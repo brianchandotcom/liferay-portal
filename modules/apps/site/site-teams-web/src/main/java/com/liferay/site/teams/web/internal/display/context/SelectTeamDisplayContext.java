@@ -14,6 +14,7 @@
 
 package com.liferay.site.teams.web.internal.display.context;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
@@ -107,10 +108,13 @@ public class SelectTeamDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/select_team.jsp");
-		portletURL.setParameter("eventName", getEventName());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/select_team.jsp"
+		).setParameter(
+			"eventName", getEventName()
+		).build();
 
 		String keywords = getKeywords();
 

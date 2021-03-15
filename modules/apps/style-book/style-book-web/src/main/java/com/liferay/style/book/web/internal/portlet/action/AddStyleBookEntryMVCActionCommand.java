@@ -14,6 +14,7 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -88,13 +89,14 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/style_book/edit_style_book_entry");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/style_book/edit_style_book_entry"
+		).setParameter(
 			"styleBookEntryId",
-			String.valueOf(styleBookEntry.getStyleBookEntryId()));
+			String.valueOf(styleBookEntry.getStyleBookEntryId())
+		).build();
 
 		return portletURL.toString();
 	}

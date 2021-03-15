@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -93,19 +94,22 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
-
-		redirectURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
-		redirectURL.setParameter("redirect", redirect);
-		redirectURL.setParameter(
+		PortletURL redirectURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest,
+				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
+				themeDisplay.getPlid(), ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_site_navigation_menu.jsp"
+		).setRedirect(
+			redirect
+		).setParameter(
 			"siteNavigationMenuId",
-			String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuId()));
-		redirectURL.setParameter(
+			String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuId())
+		).setParameter(
 			"selectedSiteNavigationMenuItemId",
-			String.valueOf(
-				siteNavigationMenuItem.getSiteNavigationMenuItemId()));
+			String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId())
+		).build();
 
 		return redirectURL.toString();
 	}

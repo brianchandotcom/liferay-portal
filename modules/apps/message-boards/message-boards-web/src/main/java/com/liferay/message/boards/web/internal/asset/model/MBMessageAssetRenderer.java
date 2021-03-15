@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -158,14 +159,15 @@ public class MBMessageAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/edit_message");
-		portletURL.setParameter(
-			"messageId", String.valueOf(_message.getMessageId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0,
+				0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/message_boards/edit_message"
+		).setParameter(
+			"messageId", String.valueOf(_message.getMessageId())
+		).build();
 
 		return portletURL;
 	}
@@ -179,14 +181,15 @@ public class MBMessageAssetRenderer
 		AssetRendererFactory<MBMessage> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = assetRendererFactory.getURLView(
-			liferayPortletResponse, windowState);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/view_message");
-		portletURL.setParameter(
-			"messageId", String.valueOf(_message.getMessageId()));
-		portletURL.setWindowState(windowState);
+		PortletURL portletURL = PortletURLBuilder.create(
+			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
+		).setMVCRenderCommandName(
+			"/message_boards/view_message"
+		).setParameter(
+			"messageId", String.valueOf(_message.getMessageId())
+		).setWindowState(
+			windowState
+		).build();
 
 		return portletURL.toString();
 	}

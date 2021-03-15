@@ -15,6 +15,7 @@
 package com.liferay.blogs.uad.display;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -53,15 +54,17 @@ public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 		String portletId = PortletProviderUtil.getPortletId(
 			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+			liferayPortletResponse,
 			portal.getControlPanelPlid(liferayPortletRequest), portletId,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
-		portletURL.setParameter(
-			"redirect", portal.getCurrentURL(liferayPortletRequest));
-		portletURL.setParameter(
-			"entryId", String.valueOf(blogsEntry.getEntryId()));
+			PortletRequest.RENDER_PHASE
+		).setMVCRenderCommandName(
+			"/blogs/edit_entry"
+		).setRedirect(
+			portal.getCurrentURL(liferayPortletRequest)
+		).setParameter(
+			"entryId", String.valueOf(blogsEntry.getEntryId())
+		).build();
 
 		return portletURL.toString();
 	}

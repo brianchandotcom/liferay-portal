@@ -17,6 +17,7 @@ package com.liferay.portlet.configuration.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -62,21 +62,21 @@ public class ArchivedSettingsActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteArchivedSetupActionUnsafeConsumer() {
 
-		PortletURL deleteArchivedSetupsURL = _renderResponse.createActionURL();
-
-		deleteArchivedSetupsURL.setParameter(
-			ActionRequest.ACTION_NAME, "deleteArchivedSetups");
-
-		deleteArchivedSetupsURL.setParameter(
-			"mvcPath", "/edit_configuration_templates.jsp");
-		deleteArchivedSetupsURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteArchivedSetupsURL.setParameter(
-			"portletConfiguration", Boolean.TRUE.toString());
-		deleteArchivedSetupsURL.setParameter(
-			"portletResource", _getPortletResource());
-		deleteArchivedSetupsURL.setParameter(
-			"name", _archivedSettings.getName());
+		PortletURL deleteArchivedSetupsURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"deleteArchivedSetups"
+		).setMVCPath(
+			"/edit_configuration_templates.jsp"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"portletConfiguration", Boolean.TRUE.toString()
+		).setParameter(
+			"portletResource", _getPortletResource()
+		).setParameter(
+			"name", _archivedSettings.getName()
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteArchivedSetups");
@@ -101,21 +101,21 @@ public class ArchivedSettingsActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getRestoreArchivedSetupActionUnsafeConsumer() {
 
-		PortletURL restoreArchivedSetupURL = _renderResponse.createActionURL();
-
-		restoreArchivedSetupURL.setParameter(
-			ActionRequest.ACTION_NAME, "restoreArchivedSetup");
-
-		restoreArchivedSetupURL.setParameter(
-			"mvcPath", "/edit_configuration_templates.jsp");
-		restoreArchivedSetupURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		restoreArchivedSetupURL.setParameter(
-			"portletConfiguration", Boolean.TRUE.toString());
-		restoreArchivedSetupURL.setParameter(
-			"portletResource", _getPortletResource());
-		restoreArchivedSetupURL.setParameter(
-			"name", _archivedSettings.getName());
+		PortletURL restoreArchivedSetupURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"restoreArchivedSetup"
+		).setMVCPath(
+			"/edit_configuration_templates.jsp"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"portletConfiguration", Boolean.TRUE.toString()
+		).setParameter(
+			"portletResource", _getPortletResource()
+		).setParameter(
+			"name", _archivedSettings.getName()
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "restoreArchivedSetup");

@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.action.AssetEntryAction;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -147,14 +148,15 @@ public class AssetEntryActionDropdownItemsProvider {
 				redirect = _fullContentRedirect;
 			}
 
-			PortletURL portletURL = _assetRenderer.getURLEdit(
-				_liferayPortletRequest, _liferayPortletResponse,
-				LiferayWindowState.NORMAL, redirect);
-
 			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-			portletURL.setParameter(
-				"portletResource", portletDisplay.getPortletName());
+			PortletURL portletURL = PortletURLBuilder.create(
+				_assetRenderer.getURLEdit(
+					_liferayPortletRequest, _liferayPortletResponse,
+					LiferayWindowState.NORMAL, redirect)
+			).setParameter(
+				"portletResource", portletDisplay.getPortletName()
+			).build();
 
 			return portletURL;
 		}

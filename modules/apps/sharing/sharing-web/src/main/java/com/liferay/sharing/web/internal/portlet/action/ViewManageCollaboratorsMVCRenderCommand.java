@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -44,7 +45,6 @@ import java.text.Format;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -98,10 +98,11 @@ public class ViewManageCollaboratorsMVCRenderCommand
 	}
 
 	private String _getActionURL(RenderResponse renderResponse) {
-		PortletURL editCollaboratorsURL = renderResponse.createActionURL();
-
-		editCollaboratorsURL.setParameter(
-			ActionRequest.ACTION_NAME, "/sharing/edit_collaborators");
+		PortletURL editCollaboratorsURL = PortletURLBuilder.createActionURL(
+			renderResponse
+		).setActionName(
+			"/sharing/edit_collaborators"
+		).build();
 
 		return editCollaboratorsURL.toString();
 	}

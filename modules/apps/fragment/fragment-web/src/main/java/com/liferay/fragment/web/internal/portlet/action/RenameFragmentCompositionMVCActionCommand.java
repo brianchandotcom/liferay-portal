@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandler;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -93,13 +94,14 @@ public class RenameFragmentCompositionMVCActionCommand
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/fragment/view_fragment_entries");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/fragment/view_fragment_entries"
+		).setParameter(
 			"fragmentCollectionId",
-			String.valueOf(fragmentComposition.getFragmentCollectionId()));
+			String.valueOf(fragmentComposition.getFragmentCollectionId())
+		).build();
 
 		return portletURL.toString();
 	}

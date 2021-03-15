@@ -25,6 +25,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -39,7 +40,6 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -103,9 +103,11 @@ public class AssetListManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -120,14 +122,14 @@ public class AssetListManagementToolbarDisplayContext
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				PortletURL addManualAssetListEntryURL =
-					liferayPortletResponse.createActionURL();
-
-				addManualAssetListEntryURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/asset_list/add_asset_list_entry");
-				addManualAssetListEntryURL.setParameter(
-					"type",
-					String.valueOf(AssetListEntryTypeConstants.TYPE_MANUAL));
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/asset_list/add_asset_list_entry"
+					).setParameter(
+						"type",
+						String.valueOf(AssetListEntryTypeConstants.TYPE_MANUAL)
+					).build();
 
 				dropdownItem.putData("action", "addAssetListEntry");
 				dropdownItem.putData(
@@ -145,14 +147,14 @@ public class AssetListManagementToolbarDisplayContext
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
 				PortletURL addDynamicAssetListEntryURL =
-					liferayPortletResponse.createActionURL();
-
-				addDynamicAssetListEntryURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/asset_list/add_asset_list_entry");
-				addDynamicAssetListEntryURL.setParameter(
-					"type",
-					String.valueOf(AssetListEntryTypeConstants.TYPE_DYNAMIC));
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/asset_list/add_asset_list_entry"
+					).setParameter(
+						"type",
+						String.valueOf(AssetListEntryTypeConstants.TYPE_DYNAMIC)
+					).build();
 
 				dropdownItem.putData("action", "addAssetListEntry");
 				dropdownItem.putData(

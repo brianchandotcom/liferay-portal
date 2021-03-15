@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -320,16 +321,18 @@ public class SelectSiteNavigationMenuDisplayContext {
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(
+				_portletURL,
+				PortalUtil.getLiferayPortletResponse(portletResponse))
+		).setParameter(
 			"backURL",
 			ParamUtil.getString(
 				_httpServletRequest, "backURL",
-				PortalUtil.getCurrentURL(_httpServletRequest)));
-		portletURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
+				PortalUtil.getCurrentURL(_httpServletRequest))
+		).setParameter(
+			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId)
+		).build();
 
 		return portletURL;
 	}

@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -77,12 +78,13 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				"publishing-x-has-started-successfully", new Object[] {name},
 				false));
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, CTPortletKeys.PUBLICATIONS,
-			PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter(
-			"mvcRenderCommandName", "/change_tracking/view_history");
+		PortletURL redirectURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest, CTPortletKeys.PUBLICATIONS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/change_tracking/view_history"
+		).build();
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 	}

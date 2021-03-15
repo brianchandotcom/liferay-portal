@@ -22,6 +22,7 @@ import com.liferay.commerce.model.CommerceOrderPayment;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -84,14 +85,15 @@ public class OrderConfirmationCheckoutStepDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceCheckoutRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"checkoutStepName", PaymentProcessCommerceCheckoutStep.NAME);
-
 		CommerceOrder commerceOrder = getCommerceOrder();
 
-		portletURL.setParameter("commerceOrderUuid", commerceOrder.getUuid());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"checkoutStepName", PaymentProcessCommerceCheckoutStep.NAME
+		).setParameter(
+			"commerceOrderUuid", commerceOrder.getUuid()
+		).build();
 
 		return portletURL.toString();
 	}

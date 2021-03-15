@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -60,11 +61,13 @@ public class AssetTagsManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			_assetTagsDisplayContext::isShowTagsActions,
 			dropdownItem -> {
-				PortletURL mergeTagsURL =
-					liferayPortletResponse.createRenderURL();
-
-				mergeTagsURL.setParameter("mvcPath", "/merge_tag.jsp");
-				mergeTagsURL.setParameter("mergeTagIds", "[$MERGE_TAGS_IDS$]");
+				PortletURL mergeTagsURL = PortletURLBuilder.createRenderURL(
+					liferayPortletResponse
+				).setMVCPath(
+					"/merge_tag.jsp"
+				).setParameter(
+					"mergeTagIds", "[$MERGE_TAGS_IDS$]"
+				).build();
 
 				dropdownItem.putData("action", "mergeTags");
 				dropdownItem.putData("mergeTagsURL", mergeTagsURL.toString());

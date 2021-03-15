@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -227,12 +228,13 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 			PortletURL portletURL)
 		throws Exception {
 
-		PortletURL viewGroupSelectorURL = PortletURLUtil.clone(
-			portletURL, liferayPortletResponse);
-
-		viewGroupSelectorURL.setParameter("groupType", "site");
-		viewGroupSelectorURL.setParameter(
-			"showGroupSelector", Boolean.TRUE.toString());
+		PortletURL viewGroupSelectorURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(portletURL, liferayPortletResponse)
+		).setParameter(
+			"groupType", "site"
+		).setParameter(
+			"showGroupSelector", Boolean.TRUE.toString()
+		).build();
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest,

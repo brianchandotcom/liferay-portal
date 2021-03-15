@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -315,10 +316,12 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		String portletId = PortletProviderUtil.getPortletId(
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view.jsp"
+		).build();
 
 		return portletURL.toString();
 	}
@@ -475,14 +478,18 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		String portletId = PortletProviderUtil.getPortletId(
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/view_template.jsp");
-		portletURL.setParameter("classNameId", String.valueOf(classNameId));
-		portletURL.setParameter("classPK", String.valueOf(classPK));
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(resourceClassNameId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view_template.jsp"
+		).setParameter(
+			"classNameId", String.valueOf(classNameId)
+		).setParameter(
+			"classPK", String.valueOf(classPK)
+		).setParameter(
+			"resourceClassNameId", String.valueOf(resourceClassNameId)
+		).build();
 
 		return portletURL.toString();
 	}

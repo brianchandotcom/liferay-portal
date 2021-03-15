@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,20 +62,19 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "removeUsers");
 
-				PortletURL removeUsersURL =
-					liferayPortletResponse.createActionURL();
-
-				removeUsersURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/account_admin/remove_account_role_users");
-				removeUsersURL.setParameter(
-					"redirect", currentURLObj.toString());
-				removeUsersURL.setParameter(
+				PortletURL removeUsersURL = PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/account_admin/remove_account_role_users"
+				).setRedirect(
+					currentURLObj.toString()
+				).setParameter(
 					"accountEntryId",
-					ParamUtil.getString(httpServletRequest, "accountEntryId"));
-				removeUsersURL.setParameter(
+					ParamUtil.getString(httpServletRequest, "accountEntryId")
+				).setParameter(
 					"accountRoleId",
-					ParamUtil.getString(httpServletRequest, "accountRoleId"));
+					ParamUtil.getString(httpServletRequest, "accountRoleId")
+				).build();
 
 				dropdownItem.putData(
 					"removeUsersURL", removeUsersURL.toString());
@@ -91,10 +90,13 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("navigation", (String)null);
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"navigation", (String)null
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}

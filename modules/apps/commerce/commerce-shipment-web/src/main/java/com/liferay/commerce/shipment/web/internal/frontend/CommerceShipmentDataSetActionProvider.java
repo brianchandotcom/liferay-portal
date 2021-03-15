@@ -22,6 +22,7 @@ import com.liferay.commerce.frontend.model.Shipment;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -91,17 +92,17 @@ public class CommerceShipmentDataSetActionProvider
 	private String _getShipmentDeleteURL(
 		long commerceShipmentId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
-			ActionRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_shipment/delete_commerce_shipment");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
-		portletURL.setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipmentId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+				ActionRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_shipment/delete_commerce_shipment"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
+			"commerceShipmentId", String.valueOf(commerceShipmentId)
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

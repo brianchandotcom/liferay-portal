@@ -20,6 +20,7 @@ import com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasure
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -124,10 +125,13 @@ public class CPMeasurementUnitsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("orderByCol", getOrderByCol());
-		portletURL.setParameter("orderByType", getOrderByType());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setParameter(
+			"orderByCol", getOrderByCol()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		String toolbarItem = ParamUtil.getString(_renderRequest, "toolbarItem");
 
@@ -228,11 +232,15 @@ public class CPMeasurementUnitsDisplayContext {
 	}
 
 	protected String getNavigationItemURL(String toolbarItem, int type) {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter("toolbarItem", toolbarItem);
-		portletURL.setParameter("type", String.valueOf(type));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"toolbarItem", toolbarItem
+		).setParameter(
+			"type", String.valueOf(type)
+		).build();
 
 		return portletURL.toString();
 	}

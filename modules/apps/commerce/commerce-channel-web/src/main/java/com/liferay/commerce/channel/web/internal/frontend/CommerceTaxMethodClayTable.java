@@ -34,6 +34,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuild
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -109,20 +110,20 @@ public class CommerceTaxMethodClayTable
 				long commerceChannelId = ParamUtil.getLong(
 					httpServletRequest, "commerceChannelId");
 
-				PortletURL portletURL = PortletProviderUtil.getPortletURL(
-					httpServletRequest, CommerceTaxMethod.class.getName(),
-					PortletProvider.Action.EDIT);
-
-				portletURL.setParameter(
-					"commerceChannelId", String.valueOf(commerceChannelId));
-
 				TaxMethod taxMethod = (TaxMethod)model;
 
-				portletURL.setParameter(
+				PortletURL portletURL = PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						httpServletRequest, CommerceTaxMethod.class.getName(),
+						PortletProvider.Action.EDIT)
+				).setParameter(
+					"commerceChannelId", String.valueOf(commerceChannelId)
+				).setParameter(
 					"commerceTaxMethodEngineKey",
-					String.valueOf(taxMethod.getKey()));
-
-				portletURL.setWindowState(LiferayWindowState.POP_UP);
+					String.valueOf(taxMethod.getKey())
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).build();
 
 				dropdownItem.setHref(portletURL.toString());
 

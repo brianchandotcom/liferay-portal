@@ -16,6 +16,7 @@ package com.liferay.marketplace.app.manager.web.internal.util;
 
 import com.liferay.marketplace.constants.MarketplaceStorePortletKeys;
 import com.liferay.marketplace.model.App;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,11 +55,13 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 
 	@Override
 	public String getDisplayURL(MimeResponse mimeResponse) {
-		PortletURL portletURL = mimeResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_modules.jsp");
-
-		portletURL.setParameter("app", String.valueOf(_app.getAppId()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			mimeResponse
+		).setMVCPath(
+			"/view_modules.jsp"
+		).setParameter(
+			"app", String.valueOf(_app.getAppId())
+		).build();
 
 		return portletURL.toString();
 	}
@@ -75,14 +78,16 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				httpServletRequest,
-				MarketplaceStorePortletKeys.MARKETPLACE_STORE,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"appEntryId", String.valueOf(_app.getRemoteAppId()));
-			portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest,
+					MarketplaceStorePortletKeys.MARKETPLACE_STORE,
+					themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"appEntryId", String.valueOf(_app.getRemoteAppId())
+			).setWindowState(
+				LiferayWindowState.MAXIMIZED
+			).build();
 
 			return portletURL.toString();
 		}

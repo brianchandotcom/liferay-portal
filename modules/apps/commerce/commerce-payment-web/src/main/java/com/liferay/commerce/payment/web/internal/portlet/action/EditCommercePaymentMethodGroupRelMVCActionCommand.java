@@ -21,6 +21,7 @@ import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -121,14 +122,16 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 		ActionRequest actionRequest, long commercePaymentMethodGroupRelId,
 		String mvcRenderCommandName) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			actionRequest, CPPortletKeys.COMMERCE_CHANNELS,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				actionRequest, CPPortletKeys.COMMERCE_CHANNELS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			mvcRenderCommandName
+		).setParameter(
 			"commercePaymentMethodGroupRelId",
-			String.valueOf(commercePaymentMethodGroupRelId));
+			String.valueOf(commercePaymentMethodGroupRelId)
+		).build();
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

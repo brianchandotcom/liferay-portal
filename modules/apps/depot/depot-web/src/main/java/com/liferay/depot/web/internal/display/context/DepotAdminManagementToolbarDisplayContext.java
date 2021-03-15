@@ -24,6 +24,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,7 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,10 +87,11 @@ public class DepotAdminManagementToolbarDisplayContext
 			"deleteDepotEntriesURL",
 			() -> {
 				PortletURL deleteDepotEntries =
-					liferayPortletResponse.createActionURL();
-
-				deleteDepotEntries.setParameter(
-					ActionRequest.ACTION_NAME, "/depot/delete_depot_entry");
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/depot/delete_depot_entry"
+					).build();
 
 				return deleteDepotEntries.toString();
 			}
@@ -99,11 +100,15 @@ public class DepotAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-		clearResultsURL.setParameter("orderByCol", getOrderByCol());
-		clearResultsURL.setParameter("orderByType", getOrderByType());
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).setParameter(
+			"orderByCol", getOrderByCol()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -152,10 +157,13 @@ public class DepotAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchTagURL = getPortletURL();
-
-		searchTagURL.setParameter("orderByCol", getOrderByCol());
-		searchTagURL.setParameter("orderByType", getOrderByType());
+		PortletURL searchTagURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"orderByCol", getOrderByCol()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		return searchTagURL.toString();
 	}

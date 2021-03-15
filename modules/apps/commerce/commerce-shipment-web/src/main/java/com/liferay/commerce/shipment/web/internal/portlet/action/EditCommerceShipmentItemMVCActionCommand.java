@@ -22,6 +22,7 @@ import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -123,13 +124,13 @@ public class EditCommerceShipmentItemMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, themeDisplay.getScopeGroup(),
-			CommerceShipment.class.getName(), PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_shipment/edit_commerce_shipment_item");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				actionRequest, themeDisplay.getScopeGroup(),
+				CommerceShipment.class.getName(), PortletProvider.Action.EDIT)
+		).setMVCRenderCommandName(
+			"/commerce_shipment/edit_commerce_shipment_item"
+		).build();
 
 		long commerceShipmentId = ParamUtil.getLong(
 			actionRequest, "commerceShipmentId");

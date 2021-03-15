@@ -20,6 +20,7 @@ import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHe
 import com.liferay.commerce.product.options.web.internal.util.CPOptionsPortletUtil;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -95,9 +96,11 @@ public class CPSpecificationOptionDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter("navigation", getNavigation());
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setParameter(
+			"navigation", getNavigation()
+		).build();
 
 		return portletURL;
 	}

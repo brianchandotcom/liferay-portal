@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -108,14 +108,15 @@ public class CommerceProductMediaDataSetActionProvider
 			long cpAttachmentFileEntryId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			_portal.getOriginalServletRequest(httpServletRequest),
-			CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/cp_definitions/edit_cp_attachment_file_entry");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				_portal.getOriginalServletRequest(httpServletRequest),
+				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/cp_definitions/edit_cp_attachment_file_entry"
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).build();
 
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
@@ -134,21 +135,20 @@ public class CommerceProductMediaDataSetActionProvider
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CPDefinition.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/cp_definitions/edit_cp_attachment_file_entry");
-		portletURL.setParameter(
-			"cpDefinitionId",
-			String.valueOf(cpAttachmentFileEntry.getClassPK()));
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CPDefinition.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_attachment_file_entry"
+		).setParameter(
+			"cpDefinitionId", String.valueOf(cpAttachmentFileEntry.getClassPK())
+		).setParameter(
 			"cpAttachmentFileEntryId",
-			String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
-		portletURL.setParameter(
-			"type", String.valueOf(cpAttachmentFileEntry.getType()));
+			String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId())
+		).setParameter(
+			"type", String.valueOf(cpAttachmentFileEntry.getType())
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

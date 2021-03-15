@@ -22,6 +22,7 @@ import com.liferay.commerce.order.web.internal.security.permission.resource.Comm
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -100,21 +100,23 @@ public class CommerceOrderItemClayDataSetActionProvider
 	private PortletURL _getOrderItemDeleteURL(
 		long commerceOrderItemId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			_portal.getOriginalServletRequest(httpServletRequest),
-			CommercePortletKeys.COMMERCE_ORDER, PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_order/edit_commerce_order_item");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"commerceOrderItemId", String.valueOf(commerceOrderItemId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				_portal.getOriginalServletRequest(httpServletRequest),
+				CommercePortletKeys.COMMERCE_ORDER, PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/commerce_order/edit_commerce_order_item"
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).setRedirect(
+			redirect
+		).setParameter(
+			"commerceOrderItemId", String.valueOf(commerceOrderItemId)
+		).build();
 
 		return portletURL;
 	}
@@ -123,14 +125,15 @@ public class CommerceOrderItemClayDataSetActionProvider
 			long commerceOrderItemId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceOrder.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/commerce_order/edit_commerce_order_item");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceOrder.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_order/edit_commerce_order_item"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).build();
 
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");

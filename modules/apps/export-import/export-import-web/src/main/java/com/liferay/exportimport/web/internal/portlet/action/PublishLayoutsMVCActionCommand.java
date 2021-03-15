@@ -18,6 +18,7 @@ import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
 import com.liferay.portal.kernel.exception.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -185,11 +186,13 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL renderURL = liferayPortletResponse.createRenderURL();
-
-		renderURL.setParameter("mvcPath", "/view_export_import.jsp");
-		renderURL.setParameter(
-			"backgroundTaskId", String.valueOf(backgroundTaskId));
+		PortletURL renderURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/view_export_import.jsp"
+		).setParameter(
+			"backgroundTaskId", String.valueOf(backgroundTaskId)
+		).build();
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
 	}

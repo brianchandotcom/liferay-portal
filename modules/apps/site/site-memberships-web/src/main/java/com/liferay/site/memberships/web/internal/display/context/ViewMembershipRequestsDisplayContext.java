@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.membership.requests.kernel.util.comparator.MembershipRequestCreateDateComparator;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.MembershipRequest;
@@ -131,13 +132,16 @@ public class ViewMembershipRequestsDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_membership_requests.jsp");
-		portletURL.setParameter("tabs1", getTabs1());
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view_membership_requests.jsp"
+		).setParameter(
+			"tabs1", getTabs1()
+		).setParameter(
 			"groupId",
-			String.valueOf(themeDisplay.getSiteGroupIdOrLiveGroupId()));
+			String.valueOf(themeDisplay.getSiteGroupIdOrLiveGroupId())
+		).build();
 
 		String displayStyle = getDisplayStyle();
 

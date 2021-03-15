@@ -28,6 +28,7 @@ import com.liferay.layout.page.template.admin.web.internal.security.permission.r
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -52,7 +53,6 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -162,15 +162,16 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		_getConfigureLayoutPrototypeActionUnsafeConsumer() {
 
 		PortletURL configureLayoutPrototypeURL =
-			_renderResponse.createRenderURL();
-
-		configureLayoutPrototypeURL.setParameter(
-			"mvcPath", "/edit_layout_prototype.jsp");
-		configureLayoutPrototypeURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		configureLayoutPrototypeURL.setParameter(
-			"layoutPrototypeId",
-			String.valueOf(_layoutPageTemplateEntry.getLayoutPrototypeId()));
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCPath(
+				"/edit_layout_prototype.jsp"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"layoutPrototypeId",
+				String.valueOf(_layoutPageTemplateEntry.getLayoutPrototypeId())
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.setHref(configureLayoutPrototypeURL);
@@ -183,17 +184,17 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		_getDeleteLayoutPageTemplateEntryActionUnsafeConsumer() {
 
 		PortletURL deleteLayoutPageTemplateEntryURL =
-			_renderResponse.createActionURL();
-
-		deleteLayoutPageTemplateEntryURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/delete_layout_page_template_entry");
-		deleteLayoutPageTemplateEntryURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteLayoutPageTemplateEntryURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/layout_page_template_admin/delete_layout_page_template_entry"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteLayoutPageTemplateEntry");
@@ -209,19 +210,18 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		_getDeleteLayoutPageTemplateEntryPreviewActionUnsafeConsumer() {
 
 		PortletURL deleteLayoutPageTemplateEntryPreviewURL =
-			_renderResponse.createActionURL();
-
-		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin" +
-				"/delete_layout_page_template_entry_preview");
-
-		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/layout_page_template_admin" +
+					"/delete_layout_page_template_entry_preview"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData(
@@ -245,15 +245,17 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			return null;
 		}
 
-		PortletURL discardDraftURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.ACTION_PHASE);
-
-		discardDraftURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout_admin/discard_draft_layout");
-		discardDraftURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		discardDraftURL.setParameter(
-			"selPlid", String.valueOf(_draftLayout.getPlid()));
+		PortletURL discardDraftURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/layout_admin/discard_draft_layout"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"selPlid", String.valueOf(_draftLayout.getPlid())
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "discardDraft");
@@ -338,16 +340,16 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 	}
 
 	private String _getItemSelectorURL() {
-		PortletURL uploadURL = _renderResponse.createActionURL();
-
-		uploadURL.setParameter(
-			ActionRequest.ACTION_NAME,
+		PortletURL uploadURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
 			"/layout_page_template_admin" +
-				"/upload_layout_page_template_entry_preview");
-		uploadURL.setParameter(
+				"/upload_layout_page_template_entry_preview"
+		).setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+		).build();
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
@@ -455,21 +457,22 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 	private String _getUpdateLayoutPageTemplateEntryURL() {
 		PortletURL updateLayoutPageTemplateEntryURL =
-			_renderResponse.createActionURL();
-
-		updateLayoutPageTemplateEntryURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/update_layout_page_template_entry");
-		updateLayoutPageTemplateEntryURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		updateLayoutPageTemplateEntryURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
-		updateLayoutPageTemplateEntryURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/layout_page_template_admin/update_layout_page_template_entry"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"layoutPageTemplateCollectionId",
+				String.valueOf(
+					_layoutPageTemplateEntry.
+						getLayoutPageTemplateCollectionId())
+			).setParameter(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+			).build();
 
 		return updateLayoutPageTemplateEntryURL.toString();
 	}
@@ -477,16 +480,16 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 	private String _getUpdateLayoutPrototypeURL(
 		LayoutPrototype layoutPrototype) {
 
-		PortletURL updateLayoutPrototypeURL = _renderResponse.createActionURL();
-
-		updateLayoutPrototypeURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/update_layout_prototype");
-		updateLayoutPrototypeURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		updateLayoutPrototypeURL.setParameter(
+		PortletURL updateLayoutPrototypeURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/update_layout_prototype"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
 			"layoutPrototypeId",
-			String.valueOf(layoutPrototype.getLayoutPrototypeId()));
+			String.valueOf(layoutPrototype.getLayoutPrototypeId())
+		).build();
 
 		return updateLayoutPrototypeURL.toString();
 	}

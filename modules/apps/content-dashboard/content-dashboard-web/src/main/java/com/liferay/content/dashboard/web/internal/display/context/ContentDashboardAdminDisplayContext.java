@@ -29,6 +29,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -189,15 +190,16 @@ public class ContentDashboardAdminDisplayContext {
 		userItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.singletonList(new UUIDItemSelectorReturnType()));
 
-		PortletURL portletURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory,
-			_liferayPortletResponse.getNamespace() + "selectedAuthorItem",
-			userItemSelectorCriterion);
-
-		portletURL.setParameter(
-			"checkedUserIds", StringUtil.merge(getAuthorIds()));
-		portletURL.setParameter(
-			"checkedUserIdsEnabled", String.valueOf(Boolean.TRUE));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_liferayPortletResponse.getNamespace() + "selectedAuthorItem",
+				userItemSelectorCriterion)
+		).setParameter(
+			"checkedUserIds", StringUtil.merge(getAuthorIds())
+		).setParameter(
+			"checkedUserIdsEnabled", String.valueOf(Boolean.TRUE)
+		).build();
 
 		return portletURL.toString();
 	}
@@ -214,19 +216,19 @@ public class ContentDashboardAdminDisplayContext {
 			setDesiredItemSelectorReturnTypes(
 				Collections.singletonList(new UUIDItemSelectorReturnType()));
 
-		PortletURL portletURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory,
-			_liferayPortletResponse.getNamespace() +
-				"selectedContentDashboardItemTypeItem",
-			contentDashboardItemTypeItemSelectorCriterion);
-
 		List<? extends ContentDashboardItemType> contentDashboardItemTypes =
 			getContentDashboardItemTypes();
 
 		Stream<? extends ContentDashboardItemType> stream =
 			contentDashboardItemTypes.stream();
 
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_liferayPortletResponse.getNamespace() +
+					"selectedContentDashboardItemTypeItem",
+				contentDashboardItemTypeItemSelectorCriterion)
+		).setParameter(
 			"checkedContentDashboardItemTypes",
 			stream.map(
 				contentDashboardItemType ->
@@ -234,7 +236,8 @@ public class ContentDashboardAdminDisplayContext {
 						_portal.getLocale(_liferayPortletRequest))
 			).toArray(
 				String[]::new
-			));
+			)
+		).build();
 
 		return String.valueOf(portletURL);
 	}
@@ -320,12 +323,13 @@ public class ContentDashboardAdminDisplayContext {
 			ResourceBundleUtil.getString(_resourceBundle, "configuration"));
 		sb.append("', url: '");
 
-		PortletURL renderURL = _liferayPortletResponse.createRenderURL();
-
-		renderURL.setParameter(
-			"mvcRenderCommandName",
-			"/content_dashboard/edit_content_dashboard_configuration");
-		renderURL.setWindowState(LiferayWindowState.POP_UP);
+		PortletURL renderURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/content_dashboard/edit_content_dashboard_configuration"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		sb.append(HtmlUtil.escapeJS(renderURL.toString()));
 

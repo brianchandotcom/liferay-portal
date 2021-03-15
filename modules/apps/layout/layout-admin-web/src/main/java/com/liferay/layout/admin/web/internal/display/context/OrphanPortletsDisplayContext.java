@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -195,11 +196,15 @@ public class OrphanPortletsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
-		portletURL.setParameter("backURL", getBackURL());
-		portletURL.setParameter("displayStyle", getDisplayStyle());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/orphan_portlets.jsp"
+		).setParameter(
+			"backURL", getBackURL()
+		).setParameter(
+			"displayStyle", getDisplayStyle()
+		).build();
 
 		return portletURL;
 	}

@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -58,20 +59,22 @@ public abstract class BaseOAuth2ManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL currentSortingURL = getCurrentSortingURL();
-
-		currentSortingURL.setParameter(
+		PortletURL currentSortingURL = PortletURLBuilder.create(
+			getCurrentSortingURL()
+		).setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
+		).build();
 
 		return currentSortingURL;
 	}
 
 	protected PortletURL getCurrentSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			currentURLObj, liferayPortletResponse);
-
-		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
+		PortletURL sortingURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+		).setParameter(
+			SearchContainer.DEFAULT_CUR_PARAM, "0"
+		).build();
 
 		return sortingURL;
 	}

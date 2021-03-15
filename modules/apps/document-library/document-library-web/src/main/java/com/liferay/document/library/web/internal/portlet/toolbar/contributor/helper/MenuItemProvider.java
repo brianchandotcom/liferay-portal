@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.document.library.web.internal.icon.provider.DLFileEntryTypeIconProviderUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -107,25 +108,27 @@ public class MenuItemProvider {
 				PortalUtil.getHttpServletRequest(portletRequest),
 				"file-upload"));
 
-		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_file_entry");
-		portletURL.setParameter(Constants.CMD, Constants.ADD);
-		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(portletRequest));
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		portletURL.setParameter("portletResource", portletDisplay.getId());
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_getPortletURL(themeDisplay, portletRequest)
+		).setMVCRenderCommandName(
+			"/document_library/edit_file_entry"
+		).setParameter(
+			Constants.CMD, Constants.ADD
+		).setRedirect(
+			PortalUtil.getCurrentURL(portletRequest)
+		).setParameter(
+			"portletResource", portletDisplay.getId()
+		).setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay)));
-		portletURL.setParameter("folderId", String.valueOf(folderId));
-		portletURL.setParameter(
+			String.valueOf(_getRepositoryId(folder, themeDisplay))
+		).setParameter(
+			"folderId", String.valueOf(folderId)
+		).setParameter(
 			"fileEntryTypeId",
-			String.valueOf(_getDefaultFileEntryTypeId(folderId)));
+			String.valueOf(_getDefaultFileEntryTypeId(folderId))
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -154,22 +157,24 @@ public class MenuItemProvider {
 			LanguageUtil.get(
 				PortalUtil.getHttpServletRequest(portletRequest), "folder"));
 
-		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_folder");
-		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(portletRequest));
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		portletURL.setParameter("portletResource", portletDisplay.getId());
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_getPortletURL(themeDisplay, portletRequest)
+		).setMVCRenderCommandName(
+			"/document_library/edit_folder"
+		).setRedirect(
+			PortalUtil.getCurrentURL(portletRequest)
+		).setParameter(
+			"portletResource", portletDisplay.getId()
+		).setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay)));
-		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
-		portletURL.setParameter("ignoreRootFolder", Boolean.TRUE.toString());
+			String.valueOf(_getRepositoryId(folder, themeDisplay))
+		).setParameter(
+			"parentFolderId", String.valueOf(folderId)
+		).setParameter(
+			"ignoreRootFolder", Boolean.TRUE.toString()
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -204,22 +209,22 @@ public class MenuItemProvider {
 		urlMenuItem.setLabel(
 			LanguageUtil.get(resourceBundle, "multiple-files-upload"));
 
-		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/document_library/upload_multiple_file_entries");
-		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(portletRequest));
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		portletURL.setParameter("portletResource", portletDisplay.getId());
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_getPortletURL(themeDisplay, portletRequest)
+		).setMVCRenderCommandName(
+			"/document_library/upload_multiple_file_entries"
+		).setRedirect(
+			PortalUtil.getCurrentURL(portletRequest)
+		).setParameter(
+			"portletResource", portletDisplay.getId()
+		).setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay)));
-		portletURL.setParameter("folderId", String.valueOf(folderId));
+			String.valueOf(_getRepositoryId(folder, themeDisplay))
+		).setParameter(
+			"folderId", String.valueOf(folderId)
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -251,12 +256,13 @@ public class MenuItemProvider {
 				PortalUtil.getHttpServletRequest(portletRequest),
 				"repository"));
 
-		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_repository");
-		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(portletRequest));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_getPortletURL(themeDisplay, portletRequest)
+		).setMVCRenderCommandName(
+			"/document_library/edit_repository"
+		).setRedirect(
+			PortalUtil.getCurrentURL(portletRequest)
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -288,16 +294,18 @@ public class MenuItemProvider {
 			LanguageUtil.get(
 				PortalUtil.getHttpServletRequest(portletRequest), "shortcut"));
 
-		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_file_shortcut");
-		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(portletRequest));
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_getPortletURL(themeDisplay, portletRequest)
+		).setMVCRenderCommandName(
+			"/document_library/edit_file_shortcut"
+		).setRedirect(
+			PortalUtil.getCurrentURL(portletRequest)
+		).setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay)));
-		portletURL.setParameter("folderId", String.valueOf(folderId));
+			String.valueOf(_getRepositoryId(folder, themeDisplay))
+		).setParameter(
+			"folderId", String.valueOf(folderId)
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -354,26 +362,27 @@ public class MenuItemProvider {
 
 		urlMenuItem.setLabel(HtmlUtil.escape(label));
 
-		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_file_entry");
-		portletURL.setParameter(Constants.CMD, Constants.ADD);
-		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(portletRequest));
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		portletURL.setParameter("portletResource", portletDisplay.getId());
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_getPortletURL(themeDisplay, portletRequest)
+		).setMVCRenderCommandName(
+			"/document_library/edit_file_entry"
+		).setParameter(
+			Constants.CMD, Constants.ADD
+		).setRedirect(
+			PortalUtil.getCurrentURL(portletRequest)
+		).setParameter(
+			"portletResource", portletDisplay.getId()
+		).setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay)));
-		portletURL.setParameter(
-			"folderId", String.valueOf(_getFolderId(folder)));
-		portletURL.setParameter(
+			String.valueOf(_getRepositoryId(folder, themeDisplay))
+		).setParameter(
+			"folderId", String.valueOf(_getFolderId(folder))
+		).setParameter(
 			"fileEntryTypeId",
-			String.valueOf(fileEntryType.getFileEntryTypeId()));
+			String.valueOf(fileEntryType.getFileEntryTypeId())
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 

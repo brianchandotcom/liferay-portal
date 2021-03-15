@@ -25,6 +25,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -124,22 +124,24 @@ public class CommerceProductOptionValueDataSetActionProvider
 		long cpDefinitionOptionValueRelId,
 		HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			_portal.getOriginalServletRequest(httpServletRequest),
-			CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/cp_definitions/edit_cp_definition_option_value_rel");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				_portal.getOriginalServletRequest(httpServletRequest),
+				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/cp_definitions/edit_cp_definition_option_value_rel"
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).setRedirect(
+			redirect
+		).setParameter(
 			"cpDefinitionOptionValueRelId",
-			String.valueOf(cpDefinitionOptionValueRelId));
+			String.valueOf(cpDefinitionOptionValueRelId)
+		).build();
 
 		return portletURL;
 	}
@@ -149,28 +151,26 @@ public class CommerceProductOptionValueDataSetActionProvider
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CPDefinition.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/cp_definitions/edit_cp_definition_option_value_rel");
-
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRel();
 
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CPDefinition.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_definition_option_value_rel"
+		).setParameter(
 			"cpDefinitionId",
-			String.valueOf(cpDefinitionOptionRel.getCPDefinitionId()));
-		portletURL.setParameter(
+			String.valueOf(cpDefinitionOptionRel.getCPDefinitionId())
+		).setParameter(
 			"cpDefinitionOptionRelId",
-			String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
-
-		portletURL.setParameter(
+			String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId())
+		).setParameter(
 			"cpDefinitionOptionValueRelId",
 			String.valueOf(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()));
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId())
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -186,22 +186,24 @@ public class CommerceProductOptionValueDataSetActionProvider
 		long cpDefinitionOptionValueRelId,
 		HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			_portal.getOriginalServletRequest(httpServletRequest),
-			CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/cp_definitions/edit_cp_definition_option_value_rel");
-		portletURL.setParameter(Constants.CMD, "updatePreselected");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				_portal.getOriginalServletRequest(httpServletRequest),
+				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/cp_definitions/edit_cp_definition_option_value_rel"
+		).setParameter(
+			Constants.CMD, "updatePreselected"
+		).setRedirect(
+			redirect
+		).setParameter(
 			"cpDefinitionOptionValueRelId",
-			String.valueOf(cpDefinitionOptionValueRelId));
+			String.valueOf(cpDefinitionOptionValueRelId)
+		).build();
 
 		return portletURL;
 	}

@@ -23,6 +23,7 @@ import com.liferay.depot.web.internal.servlet.taglib.clay.DepotEntryVerticalCard
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -119,14 +120,15 @@ public class DepotAdminDisplayContext {
 	public String getViewDepotURL(DepotEntry depotEntry)
 		throws PortalException {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, depotEntry.getGroup(),
-			DepotPortletKeys.DEPOT_ADMIN, 0, 0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/depot/view_depot_dashboard");
-		portletURL.setParameter(
-			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_liferayPortletRequest, depotEntry.getGroup(),
+				DepotPortletKeys.DEPOT_ADMIN, 0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/depot/view_depot_dashboard"
+		).setParameter(
+			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId())
+		).build();
 
 		return portletURL.toString();
 	}
@@ -184,9 +186,11 @@ public class DepotAdminDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("displayStyle", getDisplayStyle());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setParameter(
+			"displayStyle", getDisplayStyle()
+		).build();
 
 		return portletURL;
 	}

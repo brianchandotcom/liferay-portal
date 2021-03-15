@@ -18,6 +18,7 @@ import com.liferay.asset.categories.item.selector.web.internal.constants.AssetCa
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -138,19 +139,21 @@ public class SelectAssetVocabularyDisplayContext {
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(
+				_portletURL,
+				PortalUtil.getLiferayPortletResponse(portletResponse))
+		).setParameter(
 			"backURL",
 			ParamUtil.getString(
 				_httpServletRequest, "backURL",
-				PortalUtil.getCurrentURL(_httpServletRequest)));
-		portletURL.setParameter(
-			"assetCategoryTreeNodeId", String.valueOf(assetVocabularyId));
-		portletURL.setParameter(
+				PortalUtil.getCurrentURL(_httpServletRequest))
+		).setParameter(
+			"assetCategoryTreeNodeId", String.valueOf(assetVocabularyId)
+		).setParameter(
 			"assetCategoryTreeNodeType",
-			AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY);
+			AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY
+		).build();
 
 		return portletURL.toString();
 	}

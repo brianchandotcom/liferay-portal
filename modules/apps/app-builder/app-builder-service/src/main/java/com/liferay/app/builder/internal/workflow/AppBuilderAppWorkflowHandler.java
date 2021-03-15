@@ -22,6 +22,7 @@ import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -102,16 +103,20 @@ public class AppBuilderAppWorkflowHandler
 		}
 
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getRequest(),
-				GetterUtil.getString(serviceContext.getAttribute("portletId")),
-				GetterUtil.getLong(serviceContext.getAttribute("plid")),
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcPath", "/edit_app_entry.jsp");
-			portletURL.setParameter(
-				"dataRecordId", String.valueOf(ddlRecordId));
-			portletURL.setWindowState(WindowState.MAXIMIZED);
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					serviceContext.getRequest(),
+					GetterUtil.getString(
+						serviceContext.getAttribute("portletId")),
+					GetterUtil.getLong(serviceContext.getAttribute("plid")),
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/edit_app_entry.jsp"
+			).setParameter(
+				"dataRecordId", String.valueOf(ddlRecordId)
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).build();
 
 			return portletURL.toString();
 		}

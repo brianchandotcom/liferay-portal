@@ -46,6 +46,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -176,10 +177,11 @@ public class DDMDisplayContext {
 	}
 
 	public String getClearResultsURL() throws PortletException {
-		PortletURL clearResultsURL = PortletURLUtil.clone(
-			getPortletURL(), _renderResponse);
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(getPortletURL(), _renderResponse)
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -329,15 +331,17 @@ public class DDMDisplayContext {
 
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				PortletURL redirectURL = _renderResponse.createRenderURL();
-
-				redirectURL.setParameter("mvcPath", "/select_structure.jsp");
-				redirectURL.setParameter(
-					"classPK", String.valueOf(getClassPK()));
-				redirectURL.setParameter(
+				PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCPath(
+					"/select_structure.jsp"
+				).setParameter(
+					"classPK", String.valueOf(getClassPK())
+				).setParameter(
 					"eventName",
 					ParamUtil.getString(
-						_renderRequest, "eventName", "selectStructure"));
+						_renderRequest, "eventName", "selectStructure")
+				).build();
 
 				dropdownItem.setHref(
 					_renderResponse.createRenderURL(), "mvcPath",
@@ -351,49 +355,52 @@ public class DDMDisplayContext {
 	}
 
 	public String getSelectStructureSearchActionURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/select_structure.jsp");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/select_structure.jsp"
+		).setParameter(
 			"classPK",
-			String.valueOf(ParamUtil.getLong(_renderRequest, "classPK")));
-		portletURL.setParameter(
+			String.valueOf(ParamUtil.getLong(_renderRequest, "classPK"))
+		).setParameter(
 			"eventName",
-			ParamUtil.getString(
-				_renderRequest, "eventName", "selectStructure"));
+			ParamUtil.getString(_renderRequest, "eventName", "selectStructure")
+		).build();
 
 		return portletURL.toString();
 	}
 
 	public String getSelectTemplateSearchActionURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/select_template.jsp");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/select_template.jsp"
+		).setParameter(
 			"templateId",
-			String.valueOf(ParamUtil.getLong(_renderRequest, "templateId")));
-		portletURL.setParameter(
-			"classNameId", String.valueOf(getClassNameId()));
-		portletURL.setParameter(
+			String.valueOf(ParamUtil.getLong(_renderRequest, "templateId"))
+		).setParameter(
+			"classNameId", String.valueOf(getClassNameId())
+		).setParameter(
 			"classPK",
-			String.valueOf(ParamUtil.getLong(_renderRequest, "classPK")));
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(getResourceClassNameId()));
-		portletURL.setParameter(
+			String.valueOf(ParamUtil.getLong(_renderRequest, "classPK"))
+		).setParameter(
+			"resourceClassNameId", String.valueOf(getResourceClassNameId())
+		).setParameter(
 			"eventName",
-			ParamUtil.getString(_renderRequest, "eventName", "selectTemplate"));
+			ParamUtil.getString(_renderRequest, "eventName", "selectTemplate")
+		).build();
 
 		return portletURL.toString();
 	}
 
 	public String getSortingURL() throws Exception {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			getPortletURL(), _renderResponse);
-
 		String orderByType = ParamUtil.getString(_renderRequest, "orderByType");
 
-		sortingURL.setParameter(
-			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
+		PortletURL sortingURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(getPortletURL(), _renderResponse)
+		).setParameter(
+			"orderByType", orderByType.equals("asc") ? "desc" : "asc"
+		).build();
 
 		return sortingURL.toString();
 	}
@@ -407,18 +414,23 @@ public class DDMDisplayContext {
 			return null;
 		}
 
-		PortletURL redirectURL = _renderResponse.createRenderURL();
+		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId())
+		).build();
 
-		redirectURL.setParameter("mvcPath", "/view.jsp");
-		redirectURL.setParameter(
-			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId()));
-
-		PortletURL addTemplateURL = _renderResponse.createRenderURL();
-
-		addTemplateURL.setParameter("mvcPath", "/edit_structure.jsp");
-		addTemplateURL.setParameter("redirect", redirectURL.toString());
-		addTemplateURL.setParameter(
-			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId()));
+		PortletURL addTemplateURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/edit_structure.jsp"
+		).setRedirect(
+			redirectURL.toString()
+		).setParameter(
+			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId())
+		).build();
 
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			getCreationMenuDropdownItem(addTemplateURL, "add")
@@ -460,14 +472,15 @@ public class DDMDisplayContext {
 	}
 
 	public String getStructureSearchActionURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter(
-			"tabs1",
-			ParamUtil.getString(_renderRequest, "tabs1", "structures"));
-		portletURL.setParameter(
-			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"tabs1", ParamUtil.getString(_renderRequest, "tabs1", "structures")
+		).setParameter(
+			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId())
+		).build();
 
 		return portletURL.toString();
 	}
@@ -487,21 +500,24 @@ public class DDMDisplayContext {
 						DDMStructure.class)) {
 
 					PortletURL addTemplateURL =
-						_renderResponse.createRenderURL();
-
-					addTemplateURL.setParameter(
-						"mvcPath", "/edit_template.jsp");
-					addTemplateURL.setParameter(
-						"groupId",
-						String.valueOf(_ddmWebRequestHelper.getScopeGroupId()));
-					addTemplateURL.setParameter(
-						"classNameId", String.valueOf(getClassNameId()));
-					addTemplateURL.setParameter(
-						"classPK", String.valueOf(getClassPK()));
-					addTemplateURL.setParameter(
-						"resourceClassNameId",
-						String.valueOf(getResourceClassNameId()));
-					addTemplateURL.setParameter("mode", getTemplateMode());
+						PortletURLBuilder.createRenderURL(
+							_renderResponse
+						).setMVCPath(
+							"/edit_template.jsp"
+						).setParameter(
+							"groupId",
+							String.valueOf(
+								_ddmWebRequestHelper.getScopeGroupId())
+						).setParameter(
+							"classNameId", String.valueOf(getClassNameId())
+						).setParameter(
+							"classPK", String.valueOf(getClassPK())
+						).setParameter(
+							"resourceClassNameId",
+							String.valueOf(getResourceClassNameId())
+						).setParameter(
+							"mode", getTemplateMode()
+						).build();
 
 					String message = "add";
 
@@ -543,16 +559,18 @@ public class DDMDisplayContext {
 
 					if (!templateHandlers.isEmpty()) {
 						PortletURL addPortletDisplayTemplateURL =
-							_renderResponse.createRenderURL();
-
-						addPortletDisplayTemplateURL.setParameter(
-							"mvcPath", "/edit_template.jsp");
-						addPortletDisplayTemplateURL.setParameter(
-							"groupId",
-							String.valueOf(
-								_ddmWebRequestHelper.getScopeGroupId()));
-						addPortletDisplayTemplateURL.setParameter(
-							"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+							PortletURLBuilder.createRenderURL(
+								_renderResponse
+							).setMVCPath(
+								"/edit_template.jsp"
+							).setParameter(
+								"groupId",
+								String.valueOf(
+									_ddmWebRequestHelper.getScopeGroupId())
+							).setParameter(
+								"type",
+								DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY
+							).build();
 
 						for (TemplateHandler templateHandler :
 								templateHandlers) {
@@ -609,24 +627,27 @@ public class DDMDisplayContext {
 	}
 
 	public String getTemplateSearchActionURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_template.jsp");
-		portletURL.setParameter(
-			"tabs1", ParamUtil.getString(_renderRequest, "tabs1", "templates"));
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view_template.jsp"
+		).setParameter(
+			"tabs1", ParamUtil.getString(_renderRequest, "tabs1", "templates")
+		).setParameter(
 			"templateId",
-			String.valueOf(ParamUtil.getLong(_renderRequest, "templateId")));
-		portletURL.setParameter(
-			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId()));
-		portletURL.setParameter(
-			"classNameId", String.valueOf(getClassNameId()));
-		portletURL.setParameter("classPK", String.valueOf(getClassPK()));
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(getResourceClassNameId()));
-		portletURL.setParameter(
+			String.valueOf(ParamUtil.getLong(_renderRequest, "templateId"))
+		).setParameter(
+			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId())
+		).setParameter(
+			"classNameId", String.valueOf(getClassNameId())
+		).setParameter(
+			"classPK", String.valueOf(getClassPK())
+		).setParameter(
+			"resourceClassNameId", String.valueOf(getResourceClassNameId())
+		).setParameter(
 			"eventName",
-			ParamUtil.getString(_renderRequest, "eventName", "selectTemplate"));
+			ParamUtil.getString(_renderRequest, "eventName", "selectTemplate")
+		).build();
 
 		return portletURL.toString();
 	}

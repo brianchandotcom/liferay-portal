@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -67,14 +68,15 @@ public class ConfigurationTemplatesPortletConfigurationIcon
 			String returnToFullPageURL = ParamUtil.getString(
 				portletRequest, "returnToFullPageURL");
 
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				portletRequest,
-				PortletConfigurationApplicationType.PortletConfiguration.
-					CLASS_NAME,
-				PortletProvider.Action.VIEW);
-
-			portletURL.setParameter(
-				"mvcPath", "/edit_configuration_templates.jsp");
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest,
+					PortletConfigurationApplicationType.PortletConfiguration.
+						CLASS_NAME,
+					PortletProvider.Action.VIEW)
+			).setMVCPath(
+				"/edit_configuration_templates.jsp"
+			).build();
 
 			if (Validator.isNotNull(redirect)) {
 				portletURL.setParameter("redirect", redirect);

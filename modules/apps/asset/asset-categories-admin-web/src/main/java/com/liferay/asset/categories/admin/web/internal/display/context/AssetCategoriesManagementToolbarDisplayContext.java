@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -89,11 +90,15 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("navigation", "all");
-		clearResultsURL.setParameter("categoryId", "0");
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"navigation", "all"
+		).setParameter(
+			"categoryId", "0"
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -107,10 +112,11 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				PortletURL addCategoryURL =
-					liferayPortletResponse.createRenderURL();
-
-				addCategoryURL.setParameter("mvcPath", "/edit_category.jsp");
+				PortletURL addCategoryURL = PortletURLBuilder.createRenderURL(
+					liferayPortletResponse
+				).setMVCPath(
+					"/edit_category.jsp"
+				).build();
 
 				if (_assetCategoriesDisplayContext.getCategoryId() > 0) {
 					addCategoryURL.setParameter(
@@ -157,11 +163,13 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 		return LabelItemListBuilder.add(
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					currentURLObj, liferayPortletResponse);
-
-				removeLabelURL.setParameter("navigation", (String)null);
-				removeLabelURL.setParameter("categoryId", "0");
+				PortletURL removeLabelURL = PortletURLBuilder.create(
+					PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+				).setParameter(
+					"navigation", (String)null
+				).setParameter(
+					"categoryId", "0"
+				).build();
 
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
@@ -236,30 +244,36 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	}
 
 	private String _getCategoriesSelectorURL() throws Exception {
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, AssetCategory.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setParameter(
 			"vocabularyIds",
-			String.valueOf(_assetCategoriesDisplayContext.getVocabularyId()));
-		portletURL.setParameter(
+			String.valueOf(_assetCategoriesDisplayContext.getVocabularyId())
+		).setParameter(
 			"eventName",
-			liferayPortletResponse.getNamespace() + "selectCategory");
-		portletURL.setParameter("singleSelect", Boolean.TRUE.toString());
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+			liferayPortletResponse.getNamespace() + "selectCategory"
+		).setParameter(
+			"singleSelect", Boolean.TRUE.toString()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		return portletURL.toString();
 	}
 
 	private String _getViewCategoriesURL() throws PortalException {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter("navigation", "category");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"navigation", "category"
+		).setParameter(
 			"vocabularyId",
-			String.valueOf(_assetCategoriesDisplayContext.getVocabularyId()));
+			String.valueOf(_assetCategoriesDisplayContext.getVocabularyId())
+		).build();
 
 		return portletURL.toString();
 	}

@@ -22,6 +22,7 @@ import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -123,11 +124,13 @@ public class BlogsEntryAssetRendererFactory
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			liferayPortletRequest, getGroup(liferayPortletRequest),
-			BlogsPortletKeys.BLOGS, 0, 0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				liferayPortletRequest, getGroup(liferayPortletRequest),
+				BlogsPortletKeys.BLOGS, 0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/blogs/edit_entry"
+		).build();
 
 		return portletURL;
 	}

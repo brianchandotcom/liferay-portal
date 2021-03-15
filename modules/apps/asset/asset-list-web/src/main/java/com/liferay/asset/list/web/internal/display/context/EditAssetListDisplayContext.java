@@ -46,6 +46,7 @@ import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -617,12 +618,13 @@ public class EditAssetListDisplayContext {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new GroupItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-			getSelectGroupEventName(), itemSelectorCriterion);
-
-		itemSelectorURL.setParameter(
-			"portletResource", AssetListPortletKeys.ASSET_LIST);
+		PortletURL itemSelectorURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				getSelectGroupEventName(), itemSelectorCriterion)
+		).setParameter(
+			"portletResource", AssetListPortletKeys.ASSET_LIST
+		).build();
 
 		return itemSelectorURL.toString();
 	}
@@ -741,15 +743,17 @@ public class EditAssetListDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_portletRequest, AssetListPortletKeys.ASSET_LIST,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
-		portletURL.setParameter(
-			"assetListEntryId", String.valueOf(getAssetListEntryId()));
-		portletURL.setParameter(
-			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_portletRequest, AssetListPortletKeys.ASSET_LIST,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_asset_list_entry.jsp"
+		).setParameter(
+			"assetListEntryId", String.valueOf(getAssetListEntryId())
+		).setParameter(
+			"segmentsEntryId", String.valueOf(getSegmentsEntryId())
+		).build();
 
 		return portletURL;
 	}
@@ -906,16 +910,18 @@ public class EditAssetListDisplayContext {
 			return _selectSegmentsEntryURL;
 		}
 
-		PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(
-			_httpServletRequest, SegmentsEntry.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		selectCategoryURL.setParameter(
-			"eventName", _portletResponse.getNamespace() + "selectEntity");
-		selectCategoryURL.setParameter(
+		PortletURL selectCategoryURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_httpServletRequest, SegmentsEntry.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setParameter(
+			"eventName", _portletResponse.getNamespace() + "selectEntity"
+		).setParameter(
 			"selectedSegmentsEntryIds",
-			StringUtil.merge(getSelectedSegmentsEntryIds()));
-		selectCategoryURL.setWindowState(LiferayWindowState.POP_UP);
+			StringUtil.merge(getSelectedSegmentsEntryIds())
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		_selectSegmentsEntryURL = selectCategoryURL.toString();
 

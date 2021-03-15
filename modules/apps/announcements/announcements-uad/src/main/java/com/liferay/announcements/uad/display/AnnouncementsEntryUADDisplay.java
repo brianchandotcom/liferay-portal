@@ -15,6 +15,7 @@
 package com.liferay.announcements.uad.display;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -45,16 +46,17 @@ public class AnnouncementsEntryUADDisplay
 		String portletId = PortletProviderUtil.getPortletId(
 			AnnouncementsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+			liferayPortletResponse,
 			portal.getControlPanelPlid(liferayPortletRequest), portletId,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/announcements/edit_entry");
-		portletURL.setParameter(
-			"redirect", portal.getCurrentURL(liferayPortletRequest));
-		portletURL.setParameter(
-			"entryId", String.valueOf(announcementsEntry.getEntryId()));
+			PortletRequest.RENDER_PHASE
+		).setMVCRenderCommandName(
+			"/announcements/edit_entry"
+		).setRedirect(
+			portal.getCurrentURL(liferayPortletRequest)
+		).setParameter(
+			"entryId", String.valueOf(announcementsEntry.getEntryId())
+		).build();
 
 		return portletURL.toString();
 	}

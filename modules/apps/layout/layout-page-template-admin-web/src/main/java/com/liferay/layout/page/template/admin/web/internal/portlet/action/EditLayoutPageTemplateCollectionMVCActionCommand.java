@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -95,14 +96,16 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("tabs1", "page-templates");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"tabs1", "page-templates"
+		).setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(
 				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId()));
+					getLayoutPageTemplateCollectionId())
+		).build();
 
 		return portletURL.toString();
 	}

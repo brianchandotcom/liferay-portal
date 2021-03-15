@@ -19,6 +19,7 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -76,16 +77,17 @@ public class DLFileEntryCTDisplayRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, group, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0,
-			0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_file_entry");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(dlFileEntry.getFileEntryId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, group, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+				0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/document_library/edit_file_entry"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
+			"fileEntryId", String.valueOf(dlFileEntry.getFileEntryId())
+		).build();
 
 		return portletURL.toString();
 	}

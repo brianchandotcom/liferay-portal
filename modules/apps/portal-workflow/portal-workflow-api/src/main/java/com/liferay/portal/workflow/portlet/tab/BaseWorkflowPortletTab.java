@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.portlet.tab;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
@@ -42,16 +43,18 @@ public abstract class BaseWorkflowPortletTab
 	public PortletURL getSearchURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		PortletURL searchURL = renderResponse.createRenderURL();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		searchURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-
-		searchURL.setParameter("mvcPath", "/view.jsp");
-		searchURL.setParameter("tab", getName());
+		PortletURL searchURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"tab", getName()
+		).build();
 
 		return searchURL;
 	}

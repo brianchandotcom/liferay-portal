@@ -16,6 +16,7 @@ package com.liferay.marketplace.app.manager.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -67,14 +68,21 @@ public class AppManagerDisplayContext {
 			_httpServletRequest, "symbolicName");
 		String version = ParamUtil.getString(_httpServletRequest, "version");
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_module.jsp");
-		portletURL.setParameter("app", app);
-		portletURL.setParameter("moduleGroup", moduleGroup);
-		portletURL.setParameter("symbolicName", symbolicName);
-		portletURL.setParameter("version", version);
-		portletURL.setParameter("pluginType", pluginType);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view_module.jsp"
+		).setParameter(
+			"app", app
+		).setParameter(
+			"moduleGroup", moduleGroup
+		).setParameter(
+			"symbolicName", symbolicName
+		).setParameter(
+			"version", version
+		).setParameter(
+			"pluginType", pluginType
+		).build();
 
 		return portletURL.toString();
 	}

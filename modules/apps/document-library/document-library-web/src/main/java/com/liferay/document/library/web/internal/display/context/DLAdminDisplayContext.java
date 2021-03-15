@@ -34,6 +34,7 @@ import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -292,24 +293,24 @@ public class DLAdminDisplayContext {
 	}
 
 	public PortletURL getSearchSearchContainerURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/search");
-
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
-		portletURL.setParameter("redirect", redirect);
 
 		long searchFolderId = ParamUtil.getLong(
 			_httpServletRequest, "searchFolderId");
 
-		portletURL.setParameter(
-			"searchFolderId", String.valueOf(searchFolderId));
-
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
-		portletURL.setParameter("keywords", keywords);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/document_library/search"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"searchFolderId", String.valueOf(searchFolderId)
+		).setParameter(
+			"keywords", keywords
+		).build();
 
 		return portletURL;
 	}

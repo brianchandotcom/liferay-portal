@@ -17,6 +17,7 @@ package com.liferay.wiki.web.internal.asset.model;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -201,13 +202,17 @@ public class WikiPageAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, WikiPortletKeys.WIKI, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
-		portletURL.setParameter("title", _page.getTitle());
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, WikiPortletKeys.WIKI, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/wiki/edit_page"
+		).setParameter(
+			"nodeId", String.valueOf(_page.getNodeId())
+		).setParameter(
+			"title", _page.getTitle()
+		).build();
 
 		return portletURL;
 	}
@@ -217,13 +222,17 @@ public class WikiPageAssetRenderer
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, WikiPortletKeys.WIKI,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/export_page");
-		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
-		portletURL.setParameter("title", _page.getTitle());
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, WikiPortletKeys.WIKI,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/wiki/export_page"
+		).setParameter(
+			"nodeId", String.valueOf(_page.getNodeId())
+		).setParameter(
+			"title", _page.getTitle()
+		).build();
 
 		return portletURL;
 	}
@@ -237,13 +246,17 @@ public class WikiPageAssetRenderer
 		AssetRendererFactory<WikiPage> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = assetRendererFactory.getURLView(
-			liferayPortletResponse, windowState);
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
-		portletURL.setParameter("title", _page.getTitle());
-		portletURL.setWindowState(windowState);
+		PortletURL portletURL = PortletURLBuilder.create(
+			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
+		).setMVCRenderCommandName(
+			"/wiki/view"
+		).setParameter(
+			"nodeId", String.valueOf(_page.getNodeId())
+		).setParameter(
+			"title", _page.getTitle()
+		).setWindowState(
+			windowState
+		).build();
 
 		return portletURL.toString();
 	}
@@ -261,19 +274,23 @@ public class WikiPageAssetRenderer
 			return null;
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, WikiPortletKeys.WIKI,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/wiki/compare_versions");
-		portletURL.setParameter("groupId", String.valueOf(_page.getGroupId()));
-		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
-		portletURL.setParameter("title", _page.getTitle());
-		portletURL.setParameter(
-			"sourceVersion", String.valueOf(previousVersionPage.getVersion()));
-		portletURL.setParameter(
-			"targetVersion", String.valueOf(_page.getVersion()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, WikiPortletKeys.WIKI,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/wiki/compare_versions"
+		).setParameter(
+			"groupId", String.valueOf(_page.getGroupId())
+		).setParameter(
+			"nodeId", String.valueOf(_page.getNodeId())
+		).setParameter(
+			"title", _page.getTitle()
+		).setParameter(
+			"sourceVersion", String.valueOf(previousVersionPage.getVersion())
+		).setParameter(
+			"targetVersion", String.valueOf(_page.getVersion())
+		).build();
 
 		return portletURL;
 	}

@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -110,9 +111,11 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getViewPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getViewPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -312,13 +315,14 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public String getSearchURL() {
-		PortletURL portletURL = getViewPortletURL();
-
 		ThemeDisplay themeDisplay =
 			workflowInstanceRequestHelper.getThemeDisplay();
 
-		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			getViewPortletURL()
+		).setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+		).build();
 
 		return portletURL.toString();
 	}
@@ -332,10 +336,11 @@ public class WorkflowInstanceViewDisplayContext
 		LiferayPortletResponse liferayPortletResponse =
 			workflowInstanceRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc"
+		).build();
 
 		String instanceNavigation = ParamUtil.getString(
 			httpServletRequest, "navigation");
@@ -369,10 +374,13 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public PortletURL getViewPortletURL() {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("tab", WorkflowWebKeys.WORKFLOW_TAB_INSTANCE);
-		portletURL.setParameter("orderByType", getOrderByType());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"tab", WorkflowWebKeys.WORKFLOW_TAB_INSTANCE
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		return portletURL;
 	}

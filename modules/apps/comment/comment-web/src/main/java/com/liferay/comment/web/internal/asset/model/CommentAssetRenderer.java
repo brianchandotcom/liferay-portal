@@ -17,6 +17,7 @@ package com.liferay.comment.web.internal.asset.model;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.comment.web.internal.constants.CommentPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -152,14 +153,15 @@ public class CommentAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, CommentPortletKeys.COMMENT, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/comment/edit_discussion");
-		portletURL.setParameter(
-			"commentId", String.valueOf(_workflowableComment.getCommentId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, CommentPortletKeys.COMMENT, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/comment/edit_discussion"
+		).setParameter(
+			"commentId", String.valueOf(_workflowableComment.getCommentId())
+		).build();
 
 		return portletURL;
 	}
@@ -173,13 +175,15 @@ public class CommentAssetRenderer
 		AssetRendererFactory<WorkflowableComment> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = assetRendererFactory.getURLView(
-			liferayPortletResponse, windowState);
-
-		portletURL.setParameter("mvcPath", "/view_comment.jsp");
-		portletURL.setParameter(
-			"commentId", String.valueOf(_workflowableComment.getCommentId()));
-		portletURL.setWindowState(windowState);
+		PortletURL portletURL = PortletURLBuilder.create(
+			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
+		).setMVCPath(
+			"/view_comment.jsp"
+		).setParameter(
+			"commentId", String.valueOf(_workflowableComment.getCommentId())
+		).setWindowState(
+			windowState
+		).build();
 
 		return portletURL.toString();
 	}

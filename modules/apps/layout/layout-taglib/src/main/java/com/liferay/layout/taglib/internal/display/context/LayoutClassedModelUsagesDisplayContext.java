@@ -36,6 +36,7 @@ import com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributor;
 import com.liferay.layout.util.LayoutClassedModelUsageActionMenuContributorRegistryUtil;
 import com.liferay.layout.util.comparator.LayoutClassedModelUsageModifiedDateComparator;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -318,19 +319,20 @@ public class LayoutClassedModelUsagesDisplayContext {
 				String.valueOf(AssetRendererFactory.TYPE_LATEST));
 		}
 		else {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				_renderRequest, layoutClassedModelUsage.getContainerKey(),
-				layoutClassedModelUsage.getPlid(), PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					_renderRequest, layoutClassedModelUsage.getContainerKey(),
+					layoutClassedModelUsage.getPlid(),
+					PortletRequest.RENDER_PHASE)
+			).setParameter(
 				"previewClassNameId",
-				String.valueOf(layoutClassedModelUsage.getClassNameId()));
-			portletURL.setParameter(
+				String.valueOf(layoutClassedModelUsage.getClassNameId())
+			).setParameter(
 				"previewClassPK",
-				String.valueOf(layoutClassedModelUsage.getClassPK()));
-			portletURL.setParameter(
-				"previewType",
-				String.valueOf(AssetRendererFactory.TYPE_LATEST));
+				String.valueOf(layoutClassedModelUsage.getClassPK())
+			).setParameter(
+				"previewType", String.valueOf(AssetRendererFactory.TYPE_LATEST)
+			).build();
 
 			layoutURL = portletURL.toString();
 		}

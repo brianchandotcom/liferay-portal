@@ -17,6 +17,7 @@ package com.liferay.announcements.web.internal.display.context;
 import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.kernel.util.AnnouncementsUtil;
 import com.liferay.announcements.web.internal.display.context.util.AnnouncementsRequestHelper;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -243,10 +244,13 @@ public class DefaultAnnouncementsDisplayContext
 		LiferayPortletResponse liferayPortletResponse =
 			_announcementsRequestHelper.getLiferayPortletResponse();
 
-		PortletURL tabs1URL = liferayPortletResponse.createRenderURL();
-
-		tabs1URL.setParameter("mvcRenderCommandName", "/announcements/view");
-		tabs1URL.setParameter("tabs1", _announcementsRequestHelper.getTabs1());
+		PortletURL tabs1URL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/announcements/view"
+		).setParameter(
+			"tabs1", _announcementsRequestHelper.getTabs1()
+		).build();
 
 		return tabs1URL.toString();
 	}

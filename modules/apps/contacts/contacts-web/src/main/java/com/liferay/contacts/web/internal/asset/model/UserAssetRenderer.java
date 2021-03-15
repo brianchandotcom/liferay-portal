@@ -16,6 +16,7 @@ package com.liferay.contacts.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.contacts.constants.ContactsWebKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -112,13 +113,14 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 		String portletId = PortletProviderUtil.getPortletId(
 			User.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), portletId,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("p_u_i_d", String.valueOf(_user.getUserId()));
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/users_admin/edit_user");
+		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+			liferayPortletResponse, getControlPanelPlid(liferayPortletRequest),
+			portletId, PortletRequest.RENDER_PHASE
+		).setParameter(
+			"p_u_i_d", String.valueOf(_user.getUserId())
+		).setMVCRenderCommandName(
+			"/users_admin/edit_user"
+		).build();
 
 		return portletURL;
 	}

@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.configuratio
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -61,13 +62,16 @@ public class ImportPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest,
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcPath", "/view_import.jsp");
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+			PortletURL portletURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest,
+					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/view_import.jsp"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 
 			StringBundler sb = new StringBundler(6);
 

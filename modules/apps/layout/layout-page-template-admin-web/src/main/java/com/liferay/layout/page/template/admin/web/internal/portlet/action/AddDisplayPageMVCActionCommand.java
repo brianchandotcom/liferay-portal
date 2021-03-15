@@ -19,6 +19,7 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -103,12 +104,14 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 		String layoutFullURL = _portal.getLayoutFullURL(
 			draftLayout, themeDisplay);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest,
-			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("tabs1", "display-page-templates");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest,
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"tabs1", "display-page-templates"
+		).build();
 
 		layoutFullURL = _http.setParameter(
 			layoutFullURL, "p_l_back_url", portletURL.toString());

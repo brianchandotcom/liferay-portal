@@ -16,6 +16,7 @@ package com.liferay.commerce.product.display.context;
 
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -275,10 +276,11 @@ public abstract class BaseCPDefinitionsSearchContainerDisplayContext<T>
 			active = true;
 		}
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), liferayPortletResponse);
-
-		portletURL.setParameter("status", String.valueOf(status));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(getPortletURL(), liferayPortletResponse)
+		).setParameter(
+			"status", String.valueOf(status)
+		).build();
 
 		return new ManagementBarFilterItem(
 			active, WorkflowConstants.getStatusLabel(status),

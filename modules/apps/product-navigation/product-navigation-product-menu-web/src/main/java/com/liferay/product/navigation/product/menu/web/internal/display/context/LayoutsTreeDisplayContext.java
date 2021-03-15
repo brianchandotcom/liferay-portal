@@ -20,6 +20,7 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -86,23 +87,23 @@ public class LayoutsTreeDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		PortletURL addLayoutURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		addLayoutURL.setParameter("mvcPath", "/select_layout_collections.jsp");
-
 		Layout layout = _themeDisplay.getLayout();
 
-		addLayoutURL.setParameter(
-			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-		addLayoutURL.setParameter(
-			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-
-		addLayoutURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getSiteGroupId()));
-		addLayoutURL.setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout()));
+		PortletURL addLayoutURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/select_layout_collections.jsp"
+		).setRedirect(
+			PortalUtil.getLayoutFullURL(layout, _themeDisplay)
+		).setParameter(
+			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay)
+		).setParameter(
+			"groupId", String.valueOf(_themeDisplay.getSiteGroupId())
+		).setParameter(
+			"privateLayout", String.valueOf(isPrivateLayout())
+		).build();
 
 		return addLayoutURL.toString();
 	}
@@ -114,70 +115,69 @@ public class LayoutsTreeDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		PortletURL addLayoutURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		addLayoutURL.setParameter(
-			"mvcPath", "/select_layout_page_template_entry.jsp");
-
 		Layout layout = _themeDisplay.getLayout();
 
-		addLayoutURL.setParameter(
-			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-		addLayoutURL.setParameter(
-			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-
-		addLayoutURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getSiteGroupId()));
-		addLayoutURL.setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout()));
+		PortletURL addLayoutURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/select_layout_page_template_entry.jsp"
+		).setRedirect(
+			PortalUtil.getLayoutFullURL(layout, _themeDisplay)
+		).setParameter(
+			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay)
+		).setParameter(
+			"groupId", String.valueOf(_themeDisplay.getSiteGroupId())
+		).setParameter(
+			"privateLayout", String.valueOf(isPrivateLayout())
+		).build();
 
 		return addLayoutURL.toString();
 	}
 
 	public String getAdministrationPortletURL() {
-		PortletURL administrationPortletURL =
+		PortletURL administrationPortletURL = PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE);
-
-		administrationPortletURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
+				PortletRequest.RENDER_PHASE)
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).build();
 
 		return administrationPortletURL.toString();
 	}
 
 	public String getConfigureLayoutSetURL() throws PortalException {
-		PortletURL configureLayoutSetURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		configureLayoutSetURL.setParameter(
-			"mvcRenderCommandName", "/layout_admin/edit_layout_set");
-
 		Layout layout = _themeDisplay.getLayout();
 
-		configureLayoutSetURL.setParameter(
-			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-		configureLayoutSetURL.setParameter(
-			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-
-		configureLayoutSetURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-		configureLayoutSetURL.setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout()));
+		PortletURL configureLayoutSetURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/layout_admin/edit_layout_set"
+		).setRedirect(
+			PortalUtil.getLayoutFullURL(layout, _themeDisplay)
+		).setParameter(
+			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay)
+		).setParameter(
+			"groupId", String.valueOf(_themeDisplay.getScopeGroupId())
+		).setParameter(
+			"privateLayout", String.valueOf(isPrivateLayout())
+		).build();
 
 		return configureLayoutSetURL.toString();
 	}
 
 	public String getConfigureLayoutURL() throws PortalException {
-		PortletURL configureLayoutURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		configureLayoutURL.setParameter(
-			"mvcRenderCommandName", "/layout_admin/edit_layout");
+		PortletURL configureLayoutURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/layout_admin/edit_layout"
+		).build();
 
 		Layout layout = _themeDisplay.getLayout();
 
@@ -295,14 +295,17 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	public String getProductMenuPortletURL() throws WindowStateException {
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_liferayPortletRequest,
-			ProductNavigationProductMenuPortletKeys.
-				PRODUCT_NAVIGATION_PRODUCT_MENU,
-			RenderRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/portlet/product_menu.jsp");
-		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_liferayPortletRequest,
+				ProductNavigationProductMenuPortletKeys.
+					PRODUCT_NAVIGATION_PRODUCT_MENU,
+				RenderRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/portlet/product_menu.jsp"
+		).setWindowState(
+			LiferayWindowState.EXCLUSIVE
+		).build();
 
 		return portletURL.toString();
 	}

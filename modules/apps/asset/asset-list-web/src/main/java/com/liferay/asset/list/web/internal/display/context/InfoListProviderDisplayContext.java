@@ -17,6 +17,7 @@ package com.liferay.asset.list.web.internal.display.context;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderTracker;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -127,9 +128,11 @@ public class InfoListProviderDisplayContext {
 				_log.debug(portletException, portletException);
 			}
 
-			PortletURL portletURL = _renderResponse.createRenderURL();
-
-			portletURL.setParameters(currentURLObj.getParameterMap());
+			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setParameters(
+				currentURLObj.getParameterMap()
+			).build();
 
 			return portletURL;
 		}

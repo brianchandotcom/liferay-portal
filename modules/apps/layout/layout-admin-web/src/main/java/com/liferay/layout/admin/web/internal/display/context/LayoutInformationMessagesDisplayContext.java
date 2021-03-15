@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.product.navigation.control.menu.InformationMessagesProductNavigationControlMenuEntry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -31,7 +32,6 @@ import com.liferay.sites.kernel.util.SitesUtil;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -93,16 +93,17 @@ public class LayoutInformationMessagesDisplayContext {
 		).put(
 			"resetPrototypeURL",
 			() -> {
-				PortletURL resetPrototypeURL = PortletURLFactoryUtil.create(
-					_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-					PortletRequest.ACTION_PHASE);
-
-				resetPrototypeURL.setParameter(
-					ActionRequest.ACTION_NAME, "/layout_admin/reset_prototype");
-				resetPrototypeURL.setParameter(
-					"redirect", PortalUtil.getLayoutURL(themeDisplay));
-				resetPrototypeURL.setParameter(
-					"groupId", String.valueOf(themeDisplay.getSiteGroupId()));
+				PortletURL resetPrototypeURL = PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/layout_admin/reset_prototype"
+				).setRedirect(
+					PortalUtil.getLayoutURL(themeDisplay)
+				).setParameter(
+					"groupId", String.valueOf(themeDisplay.getSiteGroupId())
+				).build();
 
 				return resetPrototypeURL.toString();
 			}

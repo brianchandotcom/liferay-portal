@@ -26,6 +26,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -40,7 +41,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -150,16 +150,17 @@ public class CommerceOrderResource {
 			long commerceOrderId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL editURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceOrder.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		editURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_open_order_content/edit_commerce_order");
-		editURL.setParameter(Constants.CMD, "setCurrent");
-		editURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
+		PortletURL editURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceOrder.class.getName(),
+				PortletProvider.Action.EDIT)
+		).setActionName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setParameter(
+			Constants.CMD, "setCurrent"
+		).setParameter(
+			"commerceOrderId", String.valueOf(commerceOrderId)
+		).build();
 
 		String redirect = _portal.getCurrentURL(httpServletRequest);
 

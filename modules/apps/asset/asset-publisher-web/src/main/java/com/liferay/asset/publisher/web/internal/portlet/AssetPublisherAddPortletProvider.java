@@ -20,6 +20,7 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -62,9 +63,11 @@ public class AssetPublisherAddPortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL assetPublisherURL = super.getPortletURL(httpServletRequest);
-
-		assetPublisherURL.setParameter("mvcPath", "/view_content.jsp");
+		PortletURL assetPublisherURL = PortletURLBuilder.create(
+			super.getPortletURL(httpServletRequest)
+		).setMVCPath(
+			"/view_content.jsp"
+		).build();
 
 		return assetPublisherURL;
 	}

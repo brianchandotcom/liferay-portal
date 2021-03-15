@@ -25,6 +25,7 @@ import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.util.ContactsUtil;
 import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -1009,15 +1010,19 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		LiferayPortletResponse liferayPortletResponse =
 			portal.getLiferayPortletResponse(portletResponse);
 
-		PortletURL viewSummaryURL = liferayPortletResponse.createRenderURL();
-
-		viewSummaryURL.setParameter(
-			"mvcPath", "/contacts_center/view_resources.jsp");
-		viewSummaryURL.setParameter("redirect", redirect);
-		viewSummaryURL.setParameter(
-			"entryId", String.valueOf(entry.getEntryId()));
-		viewSummaryURL.setParameter("portalUser", Boolean.FALSE.toString());
-		viewSummaryURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+		PortletURL viewSummaryURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/contacts_center/view_resources.jsp"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"entryId", String.valueOf(entry.getEntryId())
+		).setParameter(
+			"portalUser", Boolean.FALSE.toString()
+		).setWindowState(
+			LiferayWindowState.EXCLUSIVE
+		).build();
 
 		jsonObject.put("viewSummaryURL", viewSummaryURL.toString());
 
@@ -1104,13 +1109,17 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		LiferayPortletResponse liferayPortletResponse =
 			portal.getLiferayPortletResponse(portletResponse);
 
-		PortletURL viewSummaryURL = liferayPortletResponse.createRenderURL();
-
-		viewSummaryURL.setParameter(
-			"mvcPath", "/contacts_center/view_resources.jsp");
-		viewSummaryURL.setParameter("userId", String.valueOf(user.getUserId()));
-		viewSummaryURL.setParameter("portalUser", Boolean.TRUE.toString());
-		viewSummaryURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+		PortletURL viewSummaryURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/contacts_center/view_resources.jsp"
+		).setParameter(
+			"userId", String.valueOf(user.getUserId())
+		).setParameter(
+			"portalUser", Boolean.TRUE.toString()
+		).setWindowState(
+			LiferayWindowState.EXCLUSIVE
+		).build();
 
 		jsonObject.put("viewSummaryURL", viewSummaryURL.toString());
 

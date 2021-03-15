@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -34,7 +35,6 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper;
 import com.liferay.wiki.web.internal.portlet.action.ActionUtil;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -86,12 +86,13 @@ public class PageSubscriptionPortletConfigurationIcon
 		try {
 			WikiPage page = ActionUtil.getPage(portletRequest);
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.ACTION_PHASE);
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/wiki/edit_page");
+			PortletURL portletURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, WikiPortletKeys.WIKI_ADMIN,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"/wiki/edit_page"
+			).build();
 
 			if (isSubscribed(portletRequest, page)) {
 				portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);

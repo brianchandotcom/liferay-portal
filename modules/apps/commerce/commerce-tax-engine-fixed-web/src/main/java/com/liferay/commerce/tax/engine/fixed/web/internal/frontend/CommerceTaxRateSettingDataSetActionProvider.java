@@ -23,6 +23,7 @@ import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -104,22 +104,23 @@ public class CommerceTaxRateSettingDataSetActionProvider
 	private String _getTaxRateSettingDeleteURL(
 		HttpServletRequest httpServletRequest, long taxRateSettingId) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CommercePortletKeys.COMMERCE_TAX_METHODS,
-			PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_tax_methods/edit_commerce_tax_fixed_rate_address_rel");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"commerceTaxFixedRateAddressRelId",
-			String.valueOf(taxRateSettingId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_TAX_METHODS,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/commerce_tax_methods/edit_commerce_tax_fixed_rate_address_rel"
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).setRedirect(
+			redirect
+		).setParameter(
+			"commerceTaxFixedRateAddressRelId", String.valueOf(taxRateSettingId)
+		).build();
 
 		return portletURL.toString();
 	}
@@ -128,13 +129,13 @@ public class CommerceTaxRateSettingDataSetActionProvider
 			HttpServletRequest httpServletRequest, long taxRateSettingId)
 		throws Exception {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceTaxMethod.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_tax_methods/edit_commerce_tax_fixed_rate_address_rel");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceTaxMethod.class.getName(),
+				PortletProvider.Action.EDIT)
+		).setMVCRenderCommandName(
+			"/commerce_tax_methods/edit_commerce_tax_fixed_rate_address_rel"
+		).build();
 
 		long commerceTaxMethodId = ParamUtil.getLong(
 			httpServletRequest, "commerceTaxMethodId");

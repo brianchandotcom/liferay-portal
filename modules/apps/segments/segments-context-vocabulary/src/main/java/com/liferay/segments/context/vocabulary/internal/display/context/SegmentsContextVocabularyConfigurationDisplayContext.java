@@ -15,6 +15,7 @@
 package com.liferay.segments.context.vocabulary.internal.display.context;
 
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
@@ -191,13 +192,14 @@ public class SegmentsContextVocabularyConfigurationDisplayContext {
 	}
 
 	public PortletURL getRedirect() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/view_configuration_screen");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/view_configuration_screen"
+		).setParameter(
 			"configurationScreenKey",
-			"segments-context-vocabulary-configuration-name");
+			"segments-context-vocabulary-configuration-name"
+		).build();
 
 		return portletURL;
 	}

@@ -22,6 +22,7 @@ import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -62,13 +63,15 @@ public class CommerceOrderListDisplayContext {
 		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
 			new ArrayList<>();
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_commerceOrderRequestHelper.getRequest(),
-			CommerceOrder.class.getName(), PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/commerce_order/edit_commerce_order");
-		portletURL.setParameter("commerceOrderId", "{id}");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_commerceOrderRequestHelper.getRequest(),
+				CommerceOrder.class.getName(), PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_order/edit_commerce_order"
+		).setParameter(
+			"commerceOrderId", "{id}"
+		).build();
 
 		clayDataSetActionDropdownItems.add(
 			new ClayDataSetActionDropdownItem(

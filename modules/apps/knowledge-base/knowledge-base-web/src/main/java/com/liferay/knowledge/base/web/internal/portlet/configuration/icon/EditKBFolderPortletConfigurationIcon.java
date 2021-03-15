@@ -18,6 +18,7 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -61,19 +62,20 @@ public class EditKBFolderPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/admin/common/edit_folder.jsp");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(portletRequest));
-
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
-		portletURL.setParameter(
-			"kbFolderId", String.valueOf(kbFolder.getKbFolderId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/admin/common/edit_folder.jsp"
+		).setRedirect(
+			_portal.getCurrentURL(portletRequest)
+		).setParameter(
+			"kbFolderId", String.valueOf(kbFolder.getKbFolderId())
+		).build();
 
 		return portletURL.toString();
 	}

@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -89,10 +90,12 @@ public class AMManagementToolbarDisplayContext {
 				entriesNavigation.equals("enabled") ||
 				entriesNavigation.equals("disabled"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					_currentURLObj, _liferayPortletResponse);
-
-				removeLabelURL.setParameter("entriesNavigation", (String)null);
+				PortletURL removeLabelURL = PortletURLBuilder.create(
+					PortletURLUtil.clone(
+						_currentURLObj, _liferayPortletResponse)
+				).setParameter(
+					"entriesNavigation", (String)null
+				).build();
 
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
@@ -104,9 +107,11 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("entriesNavigation", (String)null);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setParameter(
+			"entriesNavigation", (String)null
+		).build();
 
 		return portletURL;
 	}

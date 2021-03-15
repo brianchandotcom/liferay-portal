@@ -23,6 +23,7 @@ import com.liferay.commerce.pricing.web.internal.model.PriceModifier;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -103,25 +103,28 @@ public class CommercePriceModifierDataSetActionProvider
 		CommercePriceModifier commercePriceModifier,
 		HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CommercePricingPortletKeys.COMMERCE_PRICE_LIST,
-			PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_price_list/edit_commerce_price_modifier");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest,
+				CommercePricingPortletKeys.COMMERCE_PRICE_LIST,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/commerce_price_list/edit_commerce_price_modifier"
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).setRedirect(
+			redirect
+		).setParameter(
 			"commercePriceModifierId",
-			String.valueOf(commercePriceModifier.getCommercePriceModifierId()));
-		portletURL.setParameter(
+			String.valueOf(commercePriceModifier.getCommercePriceModifierId())
+		).setParameter(
 			"commercePriceListId",
-			String.valueOf(commercePriceModifier.getCommercePriceListId()));
+			String.valueOf(commercePriceModifier.getCommercePriceListId())
+		).build();
 
 		return portletURL;
 	}
@@ -131,21 +134,21 @@ public class CommercePriceModifierDataSetActionProvider
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommercePriceList.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_price_list/edit_commerce_price_modifier");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommercePriceList.class.getName(),
+				PortletProvider.Action.EDIT)
+		).setMVCRenderCommandName(
+			"/commerce_price_list/edit_commerce_price_modifier"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
 			"commercePriceModifierId",
-			String.valueOf(commercePriceModifier.getCommercePriceModifierId()));
-		portletURL.setParameter(
+			String.valueOf(commercePriceModifier.getCommercePriceModifierId())
+		).setParameter(
 			"commercePriceListId",
-			String.valueOf(commercePriceModifier.getCommercePriceListId()));
+			String.valueOf(commercePriceModifier.getCommercePriceListId())
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

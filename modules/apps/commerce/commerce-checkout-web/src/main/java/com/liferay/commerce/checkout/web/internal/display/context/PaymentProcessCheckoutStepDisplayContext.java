@@ -21,6 +21,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.petra.encryptor.Encryptor;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -93,17 +94,17 @@ public class PaymentProcessCheckoutStepDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceCheckoutRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"commerceOrderUuid", String.valueOf(_commerceOrder.getUuid()));
-
 		CommerceCheckoutStep commerceCheckoutStep =
 			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(
 				OrderConfirmationCommerceCheckoutStep.NAME);
 
-		portletURL.setParameter(
-			"checkoutStepName", commerceCheckoutStep.getName());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"commerceOrderUuid", String.valueOf(_commerceOrder.getUuid())
+		).setParameter(
+			"checkoutStepName", commerceCheckoutStep.getName()
+		).build();
 
 		return portletURL.toString();
 	}

@@ -20,6 +20,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.item.selector.web.internal.search.CommerceInventoryWarehouseChecker;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -92,9 +93,11 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter("countryId", String.valueOf(getCountryId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setParameter(
+			"countryId", String.valueOf(getCountryId())
+		).build();
 
 		return portletURL;
 	}
@@ -214,10 +217,12 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 			active = true;
 		}
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), cpRequestHelper.getRenderResponse());
-
-		portletURL.setParameter("countryId", String.valueOf(countryId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(
+				getPortletURL(), cpRequestHelper.getRenderResponse())
+		).setParameter(
+			"countryId", String.valueOf(countryId)
+		).build();
 
 		return new ManagementBarFilterItem(
 			active, String.valueOf(countryId), label, portletURL.toString());

@@ -31,6 +31,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuild
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -199,13 +200,13 @@ public class CommerceAccountUserClayDataSetDataSetDisplayView
 			long userId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL viewURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.VIEW);
-
-		viewURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_account/view_commerce_account_user");
+		PortletURL viewURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceAccount.class.getName(),
+				PortletProvider.Action.VIEW)
+		).setMVCRenderCommandName(
+			"/commerce_account/view_commerce_account_user"
+		).build();
 
 		long commerceAccountId = ParamUtil.getLong(
 			httpServletRequest, "commerceAccountId");

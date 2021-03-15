@@ -38,6 +38,7 @@ import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScre
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -241,16 +242,17 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, themeDisplay.getScopeGroup(),
-			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/cp_definitions/edit_cp_definition");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
-		portletURL.setParameter(
-			"screenNavigationCategoryKey", screenNavigationCategoryKey);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				actionRequest, themeDisplay.getScopeGroup(),
+				CPDefinition.class.getName(), PortletProvider.Action.EDIT)
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_definition"
+		).setParameter(
+			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId())
+		).setParameter(
+			"screenNavigationCategoryKey", screenNavigationCategoryKey
+		).build();
 
 		return portletURL.toString();
 	}

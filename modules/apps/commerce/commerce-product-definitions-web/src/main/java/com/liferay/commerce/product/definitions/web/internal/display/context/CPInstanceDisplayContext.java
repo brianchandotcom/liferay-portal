@@ -34,6 +34,7 @@ import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScre
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -312,16 +313,17 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 	}
 
 	private String _getEditCPInstancePortletURL() throws Exception {
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CPDefinition.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/cp_definitions/edit_cp_instance");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CPDefinition.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_instance"
+		).setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId())
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		return portletURL.toString();
 	}

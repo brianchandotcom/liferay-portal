@@ -19,6 +19,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -176,11 +177,15 @@ public class MasterLayoutDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_master_layouts.jsp");
-		portletURL.setParameter("tabs1", "master-layouts");
-		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view_master_layouts.jsp"
+		).setParameter(
+			"tabs1", "master-layouts"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).build();
 
 		String keywords = getKeywords();
 

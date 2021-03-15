@@ -37,6 +37,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuild
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -279,12 +280,13 @@ public class CommerceAccountClayDataSetDataSetDisplayView
 			return StringPool.BLANK;
 		}
 
-		PortletURL viewURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.VIEW);
-
-		viewURL.setParameter(
-			"commerceAccountId", String.valueOf(commerceAccountId));
+		PortletURL viewURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceAccount.class.getName(),
+				PortletProvider.Action.VIEW)
+		).setParameter(
+			"commerceAccountId", String.valueOf(commerceAccountId)
+		).build();
 
 		PortletURL backURL = PortletProviderUtil.getPortletURL(
 			httpServletRequest, CommerceAccount.class.getName(),

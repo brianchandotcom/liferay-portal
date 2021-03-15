@@ -14,6 +14,7 @@
 
 package com.liferay.trash.web.internal.portlet;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -80,10 +81,12 @@ public class TrashViewPortletProvider
 			return null;
 		}
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, portletId, PortletRequest.RENDER_PHASE)
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).build();
 
 		return portletURL;
 	}

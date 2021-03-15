@@ -15,6 +15,7 @@
 package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CookieNotSupportedException;
@@ -106,10 +107,11 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				LiferayPortletResponse liferayPortletResponse =
 					_portal.getLiferayPortletResponse(actionResponse);
 
-				PortletURL renderURL = liferayPortletResponse.createRenderURL();
-
-				renderURL.setParameter(
-					"mvcRenderCommandName", "/login/login_redirect");
+				PortletURL renderURL = PortletURLBuilder.createRenderURL(
+					liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/login/login_redirect"
+				).build();
 
 				actionRequest.setAttribute(
 					WebKeys.REDIRECT, renderURL.toString());
@@ -281,11 +283,13 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, liferayPortletRequest.getPortlet(), layout,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest, liferayPortletRequest.getPortlet(), layout,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"saveLastPath", Boolean.FALSE.toString()
+		).build();
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

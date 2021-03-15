@@ -14,6 +14,7 @@
 
 package com.liferay.trash.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +27,6 @@ import com.liferay.trash.constants.TrashPortletKeys;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.web.internal.display.context.TrashDisplayContext;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -63,18 +63,18 @@ public class RestoreRootTrashPortletConfigurationIcon
 				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse));
 
-			PortletURL restoreURL = _portal.getControlPanelPortletURL(
-				portletRequest, TrashPortletKeys.TRASH,
-				PortletRequest.ACTION_PHASE);
-
-			restoreURL.setParameter(
-				ActionRequest.ACTION_NAME, "restoreEntries");
-
-			restoreURL.setParameter(
-				"redirect", trashDisplayContext.getViewContentRedirectURL());
-			restoreURL.setParameter(
+			PortletURL restoreURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, TrashPortletKeys.TRASH,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"restoreEntries"
+			).setRedirect(
+				trashDisplayContext.getViewContentRedirectURL()
+			).setParameter(
 				"trashEntryId",
-				String.valueOf(trashDisplayContext.getTrashEntryId()));
+				String.valueOf(trashDisplayContext.getTrashEntryId())
+			).build();
 
 			return restoreURL.toString();
 		}

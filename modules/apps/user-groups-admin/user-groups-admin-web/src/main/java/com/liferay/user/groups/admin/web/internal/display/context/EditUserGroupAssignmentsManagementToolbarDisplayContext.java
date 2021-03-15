@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -132,9 +133,11 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -194,17 +197,19 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", _mvcPath);
-		portletURL.setParameter(
-			"userGroupId", String.valueOf(_userGroup.getUserGroupId()));
-
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
-		portletURL.setParameter("redirect", redirect);
-
-		portletURL.setParameter("displayStyle", _displayStyle);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			_mvcPath
+		).setParameter(
+			"userGroupId", String.valueOf(_userGroup.getUserGroupId())
+		).setRedirect(
+			redirect
+		).setParameter(
+			"displayStyle", _displayStyle
+		).build();
 
 		if (Validator.isNotNull(getKeywords())) {
 			portletURL.setParameter("keywords", getKeywords());
@@ -226,10 +231,11 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		searchActionURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
+		PortletURL searchActionURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setRedirect(
+			PortalUtil.getCurrentURL(_httpServletRequest)
+		).build();
 
 		return searchActionURL.toString();
 	}
@@ -278,11 +284,12 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
+		PortletURL sortingURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
+		).build();
 
 		return sortingURL.toString();
 	}

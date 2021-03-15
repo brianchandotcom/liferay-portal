@@ -16,6 +16,7 @@ package com.liferay.layout.portlets.web.internal.display.context;
 
 import com.liferay.layout.portlets.web.internal.constants.LayoutsPortletsPortletKeys;
 import com.liferay.layout.portlets.web.internal.search.PortletSearch;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -113,9 +114,11 @@ public class LayoutPortletsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("displayStyle", getDisplayStyle());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setParameter(
+			"displayStyle", getDisplayStyle()
+		).build();
 
 		return portletURL;
 	}

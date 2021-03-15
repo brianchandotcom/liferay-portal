@@ -20,6 +20,7 @@ import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogle
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveConstants;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
@@ -114,25 +115,25 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(resourceResponse);
 
-			PortletURL portletURL = liferayPortletResponse.createRenderURL(
-				_portal.getPortletId(resourceRequest));
-
-			portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/open_google_docs");
-			portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
-
 			String googleDocsEditURL = _getGoogleDocsEditURL(
 				dlOpenerFileEntryReference.getReferenceKey(),
 				DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
 					fileEntry.getMimeType()));
 
-			portletURL.setParameter("googleDocsEditURL", googleDocsEditURL);
-
-			portletURL.setParameter(
+			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+				liferayPortletResponse, _portal.getPortletId(resourceRequest)
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).setMVCRenderCommandName(
+				"/document_library/open_google_docs"
+			).setParameter(
+				"fileEntryId", String.valueOf(fileEntryId)
+			).setParameter(
+				"googleDocsEditURL", googleDocsEditURL
+			).setParameter(
 				"googleDocsRedirect",
-				ParamUtil.getString(resourceRequest, "googleDocsRedirect"));
+				ParamUtil.getString(resourceRequest, "googleDocsRedirect")
+			).build();
 
 			jsonObject.put("googleDocsEditURL", portletURL.toString());
 		}

@@ -15,6 +15,7 @@
 package com.liferay.staging.processes.web.internal.portlet.configuration.icon;
 
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -64,19 +65,20 @@ public class StagingConfigurationPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		portletURL.setParameter(
-			"showStagingConfiguration", Boolean.TRUE.toString());
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view.jsp"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"showStagingConfiguration", Boolean.TRUE.toString()
+		).build();
 
 		return portletURL.toString();
 	}

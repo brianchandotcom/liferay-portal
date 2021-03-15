@@ -16,6 +16,7 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -99,14 +100,15 @@ public class OrganizationScreenNavigationEntry
 		String backURL = ParamUtil.getString(httpServletRequest, "backURL");
 
 		if (Validator.isNull(backURL)) {
-			PortletURL viewOrganizationsURL = PortletURLFactoryUtil.create(
-				httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			viewOrganizationsURL.setParameter(
-				"toolbarItem", "view-all-organizations");
-			viewOrganizationsURL.setParameter(
-				"usersListView", UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
+			PortletURL viewOrganizationsURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"toolbarItem", "view-all-organizations"
+			).setParameter(
+				"usersListView", UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS
+			).build();
 
 			backURL = viewOrganizationsURL.toString();
 		}
@@ -116,16 +118,18 @@ public class OrganizationScreenNavigationEntry
 		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		if (Validator.isNull(redirect)) {
-			PortletURL editOrganizationURL = PortletURLFactoryUtil.create(
-				httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			editOrganizationURL.setParameter(
-				"mvcRenderCommandName", "/users_admin/edit_organization");
-			editOrganizationURL.setParameter("backURL", backURL);
-			editOrganizationURL.setParameter(
+			PortletURL editOrganizationURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/users_admin/edit_organization"
+			).setParameter(
+				"backURL", backURL
+			).setParameter(
 				"organizationId",
-				ParamUtil.getString(httpServletRequest, "organizationId"));
+				ParamUtil.getString(httpServletRequest, "organizationId")
+			).build();
 
 			redirect = editOrganizationURL.toString();
 		}

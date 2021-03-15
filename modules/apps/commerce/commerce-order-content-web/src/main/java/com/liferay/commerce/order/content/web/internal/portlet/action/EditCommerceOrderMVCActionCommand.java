@@ -29,6 +29,7 @@ import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -123,12 +124,12 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, long commerceOrderId)
 		throws Exception {
 
-		PortletURL portletURL =
+		PortletURL portletURL = PortletURLBuilder.create(
 			_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
-				_portal.getHttpServletRequest(actionRequest));
-
-		portletURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
+				_portal.getHttpServletRequest(actionRequest))
+		).setParameter(
+			"commerceOrderId", String.valueOf(commerceOrderId)
+		).build();
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
@@ -230,23 +231,21 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 				setCurrentCommerceOrder(actionRequest, commerceOrderId);
 
-				PortletURL openOrdersPortletURL =
-					PortletProviderUtil.getPortletURL(
-						actionRequest, CommerceOrder.class.getName(),
-						PortletProvider.Action.EDIT);
-
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 
-				openOrdersPortletURL.setParameter(
+				PortletURL openOrdersPortletURL = PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						actionRequest, CommerceOrder.class.getName(),
+						PortletProvider.Action.EDIT)
+				).setParameter(
 					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-					redirect);
-
-				openOrdersPortletURL.setParameter(
-					"mvcRenderCommandName",
-					"/commerce_open_order_content/edit_commerce_order");
-				openOrdersPortletURL.setParameter(
-					"commerceOrderId", String.valueOf(commerceOrderId));
+					redirect
+				).setMVCRenderCommandName(
+					"/commerce_open_order_content/edit_commerce_order"
+				).setParameter(
+					"commerceOrderId", String.valueOf(commerceOrderId)
+				).build();
 
 				hideDefaultSuccessMessage(actionRequest);
 

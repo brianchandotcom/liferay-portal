@@ -22,6 +22,7 @@ import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -142,15 +143,15 @@ public class CPDefinitionAssetRenderer
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			_cpDefinition.getGroupId());
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, CPPortletKeys.CP_DEFINITIONS, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/cp_definitions/edit_cp_definition");
-		portletURL.setParameter(
-			"cpDefinitionId",
-			String.valueOf(_cpDefinition.getCPDefinitionId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, CPPortletKeys.CP_DEFINITIONS, 0,
+				0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_definition"
+		).setParameter(
+			"cpDefinitionId", String.valueOf(_cpDefinition.getCPDefinitionId())
+		).build();
 
 		return portletURL;
 	}
@@ -164,14 +165,15 @@ public class CPDefinitionAssetRenderer
 		AssetRendererFactory<CPDefinition> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = assetRendererFactory.getURLView(
-			liferayPortletResponse, windowState);
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter(
-			"cpDefinitionId",
-			String.valueOf(_cpDefinition.getCPDefinitionId()));
-		portletURL.setWindowState(windowState);
+		PortletURL portletURL = PortletURLBuilder.create(
+			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"cpDefinitionId", String.valueOf(_cpDefinition.getCPDefinitionId())
+		).setWindowState(
+			windowState
+		).build();
 
 		return portletURL.toString();
 	}

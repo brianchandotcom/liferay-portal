@@ -15,6 +15,7 @@
 package com.liferay.marketplace.store.web.internal.portlet;
 
 import com.liferay.marketplace.store.web.internal.oauth.util.OAuthManager;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -111,9 +112,11 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(actionResponse);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/view.jsp"
+		).build();
 
 		actionResponse.sendRedirect(portletURL.toString());
 	}

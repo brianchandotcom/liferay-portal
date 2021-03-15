@@ -23,6 +23,7 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -89,12 +90,13 @@ public class CommerceProductInstanceItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"commerceCatalogGroupId", String.valueOf(getGroupId()));
-		portletURL.setParameter(
-			"commercePriceListId", String.valueOf(getCommercePriceListId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setParameter(
+			"commerceCatalogGroupId", String.valueOf(getGroupId())
+		).setParameter(
+			"commercePriceListId", String.valueOf(getCommercePriceListId())
+		).build();
 
 		return portletURL;
 	}

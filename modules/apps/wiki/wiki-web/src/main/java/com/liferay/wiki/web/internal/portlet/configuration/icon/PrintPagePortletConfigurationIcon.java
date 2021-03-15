@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -67,15 +68,21 @@ public class PrintPagePortletConfigurationIcon
 
 			sb.append("window.open('");
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-			portletURL.setParameter("nodeName", node.getName());
-			portletURL.setParameter("title", page.getTitle());
-			portletURL.setParameter("viewMode", Constants.PRINT);
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+			PortletURL portletURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, WikiPortletKeys.WIKI_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/wiki/view"
+			).setParameter(
+				"nodeName", node.getName()
+			).setParameter(
+				"title", page.getTitle()
+			).setParameter(
+				"viewMode", Constants.PRINT
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 
 			sb.append(portletURL.toString());
 

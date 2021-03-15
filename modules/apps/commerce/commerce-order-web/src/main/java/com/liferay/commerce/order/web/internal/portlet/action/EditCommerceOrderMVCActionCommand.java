@@ -31,6 +31,7 @@ import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -321,19 +322,19 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		PortletURL shipmentPortletURL = _portal.getControlPanelPortletURL(
-			actionRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
-			PortletRequest.RENDER_PHASE);
-
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		shipmentPortletURL.setParameter("redirect", redirect);
-
-		shipmentPortletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_shipment/edit_commerce_shipment");
-		shipmentPortletURL.setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipmentId));
+		PortletURL shipmentPortletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				actionRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+				PortletRequest.RENDER_PHASE)
+		).setRedirect(
+			redirect
+		).setMVCRenderCommandName(
+			"/commerce_shipment/edit_commerce_shipment"
+		).setParameter(
+			"commerceShipmentId", String.valueOf(commerceShipmentId)
+		).build();
 
 		sendRedirect(
 			actionRequest, actionResponse, shipmentPortletURL.toString());

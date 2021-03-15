@@ -17,6 +17,7 @@ package com.liferay.style.book.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -41,7 +42,6 @@ import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -109,9 +109,11 @@ public class EditStyleBookEntryDisplayContext {
 	}
 
 	private String _getActionURL(String actionName) {
-		PortletURL actionURL = _renderResponse.createActionURL();
-
-		actionURL.setParameter(ActionRequest.ACTION_NAME, actionName);
+		PortletURL actionURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			actionName
+		).build();
 
 		return actionURL.toString();
 	}
@@ -170,9 +172,11 @@ public class EditStyleBookEntryDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/style_book/view");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/style_book/view"
+		).build();
 
 		return portletURL.toString();
 	}

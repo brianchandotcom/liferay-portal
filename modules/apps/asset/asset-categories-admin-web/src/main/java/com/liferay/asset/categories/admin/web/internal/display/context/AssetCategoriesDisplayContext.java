@@ -36,6 +36,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -107,9 +108,11 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public String getAddCategoryRedirect() throws PortalException {
-		PortletURL addCategoryURL = _renderResponse.createRenderURL();
-
-		addCategoryURL.setParameter("mvcPath", "/edit_category.jsp");
+		PortletURL addCategoryURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/edit_category.jsp"
+		).build();
 
 		long parentCategoryId = BeanParamUtil.getLong(
 			getCategory(), _httpServletRequest, "parentCategoryId");
@@ -392,9 +395,11 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public String getDefaultRedirect() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).build();
 
 		return portletURL.toString();
 	}
@@ -416,12 +421,14 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public String getEditCategoryRedirect() throws PortalException {
-		PortletURL backURL = _renderResponse.createRenderURL();
-
 		long parentCategoryId = BeanParamUtil.getLong(
 			getCategory(), _httpServletRequest, "parentCategoryId");
 
-		backURL.setParameter("mvcPath", "/view.jsp");
+		PortletURL backURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).build();
 
 		if (parentCategoryId > 0) {
 			backURL.setParameter(
@@ -437,9 +444,11 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public PortletURL getEditVocabularyURL() {
-		PortletURL editVocabularyURL = _renderResponse.createRenderURL();
-
-		editVocabularyURL.setParameter("mvcPath", "/edit_vocabulary.jsp");
+		PortletURL editVocabularyURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/edit_vocabulary.jsp"
+		).build();
 
 		return editVocabularyURL;
 	}
@@ -535,21 +544,25 @@ public class AssetCategoriesDisplayContext {
 				_themeDisplay.getScopeGroupId(),
 				vocabulary.getVisibilityType());
 
-		PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(
-			_httpServletRequest, AssetCategory.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		selectCategoryURL.setParameter(
-			"allowedSelectVocabularies", Boolean.TRUE.toString());
-		selectCategoryURL.setParameter(
-			"eventName", _renderResponse.getNamespace() + "selectCategory");
-		selectCategoryURL.setParameter("moveCategory", Boolean.TRUE.toString());
-		selectCategoryURL.setParameter("singleSelect", Boolean.TRUE.toString());
-		selectCategoryURL.setParameter(
+		PortletURL selectCategoryURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_httpServletRequest, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setParameter(
+			"allowedSelectVocabularies", Boolean.TRUE.toString()
+		).setParameter(
+			"eventName", _renderResponse.getNamespace() + "selectCategory"
+		).setParameter(
+			"moveCategory", Boolean.TRUE.toString()
+		).setParameter(
+			"singleSelect", Boolean.TRUE.toString()
+		).setParameter(
 			"vocabularyIds",
 			ListUtil.toString(
-				vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR));
-		selectCategoryURL.setWindowState(LiferayWindowState.POP_UP);
+				vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR)
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		_selectCategoryURL = selectCategoryURL.toString();
 
@@ -819,11 +832,15 @@ public class AssetCategoriesDisplayContext {
 		PortletURL currentURL = PortletURLUtil.getCurrent(
 			_renderRequest, _renderResponse);
 
-		PortletURL iteratorURL = _renderResponse.createRenderURL();
-
-		iteratorURL.setParameter("mvcPath", "/view.jsp");
-		iteratorURL.setParameter("redirect", currentURL.toString());
-		iteratorURL.setParameter("navigation", getNavigation());
+		PortletURL iteratorURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).setRedirect(
+			currentURL.toString()
+		).setParameter(
+			"navigation", getNavigation()
+		).build();
 
 		if (!isFlattenedNavigationAllowed()) {
 			iteratorURL.setParameter(

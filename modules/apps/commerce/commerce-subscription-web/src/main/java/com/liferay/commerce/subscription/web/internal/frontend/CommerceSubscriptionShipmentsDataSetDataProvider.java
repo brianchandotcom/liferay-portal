@@ -33,6 +33,7 @@ import com.liferay.commerce.subscription.web.internal.model.Shipment;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -163,17 +164,17 @@ public class CommerceSubscriptionShipmentsDataSetDataProvider
 			long commerceOrderId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceOrder.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_open_order_content/edit_commerce_order");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
-		portletURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceOrder.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
+			"commerceOrderId", String.valueOf(commerceOrderId)
+		).build();
 
 		return portletURL.toString();
 	}
@@ -182,17 +183,17 @@ public class CommerceSubscriptionShipmentsDataSetDataProvider
 			long commerceShipmentId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceShipment.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_shipment/edit_commerce_shipment");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
-		portletURL.setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipmentId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceShipment.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_shipment/edit_commerce_shipment"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
+			"commerceShipmentId", String.valueOf(commerceShipmentId)
+		).build();
 
 		return portletURL.toString();
 	}

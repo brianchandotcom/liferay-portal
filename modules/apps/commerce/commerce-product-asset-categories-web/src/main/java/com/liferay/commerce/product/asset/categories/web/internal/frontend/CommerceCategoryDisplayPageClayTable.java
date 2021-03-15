@@ -33,6 +33,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuild
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,7 +52,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -191,21 +191,23 @@ public class CommerceCategoryDisplayPageClayTable
 	private String _getCategoryDisplayPageDeleteURL(
 		HttpServletRequest httpServletRequest, long categoryDisplayPageId) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
-			PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_channels/edit_asset_category_cp_display_layout");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"cpDisplayLayoutId", String.valueOf(categoryDisplayPageId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/commerce_channels/edit_asset_category_cp_display_layout"
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).setRedirect(
+			redirect
+		).setParameter(
+			"cpDisplayLayoutId", String.valueOf(categoryDisplayPageId)
+		).build();
 
 		return portletURL.toString();
 	}
@@ -214,13 +216,13 @@ public class CommerceCategoryDisplayPageClayTable
 			HttpServletRequest httpServletRequest, long categoryDisplayPageId)
 		throws Exception {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceChannel.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_channels/edit_asset_category_cp_display_layout");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceChannel.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_channels/edit_asset_category_cp_display_layout"
+		).build();
 
 		long commerceChannelId = ParamUtil.getLong(
 			httpServletRequest, "commerceChannelId");

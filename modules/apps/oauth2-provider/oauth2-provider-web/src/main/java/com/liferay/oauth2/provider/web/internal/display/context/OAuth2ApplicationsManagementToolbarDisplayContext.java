@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 /**
@@ -76,11 +76,11 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 			"deleteOAuth2ApplicationsURL",
 			() -> {
 				PortletURL deleteOAuth2ApplicationsURL =
-					liferayPortletResponse.createActionURL();
-
-				deleteOAuth2ApplicationsURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/oauth2_provider/delete_oauth2_applications");
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/oauth2_provider/delete_oauth2_applications"
+					).build();
 
 				return deleteOAuth2ApplicationsURL.toString();
 			}

@@ -24,6 +24,7 @@ import com.liferay.commerce.product.type.grouped.web.internal.util.GroupedCPType
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -129,12 +130,13 @@ public class CPDefinitionGroupedEntriesDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/cp_definitions/edit_cp_definition");
-		portletURL.setParameter(
-			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_definition"
+		).setParameter(
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey()
+		).build();
 
 		return portletURL;
 	}

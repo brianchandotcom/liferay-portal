@@ -15,6 +15,7 @@
 package com.liferay.site.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -26,7 +27,6 @@ import com.liferay.site.admin.web.internal.util.SiteInitializerItem;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -58,25 +58,23 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 		return HashMapBuilder.put(
 			"data-add-site-url",
 			() -> {
-				PortletURL addSiteURL = _renderResponse.createActionURL();
-
-				addSiteURL.setParameter(
-					ActionRequest.ACTION_NAME, "/site_admin/add_group");
-
-				addSiteURL.setParameter(
-					"mvcPath", "/select_layout_set_prototype_entry.jsp");
-
 				long parentGroupId = ParamUtil.getLong(
 					_httpServletRequest, "parentGroupId");
 
-				addSiteURL.setParameter(
-					"parentGroupId", String.valueOf(parentGroupId));
-
-				addSiteURL.setParameter(
-					"creationType", _siteInitializerItem.getType());
-				addSiteURL.setParameter(
+				PortletURL addSiteURL = PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/site_admin/add_group"
+				).setMVCPath(
+					"/select_layout_set_prototype_entry.jsp"
+				).setParameter(
+					"parentGroupId", String.valueOf(parentGroupId)
+				).setParameter(
+					"creationType", _siteInitializerItem.getType()
+				).setParameter(
 					"siteInitializerKey",
-					_siteInitializerItem.getSiteInitializerKey());
+					_siteInitializerItem.getSiteInitializerKey()
+				).build();
 
 				return addSiteURL.toString();
 			}

@@ -14,6 +14,7 @@
 
 package com.liferay.style.book.web.internal.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -60,13 +61,15 @@ public class ImportPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, StyleBookPortletKeys.STYLE_BOOK,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/style_book/view_import");
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+			PortletURL portletURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, StyleBookPortletKeys.STYLE_BOOK,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/style_book/view_import"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 
 			StringBundler sb = new StringBundler(6);
 

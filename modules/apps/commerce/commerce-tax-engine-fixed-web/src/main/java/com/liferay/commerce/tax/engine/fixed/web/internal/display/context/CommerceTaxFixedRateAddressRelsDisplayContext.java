@@ -28,6 +28,7 @@ import com.liferay.commerce.tax.engine.fixed.web.internal.frontend.taglib.servle
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
@@ -78,18 +79,18 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 	}
 
 	public String getAddTaxRateSettingURL() throws Exception {
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			commerceTaxFixedRateRequestHelper.getRequest(),
-			CommercePortletKeys.COMMERCE_TAX_METHODS,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_tax_methods/edit_commerce_tax_fixed_rate_address_rel");
-		portletURL.setParameter(
-			"commerceTaxMethodId", String.valueOf(getCommerceTaxMethodId()));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				commerceTaxFixedRateRequestHelper.getRequest(),
+				CommercePortletKeys.COMMERCE_TAX_METHODS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_tax_methods/edit_commerce_tax_fixed_rate_address_rel"
+		).setParameter(
+			"commerceTaxMethodId", String.valueOf(getCommerceTaxMethodId())
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		return portletURL.toString();
 	}

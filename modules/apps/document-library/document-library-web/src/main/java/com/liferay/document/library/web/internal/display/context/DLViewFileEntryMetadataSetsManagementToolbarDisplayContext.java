@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -77,9 +78,11 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL portletURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return portletURL.toString();
 	}
@@ -112,11 +115,13 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("navigation", "file_entry_metadata_sets");
-		portletURL.setParameter(
-			"groupId", String.valueOf(_dlRequestHelper.getScopeGroupId()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"navigation", "file_entry_metadata_sets"
+		).setParameter(
+			"groupId", String.valueOf(_dlRequestHelper.getScopeGroupId())
+		).build();
 
 		return portletURL.toString();
 	}

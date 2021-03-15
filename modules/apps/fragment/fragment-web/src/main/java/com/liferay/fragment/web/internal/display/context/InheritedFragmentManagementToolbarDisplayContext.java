@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
@@ -94,12 +94,13 @@ public class InheritedFragmentManagementToolbarDisplayContext
 						WebKeys.THEME_DISPLAY);
 
 				PortletURL copyFragmentEntryURL =
-					liferayPortletResponse.createActionURL();
-
-				copyFragmentEntryURL.setParameter(
-					ActionRequest.ACTION_NAME, "/fragment/copy_fragment_entry");
-				copyFragmentEntryURL.setParameter(
-					"redirect", themeDisplay.getURLCurrent());
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/fragment/copy_fragment_entry"
+					).setRedirect(
+						themeDisplay.getURLCurrent()
+					).build();
 
 				return copyFragmentEntryURL.toString();
 			}
@@ -122,13 +123,13 @@ public class InheritedFragmentManagementToolbarDisplayContext
 			"selectFragmentCollectionURL",
 			() -> {
 				PortletURL selectFragmentCollectionURL =
-					liferayPortletResponse.createActionURL();
-
-				selectFragmentCollectionURL.setParameter(
-					"mvcRenderCommandName",
-					"/fragment/select_fragment_collection");
-				selectFragmentCollectionURL.setWindowState(
-					LiferayWindowState.POP_UP);
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/fragment/select_fragment_collection"
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).build();
 
 				return selectFragmentCollectionURL.toString();
 			}

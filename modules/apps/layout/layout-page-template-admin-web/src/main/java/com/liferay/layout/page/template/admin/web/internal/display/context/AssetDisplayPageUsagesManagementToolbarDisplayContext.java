@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -172,10 +172,13 @@ public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 	}
 
 	private String _getPortletURL(String actionName) {
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(ActionRequest.ACTION_NAME, actionName);
-		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		PortletURL portletURL = PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			actionName
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).build();
 
 		return portletURL.toString();
 	}

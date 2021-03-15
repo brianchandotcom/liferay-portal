@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.web.internal.display.context;
 
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -136,10 +137,13 @@ public class SelectUsersDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/admin/select_users.jsp");
-		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/admin/select_users.jsp"
+		).setParameter(
+			"groupId", String.valueOf(getGroupId())
+		).build();
 
 		String displayStyle = getDisplayStyle();
 

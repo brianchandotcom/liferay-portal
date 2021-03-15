@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -64,18 +65,19 @@ public class DLFolderUADDisplay extends BaseDLFolderUADDisplay {
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+			liferayPortletResponse,
 			portal.getControlPanelPlid(liferayPortletRequest),
-			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_folder");
-		portletURL.setParameter(
-			"redirect", portal.getCurrentURL(liferayPortletRequest));
-		portletURL.setParameter(
-			"folderId", String.valueOf(dlFolder.getFolderId()));
-		portletURL.setParameter(
-			"repositoryId", String.valueOf(dlFolder.getRepositoryId()));
+			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, PortletRequest.RENDER_PHASE
+		).setMVCRenderCommandName(
+			"/document_library/edit_folder"
+		).setRedirect(
+			portal.getCurrentURL(liferayPortletRequest)
+		).setParameter(
+			"folderId", String.valueOf(dlFolder.getFolderId())
+		).setParameter(
+			"repositoryId", String.valueOf(dlFolder.getRepositoryId())
+		).build();
 
 		return portletURL.toString();
 	}

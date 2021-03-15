@@ -17,6 +17,7 @@ package com.liferay.depot.web.internal.display.context;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -106,12 +107,12 @@ public class DepotAdminRolesDisplayContext {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
 
-		PortletURL portletURL = requestBackedPortletURLFactory.createRenderURL(
-			DepotPortletKeys.DEPOT_ADMIN);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/depot/select_depot_role");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createRenderURL(
+				DepotPortletKeys.DEPOT_ADMIN)
+		).setMVCRenderCommandName(
+			"/depot/select_depot_role"
+		).setParameter(
 			"p_u_i_d",
 			Optional.ofNullable(
 				_user
@@ -121,9 +122,12 @@ public class DepotAdminRolesDisplayContext {
 				String::valueOf
 			).orElse(
 				"0"
-			));
-		portletURL.setParameter("step", "1");
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+			)
+		).setParameter(
+			"step", "1"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		return portletURL;
 	}

@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
+	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")

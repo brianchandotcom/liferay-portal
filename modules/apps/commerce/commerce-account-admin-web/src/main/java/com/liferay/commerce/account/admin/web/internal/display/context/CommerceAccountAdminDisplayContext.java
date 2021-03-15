@@ -20,6 +20,7 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,10 +70,13 @@ public class CommerceAccountAdminDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter("activeNavigation", getNavigation("active"));
-		portletURL.setParameter("typeNavigation", getNavigation("type"));
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setParameter(
+			"activeNavigation", getNavigation("active")
+		).setParameter(
+			"typeNavigation", getNavigation("type")
+		).build();
 
 		return portletURL;
 	}

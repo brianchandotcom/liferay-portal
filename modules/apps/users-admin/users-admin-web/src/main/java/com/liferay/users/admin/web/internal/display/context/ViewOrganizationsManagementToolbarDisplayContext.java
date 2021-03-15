@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -91,9 +92,11 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -148,11 +151,13 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 	public PortletURL getPortletURL() {
 		try {
-			PortletURL portletURL = PortletURLUtil.clone(
-				_currentURL, _renderResponse);
-
-			portletURL.setParameter("orderByCol", getOrderByCol());
-			portletURL.setParameter("orderByType", getOrderByType());
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLUtil.clone(_currentURL, _renderResponse)
+			).setParameter(
+				"orderByCol", getOrderByCol()
+			).setParameter(
+				"orderByType", getOrderByType()
+			).build();
 
 			return portletURL;
 		}
@@ -263,11 +268,12 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
+		PortletURL sortingURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
+		).build();
 
 		return sortingURL.toString();
 	}

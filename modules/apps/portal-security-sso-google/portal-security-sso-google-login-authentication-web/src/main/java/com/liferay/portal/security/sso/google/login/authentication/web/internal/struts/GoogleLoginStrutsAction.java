@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.google.login.authentication.web.internal.struts;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -149,15 +150,18 @@ public class GoogleLoginStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, PortletKeys.LOGIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
 			"/portal_security_sso_google_login_authentication" +
-				"/google_login_error");
-		portletURL.setParameter("error", error);
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+				"/google_login_error"
+		).setParameter(
+			"error", error
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		httpServletResponse.sendRedirect(portletURL.toString());
 	}
@@ -167,12 +171,15 @@ public class GoogleLoginStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/login/login_redirect");
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, PortletKeys.LOGIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/login/login_redirect"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		httpServletResponse.sendRedirect(portletURL.toString());
 	}
@@ -182,24 +189,32 @@ public class GoogleLoginStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse, User user)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		portletURL.setParameter(
-			"mvcRenderCommandName",
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, PortletKeys.LOGIN,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"saveLastPath", Boolean.FALSE.toString()
+		).setMVCRenderCommandName(
 			"/portal_security_sso_google_login_authentication" +
-				"/associate_google_user");
+				"/associate_google_user"
+		).build();
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter(
-			"mvcRenderCommandName", "/login/login_redirect");
-		redirectURL.setParameter("emailAddress", user.getEmailAddress());
-		redirectURL.setParameter("anonymousUser", Boolean.FALSE.toString());
-		redirectURL.setPortletMode(PortletMode.VIEW);
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
+		PortletURL redirectURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, PortletKeys.LOGIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/login/login_redirect"
+		).setParameter(
+			"emailAddress", user.getEmailAddress()
+		).setParameter(
+			"anonymousUser", Boolean.FALSE.toString()
+		).setPortletMode(
+			PortletMode.VIEW
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		portletURL.setParameter("redirect", redirectURL.toString());
 

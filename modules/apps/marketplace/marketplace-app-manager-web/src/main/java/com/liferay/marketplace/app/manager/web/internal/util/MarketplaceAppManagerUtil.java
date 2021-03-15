@@ -16,6 +16,7 @@ package com.liferay.marketplace.app.manager.web.internal.util;
 
 import com.liferay.marketplace.app.manager.web.internal.constants.BundleConstants;
 import com.liferay.marketplace.model.App;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -47,9 +48,11 @@ public class MarketplaceAppManagerUtil {
 		AppDisplay appDisplay, Bundle bundle,
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).build();
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest,
@@ -74,9 +77,11 @@ public class MarketplaceAppManagerUtil {
 		AppDisplay appDisplay, HttpServletRequest httpServletRequest,
 		RenderResponse renderResponse) {
 
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).build();
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest,

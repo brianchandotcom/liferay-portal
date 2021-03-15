@@ -23,6 +23,7 @@ import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -93,21 +94,22 @@ public class BookmarksPortletToolbarContributor
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "bookmark"));
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, themeDisplay.getScopeGroup(),
-			BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/bookmarks/edit_entry");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(portletRequest));
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		portletURL.setParameter("portletResource", portletDisplay.getId());
-
-		portletURL.setParameter("folderId", String.valueOf(folderId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, themeDisplay.getScopeGroup(),
+				BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/bookmarks/edit_entry"
+		).setRedirect(
+			_portal.getCurrentURL(portletRequest)
+		).setParameter(
+			"portletResource", portletDisplay.getId()
+		).setParameter(
+			"folderId", String.valueOf(folderId)
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -135,21 +137,22 @@ public class BookmarksPortletToolbarContributor
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "folder"));
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, themeDisplay.getScopeGroup(),
-			BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/bookmarks/edit_folder");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(portletRequest));
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		portletURL.setParameter("portletResource", portletDisplay.getId());
-
-		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, themeDisplay.getScopeGroup(),
+				BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/bookmarks/edit_folder"
+		).setRedirect(
+			_portal.getCurrentURL(portletRequest)
+		).setParameter(
+			"portletResource", portletDisplay.getId()
+		).setParameter(
+			"parentFolderId", String.valueOf(folderId)
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 

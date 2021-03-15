@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -81,9 +82,11 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter("keywords", (String)null);
+		PortletURL portletURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", (String)null
+		).build();
 
 		return portletURL.toString();
 	}
@@ -139,9 +142,11 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 				_log.warn(portletException, portletException);
 			}
 
-			portletURL = liferayPortletResponse.createRenderURL();
-
-			portletURL.setParameters(portletURL.getParameterMap());
+			portletURL = PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setParameters(
+				portletURL.getParameterMap()
+			).build();
 		}
 
 		String[] parameterNames = {

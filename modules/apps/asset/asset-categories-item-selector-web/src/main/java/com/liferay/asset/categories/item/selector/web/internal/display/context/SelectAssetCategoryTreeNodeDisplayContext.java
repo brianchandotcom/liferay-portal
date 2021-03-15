@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -266,18 +267,20 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(
+				_portletURL,
+				PortalUtil.getLiferayPortletResponse(portletResponse))
+		).setParameter(
 			"backURL",
 			ParamUtil.getString(
 				_httpServletRequest, "backURL",
-				PortalUtil.getCurrentURL(_httpServletRequest)));
-		portletURL.setParameter(
-			"assetCategoryTreeNodeId", String.valueOf(assetCategoryTreeNodeId));
-		portletURL.setParameter(
-			"assetCategoryTreeNodeType", assetCategoryTreeNodeType);
+				PortalUtil.getCurrentURL(_httpServletRequest))
+		).setParameter(
+			"assetCategoryTreeNodeId", String.valueOf(assetCategoryTreeNodeId)
+		).setParameter(
+			"assetCategoryTreeNodeType", assetCategoryTreeNodeType
+		).build();
 
 		return portletURL.toString();
 	}

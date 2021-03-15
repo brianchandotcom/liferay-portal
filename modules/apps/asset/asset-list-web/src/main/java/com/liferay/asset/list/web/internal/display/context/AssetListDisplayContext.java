@@ -31,6 +31,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -53,7 +54,6 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -406,11 +406,13 @@ public class AssetListDisplayContext {
 	}
 
 	private String _getAddAssetListEntryURL(int type) {
-		PortletURL addAssetListEntryURL = _renderResponse.createActionURL();
-
-		addAssetListEntryURL.setParameter(
-			ActionRequest.ACTION_NAME, "/asset_list/add_asset_list_entry");
-		addAssetListEntryURL.setParameter("type", String.valueOf(type));
+		PortletURL addAssetListEntryURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/asset_list/add_asset_list_entry"
+		).setParameter(
+			"type", String.valueOf(type)
+		).build();
 
 		return addAssetListEntryURL.toString();
 	}

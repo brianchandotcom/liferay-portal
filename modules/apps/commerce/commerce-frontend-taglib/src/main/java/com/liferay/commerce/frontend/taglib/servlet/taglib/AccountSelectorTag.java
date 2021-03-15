@@ -23,6 +23,7 @@ import com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceOrderM
 import com.liferay.commerce.frontend.taglib.internal.model.WorkflowStatusModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.IncludeTag;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -177,14 +177,15 @@ public class AccountSelectorTag extends IncludeTag {
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
 		if (plid > 0) {
-			PortletURL portletURL = _getPortletURL(
-				themeDisplay.getRequest(),
-				CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME,
-				"/commerce_open_order_content/edit_commerce_order");
-			portletURL.setParameter(Constants.CMD, Constants.ADD);
+			PortletURL portletURL = PortletURLBuilder.create(
+				_getPortletURL(
+					themeDisplay.getRequest(),
+					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
+			).setActionName(
+				"/commerce_open_order_content/edit_commerce_order"
+			).setParameter(
+				Constants.CMD, Constants.ADD
+			).build();
 
 			return portletURL.toString();
 		}
@@ -200,15 +201,17 @@ public class AccountSelectorTag extends IncludeTag {
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
 		if (plid > 0) {
-			PortletURL portletURL = _getPortletURL(
-				themeDisplay.getRequest(),
-				CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME,
-				"/commerce_open_order_content/edit_commerce_order");
-			portletURL.setParameter(Constants.CMD, "setCurrent");
-			portletURL.setParameter("commerceOrderId", "{id}");
+			PortletURL portletURL = PortletURLBuilder.create(
+				_getPortletURL(
+					themeDisplay.getRequest(),
+					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
+			).setActionName(
+				"/commerce_open_order_content/edit_commerce_order"
+			).setParameter(
+				Constants.CMD, "setCurrent"
+			).setParameter(
+				"commerceOrderId", "{id}"
+			).build();
 
 			return portletURL.toString();
 		}

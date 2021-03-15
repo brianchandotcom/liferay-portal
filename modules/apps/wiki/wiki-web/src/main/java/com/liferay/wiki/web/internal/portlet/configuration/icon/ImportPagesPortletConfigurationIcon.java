@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -66,14 +67,17 @@ public class ImportPagesPortletConfigurationIcon
 		try {
 			WikiNode node = ActionUtil.getNode(portletRequest);
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/wiki/import_pages");
-			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-			portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+			PortletURL portletURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, WikiPortletKeys.WIKI_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/wiki/import_pages"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).setParameter(
+				"nodeId", String.valueOf(node.getNodeId())
+			).build();
 
 			return portletURL.toString();
 		}

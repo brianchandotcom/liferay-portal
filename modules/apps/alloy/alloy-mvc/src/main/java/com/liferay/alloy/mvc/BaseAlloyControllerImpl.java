@@ -17,6 +17,7 @@ package com.liferay.alloy.mvc;
 import com.liferay.alloy.mvc.internal.json.web.service.AlloyControllerInvokerManager;
 import com.liferay.alloy.mvc.internal.json.web.service.AlloyMockUtil;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -671,14 +672,19 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			String lifecycle, WindowState windowState, Object... parameters)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, portlet, themeDisplay.getLayout(), lifecycle);
-
-		portletURL.setParameter("action", action);
-		portletURL.setParameter("controller", controller);
-
-		portletURL.setPortletMode(portletMode);
-		portletURL.setWindowState(windowState);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, portlet, themeDisplay.getLayout(),
+				lifecycle)
+		).setParameter(
+			"action", action
+		).setParameter(
+			"controller", controller
+		).setPortletMode(
+			portletMode
+		).setWindowState(
+			windowState
+		).build();
 
 		if (parameters == null) {
 			return portletURL;
@@ -1006,10 +1012,13 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 
 		if (mimeResponse != null) {
-			portletURL = mimeResponse.createRenderURL();
-
-			portletURL.setParameter("action", actionPath);
-			portletURL.setParameter("controller", controllerPath);
+			portletURL = PortletURLBuilder.createRenderURL(
+				mimeResponse
+			).setParameter(
+				"action", actionPath
+			).setParameter(
+				"controller", controllerPath
+			).build();
 
 			if (Validator.isNotNull(format)) {
 				portletURL.setParameter("format", format);

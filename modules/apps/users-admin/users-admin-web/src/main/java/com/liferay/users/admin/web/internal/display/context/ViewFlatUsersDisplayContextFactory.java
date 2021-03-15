@@ -15,6 +15,7 @@
 package com.liferay.users.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.User;
@@ -147,9 +148,6 @@ public class ViewFlatUsersDisplayContextFactory {
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(renderRequest);
 
-		PortletURL portletURL = (PortletURL)httpServletRequest.getAttribute(
-			"view.jsp-portletURL");
-
 		int status = GetterUtil.getInteger(
 			httpServletRequest.getAttribute("view.jsp-status"));
 
@@ -163,7 +161,11 @@ public class ViewFlatUsersDisplayContextFactory {
 			status = WorkflowConstants.STATUS_INACTIVE;
 		}
 
-		portletURL.setParameter("navigation", navigation);
+		PortletURL portletURL = PortletURLBuilder.create(
+			(PortletURL)httpServletRequest.getAttribute("view.jsp-portletURL")
+		).setParameter(
+			"navigation", navigation
+		).build();
 
 		UserSearch userSearch = new UserSearch(
 			renderRequest, "cur2", portletURL);

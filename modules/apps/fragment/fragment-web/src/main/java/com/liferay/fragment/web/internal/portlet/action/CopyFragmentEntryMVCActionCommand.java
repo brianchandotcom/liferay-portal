@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -73,10 +74,11 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"fragmentCollectionId", String.valueOf(fragmentCollectionId));
+		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"fragmentCollectionId", String.valueOf(fragmentCollectionId)
+		).build();
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 	}

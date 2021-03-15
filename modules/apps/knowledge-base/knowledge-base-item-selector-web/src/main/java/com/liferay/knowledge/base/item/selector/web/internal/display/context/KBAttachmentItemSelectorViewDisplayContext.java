@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelect
 import com.liferay.knowledge.base.item.selector.web.internal.KBAttachmentItemSelectorView;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -106,12 +106,12 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, liferayPortletResponse);
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(_portletURL, liferayPortletResponse)
+		).setParameter(
 			"selectedTab",
-			String.valueOf(getTitle(httpServletRequest.getLocale())));
+			String.valueOf(getTitle(httpServletRequest.getLocale()))
+		).build();
 
 		return portletURL;
 	}
@@ -123,15 +123,15 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 	public PortletURL getUploadURL(
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = liferayPortletResponse.createActionURL(
-			KBPortletKeys.KNOWLEDGE_BASE_ADMIN);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "uploadKBArticleAttachments");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createActionURL(
+			liferayPortletResponse, KBPortletKeys.KNOWLEDGE_BASE_ADMIN
+		).setActionName(
+			"uploadKBArticleAttachments"
+		).setParameter(
 			"resourcePrimKey",
 			String.valueOf(
-				_kbAttachmentItemSelectorCriterion.getResourcePrimKey()));
+				_kbAttachmentItemSelectorCriterion.getResourcePrimKey())
+		).build();
 
 		return portletURL;
 	}

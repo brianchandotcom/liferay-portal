@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationCard;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,24 +69,26 @@ public class SelectBasicTemplatesNavigationCard implements NavigationCard {
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		try {
-			PortletURL addLayoutURL = _renderResponse.createRenderURL();
-
-			addLayoutURL.setParameter(
-				"mvcRenderCommandName", "/layout_admin/add_layout");
-			addLayoutURL.setParameter("backURL", redirect);
-
 			long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
-
-			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 
 			boolean privateLayout = ParamUtil.getBoolean(
 				_httpServletRequest, "privateLayout");
 
-			addLayoutURL.setParameter(
-				"privateLayout", String.valueOf(privateLayout));
-
-			addLayoutURL.setParameter("type", _type);
-			addLayoutURL.setWindowState(LiferayWindowState.POP_UP);
+			PortletURL addLayoutURL = PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/layout_admin/add_layout"
+			).setParameter(
+				"backURL", redirect
+			).setParameter(
+				"selPlid", String.valueOf(selPlid)
+			).setParameter(
+				"privateLayout", String.valueOf(privateLayout)
+			).setParameter(
+				"type", _type
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 
 			data.put("data-add-layout-url", addLayoutURL.toString());
 		}

@@ -34,6 +34,7 @@ import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -55,7 +56,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -235,18 +235,17 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 		long cpDefinitionId, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		PortletURL portletURL = renderResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/cp_compare_content_mini_web/delete_compare_product");
-
 		String redirect = _portal.getCurrentURL(renderRequest);
 
-		portletURL.setParameter("redirect", redirect);
-
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinitionId));
+		PortletURL portletURL = PortletURLBuilder.createActionURL(
+			renderResponse
+		).setActionName(
+			"/cp_compare_content_mini_web/delete_compare_product"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"cpDefinitionId", String.valueOf(cpDefinitionId)
+		).build();
 
 		return portletURL.toString();
 	}

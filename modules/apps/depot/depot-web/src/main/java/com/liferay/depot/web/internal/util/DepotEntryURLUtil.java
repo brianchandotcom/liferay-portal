@@ -16,6 +16,7 @@ package com.liferay.depot.web.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -95,15 +96,17 @@ public class DepotEntryURLUtil {
 		DepotEntry depotEntry, String redirect,
 		LiferayPortletRequest liferayPortletRequest) {
 
-		PortletURL editDepotEntryURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DepotPortletKeys.DEPOT_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		editDepotEntryURL.setParameter(
-			"mvcRenderCommandName", "/depot/edit_depot_entry");
-		editDepotEntryURL.setParameter("redirect", redirect);
-		editDepotEntryURL.setParameter(
-			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId()));
+		PortletURL editDepotEntryURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, DepotPortletKeys.DEPOT_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/depot/edit_depot_entry"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId())
+		).build();
 
 		return editDepotEntryURL;
 	}

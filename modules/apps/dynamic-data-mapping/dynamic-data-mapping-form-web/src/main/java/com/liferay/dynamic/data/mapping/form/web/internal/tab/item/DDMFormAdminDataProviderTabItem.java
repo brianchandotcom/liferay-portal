@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.tab.item;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -55,24 +56,26 @@ public class DDMFormAdminDataProviderTabItem implements DDMDisplayTabItem {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			liferayPortletRequest,
-			PortletProviderUtil.getPortletId(
-				DDMDataProviderInstance.class.getName(),
-				PortletProvider.Action.EDIT),
-			PortletRequest.RENDER_PHASE);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
-			"refererPortletName",
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
-		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				liferayPortletRequest,
+				PortletProviderUtil.getPortletId(
+					DDMDataProviderInstance.class.getName(),
+					PortletProvider.Action.EDIT),
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"backURL", themeDisplay.getURLCurrent()
+		).setParameter(
+			"refererPortletName", DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
+		).setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+		).build();
 
 		return portletURL.toString();
 	}

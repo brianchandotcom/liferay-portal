@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,13 +63,13 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 				dropdownItem.putData("action", "deleteAccountRoles");
 
 				PortletURL deleteAccountRolesURL =
-					liferayPortletResponse.createActionURL();
-
-				deleteAccountRolesURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/account_admin/delete_account_roles");
-				deleteAccountRolesURL.setParameter(
-					"redirect", currentURLObj.toString());
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/account_admin/delete_account_roles"
+					).setRedirect(
+						currentURLObj.toString()
+					).build();
 
 				dropdownItem.putData(
 					"deleteAccountRolesURL", deleteAccountRolesURL.toString());
@@ -85,9 +85,11 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}

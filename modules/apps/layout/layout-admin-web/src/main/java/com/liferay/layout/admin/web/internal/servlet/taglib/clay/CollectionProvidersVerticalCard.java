@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,38 +67,35 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 		Map<String, String> data = new HashMap<>();
 
 		try {
-			PortletURL selectLayoutMasterLayoutURL =
-				_renderResponse.createRenderURL();
-
-			selectLayoutMasterLayoutURL.setParameter(
-				"mvcPath", "/select_layout_master_layout.jsp");
-
 			String redirect = ParamUtil.getString(
 				_httpServletRequest, "redirect");
 
-			selectLayoutMasterLayoutURL.setParameter("redirect", redirect);
-
-			selectLayoutMasterLayoutURL.setParameter(
-				"backURL", themeDisplay.getURLCurrent());
-			selectLayoutMasterLayoutURL.setParameter(
-				"groupId", String.valueOf(_groupId));
-
 			long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
-
-			selectLayoutMasterLayoutURL.setParameter(
-				"selPlid", String.valueOf(selPlid));
 
 			boolean privateLayout = ParamUtil.getBoolean(
 				_httpServletRequest, "privateLayout");
 
-			selectLayoutMasterLayoutURL.setParameter(
-				"privateLayout", String.valueOf(privateLayout));
-
-			selectLayoutMasterLayoutURL.setParameter(
-				"collectionPK", String.valueOf(_infoListProvider.getKey()));
-			selectLayoutMasterLayoutURL.setParameter(
-				"collectionType",
-				InfoListProviderItemSelectorReturnType.class.getName());
+			PortletURL selectLayoutMasterLayoutURL =
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCPath(
+					"/select_layout_master_layout.jsp"
+				).setRedirect(
+					redirect
+				).setParameter(
+					"backURL", themeDisplay.getURLCurrent()
+				).setParameter(
+					"groupId", String.valueOf(_groupId)
+				).setParameter(
+					"selPlid", String.valueOf(selPlid)
+				).setParameter(
+					"privateLayout", String.valueOf(privateLayout)
+				).setParameter(
+					"collectionPK", String.valueOf(_infoListProvider.getKey())
+				).setParameter(
+					"collectionType",
+					InfoListProviderItemSelectorReturnType.class.getName()
+				).build();
 
 			data.put(
 				"data-select-layout-master-layout-url",

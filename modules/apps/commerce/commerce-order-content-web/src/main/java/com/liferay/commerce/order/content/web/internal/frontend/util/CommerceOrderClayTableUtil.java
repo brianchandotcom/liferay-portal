@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -46,7 +47,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -71,22 +71,23 @@ public class CommerceOrderClayTableUtil {
 		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			originalHttpServletRequest, portletDisplay.getId(),
-			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_open_order_content/edit_commerce_order");
-		portletURL.setParameter(Constants.CMD, "setCurrent");
-		portletURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			PortalUtil.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter("redirect", redirect);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				originalHttpServletRequest, portletDisplay.getId(),
+				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setParameter(
+			Constants.CMD, "setCurrent"
+		).setParameter(
+			"commerceOrderId", String.valueOf(commerceOrderId)
+		).setRedirect(
+			redirect
+		).build();
 
 		return portletURL.toString();
 	}
@@ -157,19 +158,22 @@ public class CommerceOrderClayTableUtil {
 			themeDisplay.getRequest(), portletDisplay.getId(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-		PortletURL backURL = portletURL;
-
 		String pageSize = ParamUtil.getString(
 			themeDisplay.getRequest(), "pageSize");
 
 		String pageNumber = ParamUtil.getString(
 			themeDisplay.getRequest(), "page");
 
-		backURL.setParameter("itemsPerPage", pageSize);
-		backURL.setParameter("pageNumber", pageNumber);
-		backURL.setParameter(
+		PortletURL backURL = PortletURLBuilder.create(
+			portletURL
+		).setParameter(
+			"itemsPerPage", pageSize
+		).setParameter(
+			"pageNumber", pageNumber
+		).setParameter(
 			"tableName",
-			CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS);
+			CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS
+		).build();
 
 		portletURL.setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
@@ -189,15 +193,15 @@ public class CommerceOrderClayTableUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			themeDisplay.getRequest(), portletDisplay.getId(),
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_order_content/view_commerce_order_shipments");
-		portletURL.setParameter(
-			"commerceOrderItemId", String.valueOf(commerceOrderItemId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				themeDisplay.getRequest(), portletDisplay.getId(),
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_order_content/view_commerce_order_shipments"
+		).setParameter(
+			"commerceOrderItemId", String.valueOf(commerceOrderItemId)
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

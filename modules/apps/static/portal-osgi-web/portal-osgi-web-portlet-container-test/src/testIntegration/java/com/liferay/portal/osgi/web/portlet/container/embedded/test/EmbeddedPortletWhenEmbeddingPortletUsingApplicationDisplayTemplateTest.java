@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.embedded.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -104,17 +105,19 @@ public class
 			TemplateHandler.class,
 			new TestEmbeddedPortletDisplayTemplateHandler(), properties);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			PortletContainerTestUtil.getHttpServletRequest(group, layout),
-			TEST_PORTLET_ID, layout.getPlid(), PortletRequest.RENDER_PHASE);
-
 		TestRuntimePortlet testRuntimePortlet = new TestRuntimePortlet();
 		String testRuntimePortletId = "testRuntimePortletId";
 
 		setUpPortlet(
 			testRuntimePortlet, properties, testRuntimePortletId, false);
 
-		portletURL.setParameter("testRuntimePortletId", testRuntimePortletId);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				PortletContainerTestUtil.getHttpServletRequest(group, layout),
+				TEST_PORTLET_ID, layout.getPlid(), PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"testRuntimePortletId", testRuntimePortletId
+		).build();
 
 		PortletContainerTestUtil.Response response =
 			PortletContainerTestUtil.request(portletURL.toString());

@@ -17,6 +17,7 @@ package com.liferay.site.admin.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -93,10 +94,13 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 			return null;
 		}
 
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("backURL", _themeDisplay.getURLCurrent());
-		portletURL.setParameter("groupId", String.valueOf(_group.getGroupId()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setParameter(
+			"backURL", _themeDisplay.getURLCurrent()
+		).setParameter(
+			"groupId", String.valueOf(_group.getGroupId())
+		).build();
 
 		return portletURL.toString();
 	}

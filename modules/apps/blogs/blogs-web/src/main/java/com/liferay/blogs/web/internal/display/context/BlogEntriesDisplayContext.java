@@ -21,6 +21,7 @@ import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.util.BlogsUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainerResults;
@@ -138,14 +139,16 @@ public class BlogEntriesDisplayContext {
 	public SearchContainer<BlogsEntry> getSearchContainer()
 		throws PortalException, PortletException {
 
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
-
 		String entriesNavigation = ParamUtil.getString(
 			_httpServletRequest, "entriesNavigation");
 
-		portletURL.setParameter("entriesNavigation", entriesNavigation);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/blogs/view"
+		).setParameter(
+			"entriesNavigation", entriesNavigation
+		).build();
 
 		SearchContainer<BlogsEntry> entriesSearchContainer =
 			new SearchContainer<>(

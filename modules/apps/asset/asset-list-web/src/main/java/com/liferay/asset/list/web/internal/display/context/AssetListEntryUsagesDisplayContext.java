@@ -20,6 +20,7 @@ import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.asset.list.util.comparator.AssetListEntryUsageModifiedDateComparator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Layout;
@@ -143,12 +144,15 @@ public class AssetListEntryUsagesDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_asset_list_entry_usages.jsp");
-		portletURL.setParameter("redirect", getRedirect());
-		portletURL.setParameter(
-			"assetListEntryId", String.valueOf(getAssetListEntryId()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view_asset_list_entry_usages.jsp"
+		).setRedirect(
+			getRedirect()
+		).setParameter(
+			"assetListEntryId", String.valueOf(getAssetListEntryId())
+		).build();
 
 		return portletURL;
 	}

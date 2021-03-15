@@ -14,6 +14,7 @@
 
 package com.liferay.user.groups.admin.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -66,12 +67,13 @@ public class ManagePagesPortletConfigurationIcon
 		try {
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				portletRequest, userGroup.getGroup(), Layout.class.getName(),
-				PortletProvider.Action.EDIT);
-
-			portletURL.setParameter(
-				"redirect", _portal.getCurrentURL(portletRequest));
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest, userGroup.getGroup(),
+					Layout.class.getName(), PortletProvider.Action.EDIT)
+			).setRedirect(
+				_portal.getCurrentURL(portletRequest)
+			).build();
 
 			return portletURL.toString();
 		}

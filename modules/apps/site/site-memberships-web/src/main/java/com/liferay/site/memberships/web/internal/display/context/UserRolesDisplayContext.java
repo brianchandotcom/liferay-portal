@@ -14,6 +14,7 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -153,10 +154,13 @@ public class UserRolesDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() throws PortalException {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("p_u_i_d", String.valueOf(_getUserId()));
-		portletURL.setParameter("mvcPath", "/users_roles.jsp");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setParameter(
+			"p_u_i_d", String.valueOf(_getUserId())
+		).setMVCPath(
+			"/users_roles.jsp"
+		).build();
 
 		String displayStyle = getDisplayStyle();
 

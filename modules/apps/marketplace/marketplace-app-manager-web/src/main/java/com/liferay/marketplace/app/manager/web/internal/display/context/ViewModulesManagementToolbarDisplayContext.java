@@ -22,6 +22,7 @@ import com.liferay.marketplace.app.manager.web.internal.util.AppDisplayFactoryUt
 import com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.BundleUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.comparator.BundleComparator;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -98,12 +99,17 @@ public class ViewModulesManagementToolbarDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_modules.jsp");
-		portletURL.setParameter("app", getApp());
-		portletURL.setParameter("state", getState());
-		portletURL.setParameter("orderByType", getOrderByType());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/view_modules.jsp"
+		).setParameter(
+			"app", getApp()
+		).setParameter(
+			"state", getState()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		if (_searchContainer != null) {
 			portletURL.setParameter(

@@ -26,6 +26,7 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTC
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -113,12 +114,13 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	}
 
 	public String getReviewChangesURL(long ctCollectionId) {
-		PortletURL reviewURL = _renderResponse.createRenderURL();
-
-		reviewURL.setParameter(
-			"mvcRenderCommandName", "/change_tracking/view_changes");
-		reviewURL.setParameter(
-			"ctCollectionId", String.valueOf(ctCollectionId));
+		PortletURL reviewURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/change_tracking/view_changes"
+		).setParameter(
+			"ctCollectionId", String.valueOf(ctCollectionId)
+		).build();
 
 		return reviewURL.toString();
 	}

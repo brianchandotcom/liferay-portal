@@ -26,6 +26,7 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -244,10 +245,13 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, PortalUtil.getLiferayPortletResponse(_renderResponse));
-
-		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(
+				_portletURL,
+				PortalUtil.getLiferayPortletResponse(_renderResponse))
+		).setParameter(
+			"groupId", String.valueOf(getGroupId())
+		).build();
 
 		long selectedGroupId = ParamUtil.getLong(
 			_httpServletRequest, "selectedGroupId");
@@ -563,11 +567,15 @@ public class AssetBrowserDisplayContext {
 		breadcrumbEntry.setTitle(
 			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, PortalUtil.getLiferayPortletResponse(_renderResponse));
-
-		portletURL.setParameter("groupType", "site");
-		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(
+				_portletURL,
+				PortalUtil.getLiferayPortletResponse(_renderResponse))
+		).setParameter(
+			"groupType", "site"
+		).setParameter(
+			"showGroupSelector", Boolean.TRUE.toString()
+		).build();
 
 		breadcrumbEntry.setURL(portletURL.toString());
 

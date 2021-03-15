@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -40,7 +41,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,13 +88,13 @@ public class TrashManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getAdditionalProps() {
-		PortletURL restoreEntriesURL = liferayPortletResponse.createActionURL(
-			TrashPortletKeys.TRASH);
-
-		restoreEntriesURL.setParameter(
-			ActionRequest.ACTION_NAME, "restoreEntries");
-		restoreEntriesURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
+		PortletURL restoreEntriesURL = PortletURLBuilder.createActionURL(
+			liferayPortletResponse, TrashPortletKeys.TRASH
+		).setActionName(
+			"restoreEntries"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).build();
 
 		return HashMapBuilder.<String, Object>put(
 			"restoreEntriesURL", restoreEntriesURL.toString()
@@ -113,10 +113,13 @@ public class TrashManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("navigation", StringPool.BLANK);
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"navigation", StringPool.BLANK
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -133,10 +136,11 @@ public class TrashManagementToolbarDisplayContext
 				Validator.isNotNull(getNavigation()) &&
 				!Objects.equals(getNavigation(), "all"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					currentURLObj, liferayPortletResponse);
-
-				removeLabelURL.setParameter("navigation", (String)null);
+				PortletURL removeLabelURL = PortletURLBuilder.create(
+					PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+				).setParameter(
+					"navigation", (String)null
+				).build();
 
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 

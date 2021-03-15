@@ -24,6 +24,7 @@ import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.web.internal.servlet.taglib.ui.constants.CommerceAccountScreenNavigationConstants;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
@@ -191,10 +192,6 @@ public class EditCommerceAccountUserMVCActionCommand
 	protected String getSaveAndContinueRedirect(ActionRequest actionRequest)
 		throws Exception {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.VIEW);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -219,9 +216,14 @@ public class EditCommerceAccountUserMVCActionCommand
 					ENTRY_KEY_ACCOUNT_MEMBERS);
 		}
 
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				actionRequest, CommerceAccount.class.getName(),
+				PortletProvider.Action.VIEW)
+		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			backPortletURL.toString());
+			backPortletURL.toString()
+		).build();
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 

@@ -21,6 +21,7 @@ import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -64,15 +65,17 @@ public class CommerceAccountUserRelAdminDisplayContext
 	}
 
 	public String getEditUserURL(long userId) throws PortalException {
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			commerceAccountAdminRequestHelper.getRequest(),
-			User.class.getName(), PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/users_admin/edit_user");
-		portletURL.setParameter(
-			"redirect", commerceAccountAdminRequestHelper.getCurrentURL());
-		portletURL.setParameter("p_u_i_d", String.valueOf(userId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				commerceAccountAdminRequestHelper.getRequest(),
+				User.class.getName(), PortletProvider.Action.EDIT)
+		).setMVCRenderCommandName(
+			"/users_admin/edit_user"
+		).setRedirect(
+			commerceAccountAdminRequestHelper.getCurrentURL()
+		).setParameter(
+			"p_u_i_d", String.valueOf(userId)
+		).build();
 
 		return portletURL.toString();
 	}
@@ -89,24 +92,26 @@ public class CommerceAccountUserRelAdminDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "usersSelectItem",
-			userItemSelectorCriterion);
-
 		String checkedUserIds = StringUtil.merge(getCheckedUserIds());
 
-		itemSelectorURL.setParameter("checkedUserIds", checkedUserIds);
+		PortletURL itemSelectorURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "usersSelectItem",
+				userItemSelectorCriterion)
+		).setParameter(
+			"checkedUserIds", checkedUserIds
+		).build();
 
 		return itemSelectorURL.toString();
 	}
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_account_admin/edit_commerce_account");
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setMVCRenderCommandName(
+			"/commerce_account_admin/edit_commerce_account"
+		).build();
 
 		return portletURL;
 	}

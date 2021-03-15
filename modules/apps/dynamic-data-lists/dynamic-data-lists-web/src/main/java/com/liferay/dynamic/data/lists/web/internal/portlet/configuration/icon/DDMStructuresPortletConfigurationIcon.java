@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
@@ -69,21 +70,25 @@ public class DDMStructuresPortletConfigurationIcon
 		Portlet portlet = _portletLocalService.getPortletById(
 			portletDisplay.getId());
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest,
-			PortletProviderUtil.getPortletId(
-				DDMStructure.class.getName(), PortletProvider.Action.VIEW),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-		portletURL.setParameter(
-			"refererPortletName", DDLPortletKeys.DYNAMIC_DATA_LISTS);
-		portletURL.setParameter(
-			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
-		portletURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				portletRequest,
+				PortletProviderUtil.getPortletId(
+					DDMStructure.class.getName(), PortletProvider.Action.VIEW),
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"backURL", themeDisplay.getURLCurrent()
+		).setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+		).setParameter(
+			"refererPortletName", DDLPortletKeys.DYNAMIC_DATA_LISTS
+		).setParameter(
+			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet)
+		).setParameter(
+			"showAncestorScopes", Boolean.TRUE.toString()
+		).build();
 
 		return portletURL.toString();
 	}

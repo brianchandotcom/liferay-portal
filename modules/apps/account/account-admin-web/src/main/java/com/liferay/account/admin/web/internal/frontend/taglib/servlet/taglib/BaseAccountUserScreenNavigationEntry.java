@@ -19,6 +19,7 @@ import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -100,14 +101,15 @@ public abstract class BaseAccountUserScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			AccountWebKeys.SHOW_TITLE, isShowTitle());
 
-		PortletURL redirectURL = portal.getControlPanelPortletURL(
-			httpServletRequest, AccountPortletKeys.ACCOUNT_USERS_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter(
-			"p_u_i_d", ParamUtil.getString(httpServletRequest, "p_u_i_d"));
-		redirectURL.setParameter(
-			"mvcPath", "/account_users_admin/edit_account_user.jsp");
+		PortletURL redirectURL = PortletURLBuilder.create(
+			portal.getControlPanelPortletURL(
+				httpServletRequest, AccountPortletKeys.ACCOUNT_USERS_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"p_u_i_d", ParamUtil.getString(httpServletRequest, "p_u_i_d")
+		).setMVCPath(
+			"/account_users_admin/edit_account_user.jsp"
+		).build();
 
 		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
 			httpServletRequest);

@@ -26,6 +26,7 @@ import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -112,17 +113,17 @@ public class ProcessingCommerceShipmentItemDataSetActionProvider
 	private String _getShipmentItemDeleteURL(
 		long commerceShipmentItemId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
-			ActionRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_shipment/delete_commerce_shipment");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
-		portletURL.setParameter(
-			"commerceShipmentItemId", String.valueOf(commerceShipmentItemId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+				ActionRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_shipment/delete_commerce_shipment"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
+			"commerceShipmentItemId", String.valueOf(commerceShipmentItemId)
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -138,21 +139,21 @@ public class ProcessingCommerceShipmentItemDataSetActionProvider
 		CommerceShipmentItem commerceShipmentItem,
 		HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_shipment/edit_commerce_shipment_item");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_shipment/edit_commerce_shipment_item"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
 			"commerceShipmentId",
-			String.valueOf(commerceShipmentItem.getCommerceShipmentId()));
-		portletURL.setParameter(
+			String.valueOf(commerceShipmentItem.getCommerceShipmentId())
+		).setParameter(
 			"commerceShipmentItemId",
-			String.valueOf(commerceShipmentItem.getCommerceShipmentItemId()));
+			String.valueOf(commerceShipmentItem.getCommerceShipmentItemId())
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

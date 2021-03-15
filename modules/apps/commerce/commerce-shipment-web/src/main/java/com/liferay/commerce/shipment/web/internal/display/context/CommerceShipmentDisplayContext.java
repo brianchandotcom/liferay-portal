@@ -34,6 +34,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -60,7 +61,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -234,21 +234,23 @@ public class CommerceShipmentDisplayContext
 					CommerceShipmentConstants.getShipmentTransitionLabel(
 						shipmentStatus);
 
-				PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-					httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
-					PortletRequest.ACTION_PHASE);
-
-				portletURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/commerce_shipment/edit_commerce_shipment");
-				portletURL.setParameter(Constants.CMD, "transition");
-				portletURL.setParameter(
-					"redirect", PortalUtil.getCurrentURL(httpServletRequest));
-				portletURL.setParameter(
+				PortletURL portletURL = PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						httpServletRequest,
+						CommercePortletKeys.COMMERCE_SHIPMENT,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/commerce_shipment/edit_commerce_shipment"
+				).setParameter(
+					Constants.CMD, "transition"
+				).setRedirect(
+					PortalUtil.getCurrentURL(httpServletRequest)
+				).setParameter(
 					"commerceShipmentId",
-					String.valueOf(getCommerceShipmentId()));
-				portletURL.setParameter(
-					"transitionName", String.valueOf(shipmentStatus));
+					String.valueOf(getCommerceShipmentId())
+				).setParameter(
+					"transitionName", String.valueOf(shipmentStatus)
+				).build();
 
 				String buttonClass = "btn-primary";
 
@@ -278,9 +280,11 @@ public class CommerceShipmentDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter("navigation", getNavigation());
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setParameter(
+			"navigation", getNavigation()
+		).build();
 
 		return portletURL;
 	}
@@ -317,17 +321,18 @@ public class CommerceShipmentDisplayContext
 			(commerceShipment.getStatus() ==
 				CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING)) {
 
-			PortletURL portletURL = getPortletURL();
-
-			portletURL.setParameter(
-				"redirect", PortalUtil.getCurrentURL(httpServletRequest));
-			portletURL.setParameter(
+			PortletURL portletURL = PortletURLBuilder.create(
+				getPortletURL()
+			).setRedirect(
+				PortalUtil.getCurrentURL(httpServletRequest)
+			).setParameter(
 				"commerceShipmentId",
-				String.valueOf(commerceShipment.getCommerceShipmentId()));
-			portletURL.setParameter(
-				"mvcRenderCommandName",
-				"/commerce_shipment/add_commerce_shipment_items");
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+				String.valueOf(commerceShipment.getCommerceShipmentId())
+			).setMVCRenderCommandName(
+				"/commerce_shipment/add_commerce_shipment_items"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 
 			creationMenu.addDropdownItem(
 				dropdownItem -> {

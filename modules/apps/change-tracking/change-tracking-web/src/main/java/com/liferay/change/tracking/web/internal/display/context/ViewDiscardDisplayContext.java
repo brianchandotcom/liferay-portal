@@ -18,6 +18,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -144,12 +145,13 @@ public class ViewDiscardDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/change_tracking/view_changes");
-		portletURL.setParameter(
-			"ctCollectionId", String.valueOf(_ctCollectionId));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/change_tracking/view_changes"
+		).setParameter(
+			"ctCollectionId", String.valueOf(_ctCollectionId)
+		).build();
 
 		return portletURL.toString();
 	}

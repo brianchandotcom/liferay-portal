@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -2382,14 +2383,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				URLCodec.encodeURL(WikiEscapeUtil.escapeName(page.getTitle())));
 		}
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/wiki/view_page_activities");
-		portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
-		portletURL.setParameter("title", page.getTitle());
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/wiki/view_page_activities"
+		).setParameter(
+			"nodeId", String.valueOf(page.getNodeId())
+		).setParameter(
+			"title", page.getTitle()
+		).build();
 
 		return portletURL.toString();
 	}

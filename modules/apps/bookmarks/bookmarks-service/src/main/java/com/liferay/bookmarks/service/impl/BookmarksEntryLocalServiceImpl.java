@@ -25,6 +25,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -730,13 +731,15 @@ public class BookmarksEntryLocalServiceImpl
 
 		Group group = groupLocalService.fetchGroup(entry.getGroupId());
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, group, BookmarksPortletKeys.BOOKMARKS_ADMIN, 0,
-			0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
-		portletURL.setParameter(
-			"folderId", String.valueOf(entry.getFolderId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, group, BookmarksPortletKeys.BOOKMARKS_ADMIN,
+				0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/bookmarks/view"
+		).setParameter(
+			"folderId", String.valueOf(entry.getFolderId())
+		).build();
 
 		return portletURL.toString();
 	}

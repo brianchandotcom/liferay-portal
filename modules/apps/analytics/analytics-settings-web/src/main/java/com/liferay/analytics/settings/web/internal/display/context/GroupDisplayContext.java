@@ -19,6 +19,7 @@ import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWe
 import com.liferay.analytics.settings.web.internal.search.GroupChecker;
 import com.liferay.analytics.settings.web.internal.search.GroupSearch;
 import com.liferay.analytics.settings.web.internal.util.AnalyticsSettingsUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -136,9 +137,11 @@ public class GroupDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", _mvcRenderCommandName);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			_mvcRenderCommandName
+		).build();
 
 		if (StringUtil.equalsIgnoreCase(
 				_mvcRenderCommandName, "/analytics_settings/edit_channel")) {

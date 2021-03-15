@@ -31,6 +31,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -176,18 +177,19 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, themeDisplay.getScopeGroup(),
-			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/cp_definitions/edit_cp_instance");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
-		portletURL.setParameter(
-			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				actionRequest, themeDisplay.getScopeGroup(),
+				CPDefinition.class.getName(), PortletProvider.Action.EDIT)
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_instance"
+		).setParameter(
+			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId())
+		).setParameter(
+			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId())
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		return portletURL.toString();
 	}

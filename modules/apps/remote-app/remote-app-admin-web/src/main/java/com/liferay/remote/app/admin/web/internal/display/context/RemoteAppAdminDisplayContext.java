@@ -16,6 +16,7 @@ package com.liferay.remote.app.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -44,12 +45,13 @@ public class RemoteAppAdminDisplayContext {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				PortletURL addRemoteAppEntryURL =
-					_renderResponse.createRenderURL();
-
-				addRemoteAppEntryURL.setParameter(
-					"mvcRenderCommandName",
-					"/remote_app_admin/edit_remote_app_entry");
-				addRemoteAppEntryURL.setParameter("redirect", _getRedirect());
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/remote_app_admin/edit_remote_app_entry"
+					).setRedirect(
+						_getRedirect()
+					).build();
 
 				dropdownItem.setHref(addRemoteAppEntryURL);
 

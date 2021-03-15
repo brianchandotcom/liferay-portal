@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,13 +83,13 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "convertSelectedPages");
 
-				PortletURL convertLayoutURL =
-					liferayPortletResponse.createActionURL();
-
-				convertLayoutURL.setParameter(
-					ActionRequest.ACTION_NAME, "/layout_admin/convert_layout");
-				convertLayoutURL.setParameter(
-					"redirect", _themeDisplay.getURLCurrent());
+				PortletURL convertLayoutURL = PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/layout_admin/convert_layout"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).build();
 
 				dropdownItem.putData(
 					"convertLayoutURL", convertLayoutURL.toString());
@@ -104,13 +104,13 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedPages");
 
-				PortletURL deleteLayoutURL =
-					liferayPortletResponse.createActionURL();
-
-				deleteLayoutURL.setParameter(
-					ActionRequest.ACTION_NAME, "/layout_admin/delete_layout");
-				deleteLayoutURL.setParameter(
-					"redirect", _themeDisplay.getURLCurrent());
+				PortletURL deleteLayoutURL = PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/layout_admin/delete_layout"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).build();
 
 				dropdownItem.putData(
 					"deleteLayoutURL", deleteLayoutURL.toString());
@@ -125,9 +125,11 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -208,11 +210,12 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
 			"privateLayout",
-			String.valueOf(_layoutsAdminDisplayContext.isPrivateLayout()));
+			String.valueOf(_layoutsAdminDisplayContext.isPrivateLayout())
+		).build();
 
 		return portletURL.toString();
 	}

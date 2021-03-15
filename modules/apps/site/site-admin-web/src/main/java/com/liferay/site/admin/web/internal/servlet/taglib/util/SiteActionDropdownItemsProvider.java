@@ -17,6 +17,7 @@ package com.liferay.site.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -37,7 +38,6 @@ import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -110,14 +110,15 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getActivateSiteActionUnsafeConsumer() {
 
-		PortletURL activateSiteURL = _liferayPortletResponse.createActionURL();
-
-		activateSiteURL.setParameter(
-			ActionRequest.ACTION_NAME, "/site_admin/activate_group");
-
-		activateSiteURL.setParameter("redirect", _getRedirect());
-		activateSiteURL.setParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
+		PortletURL activateSiteURL = PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/site_admin/activate_group"
+		).setRedirect(
+			_getRedirect()
+		).setParameter(
+			"groupId", String.valueOf(_group.getGroupId())
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "activateSite");
@@ -144,15 +145,15 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeactivateSiteActionUnsafeConsumer() {
 
-		PortletURL deactivateSiteURL =
-			_liferayPortletResponse.createActionURL();
-
-		deactivateSiteURL.setParameter(
-			ActionRequest.ACTION_NAME, "/site_admin/deactivate_group");
-
-		deactivateSiteURL.setParameter("redirect", _getRedirect());
-		deactivateSiteURL.setParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
+		PortletURL deactivateSiteURL = PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/site_admin/deactivate_group"
+		).setRedirect(
+			_getRedirect()
+		).setParameter(
+			"groupId", String.valueOf(_group.getGroupId())
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deactivateSite");
@@ -166,14 +167,15 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteSiteActionUnsafeConsumer() {
 
-		PortletURL deleteSiteURL = _liferayPortletResponse.createActionURL();
-
-		deleteSiteURL.setParameter(
-			ActionRequest.ACTION_NAME, "/site_admin/delete_groups");
-
-		deleteSiteURL.setParameter("redirect", _getRedirect());
-		deleteSiteURL.setParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
+		PortletURL deleteSiteURL = PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/site_admin/delete_groups"
+		).setRedirect(
+			_getRedirect()
+		).setParameter(
+			"groupId", String.valueOf(_group.getGroupId())
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteSite");
@@ -186,16 +188,17 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getLeaveSiteActionUnsafeConsumer() {
 
-		PortletURL leaveSiteURL = _liferayPortletResponse.createActionURL();
-
-		leaveSiteURL.setParameter(
-			ActionRequest.ACTION_NAME, "/site_admin/edit_group_assignments");
-
-		leaveSiteURL.setParameter("redirect", _getRedirect());
-		leaveSiteURL.setParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
-		leaveSiteURL.setParameter(
-			"removeUserIds", String.valueOf(_themeDisplay.getUserId()));
+		PortletURL leaveSiteURL = PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/site_admin/edit_group_assignments"
+		).setRedirect(
+			_getRedirect()
+		).setParameter(
+			"groupId", String.valueOf(_group.getGroupId())
+		).setParameter(
+			"removeUserIds", String.valueOf(_themeDisplay.getUserId())
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "leaveSite");

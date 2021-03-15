@@ -25,6 +25,7 @@ import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -130,13 +131,15 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			cpContentRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
 		String delta = ParamUtil.getString(
 			cpContentRequestHelper.getRequest(), "delta",
 			String.valueOf(getPaginationDelta()));
 
-		portletURL.setParameter("delta", delta);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"delta", delta
+		).build();
 
 		return portletURL;
 	}

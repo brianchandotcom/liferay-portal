@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -280,9 +281,11 @@ public class BaseManagementToolbarDisplayContext
 				_log.warn(portletException, portletException);
 			}
 
-			PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-			portletURL.setParameters(currentURLObj.getParameterMap());
+			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setParameters(
+				currentURLObj.getParameterMap()
+			).build();
 
 			return portletURL;
 		}

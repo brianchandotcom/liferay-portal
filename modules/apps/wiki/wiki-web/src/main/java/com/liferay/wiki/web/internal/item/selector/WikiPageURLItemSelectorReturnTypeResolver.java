@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.internal.item.selector;
 
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -84,13 +85,17 @@ public class WikiPageURLItemSelectorReturnTypeResolver
 			}
 		}
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			themeDisplay.getRequest(), WikiPortletKeys.WIKI_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-		portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
-		portletURL.setParameter("title", page.getTitle());
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				themeDisplay.getRequest(), WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/wiki/view"
+		).setParameter(
+			"nodeId", String.valueOf(page.getNodeId())
+		).setParameter(
+			"title", page.getTitle()
+		).build();
 
 		return _http.removeDomain(portletURL.toString());
 	}

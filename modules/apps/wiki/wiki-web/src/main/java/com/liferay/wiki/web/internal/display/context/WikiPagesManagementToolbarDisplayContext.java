@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,7 +52,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -121,11 +121,11 @@ public class WikiPagesManagementToolbarDisplayContext {
 		).put(
 			"deletePagesURL",
 			() -> {
-				PortletURL deletePagesURL =
-					_liferayPortletResponse.createActionURL();
-
-				deletePagesURL.setParameter(
-					ActionRequest.ACTION_NAME, "/wiki/edit_page");
+				PortletURL deletePagesURL = PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/wiki/edit_page"
+				).build();
 
 				return deletePagesURL.toString();
 			}
@@ -150,15 +150,18 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getClearResultsURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
-		portletURL.setParameter("redirect", _currentURLObj.toString());
-
 		WikiNode node = (WikiNode)_httpServletRequest.getAttribute(
 			WikiWebKeys.WIKI_NODE);
 
-		portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/wiki/view_pages"
+		).setRedirect(
+			_currentURLObj.toString()
+		).setParameter(
+			"nodeId", String.valueOf(node.getNodeId())
+		).build();
 
 		return portletURL;
 	}
@@ -225,10 +228,12 @@ public class WikiPagesManagementToolbarDisplayContext {
 		return LabelItemListBuilder.add(
 			() -> !navigation.equals("all-pages"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					_getPortletURL(), _liferayPortletResponse);
-
-				removeLabelURL.setParameter("navigation", (String)null);
+				PortletURL removeLabelURL = PortletURLBuilder.create(
+					PortletURLUtil.clone(
+						_getPortletURL(), _liferayPortletResponse)
+				).setParameter(
+					"navigation", (String)null
+				).build();
 
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
@@ -241,15 +246,16 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSearchActionURL() {
-		PortletURL searchActionURL = _wikiURLHelper.getSearchURL();
-
-		searchActionURL.setParameter("redirect", _currentURLObj.toString());
-
 		WikiNode node = (WikiNode)_httpServletRequest.getAttribute(
 			WikiWebKeys.WIKI_NODE);
 
-		searchActionURL.setParameter(
-			"nodeId", String.valueOf(node.getNodeId()));
+		PortletURL searchActionURL = PortletURLBuilder.create(
+			_wikiURLHelper.getSearchURL()
+		).setRedirect(
+			_currentURLObj.toString()
+		).setParameter(
+			"nodeId", String.valueOf(node.getNodeId())
+		).build();
 
 		return searchActionURL;
 	}
@@ -259,13 +265,14 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = _getPortletURL();
-
-		sortingURL.setParameter("orderByCol", _getOrderByCol());
-
-		sortingURL.setParameter(
+		PortletURL sortingURL = PortletURLBuilder.create(
+			_getPortletURL()
+		).setParameter(
+			"orderByCol", _getOrderByCol()
+		).setParameter(
 			"orderByType",
-			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc");
+			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc"
+		).build();
 
 		return sortingURL;
 	}
@@ -407,11 +414,13 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
-		portletURL.setParameter("redirect", _currentURLObj.toString());
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
+		).setMVCRenderCommandName(
+			"/wiki/view_pages"
+		).setRedirect(
+			_currentURLObj.toString()
+		).build();
 
 		return portletURL;
 	}

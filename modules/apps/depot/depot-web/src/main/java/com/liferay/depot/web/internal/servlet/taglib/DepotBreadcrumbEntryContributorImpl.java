@@ -18,6 +18,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -149,14 +150,15 @@ public class DepotBreadcrumbEntryContributorImpl
 
 		Group group = depotEntry.getGroup();
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/depot/view_depot_dashboard");
-		portletURL.setParameter(
-			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/depot/view_depot_dashboard"
+		).setParameter(
+			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId())
+		).build();
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 

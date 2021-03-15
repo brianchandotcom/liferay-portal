@@ -19,6 +19,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -123,10 +124,11 @@ public class CopyContributedFragmentEntryMVCActionCommand
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"fragmentCollectionId", String.valueOf(fragmentCollectionId));
+		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"fragmentCollectionId", String.valueOf(fragmentCollectionId)
+		).build();
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 	}

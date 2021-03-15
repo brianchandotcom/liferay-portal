@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -57,14 +58,15 @@ public class DLBreadcrumbUtil {
 				folder, httpServletRequest, renderResponse);
 		}
 
-		PortletURL portletURL = renderResponse.createRenderURL();
-
 		FileEntry unescapedFileEntry = fileEntry.toUnescapedModel();
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view_file_entry");
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/document_library/view_file_entry"
+		).setParameter(
+			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
+		).build();
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, unescapedFileEntry.getTitle(),
@@ -87,12 +89,13 @@ public class DLBreadcrumbUtil {
 
 		FileShortcut unescapedDLFileShortcut = fileShortcut.toUnescapedModel();
 
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view_file_entry");
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(fileShortcut.getToFileEntryId()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/document_library/view_file_entry"
+		).setParameter(
+			"fileEntryId", String.valueOf(fileShortcut.getToFileEntryId())
+		).build();
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, unescapedDLFileShortcut.getToTitle(),
@@ -108,10 +111,11 @@ public class DLBreadcrumbUtil {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/document_library/view"
+		).build();
 
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(
 			"direction-right", Boolean.TRUE.toString()

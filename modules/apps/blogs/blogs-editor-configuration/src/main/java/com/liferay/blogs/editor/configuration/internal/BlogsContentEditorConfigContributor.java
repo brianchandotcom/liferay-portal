@@ -22,6 +22,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -89,12 +89,12 @@ public class BlogsContentEditorConfigContributor
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (Validator.isNotNull(portletDisplay.getId())) {
-			PortletURL portletURL =
+			PortletURL portletURL = PortletURLBuilder.create(
 				requestBackedPortletURLFactory.createActionURL(
-					portletDisplay.getId());
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/blogs/upload_temp_image");
+					portletDisplay.getId())
+			).setActionName(
+				"/blogs/upload_temp_image"
+			).build();
 
 			jsonObject.put("uploadUrl", portletURL.toString());
 		}

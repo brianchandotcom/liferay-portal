@@ -62,6 +62,7 @@ import com.liferay.calendar.web.internal.util.CalendarResourceUtil;
 import com.liferay.calendar.web.internal.util.CalendarUtil;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -1210,16 +1211,20 @@ public class CalendarPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter("mvcPath", "/view_calendar_booking.jsp");
-		redirectURL.setParameter(
+		PortletURL redirectURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view_calendar_booking.jsp"
+		).setParameter(
 			"calendarBookingId",
-			String.valueOf(calendarBooking.getCalendarBookingId()));
-		redirectURL.setParameter("instanceIndex", "0");
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
+			String.valueOf(calendarBooking.getCalendarBookingId())
+		).setParameter(
+			"instanceIndex", "0"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		return redirectURL.toString();
 	}

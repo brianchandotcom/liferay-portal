@@ -23,6 +23,7 @@ import com.liferay.commerce.subscription.web.internal.model.SubscriptionEntry;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -115,18 +116,18 @@ public class CommerceSubscriptionEntryClayDataSetActionProvider
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceSubscriptionEntry.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_subscription_entry/edit_commerce_subscription_entry");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceSubscriptionEntry.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_subscription_entry/edit_commerce_subscription_entry"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
 			"commerceSubscriptionEntryId",
-			String.valueOf(commerceSubscriptionEntryId));
+			String.valueOf(commerceSubscriptionEntryId)
+		).build();
 
 		return portletURL;
 	}

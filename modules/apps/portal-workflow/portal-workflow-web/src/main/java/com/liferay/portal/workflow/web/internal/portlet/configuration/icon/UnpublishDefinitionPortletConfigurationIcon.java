@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -25,7 +26,6 @@ import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 import java.util.ResourceBundle;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -71,18 +71,19 @@ public class UnpublishDefinitionPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-			PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/portal_workflow/deactivate_workflow_definition");
-		portletURL.setParameter(
-			"mvcPath", portletRequest.getParameter("mvcPath"));
-		portletURL.setParameter("name", portletRequest.getParameter("name"));
-		portletURL.setParameter(
-			"version", portletRequest.getParameter("version"));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/portal_workflow/deactivate_workflow_definition"
+		).setMVCPath(
+			portletRequest.getParameter("mvcPath")
+		).setParameter(
+			"name", portletRequest.getParameter("name")
+		).setParameter(
+			"version", portletRequest.getParameter("version")
+		).build();
 
 		return portletURL.toString();
 	}

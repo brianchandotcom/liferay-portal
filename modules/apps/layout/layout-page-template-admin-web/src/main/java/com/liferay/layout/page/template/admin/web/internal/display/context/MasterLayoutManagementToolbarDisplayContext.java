@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.admin.web.internal.security.permission.r
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
@@ -111,9 +111,11 @@ public class MasterLayoutManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -125,18 +127,17 @@ public class MasterLayoutManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		PortletURL addMasterLayoutURL =
-			liferayPortletResponse.createActionURL();
-
-		addMasterLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/add_master_layout");
-		addMasterLayoutURL.setParameter(
-			"backURL", _themeDisplay.getURLCurrent());
-		addMasterLayoutURL.setParameter(
+		PortletURL addMasterLayoutURL = PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/layout_page_template_admin/add_master_layout"
+		).setParameter(
+			"backURL", _themeDisplay.getURLCurrent()
+		).setParameter(
 			"type",
 			String.valueOf(
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT));
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)
+		).build();
 
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {

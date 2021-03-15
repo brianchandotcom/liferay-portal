@@ -27,6 +27,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -102,16 +102,16 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 		_getDeleteFragmentCompositionActionUnsafeConsumer() {
 
 		PortletURL deleteFragmentCompositionURL =
-			_renderResponse.createActionURL();
-
-		deleteFragmentCompositionURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/fragment/delete_fragment_compositions");
-		deleteFragmentCompositionURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteFragmentCompositionURL.setParameter(
-			"fragmentCompositionId",
-			String.valueOf(_fragmentComposition.getFragmentCompositionId()));
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/fragment/delete_fragment_compositions"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"fragmentCompositionId",
+				String.valueOf(_fragmentComposition.getFragmentCompositionId())
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteFragmentComposition");
@@ -127,14 +127,14 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 		_getDeleteFragmentCompositionPreviewActionUnsafeConsumer() {
 
 		PortletURL deleteFragmentCompositionPreviewURL =
-			_renderResponse.createActionURL();
-
-		deleteFragmentCompositionPreviewURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/fragment/delete_fragment_composition_preview");
-		deleteFragmentCompositionPreviewURL.setParameter(
-			"fragmentCompositionId",
-			String.valueOf(_fragmentComposition.getFragmentCompositionId()));
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/fragment/delete_fragment_composition_preview"
+			).setParameter(
+				"fragmentCompositionId",
+				String.valueOf(_fragmentComposition.getFragmentCompositionId())
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteFragmentCompositionPreview");
@@ -170,11 +170,11 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 	}
 
 	private String _getItemSelectorURL() {
-		PortletURL uploadURL = _renderResponse.createActionURL();
-
-		uploadURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/fragment/upload_fragment_composition_preview");
+		PortletURL uploadURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/fragment/upload_fragment_composition_preview"
+		).build();
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
@@ -186,14 +186,15 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-			_renderResponse.getNamespace() + "changePreview",
-			itemSelectorCriterion);
-
-		itemSelectorURL.setParameter(
+		PortletURL itemSelectorURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_renderResponse.getNamespace() + "changePreview",
+				itemSelectorCriterion)
+		).setParameter(
 			"fragmentCompositionId",
-			String.valueOf(_fragmentComposition.getFragmentCompositionId()));
+			String.valueOf(_fragmentComposition.getFragmentCompositionId())
+		).build();
 
 		return itemSelectorURL.toString();
 	}
@@ -203,19 +204,22 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 		throws Exception {
 
 		PortletURL selectFragmentCollectionURL =
-			_renderResponse.createRenderURL();
-
-		selectFragmentCollectionURL.setParameter(
-			"mvcRenderCommandName", "/fragment/select_fragment_collection");
-		selectFragmentCollectionURL.setWindowState(LiferayWindowState.POP_UP);
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/fragment/select_fragment_collection"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 
 		PortletURL moveFragmentCompositionURL =
-			_renderResponse.createActionURL();
-
-		moveFragmentCompositionURL.setParameter(
-			ActionRequest.ACTION_NAME, "/fragment/move_fragment_composition");
-		moveFragmentCompositionURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/fragment/move_fragment_composition"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "moveFragmentComposition");
@@ -238,13 +242,14 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 		_getRenameFragmentCompositionActionUnsafeConsumer() {
 
 		PortletURL renameFragmentCompositionURL =
-			_renderResponse.createActionURL();
-
-		renameFragmentCompositionURL.setParameter(
-			ActionRequest.ACTION_NAME, "/fragment/rename_fragment_composition");
-		renameFragmentCompositionURL.setParameter(
-			"fragmentCompositionId",
-			String.valueOf(_fragmentComposition.getFragmentCompositionId()));
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/fragment/rename_fragment_composition"
+			).setParameter(
+				"fragmentCompositionId",
+				String.valueOf(_fragmentComposition.getFragmentCompositionId())
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "renameFragmentComposition");

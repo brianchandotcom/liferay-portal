@@ -21,6 +21,7 @@ import com.liferay.exportimport.util.comparator.ExportImportConfigurationNameCom
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.BaseManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -69,10 +70,11 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getRenderURL();
-
-		clearResultsURL.setParameter(
-			"mvcPath", "/publish_templates/view_publish_configurations.jsp");
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getRenderURL()
+		).setMVCPath(
+			"/publish_templates/view_publish_configurations.jsp"
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -105,11 +107,11 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = getRenderURL();
-
-		searchActionURL.setParameter(
-			"mvcRenderCommandName",
-			"/staging_processes/view_publish_configurations");
+		PortletURL searchActionURL = PortletURLBuilder.create(
+			getRenderURL()
+		).setMVCRenderCommandName(
+			"/staging_processes/view_publish_configurations"
+		).build();
 
 		return searchActionURL.toString();
 	}

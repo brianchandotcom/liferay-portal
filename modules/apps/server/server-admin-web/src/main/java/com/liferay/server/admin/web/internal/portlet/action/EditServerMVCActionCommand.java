@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.log4j.Log4JUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.ConvertException;
@@ -462,10 +463,13 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			LiferayActionResponse liferayActionResponse =
 				(LiferayActionResponse)actionResponse;
 
-			PortletURL portletURL = liferayActionResponse.createRenderURL();
-
-			portletURL.setParameter("mvcRenderCommandName", path);
-			portletURL.setWindowState(WindowState.MAXIMIZED);
+			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+				liferayActionResponse
+			).setMVCRenderCommandName(
+				path
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).build();
 
 			return portletURL.toString();
 		}

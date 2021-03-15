@@ -21,6 +21,7 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.web.internal.constants.CalendarWebKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -147,14 +148,16 @@ public class CalendarBookingAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, CalendarPortletKeys.CALENDAR, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, CalendarPortletKeys.CALENDAR, 0,
+				0, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_calendar_booking.jsp"
+		).setParameter(
 			"calendarBookingId",
-			String.valueOf(_calendarBooking.getCalendarBookingId()));
+			String.valueOf(_calendarBooking.getCalendarBookingId())
+		).build();
 
 		return portletURL;
 	}
@@ -166,17 +169,19 @@ public class CalendarBookingAssetRenderer
 		String noSuchEntryRedirect) {
 
 		try {
-			PortletURL portletURL = liferayPortletResponse.createRenderURL(
-				CalendarPortletKeys.CALENDAR);
-
-			portletURL.setParameter("mvcPath", "/view_calendar_booking.jsp");
-			portletURL.setParameter(
+			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+				liferayPortletResponse, CalendarPortletKeys.CALENDAR
+			).setMVCPath(
+				"/view_calendar_booking.jsp"
+			).setParameter(
 				"returnToFullPageURL",
-				PortalUtil.getCurrentURL(liferayPortletRequest));
-			portletURL.setParameter(
+				PortalUtil.getCurrentURL(liferayPortletRequest)
+			).setParameter(
 				"calendarBookingId",
-				String.valueOf(_calendarBooking.getCalendarBookingId()));
-			portletURL.setWindowState(WindowState.MAXIMIZED);
+				String.valueOf(_calendarBooking.getCalendarBookingId())
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).build();
 
 			return portletURL.toString();
 		}

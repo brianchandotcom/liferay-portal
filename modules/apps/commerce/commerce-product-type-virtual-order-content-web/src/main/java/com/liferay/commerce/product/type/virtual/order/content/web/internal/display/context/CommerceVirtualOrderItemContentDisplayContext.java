@@ -34,6 +34,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -224,22 +225,22 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 			_commerceVirtualOrderItemContentRequestHelper.
 				getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
 			"/commerce_virtual_order_item_content" +
-				"/view_commerce_virtual_order_item_terms_of_use");
-		portletURL.setParameter(
+				"/view_commerce_virtual_order_item_terms_of_use"
+		).setParameter(
 			"commerceVirtualOrderItemId",
 			String.valueOf(
-				commerceVirtualOrderItem.getCommerceVirtualOrderItemId()));
-		portletURL.setParameter(
+				commerceVirtualOrderItem.getCommerceVirtualOrderItemId())
+		).setParameter(
 			"groupId",
 			String.valueOf(
-				_commerceVirtualOrderItemContentRequestHelper.
-					getScopeGroupId()));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+				_commerceVirtualOrderItemContentRequestHelper.getScopeGroupId())
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		if (cpDefinitionVirtualSetting.isUseTermsOfUseJournal()) {
 			JournalArticle termsOfUseJournalArticle =

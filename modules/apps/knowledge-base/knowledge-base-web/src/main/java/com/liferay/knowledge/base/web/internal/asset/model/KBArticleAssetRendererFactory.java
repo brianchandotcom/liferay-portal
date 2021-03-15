@@ -24,6 +24,7 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -120,12 +121,14 @@ public class KBArticleAssetRendererFactory
 			LiferayPortletResponse liferayPortletResponse, long classTypeId)
 		throws PortalException {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			liferayPortletRequest, getGroup(liferayPortletRequest),
-			KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				liferayPortletRequest, getGroup(liferayPortletRequest),
+				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/admin/edit_article.jsp"
+		).build();
 
 		return portletURL;
 	}

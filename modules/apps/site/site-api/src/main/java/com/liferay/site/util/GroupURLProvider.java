@@ -20,6 +20,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -167,18 +168,18 @@ public class GroupURLProvider {
 				return null;
 			}
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, group, _DEPOT_ADMIN_PORTLET_ID, 0, 0,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/depot/view_depot_dashboard");
-
 			DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
 				group.getGroupId());
 
-			portletURL.setParameter(
-				"depotEntryId", String.valueOf(depotEntry.getDepotEntryId()));
+			PortletURL portletURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, group, _DEPOT_ADMIN_PORTLET_ID, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/depot/view_depot_dashboard"
+			).setParameter(
+				"depotEntryId", String.valueOf(depotEntry.getDepotEntryId())
+			).build();
 
 			return portletURL.toString();
 		}

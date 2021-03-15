@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -115,10 +116,11 @@ public class FiltersManagementToolbarDisplayContextWrapper
 
 				filterLabelItems.add(
 					labelItem -> {
-						PortletURL removeLabelURL = getPortletURL();
-
-						removeLabelURL.setParameter(
-							filterContributor.getParameter(), (String)null);
+						PortletURL removeLabelURL = PortletURLBuilder.create(
+							getPortletURL()
+						).setParameter(
+							filterContributor.getParameter(), (String)null
+						).build();
 
 						labelItem.putData(
 							"removeLabelURL", removeLabelURL.toString());

@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.upload.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -46,7 +47,6 @@ import java.io.PrintWriter;
 import java.util.Dictionary;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -274,13 +274,15 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		MockMultipartHttpServletRequest mockServletRequest =
 			(MockMultipartHttpServletRequest)servletRequest;
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			mockServletRequest, TestUploadPortlet.PORTLET_NAME,
-			layout.getPlid(), PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, TestUploadPortlet.MVC_COMMAND_NAME);
-		portletURL.setParameter("randomId", RandomTestUtil.randomString());
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				mockServletRequest, TestUploadPortlet.PORTLET_NAME,
+				layout.getPlid(), PortletRequest.ACTION_PHASE)
+		).setActionName(
+			TestUploadPortlet.MVC_COMMAND_NAME
+		).setParameter(
+			"randomId", RandomTestUtil.randomString()
+		).build();
 
 		String url = portletURL.toString();
 

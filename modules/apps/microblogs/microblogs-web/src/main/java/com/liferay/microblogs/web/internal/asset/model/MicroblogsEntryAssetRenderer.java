@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.web.internal.util.WebKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -126,20 +127,21 @@ public class MicroblogsEntryAssetRenderer
 			long portletPlid = PortalUtil.getPlidFromPortletId(
 				user.getGroupId(), MicroblogsPortletKeys.MICROBLOGS);
 
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				liferayPortletRequest, MicroblogsPortletKeys.MICROBLOGS,
-				portletPlid, PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcPath", "/microblogs/view.jsp");
-
 			long microblogsEntryId = _entry.getMicroblogsEntryId();
 
 			if (_entry.getParentMicroblogsEntryId() > 0) {
 				microblogsEntryId = _entry.getParentMicroblogsEntryId();
 			}
 
-			portletURL.setParameter(
-				"parentMicroblogsEntryId", String.valueOf(microblogsEntryId));
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					liferayPortletRequest, MicroblogsPortletKeys.MICROBLOGS,
+					portletPlid, PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/microblogs/view.jsp"
+			).setParameter(
+				"parentMicroblogsEntryId", String.valueOf(microblogsEntryId)
+			).build();
 
 			return portletURL.toString();
 		}

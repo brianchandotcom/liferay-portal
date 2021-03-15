@@ -30,6 +30,7 @@ import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelection;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelector;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelectorFactory;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -161,13 +162,15 @@ public class DisplayPortlet extends BaseKBPortlet {
 			kbArticle = null;
 		}
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
-			PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter("kbFolderId", String.valueOf(kbFolderId));
-
-		redirectURL.setParameter("kbFolderUrlTitle", kbFolderURLTitle);
+		PortletURL redirectURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"kbFolderId", String.valueOf(kbFolderId)
+		).setParameter(
+			"kbFolderUrlTitle", kbFolderURLTitle
+		).build();
 
 		if (kbArticle != null) {
 			redirectURL.setParameter("urlTitle", kbArticle.getUrlTitle());

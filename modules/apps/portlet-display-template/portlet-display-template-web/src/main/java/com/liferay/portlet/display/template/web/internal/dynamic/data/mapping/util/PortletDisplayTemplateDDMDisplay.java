@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -184,14 +185,19 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 		else {
 			long groupId = _portal.getScopeGroupId(liferayPortletRequest);
 
-			portletURL = liferayPortletResponse.createRenderURL();
-
-			portletURL.setParameter("mvcPath", "/view_template.jsp");
-			portletURL.setParameter("groupId", String.valueOf(groupId));
-			portletURL.setParameter("classNameId", String.valueOf(classNameId));
-			portletURL.setParameter("classPK", String.valueOf(classPK));
-
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+			portletURL = PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCPath(
+				"/view_template.jsp"
+			).setParameter(
+				"groupId", String.valueOf(groupId)
+			).setParameter(
+				"classNameId", String.valueOf(classNameId)
+			).setParameter(
+				"classPK", String.valueOf(classPK)
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 		}
 
 		return portletURL.toString();

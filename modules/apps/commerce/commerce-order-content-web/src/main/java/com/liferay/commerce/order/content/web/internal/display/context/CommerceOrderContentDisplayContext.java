@@ -46,6 +46,7 @@ import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -197,13 +198,15 @@ public class CommerceOrderContentDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			_cpRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCommerceOrderItems");
-		portletURL.setParameter("redirect", _cpRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"viewCommerceOrderItems"
+		).setRedirect(
+			_cpRequestHelper.getCurrentURL()
+		).setParameter(
+			"commerceOrderId", String.valueOf(commerceOrderId)
+		).build();
 
 		return portletURL.toString();
 	}

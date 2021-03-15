@@ -18,6 +18,7 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -61,27 +62,28 @@ public class MoveKBFolderPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/admin/move_object.jsp");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(portletRequest));
-
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(kbFolder.getClassNameId()));
-		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(kbFolder.getKbFolderId()));
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/admin/move_object.jsp"
+		).setRedirect(
+			_portal.getCurrentURL(portletRequest)
+		).setParameter(
+			"resourceClassNameId", String.valueOf(kbFolder.getClassNameId())
+		).setParameter(
+			"resourcePrimKey", String.valueOf(kbFolder.getKbFolderId())
+		).setParameter(
 			"parentResourceClassNameId",
-			String.valueOf(kbFolder.getClassNameId()));
-		portletURL.setParameter(
+			String.valueOf(kbFolder.getClassNameId())
+		).setParameter(
 			"parentResourcePrimKey",
-			String.valueOf(kbFolder.getParentKBFolderId()));
+			String.valueOf(kbFolder.getParentKBFolderId())
+		).build();
 
 		return portletURL.toString();
 	}

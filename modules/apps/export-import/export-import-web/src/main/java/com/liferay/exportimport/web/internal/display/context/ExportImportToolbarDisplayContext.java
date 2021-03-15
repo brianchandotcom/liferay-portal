@@ -23,6 +23,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -199,22 +200,22 @@ public class ExportImportToolbarDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = getRenderURL();
-
-		sortingURL.setParameter(
+		PortletURL sortingURL = PortletURLBuilder.create(
+			getRenderURL()
+		).setParameter(
 			"groupId",
-			String.valueOf(ParamUtil.getLong(_httpServletRequest, "groupId")));
-		sortingURL.setParameter(
+			String.valueOf(ParamUtil.getLong(_httpServletRequest, "groupId"))
+		).setParameter(
 			"privateLayout",
 			String.valueOf(
-				ParamUtil.getBoolean(_httpServletRequest, "privateLayout")));
-		sortingURL.setParameter(
+				ParamUtil.getBoolean(_httpServletRequest, "privateLayout"))
+		).setParameter(
 			"displayStyle",
 			ParamUtil.getString(
-				_httpServletRequest, "displayStyle", "descriptive"));
-		sortingURL.setParameter(
-			"orderByCol",
-			ParamUtil.getString(_httpServletRequest, "orderByCol"));
+				_httpServletRequest, "displayStyle", "descriptive")
+		).setParameter(
+			"orderByCol", ParamUtil.getString(_httpServletRequest, "orderByCol")
+		).build();
 
 		String orderByType = ParamUtil.getString(
 			_httpServletRequest, "orderByType");

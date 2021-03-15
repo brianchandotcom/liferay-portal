@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -65,15 +66,15 @@ public class CPDefinitionPricingClassDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/cp_definitions/edit_cp_definition_pricing_class");
-		portletURL.setParameter(
-			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId())
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_definition_pricing_class"
+		).setParameter(
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey()
+		).build();
 
 		return portletURL;
 	}

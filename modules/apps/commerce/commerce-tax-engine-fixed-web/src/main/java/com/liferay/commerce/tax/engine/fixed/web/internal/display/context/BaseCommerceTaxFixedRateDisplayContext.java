@@ -26,6 +26,7 @@ import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateCompa
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.util.CommerceTaxFixedRateRequestHelper;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -170,14 +171,14 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			commerceTaxFixedRateRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_tax_methods/edit_commerce_tax_method");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/commerce_tax_methods/edit_commerce_tax_method"
+		).setParameter(
 			"screenNavigationCategoryKey",
-			getSelectedScreenNavigationCategoryKey());
+			getSelectedScreenNavigationCategoryKey()
+		).build();
 
 		String redirect = ParamUtil.getString(
 			commerceTaxFixedRateRequestHelper.getRequest(), "redirect");

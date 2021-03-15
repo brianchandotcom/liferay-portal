@@ -14,6 +14,7 @@
 
 package com.liferay.login.authentication.facebook.connect.web.internal.struts;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
@@ -270,21 +271,29 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse, User user)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/login_authentication_facebook_connect/associate_facebook_user");
-		portletURL.setParameter(
-			"redirect", ParamUtil.getString(httpServletRequest, "redirect"));
-		portletURL.setParameter("userId", String.valueOf(user.getUserId()));
-		portletURL.setParameter("emailAddress", user.getEmailAddress());
-		portletURL.setParameter("firstName", user.getFirstName());
-		portletURL.setParameter("lastName", user.getLastName());
-		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, PortletKeys.LOGIN,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"saveLastPath", Boolean.FALSE.toString()
+		).setMVCRenderCommandName(
+			"/login_authentication_facebook_connect/associate_facebook_user"
+		).setRedirect(
+			ParamUtil.getString(httpServletRequest, "redirect")
+		).setParameter(
+			"userId", String.valueOf(user.getUserId())
+		).setParameter(
+			"emailAddress", user.getEmailAddress()
+		).setParameter(
+			"firstName", user.getFirstName()
+		).setParameter(
+			"lastName", user.getLastName()
+		).setPortletMode(
+			PortletMode.VIEW
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		httpServletResponse.sendRedirect(portletURL.toString());
 	}

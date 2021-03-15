@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -65,7 +66,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -128,11 +128,11 @@ public class LayoutSiteNavigationMenuItemType
 	public PortletURL getAddURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		PortletURL addURL = renderResponse.createActionURL();
-
-		addURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/navigation_menu/add_layout_site_navigation_menu_item");
+		PortletURL addURL = PortletURLBuilder.createActionURL(
+			renderResponse
+		).setActionName(
+			"/navigation_menu/add_layout_site_navigation_menu_item"
+		).build();
 
 		return addURL;
 	}

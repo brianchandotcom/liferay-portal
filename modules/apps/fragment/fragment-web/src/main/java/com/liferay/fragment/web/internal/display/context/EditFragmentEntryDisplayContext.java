@@ -24,6 +24,7 @@ import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -52,7 +53,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -212,9 +212,11 @@ public class EditFragmentEntryDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/fragment/view");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/fragment/view"
+		).build();
 
 		if (getFragmentCollectionId() > 0) {
 			portletURL.setParameter(
@@ -265,22 +267,23 @@ public class EditFragmentEntryDisplayContext {
 	private String _getFragmentEntryRenderURL(String mvcRenderCommandName)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, FragmentPortletKeys.FRAGMENT,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
-
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_httpServletRequest, FragmentPortletKeys.FRAGMENT,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			mvcRenderCommandName
+		).setParameter(
 			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId()));
-		portletURL.setParameter(
+			String.valueOf(fragmentEntry.getFragmentEntryId())
+		).setParameter(
 			"fragmentEntryKey",
-			String.valueOf(fragmentEntry.getFragmentEntryKey()));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+			String.valueOf(fragmentEntry.getFragmentEntryKey())
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		return portletURL.toString();
 	}
@@ -455,11 +458,11 @@ public class EditFragmentEntryDisplayContext {
 				"edit",
 				() -> {
 					PortletURL editActionURL =
-						_renderResponse.createActionURL();
-
-					editActionURL.setParameter(
-						ActionRequest.ACTION_NAME,
-						"/fragment/edit_fragment_entry");
+						PortletURLBuilder.createActionURL(
+							_renderResponse
+						).setActionName(
+							"/fragment/edit_fragment_entry"
+						).build();
 
 					return editActionURL.toString();
 				}
@@ -478,14 +481,15 @@ public class EditFragmentEntryDisplayContext {
 	}
 
 	private String _getPublishFragmentEntryActionURL() {
-		PortletURL publishFragmentEntryURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, FragmentPortletKeys.FRAGMENT,
-			PortletRequest.ACTION_PHASE);
-
-		publishFragmentEntryURL.setParameter(
-			ActionRequest.ACTION_NAME, "/fragment/publish_fragment_entry");
-		publishFragmentEntryURL.setParameter(
-			"fragmentEntryId", String.valueOf(getFragmentEntryId()));
+		PortletURL publishFragmentEntryURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_httpServletRequest, FragmentPortletKeys.FRAGMENT,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/fragment/publish_fragment_entry"
+		).setParameter(
+			"fragmentEntryId", String.valueOf(getFragmentEntryId())
+		).build();
 
 		return publishFragmentEntryURL.toString();
 	}

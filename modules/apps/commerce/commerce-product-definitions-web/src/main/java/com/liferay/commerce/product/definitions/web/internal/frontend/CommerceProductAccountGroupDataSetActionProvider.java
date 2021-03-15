@@ -25,6 +25,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -89,25 +89,28 @@ public class CommerceProductAccountGroupDataSetActionProvider
 		CommerceAccountGroupRel commerceAccountGroupRel,
 		HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CPPortletKeys.CP_DEFINITIONS,
-			PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/cp_definitions/edit_cp_definition");
-		portletURL.setParameter(Constants.CMD, "deleteAccountGroup");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CPPortletKeys.CP_DEFINITIONS,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/cp_definitions/edit_cp_definition"
+		).setParameter(
+			Constants.CMD, "deleteAccountGroup"
+		).setRedirect(
+			redirect
+		).setParameter(
 			"commerceAccountGroupRelId",
 			String.valueOf(
-				commerceAccountGroupRel.getCommerceAccountGroupRelId()));
-		portletURL.setParameter(
+				commerceAccountGroupRel.getCommerceAccountGroupRelId())
+		).setParameter(
 			"cpDefinitionId",
-			String.valueOf(commerceAccountGroupRel.getClassPK()));
+			String.valueOf(commerceAccountGroupRel.getClassPK())
+		).build();
 
 		return portletURL;
 	}

@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -356,13 +357,13 @@ public class AddContentPanelDisplayContext {
 						curGroupId = group.getLiveGroupId();
 					}
 
-					PortletURL portletURL =
-						assetPublisherAddItemHolder.getPortletURL();
-
-					portletURL.setParameter(
+					PortletURL portletURL = PortletURLBuilder.create(
+						assetPublisherAddItemHolder.getPortletURL()
+					).setParameter(
 						"portletResource",
 						ProductNavigationControlMenuPortletKeys.
-							PRODUCT_NAVIGATION_CONTROL_MENU);
+							PRODUCT_NAVIGATION_CONTROL_MENU
+					).build();
 
 					return _assetHelper.getAddURLPopUp(
 						curGroupId, _themeDisplay.getPlid(), portletURL, false,

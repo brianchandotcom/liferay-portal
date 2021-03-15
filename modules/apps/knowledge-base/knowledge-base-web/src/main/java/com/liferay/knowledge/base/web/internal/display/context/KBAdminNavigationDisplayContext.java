@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -92,10 +93,11 @@ public class KBAdminNavigationDisplayContext {
 
 			kbObjectsNavigationItem.setActive(active);
 
-			PortletURL viewKBObjectsURL =
-				_liferayPortletResponse.createRenderURL();
-
-			viewKBObjectsURL.setParameter("mvcPath", "/admin/view.jsp");
+			PortletURL viewKBObjectsURL = PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/admin/view.jsp"
+			).build();
 
 			kbObjectsNavigationItem.setHref(viewKBObjectsURL.toString());
 
@@ -120,11 +122,11 @@ public class KBAdminNavigationDisplayContext {
 
 			kbTemplatesNavigationItem.setActive(active);
 
-			PortletURL viewKBTemplatesURL =
-				_liferayPortletResponse.createRenderURL();
-
-			viewKBTemplatesURL.setParameter(
-				"mvcPath", "/admin/view_templates.jsp");
+			PortletURL viewKBTemplatesURL = PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/admin/view_templates.jsp"
+			).build();
 
 			kbTemplatesNavigationItem.setHref(viewKBTemplatesURL.toString());
 
@@ -149,11 +151,11 @@ public class KBAdminNavigationDisplayContext {
 
 			kbSuggestionsNavigationItem.setActive(active);
 
-			PortletURL viewKBTemplatesURL =
-				_liferayPortletResponse.createRenderURL();
-
-			viewKBTemplatesURL.setParameter(
-				"mvcPath", "/admin/view_suggestions.jsp");
+			PortletURL viewKBTemplatesURL = PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/admin/view_suggestions.jsp"
+			).build();
 
 			kbSuggestionsNavigationItem.setHref(viewKBTemplatesURL.toString());
 

@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -111,10 +112,11 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"mvcRenderCommandName", "/change_tracking/view_scheduled");
+		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/change_tracking/view_scheduled"
+		).build();
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,

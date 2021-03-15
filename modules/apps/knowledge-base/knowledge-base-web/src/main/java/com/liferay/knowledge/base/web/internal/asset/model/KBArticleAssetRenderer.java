@@ -22,6 +22,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -126,13 +127,16 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0,
-			0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
-		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(_kbArticle.getResourcePrimKey()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group,
+				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/admin/edit_article.jsp"
+		).setParameter(
+			"resourcePrimKey", String.valueOf(_kbArticle.getResourcePrimKey())
+		).build();
 
 		return portletURL;
 	}

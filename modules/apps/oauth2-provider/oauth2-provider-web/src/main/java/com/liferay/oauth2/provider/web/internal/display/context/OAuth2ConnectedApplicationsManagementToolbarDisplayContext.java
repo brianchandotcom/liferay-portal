@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 /**
@@ -63,11 +63,11 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 			"revokeOauthAuthorizationsURL",
 			() -> {
 				PortletURL revokeOauthAuthorizationsURL =
-					liferayPortletResponse.createActionURL();
-
-				revokeOauthAuthorizationsURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/connected_applications/revoke_oauth2_authorizations");
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/connected_applications/revoke_oauth2_authorizations"
+					).build();
 
 				return revokeOauthAuthorizationsURL.toString();
 			}

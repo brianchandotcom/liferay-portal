@@ -21,6 +21,7 @@ import com.liferay.commerce.pricing.web.internal.model.PricingClassDiscount;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -76,20 +77,22 @@ public class CommercePricingClassDiscountDataSetActionProvider
 	private PortletURL _getDiscountEditURL(
 		long commerceDiscountId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CommercePricingPortletKeys.COMMERCE_DISCOUNT,
-			PortletRequest.RENDER_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_discount/edit_commerce_discount");
-		portletURL.setParameter(
-			"commerceDiscountId", String.valueOf(commerceDiscountId));
-		portletURL.setParameter("redirect", redirect);
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest,
+				CommercePricingPortletKeys.COMMERCE_DISCOUNT,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_discount/edit_commerce_discount"
+		).setParameter(
+			"commerceDiscountId", String.valueOf(commerceDiscountId)
+		).setRedirect(
+			redirect
+		).build();
 
 		return portletURL;
 	}

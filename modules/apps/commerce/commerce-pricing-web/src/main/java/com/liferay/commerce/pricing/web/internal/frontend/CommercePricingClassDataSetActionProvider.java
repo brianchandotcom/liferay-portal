@@ -22,6 +22,7 @@ import com.liferay.commerce.pricing.web.internal.model.PricingClass;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -105,27 +106,27 @@ public class CommercePricingClassDataSetActionProvider
 			PricingClass pricingClass, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest,
-			"com_liferay_portlet_configuration_web_portlet_" +
-				"PortletConfigurationPortlet",
-			ActionRequest.RENDER_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
-		portletURL.setParameter(
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			redirect);
-		portletURL.setParameter(
-			"modelResource", CommercePricingClass.class.getName());
-		portletURL.setParameter(
-			"modelResourceDescription", pricingClass.getTitle());
-		portletURL.setParameter(
-			"resourcePrimKey",
-			String.valueOf(pricingClass.getPricingClassId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", redirect
+		).setParameter(
+			"modelResource", CommercePricingClass.class.getName()
+		).setParameter(
+			"modelResourceDescription", pricingClass.getTitle()
+		).setParameter(
+			"resourcePrimKey", String.valueOf(pricingClass.getPricingClassId())
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -145,19 +146,19 @@ public class CommercePricingClassDataSetActionProvider
 	private PortletURL _getPricingClassEditURL(
 		long pricingClassId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest,
-			CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_pricing_classes/edit_commerce_pricing_class");
-		portletURL.setParameter(
-			"commercePricingClassId", String.valueOf(pricingClassId));
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest,
+				CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_pricing_classes/edit_commerce_pricing_class"
+		).setParameter(
+			"commercePricingClassId", String.valueOf(pricingClassId)
+		).setParameter(
 			"screenNavigationCategoryKey",
-			CommercePricingClassScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+			CommercePricingClassScreenNavigationConstants.CATEGORY_KEY_DETAILS
+		).build();
 
 		return portletURL;
 	}

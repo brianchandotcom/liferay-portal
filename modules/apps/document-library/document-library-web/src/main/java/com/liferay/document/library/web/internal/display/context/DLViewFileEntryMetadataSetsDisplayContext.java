@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -98,11 +99,12 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		renderURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_ddm_structure");
 
-		PortletURL currentPortletURL = PortletURLUtil.getCurrent(
-			_liferayPortletRequest, _liferayPortletResponse);
-
-		currentPortletURL.setParameter(
-			"navigation", "file_entry_metadata_sets");
+		PortletURL currentPortletURL = PortletURLBuilder.create(
+			PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse)
+		).setParameter(
+			"navigation", "file_entry_metadata_sets"
+		).build();
 
 		renderURL.setParameter("redirect", String.valueOf(currentPortletURL));
 

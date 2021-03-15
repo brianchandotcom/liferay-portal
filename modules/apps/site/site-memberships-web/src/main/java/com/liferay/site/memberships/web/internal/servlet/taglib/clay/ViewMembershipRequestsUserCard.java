@@ -15,6 +15,7 @@
 package com.liferay.site.memberships.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseUserCard;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -55,13 +56,16 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 
 	@Override
 	public String getHref() {
-		PortletURL previewURL = _renderResponse.createRenderURL();
-
-		previewURL.setParameter("mvcPath", "/preview_membership_request.jsp");
-		previewURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		previewURL.setParameter(
+		PortletURL previewURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/preview_membership_request.jsp"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
 			"membershipRequestId",
-			String.valueOf(_membershipRequest.getMembershipRequestId()));
+			String.valueOf(_membershipRequest.getMembershipRequestId())
+		).build();
 
 		return previewURL.toString();
 	}

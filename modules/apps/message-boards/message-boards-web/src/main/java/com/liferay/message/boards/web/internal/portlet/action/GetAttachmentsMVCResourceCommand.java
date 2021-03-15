@@ -16,6 +16,7 @@ package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -34,7 +35,6 @@ import com.liferay.trash.TrashHelper;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -129,17 +129,17 @@ public class GetAttachmentsMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceResponse resourceResponse, FileEntry fileEntry)
 		throws Exception {
 
-		PortletURL deleteURL = resourceResponse.createActionURL();
-
-		deleteURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/message_boards/edit_message_attachments");
-		deleteURL.setParameter(
-			Constants.CMD, _getDeleteCommand(resourceRequest));
-		deleteURL.setParameter(
-			"fileName", HtmlUtil.unescape(fileEntry.getTitle()));
-		deleteURL.setParameter(
-			"messageId", String.valueOf(message.getMessageId()));
+		PortletURL deleteURL = PortletURLBuilder.createActionURL(
+			resourceResponse
+		).setActionName(
+			"/message_boards/edit_message_attachments"
+		).setParameter(
+			Constants.CMD, _getDeleteCommand(resourceRequest)
+		).setParameter(
+			"fileName", HtmlUtil.unescape(fileEntry.getTitle())
+		).setParameter(
+			"messageId", String.valueOf(message.getMessageId())
+		).build();
 
 		return deleteURL;
 	}

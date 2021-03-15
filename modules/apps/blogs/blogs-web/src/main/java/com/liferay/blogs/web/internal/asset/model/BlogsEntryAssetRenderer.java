@@ -22,6 +22,7 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -174,12 +175,15 @@ public class BlogsEntryAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			httpServletRequest, group, BlogsPortletKeys.BLOGS, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
-		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				httpServletRequest, group, BlogsPortletKeys.BLOGS, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/blogs/edit_entry"
+		).setParameter(
+			"entryId", String.valueOf(_entry.getEntryId())
+		).build();
 
 		return portletURL;
 	}
@@ -207,12 +211,15 @@ public class BlogsEntryAssetRenderer
 		AssetRendererFactory<BlogsEntry> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = assetRendererFactory.getURLView(
-			liferayPortletResponse, windowState);
-
-		portletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
-		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
-		portletURL.setWindowState(windowState);
+		PortletURL portletURL = PortletURLBuilder.create(
+			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
+		).setMVCRenderCommandName(
+			"/blogs/view_entry"
+		).setParameter(
+			"entryId", String.valueOf(_entry.getEntryId())
+		).setWindowState(
+			windowState
+		).build();
 
 		return portletURL.toString();
 	}

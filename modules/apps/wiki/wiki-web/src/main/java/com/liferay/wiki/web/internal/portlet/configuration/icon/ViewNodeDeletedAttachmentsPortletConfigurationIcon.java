@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -67,16 +68,19 @@ public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 		try {
 			WikiNode node = ActionUtil.getNode(portletRequest);
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/wiki/view_node_deleted_attachments");
-			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-			portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-			portletURL.setParameter(
-				"viewTrashAttachments", Boolean.TRUE.toString());
+			PortletURL portletURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, WikiPortletKeys.WIKI_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/wiki/view_node_deleted_attachments"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).setParameter(
+				"nodeId", String.valueOf(node.getNodeId())
+			).setParameter(
+				"viewTrashAttachments", Boolean.TRUE.toString()
+			).build();
 
 			return portletURL.toString();
 		}

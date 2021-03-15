@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -67,19 +68,25 @@ public class CopyPagePortletConfigurationIcon
 		try {
 			WikiPage page = ActionUtil.getPage(portletRequest);
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
-			portletURL.setParameter("title", StringPool.BLANK);
-			portletURL.setParameter("editTitle", "1");
-			portletURL.setParameter(
-				"templateNodeId", String.valueOf(page.getNodeId()));
-			portletURL.setParameter(
-				"templateTitle", HtmlUtil.unescape(page.getTitle()));
+			PortletURL portletURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, WikiPortletKeys.WIKI_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/wiki/edit_page"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).setParameter(
+				"nodeId", String.valueOf(page.getNodeId())
+			).setParameter(
+				"title", StringPool.BLANK
+			).setParameter(
+				"editTitle", "1"
+			).setParameter(
+				"templateNodeId", String.valueOf(page.getNodeId())
+			).setParameter(
+				"templateTitle", HtmlUtil.unescape(page.getTitle())
+			).build();
 
 			return portletURL.toString();
 		}

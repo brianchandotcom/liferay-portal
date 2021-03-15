@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationUt
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -227,11 +228,13 @@ public class EditPublishConfigurationMVCActionCommand
 		LiferayPortletResponse liferayPortletResponse =
 			portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL renderURL = liferayPortletResponse.createRenderURL();
-
-		renderURL.setParameter("mvcPath", "/view_export_import.jsp");
-		renderURL.setParameter(
-			"backgroundTaskId", String.valueOf(backgroundTaskId));
+		PortletURL renderURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/view_export_import.jsp"
+		).setParameter(
+			"backgroundTaskId", String.valueOf(backgroundTaskId)
+		).build();
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
 	}

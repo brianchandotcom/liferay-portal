@@ -23,6 +23,7 @@ import com.liferay.marketplace.app.manager.web.internal.util.AppDisplay;
 import com.liferay.marketplace.app.manager.web.internal.util.AppDisplayFactoryUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.comparator.AppDisplayComparator;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -56,10 +57,13 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL removeLabelURL = getPortletURL();
-
-		removeLabelURL.setParameter("category", (String)null);
-		removeLabelURL.setParameter("state", (String)null);
+		PortletURL removeLabelURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"category", (String)null
+		).setParameter(
+			"state", (String)null
+		).build();
 
 		return removeLabelURL.toString();
 	}
@@ -95,9 +99,11 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> !category.equals("all-categories"),
 			labelItem -> {
-				PortletURL removeLabelURL = getPortletURL();
-
-				removeLabelURL.setParameter("category", (String)null);
+				PortletURL removeLabelURL = PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"category", (String)null
+				).build();
 
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
@@ -112,9 +118,11 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 		).add(
 			() -> !state.equals("all-statuses"),
 			labelItem -> {
-				PortletURL removeLabelURL = getPortletURL();
-
-				removeLabelURL.setParameter("state", (String)null);
+				PortletURL removeLabelURL = PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"state", (String)null
+				).build();
 
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
@@ -136,11 +144,15 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("category", getCategory());
-		portletURL.setParameter("state", getState());
-		portletURL.setParameter("orderByType", getOrderByType());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"category", getCategory()
+		).setParameter(
+			"state", getState()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		if (_searchContainer != null) {
 			portletURL.setParameter(

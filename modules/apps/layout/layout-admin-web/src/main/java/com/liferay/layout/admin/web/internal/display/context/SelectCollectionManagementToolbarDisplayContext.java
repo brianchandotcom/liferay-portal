@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -62,10 +62,11 @@ public class SelectCollectionManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL =
-			_selectLayoutCollectionDisplayContext.getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			_selectLayoutCollectionDisplayContext.getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -123,16 +124,17 @@ public class SelectCollectionManagementToolbarDisplayContext
 		return dropdownItem -> {
 			dropdownItem.putData("action", "addAssetListEntry");
 
-			PortletURL addAssetListEntryURL =
+			PortletURL addAssetListEntryURL = PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(
 					liferayPortletRequest, AssetListPortletKeys.ASSET_LIST,
-					PortletRequest.ACTION_PHASE);
-
-			addAssetListEntryURL.setParameter(
-				ActionRequest.ACTION_NAME, "/asset_list/add_asset_list_entry");
-			addAssetListEntryURL.setParameter(
-				"backURL", _themeDisplay.getURLCurrent());
-			addAssetListEntryURL.setParameter("type", String.valueOf(type));
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"/asset_list/add_asset_list_entry"
+			).setParameter(
+				"backURL", _themeDisplay.getURLCurrent()
+			).setParameter(
+				"type", String.valueOf(type)
+			).build();
 
 			dropdownItem.putData(
 				"addAssetListEntryURL", addAssetListEntryURL.toString());

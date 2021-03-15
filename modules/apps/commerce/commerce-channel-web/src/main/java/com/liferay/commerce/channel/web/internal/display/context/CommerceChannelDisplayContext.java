@@ -38,6 +38,7 @@ import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.tax.configuration.CommerceShippingTaxConfiguration;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
@@ -152,20 +153,19 @@ public class CommerceChannelDisplayContext
 	}
 
 	public String getAddChannelURL() throws Exception {
-		PortletURL editCommerceChannelPortletURL =
-			_portal.getControlPanelPortletURL(
-				httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
-				PortletRequest.RENDER_PHASE);
-
-		editCommerceChannelPortletURL.setParameter(
-			"mvcRenderCommandName", "/commerce_channels/add_commerce_channel");
-
-		editCommerceChannelPortletURL.setWindowState(LiferayWindowState.POP_UP);
-
 		PortletURL portletURL = getPortletURL();
 
-		editCommerceChannelPortletURL.setParameter(
-			"redirect", portletURL.toString());
+		PortletURL editCommerceChannelPortletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_channels/add_commerce_channel"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).setRedirect(
+			portletURL.toString()
+		).build();
 
 		return editCommerceChannelPortletURL.toString();
 	}
@@ -173,20 +173,20 @@ public class CommerceChannelDisplayContext
 	public String getAddPaymentMethodURL(String commercePaymentMethodEngineKey)
 		throws Exception {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommercePaymentMethodGroupRel.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_payment_methods/edit_commerce_payment_method_group_rel");
-		portletURL.setParameter(
-			"commerceChannelId", String.valueOf(getCommerceChannelId()));
-
-		portletURL.setParameter(
-			"commercePaymentMethodEngineKey", commercePaymentMethodEngineKey);
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest,
+				CommercePaymentMethodGroupRel.class.getName(),
+				PortletProvider.Action.EDIT)
+		).setMVCRenderCommandName(
+			"/commerce_payment_methods/edit_commerce_payment_method_group_rel"
+		).setParameter(
+			"commerceChannelId", String.valueOf(getCommerceChannelId())
+		).setParameter(
+			"commercePaymentMethodEngineKey", commercePaymentMethodEngineKey
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		return portletURL.toString();
 	}
@@ -271,12 +271,13 @@ public class CommerceChannelDisplayContext
 	}
 
 	public PortletURL getEditCommerceChannelRenderURL() {
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			cpRequestHelper.getRequest(), CPPortletKeys.COMMERCE_CHANNELS,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/commerce_channels/edit_commerce_channel");
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				cpRequestHelper.getRequest(), CPPortletKeys.COMMERCE_CHANNELS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_channels/edit_commerce_channel"
+		).build();
 
 		return portletURL;
 	}

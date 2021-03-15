@@ -19,6 +19,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -132,18 +133,18 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 			return null;
 		}
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/depot/view_depot_dashboard");
-
 		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
 			group.getGroupId());
 
-		portletURL.setParameter(
-			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/depot/view_depot_dashboard"
+		).setParameter(
+			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId())
+		).build();
 
 		return portletURL.toString();
 	}

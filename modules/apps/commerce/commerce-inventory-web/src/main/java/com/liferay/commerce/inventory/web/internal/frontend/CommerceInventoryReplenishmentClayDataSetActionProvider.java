@@ -22,6 +22,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -98,22 +98,24 @@ public class CommerceInventoryReplenishmentClayDataSetActionProvider
 		long commerceInventoryReplenishmentItemId,
 		HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			_portal.getOriginalServletRequest(httpServletRequest),
-			CPPortletKeys.COMMERCE_INVENTORY, PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_inventory/edit_commerce_inventory_replenishment_item");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				_portal.getOriginalServletRequest(httpServletRequest),
+				CPPortletKeys.COMMERCE_INVENTORY, PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/commerce_inventory/edit_commerce_inventory_replenishment_item"
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).setRedirect(
+			redirect
+		).setParameter(
 			"commerceInventoryReplenishmentItemId",
-			String.valueOf(commerceInventoryReplenishmentItemId));
+			String.valueOf(commerceInventoryReplenishmentItemId)
+		).build();
 
 		return portletURL.toString();
 	}
@@ -128,17 +130,18 @@ public class CommerceInventoryReplenishmentClayDataSetActionProvider
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			themeDisplay.getRequest(), portletDisplay.getId(),
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_inventory/edit_commerce_inventory_replenishment_item");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				themeDisplay.getRequest(), portletDisplay.getId(),
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_inventory/edit_commerce_inventory_replenishment_item"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
 			"commerceInventoryReplenishmentItemId",
-			String.valueOf(commerceInventoryReplenishmentItemId));
+			String.valueOf(commerceInventoryReplenishmentItemId)
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

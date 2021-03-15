@@ -19,6 +19,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.servlet.taglib.util.InheritedFragmentEntryActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -75,18 +76,19 @@ public class InheritedFragmentEntryVerticalCard
 			return null;
 		}
 
-		PortletURL editFragmentEntryURL = _renderResponse.createRenderURL();
-
-		editFragmentEntryURL.setParameter(
-			"mvcRenderCommandName", "/fragment/edit_fragment_entry");
-		editFragmentEntryURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-		editFragmentEntryURL.setParameter(
+		PortletURL editFragmentEntryURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/fragment/edit_fragment_entry"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
 			"fragmentCollectionId",
-			String.valueOf(fragmentEntry.getFragmentCollectionId()));
-		editFragmentEntryURL.setParameter(
+			String.valueOf(fragmentEntry.getFragmentCollectionId())
+		).setParameter(
 			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId()));
+			String.valueOf(fragmentEntry.getFragmentEntryId())
+		).build();
 
 		return editFragmentEntryURL.toString();
 	}

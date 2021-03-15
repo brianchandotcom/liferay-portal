@@ -31,6 +31,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuild
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -137,14 +138,15 @@ public class CommerceChannelClayTable
 				PermissionThreadLocal.getPermissionChecker(),
 				channel.getChannelId(), ActionKeys.DELETE),
 			dropdownItem -> {
-				PortletURL deleteURL = _portal.getControlPanelPortletURL(
-					httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
-					PortletRequest.ACTION_PHASE);
-
-				deleteURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/commerce_channels/edit_commerce_channel");
-				deleteURL.setParameter(Constants.CMD, Constants.DELETE);
+				PortletURL deleteURL = PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/commerce_channels/edit_commerce_channel"
+				).setParameter(
+					Constants.CMD, Constants.DELETE
+				).build();
 
 				String redirect = ParamUtil.getString(
 					httpServletRequest, "currentUrl",
@@ -202,25 +204,27 @@ public class CommerceChannelClayTable
 			Channel channel, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest,
-			"com_liferay_portlet_configuration_web_portlet_" +
-				"PortletConfigurationPortlet",
-			ActionRequest.RENDER_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
-		portletURL.setParameter(
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			redirect);
-		portletURL.setParameter(
-			"modelResource", CommerceChannel.class.getName());
-		portletURL.setParameter("modelResourceDescription", channel.getName());
-		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(channel.getChannelId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", redirect
+		).setParameter(
+			"modelResource", CommerceChannel.class.getName()
+		).setParameter(
+			"modelResourceDescription", channel.getName()
+		).setParameter(
+			"resourcePrimKey", String.valueOf(channel.getChannelId())
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

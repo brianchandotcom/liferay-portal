@@ -29,6 +29,7 @@ import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistr
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,7 +51,6 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -201,15 +201,17 @@ public class CommerceSubscriptionEntryDisplayContext {
 
 		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_httpServletRequest, themeDisplay.getScopeGroup(),
-			CommerceOrder.class.getName(), PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_open_order_content/edit_commerce_order");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("commerceOrderId", orderId);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_httpServletRequest, themeDisplay.getScopeGroup(),
+				CommerceOrder.class.getName(), PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"commerceOrderId", orderId
+		).build();
 
 		return portletURL.toString();
 	}
@@ -229,9 +231,11 @@ public class CommerceSubscriptionEntryDisplayContext {
 			new HeaderActionModel(
 				null, null, cancelURL.toString(), null, "cancel"));
 
-		PortletURL portletURL = getTransitionOrderPortletURL();
-
-		portletURL.setParameter("transitionName", "save");
+		PortletURL portletURL = PortletURLBuilder.create(
+			getTransitionOrderPortletURL()
+		).setParameter(
+			"transitionName", "save"
+		).build();
 
 		headerActionModels.add(
 			new HeaderActionModel(
@@ -345,17 +349,19 @@ public class CommerceSubscriptionEntryDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			_cpRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_open_order_content/edit_commerce_order");
-		portletURL.setParameter(Constants.CMD, ActionKeys.UPDATE);
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setParameter(
+			Constants.CMD, ActionKeys.UPDATE
+		).setParameter(
 			"commerceSubscriptionEntryId",
 			String.valueOf(
-				_commerceSubscriptionEntry.getCommerceSubscriptionEntryId()));
-		portletURL.setParameter("redirect", _cpRequestHelper.getCurrentURL());
+				_commerceSubscriptionEntry.getCommerceSubscriptionEntryId())
+		).setRedirect(
+			_cpRequestHelper.getCurrentURL()
+		).build();
 
 		return portletURL;
 	}

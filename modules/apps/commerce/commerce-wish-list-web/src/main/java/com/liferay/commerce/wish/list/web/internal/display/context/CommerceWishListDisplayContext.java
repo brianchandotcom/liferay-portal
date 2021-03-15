@@ -34,6 +34,7 @@ import com.liferay.commerce.wish.list.util.CommerceWishListHttpHelper;
 import com.liferay.commerce.wish.list.util.comparator.CommerceWishListNameComparator;
 import com.liferay.commerce.wish.list.web.internal.display.context.util.CommerceWishListRequestHelper;
 import com.liferay.commerce.wish.list.web.internal.util.CommerceWishListPortletUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -295,10 +296,11 @@ public class CommerceWishListDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceWishListRequestHelper.getLiferayPortletResponse();
 
-		PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-		rowURL.setParameter(
-			"commerceWishListId", String.valueOf(commerceWishListId));
+		PortletURL rowURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"commerceWishListId", String.valueOf(commerceWishListId)
+		).build();
 
 		return rowURL.toString();
 	}

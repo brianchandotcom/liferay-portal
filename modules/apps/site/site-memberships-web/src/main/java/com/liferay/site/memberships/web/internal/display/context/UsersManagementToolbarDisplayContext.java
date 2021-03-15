@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,7 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,11 +100,11 @@ public class UsersManagementToolbarDisplayContext
 								dropdownItem.putData("action", "selectRole");
 
 								PortletURL editUsersRolesURL =
-									liferayPortletResponse.createActionURL();
-
-								editUsersRolesURL.setParameter(
-									ActionRequest.ACTION_NAME,
-									"editUsersRoles");
+									PortletURLBuilder.createActionURL(
+										liferayPortletResponse
+									).setActionName(
+										"editUsersRoles"
+									).build();
 
 								dropdownItem.putData(
 									"editUsersRolesURL",
@@ -142,12 +142,12 @@ public class UsersManagementToolbarDisplayContext
 												themeDisplay.getLocale())));
 
 									PortletURL removeUserRoleURL =
-										liferayPortletResponse.
-											createActionURL();
-
-									removeUserRoleURL.setParameter(
-										ActionRequest.ACTION_NAME,
-										"removeUserRole");
+										PortletURLBuilder.create(
+											liferayPortletResponse.
+												createActionURL()
+										).setActionName(
+											"removeUserRole"
+										).build();
 
 									dropdownItem.putData(
 										"removeUserRoleURL",
@@ -201,11 +201,15 @@ public class UsersManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("navigation", "all");
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-		clearResultsURL.setParameter("roleId", "0");
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"navigation", "all"
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).setParameter(
+			"roleId", "0"
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -218,11 +222,13 @@ public class UsersManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		try {
-			PortletURL selectUsersURL =
-				liferayPortletResponse.createRenderURL();
-
-			selectUsersURL.setParameter("mvcPath", "/select_users.jsp");
-			selectUsersURL.setWindowState(LiferayWindowState.POP_UP);
+			PortletURL selectUsersURL = PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCPath(
+				"/select_users.jsp"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 
 			return CreationMenuBuilder.addDropdownItem(
 				dropdownItem -> {
@@ -265,10 +271,11 @@ public class UsersManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> role != null,
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					currentURLObj, liferayPortletResponse);
-
-				removeLabelURL.setParameter("roleId", "0");
+				PortletURL removeLabelURL = PortletURLBuilder.create(
+					PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+				).setParameter(
+					"roleId", "0"
+				).build();
 
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
@@ -351,23 +358,23 @@ public class UsersManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"selectRolesURL", _getSelectorURL("/select_site_role.jsp"));
 
-				PortletURL viewRoleURL =
-					liferayPortletResponse.createRenderURL();
-
-				viewRoleURL.setParameter("mvcPath", "/view.jsp");
-				viewRoleURL.setParameter("tabs1", "users");
-				viewRoleURL.setParameter("navigation", "roles");
-
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				viewRoleURL.setParameter(
-					"redirect", themeDisplay.getURLCurrent());
-
-				viewRoleURL.setParameter(
-					"groupId",
-					String.valueOf(_usersDisplayContext.getGroupId()));
+				PortletURL viewRoleURL = PortletURLBuilder.createRenderURL(
+					liferayPortletResponse
+				).setMVCPath(
+					"/view.jsp"
+				).setParameter(
+					"tabs1", "users"
+				).setParameter(
+					"navigation", "roles"
+				).setRedirect(
+					themeDisplay.getURLCurrent()
+				).setParameter(
+					"groupId", String.valueOf(_usersDisplayContext.getGroupId())
+				).build();
 
 				dropdownItem.putData("viewRoleURL", viewRoleURL.toString());
 
@@ -385,11 +392,13 @@ public class UsersManagementToolbarDisplayContext
 	}
 
 	private String _getSelectorURL(String mvcPath) throws Exception {
-		PortletURL selectURL = liferayPortletResponse.createRenderURL();
-
-		selectURL.setParameter("mvcPath", mvcPath);
-		selectURL.setParameter(
-			"groupId", String.valueOf(_usersDisplayContext.getGroupId()));
+		PortletURL selectURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			mvcPath
+		).setParameter(
+			"groupId", String.valueOf(_usersDisplayContext.getGroupId())
+		).build();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

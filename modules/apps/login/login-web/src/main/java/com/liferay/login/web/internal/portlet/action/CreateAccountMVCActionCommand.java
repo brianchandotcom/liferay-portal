@@ -18,6 +18,7 @@ import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.login.web.internal.portlet.util.LoginUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.AddressCityException;
@@ -386,10 +387,12 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				false, null);
 		}
 		else {
-			PortletURL loginURL = LoginUtil.getLoginURL(
-				httpServletRequest, themeDisplay.getPlid());
-
-			loginURL.setParameter("login", login);
+			PortletURL loginURL = PortletURLBuilder.create(
+				LoginUtil.getLoginURL(
+					httpServletRequest, themeDisplay.getPlid())
+			).setParameter(
+				"login", login
+			).build();
 
 			redirect = loginURL.toString();
 		}

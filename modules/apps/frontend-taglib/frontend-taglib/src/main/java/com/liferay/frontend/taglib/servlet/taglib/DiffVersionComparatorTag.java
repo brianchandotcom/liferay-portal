@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
@@ -231,17 +232,17 @@ public class DiffVersionComparatorTag extends IncludeTag {
 				(RenderResponse)request.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-			PortletURL sourceURL = PortletURLUtil.clone(
-				_portletURL, renderResponse);
+			PortletURL sourceURL = PortletURLBuilder.create(
+				PortletURLUtil.clone(_portletURL, renderResponse)
+			).setParameter(
+				"targetVersion", String.valueOf(_targetVersion)
+			).build();
 
-			sourceURL.setParameter(
-				"targetVersion", String.valueOf(_targetVersion));
-
-			PortletURL targetURL = PortletURLUtil.clone(
-				_portletURL, renderResponse);
-
-			targetURL.setParameter(
-				"sourceVersion", String.valueOf(_sourceVersion));
+			PortletURL targetURL = PortletURLBuilder.create(
+				PortletURLUtil.clone(_portletURL, renderResponse)
+			).setParameter(
+				"sourceVersion", String.valueOf(_sourceVersion)
+			).build();
 
 			JSONArray diffVersionsJSONArray = JSONFactoryUtil.createJSONArray();
 

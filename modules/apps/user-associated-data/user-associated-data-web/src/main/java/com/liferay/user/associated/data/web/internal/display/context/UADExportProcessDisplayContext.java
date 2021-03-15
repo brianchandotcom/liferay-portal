@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.display.context;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -141,21 +142,23 @@ public class UADExportProcessDisplayContext {
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletURL portletURL = PortletURLUtil.getCurrent(
-			PortalUtil.getLiferayPortletRequest(portletRequest),
-			PortalUtil.getLiferayPortletResponse(portletResponse));
-
 		User selectedUser = PortalUtil.getSelectedUser(_httpServletRequest);
 
-		portletURL.setParameter(
-			"p_u_i_d", String.valueOf(selectedUser.getUserId()));
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/user_associated_data/view_uad_export_processes");
-		portletURL.setParameter("navigation", getNavigation());
-		portletURL.setParameter("orderByCol", getOrderByCol());
-		portletURL.setParameter("orderByType", getOrderByType());
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.getCurrent(
+				PortalUtil.getLiferayPortletRequest(portletRequest),
+				PortalUtil.getLiferayPortletResponse(portletResponse))
+		).setParameter(
+			"p_u_i_d", String.valueOf(selectedUser.getUserId())
+		).setMVCRenderCommandName(
+			"/user_associated_data/view_uad_export_processes"
+		).setParameter(
+			"navigation", getNavigation()
+		).setParameter(
+			"orderByCol", getOrderByCol()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		return portletURL;
 	}

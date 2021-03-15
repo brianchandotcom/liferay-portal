@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,7 +44,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -111,11 +111,11 @@ public class WikiNodesManagementToolbarDisplayContext {
 		).put(
 			"deleteNodesURL",
 			() -> {
-				PortletURL deleteNodesURL =
-					_liferayPortletResponse.createActionURL();
-
-				deleteNodesURL.setParameter(
-					ActionRequest.ACTION_NAME, "/wiki/edit_node");
+				PortletURL deleteNodesURL = PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/wiki/edit_node"
+				).build();
 
 				return deleteNodesURL.toString();
 			}
@@ -149,11 +149,11 @@ public class WikiNodesManagementToolbarDisplayContext {
 
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				PortletURL viewNodesURL =
-					_liferayPortletResponse.createRenderURL();
-
-				viewNodesURL.setParameter(
-					"mvcRenderCommandName", "/wiki_admin/view");
+				PortletURL viewNodesURL = PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/wiki_admin/view"
+				).build();
 
 				dropdownItem.setHref(
 					_liferayPortletResponse.createRenderURL(),
@@ -181,13 +181,14 @@ public class WikiNodesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = _getPortletURL();
-
-		sortingURL.setParameter("orderByCol", _getOrderByCol());
-
-		sortingURL.setParameter(
+		PortletURL sortingURL = PortletURLBuilder.create(
+			_getPortletURL()
+		).setParameter(
+			"orderByCol", _getOrderByCol()
+		).setParameter(
 			"orderByType",
-			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc");
+			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc"
+		).build();
 
 		return sortingURL;
 	}
@@ -256,10 +257,11 @@ public class WikiNodesManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki_admin/view");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
+		).setMVCRenderCommandName(
+			"/wiki_admin/view"
+		).build();
 
 		return portletURL;
 	}

@@ -17,6 +17,7 @@ package com.liferay.asset.tags.selector.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.selector.web.internal.search.EntriesChecker;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -80,13 +81,17 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", _getMvcPath());
-		portletURL.setParameter("groupIds", StringUtil.merge(_getGroupIds()));
-		portletURL.setParameter("eventName", getEventName());
-		portletURL.setParameter(
-			"selectedTagNames", StringUtil.merge(getSelectedTagNames()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			_getMvcPath()
+		).setParameter(
+			"groupIds", StringUtil.merge(_getGroupIds())
+		).setParameter(
+			"eventName", getEventName()
+		).setParameter(
+			"selectedTagNames", StringUtil.merge(getSelectedTagNames())
+		).build();
 
 		return portletURL;
 	}

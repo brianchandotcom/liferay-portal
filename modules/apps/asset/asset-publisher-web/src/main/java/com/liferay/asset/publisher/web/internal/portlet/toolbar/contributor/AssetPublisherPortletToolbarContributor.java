@@ -20,6 +20,7 @@ import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDi
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -155,10 +156,13 @@ public class AssetPublisherPortletToolbarContributor
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(portletResponse);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/add_asset_selector.jsp");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/add_asset_selector.jsp"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -216,10 +220,11 @@ public class AssetPublisherPortletToolbarContributor
 			curGroupId = group.getLiveGroupId();
 		}
 
-		PortletURL portletURL = assetPublisherAddItemHolder.getPortletURL();
-
-		portletURL.setParameter(
-			"portletResource", AssetPublisherPortletKeys.ASSET_PUBLISHER);
+		PortletURL portletURL = PortletURLBuilder.create(
+			assetPublisherAddItemHolder.getPortletURL()
+		).setParameter(
+			"portletResource", AssetPublisherPortletKeys.ASSET_PUBLISHER
+		).build();
 
 		boolean addDisplayPageParameter =
 			_assetPublisherWebHelper.isDefaultAssetPublisher(

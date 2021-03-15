@@ -17,6 +17,7 @@ package com.liferay.item.selector.taglib.internal.util;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -96,14 +97,16 @@ public class EntryURLUtil {
 			refererGroupId = themeDisplay.getScopeGroupId();
 		}
 
-		PortletURL portletURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest),
-			group, refererGroupId, itemSelectedEventName,
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(
+					liferayPortletRequest),
+				group, refererGroupId, itemSelectedEventName,
+				itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]))
+		).setParameter(
 			"selectedTab",
-			ParamUtil.getString(liferayPortletRequest, "selectedTab"));
+			ParamUtil.getString(liferayPortletRequest, "selectedTab")
+		).build();
 
 		return portletURL;
 	}

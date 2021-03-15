@@ -22,6 +22,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -68,15 +69,17 @@ public class CommerceAccountOrganizationRelAdminDisplayContext
 	public String getEditOrganizationURL(long organizationId)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			commerceAccountAdminRequestHelper.getRequest(),
-			User.class.getName(), PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/users_admin/edit_organization");
-		portletURL.setParameter(
-			"redirect", commerceAccountAdminRequestHelper.getCurrentURL());
-		portletURL.setParameter("organization", String.valueOf(organizationId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				commerceAccountAdminRequestHelper.getRequest(),
+				User.class.getName(), PortletProvider.Action.EDIT)
+		).setMVCRenderCommandName(
+			"/users_admin/edit_organization"
+		).setRedirect(
+			commerceAccountAdminRequestHelper.getCurrentURL()
+		).setParameter(
+			"organization", String.valueOf(organizationId)
+		).build();
 
 		return portletURL.toString();
 	}
@@ -93,26 +96,27 @@ public class CommerceAccountOrganizationRelAdminDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "organizationsSelectItem",
-			organizationItemSelectorCriterion);
-
 		String checkedOrganizationIds = StringUtil.merge(
 			getCheckedOrganizationIds());
 
-		itemSelectorURL.setParameter(
-			"checkedOrganizationIds", checkedOrganizationIds);
+		PortletURL itemSelectorURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "organizationsSelectItem",
+				organizationItemSelectorCriterion)
+		).setParameter(
+			"checkedOrganizationIds", checkedOrganizationIds
+		).build();
 
 		return itemSelectorURL.toString();
 	}
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_account_admin/edit_commerce_account");
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setMVCRenderCommandName(
+			"/commerce_account_admin/edit_commerce_account"
+		).build();
 
 		return portletURL;
 	}

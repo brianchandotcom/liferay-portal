@@ -16,12 +16,12 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -60,11 +60,11 @@ public class PublicationsConfigurationDisplayContext {
 	}
 
 	public String getActionURL() {
-		PortletURL actionURL = _renderResponse.createActionURL();
-
-		actionURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/change_tracking/update_global_publications_configuration");
+		PortletURL actionURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/change_tracking/update_global_publications_configuration"
+		).build();
 
 		return actionURL.toString();
 	}

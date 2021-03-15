@@ -24,6 +24,7 @@ import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -172,10 +173,11 @@ public class CommerceInventoryWarehousesDisplayContext {
 	public PortletURL getPortletURL() {
 		RenderResponse renderResponse = _cpRequestHelper.getRenderResponse();
 
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"countryTwoLettersISOCode", getCountryTwoLettersIsoCode());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setParameter(
+			"countryTwoLettersISOCode", getCountryTwoLettersIsoCode()
+		).build();
 
 		String delta = ParamUtil.getString(
 			_cpRequestHelper.getRenderRequest(), "delta");

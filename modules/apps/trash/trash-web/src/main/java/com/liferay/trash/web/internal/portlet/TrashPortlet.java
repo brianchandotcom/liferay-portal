@@ -15,6 +15,7 @@
 package com.liferay.trash.web.internal.portlet;
 
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.TrashPermissionException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -307,21 +308,24 @@ public class TrashPortlet extends MVCPortlet {
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(actionResponse);
 
-			PortletURL renderURL = liferayPortletResponse.createRenderURL();
-
-			renderURL.setParameter("mvcPath", "/restore_entry.jsp");
-			renderURL.setParameter("redirect", redirect);
-			renderURL.setParameter(
+			PortletURL renderURL = PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCPath(
+				"/restore_entry.jsp"
+			).setRedirect(
+				redirect
+			).setParameter(
 				"trashEntryId",
-				String.valueOf(restoreEntryException.getTrashEntryId()));
-			renderURL.setParameter(
+				String.valueOf(restoreEntryException.getTrashEntryId())
+			).setParameter(
 				"duplicateEntryId",
-				String.valueOf(restoreEntryException.getDuplicateEntryId()));
-			renderURL.setParameter(
-				"oldName", restoreEntryException.getOldName());
-			renderURL.setParameter(
+				String.valueOf(restoreEntryException.getDuplicateEntryId())
+			).setParameter(
+				"oldName", restoreEntryException.getOldName()
+			).setParameter(
 				"overridable",
-				String.valueOf(restoreEntryException.isOverridable()));
+				String.valueOf(restoreEntryException.isOverridable())
+			).build();
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
 

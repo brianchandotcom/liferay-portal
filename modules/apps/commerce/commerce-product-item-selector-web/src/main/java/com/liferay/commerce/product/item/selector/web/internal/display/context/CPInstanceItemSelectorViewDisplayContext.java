@@ -19,6 +19,7 @@ import com.liferay.commerce.product.item.selector.web.internal.search.CPInstance
 import com.liferay.commerce.product.item.selector.web.internal.util.CPItemSelectorViewUtil;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,12 +56,13 @@ public class CPInstanceItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"checkedCPInstanceIds", String.valueOf(getCheckedCPInstanceIds()));
-		portletURL.setParameter(
-			"commerceCatalogGroupId", String.valueOf(getGroupId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setParameter(
+			"checkedCPInstanceIds", String.valueOf(getCheckedCPInstanceIds())
+		).setParameter(
+			"commerceCatalogGroupId", String.valueOf(getGroupId())
+		).build();
 
 		return portletURL;
 	}

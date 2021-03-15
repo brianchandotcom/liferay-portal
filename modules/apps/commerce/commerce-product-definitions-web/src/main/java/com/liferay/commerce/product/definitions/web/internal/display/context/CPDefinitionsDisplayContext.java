@@ -37,6 +37,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -105,15 +106,16 @@ public class CPDefinitionsDisplayContext
 				Collections.<ItemSelectorReturnType>singletonList(
 					new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "accountGroupSelectItem",
-			commerceAccountGroupItemSelectorCriterion);
-
 		String checkedCommerceAccountGroupIds = StringUtil.merge(
 			getCommerceAccountGroupRelCommerceAccountGroupIds());
 
-		itemSelectorURL.setParameter(
-			"checkedCommerceAccountGroupIds", checkedCommerceAccountGroupIds);
+		PortletURL itemSelectorURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "accountGroupSelectItem",
+				commerceAccountGroupItemSelectorCriterion)
+		).setParameter(
+			"checkedCommerceAccountGroupIds", checkedCommerceAccountGroupIds
+		).build();
 
 		return itemSelectorURL.toString();
 	}
@@ -154,15 +156,16 @@ public class CPDefinitionsDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "channelSelectItem",
-			commerceChannelItemSelectorCriterion);
-
 		String checkedCommerceChannelIds = StringUtil.merge(
 			getCommerceChannelRelCommerceChannelIds());
 
-		itemSelectorURL.setParameter(
-			"checkedCommerceChannelIds", checkedCommerceChannelIds);
+		PortletURL itemSelectorURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "channelSelectItem",
+				commerceChannelItemSelectorCriterion)
+		).setParameter(
+			"checkedCommerceChannelIds", checkedCommerceChannelIds
+		).build();
 
 		return itemSelectorURL.toString();
 	}
@@ -198,16 +201,18 @@ public class CPDefinitionsDisplayContext
 		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
 			new ArrayList<>();
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CPDefinition.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/cp_definitions/edit_cp_definition");
-		portletURL.setParameter("cpDefinitionId", "{id}");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CPDefinition.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_definition"
+		).setParameter(
+			"cpDefinitionId", "{id}"
+		).setParameter(
 			"screenNavigationCategoryKey",
-			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS
+		).build();
 
 		clayDataSetActionDropdownItems.add(
 			new ClayDataSetActionDropdownItem(
@@ -310,16 +315,18 @@ public class CPDefinitionsDisplayContext
 	public List<DropdownItem> getDropdownItems() throws Exception {
 		List<DropdownItem> dropdownItems = new ArrayList<>();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			cpRequestHelper.getRenderRequest(), cpRequestHelper.getPortletId(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/cp_definitions/duplicate_cp_definition");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				cpRequestHelper.getRenderRequest(),
+				cpRequestHelper.getPortletId(), PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/cp_definitions/duplicate_cp_definition"
+		).setParameter(
 			"cpDefinitionId",
-			ParamUtil.getString(httpServletRequest, "cpDefinitionId"));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+			ParamUtil.getString(httpServletRequest, "cpDefinitionId")
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 
 		DropdownItem dropdownItem = new DropdownItem();
 

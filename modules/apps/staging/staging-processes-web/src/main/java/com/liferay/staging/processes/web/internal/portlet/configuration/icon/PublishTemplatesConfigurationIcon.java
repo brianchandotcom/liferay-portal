@@ -14,6 +14,7 @@
 
 package com.liferay.staging.processes.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -65,13 +66,15 @@ public class PublishTemplatesConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcPath", "/publish_templates/view_publish_configurations.jsp");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/publish_templates/view_publish_configurations.jsp"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).build();
 
 		return portletURL.toString();
 	}

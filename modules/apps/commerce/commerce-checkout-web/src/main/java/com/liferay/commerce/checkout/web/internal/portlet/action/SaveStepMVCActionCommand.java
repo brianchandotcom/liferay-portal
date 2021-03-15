@@ -17,6 +17,7 @@ package com.liferay.commerce.checkout.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -106,14 +107,16 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
 		String commerceOrderUuid = ParamUtil.getString(
 			actionRequest, "commerceOrderUuid");
 
-		portletURL.setParameter("commerceOrderUuid", commerceOrderUuid);
-
-		portletURL.setParameter("checkoutStepName", checkoutStepName);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"commerceOrderUuid", commerceOrderUuid
+		).setParameter(
+			"checkoutStepName", checkoutStepName
+		).build();
 
 		return portletURL.toString();
 	}

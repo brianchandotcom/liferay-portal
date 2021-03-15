@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -104,14 +105,15 @@ public class CommerceCatalogDataSetActionProvider
 	private PortletURL _getCatalogDeleteURL(
 		long catalogId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CPPortletKeys.COMMERCE_CATALOGS,
-			PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_catalogs/edit_commerce_catalog");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CPPortletKeys.COMMERCE_CATALOGS,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/commerce_catalogs/edit_commerce_catalog"
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).build();
 
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
@@ -127,12 +129,13 @@ public class CommerceCatalogDataSetActionProvider
 	private PortletURL _getCatalogEditURL(
 		long catalogId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CPPortletKeys.COMMERCE_CATALOGS,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/commerce_catalogs/edit_commerce_catalog");
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CPPortletKeys.COMMERCE_CATALOGS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_catalogs/edit_commerce_catalog"
+		).build();
 
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
@@ -149,25 +152,27 @@ public class CommerceCatalogDataSetActionProvider
 			Catalog catalog, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest,
-			"com_liferay_portlet_configuration_web_portlet_" +
-				"PortletConfigurationPortlet",
-			ActionRequest.RENDER_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
-		portletURL.setParameter(
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			redirect);
-		portletURL.setParameter(
-			"modelResource", CommerceCatalog.class.getName());
-		portletURL.setParameter("modelResourceDescription", catalog.getName());
-		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(catalog.getCatalogId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", redirect
+		).setParameter(
+			"modelResource", CommerceCatalog.class.getName()
+		).setParameter(
+			"modelResourceDescription", catalog.getName()
+		).setParameter(
+			"resourcePrimKey", String.valueOf(catalog.getCatalogId())
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

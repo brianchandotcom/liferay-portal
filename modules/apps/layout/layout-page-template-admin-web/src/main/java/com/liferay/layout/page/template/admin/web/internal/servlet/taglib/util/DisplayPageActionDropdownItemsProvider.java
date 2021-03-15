@@ -30,6 +30,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -51,7 +52,6 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -177,18 +177,17 @@ public class DisplayPageActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteDisplayPageActionUnsafeConsumer() {
 
-		PortletURL deleteDisplayPageURL = _renderResponse.createActionURL();
-
-		deleteDisplayPageURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/delete_layout_page_template_entry");
-
-		deleteDisplayPageURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteDisplayPageURL.setParameter(
+		PortletURL deleteDisplayPageURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/delete_layout_page_template_entry"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteDisplayPage");
@@ -215,19 +214,18 @@ public class DisplayPageActionDropdownItemsProvider {
 		_getDeleteLayoutPageTemplateEntryPreviewActionUnsafeConsumer() {
 
 		PortletURL deleteLayoutPageTemplateEntryPreviewURL =
-			_renderResponse.createActionURL();
-
-		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin" +
-				"/delete_layout_page_template_entry_preview");
-
-		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/layout_page_template_admin" +
+					"/delete_layout_page_template_entry_preview"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData(
@@ -251,15 +249,17 @@ public class DisplayPageActionDropdownItemsProvider {
 			return null;
 		}
 
-		PortletURL discardDraftURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.ACTION_PHASE);
-
-		discardDraftURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout_admin/discard_draft_layout");
-		discardDraftURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		discardDraftURL.setParameter(
-			"selPlid", String.valueOf(_draftLayout.getPlid()));
+		PortletURL discardDraftURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/layout_admin/discard_draft_layout"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"selPlid", String.valueOf(_draftLayout.getPlid())
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "discardDraft");
@@ -309,16 +309,16 @@ public class DisplayPageActionDropdownItemsProvider {
 	}
 
 	private String _getItemSelectorURL() {
-		PortletURL uploadURL = _renderResponse.createActionURL();
-
-		uploadURL.setParameter(
-			ActionRequest.ACTION_NAME,
+		PortletURL uploadURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
 			"/layout_page_template_admin" +
-				"/upload_layout_page_template_entry_preview");
-		uploadURL.setParameter(
+				"/upload_layout_page_template_entry_preview"
+		).setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+		).build();
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
@@ -343,22 +343,21 @@ public class DisplayPageActionDropdownItemsProvider {
 		_getMarkAsDefaultDisplayPageActionUnsafeConsumer() {
 
 		PortletURL markAsDefaultDisplayPageURL =
-			_renderResponse.createActionURL();
-
-		markAsDefaultDisplayPageURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin" +
-				"/edit_layout_page_template_entry_settings");
-
-		markAsDefaultDisplayPageURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		markAsDefaultDisplayPageURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-		markAsDefaultDisplayPageURL.setParameter(
-			"defaultTemplate",
-			String.valueOf(!_layoutPageTemplateEntry.isDefaultTemplate()));
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/layout_page_template_admin" +
+					"/edit_layout_page_template_entry_settings"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+			).setParameter(
+				"defaultTemplate",
+				String.valueOf(!_layoutPageTemplateEntry.isDefaultTemplate())
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "markAsDefaultDisplayPage");
@@ -438,22 +437,21 @@ public class DisplayPageActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getRenameDisplayPageActionUnsafeConsumer() {
 
-		PortletURL updateDisplayPageURL = _renderResponse.createActionURL();
-
-		updateDisplayPageURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/update_layout_page_template_entry");
-
-		updateDisplayPageURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		updateDisplayPageURL.setParameter(
+		PortletURL updateDisplayPageURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/update_layout_page_template_entry"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
-		updateDisplayPageURL.setParameter(
+				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId())
+		).setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+		).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "renameDisplayPage");

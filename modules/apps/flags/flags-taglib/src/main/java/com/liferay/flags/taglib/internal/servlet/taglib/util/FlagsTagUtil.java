@@ -15,6 +15,7 @@
 package com.liferay.flags.taglib.internal.servlet.taglib.util;
 
 import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -90,10 +90,13 @@ public class FlagsTagUtil {
 	}
 
 	public static String getURI(HttpServletRequest httpServletRequest) {
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, PortletKeys.FLAGS, PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(ActionRequest.ACTION_NAME, "/flags/edit_entry");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, PortletKeys.FLAGS,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/flags/edit_entry"
+		).build();
 
 		return portletURL.toString();
 	}

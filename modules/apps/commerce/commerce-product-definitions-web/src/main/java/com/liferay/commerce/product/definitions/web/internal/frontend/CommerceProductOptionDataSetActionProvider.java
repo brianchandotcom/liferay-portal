@@ -23,6 +23,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -104,19 +105,19 @@ public class CommerceProductOptionDataSetActionProvider
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CPDefinition.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/cp_definitions/edit_cp_definition_option_rel");
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CPDefinition.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_definition_option_rel"
+		).setParameter(
 			"cpDefinitionId",
-			String.valueOf(cpDefinitionOptionRel.getCPDefinitionId()));
-		portletURL.setParameter(
+			String.valueOf(cpDefinitionOptionRel.getCPDefinitionId())
+		).setParameter(
 			"cpDefinitionOptionRelId",
-			String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
+			String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId())
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

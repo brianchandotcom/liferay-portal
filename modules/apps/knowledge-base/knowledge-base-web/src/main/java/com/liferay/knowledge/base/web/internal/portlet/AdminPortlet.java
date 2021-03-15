@@ -30,6 +30,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.internal.upload.KBArticleAttachmentKBUploadFileEntryHandler;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
@@ -413,18 +414,20 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws PortalException {
 
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				actionRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcPath", templatePath + "edit_article.jsp");
-			portletURL.setParameter(
-				"redirect", getRedirect(actionRequest, actionResponse));
-			portletURL.setParameter(
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					actionRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				templatePath + "edit_article.jsp"
+			).setRedirect(
+				getRedirect(actionRequest, actionResponse)
+			).setParameter(
 				"resourcePrimKey",
-				String.valueOf(kbArticle.getResourcePrimKey()));
-			portletURL.setWindowState(actionRequest.getWindowState());
+				String.valueOf(kbArticle.getResourcePrimKey())
+			).setWindowState(
+				actionRequest.getWindowState()
+			).build();
 
 			return portletURL.toString();
 		}

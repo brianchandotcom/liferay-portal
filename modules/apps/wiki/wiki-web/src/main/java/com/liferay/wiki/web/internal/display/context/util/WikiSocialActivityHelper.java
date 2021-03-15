@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.internal.display.context.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -305,11 +306,15 @@ public class WikiSocialActivityHelper {
 		LiferayPortletResponse liferayPortletResponse =
 			_wikiRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-		portletURL.setParameter("nodeName", node.getName());
-		portletURL.setParameter("title", page.getTitle());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/wiki/view"
+		).setParameter(
+			"nodeName", node.getName()
+		).setParameter(
+			"title", page.getTitle()
+		).build();
 
 		return portletURL.toString();
 	}
@@ -324,12 +329,17 @@ public class WikiSocialActivityHelper {
 		LiferayPortletResponse liferayPortletResponse =
 			_wikiRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-		portletURL.setParameter("nodeName", node.getName());
-		portletURL.setParameter("title", page.getTitle());
-		portletURL.setParameter("version", String.valueOf(version));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/wiki/view"
+		).setParameter(
+			"nodeName", node.getName()
+		).setParameter(
+			"title", page.getTitle()
+		).setParameter(
+			"version", String.valueOf(version)
+		).build();
 
 		return portletURL.toString();
 	}

@@ -23,6 +23,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,7 +55,6 @@ import java.io.Writer;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -189,15 +189,15 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			CTPreferences ctPreferences, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		PortletURL checkoutURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, themeDisplay.getScopeGroup(),
-			CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.ACTION_PHASE);
-
-		checkoutURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/change_tracking/checkout_ct_collection");
-		checkoutURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
+		PortletURL checkoutURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/change_tracking/checkout_ct_collection"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).build();
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -312,12 +312,13 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			}
 		}
 
-		PortletURL addURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, themeDisplay.getScopeGroup(),
-			CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
-
-		addURL.setParameter(
-			"mvcRenderCommandName", "/change_tracking/add_ct_collection");
+		PortletURL addURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/change_tracking/add_ct_collection"
+		).build();
 
 		PortletURL redirectURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, themeDisplay.getScopeGroup(),
@@ -336,14 +337,16 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			));
 
 		if (ctCollection != null) {
-			PortletURL reviewURL = _portal.getControlPanelPortletURL(
-				httpServletRequest, themeDisplay.getScopeGroup(),
-				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
-
-			reviewURL.setParameter(
-				"mvcRenderCommandName", "/change_tracking/view_changes");
-			reviewURL.setParameter(
-				"ctCollectionId", String.valueOf(ctCollectionId));
+			PortletURL reviewURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					httpServletRequest, themeDisplay.getScopeGroup(),
+					CTPortletKeys.PUBLICATIONS, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/change_tracking/view_changes"
+			).setParameter(
+				"ctCollectionId", String.valueOf(ctCollectionId)
+			).build();
 
 			data.put(
 				"reviewDropdownItem",
@@ -363,16 +366,17 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					themeDisplay.getPermissionChecker(), ctCollection,
 					CTActionKeys.PUBLISH)) {
 
-				PortletURL publishURL = _portal.getControlPanelPortletURL(
-					httpServletRequest, themeDisplay.getScopeGroup(),
-					CTPortletKeys.PUBLICATIONS, 0, 0,
-					PortletRequest.RENDER_PHASE);
-
-				publishURL.setParameter(
-					"mvcRenderCommandName", "/change_tracking/view_conflicts");
-				publishURL.setParameter(
+				PortletURL publishURL = PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						httpServletRequest, themeDisplay.getScopeGroup(),
+						CTPortletKeys.PUBLICATIONS, 0, 0,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/change_tracking/view_conflicts"
+				).setParameter(
 					"ctCollectionId",
-					String.valueOf(ctCollection.getCtCollectionId()));
+					String.valueOf(ctCollection.getCtCollectionId())
+				).build();
 
 				data.put(
 					"publishDropdownItem",

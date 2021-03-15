@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.info.display.url.provider;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -57,12 +58,13 @@ public class FileEntryAssetInfoEditURLProvider
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, group, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0,
-			0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_file_entry");
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, group, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+				0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/document_library/edit_file_entry"
+		).build();
 
 		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 

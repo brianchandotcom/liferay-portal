@@ -17,6 +17,7 @@ package com.liferay.commerce.item.selector.web.internal.display.context;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -80,9 +81,11 @@ public class SimpleSiteItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter("siteGroupId", String.valueOf(getGroupId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			super.getPortletURL()
+		).setParameter(
+			"siteGroupId", String.valueOf(getGroupId())
+		).build();
 
 		return portletURL;
 	}
@@ -174,10 +177,12 @@ public class SimpleSiteItemSelectorViewDisplayContext
 			active = true;
 		}
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), cpRequestHelper.getRenderResponse());
-
-		portletURL.setParameter("siteGroupId", String.valueOf(siteGroupId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(
+				getPortletURL(), cpRequestHelper.getRenderResponse())
+		).setParameter(
+			"siteGroupId", String.valueOf(siteGroupId)
+		).build();
 
 		return new ManagementBarFilterItem(
 			active, String.valueOf(siteGroupId), label, portletURL.toString());

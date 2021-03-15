@@ -17,6 +17,7 @@ package com.liferay.wiki.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -78,7 +79,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -454,14 +454,21 @@ public class DefaultWikiListPagesDisplayContext
 		LiferayPortletResponse liferayPortletResponse =
 			_wikiRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		portletURL.setParameter("redirect", _wikiRequestHelper.getCurrentURL());
-		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
-		portletURL.setParameter("title", StringPool.BLANK);
-		portletURL.setParameter("editTitle", "1");
-		portletURL.setParameter("parentTitle", wikiPage.getTitle());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/wiki/edit_page"
+		).setRedirect(
+			_wikiRequestHelper.getCurrentURL()
+		).setParameter(
+			"nodeId", String.valueOf(wikiPage.getNodeId())
+		).setParameter(
+			"title", StringPool.BLANK
+		).setParameter(
+			"editTitle", "1"
+		).setParameter(
+			"parentTitle", wikiPage.getTitle()
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -483,17 +490,23 @@ public class DefaultWikiListPagesDisplayContext
 		LiferayPortletResponse liferayPortletResponse =
 			_wikiRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		portletURL.setParameter("redirect", _wikiRequestHelper.getCurrentURL());
-		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
-		portletURL.setParameter("title", StringPool.BLANK);
-		portletURL.setParameter("editTitle", "1");
-		portletURL.setParameter(
-			"templateNodeId", String.valueOf(wikiPage.getNodeId()));
-		portletURL.setParameter(
-			"templateTitle", HtmlUtil.unescape(wikiPage.getTitle()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/wiki/edit_page"
+		).setRedirect(
+			_wikiRequestHelper.getCurrentURL()
+		).setParameter(
+			"nodeId", String.valueOf(wikiPage.getNodeId())
+		).setParameter(
+			"title", StringPool.BLANK
+		).setParameter(
+			"editTitle", "1"
+		).setParameter(
+			"templateNodeId", String.valueOf(wikiPage.getNodeId())
+		).setParameter(
+			"templateTitle", HtmlUtil.unescape(wikiPage.getTitle())
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -519,11 +532,6 @@ public class DefaultWikiListPagesDisplayContext
 			LiferayPortletResponse liferayPortletResponse =
 				_wikiRequestHelper.getLiferayPortletResponse();
 
-			PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/wiki/edit_page");
-
 			String cmd = Constants.DELETE;
 
 			if (_trashHelper.isTrashEnabled(
@@ -532,14 +540,19 @@ public class DefaultWikiListPagesDisplayContext
 				cmd = Constants.MOVE_TO_TRASH;
 			}
 
-			portletURL.setParameter(Constants.CMD, cmd);
-
-			portletURL.setParameter(
-				"redirect", _wikiRequestHelper.getCurrentURL());
-			portletURL.setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId()));
-			portletURL.setParameter(
-				"title", HtmlUtil.unescape(wikiPage.getTitle()));
+			PortletURL portletURL = PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/wiki/edit_page"
+			).setParameter(
+				Constants.CMD, cmd
+			).setRedirect(
+				_wikiRequestHelper.getCurrentURL()
+			).setParameter(
+				"nodeId", String.valueOf(wikiPage.getNodeId())
+			).setParameter(
+				"title", HtmlUtil.unescape(wikiPage.getTitle())
+			).build();
 
 			deleteMenuItem.setURL(portletURL.toString());
 
@@ -559,19 +572,21 @@ public class DefaultWikiListPagesDisplayContext
 			LiferayPortletResponse liferayPortletResponse =
 				_wikiRequestHelper.getLiferayPortletResponse();
 
-			PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/wiki/edit_page");
-			portletURL.setParameter(Constants.CMD, Constants.DELETE);
-			portletURL.setParameter(
-				"redirect", _wikiRequestHelper.getCurrentURL());
-			portletURL.setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId()));
-			portletURL.setParameter(
-				"title", HtmlUtil.unescape(wikiPage.getTitle()));
-			portletURL.setParameter(
-				"version", String.valueOf(wikiPage.getVersion()));
+			PortletURL portletURL = PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/wiki/edit_page"
+			).setParameter(
+				Constants.CMD, Constants.DELETE
+			).setRedirect(
+				_wikiRequestHelper.getCurrentURL()
+			).setParameter(
+				"nodeId", String.valueOf(wikiPage.getNodeId())
+			).setParameter(
+				"title", HtmlUtil.unescape(wikiPage.getTitle())
+			).setParameter(
+				"version", String.valueOf(wikiPage.getVersion())
+			).build();
 
 			urlMenuItem.setURL(portletURL.toString());
 
@@ -597,12 +612,15 @@ public class DefaultWikiListPagesDisplayContext
 		LiferayPortletResponse liferayPortletResponse =
 			_wikiRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
-		portletURL.setParameter(
-			"title", HtmlUtil.unescape(wikiPage.getTitle()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/wiki/edit_page"
+		).setParameter(
+			"nodeId", String.valueOf(wikiPage.getNodeId())
+		).setParameter(
+			"title", HtmlUtil.unescape(wikiPage.getTitle())
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -624,13 +642,17 @@ public class DefaultWikiListPagesDisplayContext
 		LiferayPortletResponse liferayPortletResponse =
 			_wikiRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/move_page");
-		portletURL.setParameter("redirect", _wikiRequestHelper.getCurrentURL());
-		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
-		portletURL.setParameter(
-			"title", HtmlUtil.unescape(wikiPage.getTitle()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/wiki/move_page"
+		).setRedirect(
+			_wikiRequestHelper.getCurrentURL()
+		).setParameter(
+			"nodeId", String.valueOf(wikiPage.getNodeId())
+		).setParameter(
+			"title", HtmlUtil.unescape(wikiPage.getTitle())
+		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -691,15 +713,21 @@ public class DefaultWikiListPagesDisplayContext
 			LiferayPortletResponse liferayPortletResponse =
 				_wikiRequestHelper.getLiferayPortletResponse();
 
-			PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
 			WikiNode wikiNode = wikiPage.getNode();
 
-			portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-			portletURL.setParameter("nodeName", wikiNode.getName());
-			portletURL.setParameter("title", wikiPage.getTitle());
-			portletURL.setParameter("viewMode", Constants.PRINT);
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/wiki/view"
+			).setParameter(
+				"nodeName", wikiNode.getName()
+			).setParameter(
+				"title", wikiPage.getTitle()
+			).setParameter(
+				"viewMode", Constants.PRINT
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 
 			sb.append(HtmlUtil.escapeJS(portletURL.toString()));
 
@@ -757,17 +785,19 @@ public class DefaultWikiListPagesDisplayContext
 			LiferayPortletResponse liferayPortletResponse =
 				_wikiRequestHelper.getLiferayPortletResponse();
 
-			PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/wiki/edit_page");
-			portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
-			portletURL.setParameter(
-				"redirect", _wikiRequestHelper.getCurrentURL());
-			portletURL.setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId()));
-			portletURL.setParameter(
-				"title", HtmlUtil.unescape(wikiPage.getTitle()));
+			PortletURL portletURL = PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/wiki/edit_page"
+			).setParameter(
+				Constants.CMD, Constants.UNSUBSCRIBE
+			).setRedirect(
+				_wikiRequestHelper.getCurrentURL()
+			).setParameter(
+				"nodeId", String.valueOf(wikiPage.getNodeId())
+			).setParameter(
+				"title", HtmlUtil.unescape(wikiPage.getTitle())
+			).build();
 
 			urlMenuItem.setURL(portletURL.toString());
 
@@ -782,17 +812,19 @@ public class DefaultWikiListPagesDisplayContext
 			LiferayPortletResponse liferayPortletResponse =
 				_wikiRequestHelper.getLiferayPortletResponse();
 
-			PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/wiki/edit_page");
-			portletURL.setParameter(Constants.CMD, Constants.SUBSCRIBE);
-			portletURL.setParameter(
-				"redirect", _wikiRequestHelper.getCurrentURL());
-			portletURL.setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId()));
-			portletURL.setParameter(
-				"title", HtmlUtil.unescape(wikiPage.getTitle()));
+			PortletURL portletURL = PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/wiki/edit_page"
+			).setParameter(
+				Constants.CMD, Constants.SUBSCRIBE
+			).setRedirect(
+				_wikiRequestHelper.getCurrentURL()
+			).setParameter(
+				"nodeId", String.valueOf(wikiPage.getNodeId())
+			).setParameter(
+				"title", HtmlUtil.unescape(wikiPage.getTitle())
+			).build();
 
 			urlMenuItem.setURL(portletURL.toString());
 

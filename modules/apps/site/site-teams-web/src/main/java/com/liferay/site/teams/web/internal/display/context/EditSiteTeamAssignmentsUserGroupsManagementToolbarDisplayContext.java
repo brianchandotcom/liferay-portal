@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -72,9 +73,11 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -96,19 +99,20 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 							WebKeys.THEME_DISPLAY);
 
 					PortletURL selectUserGroupURL =
-						liferayPortletResponse.createRenderURL();
-
-					selectUserGroupURL.setParameter(
-						"mvcPath", "/select_user_groups.jsp");
-					selectUserGroupURL.setParameter(
-						"redirect", themeDisplay.getURLCurrent());
-					selectUserGroupURL.setParameter(
-						"teamId",
-						String.valueOf(
-							_editSiteTeamAssignmentsUserGroupsDisplayContext.
-								getTeamId()));
-					selectUserGroupURL.setWindowState(
-						LiferayWindowState.POP_UP);
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCPath(
+							"/select_user_groups.jsp"
+						).setRedirect(
+							themeDisplay.getURLCurrent()
+						).setParameter(
+							"teamId",
+							String.valueOf(
+								_editSiteTeamAssignmentsUserGroupsDisplayContext.
+									getTeamId())
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).build();
 
 					dropdownItem.putData(
 						"selectUserGroupURL", selectUserGroupURL.toString());

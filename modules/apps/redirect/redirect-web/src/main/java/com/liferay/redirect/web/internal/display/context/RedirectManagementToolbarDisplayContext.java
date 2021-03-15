@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +39,6 @@ import com.liferay.redirect.web.internal.security.permission.resource.RedirectPe
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
 
@@ -82,11 +82,11 @@ public class RedirectManagementToolbarDisplayContext
 			"deleteRedirectEntriesURL",
 			() -> {
 				PortletURL deleteRedirectEntriesURL =
-					liferayPortletResponse.createActionURL();
-
-				deleteRedirectEntriesURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/redirect/delete_redirect_entry");
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/redirect/delete_redirect_entry"
+					).build();
 
 				return deleteRedirectEntriesURL.toString();
 			}
@@ -108,11 +108,15 @@ public class RedirectManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-		clearResultsURL.setParameter("orderByCol", getOrderByCol());
-		clearResultsURL.setParameter("orderByType", getOrderByType());
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).setParameter(
+			"orderByCol", getOrderByCol()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		return clearResultsURL.toString();
 	}
@@ -169,10 +173,13 @@ public class RedirectManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		searchActionURL.setParameter("orderByCol", getOrderByCol());
-		searchActionURL.setParameter("orderByType", getOrderByType());
+		PortletURL searchActionURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"orderByCol", getOrderByCol()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		return searchActionURL.toString();
 	}

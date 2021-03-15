@@ -14,6 +14,7 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -138,14 +139,15 @@ public class UserGroupRolesDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/user_groups_roles.jsp");
-		portletURL.setParameter(
-			"userGroupId", String.valueOf(getUserGroupId()));
-
-		portletURL.setParameter(
-			"assignRoles", String.valueOf(_isAssignRoles()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/user_groups_roles.jsp"
+		).setParameter(
+			"userGroupId", String.valueOf(getUserGroupId())
+		).setParameter(
+			"assignRoles", String.valueOf(_isAssignRoles())
+		).build();
 
 		String displayStyle = getDisplayStyle();
 

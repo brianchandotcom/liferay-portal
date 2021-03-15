@@ -75,17 +75,15 @@ public class ReschedulePublicationDisplayContext {
 			"redirect", getRedirect()
 		).put(
 			"rescheduleURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/change_tracking/reschedule_publication"
-				).setRedirect(
-					getRedirect()
-				).setParameter(
-					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/reschedule_publication"
+			).setRedirect(
+				getRedirect()
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).buildString()
 		).put(
 			"scheduledDate",
 			StringBundler.concat(
@@ -118,17 +116,15 @@ public class ReschedulePublicationDisplayContext {
 			}
 		).put(
 			"unscheduleURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/change_tracking/unschedule_publication"
-				).setRedirect(
-					getRedirect()
-				).setParameter(
-					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/unschedule_publication"
+			).setRedirect(
+				getRedirect()
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).buildString()
 		).build();
 	}
 

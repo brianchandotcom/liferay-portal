@@ -65,19 +65,16 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 				"sidebarPanelId", "details"
 			).put(
 				"url",
-				() -> {
-					return PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/document_library/ddm/details.jsp"
-					).setParameter(
-						"fileEntryTypeId",
-						ParamUtil.getLong(
-							_liferayPortletRequest, "fileEntryTypeId")
-					).setWindowState(
-						LiferayWindowState.EXCLUSIVE
-					).buildString();
-				}
+				() -> PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/document_library/ddm/details.jsp"
+				).setParameter(
+					"fileEntryTypeId",
+					ParamUtil.getLong(_liferayPortletRequest, "fileEntryTypeId")
+				).setWindowState(
+					LiferayWindowState.EXCLUSIVE
+				).buildString()
 			).build());
 
 		additionalPanels.add(
@@ -95,19 +92,16 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 				"sidebarPanelId", "additionalMetadataFields"
 			).put(
 				"url",
-				() -> {
-					return PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/document_library/ddm/additional_metadata_fields.jsp"
-					).setParameter(
-						"fileEntryTypeId",
-						ParamUtil.getLong(
-							_liferayPortletRequest, "fileEntryTypeId")
-					).setWindowState(
-						LiferayWindowState.EXCLUSIVE
-					).buildString();
-				}
+				() -> PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/document_library/ddm/additional_metadata_fields.jsp"
+				).setParameter(
+					"fileEntryTypeId",
+					ParamUtil.getLong(_liferayPortletRequest, "fileEntryTypeId")
+				).setWindowState(
+					LiferayWindowState.EXCLUSIVE
+				).buildString()
 			).build());
 
 		DLFileEntryType fileEntryType =
@@ -129,15 +123,13 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 					"sidebarPanelId", "permissions"
 				).put(
 					"url",
-					() -> {
-						return PortletURLBuilder.createRenderURL(
-							_liferayPortletResponse
-						).setMVCPath(
-							"/document_library/ddm/permissions.jsp"
-						).setWindowState(
-							LiferayWindowState.EXCLUSIVE
-						).buildString();
-					}
+					() -> PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/document_library/ddm/permissions.jsp"
+					).setWindowState(
+						LiferayWindowState.EXCLUSIVE
+					).buildString()
 				).build());
 		}
 

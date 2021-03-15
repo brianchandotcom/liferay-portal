@@ -120,13 +120,11 @@ public class WikiPagesManagementToolbarDisplayContext {
 			}
 		).put(
 			"deletePagesURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_liferayPortletResponse
-				).setActionName(
-					"/wiki/edit_page"
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/wiki/edit_page"
+			).buildString()
 		).put(
 			"trashEnabled", _isTrashEnabled()
 		).build();

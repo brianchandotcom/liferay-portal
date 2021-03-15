@@ -66,23 +66,21 @@ public class PropagationMessageDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"enableDisablePropagationURL",
-			() -> {
-				return PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						_httpServletRequest,
-						LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
-						PortletRequest.ACTION_PHASE)
-				).setActionName(
-					"updateLayoutSetPrototypeAction"
-				).setRedirect(
-					PortalUtil.getLayoutURL(themeDisplay)
-				).setParameter(
-					"layoutSetPrototypeId",
-					layoutSetPrototype.getLayoutSetPrototypeId()
-				).setParameter(
-					"readyForPropagation", !readyForPropagation
-				).buildString();
-			}
+			() -> PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					_httpServletRequest,
+					LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"updateLayoutSetPrototypeAction"
+			).setRedirect(
+				PortalUtil.getLayoutURL(themeDisplay)
+			).setParameter(
+				"layoutSetPrototypeId",
+				layoutSetPrototype.getLayoutSetPrototypeId()
+			).setParameter(
+				"readyForPropagation", !readyForPropagation
+			).buildString()
 		).put(
 			"portletNamespace",
 			PortalUtil.getPortletNamespace(

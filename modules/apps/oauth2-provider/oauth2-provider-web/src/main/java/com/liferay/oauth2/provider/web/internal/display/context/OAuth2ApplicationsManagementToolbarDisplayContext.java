@@ -74,13 +74,11 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"deleteOAuth2ApplicationsURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/oauth2_provider/delete_oauth2_applications"
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/oauth2_provider/delete_oauth2_applications"
+			).buildString()
 		).build();
 	}
 

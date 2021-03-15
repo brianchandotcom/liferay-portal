@@ -452,13 +452,11 @@ public class EditFragmentEntryDisplayContext {
 				"current", _themeDisplay.getURLCurrent()
 			).put(
 				"edit",
-				() -> {
-					return PortletURLBuilder.createActionURL(
-						_renderResponse
-					).setActionName(
-						"/fragment/edit_fragment_entry"
-					).buildString();
-				}
+				() -> PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/fragment/edit_fragment_entry"
+				).buildString()
 			).put(
 				"preview",
 				_getFragmentEntryRenderURL("/fragment/preview_fragment_entry")

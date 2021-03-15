@@ -225,57 +225,51 @@ public class RoleDisplayContext {
 
 		return HashMapBuilder.put(
 			"assignees",
-			() -> {
-				return PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCPath(
-					"/edit_role_assignments.jsp"
-				).setRedirect(
-					redirect
-				).setParameter(
-					"tabs1", "assignees"
-				).setParameter(
-					"backURL", backURL
-				).setParameter(
-					"roleId", role.getRoleId()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCPath(
+				"/edit_role_assignments.jsp"
+			).setRedirect(
+				redirect
+			).setParameter(
+				"tabs1", "assignees"
+			).setParameter(
+				"backURL", backURL
+			).setParameter(
+				"roleId", role.getRoleId()
+			).buildString()
 		).put(
 			"define-permissions",
-			() -> {
-				return PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCPath(
-					"/edit_role_permissions.jsp"
-				).setRedirect(
-					redirect
-				).setParameter(
-					"tabs1", "define-permissions"
-				).setParameter(
-					"backURL", backURL
-				).setParameter(
-					Constants.CMD, Constants.VIEW
-				).setParameter(
-					"roleId", role.getRoleId()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCPath(
+				"/edit_role_permissions.jsp"
+			).setRedirect(
+				redirect
+			).setParameter(
+				"tabs1", "define-permissions"
+			).setParameter(
+				"backURL", backURL
+			).setParameter(
+				Constants.CMD, Constants.VIEW
+			).setParameter(
+				"roleId", role.getRoleId()
+			).buildString()
 		).put(
 			"details",
-			() -> {
-				return PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCPath(
-					"/edit_role.jsp"
-				).setRedirect(
-					redirect
-				).setParameter(
-					"tabs1", "details"
-				).setParameter(
-					"backURL", backURL
-				).setParameter(
-					"roleId", role.getRoleId()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCPath(
+				"/edit_role.jsp"
+			).setRedirect(
+				redirect
+			).setParameter(
+				"tabs1", "details"
+			).setParameter(
+				"backURL", backURL
+			).setParameter(
+				"roleId", role.getRoleId()
+			).buildString()
 		).build();
 	}
 

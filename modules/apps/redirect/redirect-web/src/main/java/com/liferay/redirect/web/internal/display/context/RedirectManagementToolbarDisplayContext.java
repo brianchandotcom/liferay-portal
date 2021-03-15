@@ -80,13 +80,11 @@ public class RedirectManagementToolbarDisplayContext
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"deleteRedirectEntriesURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/redirect/delete_redirect_entry"
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/redirect/delete_redirect_entry"
+			).buildString()
 		).build();
 	}
 

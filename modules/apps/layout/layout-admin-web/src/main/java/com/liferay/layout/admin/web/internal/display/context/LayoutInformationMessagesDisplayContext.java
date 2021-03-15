@@ -91,19 +91,17 @@ public class LayoutInformationMessagesDisplayContext {
 			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES)
 		).put(
 			"resetPrototypeURL",
-			() -> {
-				return PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-						PortletRequest.ACTION_PHASE)
-				).setActionName(
-					"/layout_admin/reset_prototype"
-				).setRedirect(
-					PortalUtil.getLayoutURL(themeDisplay)
-				).setParameter(
-					"groupId", themeDisplay.getSiteGroupId()
-				).buildString();
-			}
+			() -> PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"/layout_admin/reset_prototype"
+			).setRedirect(
+				PortalUtil.getLayoutURL(themeDisplay)
+			).setParameter(
+				"groupId", themeDisplay.getSiteGroupId()
+			).buildString()
 		).put(
 			"showLinkedLayoutMessage", showLinkedLayoutMessage
 		).put(

@@ -68,18 +68,16 @@ public class DLEditDDMStructureDisplayContext {
 				"sidebarPanelId", "properties"
 			).put(
 				"url",
-				() -> {
-					return PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/document_library/ddm" +
-							"/basic_info_data_engine_editor.jsp"
-					).setParameter(
-						"ddmStructureId", getDDMStructureId()
-					).setWindowState(
-						LiferayWindowState.EXCLUSIVE
-					).buildString();
-				}
+				() -> PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/document_library/ddm" +
+						"/basic_info_data_engine_editor.jsp"
+				).setParameter(
+					"ddmStructureId", getDDMStructureId()
+				).setWindowState(
+					LiferayWindowState.EXCLUSIVE
+				).buildString()
 			).build());
 	}
 

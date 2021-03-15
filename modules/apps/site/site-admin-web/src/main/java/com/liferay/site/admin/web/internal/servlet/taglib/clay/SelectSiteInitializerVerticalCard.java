@@ -56,23 +56,21 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 	public Map<String, String> getDynamicAttributes() {
 		return HashMapBuilder.put(
 			"data-add-site-url",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setMVCPath(
-					"/select_layout_set_prototype_entry.jsp"
-				).setActionName(
-					"/site_admin/add_group"
-				).setParameter(
-					"parentGroupId",
-					ParamUtil.getLong(_httpServletRequest, "parentGroupId")
-				).setParameter(
-					"creationType", _siteInitializerItem.getType()
-				).setParameter(
-					"siteInitializerKey",
-					_siteInitializerItem.getSiteInitializerKey()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setMVCPath(
+				"/select_layout_set_prototype_entry.jsp"
+			).setActionName(
+				"/site_admin/add_group"
+			).setParameter(
+				"parentGroupId",
+				ParamUtil.getLong(_httpServletRequest, "parentGroupId")
+			).setParameter(
+				"creationType", _siteInitializerItem.getType()
+			).setParameter(
+				"siteInitializerKey",
+				_siteInitializerItem.getSiteInitializerKey()
+			).buildString()
 		).put(
 			"data-checkbox-field-name",
 			() -> {

@@ -85,13 +85,11 @@ public class DepotAdminManagementToolbarDisplayContext
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"deleteDepotEntriesURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/depot/delete_depot_entry"
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/depot/delete_depot_entry"
+			).buildString()
 		).build();
 	}
 

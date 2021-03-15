@@ -61,13 +61,11 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"revokeOauthAuthorizationsURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/connected_applications/revoke_oauth2_authorizations"
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/connected_applications/revoke_oauth2_authorizations"
+			).buildString()
 		).build();
 	}
 

@@ -113,13 +113,11 @@ public class BlogEntriesManagementToolbarDisplayContext
 			}
 		).put(
 			"deleteEntriesURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/blogs/edit_entry"
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/blogs/edit_entry"
+			).buildString()
 		).put(
 			"trashEnabled", _isTrashEnabled()
 		).build();

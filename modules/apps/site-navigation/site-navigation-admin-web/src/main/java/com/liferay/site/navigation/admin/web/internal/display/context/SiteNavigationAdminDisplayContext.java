@@ -262,47 +262,39 @@ public class SiteNavigationAdminDisplayContext {
 			getAddSiteNavigationMenuItemDropdownItems()
 		).put(
 			"deleteSiteNavigationMenuItemURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_liferayPortletResponse
-				).setActionName(
-					"/site_navigation_admin/delete_site_navigation_menu_item"
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/site_navigation_admin/delete_site_navigation_menu_item"
+			).buildString()
 		).put(
 			"editSiteNavigationMenuItemParentURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_liferayPortletResponse
-				).setActionName(
-					"/site_navigation_admin" +
-						"/edit_site_navigation_menu_item_parent"
-				).setRedirect(
-					PortalUtil.getCurrentURL(_liferayPortletRequest)
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/site_navigation_admin" +
+					"/edit_site_navigation_menu_item_parent"
+			).setRedirect(
+				PortalUtil.getCurrentURL(_liferayPortletRequest)
+			).buildString()
 		).put(
 			"editSiteNavigationMenuItemURL",
-			() -> {
-				return PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCPath(
-					"/edit_site_navigation_menu_item.jsp"
-				).setWindowState(
-					LiferayWindowState.EXCLUSIVE
-				).buildString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/edit_site_navigation_menu_item.jsp"
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString()
 		).put(
 			"editSiteNavigationMenuSettingsURL",
-			() -> {
-				return PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCPath(
-					"/site_navigation_menu_settings.jsp"
-				).setWindowState(
-					LiferayWindowState.EXCLUSIVE
-				).buildString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/site_navigation_menu_settings.jsp"
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString()
 		).put(
 			"id", _liferayPortletResponse.getNamespace() + "sidebar"
 		).put(

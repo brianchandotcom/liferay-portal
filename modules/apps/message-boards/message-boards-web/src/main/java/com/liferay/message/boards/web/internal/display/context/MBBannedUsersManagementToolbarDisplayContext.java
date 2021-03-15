@@ -76,13 +76,11 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"banUsersURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_liferayPortletResponse
-				).setActionName(
-					"/message_boards/ban_user"
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/message_boards/ban_user"
+			).buildString()
 		).build();
 	}
 

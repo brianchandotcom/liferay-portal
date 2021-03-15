@@ -102,15 +102,13 @@ public class ContributedFragmentManagementToolbarDisplayContext
 			}
 		).put(
 			"selectFragmentCollectionURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/fragment/select_fragment_collection"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/fragment/select_fragment_collection"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).build();
 	}
 

@@ -144,13 +144,11 @@ public class MBEntriesManagementToolbarDisplayContext {
 			}
 		).put(
 			"editEntryURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_liferayPortletResponse
-				).setActionName(
-					"/message_boards/edit_entry"
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/message_boards/edit_entry"
+			).buildString()
 		).put(
 			"lockCmd", Constants.LOCK
 		).put(

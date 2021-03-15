@@ -103,15 +103,13 @@ public class StyleBookManagementToolbarDisplayContext
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"copyStyleBookEntryURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/style_book/copy_style_book_entry"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/style_book/copy_style_book_entry"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).buildString()
 		).put(
 			"exportStyleBookEntriesURL",
 			() -> {

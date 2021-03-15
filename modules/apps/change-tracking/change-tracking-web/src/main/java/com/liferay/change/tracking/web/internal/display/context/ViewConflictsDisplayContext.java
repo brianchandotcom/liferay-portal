@@ -110,17 +110,15 @@ public class ViewConflictsDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"publishURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/change_tracking/publish_ct_collection"
-				).setParameter(
-					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).setParameter(
-					"name", _ctCollection.getName()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/publish_ct_collection"
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).setParameter(
+				"name", _ctCollection.getName()
+			).buildString()
 		).put(
 			"redirect", getRedirect()
 		).put(
@@ -129,17 +127,15 @@ public class ViewConflictsDisplayContext {
 			"schedule", ParamUtil.getBoolean(_renderRequest, "schedule")
 		).put(
 			"scheduleURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/change_tracking/schedule_publication"
-				).setRedirect(
-					getRedirect()
-				).setParameter(
-					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/schedule_publication"
+			).setRedirect(
+				getRedirect()
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).buildString()
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(

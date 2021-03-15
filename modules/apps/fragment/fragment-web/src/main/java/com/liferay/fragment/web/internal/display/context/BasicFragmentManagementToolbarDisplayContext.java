@@ -118,15 +118,13 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 		return HashMapBuilder.<String, Object>put(
 			"copyFragmentEntryURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/fragment/copy_fragment_entry"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/fragment/copy_fragment_entry"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).buildString()
 		).put(
 			"deleteFragmentCompositionsAndFragmentEntriesURL",
 			() -> {
@@ -161,27 +159,22 @@ public class BasicFragmentManagementToolbarDisplayContext
 			ParamUtil.getLong(liferayPortletRequest, "fragmentCollectionId")
 		).put(
 			"moveFragmentCompositionsAndFragmentEntriesURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/fragment/move_fragment_compositions_and_fragment_" +
-						"entries"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/fragment/move_fragment_compositions_and_fragment_" + "entries"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).buildString()
 		).put(
 			"selectFragmentCollectionURL",
-			() -> {
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/fragment/select_fragment_collection"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/fragment/select_fragment_collection"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).build();
 	}
 

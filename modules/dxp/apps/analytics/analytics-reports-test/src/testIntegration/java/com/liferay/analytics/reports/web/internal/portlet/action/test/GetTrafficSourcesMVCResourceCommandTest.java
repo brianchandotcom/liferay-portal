@@ -465,7 +465,8 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 						TestPropsValues.getCompanyId()),
 					_group, _layout,
 					_layoutSetLocalService.getLayoutSet(
-						_group.getGroupId(), false)));
+						_group.getGroupId(), false),
+					LocaleUtil.US));
 
 			return mockLiferayResourceRequest;
 		}

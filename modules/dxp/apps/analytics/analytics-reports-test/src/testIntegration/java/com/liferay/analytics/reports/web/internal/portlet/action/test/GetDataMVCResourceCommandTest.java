@@ -24,6 +24,7 @@ import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockT
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -61,6 +63,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -86,6 +89,8 @@ public class GetDataMVCResourceCommandTest {
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addLayout(_group);
+
+		_locale = LocaleUtil.US;
 	}
 
 	@Test
@@ -209,16 +214,24 @@ public class GetDataMVCResourceCommandTest {
 
 				Assert.assertEquals(
 					Boolean.TRUE, viewURLJSONObject.getBoolean("default"));
+
+				Locale locale = LocaleUtil.getDefault();
+
 				Assert.assertEquals(
-					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
+					LocaleUtil.toBCP47LanguageId(locale),
 					viewURLJSONObject.getString("languageId"));
+				Assert.assertEquals(
+					StringBundler.concat(
+						locale.getDisplayLanguage(), StringPool.SPACE,
+						StringPool.OPEN_PARENTHESIS, locale.getDisplayCountry(),
+						StringPool.CLOSE_PARENTHESIS),
+					viewURLJSONObject.getString("languageLabel"));
 
 				String viewURL = viewURLJSONObject.getString("viewURL");
 
 				Assert.assertTrue(
 					viewURL.contains(
-						"param_languageId=" +
-							LocaleUtil.toLanguageId(LocaleUtil.getDefault())));
+						"param_languageId=" + LocaleUtil.toLanguageId(locale)));
 			});
 	}
 
@@ -506,7 +519,8 @@ public class GetDataMVCResourceCommandTest {
 						TestPropsValues.getCompanyId()),
 					_group, _layout,
 					_layoutSetLocalService.getLayoutSet(
-						_group.getGroupId(), false)));
+						_group.getGroupId(), false),
+					_locale));
 			mockLiferayResourceRequest.setParameter(
 				"className", infoItemReference.getClassName());
 
@@ -533,6 +547,8 @@ public class GetDataMVCResourceCommandTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	private Locale _locale;
 
 	@Inject(filter = "mvc.command.name=/analytics_reports/get_data")
 	private MVCResourceCommand _mvcResourceCommand;

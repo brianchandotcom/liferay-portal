@@ -22,13 +22,16 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Locale;
+
 /**
  * @author Cristina González
  */
 public class MockThemeDisplayUtil {
 
 	public static ThemeDisplay getThemeDisplay(
-			Company company, Group group, Layout layout, LayoutSet layoutSet)
+			Company company, Group group, Layout layout, LayoutSet layoutSet,
+			Locale locale)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -40,6 +43,7 @@ public class MockThemeDisplayUtil {
 			LocaleUtil.fromLanguageId(group.getDefaultLanguageId()));
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layoutSet);
+		themeDisplay.setLocale(locale);
 		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
 		themeDisplay.setPortalDomain("localhost");
 		themeDisplay.setSecure(true);

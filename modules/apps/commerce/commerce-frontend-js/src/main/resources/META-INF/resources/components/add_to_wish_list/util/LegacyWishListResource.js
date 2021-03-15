@@ -42,9 +42,7 @@ const LegacyWishListResource = {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': window.Liferay.authToken}),
 			method: 'POST',
-		})
-			.then((response) => response.json())
-			.catch(() => ({success: false}));
+		}).then((response) => response.json());
 	},
 };
 

@@ -17,25 +17,24 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {showErrorNotification} from '../../utilities/notifications';
 import LegacyWishListResource from './util/LegacyWishListResource';
 
 function AddToWishList({
 	iconOnly,
-	isInWishlist,
+	isInWishList,
 	large,
 	spritemap,
 	...productInfo
 }) {
-	const [isAdded, setIsAdded] = useState(isInWishlist);
+	const [isAdded, setIsAdded] = useState(isInWishList);
 
 	const toggleInWishList = () =>
-		LegacyWishListResource.toggleInWishList(productInfo).then(
-			({success = false}) => {
-				if (success) {
-					setIsAdded(!isAdded);
-				}
-			}
-		);
+		LegacyWishListResource.toggleInWishList(productInfo)
+			.then(({success}) => setIsAdded(success))
+			.catch((error) => {
+				showErrorNotification(error);
+			});
 
 	/**
 	 * The following to become a trigger

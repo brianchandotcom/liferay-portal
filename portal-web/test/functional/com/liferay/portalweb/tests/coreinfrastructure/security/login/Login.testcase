@@ -186,7 +186,6 @@ definition {
 
 	@priority = "4"
 	test FacebookSSOSmoke {
-		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "Login#FacebookSSOSmoke";
 
 		var facebookApplicationID = PropsUtil.get("facebook.application.id");

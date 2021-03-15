@@ -136,10 +136,21 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 			StringUtil.splitLines(
 				ParamUtil.get(request, "redirectURIs", StringPool.BLANK)));
 		List<String> scopeAliasesList = Collections.emptyList();
-		boolean rememberDevice = ParamUtil.getBoolean(
-			request, "rememberDevice");
-		boolean trustedApplication = ParamUtil.getBoolean(
-			request, "trustedApplication");
+
+		boolean rememberDevice = false;
+		boolean trustedApplication = false;
+
+		if (allowedGrantTypesList.contains(GrantType.AUTHORIZATION_CODE) ||
+			allowedGrantTypesList.contains(GrantType.AUTHORIZATION_CODE_PKCE)) {
+
+			trustedApplication = ParamUtil.getBoolean(
+				request, "trustedApplication");
+
+			if (!trustedApplication) {
+				rememberDevice = ParamUtil.getBoolean(
+					request, "rememberDevice");
+			}
+		}
 
 		try {
 			if (oAuth2ApplicationId == 0) {

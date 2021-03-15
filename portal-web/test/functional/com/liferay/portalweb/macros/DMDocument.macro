@@ -1028,6 +1028,13 @@ definition {
 				locator1 = "Message#WARNING_FEEDBACK",
 				value1 = "Warning: Changing the filename will affect existing links to this document.");
 		}
+
+		if (!(contains("${dmDocumentTypeEdit}", "{dmDocumentTypeEdit}"))) {
+			Select(
+				key_selectFieldLabel = "Document Type",
+				locator1 = "Select#ANY",
+				value1 = "${dmDocumentTypeEdit}");
+		}
 	}
 
 	macro editCmdPG {
@@ -1119,7 +1126,8 @@ definition {
 			dmDocumentDescriptionEdit = "${dmDocumentDescriptionEdit}",
 			dmDocumentFileEdit = "${dmDocumentFileEdit}",
 			dmDocumentFileNameEdit = "${dmDocumentFileNameEdit}",
-			dmDocumentTitleEdit = "${dmDocumentTitleEdit}");
+			dmDocumentTitleEdit = "${dmDocumentTitleEdit}",
+			dmDocumentTypeEdit = "${dmDocumentTypeEdit}");
 
 		if (isSet(versioning)) {
 			Panel.expandPanel(panel = "Versioning");

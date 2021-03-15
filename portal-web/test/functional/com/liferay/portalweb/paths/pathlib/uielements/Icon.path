@@ -270,7 +270,7 @@
 </tr>
 <tr>
 	<td>REMOVE</td>
-	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-minus-circle')]]</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-times-circle')]]</td>
 	<td></td>
 </tr>
 <tr>

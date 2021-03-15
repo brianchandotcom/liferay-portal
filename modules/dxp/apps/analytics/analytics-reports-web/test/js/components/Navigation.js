@@ -42,12 +42,14 @@ const mockViewURLs = [
 	{
 		default: true,
 		languageId: 'en-US',
+		languageLabel: 'English (United States)',
 		selected: true,
 		viewURL: 'http://localhost:8080/en/web/guest/-/basic-web-content',
 	},
 	{
 		default: false,
 		languageId: 'es-ES',
+		languageLabel: 'Spanish (Spain)',
 		selected: false,
 		viewURL: 'http://localhost:8080/es/web/guest/-/contenido-web-basico',
 	},

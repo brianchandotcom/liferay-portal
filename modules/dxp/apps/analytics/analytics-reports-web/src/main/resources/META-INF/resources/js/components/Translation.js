@@ -84,7 +84,7 @@ export default function Translation({
 							>
 								<ClayLayout.ContentRow>
 									<ClayLayout.ContentCol expand>
-										<span>{language.languageId}</span>
+										<span>{language.languageLabel}</span>
 									</ClayLayout.ContentCol>
 									{language.default && (
 										<ClayLabel displayType="primary">

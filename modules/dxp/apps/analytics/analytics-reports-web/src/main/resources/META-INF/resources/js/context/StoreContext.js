@@ -21,7 +21,8 @@ const ADD_WARNING = 'add-warning';
 
 const noop = () => {};
 
-export const StoreContext = createContext([INITIAL_STATE, noop]);
+export const StoreDispatchContext = React.createContext(() => {});
+export const StoreStateContext = createContext([INITIAL_STATE, noop]);
 
 function reducer(state = INITIAL_STATE, action) {
 	if (action.type === ADD_HISTORICAL_WARNING) {
@@ -37,17 +38,19 @@ function reducer(state = INITIAL_STATE, action) {
 }
 
 export function StoreContextProvider({children, value}) {
-	const stateAndDispatch = useReducer(reducer, {...INITIAL_STATE, ...value});
+	const [state, dispatch] = useReducer(reducer, {...INITIAL_STATE, ...value});
 
 	return (
-		<StoreContext.Provider value={stateAndDispatch}>
-			{children}
-		</StoreContext.Provider>
+		<StoreDispatchContext.Provider value={dispatch}>
+			<StoreStateContext.Provider value={state}>
+				{children}
+			</StoreStateContext.Provider>
+		</StoreDispatchContext.Provider>
 	);
 }
 
 export function useHistoricalWarning() {
-	const [state, dispatch] = useContext(StoreContext);
+	const [state, dispatch] = useContext(StoreStateContext);
 
 	const addHistoricalWarning = useCallback(() => {
 		dispatch({
@@ -61,7 +64,7 @@ export function useHistoricalWarning() {
 }
 
 export function useWarning() {
-	const [state, dispatch] = useContext(StoreContext);
+	const [state, dispatch] = useContext(StoreStateContext);
 
 	const addWarning = useCallback(() => {
 		dispatch({

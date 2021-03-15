@@ -24,4 +24,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <liferay-theme:defineObjects />
 
+<%@ page import="com.liferay.layout.reports.web.internal.constants.LayoutReportsWebKeys" %><%@
+page import="com.liferay.layout.reports.web.internal.display.context.LayoutReportsDisplayContext" %>
+
 <%@ include file="/init-ext.jsp" %>

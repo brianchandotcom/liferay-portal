@@ -16,5 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+LayoutReportsDisplayContext layoutReportsDisplayContext = (LayoutReportsDisplayContext)request.getAttribute(LayoutReportsWebKeys.LAYOUT_REPORTS_DISPLAY_CONTEXT);
+%>
+
 <div class="c-p-3" id="<portlet:namespace />-layout-reports-root">
+	<div class="inline-item my-5 p-5 w-100">
+		<span aria-hidden="true" class="loading-animation"></span>
+	</div>
+
+	<react:component
+		module="js/LayoutReportsApp"
+		props="<%= layoutReportsDisplayContext.getData() %>"
+	/>
 </div>

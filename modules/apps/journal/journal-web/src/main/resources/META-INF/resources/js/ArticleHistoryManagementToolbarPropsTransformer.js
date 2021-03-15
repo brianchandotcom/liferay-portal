@@ -24,7 +24,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			const form = document.getElementById(`${portletNamespace}fm`);
 
 			if (form) {
-				submitForm(form, itemData.deleteArticlesURL);
+				submitForm(form, itemData?.deleteArticlesURL);
 			}
 		}
 	};
@@ -40,7 +40,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			const form = document.getElementById(`${portletNamespace}fm`);
 
 			if (form) {
-				submitForm(form, itemData.expireArticlesURL);
+				submitForm(form, itemData?.expireArticlesURL);
 			}
 		}
 	};

@@ -93,7 +93,7 @@ export default function propsTransformer({
 	return {
 		...otherProps,
 		onActionButtonClick(event, {item}) {
-			const action = item.data?.action;
+			const action = item?.data?.action;
 
 			if (action === 'deleteEntries') {
 				deleteEntries();
@@ -106,7 +106,7 @@ export default function propsTransformer({
 			}
 		},
 		onFilterDropdownItemClick(event, {item}) {
-			if (item.data?.action === 'openDDMStructuresSelector') {
+			if (item?.data?.action === 'openDDMStructuresSelector') {
 				openSelectionModal({
 					onSelect: (selectedItem) => {
 						navigate(

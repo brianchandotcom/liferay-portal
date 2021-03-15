@@ -16,7 +16,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
 		onActionButtonClick(event, {item}) {
-			if (item.data?.action === 'deleteDDMTemplates') {
+			if (item?.data?.action === 'deleteDDMTemplates') {
 				if (
 					confirm(
 						Liferay.Language.get(

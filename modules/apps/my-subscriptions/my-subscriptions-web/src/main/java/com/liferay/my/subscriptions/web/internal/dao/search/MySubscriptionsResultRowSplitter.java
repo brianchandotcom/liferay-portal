@@ -14,10 +14,10 @@
 
 package com.liferay.my.subscriptions.web.internal.dao.search;
 
+import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.subscription.model.Subscription;
 
 import java.util.ArrayList;
@@ -52,12 +52,11 @@ public class MySubscriptionsResultRowSplitter implements ResultRowSplitter {
 			rowMap.size());
 
 		for (Map.Entry<String, List<ResultRow>> entry : rowMap.entrySet()) {
-			String subscriptionHeader = ResourceActionsUtil.getModelResource(
-				_locale, entry.getKey());
-
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					subscriptionHeader, entry.getValue()));
+					MySubscriptionsUtil.getAssetTypeText(
+						_locale, entry.getKey()),
+					entry.getValue()));
 		}
 
 		return resultRowSplitterEntries;

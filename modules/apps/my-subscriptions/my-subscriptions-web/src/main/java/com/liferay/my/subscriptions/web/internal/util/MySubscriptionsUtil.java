@@ -27,8 +27,10 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -53,6 +56,7 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -74,6 +78,36 @@ public class MySubscriptionsUtil {
 		}
 
 		return null;
+	}
+
+	public static String getAssetTypeText(Locale locale, String className) {
+		List<String> classNames = StringUtil.split(
+			className, CharPool.UNDERLINE);
+
+		if (classNames.size() < 2) {
+			return ResourceActionsUtil.getModelResource(locale, className);
+		}
+
+		StringBundler sb = new StringBundler((classNames.size() * 2) + 2);
+
+		sb.append(
+			ResourceActionsUtil.getModelResource(locale, classNames.get(0)));
+
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int i = 1; i < classNames.size(); i++) {
+			sb.append(
+				ResourceActionsUtil.getModelResource(
+					locale, classNames.get(i)));
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	public static String getAssetURLViewInContext(

@@ -508,7 +508,9 @@ public class JournalArticleStagedModelDataHandler
 						"journal", "referenced-content"),
 					false);
 
-		article.setContent(content);
+		portletDataContext.addZipEntry(
+			ExportImportPathUtil.getModelPath(article, "journal-content-path"),
+			content);
 
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			article.getCompanyId());
@@ -649,7 +651,8 @@ public class JournalArticleStagedModelDataHandler
 			autoArticleId = false;
 		}
 
-		String content = article.getContent();
+		String content = portletDataContext.getZipEntryAsString(
+			ExportImportPathUtil.getModelPath(article, "journal-content-path"));
 
 		content =
 			_journalArticleExportImportContentProcessor.

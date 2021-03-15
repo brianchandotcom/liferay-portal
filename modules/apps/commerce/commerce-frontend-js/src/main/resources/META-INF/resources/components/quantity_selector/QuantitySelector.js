@@ -30,11 +30,14 @@ function QuantitySelector({
 	...optionSettings
 }) {
 	const [selectedQuantity, setSelectedQuantity] = useState(
-		Math.max(optionSettings.minQuantity, quantity)
+		Math.max(
+			optionSettings.minQuantity * optionSettings.multipleQuantity,
+			quantity
+		)
 	);
 
 	const isDropdown =
-		optionSettings.allowedQuantities.length > 0 || forceDropdown;
+		optionSettings.allowedQuantities?.length > 0 || forceDropdown;
 
 	/**
 	 * If source is <input /> and multipleQuantity > 1,
@@ -50,7 +53,13 @@ function QuantitySelector({
 			);
 		}
 		else {
-			setSelectedQuantity(optionSettings.minQuantity || 1);
+			setSelectedQuantity(
+				Math.max(
+					optionSettings.minQuantity *
+						optionSettings.multipleQuantity,
+					quantity
+				)
+			);
 		}
 	};
 
@@ -92,7 +101,10 @@ function QuantitySelector({
 			) : (
 				<ClayInput
 					max={optionSettings.maxQuantity}
-					min={optionSettings.minQuantity}
+					min={
+						optionSettings.minQuantity *
+						optionSettings.multipleQuantity
+					}
 					step={optionSettings.multipleQuantity}
 					type="number"
 					{...commonProps}

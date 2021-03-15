@@ -12,6 +12,8 @@
  * details.
  */
 
+export const MAX_QUANTITY_CAP = 100;
+
 export const UPDATE_AFTER = 500;
 
 export const generateQuantityOptions = ({
@@ -20,7 +22,7 @@ export const generateQuantityOptions = ({
 	minQuantity = 1,
 	multipleQuantity = 1,
 }) => {
-	if (allowedQuantities.length > 0) {
+	if (allowedQuantities?.length > 0) {
 		return allowedQuantities.map((value) => ({
 			label: value.toString(),
 			value,
@@ -29,7 +31,19 @@ export const generateQuantityOptions = ({
 
 	const quantityOptions = [];
 
-	for (let i = minQuantity; i <= maxQuantity; i++) {
+	/**
+	 * As this is used to render a ClaySelectWithOption component,
+	 * in order to avoid maximum call stack size errors, we temporarily need
+	 * to put a cap to the number of options.
+	 *
+	 * @type {number}
+	 */
+	const quantityOptionsCap = Math.min(
+		MAX_QUANTITY_CAP,
+		maxQuantity / multipleQuantity
+	);
+
+	for (let i = minQuantity; i <= quantityOptionsCap; i++) {
 		const value = i * multipleQuantity;
 
 		quantityOptions.push({

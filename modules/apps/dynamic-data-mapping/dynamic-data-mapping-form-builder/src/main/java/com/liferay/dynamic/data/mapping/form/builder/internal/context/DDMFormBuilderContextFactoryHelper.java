@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.context;
 
-import com.liferay.dynamic.data.mapping.form.builder.internal.configuration.FFDDMFormSidebarConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -75,8 +74,6 @@ public class DDMFormBuilderContextFactoryHelper {
 		Optional<DDMStructureVersion> ddmStructureVersionOptional,
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
-		FFDDMFormSidebarConfigurationActivator
-			ffDDMFormSidebarConfigurationActivator,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, JSONFactory jsonFactory,
 		Locale locale, NPMResolver npmResolver, String portletNamespace,
@@ -86,8 +83,6 @@ public class DDMFormBuilderContextFactoryHelper {
 		_ddmStructureVersionOptional = ddmStructureVersionOptional;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
-		_ffDDMFormSidebarConfigurationActivator =
-			ffDDMFormSidebarConfigurationActivator;
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 		_jsonFactory = jsonFactory;
@@ -115,8 +110,6 @@ public class DDMFormBuilderContextFactoryHelper {
 
 	protected Map<String, Object> createEmptyStateContext() {
 		return HashMapBuilder.<String, Object>put(
-			"dataEngineSidebar", _isDataEngineSidebar()
-		).put(
 			"pages", new ArrayList<>()
 		).put(
 			"rules", new ArrayList<>()
@@ -130,14 +123,7 @@ public class DDMFormBuilderContextFactoryHelper {
 				"title", StringPool.BLANK
 			).build()
 		).put(
-			"sidebarPanels",
-			() -> {
-				if (_isDataEngineSidebar()) {
-					return _getSidebarPanels();
-				}
-
-				return null;
-			}
+			"sidebarPanels", _getSidebarPanels()
 		).build();
 	}
 
@@ -375,8 +361,6 @@ public class DDMFormBuilderContextFactoryHelper {
 		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
-			"dataEngineSidebar", _isDataEngineSidebar()
-		).put(
 			"pages",
 			() -> {
 				Map<String, Object> formContext = createFormContext(
@@ -389,14 +373,7 @@ public class DDMFormBuilderContextFactoryHelper {
 		).put(
 			"rules", new ArrayList<>()
 		).put(
-			"sidebarPanels",
-			() -> {
-				if (_isDataEngineSidebar()) {
-					return _getSidebarPanels();
-				}
-
-				return null;
-			}
+			"sidebarPanels", _getSidebarPanels()
 		).put(
 			"successPageSettings",
 			() -> {
@@ -499,10 +476,6 @@ public class DDMFormBuilderContextFactoryHelper {
 		).build();
 	}
 
-	private boolean _isDataEngineSidebar() {
-		return _ffDDMFormSidebarConfigurationActivator.isDataEngineSidebar();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormBuilderContextFactoryHelper.class);
 
@@ -511,8 +484,6 @@ public class DDMFormBuilderContextFactoryHelper {
 	private final DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 	private final Optional<DDMStructure> _ddmStructureOptional;
 	private final Optional<DDMStructureVersion> _ddmStructureVersionOptional;
-	private final FFDDMFormSidebarConfigurationActivator
-		_ffDDMFormSidebarConfigurationActivator;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final JSONFactory _jsonFactory;

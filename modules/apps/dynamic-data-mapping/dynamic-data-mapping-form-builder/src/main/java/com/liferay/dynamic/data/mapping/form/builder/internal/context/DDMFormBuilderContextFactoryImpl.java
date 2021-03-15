@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.form.builder.internal.context;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
-import com.liferay.dynamic.data.mapping.form.builder.internal.configuration.FFDDMFormSidebarConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -56,7 +55,6 @@ public class DDMFormBuilderContextFactoryImpl
 				ddmStructureOptional, ddmStructureVersionOptional,
 				_ddmFormFieldTypeServicesTracker,
 				_ddmFormTemplateContextFactory,
-				_ffDDMFormSidebarConfigurationActivator,
 				ddmFormBuilderContextRequest.getHttpServletRequest(),
 				ddmFormBuilderContextRequest.getHttpServletResponse(),
 				_jsonFactory, ddmFormBuilderContextRequest.getLocale(),
@@ -77,10 +75,6 @@ public class DDMFormBuilderContextFactoryImpl
 
 	@Reference
 	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
-
-	@Reference
-	private FFDDMFormSidebarConfigurationActivator
-		_ffDDMFormSidebarConfigurationActivator;
 
 	@Reference
 	private JSONFactory _jsonFactory;

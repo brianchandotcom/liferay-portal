@@ -34,7 +34,6 @@ import React, {
 
 import {FormInfo} from '../components/FormInfo.es';
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
-import {MetalSidebarAdapter} from '../components/MetalSidebarAdapter.es';
 import {TranslationManager} from '../components/TranslationManager.es';
 import {ShareFormModalBody} from '../components/share-form/ShareFormModalBody.es';
 import {useAutoSave} from '../hooks/useAutoSave.es';
@@ -46,7 +45,6 @@ import {submitEmailContent} from '../util/submitEmailContent.es';
 export const FormBuilder = () => {
 	const {
 		autocompleteUserURL,
-		dataEngineSidebar,
 		formInstanceId,
 		portletNamespace,
 		publishFormInstanceURL,
@@ -174,12 +172,6 @@ export const FormBuilder = () => {
 		}
 	}, [addToast, showPublishAlert, published, getFormUrl]);
 
-	const onOpenSidebar = useCallback(() => {
-		if (sidebarRef.current) {
-			sidebarRef.current.current.open();
-		}
-	}, []);
-
 	const onPreviewClick = useCallback(
 		async (event) => {
 			event.preventDefault();
@@ -297,7 +289,6 @@ export const FormBuilder = () => {
 	return (
 		<>
 			<ManagementToolbar
-				onPlusClick={dataEngineSidebar ? null : onOpenSidebar}
 				onPreviewClick={onPreviewClick}
 				onPublishClick={onPublishClick}
 				onSaveClick={onSaveClick}
@@ -314,7 +305,7 @@ export const FormBuilder = () => {
 								'container ddm-form-builder',
 								{
 									'ddm-form-builder--sidebar-open':
-										dataEngineSidebar && sidebarOpen,
+										sidebarOpen,
 								}
 							)}
 						>
@@ -357,39 +348,28 @@ export const FormBuilder = () => {
 					</div>
 				</div>
 
-				{dataEngineSidebar ? (
-					<MultiPanelSidebar
-						createPlugin={({
-							panel,
+				<MultiPanelSidebar
+					createPlugin={({
+						panel,
+						sidebarOpen,
+						sidebarPanelId,
+					}) => ({
+						panel,
+						sidebarOpen,
+						sidebarPanelId,
+					})}
+					currentPanelId={currentPanelId}
+					onChange={({sidebarOpen, sidebarPanelId}) =>
+						setSidebarStatus({
+							currentPanelId: sidebarPanelId,
 							sidebarOpen,
-							sidebarPanelId,
-						}) => ({
-							panel,
-							sidebarOpen,
-							sidebarPanelId,
-						})}
-						currentPanelId={currentPanelId}
-						onChange={({sidebarOpen, sidebarPanelId}) =>
-							setSidebarStatus({
-								currentPanelId: sidebarPanelId,
-								sidebarOpen,
-							})
-						}
-						open={sidebarOpen}
-						panels={[['fields']]}
-						sidebarPanels={sidebarPanels}
-						variant="light"
-					/>
-				) : (
-					<MetalSidebarAdapter
-						defaultLanguageId={defaultLanguageId}
-						editingLanguageId={editingLanguageId}
-						fieldSets={fieldSets}
-						focusedField={focusedField}
-						ref={sidebarRef}
-						rules={rules}
-					/>
-				)}
+						})
+					}
+					open={sidebarOpen}
+					panels={[['fields']]}
+					sidebarPanels={sidebarPanels}
+					variant="light"
+				/>
 			</div>
 
 			{view === 'fieldSets' && (

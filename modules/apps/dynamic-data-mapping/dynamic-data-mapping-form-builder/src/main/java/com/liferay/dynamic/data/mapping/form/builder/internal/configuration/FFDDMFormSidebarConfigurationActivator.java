@@ -31,10 +31,6 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class FFDDMFormSidebarConfigurationActivator {
 
-	public boolean isDataEngineSidebar() {
-		return _ffDDMFormSidebarConfiguration.isDataEngineSidebar();
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

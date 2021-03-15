@@ -78,7 +78,6 @@ class FormBuilderBase extends Component {
 			activePage,
 			allowInvalidAvailableLocalesForProperty,
 			allowNestedFields = true,
-			dataEngineSidebar,
 			dnd,
 			editingLanguageId,
 			fieldActions,
@@ -97,9 +96,7 @@ class FormBuilderBase extends Component {
 			<div class="ddm-form-builder-wrapper">
 				<div
 					class={`container ddm-form-builder ${
-						dataEngineSidebar && sidebarOpen
-							? 'ddm-form-builder--sidebar-open'
-							: ''
+						sidebarOpen ? 'ddm-form-builder--sidebar-open' : ''
 					}`}
 				>
 					<LegacyFormBuilder

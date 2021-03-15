@@ -472,7 +472,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 						currentLocale,
 						analyticsReportsInfoItem.getDefaultLocale(object))
 				).put(
-					"languageId", LocaleUtil.toBCP47LanguageId(currentLocale)
+					"languageId", LocaleUtil.toW3cLanguageId(currentLocale)
 				).put(
 					"languageLabel",
 					StringBundler.concat(

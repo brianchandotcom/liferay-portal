@@ -667,13 +667,11 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		GoogleDoc.gotoEdit(
+		DMDocument.editCmdPG(
 			dmDocumentTitle = "Untitled",
-			dmDocumentTypeName = "Google Docs");
+			dmDocumentTitleEdit = "Edited Google Document With Workflow");
 
-		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Document With Workflow");
-
-		GoogleDoc.saveAndExit();
+		Button.clickSubmitForPublication();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

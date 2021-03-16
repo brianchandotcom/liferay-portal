@@ -31,10 +31,7 @@ export default getAlloyEditorProcessor(
 			editableConfig;
 
 		if (anchor) {
-			if (link.href) {
-				anchor.href = link.href;
-			}
-
+			anchor.href = link.href || '#';
 			anchor.innerHTML = value;
 			anchor.target = link.target || '';
 		}

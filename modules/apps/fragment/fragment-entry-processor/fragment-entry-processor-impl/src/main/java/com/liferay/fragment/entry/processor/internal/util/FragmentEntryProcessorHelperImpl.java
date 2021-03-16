@@ -341,7 +341,7 @@ public class FragmentEntryProcessorHelperImpl
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		if (group == null) {
-			return StringPool.BLANK;
+			return StringPool.POUND;
 		}
 
 		Layout layout = _layoutLocalService.fetchLayout(
@@ -349,7 +349,7 @@ public class FragmentEntryProcessorHelperImpl
 			layoutJSONObject.getLong("layoutId"));
 
 		if (layout == null) {
-			return StringPool.BLANK;
+			return StringPool.POUND;
 		}
 
 		return _portal.getLayoutFullURL(layout, themeDisplay);

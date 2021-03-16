@@ -369,7 +369,7 @@ public class RenderLayoutStructureDisplayContext {
 			return href;
 		}
 
-		return StringPool.BLANK;
+		return StringPool.POUND;
 	}
 
 	public String getContainerLinkTarget(

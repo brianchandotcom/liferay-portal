@@ -128,7 +128,8 @@ public class TestrayFactory {
 		}
 
 		_testrayServers.put(
-			testrayServerURLString, new TestrayServer(testrayServerURLString));
+			testrayServerURLString,
+			new DefaultTestrayServer(testrayServerURLString));
 
 		return testrayServer;
 	}

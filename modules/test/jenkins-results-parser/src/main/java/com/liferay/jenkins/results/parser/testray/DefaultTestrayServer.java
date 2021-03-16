@@ -14,32 +14,13 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
-import java.io.IOException;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
-public interface TestrayServer {
+public class DefaultTestrayServer extends BaseTestrayServer {
 
-	public TestrayProject getTestrayProjectByID(int projectID);
-
-	public TestrayProject getTestrayProjectByName(String projectName);
-
-	public List<TestrayProject> getTestrayProjects();
-
-	public URL getURL();
+	public DefaultTestrayServer(String urlString) {
+		super(urlString);
+	}
 
 }

@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -37,6 +38,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
@@ -290,6 +293,33 @@ public abstract class TestOrderHelper {
 				@Override
 				public String get(DDMFormFieldValue ddmFormFieldValue) {
 					Value value = ddmFormFieldValue.getValue();
+
+					if (StringUtil.equals(
+							assetRenderer.getClassName(),
+							JournalArticle.class.getName())) {
+
+						DDMFormField ddmFormField =
+							ddmFormFieldValue.getDDMFormField();
+
+						DDMFormFieldOptions ddmFormFieldOptions =
+							(DDMFormFieldOptions)ddmFormField.getProperty(
+								"options");
+
+						Map<String, LocalizedValue> options =
+							ddmFormFieldOptions.getOptions();
+
+						if (StringUtil.equals(
+								ddmFormField.getType(),
+								DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) &&
+							(options.size() == 1)) {
+
+							if (Validator.isNull(value.getString(locale))) {
+								return Boolean.FALSE.toString();
+							}
+
+							return Boolean.TRUE.toString();
+						}
+					}
 
 					return value.getString(locale);
 				}

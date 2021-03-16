@@ -92,6 +92,7 @@ public class WorkflowedModelPermissionLogic<T extends GroupedModel>
 					liveStagedModel.getUuid(), stagingGroup.getGroupId());
 
 			if (!actionId.equals(ActionKeys.VIEW) ||
+				(stagingStagedModel == null) ||
 				_modelResourcePermission.contains(
 					permissionChecker, (T)stagingStagedModel,
 					ActionKeys.UPDATE)) {

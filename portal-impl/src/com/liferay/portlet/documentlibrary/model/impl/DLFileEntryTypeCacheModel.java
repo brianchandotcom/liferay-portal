@@ -107,8 +107,8 @@ public class DLFileEntryTypeCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", system=");
-		sb.append(system);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -179,7 +179,7 @@ public class DLFileEntryTypeCacheModel
 			dlFileEntryTypeImpl.setDescription(description);
 		}
 
-		dlFileEntryTypeImpl.setSystem(system);
+		dlFileEntryTypeImpl.setType(type);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			dlFileEntryTypeImpl.setLastPublishDate(null);
@@ -216,7 +216,7 @@ public class DLFileEntryTypeCacheModel
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 
-		system = objectInput.readBoolean();
+		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -274,7 +274,7 @@ public class DLFileEntryTypeCacheModel
 			objectOutput.writeUTF(description);
 		}
 
-		objectOutput.writeBoolean(system);
+		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -292,7 +292,7 @@ public class DLFileEntryTypeCacheModel
 	public String fileEntryTypeKey;
 	public String name;
 	public String description;
-	public boolean system;
+	public int type;
 	public long lastPublishDate;
 
 }

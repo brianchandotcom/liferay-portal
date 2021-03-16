@@ -125,7 +125,7 @@ public interface DLFileEntryTypeService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> search(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, boolean system, int start, int end,
+		boolean includeBasicFileEntryType, int type, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -147,7 +147,7 @@ public interface DLFileEntryTypeService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, boolean system);
+		boolean includeBasicFileEntryType, int type);
 
 	public DLFileEntryType updateFileEntryType(
 			long fileEntryTypeId, Map<Locale, String> nameMap,

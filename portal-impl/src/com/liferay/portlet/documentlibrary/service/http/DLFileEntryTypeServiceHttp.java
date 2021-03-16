@@ -467,7 +467,7 @@ public class DLFileEntryTypeServiceHttp {
 	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFileEntryType> search(
 			HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-			String keywords, boolean includeBasicFileEntryType, boolean system,
+			String keywords, boolean includeBasicFileEntryType, int type,
 			int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.document.library.kernel.model.DLFileEntryType>
@@ -480,8 +480,7 @@ public class DLFileEntryTypeServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupIds, keywords,
-				includeBasicFileEntryType, system, start, end,
-				orderByComparator);
+				includeBasicFileEntryType, type, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -618,7 +617,7 @@ public class DLFileEntryTypeServiceHttp {
 
 	public static int searchCount(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-		String keywords, boolean includeBasicFileEntryType, boolean system) {
+		String keywords, boolean includeBasicFileEntryType, int type) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -627,7 +626,7 @@ public class DLFileEntryTypeServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupIds, keywords,
-				includeBasicFileEntryType, system);
+				includeBasicFileEntryType, type);
 
 			Object returnObj = null;
 
@@ -810,7 +809,7 @@ public class DLFileEntryTypeServiceHttp {
 		boolean.class, int.class, int.class
 	};
 	private static final Class<?>[] _searchParameterTypes10 = new Class[] {
-		long.class, long[].class, String.class, boolean.class, boolean.class,
+		long.class, long[].class, String.class, boolean.class, int.class,
 		int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
@@ -826,7 +825,7 @@ public class DLFileEntryTypeServiceHttp {
 		long.class, long[].class, String.class, boolean.class
 	};
 	private static final Class<?>[] _searchCountParameterTypes14 = new Class[] {
-		long.class, long[].class, String.class, boolean.class, boolean.class
+		long.class, long[].class, String.class, boolean.class, int.class
 	};
 	private static final Class<?>[] _updateFileEntryTypeParameterTypes15 =
 		new Class[] {long.class, java.util.Map.class, java.util.Map.class};

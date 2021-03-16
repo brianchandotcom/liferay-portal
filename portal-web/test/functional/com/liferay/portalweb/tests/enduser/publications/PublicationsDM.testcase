@@ -187,6 +187,7 @@ definition {
 
 		PublicationsChanges.viewPublicationsViaChangesStyle(
 			publicationsCategory = "Documents Folder",
+			publicationsOrder = "5",
 			publicationsSite = "Guest",
 			publicationsTitle = "DM Folder 1 Name",
 			publicationsType = "Modified",
@@ -202,6 +203,7 @@ definition {
 
 		PublicationsChanges.viewPublicationsViaChangesStyle(
 			publicationsCategory = "Documents Folder",
+			publicationsOrder = "5",
 			publicationsSite = "Guest",
 			publicationsTitle = "DM Folder 1 Name",
 			publicationsType = "Modified",
@@ -219,6 +221,7 @@ definition {
 
 		PublicationsChanges.viewPublicationsViaChangesStyle(
 			publicationsCategory = "Documents Folder",
+			publicationsOrder = "5",
 			publicationsSite = "Guest",
 			publicationsTitle = "DM Folder 1 Name",
 			publicationsType = "Deleted",

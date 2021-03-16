@@ -144,10 +144,6 @@ export default function getAlloyEditorProcessor(
 
 				nativeEditor.on('blur', () => {
 					if (_editor._mainUI.state.hidden) {
-						if (_callbacks.changeCallback) {
-							_callbacks.changeCallback(nativeEditor.getData());
-						}
-
 						requestAnimationFrame(() => {
 							if (_callbacks.destroyCallback) {
 								_callbacks.destroyCallback();

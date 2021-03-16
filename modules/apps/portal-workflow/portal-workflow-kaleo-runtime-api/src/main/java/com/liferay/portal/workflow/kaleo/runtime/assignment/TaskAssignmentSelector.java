@@ -25,6 +25,19 @@ import java.util.Collection;
  */
 public interface TaskAssignmentSelector {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getTaskAssignments(KaleoTaskAssignment, ExecutionContext)}
+	 */
+	@Deprecated
+	public default Collection<KaleoTaskAssignment> calculateTaskAssignments(
+			KaleoTaskAssignment kaleoTaskAssignment,
+			ExecutionContext executionContext)
+		throws PortalException {
+
+		return getTaskAssignments(kaleoTaskAssignment, executionContext);
+	}
+
 	public Collection<KaleoTaskAssignment> getTaskAssignments(
 			KaleoTaskAssignment kaleoTaskAssignment,
 			ExecutionContext executionContext)

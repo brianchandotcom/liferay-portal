@@ -28,6 +28,31 @@ import org.junit.Test;
 public class HeadlessUtilTest {
 
 	@Test
+	public void testSanitizeOpenAPIModuleURI() {
+		Assert.assertEquals(
+			"/headless-liferay/v1.0",
+			HeadlessUtil.sanitizeOpenAPIModuleURI("/headless-liferay/v1.0"));
+		Assert.assertEquals(
+			"/headless-liferay/v1.0",
+			HeadlessUtil.sanitizeOpenAPIModuleURI("/headless-liferay/v1.0/"));
+		Assert.assertEquals(
+			"/headless-liferay/v1.0",
+			HeadlessUtil.sanitizeOpenAPIModuleURI("headless-liferay/v1.0"));
+		Assert.assertEquals(
+			"/headless-liferay/v1.0",
+			HeadlessUtil.sanitizeOpenAPIModuleURI("headless-liferay/v1.0/"));
+		Assert.assertEquals(
+			"/headless-liferay/v1.0",
+			HeadlessUtil.sanitizeOpenAPIModuleURI("o/headless-liferay/v1.0/"));
+		Assert.assertEquals(
+			"/headless-liferay/v1.0",
+			HeadlessUtil.sanitizeOpenAPIModuleURI("/o/headless-liferay/v1.0/"));
+		Assert.assertEquals(
+			"/headless-liferay/v1.0",
+			HeadlessUtil.sanitizeOpenAPIModuleURI("/o/headless-liferay/v1.0"));
+	}
+
+	@Test
 	public void testUpdateWithQueryParameters() {
 		String url = "https://localhost:1977/o/headless/v1.0/lcs-cluster-nodes";
 

@@ -43,6 +43,28 @@ public class HeadlessUtil {
 		return false;
 	}
 
+	public static String sanitizeOpenAPIModuleURI(String url) {
+		String value = url;
+
+		if (!value.startsWith("/")) {
+			value = "/" + value;
+		}
+
+		if (value.length() <= 1) {
+			return value;
+		}
+
+		if (value.endsWith("/")) {
+			value = value.substring(0, value.length() - 1);
+		}
+
+		if (value.startsWith("/o/")) {
+			value = value.substring(2);
+		}
+
+		return value;
+	}
+
 	public static URI toURI(String href) {
 		try {
 			return new URI(StringUtil.removeQuotes(href));

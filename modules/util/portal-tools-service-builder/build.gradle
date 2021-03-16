@@ -16,7 +16,7 @@ configurations {
 }
 
 dependencies {
-	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.26"
+	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.29"
 	compile group: "com.thoughtworks.qdox", name: "qdox", version: "2.0-M5"
 	compile group: "commons-io", name: "commons-io", version: "2.5"
 	compile group: "jalopy", name: "jalopy", transitive: false, version: "1.5rc3"
@@ -33,7 +33,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.sql.dsl.api", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "4.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.34"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.38"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.71.9"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.5.0"

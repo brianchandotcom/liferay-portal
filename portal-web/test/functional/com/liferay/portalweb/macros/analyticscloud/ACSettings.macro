@@ -52,14 +52,14 @@ definition {
     }
 
     macro expandSidebar {
-        if(IsElementPresent(locator1 = "ACSettings#EXPAND_SIDEBAR_ARROW")){
-            Click(locator1 = "ACSettings#EXPAND_SIDEBAR_ARROW");
-        }
+
+        Click(locator1 = "ACSettings#EXPAND_SIDEBAR_ARROW");
+
     }
 
     macro collapseSidebar {
-        if(IsElementPresent(locator1 = "ACSettings#COLLAPSE_SIDEBAR_ARROW")){
-            Click(locator1 = "ACSettings#COLLAPSE_SIDEBAR_ARROW");
-        }
+
+        Click(locator1 = "ACSettings#COLLAPSE_SIDEBAR_ARROW");
+
     }
 }

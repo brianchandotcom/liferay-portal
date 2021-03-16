@@ -16,6 +16,7 @@ package com.liferay.talend.properties.resource;
 
 import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.common.daikon.DaikonUtil;
+import com.liferay.talend.common.headless.HeadlessUtil;
 import com.liferay.talend.common.oas.OASExplorer;
 import com.liferay.talend.common.oas.OASParameter;
 import com.liferay.talend.common.oas.OASSource;
@@ -244,6 +245,19 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		operations.setValue(_allowedOperations[0]);
 
 		_setupRequestParameterProperties();
+	}
+
+	public ValidationResult validateOpenAPIModule() {
+		ValidationResult validationResult = _validateOpenAPIModule();
+
+		if (validationResult.getStatus() == ValidationResult.Result.ERROR) {
+			return validationResult;
+		}
+
+		openAPIModule.setValue(
+			HeadlessUtil.sanitizeOpenAPIModuleURI(openAPIModule.getValue()));
+
+		return ValidationResult.OK;
 	}
 
 	public LiferayConnectionProperties connection =

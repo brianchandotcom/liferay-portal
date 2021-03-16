@@ -7120,6 +7120,14 @@ go</echo>
 		</if>
 	</target>
 
+	<target name="delete-static-impl-license-jar">
+		<execute>
+			<![CDATA[
+				zip -d '${liferayHome}/osgi/marketplace/Liferay Static - Impl.lpkg' com.liferay.portal.license.enterprise.app.jar
+			]]>
+		</execute>
+	</target>
+
 	<target name="deploy-analytics-cloud-demo-data-creator">
 		<if>
 			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />

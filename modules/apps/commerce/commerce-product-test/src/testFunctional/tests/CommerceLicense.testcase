@@ -67,13 +67,18 @@ definition {
 	test DeleteEnterpriseLicenseModule {
 		property commerce.enabled = "true";
 
-		var moduleID = GogoShell.getModuleID(moduleName = "Liferay Portal License Enterprise App");
-
-		GogoShell.executeCommand(
-			commandName = "uninstall",
-			moduleID = "${moduleID}");
-
 		Portlet.shutdownServer();
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		FileUtil.delete("${liferayHome}/osgi/static/com.liferay.portal.license.enterprise.app.jar");
+		FileUtil.delete("${liferayHome}/osgi/marketplace/Liferay Foundation - Liferay License Manager - Impl.lpkg");
+		FileUtil.delete("${liferayHome}/osgi/core/com.liferay.portal.app.license.api.jar");
+		FileUtil.delete("${liferayHome}/osgi/core/com.liferay.portal.app.license.impl.jar");
+		FileUtil.delete("${liferayHome}/osgi/core/com.liferay.portal.app.license.resolver.hook.jar");
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "delete-static-impl-license-jar -DliferayHome=${liferayHome}");
 
 		Portlet.startServer(keepOSGiState = "false");
 

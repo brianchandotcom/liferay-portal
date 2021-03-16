@@ -73,7 +73,7 @@ public class DLFileEntryTypeFinderImpl
 
 		return doCountByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
-			includeBasicFileEntryType, false);
+			includeBasicFileEntryType, null, false);
 	}
 
 	@Override
@@ -103,6 +103,15 @@ public class DLFileEntryTypeFinderImpl
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType) {
 
+		return filterCountByKeywords(
+			companyId, groupIds, keywords, includeBasicFileEntryType, null);
+	}
+
+	@Override
+	public int filterCountByKeywords(
+		long companyId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, Boolean system) {
+
 		String[] names = null;
 		String[] descriptions = null;
 		boolean andOperator = false;
@@ -117,7 +126,7 @@ public class DLFileEntryTypeFinderImpl
 
 		return doCountByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
-			includeBasicFileEntryType, true);
+			includeBasicFileEntryType, system, true);
 	}
 
 	@Override
@@ -146,7 +155,7 @@ public class DLFileEntryTypeFinderImpl
 	@Override
 	public List<DLFileEntryType> filterFindByKeywords(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, int start, int end,
+		boolean includeBasicFileEntryType, Boolean system, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		String[] names = null;
@@ -163,7 +172,19 @@ public class DLFileEntryTypeFinderImpl
 
 		return doFindByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
-			includeBasicFileEntryType, start, end, orderByComparator, true);
+			includeBasicFileEntryType, system, start, end, orderByComparator,
+			true);
+	}
+
+	@Override
+	public List<DLFileEntryType> filterFindByKeywords(
+		long companyId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, int start, int end,
+		OrderByComparator<DLFileEntryType> orderByComparator) {
+
+		return filterFindByKeywords(
+			companyId, groupIds, keywords, includeBasicFileEntryType, null,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -186,12 +207,13 @@ public class DLFileEntryTypeFinderImpl
 
 		return doFindByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
-			includeBasicFileEntryType, start, end, orderByComparator, false);
+			includeBasicFileEntryType, null, start, end, orderByComparator,
+			false);
 	}
 
 	protected int doCountByC_G_N_D_S(
 		long companyId, long[] groupIds, String[] names, String[] descriptions,
-		boolean andOperator, boolean includeBasicFileEntryType,
+		boolean andOperator, boolean includeBasicFileEntryType, Boolean system,
 		boolean inlineSQLHelper) {
 
 		names = CustomSQLUtil.keywords(names);
@@ -215,6 +237,7 @@ public class DLFileEntryTypeFinderImpl
 				getBasicDocumentCount(includeBasicFileEntryType));
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds.length));
+			sql = StringUtil.replace(sql, "[$SYSTEM$]", _getSystem(system));
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(DLFileEntryType.name)", StringPool.LIKE, false,
 				names);
@@ -240,6 +263,11 @@ public class DLFileEntryTypeFinderImpl
 
 			queryPos.add(companyId);
 			queryPos.add(groupIds);
+
+			if (system != null) {
+				queryPos.add(system);
+			}
+
 			queryPos.add(names, 2);
 			queryPos.add(descriptions, 2);
 
@@ -355,8 +383,9 @@ public class DLFileEntryTypeFinderImpl
 
 	protected List<DLFileEntryType> doFindByC_G_N_D_S(
 		long companyId, long[] groupIds, String[] names, String[] descriptions,
-		boolean andOperator, boolean includeBasicFileEntryType, int start,
-		int end, OrderByComparator<DLFileEntryType> orderByComparator,
+		boolean andOperator, boolean includeBasicFileEntryType, Boolean system,
+		int start, int end,
+		OrderByComparator<DLFileEntryType> orderByComparator,
 		boolean inlineSQLHelper) {
 
 		names = CustomSQLUtil.keywords(names);
@@ -380,6 +409,7 @@ public class DLFileEntryTypeFinderImpl
 				getBasicDocument(includeBasicFileEntryType));
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds.length));
+			sql = StringUtil.replace(sql, "[$SYSTEM$]", _getSystem(system));
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(DLFileEntryType.name)", StringPool.LIKE, false,
 				names);
@@ -405,6 +435,11 @@ public class DLFileEntryTypeFinderImpl
 
 			queryPos.add(companyId);
 			queryPos.add(groupIds);
+
+			if (system != null) {
+				queryPos.add(system);
+			}
+
 			queryPos.add(names, 2);
 			queryPos.add(descriptions, 2);
 
@@ -544,6 +579,14 @@ public class DLFileEntryTypeFinderImpl
 		sb.append("DLFileEntryType.groupId = ?) AND");
 
 		return sb.toString();
+	}
+
+	private String _getSystem(Boolean system) {
+		if (system == null) {
+			return StringPool.BLANK;
+		}
+
+		return "(DLFileEntryType.system_ = ?) AND";
 	}
 
 	private static final String _INNER_JOIN_SQL =

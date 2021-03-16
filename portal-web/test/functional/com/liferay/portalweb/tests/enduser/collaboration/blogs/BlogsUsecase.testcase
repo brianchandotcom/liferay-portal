@@ -505,6 +505,46 @@ definition {
 			entryTitle = "Blogs Entry6 Title");
 	}
 
+	@description = "This test covers LPS-127212 and LPS-128781. This ensures that can export and import blog entries into a site with existing entry with same title."
+	@priority = "3"
+	test ExportImportBlogsWithSameTitle {
+		JSONGroup.addGroup(groupName = "Target Site Name");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Target Site Name");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Target Site Name");
+
+		JSONGroup.addGroup(groupName = "Source Site Name");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Source Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "source-site-name");
+
+		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "target-site-name");
+
+		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "target-site-name");
+
+		for (var i : list "1,2,3") {
+			AssertTextEquals(
+				key_rowNumber = "${i}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_2",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
 	@priority = "4"
 	test ImportBlogsCommentLAR {
 		JSONBlog.addEntry(

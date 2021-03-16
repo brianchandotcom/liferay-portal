@@ -101,12 +101,12 @@ export const updateSettingsContextProperty = (
 							...propertyValue,
 						};
 					}
-
-					field.localizedValue = {
-						...field.localizedValue,
-						[editingLanguageId]: value,
-					};
 				}
+
+				field.localizedValue = {
+					...(field.localizedValue ?? {}),
+					[editingLanguageId]: value,
+				};
 			}
 
 			return field;

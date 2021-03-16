@@ -1505,4 +1505,33 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#RELATED_QUESTIONS_EMPTY_TEXT");
 	}
 
+	@description = "Validate if the user can create the second answer to a question, it also covers LPS-125810."
+	@priority = "3"
+	test ViewSecondAnswer {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Question Body Test Text",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Questions AddQuestionWithTitle");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Questions AddQuestionWithTitle");
+
+		Questions.answerQuestion(contentField = "This is my first answer");
+
+		Questions.replyToComment(commentReply = "This is my reply text");
+
+		Questions.answerQuestion(contentField = "This is my second answer");
+	}
+
 }

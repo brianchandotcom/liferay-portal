@@ -34,12 +34,16 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -70,9 +74,11 @@ import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
+import com.liferay.journal.model.impl.JournalArticleImpl;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.base.JournalArticleLocalServiceBaseImpl;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalDefaultTemplateProvider;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
@@ -205,7 +211,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -451,7 +459,6 @@ public class JournalArticleLocalServiceImpl
 		article.setArticleId(articleId);
 		article.setVersion(version);
 		article.setUrlTitle(urlTitleMap.get(LocaleUtil.toLanguageId(locale)));
-		article.setContent(_formatContent(article, content, groupId, user));
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
@@ -516,6 +523,9 @@ public class JournalArticleLocalServiceImpl
 			serviceContext.getAssetPriority());
 
 		// Dynamic data mapping
+
+		updateDDMFields(
+			article, _formatContent(article, content, groupId, user));
 
 		if (classNameLocalService.getClassNameId(DDMStructure.class) ==
 				classNameId) {
@@ -785,7 +795,6 @@ public class JournalArticleLocalServiceImpl
 		article.setClassNameId(classNameId);
 		article.setClassPK(classPK);
 		article.setArticleId(articleId);
-		article.setContent(_formatContent(article, content, groupId, user));
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 
@@ -829,6 +838,9 @@ public class JournalArticleLocalServiceImpl
 			serviceContext.getAssetPriority());
 
 		// Dynamic data mapping
+
+		updateDDMFields(
+			article, _formatContent(article, content, groupId, user));
 
 		updateDDMStructurePredefinedValues(classPK, content, serviceContext);
 
@@ -1045,7 +1057,6 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setUrlTitle(
 			getUniqueUrlTitle(
 				id, groupId, newArticleId, oldArticle.getTitleCurrentValue()));
-		newArticle.setContent(copyArticleImages(oldArticle, newArticle));
 		newArticle.setDDMStructureKey(oldArticle.getDDMStructureKey());
 		newArticle.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
 		newArticle.setDefaultLanguageId(oldArticle.getDefaultLanguageId());
@@ -1151,6 +1162,8 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
+		updateDDMFields(newArticle, copyArticleImages(oldArticle, newArticle));
+
 		updateDDMLinks(
 			id, groupId, oldArticle.getDDMStructureKey(),
 			oldArticle.getDDMTemplateKey(), true);
@@ -1242,6 +1255,8 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		// Dynamic data mapping
+
+		_ddmFieldLocalService.deleteDDMFormValues(article.getId());
 
 		if (article.getClassNameId() != classNameLocalService.getClassNameId(
 				DDMStructure.class)) {
@@ -4181,15 +4196,10 @@ public class JournalArticleLocalServiceImpl
 				article.getId(), languageId);
 		}
 
-		Document document = article.getDocument();
+		String content = JournalUtil.removeArticleLocale(article, languageId);
 
-		if (document != null) {
-			String content = article.getContent();
-
-			content = JournalUtil.removeArticleLocale(
-				document, content, languageId);
-
-			article.setContent(content);
+		if (content != null) {
+			updateDDMFields(article, content);
 		}
 
 		article = journalArticlePersistence.update(article);
@@ -5654,7 +5664,6 @@ public class JournalArticleLocalServiceImpl
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
 		article.setUrlTitle(urlTitle);
-		article.setContent(_formatContent(article, content, groupId, user));
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
@@ -5709,6 +5718,9 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		// Dynamic data mapping
+
+		updateDDMFields(
+			article, _formatContent(article, content, groupId, user));
 
 		if (classNameLocalService.getClassNameId(DDMStructure.class) !=
 				article.getClassNameId()) {
@@ -6129,7 +6141,6 @@ public class JournalArticleLocalServiceImpl
 		_updateArticleLocalizedFields(
 			article.getCompanyId(), article.getId(), titleMap, descriptionMap);
 
-		article.setContent(_formatContent(article, content, groupId, user));
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 
@@ -6170,6 +6181,9 @@ public class JournalArticleLocalServiceImpl
 			serviceContext.getAssetPriority());
 
 		// Dynamic data mapping
+
+		updateDDMFields(
+			article, _formatContent(article, content, groupId, user));
 
 		updateDDMStructurePredefinedValues(
 			article.getClassPK(), content, serviceContext);
@@ -6300,12 +6314,6 @@ public class JournalArticleLocalServiceImpl
 			_addArticleLocalizedFields(
 				article.getCompanyId(), article.getId(),
 				oldArticle.getTitleMap(), oldArticle.getDescriptionMap());
-
-			// Dynamic data mapping
-
-			updateDDMLinks(
-				id, groupId, oldArticle.getDDMStructureKey(),
-				oldArticle.getDDMTemplateKey(), true);
 		}
 		else {
 			article = oldArticle;
@@ -6315,9 +6323,20 @@ public class JournalArticleLocalServiceImpl
 			article.getCompanyId(), article.getId(), title, description,
 			LocaleUtil.toLanguageId(locale));
 
-		article.setContent(_formatContent(article, content, groupId, user));
+		article = journalArticlePersistence.update(article);
 
-		return journalArticlePersistence.update(article);
+		// Dynamic data mapping
+
+		updateDDMFields(
+			article, _formatContent(article, content, groupId, user));
+
+		if (incrementVersion) {
+			updateDDMLinks(
+				article.getId(), groupId, oldArticle.getDDMStructureKey(),
+				oldArticle.getDDMTemplateKey(), true);
+		}
+
+		return article;
 	}
 
 	/**
@@ -6716,6 +6735,13 @@ public class JournalArticleLocalServiceImpl
 		return journalArticleLocalService.updateStatus(
 			userId, article, status, articleURL, serviceContext,
 			workflowContext);
+	}
+
+	@Activate
+	protected void activate() {
+		JournalArticleImpl.setDDMFormValuesToFieldsConverter(
+			_ddmFormValuesToFieldsConverter);
+		JournalArticleImpl.setJournalConverter(_journalConverter);
 	}
 
 	protected void addImageFileEntries(
@@ -7291,6 +7317,15 @@ public class JournalArticleLocalServiceImpl
 		catch (DocumentException documentException) {
 			throw new SystemException(documentException);
 		}
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+
+		JournalArticleImpl.setDDMFormValuesToFieldsConverter(null);
+		JournalArticleImpl.setJournalConverter(null);
 	}
 
 	protected void expireMaxVersionArticles(
@@ -8319,6 +8354,35 @@ public class JournalArticleLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
+	protected void updateDDMFields(JournalArticle article, String content)
+		throws PortalException {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(article.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class),
+			article.getDDMStructureKey(), true);
+
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure,
+			_journalConverter.getDDMFields(ddmStructure, content));
+
+		_ddmFieldLocalService.updateDDMFormValues(
+			ddmStructure.getStructureId(), article.getId(), ddmFormValues);
+
+		// Document Cache
+
+		try {
+			article.setDocument(SAXReaderUtil.read(content));
+
+			journalArticlePersistence.cacheResult(article);
+		}
+		catch (DocumentException documentException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(documentException, documentException);
+			}
+		}
+	}
+
 	protected void updateDDMFormFieldPredefinedValue(
 		DDMFormField ddmFormField, LocalizedValue ddmFormFieldValue) {
 
@@ -9036,10 +9100,22 @@ public class JournalArticleLocalServiceImpl
 	private CommentManager _commentManager;
 
 	@Reference
+	private DDMFieldLocalService _ddmFieldLocalService;
+
+	@Reference
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
 	private Http _http;
@@ -9054,6 +9130,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+	@Reference
+	private JournalConverter _journalConverter;
 
 	@Reference
 	private JournalDefaultTemplateProvider _journalDefaultTemplateProvider;

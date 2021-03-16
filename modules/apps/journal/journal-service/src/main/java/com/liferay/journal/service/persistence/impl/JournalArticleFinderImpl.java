@@ -14,6 +14,7 @@
 
 package com.liferay.journal.service.persistence.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttributeTable;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
@@ -1976,6 +1977,9 @@ public class JournalArticleFinderImpl
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
+		DDMFieldAttributeTable tempDDMFieldAttributeTable =
+			DDMFieldAttributeTable.INSTANCE.as("tempDDMFieldAttributeTable");
+
 		JournalArticleTable tempJournalArticleTable =
 			JournalArticleTable.INSTANCE.as("tempJournalArticleTable");
 
@@ -2006,6 +2010,18 @@ public class JournalArticleFinderImpl
 
 		return fromStep.from(
 			JournalArticleTable.INSTANCE
+		).innerJoinON(
+			DDMFieldAttributeTable.INSTANCE,
+			DDMFieldAttributeTable.INSTANCE.storageId.eq(
+				JournalArticleTable.INSTANCE.id)
+		).leftJoinOn(
+			tempDDMFieldAttributeTable,
+			DDMFieldAttributeTable.INSTANCE.storageId.eq(
+				tempDDMFieldAttributeTable.storageId
+			).and(
+				DDMFieldAttributeTable.INSTANCE.fieldAttributeId.lt(
+					tempDDMFieldAttributeTable.fieldAttributeId)
+			)
 		).leftJoinOn(
 			tempJournalArticleTable,
 			JournalArticleTable.INSTANCE.groupId.eq(
@@ -2087,6 +2103,8 @@ public class JournalArticleFinderImpl
 				).and(
 					tempJournalArticleLocalizationTable.articleLocalizationId.
 						isNull()
+				).and(
+					tempDDMFieldAttributeTable.fieldAttributeId.isNull()
 				);
 
 				Predicate versionPredicate = null;
@@ -2108,10 +2126,17 @@ public class JournalArticleFinderImpl
 					_customSQL.getKeywordsPredicate(
 						JournalArticleLocalizationTable.INSTANCE.description,
 						_customSQL.keywords(descriptions, false)),
-					_customSQL.getKeywordsPredicate(
-						DSLFunctionFactoryUtil.castClobText(
-							JournalArticleTable.INSTANCE.content),
-						_customSQL.keywords(contents, false)));
+					Predicate.withParentheses(
+						Predicate.or(
+							_customSQL.getKeywordsPredicate(
+								DDMFieldAttributeTable.INSTANCE.
+									smallAttributeValue,
+								_customSQL.keywords(contents, false)),
+							_customSQL.getKeywordsPredicate(
+								DSLFunctionFactoryUtil.castClobText(
+									DDMFieldAttributeTable.INSTANCE.
+										largeAttributeValue),
+								_customSQL.keywords(contents, false)))));
 
 				if (displayDateGT != null) {
 					keywordsPredicate = _andOr(

@@ -17,8 +17,12 @@ package com.liferay.journal.model.impl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
@@ -35,6 +39,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -102,6 +107,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 
 		return document.asXML();
+	}
+
+	public static void setDDMFormValuesToFieldsConverter(
+		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
+
+		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
+	}
+
+	public static void setJournalConverter(JournalConverter journalConverter) {
+		_journalConverter = journalConverter;
 	}
 
 	@Override
@@ -199,6 +214,38 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 
 		return availableLanguageIds.toArray(new String[0]);
+	}
+
+	@JSON
+	@Override
+	public String getContent() {
+		String content = null;
+
+		DDMStructure ddmStructure = getDDMStructure();
+
+		if (ddmStructure == null) {
+			return content;
+		}
+
+		DDMFormValues ddmFormValues = DDMFieldLocalServiceUtil.getDDMFormValues(
+			ddmStructure.getDDMForm(), getId());
+
+		if (ddmFormValues != null) {
+			try {
+				Fields fields = _ddmFormValuesToFieldsConverter.convert(
+					ddmStructure, ddmFormValues);
+
+				content = _journalConverter.getContent(
+					ddmStructure, fields, getGroupId());
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception, exception);
+				}
+			}
+		}
+
+		return content;
 	}
 
 	@Override
@@ -333,12 +380,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public Document getDocument() {
 		if (_document == null) {
-			try {
-				_document = SAXReaderUtil.read(getContent());
-			}
-			catch (DocumentException documentException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(documentException, documentException);
+			String content = getContent();
+
+			if (content != null) {
+				try {
+					_document = SAXReaderUtil.read(getContent());
+				}
+				catch (DocumentException documentException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(documentException, documentException);
+					}
 				}
 			}
 		}
@@ -762,6 +813,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleImpl.class);
+
+	private static volatile DDMFormValuesToFieldsConverter
+		_ddmFormValuesToFieldsConverter;
+	private static volatile JournalConverter _journalConverter;
 
 	/**
 	 * @deprecated As of Judson (7.1.x)

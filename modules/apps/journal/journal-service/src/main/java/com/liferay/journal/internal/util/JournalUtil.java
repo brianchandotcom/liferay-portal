@@ -397,7 +397,13 @@ public class JournalUtil {
 	}
 
 	public static String removeArticleLocale(
-		Document document, String content, String languageId) {
+		JournalArticle article, String languageId) {
+
+		Document document = article.getDocument();
+
+		if (document == null) {
+			return null;
+		}
 
 		Element rootElement = document.getRootElement();
 
@@ -405,7 +411,7 @@ public class JournalUtil {
 			"available-locales");
 
 		if (availableLocales == null) {
-			return content;
+			return article.getContent();
 		}
 
 		availableLocales = StringUtil.removeFromList(

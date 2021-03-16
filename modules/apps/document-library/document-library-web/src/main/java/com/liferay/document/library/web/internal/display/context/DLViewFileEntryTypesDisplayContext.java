@@ -109,7 +109,7 @@ public class DLViewFileEntryTypesDisplayContext {
 			themeDisplay.getCompanyId(),
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(
 				themeDisplay.getScopeGroupId()),
-			searchTerms.getKeywords(), includeBasicFileEntryType);
+			searchTerms.getKeywords(), includeBasicFileEntryType, false);
 
 		searchContainer.setTotal(total);
 
@@ -118,7 +118,7 @@ public class DLViewFileEntryTypesDisplayContext {
 				themeDisplay.getCompanyId(),
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					themeDisplay.getScopeGroupId()),
-				searchTerms.getKeywords(), includeBasicFileEntryType,
+				searchTerms.getKeywords(), includeBasicFileEntryType, false,
 				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator()));
 

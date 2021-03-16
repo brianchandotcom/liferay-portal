@@ -945,6 +945,99 @@ definition {
 			webContentTextFieldLabel = "Text Box");
 	}
 
+	@description = "This test covers LPS-127980. This ensures that the newly added field can be translated after updating the WC structure."
+	@priority = "4"
+	test TranslateWCAfterEditingStructure {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentText = "Text",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentText = "Mensaje de texto",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.publish();
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentNumeric = "",
+			webContentNumericFieldLabel = "Numeric");
+
+		Translations.translateFields(webContentNumber = "200");
+
+		PortletEntry.publish();
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Translation of WC WebContent Title to es-ES");
+
+		Translations.viewTranslationDetails(
+			currentTargetLocale = "es-ES",
+			webContentNumber = "200",
+			webContentText = "Mensaje de texto",
+			webContentTitle = "WC WebContent Título");
+	}
+
 	@description = "This ensures that the user can not translate a web content without any languages permissions."
 	@priority = "4"
 	test TranslateWCWithoutLanguagesPermissions {

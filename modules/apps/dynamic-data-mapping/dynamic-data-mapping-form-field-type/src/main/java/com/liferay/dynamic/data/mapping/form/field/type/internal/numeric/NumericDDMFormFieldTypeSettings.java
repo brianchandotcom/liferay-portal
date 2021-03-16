@@ -35,6 +35,9 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setDataType('predefinedValue', getValue('dataType'))",
 				"setValidationDataType('validation', getValue('dataType'))",
 				"setValidationFieldName('validation', getValue('name'))",
+				"setVisible('confirmationErrorMessage', getValue('requireConfirmation'))",
+				"setVisible('confirmationLabel', getValue('requireConfirmation'))",
+				"setVisible('direction', getValue('requireConfirmation'))",
 				"setVisible('tooltip', false)"
 			},
 			condition = "TRUE"
@@ -72,8 +75,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 								"visibilityExpression", "fieldNamespace",
 								"indexType", "labelAtStructureLevel",
 								"localizable", "nativeField", "readOnly",
-								"type", "showLabel", "repeatable", "validation",
-								"tooltip"
+								"type", "showLabel", "repeatable",
+								"requireConfirmation", "direction",
+								"confirmationLabel", "confirmationErrorMessage",
+								"validation", "tooltip"
 							}
 						)
 					}
@@ -86,12 +91,31 @@ public interface NumericDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
+		dataType = "string", label = "%error-message",
+		predefinedValue = "%the-information-does-not-match", type = "text"
+	)
+	public LocalizedValue confirmationErrorMessage();
+
+	@DDMFormField(
+		dataType = "string", label = "%label", predefinedValue = "%confirm",
+		type = "text"
+	)
+	public LocalizedValue confirmationLabel();
+
+	@DDMFormField(
 		label = "%my-numeric-type-is", optionLabels = {"%integer", "%decimal"},
 		optionValues = {"integer", "double"}, predefinedValue = "integer",
 		type = "radio"
 	)
 	@Override
 	public String dataType();
+
+	@DDMFormField(
+		label = "%direction", optionLabels = {"%horizontal", "%vertical"},
+		optionValues = {"horizontal", "vertical"},
+		predefinedValue = "[\"vertical\"]", type = "select"
+	)
+	public String direction();
 
 	@DDMFormField(
 		dataType = "string", label = "%placeholder-text",
@@ -114,6 +138,11 @@ public interface NumericDDMFormFieldTypeSettings
 	)
 	@Override
 	public LocalizedValue predefinedValue();
+
+	@DDMFormField(
+		label = "%require-confirmation", properties = "showAsSwitcher=true"
+	)
+	public boolean requireConfirmation();
 
 	@DDMFormField
 	public LocalizedValue tooltip();

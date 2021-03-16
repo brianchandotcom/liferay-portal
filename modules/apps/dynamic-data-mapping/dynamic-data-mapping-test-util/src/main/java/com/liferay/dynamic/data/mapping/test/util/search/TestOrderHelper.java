@@ -76,7 +76,7 @@ public abstract class TestOrderHelper {
 	public void testOrderByDDMBooleanField() throws Exception {
 		testOrderByDDMField(
 			new String[] {"false", "true", "false", "true"},
-			new String[] {"false", "false", "true", "true"},
+			new String[] {"true", "true", "false", "false"},
 			FieldConstants.BOOLEAN, DDMFormFieldTypeConstants.CHECKBOX);
 	}
 

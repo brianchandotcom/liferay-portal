@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_CONTAINER_PREDEFINED_IMAGE</td>
+	<td>//input[@type='hidden' and contains(@value,'${key_imageFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_COLLAPSE_BUTTON</td>
 	<td>//button[contains(@class,'collapse-icon')][//label[normalize-space(text())='${key_label}']]</td>
 	<td></td>

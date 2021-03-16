@@ -24,4 +24,12 @@ definition {
 
 		Click(locator1 = "AnalyticsCloudConnection#LOGIN_BUTTON");
 	}
+
+    macro openWorkspaceAfterLogin {
+
+        var key_WorkspaceName = "${workspaceName}";
+
+        Click(locator1 = "AnalyticsCloudConnection#WORKSPACE_NAME");
+
+    }  
 }

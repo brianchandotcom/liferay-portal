@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_ERROR</td>
+	<td>//div[contains(@class,'portlet-msg-error')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_INFO</td>
 	<td>//div[contains(@class,'portlet-msg-info')]</td>
 	<td></td>

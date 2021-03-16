@@ -18,13 +18,13 @@
 
 <c:choose>
 	<c:when test='<%= Objects.equals(SessionErrors.get(request, "statusCodeURI"), "urn:oasis:names:tc:SAML:2.0:status:AuthnFailed") %>'>
-		<h3 class="portlet-msg-error">
+		<div class="portlet-msg-error">
 			<liferay-ui:message key="authentication-failed" />
-		</h3>
+		</div>
 	</c:when>
 	<c:otherwise>
-		<h3 class="portlet-msg-error">
+		<div class="portlet-msg-error">
 			<liferay-ui:message key="unable-to-process-saml-request" />
-		</h3>
+		</div>
 	</c:otherwise>
 </c:choose>

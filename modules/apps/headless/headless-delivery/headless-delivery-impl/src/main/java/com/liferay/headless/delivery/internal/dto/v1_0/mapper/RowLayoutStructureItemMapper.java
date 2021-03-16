@@ -59,8 +59,10 @@ public class RowLayoutStructureItemMapper
 							rowStyledLayoutStructureItem.getModulesPerRow();
 						numberOfColumns =
 							rowStyledLayoutStructureItem.getNumberOfColumns();
-						reverseOrder = getReverseOrder();
-						verticalAlignment = getVerticalAlignment();
+						reverseOrder =
+							rowStyledLayoutStructureItem.isReverseOrder();
+						verticalAlignment =
+							rowStyledLayoutStructureItem.getVerticalAlignment();
 
 						setFragmentStyle(
 							() -> {

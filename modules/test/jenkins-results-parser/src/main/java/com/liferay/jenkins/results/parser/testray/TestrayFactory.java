@@ -15,6 +15,12 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.SourceFormatBuild;
+import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.net.URL;
 
@@ -24,7 +30,7 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayAttachmentFactory {
+public class TestrayFactory {
 
 	public static TestrayAttachmentRecorder newTestrayAttachmentRecorder(
 		Build build) {
@@ -72,6 +78,43 @@ public class TestrayAttachmentFactory {
 		_testrayAttachmentUploaders.put(key, testrayAttachmentUploader);
 
 		return testrayAttachmentUploader;
+	}
+
+	public static TestrayCaseResult newTestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
+		AxisTestClassGroup axisTestClassGroup,
+		TestClassGroup.TestClass testClass) {
+
+		if (testrayBuild == null) {
+			throw new RuntimeException("Please set a Testray build");
+		}
+
+		if (topLevelBuild == null) {
+			throw new RuntimeException("Please set a top level build");
+		}
+
+		if (axisTestClassGroup == null) {
+			throw new RuntimeException("Please set an axis test class group");
+		}
+
+		if (testClass != null) {
+			if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
+				return new FunctionalBatchTestrayCaseResult(
+					testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
+			}
+			else if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
+				return new JUnitBatchTestrayCaseResult(
+					testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
+			}
+		}
+
+		if (topLevelBuild instanceof SourceFormatBuild) {
+			return new SFBatchTestrayCaseResult(
+				testrayBuild, topLevelBuild, axisTestClassGroup);
+		}
+
+		return new BatchTestrayCaseResult(
+			testrayBuild, topLevelBuild, axisTestClassGroup);
 	}
 
 	private static final Map<Build, TestrayAttachmentRecorder>

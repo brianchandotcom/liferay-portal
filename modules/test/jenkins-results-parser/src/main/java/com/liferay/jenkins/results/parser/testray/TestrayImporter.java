@@ -954,14 +954,14 @@ public class TestrayImporter {
 						axisTestClassGroup.getTestClasses()) {
 
 					testrayCaseResults.add(
-						TestrayCaseResultFactory.newTestrayCaseResult(
+						TestrayFactory.newTestrayCaseResult(
 							testrayBuild, getTopLevelBuild(),
 							axisTestClassGroup, testClass));
 				}
 			}
 			else {
 				testrayCaseResults.add(
-					TestrayCaseResultFactory.newTestrayCaseResult(
+					TestrayFactory.newTestrayCaseResult(
 						testrayBuild, getTopLevelBuild(), axisTestClassGroup,
 						null));
 			}

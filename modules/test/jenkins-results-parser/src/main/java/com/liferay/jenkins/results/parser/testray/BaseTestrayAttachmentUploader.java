@@ -30,7 +30,7 @@ public abstract class BaseTestrayAttachmentUploader
 		_build = build;
 
 		_testrayAttachmentRecorder =
-			TestrayAttachmentFactory.newTestrayAttachmentRecorder(build);
+			TestrayFactory.newTestrayAttachmentRecorder(build);
 	}
 
 	protected Build getBuild() {

@@ -59,12 +59,15 @@ export function useDDMFormValidation(ddmForm, languageId) {
 									localizedValue,
 								} = field;
 
-								if (editingLanguageId != languageId) {
+								if (
+									localizedValue[languageId] === undefined &&
+									editingLanguageId != languageId
+								) {
 									const newValue = formatFieldValue(
 										field,
 										true,
-										editingLanguageId,
-										languageId
+										languageId,
+										editingLanguageId
 									);
 
 									if (!localizedValue[languageId]) {

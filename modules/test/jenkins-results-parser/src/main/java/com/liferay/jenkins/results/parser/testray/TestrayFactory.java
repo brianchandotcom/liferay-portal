@@ -127,9 +127,14 @@ public class TestrayFactory {
 			return testrayServer;
 		}
 
-		_testrayServers.put(
-			testrayServerURLString,
-			new DefaultTestrayServer(testrayServerURLString));
+		if (testrayServerURLString.startsWith("https://testray.liferay.com")) {
+			testrayServer = new RsyncTestrayServer(testrayServerURLString);
+		}
+		else {
+			testrayServer = new DefaultTestrayServer(testrayServerURLString);
+		}
+
+		_testrayServers.put(testrayServerURLString, testrayServer);
 
 		return testrayServer;
 	}

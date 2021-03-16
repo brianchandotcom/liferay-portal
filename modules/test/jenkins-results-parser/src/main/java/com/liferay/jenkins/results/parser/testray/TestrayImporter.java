@@ -51,8 +51,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URLEncoder;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -67,9 +65,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -1062,52 +1057,49 @@ public class TestrayImporter {
 
 			TestrayServer testrayServer = testrayBuild.getTestrayServer();
 
+			TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+			JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
 			try {
-				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				testrayServer.writeCaseResult(
 					JenkinsResultsParserUtil.combine(
-						String.valueOf(testrayServer.getURL()),
-						"/web/guest/home/-/testray/case_results",
-						"/importResults.json"),
-					JenkinsResultsParserUtil.combine(
-						"results=",
-						URLEncoder.encode(
-							Dom4JUtil.format(rootElement), "UTF-8"),
-						"&type=poshi"));
-
-				if (jsonObject.has("data")) {
-					JSONArray dataJSONArray = jsonObject.getJSONArray("data");
-
-					for (int i = 0; i < dataJSONArray.length(); i++) {
-						JSONObject dataJSONObject = dataJSONArray.getJSONObject(
-							i);
-
-						if (dataJSONObject == JSONObject.NULL) {
-							continue;
-						}
-
-						TestrayCaseResult testrayCaseResult =
-							new TestrayCaseResult(testrayBuild, dataJSONObject);
-
-						System.out.println(
-							JenkinsResultsParserUtil.combine(
-								String.valueOf(testrayCaseResult.getStatus()),
-								" - ", testrayCaseResult.getName(), " - ",
-								String.valueOf(testrayCaseResult.getURL())));
-					}
-				}
+						"TESTS-", jenkinsMaster.getName(), "_",
+						topLevelBuild.getJobName(), "_",
+						String.valueOf(topLevelBuild.getBuildNumber()), "_",
+						axisTestClassGroup.getAxisName(), ".xml"),
+					Dom4JUtil.format(rootElement));
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
 			}
-			finally {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Recorded ", String.valueOf(testrayCaseResults.size()),
-						" case results in ",
-						JenkinsResultsParserUtil.toDurationString(
-							JenkinsResultsParserUtil.getCurrentTimeMillis() -
-								start)));
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Recorded ", String.valueOf(testrayCaseResults.size()),
+					" case results for ", axisTestClassGroup.getAxisName(),
+					" in ",
+					JenkinsResultsParserUtil.toDurationString(
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							start)));
+		}
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
+		List<Integer> testrayBuildIDs = new ArrayList<>();
+
+		for (TestrayBuild testrayBuild : _testrayBuilds.values()) {
+			if (testrayBuildIDs.contains(testrayBuild.getID())) {
+				continue;
 			}
+
+			testrayBuildIDs.add(testrayBuild.getID());
+
+			TestrayServer testrayServer = testrayBuild.getTestrayServer();
+
+			testrayServer.importCaseResults(jenkinsMaster);
 		}
 	}
 

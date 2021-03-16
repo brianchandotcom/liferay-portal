@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.MalformedURLException;
@@ -60,6 +61,22 @@ public abstract class BaseTestrayServer implements TestrayServer {
 		return _url;
 	}
 
+	@Override
+	public void writeCaseResult(String fileName, String fileContent) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(fileName) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(fileContent)) {
+
+			return;
+		}
+
+		try {
+			JenkinsResultsParserUtil.write(
+				new File(getResultsDir(), fileName), fileContent);
+		}
+		catch (IOException ioException) {
+		}
+	}
+
 	protected BaseTestrayServer(String urlString) {
 		try {
 			_url = new URL(urlString);
@@ -69,6 +86,16 @@ public abstract class BaseTestrayServer implements TestrayServer {
 				"Invalid Testray server URL " + urlString,
 				malformedURLException);
 		}
+	}
+
+	protected File getResultsDir() {
+		String workspace = System.getenv("WORKSPACE");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
+			throw new RuntimeException("Please set WORKSPACE");
+		}
+
+		return new File(workspace, "testray/results");
 	}
 
 	private synchronized void _initTestrayProjects() {

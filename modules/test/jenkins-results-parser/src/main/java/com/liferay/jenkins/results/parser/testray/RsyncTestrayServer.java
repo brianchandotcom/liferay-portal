@@ -20,43 +20,40 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URLEncoder;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Michael Hashimoto
  */
-public class DefaultTestrayServer extends BaseTestrayServer {
+public class RsyncTestrayServer extends BaseTestrayServer {
 
-	public DefaultTestrayServer(String urlString) {
+	public RsyncTestrayServer(String urlString) {
 		super(urlString);
 	}
 
 	@Override
 	public void importCaseResults(JenkinsMaster jenkinsMaster) {
+		String command = JenkinsResultsParserUtil.combine(
+			"rsync -aqz --chmod=go=rx \"",
+			JenkinsResultsParserUtil.getCanonicalPath(getResultsDir()),
+			"\"/* \"", jenkinsMaster.getName(),
+			"::testray-results/production/\"");
+
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(command);
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(exception);
+		}
+
 		for (File resultFile :
 				JenkinsResultsParserUtil.findFiles(getResultsDir(), ".*.xml")) {
-
-			try {
-				String result = JenkinsResultsParserUtil.read(resultFile);
-
-				JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.combine(
-						String.valueOf(getURL()),
-						"/web/guest/home/-/testray/case_results",
-						"/importResults.json"),
-					JenkinsResultsParserUtil.combine(
-						"results=", URLEncoder.encode(result, "UTF-8"),
-						"&type=poshi"));
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Uploaded ",
 					JenkinsResultsParserUtil.getCanonicalPath(resultFile),
-					" by REST API"));
+					" by RSYNC"));
 
 			JenkinsResultsParserUtil.delete(resultFile);
 		}

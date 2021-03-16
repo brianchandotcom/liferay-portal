@@ -14,20 +14,11 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.JenkinsMaster;
 
-import java.io.IOException;
-
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -41,5 +32,9 @@ public interface TestrayServer {
 	public List<TestrayProject> getTestrayProjects();
 
 	public URL getURL();
+
+	public void importCaseResults(JenkinsMaster jenkinsMaster);
+
+	public void writeCaseResult(String fileName, String fileContent);
 
 }

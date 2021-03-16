@@ -103,6 +103,10 @@ public class DDMFormTemplateContextProcessor {
 
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
+		setDDMFormFieldConfirmationErrorMessage(
+			jsonObject.getString("confirmationErrorMessage"), ddmFormField);
+		setDDMFormFieldConfirmationLabel(
+			jsonObject.getString("confirmationLabel"), ddmFormField);
 		setDDMFormFieldCustomProperties(jsonObject, ddmFormField);
 		setDDMFormFieldDataType(jsonObject.getString("dataType"), ddmFormField);
 		setDDMFormFieldFieldName(
@@ -233,6 +237,22 @@ public class DDMFormTemplateContextProcessor {
 
 	protected void setDDMFormDefaultLocale() {
 		_ddmForm.setDefaultLocale(_locale);
+	}
+
+	protected void setDDMFormFieldConfirmationErrorMessage(
+		String confirmationErrorMessage, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty(
+			"confirmationErrorMessage",
+			getLocalizedValue(GetterUtil.getString(confirmationErrorMessage)));
+	}
+
+	protected void setDDMFormFieldConfirmationLabel(
+		String confirmationLabel, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty(
+			"confirmationLabel",
+			getLocalizedValue(GetterUtil.getString(confirmationLabel)));
 	}
 
 	protected void setDDMFormFieldCustomProperties(

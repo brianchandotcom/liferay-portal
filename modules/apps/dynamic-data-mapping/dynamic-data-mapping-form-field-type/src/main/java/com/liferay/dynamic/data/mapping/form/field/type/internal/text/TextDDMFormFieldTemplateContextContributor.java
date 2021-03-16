@@ -17,13 +17,11 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.text;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -57,16 +55,36 @@ public class TextDDMFormFieldTemplateContextContributor
 
 		Map<String, Object> parameters = new HashMap<>();
 
+		Locale locale = ddmFormFieldRenderingContext.getLocale();
+
 		if (ddmFormFieldRenderingContext.isReturnFullContext()) {
-			parameters.put(
-				"autocompleteEnabled", isAutocompleteEnabled(ddmFormField));
-			parameters.put("displayStyle", getDisplayStyle(ddmFormField));
-			parameters.put(
+			parameters = HashMapBuilder.<String, Object>put(
+				"autocompleteEnabled", isAutocompleteEnabled(ddmFormField)
+			).put(
+				"confirmationErrorMessage",
+				DDMFormFieldTypeUtil.getPropertyValue(
+					ddmFormField, locale, "confirmationErrorMessage")
+			).put(
+				"confirmationLabel",
+				DDMFormFieldTypeUtil.getPropertyValue(
+					ddmFormField, locale, "confirmationLabel")
+			).put(
+				"direction", ddmFormField.getProperty("direction")
+			).put(
+				"displayStyle", getDisplayStyle(ddmFormField)
+			).put(
 				"placeholder",
-				getPlaceholder(ddmFormField, ddmFormFieldRenderingContext));
-			parameters.put(
+				DDMFormFieldTypeUtil.getPropertyValue(
+					ddmFormField, locale, "placeholder")
+			).put(
+				"requireConfirmation",
+				GetterUtil.getBoolean(
+					ddmFormField.getProperty("requireConfirmation"))
+			).put(
 				"tooltip",
-				getTooltip(ddmFormField, ddmFormFieldRenderingContext));
+				DDMFormFieldTypeUtil.getPropertyValue(
+					ddmFormField, locale, "tooltip")
+			).build();
 		}
 
 		parameters.put(
@@ -123,18 +141,6 @@ public class TextDDMFormFieldTemplateContextContributor
 		return options;
 	}
 
-	protected String getPlaceholder(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		LocalizedValue placeholder = (LocalizedValue)ddmFormField.getProperty(
-			"placeholder");
-
-		return getValueString(
-			placeholder, ddmFormFieldRenderingContext.getLocale(),
-			ddmFormFieldRenderingContext);
-	}
-
 	protected String getPredefinedValue(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
@@ -149,37 +155,11 @@ public class TextDDMFormFieldTemplateContextContributor
 			ddmFormFieldRenderingContext.getLocale());
 	}
 
-	protected String getTooltip(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
-			"tooltip");
-
-		return getValueString(
-			tooltip, ddmFormFieldRenderingContext.getLocale(),
-			ddmFormFieldRenderingContext);
-	}
-
-	protected String getValueString(
-		Value value, Locale locale,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		if (value == null) {
-			return StringPool.BLANK;
-		}
-
-		return value.getString(locale);
-	}
-
 	protected boolean isAutocompleteEnabled(DDMFormField ddmFormField) {
 		return GetterUtil.getBoolean(ddmFormField.getProperty("autocomplete"));
 	}
 
 	@Reference
 	protected DDMFormFieldOptionsFactory ddmFormFieldOptionsFactory;
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 }

@@ -97,6 +97,9 @@ public interface JournalArticle
 
 	public String[] getAvailableLanguageIds();
 
+	@com.liferay.portal.kernel.json.JSON
+	public String getContent();
+
 	public String getContentByLocale(String languageId);
 
 	public com.liferay.dynamic.data.mapping.model.DDMStructure

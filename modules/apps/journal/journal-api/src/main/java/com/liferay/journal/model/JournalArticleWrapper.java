@@ -63,7 +63,6 @@ public class JournalArticleWrapper
 		attributes.put("articleId", getArticleId());
 		attributes.put("version", getVersion());
 		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("content", getContent());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("DDMTemplateKey", getDDMTemplateKey());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
@@ -192,12 +191,6 @@ public class JournalArticleWrapper
 
 		if (urlTitle != null) {
 			setUrlTitle(urlTitle);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -392,11 +385,6 @@ public class JournalArticleWrapper
 		return model.getCompanyId();
 	}
 
-	/**
-	 * Returns the content of this journal article.
-	 *
-	 * @return the content of this journal article
-	 */
 	@Override
 	public String getContent() {
 		return model.getContent();
@@ -1183,16 +1171,6 @@ public class JournalArticleWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
-	}
-
-	/**
-	 * Sets the content of this journal article.
-	 *
-	 * @param content the content of this journal article
-	 */
-	@Override
-	public void setContent(String content) {
-		model.setContent(content);
 	}
 
 	/**

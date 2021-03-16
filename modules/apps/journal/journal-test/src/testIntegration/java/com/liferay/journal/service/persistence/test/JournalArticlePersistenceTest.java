@@ -159,8 +159,6 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setUrlTitle(RandomTestUtil.randomString());
 
-		newJournalArticle.setContent(RandomTestUtil.randomString());
-
 		newJournalArticle.setDDMStructureKey(RandomTestUtil.randomString());
 
 		newJournalArticle.setDDMTemplateKey(RandomTestUtil.randomString());
@@ -249,9 +247,6 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(
 			existingJournalArticle.getUrlTitle(),
 			newJournalArticle.getUrlTitle());
-		Assert.assertEquals(
-			existingJournalArticle.getContent(),
-			newJournalArticle.getContent());
 		Assert.assertEquals(
 			existingJournalArticle.getDDMStructureKey(),
 			newJournalArticle.getDDMStructureKey());
@@ -1069,8 +1064,6 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setVersion(RandomTestUtil.nextDouble());
 
 		journalArticle.setUrlTitle(RandomTestUtil.randomString());
-
-		journalArticle.setContent(RandomTestUtil.randomString());
 
 		journalArticle.setDDMStructureKey(RandomTestUtil.randomString());
 

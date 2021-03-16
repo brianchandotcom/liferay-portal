@@ -50,7 +50,7 @@ public abstract class BaseJournalArticleUADDisplay
 
 	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] {"urlTitle", "content"};
+		return new String[] {"urlTitle"};
 	}
 
 	@Override

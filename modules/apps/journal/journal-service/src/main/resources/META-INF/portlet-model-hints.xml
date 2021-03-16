@@ -26,9 +26,6 @@
 		<field name="urlTitle" type="String">
 			<hint name="max-length">255</hint>
 		</field>
-		<field name="content" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 		<field name="DDMStructureKey" type="String" />
 		<field name="DDMTemplateKey" type="String" />
 		<field name="defaultLanguageId" type="String" />

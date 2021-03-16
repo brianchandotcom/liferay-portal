@@ -33401,7 +33401,6 @@ public class JournalArticlePersistenceImpl
 		ctStrictColumnNames.add("articleId");
 		ctStrictColumnNames.add("version");
 		ctStrictColumnNames.add("urlTitle");
-		ctStrictColumnNames.add("content");
 		ctStrictColumnNames.add("DDMStructureKey");
 		ctStrictColumnNames.add("DDMTemplateKey");
 		ctStrictColumnNames.add("defaultLanguageId");

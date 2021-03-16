@@ -55,7 +55,7 @@ public abstract class BaseJournalArticleUADExporter
 
 	@Override
 	protected String toXmlString(JournalArticle journalArticle) {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.journal.model.JournalArticle");
@@ -84,10 +84,6 @@ public abstract class BaseJournalArticleUADExporter
 		sb.append(
 			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
 		sb.append(journalArticle.getUrlTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>content</column-name><column-value><![CDATA[");
-		sb.append(journalArticle.getContent());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

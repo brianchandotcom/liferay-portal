@@ -17,7 +17,6 @@ package com.liferay.journal.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
-import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -72,8 +71,6 @@ public class JournalArticleTable extends BaseTable<JournalArticleTable> {
 		"version", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, String> urlTitle = createColumn(
 		"urlTitle", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<JournalArticleTable, Clob> content = createColumn(
-		"content", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, String> DDMStructureKey =
 		createColumn(
 			"DDMStructureKey", String.class, Types.VARCHAR,

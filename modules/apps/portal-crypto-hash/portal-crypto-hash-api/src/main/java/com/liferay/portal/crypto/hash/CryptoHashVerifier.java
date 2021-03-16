@@ -18,9 +18,12 @@ import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 
 import java.util.Collection;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Carlos Sierra Andrés
  */
+@ProviderType
 public interface CryptoHashVerifier {
 
 	public default boolean verify(

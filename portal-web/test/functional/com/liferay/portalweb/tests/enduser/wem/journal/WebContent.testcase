@@ -322,6 +322,37 @@ definition {
 			webContentTitle = "WC WebContent Title Edit");
 	}
 
+	@description = "This is a use case for LPS-129096."
+	@priority = "4"
+	test EditWebContentWithUploadedFeaturedImage {
+		property testray.component.names = "Web Content Administration";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.addFeaturedImageFromComputer(uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Edit");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit");
+	}
+
 	@priority = "3"
 	test ExpireEditWebContent {
 		property testray.component.names = "Web Content Administration";

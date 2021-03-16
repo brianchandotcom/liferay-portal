@@ -31,5 +31,15 @@ definition {
 
         Click(locator1 = "AnalyticsCloudConnection#WORKSPACE_NAME");
 
+    }
+
+    macro switchWorkspace {
+
+        Click(locator1 = "//div[contains(@class,'sticker-circle')]");
+
+        Click(locator1 = "//*[@href='/']");
+
+        ACSettings.openWorkspaceAfterLogin(workspaceName = "${workspaceName}");
+
     }  
 }

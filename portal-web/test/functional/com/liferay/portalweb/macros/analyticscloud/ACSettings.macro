@@ -1,14 +1,21 @@
 definition {
 
-    macro loginAs {
+	macro collapseSidebar {
+		Click(locator1 = "ACSettings#COLLAPSE_SIDEBAR_ARROW");
+	}
 
-        if(!(isSet(emailAddress))){
-            emailAddress = "test@liferay.com";
-        }
+	macro expandSidebar {
+		Click(locator1 = "ACSettings#EXPAND_SIDEBAR_ARROW");
+	}
 
-        if(!(isSet(password))){
-            password = "test@liferay.com";
-        }
+	macro loginAs {
+		if (!(isSet(emailAddress))) {
+			emailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(password))) {
+			password = "test@liferay.com";
+		}
 
 		Click(locator1 = "ACSettings#EMAIL_LOGIN_FIELD");
 
@@ -25,41 +32,24 @@ definition {
 		Click(locator1 = "ACSettings#LOGIN_BUTTON");
 	}
 
-    macro openWorkspace {
+	macro openWorkspace {
+		var key_WorkspaceName = "${workspaceName}";
 
-        var key_WorkspaceName = "${workspaceName}";
+		Click(locator1 = "ACSettings#WORKSPACE_NAME");
+	}
 
-        Click(locator1 = "ACSettings#WORKSPACE_NAME");
+	macro signOut {
+		Click(locator1 = "ACSettings#USER_MENU_SIDEBAR_OPTION");
 
-    }
+		Click(locator1 = "ACSettings#LOGOUT_WORKSPACE_OPTION");
+	}
 
-    macro switchWorkspace {
+	macro switchWorkspace {
+		Click(locator1 = "ACSettings#USER_MENU_SIDEBAR_OPTION");
 
-        Click(locator1 = "ACSettings#USER_MENU_SIDEBAR_OPTION");
+		Click(locator1 = "ACSettings#SWITCH_WORKSPACE_OPTION");
 
-        Click(locator1 = "ACSettings#SWITCH_WORKSPACE_OPTION");
+		ACSettings.openWorkspace(workspaceName = "${workspaceName}");
+	}
 
-        ACSettings.openWorkspace(workspaceName = "${workspaceName}");
-
-    }
-
-    macro signOut {
-
-        Click(locator1 = "ACSettings#USER_MENU_SIDEBAR_OPTION");
-
-        Click(locator1 = "ACSettings#LOGOUT_WORKSPACE_OPTION");
-
-    }
-
-    macro expandSidebar {
-
-        Click(locator1 = "ACSettings#EXPAND_SIDEBAR_ARROW");
-
-    }
-
-    macro collapseSidebar {
-
-        Click(locator1 = "ACSettings#COLLAPSE_SIDEBAR_ARROW");
-
-    }
 }

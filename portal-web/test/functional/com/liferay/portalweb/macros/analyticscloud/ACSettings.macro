@@ -14,7 +14,7 @@ definition {
 		}
 
 		if (!(isSet(password))) {
-			password = "test@liferay.com";
+			password = "test";
 		}
 
 		Click(locator1 = "ACSettings#EMAIL_LOGIN_FIELD");

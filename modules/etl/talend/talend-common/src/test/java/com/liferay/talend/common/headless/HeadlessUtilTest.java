@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.common.util;
+package com.liferay.talend.common.headless;
 
 import com.liferay.talend.common.exception.MalformedURLException;
 
@@ -25,7 +25,7 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class URIUtilTest {
+public class HeadlessUtilTest {
 
 	@Test
 	public void testUpdateWithQueryParameters() {
@@ -38,7 +38,7 @@ public class URIUtilTest {
 		parameters.put("subscription", "true");
 
 		String uriString = String.valueOf(
-			URIUtil.updateWithQueryParameters(url, parameters));
+			HeadlessUtil.updateWithQueryParameters(url, parameters));
 
 		Assert.assertTrue(
 			"URI has archive query parameter",
@@ -52,17 +52,18 @@ public class URIUtilTest {
 
 	@Test(expected = MalformedURLException.class)
 	public void testValidateIfOpenAPISpecURLIsInvalid() {
-		URIUtil.validateOpenAPISpecURL("http://localhost:8080/o/test/wrong");
+		HeadlessUtil.validateOpenAPISpecURL(
+			"http://localhost:8080/o/test/wrong");
 	}
 
 	@Test(expected = MalformedURLException.class)
 	public void testValidateIfOpenAPISpecURLIsNull() {
-		URIUtil.validateOpenAPISpecURL(null);
+		HeadlessUtil.validateOpenAPISpecURL(null);
 	}
 
 	@Test
 	public void testValidateIfOpenAPISpecURLIsValid() {
-		URIUtil.validateOpenAPISpecURL(
+		HeadlessUtil.validateOpenAPISpecURL(
 			"http://localhost:8080/o/headless/v1.0/openapi.json");
 	}
 

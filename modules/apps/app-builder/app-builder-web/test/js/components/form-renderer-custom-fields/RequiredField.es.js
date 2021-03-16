@@ -195,12 +195,9 @@ describe('RequiredField', () => {
 		const dispatch = jest.fn();
 
 		const {container} = render(
-			<RequiredFieldWrapper
-				dispatch={dispatch}
-				state={VIEW_LEVEL_STATE}
-			/>
+			<RequiredFieldWrapper dispatch={dispatch} state={VIEW_LEVEL_STATE} />
 		);
-
+		
 		const options = container.querySelectorAll(
 			'.form-renderer-required-field input.custom-control-input'
 		);
@@ -214,7 +211,9 @@ describe('RequiredField', () => {
 		const dataLayoutBuilder = FORM_VIEW.getDataLayoutBuilderProps();
 
 		const {container} = render(
-			<RequiredFieldWrapper dataLayoutBuilder={dataLayoutBuilder} />
+			<RequiredFieldWrapper
+				dataLayoutBuilder={dataLayoutBuilder}
+			/>
 		);
 
 		const toggleSwitch = container.querySelector('.toggle-switch-check');

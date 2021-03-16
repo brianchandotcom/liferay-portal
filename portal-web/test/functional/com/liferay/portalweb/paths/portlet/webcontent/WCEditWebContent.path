@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_FEATURED_IMAGE_INPUT</td>
+	<td>//div[contains(@id,'smallFileContainer')]//input[contains(@id,'smallFile')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FIELD_TRIGGER</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'select-field')]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>

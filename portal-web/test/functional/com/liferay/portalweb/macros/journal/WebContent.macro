@@ -169,6 +169,18 @@ definition {
 			value1 = "Please select at least one category for ${vocabularyName}.");
 	}
 
+	macro addFeaturedImageFromComputer {
+		Panel.expandPanel(panel = "Featured Image");
+
+		Select(
+			locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_TYPE",
+			value1 = "From Your Computer");
+
+		UploadCommonFile(
+			locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_INPUT",
+			value1 = "${uploadFileName}");
+	}
+
 	macro addFeaturedImageFromURL {
 		Panel.expandPanel(panel = "Featured Image");
 

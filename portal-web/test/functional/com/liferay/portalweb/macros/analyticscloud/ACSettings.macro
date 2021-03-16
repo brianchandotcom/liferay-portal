@@ -43,6 +43,14 @@ definition {
 
     }
 
+    macro signOut {
+
+        Click(locator1 = "ACSettings#USER_MENU_SIDEBAR_OPTION");
+
+        Click(locator1 = "ACSettings#LOGOUT_WORKSPACE_OPTION");
+
+    }
+
     macro expandSidebar {
         if(IsElementPresent(locator1 = "ACSettings#EXPAND_SIDEBAR_ARROW")){
             Click(locator1 = "ACSettings#EXPAND_SIDEBAR_ARROW");

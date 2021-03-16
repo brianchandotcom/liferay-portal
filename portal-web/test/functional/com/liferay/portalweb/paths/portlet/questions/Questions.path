@@ -164,6 +164,11 @@
 	<td></td>	
 </tr>
 <tr>
+	<td>QUESTIONS_SUBSCRIBE</td>
+	<td>//button[@type='button' and @title='Subscribe']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_SUBSCRIBED_BUTTON</td>
 	<td>//button[@type='button' and @title='Subscribed']</td>
 	<td></td>
@@ -236,6 +241,11 @@
 <tr>
 	<td>QUESTIONS_SELECT_TOPIC_VALUE</td>
 	<td>//option[contains(text(),'${key_topic}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_UNSUBSCRIBE</td>
+	<td>//button[@type='button' and @title='Unsubscribe']</td>
 	<td></td>
 </tr>
 <tr>

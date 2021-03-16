@@ -165,11 +165,11 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 	@Override
 	public List<DLFileEntryType> search(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, boolean system, int start, int end,
+		boolean includeBasicFileEntryType, int type, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		return dlFileEntryTypeFinder.filterFindByKeywords(
-			companyId, groupIds, keywords, includeBasicFileEntryType, system,
+			companyId, groupIds, keywords, includeBasicFileEntryType, type,
 			start, end, orderByComparator);
 	}
 
@@ -206,10 +206,10 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 	@Override
 	public int searchCount(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, boolean system) {
+		boolean includeBasicFileEntryType, int type) {
 
 		return dlFileEntryTypeFinder.filterCountByKeywords(
-			companyId, groupIds, keywords, includeBasicFileEntryType, system);
+			companyId, groupIds, keywords, includeBasicFileEntryType, type);
 	}
 
 	@Override

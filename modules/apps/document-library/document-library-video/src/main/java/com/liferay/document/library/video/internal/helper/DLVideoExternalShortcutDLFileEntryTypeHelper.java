@@ -15,6 +15,7 @@
 package com.liferay.document.library.video.internal.helper;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.video.internal.constants.DLVideoConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -131,7 +132,8 @@ public class DLVideoExternalShortcutDLFileEntryTypeHelper {
 		_dlFileEntryTypeLocalService.addFileEntryType(
 			defaultUserId, _company.getGroupId(), ddmStructureId,
 			DLVideoConstants.DL_FILE_ENTRY_TYPE_KEY, nameMap, descriptionMap,
-			true, serviceContext);
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_SYSTEM,
+			serviceContext);
 	}
 
 	private Map<Locale, String> _updateDescriptionMap(

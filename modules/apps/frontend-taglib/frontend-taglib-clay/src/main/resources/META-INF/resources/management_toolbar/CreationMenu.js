@@ -43,13 +43,15 @@ const CreationMenu = ({
 		primaryItems.length + secondaryItemsCountRef.current
 	);
 
+	const firstItemRef = useRef(
+		primaryItems?.[0] ||
+			secondaryItems?.[0].items?.[0] ||
+			secondaryItems?.[0]
+	);
+
 	const getPlusIconLabel = () => {
 		const item =
-			totalItemsCountRef.count === 1
-				? primaryItems?.[0] ??
-				  secondaryItems?.[0].items?.[0] ??
-				  secondaryItems?.[0]
-				: null;
+			totalItemsCountRef.current === 1 ? firstItemRef.current : null;
 
 		return item?.label || Liferay.Language.get('new');
 	};
@@ -159,7 +161,7 @@ const CreationMenu = ({
 
 	return (
 		<>
-			{primaryItems.length > 1 || secondaryItems ? (
+			{totalItemsCountRef.current > 1 ? (
 				<ClayDropDown
 					active={active}
 					onActiveChange={setActive}
@@ -228,9 +230,11 @@ const CreationMenu = ({
 					button={true}
 					className="nav-btn nav-btn-monospaced"
 					displayType="primary"
-					href={primaryItems[0].href}
+					href={firstItemRef.current.href}
 					onClick={(event) => {
-						onCreateButtonClick(event, {item: primaryItems[0]});
+						onCreateButtonClick(event, {
+							item: firstItemRef.current,
+						});
 					}}
 					symbol="plus"
 					title={getPlusIconLabel()}

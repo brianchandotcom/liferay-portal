@@ -191,4 +191,12 @@ definition {
 		AssertLocation.assertPartialLocation(value1 = "${specificURL}");
 	}
 
+	macro waitForSLO {
+		var key_title = "Signing Out from Services";
+
+		WaitForElementPresent(locator1 = "Header#H3_TITLE");
+
+		Pause(locator1 = "5000");
+	}
+
 }

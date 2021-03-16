@@ -35,9 +35,9 @@ definition {
 
     macro switchWorkspace {
 
-        Click(locator1 = "//div[contains(@class,'sticker-circle')]");
+        Click(locator1 = "ACSettings#USER_MENU_SIDEBAR_OPTION");
 
-        Click(locator1 = "//*[@href='/']");
+        Click(locator1 = "ACSettings#SWITCH_WORKSPACE_OPTION");
 
         ACSettings.openWorkspace(workspaceName = "${workspaceName}");
 

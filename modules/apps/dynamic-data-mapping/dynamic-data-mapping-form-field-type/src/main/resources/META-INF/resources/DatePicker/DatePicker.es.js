@@ -91,9 +91,24 @@ const getDateFormat = (locale) => {
 	};
 };
 
-const transformToDate = (date, locale) => {
+const transformToDate = (
+	defaultLanguageId,
+	date,
+	locale,
+	formatInEditingLocale
+) => {
 	if (typeof date === 'string' && date.indexOf('_') === -1 && date !== '') {
-		return moment(date).locale(locale).toDate();
+		if (formatInEditingLocale) {
+			return moment(date, [
+				getLocaleDateFormat(locale),
+				'YYYY-MM-DD',
+			]).toDate();
+		}
+
+		return moment(date, [
+			getLocaleDateFormat(defaultLanguageId),
+			'YYYY-MM-DD',
+		]).toDate();
 	}
 
 	return date;
@@ -116,7 +131,9 @@ const getValueForHidden = (value) => {
 };
 
 const DatePicker = ({
+	defaultLanguageId,
 	disabled,
+	formatInEditingLocale,
 	locale,
 	name,
 	onChange,
@@ -128,12 +145,18 @@ const DatePicker = ({
 
 	const [expanded, setExpand] = useState(false);
 
-	const initialValueMemoized = useMemo(
-		() => transformToDate(initialValue, locale),
-		[initialValue, locale]
-	);
-
 	const [localizedValue, setLocalizedValue] = useState({});
+
+	const initialValueMemoized = useMemo(
+		() =>
+			transformToDate(
+				defaultLanguageId,
+				initialValue,
+				locale,
+				formatInEditingLocale
+			),
+		[defaultLanguageId, formatInEditingLocale, initialValue, locale]
+	);
 
 	const [value, setValue] = useSyncValue(initialValueMemoized);
 	const [years, setYears] = useState(() => {
@@ -244,7 +267,7 @@ const DatePicker = ({
 					if (moment(value).isValid()) {
 						onChange(
 							moment(value, getLocaleDateFormat(locale)).format(
-								'MM/DD/YYYY'
+								'L'
 							)
 						);
 					}
@@ -259,7 +282,9 @@ const DatePicker = ({
 };
 
 const Main = ({
+	defaultLanguageId,
 	locale = themeDisplay.getDefaultLanguageId(),
+	localizedValue,
 	name,
 	onChange,
 	placeholder,
@@ -271,12 +296,17 @@ const Main = ({
 }) => (
 	<FieldBase
 		{...otherProps}
+		localizedValue={localizedValue}
 		name={name}
 		readOnly={readOnly}
 		spritemap={spritemap}
 	>
 		<DatePicker
+			defaultLanguageId={defaultLanguageId}
 			disabled={readOnly}
+			formatInEditingLocale={
+				localizedValue && localizedValue[locale] != undefined
+			}
 			locale={locale}
 			name={name}
 			onChange={(value) => onChange({}, value)}

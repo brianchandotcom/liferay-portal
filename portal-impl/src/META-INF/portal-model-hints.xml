@@ -294,6 +294,7 @@
 		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="system" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileShortcut">

@@ -1740,16 +1740,20 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	protected long getGroupId(AuditedModel auditedModel) {
-		long groupId = 0;
+		long defaultGroupId = 0;
 
 		if (auditedModel instanceof GroupedModel) {
 			GroupedModel groupedModel = (GroupedModel)auditedModel;
 
-			groupId = BeanPropertiesUtil.getLongSilent(
-				groupedModel, "resourceGroupId", groupedModel.getGroupId());
+			defaultGroupId = groupedModel.getGroupId();
+		}
+		else {
+			defaultGroupId = BeanPropertiesUtil.getLongSilent(
+				auditedModel, "groupId", defaultGroupId);
 		}
 
-		return groupId;
+		return BeanPropertiesUtil.getLongSilent(
+			auditedModel, "resourceGroupId", defaultGroupId);
 	}
 
 	protected Role getRole(long companyId, long groupId, String roleName)

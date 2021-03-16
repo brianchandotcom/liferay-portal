@@ -10,7 +10,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useStateSafe} from '@liferay/frontend-js-react-web';
 import className from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
@@ -45,38 +44,30 @@ const FALLBACK_COLOR = '#e92563';
 
 const getColorByName = (name) => COLORS_MAP[name] || FALLBACK_COLOR;
 
-export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
+export default function TrafficSources({onTrafficSourceClick}) {
 	const [highlighted, setHighlighted] = useState(null);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const dispatch = useContext(StoreDispatchContext);
 
-	const {languageTag, publishedToday} = useContext(StoreStateContext);
-
-	const [trafficSources, setTrafficSources] = useStateSafe([]);
-
-	useEffect(() => {
-		if (validAnalyticsConnection) {
-			dataProvider()
-				.then((trafficSources) => setTrafficSources(trafficSources))
-				.catch(() => {
-					setTrafficSources([]);
-					dispatch({type: 'ADD_WARNING'});
-				});
-		}
-	}, [dispatch, dataProvider, setTrafficSources, validAnalyticsConnection]);
+	const {languageTag, publishedToday, trafficSources} = useContext(
+		StoreStateContext
+	);
 
 	const fullPieChart = useMemo(
 		() =>
 			validAnalyticsConnection &&
 			!publishedToday &&
+			trafficSources &&
 			trafficSources.some(({value}) => value),
 		[publishedToday, trafficSources, validAnalyticsConnection]
 	);
 
 	const missingTrafficSourceValue = useMemo(
-		() => trafficSources.some(({value}) => value === undefined),
+		() =>
+			trafficSources &&
+			trafficSources.some(({value}) => value === undefined),
 		[trafficSources]
 	);
 
@@ -96,15 +87,6 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 
 	return (
 		<>
-			<h5 className="mt-3 sheet-subtitle">
-				{Liferay.Language.get('traffic-channels')}
-				<Hint
-					message={Liferay.Language.get('traffic-channels-help')}
-					secondary={true}
-					title={Liferay.Language.get('traffic-channels')}
-				/>
-			</h5>
-
 			{!fullPieChart && !missingTrafficSourceValue && (
 				<div className="mb-3 text-secondary">
 					{Liferay.Language.get(
@@ -112,85 +94,91 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 					)}
 				</div>
 			)}
+
 			<div className="pie-chart-wrapper">
 				<div className="pie-chart-wrapper--legend">
 					<table>
 						<tbody>
-							{trafficSources.map((entry) => {
-								const hasDetails =
-									entry?.countryKeywords ||
-									(entry?.referringPages &&
-										entry?.referringDomains) ||
-									entry?.referringSocialMedia;
+							{trafficSources &&
+								trafficSources.map((entry) => {
+									const hasDetails =
+										entry?.countryKeywords ||
+										(entry?.referringPages &&
+											entry?.referringDomains) ||
+										entry?.referringSocialMedia;
 
-								return (
-									<tr key={entry.name}>
-										<td
-											className="px-0"
-											onMouseOut={handleLegendMouseLeave}
-											onMouseOver={() =>
-												handleLegendMouseEnter(
-													entry.name
-												)
-											}
-										>
-											<span
-												className="pie-chart-wrapper--legend--dot"
-												style={{
-													backgroundColor: getColorByName(
+									return (
+										<tr key={entry.name}>
+											<td
+												className="px-0"
+												onMouseOut={
+													handleLegendMouseLeave
+												}
+												onMouseOver={() =>
+													handleLegendMouseEnter(
 														entry.name
-													),
-												}}
-											></span>
-										</td>
-										<td
-											className="c-py-1 text-secondary"
-											onMouseOut={handleLegendMouseLeave}
-											onMouseOver={() =>
-												handleLegendMouseEnter(
-													entry.name
-												)
-											}
-										>
-											{validAnalyticsConnection &&
-											!publishedToday &&
-											entry.value > 0 &&
-											hasDetails ? (
-												<ClayButton
-													className="px-0 py-1 text-primary"
-													displayType="link"
-													onClick={() =>
-														onTrafficSourceClick(
-															trafficSources,
+													)
+												}
+											>
+												<span
+													className="pie-chart-wrapper--legend--dot"
+													style={{
+														backgroundColor: getColorByName(
 															entry.name
-														)
-													}
-													small
-												>
-													{entry.title}
-												</ClayButton>
-											) : (
-												<span>{entry.title}</span>
-											)}
-										</td>
-										<td className="text-secondary">
-											<Hint
-												message={entry.helpMessage}
-												title={entry.title}
-											/>
-										</td>
-										<td className="font-weight-semi-bold">
-											{entry.value !== undefined &&
-											!publishedToday
-												? numberFormat(
-														languageTag,
-														entry.value
-												  )
-												: '-'}
-										</td>
-									</tr>
-								);
-							})}
+														),
+													}}
+												></span>
+											</td>
+											<td
+												className="c-py-1 text-secondary"
+												onMouseOut={
+													handleLegendMouseLeave
+												}
+												onMouseOver={() =>
+													handleLegendMouseEnter(
+														entry.name
+													)
+												}
+											>
+												{validAnalyticsConnection &&
+												!publishedToday &&
+												entry.value > 0 &&
+												hasDetails ? (
+													<ClayButton
+														className="px-0 py-1 text-primary"
+														displayType="link"
+														onClick={() =>
+															onTrafficSourceClick(
+																entry.name
+															)
+														}
+														small
+													>
+														{entry.title}
+													</ClayButton>
+												) : (
+													<span>{entry.title}</span>
+												)}
+											</td>
+											<td className="text-secondary">
+												<Hint
+													message={entry.helpMessage}
+													title={entry.title}
+												/>
+											</td>
+											<td className="font-weight-semi-bold">
+												{validAnalyticsConnection &&
+												!publishedToday &&
+												entry.value !== undefined
+													? numberFormat(
+															languageTag,
+															entry.value
+													  )
+													: '-'}
+											</td>
+										</tr>
+									);
+								})}
 						</tbody>
 					</table>
 				</div>
@@ -309,6 +297,5 @@ function TrafficSourcesCustomTooltip(props) {
 }
 
 TrafficSources.propTypes = {
-	dataProvider: PropTypes.func.isRequired,
 	onTrafficSourceClick: PropTypes.func.isRequired,
 };

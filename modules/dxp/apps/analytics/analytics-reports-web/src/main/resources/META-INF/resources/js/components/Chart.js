@@ -36,7 +36,7 @@ import {
 	useSetLoading,
 } from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
+import {StoreStateContext} from '../context/StoreContext';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';
 import {ActiveDot as CustomActiveDot, Dot as CustomDot} from './CustomDots';
@@ -135,16 +135,16 @@ function legendFormatterGenerator(
 	};
 }
 
-export default function Chart({
-	dataProviders = [],
-	publishDate,
-	timeSpanOptions,
-}) {
+export default function Chart({publishDate, timeSpanOptions}) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const dispatch = useContext(StoreDispatchContext);
-
-	const {languageTag, publishedToday} = useContext(StoreStateContext);
+	const {
+		endpoints,
+		historicalReads,
+		historicalViews,
+		languageTag,
+		publishedToday,
+	} = useContext(StoreStateContext);
 
 	const chartState = useChartState();
 
@@ -171,8 +171,6 @@ export default function Chart({
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		let gone = false;
-
 		setLoading();
 
 		const timeSpanComparator =
@@ -180,41 +178,20 @@ export default function Chart({
 				? HOUR_IN_MILLISECONDS
 				: DAY_IN_MILLISECONDS;
 
+		let dataSetItems = {...historicalViews};
+
 		const keys = new Set(['analyticsReportsHistoricalViews']);
 
-		if (dataProviders.length === 2) {
+		if (endpoints.analyticsReportsHistoricalReadsURL) {
 			keys.add('analyticsReportsHistoricalReads');
+			dataSetItems = {...dataSetItems, ...historicalReads};
 		}
 
 		if (validAnalyticsConnection) {
-			const promises = dataProviders.map((getter) => {
-				return getter();
-			});
-
-			allSettled(promises).then((data) => {
-				if (gone || !isMounted()) {
-					return;
-				}
-
-				var dataSetItems = {};
-
-				for (var i = 0; i < data.length; i++) {
-					if (data[i].status === 'fulfilled') {
-						dataSetItems = {
-							...dataSetItems,
-							...data[i].value,
-						};
-					}
-					else {
-						dispatch({type: 'ADD_WARNING'});
-					}
-				}
-
-				addDataSetItems({
-					dataSetItems,
-					keys,
-					timeSpanComparator,
-				});
+			addDataSetItems({
+				dataSetItems,
+				keys,
+				timeSpanComparator,
 			});
 		}
 		else {
@@ -223,12 +200,17 @@ export default function Chart({
 				timeSpanComparator,
 			});
 		}
-
-		return () => {
-			gone = true;
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [chartState.timeSpanKey, chartState.timeSpanOffset]);
+	}, [
+		addDataSetItems,
+		chartState.timeSpanKey,
+		endpoints.analyticsReportsHistoricalReadsURL,
+		endpoints.analyticsReportsHistoricalViewsURL,
+		isMounted,
+		historicalReads,
+		historicalViews,
+		setLoading,
+		validAnalyticsConnection,
+	]);
 
 	const {dataSet} = chartState;
 	const {histogram, keyList} = dataSet;
@@ -450,22 +432,7 @@ export default function Chart({
 	);
 }
 
-function allSettled(promises) {
-	return Promise.all(
-		promises.map((promise) => {
-			return promise
-				.then((value) => {
-					return {status: 'fulfilled', value};
-				})
-				.catch((reason) => {
-					return {reason, status: 'rejected'};
-				});
-		})
-	);
-}
-
 Chart.propTypes = {
-	dataProviders: PropTypes.arrayOf(PropTypes.func).isRequired,
 	publishDate: PropTypes.string.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({

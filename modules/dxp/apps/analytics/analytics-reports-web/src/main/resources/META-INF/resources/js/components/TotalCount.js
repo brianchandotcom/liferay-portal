@@ -9,57 +9,36 @@
  * distribution rights of the Software.
  */
 
-import {useStateSafe} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
+import {StoreStateContext} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 
-function TotalCount({
+export default function TotalCount({
 	className,
-	dataProvider,
 	label,
 	percentage = false,
 	popoverAlign,
 	popoverHeader,
 	popoverMessage,
 	popoverPosition,
+	value,
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const [value, setValue] = useStateSafe('-');
-
-	const dispatch = useContext(StoreDispatchContext);
-
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
-
-	useEffect(() => {
-		if (validAnalyticsConnection) {
-			dataProvider()
-				.then(setValue)
-				.catch(() => {
-					setValue('-');
-					dispatch({type: 'ADD_WARNING'});
-				});
-		}
-	}, [dispatch, dataProvider, setValue, validAnalyticsConnection]);
 
 	let displayValue = '-';
 
-	if (validAnalyticsConnection && !publishedToday) {
-		displayValue =
-			value !== '-' ? (
-				percentage ? (
-					<span>{`${value}%`}</span>
-				) : (
-					numberFormat(languageTag, value)
-				)
-			) : (
-				value
-			);
+	if (validAnalyticsConnection && !publishedToday && value >= 0) {
+		displayValue = percentage ? (
+			<span>{`${value}%`}</span>
+		) : (
+			numberFormat(languageTag, value)
+		);
 	}
 
 	return (
@@ -79,11 +58,9 @@ function TotalCount({
 }
 
 TotalCount.propTypes = {
-	dataProvider: PropTypes.func.isRequired,
 	label: PropTypes.string.isRequired,
 	percentage: PropTypes.bool,
 	popoverHeader: PropTypes.string.isRequired,
 	popoverMessage: PropTypes.string.isRequired,
+	value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
-
-export default TotalCount;

@@ -356,7 +356,7 @@ public class RenderLayoutStructureDisplayContext {
 				Layout layout = LayoutLocalServiceUtil.getLayout(
 					groupId, privateLayout, layoutId);
 
-				return layout.getFriendlyURL(locale);
+				return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException, portalException);

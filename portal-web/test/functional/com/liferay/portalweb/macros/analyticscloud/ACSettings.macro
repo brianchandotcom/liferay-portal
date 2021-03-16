@@ -10,26 +10,26 @@ definition {
             password = "test@liferay.com";
         }
 
-		Click(locator1 = "AnalyticsCloudConnection#EMAIL_LOGIN_FIELD");
+		Click(locator1 = "ACSettings#EMAIL_LOGIN_FIELD");
 
 		Type(
-			locator1 = "AnalyticsCloudConnection#EMAIL_LOGIN_FIELD",
+			locator1 = "ACSettings#EMAIL_LOGIN_FIELD",
 			value1 = "${emailAddress}");
 
-		Click(locator1 = "AnalyticsCloudConnection#PASSWORD_LOGIN_FIELD");
+		Click(locator1 = "ACSettings#PASSWORD_LOGIN_FIELD");
 
 		Type(
-			locator1 = "AnalyticsCloudConnection#PASSWORD_LOGIN_FIELD",
+			locator1 = "ACSettings#PASSWORD_LOGIN_FIELD",
 			value1 = "${password}");
 
-		Click(locator1 = "AnalyticsCloudConnection#LOGIN_BUTTON");
+		Click(locator1 = "ACSettings#LOGIN_BUTTON");
 	}
 
     macro openWorkspace {
 
         var key_WorkspaceName = "${workspaceName}";
 
-        Click(locator1 = "AnalyticsCloudConnection#WORKSPACE_NAME");
+        Click(locator1 = "ACSettings#WORKSPACE_NAME");
 
     }
 
@@ -41,5 +41,5 @@ definition {
 
         ACSettings.openWorkspace(workspaceName = "${workspaceName}");
 
-    }  
+    }
 }

@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -79,8 +80,9 @@ import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
-import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -510,25 +512,25 @@ public class AssetCategoriesDisplayContext {
 		return group.getDescriptiveName(_themeDisplay.getLocale());
 	}
 
-	public List<AssetVocabulary> getInheritedVocabularies()
+	public Map<String, List<AssetVocabulary>> getInheritedVocabularies()
 		throws PortalException {
 
 		if (_inheritedVocabularies != null) {
 			return _inheritedVocabularies;
 		}
 
+		_inheritedVocabularies = new LinkedHashMap<>();
+
 		Company company = _themeDisplay.getCompany();
 
-		if (company.getGroupId() == _themeDisplay.getScopeGroupId()) {
-			_inheritedVocabularies = Collections.emptyList();
-
-			return _inheritedVocabularies;
+		if (company.getGroupId() != _themeDisplay.getScopeGroupId()) {
+			_inheritedVocabularies.put(
+				LanguageUtil.get(_httpServletRequest, "global"),
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					company.getGroupId(), false, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS,
+					new AssetVocabularyCreateDateComparator()));
 		}
-
-		_inheritedVocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
-				company.getGroupId(), false, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new AssetVocabularyCreateDateComparator());
 
 		return _inheritedVocabularies;
 	}
@@ -854,13 +856,21 @@ public class AssetCategoriesDisplayContext {
 			return vocabulary.getVocabularyId();
 		}
 
-		List<AssetVocabulary> inheritedVocabularies =
+		Map<String, List<AssetVocabulary>> inheritedVocabularies =
 			getInheritedVocabularies();
 
-		if (ListUtil.isNotEmpty(inheritedVocabularies)) {
-			AssetVocabulary vocabulary = inheritedVocabularies.get(0);
+		if (MapUtil.isNotEmpty(inheritedVocabularies)) {
+			for (Map.Entry<String, List<AssetVocabulary>> entry :
+					inheritedVocabularies.entrySet()) {
 
-			return vocabulary.getVocabularyId();
+				vocabularies = entry.getValue();
+
+				if (ListUtil.isNotEmpty(vocabularies)) {
+					AssetVocabulary vocabulary = vocabularies.get(0);
+
+					return vocabulary.getVocabularyId();
+				}
+			}
 		}
 
 		return 0;
@@ -926,7 +936,7 @@ public class AssetCategoriesDisplayContext {
 	private String _displayStyle;
 	private String _eventName;
 	private final HttpServletRequest _httpServletRequest;
-	private List<AssetVocabulary> _inheritedVocabularies;
+	private Map<String, List<AssetVocabulary>> _inheritedVocabularies;
 	private String _keywords;
 	private final LayoutDisplayPageProvider _layoutDisplayPageProvider;
 	private String _navigation;

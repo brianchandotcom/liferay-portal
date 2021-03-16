@@ -34,7 +34,7 @@
 				<ul class="nav nav-nested">
 					<li class="nav-item">
 						<c:choose>
-							<c:when test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) || ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">
+							<c:when test="<%= MapUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) || ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">
 								<clay:content-row
 									cssClass="mb-4"
 									verticalAlign="center"
@@ -90,52 +90,64 @@
 									</clay:content-col>
 								</clay:content-row>
 
-								<c:if test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) %>">
-									<ul class="mb-2 nav nav-stacked">
-										<span class="text-truncate"><%= LanguageUtil.get(request, "global") %></span>
+								<c:if test="<%= MapUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) %>">
 
-										<%
-										for (AssetVocabulary vocabulary : assetCategoriesDisplayContext.getInheritedVocabularies()) {
-										%>
+									<%
+									Map<String, List<AssetVocabulary>> inheritedVocabularies = assetCategoriesDisplayContext.getInheritedVocabularies();
 
-											<li class="nav-item">
-												<a
-													class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>"
-													href="<%=
-														PortletURLBuilder.createRenderURL(
-															renderResponse
-														).setMVCPath(
-															"/view.jsp"
-														).setParameter(
-															"vocabularyId", vocabulary.getVocabularyId()
-														).buildString()
-													%>"
-												>
-													<span class="text-truncate"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></span>
+									for (Map.Entry<String, List<AssetVocabulary>> entry : inheritedVocabularies.entrySet()) {
+									%>
 
-													<liferay-ui:icon
-														icon="lock"
-														iconCssClass="ml-1 text-muted"
-														markupView="lexicon"
-														message="this-vocabulary-can-only-be-edited-from-the-global-site"
-													/>
+										<ul class="mb-2 nav nav-stacked">
+											<span class="text-truncate"><%= entry.getKey() %></span>
 
-													<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>">
+											<%
+											for (AssetVocabulary vocabulary : entry.getValue()) {
+											%>
+
+												<li class="nav-item">
+													<a
+														class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>"
+														href="<%=
+															PortletURLBuilder.createRenderURL(
+																renderResponse
+															).setMVCPath(
+																"/view.jsp"
+															).setParameter(
+																"vocabularyId", vocabulary.getVocabularyId()
+															).buildString()
+														%>"
+													>
+														<span class="text-truncate"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></span>
+
 														<liferay-ui:icon
-															icon="low-vision"
+															icon="lock"
 															iconCssClass="ml-1 text-muted"
 															markupView="lexicon"
-															message="for-internal-use-only"
+															message="this-vocabulary-can-only-be-edited-from-the-global-site"
 														/>
-													</c:if>
-												</a>
-											</li>
 
-										<%
-										}
-										%>
+														<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>">
+															<liferay-ui:icon
+																icon="low-vision"
+																iconCssClass="ml-1 text-muted"
+																markupView="lexicon"
+																message="for-internal-use-only"
+															/>
+														</c:if>
+													</a>
+												</li>
 
-									</ul>
+											<%
+											}
+											%>
+
+										</ul>
+
+									<%
+									}
+									%>
+
 								</c:if>
 
 								<c:if test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">

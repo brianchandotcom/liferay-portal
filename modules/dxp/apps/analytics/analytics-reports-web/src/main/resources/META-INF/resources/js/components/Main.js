@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -31,13 +30,9 @@ export default function Main({
 	timeSpanOptions,
 	viewURLs,
 }) {
-	const {endpoints, loading, totalReads, totalViews} = useContext(
-		StoreStateContext
-	);
+	const {endpoints, totalReads, totalViews} = useContext(StoreStateContext);
 
-	return loading ? (
-		<ClayLoadingIndicator small />
-	) : (
+	return (
 		<div className="c-p-3">
 			<BasicInformation
 				author={author}

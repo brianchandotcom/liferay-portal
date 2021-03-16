@@ -1,3 +1,27 @@
 definition {
 
+    macro loginAs {
+
+        if(!(isSet(emailAddress))){
+            emailAddress = "test@liferay.com";
+        }
+
+        if(!(isSet(password))){
+            password = "test@liferay.com";
+        }
+
+		Click(locator1 = "AnalyticsCloudConnection#EMAIL_LOGIN_FIELD");
+
+		Type(
+			locator1 = "AnalyticsCloudConnection#EMAIL_LOGIN_FIELD",
+			value1 = "${emailAddress}");
+
+		Click(locator1 = "AnalyticsCloudConnection#PASSWORD_LOGIN_FIELD");
+
+		Type(
+			locator1 = "AnalyticsCloudConnection#PASSWORD_LOGIN_FIELD",
+			value1 = "${password}");
+
+		Click(locator1 = "AnalyticsCloudConnection#LOGIN_BUTTON");
+	}
 }

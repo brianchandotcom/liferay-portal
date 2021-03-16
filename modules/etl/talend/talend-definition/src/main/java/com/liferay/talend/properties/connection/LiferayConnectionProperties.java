@@ -15,12 +15,9 @@
 package com.liferay.talend.properties.connection;
 
 import com.liferay.talend.LiferayDefinition;
-import com.liferay.talend.common.util.URIUtil;
 import com.liferay.talend.internal.oas.LiferayOASSource;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.ui.UIKeys;
-
-import java.net.URL;
 
 import java.util.Objects;
 
@@ -59,18 +56,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 	public void afterReferencedComponent() {
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
-	}
-
-	public String getApplicationBaseHref() {
-		URL openAPISpecURL = URIUtil.toURL(_getValue(hostURL));
-
-		URL serverURL = URIUtil.extractServerURL(openAPISpecURL);
-		String jaxRSAppBase = URIUtil.extractJaxRSAppBasePathSegment(
-			openAPISpecURL);
-
-		String serverHref = serverURL.toExternalForm();
-
-		return serverHref.concat(jaxRSAppBase);
 	}
 
 	public int getConnectTimeout() {

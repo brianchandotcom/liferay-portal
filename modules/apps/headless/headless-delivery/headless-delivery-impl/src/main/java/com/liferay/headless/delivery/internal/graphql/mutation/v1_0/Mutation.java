@@ -1826,6 +1826,47 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the site's message board message by external reference code."
+	)
+	public boolean deleteSiteMessageBoardMessageByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					deleteSiteMessageBoardMessageByExternalReferenceCode(
+						externalReferenceCode, Long.valueOf(siteKey)));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the site's message board message with the given external reference code, or creates it if it not exists."
+	)
+	public MessageBoardMessage
+			updateSiteMessageBoardMessageByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("messageBoardMessage")
+					MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					putSiteMessageBoardMessageByExternalReferenceCode(
+						externalReferenceCode, Long.valueOf(siteKey),
+						messageBoardMessage));
+	}
+
+	@GraphQLField(
 		description = "Deletes the message board section and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteMessageBoardSection(

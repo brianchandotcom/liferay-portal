@@ -8481,6 +8481,7 @@ paths:
             # @review
             description:
                 Deletes the site's message board message by external reference code.
+            operationId: deleteSiteMessageBoardMessageByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -8505,6 +8506,7 @@ paths:
             # @review
             description:
                 Retrieves the site's message board message by external reference code.
+            operationId: getSiteMessageBoardMessageByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -8534,6 +8536,7 @@ paths:
             description:
                 Updates the site's message board message with the given external reference code, or creates it if it not
                 exists.
+            operationId: putSiteMessageBoardMessageByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode

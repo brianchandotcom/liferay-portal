@@ -129,6 +129,21 @@ public interface MessageBoardMessageResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public void deleteSiteMessageBoardMessageByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception;
+
+	public MessageBoardMessage
+			getSiteMessageBoardMessageByExternalReferenceCode(
+				String externalReferenceCode, Long siteId)
+		throws Exception;
+
+	public MessageBoardMessage
+			putSiteMessageBoardMessageByExternalReferenceCode(
+				String externalReferenceCode, Long siteId,
+				MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
 	public MessageBoardMessage getSiteMessageBoardMessageByFriendlyUrlPath(
 			Long siteId, String friendlyUrlPath)
 		throws Exception;

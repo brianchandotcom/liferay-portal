@@ -50,21 +50,31 @@ public class HeadlessUtilTest {
 			uriString.contains("subscription=true"));
 	}
 
-	@Test(expected = MalformedURLException.class)
-	public void testValidateIfOpenAPISpecURLIsInvalid() {
+	@Test
+	public void testValidateOpenAPISpecURL() {
 		HeadlessUtil.validateOpenAPISpecURL(
-			"http://localhost:8080/o/test/wrong");
-	}
-
-	@Test(expected = MalformedURLException.class)
-	public void testValidateIfOpenAPISpecURLIsNull() {
-		HeadlessUtil.validateOpenAPISpecURL(null);
+			"http://localhost:8080/o/headless/v1.0/openapi.json");
 	}
 
 	@Test
-	public void testValidateIfOpenAPISpecURLIsValid() {
-		HeadlessUtil.validateOpenAPISpecURL(
-			"http://localhost:8080/o/headless/v1.0/openapi.json");
+	public void testValidateOpenAPISpecURLExceptions() {
+		_assertException(MalformedURLException.class, null);
+
+		_assertException(
+			MalformedURLException.class, "http://localhost:8080/o/test/wrong");
+	}
+
+	private void _assertException(Class<?> exceptionClass, String url) {
+		Class<?> clazz = Exception.class;
+
+		try {
+			HeadlessUtil.validateOpenAPISpecURL(url);
+		}
+		catch (Exception exception) {
+			clazz = exception.getClass();
+		}
+
+		Assert.assertEquals("Invalid URL " + url, exceptionClass, clazz);
 	}
 
 }

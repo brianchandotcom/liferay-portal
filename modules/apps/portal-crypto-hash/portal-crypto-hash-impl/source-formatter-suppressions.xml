@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ChainingCheck" files="src/main/java/com/liferay/portal/crypto/hash/internal/CryptoHashTrackerRegistrator\.java" />
+	</checkstyle>
+</suppressions>

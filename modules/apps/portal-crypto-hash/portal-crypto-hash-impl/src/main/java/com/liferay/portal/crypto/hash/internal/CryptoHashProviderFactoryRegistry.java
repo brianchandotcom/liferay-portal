@@ -18,8 +18,8 @@ import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Arthur Chan
@@ -55,6 +55,6 @@ public class CryptoHashProviderFactoryRegistry {
 	}
 
 	private final Map<String, CryptoHashProviderFactory>
-		_cryptoHashProviderFactories = new HashMap<>();
+		_cryptoHashProviderFactories = new ConcurrentHashMap<>();
 
 }

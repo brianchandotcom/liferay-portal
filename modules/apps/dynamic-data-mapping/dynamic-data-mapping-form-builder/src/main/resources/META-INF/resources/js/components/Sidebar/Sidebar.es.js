@@ -92,6 +92,7 @@ class Sidebar extends Component {
 			instanceId: generateInstanceId(8),
 			settingsContext,
 			type: newFieldType.name,
+			value: undefined,
 		});
 	}
 

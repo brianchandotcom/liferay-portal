@@ -35,9 +35,25 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayS3ObjectImporter {
+public class TestrayAttachmentRecorder {
 
-	public TestrayS3ObjectImporter(Build build) {
+	public void record() {
+		if (_recorded) {
+			return;
+		}
+
+		JenkinsResultsParserUtil.delete(getTestrayLogsDir());
+
+		_recordJenkinsConsole();
+		_recordLiferayLogs();
+		_recordLiferayOSGiLogs();
+		_recordPoshiReportFiles();
+		_recordPoshiWarnings();
+
+		_recorded = true;
+	}
+
+	protected TestrayAttachmentRecorder(Build build) {
 		if (build == null) {
 			throw new RuntimeException("Please set a build");
 		}
@@ -51,20 +67,14 @@ public class TestrayS3ObjectImporter {
 			_build.getJobVariant() + "/start.properties");
 	}
 
-	public void record() {
-		JenkinsResultsParserUtil.delete(_getTestrayLogsDir());
+	protected File getTestrayLogsDir() {
+		String workspace = System.getenv("WORKSPACE");
 
-		_recordJenkinsConsole();
-		_recordLiferayLogs();
-		_recordLiferayOSGiLogs();
-		_recordPoshiReportFiles();
-		_recordPoshiWarnings();
-	}
+		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
+			throw new RuntimeException("Please set WORKSPACE");
+		}
 
-	public void upload() {
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
-
-		testrayS3Bucket.createTestrayS3Objects(_getTestrayLogsDir());
+		return new File(workspace, "testray/logs");
 	}
 
 	private File _convertToGzipFile(File file) {
@@ -169,17 +179,7 @@ public class TestrayS3ObjectImporter {
 		sb.append(
 			JenkinsResultsParserUtil.getAxisVariable(_build.getBuildURL()));
 
-		return new File(_getTestrayLogsDir(), sb.toString());
-	}
-
-	private File _getTestrayLogsDir() {
-		String workspace = System.getenv("WORKSPACE");
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
-			throw new RuntimeException("Please set WORKSPACE");
-		}
-
-		return new File(workspace, "testray/logs");
+		return new File(getTestrayLogsDir(), sb.toString());
 	}
 
 	private void _recordJenkinsConsole() {
@@ -445,6 +445,7 @@ public class TestrayS3ObjectImporter {
 
 	private final Build _build;
 	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private boolean _recorded;
 	private final Properties _startProperties;
 
 }

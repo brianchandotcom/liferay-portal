@@ -1646,10 +1646,11 @@ public class PoshiContext {
 					String duplicateFilePath = _filePaths.get(
 						namespacedFileName);
 
-					StringUtil.combine(
-						"WARNING: Duplicate file name '", fileName,
-						"' found within the namespace '", _namespace, "':\n",
-						filePath, "\n", duplicateFilePath, "\n");
+					throw new RuntimeException(
+						StringUtil.combine(
+							"WARNING: Duplicate file name '", fileName,
+							"' found within the namespace '", _namespace,
+							"':\n", filePath, "\n", duplicateFilePath, "\n"));
 				}
 
 				Element rootElement = PoshiGetterUtil.getRootElementFromURL(

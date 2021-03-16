@@ -59,6 +59,7 @@ public class DLFileEntryTypeWrapper
 		attributes.put("fileEntryTypeKey", getFileEntryTypeKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("system", isSystem());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -148,6 +149,12 @@ public class DLFileEntryTypeWrapper
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -436,6 +443,16 @@ public class DLFileEntryTypeWrapper
 		return model.getPrimaryKey();
 	}
 
+	/**
+	 * Returns the system of this document library file entry type.
+	 *
+	 * @return the system of this document library file entry type
+	 */
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
 	@Override
 	public String getUnambiguousName(
 			java.util.List<DLFileEntryType> dlFileEntryTypes, long groupId,
@@ -488,6 +505,16 @@ public class DLFileEntryTypeWrapper
 	@Override
 	public boolean isExportable() {
 		return model.isExportable();
+	}
+
+	/**
+	 * Returns <code>true</code> if this document library file entry type is system.
+	 *
+	 * @return <code>true</code> if this document library file entry type is system; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	@Override
@@ -748,6 +775,16 @@ public class DLFileEntryTypeWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this document library file entry type is system.
+	 *
+	 * @param system the system of this document library file entry type
+	 */
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

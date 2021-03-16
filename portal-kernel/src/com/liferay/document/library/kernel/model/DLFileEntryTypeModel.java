@@ -473,6 +473,27 @@ public interface DLFileEntryTypeModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
+	 * Returns the system of this document library file entry type.
+	 *
+	 * @return the system of this document library file entry type
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this document library file entry type is system.
+	 *
+	 * @return <code>true</code> if this document library file entry type is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this document library file entry type is system.
+	 *
+	 * @param system the system of this document library file entry type
+	 */
+	public void setSystem(boolean system);
+
+	/**
 	 * Returns the last publish date of this document library file entry type.
 	 *
 	 * @return the last publish date of this document library file entry type

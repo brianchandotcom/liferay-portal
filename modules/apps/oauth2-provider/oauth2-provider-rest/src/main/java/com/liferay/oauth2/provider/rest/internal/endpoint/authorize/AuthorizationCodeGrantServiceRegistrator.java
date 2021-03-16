@@ -82,14 +82,14 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 		@Override
 		public ServerAuthorizationCodeGrant getGrantRepresentation(
-			OAuthRedirectionState state, Client client,
-			List<String> requestedScope, List<String> approvedScope,
-			UserSubject userSubject, ServerAccessToken preauthorizedToken) {
+			OAuthRedirectionState oAuthRedirectionState, Client client,
+			List<String> requestedScopesList, List<String> approvedScopesList,
+			UserSubject userSubject, ServerAccessToken serverAccessToken) {
 
 			ServerAuthorizationCodeGrant serverAuthorizationCodeGrant =
 				super.getGrantRepresentation(
-					state, client, requestedScope, approvedScope, userSubject,
-					preauthorizedToken);
+					oAuthRedirectionState, client, requestedScopesList,
+					approvedScopesList, userSubject, serverAccessToken);
 
 			String rememberDeviceContent = _getRememberDeviceContent();
 
@@ -136,7 +136,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 		@Override
 		protected boolean canAuthorizationBeSkipped(
 			MultivaluedMap<String, String> params, Client client,
-			UserSubject userSubject, List<String> requestedScope,
+			UserSubject userSubject, List<String> requestedScopesList,
 			List<OAuthPermission> permissions) {
 
 			if (MapUtil.getBoolean(
@@ -186,7 +186,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			}
 
 			return super.canAuthorizationBeSkipped(
-				params, client, userSubject, requestedScope, permissions);
+				params, client, userSubject, requestedScopesList, permissions);
 		}
 
 		@Override

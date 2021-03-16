@@ -239,6 +239,49 @@ definition {
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 3 Name");
 	}
 
+	@description = "This test covers LPS-127602. It ensures that a predefined image can be added."
+	@priority = "4"
+	test AddPredefinedImageViaRichText {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "DM Document Type Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "Rich Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "Rich Text");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Click(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON_2");
+
+		ItemSelector.uploadFile(uploadFileName = "Document_2.jpg");
+
+		AssertElementPresent(
+			key_imageFileName = "Document_2",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
+
+		PortletEntry.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+
+		PortletEntry.inputTitle(title = "DM Document Title");
+
+		AssertElementPresent(
+			key_imageFileName = "Document_2",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
+	}
+
 	@description = "This test covers LPS-127598. It ensures that a user can check out a document with the custom field via editing."
 	@priority = "4"
 	test CheckOutDocumentWithCustomField {

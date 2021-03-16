@@ -64,7 +64,7 @@ if (configurationModel.isFactory()) {
 }
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(portletURL.toString());
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(categoryDisplayName);
 %>

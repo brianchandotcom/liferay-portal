@@ -84,6 +84,8 @@ if (samlRoleIdpOptionDisabled) {
 	</aui:button-row>
 </aui:form>
 
+<br />
+
 <portlet:actionURL name="/admin/update_certificate" var="updateCertificateURL">
 	<portlet:param name="tabs1" value="general" />
 </portlet:actionURL>
@@ -105,6 +107,8 @@ if (samlRoleIdpOptionDisabled) {
 				<liferay-util:param name="certificateUsage" value="<%= LocalEntityManager.CertificateUsage.SIGNING.name() %>" />
 			</liferay-util:include>
 		</aui:fieldset>
+
+		<br />
 
 		<c:if test="<%= StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_SP) %>">
 			<aui:fieldset label="encryption-certificate-and-private-key">

@@ -68,7 +68,7 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 	<aui:fieldset helpMessage="service-provider-metadata-help" label="metadata">
 		<aui:input name="metadataUrl" />
 
-		<aui:button-row>
+		<aui:button-row cssClass="sheet-footer">
 			<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "uploadMetadataXml();" %>' value="upload-metadata-xml" />
 		</aui:button-row>
 

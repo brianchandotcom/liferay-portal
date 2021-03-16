@@ -75,7 +75,7 @@
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
-	<aui:button-row>
+	<aui:button-row cssClass="sheet-footer">
 		<aui:button href="<%= addIdentityProviderURL %>" label="add-identity-provider" value="add-identity-provider" />
 	</aui:button-row>
 

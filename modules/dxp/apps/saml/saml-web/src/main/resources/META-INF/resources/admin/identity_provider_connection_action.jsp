@@ -24,6 +24,7 @@ SamlSpIdpConnection samlSpIdpConnection = (SamlSpIdpConnection)row.getObject();
 
 <liferay-ui:icon-menu
 	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 >
 	<portlet:renderURL var="editURL">

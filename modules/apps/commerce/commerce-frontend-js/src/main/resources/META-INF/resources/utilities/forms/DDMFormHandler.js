@@ -70,11 +70,4 @@ class DDMFormHandler {
 	}
 }
 
-Liferay.component(
-	'DDMFormHandler',
-	(() => ({
-		attach: (configuration) => new DDMFormHandler(configuration),
-	}))()
-);
-
 export default DDMFormHandler;

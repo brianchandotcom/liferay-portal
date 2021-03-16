@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:asset:asset-category-property-api")
 	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:asset:asset-taglib")
+	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")

@@ -34,6 +34,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -530,6 +532,27 @@ public class AssetCategoriesDisplayContext {
 					company.getGroupId(), false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,
 					new AssetVocabularyCreateDateComparator()));
+		}
+
+		List<DepotEntry> depotEntries =
+			DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+				_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (DepotEntry depotEntry : depotEntries) {
+			Group group = depotEntry.getGroup();
+
+			List<AssetVocabulary> groupVocabularies =
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					group.getGroupId(), false, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS,
+					new AssetVocabularyCreateDateComparator());
+
+			if (ListUtil.isNotEmpty(groupVocabularies)) {
+				_inheritedVocabularies.put(
+					group.getDescriptiveName(_themeDisplay.getLocale()),
+					groupVocabularies);
+			}
 		}
 
 		return _inheritedVocabularies;

@@ -374,6 +374,7 @@ create table DLFileEntryType (
 	fileEntryTypeKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
+	system_ BOOLEAN,
 	lastPublishDate DATE null,
 	primary key (fileEntryTypeId, ctCollectionId)
 );

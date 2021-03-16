@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -159,12 +160,12 @@ public class SiteBrowserDisplayContext {
 
 		String type = getType();
 
-		if (type.equals("layoutScopes")) {
+		if (Objects.equals(type, "layoutScopes")) {
 			total = GroupLocalServiceUtil.getGroupsCount(
 				themeDisplay.getCompanyId(), Layout.class.getName(),
 				_getGroupId());
 		}
-		else if (!type.equals("parent-sites")) {
+		else if (!Objects.equals(type, "parent-sites")) {
 			total = GroupLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), classNameIds,
 				groupSearchTerms.getKeywords(), _getGroupParams());
@@ -182,14 +183,14 @@ public class SiteBrowserDisplayContext {
 
 		List<Group> groups = null;
 
-		if (type.equals("layoutScopes")) {
+		if (Objects.equals(type, "layoutScopes")) {
 			groups = GroupLocalServiceUtil.getGroups(
 				company.getCompanyId(), Layout.class.getName(), _getGroupId(),
 				start, groupSearch.getResultEnd() - additionalSites);
 
 			groups = _filterLayoutGroups(groups, _isPrivateLayout());
 		}
-		else if (type.equals("parent-sites")) {
+		else if (Objects.equals(type, "parent-sites")) {
 			Group group = GroupLocalServiceUtil.getGroup(_getGroupId());
 
 			groups = group.getAncestors();
@@ -235,6 +236,10 @@ public class SiteBrowserDisplayContext {
 	public List<NavigationItem> getNavigationItems() {
 		String[] types = _getTypes();
 
+		if (ArrayUtil.isEmpty(types)) {
+			return Collections.emptyList();
+		}
+
 		if (types.length == 1) {
 			return NavigationItemListBuilder.add(
 				navigationItem -> {
@@ -245,24 +250,20 @@ public class SiteBrowserDisplayContext {
 				}
 			).build();
 		}
-		else if (types.length > 1) {
-			return new NavigationItemList() {
-				{
-					for (String curType : types) {
-						add(
-							navigationItem -> {
-								navigationItem.setActive(
-									curType.equals(getType()));
-								navigationItem.setHref(
-									getPortletURL(), "type", curType);
-								navigationItem.setLabel(curType);
-							});
-					}
-				}
-			};
-		}
 
-		return Collections.emptyList();
+		return new NavigationItemList() {
+			{
+				for (String curType : types) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(curType.equals(getType()));
+							navigationItem.setHref(
+								getPortletURL(), "type", curType);
+							navigationItem.setLabel(curType);
+						});
+				}
+			}
+		};
 	}
 
 	public String getOrderByType() {
@@ -478,7 +479,7 @@ public class SiteBrowserDisplayContext {
 			_groupParams.put("manualMembership", Boolean.TRUE);
 		}
 
-		if (type.equals("child-sites")) {
+		if (Objects.equals(type, "child-sites")) {
 			Group parentGroup = GroupLocalServiceUtil.getGroup(groupId);
 
 			_groupParams.put("groupsTree", ListUtil.fromArray(parentGroup));
@@ -488,7 +489,7 @@ public class SiteBrowserDisplayContext {
 
 			_groupParams.put("usersGroups", user.getUserId());
 
-			if (type.equals("sites-that-i-administer")) {
+			if (Objects.equals(type, "sites-that-i-administer")) {
 				_groupParams.put("actionId", ActionKeys.UPDATE);
 			}
 			else {

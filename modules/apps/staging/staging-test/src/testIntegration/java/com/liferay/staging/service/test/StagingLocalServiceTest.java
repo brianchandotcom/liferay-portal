@@ -302,9 +302,8 @@ public class StagingLocalServiceTest {
 				PortletPreferencesLocalServiceUtil.getPortletPreferences(
 					layoutRevision.getPlid(), portletId);
 
-			Boolean hasPortletPreferences = !portletPreferences.isEmpty();
-
-			Assert.assertTrue(hasPortletPreferences);
+			Assert.assertFalse(
+				portletPreferences.toString(), portletPreferences.isEmpty());
 		}
 		finally {
 			GroupLocalServiceUtil.deleteGroup(group.getGroupId());

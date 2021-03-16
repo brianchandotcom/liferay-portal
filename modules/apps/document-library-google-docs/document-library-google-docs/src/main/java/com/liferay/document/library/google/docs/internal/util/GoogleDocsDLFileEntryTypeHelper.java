@@ -16,6 +16,7 @@ package com.liferay.document.library.google.docs.internal.util;
 
 import com.liferay.document.library.google.docs.internal.util.constants.GoogleDocsConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -123,7 +124,8 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		_dlFileEntryTypeLocalService.addFileEntryType(
 			defaultUserId, _company.getGroupId(), ddmStructureId,
 			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY, nameMap, descriptionMap,
-			true, serviceContext);
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_SYSTEM,
+			serviceContext);
 	}
 
 	private Map<Locale, String> _updateNameMap(Map<Locale, String> nameMap) {

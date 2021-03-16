@@ -164,6 +164,68 @@ definition {
 	}
 
 	@priority = "4"
+	test DeleteDMFolderWithMultipleFiles {
+		property test.assert.warning.exceptions = "true";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder 1 Description",
+			dmFolderName = "DM Folder 1 Name");
+
+		Publications.createNewPublication(publicationsName = "Publication Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder 1 Name");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf,Document_3.png");
+
+		Publications.gotoReviewPublications(
+			gotoManagePublications = "true",
+			publicationsName = "Publication Name");
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Documents Folder",
+			publicationsSite = "Guest",
+			publicationsTitle = "DM Folder 1 Name",
+			publicationsType = "Modified",
+			publicationsUser = "Test Test");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.moveToRecycleBinCP(
+			assetType = "Documents Folder",
+			dmFolderName = "DM Folder 1 Name");
+
+		Publications.gotoReviewPublications();
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Documents Folder",
+			publicationsSite = "Guest",
+			publicationsTitle = "DM Folder 1 Name",
+			publicationsType = "Modified",
+			publicationsUser = "Test Test");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			portlet = "Recycle Bin");
+
+		RecycleBin.emptyCP();
+
+		Publications.gotoReviewPublications();
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Documents Folder",
+			publicationsSite = "Guest",
+			publicationsTitle = "DM Folder 1 Name",
+			publicationsType = "Deleted",
+			publicationsUser = "Test Test");
+	}
+
+	@priority = "4"
 	test PublishDocumentFolderWithEditedDocument {
 		Navigator.openURL();
 

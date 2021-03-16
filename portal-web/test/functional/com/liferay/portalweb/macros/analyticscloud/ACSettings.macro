@@ -25,7 +25,7 @@ definition {
 		Click(locator1 = "AnalyticsCloudConnection#LOGIN_BUTTON");
 	}
 
-    macro openWorkspaceAfterLogin {
+    macro openWorkspace {
 
         var key_WorkspaceName = "${workspaceName}";
 
@@ -39,7 +39,7 @@ definition {
 
         Click(locator1 = "//*[@href='/']");
 
-        ACSettings.openWorkspaceAfterLogin(workspaceName = "${workspaceName}");
+        ACSettings.openWorkspace(workspaceName = "${workspaceName}");
 
     }  
 }

@@ -236,7 +236,7 @@
 		<column name="fileEntryTypeKey" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
-		<column name="system" type="boolean" />
+		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->

@@ -99,19 +99,8 @@ public class DLFileEntryTypeLocalServiceImpl
 	public DLFileEntryType addFileEntryType(
 			long userId, long groupId, long dataDefinitionId,
 			String fileEntryTypeKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFileEntryType(
-			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
-			descriptionMap, false, serviceContext);
-	}
-
-	@Override
-	public DLFileEntryType addFileEntryType(
-		long userId, long groupId, long dataDefinitionId,
-		String fileEntryTypeKey, Map<Locale, String> nameMap,
-		Map<Locale, String> descriptionMap, boolean system, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -150,7 +139,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);
-		dlFileEntryType.setSystem(system);
+		dlFileEntryType.setType(type);
 
 		dlFileEntryType = dlFileEntryTypePersistence.update(dlFileEntryType);
 
@@ -167,6 +156,20 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		return dlFileEntryType;
+	}
+
+	@Override
+	public DLFileEntryType addFileEntryType(
+			long userId, long groupId, long dataDefinitionId,
+			String fileEntryTypeKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntryType(
+			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
+			descriptionMap,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_DEFAULT,
+			serviceContext);
 	}
 
 	/**

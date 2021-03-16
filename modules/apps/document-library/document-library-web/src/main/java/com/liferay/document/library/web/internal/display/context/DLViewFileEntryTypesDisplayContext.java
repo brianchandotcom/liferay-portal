@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -109,7 +110,8 @@ public class DLViewFileEntryTypesDisplayContext {
 			themeDisplay.getCompanyId(),
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(
 				themeDisplay.getScopeGroupId()),
-			searchTerms.getKeywords(), includeBasicFileEntryType, false);
+			searchTerms.getKeywords(), includeBasicFileEntryType,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_DEFAULT);
 
 		searchContainer.setTotal(total);
 
@@ -118,7 +120,8 @@ public class DLViewFileEntryTypesDisplayContext {
 				themeDisplay.getCompanyId(),
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					themeDisplay.getScopeGroupId()),
-				searchTerms.getKeywords(), includeBasicFileEntryType, false,
+				searchTerms.getKeywords(), includeBasicFileEntryType,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_DEFAULT,
 				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator()));
 

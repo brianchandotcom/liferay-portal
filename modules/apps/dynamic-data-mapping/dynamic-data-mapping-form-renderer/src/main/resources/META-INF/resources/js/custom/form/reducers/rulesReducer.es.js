@@ -12,6 +12,15 @@
  * details.
  */
 
-export {default as pageReducer} from './pageReducer.es';
-export {default as paginationReducer} from './paginationReducer.es';
-export {default as rulesReducer} from './rulesReducer.es';
+import {EVENT_TYPES} from '../eventTypes.es';
+
+export default (state, action) => {
+	switch (action.type) {
+		case EVENT_TYPES.RULES.UPDATE:
+			return {
+				rules: action.payload,
+			};
+		default:
+			return state;
+	}
+};

@@ -30,7 +30,8 @@ import {
 import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
 import {parseProps} from '../../util/parseProps.es';
 import {Form} from './FormView.es';
-import {paginationReducer} from './reducers/index.es';
+import {EVENT_TYPES} from './eventTypes.es';
+import {paginationReducer, rulesReducer} from './reducers/index.es';
 
 /**
  * Updates the state of the FieldSettings when any value coming
@@ -42,8 +43,16 @@ const StateSync = ({
 	editingLanguageId,
 	focusedField,
 	pages,
+	rules,
 }) => {
 	const dispatch = useForm();
+
+	useEffect(() => {
+		dispatch({
+			payload: rules,
+			type: EVENT_TYPES.RULES.UPDATE,
+		});
+	}, [dispatch, rules]);
 
 	useEffect(() => {
 		dispatch({
@@ -96,6 +105,7 @@ export const FormFieldSettings = ({children, onAction, ...otherProps}) => {
 					pagesStructureReducer,
 					pageValidationReducer,
 					paginationReducer,
+					rulesReducer,
 				]}
 				value={state}
 			>

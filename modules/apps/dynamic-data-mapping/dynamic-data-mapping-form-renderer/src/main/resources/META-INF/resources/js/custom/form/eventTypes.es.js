@@ -18,6 +18,10 @@ const PAGINATION = {
 	PREVIOUS: 'pagination_previous',
 };
 
+const RULES = {
+	UPDATE: 'rules_update',
+};
+
 const PAGE = {
 	ADD: 'page_add',
 	DELETE: 'page_delete',
@@ -30,5 +34,6 @@ const PAGE = {
 export const EVENT_TYPES = {
 	PAGE,
 	PAGINATION,
+	RULES,
 	SUCCESS_PAGE: 'success_page',
 };

@@ -211,8 +211,6 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -230,12 +228,9 @@ definition {
 
 		Pause(locator1 = "300000");
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "userea@liferay.com");
+		ProductMenu.gotoSite(site = "Minium");
 
-		AssertElementNotPresent(
+		AssertElementPresent(
 			locator1 = "Message#ERROR",
 			value1 = "The activation key for Liferay Commerce Subscription Production has expired. Please contact your administrator.");
 

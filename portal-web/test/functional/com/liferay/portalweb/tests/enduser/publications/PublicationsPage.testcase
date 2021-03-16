@@ -187,14 +187,6 @@ definition {
 
 		Publications.gotoPublish(publicationsName = "Publication Name 1");
 
-		// Workaround LPS-129010
-
-		/*Publications.discardPublications(
-			conflictingPublications = "true",
-			entryTitle = "Content Page Name",
-			publicationsCategory = "Page",
-			publicationsTitle = "Content Page Name");*/
-
 		Publications.discardPublications(
 			conflictingPublications = "true",
 			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",

@@ -67,7 +67,7 @@ public class TLDUtil {
 			return Collections.emptyMap();
 		}
 
-		File definitionFilesDir = new File(tldDir, "definitionFiles");
+		File definitionFilesDir = new File(tldDir, "definitions");
 
 		if (!definitionFilesDir.exists()) {
 			return Collections.emptyMap();
@@ -300,7 +300,7 @@ public class TLDUtil {
 
 				if (gradleUserHome != null) {
 					File definitionFilesDir = new File(
-						gradleUserHome, "/../definitionFiles");
+						gradleUserHome, "/../definitions");
 
 					if (definitionFilesDir.exists()) {
 						for (File definitionFile :

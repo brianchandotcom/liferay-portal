@@ -95,6 +95,18 @@ public class DLFileEntryTypeLocalServiceUtil {
 	public static DLFileEntryType addFileEntryType(
 			long userId, long groupId, long dataDefinitionId,
 			String fileEntryTypeKey, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean system,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFileEntryType(
+			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
+			descriptionMap, system, serviceContext);
+	}
+
+	public static DLFileEntryType addFileEntryType(
+			long userId, long groupId, long dataDefinitionId,
+			String fileEntryTypeKey, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {

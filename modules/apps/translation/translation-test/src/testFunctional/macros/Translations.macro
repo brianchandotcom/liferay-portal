@@ -393,6 +393,8 @@ definition {
 		Translations.viewTargetFields(
 			webContentContent = "${webContentContent}",
 			webContentDescription = "${webContentDescription}",
+			webContentNumber = "${webContentNumber}",
+			webContentText = "${webContentText}",
 			webContentTitle = "${webContentTitle}");
 	}
 

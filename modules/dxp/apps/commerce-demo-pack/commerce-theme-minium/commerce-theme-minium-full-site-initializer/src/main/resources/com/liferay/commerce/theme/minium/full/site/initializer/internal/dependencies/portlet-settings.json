@@ -4,7 +4,7 @@
 		"layoutFriendlyURL": "/catalog",
 		"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet",
 		"portletPreferences": {
-			"cpContentListRendererKey": "list-minium",
+			"cpContentListRendererKey": "list-default",
 			"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 			"simple--cpTypeListEntryRendererKey": "list-entry-default",
 			"virtual--cpTypeListEntryRendererKey": "list-entry-default"
@@ -75,7 +75,7 @@
 		"layoutFriendlyURL": "/dashboard",
 		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet",
 		"portletPreferences": {
-			"cpContentListRendererKey": "list-minium",
+			"cpContentListRendererKey": "list-default",
 			"dataSource": "assetCategoriesAndTagsDataSource",
 			"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 			"paginationDelta": "5",

@@ -108,7 +108,7 @@
 						"layoutColumnPos": 1,
 						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet_INSTANCE_product_detail",
 						"portletPreferences": {
-							"cpContentListRendererKey": "list-minium",
+							"cpContentListRendererKey": "list-default",
 							"dataSource": "assetCategoriesAndTagsDataSource",
 							"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 							"renderSelection": "custom",

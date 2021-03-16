@@ -221,6 +221,10 @@ public class DDMFormFieldFactoryHelper {
 		String fieldType = getDDMFormFieldType();
 
 		if (Validator.isNotNull(predefinedValue)) {
+			if (StringUtil.startsWith(predefinedValue, StringPool.PERCENT)) {
+				return createLocalizedValue(predefinedValue);
+			}
+
 			localizedValue.addString(_defaultLocale, predefinedValue);
 		}
 		else if (fieldType.equals("checkbox")) {

@@ -143,11 +143,11 @@ public class DLFileEntryTypeServiceUtil {
 
 	public static List<DLFileEntryType> search(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, boolean system, int start, int end,
+		boolean includeBasicFileEntryType, int type, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		return getService().search(
-			companyId, groupIds, keywords, includeBasicFileEntryType, system,
+			companyId, groupIds, keywords, includeBasicFileEntryType, type,
 			start, end, orderByComparator);
 	}
 
@@ -180,10 +180,10 @@ public class DLFileEntryTypeServiceUtil {
 
 	public static int searchCount(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, boolean system) {
+		boolean includeBasicFileEntryType, int type) {
 
 		return getService().searchCount(
-			companyId, groupIds, keywords, includeBasicFileEntryType, system);
+			companyId, groupIds, keywords, includeBasicFileEntryType, type);
 	}
 
 	public static DLFileEntryType updateFileEntryType(

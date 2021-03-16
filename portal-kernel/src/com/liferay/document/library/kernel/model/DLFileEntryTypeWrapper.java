@@ -59,7 +59,7 @@ public class DLFileEntryTypeWrapper
 		attributes.put("fileEntryTypeKey", getFileEntryTypeKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("system", isSystem());
+		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -151,10 +151,10 @@ public class DLFileEntryTypeWrapper
 			setDescription(description);
 		}
 
-		Boolean system = (Boolean)attributes.get("system");
+		Integer type = (Integer)attributes.get("type");
 
-		if (system != null) {
-			setSystem(system);
+		if (type != null) {
+			setType(type);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -444,13 +444,13 @@ public class DLFileEntryTypeWrapper
 	}
 
 	/**
-	 * Returns the system of this document library file entry type.
+	 * Returns the type of this document library file entry type.
 	 *
-	 * @return the system of this document library file entry type
+	 * @return the type of this document library file entry type
 	 */
 	@Override
-	public boolean getSystem() {
-		return model.getSystem();
+	public int getType() {
+		return model.getType();
 	}
 
 	@Override
@@ -505,16 +505,6 @@ public class DLFileEntryTypeWrapper
 	@Override
 	public boolean isExportable() {
 		return model.isExportable();
-	}
-
-	/**
-	 * Returns <code>true</code> if this document library file entry type is system.
-	 *
-	 * @return <code>true</code> if this document library file entry type is system; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isSystem() {
-		return model.isSystem();
 	}
 
 	@Override
@@ -778,13 +768,13 @@ public class DLFileEntryTypeWrapper
 	}
 
 	/**
-	 * Sets whether this document library file entry type is system.
+	 * Sets the type of this document library file entry type.
 	 *
-	 * @param system the system of this document library file entry type
+	 * @param type the type of this document library file entry type
 	 */
 	@Override
-	public void setSystem(boolean system) {
-		model.setSystem(system);
+	public void setType(int type) {
+		model.setType(type);
 	}
 
 	/**

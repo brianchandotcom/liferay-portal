@@ -328,6 +328,8 @@ definition {
 	}
 
 	macro getPublishedFormPublicURL {
+		WaitForElementPresent(locator1 = "Form#PUBLISH_FORM_PUBLIC_URL");
+
 		var publicURL = selenium.getElementValue("Form#PUBLISH_FORM_PUBLIC_URL");
 
 		return "${publicURL}";

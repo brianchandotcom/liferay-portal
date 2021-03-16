@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -268,20 +266,12 @@ public class StagingLocalServiceTest {
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		String column1Value = unicodeProperties.getProperty("column-1");
-
 		String portletId = PortletIdCodec.encode(
 			JournalPortletKeys.JOURNAL, PortletIdCodec.generateInstanceId());
 
 		PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletId);
 
-		if (Validator.isNotNull(column1Value)) {
-			column1Value += StringPool.COMMA;
-		}
-
-		column1Value += portletId;
-
-		unicodeProperties.setProperty("column-1", column1Value);
+		unicodeProperties.setProperty("column-1", portletId);
 
 		layout.setTypeSettingsProperties(unicodeProperties);
 

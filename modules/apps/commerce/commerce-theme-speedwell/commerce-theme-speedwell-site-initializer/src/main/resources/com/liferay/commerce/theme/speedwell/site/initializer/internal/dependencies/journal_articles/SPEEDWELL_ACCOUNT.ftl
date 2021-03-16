@@ -1,7 +1,8 @@
 <div class="account-dashboard">
 	<h2 class="account-dashboard__title">${PageTitle.getData()}</h2>
+	<#assign base_friendly_url = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getScopeGroup().getFriendlyURL() />
 
-	<a class="account-dashboard__pill" href="${NavigationItemLinkOrders.getFriendlyUrl()}">
+	<a class="account-dashboard__pill" href="${base_friendly_url + "/my-orders"}">
 		<div class="pill__icon">
 			<svg fill="none" height="60" viewBox="0 0 54 60" width="54" xmlns="http://www.w3.org/2000/svg">
 				<path
@@ -18,7 +19,7 @@
 		</div>
 	</a>
 
-	<a class="account-dashboard__pill" href="${NavigationItemLinkLogin.getFriendlyUrl()}">
+	<a class="account-dashboard__pill" href="${base_friendly_url + "/login-security"}">
 		<div class="pill__icon">
 			<svg fill="none" height="60" viewBox="0 0 48 60" width="48" xmlns="http://www.w3.org/2000/svg">
 				<path
@@ -35,7 +36,7 @@
 		</div>
 	</a>
 
-	<a class="account-dashboard__pill" href="${NavigationItemLinkAddresses.getFriendlyUrl()}">
+	<a class="account-dashboard__pill" href="${base_friendly_url + "/my-addresses"}">
 		<div class="pill__icon">
 			<svg fill="none" height="60" viewBox="0 0 56 60" width="56" xmlns="http://www.w3.org/2000/svg">
 				<path
@@ -52,7 +53,7 @@
 		</div>
 	</a>
 
-	<a class="account-dashboard__pill" href="${NavigationItemLinkPaymentMethods.getFriendlyUrl()}" style="visibility: hidden; order: 6;">
+	<a class="account-dashboard__pill" href="${base_friendly_url + "/my-payment-methods"}" style="visibility: hidden; order: 6;">
 		<div class="pill__icon">
 			<svg fill="none" height="60" viewBox="0 0 60 65" width="65" xmlns="http://www.w3.org/2000/svg">
 				<path
@@ -69,7 +70,7 @@
 		</div>
 	</a>
 
-	<a class="account-dashboard__pill" href="${NavigationItemLinkSubscriptions.getFriendlyUrl()}">
+	<a class="account-dashboard__pill" href="${base_friendly_url + "/my-subscriptions"}">
 		<div class="pill__icon">
 			<svg fill="none" height="60" viewBox="0 0 56 60" width="56" xmlns="http://www.w3.org/2000/svg">
 				<path
@@ -86,7 +87,7 @@
 		</div>
 	</a>
 
-	<a class="account-dashboard__pill" href="${NavigationItemLinkDownloads.getFriendlyUrl()}">
+	<a class="account-dashboard__pill" href="${base_friendly_url + "/my-downloads"}">
 		<div class="pill__icon">
 			<svg fill="none" height="58" viewBox="0 0 58 60" width="60" xmlns="http://www.w3.org/2000/svg">
 				<path

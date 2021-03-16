@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints Engine Test
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.engine.test
+Bundle-Version: 1.0.0

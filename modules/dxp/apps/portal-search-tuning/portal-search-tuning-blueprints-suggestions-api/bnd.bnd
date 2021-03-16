@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints Suggestions API
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.suggestions.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.tuning.blueprints.suggestions.attributes,\
+	com.liferay.portal.search.tuning.blueprints.suggestions.constants,\
+	com.liferay.portal.search.tuning.blueprints.suggestions.spellcheck,\
+	com.liferay.portal.search.tuning.blueprints.suggestions.suggestion,\
+	com.liferay.portal.search.tuning.blueprints.suggestions.typeahead

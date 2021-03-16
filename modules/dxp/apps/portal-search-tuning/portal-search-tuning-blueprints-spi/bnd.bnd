@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints SPI
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.spi
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.search.tuning.blueprints.spi.blueprint

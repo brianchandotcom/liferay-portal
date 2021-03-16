@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints Engine SPI
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.engine.spi
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.tuning.blueprints.engine.spi.aggregation,\
+	com.liferay.portal.search.tuning.blueprints.engine.spi.clause,\
+	com.liferay.portal.search.tuning.blueprints.engine.spi.dataprovider,\
+	com.liferay.portal.search.tuning.blueprints.engine.spi.keywords,\
+	com.liferay.portal.search.tuning.blueprints.engine.spi.parameter,\
+	com.liferay.portal.search.tuning.blueprints.engine.spi.query,\
+	com.liferay.portal.search.tuning.blueprints.engine.spi.searchrequest,\
+	com.liferay.portal.search.tuning.blueprints.engine.spi.sort,\
+	com.liferay.portal.search.tuning.blueprints.engine.spi.suggester

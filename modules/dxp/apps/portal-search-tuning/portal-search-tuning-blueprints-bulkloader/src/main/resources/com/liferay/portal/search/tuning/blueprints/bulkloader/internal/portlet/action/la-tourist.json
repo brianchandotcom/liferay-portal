@@ -1,0 +1,996 @@
+{
+	"html_attributions": [
+	],
+	"next_page_token": "CrQCKgEAAKTs7ZS3P7eS5ANnrG6dBVDVSshGMz3DRjC41TsbfOI_pzJgweEUZlSGVaa2NgIhSvvw3AyuIn-vQzd4h7yWiw0LRQpToTdnzjaZms6y64AiIwjjvqx94gjdjD1UqJbMeQopzyo7c-H7DHOu7NvpXmfVhFpHjsu0skiWu6Ptkt0kdQkKqJ7x3B7ZsV6R71PmeyRRoqTMIFFcxy2d0IwmHN6V-DePn_1NbiWiz1Sk5IOigW5PQeYl3-JEjtHT9fBBZN0XCWsvuylRIXTZzIXdDfWk3hJ7QxG3S2QkyXtTgiMPuF08asj4kaymIF_jKYCSm1kP4CpG31nXWX1OIJCn-1emb-WSb4J_JkcZIJZ33OQ25PrGhGKyQpon2kIiig_0g5M2iwaXMzwvAu_QD8Ea_sYSEISkJlNpJImbMqWXL48ALfQaFI3nBLyQyP7hjvZWLcW2oulZXlUK",
+	"results": [
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.0637293,
+					"lng": -118.223954
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.0649501802915,
+						"lng": -118.2225533697085
+					},
+					"southwest": {
+						"lat": 34.0622522197085,
+						"lng": -118.2252513302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "San Antonio Winery",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 608,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/113754798936818199807\">San Antonio Winery</a>"
+					],
+					"photo_reference": "CkQ0AAAAnsZg-unYG76d36a18lHCfGrUKPdZnriGRWrWwhWOTpr_NA5r8FXWc7-h4Sbq_UT6c8Y8tLg8WNkIg3gloYNODxIQaam3ULJxBiCg-yp9wcxgCRoUezniAn7UBpf1Jviinz-hVHSswpg",
+					"width": 1080
+				}
+			],
+			"place_id": "ChIJj2tUC2bGwoARwqdCDE37YD0",
+			"plus_code": {
+				"compound_code": "3Q7G+FC Los Angeles, CA, USA",
+				"global_code": "85633Q7G+FC"
+			},
+			"price_level": 1,
+			"rating": 4.7,
+			"reference": "ChIJj2tUC2bGwoARwqdCDE37YD0",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"bar",
+				"restaurant",
+				"food",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 1049,
+			"vicinity": "737 Lamar Street, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.1195315,
+					"lng": -118.2962896
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.1213376802915,
+						"lng": -118.2948223197085
+					},
+					"southwest": {
+						"lat": 34.1186397197085,
+						"lng": -118.2975202802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "The Greek Theatre",
+			"photos": [
+				{
+					"height": 900,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/108383165923538930629\">The Greek Theatre</a>"
+					],
+					"photo_reference": "CkQ0AAAAtNvKAxKX7oBslYeEkUUm2C7V0VD_6kTfDTTDr9vUITujq5HHCz5zcSF2dboTwhPo2lFrqaxzaxa2sLMV6LfbdRIQdF7km-MEbuVwc-Dw8eEU-hoUQZ7xSXetaesyaTmdHJCZbwQ1c4o",
+					"width": 1600
+				}
+			],
+			"place_id": "ChIJRUJ9pJjAwoARhqQ6EhQynzs",
+			"plus_code": {
+				"compound_code": "4P93+RF Los Angeles, CA, USA",
+				"global_code": "85634P93+RF"
+			},
+			"price_level": 3,
+			"rating": 4.7,
+			"reference": "ChIJRUJ9pJjAwoARhqQ6EhQynzs",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 3745,
+			"vicinity": "2700 North Vermont Avenue, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.1341151,
+					"lng": -118.3215482
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.13537033029149,
+						"lng": -118.3203275697085
+					},
+					"southwest": {
+						"lat": 34.13267236970849,
+						"lng": -118.3230255302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Hollywood Sign",
+			"photos": [
+				{
+					"height": 3096,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/113970556746089888969\">Manfredo Mazariegos</a>"
+					],
+					"photo_reference": "CkQzAAAA4PCDqEFAtz8cxaDlD_XIAY1TC72Vsw72LbJXsrZX4gEbWT8WOsy235SxufkSNM1yuJh8e0mHXSQyXgel5p4BVxIQ0xRtmbtF-MRWxfIMf33f1xoU6VTr7fqXV-QM0x_Ufe2yMA53Fe8",
+					"width": 4128
+				}
+			],
+			"place_id": "ChIJfVpQRQq_woARQ5hwJsast6s",
+			"plus_code": {
+				"compound_code": "4MMH+J9 Los Angeles, CA, USA",
+				"global_code": "85634MMH+J9"
+			},
+			"rating": 4.6,
+			"reference": "ChIJfVpQRQq_woARQ5hwJsast6s",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 7032,
+			"vicinity": "Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.06868850000001,
+					"lng": -118.231565
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.07239595000001,
+						"lng": -118.22373685
+					},
+					"southwest": {
+						"lat": 34.06263415,
+						"lng": -118.23893745
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+			"name": "Los Angeles State Historic Park",
+			"photos": [
+				{
+					"height": 3492,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/107706048829501342653\">Andrew Ramos</a>"
+					],
+					"photo_reference": "CkQ0AAAAzSzmvATdQot6UOGYB0R_Ahyhv8UTfbsCUo9jaHaOc55SlDXYnLJQO5DIjjaxvaxGgkrXSltxh4eCFgpI_hEmMhIQl0wop2RCY5mX4ID0Q1fEBxoUxdavPFYH2POeSaYUeDUl6zThf9s",
+					"width": 4656
+				}
+			],
+			"place_id": "ChIJgfk0NV7GwoAR4ja9LMYRY0s",
+			"plus_code": {
+				"compound_code": "3Q99+F9 Los Angeles, CA, USA",
+				"global_code": "85633Q99+F9"
+			},
+			"rating": 4.6,
+			"reference": "ChIJgfk0NV7GwoAR4ja9LMYRY0s",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"park",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 1894,
+			"vicinity": "1245 North Spring Street, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.047703,
+					"lng": -118.2496065
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.04901043029149,
+						"lng": -118.2483253697085
+					},
+					"southwest": {
+						"lat": 34.04631246970849,
+						"lng": -118.2510233302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+			"name": "The Last Bookstore",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 3265,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/113029379962253818635\">Jason Leung</a>"
+					],
+					"photo_reference": "CkQ0AAAANmkEUrT-BdCQ71GTjKZsLWDVAU4v2FA6z76HUXCclUgFOtuMDmaCU5ycKGOHxRP5-_p3ZvP2Sy5-xAlL2sYwdBIQh6F6wjQ6u1qoK-e9il4wuxoU4JnOw5SMV72eY2JCX_At1WuXLSs",
+					"width": 4898
+				}
+			],
+			"place_id": "ChIJ7YJ_IkrGwoARNak4CDihkYU",
+			"plus_code": {
+				"compound_code": "2QX2+35 Los Angeles, CA, USA",
+				"global_code": "85632QX2+35"
+			},
+			"rating": 4.7,
+			"reference": "ChIJ7YJ_IkrGwoARNak4CDihkYU",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"book_store",
+				"electronics_store",
+				"home_goods_store",
+				"point_of_interest",
+				"store",
+				"establishment"
+			],
+			"user_ratings_total": 9697,
+			"vicinity": "453 South Spring Street, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.1364746,
+					"lng": -118.3555788
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.1375609802915,
+						"lng": -118.3540261197085
+					},
+					"southwest": {
+						"lat": 34.1348630197085,
+						"lng": -118.3567240802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+			"name": "Universal CityWalk Hollywood",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 3024,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/107367323300201386407\">XGP</a>"
+					],
+					"photo_reference": "CkQ0AAAAx3EEpeLS64kWBbrLiq6ahp6Zvw7c2ntdyM1RXT_5DvHm9tpPJM4aaH5A5Bn2Y6X6SJw4C96zR8bUs0k19z8GBRIQTg-Gf_3wd1dmyZEWK6SbohoUICQkscijHzw53QHsGL1qzCL1jY0",
+					"width": 4032
+				}
+			],
+			"place_id": "ChIJdzBcVka-woARXKXAmSS8NW4",
+			"plus_code": {
+				"compound_code": "4JPV+HQ Universal City, CA, USA",
+				"global_code": "85634JPV+HQ"
+			},
+			"rating": 4.6,
+			"reference": "ChIJdzBcVka-woARXKXAmSS8NW4",
+			"scope": "GOOGLE",
+			"types": [
+				"shopping_mall",
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 44927,
+			"vicinity": "100 Universal City Plaza, Universal City"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.09513450000001,
+					"lng": -118.3739278
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.0964074802915,
+						"lng": -118.3725339197085
+					},
+					"southwest": {
+						"lat": 34.0937095197085,
+						"lng": -118.3752318802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "The Comedy Store",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 532,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/111650401186303321603\">Eric Anderson</a>"
+					],
+					"photo_reference": "CkQ0AAAA-8A-od0lgOj0Mek3C3hZtdbQF1GcWIK7wPkdL2YUHVw7EXFcZdr5zta-WlZffI75YV1lBIfTFE8t34ikgNwM0hIQ69H4Eiqft6Lbet3V6VNxbRoUdHfZZMSTY8aDu4Y0cKvFhD-muDs",
+					"width": 800
+				}
+			],
+			"place_id": "ChIJg7DLab6-woARHyVknPRuxJA",
+			"plus_code": {
+				"compound_code": "3JWG+3C Los Angeles, CA, USA",
+				"global_code": "85633JWG+3C"
+			},
+			"price_level": 1,
+			"rating": 4.6,
+			"reference": "ChIJg7DLab6-woARHyVknPRuxJA",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 3140,
+			"vicinity": "8433 Sunset Boulevard, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.1568,
+					"lng": -118.3252223
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.16118245,
+						"lng": -118.3223314
+					},
+					"southwest": {
+						"lat": 34.15212744999999,
+						"lng": -118.3285462
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Walt Disney Studios",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 798,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/106771803443409432787\">The Walt Disney Studios</a>"
+					],
+					"photo_reference": "CkQ0AAAAvv_4XcHonq2oJIpnuaTtL-tH2n3_GuzXZ5qPVTHCaWdHildID3yUgd3qNMWYSMzpuAaVDHIP5_C9azfQiriRwBIQZS90RgHnHDu-jHKdCEeSdRoUlBLM12x794F-kpaObqD231P7M3E",
+					"width": 1200
+				}
+			],
+			"place_id": "ChIJkyPnxsO_woARXQl-tdWAFi8",
+			"plus_code": {
+				"compound_code": "5M4F+PW Burbank, CA, USA",
+				"global_code": "85635M4F+PW"
+			},
+			"rating": 4.6,
+			"reference": "ChIJkyPnxsO_woARXQl-tdWAFi8",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 831,
+			"vicinity": "500 South Buena Vista Street, Burbank"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.0838505,
+					"lng": -118.3442797
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.08519778029149,
+						"lng": -118.3428252697085
+					},
+					"southwest": {
+						"lat": 34.0824998197085,
+						"lng": -118.3455232302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+			"name": "Pink's Hot Dogs",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 683,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/115432941254218393918\">Scott Reilly</a>"
+					],
+					"photo_reference": "CkQ0AAAAwKOsCUg0NjVPdwsF_a8T2NBpgDtA9r4dMDRJfYkwbQR7ya-QHkDlt0rQqrAVgAWpx2E2MPT-_Vv749LUZ5vOpxIQ95lu0Ks-_9wOPMuXhh5WuhoUkUuEaJubGkeJF2yKOGi274GLEAM",
+					"width": 1024
+				}
+			],
+			"place_id": "ChIJVwjfzCq_woAR4FjKokeruig",
+			"plus_code": {
+				"compound_code": "3MM4+G7 Los Angeles, CA, USA",
+				"global_code": "85633MM4+G7"
+			},
+			"price_level": 2,
+			"rating": 4.5,
+			"reference": "ChIJVwjfzCq_woAR4FjKokeruig",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"restaurant",
+				"food",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 8130,
+			"vicinity": "709 North La Brea Avenue, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.05558360000001,
+					"lng": -118.2457138
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.05798524999999,
+						"lng": -118.24359765
+					},
+					"southwest": {
+						"lat": 34.05477025,
+						"lng": -118.24964225
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+			"name": "Grand Park LA",
+			"opening_hours": {
+				"open_now": true
+			},
+			"photos": [
+				{
+					"height": 1366,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/103578514541430890722\">Grand Park LA</a>"
+					],
+					"photo_reference": "CkQ0AAAAcHefAz9jYbu1j42fyHSRmZ_Aot-X_DoEEZqwKpEyrGW8B1uhNJqJXesrW2zy5oiiUPnabSeuwci3vecwGe2apRIQRrJGCqV2IteJZ-c3ZoZo7hoUmE-KUZDDqIdMYmHe-xH_x_vgzno",
+					"width": 2048
+				}
+			],
+			"place_id": "ChIJ_STuCE7GwoAR3vCqfD2J9es",
+			"plus_code": {
+				"compound_code": "3Q43+6P Los Angeles, CA, USA",
+				"global_code": "85633Q43+6P"
+			},
+			"rating": 4.5,
+			"reference": "ChIJ_STuCE7GwoAR3vCqfD2J9es",
+			"scope": "GOOGLE",
+			"types": [
+				"park",
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 6964,
+			"vicinity": "200 North Grand Avenue, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.04962390000001,
+					"lng": -118.2385887
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.0507564802915,
+						"lng": -118.2374958697085
+					},
+					"southwest": {
+						"lat": 34.0480585197085,
+						"lng": -118.2401938302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png",
+			"name": "Japanese American National Museum",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 2988,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/105970540005932124912\">_ Chang_</a>"
+					],
+					"photo_reference": "CkQ0AAAAjPiPF2gfybRYyyW1vi21f2dhgB8Jo0MrEaEM74hq4NLEYMg3BYFGiEiPsnslMt9gBvgE1x-V7iAzp3pXtlaT5hIQwTpzV6iz6Vcpo7I1Z2yzEhoUoWzi60Hi1zjKiQOgXBrINFdtyRU",
+					"width": 5312
+				}
+			],
+			"place_id": "ChIJpQpNmkfGwoARPgqyi4UHWkM",
+			"plus_code": {
+				"compound_code": "2QX6+RH Los Angeles, CA, USA",
+				"global_code": "85632QX6+RH"
+			},
+			"rating": 4.6,
+			"reference": "ChIJpQpNmkfGwoARPgqyi4UHWkM",
+			"scope": "GOOGLE",
+			"types": [
+				"museum",
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 1292,
+			"vicinity": "100 North Central Avenue, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.0833232,
+					"lng": -118.3606212
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.08471223029149,
+						"lng": -118.3592725197085
+					},
+					"southwest": {
+						"lat": 34.08201426970849,
+						"lng": -118.3619704802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+			"name": "Melrose Trading Post",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 744,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/104026813189152453505\">Melrose Trading Post</a>"
+					],
+					"photo_reference": "CkQ0AAAAnkYI0dHMPaGYM2Zp1Gupiu_iKcMFa7CEBwgCv8ci8wUmEYGb_udMJ5BnsD99M7tTKKsfNvarwpSYBBCPMy7w0BIQu0NyvMSEtec71FCRyl69bRoUDLSMKhursCgEhTSQv5fpb7BKH-4",
+					"width": 960
+				}
+			],
+			"place_id": "ChIJ9WZU-sy-woARnhyvpzXXP18",
+			"plus_code": {
+				"compound_code": "3JMQ+8Q Los Angeles, CA, USA",
+				"global_code": "85633JMQ+8Q"
+			},
+			"rating": 4.4,
+			"reference": "ChIJ9WZU-sy-woARnhyvpzXXP18",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 973,
+			"vicinity": "7850 Melrose Avenue, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.05060400000001,
+					"lng": -118.2478573
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.05204278029151,
+						"lng": -118.2465608197085
+					},
+					"southwest": {
+						"lat": 34.04934481970851,
+						"lng": -118.2492587802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Bradbury Building",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 3464,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/101307480778185318511\">שלומי אורון</a>"
+					],
+					"photo_reference": "CkQ0AAAAg4sbpXatAQw8SbfWGSxPELz50tUor0Dr3G-62J3jgL0IGGPjb2boi3UqSFjWwQfHVP8G-llaZED1ode25F2mmBIQdniyGB5cpLTZA5O_oeNzGxoUB3Bn1k4rVV1GqBZ8asLWgBeNxyY",
+					"width": 4618
+				}
+			],
+			"place_id": "ChIJBYuC8kvGwoAROxBTjwqfWpU",
+			"plus_code": {
+				"compound_code": "3Q22+6V Los Angeles, CA, USA",
+				"global_code": "85633Q22+6V"
+			},
+			"rating": 4.5,
+			"reference": "ChIJBYuC8kvGwoAROxBTjwqfWpU",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 1578,
+			"vicinity": "304 South Broadway, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.1017446,
+					"lng": -118.3381545
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.10330553029149,
+						"lng": -118.3367717197085
+					},
+					"southwest": {
+						"lat": 34.1006075697085,
+						"lng": -118.3394696802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png",
+			"name": "Hollywood Wax Museum",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 2698,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/110500933914914270107\">Hollywood Wax Museum</a>"
+					],
+					"photo_reference": "CkQ0AAAA990MhYs1sRWKsLg3s7dS2dd7-aNZApLzyM1zbL6dtS1I_86i3UWN6TwCIgmJ-lBpGsipIJBWel_crjZ7byaaQRIQgHeFka-AuKkSfIenRW6ucBoUN0dSiDH2WEo7WHi_uzTTepURmXg",
+					"width": 4782
+				}
+			],
+			"place_id": "ChIJI56cmyO_woAR5--6TZV6Z3I",
+			"plus_code": {
+				"compound_code": "4M26+MP Los Angeles, CA, USA",
+				"global_code": "85634M26+MP"
+			},
+			"rating": 4.3,
+			"reference": "ChIJI56cmyO_woAR5--6TZV6Z3I",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"museum",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 3286,
+			"vicinity": "6767 Hollywood Boulevard, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.065226,
+					"lng": -118.237499
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.0668753302915,
+						"lng": -118.2360730697085
+					},
+					"southwest": {
+						"lat": 34.0641773697085,
+						"lng": -118.2387710302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Chinatown Central Plaza",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 2688,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/100874385357664146449\">Yan Xing</a>"
+					],
+					"photo_reference": "CkQ0AAAA5F3xS3tcOQKZAaC8kyicJLixyw2M55tT_AExEFP7JJfPOfA8j3JdmE5rw90ky7RfXHrAUoPPSnTywwUGgnurzBIQWnIzMUWuslBQ7_Bm8K3LshoUiCv7smZshO0bXoWT08DycKvVfgM",
+					"width": 4032
+				}
+			],
+			"place_id": "ChIJodIfJFrGwoARLdxWbyjLv8g",
+			"plus_code": {
+				"compound_code": "3Q87+32 Los Angeles, CA, USA",
+				"global_code": "85633Q87+32"
+			},
+			"rating": 4.2,
+			"reference": "ChIJodIfJFrGwoARLdxWbyjLv8g",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 6317,
+			"vicinity": "943 North Broadway, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.0495044,
+					"lng": -118.2782752
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.0508819802915,
+						"lng": -118.2769899197085
+					},
+					"southwest": {
+						"lat": 34.0481840197085,
+						"lng": -118.2796878802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "South Bonnie Brae Tract Historic District",
+			"photos": [
+				{
+					"height": 1536,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/110938592167426747161\">Emmanuel Mayoral</a>"
+					],
+					"photo_reference": "CkQ0AAAA0zK8mftZ2HDzI20PisTctIQe5bQ7BfZzisJUEhsxN3-q1NjvNm3ZqGyvIY4oVmvaMg5LZjjILemXRLqIgDKNDRIQIVdURf6m9u8h-Tx0_P3rAxoUcrO7yHjo9w4nVL4hB0N9vpl8NgI",
+					"width": 2560
+				}
+			],
+			"place_id": "ChIJjVZkL5jHwoARDhhRZjMi9B4",
+			"plus_code": {
+				"compound_code": "2PXC+RM Los Angeles, CA, USA",
+				"global_code": "85632PXC+RM"
+			},
+			"rating": 4.4,
+			"reference": "ChIJjVZkL5jHwoARDhhRZjMi9B4",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 28,
+			"vicinity": "Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.10859,
+					"lng": -118.3372468
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.1099389802915,
+						"lng": -118.3358978197085
+					},
+					"southwest": {
+						"lat": 34.1072410197085,
+						"lng": -118.3385957802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Highland-Camrose Bungalow Village",
+			"photos": [
+				{
+					"height": 3036,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/109483647083036443695\">Neeraj Sharma</a>"
+					],
+					"photo_reference": "CkQ0AAAAL_rVZSeHIlkSwz55H9U5-OcZ7isQuTIQ8GIWIlGgd2o3iVYz4XwMWYkGzi1tge44oKai0b9MTHpdfihLApyuLRIQ5vf1OfpanT30pq4uV8mM0xoU97Yu27hJTSW11K_aNotwhTq0m6A",
+					"width": 4048
+				}
+			],
+			"place_id": "ChIJcxvvMxm_woARPQAXiglwem8",
+			"plus_code": {
+				"compound_code": "4M57+C4 Los Angeles, CA, USA",
+				"global_code": "85634M57+C4"
+			},
+			"rating": 4.9,
+			"reference": "ChIJcxvvMxm_woARPQAXiglwem8",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 7,
+			"vicinity": "Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.1463464,
+					"lng": -118.1592625
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.1476331802915,
+						"lng": -118.1575191197085
+					},
+					"southwest": {
+						"lat": 34.14493521970851,
+						"lng": -118.1602170802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png",
+			"name": "Norton Simon Museum",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 629,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/106485334763847533029\">Norton Simon Museum</a>"
+					],
+					"photo_reference": "CkQ0AAAABvMLTi74CgyhSQwL4tMiG1oSX0qT__E2jh5iv2_UDdCaxY4XVaIb7fRpB2O-jC7QynTy4kJOVu7EyryvzTfrhxIQwe1zsFIeZZvS2pwBkRSuNxoUVC13PJmUn2Os34cRT2Cc7OARKNc",
+					"width": 1000
+				}
+			],
+			"place_id": "ChIJkZW6A57DwoARxn42TuWiIpI",
+			"plus_code": {
+				"compound_code": "4RWR+G7 Pasadena, CA, USA",
+				"global_code": "85634RWR+G7"
+			},
+			"price_level": 1,
+			"rating": 4.8,
+			"reference": "ChIJkZW6A57DwoARxn42TuWiIpI",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"museum",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 2059,
+			"vicinity": "411 West Colorado Boulevard, Pasadena"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.1279987,
+					"lng": -118.3158935
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.12935398029149,
+						"lng": -118.3145493197085
+					},
+					"southwest": {
+						"lat": 34.1266560197085,
+						"lng": -118.3172472802915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+			"name": "Sunset Ranch Hollywood",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 960,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/109167302025792290900\">Sunset Ranch Hollywood</a>"
+					],
+					"photo_reference": "CkQ0AAAAQ_PIfTBFpnn_MbpPEBjsPhQbf0ccLP26STqQwCDaLtTkI0KPq5cDnNf48L_K0WIsB0aVfDzIzVglrsWfm-FrqRIQMBFif3DQ6eTwX5cPe1_IvhoUETi5Pg7PYgqcT6OwrKAKZV4Ymzk",
+					"width": 1280
+				}
+			],
+			"place_id": "ChIJ3QFQRXa_woARkyY6MOdsVRg",
+			"plus_code": {
+				"compound_code": "4MHM+5J Los Angeles, CA, USA",
+				"global_code": "85634MHM+5J"
+			},
+			"rating": 4.5,
+			"reference": "ChIJ3QFQRXa_woARkyY6MOdsVRg",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"travel_agency",
+				"point_of_interest",
+				"establishment"
+			],
+			"user_ratings_total": 405,
+			"vicinity": "3400 North Beachwood Drive, Los Angeles"
+		},
+		{
+			"business_status": "OPERATIONAL",
+			"geometry": {
+				"location": {
+					"lat": 34.1544405,
+					"lng": -118.307865
+				},
+				"viewport": {
+					"northeast": {
+						"lat": 34.1554081302915,
+						"lng": -118.3071485697085
+					},
+					"southwest": {
+						"lat": 34.1527101697085,
+						"lng": -118.3098465302915
+					}
+				}
+			},
+			"icon": "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+			"name": "Travel Town Gift Shop",
+			"opening_hours": {
+				"open_now": false
+			},
+			"photos": [
+				{
+					"height": 3024,
+					"html_attributions": [
+						"<a href=\"https://maps.google.com/maps/contrib/102842844391490827974\">William Murray</a>"
+					],
+					"photo_reference": "CkQ0AAAAGS7-IrQSijiI__CXqrsm9b-rMzNPz0CDCm5-0CL2UfqCyOGCIjzjNGcJHhzi0N5INQRDYaIJsDxZLAaJAIJYtBIQCjXMOnG4ZxaSm2mKr999UBoUbzqENKD4apZaR4sDwVnMi8aF5Mo",
+					"width": 4032
+				}
+			],
+			"place_id": "ChIJC_MzLfO_woAR3y28XIWUHuo",
+			"plus_code": {
+				"compound_code": "5M3R+QV Los Angeles, CA, USA",
+				"global_code": "85635M3R+QV"
+			},
+			"rating": 4.6,
+			"reference": "ChIJC_MzLfO_woAR3y28XIWUHuo",
+			"scope": "GOOGLE",
+			"types": [
+				"tourist_attraction",
+				"museum",
+				"point_of_interest",
+				"store",
+				"establishment"
+			],
+			"user_ratings_total": 385,
+			"vicinity": "Travel Town Museum, 5200 Zoo Drive, Los Angeles"
+		}
+	],
+	"status": "OK"
+}

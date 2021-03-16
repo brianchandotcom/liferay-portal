@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints Utilities
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.util
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.tuning.blueprints.util.attributes,\
+	com.liferay.portal.search.tuning.blueprints.util.importer

@@ -1,0 +1,138 @@
+{
+	"mappings": {
+		"_doc": {
+			"dynamic_templates": [
+				{
+					"template_ar": {
+						"mapping": {
+							"analyzer": "arabic",
+							"store": true,
+							"term_vector": "with_positions_offsets",
+							"type": "search_as_you_type"
+						},
+						"match": "content_ar\\b|content_ar_[A-Z]{2}\\b",
+						"match_mapping_type": "string",
+						"match_pattern": "regex"
+					}
+				},
+				{
+					"template_ja": {
+						"mapping": {
+							"analyzer": "kuromoji",
+							"store": true,
+							"term_vector": "with_positions_offsets",
+							"type": "search_as_you_type"
+						},
+						"match": "content_ja\\b|content_ja_[A-Z]{2}\\b",
+						"match_mapping_type": "string",
+						"match_pattern": "regex"
+					}
+				},
+				{
+					"template_ko": {
+						"mapping": {
+							"analyzer": "cjk",
+							"store": true,
+							"term_vector": "with_positions_offsets",
+							"type": "search_as_you_type"
+						},
+						"match": "content_ko\\b|content_ko_[A-Z]{2}\\b",
+						"match_mapping_type": "string",
+						"match_pattern": "regex"
+					}
+				},
+				{
+					"template_zh": {
+						"mapping": {
+							"analyzer": "smartcn",
+							"store": true,
+							"term_vector": "with_positions_offsets",
+							"type": "search_as_you_type"
+						},
+						"match": "content_zh\\b|content_zh_[A-Z]{2}\\b",
+						"match_mapping_type": "string",
+						"match_pattern": "regex"
+					}
+				}
+			],
+			"properties": {
+				"content": {
+					"analyzer": "liferay_keyword_entry",
+					"copy_to": [
+						"content_raw",
+						"content_snowball"
+					],
+					"store": true,
+					"term_vector": "with_positions_offsets",
+					"type": "search_as_you_type"
+				},
+				"content_raw": {
+					"store": false,
+					"type": "keyword"
+				},
+				"content_snowball": {
+					"analyzer": "snowball",
+					"store": false,
+					"type": "text"
+				},
+				"created": {
+					"format": "yyyyMMddHHmmss",
+					"store": true,
+					"type": "date"
+				},
+				"groupId": {
+					"store": true,
+					"type": "long"
+				},
+				"hitCount": {
+					"store": true,
+					"type": "long"
+				},
+				"lastAccessed": {
+					"format": "yyyyMMddHHmmss",
+					"store": true,
+					"type": "date"
+				},
+				"lastReported": {
+					"store": true,
+					"type": "date"
+				},
+				"modified": {
+					"store": true,
+					"type": "date"
+				},
+				"report": {
+					"store": true,
+					"type": "text"
+				},
+				"reportCount": {
+					"store": true,
+					"type": "long"
+				},
+				"status": {
+					"store": true,
+					"type": "keyword"
+				},
+				"statusDate": {
+					"store": true,
+					"type": "keyword"
+				}
+			}
+		}
+	},
+	"settings": {
+		"analysis": {
+			"analyzer": {
+				"liferay_keyword_entry": {
+					"filter": [
+						"lowercase",
+						"asciifolding"
+					],
+					"tokenizer": "standard"
+				}
+			}
+		},
+		"index.auto_expand_replicas": "0-all",
+		"index.number_of_shards": 1
+	}
+}

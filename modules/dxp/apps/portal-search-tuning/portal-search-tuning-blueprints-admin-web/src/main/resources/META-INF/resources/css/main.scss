@@ -1,0 +1,59 @@
+@import '_variables';
+
+@import '_utils';
+
+@import '_configuration_json_modal';
+@import '_edit_title_modal';
+@import '_field_row_dropdown';
+@import '_searchable_assets_modal';
+
+.codemirror-editor-wrapper {
+	border: 1px solid $mainLighten74;
+	border-radius: 4px;
+}
+
+.portlet-blueprints-admin {
+	@import '_config_element';
+	@import '_page_toolbar';
+
+	.blueprints-search-container {
+		margin-top: 20px;
+
+		.id-text {
+			margin-right: 16px;
+		}
+	}
+
+	.edit-blueprint-root {
+		@import '_builder';
+		@import '_sidebar';
+
+		.bold {
+			font-weight: 700;
+		}
+
+		.icon {
+			background-color: $secondaryHover;
+		}
+
+		.secondary {
+			color: $secondaryL1;
+		}
+
+		.semibold {
+			font-weight: 600;
+		}
+	}
+
+	.edit-element-root {
+		height: calc(100vh - 96px);
+
+		@import '_element_form';
+	}
+
+	.import-form .modal-footer {
+		bottom: 0;
+		position: fixed;
+		width: 100%;
+	}
+}

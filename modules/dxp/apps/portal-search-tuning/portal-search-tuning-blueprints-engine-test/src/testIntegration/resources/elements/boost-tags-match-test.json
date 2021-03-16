@@ -1,0 +1,40 @@
+{
+	"elementTemplateJSON": {
+		"category": "boost",
+		"clauses": [
+			{
+				"context": "query",
+				"occur": "should",
+				"query": {
+					"query": {
+						"term": {
+							"assetTagNames.raw": {
+								"boost": "${config.boost}",
+								"value": "${keywords}"
+							}
+						}
+					}
+				},
+				"type": "wrapper"
+			}
+		],
+		"conditions": [
+		],
+		"description": {
+			"en_US": "Boost contents having an exact keyword match to a tag"
+		},
+		"enabled": true,
+		"icon": "thumbs-up",
+		"title": {
+			"en_US": "Boost Tags Match"
+		}
+	},
+	"uiConfigurationJSON": [
+		{
+			"defaultValue": 40,
+			"key": "boost",
+			"label": "Boost",
+			"type": "slider"
+		}
+	]
+}

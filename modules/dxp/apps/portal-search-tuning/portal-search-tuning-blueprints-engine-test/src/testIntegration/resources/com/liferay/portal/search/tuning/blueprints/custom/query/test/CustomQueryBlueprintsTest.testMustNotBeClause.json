@@ -1,0 +1,46 @@
+{
+	"advanced_configuration": {
+	},
+	"aggregation_configuration": [
+	],
+	"facet_configuration": [
+	],
+	"framework_configuration": {
+		"apply_indexer_clauses": true
+	},
+	"parameter_configuration": {
+	},
+	"query_configuration": [
+		{
+			"category": "custom",
+			"clauses": [
+				{
+					"context": "query",
+					"occur": "must_not",
+					"query": {
+						"query": {
+							"match": {
+								"content_en_US": {
+									"query": "los angeles"
+								}
+							}
+						}
+					},
+					"type": "wrapper"
+				}
+			],
+			"conditions": [
+			],
+			"description": {
+				"en_US": "Paste any Elasticsearch query body in the element as is"
+			},
+			"enabled": true,
+			"icon": "custom-field",
+			"title": {
+				"en_US": "Paste any Elasticsearch query"
+			}
+		}
+	],
+	"sort_configuration": [
+	]
+}

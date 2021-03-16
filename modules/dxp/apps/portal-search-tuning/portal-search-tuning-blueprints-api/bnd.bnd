@@ -1,0 +1,25 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints API
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.tuning.blueprints.attributes,\
+	com.liferay.portal.search.tuning.blueprints.comparator,\
+	com.liferay.portal.search.tuning.blueprints.constants,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys.aggregation,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys.framework,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys.query,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys.sort,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys.suggester,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.values,\
+	com.liferay.portal.search.tuning.blueprints.exception,\
+	com.liferay.portal.search.tuning.blueprints.message,\
+	com.liferay.portal.search.tuning.blueprints.model,\
+	com.liferay.portal.search.tuning.blueprints.service,\
+	com.liferay.portal.search.tuning.blueprints.service.persistence,\
+	com.liferay.portal.search.tuning.blueprints.util,\
+	com.liferay.portal.search.tuning.blueprints.validation
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../portal-search-tuning-blueprints-service/service.xml

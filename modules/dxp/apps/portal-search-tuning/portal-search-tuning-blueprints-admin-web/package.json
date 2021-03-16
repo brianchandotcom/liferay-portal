@@ -1,0 +1,50 @@
+{
+	"dependencies": {
+		"@clayui/alert": "3.5.1",
+		"@clayui/button": "3.6.0",
+		"@clayui/card": "3.25.0",
+		"@clayui/drop-down": "3.25.0",
+		"@clayui/empty-state": "3.2.0",
+		"@clayui/form": "3.14.4",
+		"@clayui/icon": "3.1.0",
+		"@clayui/layout": "3.3.0",
+		"@clayui/link": "3.2.0",
+		"@clayui/loading-indicator": "3.2.0",
+		"@clayui/localized-input": "3.25.0",
+		"@clayui/management-toolbar": "3.3.0",
+		"@clayui/modal": "3.8.5",
+		"@clayui/navigation-bar": "3.3.5",
+		"@clayui/panel": "3.25.0",
+		"@clayui/shared": "3.5.1",
+		"@clayui/sticker": "3.3.0",
+		"@clayui/toolbar": "3.0.6",
+		"@liferay/frontend-js-react-web": "*",
+		"classnames": "2.2.6",
+		"codemirror": "^5.52.0",
+		"frontend-js-web": "*",
+		"fuzzy": "^0.1.3",
+		"moment": "^2.24.0",
+		"prop-types": "15.7.2",
+		"react": "16.12.0",
+		"react-dom": "16.12.0"
+	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"@testing-library/react/cleanup-after-each"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/js/mocks/*"
+		]
+	},
+	"main": "js/index.es.js",
+	"name": "portal-search-tuning-blueprints-admin-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"storybook": "liferay-npm-scripts storybook",
+		"test": "liferay-npm-scripts test"
+	},
+	"version": "1.0.0"
+}

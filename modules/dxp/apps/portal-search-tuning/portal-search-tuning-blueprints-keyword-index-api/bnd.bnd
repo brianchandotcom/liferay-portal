@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints Keyword Index API
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.keyword.index.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.tuning.blueprints.keyword.index.configuration,\
+	com.liferay.portal.search.tuning.blueprints.keyword.index.constants,\
+	com.liferay.portal.search.tuning.blueprints.keyword.index.index,\
+	com.liferay.portal.search.tuning.blueprints.keyword.index.index.name,\
+	com.liferay.portal.search.tuning.blueprints.keyword.index.util

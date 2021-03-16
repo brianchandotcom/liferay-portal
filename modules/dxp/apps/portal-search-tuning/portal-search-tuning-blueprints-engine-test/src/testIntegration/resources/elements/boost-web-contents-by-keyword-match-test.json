@@ -1,0 +1,58 @@
+{
+	"elementTemplateJSON": {
+		"category": "conditional",
+		"clauses": [
+			{
+				"context": "query",
+				"occur": "should",
+				"query": {
+					"query": {
+						"terms": {
+							"articleId_String_sortable": "${config.article_ids}",
+							"boost": "${config.boost}"
+						}
+					}
+				},
+				"type": "wrapper"
+			}
+		],
+		"conditions": [
+			{
+				"configuration": {
+					"evaluation_type": "any_word_in",
+					"parameter_name": "${keywords}",
+					"value": "${config.values}"
+				}
+			}
+		],
+		"description": {
+			"en_US": "Show selected Web Contents higher in the results, if given keywords exist in the searchphrase"
+		},
+		"enabled": true,
+		"icon": "thumbs-up",
+		"title": {
+			"en_US": "Boost Web Contents by Keyword Match"
+		}
+	},
+	"uiConfigurationJSON": [
+		{
+			"helpText": "Add article IDs",
+			"key": "article_ids",
+			"name": "Article IDs",
+			"type": "multiselect"
+		},
+		{
+			"defaultValue": [
+			],
+			"key": "values",
+			"name": "Keywords",
+			"type": "multiselect"
+		},
+		{
+			"defaultValue": 20,
+			"key": "boost",
+			"name": "Boost",
+			"type": "slider"
+		}
+	]
+}

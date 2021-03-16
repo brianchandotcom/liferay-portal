@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.portal.search.tuning.blueprints.model.Blueprint">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="blueprintId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+		<field localized="true" name="title" type="String">
+			<hint name="max-length">500</hint>
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="configuration" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="selectedElements" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="type" type="int" />
+	</model>
+</model-hints>

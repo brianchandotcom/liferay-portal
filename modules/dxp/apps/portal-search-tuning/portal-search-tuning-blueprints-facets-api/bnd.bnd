@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints Facets API
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.facets.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.search.tuning.blueprints.facets.constants

@@ -1,0 +1,54 @@
+{
+	"advanced_configuration": {
+	},
+	"aggregation_configuration": [
+	],
+	"facet_configuration": [
+	],
+	"framework_configuration": {
+		"apply_indexer_clauses": false
+	},
+	"parameter_configuration": {
+	},
+	"query_configuration": [
+		{
+			"category": "match",
+			"clauses": [
+				{
+					"context": "query",
+					"occur": "must",
+					"query": {
+						"query": {
+							"match": {
+								"localized_title${context.language_id}": {
+									"boost": 2,
+									"operator": "or",
+									"query": "${keywords}"
+								}
+							}
+						}
+					},
+					"type": "wrapper"
+				}
+			],
+			"conditions": [
+			],
+			"description": {
+				"en_US": "Search for a keyword in a sort order"
+			},
+			"enabled": true,
+			"icon": "picture",
+			"title": {
+				"en_US": "Sort in order"
+			}
+		}
+	],
+	"sort_configuration": {
+		"default": [
+			{
+				"field": "localized_title_en_US_sortable",
+				"order": "desc"
+			}
+		]
+	}
+}

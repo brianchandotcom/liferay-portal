@@ -57,6 +57,54 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This test ensures that the document type of a published basic document can be changed."
+	@priority = "4"
+	test ChangeDocumentType {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "Basic Document");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeEdit = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Title");
+
+		DMDocument.viewFieldLabels(labels = "Text");
+	}
+
 	@description = "This test covers LPS-88313 and LPS-92145. It ensures that a user can check in a document without changing versions."
 	@priority = "5"
 	test CheckInDocumentAsCurrentVersion {
@@ -446,54 +494,6 @@ definition {
 			dmDocumentFileName = "Document_1_Edit.txt",
 			dmDocumentTitleEdit = "DM Document Title Edit",
 			dmDocumentVersionNumber = "1.1");
-	}
-
-	@description = "This test ensures that the document type of a published basic document can be changed."
-	@priority = "4"
-	test EditDocumentTypeToOther {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "Basic Document");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeEdit = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
-
-		DMDocument.viewFieldLabels(labels = "Text");
 	}
 
 	@priority = "5"

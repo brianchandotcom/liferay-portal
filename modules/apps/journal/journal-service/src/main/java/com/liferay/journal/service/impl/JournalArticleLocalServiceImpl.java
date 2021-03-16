@@ -1045,18 +1045,7 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setUrlTitle(
 			getUniqueUrlTitle(
 				id, groupId, newArticleId, oldArticle.getTitleCurrentValue()));
-
-		try {
-			copyArticleImages(oldArticle, newArticle);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			newArticle.setContent(oldArticle.getContent());
-		}
-
+		newArticle.setContent(copyArticleImages(oldArticle, newArticle));
 		newArticle.setDDMStructureKey(oldArticle.getDDMStructureKey());
 		newArticle.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
 		newArticle.setDefaultLanguageId(oldArticle.getDefaultLanguageId());
@@ -7187,59 +7176,68 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	protected void copyArticleImages(
-			JournalArticle oldArticle, JournalArticle newArticle)
-		throws Exception {
+	protected String copyArticleImages(
+		JournalArticle oldArticle, JournalArticle newArticle) {
 
-		Folder folder = newArticle.addImagesFolder();
+		try {
+			Folder folder = newArticle.addImagesFolder();
 
-		for (FileEntry fileEntry : oldArticle.getImagesFileEntries()) {
-			_portletFileRepository.addPortletFileEntry(
-				oldArticle.getGroupId(), newArticle.getUserId(),
-				JournalArticle.class.getName(), newArticle.getResourcePrimKey(),
-				JournalConstants.SERVICE_NAME, folder.getFolderId(),
-				fileEntry.getContentStream(), fileEntry.getFileName(),
-				fileEntry.getMimeType(), false);
+			for (FileEntry fileEntry : oldArticle.getImagesFileEntries()) {
+				_portletFileRepository.addPortletFileEntry(
+					oldArticle.getGroupId(), newArticle.getUserId(),
+					JournalArticle.class.getName(),
+					newArticle.getResourcePrimKey(),
+					JournalConstants.SERVICE_NAME, folder.getFolderId(),
+					fileEntry.getContentStream(), fileEntry.getFileName(),
+					fileEntry.getMimeType(), false);
+			}
+
+			Document contentDocument = oldArticle.getDocument();
+
+			contentDocument = contentDocument.clone();
+
+			XPath xPathSelector = SAXReaderUtil.createXPath(
+				"//dynamic-element[@type='image']");
+
+			List<Node> imageNodes = xPathSelector.selectNodes(contentDocument);
+
+			for (Node imageNode : imageNodes) {
+				Element imageEl = (Element)imageNode;
+
+				List<Element> dynamicContentEls = imageEl.elements(
+					"dynamic-content");
+
+				for (Element dynamicContentEl : dynamicContentEls) {
+					String fileName = dynamicContentEl.attributeValue("name");
+
+					FileEntry fileEntry =
+						_portletFileRepository.getPortletFileEntry(
+							newArticle.getGroupId(), folder.getFolderId(),
+							fileName);
+
+					String previewURL = _dlURLHelper.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), null,
+						StringPool.BLANK, false, true);
+
+					dynamicContentEl.addAttribute(
+						"resourcePrimKey",
+						String.valueOf(newArticle.getResourcePrimKey()));
+
+					dynamicContentEl.clearContent();
+
+					dynamicContentEl.addCDATA(previewURL);
+				}
+			}
+
+			return contentDocument.formattedString();
 		}
-
-		Document contentDocument = oldArticle.getDocument();
-
-		contentDocument = contentDocument.clone();
-
-		XPath xPathSelector = SAXReaderUtil.createXPath(
-			"//dynamic-element[@type='image']");
-
-		List<Node> imageNodes = xPathSelector.selectNodes(contentDocument);
-
-		for (Node imageNode : imageNodes) {
-			Element imageEl = (Element)imageNode;
-
-			List<Element> dynamicContentEls = imageEl.elements(
-				"dynamic-content");
-
-			for (Element dynamicContentEl : dynamicContentEls) {
-				String fileName = dynamicContentEl.attributeValue("name");
-
-				FileEntry fileEntry =
-					_portletFileRepository.getPortletFileEntry(
-						newArticle.getGroupId(), folder.getFolderId(),
-						fileName);
-
-				String previewURL = _dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null,
-					StringPool.BLANK, false, true);
-
-				dynamicContentEl.addAttribute(
-					"resourcePrimKey",
-					String.valueOf(newArticle.getResourcePrimKey()));
-
-				dynamicContentEl.clearContent();
-
-				dynamicContentEl.addCDATA(previewURL);
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
 			}
 		}
 
-		newArticle.setContent(contentDocument.formattedString());
+		return oldArticle.getContent();
 	}
 
 	protected Map<String, LocalizedValue> createFieldsValuesMap(

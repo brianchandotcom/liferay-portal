@@ -741,13 +741,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return true;
 	}
 
-	@Override
-	public void setContent(String content) {
-		super.setContent(content);
-
-		_document = null;
-	}
-
 	/**
 	 * @deprecated As of Judson (7.1.x)
 	 */

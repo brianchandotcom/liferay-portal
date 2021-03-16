@@ -34,7 +34,6 @@
 		<column accessor="true" name="articleId" type="String" />
 		<column name="version" type="double" />
 		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
-		<column name="content" type="String" uad-nonanonymizable="true" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="DDMTemplateKey" type="String" />
 		<column name="defaultLanguageId" type="String" />

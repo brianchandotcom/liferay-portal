@@ -123,7 +123,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		_dlFileEntryTypeLocalService.addFileEntryType(
 			defaultUserId, _company.getGroupId(), ddmStructureId,
 			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY, nameMap, descriptionMap,
-			serviceContext);
+			true, serviceContext);
 	}
 
 	private Map<Locale, String> _updateNameMap(Map<Locale, String> nameMap) {

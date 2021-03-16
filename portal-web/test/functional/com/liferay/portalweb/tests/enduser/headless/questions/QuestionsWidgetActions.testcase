@@ -1111,6 +1111,41 @@ definition {
 			locator1 = "Questions#QUESTIONS_TITLE");
 	}
 
+	@description = "Validate if the user can unsubscribe a question from the details page, it also covers LPS-125842."
+	@priority = "3"
+	test UnsubscribeFromQuestionDetails {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Add Question Body For Test",
+			titleField = "Questions Title");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Questions Title");
+
+		Click(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Questions Title");
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
+
+		AssertElementPresent(locator1 = "Questions#QUESTIONS_SUBSCRIBE");
+	}
+
 	@description = "Validate if the My Activity tab appears"
 	@priority = "4"
 	test ValidateIfTheMyActivityAppears {

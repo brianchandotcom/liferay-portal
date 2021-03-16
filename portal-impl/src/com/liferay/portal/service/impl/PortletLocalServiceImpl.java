@@ -274,15 +274,13 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					"removePortlets");
 
 				if (removePortlets == null) {
-					removePortlets = new String[0];
-				}
-
-				if (!ArrayUtil.contains(removePortlets, portletId)) {
-					removePortlets = ArrayUtil.append(
-						removePortlets, portletId);
-
 					serviceContext.setAttribute(
-						"removePortlets", removePortlets);
+						"removePortlets", new String[] {portletId});
+				}
+				else if (!ArrayUtil.contains(removePortlets, portletId)) {
+					serviceContext.setAttribute(
+						"removePortlets",
+						ArrayUtil.append(removePortlets, portletId));
 				}
 			}
 			else {

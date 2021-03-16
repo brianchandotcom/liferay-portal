@@ -43,12 +43,15 @@ import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.portlet.PortletURL;
 
@@ -131,6 +134,69 @@ public class TranslateDisplayContext {
 
 	public List<InfoFieldSetEntry> getInfoFieldSetEntries() {
 		return _infoForm.getInfoFieldSetEntries();
+	}
+
+	public HashMap<String, Object> getInfoFieldSetEntriesData() {
+		List<HashMap<String, Object>> infoFieldSetEntries = new ArrayList<>();
+
+		for (InfoFieldSetEntry infoFieldSetEntry : getInfoFieldSetEntries()) {
+			List<InfoField> infoFields = getInfoFields(infoFieldSetEntry);
+
+			if (ListUtil.isEmpty(infoFields)) {
+				continue;
+			}
+
+			infoFieldSetEntries.add(
+				HashMapBuilder.<String, Object>put(
+					"fields",
+					infoFields.stream(
+					).map(
+						infoField -> HashMapBuilder.<String, Object>put(
+							"html",
+							getBooleanValue(infoField, TextInfoFieldType.HTML)
+						).put(
+							"id", "infoField--" + infoField.getName() + "--"
+						).put(
+							"multiline",
+							getBooleanValue(
+								infoField, TextInfoFieldType.MULTILINE)
+						).put(
+							"label",
+							infoField.getLabel(_themeDisplay.getLocale())
+						).put(
+							"sourceContent",
+							getSourceStringValue(infoField, getSourceLocale())
+						).put(
+							"sourceContentDir",
+							LanguageUtil.get(getSourceLocale(), "lang.dir")
+						).put(
+							"targetContent",
+							getTargetStringValue(infoField, getTargetLocale())
+						).put(
+							"targetContentDir",
+							LanguageUtil.get(getTargetLocale(), "lang.dir")
+						).put(
+							"targetLanguageId", getTargetLanguageId()
+						).build()
+					).collect(
+						Collectors.toList()
+					)
+				).put(
+					"label",
+					getInfoFieldSetLabel(
+						infoFieldSetEntry, _themeDisplay.getLocale())
+				).build());
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"infoFieldSetEntries", infoFieldSetEntries
+		).put(
+			"sourceLanguageIdTitle", getLanguageIdTitle(getSourceLanguageId())
+		).put(
+			"targetLanguageIdTitle", getLanguageIdTitle(getTargetLanguageId())
+		).put(
+			"translationPermission", hasTranslationPermission()
+		).build();
 	}
 
 	public String getInfoFieldSetLabel(

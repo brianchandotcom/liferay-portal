@@ -211,6 +211,13 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 	</aui:form>
 </div>
 
+<div>
+	<react:component
+		module="js/translate/Translate"
+		props="<%= translateDisplayContext.getInfoFieldSetEntriesData() %>"
+	/>
+</div>
+
 <script>
 	var saveDraftBtn = document.getElementById('<portlet:namespace />saveDraftBtn');
 

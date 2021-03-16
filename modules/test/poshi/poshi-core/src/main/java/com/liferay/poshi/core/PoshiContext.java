@@ -1648,7 +1648,7 @@ public class PoshiContext {
 
 					throw new RuntimeException(
 						StringUtil.combine(
-							"WARNING: Duplicate file name '", fileName,
+							"Duplicate file name '", fileName,
 							"' found within the namespace '", _namespace,
 							"':\n", filePath, "\n", duplicateFilePath, "\n"));
 				}

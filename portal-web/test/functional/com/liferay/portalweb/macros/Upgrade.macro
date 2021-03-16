@@ -3056,10 +3056,6 @@ definition {
 			fieldName = "errorTemplateVM",
 			fieldValue = "errortest.vm");
 
-		SystemSettings.viewTextareaValue(
-			fieldName = "errorTemplateXSL",
-			fieldValue = "errortest.xsl");
-
 		FormFields.viewTextValue(
 			fieldName = "checkInterval",
 			fieldValue = "5");

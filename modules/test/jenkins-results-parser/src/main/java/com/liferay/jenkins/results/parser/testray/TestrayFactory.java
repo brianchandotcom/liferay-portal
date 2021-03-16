@@ -117,9 +117,27 @@ public class TestrayFactory {
 			testrayBuild, topLevelBuild, axisTestClassGroup);
 	}
 
+	public static TestrayServer newTestrayServer(
+		String testrayServerURLString) {
+
+		TestrayServer testrayServer = _testrayServers.get(
+			testrayServerURLString);
+
+		if (testrayServer != null) {
+			return testrayServer;
+		}
+
+		_testrayServers.put(
+			testrayServerURLString, new TestrayServer(testrayServerURLString));
+
+		return testrayServer;
+	}
+
 	private static final Map<Build, TestrayAttachmentRecorder>
 		_testrayAttachmentRecorders = new HashMap<>();
 	private static final Map<String, TestrayAttachmentUploader>
 		_testrayAttachmentUploaders = new HashMap<>();
+	private static final Map<String, TestrayServer> _testrayServers =
+		new HashMap<>();
 
 }

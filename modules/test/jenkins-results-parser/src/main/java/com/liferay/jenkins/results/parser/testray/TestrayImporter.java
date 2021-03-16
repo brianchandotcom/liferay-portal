@@ -795,7 +795,8 @@ public class TestrayImporter {
 			if ((testrayServerURL != null) &&
 				testrayServerURL.matches("https?://.*")) {
 
-				testrayServer = new TestrayServer(testrayServerURL);
+				testrayServer = TestrayFactory.newTestrayServer(
+					testrayServerURL);
 			}
 
 			testrayServerURL = _getBuildParameter("TESTRAY_SERVER_URL");
@@ -803,7 +804,8 @@ public class TestrayImporter {
 			if ((testrayServer == null) && (testrayServerURL != null) &&
 				testrayServerURL.matches("https?://.*")) {
 
-				testrayServer = new TestrayServer(testrayServerURL);
+				testrayServer = TestrayFactory.newTestrayServer(
+					testrayServerURL);
 			}
 
 			Job job = getJob();
@@ -820,7 +822,8 @@ public class TestrayImporter {
 				if ((testrayServerURL != null) &&
 					testrayServerURL.matches("https?://.*")) {
 
-					testrayServer = new TestrayServer(testrayServerURL);
+					testrayServer = TestrayFactory.newTestrayServer(
+						testrayServerURL);
 
 					break;
 				}

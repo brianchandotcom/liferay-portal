@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
 import com.liferay.jenkins.results.parser.testray.TestrayCaseResult;
+import com.liferay.jenkins.results.parser.testray.TestrayFactory;
 import com.liferay.jenkins.results.parser.testray.TestrayProject;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
 import com.liferay.jenkins.results.parser.testray.TestrayServer;
@@ -81,7 +82,8 @@ public class TestHistoryMap
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		TestrayServer testrayServer = new TestrayServer(testrayServerName);
+		TestrayServer testrayServer = TestrayFactory.newTestrayServer(
+			testrayServerName);
 
 		TestrayProject testrayProject = testrayServer.getTestrayProjectByName(
 			projectName);

@@ -15,8 +15,8 @@
 package com.liferay.portal.security.xml;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -33,6 +33,7 @@ import javax.xml.stream.XMLInputFactory;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -47,6 +48,11 @@ import org.xml.sax.helpers.DefaultHandler;
 @NewEnv(type = NewEnv.Type.JVM)
 @NewEnv.JVMArgsLine("-Dattached=true -Xmx7m")
 public class SecureXMLFactoryProviderImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -240,9 +246,6 @@ public class SecureXMLFactoryProviderImplTest {
 			SAXParseException.class,
 			"Vulnerable to Parameter Entities XXE attack using PUBLIC entity.");
 	}
-
-	@Rule
-	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	protected static String readDependency(String name) throws IOException {
 		return StringUtil.read(

@@ -17,8 +17,8 @@ package com.liferay.portal.bootstrap;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ServiceLoader;
 
@@ -47,6 +47,7 @@ import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -62,6 +63,11 @@ import org.osgi.framework.wiring.FrameworkWiring;
  * @author Matthew Tambara
  */
 public class FrameworkRestartTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	public static void doTestFrameworkRestart() throws Exception {
 		URL url = FrameworkRestartTest.class.getResource("security.policy");
@@ -191,9 +197,6 @@ public class FrameworkRestartTest {
 		ReflectionTestUtil.invoke(
 			clazz, "doTestFrameworkRestart", new Class<?>[0]);
 	}
-
-	@Rule
-	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	private static InputStream _createJAR(
 			String symbolicName, String version, String exportPackage,

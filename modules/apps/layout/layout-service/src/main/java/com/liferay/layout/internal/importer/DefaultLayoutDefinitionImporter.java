@@ -14,14 +14,12 @@
 
 package com.liferay.layout.internal.importer;
 
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.layout.internal.service.DefaultLayoutLayoutSetPrototypeLocalServiceWrapper;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -69,20 +67,19 @@ public class DefaultLayoutDefinitionImporter {
 				releaseInfo = ReleaseInfo.getReleaseInfo();
 			}
 
+			releaseInfo = StringUtil.replace(
+				releaseInfo, CharPool.OPEN_PARENTHESIS, "<br>(");
+
 			String layoutDefinitionJSON = StringUtil.replace(
 				_DEFAULT_LAYOUT_DEFINITION, "${", "}",
 				HashMapBuilder.put(
-					"RELEASE_INFO",
-					StringBundler.concat(
-						"Welcome to ",
-						StringUtil.replace(
-							releaseInfo, CharPool.OPEN_PARENTHESIS, "<br>("),
-						".")
+					"RELEASE_INFO", releaseInfo + "."
 				).put(
-					"WELCOME_IMAGE_URL",
-					_getWelcomeImageURL(
-						layout.getGroupId(), layout.getUserId(),
-						layout.getPlid(), serviceContext)
+					"TREE_IMAGE_ID",
+					String.valueOf(
+						_getTreeImageId(
+							layout.getGroupId(), layout.getUserId(),
+							layout.getPlid(), serviceContext))
 				).build());
 
 			_layoutPageTemplatesImporter.importPageElement(
@@ -94,7 +91,7 @@ public class DefaultLayoutDefinitionImporter {
 		}
 	}
 
-	private String _getWelcomeImageURL(
+	private long _getTreeImageId(
 			long groupId, long userId, long plid, ServiceContext serviceContext)
 		throws Exception {
 
@@ -110,29 +107,28 @@ public class DefaultLayoutDefinitionImporter {
 		}
 
 		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
-			groupId, repository.getDlFolderId(), _FILE_NAME_WELCOME_IMAGE);
+			groupId, repository.getDlFolderId(), _FILE_NAME_TREE_IMAGE);
 
 		if (fileEntry == null) {
 			byte[] bytes = _file.getBytes(
 				DefaultLayoutLayoutSetPrototypeLocalServiceWrapper.class,
-				_FILE_NAME_WELCOME_IMAGE);
+				_FILE_NAME_TREE_IMAGE);
 
 			fileEntry = _portletFileRepository.addPortletFileEntry(
 				groupId, userId, Layout.class.getName(), plid,
 				Layout.class.getName(), repository.getDlFolderId(), bytes,
-				_FILE_NAME_WELCOME_IMAGE,
-				MimeTypesUtil.getContentType(_FILE_NAME_WELCOME_IMAGE), false);
+				_FILE_NAME_TREE_IMAGE,
+				MimeTypesUtil.getContentType(_FILE_NAME_TREE_IMAGE), false);
 		}
 
-		return DLUtil.getDownloadURL(
-			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
+		return fileEntry.getFileEntryId();
 	}
 
 	private static final String _DEFAULT_LAYOUT_DEFINITION = StringUtil.read(
 		DefaultLayoutLayoutSetPrototypeLocalServiceWrapper.class,
 		"default-layout-definition.json");
 
-	private static final String _FILE_NAME_WELCOME_IMAGE = "welcome_bg.jpg";
+	private static final String _FILE_NAME_TREE_IMAGE = "tree.png";
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
 		StringUtil.equalsIgnoreCase(

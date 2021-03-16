@@ -21,16 +21,17 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.Locale;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -49,10 +50,10 @@ import org.springframework.mock.web.MockHttpServletRequest;
 @SuppressStaticInitializationFor("com.liferay.portal.kernel.search.BaseIndexer")
 public class FolderTitleLookupTest {
 
-	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	@Before
+	public void setUp() {
+		setUpPropsUtil();
+	}
 
 	@Test
 	public void testGetFolderTitle() throws SearchException {
@@ -143,6 +144,10 @@ public class FolderTitleLookupTest {
 		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return request;
+	}
+
+	protected void setUpPropsUtil() {
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 }

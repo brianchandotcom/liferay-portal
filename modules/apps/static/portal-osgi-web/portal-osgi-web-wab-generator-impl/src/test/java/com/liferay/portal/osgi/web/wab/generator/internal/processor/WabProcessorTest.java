@@ -27,18 +27,15 @@ import aQute.lib.filter.Filter;
 
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
-import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
-import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.io.File;
@@ -64,6 +61,7 @@ import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -71,14 +69,13 @@ import org.junit.Test;
  */
 public class WabProcessorTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@BeforeClass
 	public static void setUpClass() {
-		PropsUtil.setProps(new PropsImpl());
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
 		HttpUtil httpUtil = new HttpUtil();
 
 		httpUtil.setHttp(new HttpImpl());

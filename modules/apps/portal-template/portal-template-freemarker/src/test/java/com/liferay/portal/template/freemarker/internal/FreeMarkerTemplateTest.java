@@ -22,11 +22,10 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
-import com.liferay.portal.util.PropsImpl;
 
 import freemarker.cache.TemplateCache;
 
@@ -55,6 +54,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -62,10 +62,13 @@ import org.junit.Test;
  */
 public class FreeMarkerTemplateTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		PropsUtil.setProps(new PropsImpl());
-
 		_templateResourceCache = new FreeMarkerTemplateResourceCache() {
 
 			@Override

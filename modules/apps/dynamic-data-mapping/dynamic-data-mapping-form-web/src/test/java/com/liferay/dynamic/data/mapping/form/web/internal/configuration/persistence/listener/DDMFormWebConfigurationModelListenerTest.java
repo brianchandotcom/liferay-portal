@@ -15,15 +15,15 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.configuration.persistence.listener;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.util.PropsImpl;
 
 import java.util.Dictionary;
 import java.util.Locale;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,10 +40,14 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class DDMFormWebConfigurationModelListenerTest extends PowerMockito {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@Before
 	public void setUp() {
 		_setUpDDMFormWebConfigurationModelListener();
-		_setUpPropsUtil();
 		_setUpResourceBundleUtil();
 	}
 
@@ -61,10 +65,6 @@ public class DDMFormWebConfigurationModelListenerTest extends PowerMockito {
 	private void _setUpDDMFormWebConfigurationModelListener() {
 		_ddmFormWebConfigurationModelListener =
 			new DDMFormWebConfigurationModelListener();
-	}
-
-	private void _setUpPropsUtil() {
-		PropsUtil.setProps(new PropsImpl());
 	}
 
 	private void _setUpResourceBundleUtil() {

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.synonym;
 
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
@@ -32,7 +32,6 @@ import com.liferay.portal.search.engine.adapter.index.CreateIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
-import com.liferay.portal.util.PropsImpl;
 
 import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 
@@ -40,6 +39,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -47,10 +47,13 @@ import org.junit.Test;
  */
 public class SynonymFiltersTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		PropsUtil.setProps(new PropsImpl());
-
 		_elasticsearchFixture = new ElasticsearchFixture(
 			ElasticsearchSearchEngineAdapterIndexRequestTest.class.
 				getSimpleName());

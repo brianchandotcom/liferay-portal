@@ -15,10 +15,9 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.display.context;
 
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -37,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -50,6 +50,11 @@ import org.mockito.MockitoAnnotations;
  */
 @Ignore
 public class SynonymsDisplayContextTest {
+
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
 
 	public void mockSynonymSets(String... synonymSets) {
 		Mockito.when(
@@ -87,8 +92,6 @@ public class SynonymsDisplayContextTest {
 		).thenReturn(
 			_renderURL
 		);
-
-		PropsUtil.setProps(_props);
 	}
 
 	@Test
@@ -140,9 +143,6 @@ public class SynonymsDisplayContextTest {
 
 	@Mock
 	private Portal _portal;
-
-	@Mock
-	private Props _props;
 
 	@Mock
 	private Queries _queries;

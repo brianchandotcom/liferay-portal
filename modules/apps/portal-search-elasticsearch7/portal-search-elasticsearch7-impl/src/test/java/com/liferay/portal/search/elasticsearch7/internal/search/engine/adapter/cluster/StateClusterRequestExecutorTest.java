@@ -14,15 +14,15 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterResponse;
-import com.liferay.portal.util.PropsImpl;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -30,10 +30,13 @@ import org.junit.Test;
  */
 public class StateClusterRequestExecutorTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@Before
 	public void setUp() throws Exception {
-		PropsUtil.setProps(new PropsImpl());
-
 		_elasticsearchFixture = new ElasticsearchFixture(
 			StateClusterRequestExecutorTest.class.getSimpleName());
 

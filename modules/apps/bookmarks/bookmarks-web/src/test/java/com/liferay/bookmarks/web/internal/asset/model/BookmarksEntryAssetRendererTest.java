@@ -19,11 +19,10 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -33,10 +32,10 @@ import org.mockito.Mockito;
  */
 public class BookmarksEntryAssetRendererTest {
 
-	@Before
-	public void setUp() {
-		PropsUtil.setProps(Mockito.mock(Props.class));
-	}
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
 
 	@Test
 	public void testHasViewPermissionReturnsFalseOnFailure() throws Exception {

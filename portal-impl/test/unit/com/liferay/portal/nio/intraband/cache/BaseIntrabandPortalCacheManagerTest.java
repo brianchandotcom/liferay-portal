@@ -19,14 +19,14 @@ import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.proxy.ExceptionHandler;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil;
 import com.liferay.portal.nio.intraband.proxy.WarnLogExceptionHandler;
-import com.liferay.portal.util.FileImpl;
 
 import java.lang.reflect.Constructor;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -34,12 +34,13 @@ import org.junit.Test;
  */
 public class BaseIntrabandPortalCacheManagerTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@Test
 	public void testStubGeneration() throws Exception {
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
 		Class<?> stubClass = IntrabandProxyUtil.getStubClass(
 			BaseIntrabandPortalCacheManager.class,
 			PortalCacheManager.class.getName());

@@ -15,14 +15,13 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.CustomJspRegistryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.util.CustomJspRegistryImpl;
-import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
@@ -40,12 +39,18 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Leon Chi
  */
 public class CustomJspBagRegistryUtilTest {
+
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -57,10 +62,6 @@ public class CustomJspBagRegistryUtilTest {
 			new CustomJspRegistryUtil();
 
 		customJspRegistryUtil.setCustomJspRegistry(new CustomJspRegistryImpl());
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
 
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 	}

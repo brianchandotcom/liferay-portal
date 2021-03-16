@@ -14,6 +14,7 @@
 
 package com.liferay.portal.zip;
 
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 
 import java.io.File;
@@ -35,6 +35,7 @@ import java.nio.file.Paths;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -42,12 +43,13 @@ import org.junit.Test;
  */
 public class ZipWriterImplTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
 		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
 
 		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());

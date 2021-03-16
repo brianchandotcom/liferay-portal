@@ -15,10 +15,9 @@
 package com.liferay.portal.search.elasticsearch7.internal;
 
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
-import com.liferay.portal.util.PropsImpl;
 
 import java.io.IOException;
 
@@ -36,6 +35,7 @@ import org.elasticsearch.snapshots.SnapshotInfo;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -43,10 +43,13 @@ import org.junit.Test;
  */
 public class ElasticsearchSearchEngineBackupTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		PropsUtil.setProps(new PropsImpl());
-
 		ElasticsearchConnectionFixture elasticsearchConnectionFixture =
 			ElasticsearchConnectionFixture.builder(
 			).clusterName(

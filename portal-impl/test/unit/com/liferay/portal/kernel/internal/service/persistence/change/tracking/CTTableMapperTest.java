@@ -39,12 +39,12 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.ToolDependencies;
-import com.liferay.portal.util.PropsImpl;
 
 import java.io.Serializable;
 
@@ -76,8 +76,10 @@ import org.junit.Test;
 public class CTTableMapperTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE,
+			InitializeKernelUtilClassTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -90,8 +92,6 @@ public class CTTableMapperTest {
 
 		mappingSqlQueryFactoryUtil.setMappingSqlQueryFactory(
 			new MockMappingSqlQueryFactory());
-
-		PropsUtil.setProps(new PropsImpl());
 
 		SqlUpdateFactoryUtil sqlUpdateFactoryUtil = new SqlUpdateFactoryUtil();
 

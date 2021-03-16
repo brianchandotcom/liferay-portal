@@ -39,12 +39,11 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Locale;
@@ -57,6 +56,7 @@ import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -80,6 +80,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
 @RunWith(PowerMockRunner.class)
 public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
+
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
 
 	public HttpServletRequest createHttpServletRequest() {
 		MockHttpServletRequest httpServletRequest =
@@ -611,10 +616,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
-
-	protected void setUpParamUtil() {
-		PropsUtil.setProps(Mockito.mock(Props.class));
 	}
 
 	protected void setUpPortal() throws Exception {

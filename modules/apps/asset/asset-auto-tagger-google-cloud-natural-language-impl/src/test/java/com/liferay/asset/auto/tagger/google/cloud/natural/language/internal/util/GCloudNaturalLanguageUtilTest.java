@@ -20,10 +20,10 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.util.FileImpl;
 
 import java.io.ByteArrayInputStream;
 
@@ -31,6 +31,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.mockito.Mock;
@@ -42,13 +43,14 @@ import org.mockito.MockitoAnnotations;
  */
 public class GCloudNaturalLanguageUtilTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 

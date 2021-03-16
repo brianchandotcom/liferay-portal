@@ -27,11 +27,10 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PropsImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,6 +42,7 @@ import javax.portlet.ResourceRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -57,13 +57,17 @@ import org.powermock.api.mockito.PowerMockito;
 @RunWith(MockitoJUnitRunner.class)
 public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormContextToDDMFormValues();
 
 		setUpAddFormInstanceRecordMVCResourceCommand();
 		setUpDDMFormInstance();
-		setUpPropsUtil();
 		setUpLanguageUtil();
 	}
 
@@ -182,10 +186,6 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
-	}
-
-	protected void setUpPropsUtil() {
-		PropsUtil.setProps(new PropsImpl());
 	}
 
 	private AddFormInstanceRecordMVCResourceCommand

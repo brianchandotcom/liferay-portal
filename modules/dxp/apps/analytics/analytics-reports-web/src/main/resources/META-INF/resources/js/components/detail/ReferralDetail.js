@@ -15,8 +15,8 @@ import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
 
 import {
+	ChartStateContext,
 	useChangeTimeSpanKey,
-	useChartState,
 	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
 	useNextTimeSpan,
@@ -61,7 +61,7 @@ export default function ReferralDetail({
 		return dateFormatters.formatChartTitle([firstDate, lastDate]);
 	}, [dateFormatters, firstDate, lastDate]);
 
-	const chartState = useChartState();
+	const {timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
 
@@ -83,16 +83,14 @@ export default function ReferralDetail({
 				<>
 					<div className="c-mb-3 c-mt-2">
 						<TimeSpanSelector
-							disabledNextTimeSpan={
-								chartState.timeSpanOffset === 0
-							}
+							disabledNextTimeSpan={timeSpanOffset === 0}
 							disabledPreviousPeriodButton={
 								isPreviousPeriodButtonDisabled
 							}
 							onNextTimeSpanClick={nextTimeSpan}
 							onPreviousTimeSpanClick={previousTimeSpan}
 							onTimeSpanChange={handleTimeSpanChange}
-							timeSpanKey={chartState.timeSpanKey}
+							timeSpanKey={timeSpanKey}
 							timeSpanOptions={timeSpanOptions}
 						/>
 					</div>

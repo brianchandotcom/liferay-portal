@@ -76,12 +76,6 @@ export const useChangeTimeSpanKey = () => {
 	return (payload) => dispatch({payload, type: CHANGE_TIME_SPAN_KEY});
 };
 
-export const useChartState = () => {
-	const [state] = useContext(ChartStateContext);
-
-	return state;
-};
-
 export function useDateTitle() {
 	const [state] = useContext(ChartStateContext);
 

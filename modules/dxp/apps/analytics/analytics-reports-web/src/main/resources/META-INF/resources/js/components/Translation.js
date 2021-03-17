@@ -18,7 +18,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
 
-import {useChartState} from '../context/ChartStateContext';
+import {ChartStateContext} from '../context/ChartStateContext';
 import {StoreStateContext} from '../context/StoreContext';
 
 export default function Translation({onSelectedLanguageClick, viewURLs}) {
@@ -33,7 +33,7 @@ export default function Translation({onSelectedLanguageClick, viewURLs}) {
 		);
 	}, [defaultLanguage, viewURLs]);
 
-	const chartState = useChartState();
+	const {timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
 
 	return (
 		<ClayLayout.ContentRow>
@@ -79,8 +79,8 @@ export default function Translation({onSelectedLanguageClick, viewURLs}) {
 								onClick={() => {
 									onSelectedLanguageClick(
 										language.viewURL,
-										chartState.timeSpanKey,
-										chartState.timeSpanOffset
+										timeSpanKey,
+										timeSpanOffset
 									);
 								}}
 								symbolLeft={language.languageId.toLowerCase()}

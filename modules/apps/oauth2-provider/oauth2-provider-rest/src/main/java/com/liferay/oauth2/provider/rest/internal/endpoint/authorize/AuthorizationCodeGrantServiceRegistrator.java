@@ -114,8 +114,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 				return serverAuthorizationCodeGrant;
 			}
 
-			liferayOAuthDataProvider.doRevokeAuthorization(
-				oAuth2Authorization);
+			liferayOAuthDataProvider.doRevokeAuthorization(oAuth2Authorization);
 
 			Cookie cookie = _getCookie();
 
@@ -129,12 +128,10 @@ public class AuthorizationCodeGrantServiceRegistrator {
 				serverAuthorizationCodeGrant.getExtraProperties();
 
 			extraProperties.put(
-				OAuth2ProviderRESTEndpointConstants.
-					COOKIE_REMEMBER_DEVICE,
+				OAuth2ProviderRESTEndpointConstants.COOKIE_REMEMBER_DEVICE,
 				cookie.getValue());
 
-			serverAuthorizationCodeGrant.setExtraProperties(
-				extraProperties);
+			serverAuthorizationCodeGrant.setExtraProperties(extraProperties);
 
 			return serverAuthorizationCodeGrant;
 		}

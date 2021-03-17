@@ -27,7 +27,7 @@ definition {
 	test LiferayDXPLicenseExpire {
 		property dxp.license.file = "portal-dxp-license-custom-expiration-48-hours.xml";
 
-		Pause(locator1 = "10000");
+		Pause(locator1 = "300000");
 
 		Navigator.openURL();
 

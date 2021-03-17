@@ -5583,7 +5583,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							ZonedDateTime expiration = now.minusDays(2);
 
 							//License expiration delay
-							expiration = expiration.plusMinutes(1);
+							expiration = expiration.plusMinutes(5);
 
 							System.out.println(dateTimeFormatter.format(expiration));
 							project.setProperty("expiration.date", dateTimeFormatter.format(expiration));

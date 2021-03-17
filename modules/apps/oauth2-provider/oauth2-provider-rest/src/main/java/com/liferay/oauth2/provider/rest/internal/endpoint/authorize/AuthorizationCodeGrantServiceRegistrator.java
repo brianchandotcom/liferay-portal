@@ -119,9 +119,11 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 			Cookie cookie = _getCookie();
 
+			MessageContext messageContext = getMessageContext();
+
 			CookieKeys.addCookie(
-				getMessageContext().getHttpServletRequest(),
-				getMessageContext().getHttpServletResponse(), cookie);
+				messageContext.getHttpServletRequest(),
+				messageContext.getHttpServletResponse(), cookie);
 
 			Map<String, String> extraProperties =
 				serverAuthorizationCodeGrant.getExtraProperties();
@@ -258,9 +260,11 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 				Cookie cookie = _getCookie();
 
+				MessageContext messageContext = getMessageContext();
+
 				CookieKeys.addCookie(
-					getMessageContext().getHttpServletRequest(),
-					getMessageContext().getHttpServletResponse(), cookie);
+					messageContext.getHttpServletRequest(),
+					messageContext.getHttpServletResponse(), cookie);
 
 				Map<String, String> extraProperties =
 					oAuthRedirectionState.getExtraProperties();

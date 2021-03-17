@@ -31,8 +31,6 @@
 /development/jasper.jar
 /development/jaxb-api.jar
 /development/jbi_rt.jar
-/development/jetty-server.jar
-/development/jetty-util.jar
 /development/jms.jar
 /development/jndi.jar
 /development/jsch.jar

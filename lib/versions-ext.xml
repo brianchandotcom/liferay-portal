@@ -383,38 +383,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/jetty-server.jar</file-name>
-				<version>9.3.25.v20180904</version>
-				<project-name>Jetty</project-name>
-				<project-url>http://www.eclipse.org/jetty</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-					<license>
-						<license-name>Eclipse Public License 1.0</license-name>
-						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jetty-util.jar</file-name>
-				<version>9.3.25.v20180904</version>
-				<project-name>Jetty</project-name>
-				<project-url>http://www.eclipse.org/jetty</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-					<license>
-						<license-name>Eclipse Public License 1.0</license-name>
-						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/jms.jar</file-name>
 				<version>1.1</version>
 				<project-name>Java Message Services</project-name>

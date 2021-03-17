@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
@@ -100,6 +101,37 @@ public class ContributedFragmentEntryVerticalCard
 	@Override
 	public String getInputValue() {
 		return fragmentEntry.getFragmentEntryKey();
+	}
+
+	@Override
+	public String getStickerCssClass() {
+		int type = fragmentEntry.getType();
+
+		if ((type == FragmentConstants.TYPE_COMPONENT) ||
+			(type == FragmentConstants.TYPE_SECTION) ||
+			(type == FragmentConstants.TYPE_REACT)) {
+
+			return "fragment-entry-sticker";
+		}
+
+		return "fragment-composition-sticker";
+	}
+
+	@Override
+	public String getStickerIcon() {
+		int type = fragmentEntry.getType();
+
+		if ((type == FragmentConstants.TYPE_COMPONENT) ||
+			(type == FragmentConstants.TYPE_SECTION)) {
+
+			return "code";
+		}
+
+		if (type == FragmentConstants.TYPE_REACT) {
+			return "react";
+		}
+
+		return "edit-layout";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

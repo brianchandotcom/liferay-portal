@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.internal.util;
 
-import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -69,8 +68,7 @@ public class JsonHelperTest {
 	public void testGetValueAsJSONArray() throws Exception {
 		JSONObject jsonObject = _jsonFactory.createJSONObject("{\"array\":[]}");
 
-		JSONArray jsonArray = _jsonHelper.getValueAsJSONArray(
-			"array", jsonObject);
+		JSONArray jsonArray = JSONUtil.getValueAsJSONArray("array", jsonObject);
 
 		Assert.assertNotNull("JSONArray is not null", jsonArray);
 
@@ -79,7 +77,7 @@ public class JsonHelperTest {
 		jsonObject = _jsonFactory.createJSONObject(
 			"{\"array\":[\"commerce\"]}");
 
-		jsonArray = _jsonHelper.getValueAsJSONArray("array", jsonObject);
+		jsonArray = JSONUtil.getValueAsJSONArray("array", jsonObject);
 
 		Assert.assertEquals("JSONArray length", 1, jsonArray.length());
 
@@ -89,7 +87,7 @@ public class JsonHelperTest {
 
 		jsonObject = _jsonFactory.createJSONObject("{\"array\":[1,2,300,4]}");
 
-		jsonArray = _jsonHelper.getValueAsJSONArray("array", jsonObject);
+		jsonArray = JSONUtil.getValueAsJSONArray("array", jsonObject);
 
 		Assert.assertEquals("JSONArray length", 4, jsonArray.length());
 
@@ -164,6 +162,5 @@ public class JsonHelperTest {
 	}
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
-	private final JsonHelper _jsonHelper = new JsonHelperImpl();
 
 }

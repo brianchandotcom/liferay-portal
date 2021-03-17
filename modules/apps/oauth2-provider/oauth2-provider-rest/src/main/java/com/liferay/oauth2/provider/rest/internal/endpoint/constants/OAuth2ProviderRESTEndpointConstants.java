@@ -49,4 +49,7 @@ public class OAuth2ProviderRESTEndpointConstants {
 
 	public static final String PROPERTY_KEY_COMPANY_ID = "company.id";
 
+	public static final String PROPERTY_KEY_REMEMBER_DEVICE =
+		"oauth2.remember.device";
+
 }

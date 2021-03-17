@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Matthew Tambara
  */
-@InitializeKernelUtil(properties = "testClassKey=testClassValue")
+@PortalProps(properties = "testClassKey=testClassValue")
 public class InitializeKernelUtilTestRuleTest {
 
 	@ClassRule
@@ -39,7 +39,7 @@ public class InitializeKernelUtilTestRuleTest {
 		Assert.assertEquals("testClassValue", PropsUtil.get("testClassKey"));
 	}
 
-	@InitializeKernelUtil(properties = "testMethodKey=testMethodValue")
+	@PortalProps(properties = "testMethodKey=testMethodValue")
 	@Test
 	public void testPropsMethodAnnotation() {
 		Assert.assertNotNull(PropsUtil.getProps());

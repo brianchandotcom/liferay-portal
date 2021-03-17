@@ -70,15 +70,13 @@ public class InitializeKernelUtilTestRule
 
 		Class<?> clazz = description.getTestClass();
 
-		InitializeKernelUtil initializeKernelUtil = clazz.getAnnotation(
-			InitializeKernelUtil.class);
+		PortalProps portalProps = clazz.getAnnotation(PortalProps.class);
 
-		if (initializeKernelUtil == null) {
+		if (portalProps == null) {
 			_setUpPropsUtil(null);
 		}
 		else {
-			_setUpPropsUtil(
-				_processProperties(initializeKernelUtil.properties()));
+			_setUpPropsUtil(_processProperties(portalProps.properties()));
 		}
 
 		_setUpFileUtil();
@@ -90,12 +88,11 @@ public class InitializeKernelUtilTestRule
 	protected Properties beforeMethod(Description description, Object target)
 		throws Throwable {
 
-		InitializeKernelUtil initializeKernelUtil = description.getAnnotation(
-			InitializeKernelUtil.class);
+		PortalProps portalProps = description.getAnnotation(PortalProps.class);
 
-		if (initializeKernelUtil != null) {
+		if (portalProps != null) {
 			Map<String, String> map = _processProperties(
-				initializeKernelUtil.properties());
+				portalProps.properties());
 
 			return _setUpPropsUtil(map);
 		}

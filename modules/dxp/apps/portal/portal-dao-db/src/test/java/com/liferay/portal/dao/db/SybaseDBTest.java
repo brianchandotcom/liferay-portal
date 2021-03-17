@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.test.rule.InitializeKernelUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.test.rule.PortalProps;
 
 import java.lang.reflect.Method;
 
@@ -31,9 +31,7 @@ import org.junit.Test;
  * @author Miguel Pastor
  * @author Alberto Chaparro
  */
-@InitializeKernelUtil(
-	properties = PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH + "=-1"
-)
+@PortalProps(properties = PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH + "=-1")
 public class SybaseDBTest extends BaseDBTestCase {
 
 	@ClassRule

@@ -245,6 +245,14 @@ public class RemoteCommerceTaxEngineTest {
 			commerceAddressId
 		);
 
+		Country country = _getCountry(commerceCountryThreeLettersISOCode);
+
+		Mockito.when(
+			commerceAddress.getCountry()
+		).thenReturn(
+			country
+		);
+
 		Mockito.when(
 			commerceAddress.getExternalReferenceCode()
 		).thenReturn(
@@ -267,6 +275,14 @@ public class RemoteCommerceTaxEngineTest {
 			commerceAddress.getPhoneNumber()
 		).thenReturn(
 			phoneNumber
+		);
+
+		Region region = _getRegion(commerceRegionCode);
+
+		Mockito.when(
+			commerceAddress.getRegion()
+		).thenReturn(
+			region
 		);
 
 		Mockito.when(
@@ -297,22 +313,6 @@ public class RemoteCommerceTaxEngineTest {
 			commerceAddress.getZip()
 		).thenReturn(
 			zip
-		);
-
-		Country country = _getCountry(commerceCountryThreeLettersISOCode);
-
-		Mockito.when(
-			commerceAddress.getCountry()
-		).thenReturn(
-			country
-		);
-
-		Region region = _getRegion(commerceRegionCode);
-
-		Mockito.when(
-			commerceAddress.getRegion()
-		).thenReturn(
-			region
 		);
 
 		return commerceAddress;

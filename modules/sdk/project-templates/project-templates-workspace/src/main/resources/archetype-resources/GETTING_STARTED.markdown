@@ -122,6 +122,19 @@ https://bit.ly/2IkAwwW for Liferay Portal and https://bit.ly/2GIyfZF for
 Liferay DXP. If you did not set `liferay.workspace.product`, the default value
 is `7.3.5`.
 
+To overwrite the version of a specific dependency, you must use `force = true`.
+See `https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#forced_dependencies_vs_strict_dependencies`.
+
+To overwrite the version of a dependency for the project, set the following
+at a top level gradle file
+```
+subprojects {
+	configurations.all {
+		resolutionStrategy.force 'groupId:artifactId:version`
+	}
+}
+```
+
 $h4 liferay.workspace.bundle.cache.dir
 Set the directory where the downloaded bundle Zip files are stored. The default
 value is the `.liferay/bundles` folder inside the user home directory. The

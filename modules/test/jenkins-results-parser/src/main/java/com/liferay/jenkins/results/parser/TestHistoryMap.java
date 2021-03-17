@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -138,6 +139,12 @@ public class TestHistoryMap
 	public void put(
 		String testName, String batchName, String buildURL, String errorSnippet,
 		String status) {
+
+		for (String excludedTestNameRegex : _excludedTestNameRegexes) {
+			if (testName.matches(".*" + excludedTestNameRegex + ".*")) {
+				return;
+			}
+		}
 
 		if (containsKey(Collections.singletonMap(testName, batchName))) {
 			TestHistory testHistory = get(
@@ -347,6 +354,28 @@ public class TestHistoryMap
 			}
 		}
 	}
+
+	private static final List<String> _excludedTestNameRegexes =
+		new ArrayList<String>() {
+			{
+				Properties buildProperties = null;
+
+				try {
+					buildProperties =
+						JenkinsResultsParserUtil.getBuildProperties();
+
+					String excludedTestNames = buildProperties.getProperty(
+						"flaky.test.report.test.name.excludes");
+
+					Collections.addAll(
+						this, excludedTestNames.split("\\s*,\\s*"));
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(
+						"Unable to get build properties", ioException);
+				}
+			}
+		};
 
 	private static final Pattern _testrayLogPattern = Pattern.compile(
 		"test[0-9-]+\\/[0-9]+\\/.+?\\/[0-9]+\\/(?<jobVariant>.+?)\\/.*");

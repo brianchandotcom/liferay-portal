@@ -25,6 +25,7 @@ const spritemap = 'icons.svg';
 
 const defaultDatePickerConfig = {
 	locale: 'en_US',
+	localizedValue: {},
 	name: 'dateField',
 	spritemap,
 };

@@ -271,48 +271,6 @@ public class DDMDataDefinitionConverterImpl
 		return false;
 	}
 
-	private void _upgradeDDMFormFieldOptionsReferences(
-		DDMFormFieldOptions ddmFormFieldOptions) {
-
-		if (ddmFormFieldOptions == null) {
-			return;
-		}
-
-		Set<String> ddmFormFieldOptionsValues =
-			ddmFormFieldOptions.getOptionsValues();
-
-		ddmFormFieldOptionsValues.forEach(
-			ddmFormFieldOptionsValue -> ddmFormFieldOptions.addOptionReference(
-				ddmFormFieldOptionsValue,
-				ddmFormFieldOptionsValue.replaceAll(
-					"([\\p{Punct}|\\p{Space}$]|_)+", StringPool.BLANK)));
-	}
-
-	private LocalizedValue _upgradeLocalizedValue(
-		Set<Locale> availableLocales, Locale defaultLocale, String key,
-		LocalizedValue localizedValue) {
-
-		if (localizedValue == null) {
-			localizedValue = new LocalizedValue();
-
-			localizedValue.addString(
-				defaultLocale, LanguageUtil.get(defaultLocale, key));
-
-			for (Locale locale : availableLocales) {
-				localizedValue.addString(locale, LanguageUtil.get(locale, key));
-			}
-
-			return localizedValue;
-		}
-
-		if (Validator.isNull(localizedValue.getString(defaultLocale))) {
-			localizedValue.addString(
-				defaultLocale, LanguageUtil.get(defaultLocale, key));
-		}
-
-		return localizedValue;
-	}
-
 	private void _upgradeBooleanField(DDMFormField ddmFormField) {
 		ddmFormField.setDataType("string");
 		ddmFormField.setDDMFormFieldOptions(
@@ -334,6 +292,23 @@ public class DDMDataDefinitionConverterImpl
 		ddmFormField.setFieldNamespace(StringPool.BLANK);
 		ddmFormField.setType("date");
 		ddmFormField.setVisibilityExpression(StringPool.BLANK);
+	}
+
+	private void _upgradeDDMFormFieldOptionsReferences(
+		DDMFormFieldOptions ddmFormFieldOptions) {
+
+		if (ddmFormFieldOptions == null) {
+			return;
+		}
+
+		Set<String> ddmFormFieldOptionsValues =
+			ddmFormFieldOptions.getOptionsValues();
+
+		ddmFormFieldOptionsValues.forEach(
+			ddmFormFieldOptionsValue -> ddmFormFieldOptions.addOptionReference(
+				ddmFormFieldOptionsValue,
+				ddmFormFieldOptionsValue.replaceAll(
+					"([\\p{Punct}|\\p{Space}$]|_)+", StringPool.BLANK)));
 	}
 
 	private void _upgradeDecimalField(DDMFormField ddmFormField) {
@@ -480,6 +455,31 @@ public class DDMDataDefinitionConverterImpl
 		ddmFormField.setDataType("link-to-page");
 		ddmFormField.setFieldNamespace(StringPool.BLANK);
 		ddmFormField.setType("link_to_layout");
+	}
+
+	private LocalizedValue _upgradeLocalizedValue(
+		Set<Locale> availableLocales, Locale defaultLocale, String key,
+		LocalizedValue localizedValue) {
+
+		if (localizedValue == null) {
+			localizedValue = new LocalizedValue();
+
+			localizedValue.addString(
+				defaultLocale, LanguageUtil.get(defaultLocale, key));
+
+			for (Locale locale : availableLocales) {
+				localizedValue.addString(locale, LanguageUtil.get(locale, key));
+			}
+
+			return localizedValue;
+		}
+
+		if (Validator.isNull(localizedValue.getString(defaultLocale))) {
+			localizedValue.addString(
+				defaultLocale, LanguageUtil.get(defaultLocale, key));
+		}
+
+		return localizedValue;
 	}
 
 	private DDMForm _upgradeNestedFields(DDMForm ddmForm) {

@@ -11,16 +11,14 @@
 	<start-date>Thursday, September 17, 2020 12:00:00 AM GMT</start-date>
 	<expiration-date>Saturday, August 24, 2120 12:00:00 AM GMT</expiration-date>
 	<max-http-sessions>5</max-http-sessions>
-	<server>
-		<host-names>
-			<host-name>hostnameToReplace</host-name>
-		</host-names>
-		<ip-addresses>
-				<ip-address>ipToReplace</ip-address>
-		</ip-addresses>
-		<mac-addresses>
-			<mac-address>macAddressToReplace</mac-address>
-		</mac-addresses>
-	</server>
+	<host-names>
+		<host-name>hostnameToReplace</host-name>
+	</host-names>
+	<ip-addresses>
+		<ip-address>ipToReplace</ip-address>
+	</ip-addresses>
+	<mac-addresses>
+		<mac-address>macAddressToReplace</mac-address>
+	</mac-addresses>
 	<key>INVALID</key>
 </license>

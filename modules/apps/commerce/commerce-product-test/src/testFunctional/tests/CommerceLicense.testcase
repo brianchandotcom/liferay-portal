@@ -176,6 +176,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-production.xml";
 		property commerce.license.property = "hostname";
+		property dxp.license.file = "dxp-license-production.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -185,6 +186,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-production.xml";
 		property commerce.license.property = "ip-address";
+		property dxp.license.file = "dxp-license-production.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -194,6 +196,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-production.xml";
 		property commerce.license.property = "mac-address";
+		property dxp.license.file = "dxp-license-production.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}

@@ -5627,6 +5627,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							token="hostnameToReplace"
 							value="${env.HOSTNAME}"
 						/>
+
+						<replace
+							file="${liferay.home}/deploy/${dxp.license.file}"
+							token="hostnameToReplace"
+							value="${env.HOSTNAME}"
+						/>
 					</then>
 				</elseif>
 				<elseif>
@@ -5639,6 +5645,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							token="ipToReplace"
 							value="${ip.address}"
 						/>
+
+						<replace
+							file="${liferay.home}/deploy/${dxp.license.file}"
+							token="ipToReplace"
+							value="${ip.address}"
+						/>
 					</then>
 				</elseif>
 				<elseif>
@@ -5648,6 +5660,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 						<replace
 							file="${liferay.home}/deploy/@{commerce.license.file}"
+							token="macAddressToReplace"
+							value="${mac.address}"
+						/>
+
+						<replace
+							file="${liferay.home}/deploy/${dxp.license.file}"
 							token="macAddressToReplace"
 							value="${mac.address}"
 						/>

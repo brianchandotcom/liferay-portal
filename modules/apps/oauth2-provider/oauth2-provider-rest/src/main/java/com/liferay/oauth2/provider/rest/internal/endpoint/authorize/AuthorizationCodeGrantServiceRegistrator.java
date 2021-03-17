@@ -150,41 +150,48 @@ public class AuthorizationCodeGrantServiceRegistrator {
 				return true;
 			}
 
-			if (MapUtil.getBoolean(
+			if (!MapUtil.getBoolean(
 					client.getProperties(),
 					OAuth2ProviderRESTEndpointConstants.
 						PROPERTY_KEY_CLIENT_REMEMBER_DEVICE)) {
 
-				String rememberDeviceCookieContent =
-					_getRememberDeviceContent();
+				return super.canAuthorizationBeSkipped(
+					params, client, userSubject, requestedScopesList,
+					permissions);
+			}
 
-				if (rememberDeviceCookieContent != null) {
-					long userId = GetterUtil.getLong(userSubject.getId());
+			String rememberDeviceCookieContent = _getRememberDeviceContent();
 
-					LiferayOAuthDataProvider liferayOAuthDataProvider =
-						_getLiferayOAuthDataProvider();
+			if (rememberDeviceCookieContent == null) {
+				return super.canAuthorizationBeSkipped(
+					params, client, userSubject, requestedScopesList,
+					permissions);
+			}
 
-					OAuth2Authorization oAuth2Authorization =
-						liferayOAuthDataProvider.
-							getOAuth2AuthorizationByRememberDeviceContent(
-								client, rememberDeviceCookieContent, userId);
+			long userId = GetterUtil.getLong(userSubject.getId());
 
-					if ((oAuth2Authorization != null) &&
-						rememberDeviceCookieContent.equals(
-							oAuth2Authorization.getRememberDeviceContent())) {
+			LiferayOAuthDataProvider liferayOAuthDataProvider =
+				_getLiferayOAuthDataProvider();
 
-						RefreshToken refreshToken =
-							liferayOAuthDataProvider.getRefreshToken(
-								oAuth2Authorization.getRefreshTokenContent());
+			OAuth2Authorization oAuth2Authorization =
+				liferayOAuthDataProvider.
+					getOAuth2AuthorizationByRememberDeviceContent(
+						client, rememberDeviceCookieContent, userId);
 
-						if ((refreshToken != null) &&
-							!OAuthUtils.isExpired(
-								refreshToken.getIssuedAt(),
-								refreshToken.getExpiresIn())) {
+			if ((oAuth2Authorization != null) &&
+				rememberDeviceCookieContent.equals(
+					oAuth2Authorization.getRememberDeviceContent())) {
 
-							return true;
-						}
-					}
+				RefreshToken refreshToken =
+					liferayOAuthDataProvider.getRefreshToken(
+						oAuth2Authorization.getRefreshTokenContent());
+
+				if ((refreshToken != null) &&
+					!OAuthUtils.isExpired(
+						refreshToken.getIssuedAt(),
+						refreshToken.getExpiresIn())) {
+
+					return true;
 				}
 			}
 

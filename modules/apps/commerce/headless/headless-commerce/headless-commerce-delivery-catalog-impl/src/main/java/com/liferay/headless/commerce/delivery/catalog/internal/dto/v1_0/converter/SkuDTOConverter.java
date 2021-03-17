@@ -35,6 +35,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -164,7 +165,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 						cpInstance.getCPInstanceId());
 
-		JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
+		JSONArray keyValuesJSONArray = JSONUtil.toJSONArray(
 			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>

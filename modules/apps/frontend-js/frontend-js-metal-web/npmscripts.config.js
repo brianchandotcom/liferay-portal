@@ -54,7 +54,6 @@ module.exports = {
 			'querystring',
 			'xss-filters',
 		],
-		mode: 'default',
 	},
 	fix: [],
 };

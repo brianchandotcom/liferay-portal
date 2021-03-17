@@ -13,6 +13,18 @@
  */
 
 module.exports = {
+	build: {
+		bundler: {
+			config: {
+				imports: {
+					'asset-taglib': {
+						'/': '>=1.0.0',
+					},
+				},
+			},
+		},
+		dependencies: ['asset-taglib'],
+	},
 	federation: {
 		exposes: [
 			'<inputDir>/js/ActionsComponentPropsTransformer.js',
@@ -20,7 +32,6 @@ module.exports = {
 			'<inputDir>/js/AssetCategoriesSelectorTag.es.js',
 			'<inputDir>/js/DetailsItemSelector.js',
 		],
-		mode: 'default',
 		remotes: ['asset-taglib'],
 	},
 };

@@ -14,8 +14,9 @@
 
 package com.liferay.frontend.js.dropdown.support.web.internal.servlet.taglib;
 
-import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 
 import java.io.IOException;
 
@@ -37,9 +38,17 @@ public class DropdownBottomDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		_jsModuleLauncher.writeModuleInvocation(
-			httpServletResponse.getWriter(),
-			"frontend-js-dropdown-support-web");
+		ScriptData scriptData = new ScriptData();
+
+		String initModuleName = _npmResolver.resolveModuleName(
+			"frontend-js-dropdown-support-web/index");
+
+		scriptData.append(
+			null, "DropdownProvider.default()",
+			initModuleName + " as DropdownProvider",
+			ScriptData.ModulesType.ES6);
+
+		scriptData.writeTo(httpServletResponse.getWriter());
 	}
 
 	@Override
@@ -50,6 +59,6 @@ public class DropdownBottomDynamicInclude implements DynamicInclude {
 	}
 
 	@Reference
-	private JSModuleLauncher _jsModuleLauncher;
+	private NPMResolver _npmResolver;
 
 }

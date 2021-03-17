@@ -22,7 +22,4 @@ module.exports = {
 		'svg4everybody',
 		'uuid',
 	],
-	federation: {
-		mode: 'compatible',
-	},
 };

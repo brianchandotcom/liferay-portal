@@ -14,24 +14,21 @@
 
 package com.liferay.portal.template.react.renderer.internal;
 
-import com.liferay.frontend.js.module.launcher.JSModuleDependency;
-import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +41,7 @@ public class ReactRendererUtil {
 	public static void renderReact(
 			ComponentDescriptor componentDescriptor, Map<String, Object> props,
 			HttpServletRequest httpServletRequest,
-			JSModuleLauncher jsModuleLauncher, Portal portal, Writer writer)
+			String npmResolvedPackageName, Portal portal, Writer writer)
 		throws IOException {
 
 		String placeholderId = StringUtil.randomId();
@@ -52,43 +49,8 @@ public class ReactRendererUtil {
 		_renderPlaceholder(writer, placeholderId);
 
 		_renderJavaScript(
-			componentDescriptor, props, httpServletRequest, placeholderId,
-			jsModuleLauncher, portal, writer);
-	}
-
-	private static String _getRenderInvocation(
-		ComponentDescriptor componentDescriptor, Map<String, Object> props,
-		HttpServletRequest httpServletRequest, String placeholderId,
-		Portal portal) {
-
-		StringBundler javascriptSB = new StringBundler(7);
-
-		javascriptSB.append("try {\nrender(component.default, ");
-
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
-		if (Validator.isNotNull(componentDescriptor.getPropsTransformer())) {
-			javascriptSB.append("propsTransformer.default(");
-			javascriptSB.append(
-				jsonSerializer.serializeDeep(
-					_prepareProps(
-						componentDescriptor, props, httpServletRequest,
-						portal)));
-			javascriptSB.append(")");
-		}
-		else {
-			javascriptSB.append(
-				jsonSerializer.serializeDeep(
-					_prepareProps(
-						componentDescriptor, props, httpServletRequest,
-						portal)));
-		}
-
-		javascriptSB.append(", '");
-		javascriptSB.append(placeholderId);
-		javascriptSB.append("');\n} catch (err) {console.error(err);}");
-
-		return javascriptSB.toString();
+			componentDescriptor, props, httpServletRequest,
+			npmResolvedPackageName, placeholderId, portal, writer);
 	}
 
 	private static Map<String, Object> _prepareProps(
@@ -142,100 +104,90 @@ public class ReactRendererUtil {
 		return modifiedProps;
 	}
 
-	private static void _registerJSModuleDependency(
-		JSModuleLauncher jsModuleLauncher,
-		JSModuleDependency jsModuleDependency,
-		List<JSModuleDependency> jsModuleDependencies,
-		List<JSModuleDependency> amdJSModuleDependencies) {
-
-		if (jsModuleLauncher.isValidModule(
-				jsModuleDependency.getModuleName())) {
-
-			jsModuleDependencies.add(jsModuleDependency);
-		}
-		else {
-			amdJSModuleDependencies.add(jsModuleDependency);
-		}
-	}
-
 	private static void _renderJavaScript(
-		ComponentDescriptor componentDescriptor, Map<String, Object> props,
-		HttpServletRequest httpServletRequest, String placeholderId,
-		JSModuleLauncher jsModuleLauncher, Portal portal, Writer writer) {
+			ComponentDescriptor componentDescriptor, Map<String, Object> props,
+			HttpServletRequest httpServletRequest,
+			String npmResolvedPackageName, String placeholderId, Portal portal,
+			Writer writer)
+		throws IOException {
 
-		List<JSModuleDependency> jsModuleDependencies = new ArrayList<>();
-		List<JSModuleDependency> amdJSModuleDependencies = new ArrayList<>();
+		StringBundler dependenciesSB = new StringBundler(11);
 
-		jsModuleDependencies.add(
-			new JSModuleDependency(
-				"portal-template-react-renderer-impl", "{render}"));
-
-		_registerJSModuleDependency(
-			jsModuleLauncher,
-			new JSModuleDependency(
-				componentDescriptor.getModule(), "component"),
-			jsModuleDependencies, amdJSModuleDependencies);
+		dependenciesSB.append(npmResolvedPackageName);
+		dependenciesSB.append("/render.es as render");
+		dependenciesSB.append(placeholderId);
+		dependenciesSB.append(", ");
+		dependenciesSB.append(componentDescriptor.getModule());
+		dependenciesSB.append(" as renderFunction");
+		dependenciesSB.append(placeholderId);
 
 		String propsTransformer = componentDescriptor.getPropsTransformer();
 
 		if (Validator.isNotNull(propsTransformer)) {
-			_registerJSModuleDependency(
-				jsModuleLauncher,
-				new JSModuleDependency(propsTransformer, "propsTransformer"),
-				jsModuleDependencies, amdJSModuleDependencies);
+			dependenciesSB.append(", ");
+			dependenciesSB.append(propsTransformer);
+			dependenciesSB.append(" as propsTransformer");
+			dependenciesSB.append(placeholderId);
 		}
 
-		String javaScriptCode = _getRenderInvocation(
-			componentDescriptor, props, httpServletRequest, placeholderId,
-			portal);
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		if (!amdJSModuleDependencies.isEmpty()) {
-			StringBundler javascriptSB = new StringBundler(
-				5 + (6 * amdJSModuleDependencies.size()) - 2);
+		StringBundler javascriptSB = new StringBundler(13);
 
-			javascriptSB.append("Liferay.Loader.require([");
+		javascriptSB.append("render");
+		javascriptSB.append(placeholderId);
+		javascriptSB.append(".default(renderFunction");
+		javascriptSB.append(placeholderId);
+		javascriptSB.append(".default, ");
 
-			for (int i = 0; i < amdJSModuleDependencies.size(); i++) {
-				JSModuleDependency jsModuleDependency =
-					amdJSModuleDependencies.get(i);
-
-				if (i > 0) {
-					javascriptSB.append(StringPool.COMMA_AND_SPACE);
-				}
-
-				javascriptSB.append(StringPool.APOSTROPHE);
-				javascriptSB.append(jsModuleDependency.getModuleName());
-				javascriptSB.append(StringPool.APOSTROPHE);
-			}
-
-			javascriptSB.append("], function(");
-
-			for (int i = 0; i < amdJSModuleDependencies.size(); i++) {
-				JSModuleDependency jsModuleDependency =
-					amdJSModuleDependencies.get(i);
-
-				if (i > 0) {
-					javascriptSB.append(StringPool.COMMA_AND_SPACE);
-				}
-
-				javascriptSB.append(jsModuleDependency.getVariableName());
-			}
-
-			javascriptSB.append(") {\n");
-			javascriptSB.append(javaScriptCode);
-			javascriptSB.append("});");
-
-			javaScriptCode = javascriptSB.toString();
-		}
-
-		if (componentDescriptor.isPositionInLine()) {
-			jsModuleLauncher.writeScript(
-				writer, jsModuleDependencies, javaScriptCode);
+		if (Validator.isNotNull(propsTransformer)) {
+			javascriptSB.append("propsTransformer");
+			javascriptSB.append(placeholderId);
+			javascriptSB.append(".default(");
+			javascriptSB.append(
+				jsonSerializer.serializeDeep(
+					_prepareProps(
+						componentDescriptor, props, httpServletRequest,
+						portal)));
+			javascriptSB.append(")");
 		}
 		else {
-			jsModuleLauncher.appendPortletScript(
-				httpServletRequest, portal.getPortletId(httpServletRequest),
-				jsModuleDependencies, javaScriptCode);
+			javascriptSB.append(
+				jsonSerializer.serializeDeep(
+					_prepareProps(
+						componentDescriptor, props, httpServletRequest,
+						portal)));
+		}
+
+		javascriptSB.append(", '");
+		javascriptSB.append(placeholderId);
+		javascriptSB.append("');");
+
+		if (componentDescriptor.isPositionInLine()) {
+			ScriptData scriptData = new ScriptData();
+
+			scriptData.append(
+				portal.getPortletId(httpServletRequest),
+				javascriptSB.toString(), dependenciesSB.toString(),
+				ScriptData.ModulesType.ES6);
+
+			scriptData.writeTo(writer);
+		}
+		else {
+			ScriptData scriptData = (ScriptData)httpServletRequest.getAttribute(
+				WebKeys.AUI_SCRIPT_DATA);
+
+			if (scriptData == null) {
+				scriptData = new ScriptData();
+
+				httpServletRequest.setAttribute(
+					WebKeys.AUI_SCRIPT_DATA, scriptData);
+			}
+
+			scriptData.append(
+				portal.getPortletId(httpServletRequest),
+				javascriptSB.toString(), dependenciesSB.toString(),
+				ScriptData.ModulesType.ES6);
 		}
 	}
 

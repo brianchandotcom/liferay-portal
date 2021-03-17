@@ -35,10 +35,6 @@ public interface JsonHelper {
 
 	public JSONArray getValueAsJSONArray(String key, JSONObject jsonObject);
 
-	public boolean isArray(String json);
-
-	public boolean isEmpty(String json);
-
 	public JSONArray toJSONArray(Map<String, List<String>> keyValues);
 
 }

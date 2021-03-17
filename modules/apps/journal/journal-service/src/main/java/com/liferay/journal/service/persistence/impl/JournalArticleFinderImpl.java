@@ -1459,20 +1459,6 @@ public class JournalArticleFinderImpl
 		return StringUtil.replace(sql, "[$STRUCTURE_TEMPLATE$]", sb.toString());
 	}
 
-	private boolean _isKeywordsDefined(String[] keywords) {
-		if (ArrayUtil.isEmpty(keywords)) {
-			return false;
-		}
-
-		for (String keyword : keywords) {
-			if (Validator.isNotNull(keyword)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _isOrderByTitle(
 		OrderByComparator<JournalArticle> orderByComparator) {
 

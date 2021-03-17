@@ -116,14 +116,14 @@ public class DDMDataDefinitionConverterImpl
 
 			ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
 
-			LocalizedValue localizedValue = _updateLocalizedValue(
+			LocalizedValue localizedValue = _upgradeLocalizedValue(
 				ddmFormLayout.getAvailableLocales(),
 				ddmFormLayout.getDefaultLocale(), "page",
 				ddmFormLayoutPage.getTitle());
 
 			ddmFormLayoutPage.setTitle(localizedValue);
 
-			localizedValue = _updateLocalizedValue(
+			localizedValue = _upgradeLocalizedValue(
 				ddmFormLayout.getAvailableLocales(),
 				ddmFormLayout.getDefaultLocale(), "description",
 				ddmFormLayoutPage.getDescription());
@@ -271,7 +271,7 @@ public class DDMDataDefinitionConverterImpl
 		return false;
 	}
 
-	private void _updateDDMFormFieldOptionsReferences(
+	private void _upgradeDDMFormFieldOptionsReferences(
 		DDMFormFieldOptions ddmFormFieldOptions) {
 
 		if (ddmFormFieldOptions == null) {
@@ -288,7 +288,7 @@ public class DDMDataDefinitionConverterImpl
 					"([\\p{Punct}|\\p{Space}$]|_)+", StringPool.BLANK)));
 	}
 
-	private LocalizedValue _updateLocalizedValue(
+	private LocalizedValue _upgradeLocalizedValue(
 		Set<Locale> availableLocales, Locale defaultLocale, String key,
 		LocalizedValue localizedValue) {
 
@@ -362,11 +362,11 @@ public class DDMDataDefinitionConverterImpl
 		}
 
 		if (!StringUtil.equals(ddmFormField.getType(), "fieldset")) {
-			_updateDDMFormFieldOptionsReferences(
+			_upgradeDDMFormFieldOptionsReferences(
 				ddmFormField.getDDMFormFieldOptions());
-			_updateDDMFormFieldOptionsReferences(
+			_upgradeDDMFormFieldOptionsReferences(
 				(DDMFormFieldOptions)ddmFormField.getProperty("columns"));
-			_updateDDMFormFieldOptionsReferences(
+			_upgradeDDMFormFieldOptionsReferences(
 				(DDMFormFieldOptions)ddmFormField.getProperty("rows"));
 		}
 

@@ -55,7 +55,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 		_upgradeDDMStructure();
 	}
 
-	private void _updateDDMFormFieldOptionsReferences(
+	private void _upgradeDDMFormFieldOptionsReferences(
 		DDMFormFieldOptions ddmFormFieldOptions) {
 
 		if (ddmFormFieldOptions == null) {
@@ -72,15 +72,15 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 					"([\\p{Punct}|\\p{Space}$]|_)+", StringPool.BLANK)));
 	}
 
-	private void _updateDDMFormFieldReference(DDMFormField ddmFormField) {
+	private void _upgradeDDMFormFieldReference(DDMFormField ddmFormField) {
 		ddmFormField.setFieldReference(ddmFormField.getName());
 
 		if (!StringUtil.equals(ddmFormField.getType(), "fieldset")) {
-			_updateDDMFormFieldOptionsReferences(
+			_upgradeDDMFormFieldOptionsReferences(
 				ddmFormField.getDDMFormFieldOptions());
-			_updateDDMFormFieldOptionsReferences(
+			_upgradeDDMFormFieldOptionsReferences(
 				(DDMFormFieldOptions)ddmFormField.getProperty("columns"));
-			_updateDDMFormFieldOptionsReferences(
+			_upgradeDDMFormFieldOptionsReferences(
 				(DDMFormFieldOptions)ddmFormField.getProperty("rows"));
 		}
 
@@ -88,7 +88,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 			ddmFormField.getNestedDDMFormFields();
 
 		nestedDDMFormFields.forEach(
-			nestedDDMFormField -> _updateDDMFormFieldReference(
+			nestedDDMFormField -> _upgradeDDMFormFieldReference(
 				nestedDDMFormField));
 	}
 
@@ -177,7 +177,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		ddmFormFields.forEach(
-			ddmFormField -> _updateDDMFormFieldReference(ddmFormField));
+			ddmFormField -> _upgradeDDMFormFieldReference(ddmFormField));
 
 		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 	}

@@ -27,6 +27,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,17 +96,23 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("assetCategoryId", (String)null);
-		clearResultsURL.setParameter("assetTagId", (String)null);
-		clearResultsURL.setParameter("authorIds", (String)null);
-		clearResultsURL.setParameter(
-			"contentDashboardItemTypePayload", (String)null);
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-		clearResultsURL.setParameter("scopeId", (String)null);
-		clearResultsURL.setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
+		PortletURL clearResultsURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"assetCategoryId", (String)null
+		).setParameter(
+			"assetTagId", (String)null
+		).setParameter(
+			"authorIds", (String)null
+		).setParameter(
+			"contentDashboardItemTypePayload", (String)null
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).setParameter(
+			"scopeId", (String)null
+		).setParameter(
+			"status", WorkflowConstants.STATUS_ANY
+		).build();
 
 		return String.valueOf(clearResultsURL);
 	}
@@ -157,20 +164,23 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		for (Long assetCategoryId : assetCategoryIds) {
 			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL portletURL = PortletURLUtil.clone(
-						currentURLObj, liferayPortletResponse);
-
-					Stream<Long> stream = assetCategoryIds.stream();
-
-					portletURL.setParameter(
+					PortletURL portletURL = PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
 						"assetCategoryId",
-						stream.filter(
-							id -> id != assetCategoryId
-						).map(
-							String::valueOf
-						).toArray(
-							String[]::new
-						));
+						() -> {
+							Stream<Long> stream = assetCategoryIds.stream();
+
+							return stream.filter(
+								id -> id != assetCategoryId
+							).map(
+								String::valueOf
+							).toArray(
+								String[]::new
+							);
+						}
+					).build();
 
 					labelItem.putData(
 						"removeLabelURL",
@@ -197,12 +207,14 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		labelItemListWrapper.add(
 			() -> scopeId > 0,
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					currentURLObj, liferayPortletResponse);
-
-				removeLabelURL.setParameter("scopeId", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"scopeId", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
@@ -220,33 +232,37 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL portletURL = PortletURLUtil.clone(
-						currentURLObj, liferayPortletResponse);
-
-					InfoItemReference infoItemReference =
-						contentDashboardItemType.getInfoItemReference();
-					Stream<? extends ContentDashboardItemType> stream =
-						contentDashboardItemTypes.stream();
-
-					portletURL.setParameter(
+					PortletURL portletURL = PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
 						"contentDashboardItemTypePayload",
-						stream.filter(
-							curContentDashboardItemType -> {
-								InfoItemReference curInfoItemReference =
-									curContentDashboardItemType.
-										getInfoItemReference();
+						() -> {
+							Stream<? extends ContentDashboardItemType> stream =
+								contentDashboardItemTypes.stream();
 
-								return !Objects.equals(
-									curInfoItemReference.getClassPK(),
-									infoItemReference.getClassPK());
-							}
-						).map(
-							curContentDashboardItemType ->
-								curContentDashboardItemType.toJSONString(
-									_locale)
-						).toArray(
-							String[]::new
-						));
+							InfoItemReference infoItemReference =
+								contentDashboardItemType.getInfoItemReference();
+
+							return stream.filter(
+								curContentDashboardItemType -> {
+									InfoItemReference curInfoItemReference =
+										curContentDashboardItemType.
+											getInfoItemReference();
+
+									return !Objects.equals(
+										curInfoItemReference.getClassPK(),
+										infoItemReference.getClassPK());
+								}
+							).map(
+								curContentDashboardItemType ->
+									curContentDashboardItemType.toJSONString(
+										_locale)
+							).toArray(
+								String[]::new
+							);
+						}
+					).build();
 
 					labelItem.putData(
 						"removeLabelURL",
@@ -267,20 +283,23 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		for (Long authorId : authorIds) {
 			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL portletURL = PortletURLUtil.clone(
-						currentURLObj, liferayPortletResponse);
-
-					Stream<Long> stream = authorIds.stream();
-
-					portletURL.setParameter(
+					PortletURL portletURL = PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
 						"authorIds",
-						stream.filter(
-							id -> id != authorId
-						).map(
-							String::valueOf
-						).toArray(
-							String[]::new
-						));
+						() -> {
+							Stream<Long> stream = authorIds.stream();
+
+							return stream.filter(
+								id -> id != authorId
+							).map(
+								String::valueOf
+							).toArray(
+								String[]::new
+							);
+						}
+					).build();
 
 					labelItem.putData(
 						"removeLabelURL",
@@ -308,12 +327,14 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		labelItemListWrapper.add(
 			() -> status != WorkflowConstants.STATUS_ANY,
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					currentURLObj, liferayPortletResponse);
-
-				removeLabelURL.setParameter("status", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"status", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
@@ -327,18 +348,21 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		for (String assetTagId : assetTagIds) {
 			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL portletURL = PortletURLUtil.clone(
-						currentURLObj, liferayPortletResponse);
-
-					Stream<String> stream = assetTagIds.stream();
-
-					portletURL.setParameter(
+					PortletURL portletURL = PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
 						"assetTagId",
-						stream.filter(
-							id -> !Objects.equals(id, assetTagId)
-						).toArray(
-							String[]::new
-						));
+						() -> {
+							Stream<String> stream = assetTagIds.stream();
+
+							return stream.filter(
+								id -> !Objects.equals(id, assetTagId)
+							).toArray(
+								String[]::new
+							);
+						}
+					).build();
 
 					labelItem.putData(
 						"removeLabelURL",
@@ -465,95 +489,98 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private PortletURL _getAssetCategorySelectorURL()
 		throws PortalException, WindowStateException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_liferayPortletRequest, AssetCategory.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		portletURL.setParameter(
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_liferayPortletRequest, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setParameter(
 			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectedAssetCategory");
-
-		List<Long> assetCategoryIds =
-			_contentDashboardAdminDisplayContext.getAssetCategoryIds();
-
-		Stream<Long> assetCategoryIdsStream = assetCategoryIds.stream();
-
-		portletURL.setParameter(
+			_liferayPortletResponse.getNamespace() + "selectedAssetCategory"
+		).setParameter(
 			"selectedCategories",
-			assetCategoryIdsStream.map(
-				String::valueOf
-			).collect(
-				Collectors.joining(StringPool.COMMA)
-			));
+			() -> {
+				List<Long> assetCategoryIds =
+					_contentDashboardAdminDisplayContext.getAssetCategoryIds();
 
-		portletURL.setParameter("singleSelect", Boolean.FALSE.toString());
+				Stream<Long> assetCategoryIdsStream = assetCategoryIds.stream();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		List<AssetVocabulary> assetVocabularies =
-			_assetVocabularyLocalService.getCompanyVocabularies(
-				themeDisplay.getCompanyId());
-
-		Stream<AssetVocabulary> assetVocabularyStream =
-			assetVocabularies.stream();
-
-		portletURL.setParameter(
+				return assetCategoryIdsStream.map(
+					String::valueOf
+				).collect(
+					Collectors.joining(StringPool.COMMA)
+				);
+			}
+		).setParameter(
+			"singleSelect", Boolean.FALSE.toString()
+		).setParameter(
 			"vocabularyIds",
-			assetVocabularyStream.map(
-				AssetVocabulary::getVocabularyId
-			).map(
-				String::valueOf
-			).collect(
-				Collectors.joining(StringPool.COMMA)
-			));
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+				List<AssetVocabulary> assetVocabularies =
+					_assetVocabularyLocalService.getCompanyVocabularies(
+						themeDisplay.getCompanyId());
 
-		return portletURL;
+				Stream<AssetVocabulary> assetVocabularyStream =
+					assetVocabularies.stream();
+
+				return assetVocabularyStream.map(
+					AssetVocabulary::getVocabularyId
+				).map(
+					String::valueOf
+				).collect(
+					Collectors.joining(StringPool.COMMA)
+				);
+			}
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 	}
 
 	private PortletURL _getAssetTagSelectorURL()
 		throws PortalException, WindowStateException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_liferayPortletRequest, AssetTag.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		portletURL.setParameter(
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_liferayPortletRequest, AssetTag.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setParameter(
 			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectedAssetTag");
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		List<Long> groupIds = _groupLocalService.getGroupIds(
-			themeDisplay.getCompanyId(), true);
-
-		Stream<Long> groupIdsStream = groupIds.stream();
-
-		portletURL.setParameter(
+			_liferayPortletResponse.getNamespace() + "selectedAssetTag"
+		).setParameter(
 			"groupIds",
-			groupIdsStream.map(
-				String::valueOf
-			).collect(
-				Collectors.joining(StringPool.COMMA)
-			));
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-		Set<String> assetTagIds =
-			_contentDashboardAdminDisplayContext.getAssetTagIds();
+				List<Long> groupIds = _groupLocalService.getGroupIds(
+					themeDisplay.getCompanyId(), true);
 
-		Stream<String> assetTagIdsStream = assetTagIds.stream();
+				Stream<Long> groupIdsStream = groupIds.stream();
 
-		portletURL.setParameter(
+				return groupIdsStream.map(
+					String::valueOf
+				).collect(
+					Collectors.joining(StringPool.COMMA)
+				);
+			}
+		).setParameter(
 			"selectedTagNames",
-			assetTagIdsStream.collect(Collectors.joining(StringPool.COMMA)));
+			() -> {
+				Set<String> assetTagIds =
+					_contentDashboardAdminDisplayContext.getAssetTagIds();
 
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+				Stream<String> assetTagIdsStream = assetTagIds.stream();
 
-		return portletURL;
+				return assetTagIdsStream.collect(
+					Collectors.joining(StringPool.COMMA));
+			}
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).build();
 	}
 
 	private List<DropdownItem> _getFilterAuthorDropdownItems() {
@@ -566,9 +593,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 				dropdownItem.setActive(authorIds.isEmpty());
 
-				PortletURL portletURL = getPortletURL();
-
-				portletURL.setParameter("authorIds", (String)null);
+				PortletURL portletURL = PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"authorIds", (String)null
+				).build();
 
 				dropdownItem.setHref(portletURL);
 
@@ -611,9 +640,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					"dialogTitle",
 					LanguageUtil.get(httpServletRequest, "select-author"));
 
-				PortletURL portletURL = getPortletURL();
-
-				portletURL.setParameter("authorIds", (String)null);
+				PortletURL portletURL = PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"authorIds", (String)null
+				).build();
 
 				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
 
@@ -645,9 +676,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					"dialogTitle",
 					LanguageUtil.get(httpServletRequest, "select-categories"));
 
-				PortletURL portletURL = getPortletURL();
-
-				portletURL.setParameter("assetCategoryId", (String)null);
+				PortletURL portletURL = PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"assetCategoryId", (String)null
+				).build();
 
 				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
 
@@ -674,9 +707,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					LanguageUtil.get(
 						httpServletRequest, "select-site-or-asset-library"));
 
-				PortletURL portletURL = getPortletURL();
-
-				portletURL.setParameter("scopeId", (String)null);
+				PortletURL portletURL = PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"scopeId", (String)null
+				).build();
 
 				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
 
@@ -710,10 +745,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					"dialogTitle",
 					LanguageUtil.get(httpServletRequest, "select-subtype"));
 
-				PortletURL portletURL = getPortletURL();
-
-				portletURL.setParameter(
-					"contentDashboardItemTypePayload", (String)null);
+				PortletURL portletURL = PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"contentDashboardItemTypePayload", (String)null
+				).build();
 
 				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
 
@@ -737,9 +773,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					"dialogTitle",
 					LanguageUtil.get(httpServletRequest, "select-tags"));
 
-				PortletURL portletURL = getPortletURL();
-
-				portletURL.setParameter("assetTagId", (String)null);
+				PortletURL portletURL = PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"assetTagId", (String)null
+				).build();
 
 				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
 

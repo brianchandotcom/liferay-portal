@@ -16,6 +16,7 @@ package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -62,7 +63,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.WindowStateException;
 
@@ -235,17 +235,17 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			PortletURLFactory portletURLFactory)
 		throws WindowStateException {
 
-		PortletURL portletURL = portletURLFactory.create(
-			httpServletRequest, LayoutReportsPortletKeys.LAYOUT_REPORTS,
-			RenderRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/layout_reports/layout_reports_panel");
-		portletURL.setParameter(
-			"redirect", portal.getCurrentCompleteURL(httpServletRequest));
-		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			portletURLFactory.create(
+				httpServletRequest, LayoutReportsPortletKeys.LAYOUT_REPORTS,
+				RenderRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/layout_reports/layout_reports_panel"
+		).setRedirect(
+			portal.getCurrentCompleteURL(httpServletRequest)
+		).setWindowState(
+			LiferayWindowState.EXCLUSIVE
+		).buildString();
 	}
 
 	private boolean _hasEditPermission(

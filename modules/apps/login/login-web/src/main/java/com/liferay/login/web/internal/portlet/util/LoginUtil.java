@@ -16,6 +16,7 @@ package com.liferay.login.web.internal.portlet.util;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.petra.content.ContentUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -176,16 +177,19 @@ public class LoginUtil {
 			HttpServletRequest httpServletRequest, long plid)
 		throws PortletModeException, WindowStateException {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, LoginPortletKeys.LOGIN, plid,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		portletURL.setParameter("mvcRenderCommandName", "/login/login");
-		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(WindowState.MAXIMIZED);
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, LoginPortletKeys.LOGIN, plid,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/login/login"
+		).setParameter(
+			"saveLastPath", Boolean.FALSE.toString()
+		).setPortletMode(
+			PortletMode.VIEW
+		).setWindowState(
+			WindowState.MAXIMIZED
+		).build();
 	}
 
 	public static void sendPassword(

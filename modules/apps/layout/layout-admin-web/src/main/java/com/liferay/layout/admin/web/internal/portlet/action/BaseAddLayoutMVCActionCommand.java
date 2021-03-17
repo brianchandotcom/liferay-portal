@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -75,11 +76,11 @@ public abstract class BaseAddLayoutMVCActionCommand
 		LiferayPortletResponse liferayPortletResponse =
 			portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL configureLayoutURL =
-			liferayPortletResponse.createRenderURL();
-
-		configureLayoutURL.setParameter(
-			"mvcRenderCommandName", "/layout_admin/edit_layout");
+		PortletURL configureLayoutURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/layout_admin/edit_layout"
+		).build();
 
 		String backURL = ParamUtil.getString(actionRequest, "backURL");
 

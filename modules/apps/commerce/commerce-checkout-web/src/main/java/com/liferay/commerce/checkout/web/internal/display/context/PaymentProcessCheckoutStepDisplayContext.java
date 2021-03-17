@@ -21,17 +21,15 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.petra.encryptor.Encryptor;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 
 import java.security.Key;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,22 +88,21 @@ public class PaymentProcessCheckoutStepDisplayContext {
 	}
 
 	private String _getOrderConfirmationCheckoutStepUrl() {
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceCheckoutRequestHelper.getLiferayPortletResponse();
+		return PortletURLBuilder.createRenderURL(
+			_commerceCheckoutRequestHelper.getLiferayPortletResponse()
+		).setParameter(
+			"commerceOrderUuid", _commerceOrder.getUuid()
+		).setParameter(
+			"checkoutStepName",
+			() -> {
+				CommerceCheckoutStep commerceCheckoutStep =
+					_commerceCheckoutStepServicesTracker.
+						getCommerceCheckoutStep(
+							OrderConfirmationCommerceCheckoutStep.NAME);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"commerceOrderUuid", String.valueOf(_commerceOrder.getUuid()));
-
-		CommerceCheckoutStep commerceCheckoutStep =
-			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(
-				OrderConfirmationCommerceCheckoutStep.NAME);
-
-		portletURL.setParameter(
-			"checkoutStepName", commerceCheckoutStep.getName());
-
-		return portletURL.toString();
+				return commerceCheckoutStep.getName();
+			}
+		).buildString();
 	}
 
 	private String _getPathModule() {

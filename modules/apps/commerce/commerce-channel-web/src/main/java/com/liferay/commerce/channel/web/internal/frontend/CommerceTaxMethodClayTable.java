@@ -34,6 +34,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuild
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -47,8 +48,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -106,25 +105,26 @@ public class CommerceTaxMethodClayTable
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				long commerceChannelId = ParamUtil.getLong(
-					httpServletRequest, "commerceChannelId");
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							httpServletRequest,
+							CommerceTaxMethod.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setParameter(
+						"commerceChannelId",
+						ParamUtil.getLong(
+							httpServletRequest, "commerceChannelId")
+					).setParameter(
+						"commerceTaxMethodEngineKey",
+						() -> {
+							TaxMethod taxMethod = (TaxMethod)model;
 
-				PortletURL portletURL = PortletProviderUtil.getPortletURL(
-					httpServletRequest, CommerceTaxMethod.class.getName(),
-					PortletProvider.Action.EDIT);
-
-				portletURL.setParameter(
-					"commerceChannelId", String.valueOf(commerceChannelId));
-
-				TaxMethod taxMethod = (TaxMethod)model;
-
-				portletURL.setParameter(
-					"commerceTaxMethodEngineKey",
-					String.valueOf(taxMethod.getKey()));
-
-				portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-				dropdownItem.setHref(portletURL.toString());
+							return taxMethod.getKey();
+						}
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));

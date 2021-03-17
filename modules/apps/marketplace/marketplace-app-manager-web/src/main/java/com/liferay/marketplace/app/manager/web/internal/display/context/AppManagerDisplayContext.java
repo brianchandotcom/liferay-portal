@@ -16,12 +16,12 @@ package com.liferay.marketplace.app.manager.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,23 +60,23 @@ public class AppManagerDisplayContext {
 	}
 
 	private String _getViewModuleURL(String pluginType) {
-		String app = ParamUtil.getString(_httpServletRequest, "app");
-		String moduleGroup = ParamUtil.getString(
-			_httpServletRequest, "moduleGroup");
-		String symbolicName = ParamUtil.getString(
-			_httpServletRequest, "symbolicName");
-		String version = ParamUtil.getString(_httpServletRequest, "version");
-
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_module.jsp");
-		portletURL.setParameter("app", app);
-		portletURL.setParameter("moduleGroup", moduleGroup);
-		portletURL.setParameter("symbolicName", symbolicName);
-		portletURL.setParameter("version", version);
-		portletURL.setParameter("pluginType", pluginType);
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view_module.jsp"
+		).setParameter(
+			"app", ParamUtil.getString(_httpServletRequest, "app")
+		).setParameter(
+			"moduleGroup",
+			ParamUtil.getString(_httpServletRequest, "moduleGroup")
+		).setParameter(
+			"symbolicName",
+			ParamUtil.getString(_httpServletRequest, "symbolicName")
+		).setParameter(
+			"version", ParamUtil.getString(_httpServletRequest, "version")
+		).setParameter(
+			"pluginType", pluginType
+		).buildString();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

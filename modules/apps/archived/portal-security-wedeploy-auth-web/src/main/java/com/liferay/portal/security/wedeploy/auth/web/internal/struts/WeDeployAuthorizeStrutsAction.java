@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.wedeploy.auth.web.internal.struts;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -25,7 +26,6 @@ import com.liferay.portal.security.wedeploy.auth.web.internal.constants.WeDeploy
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,20 +59,21 @@ public class WeDeployAuthorizeStrutsAction implements StrutsAction {
 			return null;
 		}
 
-		String redirectURI = ParamUtil.getString(
-			httpServletRequest, "redirect_uri");
-		String clientId = ParamUtil.getString(httpServletRequest, "client_id");
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirectURI", redirectURI);
-		portletURL.setParameter("clientId", clientId);
-		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		portletURL.setPortletMode(PortletMode.VIEW);
-
-		httpServletResponse.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
+					themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"redirectURI",
+				ParamUtil.getString(httpServletRequest, "redirect_uri")
+			).setParameter(
+				"clientId", ParamUtil.getString(httpServletRequest, "client_id")
+			).setParameter(
+				"saveLastPath", Boolean.FALSE.toString()
+			).setPortletMode(
+				PortletMode.VIEW
+			).buildString());
 
 		return null;
 	}
@@ -82,16 +83,20 @@ public class WeDeployAuthorizeStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse, long plid)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, PortletKeys.LOGIN, plid,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		portletURL.setParameter("mvcRenderCommandName", "/login/login");
-		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
-
-		httpServletResponse.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, PortletKeys.LOGIN, plid,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/login/login"
+			).setParameter(
+				"saveLastPath", Boolean.FALSE.toString()
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				LiferayWindowState.MAXIMIZED
+			).buildString());
 	}
 
 }

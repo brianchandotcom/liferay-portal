@@ -23,6 +23,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -49,7 +50,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -238,17 +238,17 @@ public class TranslateDisplayContext {
 	}
 
 	public PortletURL getUpdateTranslationPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/translation/update_translation");
-		portletURL.setParameter("groupId", String.valueOf(_getGroupId()));
-		portletURL.setParameter(
-			"classNameId",
-			String.valueOf(PortalUtil.getClassNameId(_className)));
-		portletURL.setParameter("classPK", String.valueOf(_classPK));
-
-		return portletURL;
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/translation/update_translation"
+		).setParameter(
+			"groupId", _getGroupId()
+		).setParameter(
+			"classNameId", PortalUtil.getClassNameId(_className)
+		).setParameter(
+			"classPK", _classPK
+		).build();
 	}
 
 	public boolean hasTranslationPermission() {

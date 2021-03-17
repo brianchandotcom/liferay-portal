@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -51,7 +52,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -94,22 +94,24 @@ public class AssetCategoriesSelectorDisplayContext {
 			return null;
 		}
 
-		PortletURL addCategoryURL = PortletURLFactoryUtil.create(
-			_renderRequest,
-			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		addCategoryURL.setParameter("mvcPath", "/edit_category.jsp");
-		addCategoryURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		addCategoryURL.setParameter(
-			"groupId", String.valueOf(assetVocabulary.getGroupId()));
-		addCategoryURL.setParameter(
-			"vocabularyId", String.valueOf(vocabularyIds[0]));
-		addCategoryURL.setParameter("itemSelectorEventName", getEventName());
-
-		addCategoryURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return addCategoryURL.toString();
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_renderRequest,
+				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_category.jsp"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"groupId", assetVocabulary.getGroupId()
+		).setParameter(
+			"vocabularyId", vocabularyIds[0]
+		).setParameter(
+			"itemSelectorEventName", getEventName()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public JSONArray getCategoriesJSONArray() throws Exception {

@@ -15,6 +15,7 @@
 package com.liferay.password.policies.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,19 +57,18 @@ public class AssignMembersPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portletURLFactory.create(
-			portletRequest,
-			PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcPath", "/edit_password_policy_assignments.jsp");
-		portletURL.setParameter(
-			"passwordPolicyId",
-			String.valueOf(_getPasswordPolicyId(portletRequest)));
-		portletURL.setParameter("tabs1", "assignees");
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			_portletURLFactory.create(
+				portletRequest,
+				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_password_policy_assignments.jsp"
+		).setParameter(
+			"passwordPolicyId", _getPasswordPolicyId(portletRequest)
+		).setParameter(
+			"tabs1", "assignees"
+		).buildString();
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistr
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,7 +51,6 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -190,28 +190,31 @@ public class CommerceSubscriptionEntryDisplayContext {
 	public String getEditCommerceOrderURL(long commerceOrderId)
 		throws PortalException {
 
-		String orderId;
-
-		if (commerceOrderId > 0) {
-			orderId = String.valueOf(commerceOrderId);
-		}
-		else {
-			orderId = String.valueOf(getCommerceOrderId());
-		}
-
 		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_httpServletRequest, themeDisplay.getScopeGroup(),
-			CommerceOrder.class.getName(), PortletProvider.Action.MANAGE);
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_httpServletRequest, themeDisplay.getScopeGroup(),
+				CommerceOrder.class.getName(), PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"commerceOrderId",
+			() -> {
+				String orderId;
 
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_open_order_content/edit_commerce_order");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("commerceOrderId", orderId);
+				if (commerceOrderId > 0) {
+					orderId = String.valueOf(commerceOrderId);
+				}
+				else {
+					orderId = String.valueOf(getCommerceOrderId());
+				}
 
-		return portletURL.toString();
+				return orderId;
+			}
+		).buildString();
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() {
@@ -229,14 +232,15 @@ public class CommerceSubscriptionEntryDisplayContext {
 			new HeaderActionModel(
 				null, null, cancelURL.toString(), null, "cancel"));
 
-		PortletURL portletURL = getTransitionOrderPortletURL();
-
-		portletURL.setParameter("transitionName", "save");
-
 		headerActionModels.add(
 			new HeaderActionModel(
 				"btn-primary", renderResponse.getNamespace() + "fm",
-				portletURL.toString(), null, "save"));
+				PortletURLBuilder.create(
+					getTransitionOrderPortletURL()
+				).setParameter(
+					"transitionName", "save"
+				).buildString(),
+				null, "save"));
 
 		return headerActionModels;
 	}
@@ -342,22 +346,18 @@ public class CommerceSubscriptionEntryDisplayContext {
 	}
 
 	public PortletURL getTransitionOrderPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_open_order_content/edit_commerce_order");
-		portletURL.setParameter(Constants.CMD, ActionKeys.UPDATE);
-		portletURL.setParameter(
+		return PortletURLBuilder.createActionURL(
+			_cpRequestHelper.getLiferayPortletResponse()
+		).setActionName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setRedirect(
+			_cpRequestHelper.getCurrentURL()
+		).setParameter(
+			Constants.CMD, ActionKeys.UPDATE
+		).setParameter(
 			"commerceSubscriptionEntryId",
-			String.valueOf(
-				_commerceSubscriptionEntry.getCommerceSubscriptionEntryId()));
-		portletURL.setParameter("redirect", _cpRequestHelper.getCurrentURL());
-
-		return portletURL;
+			_commerceSubscriptionEntry.getCommerceSubscriptionEntryId()
+		).build();
 	}
 
 	public boolean hasManageCommerceSubscriptionEntryPermission() {

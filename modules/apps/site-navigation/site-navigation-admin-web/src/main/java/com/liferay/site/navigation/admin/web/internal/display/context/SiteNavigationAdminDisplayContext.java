@@ -16,6 +16,7 @@ package com.liferay.site.navigation.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -58,7 +59,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -262,59 +262,38 @@ public class SiteNavigationAdminDisplayContext {
 			getAddSiteNavigationMenuItemDropdownItems()
 		).put(
 			"deleteSiteNavigationMenuItemURL",
-			() -> {
-				PortletURL actionURL =
-					_liferayPortletResponse.createActionURL();
-
-				actionURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/site_navigation_admin/delete_site_navigation_menu_item");
-
-				return actionURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/site_navigation_admin/delete_site_navigation_menu_item"
+			).buildString()
 		).put(
 			"editSiteNavigationMenuItemParentURL",
-			() -> {
-				PortletURL actionURL =
-					_liferayPortletResponse.createActionURL();
-
-				actionURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/site_navigation_admin" +
-						"/edit_site_navigation_menu_item_parent");
-
-				actionURL.setParameter(
-					"redirect",
-					PortalUtil.getCurrentURL(_liferayPortletRequest));
-
-				return actionURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/site_navigation_admin/edit_site_navigation_menu_item_parent"
+			).setRedirect(
+				PortalUtil.getCurrentURL(_liferayPortletRequest)
+			).buildString()
 		).put(
 			"editSiteNavigationMenuItemURL",
-			() -> {
-				PortletURL renderURL =
-					_liferayPortletResponse.createRenderURL();
-
-				renderURL.setParameter(
-					"mvcPath", "/edit_site_navigation_menu_item.jsp");
-
-				renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-				return renderURL.toString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/edit_site_navigation_menu_item.jsp"
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString()
 		).put(
 			"editSiteNavigationMenuSettingsURL",
-			() -> {
-				PortletURL renderURL =
-					_liferayPortletResponse.createRenderURL();
-
-				renderURL.setParameter(
-					"mvcPath", "/site_navigation_menu_settings.jsp");
-
-				renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-				return renderURL.toString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/site_navigation_menu_settings.jsp"
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString()
 		).put(
 			"id", _liferayPortletResponse.getNamespace() + "sidebar"
 		).put(
@@ -415,30 +394,33 @@ public class SiteNavigationAdminDisplayContext {
 	private String _getAddURL(
 		SiteNavigationMenuItemType siteNavigationMenuItemType) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		PortletURL addURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/add_site_navigation_menu_item.jsp"
+		).setRedirect(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/add_site_navigation_menu_item_redirect.jsp"
+			).setParameter(
+				"portletResource",
+				() -> {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)_httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
 
-		PortletURL addURL = _liferayPortletResponse.createRenderURL();
-
-		addURL.setParameter("mvcPath", "/add_site_navigation_menu_item.jsp");
-
-		PortletURL addSiteNavigationMenuItemRedirectURL =
-			_liferayPortletResponse.createRenderURL();
-
-		addSiteNavigationMenuItemRedirectURL.setParameter(
-			"mvcPath", "/add_site_navigation_menu_item_redirect.jsp");
-		addSiteNavigationMenuItemRedirectURL.setParameter(
-			"portletResource", portletDisplay.getId());
-
-		addURL.setParameter(
-			"redirect", addSiteNavigationMenuItemRedirectURL.toString());
-
-		addURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(getSiteNavigationMenuId()));
-		addURL.setParameter("type", siteNavigationMenuItemType.getType());
+					return portletDisplay.getId();
+				}
+			).buildString()
+		).setParameter(
+			"siteNavigationMenuId", getSiteNavigationMenuId()
+		).setParameter(
+			"type", siteNavigationMenuItemType.getType()
+		).build();
 
 		try {
 			addURL.setWindowState(LiferayWindowState.POP_UP);

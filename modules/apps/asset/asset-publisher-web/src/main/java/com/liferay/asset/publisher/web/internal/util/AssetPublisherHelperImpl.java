@@ -33,6 +33,7 @@ import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -547,18 +548,15 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		AssetRenderer<?> assetRenderer, AssetEntry assetEntry,
 		boolean viewInContext) {
 
-		PortletURL viewFullContentURL = getBaseAssetViewURL(
-			liferayPortletRequest, liferayPortletResponse, assetRenderer,
-			assetEntry);
-
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		int cur = ParamUtil.getInteger(liferayPortletRequest, "cur");
 		int delta = ParamUtil.getInteger(liferayPortletRequest, "delta");
 		boolean resetCur = ParamUtil.getBoolean(
 			liferayPortletRequest, "resetCur");
 
-		redirectURL.setParameter("cur", String.valueOf(cur));
+		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"cur", ParamUtil.getInteger(liferayPortletRequest, "cur")
+		).build();
 
 		if (delta > 0) {
 			redirectURL.setParameter("delta", String.valueOf(delta));
@@ -568,7 +566,13 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		redirectURL.setParameter(
 			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
 
-		viewFullContentURL.setParameter("redirect", redirectURL.toString());
+		PortletURL viewFullContentURL = PortletURLBuilder.create(
+			getBaseAssetViewURL(
+				liferayPortletRequest, liferayPortletResponse, assetRenderer,
+				assetEntry)
+		).setRedirect(
+			redirectURL.toString()
+		).build();
 
 		String viewURL = null;
 
@@ -608,16 +612,21 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		LiferayPortletResponse liferayPortletResponse,
 		AssetRenderer<?> assetRenderer, AssetEntry assetEntry) {
 
-		PortletURL baseAssetViewURL = liferayPortletResponse.createRenderURL();
+		PortletURL baseAssetViewURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/view_content.jsp"
+		).setParameter(
+			"assetEntryId", assetEntry.getEntryId()
+		).setParameter(
+			"type",
+			() -> {
+				AssetRendererFactory<?> assetRendererFactory =
+					assetRenderer.getAssetRendererFactory();
 
-		baseAssetViewURL.setParameter("mvcPath", "/view_content.jsp");
-		baseAssetViewURL.setParameter(
-			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
-
-		AssetRendererFactory<?> assetRendererFactory =
-			assetRenderer.getAssetRendererFactory();
-
-		baseAssetViewURL.setParameter("type", assetRendererFactory.getType());
+				return assetRendererFactory.getType();
+			}
+		).build();
 
 		String urlTitle = assetRenderer.getUrlTitle(
 			liferayPortletRequest.getLocale());

@@ -14,6 +14,7 @@
 
 package com.liferay.product.navigation.product.menu.web.internal.product.navigation.control.menu;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -103,20 +104,27 @@ public class ProductMenuProductNavigationControlMenuEntry
 		else {
 			values.put("cssClass", StringPool.BLANK);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest,
+					ProductNavigationProductMenuPortletKeys.
+						PRODUCT_NAVIGATION_PRODUCT_MENU,
+					RenderRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/portlet/product_menu.jsp"
+			).setParameter(
+				"selPpid",
+				() -> {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
 
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				httpServletRequest,
-				ProductNavigationProductMenuPortletKeys.
-					PRODUCT_NAVIGATION_PRODUCT_MENU,
-				RenderRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcPath", "/portlet/product_menu.jsp");
-			portletURL.setParameter("selPpid", portletDisplay.getId());
+					return portletDisplay.getId();
+				}
+			).build();
 
 			try {
 				portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);

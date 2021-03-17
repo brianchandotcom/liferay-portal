@@ -21,6 +21,7 @@ import com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.MarketplaceAppManagerUtil;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -83,9 +84,11 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 			categoriesMap.put(translatedCategory, category);
 		}
 
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter("resetCur", Boolean.TRUE.toString());
+		PortletURL portletURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"resetCur", Boolean.TRUE.toString()
+		).build();
 
 		return getDropdownItems(
 			categoriesMap, portletURL, "category", getCategory());
@@ -101,11 +104,11 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = liferayPortletResponse.createRenderURL();
-
-		searchActionURL.setParameter("mvcPath", "/view_search_results.jsp");
-
-		return searchActionURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/view_search_results.jsp"
+		).buildString();
 	}
 
 	public abstract SearchContainer<Object> getSearchContainer()
@@ -127,9 +130,11 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 			BundleStateConstants.INSTALLED_LABEL
 		};
 
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter("resetCur", Boolean.TRUE.toString());
+		PortletURL portletURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"resetCur", Boolean.TRUE.toString()
+		).build();
 
 		return getDropdownItems(
 			getDefaultEntriesMap(states), portletURL, "state", getState());

@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -35,8 +36,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -76,19 +75,15 @@ public class ReschedulePublicationDisplayContext {
 			"redirect", getRedirect()
 		).put(
 			"rescheduleURL",
-			() -> {
-				PortletURL scheduleURL = _renderResponse.createActionURL();
-
-				scheduleURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/change_tracking/reschedule_publication");
-				scheduleURL.setParameter("redirect", getRedirect());
-				scheduleURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId()));
-
-				return scheduleURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/reschedule_publication"
+			).setRedirect(
+				getRedirect()
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).buildString()
 		).put(
 			"scheduledDate",
 			StringBundler.concat(
@@ -121,19 +116,15 @@ public class ReschedulePublicationDisplayContext {
 			}
 		).put(
 			"unscheduleURL",
-			() -> {
-				PortletURL scheduleURL = _renderResponse.createActionURL();
-
-				scheduleURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/change_tracking/unschedule_publication");
-				scheduleURL.setParameter("redirect", getRedirect());
-				scheduleURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId()));
-
-				return scheduleURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/unschedule_publication"
+			).setRedirect(
+				getRedirect()
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).buildString()
 		).build();
 	}
 
@@ -144,12 +135,11 @@ public class ReschedulePublicationDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/change_tracking/view_scheduled");
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/change_tracking/view_scheduled"
+		).buildString();
 	}
 
 	public String getTitle() {

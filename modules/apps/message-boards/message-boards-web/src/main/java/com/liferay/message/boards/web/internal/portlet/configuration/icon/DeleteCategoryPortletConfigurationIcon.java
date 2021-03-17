@@ -18,6 +18,7 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.web.internal.portlet.action.ActionUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -74,24 +74,28 @@ public class DeleteCategoryPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL deleteURL = _portal.getControlPanelPortletURL(
-				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-				PortletRequest.ACTION_PHASE);
+			PortletURL deleteURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"/message_boards/edit_category"
+			).setParameter(
+				Constants.CMD,
+				() -> {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)portletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-			deleteURL.setParameter(
-				ActionRequest.ACTION_NAME, "/message_boards/edit_category");
+					String cmd = Constants.DELETE;
 
-			String cmd = Constants.DELETE;
+					if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
+						cmd = Constants.MOVE_TO_TRASH;
+					}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-				cmd = Constants.MOVE_TO_TRASH;
-			}
-
-			deleteURL.setParameter(Constants.CMD, cmd);
+					return cmd;
+				}
+			).build();
 
 			PortletURL parentCategoryURL = _portal.getControlPanelPortletURL(
 				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,

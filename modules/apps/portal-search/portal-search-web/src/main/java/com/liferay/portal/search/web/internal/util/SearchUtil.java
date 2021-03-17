@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
@@ -151,11 +152,15 @@ public class SearchUtil {
 		String currentURL) {
 
 		try {
-			PortletURL viewContentURL = renderResponse.createRenderURL();
-
-			viewContentURL.setParameter("mvcPath", "/view_content.jsp");
-			viewContentURL.setPortletMode(PortletMode.VIEW);
-			viewContentURL.setWindowState(WindowState.MAXIMIZED);
+			PortletURL viewContentURL = PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCPath(
+				"/view_content.jsp"
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).build();
 
 			if (Validator.isNull(className) || (classPK <= 0)) {
 				return HttpUtil.setParameter(

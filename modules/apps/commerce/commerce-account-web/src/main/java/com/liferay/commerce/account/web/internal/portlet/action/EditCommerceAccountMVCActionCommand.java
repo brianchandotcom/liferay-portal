@@ -30,6 +30,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -85,13 +86,13 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameters(new HashMap<>());
-
-		String redirect = portletURL.toString();
+		String redirect = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				actionRequest, CommerceAccount.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setParameters(
+			new HashMap<>()
+		).buildString();
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
@@ -139,23 +140,22 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, CommerceAccount commerceAccount)
 		throws PortalException {
 
-		PortletURL managePortletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.VIEW);
-
-		portletURL.setParameter(
-			"commerceAccountId",
-			String.valueOf(commerceAccount.getCommerceAccountId()));
-
-		portletURL.setParameter(
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				actionRequest, CommerceAccount.class.getName(),
+				PortletProvider.Action.VIEW)
+		).setParameter(
+			"commerceAccountId", commerceAccount.getCommerceAccountId()
+		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			managePortletURL.toString());
+			() -> {
+				PortletURL managePortletURL = PortletProviderUtil.getPortletURL(
+					actionRequest, CommerceAccount.class.getName(),
+					PortletProvider.Action.MANAGE);
 
-		return portletURL.toString();
+				return managePortletURL.toString();
+			}
+		).buildString();
 	}
 
 	protected void setActive(ActionRequest actionRequest)

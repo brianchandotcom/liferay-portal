@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -43,7 +44,6 @@ import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -131,13 +131,13 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 		LayoutLocalServiceUtil.updateLayout(layout);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			PortletContainerTestUtil.getHttpServletRequest(group, layout),
-			TEST_PORTLET_ID, layout.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(prpName, prpValue);
-
-		String portletURLString = portletURL.toString();
+		String portletURLString = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				PortletContainerTestUtil.getHttpServletRequest(group, layout),
+				TEST_PORTLET_ID, layout.getPlid(), PortletRequest.RENDER_PHASE)
+		).setParameter(
+			prpName, prpValue
+		).buildString();
 
 		Assert.assertTrue(
 			portletURLString,
@@ -188,13 +188,13 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			PortletContainerTestUtil.getHttpServletRequest(group, layout),
-			TEST_PORTLET_ID, layout.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(prpName, prpValue);
-
-		String portletURLString = portletURL.toString();
+		String portletURLString = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				PortletContainerTestUtil.getHttpServletRequest(group, layout),
+				TEST_PORTLET_ID, layout.getPlid(), PortletRequest.RENDER_PHASE)
+		).setParameter(
+			prpName, prpValue
+		).buildString();
 
 		Assert.assertTrue(
 			portletURLString,

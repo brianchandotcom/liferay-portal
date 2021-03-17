@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.web.internal.portlet.configuration.icon;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,22 +64,27 @@ public class PrintKBTemplatePortletConfigurationIcon
 
 			sb.append("window.open('");
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				PortletRequest.RENDER_PHASE);
+			sb.append(
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/admin/print_template.jsp"
+				).setParameter(
+					"kbTemplateId",
+					() -> {
+						KBTemplate kbTemplate =
+							(KBTemplate)portletRequest.getAttribute(
+								KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 
-			portletURL.setParameter("mvcPath", "/admin/print_template.jsp");
-
-			KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
-
-			portletURL.setParameter(
-				"kbTemplateId", String.valueOf(kbTemplate.getKbTemplateId()));
-
-			portletURL.setParameter("viewMode", Constants.PRINT);
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			sb.append(portletURL.toString());
+						return kbTemplate.getKbTemplateId();
+					}
+				).setParameter(
+					"viewMode", Constants.PRINT
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 
 			sb.append("', '', 'directories=no,height=640,location=no,");
 			sb.append("menubar=no,resizable=yes,scrollbars=yes,status=0,");

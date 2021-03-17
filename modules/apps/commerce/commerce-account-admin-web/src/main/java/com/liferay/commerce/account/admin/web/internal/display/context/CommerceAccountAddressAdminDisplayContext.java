@@ -20,12 +20,12 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
@@ -130,53 +129,42 @@ public class CommerceAccountAddressAdminDisplayContext
 	}
 
 	public String getDeleteCommerceAddressURL(long commerceAddressId) {
-		LiferayPortletResponse liferayPortletResponse =
-			commerceAccountAdminRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_account_admin/edit_commerce_address");
-		portletURL.setParameter(
-			"redirect", commerceAccountAdminRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"commerceAddressId", String.valueOf(commerceAddressId));
-
-		return portletURL.toString();
+		return PortletURLBuilder.createActionURL(
+			commerceAccountAdminRequestHelper.getLiferayPortletResponse()
+		).setActionName(
+			"/commerce_account_admin/edit_commerce_address"
+		).setRedirect(
+			commerceAccountAdminRequestHelper.getCurrentURL()
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).setParameter(
+			"commerceAddressId", commerceAddressId
+		).buildString();
 	}
 
 	public String getEditCommerceAddressURL(long commerceAddressId)
 		throws PortalException {
 
-		LiferayPortletResponse liferayPortletResponse =
-			commerceAccountAdminRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_account_admin/edit_commerce_address");
-		portletURL.setParameter(
-			"redirect", commerceAccountAdminRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"commerceAccountId", String.valueOf(getCommerceAccountId()));
-		portletURL.setParameter(
-			"commerceAddressId", String.valueOf(commerceAddressId));
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			commerceAccountAdminRequestHelper.getLiferayPortletResponse()
+		).setMVCRenderCommandName(
+			"/commerce_account_admin/edit_commerce_address"
+		).setRedirect(
+			commerceAccountAdminRequestHelper.getCurrentURL()
+		).setParameter(
+			"commerceAccountId", getCommerceAccountId()
+		).setParameter(
+			"commerceAddressId", commerceAddressId
+		).buildString();
 	}
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_account_admin/edit_commerce_account");
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			super.getPortletURL()
+		).setMVCRenderCommandName(
+			"/commerce_account_admin/edit_commerce_account"
+		).build();
 	}
 
 	public long getRegionId() throws PortalException {

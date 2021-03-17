@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -127,11 +128,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	public String getDefaultWorkflowDefinitionLabel(String className)
@@ -246,12 +247,15 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter(
-			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
-		portletURL.setParameter("tabs1", "default-configuration");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
+		).setParameter(
+			"tabs1", "default-configuration"
+		).build();
 
 		String delta = ParamUtil.getString(_httpServletRequest, "delta");
 
@@ -374,34 +378,39 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public String getSearchURL() {
-		PortletURL portletURL = getPortletURL();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"groupId",
+			() -> {
+				ThemeDisplay themeDisplay =
+					_workflowDefinitionLinkRequestHelper.getThemeDisplay();
 
-		ThemeDisplay themeDisplay =
-			_workflowDefinitionLinkRequestHelper.getThemeDisplay();
-
-		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-
-		return portletURL.toString();
+				return themeDisplay.getScopeGroupId();
+			}
+		).buildString();
 	}
 
 	public String getSortingURL() throws PortletException {
-		LiferayPortletResponse liferayPortletResponse =
-			_workflowDefinitionLinkRequestHelper.getLiferayPortletResponse();
+		return PortletURLBuilder.createRenderURL(
+			_workflowDefinitionLinkRequestHelper.getLiferayPortletResponse()
+		).setParameter(
+			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
+		).setParameter(
+			"orderByCol", getOrderByCol()
+		).setParameter(
+			"orderByType",
+			() -> {
+				String orderByType = ParamUtil.getString(
+					_httpServletRequest, "orderByType", "asc");
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+				if (Objects.equals(orderByType, "asc")) {
+					return "desc";
+				}
 
-		portletURL.setParameter(
-			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
-		portletURL.setParameter("orderByCol", getOrderByCol());
-
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
-
-		portletURL.setParameter(
-			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
-
-		return portletURL.toString();
+				return "asc";
+			}
+		).buildString();
 	}
 
 	public int getTotalItems() throws PortalException {

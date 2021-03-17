@@ -20,6 +20,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -45,7 +46,6 @@ import java.util.TimeZone;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
@@ -110,19 +110,15 @@ public class ViewConflictsDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"publishURL",
-			() -> {
-				PortletURL publishURL = _renderResponse.createActionURL();
-
-				publishURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/change_tracking/publish_ct_collection");
-				publishURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId()));
-				publishURL.setParameter("name", _ctCollection.getName());
-
-				return publishURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/publish_ct_collection"
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).setParameter(
+				"name", _ctCollection.getName()
+			).buildString()
 		).put(
 			"redirect", getRedirect()
 		).put(
@@ -131,19 +127,15 @@ public class ViewConflictsDisplayContext {
 			"schedule", ParamUtil.getBoolean(_renderRequest, "schedule")
 		).put(
 			"scheduleURL",
-			() -> {
-				PortletURL scheduleURL = _renderResponse.createActionURL();
-
-				scheduleURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/change_tracking/schedule_publication");
-				scheduleURL.setParameter("redirect", getRedirect());
-				scheduleURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId()));
-
-				return scheduleURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/schedule_publication"
+			).setRedirect(
+				getRedirect()
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).buildString()
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(
@@ -172,15 +164,13 @@ public class ViewConflictsDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/change_tracking/view_changes");
-		portletURL.setParameter(
-			"ctCollectionId",
-			String.valueOf(_ctCollection.getCtCollectionId()));
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/change_tracking/view_changes"
+		).setParameter(
+			"ctCollectionId", _ctCollection.getCtCollectionId()
+		).buildString();
 	}
 
 	private <T extends BaseModel<T>> JSONObject _getConflictJSONObject(

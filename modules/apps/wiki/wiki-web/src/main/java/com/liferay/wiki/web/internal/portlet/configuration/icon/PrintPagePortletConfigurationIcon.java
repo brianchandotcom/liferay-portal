@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,7 +32,6 @@ import com.liferay.wiki.web.internal.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,24 +60,36 @@ public class PrintPagePortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			WikiNode node = ActionUtil.getNode(portletRequest);
-			WikiPage page = ActionUtil.getPage(portletRequest);
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("window.open('");
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.RENDER_PHASE);
+			sb.append(
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest, WikiPortletKeys.WIKI_ADMIN,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/wiki/view"
+				).setParameter(
+					"nodeName",
+					() -> {
+						WikiNode node = ActionUtil.getNode(portletRequest);
 
-			portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-			portletURL.setParameter("nodeName", node.getName());
-			portletURL.setParameter("title", page.getTitle());
-			portletURL.setParameter("viewMode", Constants.PRINT);
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+						return node.getName();
+					}
+				).setParameter(
+					"title",
+					() -> {
+						WikiPage page = ActionUtil.getPage(portletRequest);
 
-			sb.append(portletURL.toString());
+						return page.getTitle();
+					}
+				).setParameter(
+					"viewMode", Constants.PRINT
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 
 			sb.append("', '', 'directories=0,height=480,left=80,location=1,");
 			sb.append("menubar=1,resizable=1,scrollbars=yes,status=0,");

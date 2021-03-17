@@ -15,9 +15,9 @@
 package com.liferay.trash.web.internal.portlet;
 
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.TrashPermissionException;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -49,7 +49,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -302,28 +301,24 @@ public class TrashPortlet extends MVCPortlet {
 				TrashEntryConstants.DEFAULT_CONTAINER_ID, newName);
 		}
 		catch (RestoreEntryException restoreEntryException) {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			LiferayPortletResponse liferayPortletResponse =
-				_portal.getLiferayPortletResponse(actionResponse);
-
-			PortletURL renderURL = liferayPortletResponse.createRenderURL();
-
-			renderURL.setParameter("mvcPath", "/restore_entry.jsp");
-			renderURL.setParameter("redirect", redirect);
-			renderURL.setParameter(
-				"trashEntryId",
-				String.valueOf(restoreEntryException.getTrashEntryId()));
-			renderURL.setParameter(
-				"duplicateEntryId",
-				String.valueOf(restoreEntryException.getDuplicateEntryId()));
-			renderURL.setParameter(
-				"oldName", restoreEntryException.getOldName());
-			renderURL.setParameter(
-				"overridable",
-				String.valueOf(restoreEntryException.isOverridable()));
-
-			actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
+			actionRequest.setAttribute(
+				WebKeys.REDIRECT,
+				PortletURLBuilder.createRenderURL(
+					_portal.getLiferayPortletResponse(actionResponse)
+				).setMVCPath(
+					"/restore_entry.jsp"
+				).setRedirect(
+					ParamUtil.getString(actionRequest, "redirect")
+				).setParameter(
+					"trashEntryId", restoreEntryException.getTrashEntryId()
+				).setParameter(
+					"duplicateEntryId",
+					restoreEntryException.getDuplicateEntryId()
+				).setParameter(
+					"oldName", restoreEntryException.getOldName()
+				).setParameter(
+					"overridable", restoreEntryException.isOverridable()
+				).buildString());
 
 			hideDefaultErrorMessage(actionRequest);
 

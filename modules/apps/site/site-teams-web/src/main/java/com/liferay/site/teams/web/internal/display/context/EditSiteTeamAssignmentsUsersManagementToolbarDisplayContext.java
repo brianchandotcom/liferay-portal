@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -72,11 +73,11 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	@Override
@@ -95,21 +96,21 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					PortletURL selectUserURL =
-						liferayPortletResponse.createRenderURL();
-
-					selectUserURL.setParameter("mvcPath", "/select_users.jsp");
-					selectUserURL.setParameter(
-						"redirect", themeDisplay.getURLCurrent());
-					selectUserURL.setParameter(
-						"teamId",
-						String.valueOf(
-							_editSiteTeamAssignmentsUsersDisplayContext.
-								getTeamId()));
-					selectUserURL.setWindowState(LiferayWindowState.POP_UP);
-
 					dropdownItem.putData(
-						"selectUserURL", selectUserURL.toString());
+						"selectUserURL",
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCPath(
+							"/select_users.jsp"
+						).setRedirect(
+							themeDisplay.getURLCurrent()
+						).setParameter(
+							"teamId",
+							_editSiteTeamAssignmentsUsersDisplayContext.
+								getTeamId()
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString());
 
 					String title = LanguageUtil.format(
 						httpServletRequest, "add-new-user-to-x",

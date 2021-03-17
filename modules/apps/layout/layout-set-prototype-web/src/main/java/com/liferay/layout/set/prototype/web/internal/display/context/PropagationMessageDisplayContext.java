@@ -15,6 +15,7 @@
 package com.liferay.layout.set.prototype.web.internal.display.context;
 
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -29,9 +30,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,28 +66,21 @@ public class PropagationMessageDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"enableDisablePropagationURL",
-			() -> {
-				PortletURL enableDisableLayoutSetPrototypePropagationURL =
-					PortletURLFactoryUtil.create(
-						_httpServletRequest,
-						LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
-						PortletRequest.ACTION_PHASE);
-
-				enableDisableLayoutSetPrototypePropagationURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"updateLayoutSetPrototypeAction");
-				enableDisableLayoutSetPrototypePropagationURL.setParameter(
-					"redirect", PortalUtil.getLayoutURL(themeDisplay));
-				enableDisableLayoutSetPrototypePropagationURL.setParameter(
-					"layoutSetPrototypeId",
-					String.valueOf(
-						layoutSetPrototype.getLayoutSetPrototypeId()));
-				enableDisableLayoutSetPrototypePropagationURL.setParameter(
-					"readyForPropagation",
-					String.valueOf(!readyForPropagation));
-
-				return enableDisableLayoutSetPrototypePropagationURL.toString();
-			}
+			() -> PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					_httpServletRequest,
+					LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"updateLayoutSetPrototypeAction"
+			).setRedirect(
+				PortalUtil.getLayoutURL(themeDisplay)
+			).setParameter(
+				"layoutSetPrototypeId",
+				layoutSetPrototype.getLayoutSetPrototypeId()
+			).setParameter(
+				"readyForPropagation", !readyForPropagation
+			).buildString()
 		).put(
 			"portletNamespace",
 			PortalUtil.getPortletNamespace(

@@ -22,9 +22,9 @@ import com.liferay.commerce.model.CommerceOrderPayment;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import javax.portlet.PortletURL;
 
@@ -81,19 +81,18 @@ public class OrderConfirmationCheckoutStepDisplayContext {
 	}
 
 	public String getRetryPaymentURL() throws PortalException {
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceCheckoutRequestHelper.getLiferayPortletResponse();
+		return PortletURLBuilder.createRenderURL(
+			_commerceCheckoutRequestHelper.getLiferayPortletResponse()
+		).setParameter(
+			"checkoutStepName", PaymentProcessCommerceCheckoutStep.NAME
+		).setParameter(
+			"commerceOrderUuid",
+			() -> {
+				CommerceOrder commerceOrder = getCommerceOrder();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"checkoutStepName", PaymentProcessCommerceCheckoutStep.NAME);
-
-		CommerceOrder commerceOrder = getCommerceOrder();
-
-		portletURL.setParameter("commerceOrderUuid", commerceOrder.getUuid());
-
-		return portletURL.toString();
+				return commerceOrder.getUuid();
+			}
+		).buildString();
 	}
 
 	protected long getCommerceOrderId() throws PortalException {

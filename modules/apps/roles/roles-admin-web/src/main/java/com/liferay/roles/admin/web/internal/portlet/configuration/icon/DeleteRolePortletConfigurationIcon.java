@@ -14,6 +14,7 @@
 
 package com.liferay.roles.admin.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,10 +35,8 @@ import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,16 +67,17 @@ public class DeleteRolePortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, RolesAdminPortletKeys.ROLES_ADMIN,
-				PortletRequest.ACTION_PHASE);
-
-			portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteRole");
-			portletURL.setParameter("mvcPath", "/view.jsp");
-			portletURL.setParameter(
-				"roleId", String.valueOf(_getRoleId(portletRequest)));
-
-			return portletURL.toString();
+			return PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					portletRequest, RolesAdminPortletKeys.ROLES_ADMIN,
+					PortletRequest.ACTION_PHASE)
+			).setMVCPath(
+				"/view.jsp"
+			).setActionName(
+				"deleteRole"
+			).setParameter(
+				"roleId", _getRoleId(portletRequest)
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

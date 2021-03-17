@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 /**
@@ -52,10 +52,11 @@ public class DLEditFileShortcutDisplayContext {
 	}
 
 	public String getEditFileShortcutURL() {
-		PortletURL portletURL = _liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/document_library/edit_file_shortcut");
+		PortletURL portletURL = PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/document_library/edit_file_shortcut"
+		).build();
 
 		if (_getFileShortcut() == null) {
 			portletURL.setParameter(Constants.CMD, Constants.ADD);

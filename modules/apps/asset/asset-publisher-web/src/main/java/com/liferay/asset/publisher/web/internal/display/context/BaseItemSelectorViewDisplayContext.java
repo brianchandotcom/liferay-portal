@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -100,23 +101,21 @@ public abstract class BaseItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLUtil.clone(
-			this.portletURL,
-			PortalUtil.getLiferayPortletResponse(getPortletResponse()));
-
-		long plid = ParamUtil.getLong(httpServletRequest, "plid");
-		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			httpServletRequest, "privateLayout");
-		String portletResource = ParamUtil.getString(
-			httpServletRequest, "portletResource");
-
-		portletURL.setParameter("plid", String.valueOf(plid));
-		portletURL.setParameter("groupId", String.valueOf(groupId));
-		portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
-		portletURL.setParameter("portletResource", portletResource);
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(
+				portletURL,
+				PortalUtil.getLiferayPortletResponse(getPortletResponse()))
+		).setParameter(
+			"plid", ParamUtil.getLong(httpServletRequest, "plid")
+		).setParameter(
+			"groupId", ParamUtil.getLong(httpServletRequest, "groupId")
+		).setParameter(
+			"privateLayout",
+			ParamUtil.getBoolean(httpServletRequest, "privateLayout")
+		).setParameter(
+			"portletResource",
+			ParamUtil.getString(httpServletRequest, "portletResource")
+		).build();
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,7 +40,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -70,21 +70,23 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			Organization organization = ActionUtil.getOrganization(
-				portletRequest);
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest, UserGroupRole.class.getName(),
+					PortletProvider.Action.EDIT)
+			).setParameter(
+				"className", User.class.getName()
+			).setParameter(
+				"groupId",
+				() -> {
+					Organization organization = ActionUtil.getOrganization(
+						portletRequest);
 
-			long organizationGroupId = organization.getGroupId();
-
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				portletRequest, UserGroupRole.class.getName(),
-				PortletProvider.Action.EDIT);
-
-			portletURL.setParameter("className", User.class.getName());
-			portletURL.setParameter(
-				"groupId", String.valueOf(organizationGroupId));
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			return portletURL.toString();
+					return organization.getGroupId();
+				}
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

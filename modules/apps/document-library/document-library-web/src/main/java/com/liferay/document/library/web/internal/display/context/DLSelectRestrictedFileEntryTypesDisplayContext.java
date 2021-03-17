@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -39,15 +41,13 @@ public class DLSelectRestrictedFileEntryTypesDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcPath",
-			"/document_library/select_restricted_file_entry_type.jsp");
-		portletURL.setParameter(
-			"includeBasicFileEntryType", Boolean.TRUE.toString());
-
-		return portletURL;
+		return PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/document_library/select_restricted_file_entry_type.jsp"
+		).setParameter(
+			"includeBasicFileEntryType", Boolean.TRUE.toString()
+		).build();
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -266,15 +267,15 @@ public class UADSearchContainerBuilder {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL viewURL = PortletURLUtil.clone(
-			currentURL, liferayPortletResponse);
-
-		viewURL.setParameter(
-			"applicationKey", uadApplicationSummaryDisplay.getApplicationKey());
-
 		UADEntity<T> uadEntity = new UADEntity(
 			null, uadApplicationSummaryDisplay.getApplicationKey(), null, false,
-			null, true, viewURL.toString());
+			null, true,
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(currentURL, liferayPortletResponse)
+			).setParameter(
+				"applicationKey",
+				uadApplicationSummaryDisplay.getApplicationKey()
+			).buildString());
 
 		uadEntity.addColumnEntry(
 			"name",

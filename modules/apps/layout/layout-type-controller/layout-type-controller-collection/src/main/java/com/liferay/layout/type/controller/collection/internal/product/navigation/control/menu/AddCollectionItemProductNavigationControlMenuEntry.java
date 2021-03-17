@@ -24,6 +24,7 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.type.controller.collection.internal.constants.CollectionPageLayoutTypeControllerWebKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -57,13 +58,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
@@ -251,16 +250,17 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 		LiferayPortletResponse liferayPortletResponse, String currentURL,
 		long assetListEntryId) {
 
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/control_menu/add_collection_item");
-		portletURL.setParameter("redirect", currentURL);
-		portletURL.setParameter(
-			"assetListEntryId", String.valueOf(assetListEntryId));
-
 		return _http.addParameter(
-			portletURL.toString(), "portletResource",
+			PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/control_menu/add_collection_item"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"assetListEntryId", assetListEntryId
+			).buildString(),
+			"portletResource",
 			ProductNavigationControlMenuPortletKeys.
 				PRODUCT_NAVIGATION_CONTROL_MENU);
 	}

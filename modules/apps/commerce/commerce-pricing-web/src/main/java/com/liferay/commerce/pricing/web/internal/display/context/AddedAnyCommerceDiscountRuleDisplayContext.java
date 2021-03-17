@@ -22,6 +22,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,8 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -103,19 +102,18 @@ public class AddedAnyCommerceDiscountRuleDisplayContext {
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "productDefinitionsSelectItem",
-			cpDefinitionItemSelectorCriterion);
-
 		String checkedCPDefinitionIds = StringUtil.merge(
 			getCheckedCPDefinitionIds());
 
-		itemSelectorURL.setParameter(
-			"checkedCPDefinitionIds", checkedCPDefinitionIds);
-		itemSelectorURL.setParameter(
-			"disabledCPDefinitionIds", checkedCPDefinitionIds);
-
-		return itemSelectorURL.toString();
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "productDefinitionsSelectItem",
+				cpDefinitionItemSelectorCriterion)
+		).setParameter(
+			"checkedCPDefinitionIds", checkedCPDefinitionIds
+		).setParameter(
+			"disabledCPDefinitionIds", checkedCPDefinitionIds
+		).buildString();
 	}
 
 	public String getTypeSettings() throws PortalException {

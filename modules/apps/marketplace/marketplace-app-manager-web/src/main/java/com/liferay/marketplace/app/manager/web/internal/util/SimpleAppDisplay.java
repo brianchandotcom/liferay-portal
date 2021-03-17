@@ -14,12 +14,12 @@
 
 package com.liferay.marketplace.app.manager.web.internal.util;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.MimeResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,12 +55,13 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 
 	@Override
 	public String getDisplayURL(MimeResponse mimeResponse) {
-		PortletURL portletURL = mimeResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_modules.jsp");
-		portletURL.setParameter("app", _title);
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			mimeResponse
+		).setMVCPath(
+			"/view_modules.jsp"
+		).setParameter(
+			"app", _title
+		).buildString();
 	}
 
 	@Override

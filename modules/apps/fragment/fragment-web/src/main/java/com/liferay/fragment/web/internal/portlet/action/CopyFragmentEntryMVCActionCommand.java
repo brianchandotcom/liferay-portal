@@ -16,7 +16,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -52,31 +52,33 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "fragmentCollectionId");
+		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(actionResponse)
+		).setParameter(
+			"fragmentCollectionId",
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
 
-		long[] fragmentEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "fragmentEntryIds"), 0L);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+				long[] fragmentEntryIds = StringUtil.split(
+					ParamUtil.getString(actionRequest, "fragmentEntryIds"), 0L);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+				long fragmentCollectionId = ParamUtil.getLong(
+					actionRequest, "fragmentCollectionId");
 
-		for (long fragmentEntryId : fragmentEntryIds) {
-			_fragmentEntryService.copyFragmentEntry(
-				themeDisplay.getScopeGroupId(), fragmentEntryId,
-				fragmentCollectionId, serviceContext);
-		}
+				for (long fragmentEntryId : fragmentEntryIds) {
+					_fragmentEntryService.copyFragmentEntry(
+						themeDisplay.getScopeGroupId(), fragmentEntryId,
+						fragmentCollectionId, serviceContext);
+				}
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"fragmentCollectionId", String.valueOf(fragmentCollectionId));
+				return fragmentCollectionId;
+			}
+		).build();
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 	}

@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,16 +61,13 @@ public class ViewAccountGroupsManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deleteAccountGroups");
 
-				PortletURL deleteAccountGroupsURL =
-					liferayPortletResponse.createActionURL();
-
-				deleteAccountGroupsURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/account_admin/delete_account_groups");
-
 				dropdownItem.putData(
 					"deleteAccountGroupsURL",
-					deleteAccountGroupsURL.toString());
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/account_admin/delete_account_groups"
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
@@ -83,11 +80,11 @@ public class ViewAccountGroupsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	@Override

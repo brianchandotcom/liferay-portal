@@ -16,6 +16,7 @@ package com.liferay.item.selector.web.internal.display.context;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -159,18 +160,18 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 			PortletURL currentURL)
 		throws PortletException {
 
-		PortletURL viewGroupSelectorURL = PortletURLUtil.clone(
-			currentURL, _liferayPortletResponse);
-
-		viewGroupSelectorURL.setParameter("groupType", "site");
-		viewGroupSelectorURL.setParameter(
-			"showGroupSelector", Boolean.TRUE.toString());
-
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
 			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
-		breadcrumbEntry.setURL(viewGroupSelectorURL.toString());
+		breadcrumbEntry.setURL(
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(currentURL, _liferayPortletResponse)
+			).setParameter(
+				"groupType", "site"
+			).setParameter(
+				"showGroupSelector", Boolean.TRUE.toString()
+			).buildString());
 
 		return breadcrumbEntry;
 	}

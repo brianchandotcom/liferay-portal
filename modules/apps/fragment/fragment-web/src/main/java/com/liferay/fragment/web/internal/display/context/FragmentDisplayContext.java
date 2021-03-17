@@ -30,6 +30,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -328,46 +329,33 @@ public class FragmentDisplayContext {
 			}
 		).put(
 			"viewDeleteFragmentCollectionsURL",
-			() -> {
-				PortletURL viewDeleteFragmentCollectionsURL =
-					_renderResponse.createRenderURL();
-
-				viewDeleteFragmentCollectionsURL.setParameter(
-					"mvcRenderCommandName",
-					"/fragment/view_fragment_collections");
-				viewDeleteFragmentCollectionsURL.setWindowState(
-					LiferayWindowState.POP_UP);
-
-				return viewDeleteFragmentCollectionsURL.toString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/fragment/view_fragment_collections"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).put(
 			"viewExportFragmentCollectionsURL",
-			() -> {
-				PortletURL viewExportFragmentCollectionsURL =
-					_renderResponse.createRenderURL();
-
-				viewExportFragmentCollectionsURL.setParameter(
-					"mvcRenderCommandName",
-					"/fragment/view_fragment_collections");
-				viewExportFragmentCollectionsURL.setParameter(
-					"includeGlobalFragmentCollections",
-					Boolean.TRUE.toString());
-				viewExportFragmentCollectionsURL.setWindowState(
-					LiferayWindowState.POP_UP);
-
-				return viewExportFragmentCollectionsURL.toString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/fragment/view_fragment_collections"
+			).setParameter(
+				"includeGlobalFragmentCollections", Boolean.TRUE.toString()
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).put(
 			"viewImportURL",
-			() -> {
-				PortletURL viewImportURL = _renderResponse.createRenderURL();
-
-				viewImportURL.setParameter(
-					"mvcRenderCommandName", "/fragment/view_import");
-				viewImportURL.setWindowState(LiferayWindowState.POP_UP);
-
-				return viewImportURL.toString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/fragment/view_import"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).build();
 	}
 
@@ -520,9 +508,11 @@ public class FragmentDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/fragment/view");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/fragment/view"
+		).build();
 
 		if (getFragmentCollectionId() > 0) {
 			portletURL.setParameter(
@@ -705,9 +695,11 @@ public class FragmentDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/fragment/view");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/fragment/view"
+		).build();
 
 		long fragmentCollectionId = getFragmentCollectionId();
 

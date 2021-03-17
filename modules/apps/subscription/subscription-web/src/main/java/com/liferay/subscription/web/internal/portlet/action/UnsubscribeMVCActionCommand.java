@@ -14,6 +14,7 @@
 
 package com.liferay.subscription.web.internal.portlet.action;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -71,15 +72,19 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 		String key = ParamUtil.getString(actionRequest, "key");
 		long userId = ParamUtil.getLong(actionRequest, "userId");
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, SubscriptionPortletKeys.UNSUBSCRIBE,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setWindowState(WindowState.MAXIMIZED);
-
-		portletURL.setParameter("mvcPath", "/unsubscribe/unsubscribed.jsp");
-		portletURL.setParameter("key", key);
-		portletURL.setParameter("userId", String.valueOf(userId));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest, SubscriptionPortletKeys.UNSUBSCRIBE,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/unsubscribe/unsubscribed.jsp"
+		).setParameter(
+			"key", key
+		).setParameter(
+			"userId", userId
+		).setWindowState(
+			WindowState.MAXIMIZED
+		).build();
 
 		try {
 			_checkUser(userId, actionRequest);

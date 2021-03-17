@@ -31,10 +31,10 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -136,17 +136,16 @@ public class ExportImportChangesetMVCActionCommandImpl
 			long backgroundTaskId)
 		throws IOException {
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
-		PortletURL renderURL = liferayPortletResponse.createRenderURL(
-			ExportImportPortletKeys.EXPORT_IMPORT);
-
-		renderURL.setParameter("mvcPath", "/view_export_import.jsp");
-		renderURL.setParameter(
-			"backURL", actionRequest.getParameter("backURL"));
-		renderURL.setParameter(
-			"backgroundTaskId", String.valueOf(backgroundTaskId));
+		PortletURL renderURL = PortletURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(actionResponse),
+			ExportImportPortletKeys.EXPORT_IMPORT
+		).setMVCPath(
+			"/view_export_import.jsp"
+		).setParameter(
+			"backURL", actionRequest.getParameter("backURL")
+		).setParameter(
+			"backgroundTaskId", backgroundTaskId
+		).build();
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
 

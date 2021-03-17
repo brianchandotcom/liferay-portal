@@ -21,6 +21,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -126,16 +127,15 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
-
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(thread.getCategoryId()));
-		portletURL.setParameter(
-			"messageId", String.valueOf(thread.getRootMessageId()));
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			getRestoreURL(portletRequest, classPK, false)
+		).setParameter(
+			"mbCategoryId", thread.getCategoryId()
+		).setParameter(
+			"messageId", thread.getRootMessageId()
+		).buildString();
 	}
 
 	@Override
@@ -145,12 +145,11 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		PortletURL portletURL = getRestoreURL(portletRequest, classPK, true);
-
-		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(thread.getCategoryId()));
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			getRestoreURL(portletRequest, classPK, true)
+		).setParameter(
+			"mbCategoryId", thread.getCategoryId()
+		).buildString();
 	}
 
 	@Override

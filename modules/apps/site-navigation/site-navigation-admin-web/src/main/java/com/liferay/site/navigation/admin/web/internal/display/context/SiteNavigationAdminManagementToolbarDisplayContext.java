@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,7 +35,6 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -91,11 +91,11 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	@Override
@@ -104,23 +104,20 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletURL addSiteNavigationMenuURL =
-			liferayPortletResponse.createActionURL();
-
-		addSiteNavigationMenuURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/site_navigation_admin/add_site_navigation_menu");
-		addSiteNavigationMenuURL.setParameter(
-			"mvcPath", "/edit_site_navigation_menu.jsp");
-		addSiteNavigationMenuURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "addSiteNavigationMenu");
 				dropdownItem.putData(
 					"addSiteNavigationMenuURL",
-					addSiteNavigationMenuURL.toString());
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/edit_site_navigation_menu.jsp"
+					).setActionName(
+						"/site_navigation_admin/add_site_navigation_menu"
+					).setRedirect(
+						themeDisplay.getURLCurrent()
+					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add"));
 			}

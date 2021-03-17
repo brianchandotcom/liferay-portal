@@ -24,6 +24,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderTracker;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -173,11 +174,11 @@ public class SelectLayoutCollectionDisplayContext {
 				_log.debug(portletException, portletException);
 			}
 
-			PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-			portletURL.setParameters(currentURLObj.getParameterMap());
-
-			return portletURL;
+			return PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setParameters(
+				currentURLObj.getParameterMap()
+			).build();
 		}
 	}
 
@@ -299,11 +300,12 @@ public class SelectLayoutCollectionDisplayContext {
 			navigationItem.setActive(true);
 		}
 
-		PortletURL collectionsPortletURL = getPortletURL();
-
-		collectionsPortletURL.setParameter("selectedTab", tabName);
-
-		navigationItem.setHref(collectionsPortletURL.toString());
+		navigationItem.setHref(
+			PortletURLBuilder.create(
+				getPortletURL()
+			).setParameter(
+				"selectedTab", tabName
+			).buildString());
 
 		navigationItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
 

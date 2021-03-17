@@ -15,11 +15,10 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,27 +46,25 @@ public class DLSelectDDMStructureManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcPath", "/document_library/ddm/select_ddm_structure.jsp");
-		portletURL.setParameter(
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/document_library/ddm/select_ddm_structure.jsp"
+		).setParameter(
 			"ddmStructureId",
-			String.valueOf(
-				_dlSelectDDMStructureDisplayContext.getDDMStructureId()));
-		portletURL.setParameter(
-			"eventName", _dlSelectDDMStructureDisplayContext.getEventName());
-
-		return portletURL.toString();
+			_dlSelectDDMStructureDisplayContext.getDDMStructureId()
+		).setParameter(
+			"eventName", _dlSelectDDMStructureDisplayContext.getEventName()
+		).buildString();
 	}
 
 	@Override

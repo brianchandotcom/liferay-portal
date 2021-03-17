@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -125,11 +126,11 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -141,28 +142,27 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			dropdownItem -> {
 				dropdownItem.putData("action", "addSegmentEntry");
 
-				PortletURL addSegmentEntryURL =
-					PortletProviderUtil.getPortletURL(
-						_renderRequest, SegmentsEntry.class.getName(),
-						PortletProvider.Action.EDIT);
-
-				addSegmentEntryURL.setParameter(
-					"redirect",
-					ParamUtil.getString(_httpServletRequest, "redirect"));
-				addSegmentEntryURL.setParameter(
-					"backURL",
-					ParamUtil.getString(_httpServletRequest, "backURL"));
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)_httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				addSegmentEntryURL.setParameter(
-					"groupId",
-					String.valueOf(themeDisplay.getCompanyGroupId()));
-
 				dropdownItem.putData(
-					"addSegmentEntryURL", addSegmentEntryURL.toString());
+					"addSegmentEntryURL",
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							_renderRequest, SegmentsEntry.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setRedirect(
+						ParamUtil.getString(_httpServletRequest, "redirect")
+					).setParameter(
+						"backURL",
+						ParamUtil.getString(_httpServletRequest, "backURL")
+					).setParameter(
+						"groupId",
+						() -> {
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)_httpServletRequest.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							return themeDisplay.getCompanyGroupId();
+						}
+					).buildString());
 
 				dropdownItem.putData(
 					"sessionKey", RolesAdminWebKeys.MODAL_SEGMENT_STATE);
@@ -408,14 +408,16 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setRedirect(
+			() -> {
+				PortletURL currentURL = PortletURLUtil.getCurrent(
+					_renderRequest, _renderResponse);
 
-		PortletURL currentURL = PortletURLUtil.getCurrent(
-			_renderRequest, _renderResponse);
-
-		searchActionURL.setParameter("redirect", currentURL.toString());
-
-		return searchActionURL.toString();
+				return currentURL.toString();
+			}
+		).buildString();
 	}
 
 	public SearchContainer<?> getSearchContainer() throws Exception {
@@ -444,13 +446,12 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
+		).buildString();
 	}
 
 	public String getTabs2() {

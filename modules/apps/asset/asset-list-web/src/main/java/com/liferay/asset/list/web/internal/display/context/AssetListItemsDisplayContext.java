@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -130,16 +131,17 @@ public class AssetListItemsDisplayContext {
 	}
 
 	private PortletURL _getAssetListContentURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_asset_list_items.jsp");
-		portletURL.setParameter("redirect", _getRedirect());
-		portletURL.setParameter(
-			"assetListEntryId", String.valueOf(getAssetListEntryId()));
-		portletURL.setParameter(
-			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
-
-		return portletURL;
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/view_asset_list_items.jsp"
+		).setRedirect(
+			_getRedirect()
+		).setParameter(
+			"assetListEntryId", getAssetListEntryId()
+		).setParameter(
+			"segmentsEntryId", getSegmentsEntryId()
+		).build();
 	}
 
 	private String _getRedirect() {

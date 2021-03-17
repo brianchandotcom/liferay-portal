@@ -30,6 +30,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -248,23 +249,27 @@ public class CPDefinitionVirtualSettingDisplayContext
 	}
 
 	public String getTermsOfUseJournalArticleBrowserURL() throws Exception {
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, JournalArticle.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		portletURL.setParameter("groupId", String.valueOf(getScopeGroupId()));
-		portletURL.setParameter(
-			"selectedGroupIds", StringUtil.merge(getSelectedGroupIds()));
-		portletURL.setParameter(
-			"typeSelection", JournalArticle.class.getName());
-		portletURL.setParameter(
-			"showNonindexable", String.valueOf(Boolean.TRUE));
-		portletURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
-		portletURL.setParameter("eventName", "selectJournalArticle");
-		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, JournalArticle.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setParameter(
+			"groupId", getScopeGroupId()
+		).setParameter(
+			"selectedGroupIds", StringUtil.merge(getSelectedGroupIds())
+		).setParameter(
+			"typeSelection", JournalArticle.class.getName()
+		).setParameter(
+			"showNonindexable", Boolean.TRUE
+		).setParameter(
+			"showScheduled", Boolean.TRUE
+		).setParameter(
+			"eventName", "selectJournalArticle"
+		).setPortletMode(
+			PortletMode.VIEW
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	protected long[] getSelectedGroupIds() {

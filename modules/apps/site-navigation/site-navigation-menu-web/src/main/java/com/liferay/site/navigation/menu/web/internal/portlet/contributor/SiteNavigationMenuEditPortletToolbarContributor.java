@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.menu.web.internal.portlet.contributor;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,7 +42,6 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -129,16 +129,18 @@ public class SiteNavigationMenuEditPortletToolbarContributor
 		Group group = _groupLocalService.getGroup(
 			siteNavigationMenu.getGroupId());
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			portletRequest, group, SiteNavigationMenu.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		portletURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
-
-		urlMenuItem.setURL(portletURL.toString());
+		urlMenuItem.setURL(
+			PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest, group, SiteNavigationMenu.class.getName(),
+					PortletProvider.Action.EDIT)
+			).setMVCPath(
+				"/edit_site_navigation_menu.jsp"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).setParameter(
+				"siteNavigationMenuId", siteNavigationMenuId
+			).buildString());
 
 		return urlMenuItem;
 	}

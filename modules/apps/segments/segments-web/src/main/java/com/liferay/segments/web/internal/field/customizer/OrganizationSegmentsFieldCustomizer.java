@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.field.customizer;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -31,7 +32,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,21 +87,23 @@ public class OrganizationSegmentsFieldCustomizer
 	@Override
 	public Field.SelectEntity getSelectEntity(PortletRequest portletRequest) {
 		try {
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, SegmentsPortletKeys.SEGMENTS,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/segments/select_organizations");
-			portletURL.setParameter("eventName", "selectEntity");
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
 			return new Field.SelectEntity(
 				"selectEntity",
 				getSelectEntityTitle(
 					_portal.getLocale(portletRequest),
 					Organization.class.getName()),
-				portletURL.toString(), true);
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest, SegmentsPortletKeys.SEGMENTS,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/segments/select_organizations"
+				).setParameter(
+					"eventName", "selectEntity"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				true);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

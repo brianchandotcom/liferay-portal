@@ -30,6 +30,7 @@ dependencies {
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:knowledge-base:knowledge-base-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
+	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:rss:rss-taglib")
 	compileOnly project(":apps:social:social-bookmarks-taglib")

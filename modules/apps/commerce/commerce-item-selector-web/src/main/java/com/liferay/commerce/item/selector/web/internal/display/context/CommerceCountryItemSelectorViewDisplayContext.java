@@ -16,6 +16,7 @@ package com.liferay.commerce.item.selector.web.internal.display.context;
 
 import com.liferay.commerce.item.selector.web.internal.search.CommerceCountryItemSelectorChecker;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,13 +54,11 @@ public class CommerceCountryItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
-
-		String checkedCountryIds = StringUtil.merge(getCheckedCountryIds());
-
-		portletURL.setParameter("checkedCountryIds", checkedCountryIds);
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			super.getPortletURL()
+		).setParameter(
+			"checkedCountryIds", StringUtil.merge(getCheckedCountryIds())
+		).build();
 	}
 
 	@Override

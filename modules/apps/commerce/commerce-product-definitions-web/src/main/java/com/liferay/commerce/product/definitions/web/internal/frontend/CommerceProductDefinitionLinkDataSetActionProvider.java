@@ -24,6 +24,7 @@ import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -102,27 +102,25 @@ public class CommerceProductDefinitionLinkDataSetActionProvider
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			_portal.getOriginalServletRequest(httpServletRequest),
-			CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/cp_definitions/edit_cp_definition_link");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"cpDefinitionId",
-			String.valueOf(cpDefinitionLink.getCPDefinitionId()));
-		portletURL.setParameter(
-			"cpDefinitionLinkId",
-			String.valueOf(cpDefinitionLink.getCPDefinitionLinkId()));
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				_portal.getOriginalServletRequest(httpServletRequest),
+				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/cp_definitions/edit_cp_definition_link"
+		).setRedirect(
+			redirect
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).setParameter(
+			"cpDefinitionId", cpDefinitionLink.getCPDefinitionId()
+		).setParameter(
+			"cpDefinitionLinkId", cpDefinitionLink.getCPDefinitionLinkId()
+		).build();
 	}
 
 	private PortletURL _getProductLinkEditURL(
@@ -130,18 +128,17 @@ public class CommerceProductDefinitionLinkDataSetActionProvider
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CPDefinition.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/cp_definitions/edit_cp_definition_link");
-		portletURL.setParameter(
-			"cpDefinitionId",
-			String.valueOf(cpDefinitionLink.getCPDefinitionId()));
-		portletURL.setParameter(
-			"cpDefinitionLinkId",
-			String.valueOf(cpDefinitionLink.getCPDefinitionLinkId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CPDefinition.class.getName(),
+				PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_definition_link"
+		).setParameter(
+			"cpDefinitionId", cpDefinitionLink.getCPDefinitionId()
+		).setParameter(
+			"cpDefinitionLinkId", cpDefinitionLink.getCPDefinitionLinkId()
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

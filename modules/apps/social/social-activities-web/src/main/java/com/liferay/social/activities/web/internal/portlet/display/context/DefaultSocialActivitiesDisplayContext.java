@@ -14,6 +14,7 @@
 
 package com.liferay.social.activities.web.internal.portlet.display.context;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -30,7 +31,6 @@ import com.liferay.social.kernel.model.SocialActivitySet;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
 /**
@@ -54,20 +54,15 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public String getPaginationURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_socialActivitiesRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("tabs1", getSelectedTabName());
-
-		int end =
+		return PortletURLBuilder.createRenderURL(
+			_socialActivitiesRequestHelper.getLiferayPortletResponse()
+		).setParameter(
+			"tabs1", getSelectedTabName()
+		).setParameter(
+			"end",
 			_socialActivitiesRequestHelper.getEnd() +
-				_socialActivitiesRequestHelper.getMax();
-
-		portletURL.setParameter("end", String.valueOf(end));
-
-		return portletURL.toString();
+				_socialActivitiesRequestHelper.getMax()
+		).buildString();
 	}
 
 	@Override
@@ -140,14 +135,11 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public String getTabsURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_socialActivitiesRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("tabs1", getSelectedTabName());
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_socialActivitiesRequestHelper.getLiferayPortletResponse()
+		).setParameter(
+			"tabs1", getSelectedTabName()
+		).buildString();
 	}
 
 	@Override

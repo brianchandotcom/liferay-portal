@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -101,33 +102,29 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = _liferayPortletResponse.createRenderURL();
-
-		clearResultsURL.setParameter("navigation", _getNavigation());
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setParameter(
+			"navigation", _getNavigation()
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				PortletURL addEntryURL =
-					_liferayPortletResponse.createRenderURL();
-
-				addEntryURL.setParameter(
-					"mvcRenderCommandName", "/announcements/edit_entry");
-				addEntryURL.setParameter(
-					"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
-
 				String navigation = _getNavigation();
 
-				addEntryURL.setParameter(
-					"alert",
-					String.valueOf(
-						String.valueOf(navigation.equals("alerts"))));
-
-				addEntryURL.setParameter(
-					"distributionScope", _getDistributionScope());
+				PortletURL addEntryURL = PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/announcements/edit_entry"
+				).setRedirect(
+					PortalUtil.getCurrentURL(_httpServletRequest)
+				).setParameter(
+					"alert", navigation.equals("alerts")
+				).setParameter(
+					"distributionScope", _getDistributionScope()
+				).build();
 
 				dropdownItem.setHref(addEntryURL);
 
@@ -162,12 +159,14 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 		return LabelItemListBuilder.add(
 			() -> Validator.isNotNull(_getDistributionScope()),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					_currentURLObj, _liferayPortletResponse);
-
-				removeLabelURL.setParameter("distributionScope", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setParameter(
+						"distributionScope", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 

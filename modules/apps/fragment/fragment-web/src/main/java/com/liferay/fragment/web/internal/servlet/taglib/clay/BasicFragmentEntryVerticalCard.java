@@ -23,6 +23,7 @@ import com.liferay.fragment.web.internal.servlet.taglib.util.BasicFragmentEntryA
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -92,20 +92,17 @@ public class BasicFragmentEntryVerticalCard extends FragmentEntryVerticalCard {
 			return null;
 		}
 
-		PortletURL editFragmentEntryURL = _renderResponse.createRenderURL();
-
-		editFragmentEntryURL.setParameter(
-			"mvcRenderCommandName", "/fragment/edit_fragment_entry");
-		editFragmentEntryURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-		editFragmentEntryURL.setParameter(
-			"fragmentCollectionId",
-			String.valueOf(fragmentEntry.getFragmentCollectionId()));
-		editFragmentEntryURL.setParameter(
-			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId()));
-
-		return editFragmentEntryURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/fragment/edit_fragment_entry"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"fragmentCollectionId", fragmentEntry.getFragmentCollectionId()
+		).setParameter(
+			"fragmentEntryId", fragmentEntry.getFragmentEntryId()
+		).buildString();
 	}
 
 	@Override

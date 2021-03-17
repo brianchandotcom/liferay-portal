@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
@@ -118,29 +118,25 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 		return HashMapBuilder.<String, Object>put(
 			"copyFragmentEntryURL",
-			() -> {
-				PortletURL copyFragmentEntryURL =
-					liferayPortletResponse.createActionURL();
-
-				copyFragmentEntryURL.setParameter(
-					ActionRequest.ACTION_NAME, "/fragment/copy_fragment_entry");
-				copyFragmentEntryURL.setParameter(
-					"redirect", themeDisplay.getURLCurrent());
-
-				return copyFragmentEntryURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/fragment/copy_fragment_entry"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).buildString()
 		).put(
 			"deleteFragmentCompositionsAndFragmentEntriesURL",
 			() -> {
 				PortletURL deleteFragmentCompositionsAndFragmentEntriesURL =
-					liferayPortletResponse.createActionURL();
-
-				deleteFragmentCompositionsAndFragmentEntriesURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/fragment/delete_fragment_compositions_and_fragment_" +
-						"entries");
-				deleteFragmentCompositionsAndFragmentEntriesURL.setParameter(
-					"redirect", themeDisplay.getURLCurrent());
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/fragment/delete_fragment_compositions_and_fragment_" +
+							"entries"
+					).setRedirect(
+						themeDisplay.getURLCurrent()
+					).build();
 
 				return deleteFragmentCompositionsAndFragmentEntriesURL.
 					toString();
@@ -163,33 +159,22 @@ public class BasicFragmentManagementToolbarDisplayContext
 			ParamUtil.getLong(liferayPortletRequest, "fragmentCollectionId")
 		).put(
 			"moveFragmentCompositionsAndFragmentEntriesURL",
-			() -> {
-				PortletURL moveFragmentCompositionsAndFragmentEntriesURL =
-					liferayPortletResponse.createActionURL();
-
-				moveFragmentCompositionsAndFragmentEntriesURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/fragment/move_fragment_compositions_and_fragment_" +
-						"entries");
-				moveFragmentCompositionsAndFragmentEntriesURL.setParameter(
-					"redirect", themeDisplay.getURLCurrent());
-
-				return moveFragmentCompositionsAndFragmentEntriesURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/fragment/move_fragment_compositions_and_fragment_entries"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).buildString()
 		).put(
 			"selectFragmentCollectionURL",
-			() -> {
-				PortletURL selectFragmentCollectionURL =
-					liferayPortletResponse.createActionURL();
-
-				selectFragmentCollectionURL.setParameter(
-					"mvcRenderCommandName",
-					"/fragment/select_fragment_collection");
-				selectFragmentCollectionURL.setWindowState(
-					LiferayWindowState.POP_UP);
-
-				return selectFragmentCollectionURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/fragment/select_fragment_collection"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).build();
 	}
 
@@ -199,20 +184,18 @@ public class BasicFragmentManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "addFragmentEntry");
 
-				PortletURL addFragmentEntryURL =
-					liferayPortletResponse.createActionURL();
-
-				addFragmentEntryURL.setParameter(
-					ActionRequest.ACTION_NAME, "/fragment/add_fragment_entry");
-				addFragmentEntryURL.setParameter(
-					"fragmentCollectionId",
-					String.valueOf(
-						fragmentDisplayContext.getFragmentCollectionId()));
-				addFragmentEntryURL.setParameter(
-					"type", String.valueOf(FragmentConstants.TYPE_COMPONENT));
-
 				dropdownItem.putData(
-					"addFragmentEntryURL", addFragmentEntryURL.toString());
+					"addFragmentEntryURL",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/fragment/add_fragment_entry"
+					).setParameter(
+						"fragmentCollectionId",
+						fragmentDisplayContext.getFragmentCollectionId()
+					).setParameter(
+						"type", FragmentConstants.TYPE_COMPONENT
+					).buildString());
 
 				dropdownItem.putData(
 					"title",

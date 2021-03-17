@@ -25,6 +25,7 @@ import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.util.ContactsUtil;
 import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -60,7 +61,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -111,7 +111,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -1004,22 +1003,22 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			themeDisplay.getPathImage() + "/user_male_portrait?img_id=0"
 		).put(
 			"redirect", redirect
+		).put(
+			"viewSummaryURL",
+			PortletURLBuilder.createRenderURL(
+				portal.getLiferayPortletResponse(portletResponse)
+			).setMVCPath(
+				"/contacts_center/view_resources.jsp"
+			).setRedirect(
+				redirect
+			).setParameter(
+				"entryId", entry.getEntryId()
+			).setParameter(
+				"portalUser", Boolean.FALSE.toString()
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString()
 		);
-
-		LiferayPortletResponse liferayPortletResponse =
-			portal.getLiferayPortletResponse(portletResponse);
-
-		PortletURL viewSummaryURL = liferayPortletResponse.createRenderURL();
-
-		viewSummaryURL.setParameter(
-			"mvcPath", "/contacts_center/view_resources.jsp");
-		viewSummaryURL.setParameter("redirect", redirect);
-		viewSummaryURL.setParameter(
-			"entryId", String.valueOf(entry.getEntryId()));
-		viewSummaryURL.setParameter("portalUser", Boolean.FALSE.toString());
-		viewSummaryURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-		jsonObject.put("viewSummaryURL", viewSummaryURL.toString());
 
 		return jsonObject;
 	}
@@ -1099,20 +1098,22 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		JSONObject jsonObject = ContactsUtil.getUserJSONObject(
 			themeDisplay.getUserId(), user);
 
-		jsonObject.put("portraitURL", user.getPortraitURL(themeDisplay));
-
-		LiferayPortletResponse liferayPortletResponse =
-			portal.getLiferayPortletResponse(portletResponse);
-
-		PortletURL viewSummaryURL = liferayPortletResponse.createRenderURL();
-
-		viewSummaryURL.setParameter(
-			"mvcPath", "/contacts_center/view_resources.jsp");
-		viewSummaryURL.setParameter("userId", String.valueOf(user.getUserId()));
-		viewSummaryURL.setParameter("portalUser", Boolean.TRUE.toString());
-		viewSummaryURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-		jsonObject.put("viewSummaryURL", viewSummaryURL.toString());
+		jsonObject.put(
+			"portraitURL", user.getPortraitURL(themeDisplay)
+		).put(
+			"viewSummaryURL",
+			PortletURLBuilder.createRenderURL(
+				portal.getLiferayPortletResponse(portletResponse)
+			).setMVCPath(
+				"/contacts_center/view_resources.jsp"
+			).setParameter(
+				"userId", user.getUserId()
+			).setParameter(
+				"portalUser", Boolean.TRUE.toString()
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString()
+		);
 
 		return jsonObject;
 	}

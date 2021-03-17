@@ -32,6 +32,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -87,27 +88,25 @@ public class CommercePriceListDisplayContext
 	}
 
 	public String getAddCommercePriceListRenderURL() throws Exception {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_price_list/add_commerce_price_list");
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/commerce_price_list/add_commerce_price_list"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public String getAddCommercePriceModifierRenderURL() throws Exception {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_price_list/add_commerce_price_modifier");
-		portletURL.setParameter(
-			"commercePriceListId", String.valueOf(getCommercePriceListId()));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/commerce_price_list/add_commerce_price_modifier"
+		).setParameter(
+			"commercePriceListId", getCommercePriceListId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public List<CommerceCatalog> getCommerceCatalogs() throws PortalException {
@@ -420,19 +419,23 @@ public class CommercePriceListDisplayContext
 	}
 
 	private String _getManagePriceListPermissionsURL() throws PortalException {
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			httpServletRequest,
-			"com_liferay_portlet_configuration_web_portlet_" +
-				"PortletConfigurationPortlet",
-			ActionRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"modelResource", CommercePriceList.class.getName());
-		portletURL.setParameter("modelResourceDescription", "{name}");
-		portletURL.setParameter("resourcePrimKey", "{id}");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				httpServletRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setRedirect(
+			commercePricingRequestHelper.getCurrentURL()
+		).setParameter(
+			"modelResource", CommercePriceList.class.getName()
+		).setParameter(
+			"modelResourceDescription", "{name}"
+		).setParameter(
+			"resourcePrimKey", "{id}"
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

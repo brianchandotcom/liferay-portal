@@ -30,6 +30,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,7 +67,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -253,20 +253,22 @@ public class ContentUtil {
 			}
 		}
 
-		PortletURL viewUsagesURL = PortletURLFactoryUtil.create(
-			httpServletRequest,
-			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-			PortletRequest.RENDER_PHASE);
-
-		viewUsagesURL.setParameter(
-			"mvcPath", "/view_layout_classed_model_usages.jsp");
-		viewUsagesURL.setParameter(
-			"className", layoutClassedModelUsage.getClassName());
-		viewUsagesURL.setParameter(
-			"classPK", String.valueOf(layoutClassedModelUsage.getClassPK()));
-		viewUsagesURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return jsonObject.put("viewUsagesURL", viewUsagesURL.toString());
+		return jsonObject.put(
+			"viewUsagesURL",
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest,
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/view_layout_classed_model_usages.jsp"
+			).setParameter(
+				"className", layoutClassedModelUsage.getClassName()
+			).setParameter(
+				"classPK", layoutClassedModelUsage.getClassPK()
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString());
 	}
 
 	private static Set<LayoutDisplayPageObjectProvider<?>>

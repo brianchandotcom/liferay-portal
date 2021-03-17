@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.embedded.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -36,7 +37,6 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -101,20 +101,23 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 			TEST_PORTLET_ID, null, null);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			PortletContainerTestUtil.getHttpServletRequest(group, layout),
-			TEST_PORTLET_ID, layout.getPlid(), PortletRequest.RESOURCE_PHASE);
-
 		TestRuntimePortlet testRuntimePortlet = new TestRuntimePortlet();
 		String testRuntimePortletId = "testRuntimePortletId";
 
 		setUpPortlet(
 			testRuntimePortlet, properties, testRuntimePortletId, false);
 
-		portletURL.setParameter("testRuntimePortletId", testRuntimePortletId);
-
 		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(portletURL.toString());
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.RESOURCE_PHASE)
+				).setParameter(
+					"testRuntimePortletId", testRuntimePortletId
+				).buildString());
 
 		Assert.assertEquals(200, response.getCode());
 

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.tab.item;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -52,36 +53,33 @@ public class DDMFormAdminTabItem implements DDMDisplayTabItem {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = getPortletURL(
-			liferayPortletRequest, liferayPortletResponse);
-
-		portletURL.setParameter("currentTab", "forms");
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL(liferayPortletRequest, liferayPortletResponse)
+		).setParameter(
+			"currentTab", "forms"
+		).buildString();
 	}
 
 	protected PortletURL getPortletURL(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			liferayPortletRequest,
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
-
-		portletURL.setParameter(
-			"refererPortletName",
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
-		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				liferayPortletRequest,
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"backURL", themeDisplay.getURLCurrent()
+		).setParameter(
+			"refererPortletName", DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
+		).setParameter(
+			"groupId", themeDisplay.getScopeGroupId()
+		).build();
 	}
 
 }

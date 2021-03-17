@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -168,21 +169,20 @@ public class DDMFormAssetRenderer
 
 		String portletNamespace = DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM;
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, portletNamespace, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcPath", "/display/edit_form_instance_record.jsp");
-		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
-		portletURL.setParameter(
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, portletNamespace,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/display/edit_form_instance_record.jsp"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
 			"formInstanceRecordId",
-			String.valueOf(_ddmFormInstanceRecord.getFormInstanceRecordId()));
-		portletURL.setParameter(
-			"formInstanceId",
-			String.valueOf(_ddmFormInstanceRecord.getFormInstanceId()));
-
-		return portletURL;
+			_ddmFormInstanceRecord.getFormInstanceRecordId()
+		).setParameter(
+			"formInstanceId", _ddmFormInstanceRecord.getFormInstanceId()
+		).build();
 	}
 
 	@Override

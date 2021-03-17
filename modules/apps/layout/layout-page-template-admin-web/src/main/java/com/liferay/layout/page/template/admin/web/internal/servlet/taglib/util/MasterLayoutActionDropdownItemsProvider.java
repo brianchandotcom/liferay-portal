@@ -28,6 +28,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -47,7 +48,6 @@ import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -152,26 +152,24 @@ public class MasterLayoutActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getCopyMasterLayoutActionUnsafeConsumer() {
 
-		PortletURL copyMasterLayoutURL = _renderResponse.createActionURL();
-
-		copyMasterLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/copy_layout_page_template_entry");
-		copyMasterLayoutURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		copyMasterLayoutURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
-		copyMasterLayoutURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "copyMasterLayout");
 			dropdownItem.putData(
-				"copyMasterLayoutURL", copyMasterLayoutURL.toString());
+				"copyMasterLayoutURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_page_template_admin" +
+						"/copy_layout_page_template_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutPageTemplateCollectionId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
@@ -180,23 +178,20 @@ public class MasterLayoutActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteMasterLayoutActionUnsafeConsumer() {
 
-		PortletURL deleteMasterLayoutURL = _renderResponse.createActionURL();
-
-		deleteMasterLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/delete_master_layout");
-
-		deleteMasterLayoutURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteMasterLayoutURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteMasterLayout");
 			dropdownItem.putData(
-				"deleteMasterLayoutURL", deleteMasterLayoutURL.toString());
+				"deleteMasterLayoutURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_page_template_admin/delete_master_layout"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -205,26 +200,21 @@ public class MasterLayoutActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteMasterLayoutPreviewActionUnsafeConsumer() {
 
-		PortletURL deleteMasterLayoutPreviewURL =
-			_renderResponse.createActionURL();
-
-		deleteMasterLayoutPreviewURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin" +
-				"/delete_layout_page_template_entry_preview");
-
-		deleteMasterLayoutPreviewURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteMasterLayoutPreviewURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteMasterLayoutPreview");
 			dropdownItem.putData(
 				"deleteMasterLayoutPreviewURL",
-				deleteMasterLayoutPreviewURL.toString());
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_page_template_admin" +
+						"/delete_layout_page_template_entry_preview"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				).buildString());
 			dropdownItem.putData(
 				"layoutPageTemplateEntryId",
 				String.valueOf(
@@ -241,19 +231,21 @@ public class MasterLayoutActionDropdownItemsProvider {
 			return null;
 		}
 
-		PortletURL discardDraftURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.ACTION_PHASE);
-
-		discardDraftURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout_admin/discard_draft_layout");
-		discardDraftURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		discardDraftURL.setParameter(
-			"selPlid", String.valueOf(_draftLayout.getPlid()));
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "discardDraft");
-			dropdownItem.putData("discardDraftURL", discardDraftURL.toString());
+			dropdownItem.putData(
+				"discardDraftURL",
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/layout_admin/discard_draft_layout"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"selPlid", _draftLayout.getPlid()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "discard-draft"));
 		};
@@ -303,16 +295,15 @@ public class MasterLayoutActionDropdownItemsProvider {
 	}
 
 	private String _getItemSelectorURL() {
-		PortletURL uploadURL = _renderResponse.createActionURL();
-
-		uploadURL.setParameter(
-			ActionRequest.ACTION_NAME,
+		PortletURL uploadURL = PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
 			"/layout_page_template_admin" +
-				"/upload_layout_page_template_entry_preview");
-		uploadURL.setParameter(
+				"/upload_layout_page_template_entry_preview"
+		).setParameter(
 			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).build();
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
@@ -340,27 +331,24 @@ public class MasterLayoutActionDropdownItemsProvider {
 			return null;
 		}
 
-		PortletURL markAsDefaultMasterLayoutURL =
-			_renderResponse.createActionURL();
-
-		markAsDefaultMasterLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin" +
-				"/edit_layout_page_template_entry_settings");
-		markAsDefaultMasterLayoutURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		markAsDefaultMasterLayoutURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-		markAsDefaultMasterLayoutURL.setParameter(
-			"defaultTemplate", Boolean.FALSE.toString());
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "markAsDefaultMasterLayout");
 			dropdownItem.putData(
 				"markAsDefaultMasterLayoutURL",
-				markAsDefaultMasterLayoutURL.toString());
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_page_template_admin" +
+						"/edit_layout_page_template_entry_settings"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					defaultLayoutPageTemplateEntry.
+						getLayoutPageTemplateEntryId()
+				).setParameter(
+					"defaultTemplate", Boolean.FALSE.toString()
+				).buildString());
 			dropdownItem.putData(
 				"message",
 				LanguageUtil.format(
@@ -379,28 +367,23 @@ public class MasterLayoutActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMarkAsDefaultMasterLayoutActionUnsafeConsumer() {
 
-		PortletURL markAsDefaultMasterLayoutURL =
-			_renderResponse.createActionURL();
-
-		markAsDefaultMasterLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin" +
-				"/edit_layout_page_template_entry_settings");
-
-		markAsDefaultMasterLayoutURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		markAsDefaultMasterLayoutURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-		markAsDefaultMasterLayoutURL.setParameter(
-			"defaultTemplate", Boolean.TRUE.toString());
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "markAsDefaultMasterLayout");
 			dropdownItem.putData(
 				"markAsDefaultMasterLayoutURL",
-				markAsDefaultMasterLayoutURL.toString());
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_page_template_admin" +
+						"/edit_layout_page_template_entry_settings"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				).setParameter(
+					"defaultTemplate", Boolean.TRUE.toString()
+				).buildString());
 
 			String name = "Blank";
 
@@ -451,23 +434,6 @@ public class MasterLayoutActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getRenameMasterLayoutActionUnsafeConsumer() {
 
-		PortletURL updateMasterLayoutURL = _renderResponse.createActionURL();
-
-		updateMasterLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/update_layout_page_template_entry");
-
-		updateMasterLayoutURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		updateMasterLayoutURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
-		updateMasterLayoutURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "renameMasterLayout");
 			dropdownItem.putData(
@@ -478,7 +444,21 @@ public class MasterLayoutActionDropdownItemsProvider {
 				"layoutPageTemplateEntryName",
 				_layoutPageTemplateEntry.getName());
 			dropdownItem.putData(
-				"updateMasterLayoutURL", updateMasterLayoutURL.toString());
+				"updateMasterLayoutURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_page_template_admin" +
+						"/update_layout_page_template_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutPageTemplateCollectionId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "rename"));
 		};

@@ -20,12 +20,12 @@ import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDi
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -152,15 +152,14 @@ public class AssetPublisherPortletToolbarContributor
 
 		urlMenuItem.setLabel(title);
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(portletResponse);
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/add_asset_selector.jsp");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		urlMenuItem.setURL(portletURL.toString());
+		urlMenuItem.setURL(
+			PortletURLBuilder.createRenderURL(
+				_portal.getLiferayPortletResponse(portletResponse)
+			).setMVCPath(
+				"/add_asset_selector.jsp"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).buildString());
 
 		menuItems.add(urlMenuItem);
 	}
@@ -216,10 +215,11 @@ public class AssetPublisherPortletToolbarContributor
 			curGroupId = group.getLiveGroupId();
 		}
 
-		PortletURL portletURL = assetPublisherAddItemHolder.getPortletURL();
-
-		portletURL.setParameter(
-			"portletResource", AssetPublisherPortletKeys.ASSET_PUBLISHER);
+		PortletURL portletURL = PortletURLBuilder.create(
+			assetPublisherAddItemHolder.getPortletURL()
+		).setParameter(
+			"portletResource", AssetPublisherPortletKeys.ASSET_PUBLISHER
+		).build();
 
 		boolean addDisplayPageParameter =
 			_assetPublisherWebHelper.isDefaultAssetPublisher(

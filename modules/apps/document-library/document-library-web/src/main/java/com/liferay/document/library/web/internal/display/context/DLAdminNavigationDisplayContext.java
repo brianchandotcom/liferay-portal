@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -84,15 +85,14 @@ public class DLAdminNavigationDisplayContext {
 			navigationItem.setActive(true);
 		}
 
-		PortletURL viewDocumentLibraryURL =
-			_liferayPortletResponse.createRenderURL();
-
-		viewDocumentLibraryURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
-		viewDocumentLibraryURL.setParameter(
-			"redirect", _currentURLObj.toString());
-
-		navigationItem.setHref(viewDocumentLibraryURL.toString());
+		navigationItem.setHref(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/document_library/view"
+			).setRedirect(
+				_currentURLObj.toString()
+			).buildString());
 
 		navigationItem.setLabel(
 			LanguageUtil.get(
@@ -105,14 +105,14 @@ public class DLAdminNavigationDisplayContext {
 
 		navigationItem.setActive(navigation.equals("file_entry_types"));
 
-		PortletURL viewFileEntryTypesURL =
-			_liferayPortletResponse.createRenderURL();
-
-		viewFileEntryTypesURL.setParameter("navigation", "file_entry_types");
-		viewFileEntryTypesURL.setParameter(
-			"redirect", _currentURLObj.toString());
-
-		navigationItem.setHref(viewFileEntryTypesURL.toString());
+		navigationItem.setHref(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setRedirect(
+				_currentURLObj.toString()
+			).setParameter(
+				"navigation", "file_entry_types"
+			).buildString());
 
 		navigationItem.setLabel(
 			LanguageUtil.get(
@@ -127,15 +127,18 @@ public class DLAdminNavigationDisplayContext {
 			navigationItem.setActive(true);
 		}
 
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("navigation", "file_entry_metadata_sets");
-		portletURL.setParameter("redirect", _currentURLObj.toString());
-		portletURL.setParameter("backURL", _themeDisplay.getURLCurrent());
-		portletURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-
-		navigationItem.setHref(portletURL.toString());
+		navigationItem.setHref(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setRedirect(
+				_currentURLObj.toString()
+			).setParameter(
+				"navigation", "file_entry_metadata_sets"
+			).setParameter(
+				"backURL", _themeDisplay.getURLCurrent()
+			).setParameter(
+				"groupId", _themeDisplay.getScopeGroupId()
+			).buildString());
 
 		navigationItem.setLabel(
 			LanguageUtil.get(

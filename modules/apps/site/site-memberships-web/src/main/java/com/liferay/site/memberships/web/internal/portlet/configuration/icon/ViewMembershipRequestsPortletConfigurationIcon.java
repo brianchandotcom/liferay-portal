@@ -14,6 +14,7 @@
 
 package com.liferay.site.memberships.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -31,7 +32,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,13 +59,14 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/view_membership_requests.jsp");
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest,
+				SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view_membership_requests.jsp"
+		).buildString();
 	}
 
 	@Override

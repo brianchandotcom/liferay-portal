@@ -40,6 +40,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -128,12 +129,11 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public String getClearResultsURL() throws PortletException {
-		PortletURL clearResultsURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(getPortletURL(), _liferayPortletResponse)
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
@@ -274,15 +274,16 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLUtil.getCurrent(
-			_liferayPortletRequest, _liferayPortletResponse);
-
-		portletURL.setParameter("mvcPath", getMVCPath());
-		portletURL.setParameter(
-			"redirect",
-			ParamUtil.getString(_liferayPortletRequest, "redirect"));
-		portletURL.setParameter(
-			"recordSetId", String.valueOf(_ddlRecordSet.getRecordSetId()));
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse)
+		).setMVCPath(
+			getMVCPath()
+		).setRedirect(
+			ParamUtil.getString(_liferayPortletRequest, "redirect")
+		).setParameter(
+			"recordSetId", _ddlRecordSet.getRecordSetId()
+		).build();
 
 		String delta = ParamUtil.getString(_liferayPortletRequest, "delta");
 
@@ -318,11 +319,11 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public SearchContainer<?> getSearch() throws PortalException {
-		String displayStyle = getDisplayStyle();
-
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter("displayStyle", displayStyle);
+		PortletURL portletURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"displayStyle", getDisplayStyle()
+		).build();
 
 		List<String> headerNames = new ArrayList<>();
 
@@ -372,15 +373,15 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", getMVCPath());
-		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(_liferayPortletRequest));
-		portletURL.setParameter(
-			"recordSetId", String.valueOf(_ddlRecordSet.getRecordSetId()));
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			getMVCPath()
+		).setRedirect(
+			PortalUtil.getCurrentURL(_liferayPortletRequest)
+		).setParameter(
+			"recordSetId", _ddlRecordSet.getRecordSetId()
+		).buildString();
 	}
 
 	public String getSearchContainerId() {
@@ -388,16 +389,21 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public String getSortingURL() throws Exception {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(getPortletURL(), _liferayPortletResponse)
+		).setParameter(
+			"orderByType",
+			() -> {
+				String orderByType = ParamUtil.getString(
+					_liferayPortletRequest, "orderByType");
 
-		String orderByType = ParamUtil.getString(
-			_liferayPortletRequest, "orderByType");
+				if (orderByType.equals("asc")) {
+					return "desc";
+				}
 
-		sortingURL.setParameter(
-			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
+				return "asc";
+			}
+		).buildString();
 	}
 
 	public int getTotalItems() throws PortalException {

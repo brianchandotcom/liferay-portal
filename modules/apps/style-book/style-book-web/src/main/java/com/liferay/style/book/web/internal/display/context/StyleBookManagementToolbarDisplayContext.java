@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -35,7 +36,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
@@ -103,18 +103,13 @@ public class StyleBookManagementToolbarDisplayContext
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"copyStyleBookEntryURL",
-			() -> {
-				PortletURL copyStyleBookEntryURL =
-					liferayPortletResponse.createActionURL();
-
-				copyStyleBookEntryURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/style_book/copy_style_book_entry");
-				copyStyleBookEntryURL.setParameter(
-					"redirect", _themeDisplay.getURLCurrent());
-
-				return copyStyleBookEntryURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/style_book/copy_style_book_entry"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).buildString()
 		).put(
 			"exportStyleBookEntriesURL",
 			() -> {
@@ -131,11 +126,11 @@ public class StyleBookManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	@Override
@@ -149,15 +144,13 @@ public class StyleBookManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "addStyleBookEntry");
 
-				PortletURL addStyleBookEntryURL =
-					liferayPortletResponse.createActionURL();
-
-				addStyleBookEntryURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/style_book/add_style_book_entry");
-
 				dropdownItem.putData(
-					"addStyleBookEntryURL", addStyleBookEntryURL.toString());
+					"addStyleBookEntryURL",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/style_book/add_style_book_entry"
+					).buildString());
 
 				dropdownItem.putData(
 					"title",

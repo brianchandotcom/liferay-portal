@@ -36,6 +36,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -55,7 +56,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -176,22 +176,17 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public String getDeleteURL(CommerceOrderItem commerceOrderItem) {
-		LiferayPortletResponse liferayPortletResponse =
-			commerceCartContentRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_cart_content/edit_commerce_order_item");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter(
-			"redirect", commerceCartContentRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"commerceOrderItemId",
-			String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
-
-		return portletURL.toString();
+		return PortletURLBuilder.createActionURL(
+			commerceCartContentRequestHelper.getLiferayPortletResponse()
+		).setActionName(
+			"/commerce_cart_content/edit_commerce_order_item"
+		).setRedirect(
+			commerceCartContentRequestHelper.getCurrentURL()
+		).setParameter(
+			Constants.CMD, Constants.DELETE
+		).setParameter(
+			"commerceOrderItemId", commerceOrderItem.getCommerceOrderItemId()
+		).buildString();
 	}
 
 	public CommerceMoney getDiscountAmountCommerceMoney(

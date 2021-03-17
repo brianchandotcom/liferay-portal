@@ -31,6 +31,7 @@ import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -49,7 +50,6 @@ import java.util.Calendar;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -321,22 +321,19 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		PortletURL shipmentPortletURL = _portal.getControlPanelPortletURL(
-			actionRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
-			PortletRequest.RENDER_PHASE);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		shipmentPortletURL.setParameter("redirect", redirect);
-
-		shipmentPortletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_shipment/edit_commerce_shipment");
-		shipmentPortletURL.setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipmentId));
-
 		sendRedirect(
-			actionRequest, actionResponse, shipmentPortletURL.toString());
+			actionRequest, actionResponse,
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					actionRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/commerce_shipment/edit_commerce_shipment"
+			).setRedirect(
+				ParamUtil.getString(actionRequest, "redirect")
+			).setParameter(
+				"commerceShipmentId", commerceShipmentId
+			).buildString());
 	}
 
 	protected void selectBillingAddress(ActionRequest actionRequest)

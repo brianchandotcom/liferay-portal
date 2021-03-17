@@ -22,6 +22,7 @@ import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,17 +51,19 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 			commerceAccountGroupCommerceAccountRelLocalService;
 		_commerceAccountGroupService = commerceAccountGroupService;
 		_commerceAccountService = commerceAccountService;
-		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
 
 		_commerceAccountItemSelectorRequestHelper =
 			new CommerceAccountItemSelectorRequestHelper(httpServletRequest);
 
-		_portletURL.setParameter(
+		_portletURL = PortletURLBuilder.create(
+			portletURL
+		).setParameter(
 			"commerceAccountGroupId",
 			ParamUtil.getString(
 				_commerceAccountItemSelectorRequestHelper.getRenderRequest(),
-				"commerceAccountGroupId"));
+				"commerceAccountGroupId")
+		).build();
 	}
 
 	public String getItemSelectedEventName() {

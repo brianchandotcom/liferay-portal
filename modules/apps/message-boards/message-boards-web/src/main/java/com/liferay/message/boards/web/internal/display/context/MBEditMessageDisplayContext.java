@@ -15,6 +15,7 @@
 package com.liferay.message.boards.web.internal.display.context;
 
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
 /**
@@ -77,23 +77,21 @@ public class MBEditMessageDisplayContext {
 			taglibContext.put(
 				"getAttachmentsURL", getAttachmentsURL.toString());
 
-			PortletURL viewTrashAttachmentsURL =
-				_liferayPortletResponse.createRenderURL();
-
-			viewTrashAttachmentsURL.setParameter(
-				"mvcRenderCommandName",
-				"/message_boards/view_deleted_message_attachments");
-			viewTrashAttachmentsURL.setParameter(
-				"redirect",
-				String.valueOf(
-					PortletURLUtil.getCurrent(
-						_liferayPortletRequest, _liferayPortletResponse)));
-			viewTrashAttachmentsURL.setParameter(
-				"messageId", String.valueOf(_message.getMessageId()));
-			viewTrashAttachmentsURL.setWindowState(LiferayWindowState.POP_UP);
-
 			taglibContext.put(
-				"viewTrashAttachmentsURL", viewTrashAttachmentsURL.toString());
+				"viewTrashAttachmentsURL",
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/message_boards/view_deleted_message_attachments"
+				).setRedirect(
+					String.valueOf(
+						PortletURLUtil.getCurrent(
+							_liferayPortletRequest, _liferayPortletResponse))
+				).setParameter(
+					"messageId", _message.getMessageId()
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 		}
 
 		return taglibContext;

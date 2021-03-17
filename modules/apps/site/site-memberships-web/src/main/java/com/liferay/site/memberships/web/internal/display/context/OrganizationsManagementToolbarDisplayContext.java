@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -93,11 +94,11 @@ public class OrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	@Override
@@ -108,13 +109,6 @@ public class OrganizationsManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		try {
-			PortletURL selectOrganizationsURL =
-				liferayPortletResponse.createRenderURL();
-
-			selectOrganizationsURL.setParameter(
-				"mvcPath", "/select_organizations.jsp");
-			selectOrganizationsURL.setWindowState(LiferayWindowState.POP_UP);
-
 			return CreationMenuBuilder.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.putData("action", "selectOrganizations");
@@ -131,7 +125,13 @@ public class OrganizationsManagementToolbarDisplayContext
 
 					dropdownItem.putData(
 						"selectOrganizationsURL",
-						selectOrganizationsURL.toString());
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCPath(
+							"/select_organizations.jsp"
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString());
 					dropdownItem.setLabel(
 						LanguageUtil.get(httpServletRequest, "add"));
 				}

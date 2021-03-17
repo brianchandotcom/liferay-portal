@@ -16,11 +16,11 @@ package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -68,15 +68,13 @@ public class ConfigurationScreenConfigurationEntry
 	public String getEditURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/configuration_admin/view_configuration_screen");
-		portletURL.setParameter(
-			"configurationScreenKey", _configurationScreen.getKey());
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/configuration_admin/view_configuration_screen"
+		).setParameter(
+			"configurationScreenKey", _configurationScreen.getKey()
+		).buildString();
 	}
 
 	@Override

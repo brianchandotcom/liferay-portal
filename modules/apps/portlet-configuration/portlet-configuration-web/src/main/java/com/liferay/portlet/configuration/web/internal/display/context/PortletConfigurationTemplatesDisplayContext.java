@@ -15,6 +15,7 @@
 package com.liferay.portlet.configuration.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Portlet;
@@ -189,13 +190,17 @@ public class PortletConfigurationTemplatesDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/edit_configuration_templates.jsp");
-		portletURL.setParameter("redirect", getRedirect());
-		portletURL.setParameter(
-			"returnToFullPageURL", getReturnToFullPageURL());
-		portletURL.setParameter("portletResource", getPortletResource());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/edit_configuration_templates.jsp"
+		).setRedirect(
+			getRedirect()
+		).setParameter(
+			"returnToFullPageURL", getReturnToFullPageURL()
+		).setParameter(
+			"portletResource", getPortletResource()
+		).build();
 
 		String displayStyle = getDisplayStyle();
 

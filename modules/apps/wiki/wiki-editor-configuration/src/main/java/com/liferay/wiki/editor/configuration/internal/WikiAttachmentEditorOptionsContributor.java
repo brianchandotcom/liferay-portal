@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.editor.configuration.internal;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -25,9 +26,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -74,17 +72,17 @@ public class WikiAttachmentEditorOptionsContributor
 			return;
 		}
 
-		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
-			WikiPortletKeys.WIKI);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
-		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey));
-		portletURL.setParameter(
-			"mimeTypes", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
-
-		editorOptions.setUploadURL(portletURL.toString());
+		editorOptions.setUploadURL(
+			PortletURLBuilder.create(
+				requestBackedPortletURLFactory.createActionURL(
+					WikiPortletKeys.WIKI)
+			).setActionName(
+				"/wiki/upload_page_attachment"
+			).setParameter(
+				"resourcePrimKey", wikiPageResourcePrimKey
+			).setParameter(
+				"mimeTypes", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES
+			).buildString());
 	}
 
 }

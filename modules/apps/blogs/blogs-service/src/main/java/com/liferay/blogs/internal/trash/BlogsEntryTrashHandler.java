@@ -16,6 +16,7 @@ package com.liferay.blogs.internal.trash;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -63,14 +64,15 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
-
 		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 
-		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
-		portletURL.setParameter("urlTitle", entry.getUrlTitle());
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			getRestoreURL(portletRequest, classPK, false)
+		).setParameter(
+			"entryId", entry.getEntryId()
+		).setParameter(
+			"urlTitle", entry.getUrlTitle()
+		).buildString();
 	}
 
 	@Override

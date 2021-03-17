@@ -16,6 +16,7 @@ package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -195,13 +196,13 @@ public class DepotAdminSelectRoleDisplayContext {
 		}
 
 		public PortletURL getSelectRolePortletURL() {
-			PortletURL portletURL = _getPortletURL(
-				_renderRequest, _renderResponse, _user);
-
-			portletURL.setParameter("resetCur", Boolean.TRUE.toString());
-			portletURL.setParameter("step", String.valueOf(Step2.TYPE));
-
-			return portletURL;
+			return PortletURLBuilder.create(
+				_getPortletURL(_renderRequest, _renderResponse, _user)
+			).setParameter(
+				"resetCur", Boolean.TRUE.toString()
+			).setParameter(
+				"step", Step2.TYPE
+			).build();
 		}
 
 		public int getType() {
@@ -274,16 +275,17 @@ public class DepotAdminSelectRoleDisplayContext {
 		}
 
 		public String getBreadCrumbs() throws PortalException {
-			PortletURL portletURL = _getPortletURL(
-				_renderRequest, _renderResponse, _user);
-
-			portletURL.setParameter("step", String.valueOf(Step1.TYPE));
-
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				_themeDisplay.getLocale(), getClass());
 
 			return StringBundler.concat(
-				"<a href=\"", portletURL.toString(), "\">",
+				"<a href=\"",
+				PortletURLBuilder.create(
+					_getPortletURL(_renderRequest, _renderResponse, _user)
+				).setParameter(
+					"step", Step1.TYPE
+				).buildString(),
+				"\">",
 				ResourceBundleUtil.getString(resourceBundle, "asset-libraries"),
 				"</a> &raquo; ",
 				HtmlUtil.escape(

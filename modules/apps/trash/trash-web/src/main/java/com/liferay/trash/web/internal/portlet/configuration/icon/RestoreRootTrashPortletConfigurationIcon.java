@@ -14,6 +14,7 @@
 
 package com.liferay.trash.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -26,10 +27,8 @@ import com.liferay.trash.constants.TrashPortletKeys;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.web.internal.display.context.TrashDisplayContext;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,20 +62,17 @@ public class RestoreRootTrashPortletConfigurationIcon
 				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse));
 
-			PortletURL restoreURL = _portal.getControlPanelPortletURL(
-				portletRequest, TrashPortletKeys.TRASH,
-				PortletRequest.ACTION_PHASE);
-
-			restoreURL.setParameter(
-				ActionRequest.ACTION_NAME, "restoreEntries");
-
-			restoreURL.setParameter(
-				"redirect", trashDisplayContext.getViewContentRedirectURL());
-			restoreURL.setParameter(
-				"trashEntryId",
-				String.valueOf(trashDisplayContext.getTrashEntryId()));
-
-			return restoreURL.toString();
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, TrashPortletKeys.TRASH,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"restoreEntries"
+			).setRedirect(
+				trashDisplayContext.getViewContentRedirectURL()
+			).setParameter(
+				"trashEntryId", trashDisplayContext.getTrashEntryId()
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

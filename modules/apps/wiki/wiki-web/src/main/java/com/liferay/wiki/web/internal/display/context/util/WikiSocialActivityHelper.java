@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.internal.display.context.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,8 +38,6 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.social.WikiActivityKeys;
 
 import java.util.ResourceBundle;
-
-import javax.portlet.PortletURL;
 
 /**
  * @author Adolfo Pérez
@@ -300,18 +299,20 @@ public class WikiSocialActivityHelper {
 			return StringPool.BLANK;
 		}
 
-		WikiNode node = page.getNode();
+		return PortletURLBuilder.createRenderURL(
+			_wikiRequestHelper.getLiferayPortletResponse()
+		).setMVCRenderCommandName(
+			"/wiki/view"
+		).setParameter(
+			"nodeName",
+			() -> {
+				WikiNode node = page.getNode();
 
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-		portletURL.setParameter("nodeName", node.getName());
-		portletURL.setParameter("title", page.getTitle());
-
-		return portletURL.toString();
+				return node.getName();
+			}
+		).setParameter(
+			"title", page.getTitle()
+		).buildString();
 	}
 
 	protected String getPageURL(WikiPage page, double version) {
@@ -319,19 +320,22 @@ public class WikiSocialActivityHelper {
 			return null;
 		}
 
-		WikiNode node = page.getNode();
+		return PortletURLBuilder.createRenderURL(
+			_wikiRequestHelper.getLiferayPortletResponse()
+		).setMVCRenderCommandName(
+			"/wiki/view"
+		).setParameter(
+			"nodeName",
+			() -> {
+				WikiNode node = page.getNode();
 
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-		portletURL.setParameter("nodeName", node.getName());
-		portletURL.setParameter("title", page.getTitle());
-		portletURL.setParameter("version", String.valueOf(version));
-
-		return portletURL.toString();
+				return node.getName();
+			}
+		).setParameter(
+			"title", page.getTitle()
+		).setParameter(
+			"version", version
+		).buildString();
 	}
 
 	private FileEntry _fetchFileEntry(long fileEntryId) throws PortalException {

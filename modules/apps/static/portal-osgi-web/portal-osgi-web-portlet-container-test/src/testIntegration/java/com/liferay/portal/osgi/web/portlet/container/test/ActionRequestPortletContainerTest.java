@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -254,14 +255,17 @@ public class ActionRequestPortletContainerTest
 			testPortlet, new HashMapDictionary<String, Object>(),
 			TEST_PORTLET_ID);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			PortletContainerTestUtil.getHttpServletRequest(group, layout),
-			TEST_PORTLET_ID, layout.getPlid(), PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter("p_auth_secret", _SHARED_SECRET);
-
 		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(portletURL.toString());
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.ACTION_PHASE)
+				).setParameter(
+					"p_auth_secret", _SHARED_SECRET
+				).buildString());
 
 		Assert.assertEquals(200, response.getCode());
 
@@ -277,14 +281,17 @@ public class ActionRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			PortletContainerTestUtil.getHttpServletRequest(group, layout),
-			TEST_PORTLET_ID, layout.getPlid(), PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter("struts_action", "/test/portlet/1");
-
 		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(portletURL.toString());
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.ACTION_PHASE)
+				).setParameter(
+					"struts_action", "/test/portlet/1"
+				).buildString());
 
 		Assert.assertEquals(200, response.getCode());
 

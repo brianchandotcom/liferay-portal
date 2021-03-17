@@ -26,6 +26,7 @@ import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShip
 import com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.taglib.servlet.taglib.CommerceShippingMethodFixedOptionsScreenNavigationCategory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -63,20 +63,17 @@ public class CommerceShippingFixedOptionsDisplayContext
 	}
 
 	public String getAddShippingFixedOptionURL() throws Exception {
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			renderRequest, CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_shipping_methods/edit_commerce_shipping_fixed_option");
-		portletURL.setParameter(
-			"commerceShippingMethodId",
-			String.valueOf(getCommerceShippingMethodId()));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				renderRequest, CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_shipping_methods/edit_commerce_shipping_fixed_option"
+		).setParameter(
+			"commerceShippingMethodId", getCommerceShippingMethodId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public CommerceShippingFixedOption getCommerceShippingFixedOption()

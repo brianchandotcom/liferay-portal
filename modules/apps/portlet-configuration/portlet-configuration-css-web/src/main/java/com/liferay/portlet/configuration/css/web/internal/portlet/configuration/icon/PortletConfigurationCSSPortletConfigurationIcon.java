@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.css.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -32,7 +33,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -56,24 +56,29 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL renderURL = PortletURLFactoryUtil.create(
-				portletRequest,
-				PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
-				PortletRequest.RENDER_PHASE);
+			return PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					portletRequest,
+					PortletConfigurationCSSPortletKeys.
+						PORTLET_CONFIGURATION_CSS,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/view.jsp"
+			).setParameter(
+				"portletResource",
+				() -> {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)portletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-			renderURL.setParameter("mvcPath", "/view.jsp");
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			renderURL.setParameter("portletResource", portletDisplay.getId());
-
-			renderURL.setWindowState(LiferayWindowState.POP_UP);
-
-			return renderURL.toString();
+					return portletDisplay.getId();
+				}
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

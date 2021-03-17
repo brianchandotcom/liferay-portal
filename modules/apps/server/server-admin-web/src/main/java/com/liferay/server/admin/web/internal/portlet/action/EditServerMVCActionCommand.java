@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.log4j.Log4JUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.ConvertException;
@@ -114,7 +115,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.apache.log4j.Level;
@@ -462,12 +462,13 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			LiferayActionResponse liferayActionResponse =
 				(LiferayActionResponse)actionResponse;
 
-			PortletURL portletURL = liferayActionResponse.createRenderURL();
-
-			portletURL.setParameter("mvcRenderCommandName", path);
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-
-			return portletURL.toString();
+			return PortletURLBuilder.createRenderURL(
+				liferayActionResponse
+			).setMVCRenderCommandName(
+				path
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).buildString();
 		}
 
 		PortletSession portletSession = actionRequest.getPortletSession();

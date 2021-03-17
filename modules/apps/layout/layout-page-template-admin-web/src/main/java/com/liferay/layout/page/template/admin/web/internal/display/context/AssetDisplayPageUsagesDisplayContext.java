@@ -27,6 +27,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.admin.web.internal.util.comparator.AssetDisplayPageEntryModifiedDateComparator;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -120,17 +121,15 @@ public class AssetDisplayPageUsagesDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/layout_page_template_admin/view_asset_display_page_usages");
-		portletURL.setParameter("redirect", getRedirect());
-		portletURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(getLayoutPageTemplateEntryId()));
-
-		return portletURL;
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/layout_page_template_admin/view_asset_display_page_usages"
+		).setRedirect(
+			getRedirect()
+		).setParameter(
+			"layoutPageTemplateEntryId", getLayoutPageTemplateEntryId()
+		).build();
 	}
 
 	public String getRedirect() {

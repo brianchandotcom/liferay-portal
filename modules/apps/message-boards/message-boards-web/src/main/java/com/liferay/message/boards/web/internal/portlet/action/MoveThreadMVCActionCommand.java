@@ -27,6 +27,7 @@ import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -42,7 +43,6 @@ import java.util.Collections;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -122,14 +122,14 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 		LiferayActionResponse liferayActionResponse =
 			(LiferayActionResponse)actionResponse;
 
-		PortletURL portletURL = liferayActionResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/view_message");
-		portletURL.setParameter(
-			"messageId", String.valueOf(thread.getRootMessageId()));
-
-		actionResponse.sendRedirect(portletURL.toString());
+		actionResponse.sendRedirect(
+			PortletURLBuilder.createRenderURL(
+				liferayActionResponse
+			).setMVCRenderCommandName(
+				"/message_boards/view_message"
+			).setParameter(
+				"messageId", thread.getRootMessageId()
+			).buildString());
 	}
 
 	@Reference

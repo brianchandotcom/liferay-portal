@@ -25,6 +25,7 @@ import com.liferay.password.policies.admin.web.internal.search.AddOrganizationPa
 import com.liferay.password.policies.admin.web.internal.search.AddUserPasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.DeleteOrganizationPasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.DeleteUserPasswordPolicyChecker;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -102,11 +103,11 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -209,20 +210,21 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", _mvcPath);
-		portletURL.setParameter("tabs1", "assignees");
-		portletURL.setParameter("tabs2", getTabs2());
-		portletURL.setParameter(
-			"passwordPolicyId",
-			String.valueOf(_passwordPolicy.getPasswordPolicyId()));
-
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
-		portletURL.setParameter("redirect", redirect);
-
-		portletURL.setParameter("displayStyle", _displayStyle);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			_mvcPath
+		).setRedirect(
+			ParamUtil.getString(_httpServletRequest, "redirect")
+		).setParameter(
+			"tabs1", "assignees"
+		).setParameter(
+			"tabs2", getTabs2()
+		).setParameter(
+			"passwordPolicyId", _passwordPolicy.getPasswordPolicyId()
+		).setParameter(
+			"displayStyle", _displayStyle
+		).build();
 
 		if (Validator.isNotNull(getKeywords())) {
 			portletURL.setParameter("keywords", getKeywords());
@@ -261,13 +263,12 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
+		).buildString();
 	}
 
 	public String getTabs2() {

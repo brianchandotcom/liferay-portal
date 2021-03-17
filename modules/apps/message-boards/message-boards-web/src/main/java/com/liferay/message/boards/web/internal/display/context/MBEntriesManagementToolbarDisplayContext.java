@@ -32,6 +32,7 @@ import com.liferay.message.boards.util.comparator.ThreadTitleComparator;
 import com.liferay.message.boards.web.internal.security.permission.MBCategoryPermission;
 import com.liferay.message.boards.web.internal.security.permission.MBMessagePermission;
 import com.liferay.message.boards.web.internal.util.MBUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -56,7 +57,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -144,15 +144,11 @@ public class MBEntriesManagementToolbarDisplayContext {
 			}
 		).put(
 			"editEntryURL",
-			() -> {
-				PortletURL editEntryURL =
-					_liferayPortletResponse.createActionURL();
-
-				editEntryURL.setParameter(
-					ActionRequest.ACTION_NAME, "/message_boards/edit_entry");
-
-				return editEntryURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/message_boards/edit_entry"
+			).buildString()
 		).put(
 			"lockCmd", Constants.LOCK
 		).put(
@@ -295,12 +291,14 @@ public class MBEntriesManagementToolbarDisplayContext {
 				entriesNavigation.equals("threads") ||
 				entriesNavigation.equals("categories"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					_currentURLObj, _liferayPortletResponse);
-
-				removeLabelURL.setParameter("entriesNavigation", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setParameter(
+						"entriesNavigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
@@ -395,32 +393,31 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL searchURL = _liferayPortletResponse.createRenderURL();
-
-		searchURL.setParameter(
-			"mvcRenderCommandName", "/message_boards_admin/search");
-		searchURL.setParameter("redirect", _currentURLObj.toString());
-
 		MBCategory category = (MBCategory)_httpServletRequest.getAttribute(
 			WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 		long categoryId = MBUtil.getCategoryId(_httpServletRequest, category);
 
-		searchURL.setParameter(
-			"breadcrumbsCategoryId", String.valueOf(categoryId));
-		searchURL.setParameter("searchCategoryId", String.valueOf(categoryId));
-
-		return searchURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/message_boards_admin/search"
+		).setRedirect(
+			_currentURLObj.toString()
+		).setParameter(
+			"breadcrumbsCategoryId", categoryId
+		).setParameter(
+			"searchCategoryId", categoryId
+		).buildString();
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = _getCurrentSortingURL();
-
-		sortingURL.setParameter(
+		return PortletURLBuilder.create(
+			_getCurrentSortingURL()
+		).setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL;
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
+		).build();
 	}
 
 	public void populateOrder(SearchContainer searchContainer) {

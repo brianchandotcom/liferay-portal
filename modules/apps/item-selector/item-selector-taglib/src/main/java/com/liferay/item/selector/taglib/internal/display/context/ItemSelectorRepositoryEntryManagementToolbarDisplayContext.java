@@ -26,6 +26,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.item.selector.taglib.internal.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorRegistryUtil;
 import com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag;
 import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -83,11 +84,11 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = _getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			_getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -136,11 +137,13 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getCurrentSortingURL() throws PortletException {
-		PortletURL currentSortingURL = PortletURLUtil.clone(
-			_getPortletURL(), _liferayPortletResponse);
-
-		currentSortingURL.setParameter("orderByType", getOrderByType());
-		currentSortingURL.setParameter("orderByCol", _getOrderByCol());
+		PortletURL currentSortingURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(_getPortletURL(), _liferayPortletResponse)
+		).setParameter(
+			"orderByType", getOrderByType()
+		).setParameter(
+			"orderByCol", _getOrderByCol()
+		).build();
 
 		if (_repositoryEntryBrowserDisplayContext.isSearchEverywhere()) {
 			currentSortingURL.setParameter("scope", "everywhere");
@@ -199,11 +202,13 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		return LabelItemListBuilder.add(
 			labelItem -> {
-				PortletURL removeLabelURL = getCurrentSortingURL();
-
-				removeLabelURL.setParameter("scope", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getCurrentSortingURL()
+					).setParameter(
+						"scope", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -228,23 +233,22 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSearchURL() throws PortletException {
-		PortletURL searchURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
-
-		searchURL.setParameter("keywords", (String)null);
-		searchURL.setParameter("resetCur", Boolean.TRUE.toString());
-
-		return searchURL;
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
+		).setParameter(
+			"keywords", (String)null
+		).setParameter(
+			"resetCur", Boolean.TRUE.toString()
+		).build();
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = getCurrentSortingURL();
-
-		sortingURL.setParameter(
+		return PortletURLBuilder.create(
+			getCurrentSortingURL()
+		).setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL;
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
+		).build();
 	}
 
 	public ViewTypeItemList getViewTypes() throws PortletException {

@@ -23,6 +23,7 @@ import com.liferay.document.library.web.internal.display.context.util.DLRequestH
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -51,7 +52,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -242,8 +242,6 @@ public class DLViewFileEntryDisplayContext {
 			return _redirect;
 		}
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
 		long parentFolderId = _getParentFolderId();
 
 		String mvcRenderCommandName = "/document_library/view";
@@ -252,10 +250,13 @@ public class DLViewFileEntryDisplayContext {
 			mvcRenderCommandName = "/document_library/view_folder";
 		}
 
-		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
-		portletURL.setParameter("folderId", String.valueOf(parentFolderId));
-
-		_redirect = portletURL.toString();
+		_redirect = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			mvcRenderCommandName
+		).setParameter(
+			"folderId", parentFolderId
+		).buildString();
 
 		return _redirect;
 	}

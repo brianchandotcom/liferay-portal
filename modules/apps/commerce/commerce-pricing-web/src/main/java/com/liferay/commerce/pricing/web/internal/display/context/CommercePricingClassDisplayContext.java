@@ -20,10 +20,10 @@ import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -65,17 +64,13 @@ public class CommercePricingClassDisplayContext
 	}
 
 	public String getAddCommercePricingClassRenderURL() throws Exception {
-		LiferayPortletResponse liferayPortletResponse =
-			commercePricingRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_pricing_classes/add_commerce_pricing_class");
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			commercePricingRequestHelper.getLiferayPortletResponse()
+		).setMVCRenderCommandName(
+			"/commerce_pricing_classes/add_commerce_pricing_class"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public CommercePricingClass getCommercePricingClass()
@@ -128,34 +123,32 @@ public class CommercePricingClassDisplayContext
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			commercePricingRequestHelper.getRequest(),
-			CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
-			PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_pricing_classes/edit_commerce_pricing_class");
-		portletURL.setParameter(Constants.CMD, Constants.UPDATE);
-		portletURL.setParameter(
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				commercePricingRequestHelper.getRequest(),
+				CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/commerce_pricing_classes/edit_commerce_pricing_class"
+		).setParameter(
+			Constants.CMD, Constants.UPDATE
+		).setParameter(
 			"commercePricingClassId",
-			String.valueOf(commercePricingClass.getCommercePricingClassId()));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+			commercePricingClass.getCommercePricingClassId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public PortletURL getEditCommercePricingClassRenderURL() {
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			commercePricingRequestHelper.getRequest(),
-			CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_pricing_classes/edit_commerce_pricing_class");
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				commercePricingRequestHelper.getRequest(),
+				CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_pricing_classes/edit_commerce_pricing_class"
+		).build();
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() throws Exception {

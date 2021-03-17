@@ -15,6 +15,7 @@
 package com.liferay.users.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +39,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -69,14 +69,15 @@ public class ManageCustomFieldsPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				portletRequest, ExpandoColumn.class.getName(),
-				PortletProvider.Action.MANAGE);
-
-			portletURL.setParameter("modelResource", User.class.getName());
-			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-			return portletURL.toString();
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest, ExpandoColumn.class.getName(),
+					PortletProvider.Action.MANAGE)
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).setParameter(
+				"modelResource", User.class.getName()
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

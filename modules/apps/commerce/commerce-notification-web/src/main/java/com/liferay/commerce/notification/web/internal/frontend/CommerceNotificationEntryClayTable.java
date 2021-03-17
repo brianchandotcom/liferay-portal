@@ -37,6 +37,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuild
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -49,7 +50,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -105,24 +105,28 @@ public class CommerceNotificationEntryClayTable
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		NotificationEntry notificationEntry = (NotificationEntry)model;
-
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
-			PortletRequest.ACTION_PHASE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_channels/edit_commerce_notification_queue_entry");
-		portletURL.setParameter(Constants.CMD, "resend");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/commerce_channels/edit_commerce_notification_queue_entry"
+		).setRedirect(
+			redirect
+		).setParameter(
+			Constants.CMD, "resend"
+		).setParameter(
 			"commerceNotificationQueueEntryId",
-			String.valueOf(notificationEntry.getNotificationEntryId()));
+			() -> {
+				NotificationEntry notificationEntry = (NotificationEntry)model;
+
+				return notificationEntry.getNotificationEntryId();
+			}
+		).build();
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {

@@ -37,6 +37,7 @@ import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,8 +62,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -151,14 +150,15 @@ public class SelectAssetDisplayPageDisplayContext {
 			itemSelectorCriteria.add(layoutItemSelectorCriterion);
 		}
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
-			_eventName,
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		itemSelectorURL.setParameter("layoutUuid", getLayoutUuid());
-
-		return itemSelectorURL.toString();
+		return PortletURLBuilder.create(
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(
+					_liferayPortletRequest),
+				_eventName,
+				itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]))
+		).setParameter(
+			"layoutUuid", getLayoutUuid()
+		).buildString();
 	}
 
 	public int getAssetDisplayPageType() {

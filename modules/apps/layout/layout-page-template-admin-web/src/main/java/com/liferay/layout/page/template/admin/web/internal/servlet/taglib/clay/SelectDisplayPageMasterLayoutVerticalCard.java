@@ -17,12 +17,11 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -46,22 +45,17 @@ public class SelectDisplayPageMasterLayoutVerticalCard implements VerticalCard {
 	}
 
 	public String getAddDisplayPageURL() {
-		PortletURL addDisplayPageURL = _renderResponse.createActionURL();
-
-		addDisplayPageURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/add_display_page");
-		addDisplayPageURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		addDisplayPageURL.setParameter(
-			"type",
-			String.valueOf(
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE));
-		addDisplayPageURL.setParameter(
-			"masterLayoutPlid",
-			String.valueOf(_layoutPageTemplateEntry.getPlid()));
-
-		return addDisplayPageURL.toString();
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/add_display_page"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"type", LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE
+		).setParameter(
+			"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
+		).buildString();
 	}
 
 	@Override

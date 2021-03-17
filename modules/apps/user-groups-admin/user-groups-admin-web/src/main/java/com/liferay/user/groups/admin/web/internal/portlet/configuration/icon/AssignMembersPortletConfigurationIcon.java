@@ -14,6 +14,7 @@
 
 package com.liferay.user.groups.admin.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -62,14 +63,16 @@ public class AssignMembersPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcPath", "/edit_user_group_assignments.jsp");
-			portletURL.setParameter(
-				"redirect", _portal.getCurrentURL(portletRequest));
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					portletRequest,
+					UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/edit_user_group_assignments.jsp"
+			).setRedirect(
+				_portal.getCurrentURL(portletRequest)
+			).build();
 
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 

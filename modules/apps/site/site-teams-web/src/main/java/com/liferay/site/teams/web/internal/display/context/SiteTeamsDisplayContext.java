@@ -14,6 +14,7 @@
 
 package com.liferay.site.teams.web.internal.display.context;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Team;
@@ -84,11 +85,11 @@ public class SiteTeamsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("displayStyle", getDisplayStyle());
-
-		return portletURL;
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setParameter(
+			"displayStyle", getDisplayStyle()
+		).build();
 	}
 
 	public SearchContainer<Team> getSearchContainer() {

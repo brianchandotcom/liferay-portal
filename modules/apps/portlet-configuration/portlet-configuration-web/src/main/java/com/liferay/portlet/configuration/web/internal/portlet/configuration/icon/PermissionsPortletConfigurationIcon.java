@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,7 +42,6 @@ import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplica
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,35 +64,34 @@ public class PermissionsPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			String returnToFullPageURL = ParamUtil.getString(
-				portletRequest, "returnToFullPageURL");
-
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				portletRequest,
-				PortletConfigurationApplicationType.PortletConfiguration.
-					CLASS_NAME,
-				PortletProvider.Action.VIEW);
-
-			portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
-			portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-			portletURL.setParameter(
-				"portletConfiguration", Boolean.TRUE.toString());
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-			portletURL.setParameter("portletResource", portletDisplay.getId());
-			portletURL.setParameter(
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest,
+					PortletConfigurationApplicationType.PortletConfiguration.
+						CLASS_NAME,
+					PortletProvider.Action.VIEW)
+			).setMVCPath(
+				"/edit_permissions.jsp"
+			).setParameter(
+				"returnToFullPageURL",
+				ParamUtil.getString(portletRequest, "returnToFullPageURL")
+			).setParameter(
+				"portletConfiguration", Boolean.TRUE.toString()
+			).setParameter(
+				"portletResource", portletDisplay.getId()
+			).setParameter(
 				"resourcePrimKey",
 				PortletPermissionUtil.getPrimaryKey(
-					themeDisplay.getPlid(), portletDisplay.getId()));
-
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			return portletURL.toString();
+					themeDisplay.getPlid(), portletDisplay.getId())
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

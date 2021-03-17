@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBCommentPermission;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -94,11 +95,11 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = _liferayPortletResponse.createRenderURL();
-
-		clearResultsURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/admin/view_suggestions.jsp"
+		).buildString();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -125,12 +126,14 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 		return LabelItemListBuilder.add(
 			() -> !navigation.equals("all"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					_currentURLObj, _liferayPortletResponse);
-
-				removeLabelURL.setParameter("navigation", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setParameter(
+						"navigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
@@ -148,13 +151,12 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = _getCurrentSortingURL();
-
-		sortingURL.setParameter(
+		return PortletURLBuilder.create(
+			_getCurrentSortingURL()
+		).setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL;
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
+		).build();
 	}
 
 	public int getTotal() {
@@ -172,13 +174,11 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getCurrentSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
-
-		sortingURL.setParameter(
-			"storeOrderByPreference", Boolean.TRUE.toString());
-
-		return sortingURL;
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
+		).setParameter(
+			"storeOrderByPreference", Boolean.TRUE.toString()
+		).build();
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems()
@@ -191,11 +191,12 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 					"all", "new", "in-progress", "resolved"
 				};
 
-				PortletURL navigationURL = PortletURLUtil.clone(
-					_currentURLObj, _liferayPortletResponse);
-
-				navigationURL.setParameter(
-					"storeOrderByPreference", Boolean.FALSE.toString());
+				PortletURL navigationURL = PortletURLBuilder.create(
+					PortletURLUtil.clone(
+						_currentURLObj, _liferayPortletResponse)
+				).setParameter(
+					"storeOrderByPreference", Boolean.FALSE.toString()
+				).build();
 
 				for (String navigationKey : navigationKeys) {
 					add(

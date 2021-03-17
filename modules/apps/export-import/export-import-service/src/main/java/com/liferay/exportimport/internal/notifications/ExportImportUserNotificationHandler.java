@@ -18,6 +18,7 @@ import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
@@ -45,7 +46,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -139,12 +139,6 @@ public class ExportImportUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		PortletURL renderURL = PortletURLFactoryUtil.create(
-			serviceContext.getRequest(), ExportImportPortletKeys.EXPORT_IMPORT,
-			PortletRequest.RENDER_PHASE);
-
-		renderURL.setParameter("mvcPath", "/view_export_import.jsp");
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
@@ -157,12 +151,18 @@ public class ExportImportUserNotificationHandler
 			return StringPool.BLANK;
 		}
 
-		renderURL.setParameter(
-			"backgroundTaskId", String.valueOf(backgroundTaskId));
-
-		renderURL.setParameter("backURL", serviceContext.getCurrentURL());
-
-		return renderURL.toString();
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				serviceContext.getRequest(),
+				ExportImportPortletKeys.EXPORT_IMPORT,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view_export_import.jsp"
+		).setParameter(
+			"backgroundTaskId", backgroundTaskId
+		).setParameter(
+			"backURL", serviceContext.getCurrentURL()
+		).buildString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -62,16 +63,17 @@ public class InfoListProviderActionDropdownItems {
 		throws Exception {
 
 		PortletURL viewInfoListProviderItemsURL =
-			_liferayPortletResponse.createRenderURL();
-
-		viewInfoListProviderItemsURL.setParameter(
-			"mvcPath", "/view_info_list_provider_items.jsp");
-		viewInfoListProviderItemsURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		viewInfoListProviderItemsURL.setParameter(
-			"infoListProviderKey", String.valueOf(_infoListProvider.getKey()));
-
-		viewInfoListProviderItemsURL.setWindowState(LiferayWindowState.POP_UP);
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/view_info_list_provider_items.jsp"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"infoListProviderKey", _infoListProvider.getKey()
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).build();
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "viewInfoListProviderItems");

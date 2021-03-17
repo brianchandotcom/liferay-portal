@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -142,32 +143,37 @@ public class BlogImagesManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchURL = _liferayPortletResponse.createRenderURL();
-
-		searchURL.setParameter("mvcRenderCommandName", "/blogs/view");
-		searchURL.setParameter("navigation", "images");
-		searchURL.setParameter("orderByCol", getOrderByCol());
-		searchURL.setParameter("orderByType", getOrderByType());
-
-		return searchURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/blogs/view"
+		).setParameter(
+			"navigation", "images"
+		).setParameter(
+			"orderByCol", getOrderByCol()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).buildString();
 	}
 
 	@Override
 	public String getSortingURL() {
-		PortletURL sortingURL = _getCurrentSortingURL();
-
-		sortingURL.setParameter(
+		return PortletURLBuilder.create(
+			_getCurrentSortingURL()
+		).setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
+		).buildString();
 	}
 
 	public ViewTypeItemList getViewTypes() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
-		portletURL.setParameter("navigation", "images");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/blogs/view"
+		).setParameter(
+			"navigation", "images"
+		).build();
 
 		int delta = ParamUtil.getInteger(
 			_httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM);
@@ -202,9 +208,11 @@ public class BlogImagesManagementToolbarDisplayContext
 	}
 
 	private PortletURL _getCurrentSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
+		PortletURL sortingURL = PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			SearchContainer.DEFAULT_CUR_PARAM, "0"
+		).build();
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 

@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -35,7 +36,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -99,18 +99,18 @@ public class AddSiteNavigationMenuMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
-
-		redirectURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
-		redirectURL.setParameter("redirect", redirect);
-		redirectURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
-
-		return redirectURL.toString();
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest,
+				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
+				themeDisplay.getPlid(), ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_site_navigation_menu.jsp"
+		).setRedirect(
+			ParamUtil.getString(actionRequest, "redirect")
+		).setParameter(
+			"siteNavigationMenuId", siteNavigationMenuId
+		).buildString();
 	}
 
 	@Reference

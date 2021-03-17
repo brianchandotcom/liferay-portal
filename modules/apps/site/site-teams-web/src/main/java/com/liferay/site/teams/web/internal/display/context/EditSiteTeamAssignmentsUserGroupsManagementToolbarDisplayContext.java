@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -72,11 +73,11 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).buildString();
 	}
 
 	@Override
@@ -95,23 +96,21 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					PortletURL selectUserGroupURL =
-						liferayPortletResponse.createRenderURL();
-
-					selectUserGroupURL.setParameter(
-						"mvcPath", "/select_user_groups.jsp");
-					selectUserGroupURL.setParameter(
-						"redirect", themeDisplay.getURLCurrent());
-					selectUserGroupURL.setParameter(
-						"teamId",
-						String.valueOf(
-							_editSiteTeamAssignmentsUserGroupsDisplayContext.
-								getTeamId()));
-					selectUserGroupURL.setWindowState(
-						LiferayWindowState.POP_UP);
-
 					dropdownItem.putData(
-						"selectUserGroupURL", selectUserGroupURL.toString());
+						"selectUserGroupURL",
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCPath(
+							"/select_user_groups.jsp"
+						).setRedirect(
+							themeDisplay.getURLCurrent()
+						).setParameter(
+							"teamId",
+							_editSiteTeamAssignmentsUserGroupsDisplayContext.
+								getTeamId()
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString());
 
 					String title = LanguageUtil.format(
 						httpServletRequest, "add-new-user-group-to-x",

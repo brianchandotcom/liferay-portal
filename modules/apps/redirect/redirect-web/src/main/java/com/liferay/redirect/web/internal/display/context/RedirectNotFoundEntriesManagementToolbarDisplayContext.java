@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -121,11 +122,11 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = liferayPortletResponse.createRenderURL();
-
-		clearResultsURL.setParameter("navigation", "404-urls");
-
-		return clearResultsURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setParameter(
+			"navigation", "404-urls"
+		).buildString();
 	}
 
 	@Override
@@ -174,11 +175,13 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> !StringUtil.equals(getNavigation(), "active-urls"),
 			labelItem -> {
-				PortletURL removeLabelURL = getPortletURL();
-
-				removeLabelURL.setParameter(getNavigationParam(), (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						getNavigationParam(), (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -191,11 +194,13 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 		).add(
 			() -> _getFilterDate() != 0,
 			labelItem -> {
-				PortletURL removeLabelURL = getPortletURL();
-
-				removeLabelURL.setParameter("filterDate", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"filterDate", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -210,12 +215,13 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		searchActionURL.setParameter("orderByCol", getOrderByCol());
-		searchActionURL.setParameter("orderByType", getOrderByType());
-
-		return searchActionURL.toString();
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"orderByCol", getOrderByCol()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).buildString();
 	}
 
 	@Override
@@ -279,9 +285,11 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 		return dropdownItem -> {
 			dropdownItem.setActive(days == _getFilterDate());
 
-			PortletURL portletURL = getPortletURL();
-
-			portletURL.setParameter("filterDate", String.valueOf(days));
+			PortletURL portletURL = PortletURLBuilder.create(
+				getPortletURL()
+			).setParameter(
+				"filterDate", days
+			).build();
 
 			dropdownItem.setHref(portletURL);
 

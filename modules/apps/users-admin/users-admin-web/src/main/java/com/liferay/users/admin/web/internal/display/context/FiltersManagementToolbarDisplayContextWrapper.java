@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -30,8 +31,6 @@ import com.liferay.users.admin.management.toolbar.FilterContributor;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -115,13 +114,13 @@ public class FiltersManagementToolbarDisplayContextWrapper
 
 				filterLabelItems.add(
 					labelItem -> {
-						PortletURL removeLabelURL = getPortletURL();
-
-						removeLabelURL.setParameter(
-							filterContributor.getParameter(), (String)null);
-
 						labelItem.putData(
-							"removeLabelURL", removeLabelURL.toString());
+							"removeLabelURL",
+							PortletURLBuilder.create(
+								getPortletURL()
+							).setParameter(
+								filterContributor.getParameter(), (String)null
+							).buildString());
 
 						labelItem.setCloseable(true);
 

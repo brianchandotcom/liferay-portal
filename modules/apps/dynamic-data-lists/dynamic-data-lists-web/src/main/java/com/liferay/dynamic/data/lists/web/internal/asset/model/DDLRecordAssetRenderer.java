@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.web.internal.asset.DDLRecordDDMFormValuesReader;
 import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -161,16 +162,17 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, DDLPortletKeys.DYNAMIC_DATA_LISTS, 0,
-			0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/edit_record.jsp");
-		portletURL.setParameter(
-			"recordId", String.valueOf(_record.getRecordId()));
-		portletURL.setParameter("version", _recordVersion.getVersion());
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group, DDLPortletKeys.DYNAMIC_DATA_LISTS,
+				0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_record.jsp"
+		).setParameter(
+			"recordId", _record.getRecordId()
+		).setParameter(
+			"version", _recordVersion.getVersion()
+		).build();
 	}
 
 	@Override

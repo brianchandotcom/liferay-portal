@@ -24,6 +24,7 @@ import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -158,15 +159,13 @@ public class CommerceAccountGroupAdminDisplayContext {
 				Collections.<ItemSelectorReturnType>singletonList(
 					new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "commerceAccountsSelectItem",
-			commerceAccountGroupAccountItemSelectorCriterion);
-
-		itemSelectorURL.setParameter(
-			"commerceAccountGroupId",
-			String.valueOf(getCommerceAccountGroupId()));
-
-		return itemSelectorURL.toString();
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "commerceAccountsSelectItem",
+				commerceAccountGroupAccountItemSelectorCriterion)
+		).setParameter(
+			"commerceAccountGroupId", getCommerceAccountGroupId()
+		).buildString();
 	}
 
 	public PortletURL getPortletURL() {

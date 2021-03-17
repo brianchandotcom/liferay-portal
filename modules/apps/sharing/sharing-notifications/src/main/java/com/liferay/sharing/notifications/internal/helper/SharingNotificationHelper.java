@@ -15,6 +15,7 @@
 package com.liferay.sharing.notifications.internal.helper;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -42,7 +43,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,19 +107,17 @@ public class SharingNotificationHelper {
 		throws PortalException {
 
 		if (portletRequest != null) {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				portletRequest, SharingEntry.class.getName(),
-				PortletProvider.Action.PREVIEW);
-
-			portletURL.setParameter(
-				"sharingEntryId",
-				String.valueOf(sharingEntry.getSharingEntryId()));
-			portletURL.setParameter(
-				"classNameId", String.valueOf(sharingEntry.getClassNameId()));
-			portletURL.setParameter(
-				"classPK", String.valueOf(sharingEntry.getClassPK()));
-
-			return portletURL.toString();
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest, SharingEntry.class.getName(),
+					PortletProvider.Action.PREVIEW)
+			).setParameter(
+				"sharingEntryId", sharingEntry.getSharingEntryId()
+			).setParameter(
+				"classNameId", sharingEntry.getClassNameId()
+			).setParameter(
+				"classPK", sharingEntry.getClassPK()
+			).buildString();
 		}
 
 		return null;

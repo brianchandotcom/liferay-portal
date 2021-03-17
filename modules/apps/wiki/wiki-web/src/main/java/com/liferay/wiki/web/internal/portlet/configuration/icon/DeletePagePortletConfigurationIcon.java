@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -31,7 +32,6 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.web.internal.portlet.action.ActionUtil;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -77,13 +77,15 @@ public class DeletePagePortletConfigurationIcon
 		try {
 			WikiPage page = ActionUtil.getPage(portletRequest);
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.ACTION_PHASE);
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/wiki/edit_page");
-			portletURL.setParameter(Constants.CMD, Constants.DELETE);
+			PortletURL portletURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, WikiPortletKeys.WIKI_ADMIN,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"/wiki/edit_page"
+			).setParameter(
+				Constants.CMD, Constants.DELETE
+			).build();
 
 			if (!page.isDraft() &&
 				isTrashEnabled(themeDisplay.getScopeGroupId())) {
@@ -95,17 +97,19 @@ public class DeletePagePortletConfigurationIcon
 					"version", String.valueOf(page.getVersion()));
 			}
 
-			PortletURL redirectURL = _portal.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.ACTION_PHASE);
-
-			redirectURL.setParameter(
-				"mvcRenderCommandName", "/wiki/view_pages");
-			redirectURL.setParameter("navigation", "all-pages");
-			redirectURL.setParameter(
-				"nodeId", String.valueOf(page.getNodeId()));
-
-			portletURL.setParameter("redirect", redirectURL.toString());
+			portletURL.setParameter(
+				"redirect",
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest, WikiPortletKeys.WIKI_ADMIN,
+						PortletRequest.ACTION_PHASE)
+				).setMVCRenderCommandName(
+					"/wiki/view_pages"
+				).setParameter(
+					"navigation", "all-pages"
+				).setParameter(
+					"nodeId", page.getNodeId()
+				).buildString());
 
 			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
 			portletURL.setParameter("title", page.getTitle());

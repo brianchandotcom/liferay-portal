@@ -14,6 +14,7 @@
 
 package com.liferay.translation.web.internal.url.provider;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.url.provider.TranslationURLProvider;
@@ -33,15 +34,16 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 		long classNameId, long classPK,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL portletURL = requestBackedPortletURLFactory.createRenderURL(
-			TranslationPortletKeys.TRANSLATION);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/translation/translate");
-		portletURL.setParameter("classNameId", String.valueOf(classNameId));
-		portletURL.setParameter("classPK", String.valueOf(classPK));
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createRenderURL(
+				TranslationPortletKeys.TRANSLATION)
+		).setMVCRenderCommandName(
+			"/translation/translate"
+		).setParameter(
+			"classNameId", classNameId
+		).setParameter(
+			"classPK", classPK
+		).build();
 	}
 
 }

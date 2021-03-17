@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,8 +36,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,21 +68,15 @@ public class DLEditDDMStructureDisplayContext {
 				"sidebarPanelId", "properties"
 			).put(
 				"url",
-				() -> {
-					PortletURL editBasicInfoURL =
-						_liferayPortletResponse.createRenderURL();
-
-					editBasicInfoURL.setParameter(
-						"mvcPath",
-						"/document_library/ddm" +
-							"/basic_info_data_engine_editor.jsp");
-					editBasicInfoURL.setParameter(
-						"ddmStructureId", String.valueOf(getDDMStructureId()));
-					editBasicInfoURL.setWindowState(
-						LiferayWindowState.EXCLUSIVE);
-
-					return editBasicInfoURL.toString();
-				}
+				() -> PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/document_library/ddm/basic_info_data_engine_editor.jsp"
+				).setParameter(
+					"ddmStructureId", getDDMStructureId()
+				).setWindowState(
+					LiferayWindowState.EXCLUSIVE
+				).buildString()
 			).build());
 	}
 

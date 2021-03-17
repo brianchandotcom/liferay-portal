@@ -14,6 +14,7 @@
 
 package com.liferay.roles.admin.web.internal.portlet;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
@@ -45,11 +46,11 @@ public class RolesAdminManagePortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = super.getPortletURL(httpServletRequest);
-
-		portletURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			super.getPortletURL(httpServletRequest)
+		).setMVCPath(
+			"/edit_role_permissions.jsp"
+		).build();
 	}
 
 }

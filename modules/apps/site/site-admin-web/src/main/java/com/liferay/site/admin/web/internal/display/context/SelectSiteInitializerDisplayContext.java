@@ -14,6 +14,7 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -103,13 +104,13 @@ public class SelectSiteInitializerDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/site_admin/select_site_initializer");
-		portletURL.setParameter("redirect", getBackURL());
-
-		return portletURL;
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/site_admin/select_site_initializer"
+		).setRedirect(
+			getBackURL()
+		).build();
 	}
 
 	private List<SiteInitializerItem> _getSiteInitializerItems()

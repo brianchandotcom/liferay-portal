@@ -16,6 +16,7 @@ package com.liferay.oauth.web.internal.struts;
 
 import com.liferay.oauth.constants.OAuthConstants;
 import com.liferay.oauth.constants.OAuthPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -67,11 +68,13 @@ public class OAuthAuthorizeStrutsAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, OAuthPortletKeys.OAUTH_AUTHORIZE,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("saveLastPath", "0");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, OAuthPortletKeys.OAUTH_AUTHORIZE,
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"saveLastPath", "0"
+		).build();
 
 		String oauthCallback = httpServletRequest.getParameter(
 			OAuth.OAUTH_CALLBACK);

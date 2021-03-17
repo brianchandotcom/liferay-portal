@@ -23,6 +23,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -40,7 +41,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -139,41 +139,39 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 	}
 
 	private String _getBackURL(HttpServletRequest httpServletRequest) {
-		PortletURL backURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		backURL.setParameter(
-			"mvcRenderCommandName", "/account_admin/edit_account_entry");
-		backURL.setParameter(
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/account_admin/edit_account_entry"
+		).setParameter(
 			"screenNavigationCategoryKey",
-			AccountScreenNavigationEntryConstants.CATEGORY_KEY_ROLES);
-		backURL.setParameter(
+			AccountScreenNavigationEntryConstants.CATEGORY_KEY_ROLES
+		).setParameter(
 			"accountEntryId",
-			ParamUtil.getString(httpServletRequest, "accountEntryId"));
-
-		return backURL.toString();
+			ParamUtil.getString(httpServletRequest, "accountEntryId")
+		).buildString();
 	}
 
 	private String _getRedirect(HttpServletRequest httpServletRequest) {
-		PortletURL redirectURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter(
-			"mvcRenderCommandName", "/account_admin/edit_account_role");
-		redirectURL.setParameter(
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/account_admin/edit_account_role"
+		).setParameter(
 			"screenNavigationCategoryKey",
 			AccountScreenNavigationEntryConstants.
-				CATEGORY_KEY_DEFINE_PERMISSIONS);
-		redirectURL.setParameter(
+				CATEGORY_KEY_DEFINE_PERMISSIONS
+		).setParameter(
 			"accountEntryId",
-			ParamUtil.getString(httpServletRequest, "accountEntryId"));
-		redirectURL.setParameter(
+			ParamUtil.getString(httpServletRequest, "accountEntryId")
+		).setParameter(
 			"accountRoleId",
-			ParamUtil.getString(httpServletRequest, "accountRoleId"));
-
-		return redirectURL.toString();
+			ParamUtil.getString(httpServletRequest, "accountRoleId")
+		).buildString();
 	}
 
 	@Reference

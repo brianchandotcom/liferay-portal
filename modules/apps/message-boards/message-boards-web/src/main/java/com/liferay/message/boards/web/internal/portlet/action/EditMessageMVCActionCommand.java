@@ -44,6 +44,7 @@ import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUplo
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandlerProvider;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -92,7 +93,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
@@ -294,40 +294,36 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		LiferayActionResponse liferayActionResponse =
 			(LiferayActionResponse)actionResponse;
 
-		PortletURL portletURL = liferayActionResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/view_message");
-		portletURL.setParameter(
-			"messageId", String.valueOf(message.getMessageId()));
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			liferayActionResponse
+		).setMVCRenderCommandName(
+			"/message_boards/view_message"
+		).setParameter(
+			"messageId", message.getMessageId()
+		).buildString();
 	}
 
 	protected String getSaveAndContinueRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		MBMessage message) {
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
-
 		LiferayActionResponse liferayActionResponse =
 			(LiferayActionResponse)actionResponse;
 
-		PortletURL portletURL = liferayActionResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/edit_message");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
+		return PortletURLBuilder.createRenderURL(
+			liferayActionResponse
+		).setMVCRenderCommandName(
+			"/message_boards/edit_message"
+		).setRedirect(
+			ParamUtil.getString(actionRequest, "redirect")
+		).setParameter(
 			"portletResource",
-			ParamUtil.getString(actionRequest, "portletResource"));
-		portletURL.setParameter(
-			"messageId", String.valueOf(message.getMessageId()));
-		portletURL.setParameter("preview", String.valueOf(preview));
-
-		return portletURL.toString();
+			ParamUtil.getString(actionRequest, "portletResource")
+		).setParameter(
+			"messageId", message.getMessageId()
+		).setParameter(
+			"preview", ParamUtil.getBoolean(actionRequest, "preview")
+		).buildString();
 	}
 
 	protected void lockThreads(ActionRequest actionRequest) throws Exception {

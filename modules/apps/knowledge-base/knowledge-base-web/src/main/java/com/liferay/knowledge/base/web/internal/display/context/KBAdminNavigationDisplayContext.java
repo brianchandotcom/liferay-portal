@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -28,8 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -92,12 +91,12 @@ public class KBAdminNavigationDisplayContext {
 
 			kbObjectsNavigationItem.setActive(active);
 
-			PortletURL viewKBObjectsURL =
-				_liferayPortletResponse.createRenderURL();
-
-			viewKBObjectsURL.setParameter("mvcPath", "/admin/view.jsp");
-
-			kbObjectsNavigationItem.setHref(viewKBObjectsURL.toString());
+			kbObjectsNavigationItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view.jsp"
+				).buildString());
 
 			kbObjectsNavigationItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "articles"));
@@ -120,13 +119,12 @@ public class KBAdminNavigationDisplayContext {
 
 			kbTemplatesNavigationItem.setActive(active);
 
-			PortletURL viewKBTemplatesURL =
-				_liferayPortletResponse.createRenderURL();
-
-			viewKBTemplatesURL.setParameter(
-				"mvcPath", "/admin/view_templates.jsp");
-
-			kbTemplatesNavigationItem.setHref(viewKBTemplatesURL.toString());
+			kbTemplatesNavigationItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view_templates.jsp"
+				).buildString());
 
 			kbTemplatesNavigationItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "templates"));
@@ -149,13 +147,12 @@ public class KBAdminNavigationDisplayContext {
 
 			kbSuggestionsNavigationItem.setActive(active);
 
-			PortletURL viewKBTemplatesURL =
-				_liferayPortletResponse.createRenderURL();
-
-			viewKBTemplatesURL.setParameter(
-				"mvcPath", "/admin/view_suggestions.jsp");
-
-			kbSuggestionsNavigationItem.setHref(viewKBTemplatesURL.toString());
+			kbSuggestionsNavigationItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view_suggestions.jsp"
+				).buildString());
 
 			kbSuggestionsNavigationItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "suggestions"));

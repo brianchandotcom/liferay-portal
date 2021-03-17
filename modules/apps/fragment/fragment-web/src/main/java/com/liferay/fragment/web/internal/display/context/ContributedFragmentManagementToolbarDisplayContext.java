@@ -19,6 +19,7 @@ import com.liferay.fragment.web.internal.security.permission.resource.FragmentPe
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,31 +92,23 @@ public class ContributedFragmentManagementToolbarDisplayContext
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				PortletURL copyContributedFragmentEntryURL =
-					liferayPortletResponse.createActionURL();
-
-				copyContributedFragmentEntryURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/fragment/copy_contributed_fragment_entry");
-				copyContributedFragmentEntryURL.setParameter(
-					"redirect", themeDisplay.getURLCurrent());
-
-				return copyContributedFragmentEntryURL.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/fragment/copy_contributed_fragment_entry"
+				).setRedirect(
+					themeDisplay.getURLCurrent()
+				).buildString();
 			}
 		).put(
 			"selectFragmentCollectionURL",
-			() -> {
-				PortletURL selectFragmentCollectionURL =
-					liferayPortletResponse.createActionURL();
-
-				selectFragmentCollectionURL.setParameter(
-					"mvcRenderCommandName",
-					"/fragment/select_fragment_collection");
-				selectFragmentCollectionURL.setWindowState(
-					LiferayWindowState.POP_UP);
-
-				return selectFragmentCollectionURL.toString();
-			}
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/fragment/select_fragment_collection"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).build();
 	}
 

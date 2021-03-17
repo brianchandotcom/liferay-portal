@@ -17,6 +17,7 @@ package com.liferay.marketplace.app.manager.web.internal.display.context;
 import com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.MarketplaceAppManagerSearchUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.comparator.MarketplaceAppManagerComparator;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -51,12 +52,17 @@ public class AppManagerSearchResultsManagementToolbarDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_search_results.jsp");
-		portletURL.setParameter("category", getCategory());
-		portletURL.setParameter("state", getState());
-		portletURL.setParameter("orderByType", getOrderByType());
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/view_search_results.jsp"
+		).setParameter(
+			"category", getCategory()
+		).setParameter(
+			"state", getState()
+		).setParameter(
+			"orderByType", getOrderByType()
+		).build();
 
 		if (Validator.isNotNull(getKeywords())) {
 			portletURL.setParameter("keywords", getKeywords());

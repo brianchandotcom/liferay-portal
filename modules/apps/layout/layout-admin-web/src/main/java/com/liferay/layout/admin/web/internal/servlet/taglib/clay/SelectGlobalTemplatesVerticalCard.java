@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -54,36 +54,28 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 		Map<String, String> data = new HashMap<>();
 
 		try {
-			PortletURL addLayoutURL = _renderResponse.createRenderURL();
-
-			addLayoutURL.setParameter(
-				"mvcRenderCommandName", "/layout_admin/add_layout");
-
-			String redirect = ParamUtil.getString(_renderRequest, "redirect");
-
-			addLayoutURL.setParameter("backURL", redirect);
-
-			long selPlid = ParamUtil.getLong(_renderRequest, "selPlid");
-
-			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
-
-			boolean privateLayout = ParamUtil.getBoolean(
-				_renderRequest, "privateLayout");
-
-			addLayoutURL.setParameter(
-				"privateLayout", String.valueOf(privateLayout));
-
-			addLayoutURL.setParameter(
-				"layoutPageTemplateEntryId",
-				String.valueOf(
-					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-			addLayoutURL.setParameter(
-				"layoutPrototypeId",
-				String.valueOf(
-					_layoutPageTemplateEntry.getLayoutPrototypeId()));
-			addLayoutURL.setWindowState(LiferayWindowState.POP_UP);
-
-			data.put("data-add-layout-url", addLayoutURL.toString());
+			data.put(
+				"data-add-layout-url",
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/layout_admin/add_layout"
+				).setParameter(
+					"backURL", ParamUtil.getString(_renderRequest, "redirect")
+				).setParameter(
+					"selPlid", ParamUtil.getLong(_renderRequest, "selPlid")
+				).setParameter(
+					"privateLayout",
+					ParamUtil.getBoolean(_renderRequest, "privateLayout")
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				).setParameter(
+					"layoutPrototypeId",
+					_layoutPageTemplateEntry.getLayoutPrototypeId()
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

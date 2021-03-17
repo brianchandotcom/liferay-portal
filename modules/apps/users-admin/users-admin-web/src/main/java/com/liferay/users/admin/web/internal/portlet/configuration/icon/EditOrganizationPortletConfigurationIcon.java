@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.internal.portlet.configuration.icon;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -62,14 +63,15 @@ public class EditOrganizationPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, UsersAdminPortletKeys.USERS_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/users_admin/edit_organization");
-			portletURL.setParameter(
-				"backURL", _portal.getCurrentURL(portletRequest));
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					portletRequest, UsersAdminPortletKeys.USERS_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/users_admin/edit_organization"
+			).setParameter(
+				"backURL", _portal.getCurrentURL(portletRequest)
+			).build();
 
 			Organization organization = ActionUtil.getOrganization(
 				portletRequest);

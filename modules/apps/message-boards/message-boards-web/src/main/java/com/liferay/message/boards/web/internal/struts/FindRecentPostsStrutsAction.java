@@ -15,6 +15,7 @@
 package com.liferay.message.boards.web.internal.struts;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,16 +53,18 @@ public class FindRecentPostsStrutsAction implements StrutsAction {
 		try {
 			long plid = ParamUtil.getLong(httpServletRequest, "p_l_id");
 
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				httpServletRequest, MBPortletKeys.MESSAGE_BOARDS, plid,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/view_recent_posts");
-			portletURL.setPortletMode(PortletMode.VIEW);
-			portletURL.setWindowState(WindowState.NORMAL);
-
-			httpServletResponse.sendRedirect(portletURL.toString());
+			httpServletResponse.sendRedirect(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						httpServletRequest, MBPortletKeys.MESSAGE_BOARDS, plid,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/message_boards/view_recent_posts"
+				).setPortletMode(
+					PortletMode.VIEW
+				).setWindowState(
+					WindowState.NORMAL
+				).buildString());
 
 			return null;
 		}

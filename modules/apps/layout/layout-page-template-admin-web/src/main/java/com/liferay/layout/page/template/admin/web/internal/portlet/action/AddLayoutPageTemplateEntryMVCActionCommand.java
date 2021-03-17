@@ -19,6 +19,7 @@ import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTem
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -126,19 +126,19 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 		String layoutFullURL = _portal.getLayoutFullURL(
 			draftLayout, themeDisplay);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest,
-			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("tabs1", "page-templates");
-		portletURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
-
 		layoutFullURL = _http.setParameter(
-			layoutFullURL, "p_l_back_url", portletURL.toString());
+			layoutFullURL, "p_l_back_url",
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					actionRequest,
+					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+					PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"tabs1", "page-templates"
+			).setParameter(
+				"layoutPageTemplateCollectionId",
+				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
+			).buildString());
 
 		return _http.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}

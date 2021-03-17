@@ -15,6 +15,7 @@
 package com.liferay.commerce.account.web.internal.portlet;
 
 import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
@@ -64,14 +65,13 @@ public class CommerceAccountViewPortletProvider
 		long plid = _portal.getPlidFromPortletId(
 			group.getGroupId(), getPortletName());
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, getPortletName(), plid,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/commerce_account/view_commerce_account");
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, getPortletName(), plid,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_account/view_commerce_account"
+		).build();
 	}
 
 	@Reference

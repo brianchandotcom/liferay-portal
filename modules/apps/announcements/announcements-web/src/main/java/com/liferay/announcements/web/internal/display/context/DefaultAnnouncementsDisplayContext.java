@@ -17,6 +17,7 @@ package com.liferay.announcements.web.internal.display.context;
 import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.kernel.util.AnnouncementsUtil;
 import com.liferay.announcements.web.internal.display.context.util.AnnouncementsRequestHelper;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -54,7 +54,6 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletURL;
 
 /**
  * @author Adolfo Pérez
@@ -240,15 +239,13 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public String getTabs1PortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_announcementsRequestHelper.getLiferayPortletResponse();
-
-		PortletURL tabs1URL = liferayPortletResponse.createRenderURL();
-
-		tabs1URL.setParameter("mvcRenderCommandName", "/announcements/view");
-		tabs1URL.setParameter("tabs1", _announcementsRequestHelper.getTabs1());
-
-		return tabs1URL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_announcementsRequestHelper.getLiferayPortletResponse()
+		).setMVCRenderCommandName(
+			"/announcements/view"
+		).setParameter(
+			"tabs1", _announcementsRequestHelper.getTabs1()
+		).buildString();
 	}
 
 	@Override

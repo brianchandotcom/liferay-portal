@@ -15,6 +15,7 @@
 package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -301,15 +302,15 @@ public class LayoutsTreeTag extends IncludeTag {
 		for (Map.Entry<String, PortletURL> entry : portletURLs.entrySet()) {
 			JSONObject jsonObject = JSONUtil.put("name", entry.getKey());
 
-			PortletURL portletURL = entry.getValue();
-
-			portletURL.setParameter("selPlid", "{selPlid}");
-
 			jsonObject.put(
 				"value",
 				StringUtil.replace(
-					portletURL.toString(), HttpUtil.encodePath("{selPlid}"),
-					"{selPlid}"));
+					PortletURLBuilder.create(
+						entry.getValue()
+					).setParameter(
+						"selPlid", "{selPlid}"
+					).buildString(),
+					HttpUtil.encodePath("{selPlid}"), "{selPlid}"));
 
 			jsonArray.put(jsonObject);
 		}

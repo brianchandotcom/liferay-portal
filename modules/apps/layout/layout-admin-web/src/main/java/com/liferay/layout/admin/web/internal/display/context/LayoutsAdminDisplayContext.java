@@ -36,6 +36,7 @@ import com.liferay.layout.util.comparator.LayoutRelevanceComparator;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.content.ContentUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -176,22 +177,27 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getAddLayoutURL() {
-		PortletURL portletURL = _liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter(
-			"mvcPath", "/select_layout_page_template_entry.jsp");
-		portletURL.setParameter("backURL", getBackURL());
-		portletURL.setParameter("portletResource", getPortletResource());
-		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
-		portletURL.setParameter(
-			"liveGroupId", String.valueOf(getLiveGroupId()));
-		portletURL.setParameter(
-			"stagingGroupId", String.valueOf(getStagingGroupId()));
-		portletURL.setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout()));
-		portletURL.setParameter(
-			"parentLayoutId", String.valueOf(getParentLayoutId()));
-		portletURL.setParameter("explicitCreation", Boolean.TRUE.toString());
+		PortletURL portletURL = PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/select_layout_page_template_entry.jsp"
+		).setParameter(
+			"backURL", getBackURL()
+		).setParameter(
+			"portletResource", getPortletResource()
+		).setParameter(
+			"groupId", getGroupId()
+		).setParameter(
+			"liveGroupId", getLiveGroupId()
+		).setParameter(
+			"stagingGroupId", getStagingGroupId()
+		).setParameter(
+			"privateLayout", isPrivateLayout()
+		).setParameter(
+			"parentLayoutId", getParentLayoutId()
+		).setParameter(
+			"explicitCreation", Boolean.TRUE.toString()
+		).build();
 
 		String type = ParamUtil.getString(httpServletRequest, "type");
 
@@ -262,112 +268,112 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getConfigureLayoutURL(Layout layout) {
-		PortletURL configureLayoutURL =
-			_liferayPortletResponse.createRenderURL();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/layout_admin/edit_layout"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"backURL", themeDisplay.getURLCurrent()
+		).setParameter(
+			"portletResource",
+			() -> {
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
 
-		configureLayoutURL.setParameter(
-			"mvcRenderCommandName", "/layout_admin/edit_layout");
-		configureLayoutURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-		configureLayoutURL.setParameter(
-			"backURL", themeDisplay.getURLCurrent());
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		configureLayoutURL.setParameter(
-			"portletResource", portletDisplay.getId());
-
-		configureLayoutURL.setParameter(
-			"groupId", String.valueOf(layout.getGroupId()));
-		configureLayoutURL.setParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-		configureLayoutURL.setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		return configureLayoutURL.toString();
+				return portletDisplay.getId();
+			}
+		).setParameter(
+			"groupId", layout.getGroupId()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).setParameter(
+			"privateLayout", layout.isPrivateLayout()
+		).buildString();
 	}
 
 	public String getConvertLayoutURL(Layout layout) {
-		PortletURL convertLayoutURL = _liferayPortletResponse.createActionURL();
-
-		convertLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout_admin/convert_layout");
-		convertLayoutURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		convertLayoutURL.setParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-
-		return convertLayoutURL.toString();
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/convert_layout"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
 	}
 
 	public String getCopyLayoutRenderURL(Layout layout) throws Exception {
-		PortletURL copyLayoutRenderURL =
-			_liferayPortletResponse.createRenderURL();
-
-		copyLayoutRenderURL.setParameter(
-			"mvcRenderCommandName", "/layout_admin/add_layout");
-		copyLayoutRenderURL.setParameter(
-			"sourcePlid", String.valueOf(layout.getPlid()));
-		copyLayoutRenderURL.setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout()));
-		copyLayoutRenderURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return copyLayoutRenderURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/layout_admin/add_layout"
+		).setParameter(
+			"sourcePlid", layout.getPlid()
+		).setParameter(
+			"privateLayout", isPrivateLayout()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public String getCopyLayoutURL(long sourcePlid) {
-		PortletURL copyLayoutURL = _liferayPortletResponse.createActionURL();
-
-		copyLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout_admin/copy_layout");
-		copyLayoutURL.setParameter("sourcePlid", String.valueOf(sourcePlid));
-		copyLayoutURL.setParameter("groupId", String.valueOf(getGroupId()));
-		copyLayoutURL.setParameter(
-			"liveGroupId", String.valueOf(getLiveGroupId()));
-		copyLayoutURL.setParameter(
-			"stagingGroupId", String.valueOf(getStagingGroupId()));
-		copyLayoutURL.setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout()));
-		copyLayoutURL.setParameter(
-			"explicitCreation", String.valueOf(Boolean.TRUE));
-
-		return copyLayoutURL.toString();
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/copy_layout"
+		).setParameter(
+			"sourcePlid", sourcePlid
+		).setParameter(
+			"groupId", getGroupId()
+		).setParameter(
+			"liveGroupId", getLiveGroupId()
+		).setParameter(
+			"stagingGroupId", getStagingGroupId()
+		).setParameter(
+			"privateLayout", isPrivateLayout()
+		).setParameter(
+			"explicitCreation", Boolean.TRUE
+		).buildString();
 	}
 
 	public String getDeleteLayoutURL(Layout layout) throws PortalException {
-		PortletURL deleteLayoutURL = _liferayPortletResponse.createActionURL();
-
-		deleteLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout_admin/delete_layout");
-
-		PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"selPlid", String.valueOf(layout.getParentPlid()));
-		redirectURL.setParameter(
-			"layoutSetBranchId", String.valueOf(getActiveLayoutSetBranchId()));
-
-		deleteLayoutURL.setParameter("redirect", redirectURL.toString());
-
-		deleteLayoutURL.setParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-		deleteLayoutURL.setParameter(
-			"layoutSetBranchId", String.valueOf(getActiveLayoutSetBranchId()));
-
-		return deleteLayoutURL.toString();
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/delete_layout"
+		).setRedirect(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setParameter(
+				"selPlid", layout.getParentPlid()
+			).setParameter(
+				"layoutSetBranchId", getActiveLayoutSetBranchId()
+			).buildString()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).setParameter(
+			"layoutSetBranchId", getActiveLayoutSetBranchId()
+		).buildString();
 	}
 
 	public String getDiscardDraftURL(Layout layout) {
-		Layout draftLayout = layout.fetchDraftLayout();
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/discard_draft_layout"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"selPlid",
+			() -> {
+				Layout draftLayout = layout.fetchDraftLayout();
 
-		PortletURL discardDraftURL = _liferayPortletResponse.createActionURL();
-
-		discardDraftURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout_admin/discard_draft_layout");
-		discardDraftURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		discardDraftURL.setParameter(
-			"selPlid", String.valueOf(draftLayout.getPlid()));
-
-		return discardDraftURL.toString();
+				return draftLayout.getPlid();
+			}
+		).buildString();
 	}
 
 	public String getDisplayStyle() {
@@ -399,18 +405,19 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getFirstColumnConfigureLayoutURL(boolean privatePages) {
-		PortletURL editLayoutSetURL = _liferayPortletResponse.createRenderURL();
-
-		editLayoutSetURL.setParameter(
-			"mvcRenderCommandName", "/layout_admin/edit_layout_set");
-		editLayoutSetURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		editLayoutSetURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		editLayoutSetURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-		editLayoutSetURL.setParameter(
-			"privateLayout", String.valueOf(privatePages));
-
-		return editLayoutSetURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/layout_admin/edit_layout_set"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"backURL", themeDisplay.getURLCurrent()
+		).setParameter(
+			"groupId", themeDisplay.getScopeGroupId()
+		).setParameter(
+			"privateLayout", privatePages
+		).buildString();
 	}
 
 	public SearchContainer<String> getFirstColumnLayoutsSearchContainer() {
@@ -532,19 +539,15 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getLayoutConversionPreviewURL(Layout layout) {
-		PortletURL layoutConversionPreviewURL =
-			_liferayPortletResponse.createActionURL();
-
-		layoutConversionPreviewURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_admin/add_layout_conversion_preview");
-
-		layoutConversionPreviewURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-		layoutConversionPreviewURL.setParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-
-		return layoutConversionPreviewURL.toString();
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/add_layout_conversion_preview"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
 	}
 
 	public LayoutConverterConfiguration getLayoutConverterConfiguration() {
@@ -664,25 +667,25 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getMoveLayoutColumnItemURL() {
-		PortletURL deleteLayoutURL = _liferayPortletResponse.createActionURL();
-
-		deleteLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout_admin/move_layout");
-		deleteLayoutURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		return deleteLayoutURL.toString();
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/move_layout"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).buildString();
 	}
 
 	public String getOrphanPortletsURL(Layout layout) {
-		PortletURL orphanPortletsURL =
-			_liferayPortletResponse.createRenderURL();
-
-		orphanPortletsURL.setParameter("mvcPath", "/orphan_portlets.jsp");
-		orphanPortletsURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		orphanPortletsURL.setParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-
-		return orphanPortletsURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/orphan_portlets.jsp"
+		).setParameter(
+			"backURL", themeDisplay.getURLCurrent()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
 	}
 
 	public long getParentLayoutId() {
@@ -727,11 +730,13 @@ public class LayoutsAdminDisplayContext {
 
 		breadcrumbEntry.setTitle(LanguageUtil.get(httpServletRequest, "pages"));
 
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("tabs1", getTabs1());
-		portletURL.setParameter(
-			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setParameter(
+			"tabs1", getTabs1()
+		).setParameter(
+			"selPlid", LayoutConstants.DEFAULT_PLID
+		).build();
 
 		String displayStyle = getDisplayStyle();
 
@@ -793,11 +798,13 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("tabs1", getTabs1());
-		portletURL.setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout()));
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setParameter(
+			"tabs1", getTabs1()
+		).setParameter(
+			"privateLayout", isPrivateLayout()
+		).build();
 
 		String displayStyle = getDisplayStyle();
 
@@ -820,12 +827,13 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getRedirectURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("redirect", getRedirect());
-		portletURL.setParameter("groupId", String.valueOf(getSelGroupId()));
-
-		return portletURL;
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setRedirect(
+			getRedirect()
+		).setParameter(
+			"groupId", getSelGroupId()
+		).build();
 	}
 
 	public List<BreadcrumbEntry> getRelativeBreadcrumbEntries(Layout layout)
@@ -898,35 +906,37 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getScreenNavigationPortletURL() {
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/layout_admin/edit_layout");
-		portletURL.setParameter(
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setMVCRenderCommandName(
+			"/layout_admin/edit_layout"
+		).setParameter(
 			"portletResource",
-			ParamUtil.getString(httpServletRequest, "portletResource"));
-		portletURL.setParameter("selPlid", String.valueOf(getSelPlid()));
-
-		return portletURL;
+			ParamUtil.getString(httpServletRequest, "portletResource")
+		).setParameter(
+			"selPlid", getSelPlid()
+		).build();
 	}
 
 	public String getSelectLayoutCollectionURL(
 		long selPlid, String selectedTab, boolean privateLayout) {
 
 		PortletURL selectLayoutCollectionsURL =
-			_liferayPortletResponse.createRenderURL();
-
-		selectLayoutCollectionsURL.setParameter(
-			"mvcPath", "/select_layout_collections.jsp");
-		selectLayoutCollectionsURL.setParameter("redirect", getRedirect());
-		selectLayoutCollectionsURL.setParameter(
-			"backURL", themeDisplay.getURLCurrent());
-		selectLayoutCollectionsURL.setParameter(
-			"groupId", String.valueOf(getSelGroupId()));
-		selectLayoutCollectionsURL.setParameter(
-			"selPlid", String.valueOf(selPlid));
-		selectLayoutCollectionsURL.setParameter(
-			"privateLayout", String.valueOf(privateLayout));
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/select_layout_collections.jsp"
+			).setRedirect(
+				getRedirect()
+			).setParameter(
+				"backURL", themeDisplay.getURLCurrent()
+			).setParameter(
+				"groupId", getSelGroupId()
+			).setParameter(
+				"selPlid", selPlid
+			).setParameter(
+				"privateLayout", privateLayout
+			).build();
 
 		if (Validator.isNotNull(selectedTab)) {
 			selectLayoutCollectionsURL.setParameter("selectedTab", selectedTab);
@@ -964,20 +974,21 @@ public class LayoutsAdminDisplayContext {
 		boolean privateLayout) {
 
 		PortletURL selectLayoutPageTemplateEntryURL =
-			_liferayPortletResponse.createRenderURL();
-
-		selectLayoutPageTemplateEntryURL.setParameter(
-			"mvcPath", "/select_layout_page_template_entry.jsp");
-		selectLayoutPageTemplateEntryURL.setParameter(
-			"redirect", getRedirect());
-		selectLayoutPageTemplateEntryURL.setParameter(
-			"backURL", themeDisplay.getURLCurrent());
-		selectLayoutPageTemplateEntryURL.setParameter(
-			"groupId", String.valueOf(getSelGroupId()));
-		selectLayoutPageTemplateEntryURL.setParameter(
-			"selPlid", String.valueOf(selPlid));
-		selectLayoutPageTemplateEntryURL.setParameter(
-			"privateLayout", String.valueOf(privateLayout));
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/select_layout_page_template_entry.jsp"
+			).setRedirect(
+				getRedirect()
+			).setParameter(
+				"backURL", themeDisplay.getURLCurrent()
+			).setParameter(
+				"groupId", getSelGroupId()
+			).setParameter(
+				"selPlid", selPlid
+			).setParameter(
+				"privateLayout", privateLayout
+			).build();
 
 		if (layoutPageTemplateCollectionId > 0) {
 			selectLayoutPageTemplateEntryURL.setParameter(
@@ -1074,25 +1085,28 @@ public class LayoutsAdminDisplayContext {
 					"public-pages");
 		}
 
-		PortletURL editLayoutSetURL = _liferayPortletResponse.createRenderURL();
-
-		editLayoutSetURL.setParameter(
-			"mvcRenderCommandName", "/layout_admin/edit_layout_set");
-		editLayoutSetURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(httpServletRequest));
-		editLayoutSetURL.setParameter("backURL", _backURL);
-		editLayoutSetURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-		editLayoutSetURL.setParameter(
-			"privateLayout", Boolean.FALSE.toString());
-		editLayoutSetURL.setWindowState(LiferayWindowState.MAXIMIZED);
-
 		return LanguageUtil.format(
 			httpServletRequest,
 			"private-pages-is-using-a-different-theme-than-the-one-set-for-x-" +
 				"public-pages-x",
 			new String[] {
-				"<a href =\"" + editLayoutSetURL.toString() + "\">", "</a>"
+				"<a href =\"" +
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/layout_admin/edit_layout_set"
+					).setRedirect(
+						PortalUtil.getCurrentURL(httpServletRequest)
+					).setParameter(
+						"backURL", _backURL
+					).setParameter(
+						"groupId", themeDisplay.getScopeGroupId()
+					).setParameter(
+						"privateLayout", Boolean.FALSE.toString()
+					).setWindowState(
+						LiferayWindowState.MAXIMIZED
+					).buildString() + "\">",
+				"</a>"
 			});
 	}
 
@@ -1715,12 +1729,14 @@ public class LayoutsAdminDisplayContext {
 
 		breadcrumbEntry.setTitle(title);
 
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter("selPlid", String.valueOf(plid));
-		portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
-
-		breadcrumbEntry.setURL(portletURL.toString());
+		breadcrumbEntry.setURL(
+			PortletURLBuilder.create(
+				getPortletURL()
+			).setParameter(
+				"selPlid", plid
+			).setParameter(
+				"privateLayout", privateLayout
+			).buildString());
 
 		return breadcrumbEntry;
 	}

@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -247,11 +248,11 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	private PortletURL _getNavigationURL(String navigation) {
-		PortletURL url = _getStagingRenderURL();
-
-		url.setParameter("navigation", navigation);
-
-		return url;
+		return PortletURLBuilder.create(
+			_getStagingRenderURL()
+		).setParameter(
+			"navigation", navigation
+		).build();
 	}
 
 	private List<DropdownItem> _getOrderByDropDownItems() {
@@ -277,38 +278,35 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	private PortletURL _getOrderByURL(String orderByColumnName) {
-		PortletURL url = _getStagingRenderURL();
-
-		url.setParameter("orderByCol", orderByColumnName);
-
-		return url;
+		return PortletURLBuilder.create(
+			_getStagingRenderURL()
+		).setParameter(
+			"orderByCol", orderByColumnName
+		).build();
 	}
 
 	private PortletURL _getStagingRenderURL() {
-		PortletURL renderURL = _liferayPortletResponse.createRenderURL();
-
-		renderURL.setParameter(
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setParameter(
 			"navigation",
-			ParamUtil.getString(_httpServletRequest, "navigation", "all"));
-		renderURL.setParameter(
-			"groupId",
-			String.valueOf(ParamUtil.getLong(_httpServletRequest, "groupId")));
-		renderURL.setParameter(
+			ParamUtil.getString(_httpServletRequest, "navigation", "all")
+		).setParameter(
+			"groupId", ParamUtil.getLong(_httpServletRequest, "groupId")
+		).setParameter(
 			"privateLayout",
-			String.valueOf(
-				ParamUtil.getBoolean(_httpServletRequest, "privateLayout")));
-		renderURL.setParameter("displayStyle", getDisplayStyle());
-		renderURL.setParameter(
-			"orderByCol",
-			ParamUtil.getString(_httpServletRequest, "orderByCol"));
-		renderURL.setParameter(
+			ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
+		).setParameter(
+			"displayStyle", getDisplayStyle()
+		).setParameter(
+			"orderByCol", ParamUtil.getString(_httpServletRequest, "orderByCol")
+		).setParameter(
 			"orderByType",
-			ParamUtil.getString(_httpServletRequest, "orderByType", "asc"));
-		renderURL.setParameter(
+			ParamUtil.getString(_httpServletRequest, "orderByType", "asc")
+		).setParameter(
 			"searchContainerId",
-			ParamUtil.getString(_httpServletRequest, "searchContainerId"));
-
-		return renderURL;
+			ParamUtil.getString(_httpServletRequest, "searchContainerId")
+		).build();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

@@ -15,6 +15,7 @@
 package com.liferay.notifications.web.internal.portlet.configuration.icon;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -114,11 +115,13 @@ public class DeliveryPortletConfigurationIcon
 	}
 
 	protected PortletURL getDeliveryURL(PortletRequest portletRequest) {
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, NotificationsPortletKeys.NOTIFICATIONS,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/notifications/configuration.jsp");
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				portletRequest, NotificationsPortletKeys.NOTIFICATIONS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/notifications/configuration.jsp"
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

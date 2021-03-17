@@ -22,6 +22,7 @@ import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -148,13 +149,13 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 			ActionRequest actionRequest, long commerceTierPriceEntryId)
 		throws Exception {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			actionRequest, CommercePriceListPortletKeys.COMMERCE_PRICE_LIST,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_price_list/edit_commerce_tier_price_entry");
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				actionRequest, CommercePriceListPortletKeys.COMMERCE_PRICE_LIST,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_price_list/edit_commerce_tier_price_entry"
+		).build();
 
 		long commercePriceEntryId = ParamUtil.getLong(
 			actionRequest, "commercePriceEntryId");

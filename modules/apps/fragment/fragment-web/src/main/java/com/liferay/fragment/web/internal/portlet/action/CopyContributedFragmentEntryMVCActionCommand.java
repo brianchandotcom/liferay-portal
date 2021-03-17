@@ -19,13 +19,13 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -73,60 +73,64 @@ public class CopyContributedFragmentEntryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "fragmentCollectionId");
+		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(actionResponse)
+		).setParameter(
+			"fragmentCollectionId",
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
 
-		String[] fragmentEntryKeys = StringUtil.split(
-			ParamUtil.getString(actionRequest, "fragmentEntryKeys"));
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+				String[] fragmentEntryKeys = StringUtil.split(
+					ParamUtil.getString(actionRequest, "fragmentEntryKeys"));
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+				long fragmentCollectionId = ParamUtil.getLong(
+					actionRequest, "fragmentCollectionId");
 
-		for (String fragmentEntryKey : fragmentEntryKeys) {
-			FragmentEntry fragmentEntry =
-				_fragmentCollectionContributorTracker.getFragmentEntry(
-					fragmentEntryKey);
+				for (String fragmentEntryKey : fragmentEntryKeys) {
+					FragmentEntry fragmentEntry =
+						_fragmentCollectionContributorTracker.getFragmentEntry(
+							fragmentEntryKey);
 
-			StringBundler sb = new StringBundler(5);
+					StringBundler sb = new StringBundler(5);
 
-			sb.append(fragmentEntry.getName());
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(
-				LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "copy"));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+					sb.append(fragmentEntry.getName());
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(
+						LanguageUtil.get(
+							LocaleUtil.getMostRelevantLocale(), "copy"));
+					sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			long previewFileEntryId = 0;
+					long previewFileEntryId = 0;
 
-			String imagePreviewURL = fragmentEntry.getImagePreviewURL(
-				themeDisplay);
+					String imagePreviewURL = fragmentEntry.getImagePreviewURL(
+						themeDisplay);
 
-			if (Validator.isNotNull(imagePreviewURL)) {
-				previewFileEntryId = _getPreviewFileEntryId(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					fragmentCollectionId,
-					themeDisplay.getPortalURL() + imagePreviewURL);
+					if (Validator.isNotNull(imagePreviewURL)) {
+						previewFileEntryId = _getPreviewFileEntryId(
+							themeDisplay.getUserId(),
+							themeDisplay.getScopeGroupId(),
+							fragmentCollectionId,
+							themeDisplay.getPortalURL() + imagePreviewURL);
+					}
+
+					_fragmentEntryService.addFragmentEntry(
+						themeDisplay.getScopeGroupId(), fragmentCollectionId,
+						StringPool.BLANK, sb.toString(), fragmentEntry.getCss(),
+						fragmentEntry.getHtml(), fragmentEntry.getJs(),
+						fragmentEntry.getConfiguration(), previewFileEntryId,
+						fragmentEntry.getType(),
+						WorkflowConstants.STATUS_APPROVED, serviceContext);
+				}
+
+				return fragmentCollectionId;
 			}
-
-			_fragmentEntryService.addFragmentEntry(
-				themeDisplay.getScopeGroupId(), fragmentCollectionId,
-				StringPool.BLANK, sb.toString(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(), previewFileEntryId,
-				fragmentEntry.getType(), WorkflowConstants.STATUS_APPROVED,
-				serviceContext);
-		}
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"fragmentCollectionId", String.valueOf(fragmentCollectionId));
+		).build();
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 	}

@@ -22,6 +22,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -62,18 +63,17 @@ public class CommercePriceEntryDisplayContext
 	}
 
 	public String getAddCommerceTierPriceEntryRenderURL() throws Exception {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_price_list/add_commerce_tier_price_entry");
-		portletURL.setParameter(
-			"commercePriceEntryId", String.valueOf(getCommercePriceEntryId()));
-		portletURL.setParameter(
-			"commercePriceListId", String.valueOf(getCommercePriceListId()));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/commerce_price_list/add_commerce_tier_price_entry"
+		).setParameter(
+			"commercePriceEntryId", getCommercePriceEntryId()
+		).setParameter(
+			"commercePriceListId", getCommercePriceListId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public String getBasePrice() throws PortalException {
@@ -150,16 +150,17 @@ public class CommercePriceEntryDisplayContext
 		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
 			new ArrayList<>();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_price_list/edit_commerce_price_entry");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"commercePriceListId", String.valueOf(getCommercePriceListId()));
-		portletURL.setParameter("commercePriceEntryId", "{priceEntryId}");
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/commerce_price_list/edit_commerce_price_entry"
+		).setRedirect(
+			commercePricingRequestHelper.getCurrentURL()
+		).setParameter(
+			"commercePriceListId", getCommercePriceListId()
+		).setParameter(
+			"commercePriceEntryId", "{priceEntryId}"
+		).build();
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

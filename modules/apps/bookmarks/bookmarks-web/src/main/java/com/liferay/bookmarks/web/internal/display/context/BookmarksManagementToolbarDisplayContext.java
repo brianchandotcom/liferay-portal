@@ -27,6 +27,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -201,14 +202,15 @@ public class BookmarksManagementToolbarDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = _liferayPortletResponse.createRenderURL();
-
-		searchActionURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
-		searchActionURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
-		searchActionURL.setParameter("folderId", String.valueOf(_folderId));
-
-		return searchActionURL.toString();
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/bookmarks/view"
+		).setRedirect(
+			PortalUtil.getCurrentURL(_httpServletRequest)
+		).setParameter(
+			"folderId", _folderId
+		).buildString();
 	}
 
 	public String getSearchContainerId() {
@@ -311,12 +313,12 @@ public class BookmarksManagementToolbarDisplayContext {
 					navigationKeys = new String[] {"all", "recent"};
 				}
 
-				PortletURL portletURL = _getPortletURL();
-
-				portletURL.setParameter(
+				PortletURL portletURL = PortletURLBuilder.create(
+					_getPortletURL()
+				).setParameter(
 					"folderId",
-					String.valueOf(
-						BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID
+				).build();
 
 				for (String navigationKey : navigationKeys) {
 					add(
@@ -344,9 +346,11 @@ public class BookmarksManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("categoryId", StringPool.BLANK);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setParameter(
+			"categoryId", StringPool.BLANK
+		).build();
 
 		int deltaEntry = ParamUtil.getInteger(
 			_httpServletRequest, "deltaEntry");
@@ -364,13 +368,11 @@ public class BookmarksManagementToolbarDisplayContext {
 	private String _removeNavigartionParameter(PortletURL portletURL)
 		throws PortletException {
 
-		PortletURL removeNavigationParameterPortletURL = PortletURLUtil.clone(
-			portletURL, _liferayPortletResponse);
-
-		removeNavigationParameterPortletURL.setParameter(
-			"navigation", (String)null);
-
-		return removeNavigationParameterPortletURL.toString();
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(portletURL, _liferayPortletResponse)
+		).setParameter(
+			"navigation", (String)null
+		).buildString();
 	}
 
 	private final BookmarksGroupServiceOverriddenConfiguration

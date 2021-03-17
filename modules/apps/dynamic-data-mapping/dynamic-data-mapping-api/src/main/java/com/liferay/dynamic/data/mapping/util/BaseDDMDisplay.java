@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -49,7 +50,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -315,12 +315,12 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		String portletId = PortletProviderUtil.getPortletId(
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view.jsp"
+		).buildString();
 	}
 
 	@Override
@@ -475,16 +475,18 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		String portletId = PortletProviderUtil.getPortletId(
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/view_template.jsp");
-		portletURL.setParameter("classNameId", String.valueOf(classNameId));
-		portletURL.setParameter("classPK", String.valueOf(classPK));
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(resourceClassNameId));
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view_template.jsp"
+		).setParameter(
+			"classNameId", classNameId
+		).setParameter(
+			"classPK", classPK
+		).setParameter(
+			"resourceClassNameId", resourceClassNameId
+		).buildString();
 	}
 
 	private static final Set<String> _templateLanguageTypes = SetUtil.fromArray(

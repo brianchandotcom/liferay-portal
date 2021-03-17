@@ -16,6 +16,7 @@ package com.liferay.trash.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -27,9 +28,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletURL;
 
 /**
  * @author Eudaldo Alonso
@@ -66,18 +64,19 @@ public class TrashViewContentActionDropdownItemsProvider {
 			{
 				putData("action", "deleteEntry");
 
-				PortletURL deleteEntryURL =
-					_liferayPortletResponse.createActionURL();
-
-				deleteEntryURL.setParameter(
-					ActionRequest.ACTION_NAME, "deleteEntries");
-				deleteEntryURL.setParameter(
-					"redirect", _themeDisplay.getURLCurrent());
-				deleteEntryURL.setParameter("className", _className);
-				deleteEntryURL.setParameter(
-					"classPK", String.valueOf(_classPK));
-
-				putData("deleteEntryURL", deleteEntryURL.toString());
+				putData(
+					"deleteEntryURL",
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"deleteEntries"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"className", _className
+					).setParameter(
+						"classPK", _classPK
+					).buildString());
 
 				setLabel(LanguageUtil.get(_themeDisplay.getLocale(), "delete"));
 			}
@@ -89,24 +88,23 @@ public class TrashViewContentActionDropdownItemsProvider {
 			{
 				putData("action", "moveEntry");
 
-				PortletURL moveEntryURL =
-					_liferayPortletResponse.createRenderURL();
-
-				moveEntryURL.setParameter(
-					"mvcPath", "/view_container_model.jsp");
-				moveEntryURL.setParameter(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(_className)));
-				moveEntryURL.setParameter("classPK", String.valueOf(_classPK));
-				moveEntryURL.setParameter(
-					"containerModelClassNameId",
-					String.valueOf(
+				putData(
+					"moveEntryURL",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/view_container_model.jsp"
+					).setParameter(
+						"classNameId", PortalUtil.getClassNameId(_className)
+					).setParameter(
+						"classPK", _classPK
+					).setParameter(
+						"containerModelClassNameId",
 						PortalUtil.getClassNameId(
-							_trashHandler.getContainerModelClassName(
-								_classPK))));
-				moveEntryURL.setWindowState(LiferayWindowState.POP_UP);
-
-				putData("moveEntryURL", moveEntryURL.toString());
+							_trashHandler.getContainerModelClassName(_classPK))
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
 
 				setLabel(
 					LanguageUtil.get(_themeDisplay.getLocale(), "restore"));

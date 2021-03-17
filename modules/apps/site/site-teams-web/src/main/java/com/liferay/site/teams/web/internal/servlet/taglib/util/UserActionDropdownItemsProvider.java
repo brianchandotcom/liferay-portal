@@ -17,6 +17,7 @@ package com.liferay.site.teams.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -25,8 +26,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -60,20 +59,21 @@ public class UserActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteTeamUsersUnsafeConsumer() {
 
-		PortletURL deleteTeamUsersURL = _renderResponse.createActionURL();
-
-		deleteTeamUsersURL.setParameter(
-			ActionRequest.ACTION_NAME, "deleteTeamUsers");
-		deleteTeamUsersURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteTeamUsersURL.setParameter("teamId", String.valueOf(_teamId));
-		deleteTeamUsersURL.setParameter(
-			"removeUserId", String.valueOf(_user.getUserId()));
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteTeamUsers");
 			dropdownItem.putData(
-				"deleteTeamUsersURL", deleteTeamUsersURL.toString());
+				"deleteTeamUsersURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"deleteTeamUsers"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"teamId", _teamId
+				).setParameter(
+					"removeUserId", _user.getUserId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};

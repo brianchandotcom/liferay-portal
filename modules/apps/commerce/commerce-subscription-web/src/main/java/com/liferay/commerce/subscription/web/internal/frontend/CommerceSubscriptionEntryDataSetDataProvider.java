@@ -29,6 +29,7 @@ import com.liferay.commerce.subscription.web.internal.model.SubscriptionEntry;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -43,8 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -154,22 +153,21 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 
 		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, themeDisplay.getScopeGroup(),
-			CommerceAccount.class.getName(), PortletProvider.Action.EDIT);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_account_admin/edit_commerce_account");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"commerceAccountId", String.valueOf(commerceAccountId));
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				CommerceAccount.class.getName(), PortletProvider.Action.EDIT)
+		).setMVCRenderCommandName(
+			"/commerce_account_admin/edit_commerce_account"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"commerceAccountId", commerceAccountId
+		).buildString();
 	}
 
 	private String _getEditCommerceOrderURL(
@@ -181,22 +179,21 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 
 		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, themeDisplay.getScopeGroup(),
-			CommerceOrder.class.getName(), PortletProvider.Action.MANAGE);
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_open_order_content/edit_commerce_order");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				CommerceOrder.class.getName(), PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"commerceOrderId", commerceOrderId
+		).buildString();
 	}
 
 	private Label _getSubscriptionStatus(

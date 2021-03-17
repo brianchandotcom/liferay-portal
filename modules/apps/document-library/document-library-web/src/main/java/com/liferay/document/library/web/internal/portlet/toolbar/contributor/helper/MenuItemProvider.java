@@ -14,8 +14,7 @@
 
 package com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -28,7 +27,6 @@ import com.liferay.document.library.web.internal.icon.provider.DLFileEntryTypeIc
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -40,9 +38,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -301,17 +297,6 @@ public class MenuItemProvider {
 		return urlMenuItem;
 	}
 
-	private long[] _getCurrentAndAncestorSiteAndDepotGroupIds(long groupId)
-		throws PortalException {
-
-		return ArrayUtil.append(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-			ListUtil.toLongArray(
-				DepotEntryLocalServiceUtil.getGroupConnectedDepotEntries(
-					groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-				DepotEntry::getGroupId));
-	}
-
 	private long _getDefaultFileEntryTypeId(long folderId) {
 		try {
 			return DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
@@ -399,8 +384,9 @@ public class MenuItemProvider {
 
 		try {
 			return DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(
-				_getCurrentAndAncestorSiteAndDepotGroupIds(groupId), folderId,
-				inherited);
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true),
+				folderId, inherited);
 		}
 		catch (PortalException portalException) {
 			_log.error(

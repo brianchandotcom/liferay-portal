@@ -34,7 +34,7 @@ const BODY = (item) => ({
 
 let history;
 
-describe('ListView', () => {
+describe.skip('ListView', () => {
 	beforeEach(() => {
 		history = createMemoryHistory();
 		cleanup();

@@ -199,7 +199,7 @@ public class TranslateDisplayContext {
 						Collectors.toList()
 					)
 				).put(
-					"label",
+					"legend",
 					getInfoFieldSetLabel(
 						infoFieldSetEntry, _themeDisplay.getLocale())
 				).build());

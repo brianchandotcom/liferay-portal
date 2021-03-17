@@ -35,14 +35,14 @@ const TranslationHeader = ({sourceLanguageIdTitle, targetLanguageIdTitle}) => (
 );
 
 const TranslationFieldSetEntries = ({infoFieldSetEntries}) =>
-	infoFieldSetEntries.map(({fields, label}) => (
-		<React.Fragment key={label}>
+	infoFieldSetEntries.map(({fields, legend}) => (
+		<React.Fragment key={legend}>
 			<ClayLayout.Row>
 				<ClayLayout.Col md={6}>
-					<div className="fieldset-title">{label}</div>
+					<div className="fieldset-title">{legend}</div>
 				</ClayLayout.Col>
 				<ClayLayout.Col md={6}>
-					<div className="fieldset-title">{label}</div>
+					<div className="fieldset-title">{legend}</div>
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 			{fields.map(
@@ -121,7 +121,7 @@ Translate.propTypes = {
 					sourceContentDir: PropTypes.string,
 				})
 			),
-			label: PropTypes.string,
+			legend: PropTypes.string,
 		})
 	),
 	sourceLanguageIdTitle: PropTypes.string.isRequired,

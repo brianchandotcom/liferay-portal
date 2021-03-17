@@ -124,6 +124,18 @@ public class JSONUtil {
 			start + 1, jsonArrayString.indexOf(StringPool.QUOTE, start + 1));
 	}
 
+	public static JSONArray getJSONArray(String json) throws JSONException {
+		if (isArray(json)) {
+			return _createJSONArray(json);
+		}
+
+		JSONArray jsonArray = _createJSONArray();
+
+		jsonArray.put(_createJSONObject(json));
+
+		return jsonArray;
+	}
+
 	public static Object getValue(Object object, String... paths) {
 		Object value = null;
 
@@ -929,6 +941,12 @@ public class JSONUtil {
 
 	private static JSONArray _createJSONArray() {
 		return JSONFactoryUtil.createJSONArray();
+	}
+
+	private static JSONArray _createJSONArray(String json)
+		throws JSONException {
+
+		return JSONFactoryUtil.createJSONArray(json);
 	}
 
 	private static JSONObject _createJSONObject() {

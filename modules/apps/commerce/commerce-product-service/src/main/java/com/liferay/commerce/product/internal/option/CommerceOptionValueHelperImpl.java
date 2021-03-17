@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.math.BigDecimal;
 
@@ -144,8 +145,7 @@ public class CommerceOptionValueHelperImpl
 
 		List<CommerceOptionValue> commerceOptionValues = new ArrayList<>();
 
-		JSONArray commerceOptionValuesJSONArray = _jsonHelper.getJSONArray(
-			json);
+		JSONArray commerceOptionValuesJSONArray = JSONUtil.getJSONArray(json);
 
 		for (int i = 0; i < commerceOptionValuesJSONArray.length(); i++) {
 			JSONObject jsonObject = commerceOptionValuesJSONArray.getJSONObject(

@@ -799,6 +799,34 @@ definition {
 			dmFolderName2 = "DM Folder2 Name");
 	}
 
+	@description = "This case covers LPS-127681. It ensures that a subfolder cannot be moved to parent folder when they are using same name."
+	@priority = "3"
+	test MoveSubfolderToParentFolderWithSameName {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.moveToFolderCP(
+			dmFolderName = "DM Folder Name",
+			dmFolderName2 = "DM Folder Name",
+			moveFailure = "true",
+			moveSubfolder = "true");
+	}
+
 	@priority = "5"
 	test MoveToRecycleBinDocument {
 		property portal.acceptance = "true";

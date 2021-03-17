@@ -51,7 +51,6 @@ import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.service.base.CommerceOrderItemLocalServiceBaseImpl;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -1692,8 +1691,5 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@ServiceReference(type = CPInstanceLocalService.class)
 	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@ServiceReference(type = JsonHelper.class)
-	private JsonHelper _jsonHelper;
 
 }

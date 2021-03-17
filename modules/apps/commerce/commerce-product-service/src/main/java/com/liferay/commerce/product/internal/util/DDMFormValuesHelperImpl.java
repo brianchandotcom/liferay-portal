@@ -94,7 +94,7 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 	 *
 	 * @throws     PortalException
 	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 *             JsonHelper#equals(String, String)}
+	 *             java.util.Objects#equals(String, String)}
 	 */
 	@Deprecated
 	@Override

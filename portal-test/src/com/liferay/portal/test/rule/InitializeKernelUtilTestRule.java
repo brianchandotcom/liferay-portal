@@ -90,14 +90,11 @@ public class InitializeKernelUtilTestRule
 
 		PortalProps portalProps = description.getAnnotation(PortalProps.class);
 
-		if (portalProps != null) {
-			Map<String, String> map = _processProperties(
-				portalProps.properties());
-
-			return _setUpPropsUtil(map);
+		if (portalProps == null) {
+			return null;
 		}
 
-		return null;
+		return _setUpPropsUtil(_processProperties(portalProps.properties()));
 	}
 
 	private Map<String, String> _processProperties(String[] properties) {

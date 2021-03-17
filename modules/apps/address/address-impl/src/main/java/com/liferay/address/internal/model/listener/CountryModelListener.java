@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -78,12 +79,25 @@ public class CountryModelListener extends BaseModelListener<Country> {
 						_userLocalService.getDefaultUserId(
 							country.getCompanyId()));
 
-					_regionLocalService.addRegion(
+					Region region = _regionLocalService.addRegion(
 						country.getCountryId(),
 						regionJSONObject.getBoolean("active"),
 						regionJSONObject.getString("name"), 0,
 						regionJSONObject.getString("regionCode"),
 						serviceContext);
+
+					JSONObject regionLocalizationsJSONObject =
+						regionJSONObject.getJSONObject("localizations");
+
+					if (regionLocalizationsJSONObject != null) {
+						for (String key :
+								regionLocalizationsJSONObject.keySet()) {
+
+							_regionLocalService.updateRegionLocalization(
+								region, key,
+								regionLocalizationsJSONObject.getString(key));
+						}
+					}
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {

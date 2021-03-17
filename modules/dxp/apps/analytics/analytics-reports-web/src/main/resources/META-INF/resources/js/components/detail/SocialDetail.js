@@ -15,12 +15,11 @@ import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
 
 import {
+	ChartDispatchContext,
 	ChartStateContext,
 	useChangeTimeSpanKey,
 	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
-	useNextTimeSpan,
-	usePreviousTimeSpan,
 } from '../../context/ChartStateContext';
 import {StoreStateContext} from '../../context/StoreContext';
 import {generateDateFormatters as dateFormat} from '../../utils/dateFormat';
@@ -59,15 +58,13 @@ export default function SocialDetail({
 
 	const title = dateFormatters.formatChartTitle([firstDate, lastDate]);
 
+	const dispatch = useContext(ChartDispatchContext);
+
 	const {timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
 
 	const changeTimeSpanKey = useChangeTimeSpanKey();
-
-	const previousTimeSpan = usePreviousTimeSpan();
-
-	const nextTimeSpan = useNextTimeSpan();
 
 	const handleTimeSpanChange = (event) => {
 		const {value} = event.target;
@@ -110,8 +107,12 @@ export default function SocialDetail({
 							disabledPreviousPeriodButton={
 								isPreviousPeriodButtonDisabled
 							}
-							onNextTimeSpanClick={nextTimeSpan}
-							onPreviousTimeSpanClick={previousTimeSpan}
+							onNextTimeSpanClick={() =>
+								dispatch({type: 'NEXT_TIME_SPAN'})
+							}
+							onPreviousTimeSpanClick={() =>
+								dispatch({type: 'PREV_TIME_SPAN'})
+							}
 							onTimeSpanChange={handleTimeSpanChange}
 							timeSpanKey={timeSpanKey}
 							timeSpanOptions={timeSpanOptions}

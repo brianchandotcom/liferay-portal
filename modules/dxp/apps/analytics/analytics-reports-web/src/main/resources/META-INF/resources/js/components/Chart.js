@@ -29,13 +29,12 @@ import {
 } from 'recharts';
 
 import {
+	ChartDispatchContext,
 	ChartStateContext,
 	useAddDataSetItems,
 	useChangeTimeSpanKey,
 	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
-	useNextTimeSpan,
-	usePreviousTimeSpan,
 	useSetLoading,
 } from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
@@ -145,7 +144,9 @@ export default function Chart({
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const dispatch = useContext(StoreDispatchContext);
+	const storeDispatch = useContext(StoreDispatchContext);
+
+	const chartDispatch = useContext(ChartDispatchContext);
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
@@ -164,10 +165,6 @@ export default function Chart({
 	const addDataSetItems = useAddDataSetItems();
 
 	const changeTimeSpanKey = useChangeTimeSpanKey();
-
-	const nextTimeSpan = useNextTimeSpan();
-
-	const previousTimeSpan = usePreviousTimeSpan();
 
 	const setLoading = useSetLoading();
 
@@ -215,7 +212,7 @@ export default function Chart({
 						};
 					}
 					else {
-						dispatch({type: 'ADD_WARNING'});
+						storeDispatch({type: 'ADD_WARNING'});
 					}
 				}
 
@@ -282,8 +279,12 @@ export default function Chart({
 						disabledPreviousPeriodButton={
 							isPreviousPeriodButtonDisabled
 						}
-						onNextTimeSpanClick={nextTimeSpan}
-						onPreviousTimeSpanClick={previousTimeSpan}
+						onNextTimeSpanClick={() =>
+							chartDispatch({type: 'NEXT_TIME_SPAN'})
+						}
+						onPreviousTimeSpanClick={() =>
+							chartDispatch({type: 'PREV_TIME_SPAN'})
+						}
 						onTimeSpanChange={handleTimeSpanChange}
 						timeSpanKey={timeSpanKey}
 						timeSpanOptions={timeSpanOptions}

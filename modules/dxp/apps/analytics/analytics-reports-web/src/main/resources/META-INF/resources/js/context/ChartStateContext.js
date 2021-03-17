@@ -13,11 +13,11 @@ import React, {createContext, useCallback, useContext, useReducer} from 'react';
 
 import ConnectionContext from './ConnectionContext';
 
-const ADD_DATA_SET_ITEMS = 'add-data-keys';
-const CHANGE_TIME_SPAN_KEY = 'change-time-span-key';
-const NEXT_TIME_SPAN = 'next-time-span';
-const PREV_TIME_SPAN = 'previous-time-span';
-const SET_LOADING = 'set-loading';
+const ADD_DATA_SET_ITEMS = 'ADD_DATA_SET_ITEMS';
+const CHANGE_TIME_SPAN_KEY = 'CHANGE_TIME_SPAN_KEY';
+const NEXT_TIME_SPAN = 'NEXT_TIME_SPAN';
+const PREV_TIME_SPAN = 'PREV_TIME_SPAN';
+const SET_LOADING = 'SET_LOADING';
 
 const INITIAL_STATE = {
 	dataSet: {histogram: [], keyList: [], totals: []},
@@ -117,22 +117,10 @@ export function useIsPreviousPeriodButtonDisabled() {
 	return true;
 }
 
-export const useNextTimeSpan = () => {
-	const [, dispatch] = useContext(ChartStateContext);
-
-	return () => dispatch({type: NEXT_TIME_SPAN});
-};
-
 export const useSetLoading = () => {
 	const [, dispatch] = useContext(ChartStateContext);
 
 	return useCallback(() => dispatch({type: SET_LOADING}), [dispatch]);
-};
-
-export const usePreviousTimeSpan = () => {
-	const [, dispatch] = useContext(ChartStateContext);
-
-	return () => dispatch({type: PREV_TIME_SPAN});
 };
 
 /**

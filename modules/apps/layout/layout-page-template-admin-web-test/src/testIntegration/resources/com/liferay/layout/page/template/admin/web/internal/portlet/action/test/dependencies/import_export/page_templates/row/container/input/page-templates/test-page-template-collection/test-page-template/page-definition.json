@@ -34,6 +34,7 @@
 					"gutters": true,
 					"modulesPerRow": 1,
 					"numberOfColumns": 1,
+					"reverseOrder": false,
 					"rowViewports": [
 						{
 							"id": "landscapeMobile",
@@ -50,7 +51,8 @@
 							"rowViewportDefinition": {
 							}
 						}
-					]
+					],
+					"verticalAlignment": "top"
 				},
 				"pageElements": [
 					{

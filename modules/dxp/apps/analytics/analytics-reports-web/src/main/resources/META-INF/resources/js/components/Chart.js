@@ -33,7 +33,6 @@ import {
 	ChartStateContext,
 	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
-	useSetLoading,
 } from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
@@ -160,8 +159,6 @@ export default function Chart({
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
 
-	const setLoading = useSetLoading();
-
 	const dateFormatters = useMemo(() => dateFormat(languageTag), [
 		languageTag,
 	]);
@@ -173,7 +170,7 @@ export default function Chart({
 	useEffect(() => {
 		let gone = false;
 
-		setLoading();
+		chartDispatch({type: 'SET_LOADING'});
 
 		const timeSpanComparator =
 			timeSpanKey === LAST_24_HOURS

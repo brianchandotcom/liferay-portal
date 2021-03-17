@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {createContext, useCallback, useContext, useReducer} from 'react';
+import React, {createContext, useContext, useReducer} from 'react';
 
 const ADD_DATA_SET_ITEMS = 'ADD_DATA_SET_ITEMS';
 const CHANGE_TIME_SPAN_KEY = 'CHANGE_TIME_SPAN_KEY';
@@ -93,12 +93,6 @@ export function useIsPreviousPeriodButtonDisabled() {
 
 	return true;
 }
-
-export const useSetLoading = () => {
-	const [, dispatch] = useContext(ChartStateContext);
-
-	return useCallback(() => dispatch({type: SET_LOADING}), [dispatch]);
-};
 
 /**
  * {

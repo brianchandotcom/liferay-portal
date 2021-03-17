@@ -52,12 +52,11 @@ public class JsonHelperTest {
 	public void testGetFirstElementStringValue() {
 		Assert.assertEquals(
 			"First element string value", "commerce",
-			_jsonHelper.getFirstElementStringValue("[\"commerce\"]"));
+			JSONUtil.getFirstElementStringValue("[\"commerce\"]"));
 
 		Assert.assertEquals(
 			"First element string value", "commerce",
-			_jsonHelper.getFirstElementStringValue(
-				"[\"commerce\",\"value2\"]"));
+			JSONUtil.getFirstElementStringValue("[\"commerce\",\"value2\"]"));
 
 		_assertException(
 			"[\"commerce\",\"value2\"", IllegalArgumentException.class);
@@ -152,7 +151,7 @@ public class JsonHelperTest {
 		Exception exception1 = null;
 
 		try {
-			_jsonHelper.getFirstElementStringValue(failingExpression);
+			JSONUtil.getFirstElementStringValue(failingExpression);
 		}
 		catch (Exception exception2) {
 			exception1 = exception2;

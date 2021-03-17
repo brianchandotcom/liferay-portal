@@ -29,8 +29,6 @@ import java.util.Map;
 @ProviderType
 public interface JsonHelper {
 
-	public String getFirstElementStringValue(String jsonArrayString);
-
 	public JSONArray getJSONArray(String json) throws JSONException;
 
 	public JSONArray getValueAsJSONArray(String key, JSONObject jsonObject);

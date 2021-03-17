@@ -60,6 +60,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -1208,7 +1209,7 @@ public class CommerceOrderItemLocalServiceImpl
 	private String _getCPInstanceOptionValueRelsJSONString(long cpInstanceId)
 		throws PortalException {
 
-		JSONArray jsonArray = _jsonHelper.toJSONArray(
+		JSONArray jsonArray = JSONUtil.toJSONArray(
 			_cpDefinitionOptionRelLocalService.
 				getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 					cpInstanceId));

@@ -33,35 +33,4 @@ public class JsonHelperImpl implements JsonHelper {
 
 	public JsonHelperImpl() {
 	}
-
-	@Override
-	public JSONArray toJSONArray(Map<String, List<String>> keyValues) {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (Map.Entry<String, List<String>> keyValuesEntry :
-				keyValues.entrySet()) {
-
-			JSONObject arrayEntryJSONObject = _jsonFactory.createJSONObject();
-
-			arrayEntryJSONObject.put("key", keyValuesEntry.getKey());
-
-			JSONArray valuesJSONArray = _jsonFactory.createJSONArray();
-
-			List<String> values = keyValuesEntry.getValue();
-
-			for (String value : values) {
-				valuesJSONArray.put(value);
-			}
-
-			arrayEntryJSONObject.put("value", valuesJSONArray);
-
-			jsonArray.put(arrayEntryJSONObject);
-		}
-
-		return jsonArray;
-	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
 }

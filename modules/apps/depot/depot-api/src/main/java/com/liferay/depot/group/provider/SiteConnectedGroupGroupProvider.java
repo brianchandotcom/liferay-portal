@@ -35,4 +35,7 @@ public interface SiteConnectedGroupGroupProvider {
 			long groupId, boolean ddmStructuresAvailable)
 		throws PortalException;
 
+	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(long[] groupIds)
+		throws PortalException;
+
 }

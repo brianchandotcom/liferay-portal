@@ -73,6 +73,18 @@ public class SiteConnectedGroupGroupProviderUtil {
 				groupId, ddmStructuresAvailable);
 	}
 
+	public static long[] getCurrentAndAncestorSiteAndDepotGroupIds(
+			long[] groupIds)
+		throws PortalException {
+
+		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
+			_siteConnectedGroupGroupProviderUtil.
+				_getSiteConnectedGroupGroupProvider();
+
+		return siteConnectedGroupGroupProvider.
+			getCurrentAndAncestorSiteAndDepotGroupIds(groupIds);
+	}
+
 	private SiteConnectedGroupGroupProviderUtil() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			SiteConnectedGroupGroupProviderUtil.class);

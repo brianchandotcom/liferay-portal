@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -83,6 +86,23 @@ public class SiteConnectedGroupGroupProviderImpl
 					groupId, ddmStructuresAvailable, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS),
 				DepotEntry::getGroupId));
+	}
+
+	@Override
+	public long[] getCurrentAndAncestorSiteAndDepotGroupIds(long[] groupIds)
+		throws PortalException {
+
+		List<DepotEntry> depotEntries = new ArrayList<>();
+
+		for (long groupId : groupIds) {
+			depotEntries.addAll(
+				_depotEntryLocalService.getGroupConnectedDepotEntries(
+					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		}
+
+		return ArrayUtil.append(
+			_portal.getCurrentAndAncestorSiteGroupIds(groupIds),
+			ListUtil.toLongArray(depotEntries, DepotEntry::getGroupId));
 	}
 
 	@Reference

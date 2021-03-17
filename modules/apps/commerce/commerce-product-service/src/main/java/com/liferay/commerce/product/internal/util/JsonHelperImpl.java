@@ -16,10 +16,8 @@ package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -34,19 +32,6 @@ import org.osgi.service.component.annotations.Reference;
 public class JsonHelperImpl implements JsonHelper {
 
 	public JsonHelperImpl() {
-	}
-
-	@Override
-	public JSONArray getJSONArray(String json) throws JSONException {
-		if (JSONUtil.isArray(json)) {
-			return _jsonFactory.createJSONArray(json);
-		}
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		jsonArray.put(_jsonFactory.createJSONObject(json));
-
-		return jsonArray;
 	}
 
 	@Override

@@ -3,4 +3,6 @@ dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testCompile project(":core:petra:petra-concurrent")
+	testCompile project(":core:petra:petra-process")
 }

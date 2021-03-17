@@ -14,8 +14,6 @@
 
 package com.liferay.portal.test.rule;
 
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
@@ -23,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
  * @author Matthew Tambara
@@ -41,44 +37,11 @@ public class LiferayUnitTestRule extends AggregateTestRule {
 	private static TestRule[] _getTestRules() {
 		List<TestRule> testRules = new ArrayList<>();
 
-		testRules.add(
-			new LazyInstanceTestRule(
-				InitializeKernelUtilTestRule.class.getName()));
-		testRules.add(
-			new LazyInstanceTestRule(AspectJNewEnvTestRule.class.getName()));
-		testRules.add(new LazyInstanceTestRule(NewEnvTestRule.class.getName()));
+		testRules.add(InitializeKernelUtilTestRule.INSTANCE);
+		testRules.add(AspectJNewEnvTestRule.INSTANCE);
+		testRules.add(NewEnvTestRule.INSTANCE);
 
 		return testRules.toArray(new TestRule[0]);
-	}
-
-	private static class LazyInstanceTestRule implements TestRule {
-
-		@Override
-		public Statement apply(Statement statement, Description description) {
-			ClassLoader classLoader =
-				LazyInstanceTestRule.class.getClassLoader();
-
-			try {
-				return ReflectionTestUtil.invoke(
-					ReflectionTestUtil.<Object>getFieldValue(
-						classLoader.loadClass(_testRuleName), "INSTANCE"),
-					"apply",
-					new Class<?>[] {Statement.class, Description.class},
-					statement, description);
-			}
-			catch (ClassNotFoundException classNotFoundException) {
-				ReflectionUtil.throwException(classNotFoundException);
-			}
-
-			return null;
-		}
-
-		private LazyInstanceTestRule(String testRuleName) {
-			_testRuleName = testRuleName;
-		}
-
-		private final String _testRuleName;
-
 	}
 
 }

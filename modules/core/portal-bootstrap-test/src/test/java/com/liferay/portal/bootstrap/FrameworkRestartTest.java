@@ -14,6 +14,8 @@
 
 package com.liferay.portal.bootstrap;
 
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -189,6 +191,7 @@ public class FrameworkRestartTest {
 			_getURLS(
 				Assert.class, FrameworkFactory.class,
 				FrameworkRestartTest.class, LiferayUnitTestRule.class,
+				LocalProcessExecutor.class, NoticeableFuture.class,
 				UnsyncByteArrayOutputStream.class),
 			null);
 

@@ -151,7 +151,7 @@ public class CommerceOptionValueHelperImpl
 			JSONObject jsonObject = commerceOptionValuesJSONArray.getJSONObject(
 				i);
 
-			JSONArray valueJSONArray = _jsonHelper.getValueAsJSONArray(
+			JSONArray valueJSONArray = JSONUtil.getValueAsJSONArray(
 				"value", jsonObject);
 
 			if (valueJSONArray.length() > 0) {
@@ -178,7 +178,7 @@ public class CommerceOptionValueHelperImpl
 
 		commerceOptionValueBuilder.optionKey(jsonObject.getString("key"));
 
-		JSONArray valueJSONArray = _jsonHelper.getValueAsJSONArray(
+		JSONArray valueJSONArray = JSONUtil.getValueAsJSONArray(
 			"value", jsonObject);
 
 		if (valueJSONArray.length() > 0) {

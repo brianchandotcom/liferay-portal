@@ -1391,4 +1391,75 @@ definition {
 			webContentTitle = "WC WebContent Title PT Again");
 	}
 
+	@description = "This test covers LPS-125966. This ensures that a warning message shows when viewing a translation that its web content has been deleted."
+	@priority = "4"
+	test ViewTranslateAfterWebContentDeleted {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.publish();
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation");
+
+		AssertClick(
+			key_rowEntry = "Translation",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "Translation");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Info:You do not have permissions to translate to any of the available languages.");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.deleteCP(
+			assetName = "WC WebContent Title",
+			assetType = "Web Content Article");
+
+		AssertElementNotPresent(
+			key_rowEntry = "Translation",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		AssertElementNotPresent(
+			key_rowEntry = "Translation of WC WebContent Title to es-ES",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+	}
+
 }

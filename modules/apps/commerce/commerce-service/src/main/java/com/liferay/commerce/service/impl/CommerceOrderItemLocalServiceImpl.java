@@ -1320,11 +1320,7 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	private boolean _jsonMatches(String json1, String json2) {
-		if (_jsonHelper.isEmpty(json1) && _jsonHelper.isEmpty(json2)) {
-			return true;
-		}
-
-		if (_jsonHelper.equals(json1, json2)) {
+		if (Objects.equals(json1, json2)) {
 			return true;
 		}
 

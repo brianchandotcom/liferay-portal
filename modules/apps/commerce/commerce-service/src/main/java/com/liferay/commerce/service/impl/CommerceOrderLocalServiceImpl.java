@@ -107,6 +107,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -757,7 +758,7 @@ public class CommerceOrderLocalServiceImpl
 				for (CommerceOrderItem userCommerceOrderItem :
 						userCommerceOrderItems) {
 
-					if (_jsonHelper.equals(
+					if (Objects.equals(
 							guestCommerceOrderItem.getJson(),
 							userCommerceOrderItem.getJson())) {
 

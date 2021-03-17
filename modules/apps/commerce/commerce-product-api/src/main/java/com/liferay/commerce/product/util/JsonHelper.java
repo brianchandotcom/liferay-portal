@@ -29,8 +29,6 @@ import java.util.Map;
 @ProviderType
 public interface JsonHelper {
 
-	public boolean equals(String json1, String json2);
-
 	public String getFirstElementStringValue(String jsonArrayString);
 
 	public JSONArray getJSONArray(String json) throws JSONException;

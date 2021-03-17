@@ -45,7 +45,7 @@ public interface DDMFormValuesHelper {
 	 * @return
 	 *
 	 * @throws PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link JsonHelper#equals(String, String)}
+	 * @deprecated As of Athanasius (7.3.x), use {@link java.util.Objects#equals(String, String)}
 	 */
 	@Deprecated
 	public boolean equals(String json1, String json2) throws PortalException;

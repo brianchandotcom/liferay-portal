@@ -284,8 +284,7 @@ public class CommerceWishListLocalServiceImpl
 					Objects.equals(
 						fromCommerceWishListItem.getCPInstanceUuid(),
 						toCommerceWishListItem.getCPInstanceUuid()) &&
-					_ddmFormValuesHelper.equals(
-						json, toCommerceWishListItem.getJson())) {
+					Objects.equals(json, toCommerceWishListItem.getJson())) {
 
 					found = true;
 

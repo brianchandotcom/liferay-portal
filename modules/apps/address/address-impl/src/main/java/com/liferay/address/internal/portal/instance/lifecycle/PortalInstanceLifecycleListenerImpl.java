@@ -87,8 +87,7 @@ public class PortalInstanceLifecycleListenerImpl
 
 				_countryLocalService.addCountry(
 					countryJSONObject.getString("a2"),
-					countryJSONObject.getString("a3"),
-					countryJSONObject.getBoolean("active"), true,
+					countryJSONObject.getString("a3"), true, true,
 					countryJSONObject.getString("idd"), name,
 					countryJSONObject.getString("number"), 0, true, false,
 					countryJSONObject.getBoolean("zipRequired"),

@@ -54,10 +54,9 @@ export const ChartStateContextProvider = ({
 };
 
 export function useDateTitle() {
-	const [state] = useContext(ChartStateContext);
+	const {dataSet, timeRange} = useContext(ChartStateContext);
 
-	const {histogram} = state.dataSet;
-	const {timeRange} = state;
+	const {histogram} = dataSet;
 
 	if (histogram.length) {
 		const firstDateLabel = histogram[0].label;
@@ -77,10 +76,9 @@ export function useDateTitle() {
 }
 
 export function useIsPreviousPeriodButtonDisabled() {
-	const [state] = useContext(ChartStateContext);
+	const {dataSet, publishDate} = useContext(ChartStateContext);
 
-	const {histogram} = state.dataSet;
-	const {publishDate} = state;
+	const {histogram} = dataSet;
 
 	if (histogram.length) {
 		const firstDateLabel = histogram[0].label;

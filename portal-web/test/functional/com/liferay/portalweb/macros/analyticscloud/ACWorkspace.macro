@@ -6,6 +6,12 @@ definition {
 		Click(locator1 = "ACWorkspace#WORKSPACE_NAME");
 	}
 
+	macro signOut {
+		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
+
+		Click(locator1 = "ACWorkspace#LOGOUT_WORKSPACE_OPTION");
+	}
+
 	macro switchWorkspace {
 		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
 
@@ -14,10 +20,4 @@ definition {
 		ACWorkspace.openWorkspace(workspaceName = "${workspaceName}");
 	}
 
-
-    macro signOut {
-		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
-
-		Click(locator1 = "ACWorkspace#LOGOUT_WORKSPACE_OPTION");
-	}
 }

@@ -8,45 +8,38 @@ definition {
 		Click(locator1 = "ACNavigation#EXPAND_SIDEBAR_ARROW");
 	}
 
-    macro goToSettings {
+	macro goToAccounts {
+		ACNavigation.goToSidebarOption(sidebarOption = "accounts");
+	}
 
-        ACNavigation.goToSidebarOption(sidebarOption = "settings");
-    }
+	macro goToAssets {
+		ACNavigation.goToSidebarOption(sidebarOption = "assets");
+	}
 
-    macro goToSites {
-        
-        ACNavigation.goToSidebarOption(sidebarOption = "sites");
-    }
+	macro goToIndividuals {
+		ACNavigation.goToSidebarOption(sidebarOption = "individuals");
+	}
 
-    macro goToSegments {
+	macro goToSegments {
+		ACNavigation.goToSidebarOption(sidebarOption = "segments");
+	}
 
-        ACNavigation.goToSidebarOption(sidebarOption = "segments");
-    }
+	macro goToSettings {
+		ACNavigation.goToSidebarOption(sidebarOption = "settings");
+	}
 
-    macro goToTests {
+	macro goToSidebarOption {
+		var key_SidebarOption = "${sidebarOption}";
 
-        ACNavigation.goToSidebarOption(sidebarOption = "tests");
-    }
+		Click(locator1 = "ACNavigation#GENERIC_SIDEBAR_OPTION");
+	}
 
-    macro goToIndividuals {
+	macro goToSites {
+		ACNavigation.goToSidebarOption(sidebarOption = "sites");
+	}
 
-        ACNavigation.goToSidebarOption(sidebarOption = "individuals");
-    }
+	macro goToTests {
+		ACNavigation.goToSidebarOption(sidebarOption = "tests");
+	}
 
-    macro goToAccounts {
-
-        ACNavigation.goToSidebarOption(sidebarOption = "accounts");
-    }
-
-    macro goToAssets {
-
-        ACNavigation.goToSidebarOption(sidebarOption = "assets");
-    }
-
-    macro goToSidebarOption {
-
-        var key_SidebarOption = "${sidebarOption}";
-
-        Click(locator1 = "ACNavigation#GENERIC_SIDEBAR_OPTION");
-    }
 }

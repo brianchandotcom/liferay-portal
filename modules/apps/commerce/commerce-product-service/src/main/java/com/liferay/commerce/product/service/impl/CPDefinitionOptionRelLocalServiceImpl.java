@@ -354,7 +354,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				continue;
 			}
 
-			JSONArray valueJSONArray = _jsonHelper.getValueAsJSONArray(
+			JSONArray valueJSONArray = JSONUtil.getValueAsJSONArray(
 				"value", jsonObject);
 
 			for (int j = 0; j < valueJSONArray.length(); j++) {

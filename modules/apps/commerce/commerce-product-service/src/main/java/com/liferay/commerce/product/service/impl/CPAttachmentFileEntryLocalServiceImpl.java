@@ -435,7 +435,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			JSONArray valueAsJSONArray = _jsonHelper.getValueAsJSONArray(
+			JSONArray valueAsJSONArray = JSONUtil.getValueAsJSONArray(
 				"value", jsonObject);
 
 			String[] values = new String[valueAsJSONArray.length()];

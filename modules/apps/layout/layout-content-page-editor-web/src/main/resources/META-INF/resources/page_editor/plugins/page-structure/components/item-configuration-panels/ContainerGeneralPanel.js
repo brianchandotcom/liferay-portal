@@ -20,6 +20,7 @@ import {config} from '../../../../app/config/index';
 import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateItemConfig from '../../../../app/thunks/updateItemConfig';
+import isMapped from '../../../../app/utils/editable-value/isMapped';
 import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
 
 export default function ContainerGeneralPanel({item}) {
@@ -41,10 +42,21 @@ export default function ContainerGeneralPanel({item}) {
 	);
 
 	const handleValueSelect = (_, linkConfig) => {
-		const nextLinkConfig = {
-			...item.config?.link,
-			[languageId]: linkConfig,
-		};
+		let nextLinkConfig = linkConfig;
+
+		if (!isMapped(linkConfig)) {
+			if (!isMapped(item.config?.link)) {
+				nextLinkConfig = {
+					...(item.config?.link || {}),
+					[languageId]: linkConfig,
+				};
+			}
+			else {
+				nextLinkConfig = {
+					[languageId]: linkConfig,
+				};
+			}
+		}
 
 		dispatch(
 			updateItemConfig({

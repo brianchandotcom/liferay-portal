@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputDateTag extends BaseValidatorTagSupport {
 
+	public String getAutoComplete() {
+		return _autoComplete;
+	}
+
 	public String getCssClass() {
 		return _cssClass;
 	}
@@ -110,6 +114,10 @@ public class InputDateTag extends BaseValidatorTagSupport {
 
 	public boolean isShowDisableCheckbox() {
 		return _showDisableCheckbox;
+	}
+
+	public void setAutoComplete(String autoComplete) {
+		_autoComplete = autoComplete;
 	}
 
 	public void setAutoFocus(boolean autoFocus) {
@@ -196,6 +204,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_autoComplete = null;
 		_autoFocus = false;
 		_cssClass = null;
 		_dateTogglerCheckboxLabel = null;
@@ -225,6 +234,8 @@ public class InputDateTag extends BaseValidatorTagSupport {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-date:autoComplete", _autoComplete);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-date:autoFocus", String.valueOf(_autoFocus));
 		httpServletRequest.setAttribute(
@@ -272,6 +283,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 
 	private static final String _PAGE = "/html/taglib/ui/input_date/page.jsp";
 
+	private String _autoComplete;
 	private boolean _autoFocus;
 	private String _cssClass;
 	private String _dateTogglerCheckboxLabel;

@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String autoComplete = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-checkbox:autoComplete"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-checkbox:cssClass"));
 String param = (String)request.getAttribute("liferay-ui:input-checkbox:param");
 String id = (String)request.getAttribute("liferay-ui:input-checkbox:id");
@@ -31,4 +32,4 @@ if (Validator.isNull(id)) {
 }
 %>
 
-<input <%= value ? "checked" : "" %> class="<%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= HtmlUtil.escapeAttribute(id) %>" name="<%= namespace %><%= param %>" onClick="<%= onClick %>" type="checkbox" />
+<input <%= Validator.isNotNull(autoComplete) ? "autocomplete=\"" + autoComplete + "\"" : StringPool.BLANK %> <%= value ? "checked" : "" %> class="<%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= HtmlUtil.escapeAttribute(id) %>" name="<%= namespace %><%= param %>" onClick="<%= onClick %>" type="checkbox" />

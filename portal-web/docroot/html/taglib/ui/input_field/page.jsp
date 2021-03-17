@@ -72,6 +72,7 @@ if (hints != null) {
 			%>
 
 			<liferay-ui:input-checkbox
+				autoComplete="<%= autoComplete %>"
 				cssClass="<%= cssClass %>"
 				defaultValue="<%= value %>"
 				disabled="<%= disabled %>"
@@ -220,6 +221,7 @@ if (hints != null) {
 			<div class="form-group-autofit">
 				<div class="form-group-item">
 					<liferay-ui:input-date
+						autoComplete="<%= autoComplete %>"
 						autoFocus="<%= autoFocus %>"
 						cssClass="<%= cssClass %>"
 						dayParam='<%= fieldParam + "Day" %>'
@@ -240,6 +242,7 @@ if (hints != null) {
 						<liferay-ui:input-time
 							amPmParam='<%= fieldParam + "AmPm" %>'
 							amPmValue="<%= amPm %>"
+							autoComplete="<%= autoComplete %>"
 							cssClass="<%= cssClass %>"
 							disabled="<%= disabled %>"
 							hourParam='<%= fieldParam + "Hour" %>'

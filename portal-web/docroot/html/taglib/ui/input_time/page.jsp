@@ -21,6 +21,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_
 
 String amPmParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:amPmParam"));
 int amPmValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:amPmValue"));
+String autoComplete = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:autoComplete"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:cssClass"));
 String dateParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:dateParam"), "date");
 Date dateValue = (Date)GetterUtil.getObject(request.getAttribute("liferay-ui:input-time:dateValue"));
@@ -81,10 +82,10 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 <span class="lfr-input-time" id="<%= randomNamespace %>displayTime">
 	<c:choose>
 		<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-			<input class="form-control <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="time" value="<%= format.format(calendar.getTime()) %>" />
+			<input <%= Validator.isNotNull(autoComplete) ? "autocomplete=\"" + autoComplete + "\"" : StringPool.BLANK %> class="form-control <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="time" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<input class="form-control <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" placeholder="<%= placeholder %>" type="text" value="<%= format.format(calendar.getTime()) %>" />
+			<input <%= Validator.isNotNull(autoComplete) ? "autocomplete=\"" + autoComplete + "\"" : StringPool.BLANK %> class="form-control <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" placeholder="<%= placeholder %>" type="text" value="<%= format.format(calendar.getTime()) %>" />
 		</c:otherwise>
 	</c:choose>
 

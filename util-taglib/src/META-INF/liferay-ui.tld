@@ -766,6 +766,11 @@
 		<tag-class>com.liferay.taglib.ui.InputCheckBoxTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>autoComplete</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
@@ -815,6 +820,11 @@
 		<name>input-date</name>
 		<tag-class>com.liferay.taglib.ui.InputDateTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>autoComplete</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<description>Whether the date field gets focus by default. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>autoFocus</name>
@@ -1573,6 +1583,11 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
+		</attribute>
+		<attribute>
+			<name>autoComplete</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>A CSS class for styling the component.</description>

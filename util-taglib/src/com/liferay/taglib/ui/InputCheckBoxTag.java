@@ -33,6 +33,10 @@ public class InputCheckBoxTag extends IncludeTag {
 		return super.doEndTag();
 	}
 
+	public String getAutoComplete() {
+		return _autoComplete;
+	}
+
 	public String getCssClass() {
 		return _cssClass;
 	}
@@ -59,6 +63,10 @@ public class InputCheckBoxTag extends IncludeTag {
 
 	public boolean isDisabled() {
 		return _disabled;
+	}
+
+	public void setAutoComplete(String autoComplete) {
+		_autoComplete = autoComplete;
 	}
 
 	public void setCssClass(String cssClass) {
@@ -93,6 +101,7 @@ public class InputCheckBoxTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_autoComplete = null;
 		_cssClass = null;
 		_defaultValue = false;
 		_disabled = false;
@@ -109,6 +118,8 @@ public class InputCheckBoxTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-checkbox:autoComplete", _autoComplete);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-checkbox:cssClass", _cssClass);
 		httpServletRequest.setAttribute(
@@ -139,6 +150,7 @@ public class InputCheckBoxTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_checkbox/page.jsp";
 
+	private String _autoComplete;
 	private String _cssClass;
 	private boolean _defaultValue;
 	private boolean _disabled;

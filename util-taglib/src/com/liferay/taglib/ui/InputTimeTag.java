@@ -33,6 +33,10 @@ public class InputTimeTag extends IncludeTag {
 		return _amPmValue;
 	}
 
+	public String getAutoComplete() {
+		return _autoComplete;
+	}
+
 	public String getCssClass() {
 		return _cssClass;
 	}
@@ -85,6 +89,10 @@ public class InputTimeTag extends IncludeTag {
 		_amPmValue = amPmValue;
 	}
 
+	public void setAutoComplete(String autoComplete) {
+		_autoComplete = autoComplete;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -135,6 +143,7 @@ public class InputTimeTag extends IncludeTag {
 
 		_amPmParam = null;
 		_amPmValue = 0;
+		_autoComplete = null;
 		_cssClass = null;
 		_dateParam = null;
 		_dateValue = null;
@@ -159,6 +168,8 @@ public class InputTimeTag extends IncludeTag {
 			"liferay-ui:input-time:amPmParam", _amPmParam);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-time:amPmValue", String.valueOf(_amPmValue));
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-time:autoComplete", _autoComplete);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-time:cssClass", _cssClass);
 		httpServletRequest.setAttribute(
@@ -187,6 +198,7 @@ public class InputTimeTag extends IncludeTag {
 
 	private String _amPmParam;
 	private int _amPmValue;
+	private String _autoComplete;
 	private String _cssClass;
 	private String _dateParam;
 	private Date _dateValue;

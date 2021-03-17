@@ -57,9 +57,6 @@
 		}
 	},
 	"exclude": {
-		"*": [
-			"src/__tests__/**/*"
-		],
 		"@clayui/icon": true,
 		"commander": true,
 		"core-js": true,

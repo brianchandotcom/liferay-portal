@@ -692,6 +692,53 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 	}
 
+	@description = "This test covers LPS-128473. This test ensures that users can filter documents by Recent."
+	@priority = "3"
+	test FilterByRecent {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title 2",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title 3",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_3.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title 1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "DM Document Title 3",
+			dmDocumentTitleEdit = "DM Document Title 3 Edit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		ManagementBar.setFilterAndOrder(
+			filterBy = "Recent",
+			orderBy = "Modified Date");
+
+		var index = "1";
+
+		for (var dmDocumentTitle : list "DM Document Title 3 Edit,DM Document Title 1,DM Document Title 2") {
+			AssertTextEquals.assertPartialText(
+				index = "${index}",
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "${dmDocumentTitle}");
+
+			var index = ${index} + 1;
+		}
+	}
+
 	@priority = "5"
 	test ImportAudioAndLimitPermissionsToSubfolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

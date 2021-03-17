@@ -71,7 +71,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		Assert.assertNull(cookies.get(_REMEMBER_DEVICE_COOKIE));
+		Assert.assertNull(cookies.get(_COOKIE_NAME));
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		Assert.assertNull(cookies.get(_REMEMBER_DEVICE_COOKIE));
+		Assert.assertNull(cookies.get(_COOKIE_NAME));
 	}
 
 	@Test
@@ -114,7 +114,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		NewCookie newCookie1 = cookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie1 = cookies.get(_COOKIE_NAME);
 
 		Assert.assertNotNull(newCookie1);
 
@@ -149,13 +149,13 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				null, true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_REMEMBER_DEVICE_COOKIE, newCookie1.getValue()));
+				_COOKIE_NAME, newCookie1.getValue()));
 
 		Assert.assertNotNull(parseAuthorizationCodeString(response));
 
 		cookies = response.getCookies();
 
-		NewCookie newCookie2 = cookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie2 = cookies.get(_COOKIE_NAME);
 
 		Assert.assertNotEquals(newCookie1.getValue(), newCookie2.getValue());
 	}
@@ -182,7 +182,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		NewCookie newCookie1 = cookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie1 = cookies.get(_COOKIE_NAME);
 
 		Assert.assertNotNull(newCookie1);
 
@@ -219,13 +219,13 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_REMEMBER_DEVICE_COOKIE, newCookie1.getValue()));
+				_COOKIE_NAME, newCookie1.getValue()));
 
 		Assert.assertNotNull(parseAuthorizationCodeString(response));
 
 		cookies = response.getCookies();
 
-		NewCookie newCookie2 = cookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie2 = cookies.get(_COOKIE_NAME);
 
 		Assert.assertNotEquals(newCookie1.getValue(), newCookie2.getValue());
 	}
@@ -248,7 +248,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response1.getCookies();
 
-		NewCookie newCookie = newCookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie = newCookies.get(_COOKIE_NAME);
 
 		String token = getToken(
 			applicationClientId, null,
@@ -279,7 +279,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_REMEMBER_DEVICE_COOKIE, newCookie.getValue()));
+				_COOKIE_NAME, newCookie.getValue()));
 
 		getToken(
 			applicationClientId, null,
@@ -323,7 +323,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response1.getCookies();
 
-		NewCookie newCookie = cookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie = cookies.get(_COOKIE_NAME);
 
 		String token = getToken(
 			applicationClientId, null,
@@ -356,7 +356,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_REMEMBER_DEVICE_COOKIE, newCookie.getValue()));
+				_COOKIE_NAME, newCookie.getValue()));
 
 		getToken(
 			applicationClientId, null,
@@ -398,7 +398,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		NewCookie newCookie = cookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie = cookies.get(_COOKIE_NAME);
 
 		_revokeOAuth2AuthorizationByAccessToken(
 			getToken(
@@ -431,7 +431,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						),
 						true),
 					invocationBuilder -> invocationBuilder.cookie(
-						_REMEMBER_DEVICE_COOKIE, newCookie.getValue()))));
+						_COOKIE_NAME, newCookie.getValue()))));
 	}
 
 	@Test
@@ -458,7 +458,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		NewCookie newCookie = cookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie = cookies.get(_COOKIE_NAME);
 
 		_revokeOAuth2AuthorizationByAccessToken(
 			getToken(
@@ -494,7 +494,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						),
 						true),
 					invocationBuilder -> invocationBuilder.cookie(
-						_REMEMBER_DEVICE_COOKIE, newCookie.getValue()))));
+						_COOKIE_NAME, newCookie.getValue()))));
 	}
 
 	@Test
@@ -515,7 +515,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response1.getCookies();
 
-		NewCookie newCookie = cookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie = cookies.get(_COOKIE_NAME);
 
 		getToken(
 			applicationClientId, null,
@@ -544,7 +544,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_REMEMBER_DEVICE_COOKIE, newCookie.getValue()));
+				_COOKIE_NAME, newCookie.getValue()));
 
 		Assert.assertNotNull(
 			getToken(
@@ -577,7 +577,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						),
 						null, true),
 					invocationBuilder -> invocationBuilder.cookie(
-						_REMEMBER_DEVICE_COOKIE, newCookie.getValue()))));
+						_COOKIE_NAME, newCookie.getValue()))));
 	}
 
 	@Test
@@ -602,7 +602,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response1.getCookies();
 
-		NewCookie newCookie = cookies.get(_REMEMBER_DEVICE_COOKIE);
+		NewCookie newCookie = cookies.get(_COOKIE_NAME);
 
 		getToken(
 			applicationClientId, null,
@@ -633,7 +633,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_REMEMBER_DEVICE_COOKIE, newCookie.getValue()));
+				_COOKIE_NAME, newCookie.getValue()));
 
 		String authorizationCodeString = parseAuthorizationCodeString(
 			response2);
@@ -672,7 +672,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						),
 						true),
 					invocationBuilder -> invocationBuilder.cookie(
-						_REMEMBER_DEVICE_COOKIE, newCookie.getValue()))));
+						_COOKIE_NAME, newCookie.getValue()))));
 	}
 
 	public static class RememberApplicationClientTestPreparatorBundleActivator
@@ -716,7 +716,10 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		MultivaluedMap<String, String> multivaluedMap =
 			new MultivaluedHashMap<>();
 
-		multivaluedMap.add(_REMEMBER_DEVICE_PARAMETER, StringPool.TRUE);
+		multivaluedMap.add(
+			"_com_liferay_oauth2_provider_web_internal_portlet_" +
+				"OAuth2AuthorizePortlet_rememberDevice",
+			StringPool.TRUE);
 
 		return multivaluedMap;
 	}
@@ -729,12 +732,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				getOAuth2AuthorizationByAccessTokenContent(token));
 	}
 
-	private static final String _REMEMBER_DEVICE_COOKIE =
-		"OAUTH2_REMEMBER_DEVICE";
-
-	private static final String _REMEMBER_DEVICE_PARAMETER =
-		"_com_liferay_oauth2_provider_web_internal_portlet_" +
-			"OAuth2AuthorizePortlet_rememberDevice";
+	private static final String _COOKIE_NAME = "OAUTH2_REMEMBER_DEVICE";
 
 	@Inject
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -178,13 +179,27 @@ public abstract class Base${schemaName}ResourceImpl
 					vulcanBatchEngineImportTaskResource.putImportTask(${javaDataType}.class.getName(), callbackURL, object)
 				).build();
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>
+				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
+					<#assign generateGetPermissionCheckerMethods = true />
+
+					String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
+
+					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
+
+					PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId, getPermissionCheckerGroupId(${schemaVarName}Id));
+
+					return toPermissionPage(resourceId, resourceName, roleNames);
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				</#if>
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getAssetLibrary" + schemaName + "PermissionsPage")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
-				String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
+				String portletName = getPermissionCheckerPortletName(assetLibraryId);
 
-				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, resourceName, ${schemaVarName}Id, getPermissionCheckerGroupId(${schemaVarName}Id));
+				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, assetLibraryId, assetLibraryId);
 
-				return toPermissionPage(${schemaVarName}Id, resourceName, roleNames);
+				return toPermissionPage(assetLibraryId, portletName, roleNames);
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaName + "PermissionsPage")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
@@ -194,13 +209,27 @@ public abstract class Base${schemaName}ResourceImpl
 
 				return toPermissionPage(siteId, portletName, roleNames);
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Permission")>
+				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
+					<#assign generateGetPermissionCheckerMethods = true />
+
+					String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
+
+					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
+
+					PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId, getPermissionCheckerGroupId(${schemaVarName}Id));
+
+					resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), 0, resourceName, String.valueOf(resourceId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, resourceId, resourceName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				</#if>
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putAssetLibrary" + schemaName + "Permission")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
-				String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
+				String portletName = getPermissionCheckerPortletName(assetLibraryId);
 
-				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, resourceName, ${schemaVarName}Id, getPermissionCheckerGroupId(${schemaVarName}Id));
+				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, assetLibraryId, assetLibraryId);
 
-				resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), 0, resourceName, String.valueOf(${schemaVarName}Id), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${schemaVarName}Id, resourceName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
+				resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), assetLibraryId, portletName, String.valueOf(assetLibraryId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, assetLibraryId, portletName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putSite" + schemaName + "Permission")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
@@ -406,6 +435,10 @@ public abstract class Base${schemaName}ResourceImpl
 
 		protected String getPermissionCheckerPortletName(Object id) throws Exception {
 			throw new UnsupportedOperationException("This method needs to be implemented");
+		}
+
+		protected Long getPermissionCheckerResourceId(Object id) throws Exception {
+			return GetterUtil.getLong(id);
 		}
 
 		protected String getPermissionCheckerResourceName(Object id) throws Exception {

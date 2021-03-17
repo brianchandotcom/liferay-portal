@@ -163,17 +163,6 @@ export default function getAlloyEditorProcessor(
 					}
 				}),
 			];
-
-			_eventHandlers.push(
-				nativeEditor.on(
-					'saveSnapshot',
-					debounce(() => {
-						if (_callbacks.changeCallback) {
-							_callbacks.changeCallback(nativeEditor.getData());
-						}
-					}, 100)
-				)
-			);
 		},
 
 		/**

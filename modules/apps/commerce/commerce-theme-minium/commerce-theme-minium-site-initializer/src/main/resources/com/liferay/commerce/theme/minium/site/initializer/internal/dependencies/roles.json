@@ -12,6 +12,13 @@
 					"MANAGE_ORGANIZATIONS"
 				],
 				"resource": "com.liferay.commerce.account.model.CommerceAccount"
+			},
+			{
+				"actionIds": [
+					"VIEW_OPEN_COMMERCE_ORDERS",
+					"CHECKOUT_OPEN_COMMERCE_ORDERS"
+				],
+				"resource": "com.liferay.commerce.order"
 			}
 		],
 		"name": "Sales Agent",

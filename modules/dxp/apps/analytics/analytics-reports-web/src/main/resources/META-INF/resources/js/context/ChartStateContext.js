@@ -70,12 +70,6 @@ export const useAddDataSetItems = () => {
 	);
 };
 
-export const useChangeTimeSpanKey = () => {
-	const [, dispatch] = useContext(ChartStateContext);
-
-	return (payload) => dispatch({payload, type: CHANGE_TIME_SPAN_KEY});
-};
-
 export function useDateTitle() {
 	const [state] = useContext(ChartStateContext);
 

@@ -478,6 +478,12 @@ definition {
 		property osgi.app.includes = "account";
 		property test.name.skip.portal.instance = "MastersPageTemplatesExportImport#ExportImportMastersPageTemplateWithOrganizationRolePermissionSettingsOfWidgets";
 
+		task ("Restart the server") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
 		task ("Add a organization and organization site") {
 			JSONOrganization.addOrganization(
 				organizationName = "Organization Name 1",

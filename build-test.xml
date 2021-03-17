@@ -388,18 +388,26 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<var name="commerce.license.product.name" unset="true" />
 
-			<loadfile
-				property="commerce.license.content"
-				srcfile="${liferay.home}/osgi/modules/${commerce.license.file}"
-			/>
+			<if>
+				<equals arg1="${commerce.license.file}" arg2="commerce-binary-license-developer.li" />
+				<then>
+					<property name="commerce.license.product.name" value="Liferay Commerce Subscription Development" />
+				</then>
+				<else>
+					<loadfile
+						property="commerce.license.content"
+						srcfile="${liferay.home}/osgi/modules/${commerce.license.file}"
+					/>
 
-			<propertyregex
-				casesensitive="false"
-				input="${commerce.license.content}"
-				property="commerce.license.product.name"
-				regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
-				select="\1"
-			/>
+					<propertyregex
+						casesensitive="false"
+						input="${commerce.license.content}"
+						property="commerce.license.product.name"
+						regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
+						select="\1"
+					/>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

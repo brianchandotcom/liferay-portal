@@ -2503,7 +2503,8 @@ jdbc.default.password=${database.password}</echo>
 	<macrodef name="prepare-liferay-online-properties">
 		<sequential>
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
-include-and-override=portal-liferay-online.properties</echo>
+include-and-override=portal-liferay-online.properties
+include-and-override=portal-liferay-online-limit.properties</echo>
 		</sequential>
 	</macrodef>
 

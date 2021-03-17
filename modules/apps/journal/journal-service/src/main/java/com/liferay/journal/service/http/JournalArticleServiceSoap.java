@@ -2041,69 +2041,12 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	/**
-	 * Returns an ordered range of all the web content articles matching the
-	 * parameters, including a keywords parameter for matching with the
-	 * article's ID, title, description, and content, a DDM structure key
-	 * parameter, and a DDM template key parameter.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param companyId the primary key of the web content article's company
-	 * @param groupId the primary key of the group (optionally <code>0</code>)
-	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param keywords the keywords (space separated), which may occur in the
-	 web content article ID, title, description, or content
-	 (optionally <code>null</code>). If the keywords value is not
-	 <code>null</code>, the search uses the OR operator in connecting
-	 query criteria; otherwise it uses the AND operator.
-	 * @param version the web content article's version (optionally
-	 <code>null</code>)
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure, if the article is related to a DDM structure, or
-	 <code>null</code> otherwise
-	 * @param ddmTemplateKey the primary key of the web content article's DDM
-	 template
-	 * @param displayDateGT the date after which a matching web content
-	 article's display date must be after (optionally
-	 <code>null</code>)
-	 * @param displayDateLT the date before which a matching web content
-	 article's display date must be before (optionally
-	 <code>null</code>)
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
-	 * @param start the lower bound of the range of web content articles to
-	 return
-	 * @param end the upper bound of the range of web content articles to
-	 return (not inclusive)
-	 * @param orderByComparator the comparator to order the web content
-	 articles
-	 * @return the range of matching web content articles ordered by the
-	 comparator
-	 */
 	public static com.liferay.journal.model.JournalArticleSoap[] search(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String keywords, Double version, String ddmStructureKey,
 			String ddmTemplateKey, java.util.Date displayDateGT,
-			java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-			int start, int end,
+			java.util.Date displayDateLT, java.util.Date reviewDate, int status,
+			String locale, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.journal.model.JournalArticle> orderByComparator)
 		throws RemoteException {
@@ -2113,8 +2056,9 @@ public class JournalArticleServiceSoap {
 				returnValue = JournalArticleServiceUtil.search(
 					companyId, groupId, ListUtil.toList(folderIds), classNameId,
 					keywords, version, ddmStructureKey, ddmTemplateKey,
-					displayDateGT, displayDateLT, status, reviewDate, start,
-					end, orderByComparator);
+					displayDateGT, displayDateLT, reviewDate, status,
+					LocaleUtil.fromLanguageId(locale), start, end,
+					orderByComparator);
 
 			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(
 				returnValue);
@@ -2126,76 +2070,13 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	/**
-	 * Returns an ordered range of all the web content articles matching the
-	 * parameters, including keyword parameters for article ID, title,
-	 * description, and content, a DDM structure key parameter, a DDM template
-	 * key parameter, and an AND operator switch.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param companyId the primary key of the web content article's company
-	 * @param groupId the primary key of the group (optionally <code>0</code>)
-	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param articleId the article ID keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param version the web content article's version (optionally
-	 <code>null</code>)
-	 * @param title the title keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param description the description keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param content the content keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure, if the article is related to a DDM structure, or
-	 <code>null</code> otherwise
-	 * @param ddmTemplateKey the primary key of the web content article's DDM
-	 template
-	 * @param displayDateGT the date after which a matching web content
-	 article's display date must be after (optionally
-	 <code>null</code>)
-	 * @param displayDateLT the date before which a matching web content
-	 article's display date must be before (optionally
-	 <code>null</code>)
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
-	 * @param andOperator whether every field must match its value or keywords,
-	 or just one field must match. Company, group, folder IDs, class
-	 name ID, and status must all match their values.
-	 * @param start the lower bound of the range of web content articles to
-	 return
-	 * @param end the upper bound of the range of web content articles to
-	 return (not inclusive)
-	 * @param orderByComparator the comparator to order the web content
-	 articles
-	 * @return the range of matching web content articles ordered by the
-	 comparator
-	 */
 	public static com.liferay.journal.model.JournalArticleSoap[] search(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String articleId, Double version, String title, String description,
 			String content, String ddmStructureKey, String ddmTemplateKey,
 			java.util.Date displayDateGT, java.util.Date displayDateLT,
-			int status, java.util.Date reviewDate, boolean andOperator,
-			int start, int end,
+			java.util.Date reviewDate, int status, String locale,
+			boolean andOperator, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.journal.model.JournalArticle> orderByComparator)
 		throws RemoteException {
@@ -2206,7 +2087,8 @@ public class JournalArticleServiceSoap {
 					companyId, groupId, ListUtil.toList(folderIds), classNameId,
 					articleId, version, title, description, content,
 					ddmStructureKey, ddmTemplateKey, displayDateGT,
-					displayDateLT, status, reviewDate, andOperator, start, end,
+					displayDateLT, reviewDate, status,
+					LocaleUtil.fromLanguageId(locale), andOperator, start, end,
 					orderByComparator);
 
 			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(
@@ -2219,78 +2101,13 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	/**
-	 * Returns an ordered range of all the web content articles matching the
-	 * parameters, including keyword parameters for article ID, title,
-	 * description, and content, a DDM structure keys (plural) parameter, a DDM
-	 * template keys (plural) parameter, and an AND operator switch.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param companyId the primary key of the web content article's company
-	 * @param groupId the primary key of the group (optionally <code>0</code>)
-	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param articleId the article ID keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param version the web content article's version (optionally
-	 <code>null</code>)
-	 * @param title the title keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param description the description keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param content the content keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param ddmStructureKeys the primary keys of the web content article's
-	 DDM structures, if the article is related to a DDM structure, or
-	 <code>null</code> otherwise
-	 * @param ddmTemplateKeys the primary keys of the web content article's DDM
-	 templates (originally <code>null</code>). If the articles are
-	 related to a DDM structure, the template's structure must match
-	 it.
-	 * @param displayDateGT the date after which a matching web content
-	 article's display date must be after (optionally
-	 <code>null</code>)
-	 * @param displayDateLT the date before which a matching web content
-	 article's display date must be before (optionally
-	 <code>null</code>)
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
-	 * @param andOperator whether every field must match its value or keywords,
-	 or just one field must match.  Company, group, folder IDs, class
-	 name ID, and status must all match their values.
-	 * @param start the lower bound of the range of web content articles to
-	 return
-	 * @param end the upper bound of the range of web content articles to
-	 return (not inclusive)
-	 * @param orderByComparator the comparator to order the web content
-	 articles
-	 * @return the range of matching web content articles ordered by the
-	 comparator
-	 */
 	public static com.liferay.journal.model.JournalArticleSoap[] search(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String articleId, Double version, String title, String description,
 			String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
 			java.util.Date displayDateGT, java.util.Date displayDateLT,
-			int status, java.util.Date reviewDate, boolean andOperator,
-			int start, int end,
+			java.util.Date reviewDate, int status, String locale,
+			boolean andOperator, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.journal.model.JournalArticle> orderByComparator)
 		throws RemoteException {
@@ -2301,7 +2118,8 @@ public class JournalArticleServiceSoap {
 					companyId, groupId, ListUtil.toList(folderIds), classNameId,
 					articleId, version, title, description, content,
 					ddmStructureKeys, ddmTemplateKeys, displayDateGT,
-					displayDateLT, status, reviewDate, andOperator, start, end,
+					displayDateLT, reviewDate, status,
+					LocaleUtil.fromLanguageId(locale), andOperator, start, end,
 					orderByComparator);
 
 			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(
@@ -2314,58 +2132,20 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	/**
-	 * Returns the number of web content articles matching the parameters,
-	 * including a keywords parameter for matching with the article's ID, title,
-	 * description, and content, a DDM structure key parameter, and a DDM
-	 * template key parameter.
-	 *
-	 * @param companyId the primary key of the web content article's company
-	 * @param groupId the primary key of the group (optionally <code>0</code>)
-	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param keywords the keywords (space separated), which may occur in the
-	 web content article ID, title, description, or content
-	 (optionally <code>null</code>). If the keywords value is not
-	 <code>null</code>, the search uses the OR operator in connecting
-	 query criteria; otherwise it uses the AND operator.
-	 * @param version the web content article's version (optionally
-	 <code>null</code>)
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure, if the article is related to a DDM structure, or
-	 <code>null</code> otherwise
-	 * @param ddmTemplateKey the primary key of the web content article's DDM
-	 template
-	 * @param displayDateGT the date after which a matching web content
-	 article's display date must be after (optionally
-	 <code>null</code>)
-	 * @param displayDateLT the date before which a matching web content
-	 article's display date must be before (optionally
-	 <code>null</code>)
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
-	 * @return the number of matching web content articles
-	 */
 	public static int searchCount(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String keywords, Double version, String ddmStructureKey,
 			String ddmTemplateKey, java.util.Date displayDateGT,
-			java.util.Date displayDateLT, int status, java.util.Date reviewDate)
+			java.util.Date displayDateLT, java.util.Date reviewDate, int status,
+			String locale)
 		throws RemoteException {
 
 		try {
 			int returnValue = JournalArticleServiceUtil.searchCount(
 				companyId, groupId, ListUtil.toList(folderIds), classNameId,
 				keywords, version, ddmStructureKey, ddmTemplateKey,
-				displayDateGT, displayDateLT, status, reviewDate);
+				displayDateGT, displayDateLT, reviewDate, status,
+				LocaleUtil.fromLanguageId(locale));
 
 			return returnValue;
 		}
@@ -2376,58 +2156,13 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	/**
-	 * Returns the number of web content articles matching the parameters,
-	 * including keyword parameters for article ID, title, description, and
-	 * content, a DDM structure key parameter, a DDM template key parameter, and
-	 * an AND operator switch.
-	 *
-	 * @param companyId the primary key of the web content article's company
-	 * @param groupId the primary key of the group (optionally <code>0</code>)
-	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param articleId the article ID keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param version the web content article's version (optionally
-	 <code>null</code>)
-	 * @param title the title keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param description the description keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param content the content keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure, if the article is related to a DDM structure, or
-	 <code>null</code> otherwise
-	 * @param ddmTemplateKey the primary key of the web content article's DDM
-	 template
-	 * @param displayDateGT the date after which a matching web content
-	 article's display date must be after (optionally
-	 <code>null</code>)
-	 * @param displayDateLT the date before which a matching web content
-	 article's display date must be before (optionally
-	 <code>null</code>)
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
-	 * @param andOperator whether every field must match its value or keywords,
-	 or just one field must match. Group, folder IDs, class name ID,
-	 and status must all match their values.
-	 * @return the number of matching web content articles
-	 */
 	public static int searchCount(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String articleId, Double version, String title, String description,
 			String content, String ddmStructureKey, String ddmTemplateKey,
 			java.util.Date displayDateGT, java.util.Date displayDateLT,
-			int status, java.util.Date reviewDate, boolean andOperator)
+			java.util.Date reviewDate, int status, String locale,
+			boolean andOperator)
 		throws RemoteException {
 
 		try {
@@ -2435,7 +2170,8 @@ public class JournalArticleServiceSoap {
 				companyId, groupId, ListUtil.toList(folderIds), classNameId,
 				articleId, version, title, description, content,
 				ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
-				status, reviewDate, andOperator);
+				reviewDate, status, LocaleUtil.fromLanguageId(locale),
+				andOperator);
 
 			return returnValue;
 		}
@@ -2446,60 +2182,13 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	/**
-	 * Returns the number of web content articles matching the parameters,
-	 * including keyword parameters for article ID, title, description, and
-	 * content, a DDM structure keys (plural) parameter, a DDM template keys
-	 * (plural) parameter, and an AND operator switch.
-	 *
-	 * @param companyId the primary key of the web content article's company
-	 * @param groupId the primary key of the group (optionally <code>0</code>)
-	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param articleId the article ID keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param version the web content article's version (optionally
-	 <code>null</code>)
-	 * @param title the title keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param description the description keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param content the content keywords (space separated, optionally
-	 <code>null</code>)
-	 * @param ddmStructureKeys the primary keys of the web content article's
-	 DDM structures, if the article is related to a DDM structure, or
-	 <code>null</code> otherwise
-	 * @param ddmTemplateKeys the primary keys of the web content article's DDM
-	 templates (originally <code>null</code>). If the articles are
-	 related to a DDM structure, the template's structure must match
-	 it.
-	 * @param displayDateGT the date after which a matching web content
-	 article's display date must be after (optionally
-	 <code>null</code>)
-	 * @param displayDateLT the date before which a matching web content
-	 article's display date must be before (optionally
-	 <code>null</code>)
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
-	 * @param andOperator whether every field must match its value or keywords,
-	 or just one field must match.  Group, folder IDs, class name ID,
-	 and status must all match their values.
-	 * @return the number of matching web content articles
-	 */
 	public static int searchCount(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String articleId, Double version, String title, String description,
 			String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
 			java.util.Date displayDateGT, java.util.Date displayDateLT,
-			int status, java.util.Date reviewDate, boolean andOperator)
+			java.util.Date reviewDate, String locale, int status,
+			boolean andOperator)
 		throws RemoteException {
 
 		try {
@@ -2507,7 +2196,8 @@ public class JournalArticleServiceSoap {
 				companyId, groupId, ListUtil.toList(folderIds), classNameId,
 				articleId, version, title, description, content,
 				ddmStructureKeys, ddmTemplateKeys, displayDateGT, displayDateLT,
-				status, reviewDate, andOperator);
+				reviewDate, LocaleUtil.fromLanguageId(locale), status,
+				andOperator);
 
 			return returnValue;
 		}

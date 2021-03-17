@@ -31,6 +31,7 @@ function ViewEntryUpperToolbar({
 	history,
 	page,
 	showButtons,
+	showNavigationControls = true,
 	totalCount,
 }) {
 	const {
@@ -84,76 +85,82 @@ function ViewEntryUpperToolbar({
 
 	return (
 		<UpperToolbar className={appDeploymentType}>
-			<UpperToolbar.Item className="ml-2 text-left">
-				<label>
-					{totalCount > 0 &&
-						sub(
-							totalCount == 1
-								? Liferay.Language.get('x-of-x-entry')
-								: Liferay.Language.get('x-of-x-entries'),
-							[page, totalCount]
-						)}
-				</label>
-			</UpperToolbar.Item>
+			{showNavigationControls && (
+				<UpperToolbar.Item className="ml-2 text-left">
+					<label>
+						{totalCount > 0 &&
+							sub(
+								totalCount == 1
+									? Liferay.Language.get('x-of-x-entry')
+									: Liferay.Language.get('x-of-x-entries'),
+								[page, totalCount]
+							)}
+					</label>
+				</UpperToolbar.Item>
+			)}
 
 			<UpperToolbar.Item expand>{children}</UpperToolbar.Item>
 
-			<UpperToolbar.Group>
-				<ClayButtonGroup>
-					<ClayButtonWithIcon
-						data-tooltip-align="bottom"
-						data-tooltip-delay="200"
-						disabled={page === 1}
-						displayType="secondary"
-						onClick={onPrev}
-						small
-						symbol="angle-left"
-						title={Liferay.Language.get('previous-entry')}
-					/>
+			{showNavigationControls && (
+				<>
+					<UpperToolbar.Group>
+						<ClayButtonGroup>
+							<ClayButtonWithIcon
+								data-tooltip-align="bottom"
+								data-tooltip-delay="200"
+								disabled={page === 1}
+								displayType="secondary"
+								onClick={onPrev}
+								small
+								symbol="angle-left"
+								title={Liferay.Language.get('previous-entry')}
+							/>
 
-					<ClayButtonWithIcon
-						data-tooltip-align="bottom"
-						data-tooltip-delay="200"
-						disabled={page === totalCount}
-						displayType="secondary"
-						onClick={onNext}
-						small
-						symbol="angle-right"
-						title={Liferay.Language.get('next-entry')}
-					/>
-				</ClayButtonGroup>
-			</UpperToolbar.Group>
+							<ClayButtonWithIcon
+								data-tooltip-align="bottom"
+								data-tooltip-delay="200"
+								disabled={page === totalCount}
+								displayType="secondary"
+								onClick={onNext}
+								small
+								symbol="angle-right"
+								title={Liferay.Language.get('next-entry')}
+							/>
+						</ClayButtonGroup>
+					</UpperToolbar.Group>
 
-			{showFormView && (
-				<UpperToolbar.Group>
-					{permissions.delete && showDeleteButton && (
-						<ClayButtonWithIcon
-							className="mr-2"
-							data-tooltip-align="bottom"
-							data-tooltip-delay="200"
-							displayType="secondary"
-							onClick={onDelete}
-							small
-							symbol="trash"
-							title={Liferay.Language.get('delete')}
-						/>
+					{showFormView && (
+						<UpperToolbar.Group>
+							{permissions.delete && showDeleteButton && (
+								<ClayButtonWithIcon
+									className="mr-2"
+									data-tooltip-align="bottom"
+									data-tooltip-delay="200"
+									displayType="secondary"
+									onClick={onDelete}
+									small
+									symbol="trash"
+									title={Liferay.Language.get('delete')}
+								/>
+							)}
+
+							{permissions.update && showUpdateButton && (
+								<ClayButtonWithIcon
+									className="mr-2"
+									data-tooltip-align="bottom"
+									data-tooltip-delay="200"
+									displayType="secondary"
+									onClick={onEdit}
+									small
+									symbol="pencil"
+									title={Liferay.Language.get('edit')}
+								/>
+							)}
+
+							{additionalButtons}
+						</UpperToolbar.Group>
 					)}
-
-					{permissions.update && showUpdateButton && (
-						<ClayButtonWithIcon
-							className="mr-2"
-							data-tooltip-align="bottom"
-							data-tooltip-delay="200"
-							displayType="secondary"
-							onClick={onEdit}
-							small
-							symbol="pencil"
-							title={Liferay.Language.get('edit')}
-						/>
-					)}
-
-					{additionalButtons}
-				</UpperToolbar.Group>
+				</>
 			)}
 		</UpperToolbar>
 	);

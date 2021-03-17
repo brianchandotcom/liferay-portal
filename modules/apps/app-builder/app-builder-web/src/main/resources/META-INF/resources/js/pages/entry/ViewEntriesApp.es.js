@@ -67,6 +67,10 @@ export default function ({appTab, ...props}) {
 									component={ViewPage}
 									path="/entries/:entryIndex(\d+)"
 								/>
+								<Route
+									component={ViewPage}
+									path="/view-entry/:entryId(\d+)"
+								/>
 							</Switch>
 						</Router>
 					</PermissionTunnel>

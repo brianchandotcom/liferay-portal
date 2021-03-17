@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
@@ -85,7 +86,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			return getDefaultCPInstance(cpDefinitionId);
 		}
 
-		if (_jsonHelper.isEmpty(serializedDDMFormValues)) {
+		if (JSONUtil.isEmpty(serializedDDMFormValues)) {
 			return null;
 		}
 

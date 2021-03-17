@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Array;
 
@@ -176,6 +177,32 @@ public class JSONUtil {
 			if (Objects.equals(value, jsonArray.get(i))) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	public static boolean isArray(String json) {
+		if (Validator.isNull(json)) {
+			return false;
+		}
+
+		if (json.startsWith(StringPool.OPEN_BRACKET) &&
+			json.endsWith(StringPool.CLOSE_BRACKET)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(String json) {
+		if (Validator.isNull(json)) {
+			return true;
+		}
+
+		if (Objects.equals(json, "[]") || Objects.equals(json, "{}")) {
+			return true;
 		}
 
 		return false;

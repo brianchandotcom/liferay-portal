@@ -20,11 +20,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,7 +60,7 @@ public class JsonHelperImpl implements JsonHelper {
 
 	@Override
 	public JSONArray getJSONArray(String json) throws JSONException {
-		if (isArray(json)) {
+		if (JSONUtil.isArray(json)) {
 			return _jsonFactory.createJSONArray(json);
 		}
 
@@ -91,34 +90,6 @@ public class JsonHelperImpl implements JsonHelper {
 		valueJSONArray.put(valueString);
 
 		return valueJSONArray;
-	}
-
-	@Override
-	public boolean isArray(String json) {
-		if (Validator.isNull(json)) {
-			return false;
-		}
-
-		if (json.startsWith(StringPool.OPEN_BRACKET) &&
-			json.endsWith(StringPool.CLOSE_BRACKET)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isEmpty(String json) {
-		if (Validator.isNull(json)) {
-			return true;
-		}
-
-		if (Objects.equals(json, "[]") || Objects.equals(json, "{}")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

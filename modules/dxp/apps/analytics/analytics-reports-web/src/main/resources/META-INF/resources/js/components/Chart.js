@@ -31,7 +31,6 @@ import {
 import {
 	ChartDispatchContext,
 	ChartStateContext,
-	useAddDataSetItems,
 	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
 	useSetLoading,
@@ -161,8 +160,6 @@ export default function Chart({
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
 
-	const addDataSetItems = useAddDataSetItems();
-
 	const setLoading = useSetLoading();
 
 	const dateFormatters = useMemo(() => dateFormat(languageTag), [
@@ -213,17 +210,25 @@ export default function Chart({
 					}
 				}
 
-				addDataSetItems({
-					dataSetItems,
-					keys,
-					timeSpanComparator,
+				chartDispatch({
+					payload: {
+						dataSetItems,
+						keys,
+						timeSpanComparator,
+					},
+					type: 'ADD_DATA_SET_ITEMS',
+					validAnalyticsConnection,
 				});
 			});
 		}
 		else {
-			addDataSetItems({
-				keys,
-				timeSpanComparator,
+			chartDispatch({
+				payload: {
+					keys,
+					timeSpanComparator,
+				},
+				type: 'ADD_DATA_SET_ITEMS',
+				validAnalyticsConnection,
 			});
 		}
 
@@ -246,7 +251,7 @@ export default function Chart({
 	const handleTimeSpanChange = (event) => {
 		const {value} = event.target;
 
-		dispatch({payload: {key: value}, type: 'CHANGE_TIME_SPAN_KEY'});
+		chartDispatch({payload: {key: value}, type: 'CHANGE_TIME_SPAN_KEY'});
 	};
 
 	const legendFormatter =

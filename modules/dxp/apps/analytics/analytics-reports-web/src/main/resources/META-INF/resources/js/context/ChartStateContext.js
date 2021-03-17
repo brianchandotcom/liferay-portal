@@ -11,8 +11,6 @@
 
 import React, {createContext, useCallback, useContext, useReducer} from 'react';
 
-import ConnectionContext from './ConnectionContext';
-
 const ADD_DATA_SET_ITEMS = 'ADD_DATA_SET_ITEMS';
 const CHANGE_TIME_SPAN_KEY = 'CHANGE_TIME_SPAN_KEY';
 const NEXT_TIME_SPAN = 'NEXT_TIME_SPAN';
@@ -52,21 +50,6 @@ export const ChartStateContextProvider = ({
 				{children}
 			</ChartStateContext.Provider>
 		</ChartDispatchContext.Provider>
-	);
-};
-
-export const useAddDataSetItems = () => {
-	const [, dispatch] = useContext(ChartStateContext);
-	const {validAnalyticsConnection} = useContext(ConnectionContext);
-
-	return useCallback(
-		(payload) =>
-			dispatch({
-				payload,
-				type: ADD_DATA_SET_ITEMS,
-				validAnalyticsConnection,
-			}),
-		[dispatch, validAnalyticsConnection]
 	);
 };
 

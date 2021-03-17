@@ -54,6 +54,10 @@ definition {
 			Check(locator1 = "ServerAdministrationExternalServices#XUGGLER_ENABLED_CHECKBOX");
 		}
 
+		else if ("${enableXuggler}" == "false") {
+			Uncheck(locator1 = "ServerAdministrationExternalServices#XUGGLER_ENABLED_CHECKBOX");
+		}
+
 		PortletEntry.save();
 	}
 

@@ -81,7 +81,7 @@ if (notificationUnread) {
 					<c:if test="<%= notificationUnread %>">
 						<h4>
 					</c:if>
-						<a href="<%= markNotificationAsReadURL.toString() %>">
+						<a data-senna-off="true" href="<%= markNotificationAsReadURL.toString() %>">
 							<%= userNotificationFeedEntry.getBody() %>
 						</a>
 					<c:if test="<%= notificationUnread %>">

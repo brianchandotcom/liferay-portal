@@ -127,6 +127,7 @@ definition {
 		CommerceLicense.viewCommerceMissing();
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test DeployCommereceLicenseBinaryFile {
 		property commerce.enabled = "true";

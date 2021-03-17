@@ -90,6 +90,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
+import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
@@ -649,13 +650,6 @@ public class DataFactory {
 		int maxJournalArticleSize =
 			BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_SIZE;
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><dynamic-element name=\"content");
-		sb.append("\" type=\"text_area\" index-type=\"keyword\" index=\"0\">");
-		sb.append("<dynamic-content language-id=\"en_US\"><![CDATA[");
-
 		if (maxJournalArticleSize <= 0) {
 			maxJournalArticleSize = 1;
 		}
@@ -666,11 +660,7 @@ public class DataFactory {
 			chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
 		}
 
-		sb.append(new String(chars));
-
-		sb.append("]]></dynamic-content></dynamic-element></root>");
-
-		_journalArticleContent = sb.toString();
+		_journalArticleContent = new String(chars);
 	}
 
 	public void initUserNames() throws IOException {
@@ -1915,6 +1905,62 @@ public class DataFactory {
 		return ddmFieldAttributeModels;
 	}
 
+	public List<DDMFieldAttributeModel> newDDMFieldAttributeModels(
+		JournalArticleModel journalArticleModel,
+		List<DDMFieldModel> ddmFieldModels) {
+
+		DDMFieldModel ddmFieldModel = ddmFieldModels.get(0);
+
+		DDMFieldAttributeModel ddmFieldAttributeModel1 =
+			new DDMFieldAttributeModelImpl();
+
+		ddmFieldAttributeModel1.setFieldAttributeId(_counter.get());
+		ddmFieldAttributeModel1.setCompanyId(_companyId);
+		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
+		ddmFieldAttributeModel1.setStorageId(journalArticleModel.getId());
+		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
+		ddmFieldAttributeModel1.setLanguageId(StringPool.BLANK);
+		ddmFieldAttributeModel1.setSmallAttributeValue("en_US");
+
+		DDMFieldAttributeModel ddmFieldAttributeModel2 =
+			new DDMFieldAttributeModelImpl();
+
+		ddmFieldAttributeModel2.setFieldAttributeId(_counter.get());
+		ddmFieldAttributeModel2.setCompanyId(_companyId);
+		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
+		ddmFieldAttributeModel2.setStorageId(journalArticleModel.getId());
+		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
+		ddmFieldAttributeModel2.setLanguageId(StringPool.BLANK);
+		ddmFieldAttributeModel2.setSmallAttributeValue("en_US");
+
+		ddmFieldModel = ddmFieldModels.get(1);
+
+		DDMFieldAttributeModel ddmFieldAttributeModel3 =
+			new DDMFieldAttributeModelImpl();
+
+		ddmFieldAttributeModel3.setFieldAttributeId(_counter.get());
+		ddmFieldAttributeModel3.setCompanyId(_companyId);
+		ddmFieldAttributeModel3.setFieldId(ddmFieldModel.getFieldId());
+		ddmFieldAttributeModel3.setStorageId(journalArticleModel.getId());
+		ddmFieldAttributeModel3.setAttributeName(StringPool.BLANK);
+		ddmFieldAttributeModel3.setLanguageId("en_US");
+
+		if (_journalArticleContent.length() >
+				DDMFieldAttributeImpl.SMALL_ATTRIBUTE_VALUE_MAX_LENGTH) {
+
+			ddmFieldAttributeModel3.setLargeAttributeValue(
+				_journalArticleContent);
+		}
+		else {
+			ddmFieldAttributeModel3.setSmallAttributeValue(
+				_journalArticleContent);
+		}
+
+		return Arrays.asList(
+			ddmFieldAttributeModel1, ddmFieldAttributeModel2,
+			ddmFieldAttributeModel3);
+	}
+
 	public List<DDMFieldModel> newDDMFieldModels(
 		DLFileEntryModel dlFileEntryModel,
 		DDMStorageLinkModel ddmStorageLinkModel) {
@@ -1995,6 +2041,40 @@ public class DataFactory {
 		}
 
 		return ddmFieldModels;
+	}
+
+	public List<DDMFieldModel> newDDMFieldModels(
+		JournalArticleModel journalArticleModel) {
+
+		DDMFieldModel ddmFieldModel1 = new DDMFieldModelImpl();
+
+		ddmFieldModel1.setFieldId(_counter.get());
+		ddmFieldModel1.setCompanyId(_companyId);
+		ddmFieldModel1.setParentFieldId(0);
+		ddmFieldModel1.setStorageId(journalArticleModel.getId());
+		ddmFieldModel1.setStructureVersionId(
+			_defaultJournalDDMStructureVersionId);
+		ddmFieldModel1.setFieldName(StringPool.BLANK);
+		ddmFieldModel1.setFieldType(StringPool.BLANK);
+		ddmFieldModel1.setInstanceId(StringPool.BLANK);
+		ddmFieldModel1.setLocalizable(false);
+		ddmFieldModel1.setPriority(0);
+
+		DDMFieldModel ddmFieldModel2 = new DDMFieldModelImpl();
+
+		ddmFieldModel2.setFieldId(_counter.get());
+		ddmFieldModel2.setCompanyId(_companyId);
+		ddmFieldModel2.setParentFieldId(0);
+		ddmFieldModel2.setStorageId(journalArticleModel.getClassPK());
+		ddmFieldModel2.setStructureVersionId(
+			_defaultJournalDDMStructureVersionId);
+		ddmFieldModel2.setFieldName("content");
+		ddmFieldModel2.setFieldType("rich_text");
+		ddmFieldModel2.setInstanceId(StringUtil.randomId());
+		ddmFieldModel2.setLocalizable(true);
+		ddmFieldModel2.setPriority(1);
+
+		return Arrays.asList(ddmFieldModel1, ddmFieldModel2);
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
@@ -2757,7 +2837,6 @@ public class DataFactory {
 
 		journalArticleModel.setUrlTitle(sb.toString());
 
-		journalArticleModel.setContent(_journalArticleContent);
 		journalArticleModel.setDDMStructureKey(_JOURNAL_STRUCTURE_KEY);
 		journalArticleModel.setDDMTemplateKey(_JOURNAL_STRUCTURE_KEY);
 		journalArticleModel.setDefaultLanguageId("en_US");

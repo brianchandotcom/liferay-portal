@@ -180,6 +180,18 @@
 >
 	${dataFactory.toInsertSQL(_journalArticleModel)}
 
+	<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel) />
+
+	<#list ddmFieldModels as ddmFieldModel>
+		${dataFactory.toInsertSQL(ddmFieldModel)}
+	</#list>
+
+	<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_journalArticleModel, ddmFieldModels) />
+
+	<#list ddmFieldAttributeModels as ddmFieldAttributeModel>
+		${dataFactory.toInsertSQL(ddmFieldAttributeModel)}
+	</#list>
+
 	<#local journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(_journalArticleModel)>
 
 	${dataFactory.toInsertSQL(journalArticleLocalizationModel)}

@@ -16,8 +16,11 @@ package com.liferay.document.library.google.docs.internal.upgrade;
 
 import com.liferay.document.library.google.docs.internal.upgrade.v1_0_0.FileEntryTypeNameUpgradeProcess;
 import com.liferay.document.library.google.docs.internal.upgrade.v1_0_0.PortletPreferencesUpgradeProcess;
+import com.liferay.document.library.google.docs.internal.upgrade.v2_0_0.FileEntryTypeUpgradeProcess;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -40,10 +43,22 @@ public class GoogleDocsUpgrade implements UpgradeStepRegistrator {
 			"1.0.0", "1.0.1",
 			new PortletPreferencesUpgradeProcess(
 				_configurationProvider, _prefsProps));
+
+		registry.register(
+			"1.0.1", "2.0.0",
+			new FileEntryTypeUpgradeProcess(
+				_classNameLocalService, _ddmStructureLocalService,
+				_dlFileEntryTypeLocalService));
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

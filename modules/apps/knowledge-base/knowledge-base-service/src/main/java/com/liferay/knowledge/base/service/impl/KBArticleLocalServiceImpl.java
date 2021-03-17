@@ -974,7 +974,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			curKBArticle.setKbFolderId(kbFolderId);
 			curKBArticle.setPriority(priority);
 
-			kbArticlePersistence.update(curKBArticle);
+			kbArticleLocalService.updateKBArticle(curKBArticle);
 		}
 
 		if (kbArticle.getKbFolderId() != kbFolderId) {
@@ -990,7 +990,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				for (KBArticle kbArticleVersion : kbArticleVersions) {
 					kbArticleVersion.setKbFolderId(kbFolderId);
 
-					kbArticlePersistence.update(kbArticleVersion);
+					kbArticleLocalService.updateKBArticle(kbArticleVersion);
 				}
 			}
 		}

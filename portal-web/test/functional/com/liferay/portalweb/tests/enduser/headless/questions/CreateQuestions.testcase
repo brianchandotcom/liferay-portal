@@ -11,6 +11,14 @@ definition {
 		User.firstLoginPG();
 
 		Navigator.openURL();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Questions Page");
+
+		PageEditor.addWidget(portletName = "Questions");
+
+		PageEditor.clickPublish();
 	}
 
 	tearDown {
@@ -43,6 +51,14 @@ definition {
 			displayStyleOption = "Question",
 			menuItem = "Category",
 			nameField = "question AddQuestionCategory");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "question AddQuestionCategory");
+
+		AssertElementPresent(
+			key_emptyInfo = "This topic is empty.",
+			locator1 = "Questions#EMPTY_STATE_MESSAGE");
 	}
 
 }

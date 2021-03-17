@@ -26,9 +26,12 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,6 +42,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
@@ -151,33 +155,44 @@ public class TranslateDisplayContext {
 					"fields",
 					infoFields.stream(
 					).map(
-						infoField -> HashMapBuilder.<String, Object>put(
-							"html",
-							getBooleanValue(infoField, TextInfoFieldType.HTML)
-						).put(
-							"id", "infoField--" + infoField.getName() + "--"
-						).put(
-							"multiline",
-							getBooleanValue(
-								infoField, TextInfoFieldType.MULTILINE)
-						).put(
-							"label",
-							infoField.getLabel(_themeDisplay.getLocale())
-						).put(
-							"sourceContent",
-							getSourceStringValue(infoField, getSourceLocale())
-						).put(
-							"sourceContentDir",
-							LanguageUtil.get(getSourceLocale(), "lang.dir")
-						).put(
-							"targetContent",
-							getTargetStringValue(infoField, getTargetLocale())
-						).put(
-							"targetContentDir",
-							LanguageUtil.get(getTargetLocale(), "lang.dir")
-						).put(
-							"targetLanguageId", getTargetLanguageId()
-						).build()
+						infoField -> {
+							String infoFieldId =
+								"infoField--" + infoField.getName() + "--";
+
+							return HashMapBuilder.<String, Object>put(
+								"editorConfiguration",
+								_getInfoFieldEditorConfig(infoFieldId)
+							).put(
+								"html",
+								getBooleanValue(
+									infoField, TextInfoFieldType.HTML)
+							).put(
+								"id", infoFieldId
+							).put(
+								"label",
+								infoField.getLabel(_themeDisplay.getLocale())
+							).put(
+								"multiline",
+								getBooleanValue(
+									infoField, TextInfoFieldType.MULTILINE)
+							).put(
+								"sourceContent",
+								getSourceStringValue(
+									infoField, getSourceLocale())
+							).put(
+								"sourceContentDir",
+								LanguageUtil.get(getSourceLocale(), "lang.dir")
+							).put(
+								"targetContent",
+								getTargetStringValue(
+									infoField, getTargetLocale())
+							).put(
+								"targetContentDir",
+								LanguageUtil.get(getTargetLocale(), "lang.dir")
+							).put(
+								"targetLanguageId", getTargetLanguageId()
+							).build();
+						}
 					).collect(
 						Collectors.toList()
 					)
@@ -357,6 +372,23 @@ public class TranslateDisplayContext {
 			_themeDisplay.getScopeGroupId());
 
 		return _groupId;
+	}
+
+	private Map<String, Object> _getInfoFieldEditorConfig(String infoFieldId) {
+		Map<String, Object> inputEditorTaglibAttributes =
+			HashMapBuilder.<String, Object>put(
+				"liferay-ui:input-editor:allowBrowseDocuments", true
+			).put(
+				"liferay-ui:input-editor:name", infoFieldId
+			).build();
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				TranslationPortletKeys.TRANSLATION, "translateEditor",
+				"ckeditor", inputEditorTaglibAttributes, _themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest));
+
+		return editorConfiguration.getData();
 	}
 
 	private TranslationEntry _getTranslationEntry() {

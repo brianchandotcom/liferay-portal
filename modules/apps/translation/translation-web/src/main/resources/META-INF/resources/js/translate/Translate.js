@@ -72,7 +72,13 @@ function Translate({
 							</ClayLayout.Col>
 						</ClayLayout.Row>
 						{infoFieldSetEntry.fields.map(
-							({label, sourceContent, targetContent}) => (
+							({
+								editorConfiguration,
+								id,
+								label,
+								sourceContent,
+								targetContent,
+							}) => (
 								<ClayLayout.Row key={label}>
 									<ClayLayout.Col md={6}>
 										<label className="control-label">
@@ -93,7 +99,10 @@ function Translate({
 
 										<ClassicEditor
 											contents={targetContent}
-											data={targetContent}
+											editorConfig={
+												editorConfiguration.editorConfig
+											}
+											name={id}
 										/>
 									</ClayLayout.Col>
 								</ClayLayout.Row>

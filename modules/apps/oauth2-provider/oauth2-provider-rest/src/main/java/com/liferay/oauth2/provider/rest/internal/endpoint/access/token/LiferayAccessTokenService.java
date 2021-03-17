@@ -63,7 +63,7 @@ public class LiferayAccessTokenService extends AccessTokenService {
 
 			if (parameters.containsKey(
 					OAuth2ProviderRESTEndpointConstants.
-						COOKIE_REMEMBER_DEVICE)) {
+						COOKIE_NAME_REMEMBER_DEVICE)) {
 
 				LiferayOAuthDataProvider liferayOAuthDataProvider =
 					(LiferayOAuthDataProvider)getDataProvider();
@@ -72,7 +72,7 @@ public class LiferayAccessTokenService extends AccessTokenService {
 					clientAccessToken.getRefreshToken(),
 					parameters.get(
 						OAuth2ProviderRESTEndpointConstants.
-							COOKIE_REMEMBER_DEVICE));
+							COOKIE_NAME_REMEMBER_DEVICE));
 			}
 		}
 

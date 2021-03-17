@@ -18,6 +18,7 @@ import com.liferay.document.library.google.docs.internal.util.constants.GoogleDo
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -96,6 +97,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY);
 
 		ddmStructure.setNameMap(_updateNameMap(ddmStructure.getNameMap()));
+		ddmStructure.setType(DDMStructureConstants.TYPE_AUTO);
 
 		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
 

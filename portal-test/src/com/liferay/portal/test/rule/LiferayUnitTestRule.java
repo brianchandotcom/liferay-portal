@@ -17,6 +17,7 @@ package com.liferay.portal.test.rule;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.lang.reflect.Field;
 
@@ -44,13 +45,10 @@ public class LiferayUnitTestRule extends AggregateTestRule {
 
 		testRules.add(
 			new LazyInstanceTestRule(
-				"com.liferay.portal.test.rule.InitializeKernelUtilTestRule"));
+				InitializeKernelUtilTestRule.class.getName()));
 		testRules.add(
-			new LazyInstanceTestRule(
-				"com.liferay.portal.test.rule.AspectJNewEnvTestRule"));
-		testRules.add(
-			new LazyInstanceTestRule(
-				"com.liferay.portal.kernel.test.rule.NewEnvTestRule"));
+			new LazyInstanceTestRule(AspectJNewEnvTestRule.class.getName()));
+		testRules.add(new LazyInstanceTestRule(NewEnvTestRule.class.getName()));
 
 		return testRules.toArray(new TestRule[0]);
 	}

@@ -6,6 +6,8 @@ Export-Package:\
 	com.liferay.depot.configuration,\
 	com.liferay.depot.constants,\
 	com.liferay.depot.exception,\
+	com.liferay.depot.group.provider,\
 	com.liferay.depot.model,\
 	com.liferay.depot.service,\
-	com.liferay.depot.service.persistence
+	com.liferay.depot.service.persistence,\
+	com.liferay.depot.util

@@ -56,6 +56,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -150,11 +151,12 @@ public class TranslateDisplayContext {
 				continue;
 			}
 
+			Stream<InfoField> infoFieldsStream = infoFields.stream();
+
 			infoFieldSetEntries.add(
 				HashMapBuilder.<String, Object>put(
 					"fields",
-					infoFields.stream(
-					).map(
+					infoFieldsStream.map(
 						infoField -> {
 							String infoFieldId =
 								"infoField--" + infoField.getName() + "--";

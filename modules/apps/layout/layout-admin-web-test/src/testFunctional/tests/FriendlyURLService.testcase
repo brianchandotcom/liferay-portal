@@ -28,6 +28,24 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-125475. The default page will be displayed when accessing a page through a language without a specific layout."
+	@priority = "3"
+	test AccessWithSpecificDisabledLanguage {
+		property custom.properties = "locales.enabled=zh_CN,en_US,en_AU,fr_FR,de_DE,it_IT,ja_JP,pt_BR,es_ES${line.separator}locales=zh_CN,en_US,en_AU,fr_FR,de_DE,it_IT,ja_JP,pt_BR,es_ES,ru_RU,pl_PL,sv_SE,hu_HU,ar_SA,nb_NO,hr_HR,fi_FI,nl_NL,cs_CZ";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "English (United States),Japanese (Japan)",
+			defaultSiteLanguage = "English (United States)");
+
+		Navigator.openSpecificURL(url = "${portalURL}/en_AU/web/test-site-name/test-source-page");
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+	}
+
 	@description = "This ensures that a user is redirected to the updated friendlyURL when he accesses the former friendlyURL."
 	@priority = "5"
 	test RedirectToUpdatedFriendlyURL {

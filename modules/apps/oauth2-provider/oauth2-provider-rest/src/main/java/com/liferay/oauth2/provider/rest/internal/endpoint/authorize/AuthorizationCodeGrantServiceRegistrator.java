@@ -93,42 +93,46 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 			String rememberDeviceContent = _getRememberDeviceContent();
 
-			if (rememberDeviceContent != null) {
-				long userId = GetterUtil.getLong(userSubject.getId());
-
-				LiferayOAuthDataProvider liferayOAuthDataProvider =
-					_getLiferayOAuthDataProvider();
-
-				OAuth2Authorization oAuth2Authorization =
-					liferayOAuthDataProvider.
-						getOAuth2AuthorizationByRememberDeviceContent(
-							client, rememberDeviceContent, userId);
-
-				if ((oAuth2Authorization != null) &&
-					rememberDeviceContent.equals(
-						oAuth2Authorization.getRememberDeviceContent())) {
-
-					liferayOAuthDataProvider.doRevokeAuthorization(
-						oAuth2Authorization);
-
-					Cookie cookie = _getCookie();
-
-					CookieKeys.addCookie(
-						getMessageContext().getHttpServletRequest(),
-						getMessageContext().getHttpServletResponse(), cookie);
-
-					Map<String, String> extraProperties =
-						serverAuthorizationCodeGrant.getExtraProperties();
-
-					extraProperties.put(
-						OAuth2ProviderRESTEndpointConstants.
-							COOKIE_REMEMBER_DEVICE,
-						cookie.getValue());
-
-					serverAuthorizationCodeGrant.setExtraProperties(
-						extraProperties);
-				}
+			if (rememberDeviceContent == null) {
+				return serverAuthorizationCodeGrant;
 			}
+
+			long userId = GetterUtil.getLong(userSubject.getId());
+
+			LiferayOAuthDataProvider liferayOAuthDataProvider =
+				_getLiferayOAuthDataProvider();
+
+			OAuth2Authorization oAuth2Authorization =
+				liferayOAuthDataProvider.
+					getOAuth2AuthorizationByRememberDeviceContent(
+						client, rememberDeviceContent, userId);
+
+			if ((oAuth2Authorization == null) ||
+				!rememberDeviceContent.equals(
+					oAuth2Authorization.getRememberDeviceContent())) {
+
+				return serverAuthorizationCodeGrant;
+			}
+
+			liferayOAuthDataProvider.doRevokeAuthorization(
+				oAuth2Authorization);
+
+			Cookie cookie = _getCookie();
+
+			CookieKeys.addCookie(
+				getMessageContext().getHttpServletRequest(),
+				getMessageContext().getHttpServletResponse(), cookie);
+
+			Map<String, String> extraProperties =
+				serverAuthorizationCodeGrant.getExtraProperties();
+
+			extraProperties.put(
+				OAuth2ProviderRESTEndpointConstants.
+					COOKIE_REMEMBER_DEVICE,
+				cookie.getValue());
+
+			serverAuthorizationCodeGrant.setExtraProperties(
+				extraProperties);
 
 			return serverAuthorizationCodeGrant;
 		}

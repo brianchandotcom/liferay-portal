@@ -736,9 +736,9 @@ public class FragmentLayoutStructureItemImporter
 				).put(
 					"layoutId", String.valueOf(layout.getLayoutId())
 				).put(
-					"name", layout.getName(LocaleUtil.getMostRelevantLocale())
-				).put(
 					"privateLayout", layout.isPrivateLayout()
+				).put(
+					"title", layout.getName(LocaleUtil.getMostRelevantLocale())
 				).put(
 					"value", layout.getFriendlyURL()
 				));

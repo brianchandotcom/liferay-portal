@@ -27,7 +27,7 @@ export const LayoutSelector = ({mappedLayout, onLayoutSelect}) => {
 				itemSelectorURL={config.layoutItemSelectorURL}
 				label={Liferay.Language.get('page')}
 				onItemSelect={(layout) => onLayoutSelect(layout)}
-				selectedItemTitle={mappedLayout?.name || ''}
+				selectedItemTitle={mappedLayout?.title || ''}
 				showMappedItems={false}
 				transformValueCallback={itemSelectorValueToLayout}
 			/>
@@ -36,6 +36,6 @@ export const LayoutSelector = ({mappedLayout, onLayoutSelect}) => {
 };
 
 LayoutSelector.propTypes = {
-	mappedLayout: PropTypes.shape({name: PropTypes.string.isRequired}),
+	mappedLayout: PropTypes.shape({title: PropTypes.string.isRequired}),
 	onLayoutSelect: PropTypes.func.isRequired,
 };

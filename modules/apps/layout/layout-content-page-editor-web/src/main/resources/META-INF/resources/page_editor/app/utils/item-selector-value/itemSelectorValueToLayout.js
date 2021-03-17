@@ -15,13 +15,13 @@
 export default function itemSelectorValueToLayout({
 	groupId,
 	layoutId,
-	name,
 	privateLayout,
+	title,
 }) {
 	return {
 		groupId,
 		layoutId,
-		name,
 		privateLayout,
+		title,
 	};
 }

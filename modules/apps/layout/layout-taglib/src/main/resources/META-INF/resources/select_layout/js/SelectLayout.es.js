@@ -64,6 +64,7 @@ const SelectLayout = ({
 					layoutId: node.layoutId,
 					name: node.value,
 					privateLayout: node.privateLayout,
+					title: node.name,
 					value: node.url,
 				});
 			}

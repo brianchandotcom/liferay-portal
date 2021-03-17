@@ -52,6 +52,9 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 	public KBArticleImpl() {
 	}
 
+	/**
+	 * @see com.liferay.portal.model.impl.OrganizationBaseImpl#buildTreePath()
+	 */
 	@Override
 	public String buildTreePath() throws PortalException {
 		List<KBFolder> folders = new ArrayList<>();

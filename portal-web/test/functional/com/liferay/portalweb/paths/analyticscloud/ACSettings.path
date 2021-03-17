@@ -8,52 +8,10 @@
 <tr><td rowspan="1" colspan="3">ACSettings</td></tr>
 </thead>
 <tbody>
-<!-- LOGIN SCREEN FIELDS  -->
+<!-- SETTINGS TBD  -->
 <tr>
-    <td>EMAIL_LOGIN_FIELD</td>
-    <td>//input[contains(@id, '_com_liferay_login_web_portlet_LoginPortlet_login')]</td>
-    <td></td>
-</tr>
-<tr>
-	<td>LOGIN_BUTTON</td>
-	<td>//*[contains(@class, 'btn-primary')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PASSWORD_LOGIN_FIELD</td>
-	<td>//*[contains(@id, '_com_liferay_login_web_portlet_LoginPortlet_password')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WORKSPACE_NAME</td>
-	<td>//*[contains(@class,'workspace-name')]//span[contains(text(),'${key_WorkspaceName}')]</td>
-	<td></td>
-</tr>
-<!-- USER MENU OPTIONS  -->
-<tr>
-	<td>LOGOUT_WORKSPACE_OPTION</td>
-	<td>//*[contains(@href,'logout')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SWITCH_WORKSPACE_OPTION</td>
-	<td>//*[@href='/']</td>
-	<td></td>
-</tr>
-<!-- SIDEBAR FIELDS/OPTIONS  -->
-<tr>
-	<td>USER_MENU_SIDEBAR_OPTION</td>
-	<td>//div[contains(@class,'sticker-circle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXPAND_SIDEBAR_ARROW</td>
-	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@class,'exicon-icon-angle-right')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COLLAPSE_SIDEBAR_ARROW</td>
-	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@class,'exicon-icon-angle-left')]</td>
+	<td>SETTINGS_TBD</td>
+	<td>//TBD</td>
 	<td></td>
 </tr>
 </tbody>

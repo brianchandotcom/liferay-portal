@@ -218,6 +218,7 @@
 /portal/netty-all.jar
 /portal/ridl.jar
 /portal/odmg.jar
+/portal/org-gagravarr-tika.jar
 /portal/oro.jar
 /portal/pdfbox.jar
 /portal/poi-ooxml.jar

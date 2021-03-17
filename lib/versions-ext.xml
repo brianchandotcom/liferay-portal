@@ -2587,6 +2587,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/org-gagravarr-tika.jar</file-name>
+				<version>0.8.LIFERAY-PATCHED-1</version>
+				<project-name>Vorbis</project-name>
+				<project-url>http://xiph.org/vorbis</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/oro.jar</file-name>
 				<version>2.0.8</version>
 				<project-name>ORO</project-name>
@@ -3227,18 +3239,6 @@
 			</library>
 			<library>
 				<file-name>lib/portal/vorbis-java-core.jar</file-name>
-				<version>0.8</version>
-				<project-name>Vorbis</project-name>
-				<project-url>http://xiph.org/vorbis</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/vorbis-java-tika.jar</file-name>
 				<version>0.8</version>
 				<project-name>Vorbis</project-name>
 				<project-url>http://xiph.org/vorbis</project-url>

@@ -1660,7 +1660,8 @@ definition {
 
 		BlogsEntry.editContentViaCardViewPG(
 			entryContent = "Blogs Entry Content",
-			entryContentEdit = "Blogs Entry Content Edited");
+			entryContentEdit = "Blogs Entry Content Edited",
+			entryTitle = "Blogs Entry Title");
 
 		PortletEntry.publish();
 

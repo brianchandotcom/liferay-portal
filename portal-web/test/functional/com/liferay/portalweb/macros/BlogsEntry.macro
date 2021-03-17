@@ -259,7 +259,11 @@ definition {
 	macro editContentViaCardViewPG {
 		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click(
+			key_entryTitle = "${entryTitle}",
+			locator1 = "Blogs#WIDGET_VIEW_ENTRY_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
 
 		BlogsEntry.editContent(
 			entryContent = "${entryContent}",
@@ -1044,7 +1048,11 @@ definition {
 	macro viewPermissionsPG {
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Permissions");
+		Click(
+			key_entryTitle = "${entryTitle}",
+			locator1 = "Blogs#WIDGET_VIEW_ENTRY_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Permissions");
 
 		IFrame.selectPermissionsFrame();
 

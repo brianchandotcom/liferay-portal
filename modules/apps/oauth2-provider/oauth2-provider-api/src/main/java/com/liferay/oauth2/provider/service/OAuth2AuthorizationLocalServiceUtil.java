@@ -534,13 +534,6 @@ public class OAuth2AuthorizationLocalServiceUtil {
 			oAuth2ScopeGrantId, oAuth2AuthorizationIds);
 	}
 
-	public static OAuth2Authorization setRememberDeviceContent(
-		String refreshTokenContent, String rememberDeviceContent) {
-
-		return getService().setRememberDeviceContent(
-			refreshTokenContent, rememberDeviceContent);
-	}
-
 	/**
 	 * Updates the o auth2 authorization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -555,6 +548,13 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		OAuth2Authorization oAuth2Authorization) {
 
 		return getService().updateOAuth2Authorization(oAuth2Authorization);
+	}
+
+	public static OAuth2Authorization updateRememberDeviceContent(
+		String refreshTokenContent, String rememberDeviceContent) {
+
+		return getService().updateRememberDeviceContent(
+			refreshTokenContent, rememberDeviceContent);
 	}
 
 	public static OAuth2AuthorizationLocalService getService() {

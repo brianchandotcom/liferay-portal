@@ -392,9 +392,6 @@ public interface OAuth2AuthorizationLocalService
 	public void setOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId, long[] oAuth2AuthorizationIds);
 
-	public OAuth2Authorization setRememberDeviceContent(
-		String refreshTokenContent, String rememberDeviceContent);
-
 	/**
 	 * Updates the o auth2 authorization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -408,5 +405,8 @@ public interface OAuth2AuthorizationLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuth2Authorization updateOAuth2Authorization(
 		OAuth2Authorization oAuth2Authorization);
+
+	public OAuth2Authorization updateRememberDeviceContent(
+		String refreshTokenContent, String rememberDeviceContent);
 
 }

@@ -68,7 +68,7 @@ public class LiferayAccessTokenService extends AccessTokenService {
 				LiferayOAuthDataProvider liferayOAuthDataProvider =
 					(LiferayOAuthDataProvider)getDataProvider();
 
-				liferayOAuthDataProvider.setRememberDeviceContent(
+				liferayOAuthDataProvider.updateRememberDeviceContent(
 					clientAccessToken.getRefreshToken(),
 					parameters.get(
 						OAuth2ProviderRESTEndpointConstants.

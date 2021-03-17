@@ -624,15 +624,6 @@ public class OAuth2AuthorizationLocalServiceWrapper
 				oAuth2ScopeGrantId, oAuth2AuthorizationIds);
 	}
 
-	@Override
-	public com.liferay.oauth2.provider.model.OAuth2Authorization
-		setRememberDeviceContent(
-			String refreshTokenContent, String rememberDeviceContent) {
-
-		return _oAuth2AuthorizationLocalService.setRememberDeviceContent(
-			refreshTokenContent, rememberDeviceContent);
-	}
-
 	/**
 	 * Updates the o auth2 authorization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -651,6 +642,15 @@ public class OAuth2AuthorizationLocalServiceWrapper
 
 		return _oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 			oAuth2Authorization);
+	}
+
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2Authorization
+		updateRememberDeviceContent(
+			String refreshTokenContent, String rememberDeviceContent) {
+
+		return _oAuth2AuthorizationLocalService.updateRememberDeviceContent(
+			refreshTokenContent, rememberDeviceContent);
 	}
 
 	@Override

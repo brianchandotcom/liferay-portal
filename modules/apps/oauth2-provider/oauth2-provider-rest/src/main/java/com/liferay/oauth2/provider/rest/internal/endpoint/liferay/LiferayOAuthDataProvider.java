@@ -615,10 +615,10 @@ public class LiferayOAuthDataProvider
 		throw new UnsupportedOperationException();
 	}
 
-	public void setRememberDeviceContent(
+	public void updateRememberDeviceContent(
 		String refreshTokenContent, String rememberDeviceContent) {
 
-		_oAuth2AuthorizationLocalService.setRememberDeviceContent(
+		_oAuth2AuthorizationLocalService.updateRememberDeviceContent(
 			refreshTokenContent, rememberDeviceContent);
 	}
 

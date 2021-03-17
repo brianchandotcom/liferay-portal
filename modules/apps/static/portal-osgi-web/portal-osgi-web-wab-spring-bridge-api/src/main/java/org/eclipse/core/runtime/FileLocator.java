@@ -46,7 +46,7 @@ public class FileLocator {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), with no replacement
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	protected void deactivate() {

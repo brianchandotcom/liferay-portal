@@ -638,6 +638,15 @@ definition {
 			groupName = "Child SiteName",
 			parentGroupName = "Site Name");
 
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Site Name",
+			title = "WC 1");
+
+		JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page");
+
 		Staging.remoteStagingSetUp(
 			remotePort = "9080",
 			remoteStaging = "true",
@@ -651,9 +660,7 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -664,7 +671,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "Structure Name",
 			templateDescription = "Template Description",
-			templateFieldNames = "Text",
+			templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
 			templateName = "Template Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "child-siteName");
@@ -676,6 +683,28 @@ definition {
 			templateName = "Template Name",
 			webContentText = "Web Content Content",
 			webContentTitle = "Web Content Title");
+
+		WebContent.addWithStructureCP(
+				column = "1",
+				dmNavTab = "User Personal Folder",
+				navTab = "Web Content Images",
+				row = "1",
+				structureName = "Structure Name",
+				templateName = "Template Name",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Staging Test Page",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "Web Content Content",
+				webContentTitle = "Web Content Title",
+				webContentUpload = "Document_1.doc",
+				webContentWebContent = "WC 1");
 
 		PortletEntry.publish();
 

@@ -1993,13 +1993,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		int status, Date reviewDate, Locale locale, int start, int end,
+		Date reviewDate, int status, Locale locale, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return journalArticleLocalService.search(
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
-			status, reviewDate, locale, start, end, orderByComparator);
+			reviewDate, status, locale, start, end, orderByComparator);
 	}
 
 	@Override
@@ -2007,14 +2007,14 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String ddmStructureKey, String ddmTemplateKey,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		Date displayDateGT, Date displayDateLT, Date reviewDate, int status,
 		Locale locale, boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return journalArticleLocalService.search(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate, locale,
+			displayDateGT, displayDateLT, reviewDate, status, locale,
 			andOperator, start, end, orderByComparator);
 	}
 
@@ -2023,14 +2023,14 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		Date displayDateGT, Date displayDateLT, Date reviewDate, int status,
 		Locale locale, boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return journalArticleLocalService.search(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, status, reviewDate, locale,
+			displayDateGT, displayDateLT, reviewDate, status, locale,
 			andOperator, start, end, orderByComparator);
 	}
 
@@ -2039,12 +2039,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		int status, Date reviewDate, Locale locale) {
+		Date reviewDate, int status, Locale locale) {
 
 		return journalArticleLocalService.searchCount(
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
-			status, reviewDate, locale);
+			reviewDate, status, locale);
 	}
 
 	@Override
@@ -2052,13 +2052,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String ddmStructureKey, String ddmTemplateKey,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		Date displayDateGT, Date displayDateLT, Date reviewDate, int status,
 		Locale locale, boolean andOperator) {
 
 		return journalArticleLocalService.searchCount(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate, locale,
+			displayDateGT, displayDateLT, reviewDate, status, locale,
 			andOperator);
 	}
 
@@ -2067,13 +2067,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
-		Date displayDateGT, Date displayDateLT, Locale locale, int status,
-		Date reviewDate, boolean andOperator) {
+		Date displayDateGT, Date displayDateLT, Date reviewDate, Locale locale,
+		int status, boolean andOperator) {
 
 		return journalArticleLocalService.searchCount(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, status, reviewDate, locale,
+			displayDateGT, displayDateLT, reviewDate, status, locale,
 			andOperator);
 	}
 

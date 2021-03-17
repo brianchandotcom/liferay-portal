@@ -95,12 +95,10 @@ public class LayoutAnalyticsReportsInfoItem
 
 		return themeDisplayOptional.map(
 			themeDisplay -> {
-				String completeURL = _portal.getCurrentCompleteURL(
-					themeDisplay.getRequest());
-
 				try {
 					String canonicalURL = _portal.getCanonicalURL(
-						completeURL, themeDisplay, layout, false, false);
+						_getCompleteURL(themeDisplay), themeDisplay, layout,
+						false, false);
 
 					LayoutSEOLink layoutSEOLink =
 						_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
@@ -173,6 +171,17 @@ public class LayoutAnalyticsReportsInfoItem
 		}
 
 		return true;
+	}
+
+	private String _getCompleteURL(ThemeDisplay themeDisplay) {
+		try {
+			return _portal.getLayoutURL(themeDisplay);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return _portal.getCurrentCompleteURL(themeDisplay.getRequest());
+		}
 	}
 
 	private Optional<ThemeDisplay> _getThemeDisplayOptional() {

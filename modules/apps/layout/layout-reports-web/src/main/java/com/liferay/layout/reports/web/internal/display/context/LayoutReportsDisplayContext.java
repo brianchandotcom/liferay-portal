@@ -119,7 +119,7 @@ public class LayoutReportsDisplayContext {
 	private String _getCanonicalURL(String currentCompleteURL, Layout layout) {
 		try {
 			return _portal.getCanonicalURL(
-				currentCompleteURL, _themeDisplay, layout);
+				currentCompleteURL, _themeDisplay, layout, false, false);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -131,13 +131,10 @@ public class LayoutReportsDisplayContext {
 	private List<Map<String, Object>> _getCanonicalURLs(Layout layout) {
 		Locale defaultLocale = _getDefaultLocale(layout);
 
-		String currentCompleteURL = _portal.getCurrentCompleteURL(
-			_portal.getHttpServletRequest(_renderRequest));
-
-		String canonicalURL = _getCanonicalURL(currentCompleteURL, layout);
+		String canonicalURL = _getCanonicalURL(_getCompleteURL(), layout);
 
 		Map<Locale, String> alternateURLs = _getAlternateURLs(
-			currentCompleteURL, layout);
+			canonicalURL, layout);
 
 		return Optional.ofNullable(
 			_groupLocalService.fetchGroup(layout.getGroupId())
@@ -188,6 +185,18 @@ public class LayoutReportsDisplayContext {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	private String _getCompleteURL() {
+		try {
+			return _portal.getLayoutURL(_themeDisplay);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return _portal.getCurrentCompleteURL(
+				_portal.getHttpServletRequest(_renderRequest));
+		}
 	}
 
 	private String _getConfigurePageSpeedURL(PortletRequest portletRequest) {

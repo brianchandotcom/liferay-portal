@@ -33,6 +33,48 @@ definition {
 			portlet = "Documents and Media");
 	}
 
+	@description = "This test covers LPS-126751. It ensures that a user cannot create empty document types or metadata sets."
+	@priority = "4"
+	test AddCustomTypeWithoutFields {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "DM Document Type Name");
+
+		DDLDataDefinition.save();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "Error:At least one field must be added.");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
+
+		DDLDataDefinition.save();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "Error:At least one field must be added.");
+	}
+
 	@description = "This is a use case for LPS-74621."
 	@priority = "3"
 	test CommentDMDocumentOnLiveSite {

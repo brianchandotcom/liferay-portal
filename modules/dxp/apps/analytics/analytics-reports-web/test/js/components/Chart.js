@@ -10,118 +10,122 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render, wait} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import Chart from '../../../src/main/resources/META-INF/resources/js/components/Chart';
 import {ChartStateContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/ChartStateContext';
 import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
-const mockReadsDataProvider = jest.fn(() =>
-	Promise.resolve({
-		analyticsReportsHistoricalReads: {
-			histogram: [
-				{
-					key: '2020-01-27T00:00',
-					previousKey: '2020-01-20T00:00',
-					previousValue: 22.0,
-					value: 33.0,
-				},
-				{
-					key: '2020-01-28T00:00',
-					previousKey: '2020-01-21T00:00',
-					previousValue: 23.0,
-					value: 33.0,
-				},
-				{
-					key: '2020-01-29T00:00',
-					previousKey: '2020-01-22T00:00',
-					previousValue: 24.0,
-					value: 34.0,
-				},
-				{
-					key: '2020-01-30T00:00',
-					previousKey: '2020-01-23T00:00',
-					previousValue: 25.0,
-					value: 33.0,
-				},
-				{
-					key: '2020-01-31T00:00',
-					previousKey: '2020-01-24T00:00',
-					previousValue: 26.0,
-					value: 32.0,
-				},
-				{
-					key: '2020-02-01T00:00',
-					previousKey: '2020-01-25T00:00',
-					previousValue: 27.0,
-					value: 31.0,
-				},
-				{
-					key: '2020-02-02T00:00',
-					previousKey: '2020-01-26T00:00',
-					previousValue: 28.0,
-					value: 30.0,
-				},
-			],
-			previousValue: 175.0,
-			value: 226.0,
-		},
-	})
-);
+const mockEndpoints = {
+	analyticsReportsHistoricalReadsURL: 'analyticsReportsHistoricalReadsURL',
+	analyticsReportsHistoricalViewsURL: 'analyticsReportsHistoricalViewsURL',
+	analyticsReportsTotalReadsURL: 'analyticsReportsTotalReadsURL',
+	analyticsReportsTotalViewsURL: 'analyticsReportsTotalViewsURL',
+	analyticsReportsTrafficSourcesURL: 'analyticsReportsTrafficSourcesURL',
+};
 
-const mockViewsDataProvider = jest.fn(() =>
-	Promise.resolve({
-		analyticsReportsHistoricalViews: {
-			histogram: [
-				{
-					key: '2020-01-27T00:00',
-					previousKey: '2020-01-20T00:00',
-					previousValue: 22.0,
-					value: 32.0,
-				},
-				{
-					key: '2020-01-28T00:00',
-					previousKey: '2020-01-21T00:00',
-					previousValue: 23.0,
-					value: 33.0,
-				},
-				{
-					key: '2020-01-29T00:00',
-					previousKey: '2020-01-22T00:00',
-					previousValue: 24.0,
-					value: 34.0,
-				},
-				{
-					key: '2020-01-30T00:00',
-					previousKey: '2020-01-23T00:00',
-					previousValue: 25.0,
-					value: 33.0,
-				},
-				{
-					key: '2020-01-31T00:00',
-					previousKey: '2020-01-24T00:00',
-					previousValue: 26.0,
-					value: 32.0,
-				},
-				{
-					key: '2020-02-01T00:00',
-					previousKey: '2020-01-25T00:00',
-					previousValue: 27.0,
-					value: 31.0,
-				},
-				{
-					key: '2020-02-02T00:00',
-					previousKey: '2020-01-26T00:00',
-					previousValue: 28.0,
-					value: 30.0,
-				},
-			],
-			previousValue: 175.0,
-			value: 225.0,
-		},
-	})
-);
+const mockHistoricalReads = {
+	analyticsReportsHistoricalReads: {
+		histogram: [
+			{
+				key: '2020-01-27T00:00',
+				previousKey: '2020-01-20T00:00',
+				previousValue: 22.0,
+				value: 33.0,
+			},
+			{
+				key: '2020-01-28T00:00',
+				previousKey: '2020-01-21T00:00',
+				previousValue: 23.0,
+				value: 33.0,
+			},
+			{
+				key: '2020-01-29T00:00',
+				previousKey: '2020-01-22T00:00',
+				previousValue: 24.0,
+				value: 34.0,
+			},
+			{
+				key: '2020-01-30T00:00',
+				previousKey: '2020-01-23T00:00',
+				previousValue: 25.0,
+				value: 33.0,
+			},
+			{
+				key: '2020-01-31T00:00',
+				previousKey: '2020-01-24T00:00',
+				previousValue: 26.0,
+				value: 32.0,
+			},
+			{
+				key: '2020-02-01T00:00',
+				previousKey: '2020-01-25T00:00',
+				previousValue: 27.0,
+				value: 31.0,
+			},
+			{
+				key: '2020-02-02T00:00',
+				previousKey: '2020-01-26T00:00',
+				previousValue: 28.0,
+				value: 30.0,
+			},
+		],
+		previousValue: 175.0,
+		value: 226.0,
+	},
+};
+
+const mockHistoricalViews = {
+	analyticsReportsHistoricalViews: {
+		histogram: [
+			{
+				key: '2020-01-27T00:00',
+				previousKey: '2020-01-20T00:00',
+				previousValue: 22.0,
+				value: 32.0,
+			},
+			{
+				key: '2020-01-28T00:00',
+				previousKey: '2020-01-21T00:00',
+				previousValue: 23.0,
+				value: 33.0,
+			},
+			{
+				key: '2020-01-29T00:00',
+				previousKey: '2020-01-22T00:00',
+				previousValue: 24.0,
+				value: 34.0,
+			},
+			{
+				key: '2020-01-30T00:00',
+				previousKey: '2020-01-23T00:00',
+				previousValue: 25.0,
+				value: 33.0,
+			},
+			{
+				key: '2020-01-31T00:00',
+				previousKey: '2020-01-24T00:00',
+				previousValue: 26.0,
+				value: 32.0,
+			},
+			{
+				key: '2020-02-01T00:00',
+				previousKey: '2020-01-25T00:00',
+				previousValue: 27.0,
+				value: 31.0,
+			},
+			{
+				key: '2020-02-02T00:00',
+				previousKey: '2020-01-26T00:00',
+				previousValue: 28.0,
+				value: 30.0,
+			},
+		],
+		previousValue: 175.0,
+		value: 225.0,
+	},
+};
 
 const mockLanguageTag = 'en-US';
 
@@ -148,7 +152,7 @@ describe('Chart', () => {
 		cleanup();
 	});
 
-	it('displays total views and date range title for default time span', async () => {
+	it('displays total views and date range title for default time span', () => {
 		const testProps = {
 			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
@@ -156,23 +160,24 @@ describe('Chart', () => {
 		};
 
 		const {getByText} = render(
-			<StoreContextProvider value={{languageTag: mockLanguageTag}}>
+			<StoreContextProvider
+				value={{
+					endpoints: mockEndpoints,
+					historicalViews: mockHistoricalViews,
+					languageTag: mockLanguageTag,
+				}}
+			>
 				<ChartStateContextProvider
 					publishDate={testProps.pagePublishDate}
 					timeRange={testProps.timeRange}
 					timeSpanKey={testProps.timeSpanKey}
 				>
 					<Chart
-						dataProviders={[mockViewsDataProvider]}
 						publishDate={mockPublishDate}
 						timeSpanOptions={mockTimeSpanOptions}
 					/>
 				</ChartStateContextProvider>
 			</StoreContextProvider>
-		);
-
-		await wait(() =>
-			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1)
 		);
 
 		expect(getByText('225')).toBeInTheDocument();
@@ -180,7 +185,7 @@ describe('Chart', () => {
 		expect(getByText('Jan 27 - Feb 2, 2020')).toBeInTheDocument();
 	});
 
-	it('displays total views and reads and date range title for default time span', async () => {
+	it('displays total views and reads and date range title for default time span', () => {
 		const testProps = {
 			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
@@ -188,28 +193,26 @@ describe('Chart', () => {
 		};
 
 		const {getByText} = render(
-			<StoreContextProvider value={{languageTag: mockLanguageTag}}>
+			<StoreContextProvider
+				value={{
+					endpoints: mockEndpoints,
+					historicalReads: mockHistoricalReads,
+					historicalViews: mockHistoricalViews,
+					languageTag: mockLanguageTag,
+				}}
+			>
 				<ChartStateContextProvider
 					publishDate={testProps.pagePublishDate}
 					timeRange={testProps.timeRange}
 					timeSpanKey={testProps.timeSpanKey}
 				>
 					<Chart
-						dataProviders={[
-							mockViewsDataProvider,
-							mockReadsDataProvider,
-						]}
 						publishDate={mockPublishDate}
 						timeSpanOptions={mockTimeSpanOptions}
 					/>
 				</ChartStateContextProvider>
 			</StoreContextProvider>
 		);
-
-		await wait(() => {
-			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1);
-			expect(mockReadsDataProvider).toHaveBeenCalledTimes(1);
-		});
 
 		expect(getByText('225')).toBeInTheDocument();
 		expect(getByText('226')).toBeInTheDocument();

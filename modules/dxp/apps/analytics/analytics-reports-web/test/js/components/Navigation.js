@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, wait} from '@testing-library/react';
 import React from 'react';
 
 import Navigation from '../../../src/main/resources/META-INF/resources/js/components/Navigation';
@@ -73,7 +73,7 @@ describe('Navigation', () => {
 		cleanup();
 	});
 
-	it('displays an alert error message if there is no valid connection', () => {
+	it('displays an alert error message if there is no valid connection', async () => {
 		const testProps = {
 			author: {
 				authorId: '',
@@ -110,9 +110,7 @@ describe('Navigation', () => {
 						<Navigation
 							author={testProps.author}
 							canonicalURL={testProps.canonicalURL}
-							endpoints={mockEndpoints}
 							onSelectedLanguageClick={noop}
-							page={testProps.page}
 							pagePublishDate={testProps.pagePublishDate}
 							pageTitle={testProps.pageTitle}
 							timeSpanOptions={mockTimeSpanOptions}
@@ -123,10 +121,14 @@ describe('Navigation', () => {
 			</ConnectionContext.Provider>
 		);
 
-		expect(getByText('an-unexpected-error-occurred')).toBeInTheDocument();
+		await wait(() =>
+			expect(
+				getByText('an-unexpected-error-occurred')
+			).toBeInTheDocument()
+		);
 	});
 
-	it('displays an alert warning message if some data is temporarily unavailable', () => {
+	it('displays an alert warning message if some data is temporarily unavailable', async () => {
 		const testProps = {
 			author: {
 				authorId: '',
@@ -159,9 +161,7 @@ describe('Navigation', () => {
 					<Navigation
 						author={testProps.author}
 						canonicalURL={testProps.canonicalURL}
-						endpoints={mockEndpoints}
 						onSelectedLanguageClick={noop}
-						page={testProps.page}
 						pagePublishDate={testProps.pagePublishDate}
 						pageTitle={testProps.pageTitle}
 						timeSpanOptions={mockTimeSpanOptions}
@@ -171,12 +171,14 @@ describe('Navigation', () => {
 			</StoreContextProvider>
 		);
 
-		expect(
-			getByText('some-data-is-temporarily-unavailable')
-		).toBeInTheDocument();
+		await wait(() =>
+			expect(
+				getByText('some-data-is-temporarily-unavailable')
+			).toBeInTheDocument()
+		);
 	});
 
-	it('displays an alert info message if the content was published today', () => {
+	it('displays an alert info message if the content was published today', async () => {
 		const testProps = {
 			author: {
 				authorId: '',
@@ -209,9 +211,7 @@ describe('Navigation', () => {
 					<Navigation
 						author={testProps.author}
 						canonicalURL={testProps.canonicalURL}
-						endpoints={mockEndpoints}
 						onSelectedLanguageClick={noop}
-						page={testProps.page}
 						pagePublishDate={testProps.pagePublishDate}
 						pageTitle={testProps.pageTitle}
 						timeSpanOptions={mockTimeSpanOptions}
@@ -221,9 +221,11 @@ describe('Navigation', () => {
 			</StoreContextProvider>
 		);
 
-		expect(getByText('no-data-is-available-yet')).toBeInTheDocument();
-		expect(
-			getByText('content-has-just-been-published')
-		).toBeInTheDocument();
+		await wait(() => {
+			expect(getByText('no-data-is-available-yet')).toBeInTheDocument();
+			expect(
+				getByText('content-has-just-been-published')
+			).toBeInTheDocument();
+		});
 	});
 });

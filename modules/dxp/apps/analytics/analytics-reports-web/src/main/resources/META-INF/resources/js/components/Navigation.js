@@ -50,8 +50,6 @@ export default function Navigation({
 
 	const [currentPage, setCurrentPage] = useState({view: 'main'});
 
-	const [trafficSourceName, setTrafficSourceName] = useState('');
-
 	const chartState = useChartState();
 
 	const {timeSpanKey, timeSpanOffset} = chartState;
@@ -126,7 +124,10 @@ export default function Navigation({
 	}, []);
 
 	const handleTrafficSourceClick = (trafficSourceName) => {
-		setTrafficSourceName(trafficSourceName);
+		dispatch({
+			selectedTrafficSourceName: trafficSourceName,
+			type: 'SET_SELECTED_TRAFFIC_SOURCE_NAME',
+		});
 
 		const trafficSource = trafficSources.find((trafficSource) => {
 			return trafficSource.name === trafficSourceName;
@@ -137,25 +138,6 @@ export default function Navigation({
 			view: trafficSource.name,
 		});
 	};
-
-	const handleTrafficSourceName = (trafficSourceName) =>
-		setTrafficSourceName(trafficSourceName);
-
-	const handleTrafficShare = useCallback(() => {
-		const trafficSource = trafficSources.find((trafficSource) => {
-			return trafficSource.name === trafficSourceName;
-		});
-
-		return Promise.resolve(trafficSource?.share ?? '-');
-	}, [trafficSourceName, trafficSources]);
-
-	const handleTrafficVolume = useCallback(() => {
-		const trafficSource = trafficSources.find((trafficSource) => {
-			return trafficSource.name === trafficSourceName;
-		});
-
-		return Promise.resolve(trafficSource?.value ?? '-');
-	}, [trafficSourceName, trafficSources]);
 
 	return loading ? (
 		<ClayLoadingIndicator small />
@@ -204,10 +186,7 @@ export default function Navigation({
 				<Detail
 					currentPage={currentPage}
 					onCurrentPageChange={handleCurrentPage}
-					onTrafficSourceNameChange={handleTrafficSourceName}
 					timeSpanOptions={timeSpanOptions}
-					trafficShareDataProvider={handleTrafficShare}
-					trafficVolumeDataProvider={handleTrafficVolume}
 				/>
 			)}
 		</>

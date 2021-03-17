@@ -13,10 +13,12 @@ import React, {createContext, useReducer} from 'react';
 
 const ADD_WARNING = 'ADD_WARNING';
 const SET_METRICS = 'SET_METRICS';
+const SET_SELECTED_TRAFFIC_SOURCE_NAME = 'SET_SELECTED_TRAFFIC_SOURCE_NAME';
 
 const INITIAL_STATE = {
 	loading: true,
 	publishedToday: false,
+	selectedTrafficSourceName: '',
 	warning: false,
 };
 
@@ -49,6 +51,32 @@ function reducer(state = INITIAL_STATE, action) {
 				trafficSources: action.payload.trafficSources,
 			};
 			break;
+		case SET_SELECTED_TRAFFIC_SOURCE_NAME: {
+			const selectedTrafficSourceName = action.selectedTrafficSourceName;
+
+			if (selectedTrafficSourceName === '') {
+				nextState = {
+					...state,
+					selectedTrafficSourceName,
+					trafficShare: undefined,
+					trafficVolume: undefined,
+				};
+			}
+			else {
+				const trafficSource = state.trafficSources.find(
+					(trafficSource) =>
+						trafficSource.name === selectedTrafficSourceName
+				);
+
+				nextState = {
+					...state,
+					selectedTrafficSourceName,
+					trafficShare: trafficSource?.share ?? '-',
+					trafficVolume: trafficSource?.value ?? '-',
+				};
+			}
+			break;
+		}
 		default:
 			return state;
 	}

@@ -30,7 +30,8 @@ const INITIAL_STATE = {
 
 const FALLBACK_DATA_SET_ITEM = {histogram: [], value: null};
 
-const ChartStateContext = createContext(INITIAL_STATE);
+export const ChartDispatchContext = createContext(() => {});
+export const ChartStateContext = createContext(INITIAL_STATE);
 
 export const ChartStateContextProvider = ({
 	children,
@@ -38,7 +39,7 @@ export const ChartStateContextProvider = ({
 	timeRange,
 	timeSpanKey,
 }) => {
-	const stateAndDispatch = useReducer(reducer, {
+	const [state, dispatch] = useReducer(reducer, {
 		...INITIAL_STATE,
 		publishDate,
 		timeRange,
@@ -46,9 +47,11 @@ export const ChartStateContextProvider = ({
 	});
 
 	return (
-		<ChartStateContext.Provider value={stateAndDispatch}>
-			{children}
-		</ChartStateContext.Provider>
+		<ChartDispatchContext.Provider value={dispatch}>
+			<ChartStateContext.Provider value={state}>
+				{children}
+			</ChartStateContext.Provider>
+		</ChartDispatchContext.Provider>
 	);
 };
 

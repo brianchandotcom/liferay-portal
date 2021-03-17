@@ -61,7 +61,9 @@ function OrdersListView({
 						if (!items || !items.length) {
 							return (
 								<EmptyListView
-									caption="no-orders-were-found"
+									caption={Liferay.Language.get(
+										'no-orders-were-found'
+									)}
 									loading={loading}
 								/>
 							);

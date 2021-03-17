@@ -18,7 +18,7 @@ import React from 'react';
 function EmptyListView({caption, loading}) {
 	return (
 		<ClayDropDown.Caption>
-			{Liferay.Language.get(loading ? 'loading' : caption)}
+			{loading ? Liferay.Language.get('loading') : caption}
 		</ClayDropDown.Caption>
 	);
 }

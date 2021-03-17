@@ -128,9 +128,9 @@ function Price({
 						)}
 					</span>
 					<span className="price-label">
-						{Liferay.Language.get(
-							netPrice ? 'net-price' : 'gross-price'
-						)}
+						{netPrice
+							? Liferay.Language.get('net-price')
+							: Liferay.Language.get('gross-price')}
 					</span>
 					<span className="price-value price-value-final">
 						{finalPriceFormatted}

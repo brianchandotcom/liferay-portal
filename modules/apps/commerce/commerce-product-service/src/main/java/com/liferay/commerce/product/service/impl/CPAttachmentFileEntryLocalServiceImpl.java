@@ -22,7 +22,6 @@ import com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryExce
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServiceBaseImpl;
-import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -897,9 +896,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@ServiceReference(type = JSONFactory.class)
 	private JSONFactory _jsonFactory;
-
-	@ServiceReference(type = JsonHelper.class)
-	private JsonHelper _jsonHelper;
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;

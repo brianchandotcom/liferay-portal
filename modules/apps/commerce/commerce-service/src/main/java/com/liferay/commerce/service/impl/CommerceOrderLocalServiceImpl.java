@@ -52,7 +52,6 @@ import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceOrderPriceCalculationFactory;
-import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.search.facet.NegatableMultiValueFacet;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
@@ -2384,9 +2383,6 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	private ConfigurationProvider _configurationProvider;
-
-	@ServiceReference(type = JsonHelper.class)
-	private JsonHelper _jsonHelper;
 
 	@ServiceReference(type = UserLocalService.class)
 	private UserLocalService _userLocalService;

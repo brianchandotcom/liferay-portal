@@ -26,7 +26,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionRelLocalServiceBaseImpl;
-import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -996,8 +995,5 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 	@ServiceReference(type = JSONFactory.class)
 	private JSONFactory _jsonFactory;
-
-	@ServiceReference(type = JsonHelper.class)
-	private JsonHelper _jsonHelper;
 
 }

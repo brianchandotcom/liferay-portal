@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -142,14 +144,21 @@ public class LayoutDDMFormFieldTemplateContextContributor
 			boolean privateLayout = jsonObject.getBoolean("privateLayout");
 			long layoutId = jsonObject.getLong("layoutId");
 
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
 			Layout layout = _layoutLocalService.fetchLayout(
-				defaultGroupId, privateLayout, layoutId);
+				GetterUtil.getLong(
+					defaultGroupId, serviceContext.getScopeGroupId()),
+				privateLayout, layoutId);
 
 			if (layout == null) {
 				return StringPool.BLANK;
 			}
 
 			jsonObject.put(
+				"groupId", layout.getGroupId()
+			).put(
 				"id", layout.getUuid()
 			).put(
 				"name", layout.getName(defaultLocale)

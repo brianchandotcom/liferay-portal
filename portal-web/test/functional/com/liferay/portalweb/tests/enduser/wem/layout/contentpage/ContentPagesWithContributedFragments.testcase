@@ -154,7 +154,6 @@ definition {
 	@priority = "5"
 	test AddFragmentToIndividualTabOfTabsFragment {
 		property portal.acceptance = "true";
-		property test.assert.warning.exceptions = "true";
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -196,6 +195,8 @@ definition {
 			position = "5");
 
 		PageEditor.clickPublish();
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
 	@description = "This is a use case for LPS-86141. The fragment should be added to all cells of the Collection Display when add it to one cell."

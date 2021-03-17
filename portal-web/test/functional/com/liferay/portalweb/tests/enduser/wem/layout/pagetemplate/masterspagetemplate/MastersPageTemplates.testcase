@@ -40,8 +40,6 @@ definition {
 	@description = "This is for LPS-109298. Each tab of Tabs fragment is able to contain any elements in custom master."
 	@priority = "4"
 	test AddFragmentToIndividualTabOfTabsFragmentInMasterPageTemplate {
-		property test.assert.warning.exceptions = "true";
-
 		MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 		PageEditor.addFragment(
@@ -84,6 +82,8 @@ definition {
 		Button.click(button = "Publish Master");
 
 		Alert.viewSuccessMessage();
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
 	@description = "This is a test for LPS-102566, LPS-109594 and LPS-119634. Add a page based on custom master."
@@ -1586,8 +1586,6 @@ definition {
 	@description = "This is for LPS-109298. If move the Drop Zone of master to one tab, only can add elements to that tab in content page."
 	@priority = "4"
 	test MoveDropZoneToOneTabOfTabsFragment {
-		property test.assert.warning.exceptions = "true";
-
 		MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 		PageEditor.addFragment(
@@ -1646,6 +1644,8 @@ definition {
 		}
 
 		PageEditor.clickPublish();
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
 	@description = "This is a test for LPS-102566. The new elements can only be added into Drop Zone in a page based on custom master and the elements inherited from the custom master are changless."
@@ -1827,8 +1827,6 @@ definition {
 	@description = "This is for LPS-109298. Can not add elements to each tab of Tabs fragment that is inherited from custom master in content page."
 	@priority = "4"
 	test ViewNoDropzoneAtIndividualTabOfTabsFragmentInContentPage {
-		property test.assert.warning.exceptions = "true";
-
 		MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 		PageEditor.addFragment(
@@ -1870,6 +1868,8 @@ definition {
 		}
 
 		PageEditor.clickPublish();
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
 }

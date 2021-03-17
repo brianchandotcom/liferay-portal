@@ -296,38 +296,60 @@ definition {
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
-
 		Click(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS",
 			value1 = "${dmFolderName2}");
 
 		MenuItem.click(menuItem = "Move");
 
-		SelectFrame(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
 
-		var key_dmFolderName = "${dmFolderName1}";
+		if ("${moveSubfolder}" == "true") {
+			AssertClick(
+				key_breadcrumbName = "Home",
+				locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
+				value1 = "Home");
 
-		AssertClick(
-			locator1 = "DocumentsAndMediaSelectFolder#SELECT_BUTTON",
-			value1 = "Select");
+			AssertClick(
+				key_text = "Select This Folder",
+				locator1 = "Button#ANY",
+				value1 = "Select This Folder");
 
-		SelectFrame(locator1 = "relative=top");
+			SelectFrame(locator1 = "relative=top");
 
-		Alert.viewSuccessMessage();
+			if ("${moveFailure}" == "true") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#ERROR",
+					value1 = "Error:The folder you selected already has an entry with this name. Please select a different folder.");
+			}
+			else {
+				Alert.viewSuccessMessage();
+			}
+		}
+		else {
+			var key_dmFolderName = "${dmFolderName1}";
 
-		AssertElementNotPresent(
-			key_dmFolderName = "${dmFolderName2}",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
+			AssertClick(
+				locator1 = "DocumentsAndMediaSelectFolder#SELECT_BUTTON",
+				value1 = "Select");
 
-		Click(
-			key_dmFolderName = "${dmFolderName1}",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "${dmFolderName1}");
+			SelectFrame(locator1 = "relative=top");
 
-		AssertElementPresent(
-			key_dmFolderName = "${dmFolderName2}",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
+			Alert.viewSuccessMessage();
+
+			AssertElementNotPresent(
+				key_dmFolderName = "${dmFolderName2}",
+				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
+
+			Click(
+				key_dmFolderName = "${dmFolderName1}",
+				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+				value1 = "${dmFolderName1}");
+
+			AssertElementPresent(
+				key_dmFolderName = "${dmFolderName2}",
+				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
+		}
 	}
 
 	macro moveToRecycleBinCP {

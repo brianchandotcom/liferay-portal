@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
-import java.lang.reflect.Field;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,19 +59,15 @@ public class LiferayUnitTestRule extends AggregateTestRule {
 				LazyInstanceTestRule.class.getClassLoader();
 
 			try {
-				Class<?> clazz = classLoader.loadClass(_testRuleName);
-
-				Field field = clazz.getField("INSTANCE");
-
-				Object testRule = field.get(null);
-
 				return ReflectionTestUtil.invoke(
-					testRule, "apply",
+					ReflectionTestUtil.<Object>getFieldValue(
+						classLoader.loadClass(_testRuleName), "INSTANCE"),
+					"apply",
 					new Class<?>[] {Statement.class, Description.class},
 					statement, description);
 			}
-			catch (Exception exception) {
-				ReflectionUtil.throwException(exception);
+			catch (ClassNotFoundException classNotFoundException) {
+				ReflectionUtil.throwException(classNotFoundException);
 			}
 
 			return null;

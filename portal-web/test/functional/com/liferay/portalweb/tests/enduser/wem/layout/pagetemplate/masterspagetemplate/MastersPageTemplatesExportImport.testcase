@@ -476,6 +476,7 @@ definition {
 	@priority = "4"
 	test ExportImportMastersPageTemplateWithOrganizationRolePermissionSettingsOfWidgets {
 		property osgi.app.includes = "account";
+		property test.name.skip.portal.instance = "MastersPageTemplatesExportImport#ExportImportMastersPageTemplateWithOrganizationRolePermissionSettingsOfWidgets";
 
 		task ("Add a organization and organization site") {
 			JSONOrganization.addOrganization(

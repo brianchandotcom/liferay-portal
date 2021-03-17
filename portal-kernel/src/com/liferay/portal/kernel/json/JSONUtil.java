@@ -102,6 +102,26 @@ public class JSONUtil {
 		return Objects.equals(jsonObject1.toString(), jsonObject2.toString());
 	}
 
+	public static String getFirstElementStringValue(String jsonArrayString) {
+		if (!isArray(jsonArrayString)) {
+			throw new IllegalArgumentException(
+				String.format(
+					"%s is not a valid JSON array expression",
+					jsonArrayString));
+		}
+
+		int start = jsonArrayString.indexOf(StringPool.QUOTE);
+
+		if (start == -1) {
+			throw new IndexOutOfBoundsException(
+				String.format(
+					"%s JSON array has no first element", jsonArrayString));
+		}
+
+		return jsonArrayString.substring(
+			start + 1, jsonArrayString.indexOf(StringPool.QUOTE, start + 1));
+	}
+
 	public static Object getValue(Object object, String... paths) {
 		Object value = null;
 

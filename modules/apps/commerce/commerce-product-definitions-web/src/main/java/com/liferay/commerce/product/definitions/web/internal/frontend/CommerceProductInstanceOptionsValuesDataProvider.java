@@ -157,7 +157,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 				String optionValueKey = parameterValue;
 
 				if (JSONUtil.isArray(parameterValue)) {
-					optionValueKey = _jsonHelper.getFirstElementStringValue(
+					optionValueKey = JSONUtil.getFirstElementStringValue(
 						parameterValue);
 				}
 
@@ -322,7 +322,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 			if (JSONUtil.isArray(parameterValue) &&
 				!JSONUtil.isEmpty(parameterValue)) {
 
-				optionValueKey = _jsonHelper.getFirstElementStringValue(
+				optionValueKey = JSONUtil.getFirstElementStringValue(
 					parameterValue);
 			}
 

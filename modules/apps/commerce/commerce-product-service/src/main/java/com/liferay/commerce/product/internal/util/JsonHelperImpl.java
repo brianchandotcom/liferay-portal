@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.util.JsonHelper;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -35,27 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 public class JsonHelperImpl implements JsonHelper {
 
 	public JsonHelperImpl() {
-	}
-
-	@Override
-	public String getFirstElementStringValue(String jsonArrayString) {
-		if (!isArray(jsonArrayString)) {
-			throw new IllegalArgumentException(
-				String.format(
-					"%s is not a valid JSON array expression",
-					jsonArrayString));
-		}
-
-		int start = jsonArrayString.indexOf(StringPool.QUOTE);
-
-		if (start == -1) {
-			throw new IndexOutOfBoundsException(
-				String.format(
-					"%s JSON array has no first element", jsonArrayString));
-		}
-
-		return jsonArrayString.substring(
-			start + 1, jsonArrayString.indexOf(StringPool.QUOTE, start + 1));
 	}
 
 	@Override

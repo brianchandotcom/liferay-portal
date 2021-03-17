@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.video.internal.constants.DLVideoConstants;
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -104,6 +105,7 @@ public class DLVideoExternalShortcutDLFileEntryTypeHelper {
 		ddmStructure.setNameMap(_updateNameMap(ddmStructure.getNameMap()));
 		ddmStructure.setDescriptionMap(
 			_updateDescriptionMap(ddmStructure.getDescriptionMap()));
+		ddmStructure.setType(DDMStructureConstants.TYPE_AUTO);
 
 		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
 

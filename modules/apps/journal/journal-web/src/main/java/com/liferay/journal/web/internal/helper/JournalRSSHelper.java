@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -141,8 +142,9 @@ public class JournalRSSHelper {
 			companyId, groupId, folderIds,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, articleId, version,
 			title, description, content, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, orderByComparator);
+			displayDateGT, displayDateLT, reviewDate, status,
+			LocaleUtil.getMostRelevantLocale(), andOperator, start, end,
+			orderByComparator);
 	}
 
 	public List<SyndEnclosure> getDLEnclosures(String portalURL, String url) {

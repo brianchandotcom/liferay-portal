@@ -4444,7 +4444,7 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		int status, Date reviewDate, Locale locale, int start, int end,
+		Date reviewDate, int status, Locale locale, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		String[] articleIds = null;
@@ -4483,7 +4483,7 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String ddmStructureKey, String ddmTemplateKey,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		Date displayDateGT, Date displayDateLT, Date reviewDate, int status,
 		Locale locale, boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
@@ -4493,7 +4493,7 @@ public class JournalArticleLocalServiceImpl
 		return search(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, status, reviewDate, locale,
+			displayDateGT, displayDateLT, reviewDate, status, locale,
 			andOperator, start, end, orderByComparator);
 	}
 
@@ -4502,7 +4502,7 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		Date displayDateGT, Date displayDateLT, Date reviewDate, int status,
 		Locale locale, boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
@@ -4766,7 +4766,7 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		int status, Date reviewDate, Locale locale) {
+		Date reviewDate, int status, Locale locale) {
 
 		String[] articleIds = null;
 		String[] titles = null;
@@ -4804,7 +4804,7 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String ddmStructureKey, String ddmTemplateKey,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		Date displayDateGT, Date displayDateLT, Date reviewDate, int status,
 		Locale locale, boolean andOperator) {
 
 		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
@@ -4813,7 +4813,7 @@ public class JournalArticleLocalServiceImpl
 		return searchCount(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, status, reviewDate, locale,
+			displayDateGT, displayDateLT, reviewDate, status, locale,
 			andOperator);
 	}
 
@@ -4822,7 +4822,7 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+		Date displayDateGT, Date displayDateLT, Date reviewDate, int status,
 		Locale locale, boolean andOperator) {
 
 		String[] articleIds = _customSQL.keywords(articleId, false);

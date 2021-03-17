@@ -91,20 +91,17 @@ public class AccessControlImpl implements AccessControl {
 
 		Map<String, Object> settings = accessControlContext.getSettings();
 
-		AuthVerifierPipeline authVerifierPipeline =
-			AuthVerifierPipeline.PORTAL_AUTH_VERIFIER_PIPELINE;
-
 		AuthVerifierResult authVerifierResult = null;
 
-		if (settings.get(AuthVerifierPipeline.class.getName()) == null) {
-			authVerifierResult = authVerifierPipeline.verifyRequest(
-				accessControlContext);
+		if (!settings.containsKey(AuthVerifierPipeline.class.getName())) {
+			authVerifierResult =
+				AuthVerifierPipeline.PORTAL_AUTH_VERIFIER_PIPELINE.
+					verifyRequest(accessControlContext);
 		}
 		else {
-			authVerifierPipeline = (AuthVerifierPipeline)settings.get(
-				AuthVerifierPipeline.class.getName());
-
-			settings.remove(AuthVerifierPipeline.class.getName());
+			AuthVerifierPipeline authVerifierPipeline =
+				(AuthVerifierPipeline)settings.get(
+					AuthVerifierPipeline.class.getName());
 
 			authVerifierResult = authVerifierPipeline.verifyRequest(
 				accessControlContext);
@@ -112,11 +109,9 @@ public class AccessControlImpl implements AccessControl {
 			if (authVerifierResult.getState() !=
 					AuthVerifierResult.State.SUCCESS) {
 
-				authVerifierPipeline =
-					AuthVerifierPipeline.PORTAL_AUTH_VERIFIER_PIPELINE;
-
-				authVerifierResult = authVerifierPipeline.verifyRequest(
-					accessControlContext);
+				authVerifierResult =
+					AuthVerifierPipeline.PORTAL_AUTH_VERIFIER_PIPELINE.
+						verifyRequest(accessControlContext);
 			}
 		}
 

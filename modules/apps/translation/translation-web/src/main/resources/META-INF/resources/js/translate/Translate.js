@@ -34,86 +34,79 @@ const TranslationHeader = ({sourceLanguageIdTitle, targetLanguageIdTitle}) => (
 	</ClayLayout.Row>
 );
 
+const TranslationFieldSetEntries = ({infoFieldSetEntries}) =>
+	infoFieldSetEntries.map(({fields, label}) => (
+		<React.Fragment key={label}>
+			<ClayLayout.Row>
+				<ClayLayout.Col md={6}>
+					<div className="fieldset-title">{label}</div>
+				</ClayLayout.Col>
+				<ClayLayout.Col md={6}>
+					<div className="fieldset-title">{label}</div>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+			{fields.map(
+				({
+					editorConfiguration,
+					id,
+					label,
+					sourceContent,
+					targetContent,
+				}) => (
+					<ClayLayout.Row key={label}>
+						<ClayLayout.Col md={6}>
+							<label className="control-label">{label}</label>
 
+							<div
+								className="translation-editor-preview"
+								dir="<%= sourceContentDir %>"
+							>
+								{sourceContent}
+							</div>
+						</ClayLayout.Col>
+						<ClayLayout.Col md={6}>
+							<label className="control-label">{label}</label>
 
-function Translate({
+							<ClassicEditor
+								contents={targetContent}
+								editorConfig={editorConfiguration.editorConfig}
+								name={id}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+				)
+			)}
+		</React.Fragment>
+	));
+
+const Translate = ({
 	infoFieldSetEntries,
 	sourceLanguageIdTitle,
 	targetLanguageIdTitle,
-	translationPermission = true,
-}) {
-	const infoFieldSetEntry = infoFieldSetEntries[0];
-
-	return (
-		<ClayLayout.ContainerFluid view>
-			<div className="sheet translation-edit-body-form">
-				{!translationPermission ? (
-					<ClayAlert>
-						{Liferay.Language.get(
-							'you-do-not-have-permissions-to-translate-to-any-of-the-available-languages'
-						)}
-					</ClayAlert>
-				) : (
-					<>
-						<TranslationHeader
-							sourceLanguageIdTitle={sourceLanguageIdTitle}
-							targetLanguageIdTitle={targetLanguageIdTitle}
-						/>
-						<ClayLayout.Row>
-							<ClayLayout.Col md={6}>
-								<div className="fieldset-title">
-									{infoFieldSetEntry.label}
-								</div>
-							</ClayLayout.Col>
-							<ClayLayout.Col md={6}>
-								<div className="fieldset-title">
-									{infoFieldSetEntry.label}
-								</div>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
-						{infoFieldSetEntry.fields.map(
-							({
-								editorConfiguration,
-								id,
-								label,
-								sourceContent,
-								targetContent,
-							}) => (
-								<ClayLayout.Row key={label}>
-									<ClayLayout.Col md={6}>
-										<label className="control-label">
-											{label}
-										</label>
-
-										<div
-											className="translation-editor-preview"
-											dir="<%= sourceContentDir %>"
-										>
-											{sourceContent}
-										</div>
-									</ClayLayout.Col>
-									<ClayLayout.Col md={6}>
-										<label className="control-label">
-											{label}
-										</label>
-
-										<ClassicEditor
-											contents={targetContent}
-											editorConfig={
-												editorConfiguration.editorConfig
-											}
-											name={id}
-										/>
-									</ClayLayout.Col>
-								</ClayLayout.Row>
-							)
-						)}
-					</>
-				)}
-			</div>
-		</ClayLayout.ContainerFluid>
-	);
-}
+	translationPermission,
+}) => (
+	<ClayLayout.ContainerFluid view>
+		<div className="sheet translation-edit-body-form">
+			{!translationPermission ? (
+				<ClayAlert>
+					{Liferay.Language.get(
+						'you-do-not-have-permissions-to-translate-to-any-of-the-available-languages'
+					)}
+				</ClayAlert>
+			) : (
+				<>
+					<TranslationHeader
+						sourceLanguageIdTitle={sourceLanguageIdTitle}
+						targetLanguageIdTitle={targetLanguageIdTitle}
+					/>
+					<TranslationFieldSetEntries
+						infoFieldSetEntries={infoFieldSetEntries}
+					/>
+				</>
+			)}
+		</div>
+	</ClayLayout.ContainerFluid>
+);
 
 Translate.propTypes = {
 	infoFieldSetEntries: PropTypes.arrayOf(

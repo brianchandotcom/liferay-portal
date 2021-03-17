@@ -56,6 +56,7 @@ export default function LanguagesDropdown({
 						key={index}
 						onClick={() => {
 							onSelectedLanguageId(languageId);
+							setActive(false);
 						}}
 						symbolLeft={languageId.toLowerCase()}
 					>

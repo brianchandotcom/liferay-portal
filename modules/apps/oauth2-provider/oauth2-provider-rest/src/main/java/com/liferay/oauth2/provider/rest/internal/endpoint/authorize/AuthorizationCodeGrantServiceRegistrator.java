@@ -251,30 +251,32 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			Client client = liferayOAuthDataProvider.getClient(
 				oAuthRedirectionState.getClientId());
 
-			if (MapUtil.getBoolean(
+			if (!MapUtil.getBoolean(
 					client.getProperties(),
 					OAuth2ProviderRESTEndpointConstants.
-						PROPERTY_KEY_CLIENT_REMEMBER_DEVICE) &&
-				params.containsKey(
+						PROPERTY_KEY_CLIENT_REMEMBER_DEVICE) ||
+				!params.containsKey(
 					_OAUTH2_AUTHORIZE_PORTLET_REMEMBER_DEVICE_PARAMETER)) {
 
-				Cookie cookie = _getCookie();
-
-				MessageContext messageContext = getMessageContext();
-
-				CookieKeys.addCookie(
-					messageContext.getHttpServletRequest(),
-					messageContext.getHttpServletResponse(), cookie);
-
-				Map<String, String> extraProperties =
-					oAuthRedirectionState.getExtraProperties();
-
-				extraProperties.put(
-					OAuth2ProviderRESTEndpointConstants.COOKIE_REMEMBER_DEVICE,
-					cookie.getValue());
-
-				oAuthRedirectionState.setExtraProperties(extraProperties);
+				return oAuthRedirectionState;
 			}
+
+			Cookie cookie = _getCookie();
+
+			MessageContext messageContext = getMessageContext();
+
+			CookieKeys.addCookie(
+				messageContext.getHttpServletRequest(),
+				messageContext.getHttpServletResponse(), cookie);
+
+			Map<String, String> extraProperties =
+				oAuthRedirectionState.getExtraProperties();
+
+			extraProperties.put(
+				OAuth2ProviderRESTEndpointConstants.COOKIE_REMEMBER_DEVICE,
+				cookie.getValue());
+
+			oAuthRedirectionState.setExtraProperties(extraProperties);
 
 			return oAuthRedirectionState;
 		}

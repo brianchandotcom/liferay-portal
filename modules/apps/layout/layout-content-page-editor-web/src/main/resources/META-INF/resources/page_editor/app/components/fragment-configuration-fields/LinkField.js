@@ -180,7 +180,14 @@ export default function LinkField({field, onValueSelect, value}) {
 			{source === SOURCE_OPTIONS.fromLayout.value && (
 				<LayoutSelector
 					mappedLayout={nextValue?.layout}
-					onLayoutSelect={(layout) => handleChange({layout})}
+					onLayoutSelect={(layout) => {
+						if (layout && Object.keys(layout).length) {
+							handleChange({layout});
+						}
+						else {
+							handleChange({});
+						}
+					}}
 				/>
 			)}
 

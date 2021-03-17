@@ -27,6 +27,7 @@ const TranslationFieldEditor = ({
 	sourceContent,
 	sourceContentDir,
 	targetContent,
+	targetContentDir,
 }) => (
 	<ClayLayout.Row>
 		<ClayLayout.Col md={6}>
@@ -44,7 +45,10 @@ const TranslationFieldEditor = ({
 				<label className="control-label">{label}</label>
 				<ClassicEditor
 					contents={targetContent}
-					editorConfig={editorConfiguration.editorConfig}
+					editorConfig={{
+						...editorConfiguration.editorConfig,
+						contentsLangDirection: targetContentDir,
+					}}
 					name={id}
 				/>
 			</ClayForm.Group>

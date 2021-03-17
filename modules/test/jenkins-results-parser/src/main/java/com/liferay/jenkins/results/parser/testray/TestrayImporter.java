@@ -1062,12 +1062,14 @@ public class TestrayImporter {
 			JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
 
 			try {
+				String axisName = axisTestClassGroup.getAxisName();
+
 				testrayServer.writeCaseResult(
 					JenkinsResultsParserUtil.combine(
 						"TESTS-", jenkinsMaster.getName(), "_",
 						topLevelBuild.getJobName(), "_",
 						String.valueOf(topLevelBuild.getBuildNumber()), "_",
-						axisTestClassGroup.getAxisName(), ".xml"),
+						axisName.replace("/", "_"), ".xml"),
 					Dom4JUtil.format(rootElement));
 			}
 			catch (IOException ioException) {

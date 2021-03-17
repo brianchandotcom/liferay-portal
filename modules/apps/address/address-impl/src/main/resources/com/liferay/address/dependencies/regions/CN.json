@@ -1,172 +1,138 @@
 [
 	{
-		"active": true,
-		"name": "Anhui",
-		"regionCode": "CN-34"
+		"name": "Anhui Sheng",
+		"regionCode": "AH"
 	},
 	{
-		"active": true,
 		"name": "Aomen",
-		"regionCode": "CN-92"
+		"regionCode": "MO"
 	},
 	{
-		"active": true,
-		"name": "Beijing",
-		"regionCode": "CN-11"
+		"name": "Beijing Shi",
+		"regionCode": "BJ"
 	},
 	{
-		"active": true,
-		"name": "Chongqing",
-		"regionCode": "CN-50"
+		"name": "Chongqing Shi",
+		"regionCode": "CQ"
 	},
 	{
-		"active": true,
-		"name": "Fujian",
-		"regionCode": "CN-35"
+		"name": "Fujian Sheng",
+		"regionCode": "FJ"
 	},
 	{
-		"active": true,
-		"name": "Gansu",
-		"regionCode": "CN-62"
+		"name": "Gansu Sheng",
+		"regionCode": "GS"
 	},
 	{
-		"active": true,
-		"name": "Guangdong",
-		"regionCode": "CN-44"
+		"name": "Guangdong Sheng",
+		"regionCode": "GD"
 	},
 	{
-		"active": true,
-		"name": "Guangxi",
-		"regionCode": "CN-45"
+		"name": "Guangxi Zhuangzu Zizhiqu",
+		"regionCode": "GX"
 	},
 	{
-		"active": true,
-		"name": "Guizhou",
-		"regionCode": "CN-52"
+		"name": "Guizhou Sheng",
+		"regionCode": "GZ"
 	},
 	{
-		"active": true,
-		"name": "Hainan",
-		"regionCode": "CN-46"
+		"name": "Hainan Sheng",
+		"regionCode": "HI"
 	},
 	{
-		"active": true,
-		"name": "Hebei",
-		"regionCode": "CN-13"
+		"name": "Hebei Sheng",
+		"regionCode": "HE"
 	},
 	{
-		"active": true,
-		"name": "Heilongjiang",
-		"regionCode": "CN-23"
+		"name": "Heilongjiang Sheng",
+		"regionCode": "HL"
 	},
 	{
-		"active": true,
-		"name": "Henan",
-		"regionCode": "CN-41"
+		"name": "Henan Sheng",
+		"regionCode": "HA"
 	},
 	{
-		"active": true,
-		"name": "Hubei",
-		"regionCode": "CN-42"
+		"name": "Hubei Sheng",
+		"regionCode": "HB"
 	},
 	{
-		"active": true,
-		"name": "Hunan",
-		"regionCode": "CN-43"
+		"name": "Hunan Sheng",
+		"regionCode": "HN"
 	},
 	{
-		"active": true,
-		"name": "Jiangsu",
-		"regionCode": "CN-32"
+		"name": "Jiangsu Sheng",
+		"regionCode": "JS"
 	},
 	{
-		"active": true,
-		"name": "Jiangxi",
-		"regionCode": "CN-36"
+		"name": "Jiangxi Sheng",
+		"regionCode": "JX"
 	},
 	{
-		"active": true,
-		"name": "Jilin",
-		"regionCode": "CN-22"
+		"name": "Jilin Sheng",
+		"regionCode": "JL"
 	},
 	{
-		"active": true,
-		"name": "Liaoning",
-		"regionCode": "CN-21"
+		"name": "Liaoning Sheng",
+		"regionCode": "LN"
 	},
 	{
-		"active": true,
-		"name": "Nei Mongol",
-		"regionCode": "CN-15"
+		"name": "Nei Mongol Zizhiqu",
+		"regionCode": "NM"
 	},
 	{
-		"active": true,
-		"name": "Ningxia",
-		"regionCode": "CN-64"
+		"name": "Ningxia Sheng",
+		"regionCode": "NX"
 	},
 	{
-		"active": true,
-		"name": "Qinghai",
-		"regionCode": "CN-63"
+		"name": "Qinghai Sheng",
+		"regionCode": "QH"
 	},
 	{
-		"active": true,
-		"name": "Shaanxi",
-		"regionCode": "CN-61"
+		"name": "Shaanxi Sheng",
+		"regionCode": "SN"
 	},
 	{
-		"active": true,
-		"name": "Shandong",
-		"regionCode": "CN-37"
+		"name": "Shandong Sheng",
+		"regionCode": "SD"
 	},
 	{
-		"active": true,
-		"name": "Shanghai",
-		"regionCode": "CN-31"
+		"name": "Shanghai Sheng",
+		"regionCode": "SH"
 	},
 	{
-		"active": true,
-		"name": "Shanxi",
-		"regionCode": "CN-14"
+		"name": "Shanxi Sheng",
+		"regionCode": "SX"
 	},
 	{
-		"active": true,
-		"name": "Sichuan",
-		"regionCode": "CN-51"
+		"name": "Sichuan Sheng",
+		"regionCode": "SC"
 	},
 	{
-		"active": true,
-		"name": "Taiwan",
-		"regionCode": "CN-71"
+		"name": "Taiwan Sheng",
+		"regionCode": "TW"
 	},
 	{
-		"active": true,
-		"name": "Tianjin",
-		"regionCode": "CN-12"
+		"name": "Tianjin Shi",
+		"regionCode": "TJ"
 	},
 	{
-		"active": true,
 		"name": "Xianggang",
-		"regionCode": "CN-91"
+		"regionCode": "HK"
 	},
 	{
-		"active": true,
-		"name": "Xinjiang",
-		"regionCode": "CN-65"
+		"name": "Xinjiang Uygur Zizhiqu",
+		"regionCode": "XJ"
 	},
 	{
-		"active": true,
-		"name": "Xizang",
-		"regionCode": "CN-54"
+		"name": "Xizang Zizhiqu",
+		"regionCode": "XZ"
 	},
 	{
-		"active": true,
-		"name": "Yunnan",
-		"regionCode": "CN-53"
+		"name": "Yunnan Sheng",
+		"regionCode": "YN"
 	},
 	{
-		"active": true,
-		"name": "Zhejiang",
-		"regionCode": "CN-33"
+		"name": "Zhejiang Sheng",
+		"regionCode": "ZJ"
 	}
 ]

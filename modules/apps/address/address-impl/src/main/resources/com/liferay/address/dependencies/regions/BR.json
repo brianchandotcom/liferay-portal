@@ -1,0 +1,110 @@
+[
+	{
+		"name": "Acre",
+		"regionCode": "AC"
+	},
+	{
+		"name": "Alagoas",
+		"regionCode": "AL"
+	},
+	{
+		"name": "Amapá",
+		"regionCode": "AP"
+	},
+	{
+		"name": "Amazonas",
+		"regionCode": "AM"
+	},
+	{
+		"name": "Bahia",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Ceará",
+		"regionCode": "CE"
+	},
+	{
+		"name": "Distrito Federal",
+		"regionCode": "DF"
+	},
+	{
+		"name": "Espírito Santo",
+		"regionCode": "ES"
+	},
+	{
+		"name": "Goiás",
+		"regionCode": "GO"
+	},
+	{
+		"name": "Maranhão",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Mato Grosso",
+		"regionCode": "MT"
+	},
+	{
+		"name": "Mato Grosso do Sul",
+		"regionCode": "MS"
+	},
+	{
+		"name": "Minas Gerais",
+		"regionCode": "MG"
+	},
+	{
+		"name": "Pará",
+		"regionCode": "PA"
+	},
+	{
+		"name": "Paraíba",
+		"regionCode": "PB"
+	},
+	{
+		"name": "Paraná",
+		"regionCode": "PR"
+	},
+	{
+		"name": "Pernambuco",
+		"regionCode": "PE"
+	},
+	{
+		"name": "Piauí",
+		"regionCode": "PI"
+	},
+	{
+		"name": "Rio de Janeiro",
+		"regionCode": "RJ"
+	},
+	{
+		"name": "Rio Grande do Norte",
+		"regionCode": "RN"
+	},
+	{
+		"name": "Rio Grande do Sul",
+		"regionCode": "RS"
+	},
+	{
+		"name": "Rondônia",
+		"regionCode": "RO"
+	},
+	{
+		"name": "Roraima",
+		"regionCode": "RR"
+	},
+	{
+		"name": "Santa Catarina",
+		"regionCode": "SC"
+	},
+	{
+		"name": "São Paulo",
+		"regionCode": "SP"
+	},
+	{
+		"name": "Sergipe",
+		"regionCode": "SE"
+	},
+	{
+		"name": "Tocantins",
+		"regionCode": "TO"
+	}
+]

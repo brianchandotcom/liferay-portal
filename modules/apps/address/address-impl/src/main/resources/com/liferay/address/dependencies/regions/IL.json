@@ -1,0 +1,26 @@
+[
+	{
+		"name": "HaDarom",
+		"regionCode": "D"
+	},
+	{
+		"name": "HaMerkaz",
+		"regionCode": "M"
+	},
+	{
+		"name": "HaTsafon",
+		"regionCode": "Z"
+	},
+	{
+		"name": "H̱efa",
+		"regionCode": "HA"
+	},
+	{
+		"name": "Tel-Aviv",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Yerushalayim",
+		"regionCode": "JM"
+	}
+]

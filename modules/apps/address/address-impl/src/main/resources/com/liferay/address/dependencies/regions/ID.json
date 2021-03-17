@@ -1,0 +1,166 @@
+[
+	{
+		"name": "Aceh",
+		"regionCode": "AC"
+	},
+	{
+		"name": "Bali",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Banten",
+		"regionCode": "BT"
+	},
+	{
+		"name": "Bengkulu",
+		"regionCode": "BE"
+	},
+	{
+		"name": "Gorontalo",
+		"regionCode": "GO"
+	},
+	{
+		"name": "Jakarta Raya",
+		"regionCode": "JK"
+	},
+	{
+		"name": "Jambi",
+		"regionCode": "JA"
+	},
+	{
+		"name": "Jawa",
+		"regionCode": "JW"
+	},
+	{
+		"name": "Jawa Barat",
+		"regionCode": "JB"
+	},
+	{
+		"name": "Jawa Tengah",
+		"regionCode": "JT"
+	},
+	{
+		"name": "Jawa Timur",
+		"regionCode": "JI"
+	},
+	{
+		"name": "Kalimantan Barat",
+		"regionCode": "KB"
+	},
+	{
+		"name": "Kalimantan Selatan",
+		"regionCode": "KS"
+	},
+	{
+		"name": "Kalimantan Tengah",
+		"regionCode": "KT"
+	},
+	{
+		"name": "Kalimantan Timur",
+		"regionCode": "KI"
+	},
+	{
+		"name": "Kalimantan Utara",
+		"regionCode": "KU"
+	},
+	{
+		"name": "Kalinantan",
+		"regionCode": "KA"
+	},
+	{
+		"name": "Kepulauan Bangka Belitung",
+		"regionCode": "BB"
+	},
+	{
+		"name": "Kepulauan Riau",
+		"regionCode": "KR"
+	},
+	{
+		"name": "Lampung",
+		"regionCode": "LA"
+	},
+	{
+		"name": "Maluku",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Maluku",
+		"regionCode": "ML"
+	},
+	{
+		"name": "Maluku Utara",
+		"regionCode": "MU"
+	},
+	{
+		"name": "Nusa Tenggara",
+		"regionCode": "NU"
+	},
+	{
+		"name": "Nusa Tenggara Barat",
+		"regionCode": "NB"
+	},
+	{
+		"name": "Nusa Tenggara Timur",
+		"regionCode": "NT"
+	},
+	{
+		"name": "Papua",
+		"regionCode": "PA"
+	},
+	{
+		"name": "Papua",
+		"regionCode": "PP"
+	},
+	{
+		"name": "Papua Barat",
+		"regionCode": "PB"
+	},
+	{
+		"name": "Riau",
+		"regionCode": "RI"
+	},
+	{
+		"name": "Sulawesi",
+		"regionCode": "SL"
+	},
+	{
+		"name": "Sulawesi Barat",
+		"regionCode": "SR"
+	},
+	{
+		"name": "Sulawesi Selatan",
+		"regionCode": "SN"
+	},
+	{
+		"name": "Sulawesi Tengah",
+		"regionCode": "ST"
+	},
+	{
+		"name": "Sulawesi Tenggara",
+		"regionCode": "SG"
+	},
+	{
+		"name": "Sulawesi Utara",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Sumatera",
+		"regionCode": "SM"
+	},
+	{
+		"name": "Sumatera Barat",
+		"regionCode": "SB"
+	},
+	{
+		"name": "Sumatera Selatan",
+		"regionCode": "SS"
+	},
+	{
+		"name": "Sumatera Utara",
+		"regionCode": "SU"
+	},
+	{
+		"name": "Yogyakarta",
+		"regionCode": "YO"
+	}
+]

@@ -1,0 +1,54 @@
+[
+	{
+		"name": "'Asir",
+		"regionCode": 14.0
+	},
+	{
+		"name": "Al Bāḩah",
+		"regionCode": 11.0
+	},
+	{
+		"name": "Al Jawf",
+		"regionCode": 12.0
+	},
+	{
+		"name": "Al Madīnah al Munawwarah",
+		"regionCode": 3.0
+	},
+	{
+		"name": "Al Qaşīm",
+		"regionCode": 5.0
+	},
+	{
+		"name": "Al Ḩudūd ash Shamālīyah",
+		"regionCode": 8.0
+	},
+	{
+		"name": "Ar Riyāḑ",
+		"regionCode": 1.0
+	},
+	{
+		"name": "Ash Sharqīyah",
+		"regionCode": 4.0
+	},
+	{
+		"name": "Jāzān",
+		"regionCode": 9.0
+	},
+	{
+		"name": "Makkah al Mukarramah",
+		"regionCode": 2.0
+	},
+	{
+		"name": "Najrān",
+		"regionCode": 10.0
+	},
+	{
+		"name": "Tabūk",
+		"regionCode": 7.0
+	},
+	{
+		"name": "Ḩā'il",
+		"regionCode": 6.0
+	}
+]

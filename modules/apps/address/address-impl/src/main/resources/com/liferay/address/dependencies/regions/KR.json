@@ -1,0 +1,70 @@
+[
+	{
+		"name": "Busan-gwangyeoksi",
+		"regionCode": 26.0
+	},
+	{
+		"name": "Chungcheongbuk-do",
+		"regionCode": 43.0
+	},
+	{
+		"name": "Chungcheongnam-do",
+		"regionCode": 44.0
+	},
+	{
+		"name": "Daegu-gwangyeoksi",
+		"regionCode": 27.0
+	},
+	{
+		"name": "Daejeon-gwangyeoksi",
+		"regionCode": 30.0
+	},
+	{
+		"name": "Gangwon-do",
+		"regionCode": 42.0
+	},
+	{
+		"name": "Gwangju-gwangyeoksi",
+		"regionCode": 29.0
+	},
+	{
+		"name": "Gyeonggi-do",
+		"regionCode": 41.0
+	},
+	{
+		"name": "Gyeongsangbuk-do",
+		"regionCode": 47.0
+	},
+	{
+		"name": "Gyeongsangnam-do",
+		"regionCode": 48.0
+	},
+	{
+		"name": "Incheon-gwangyeoksi",
+		"regionCode": 28.0
+	},
+	{
+		"name": "Jeju-teukbyeoljachido",
+		"regionCode": 49.0
+	},
+	{
+		"name": "Jeollabuk-do",
+		"regionCode": 45.0
+	},
+	{
+		"name": "Jeollanam-do",
+		"regionCode": 46.0
+	},
+	{
+		"name": "Sejong",
+		"regionCode": 50.0
+	},
+	{
+		"name": "Seoul-teukbyeolsi",
+		"regionCode": 11.0
+	},
+	{
+		"name": "Ulsan-gwangyeoksi",
+		"regionCode": 31.0
+	}
+]

@@ -1,0 +1,142 @@
+[
+	{
+		"name": "Andaman and Nicobar Islands",
+		"regionCode": "AN"
+	},
+	{
+		"name": "Andhra Pradesh",
+		"regionCode": "AP"
+	},
+	{
+		"name": "Arunachal Pradesh",
+		"regionCode": "AR"
+	},
+	{
+		"name": "Assam",
+		"regionCode": "AS"
+	},
+	{
+		"name": "Bihar",
+		"regionCode": "BR"
+	},
+	{
+		"name": "Chandigarh",
+		"regionCode": "CH"
+	},
+	{
+		"name": "Chhattisgarh",
+		"regionCode": "CT"
+	},
+	{
+		"name": "Dadra and Nagar Haveli and Daman and Diu",
+		"regionCode": "DH"
+	},
+	{
+		"name": "Delhi",
+		"regionCode": "DL"
+	},
+	{
+		"name": "Goa",
+		"regionCode": "GA"
+	},
+	{
+		"name": "Gujarat",
+		"regionCode": "GJ"
+	},
+	{
+		"name": "Haryana",
+		"regionCode": "HR"
+	},
+	{
+		"name": "Himachal Pradesh",
+		"regionCode": "HP"
+	},
+	{
+		"name": "Jammu and Kashmir",
+		"regionCode": "JK"
+	},
+	{
+		"name": "Jharkhand",
+		"regionCode": "JH"
+	},
+	{
+		"name": "Karnataka",
+		"regionCode": "KA"
+	},
+	{
+		"name": "Kerala",
+		"regionCode": "KL"
+	},
+	{
+		"name": "Ladakh",
+		"regionCode": "LA"
+	},
+	{
+		"name": "Lakshadweep",
+		"regionCode": "LD"
+	},
+	{
+		"name": "Madhya Pradesh",
+		"regionCode": "MP"
+	},
+	{
+		"name": "Maharashtra",
+		"regionCode": "MH"
+	},
+	{
+		"name": "Manipur",
+		"regionCode": "MN"
+	},
+	{
+		"name": "Meghalaya",
+		"regionCode": "ML"
+	},
+	{
+		"name": "Mizoram",
+		"regionCode": "MZ"
+	},
+	{
+		"name": "Nagaland",
+		"regionCode": "NL"
+	},
+	{
+		"name": "Odisha",
+		"regionCode": "OR"
+	},
+	{
+		"name": "Puducherry",
+		"regionCode": "PY"
+	},
+	{
+		"name": "Punjab",
+		"regionCode": "PB"
+	},
+	{
+		"name": "Rajasthan",
+		"regionCode": "RJ"
+	},
+	{
+		"name": "Sikkim",
+		"regionCode": "SK"
+	},
+	{
+		"name": "Tamil Nadu",
+		"regionCode": "TN"
+	},
+	{
+		"name": "Telangana",
+		"regionCode": "TG"
+	},
+	{
+		"name": "Tripura",
+		"regionCode": "TR"
+	},
+	{
+		"name": "Uttar Pradesh",
+		"regionCode": "UP"
+	},
+	{
+		"name": "West Bengal",
+		"regionCode": "WB"
+	}
+]

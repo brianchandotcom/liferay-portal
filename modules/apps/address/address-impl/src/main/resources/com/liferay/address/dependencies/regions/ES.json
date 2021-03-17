@@ -1,97 +1,278 @@
 [
 	{
-		"active": true,
-		"name": "Andalusia",
+		"name": "A Coruña",
+		"regionCode": "C"
+	},
+	{
+		"name": "Albacete",
+		"regionCode": "AB"
+	},
+	{
+		"name": "Alicante",
+		"regionCode": "A"
+	},
+	{
+		"name": "Almería",
+		"regionCode": "AL"
+	},
+	{
+		"name": "Andalucía",
 		"regionCode": "AN"
 	},
 	{
-		"active": true,
-		"name": "Aragon",
+		"name": "Araba/Álava",
+		"regionCode": "VI"
+	},
+	{
+		"name": "Aragón",
 		"regionCode": "AR"
 	},
 	{
-		"active": true,
 		"name": "Asturias",
+		"regionCode": "O"
+	},
+	{
+		"name": "Asturias, Principado de",
 		"regionCode": "AS"
 	},
 	{
-		"active": true,
-		"name": "Balearic Islands",
-		"regionCode": "IB"
+		"name": "Ávila",
+		"regionCode": "AV"
 	},
 	{
-		"active": true,
-		"name": "Basque Country",
-		"regionCode": "PV"
+		"name": "Badajoz",
+		"regionCode": "BA"
 	},
 	{
-		"active": true,
-		"name": "Canary Islands",
+		"name": "Balears",
+		"regionCode": "PM"
+	},
+	{
+		"name": "Barcelona",
+		"regionCode": "B"
+	},
+	{
+		"name": "Bizkaia",
+		"regionCode": "BI"
+	},
+	{
+		"name": "Burgos",
+		"regionCode": "BU"
+	},
+	{
+		"name": "Cáceres",
+		"regionCode": "CC"
+	},
+	{
+		"name": "Cádiz",
+		"regionCode": "CA"
+	},
+	{
+		"name": "Canarias",
 		"regionCode": "CN"
 	},
 	{
-		"active": true,
 		"name": "Cantabria",
 		"regionCode": "CB"
 	},
 	{
-		"active": true,
-		"name": "Castile and Leon",
+		"name": "Cantabria (autonomous)",
+		"regionCode": "S"
+	},
+	{
+		"name": "Castelló",
+		"regionCode": "CS"
+	},
+	{
+		"name": "Castilla y León",
 		"regionCode": "CL"
 	},
 	{
-		"active": true,
-		"name": "Castile-La Mancha",
+		"name": "Castilla-La Mancha",
 		"regionCode": "CM"
 	},
 	{
-		"active": true,
-		"name": "Catalonia",
+		"name": "Catalunya",
 		"regionCode": "CT"
 	},
 	{
-		"active": true,
 		"name": "Ceuta",
 		"regionCode": "CE"
 	},
 	{
-		"active": true,
+		"name": "Ciudad Real",
+		"regionCode": "CR"
+	},
+	{
+		"name": "Córdoba",
+		"regionCode": "CO"
+	},
+	{
+		"name": "Cuenca",
+		"regionCode": "CU"
+	},
+	{
 		"name": "Extremadura",
 		"regionCode": "EX"
 	},
 	{
-		"active": true,
 		"name": "Galicia",
 		"regionCode": "GA"
 	},
 	{
-		"active": true,
+		"name": "Gipuzkoa",
+		"regionCode": "SS"
+	},
+	{
+		"name": "Girona",
+		"regionCode": "GI"
+	},
+	{
+		"name": "Granada",
+		"regionCode": "GR"
+	},
+	{
+		"name": "Guadalajara",
+		"regionCode": "GU"
+	},
+	{
+		"name": "Huelva",
+		"regionCode": "H"
+	},
+	{
+		"name": "Huesca",
+		"regionCode": "HU"
+	},
+	{
+		"name": "Illes Balears",
+		"regionCode": "IB"
+	},
+	{
+		"name": "Jaén",
+		"regionCode": "J"
+	},
+	{
 		"name": "La Rioja",
 		"regionCode": "LO"
 	},
 	{
-		"active": true,
+		"name": "La Rioja (autonomous)",
+		"regionCode": "RI"
+	},
+	{
+		"name": "Las Palmas",
+		"regionCode": "GC"
+	},
+	{
+		"name": "León",
+		"regionCode": "LE"
+	},
+	{
+		"name": "Lleida",
+		"regionCode": "L"
+	},
+	{
+		"name": "Lugo",
+		"regionCode": "LU"
+	},
+	{
 		"name": "Madrid",
 		"regionCode": "M"
 	},
 	{
-		"active": true,
+		"name": "Madrid, Comunidad de",
+		"regionCode": "MD"
+	},
+	{
+		"name": "Málaga",
+		"regionCode": "MA"
+	},
+	{
 		"name": "Melilla",
 		"regionCode": "ML"
 	},
 	{
-		"active": true,
 		"name": "Murcia",
 		"regionCode": "MU"
 	},
 	{
-		"active": true,
+		"name": "Murcia, Región de",
+		"regionCode": "MC"
+	},
+	{
 		"name": "Navarra",
 		"regionCode": null
 	},
 	{
-		"active": true,
+		"name": "Navarra, Comunidad Foral de",
+		"regionCode": "NC"
+	},
+	{
+		"name": "Ourense",
+		"regionCode": "OR"
+	},
+	{
+		"name": "Pais Vasco",
+		"regionCode": "PV"
+	},
+	{
+		"name": "Palencia",
+		"regionCode": "P"
+	},
+	{
+		"name": "Pontevedra",
+		"regionCode": "PO"
+	},
+	{
+		"name": "Salamanca",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Santa Cruz de Tenerife",
+		"regionCode": "TF"
+	},
+	{
+		"name": "Segovia",
+		"regionCode": "SG"
+	},
+	{
+		"name": "Sevilla",
+		"regionCode": "SE"
+	},
+	{
+		"name": "Soria",
+		"regionCode": "SO"
+	},
+	{
+		"name": "Tarragona",
+		"regionCode": "T"
+	},
+	{
+		"name": "Teruel",
+		"regionCode": "TE"
+	},
+	{
+		"name": "Toledo",
+		"regionCode": "TO"
+	},
+	{
 		"name": "Valencia",
+		"regionCode": "V"
+	},
+	{
+		"name": "Valenciana, Comunidad",
 		"regionCode": "VC"
+	},
+	{
+		"name": "Valladolid",
+		"regionCode": "VA"
+	},
+	{
+		"name": "Zamora",
+		"regionCode": "ZA"
+	},
+	{
+		"name": "Zaragoza",
+		"regionCode": "Z"
 	}
 ]

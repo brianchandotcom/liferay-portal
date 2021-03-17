@@ -1,0 +1,98 @@
+[
+	{
+		"name": "Buenos Aires",
+		"regionCode": "B"
+	},
+	{
+		"name": "Catamarca",
+		"regionCode": "K"
+	},
+	{
+		"name": "Chaco",
+		"regionCode": "H"
+	},
+	{
+		"name": "Chubut",
+		"regionCode": "U"
+	},
+	{
+		"name": "Ciudad Autonoma de Buenos Aires",
+		"regionCode": "C"
+	},
+	{
+		"name": "Córdoba",
+		"regionCode": "X"
+	},
+	{
+		"name": "Corrientes",
+		"regionCode": "W"
+	},
+	{
+		"name": "Entre Ríos",
+		"regionCode": "E"
+	},
+	{
+		"name": "Formosa",
+		"regionCode": "P"
+	},
+	{
+		"name": "Jujuy",
+		"regionCode": "Y"
+	},
+	{
+		"name": "La Pampa",
+		"regionCode": "L"
+	},
+	{
+		"name": "La Rioja",
+		"regionCode": "F"
+	},
+	{
+		"name": "Mendoza",
+		"regionCode": "M"
+	},
+	{
+		"name": "Misiones",
+		"regionCode": "N"
+	},
+	{
+		"name": "Neuquén",
+		"regionCode": "Q"
+	},
+	{
+		"name": "Río Negro",
+		"regionCode": "R"
+	},
+	{
+		"name": "Salta",
+		"regionCode": "A"
+	},
+	{
+		"name": "San Juan",
+		"regionCode": "J"
+	},
+	{
+		"name": "San Luis",
+		"regionCode": "D"
+	},
+	{
+		"name": "Santa Cruz",
+		"regionCode": "Z"
+	},
+	{
+		"name": "Santa Fe",
+		"regionCode": "S"
+	},
+	{
+		"name": "Santiago del Estero",
+		"regionCode": "G"
+	},
+	{
+		"name": "Tierra del Fuego",
+		"regionCode": "V"
+	},
+	{
+		"name": "Tucumán",
+		"regionCode": "T"
+	}
+]

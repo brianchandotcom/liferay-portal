@@ -1,0 +1,870 @@
+[
+	{
+		"name": "Aberdeen City",
+		"regionCode": "ABE"
+	},
+	{
+		"name": "Aberdeenshire",
+		"regionCode": "ABD"
+	},
+	{
+		"name": "Angus",
+		"regionCode": "ANS"
+	},
+	{
+		"name": "Antrim and Newtownabbey",
+		"regionCode": "ANN"
+	},
+	{
+		"name": "Ards and North Down",
+		"regionCode": "AND"
+	},
+	{
+		"name": "Argyll and Bute",
+		"regionCode": "AGB"
+	},
+	{
+		"name": "Armagh, Banbridge and Craigavon",
+		"regionCode": "ABC"
+	},
+	{
+		"name": "Barking and Dagenham",
+		"regionCode": "BDG"
+	},
+	{
+		"name": "Barnet",
+		"regionCode": "BNE"
+	},
+	{
+		"name": "Barnsley",
+		"regionCode": "BNS"
+	},
+	{
+		"name": "Bath and North East Somerset",
+		"regionCode": "BAS"
+	},
+	{
+		"name": "Bedford",
+		"regionCode": "BDF"
+	},
+	{
+		"name": "Belfast",
+		"regionCode": "BFS"
+	},
+	{
+		"name": "Bexley",
+		"regionCode": "BEX"
+	},
+	{
+		"name": "Birmingham",
+		"regionCode": "BIR"
+	},
+	{
+		"name": "Blackburn with Darwen",
+		"regionCode": "BBD"
+	},
+	{
+		"name": "Blackpool",
+		"regionCode": "BPL"
+	},
+	{
+		"name": "Blaenau Gwent",
+		"regionCode": "BGW"
+	},
+	{
+		"name": "Bolton",
+		"regionCode": "BOL"
+	},
+	{
+		"name": "Bournemouth",
+		"regionCode": "BCP"
+	},
+	{
+		"name": "Bracknell Forest",
+		"regionCode": "BRC"
+	},
+	{
+		"name": "Bradford",
+		"regionCode": "BRD"
+	},
+	{
+		"name": "Brent",
+		"regionCode": "BEN"
+	},
+	{
+		"name": "Bridgend",
+		"regionCode": "BGE"
+	},
+	{
+		"name": "Brighton and Hove",
+		"regionCode": "BNH"
+	},
+	{
+		"name": "Bristol, City of",
+		"regionCode": "BST"
+	},
+	{
+		"name": "Bromley",
+		"regionCode": "BRY"
+	},
+	{
+		"name": "Buckinghamshire",
+		"regionCode": "BKM"
+	},
+	{
+		"name": "Bury",
+		"regionCode": "BUR"
+	},
+	{
+		"name": "Caerphilly",
+		"regionCode": "CAY"
+	},
+	{
+		"name": "Calderdale",
+		"regionCode": "CLD"
+	},
+	{
+		"name": "Cambridgeshire",
+		"regionCode": "CAM"
+	},
+	{
+		"name": "Camden",
+		"regionCode": "CMD"
+	},
+	{
+		"name": "Cardiff",
+		"regionCode": "CRF"
+	},
+	{
+		"name": "Carmarthenshire",
+		"regionCode": "CMN"
+	},
+	{
+		"name": "Causeway Coast and Glens",
+		"regionCode": "CCG"
+	},
+	{
+		"name": "Central Bedfordshire",
+		"regionCode": "CBF"
+	},
+	{
+		"name": "Ceredigion",
+		"regionCode": "CGN"
+	},
+	{
+		"name": "Cheshire East",
+		"regionCode": "CHE"
+	},
+	{
+		"name": "Cheshire West and Chester",
+		"regionCode": "CHW"
+	},
+	{
+		"name": "Clackmannanshire",
+		"regionCode": "CLK"
+	},
+	{
+		"name": "Conwy",
+		"regionCode": "CWY"
+	},
+	{
+		"name": "Cornwall",
+		"regionCode": "CON"
+	},
+	{
+		"name": "Coventry",
+		"regionCode": "COV"
+	},
+	{
+		"name": "Croydon",
+		"regionCode": "CRY"
+	},
+	{
+		"name": "Cumbria",
+		"regionCode": "CMA"
+	},
+	{
+		"name": "Darlington",
+		"regionCode": "DAL"
+	},
+	{
+		"name": "Denbighshire",
+		"regionCode": "DEN"
+	},
+	{
+		"name": "Derby",
+		"regionCode": "DER"
+	},
+	{
+		"name": "Derbyshire",
+		"regionCode": "DBY"
+	},
+	{
+		"name": "Derry and Strabane",
+		"regionCode": "DRS"
+	},
+	{
+		"name": "Devon",
+		"regionCode": "DEV"
+	},
+	{
+		"name": "Doncaster",
+		"regionCode": "DNC"
+	},
+	{
+		"name": "Dorset",
+		"regionCode": "DOR"
+	},
+	{
+		"name": "Dudley",
+		"regionCode": "DUD"
+	},
+	{
+		"name": "Dumfries and Galloway",
+		"regionCode": "DGY"
+	},
+	{
+		"name": "Dundee City",
+		"regionCode": "DND"
+	},
+	{
+		"name": "Durham County",
+		"regionCode": "DUR"
+	},
+	{
+		"name": "Ealing",
+		"regionCode": "EAL"
+	},
+	{
+		"name": "East Ayrshire",
+		"regionCode": "EAY"
+	},
+	{
+		"name": "East Dunbartonshire",
+		"regionCode": "EDU"
+	},
+	{
+		"name": "East Lothian",
+		"regionCode": "ELN"
+	},
+	{
+		"name": "East Renfrewshire",
+		"regionCode": "ERW"
+	},
+	{
+		"name": "East Riding of Yorkshire",
+		"regionCode": "ERY"
+	},
+	{
+		"name": "East Sussex",
+		"regionCode": "ESX"
+	},
+	{
+		"name": "Edinburgh, City of",
+		"regionCode": "EDH"
+	},
+	{
+		"name": "Eilean Siar",
+		"regionCode": "ELS"
+	},
+	{
+		"name": "Enfield",
+		"regionCode": "ENF"
+	},
+	{
+		"name": "Essex",
+		"regionCode": "ESS"
+	},
+	{
+		"name": "Falkirk",
+		"regionCode": "FAL"
+	},
+	{
+		"name": "Fermanagh and Omagh",
+		"regionCode": "FMO"
+	},
+	{
+		"name": "Fife",
+		"regionCode": "FIF"
+	},
+	{
+		"name": "Flintshire",
+		"regionCode": "FLN"
+	},
+	{
+		"name": "Gateshead",
+		"regionCode": "GAT"
+	},
+	{
+		"name": "Glasgow City",
+		"regionCode": "GLG"
+	},
+	{
+		"name": "Gloucestershire",
+		"regionCode": "GLS"
+	},
+	{
+		"name": "Greenwich",
+		"regionCode": "GRE"
+	},
+	{
+		"name": "Gwynedd",
+		"regionCode": "GWN"
+	},
+	{
+		"name": "Hackney",
+		"regionCode": "HCK"
+	},
+	{
+		"name": "Halton",
+		"regionCode": "HAL"
+	},
+	{
+		"name": "Hammersmith and Fulham",
+		"regionCode": "HMF"
+	},
+	{
+		"name": "Hampshire",
+		"regionCode": "HAM"
+	},
+	{
+		"name": "Haringey",
+		"regionCode": "HRY"
+	},
+	{
+		"name": "Harrow",
+		"regionCode": "HRW"
+	},
+	{
+		"name": "Hartlepool",
+		"regionCode": "HPL"
+	},
+	{
+		"name": "Havering",
+		"regionCode": "HAV"
+	},
+	{
+		"name": "Herefordshire",
+		"regionCode": "HEF"
+	},
+	{
+		"name": "Hertfordshire",
+		"regionCode": "HRT"
+	},
+	{
+		"name": "Highland",
+		"regionCode": "HLD"
+	},
+	{
+		"name": "Hillingdon",
+		"regionCode": "HIL"
+	},
+	{
+		"name": "Hounslow",
+		"regionCode": "HNS"
+	},
+	{
+		"name": "Inverclyde",
+		"regionCode": "IVC"
+	},
+	{
+		"name": "Isle of Anglesey",
+		"regionCode": "AGY"
+	},
+	{
+		"name": "Isle of Wight",
+		"regionCode": "IOW"
+	},
+	{
+		"name": "Isles of Scilly",
+		"regionCode": "IOS"
+	},
+	{
+		"name": "Islington",
+		"regionCode": "ISL"
+	},
+	{
+		"name": "Kensington and Chelsea",
+		"regionCode": "KEC"
+	},
+	{
+		"name": "Kent",
+		"regionCode": "KEN"
+	},
+	{
+		"name": "Kingston upon Hull",
+		"regionCode": "KHL"
+	},
+	{
+		"name": "Kingston upon Thames",
+		"regionCode": "KTT"
+	},
+	{
+		"name": "Kirklees",
+		"regionCode": "KIR"
+	},
+	{
+		"name": "Knowsley",
+		"regionCode": "KWL"
+	},
+	{
+		"name": "Lambeth",
+		"regionCode": "LBH"
+	},
+	{
+		"name": "Lancashire",
+		"regionCode": "LAN"
+	},
+	{
+		"name": "Leeds",
+		"regionCode": "LDS"
+	},
+	{
+		"name": "Leicester",
+		"regionCode": "LCE"
+	},
+	{
+		"name": "Leicestershire",
+		"regionCode": "LEC"
+	},
+	{
+		"name": "Lewisham",
+		"regionCode": "LEW"
+	},
+	{
+		"name": "Lincolnshire",
+		"regionCode": "LIN"
+	},
+	{
+		"name": "Lisburn and Castlereagh",
+		"regionCode": "LBC"
+	},
+	{
+		"name": "Liverpool",
+		"regionCode": "LIV"
+	},
+	{
+		"name": "London, City of",
+		"regionCode": "LND"
+	},
+	{
+		"name": "Luton",
+		"regionCode": "LUT"
+	},
+	{
+		"name": "Manchester",
+		"regionCode": "MAN"
+	},
+	{
+		"name": "Medway",
+		"regionCode": "MDW"
+	},
+	{
+		"name": "Merthyr Tydfil",
+		"regionCode": "MTY"
+	},
+	{
+		"name": "Merton",
+		"regionCode": "MRT"
+	},
+	{
+		"name": "Mid and East Antrim",
+		"regionCode": "MEA"
+	},
+	{
+		"name": "Mid Ulster",
+		"regionCode": "MUL"
+	},
+	{
+		"name": "Middlesbrough",
+		"regionCode": "MDB"
+	},
+	{
+		"name": "Midlothian",
+		"regionCode": "MLN"
+	},
+	{
+		"name": "Milton Keynes",
+		"regionCode": "MIK"
+	},
+	{
+		"name": "Monmouthshire",
+		"regionCode": "MON"
+	},
+	{
+		"name": "Moray",
+		"regionCode": "MRY"
+	},
+	{
+		"name": "Neath Port Talbot",
+		"regionCode": "NTL"
+	},
+	{
+		"name": "Newcastle upon Tyne",
+		"regionCode": "NET"
+	},
+	{
+		"name": "Newham",
+		"regionCode": "NWM"
+	},
+	{
+		"name": "Newport",
+		"regionCode": "NWP"
+	},
+	{
+		"name": "Newry, Mourne and Down",
+		"regionCode": "NMD"
+	},
+	{
+		"name": "Norfolk",
+		"regionCode": "NFK"
+	},
+	{
+		"name": "North Ayrshire",
+		"regionCode": "NAY"
+	},
+	{
+		"name": "North East Lincolnshire",
+		"regionCode": "NEL"
+	},
+	{
+		"name": "North Lanarkshire",
+		"regionCode": "NLK"
+	},
+	{
+		"name": "North Lincolnshire",
+		"regionCode": "NLN"
+	},
+	{
+		"name": "North Somerset",
+		"regionCode": "NSM"
+	},
+	{
+		"name": "North Tyneside",
+		"regionCode": "NTY"
+	},
+	{
+		"name": "North Yorkshire",
+		"regionCode": "NYK"
+	},
+	{
+		"name": "Northamptonshire",
+		"regionCode": "NTH"
+	},
+	{
+		"name": "Northumberland",
+		"regionCode": "NBL"
+	},
+	{
+		"name": "Nottingham",
+		"regionCode": "NGM"
+	},
+	{
+		"name": "Nottinghamshire",
+		"regionCode": "NTT"
+	},
+	{
+		"name": "Oldham",
+		"regionCode": "OLD"
+	},
+	{
+		"name": "Orkney Islands",
+		"regionCode": "ORK"
+	},
+	{
+		"name": "Oxfordshire",
+		"regionCode": "OXF"
+	},
+	{
+		"name": "Pembrokeshire",
+		"regionCode": "PEM"
+	},
+	{
+		"name": "Perth and Kinross",
+		"regionCode": "PKN"
+	},
+	{
+		"name": "Peterborough",
+		"regionCode": "PTE"
+	},
+	{
+		"name": "Plymouth",
+		"regionCode": "PLY"
+	},
+	{
+		"name": "Poole",
+		"regionCode": "POL"
+	},
+	{
+		"name": "Portsmouth",
+		"regionCode": "POR"
+	},
+	{
+		"name": "Powys",
+		"regionCode": "POW"
+	},
+	{
+		"name": "Reading",
+		"regionCode": "RDG"
+	},
+	{
+		"name": "Redbridge",
+		"regionCode": "RDB"
+	},
+	{
+		"name": "Redcar and Cleveland",
+		"regionCode": "RCC"
+	},
+	{
+		"name": "Renfrewshire",
+		"regionCode": "RFW"
+	},
+	{
+		"name": "Rhondda, Cynon, Taff",
+		"regionCode": "RCT"
+	},
+	{
+		"name": "Richmond upon Thames",
+		"regionCode": "RIC"
+	},
+	{
+		"name": "Rochdale",
+		"regionCode": "RCH"
+	},
+	{
+		"name": "Rotherham",
+		"regionCode": "ROT"
+	},
+	{
+		"name": "Rutland",
+		"regionCode": "RUT"
+	},
+	{
+		"name": "Salford",
+		"regionCode": "SLF"
+	},
+	{
+		"name": "Sandwell",
+		"regionCode": "SAW"
+	},
+	{
+		"name": "Scottish Borders, The",
+		"regionCode": "SCB"
+	},
+	{
+		"name": "Sefton",
+		"regionCode": "SFT"
+	},
+	{
+		"name": "Sheffield",
+		"regionCode": "SHF"
+	},
+	{
+		"name": "Shetland Islands",
+		"regionCode": "ZET"
+	},
+	{
+		"name": "Shropshire",
+		"regionCode": "SHR"
+	},
+	{
+		"name": "Slough",
+		"regionCode": "SLG"
+	},
+	{
+		"name": "Solihull",
+		"regionCode": "SOL"
+	},
+	{
+		"name": "Somerset",
+		"regionCode": "SOM"
+	},
+	{
+		"name": "South Ayrshire",
+		"regionCode": "SAY"
+	},
+	{
+		"name": "South Gloucestershire",
+		"regionCode": "SGC"
+	},
+	{
+		"name": "South Lanarkshire",
+		"regionCode": "SLK"
+	},
+	{
+		"name": "South Tyneside",
+		"regionCode": "STY"
+	},
+	{
+		"name": "Southampton",
+		"regionCode": "STH"
+	},
+	{
+		"name": "Southend-on-Sea",
+		"regionCode": "SOS"
+	},
+	{
+		"name": "Southwark",
+		"regionCode": "SWK"
+	},
+	{
+		"name": "St. Helens",
+		"regionCode": "SHN"
+	},
+	{
+		"name": "Staffordshire",
+		"regionCode": "STS"
+	},
+	{
+		"name": "Stirling",
+		"regionCode": "STG"
+	},
+	{
+		"name": "Stockport",
+		"regionCode": "SKP"
+	},
+	{
+		"name": "Stockton-on-Tees",
+		"regionCode": "STT"
+	},
+	{
+		"name": "Stoke-on-Trent",
+		"regionCode": "STE"
+	},
+	{
+		"name": "Suffolk",
+		"regionCode": "SFK"
+	},
+	{
+		"name": "Sunderland",
+		"regionCode": "SND"
+	},
+	{
+		"name": "Surrey",
+		"regionCode": "SRY"
+	},
+	{
+		"name": "Sutton",
+		"regionCode": "STN"
+	},
+	{
+		"name": "Swansea",
+		"regionCode": "SWA"
+	},
+	{
+		"name": "Swindon",
+		"regionCode": "SWD"
+	},
+	{
+		"name": "Tameside",
+		"regionCode": "TAM"
+	},
+	{
+		"name": "Telford and Wrekin",
+		"regionCode": "TFW"
+	},
+	{
+		"name": "Thurrock",
+		"regionCode": "THR"
+	},
+	{
+		"name": "Torbay",
+		"regionCode": "TOB"
+	},
+	{
+		"name": "Torfaen [Tor-faen]",
+		"regionCode": "TOF"
+	},
+	{
+		"name": "Tower Hamlets",
+		"regionCode": "TWH"
+	},
+	{
+		"name": "Trafford",
+		"regionCode": "TRF"
+	},
+	{
+		"name": "Vale of Glamorgan, The",
+		"regionCode": "VGL"
+	},
+	{
+		"name": "Wakefield",
+		"regionCode": "WKF"
+	},
+	{
+		"name": "Walsall",
+		"regionCode": "WLL"
+	},
+	{
+		"name": "Waltham Forest",
+		"regionCode": "WFT"
+	},
+	{
+		"name": "Wandsworth",
+		"regionCode": "WND"
+	},
+	{
+		"name": "Warrington",
+		"regionCode": "WRT"
+	},
+	{
+		"name": "Warwickshire",
+		"regionCode": "WAR"
+	},
+	{
+		"name": "West Berkshire",
+		"regionCode": "WBK"
+	},
+	{
+		"name": "West Dunbartonshire",
+		"regionCode": "WDU"
+	},
+	{
+		"name": "West Lothian",
+		"regionCode": "WLN"
+	},
+	{
+		"name": "West Sussex",
+		"regionCode": "WSX"
+	},
+	{
+		"name": "Westminster",
+		"regionCode": "WSM"
+	},
+	{
+		"name": "Wigan",
+		"regionCode": "WGN"
+	},
+	{
+		"name": "Wiltshire",
+		"regionCode": "WIL"
+	},
+	{
+		"name": "Windsor and Maidenhead",
+		"regionCode": "WNM"
+	},
+	{
+		"name": "Wirral",
+		"regionCode": "WRL"
+	},
+	{
+		"name": "Wokingham",
+		"regionCode": "WOK"
+	},
+	{
+		"name": "Wolverhampton",
+		"regionCode": "WLV"
+	},
+	{
+		"name": "Worcestershire",
+		"regionCode": "WOR"
+	},
+	{
+		"name": "Wrexham",
+		"regionCode": "WRX"
+	},
+	{
+		"name": "York",
+		"regionCode": "YOR"
+	}
+]

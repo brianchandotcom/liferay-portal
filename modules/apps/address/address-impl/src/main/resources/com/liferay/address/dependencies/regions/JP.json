@@ -1,237 +1,331 @@
 [
 	{
-		"active": true,
-		"name": "北海道",
-		"regionCode": "JP-01"
+		"localizations": {
+			"ja_JP": "愛知県"
+		},
+		"name": "Aichi",
+		"regionCode": 23.0
 	},
 	{
-		"active": true,
-		"name": "青森県",
-		"regionCode": "JP-02"
+		"localizations": {
+			"ja_JP": "秋田県"
+		},
+		"name": "Akita",
+		"regionCode": 5.0
 	},
 	{
-		"active": true,
-		"name": "岩手県",
-		"regionCode": "JP-03"
+		"localizations": {
+			"ja_JP": "青森県"
+		},
+		"name": "Aomori",
+		"regionCode": 2.0
 	},
 	{
-		"active": true,
-		"name": "宮城県",
-		"regionCode": "JP-04"
+		"localizations": {
+			"ja_JP": "千葉県"
+		},
+		"name": "Chiba",
+		"regionCode": 12.0
 	},
 	{
-		"active": true,
-		"name": "秋田県",
-		"regionCode": "JP-05"
+		"localizations": {
+			"ja_JP": "愛媛県"
+		},
+		"name": "Ehime",
+		"regionCode": 38.0
 	},
 	{
-		"active": true,
-		"name": "山形県",
-		"regionCode": "JP-06"
+		"localizations": {
+			"ja_JP": "福井県"
+		},
+		"name": "Fukui",
+		"regionCode": 18.0
 	},
 	{
-		"active": true,
-		"name": "福島県",
-		"regionCode": "JP-07"
+		"localizations": {
+			"ja_JP": "福岡県"
+		},
+		"name": "Fukuoka",
+		"regionCode": 40.0
 	},
 	{
-		"active": true,
-		"name": "茨城県",
-		"regionCode": "JP-08"
+		"localizations": {
+			"ja_JP": "福島県"
+		},
+		"name": "Fukushima",
+		"regionCode": 7.0
 	},
 	{
-		"active": true,
-		"name": "栃木県",
-		"regionCode": "JP-09"
+		"localizations": {
+			"ja_JP": "岐阜県"
+		},
+		"name": "Gifu",
+		"regionCode": 21.0
 	},
 	{
-		"active": true,
-		"name": "群馬県",
-		"regionCode": "JP-10"
+		"localizations": {
+			"ja_JP": "群馬県"
+		},
+		"name": "Gunma",
+		"regionCode": 10.0
 	},
 	{
-		"active": true,
-		"name": "埼玉県",
-		"regionCode": "JP-11"
+		"localizations": {
+			"ja_JP": "広島県"
+		},
+		"name": "Hiroshima",
+		"regionCode": 34.0
 	},
 	{
-		"active": true,
-		"name": "千葉県",
-		"regionCode": "JP-12"
+		"localizations": {
+			"ja_JP": "北海道"
+		},
+		"name": "Hokkaido",
+		"regionCode": 1.0
 	},
 	{
-		"active": true,
-		"name": "東京都",
-		"regionCode": "JP-13"
+		"localizations": {
+			"ja_JP": "兵庫県"
+		},
+		"name": "Hyogo",
+		"regionCode": 28.0
 	},
 	{
-		"active": true,
-		"name": "神奈川県",
-		"regionCode": "JP-14"
+		"localizations": {
+			"ja_JP": "茨城県"
+		},
+		"name": "Ibaraki",
+		"regionCode": 8.0
 	},
 	{
-		"active": true,
-		"name": "新潟県",
-		"regionCode": "JP-15"
+		"localizations": {
+			"ja_JP": "石川県"
+		},
+		"name": "Ishikawa",
+		"regionCode": 17.0
 	},
 	{
-		"active": true,
-		"name": "富山県",
-		"regionCode": "JP-16"
+		"localizations": {
+			"ja_JP": "岩手県"
+		},
+		"name": "Iwate",
+		"regionCode": 3.0
 	},
 	{
-		"active": true,
-		"name": "石川県",
-		"regionCode": "JP-17"
+		"localizations": {
+			"ja_JP": "香川県 "
+		},
+		"name": "Kagawa",
+		"regionCode": 37.0
 	},
 	{
-		"active": true,
-		"name": "福井県",
-		"regionCode": "JP-18"
+		"localizations": {
+			"ja_JP": "鹿児島県"
+		},
+		"name": "Kagoshima",
+		"regionCode": 46.0
 	},
 	{
-		"active": true,
-		"name": "山梨県",
-		"regionCode": "JP-19"
+		"localizations": {
+			"ja_JP": "神奈川県"
+		},
+		"name": "Kanagawa",
+		"regionCode": 14.0
 	},
 	{
-		"active": true,
-		"name": "長野県",
-		"regionCode": "JP-20"
+		"localizations": {
+			"ja_JP": "高知県"
+		},
+		"name": "Kochi",
+		"regionCode": 39.0
 	},
 	{
-		"active": true,
-		"name": "岐阜県",
-		"regionCode": "JP-21"
+		"localizations": {
+			"ja_JP": "熊本県"
+		},
+		"name": "Kumamoto",
+		"regionCode": 43.0
 	},
 	{
-		"active": true,
-		"name": "静岡県",
-		"regionCode": "JP-22"
+		"localizations": {
+			"ja_JP": "京都府"
+		},
+		"name": "Kyoto",
+		"regionCode": 26.0
 	},
 	{
-		"active": true,
-		"name": "愛知県",
-		"regionCode": "JP-23"
+		"localizations": {
+			"ja_JP": "三重県"
+		},
+		"name": "Mie",
+		"regionCode": 24.0
 	},
 	{
-		"active": true,
-		"name": "三重県",
-		"regionCode": "JP-24"
+		"localizations": {
+			"ja_JP": "宮城県"
+		},
+		"name": "Miyagi",
+		"regionCode": 4.0
 	},
 	{
-		"active": true,
-		"name": "滋賀県",
-		"regionCode": "JP-25"
+		"localizations": {
+			"ja_JP": "宮崎県"
+		},
+		"name": "Miyazaki",
+		"regionCode": 45.0
 	},
 	{
-		"active": true,
-		"name": "京都府",
-		"regionCode": "JP-26"
+		"localizations": {
+			"ja_JP": "長野県"
+		},
+		"name": "Nagano",
+		"regionCode": 20.0
 	},
 	{
-		"active": true,
-		"name": "大阪府",
-		"regionCode": "JP-27"
+		"localizations": {
+			"ja_JP": "長崎県"
+		},
+		"name": "Nagasaki",
+		"regionCode": 42.0
 	},
 	{
-		"active": true,
-		"name": "兵庫県",
-		"regionCode": "JP-28"
+		"localizations": {
+			"ja_JP": "奈良県"
+		},
+		"name": "Nara",
+		"regionCode": 29.0
 	},
 	{
-		"active": true,
-		"name": "奈良県",
-		"regionCode": "JP-29"
+		"localizations": {
+			"ja_JP": "新潟県"
+		},
+		"name": "Niigata",
+		"regionCode": 15.0
 	},
 	{
-		"active": true,
-		"name": "和歌山県",
-		"regionCode": "JP-30"
+		"localizations": {
+			"ja_JP": "大分県"
+		},
+		"name": "Oita",
+		"regionCode": 44.0
 	},
 	{
-		"active": true,
-		"name": "鳥取県",
-		"regionCode": "JP-31"
+		"localizations": {
+			"ja_JP": "岡山県"
+		},
+		"name": "Okayama",
+		"regionCode": 33.0
 	},
 	{
-		"active": true,
-		"name": "島根県",
-		"regionCode": "JP-32"
+		"localizations": {
+			"ja_JP": "沖縄県"
+		},
+		"name": "Okinawa",
+		"regionCode": 47.0
 	},
 	{
-		"active": true,
-		"name": "岡山県",
-		"regionCode": "JP-33"
+		"localizations": {
+			"ja_JP": "大阪府"
+		},
+		"name": "Osaka",
+		"regionCode": 27.0
 	},
 	{
-		"active": true,
-		"name": "広島県",
-		"regionCode": "JP-34"
+		"localizations": {
+			"ja_JP": "佐賀県"
+		},
+		"name": "Saga",
+		"regionCode": 41.0
 	},
 	{
-		"active": true,
-		"name": "山口県",
-		"regionCode": "JP-35"
+		"localizations": {
+			"ja_JP": "埼玉県"
+		},
+		"name": "Saitama",
+		"regionCode": 11.0
 	},
 	{
-		"active": true,
-		"name": "徳島県",
-		"regionCode": "JP-36"
+		"localizations": {
+			"ja_JP": "滋賀県"
+		},
+		"name": "Shiga",
+		"regionCode": 25.0
 	},
 	{
-		"active": true,
-		"name": "香川県",
-		"regionCode": "JP-37"
+		"localizations": {
+			"ja_JP": "島根県"
+		},
+		"name": "Shimane",
+		"regionCode": 32.0
 	},
 	{
-		"active": true,
-		"name": "愛媛県",
-		"regionCode": "JP-38"
+		"localizations": {
+			"ja_JP": "静岡県"
+		},
+		"name": "Shizuoka",
+		"regionCode": 22.0
 	},
 	{
-		"active": true,
-		"name": "高知県",
-		"regionCode": "JP-39"
+		"localizations": {
+			"ja_JP": "栃木県"
+		},
+		"name": "Tochigi",
+		"regionCode": 9.0
 	},
 	{
-		"active": true,
-		"name": "福岡県",
-		"regionCode": "JP-40"
+		"localizations": {
+			"ja_JP": "徳島県"
+		},
+		"name": "Tokushima",
+		"regionCode": 36.0
 	},
 	{
-		"active": true,
-		"name": "佐賀県",
-		"regionCode": "JP-41"
+		"localizations": {
+			"ja_JP": "東京都"
+		},
+		"name": "Tokyo",
+		"regionCode": 13.0
 	},
 	{
-		"active": true,
-		"name": "長崎県",
-		"regionCode": "JP-42"
+		"localizations": {
+			"ja_JP": "鳥取県"
+		},
+		"name": "Tottori",
+		"regionCode": 31.0
 	},
 	{
-		"active": true,
-		"name": "熊本県",
-		"regionCode": "JP-43"
+		"localizations": {
+			"ja_JP": "富山県"
+		},
+		"name": "Toyama",
+		"regionCode": 16.0
 	},
 	{
-		"active": true,
-		"name": "大分県",
-		"regionCode": "JP-44"
+		"localizations": {
+			"ja_JP": "和歌山県"
+		},
+		"name": "Wakayama",
+		"regionCode": 30.0
 	},
 	{
-		"active": true,
-		"name": "宮崎県",
-		"regionCode": "JP-45"
+		"localizations": {
+			"ja_JP": "山形県"
+		},
+		"name": "Yamagata",
+		"regionCode": 6.0
 	},
 	{
-		"active": true,
-		"name": "鹿児島県",
-		"regionCode": "JP-46"
+		"localizations": {
+			"ja_JP": "山口県"
+		},
+		"name": "Yamaguchi",
+		"regionCode": 35.0
 	},
 	{
-		"active": true,
-		"name": "沖縄県",
-		"regionCode": "JP-47"
+		"localizations": {
+			"ja_JP": "山梨県"
+		},
+		"name": "Yamanashi",
+		"regionCode": 19.0
 	}
 ]

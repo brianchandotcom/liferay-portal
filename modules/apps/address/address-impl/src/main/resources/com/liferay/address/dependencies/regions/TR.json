@@ -1,0 +1,326 @@
+[
+	{
+		"name": "Adana",
+		"regionCode": 1.0
+	},
+	{
+		"name": "Adiyaman",
+		"regionCode": 2.0
+	},
+	{
+		"name": "Afyonkarahisar",
+		"regionCode": 3.0
+	},
+	{
+		"name": "Ağrı",
+		"regionCode": 4.0
+	},
+	{
+		"name": "Aksaray",
+		"regionCode": 68.0
+	},
+	{
+		"name": "Amasya",
+		"regionCode": 5.0
+	},
+	{
+		"name": "Ankara",
+		"regionCode": 6.0
+	},
+	{
+		"name": "Antalya",
+		"regionCode": 7.0
+	},
+	{
+		"name": "Ardahan",
+		"regionCode": 75.0
+	},
+	{
+		"name": "Artvin",
+		"regionCode": 8.0
+	},
+	{
+		"name": "Aydin",
+		"regionCode": 9.0
+	},
+	{
+		"name": "Balikesir",
+		"regionCode": 10.0
+	},
+	{
+		"name": "Bartin",
+		"regionCode": 74.0
+	},
+	{
+		"name": "Batman",
+		"regionCode": 72.0
+	},
+	{
+		"name": "Bayburt",
+		"regionCode": 69.0
+	},
+	{
+		"name": "Bilecik",
+		"regionCode": 11.0
+	},
+	{
+		"name": "Bingöl",
+		"regionCode": 12.0
+	},
+	{
+		"name": "Bitlis",
+		"regionCode": 13.0
+	},
+	{
+		"name": "Bolu",
+		"regionCode": 14.0
+	},
+	{
+		"name": "Burdur",
+		"regionCode": 15.0
+	},
+	{
+		"name": "Bursa",
+		"regionCode": 16.0
+	},
+	{
+		"name": "Çanakkale",
+		"regionCode": 17.0
+	},
+	{
+		"name": "Çankiri",
+		"regionCode": 18.0
+	},
+	{
+		"name": "Çorum",
+		"regionCode": 19.0
+	},
+	{
+		"name": "Denizli",
+		"regionCode": 20.0
+	},
+	{
+		"name": "Diyarbakir",
+		"regionCode": 21.0
+	},
+	{
+		"name": "Duzce",
+		"regionCode": 81.0
+	},
+	{
+		"name": "Edirne",
+		"regionCode": 22.0
+	},
+	{
+		"name": "Elazığ",
+		"regionCode": 23.0
+	},
+	{
+		"name": "Erzincan",
+		"regionCode": 24.0
+	},
+	{
+		"name": "Erzurum",
+		"regionCode": 25.0
+	},
+	{
+		"name": "Eskişehir",
+		"regionCode": 26.0
+	},
+	{
+		"name": "Gaziantep",
+		"regionCode": 27.0
+	},
+	{
+		"name": "Giresun",
+		"regionCode": 28.0
+	},
+	{
+		"name": "Gümüşhane",
+		"regionCode": 29.0
+	},
+	{
+		"name": "Hakkâri",
+		"regionCode": 30.0
+	},
+	{
+		"name": "Hatay",
+		"regionCode": 31.0
+	},
+	{
+		"name": "Iğdır",
+		"regionCode": 76.0
+	},
+	{
+		"name": "Isparta",
+		"regionCode": 32.0
+	},
+	{
+		"name": "Istanbul",
+		"regionCode": 34.0
+	},
+	{
+		"name": "Izmir",
+		"regionCode": 35.0
+	},
+	{
+		"name": "Kahramanmaras",
+		"regionCode": 46.0
+	},
+	{
+		"name": "Karabük",
+		"regionCode": 78.0
+	},
+	{
+		"name": "Karaman",
+		"regionCode": 70.0
+	},
+	{
+		"name": "Kars",
+		"regionCode": 36.0
+	},
+	{
+		"name": "Kastamonu",
+		"regionCode": 37.0
+	},
+	{
+		"name": "Kayseri",
+		"regionCode": 38.0
+	},
+	{
+		"name": "Kilis",
+		"regionCode": 79.0
+	},
+	{
+		"name": "Kirikkale",
+		"regionCode": 71.0
+	},
+	{
+		"name": "Kirklareli",
+		"regionCode": 39.0
+	},
+	{
+		"name": "Kirsehir",
+		"regionCode": 40.0
+	},
+	{
+		"name": "Kocaeli",
+		"regionCode": 41.0
+	},
+	{
+		"name": "Konya",
+		"regionCode": 42.0
+	},
+	{
+		"name": "Kütahya",
+		"regionCode": 43.0
+	},
+	{
+		"name": "Malatya",
+		"regionCode": 44.0
+	},
+	{
+		"name": "Manisa",
+		"regionCode": 45.0
+	},
+	{
+		"name": "Mardin",
+		"regionCode": 47.0
+	},
+	{
+		"name": "Mersin",
+		"regionCode": 33.0
+	},
+	{
+		"name": "Muğla",
+		"regionCode": 48.0
+	},
+	{
+		"name": "Muş",
+		"regionCode": 49.0
+	},
+	{
+		"name": "Nevşehir",
+		"regionCode": 50.0
+	},
+	{
+		"name": "Niğde",
+		"regionCode": 51.0
+	},
+	{
+		"name": "Ordu",
+		"regionCode": 52.0
+	},
+	{
+		"name": "Osmaniye",
+		"regionCode": 80.0
+	},
+	{
+		"name": "Rize",
+		"regionCode": 53.0
+	},
+	{
+		"name": "Sakarya",
+		"regionCode": 54.0
+	},
+	{
+		"name": "Samsun",
+		"regionCode": 55.0
+	},
+	{
+		"name": "Şanlıurfa",
+		"regionCode": 63.0
+	},
+	{
+		"name": "Şiirt",
+		"regionCode": 56.0
+	},
+	{
+		"name": "Sinop",
+		"regionCode": 57.0
+	},
+	{
+		"name": "Sirnak",
+		"regionCode": 73.0
+	},
+	{
+		"name": "Sivas",
+		"regionCode": 58.0
+	},
+	{
+		"name": "Tekirdağ",
+		"regionCode": 59.0
+	},
+	{
+		"name": "Tokat",
+		"regionCode": 60.0
+	},
+	{
+		"name": "Trabzon",
+		"regionCode": 61.0
+	},
+	{
+		"name": "Tunceli",
+		"regionCode": 62.0
+	},
+	{
+		"name": "Uşak",
+		"regionCode": 64.0
+	},
+	{
+		"name": "Van",
+		"regionCode": 65.0
+	},
+	{
+		"name": "Yalova",
+		"regionCode": 77.0
+	},
+	{
+		"name": "Yozgat",
+		"regionCode": 66.0
+	},
+	{
+		"name": "Zonguldak",
+		"regionCode": 67.0
+	}
+]

@@ -1,0 +1,174 @@
+[
+	{
+		"name": "Bács-Kiskun",
+		"regionCode": "BK"
+	},
+	{
+		"name": "Baranya",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Békés",
+		"regionCode": "BE"
+	},
+	{
+		"name": "Békéscsaba",
+		"regionCode": "BC"
+	},
+	{
+		"name": "Borsod-Abauj-Zemplen",
+		"regionCode": "BZ"
+	},
+	{
+		"name": "Budapest",
+		"regionCode": "BU"
+	},
+	{
+		"name": "Csongrád",
+		"regionCode": "CS"
+	},
+	{
+		"name": "Debrecen",
+		"regionCode": "DE"
+	},
+	{
+		"name": "Dunaújváros",
+		"regionCode": "DU"
+	},
+	{
+		"name": "Eger",
+		"regionCode": "EG"
+	},
+	{
+		"name": "Érd",
+		"regionCode": "ER"
+	},
+	{
+		"name": "Fejér",
+		"regionCode": "FE"
+	},
+	{
+		"name": "Győr",
+		"regionCode": "GY"
+	},
+	{
+		"name": "Győr-Moson-Sopron",
+		"regionCode": "GS"
+	},
+	{
+		"name": "Hajdú-Bihar",
+		"regionCode": "HB"
+	},
+	{
+		"name": "Heves",
+		"regionCode": "HE"
+	},
+	{
+		"name": "Hódmezővásárhely",
+		"regionCode": "HV"
+	},
+	{
+		"name": "Jász-Nagykun-Szolnok",
+		"regionCode": "JN"
+	},
+	{
+		"name": "Kaposvár",
+		"regionCode": "KV"
+	},
+	{
+		"name": "Kecskemét",
+		"regionCode": "KM"
+	},
+	{
+		"name": "Komárom-Esztergom",
+		"regionCode": "KE"
+	},
+	{
+		"name": "Miskolc",
+		"regionCode": "MI"
+	},
+	{
+		"name": "Nagykanizsa",
+		"regionCode": "NK"
+	},
+	{
+		"name": "Nógrád",
+		"regionCode": "NO"
+	},
+	{
+		"name": "Nyíregyháza",
+		"regionCode": "NY"
+	},
+	{
+		"name": "Pécs",
+		"regionCode": "PS"
+	},
+	{
+		"name": "Pest",
+		"regionCode": "PE"
+	},
+	{
+		"name": "Salgótarján",
+		"regionCode": "ST"
+	},
+	{
+		"name": "Somogy",
+		"regionCode": "SO"
+	},
+	{
+		"name": "Sopron",
+		"regionCode": "SN"
+	},
+	{
+		"name": "Szabolcs-á-Bereg",
+		"regionCode": "SZ"
+	},
+	{
+		"name": "Szeged",
+		"regionCode": "SD"
+	},
+	{
+		"name": "Székesfehérvár",
+		"regionCode": "SF"
+	},
+	{
+		"name": "Szekszárd",
+		"regionCode": "SS"
+	},
+	{
+		"name": "Szolnok",
+		"regionCode": "SK"
+	},
+	{
+		"name": "Szombathely",
+		"regionCode": "SH"
+	},
+	{
+		"name": "Tatabánya",
+		"regionCode": "TB"
+	},
+	{
+		"name": "Tolna",
+		"regionCode": "TO"
+	},
+	{
+		"name": "Vas",
+		"regionCode": "VA"
+	},
+	{
+		"name": "Veszprém",
+		"regionCode": "VE"
+	},
+	{
+		"name": "Veszprém (City)",
+		"regionCode": "VM"
+	},
+	{
+		"name": "Zala",
+		"regionCode": "ZA"
+	},
+	{
+		"name": "Zalaegerszeg",
+		"regionCode": "ZE"
+	}
+]

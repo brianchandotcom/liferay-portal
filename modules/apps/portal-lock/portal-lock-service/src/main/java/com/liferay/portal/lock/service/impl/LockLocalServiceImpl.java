@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockListener;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -302,6 +304,10 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 				if (causeThrowable instanceof ConstraintViolationException ||
 					causeThrowable instanceof LockAcquisitionException) {
 
+					if (_log.isInfoEnabled()) {
+						_log.info("Failed to acquire lock, will retry again");
+					}
+
 					continue;
 				}
 
@@ -415,6 +421,10 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 				if (causeThrowable instanceof ConstraintViolationException ||
 					causeThrowable instanceof LockAcquisitionException) {
 
+					if (_log.isInfoEnabled()) {
+						_log.info("Failed to remove lock, will retry again");
+					}
+
 					continue;
 				}
 
@@ -472,6 +482,9 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		return _serviceTrackerMap.getService(className);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LockLocalServiceImpl.class);
 
 	private ServiceTrackerMap<String, LockListener> _serviceTrackerMap;
 	private final TransactionConfig _transactionConfig =

@@ -1533,7 +1533,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<execute dir="@{patching.tool.dir}" failonerror="true">
 						patching-tool${file.suffix.bat} auto-discovery
 						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
 					</execute>
 				</then>
 				<else>
@@ -1544,7 +1543,6 @@ war.path=${app.server.portal.dir}/</echo>
 
 					<execute dir="@{patching.tool.dir}" failonerror="true">
 						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
 					</execute>
 				</else>
 			</if>

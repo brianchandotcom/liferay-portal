@@ -78,15 +78,15 @@ export default function Navigation({
 					}
 				);
 			}
-			else if (request === 'analyticsReportsTotalViewsURL') {
-				return APIService.getTotalViews(
-					endpoints.analyticsReportsTotalViewsURL,
-					{namespace, plid}
-				);
-			}
 			else if (request === 'analyticsReportsTotalReadsURL') {
 				return APIService.getTotalReads(
 					endpoints.analyticsReportsTotalReadsURL,
+					{namespace, plid}
+				);
+			}
+			else if (request === 'analyticsReportsTotalViewsURL') {
+				return APIService.getTotalViews(
+					endpoints.analyticsReportsTotalViewsURL,
 					{namespace, plid}
 				);
 			}
@@ -98,25 +98,26 @@ export default function Navigation({
 			}
 		});
 
-		let metrics = {};
+		allSettled(requests).then((data) => {
+			let addWarning = false;
 
-		allSettled(requests)
-			.then((data) => {
-				for (var i = 0; i < data.length; i++) {
-					if (data[i].status === 'fulfilled') {
-						metrics = {
-							...metrics,
-							...data[i].value,
-						};
-					}
-					else {
-						dispatch({type: 'ADD_WARNING'});
-					}
+			const metrics = data.reduce((result, {status, value}) => {
+				if (status === 'fulfilled') {
+					return {...result, ...value};
 				}
-			})
-			.then(() => {
-				dispatch({payload: metrics, type: 'SET_METRICS'});
-			});
+				else {
+					addWarning = true;
+
+					return result;
+				}
+			}, {});
+
+			if (addWarning) {
+				dispatch({type: 'ADD_WARNING'});
+			}
+
+			dispatch({...metrics, type: 'SET_METRICS'});
+		});
 	}, [dispatch, endpoints, namespace, plid, timeSpanKey, timeSpanOffset]);
 
 	const handleCurrentPage = useCallback((currentPage) => {

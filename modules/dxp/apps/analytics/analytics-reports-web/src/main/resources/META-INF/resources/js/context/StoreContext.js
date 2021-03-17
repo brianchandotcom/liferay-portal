@@ -39,16 +39,16 @@ function reducer(state = INITIAL_STATE, action) {
 				...state,
 				historicalReads: {
 					analyticsReportsHistoricalReads:
-						action.payload?.analyticsReportsHistoricalReads,
+						action.analyticsReportsHistoricalReads,
 				},
 				historicalViews: {
 					analyticsReportsHistoricalViews:
-						action.payload?.analyticsReportsHistoricalViews,
+						action.analyticsReportsHistoricalViews,
 				},
 				loading: false,
-				totalReads: action.payload?.analyticsReportsTotalReads,
-				totalViews: action.payload.analyticsReportsTotalViews,
-				trafficSources: action.payload.trafficSources,
+				totalReads: action.analyticsReportsTotalReads,
+				totalViews: action.analyticsReportsTotalViews,
+				trafficSources: action.trafficSources,
 			};
 			break;
 		case SET_SELECTED_TRAFFIC_SOURCE_NAME: {

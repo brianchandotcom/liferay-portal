@@ -59,15 +59,12 @@ export default function TrafficSources({onTrafficSourceClick}) {
 		() =>
 			validAnalyticsConnection &&
 			!publishedToday &&
-			trafficSources &&
-			trafficSources.some(({value}) => value),
+			trafficSources?.some(({value}) => value),
 		[publishedToday, trafficSources, validAnalyticsConnection]
 	);
 
 	const missingTrafficSourceValue = useMemo(
-		() =>
-			trafficSources &&
-			trafficSources.some(({value}) => value === undefined),
+		() => trafficSources?.some(({value}) => value === undefined),
 		[trafficSources]
 	);
 
@@ -99,86 +96,81 @@ export default function TrafficSources({onTrafficSourceClick}) {
 				<div className="pie-chart-wrapper--legend">
 					<table>
 						<tbody>
-							{trafficSources &&
-								trafficSources.map((entry) => {
-									const hasDetails =
-										entry?.countryKeywords ||
-										(entry?.referringPages &&
-											entry?.referringDomains) ||
-										entry?.referringSocialMedia;
+							{trafficSources?.map((entry) => {
+								const hasDetails =
+									entry?.countryKeywords ||
+									(entry?.referringPages &&
+										entry?.referringDomains) ||
+									entry?.referringSocialMedia;
 
-									return (
-										<tr key={entry.name}>
-											<td
-												className="px-0"
-												onMouseOut={
-													handleLegendMouseLeave
-												}
-												onMouseOver={() =>
-													handleLegendMouseEnter(
+								return (
+									<tr key={entry.name}>
+										<td
+											className="px-0"
+											onMouseOut={handleLegendMouseLeave}
+											onMouseOver={() =>
+												handleLegendMouseEnter(
+													entry.name
+												)
+											}
+										>
+											<span
+												className="pie-chart-wrapper--legend--dot"
+												style={{
+													backgroundColor: getColorByName(
 														entry.name
-													)
-												}
-											>
-												<span
-													className="pie-chart-wrapper--legend--dot"
-													style={{
-														backgroundColor: getColorByName(
+													),
+												}}
+											></span>
+										</td>
+										<td
+											className="c-py-1 text-secondary"
+											onMouseOut={handleLegendMouseLeave}
+											onMouseOver={() =>
+												handleLegendMouseEnter(
+													entry.name
+												)
+											}
+										>
+											{validAnalyticsConnection &&
+											!publishedToday &&
+											entry.value > 0 &&
+											hasDetails ? (
+												<ClayButton
+													className="px-0 py-1 text-primary"
+													displayType="link"
+													onClick={() =>
+														onTrafficSourceClick(
 															entry.name
-														),
-													}}
-												></span>
-											</td>
-											<td
-												className="c-py-1 text-secondary"
-												onMouseOut={
-													handleLegendMouseLeave
-												}
-												onMouseOver={() =>
-													handleLegendMouseEnter(
-														entry.name
-													)
-												}
-											>
-												{validAnalyticsConnection &&
-												!publishedToday &&
-												entry.value > 0 &&
-												hasDetails ? (
-													<ClayButton
-														className="px-0 py-1 text-primary"
-														displayType="link"
-														onClick={() =>
-															onTrafficSourceClick(
-																entry.name
-															)
-														}
-														small
-													>
-														{entry.title}
-													</ClayButton>
-												) : (
-													<span>{entry.title}</span>
-												)}
-											</td>
-											<td className="text-secondary">
-												<Hint
-													message={entry.helpMessage}
-													title={entry.title}
-												/>
-											</td>
-											<td className="font-weight-semi-bold">
-												{validAnalyticsConnection &&
-												!publishedToday &&
-												entry.value !== undefined
-													? numberFormat(
-															languageTag,
-															entry.value
-													  )
-													: '-'}
-											</td>
-										</tr>
-									);
-								})}
+														)
+													}
+													small
+												>
+													{entry.title}
+												</ClayButton>
+											) : (
+												<span>{entry.title}</span>
+											)}
+										</td>
+										<td className="text-secondary">
+											<Hint
+												message={entry.helpMessage}
+												title={entry.title}
+											/>
+										</td>
+										<td className="font-weight-semi-bold">
+											{validAnalyticsConnection &&
+											!publishedToday &&
+											entry.value !== undefined
+												? numberFormat(
+														languageTag,
+														entry.value
+												  )
+												: '-'}
+										</td>
+									</tr>
+								);
+							})}
 						</tbody>
 					</table>
 				</div>

@@ -345,6 +345,32 @@ definition {
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
 
+	@description = "This test ensures that no internal video is not listed via item selector with disabling Xuggler."
+	@priority = "3"
+	test NoVideoInItemSelectorAfterDisablingXuggler {
+		property test.name.skip.portal.instance = "DLVideo#NoVideoInItemSelectorAfterDisablingXuggler";
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(enableXuggler = "false");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
+
+		ItemSelector.configureFilterViaSelectFile(
+			filterBy = "Everywhere",
+			navTab = "Documents and Media");
+
+		AssertElementNotPresent(
+			key_card = "DM Video Title In Site",
+			locator1 = "Card#CARD_TITLE");
+	}
+
 	@description = "This ensures that a depot internal video cannot be viewed from the disconnected site."
 	@priority = "4"
 	test ViewFromDisconnectedSite {

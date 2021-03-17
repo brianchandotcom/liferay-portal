@@ -1379,6 +1379,8 @@ definition {
 
 	@priority = "3"
 	test ViewBlogsEntryViewCount {
+		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryViewCount";
+
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
 			portletOption = "Configuration");
@@ -1402,6 +1404,8 @@ definition {
 
 	@priority = "3"
 	test ViewBlogsEntryWithAbstractDisplayTemplate {
+		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryWithAbstractDisplayTemplate";
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");

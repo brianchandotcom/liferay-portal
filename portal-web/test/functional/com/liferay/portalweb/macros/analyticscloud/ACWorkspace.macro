@@ -1,0 +1,23 @@
+definition {
+
+	macro openWorkspace {
+		var key_WorkspaceName = "${workspaceName}";
+
+		Click(locator1 = "ACWorkspace#WORKSPACE_NAME");
+	}
+
+	macro switchWorkspace {
+		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
+
+		Click(locator1 = "ACWorkspace#SWITCH_WORKSPACE_OPTION");
+
+		ACWorkspace.openWorkspace(workspaceName = "${workspaceName}");
+	}
+
+
+    macro signOut {
+		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
+
+		Click(locator1 = "ACWorkspace#LOGOUT_WORKSPACE_OPTION");
+	}
+}

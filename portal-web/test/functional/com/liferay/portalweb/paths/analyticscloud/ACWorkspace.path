@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>ACWorkspace</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACWorkspace</td></tr>
+</thead>
+<tbody>
+<!-- WORKSPACE LIST SCREEN FIELDS  -->
+<tr>
+	<td>USER_MENU_OPTION</td>
+	<td>//div[contains(@class,'sticker-circle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGOUT_WORKSPACE_OPTION</td>
+	<td>//*[contains(@href,'logout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SWITCH_WORKSPACE_OPTION</td>
+	<td>//*[@href='/']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKSPACE_NAME</td>
+	<td>//*[contains(@class,'workspace-name')]//span[contains(text(),'${key_WorkspaceName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

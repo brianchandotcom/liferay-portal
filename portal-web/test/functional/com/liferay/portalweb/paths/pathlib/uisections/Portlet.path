@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MAIN_CONTENT</td>
+	<td>//div[@id='main-content']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_INFO</td>
 	<td>//div[contains(@class,'portlet-msg-info')]</td>
 	<td></td>

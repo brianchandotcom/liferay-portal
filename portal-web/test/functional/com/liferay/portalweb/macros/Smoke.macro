@@ -124,29 +124,21 @@ definition {
 		}
 	}
 
-	@summary = "View default welcome content page while signed in as '${userFirstName} ${userLastName}'"
+	@summary = "View default welcome content page while signed in as '${userFirstName} ${userLastName}' and check that image is present"
 	macro viewWelcomeContentPage {
-		AssertTextPresent(
-			locator1 = "HelloWorld#PORTLET_TITLE",
-			value1 = "Hello World");
-
 		AssertTextEquals.assertPartialText(
-			locator1 = "HelloWorld#PORTLET_CONTENT",
-			value1 = "Welcome to Liferay");
+			locator1 = "Portlet#MAIN_CONTENT",
+			value1 = "Welcome to Liferay Portal");
 
 		AssertElementPresent(
-			key_imageName = "welcome_bg.jpg",
-			locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			key_imageName = "tree.png",
+			locator1 = "Portlet#MAIN_CONTENT");
 	}
 
 	@summary = "View default welcome page while signed in as '${userFirstName} ${userLastName}'"
 	macro viewWelcomePage {
-		AssertTextPresent(
-			locator1 = "HelloWorld#PORTLET_TITLE",
-			value1 = "Hello World");
-
 		AssertTextEquals.assertPartialText(
-			locator1 = "HelloWorld#PORTLET_CONTENT",
+			locator1 = "Portlet#MAIN_CONTENT",
 			value1 = "Welcome to Liferay");
 	}
 

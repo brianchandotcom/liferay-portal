@@ -15,8 +15,8 @@
 			},
 			{
 				"actionIds": [
-					"VIEW_OPEN_COMMERCE_ORDERS",
-					"CHECKOUT_OPEN_COMMERCE_ORDERS"
+					"CHECKOUT_OPEN_COMMERCE_ORDERS",
+					"VIEW_OPEN_COMMERCE_ORDERS"
 				],
 				"resource": "com.liferay.commerce.order"
 			}
@@ -187,8 +187,8 @@
 		"actions": [
 			{
 				"actionIds": [
-					"VIEW_OPEN_COMMERCE_ORDERS",
-					"CHECKOUT_OPEN_COMMERCE_ORDERS"
+					"CHECKOUT_OPEN_COMMERCE_ORDERS",
+					"VIEW_OPEN_COMMERCE_ORDERS"
 				],
 				"resource": "com.liferay.commerce.order"
 			}

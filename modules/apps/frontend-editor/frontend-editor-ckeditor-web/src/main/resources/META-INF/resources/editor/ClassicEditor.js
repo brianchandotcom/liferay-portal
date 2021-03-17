@@ -66,7 +66,7 @@ const ClassicEditor = React.forwardRef(
 		}, [contents]);
 
 		const onChangeCallback = () => {
-			if (!onChangeMethodName && !onChange && !editorRef.current) {
+			if (!onChangeMethodName && !onChange || !editorRef.current) {
 				return;
 			}
 

@@ -157,7 +157,7 @@ public class JournalArticleAtomCollectionProvider
 		int count = _journalArticleService.searchCount(
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
-			status, reviewDate);
+			reviewDate, status, LocaleUtil.getMostRelevantLocale());
 
 		AtomPager atomPager = new AtomPager(atomRequestContext, count);
 
@@ -166,8 +166,8 @@ public class JournalArticleAtomCollectionProvider
 		return _journalArticleService.search(
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
-			status, reviewDate, atomPager.getStart(), atomPager.getEnd() + 1,
-			orderByComparator);
+			reviewDate, status, LocaleUtil.getMostRelevantLocale(),
+			atomPager.getStart(), atomPager.getEnd() + 1, orderByComparator);
 	}
 
 	@Override

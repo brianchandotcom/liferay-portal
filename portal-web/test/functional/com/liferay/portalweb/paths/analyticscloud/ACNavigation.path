@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>ACNavigation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACNavigation</td></tr>
+</thead>
+<tbody>
+<!-- SIDEBAR FIELDS/OPTIONS  -->
+<tr>
+	<td>EXPAND_SIDEBAR_ARROW</td>
+	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@class,'exicon-icon-angle-right')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLAPSE_SIDEBAR_ARROW</td>
+	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@class,'exicon-icon-angle-left')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERIC_SIDEBAR_OPTION</td>
+	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@href,'${key_SidebarOption}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

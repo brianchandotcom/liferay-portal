@@ -1,0 +1,52 @@
+definition {
+
+	macro collapseSidebar {
+		Click(locator1 = "ACNavigation#COLLAPSE_SIDEBAR_ARROW");
+	}
+
+	macro expandSidebar {
+		Click(locator1 = "ACNavigation#EXPAND_SIDEBAR_ARROW");
+	}
+
+    macro goToSettings {
+
+        ACNavigation.goToSidebarOption(sidebarOption = "settings");
+    }
+
+    macro goToSites {
+        
+        ACNavigation.goToSidebarOption(sidebarOption = "sites");
+    }
+
+    macro goToSegments {
+
+        ACNavigation.goToSidebarOption(sidebarOption = "segments");
+    }
+
+    macro goToTests {
+
+        ACNavigation.goToSidebarOption(sidebarOption = "tests");
+    }
+
+    macro goToIndividuals {
+
+        ACNavigation.goToSidebarOption(sidebarOption = "individuals");
+    }
+
+    macro goToAccounts {
+
+        ACNavigation.goToSidebarOption(sidebarOption = "accounts");
+    }
+
+    macro goToAssets {
+
+        ACNavigation.goToSidebarOption(sidebarOption = "assets");
+    }
+
+    macro goToSidebarOption {
+
+        var key_SidebarOption = "${sidebarOption}";
+
+        Click(locator1 = "ACNavigation#GENERIC_SIDEBAR_OPTION");
+    }
+}

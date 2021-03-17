@@ -114,7 +114,7 @@ public class TestrayRoutine {
 
 		try {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				buildAddURL, sb.toString());
+				buildAddURL, 2, 5, sb.toString());
 
 			if (jsonObject.has("data")) {
 				return new TestrayBuild(this, jsonObject.getJSONObject("data"));
@@ -125,12 +125,11 @@ public class TestrayRoutine {
 			if (!message.equals("The build name already exists.")) {
 				throw new RuntimeException("Failed to create a Testray build");
 			}
-
-			return getTestrayBuildByName(buildName);
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
 		}
+
+		return getTestrayBuildByName(buildName);
 	}
 
 	public int getID() {

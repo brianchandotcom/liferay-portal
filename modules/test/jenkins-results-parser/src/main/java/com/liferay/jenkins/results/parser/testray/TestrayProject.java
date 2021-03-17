@@ -59,6 +59,13 @@ public class TestrayProject {
 				"Please set a Testray product version name");
 		}
 
+		TestrayProductVersion testrayProductVersion =
+			getTestrayProductVersionByName(testrayProductVersionName);
+
+		if (testrayProductVersion != null) {
+			return testrayProductVersion;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("name=");
@@ -79,14 +86,7 @@ public class TestrayProject {
 					this, jsonObject.getJSONObject("data"));
 			}
 
-			String message = jsonObject.optString("message", "");
-
-			if (!message.equals("The product version name already exists.")) {
-				throw new RuntimeException(
-					"Failed to create a product version");
-			}
-
-			return getTestrayProductVersionByName(testrayProductVersionName);
+			throw new RuntimeException("Failed to create a product version");
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -96,6 +96,13 @@ public class TestrayProject {
 	public TestrayRoutine createTestrayRoutine(String testrayRoutineName) {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
 			throw new RuntimeException("Please set a Testray routine name");
+		}
+
+		TestrayRoutine testrayRoutine = getTestrayRoutineByName(
+			testrayRoutineName);
+
+		if (testrayRoutine != null) {
+			return testrayRoutine;
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -118,13 +125,7 @@ public class TestrayProject {
 					this, jsonObject.getJSONObject("data"));
 			}
 
-			String message = jsonObject.optString("message", "");
-
-			if (!message.equals("The routine name already exists.")) {
-				throw new RuntimeException("Failed to create a routine");
-			}
-
-			return getTestrayRoutineByName(testrayRoutineName);
+			throw new RuntimeException("Failed to create a routine");
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

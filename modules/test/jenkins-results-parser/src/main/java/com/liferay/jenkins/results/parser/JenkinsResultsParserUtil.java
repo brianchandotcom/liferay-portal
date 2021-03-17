@@ -3372,6 +3372,15 @@ public class JenkinsResultsParserUtil {
 			timeout, null);
 	}
 
+	public static JSONObject toJSONObject(
+			String url, int maxRetries, int retryPeriod, String postContent)
+		throws IOException {
+
+		return toJSONObject(
+			url, true, maxRetries, null, postContent, retryPeriod,
+			_MILLIS_TIMEOUT_DEFAULT, null);
+	}
+
 	public static JSONObject toJSONObject(String url, String postContent)
 		throws IOException {
 

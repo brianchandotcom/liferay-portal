@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>ACLogin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACLogin</td></tr>
+</thead>
+<tbody>
+<!-- LOGIN SCREEN FIELDS  -->
+<tr>
+    <td>EMAIL_LOGIN_FIELD</td>
+    <td>//input[contains(@id, '_com_liferay_login_web_portlet_LoginPortlet_login')]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>LOGIN_BUTTON</td>
+	<td>//*[contains(@class, 'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_LOGIN_FIELD</td>
+	<td>//*[contains(@id, '_com_liferay_login_web_portlet_LoginPortlet_password')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

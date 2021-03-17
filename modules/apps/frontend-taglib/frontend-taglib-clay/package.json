@@ -76,7 +76,6 @@
 		"clay-tooltip": "2.22.2",
 		"date-fns": "^1.30.1",
 		"frontend-js-web": "*",
-		"metal-component": "2.16.8",
 		"metal-soy": "2.16.9",
 		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",

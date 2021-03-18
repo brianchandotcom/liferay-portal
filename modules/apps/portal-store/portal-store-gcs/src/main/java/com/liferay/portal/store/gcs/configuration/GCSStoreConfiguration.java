@@ -88,4 +88,7 @@ public interface GCSStoreConfiguration {
 	)
 	public boolean retryJitter();
 
+	@Meta.AD(deflt = "", description = "aes256-key-help", name = "aes256-key")
+	public String aes256Key();
+
 }

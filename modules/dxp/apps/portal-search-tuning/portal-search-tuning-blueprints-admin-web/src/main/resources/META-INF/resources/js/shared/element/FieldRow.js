@@ -192,7 +192,7 @@ function FieldRow({
 							<ClaySelect.Option
 								key={`users-language-${index}`}
 								label={Liferay.Language.get('users-language')}
-								value={'${context.language_id}'}
+								value="${context.language_id}"
 							/>
 
 							{Object.keys(availableLanguages).map((locale) => (

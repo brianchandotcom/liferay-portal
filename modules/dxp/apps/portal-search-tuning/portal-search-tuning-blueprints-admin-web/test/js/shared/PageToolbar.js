@@ -28,7 +28,7 @@ function renderPageToolbar(props) {
 			onCancel="/link"
 			onChangeTab={jest.fn()}
 			onSubmit={onSubmit}
-			tab={'query-builder'}
+			tab="query-builder"
 			tabs={{
 				'query-builder': 'query-builder',
 			}}

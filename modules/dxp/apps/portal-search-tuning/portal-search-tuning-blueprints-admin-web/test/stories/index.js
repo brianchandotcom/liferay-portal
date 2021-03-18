@@ -258,7 +258,7 @@ storiesOf('Components|PageToolbar', module)
 			onCancel=""
 			onPublish={action('onPublish')}
 			onSubmit={action('onSubmit')}
-			tab={'query-builder'}
+			tab="query-builder"
 			tabs={{
 				'query-builder': 'query-builder',
 			}}

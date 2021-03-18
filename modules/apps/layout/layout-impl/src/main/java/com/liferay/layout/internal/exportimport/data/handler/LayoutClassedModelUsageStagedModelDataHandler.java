@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -200,34 +201,41 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 
 		importedLayoutClassedModelUsage.setClassPK(classPK);
 
-		Map<Long, Long> fragmentLinkEntryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FragmentEntryLink.class.getName());
-
-		Long containerKey = Long.valueOf(
-			layoutClassedModelUsage.getContainerKey());
-
-		containerKey = MapUtil.getLong(
-			fragmentLinkEntryIds, containerKey, containerKey);
-
-		importedLayoutClassedModelUsage.setContainerKey(
-			containerKey.toString());
-
-		importedLayoutClassedModelUsage.setContainerType(
-			_portal.getClassNameId(FragmentEntryLink.class));
-
 		Element element = portletDataContext.getImportDataStagedModelElement(
 			layoutClassedModelUsage);
+
+		long containerTypeClassNameId = _portal.getClassNameId(
+			element.attributeValue(
+				"layout-classed-model-container-class-name"));
+
+		if (containerTypeClassNameId == _portal.getClassNameId(
+				FragmentEntryLink.class)) {
+
+			long containerKey = GetterUtil.getLong(
+				layoutClassedModelUsage.getContainerKey());
+
+			if (containerKey != 0) {
+				Map<Long, Long> fragmentLinkEntryIds =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						FragmentEntryLink.class.getName());
+
+				containerKey = MapUtil.getLong(
+					fragmentLinkEntryIds, containerKey, containerKey);
+
+				importedLayoutClassedModelUsage.setContainerKey(
+					String.valueOf(containerKey));
+
+				importedLayoutClassedModelUsage.setContainerType(
+					_portal.getClassNameId(FragmentEntryLink.class));
+			}
+		}
 
 		LayoutClassedModelUsage existingLayoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
 				_portal.getClassNameId(
 					element.attributeValue("layout-classed-model-class-name")),
 				classPK, importedLayoutClassedModelUsage.getContainerKey(),
-				_portal.getClassNameId(
-					element.attributeValue(
-						"layout-classed-model-container-class-name")),
-				plid);
+				containerTypeClassNameId, plid);
 
 		if (existingLayoutClassedModelUsage == null) {
 			existingLayoutClassedModelUsage =

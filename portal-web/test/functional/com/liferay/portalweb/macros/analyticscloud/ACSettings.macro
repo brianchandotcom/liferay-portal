@@ -1,5 +1,39 @@
 definition {
 
+	macro addKeywords {
+		Click(locator1 = "ACSettings#KEYWORD_BUTTON");
+
+		Type(locator1 = "ACSettings#KEYWORD_TEXTFIELD", value1 = "${keyword}");
+
+		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
+	}
+
+	macro assertKeywords {
+		var key_KeywordName = "${keyword}";
+
+		AssertTextEquals(
+			locator1 = "ACSettings#KEYWORD_NAME", 
+			value1 = "${keyword}");
+	}
+
+	macro deleteKeywordCheckbox {
+		if(isVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+			Click(locator1 = "ACSettings#KEYWORD_DELETE_CHECKBOX");
+
+			Click(locator1 = "ACSettings#DELETE_FROM_TOOLBAR");
+
+			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
+		}
+	}
+
+	macro deleteKeywordIcon {
+		if(isVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
+
+			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
+		}
+	}
+
 	macro goToApis {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "APIs");
 	}

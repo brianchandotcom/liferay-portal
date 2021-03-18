@@ -75,7 +75,7 @@ public class DLFileEntryTypeFinderImpl
 		return doCountByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
 			includeBasicFileEntryType,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_ANY, false);
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_ANY, false);
 	}
 
 	@Override
@@ -107,13 +107,13 @@ public class DLFileEntryTypeFinderImpl
 
 		return filterCountByKeywords(
 			companyId, groupIds, keywords, includeBasicFileEntryType,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_ANY);
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_ANY);
 	}
 
 	@Override
 	public int filterCountByKeywords(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, int type) {
+		boolean includeBasicFileEntryType, int scope) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -129,7 +129,7 @@ public class DLFileEntryTypeFinderImpl
 
 		return doCountByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
-			includeBasicFileEntryType, type, true);
+			includeBasicFileEntryType, scope, true);
 	}
 
 	@Override
@@ -158,7 +158,7 @@ public class DLFileEntryTypeFinderImpl
 	@Override
 	public List<DLFileEntryType> filterFindByKeywords(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, int type, int start, int end,
+		boolean includeBasicFileEntryType, int scope, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		String[] names = null;
@@ -175,7 +175,7 @@ public class DLFileEntryTypeFinderImpl
 
 		return doFindByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
-			includeBasicFileEntryType, type, start, end, orderByComparator,
+			includeBasicFileEntryType, scope, start, end, orderByComparator,
 			true);
 	}
 
@@ -187,7 +187,7 @@ public class DLFileEntryTypeFinderImpl
 
 		return filterFindByKeywords(
 			companyId, groupIds, keywords, includeBasicFileEntryType,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_ANY, start, end,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_ANY, start, end,
 			orderByComparator);
 	}
 
@@ -212,13 +212,13 @@ public class DLFileEntryTypeFinderImpl
 		return doFindByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
 			includeBasicFileEntryType,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_ANY, start, end,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_ANY, start, end,
 			orderByComparator, false);
 	}
 
 	protected int doCountByC_G_N_D_S(
 		long companyId, long[] groupIds, String[] names, String[] descriptions,
-		boolean andOperator, boolean includeBasicFileEntryType, int type,
+		boolean andOperator, boolean includeBasicFileEntryType, int scope,
 		boolean inlineSQLHelper) {
 
 		names = CustomSQLUtil.keywords(names);
@@ -242,7 +242,7 @@ public class DLFileEntryTypeFinderImpl
 				getBasicDocumentCount(includeBasicFileEntryType));
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds.length));
-			sql = StringUtil.replace(sql, "[$TYPE$]", _getType(type));
+			sql = StringUtil.replace(sql, "[$SCOPE$]", _getScope(scope));
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(DLFileEntryType.name)", StringPool.LIKE, false,
 				names);
@@ -269,8 +269,8 @@ public class DLFileEntryTypeFinderImpl
 			queryPos.add(companyId);
 			queryPos.add(groupIds);
 
-			if (type != DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_ANY) {
-				queryPos.add(type);
+			if (scope != DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_ANY) {
+				queryPos.add(scope);
 			}
 
 			queryPos.add(names, 2);
@@ -388,7 +388,7 @@ public class DLFileEntryTypeFinderImpl
 
 	protected List<DLFileEntryType> doFindByC_G_N_D_S(
 		long companyId, long[] groupIds, String[] names, String[] descriptions,
-		boolean andOperator, boolean includeBasicFileEntryType, int type,
+		boolean andOperator, boolean includeBasicFileEntryType, int scope,
 		int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator,
 		boolean inlineSQLHelper) {
@@ -414,7 +414,7 @@ public class DLFileEntryTypeFinderImpl
 				getBasicDocument(includeBasicFileEntryType));
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds.length));
-			sql = StringUtil.replace(sql, "[$TYPE$]", _getType(type));
+			sql = StringUtil.replace(sql, "[$SCOPE$]", _getScope(scope));
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(DLFileEntryType.name)", StringPool.LIKE, false,
 				names);
@@ -441,8 +441,8 @@ public class DLFileEntryTypeFinderImpl
 			queryPos.add(companyId);
 			queryPos.add(groupIds);
 
-			if (type != DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_ANY) {
-				queryPos.add(type);
+			if (scope != DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_ANY) {
+				queryPos.add(scope);
 			}
 
 			queryPos.add(names, 2);
@@ -586,12 +586,12 @@ public class DLFileEntryTypeFinderImpl
 		return sb.toString();
 	}
 
-	private String _getType(int type) {
-		if (type == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_ANY) {
+	private String _getScope(int scope) {
+		if (scope == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_ANY) {
 			return StringPool.BLANK;
 		}
 
-		return "(DLFileEntryType.type_ = ?) AND";
+		return "(DLFileEntryType.scope = ?) AND";
 	}
 
 	private static final String _INNER_JOIN_SQL =

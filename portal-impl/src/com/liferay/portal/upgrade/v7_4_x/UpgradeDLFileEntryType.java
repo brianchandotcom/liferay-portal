@@ -24,10 +24,10 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("DLFileEntryType", "type_")) {
+		if (!hasColumn("DLFileEntryType", "scope")) {
 			alter(
 				DLFileEntryTypeTable.class,
-				new AlterTableAddColumn("type_", "INT 0"));
+				new AlterTableAddColumn("scope", "INT 0"));
 		}
 	}
 

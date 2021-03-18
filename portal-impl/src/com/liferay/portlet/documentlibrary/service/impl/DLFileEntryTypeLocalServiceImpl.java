@@ -99,7 +99,7 @@ public class DLFileEntryTypeLocalServiceImpl
 	public DLFileEntryType addFileEntryType(
 			long userId, long groupId, long dataDefinitionId,
 			String fileEntryTypeKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, int type,
+			Map<Locale, String> descriptionMap, int scope,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -139,7 +139,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);
-		dlFileEntryType.setType(type);
+		dlFileEntryType.setScope(scope);
 
 		dlFileEntryType = dlFileEntryTypePersistence.update(dlFileEntryType);
 
@@ -168,7 +168,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		return addFileEntryType(
 			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
 			descriptionMap,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_DEFAULT,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 			serviceContext);
 	}
 

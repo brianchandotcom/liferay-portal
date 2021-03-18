@@ -70,6 +70,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
@@ -576,6 +577,43 @@ public class JournalArticleServiceTest {
 	}
 
 	@Test
+	public void testSearchLocalizedArticle() throws Exception {
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, "Localized Title"
+		).build();
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, titleMap, titleMap,
+			HashMapBuilder.put(
+				LocaleUtil.US, "Just a content."
+			).build(),
+			LocaleUtil.US, false, false,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		int count = countArticlesByLocalizedTitle(
+			"\"Localized Title\"", LocaleUtil.US);
+
+		Assert.assertEquals(1, count);
+
+		count = countArticlesByLocalizedTitle(
+			"\"Localized Title\"", LocaleUtil.FRENCH);
+
+		Assert.assertEquals(0, count);
+
+		List<JournalArticle> articles = searchArticlesByLocalizedTitle(
+			"\"Localized Title\"", LocaleUtil.US);
+
+		Assert.assertEquals(article, articles.get(0));
+
+		articles = searchArticlesByLocalizedTitle(
+			"\"Localized Title\"", LocaleUtil.FRENCH);
+
+		Assert.assertTrue(articles.isEmpty());
+	}
+
+	@Test
 	public void testUpdateArticle() throws Exception {
 		_article.setDisplayDate(new Date());
 
@@ -640,7 +678,19 @@ public class JournalArticleServiceTest {
 			TestPropsValues.getCompanyId(), _group.getGroupId(),
 			ListUtil.fromArray(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, null, null,
-			null, keyword, "", "", null, null, status, null, true);
+			null, keyword, "", "", null, null, null, status,
+			LocaleUtil.getMostRelevantLocale(), true);
+	}
+
+	protected int countArticlesByLocalizedTitle(String title, Locale locale)
+		throws Exception {
+
+		return JournalArticleLocalServiceUtil.searchCount(
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
+			ListUtil.fromArray(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, null, title,
+			null, null, "", "", null, null, null, WorkflowConstants.STATUS_ANY,
+			locale, true);
 	}
 
 	protected List<JournalArticle> createArticlesWithKeyword(int count)
@@ -692,8 +742,21 @@ public class JournalArticleServiceTest {
 			TestPropsValues.getCompanyId(), _group.getGroupId(),
 			ListUtil.fromArray(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, null, null,
-			null, keyword, "", "", null, null, status, null, false,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			null, keyword, "", "", null, null, null, status,
+			LocaleUtil.getMostRelevantLocale(), false, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	protected List<JournalArticle> searchArticlesByLocalizedTitle(
+			String title, Locale locale)
+		throws Exception {
+
+		return JournalArticleLocalServiceUtil.search(
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
+			ListUtil.fromArray(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, null, title,
+			null, null, "", "", null, null, null, WorkflowConstants.STATUS_ANY,
+			locale, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	protected void testAddArticleRequiredFields(

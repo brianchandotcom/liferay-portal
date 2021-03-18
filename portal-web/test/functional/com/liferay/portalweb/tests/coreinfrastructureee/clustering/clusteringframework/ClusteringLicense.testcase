@@ -7,14 +7,9 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "false";
 	property remote.elasticsearch.enabled = "true";
+	property skip.start-app-server = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Clustering";
-
-	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
-	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
@@ -28,6 +23,20 @@ definition {
 	test ViewNodeLimit {
 		property commerce.enabled = "false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			nodePort = "8080");
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			nodePort = "9080");
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			nodePort = "10080");
+
+		User.firstLoginPG();
 
 		Clustering.viewClusterStatusInConsole();
 

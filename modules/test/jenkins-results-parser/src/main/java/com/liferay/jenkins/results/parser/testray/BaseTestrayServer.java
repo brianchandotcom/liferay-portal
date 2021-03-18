@@ -148,7 +148,7 @@ public abstract class BaseTestrayServer implements TestrayServer {
 		}
 	}
 
-	private static final int _DELTA = 25;
+	private static final int _DELTA = 50;
 
 	private Map<Integer, TestrayProject> _testrayProjectsByID;
 	private Map<String, TestrayProject> _testrayProjectsByName;

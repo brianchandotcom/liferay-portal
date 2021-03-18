@@ -62,8 +62,8 @@ public class FileEntryTypeUpgradeProcess extends UpgradeProcess {
 
 			actionableDynamicQuery.setPerformActionMethod(
 				(DLFileEntryType dlFileEntryType) -> {
-					dlFileEntryType.setType(
-						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_TYPE_SYSTEM);
+					dlFileEntryType.setScope(
+						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM);
 
 					_dlFileEntryTypeLocalService.updateDLFileEntryType(
 						dlFileEntryType);

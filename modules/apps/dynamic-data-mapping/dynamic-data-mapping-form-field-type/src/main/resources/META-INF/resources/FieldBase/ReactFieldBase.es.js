@@ -143,10 +143,6 @@ function FieldBase({
 
 	let fieldDetails = '';
 
-	if (renderLabel) {
-		fieldDetails += label + '<br>';
-	}
-
 	if (tip) {
 		fieldDetails += tip + '<br>';
 	}

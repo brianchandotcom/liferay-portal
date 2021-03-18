@@ -161,9 +161,17 @@ public class TranslateDisplayContext {
 							String infoFieldId =
 								"infoField--" + infoField.getName() + "--";
 
+							Map<String, Object> editorConfiguration = null;
+
+							if (getBooleanValue(
+									infoField, TextInfoFieldType.HTML)) {
+
+								editorConfiguration = _getInfoFieldEditorConfig(
+									infoFieldId);
+							}
+
 							return HashMapBuilder.<String, Object>put(
-								"editorConfiguration",
-								_getInfoFieldEditorConfig(infoFieldId)
+								"editorConfiguration", editorConfiguration
 							).put(
 								"html",
 								getBooleanValue(

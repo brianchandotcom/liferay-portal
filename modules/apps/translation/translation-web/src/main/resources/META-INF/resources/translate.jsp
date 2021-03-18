@@ -176,24 +176,21 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 									>
 
 										<%
-										String id = "infoField--" + infoField.getName() + "--";
 										String targetContent = translateDisplayContext.getTargetStringValue(infoField, translateDisplayContext.getTargetLocale());
 										%>
 
 										<c:choose>
 											<c:when test="<%= html %>">
-												<liferay-editor:editor
-													configKey="translateEditor"
-													contents="<%= targetContent %>"
-													contentsLanguageId="<%= translateDisplayContext.getTargetLanguageId() %>"
-													name="<%= id %>"
-													onChangeMethod="onInputChange"
-													placeholder="<%= label %>"
-													toolbarSet="simple"
-												/>
+												<label class="control-label">
+													<%= label %>
+												</label>
+
+												<div class="translation-editor-preview" dir="<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>">
+													<%= targetContent %>
+												</div>
 											</c:when>
 											<c:otherwise>
-												<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
+												<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name='<%= "infoField--" + infoField.getName() + "--" %>' onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
 											</c:otherwise>
 										</c:choose>
 									</clay:col>
@@ -207,15 +204,13 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 					</c:otherwise>
 				</c:choose>
 			</div>
+
+			<react:component
+				module="js/translate/Translate"
+				props="<%= translateDisplayContext.getInfoFieldSetEntriesData() %>"
+			/>
 		</clay:container-fluid>
 	</aui:form>
-</div>
-
-<div>
-	<react:component
-		module="js/translate/Translate"
-		props="<%= translateDisplayContext.getInfoFieldSetEntriesData() %>"
-	/>
 </div>
 
 <script>

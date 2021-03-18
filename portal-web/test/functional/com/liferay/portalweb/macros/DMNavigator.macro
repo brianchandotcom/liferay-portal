@@ -17,6 +17,18 @@ definition {
 
 		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
 
+		if ("${dmDocumentTypeName}" == "External Video Shortcut") {
+			AssertVisible(
+				key_text = "video",
+				locator1 = "Icon#ANY");
+		}
+
+		if ("${dmDocumentTypeName}" == "Google Drive Shortcut") {
+			AssertVisible(
+				key_text = "google-drive",
+				locator1 = "Icon#ANY");
+		}
+
 		MenuItem.click(menuItem = "${dmDocumentTypeName}");
 	}
 

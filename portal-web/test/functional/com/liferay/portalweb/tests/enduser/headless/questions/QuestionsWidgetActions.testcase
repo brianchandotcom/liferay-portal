@@ -1163,6 +1163,178 @@ definition {
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 	}
 
+	@description = "Validate if the user can view the my activity default after delete all the responses."
+	@priority = "4"
+	test ViewMyActivityDeletions {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Body AddQuestionText",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Title AddQuestion");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.answerQuestion(contentField = "Body AddAnswerText");
+
+		Questions.replyToComment(commentReply = "Body AddCommentText");
+
+		Questions.deleteComment(commentReply = "Body AddCommentText");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "My Activity");
+
+		AssertElementNotPresent(
+			key_articleBodyContent = "Body AddCommentText",
+			locator1 = "Questions#QUESTIONS_ARTICLE_BODY");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.deleteAnswer(contentField = "Body AddAnswerText");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "My Activity");
+
+		AssertElementNotPresent(
+			key_articleBodyContent = "Body AddAnswerText",
+			locator1 = "Questions#QUESTIONS_ARTICLE_BODY");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.deleteQuestion();
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "My Activity");
+
+		Questions.viewMyActivityDefault();
+	}
+
+	@description = "Validate if the user can view the edited responses from my activity."
+	@priority = "4"
+	test ViewMyActivityEditedResponses {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Body AddQuestionText",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Title AddQuestion");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.editQuestion(
+			contentFieldEdit = "Body AddQuestionTextEdit",
+			questionTitle = "Title AddQuestion",
+			titleFieldEdit = "Title AddQuestionEdit");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestionEdit");
+
+		Questions.answerQuestion(contentField = "Body AddAnswerText");
+
+		Questions.editAnswer(contentField = "Body AddAnswerTextEdit");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "My Activity");
+
+		for (var articleBodyContent : list "Body AddQuestionTextEdit,Body AddAnswerTextEdit") {
+			AssertElementPresent(
+				key_articleBodyContent = "${articleBodyContent}",
+				locator1 = "Questions#QUESTIONS_ARTICLE_BODY");
+		}
+
+		Click(
+			key_questionTitle = "Title AddQuestionEdit",
+			locator1 = "Questions#QUESTIONS_TITLE");
+
+		AssertTextEquals(
+			key_questionTitle = "Title AddQuestionEdit",
+			locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+			value1 = "Title AddQuestionEdit");
+	}
+
+	@description = "Validate if the user can view the responses from my activity."
+	@priority = "4"
+	test ViewMyActivityResponses {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Body AddQuestionText",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Title AddQuestion");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.answerQuestion(contentField = "Body AddAnswerText");
+
+		Questions.replyToComment(commentReply = "Body AddCommentText");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "My Activity");
+
+		for (var articleBodyContent : list "Body AddQuestionText,Body AddAnswerText,Body AddCommentText") {
+			AssertElementPresent(
+				key_articleBodyContent = "${articleBodyContent}",
+				locator1 = "Questions#QUESTIONS_ARTICLE_BODY");
+		}
+
+		Click(
+			key_questionTitle = "Title AddQuestion",
+			locator1 = "Questions#QUESTIONS_TITLE");
+
+		AssertTextEquals(
+			key_questionTitle = "Title AddQuestion",
+			locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+			value1 = "Title AddQuestion");
+	}
+
 	@description = "Validate if the user can view a question via an edited topic."
 	@priority = "5"
 	test ViewQuestionAfterEditingTopic {

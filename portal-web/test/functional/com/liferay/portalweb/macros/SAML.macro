@@ -1,6 +1,6 @@
 definition {
 
-	@description = "Configures Liferay SAML as the IdP and Liferay SAML as the SP."
+	@description = "Configures Liferay SAML as the IdP"
 	macro configureLiferaySAMLAsIdP {
 
 		// Configure IdP (Identity Provider) on specific Portal URL or default to current URL
@@ -44,11 +44,20 @@ definition {
 		SAMLPortlet.configureIdentityProvider();
 	}
 
+	@description = "Configures Liferay SAML as the SP."
 	macro configureLiferaySAMLAsSP {
-		User.loginPG(
-			password = "test",
-			specificURL = "${spURL}",
-			userEmailAddress = "test@liferay.com");
+		if (isSet(userEmailAddress)) {
+			User.loginPG(
+				password = "test",
+				specificURL = "${spURL}",
+				userEmailAddress = "${userEmailAddress}");
+		}
+		else {
+			User.loginPG(
+				password = "test",
+				specificURL = "${spURL}",
+				userEmailAddress = "test@liferay.com");
+		}
 
 		Navigator.openSpecificURL(url = "${spURL}");
 
@@ -87,6 +96,7 @@ definition {
 			spURL = "${spURL}");
 	}
 
+	@description = "Connect SP and IdP."
 	macro connectSPAndIdP {
 
 		// Add a configured IdP connection to an SP

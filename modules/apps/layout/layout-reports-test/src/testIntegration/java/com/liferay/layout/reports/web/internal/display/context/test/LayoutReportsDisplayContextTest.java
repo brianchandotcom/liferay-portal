@@ -16,12 +16,14 @@ package com.liferay.layout.reports.web.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -84,11 +87,11 @@ public class LayoutReportsDisplayContextTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsConfiguration",
+						"LayoutReportsPageSpeedConfiguration",
 					new HashMapDictionary<String, Object>() {
 						{
 							put("apiKey", RandomTestUtil.randomString());
-							put("enable", true);
+							put("enabled", true);
 						}
 					})) {
 
@@ -147,6 +150,84 @@ public class LayoutReportsDisplayContextTest {
 		}
 	}
 
+	@Test
+	public void testGetDataWithApiKeyInSiteConfiguration() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.layout.reports.web.internal.configuration." +
+						"LayoutReportsPageSpeedConfiguration",
+					new HashMapDictionary<String, Object>() {
+						{
+							put("apiKey", StringPool.BLANK);
+							put("enabled", true);
+						}
+					})) {
+
+			UnicodeProperties unicodeProperties =
+				_group.getTypeSettingsProperties();
+
+			unicodeProperties.setProperty(
+				"pageSpeedApiKey", RandomTestUtil.randomString());
+			unicodeProperties.setProperty(
+				"pageSpeedEnabled", Boolean.TRUE.toString());
+
+			_groupLocalService.updateGroup(_group);
+
+			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+
+			Map<String, Object> data = ReflectionTestUtil.invoke(
+				_getLayoutReportsDisplayContext(layout), "getData",
+				new Class<?>[0]);
+
+			Map<String, Object> context = (Map<String, Object>)data.get(
+				"context");
+
+			Assert.assertTrue((Boolean)context.get("validConnection"));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
+	}
+
+	@Test
+	public void testGetDataWithoutApiKey() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.layout.reports.web.internal.configuration." +
+						"LayoutReportsPageSpeedConfiguration",
+					new HashMapDictionary<String, Object>() {
+						{
+							put("apiKey", StringPool.BLANK);
+							put("enabled", true);
+						}
+					})) {
+
+			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+
+			Map<String, Object> data = ReflectionTestUtil.invoke(
+				_getLayoutReportsDisplayContext(layout), "getData",
+				new Class<?>[0]);
+
+			Map<String, Object> context = (Map<String, Object>)data.get(
+				"context");
+
+			Assert.assertFalse((Boolean)context.get("validConnection"));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
+	}
+
 	private Object _getLayoutReportsDisplayContext(Layout layout)
 		throws Exception {
 
@@ -193,6 +274,8 @@ public class LayoutReportsDisplayContextTest {
 				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,
 			new MockLiferayPortletContext(path));
 
+		mockLiferayPortletRenderRequest.setAttribute(WebKeys.LAYOUT, layout);
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
@@ -214,6 +297,9 @@ public class LayoutReportsDisplayContextTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.layout.reports.web.internal.portlet.LayoutReportsPortlet"

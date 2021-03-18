@@ -17,11 +17,13 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
+import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.TopLevelBuild;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,10 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringEscapeUtils;
+
+import org.dom4j.Element;
 
 /**
  * @author Michael Hashimoto
@@ -46,10 +52,16 @@ public class TestrayAttachmentRecorder {
 		JenkinsResultsParserUtil.delete(getTestrayLogsDir());
 
 		_recordJenkinsConsole();
-		_recordLiferayLogs();
-		_recordLiferayOSGiLogs();
-		_recordPoshiReportFiles();
-		_recordPoshiWarnings();
+
+		if (_build instanceof TopLevelBuild) {
+			_recordJenkinsReport();
+		}
+		else {
+			_recordLiferayLogs();
+			_recordLiferayOSGiLogs();
+			_recordPoshiReportFiles();
+			_recordPoshiWarnings();
+		}
 
 		_recorded = true;
 	}
@@ -206,11 +218,14 @@ public class TestrayAttachmentRecorder {
 		sb.append("/");
 		sb.append(_startProperties.getProperty("TOP_LEVEL_BUILD_NUMBER"));
 		sb.append("/");
-		sb.append(_build.getJobVariant());
-		sb.append("/");
 
-		sb.append(
-			JenkinsResultsParserUtil.getAxisVariable(_build.getBuildURL()));
+		if (!(_build instanceof TopLevelBuild)) {
+			sb.append(_build.getJobVariant());
+			sb.append("/");
+
+			sb.append(
+				JenkinsResultsParserUtil.getAxisVariable(_build.getBuildURL()));
+		}
 
 		return new File(getTestrayLogsDir(), sb.toString());
 	}
@@ -227,6 +242,31 @@ public class TestrayAttachmentRecorder {
 				jenkinsConsoleFile, jenkinsConsoleTextLoader.getConsoleText());
 
 			_convertToGzipFile(jenkinsConsoleFile);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private void _recordJenkinsReport() {
+		if (!(_build instanceof TopLevelBuild)) {
+			return;
+		}
+
+		TopLevelBuild topLevelBuild = (TopLevelBuild)_build;
+
+		Element jenkinsReportElement = topLevelBuild.getJenkinsReportElement();
+
+		File jenkinsReportFile = new File(
+			_getTestrayLogsBuildDir(), "jenkins-report.html");
+
+		try {
+			JenkinsResultsParserUtil.write(
+				jenkinsReportFile,
+				StringEscapeUtils.unescapeXml(
+					Dom4JUtil.format(jenkinsReportElement, true)));
+
+			_convertToGzipFile(jenkinsReportFile);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -379,8 +419,6 @@ public class TestrayAttachmentRecorder {
 			}
 		}
 
-		System.out.println("testResultsDirs=" + testResultsDirs);
-
 		if (testResultsDirs.isEmpty()) {
 			return;
 		}
@@ -389,9 +427,6 @@ public class TestrayAttachmentRecorder {
 			List<File> poshiReportIndexFiles =
 				JenkinsResultsParserUtil.findFiles(
 					testResultsDir, "index.html");
-
-			System.out.println(
-				"poshiReportIndexFiles=" + poshiReportIndexFiles);
 
 			for (File poshiReportIndexFile : poshiReportIndexFiles) {
 				File sourcePoshiReportDir =

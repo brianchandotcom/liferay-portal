@@ -63,6 +63,7 @@ public class AppBuilderAppWorkflowHandler
 			AppBuilderApp.class.getName(), DDLRecord.class.getName());
 	}
 
+	@Override
 	public String getNotificationLink(
 			long workflowTaskId, ServiceContext serviceContext)
 		throws PortalException {
@@ -123,6 +124,11 @@ public class AppBuilderAppWorkflowHandler
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getNotificationLink(long, ServiceContext)}}
+	 */
+	@Deprecated
 	@Override
 	public String getURLEditWorkflowTask(
 			long workflowTaskId, ServiceContext serviceContext)

@@ -72,6 +72,11 @@ public interface WorkflowHandler<T> {
 		long classPK, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getNotificationLink(long, ServiceContext)}}
+	 */
+	@Deprecated
 	public String getURLEditWorkflowTask(
 			long workflowTaskId, ServiceContext serviceContext)
 		throws PortalException;

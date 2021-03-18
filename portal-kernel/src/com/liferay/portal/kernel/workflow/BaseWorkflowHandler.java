@@ -171,6 +171,11 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getNotificationLink(long, ServiceContext)}}
+	 */
+	@Deprecated
 	@Override
 	public String getURLEditWorkflowTask(
 			long workflowTaskId, ServiceContext serviceContext)

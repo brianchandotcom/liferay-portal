@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_ARTICLE_BODY</td>
+	<td>//div[contains(@class,'questions-article-body') and contains(.,'${key_articleBodyContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_CATEGORY_LABEL_ITEM</td>
 	<td>//span[contains(@class,'label-item') and contains(.,'${key_categoryItem}')]</td>
 	<td></td>

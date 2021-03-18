@@ -184,6 +184,7 @@ public class DDMDataDefinitionConverterImpl
 					});
 				setLocalizable(false);
 				setNestedDDMFormFields(nestedDDMFormFields);
+				setProperty("collapsible", false);
 				setProperty("ddmStructureId", ddmStructureId);
 				setProperty("ddmStructureLayoutId", ddmStructureLayoutId);
 				setProperty("upgradedStructure", upgradedStructure);

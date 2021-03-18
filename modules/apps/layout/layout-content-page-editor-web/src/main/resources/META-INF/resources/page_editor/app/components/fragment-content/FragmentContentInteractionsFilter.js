@@ -192,7 +192,7 @@ function FragmentContentInteractionsFilter({
 
 				if (isActive(editable.itemId)) {
 					setEditableProcessorUniqueId(
-						editable.itemId,
+						toControlsId(editable.itemId),
 						editableClickPosition
 					);
 				}
@@ -248,6 +248,7 @@ function FragmentContentInteractionsFilter({
 		itemId,
 		setEditableProcessorUniqueId,
 		selectedViewportSize,
+		toControlsId,
 	]);
 
 	const hoverEditable = (event) => {

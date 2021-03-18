@@ -113,6 +113,12 @@ const FragmentContent = ({
 		}
 	}, [fragmentEntryLinkError]);
 
+	const editables = useSelectorCallback(
+		(state) =>
+			Object.values(state.editables?.[toControlsId(item.itemId)] || {}),
+		[item, toControlsId]
+	);
+
 	/**
 	 * fragmentElement keeps a copy of the fragment real HTML,
 	 * we perform editableValues replacements over this copy
@@ -125,7 +131,11 @@ const FragmentContent = ({
 	useEffect(() => {
 		let fragmentElement = document.createElement('div');
 
-		if (!isProcessorEnabled()) {
+		const isBeingEdited = editables.some((editable) =>
+			isProcessorEnabled(toControlsId(editable.itemId))
+		);
+
+		if (!isBeingEdited) {
 			fragmentElement.innerHTML = defaultContent;
 
 			Promise.all(
@@ -170,6 +180,7 @@ const FragmentContent = ({
 	}, [
 		defaultContent,
 		dispatch,
+		editables,
 		editableValues,
 		fragmentEntryLink,
 		fragmentEntryLinkId,
@@ -178,6 +189,7 @@ const FragmentContent = ({
 		isProcessorEnabled,
 		languageId,
 		segmentsExperienceId,
+		toControlsId,
 	]);
 
 	const responsiveConfig = getResponsiveConfig(

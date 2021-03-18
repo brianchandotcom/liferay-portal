@@ -271,15 +271,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					ServiceContextThreadLocal.getServiceContext();
 
 				String[] removePortlets = (String[])serviceContext.getAttribute(
-					"removePortlets");
+					"removePortletIds");
 
 				if (removePortlets == null) {
 					serviceContext.setAttribute(
-						"removePortlets", new String[] {portletId});
+						"removePortletIds", new String[] {portletId});
 				}
 				else if (!ArrayUtil.contains(removePortlets, portletId)) {
 					serviceContext.setAttribute(
-						"removePortlets",
+						"removePortletIds",
 						ArrayUtil.append(removePortlets, portletId));
 				}
 			}

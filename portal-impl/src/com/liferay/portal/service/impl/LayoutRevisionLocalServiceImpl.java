@@ -508,19 +508,19 @@ public class LayoutRevisionLocalServiceImpl
 			String command = serviceContext.getCommand();
 
 			if (command.equals("delete")) {
-				String[] removePortletArray =
-					(String[])serviceContext.getAttribute("removePortlets");
+				String[] removePortletIdsArray =
+					(String[])serviceContext.getAttribute("removePortletIds");
 
-				if (!ArrayUtil.isEmpty(removePortletArray)) {
-					Set<String> removePortlets = SetUtil.fromArray(
-						removePortletArray);
+				if (!ArrayUtil.isEmpty(removePortletIdsArray)) {
+					Set<String> removePortletIds = SetUtil.fromArray(
+						removePortletIdsArray);
 
 					for (PortletPreferences portletPreferences :
 							portletPreferencesLocalService.
 								getPortletPreferencesByPlid(
 									layoutRevision.getLayoutRevisionId())) {
 
-						if (removePortlets.contains(
+						if (removePortletIds.contains(
 								portletPreferences.getPortletId())) {
 
 							portletPreferencesLocalService.

@@ -27,9 +27,15 @@ import java.util.Map;
 
 import jodd.util.BCrypt;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Arthur Chan
  */
+@Component(
+	property = "configuration.pid=com.liferay.portal.crypto.hash.provider.bcrypt.internal.configuration.BCryptCryptoHashProviderConfiguration",
+	service = CryptoHashProviderFactory.class
+)
 public class BCryptCryptoHashProviderFactory
 	implements CryptoHashProviderFactory {
 
@@ -63,7 +69,7 @@ public class BCryptCryptoHashProviderFactory
 			_cryptoHashProviderProperties = cryptoHashProviderProperties;
 
 			_rounds = MapUtil.getInteger(
-				cryptoHashProviderProperties, "rounds", 10);
+				cryptoHashProviderProperties, "bcrypt.rounds", 10);
 		}
 
 		@Override

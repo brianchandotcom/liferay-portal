@@ -6,6 +6,7 @@
 	"definitionSchemaVersion": "2.0",
 	"fields": [
 		{
+			"collapsible": false,
 			"ddmStructureId": "",
 			"ddmStructureLayoutId": "",
 			"fieldReference": "TextFieldSet",
@@ -113,6 +114,7 @@
 			"upgradedStructure": false
 		},
 		{
+			"collapsible": false,
 			"ddmStructureId": "",
 			"ddmStructureLayoutId": "",
 			"fieldReference": "NumberFieldSet",

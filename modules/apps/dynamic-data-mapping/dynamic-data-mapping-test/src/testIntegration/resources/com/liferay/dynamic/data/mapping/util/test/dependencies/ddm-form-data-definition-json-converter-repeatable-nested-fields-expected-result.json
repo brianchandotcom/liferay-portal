@@ -6,6 +6,7 @@
 	"definitionSchemaVersion": "2.0",
 	"fields": [
 		{
+			"collapsible": false,
 			"ddmStructureId": "",
 			"ddmStructureLayoutId": "",
 			"fieldReference": "TextFieldSet",
@@ -58,6 +59,7 @@
 					"visibilityExpression": ""
 				},
 				{
+					"collapsible": false,
 					"ddmStructureId": "",
 					"ddmStructureLayoutId": "",
 					"fieldReference": "HTMLFieldSet",
@@ -149,6 +151,7 @@
 					"visibilityExpression": ""
 				},
 				{
+					"collapsible": false,
 					"ddmStructureId": "",
 					"ddmStructureLayoutId": "",
 					"fieldReference": "ImageFieldSet",

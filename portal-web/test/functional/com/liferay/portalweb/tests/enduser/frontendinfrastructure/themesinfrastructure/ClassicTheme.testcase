@@ -90,7 +90,7 @@ definition {
 
 		Theme.viewRestorePortlet();
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 	}
 
 }

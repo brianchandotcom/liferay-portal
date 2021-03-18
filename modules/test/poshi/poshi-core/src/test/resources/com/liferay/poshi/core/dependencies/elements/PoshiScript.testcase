@@ -213,7 +213,7 @@ definition {
 			userMiddleNameEdit = '''<script>document.write("XSS"); window.stop();</script>'''
 		);
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		takeScreenshot();
 

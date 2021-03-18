@@ -16,7 +16,7 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "PortalContext#Smoke";
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}

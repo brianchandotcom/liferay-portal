@@ -26,7 +26,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.hypersonic.driver"),
 			jdbcURL = PropsUtil.get("database.hypersonic.url"));
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}
@@ -48,7 +48,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.hypersonic.driver"),
 			jdbcURL = PropsUtil.get("database.hypersonic.url"));
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		SetupWizard.viewSampleDataEnabledInPropertiesFile();
 
@@ -73,9 +73,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.mariadb.driver"),
 			jdbcURL = PropsUtil.get("database.mariadb.url"));
 
-		Smoke.viewWelcomePage(
-			userFirstName = "Joe",
-			userLastName = "Bloggs");
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}
@@ -98,7 +96,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.mariadb.driver"),
 			jdbcURL = PropsUtil.get("database.mariadb.url"));
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		SetupWizard.viewSampleDataEnabledInPropertiesFile();
 
@@ -125,7 +123,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
 			jdbcURL = PropsUtil.get("database.mysql.url"));
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		SetupWizard.viewSampleDataEnabledInPropertiesFile();
 
@@ -149,9 +147,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.postgresql.driver"),
 			jdbcURL = PropsUtil.get("database.postgresql.url"));
 
-		Smoke.viewWelcomePage(
-			userFirstName = "Joe",
-			userLastName = "Bloggs");
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}
@@ -174,7 +170,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.postgresql.driver"),
 			jdbcURL = PropsUtil.get("database.postgresql.url"));
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		SetupWizard.viewSampleDataEnabledInPropertiesFile();
 

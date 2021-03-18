@@ -86,9 +86,7 @@ definition {
 
 		Refresh();
 
-		Smoke.viewWelcomePage(
-			userFirstName = "Test",
-			userLastName = "Test");
+		Smoke.viewWelcomeContentPage();
 
 		User.logoutPG();
 

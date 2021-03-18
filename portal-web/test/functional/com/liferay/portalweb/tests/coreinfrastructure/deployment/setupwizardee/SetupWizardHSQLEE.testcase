@@ -24,9 +24,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.db2.driver"),
 			jdbcURL = PropsUtil.get("database.db2.url"));
 
-		Smoke.viewWelcomePage(
-			userFirstName = "Joe",
-			userLastName = "Bloggs");
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}
@@ -49,7 +47,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.db2.driver"),
 			jdbcURL = PropsUtil.get("database.db2.url"));
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		SetupWizard.viewSampleDataEnabledInPropertiesFile();
 
@@ -74,9 +72,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.oracle.driver"),
 			jdbcURL = PropsUtil.get("database.oracle.url"));
 
-		Smoke.viewWelcomePage(
-			userFirstName = "Joe",
-			userLastName = "Bloggs");
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}
@@ -99,7 +95,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.oracle.driver"),
 			jdbcURL = PropsUtil.get("database.oracle.url"));
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		SetupWizard.viewSampleDataEnabledInPropertiesFile();
 
@@ -124,9 +120,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.sqlserver.driver"),
 			jdbcURL = PropsUtil.get("database.sqlserver.url"));
 
-		Smoke.viewWelcomePage(
-			userFirstName = "Joe",
-			userLastName = "Bloggs");
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}
@@ -149,7 +143,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.sqlserver.driver"),
 			jdbcURL = PropsUtil.get("database.sqlserver.url"));
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		SetupWizard.viewSampleDataEnabledInPropertiesFile();
 
@@ -173,9 +167,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.sybase.driver"),
 			jdbcURL = PropsUtil.get("database.sybase.url"));
 
-		Smoke.viewWelcomePage(
-			userFirstName = "Joe",
-			userLastName = "Bloggs");
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}
@@ -198,7 +190,7 @@ definition {
 			jdbcDriverClassName = PropsUtil.get("database.sybase.driver"),
 			jdbcURL = PropsUtil.get("database.sybase.url"));
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		SetupWizard.viewSampleDataEnabledInPropertiesFile();
 

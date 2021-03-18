@@ -392,24 +392,23 @@ public class DefaultUserResolver implements UserResolver {
 			return user;
 		}
 
-			user = getUser(companyId, subjectNameIdentifier, authType);
+		user = getUser(companyId, subjectNameIdentifier, authType);
 
-			if (user != null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Found user " + user.toString());
-				}
-
-				user = updateUser(user, attributesMap, serviceContext);
+		if (user != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Found user " + user.toString());
 			}
-			else {
-				user = addUser(
-					companyId, samlSpIdpConnection, attributesMap,
-					serviceContext);
 
-				if (_log.isDebugEnabled()) {
-					_log.debug("Added user " + user.toString());
-				}
+			user = updateUser(user, attributesMap, serviceContext);
+		}
+		else {
+			user = addUser(
+				companyId, samlSpIdpConnection, attributesMap, serviceContext);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Added user " + user.toString());
 			}
+		}
 
 		return user;
 	}

@@ -82,7 +82,9 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Media");
 
-		CommerceProductImages.addProductImages(optionValuesList = "Black,Blue,White");
+		CommerceProductImages.addProductImages(
+			imageTitles = "Black,Blue,White",
+			optionValuesList = "Black,Blue,White");
 
 		echo("Asserting all the attributes are correctly shown in Front Store...");
 

@@ -5,6 +5,10 @@
 
 	min-width: $product-card-min-width;
 
+	a {
+		text-decoration: none;
+	}
+
 	&-tiles {
 		display: grid;
 		grid-column-gap: $product-card-gutter;

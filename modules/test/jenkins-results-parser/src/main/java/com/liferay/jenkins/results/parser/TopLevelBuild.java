@@ -454,7 +454,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		}
 	}
 
-	public Element getJenkinsReportElement() {
+	public synchronized Element getJenkinsReportElement() {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {

@@ -48,7 +48,7 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 	}
 
 	@Override
-	public Element getJenkinsReportElement() {
+	public synchronized Element getJenkinsReportElement() {
 		if (_workspaceGitRepository == null) {
 			throw new IllegalStateException(
 				"Please set the workspace git repository");

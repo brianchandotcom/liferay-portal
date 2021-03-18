@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>ACHeader</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACNavigation</td></tr>
+</thead>
+<tbody>
+<!-- HEADER ELEMENTS  -->
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//header//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERIC_HEADER_TAB</td>
+	<td>//header//li[contains(@class, 'nav-item') and text()='${key_tabName}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

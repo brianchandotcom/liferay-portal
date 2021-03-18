@@ -1,5 +1,11 @@
 definition {
 
+	macro clickHeaderTab {
+		Click(
+			key_tabName = "${tabName}",
+			locator1 = "ACHeader#GENERIC_HEADER_TAB");
+	}
+
 	macro collapseSidebar {
 		Click(locator1 = "ACNavigation#COLLAPSE_SIDEBAR_ARROW");
 	}

@@ -14,8 +14,6 @@
 
 import React, {useCallback, useContext, useRef, useState} from 'react';
 
-import {useToControlsId} from '../CollectionItemContext';
-
 const INITIAL_STATE = {editableClickPosition: null, editableUniqueId: null};
 
 const EditableProcessorDispatchContext = React.createContext(() => {});
@@ -51,29 +49,26 @@ export function useEditableProcessorUniqueId() {
 
 export function useIsProcessorEnabled() {
 	const ref = useContext(EditableProcessorRefContext);
-	const toControlsId = useToControlsId();
 
 	return useCallback(
 		(editableUniqueId = null) =>
 			editableUniqueId
-				? ref.current?.editableUniqueId ===
-				  toControlsId(editableUniqueId)
+				? ref.current?.editableUniqueId === editableUniqueId
 				: !!ref.current?.editableUniqueId,
-		[ref, toControlsId]
+		[ref]
 	);
 }
 
 export function useSetEditableProcessorUniqueId() {
 	const setState = useContext(EditableProcessorDispatchContext);
-	const toControlsId = useToControlsId();
 
 	return useCallback(
 		(editableUniqueIdOrNull, editableClickPosition = null) => {
 			setState({
 				editableClickPosition,
-				editableUniqueId: toControlsId(editableUniqueIdOrNull),
+				editableUniqueId: editableUniqueIdOrNull,
 			});
 		},
-		[setState, toControlsId]
+		[setState]
 	);
 }

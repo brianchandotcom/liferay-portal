@@ -249,21 +249,8 @@ public class JournalConverterUtilTest {
 		Field fieldsDisplayField = getFieldsDisplayField(
 			_ddmStructure.getStructureId(),
 			StringBundler.concat(
-				"boolean_INSTANCE_", _ddmStructure.getStructureId(),
-				",document_library_INSTANCE_", _ddmStructure.getStructureId(),
-				",link_to_layout_INSTANCE_", _ddmStructure.getStructureId(),
-				",text_area_INSTANCE_", _ddmStructure.getStructureId(),
-				",multi_list_INSTANCE_", _ddmStructure.getStructureId(),
-				",list_INSTANCE_pcm9WPVX,contactFieldSet_INSTANCE_",
-				_ddmStructure.getStructureId(), ",contact_INSTANCE_",
+				"list_INSTANCE_pcm9WPVX,contactFieldSet_INSTANCE_",
 				_ddmStructure.getStructureId(), ",phoneFieldSet_INSTANCE_",
-				_ddmStructure.getStructureId(), ",phone_INSTANCE_",
-				_ddmStructure.getStructureId(), ",ext_INSTANCE_",
-				_ddmStructure.getStructureId(), ",text_INSTANCE_",
-				_ddmStructure.getStructureId(), ",text_box_INSTANCE_",
-				_ddmStructure.getStructureId(), ",image_1_INSTANCE_",
-				_ddmStructure.getStructureId(), ",image_2_INSTANCE_",
-				_ddmStructure.getStructureId(), ",image_3_INSTANCE_",
 				_ddmStructure.getStructureId()));
 
 		expectedFields.put(fieldsDisplayField);
@@ -292,21 +279,8 @@ public class JournalConverterUtilTest {
 		Field fieldsDisplayField = getFieldsDisplayField(
 			_ddmStructure.getStructureId(),
 			StringBundler.concat(
-				"boolean_INSTANCE_", _ddmStructure.getStructureId(),
-				",document_library_INSTANCE_", _ddmStructure.getStructureId(),
-				",link_to_layout_INSTANCE_", _ddmStructure.getStructureId(),
-				",text_area_INSTANCE_", _ddmStructure.getStructureId(),
-				",multi_list_INSTANCE_9X5wVsSv,list_INSTANCE_",
-				_ddmStructure.getStructureId(), ",contactFieldSet_INSTANCE_",
-				_ddmStructure.getStructureId(), ",contact_INSTANCE_",
+				"multi_list_INSTANCE_9X5wVsSv,contactFieldSet_INSTANCE_",
 				_ddmStructure.getStructureId(), ",phoneFieldSet_INSTANCE_",
-				_ddmStructure.getStructureId(), ",phone_INSTANCE_",
-				_ddmStructure.getStructureId(), ",ext_INSTANCE_",
-				_ddmStructure.getStructureId(), ",text_INSTANCE_",
-				_ddmStructure.getStructureId(), ",text_box_INSTANCE_",
-				_ddmStructure.getStructureId(), ",image_1_INSTANCE_",
-				_ddmStructure.getStructureId(), ",image_2_INSTANCE_",
-				_ddmStructure.getStructureId(), ",image_3_INSTANCE_",
 				_ddmStructure.getStructureId()));
 
 		expectedFields.put(fieldsDisplayField);
@@ -414,22 +388,9 @@ public class JournalConverterUtilTest {
 		Field fieldsDisplayField = getFieldsDisplayField(
 			_ddmStructure.getStructureId(),
 			StringBundler.concat(
-				"boolean_INSTANCE_", _ddmStructure.getStructureId(),
-				",document_library_INSTANCE_", _ddmStructure.getStructureId(),
-				",link_to_layout_INSTANCE_", _ddmStructure.getStructureId(),
-				",text_area_INSTANCE_", _ddmStructure.getStructureId(),
-				",multi_list_INSTANCE_", _ddmStructure.getStructureId(),
-				",list_INSTANCE_", _ddmStructure.getStructureId(),
-				",contactFieldSet_INSTANCE_", _ddmStructure.getStructureId(),
-				",contact_INSTANCE_", _ddmStructure.getStructureId(),
+				"contactFieldSet_INSTANCE_", _ddmStructure.getStructureId(),
 				",phoneFieldSet_INSTANCE_", _ddmStructure.getStructureId(),
-				",phone_INSTANCE_", _ddmStructure.getStructureId(),
-				",ext_INSTANCE_", _ddmStructure.getStructureId(),
-				",text_INSTANCE_Okhyj7Ni,text_box_INSTANCE_",
-				_ddmStructure.getStructureId(), ",image_1_INSTANCE_",
-				_ddmStructure.getStructureId(), ",image_2_INSTANCE_",
-				_ddmStructure.getStructureId(), ",image_3_INSTANCE_",
-				_ddmStructure.getStructureId()));
+				",text_INSTANCE_Okhyj7Ni"));
 
 		expectedFields.put(fieldsDisplayField);
 

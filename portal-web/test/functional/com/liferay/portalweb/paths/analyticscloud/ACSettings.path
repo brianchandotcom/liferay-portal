@@ -8,11 +8,27 @@
 <tr><td rowspan="1" colspan="3">ACSettings</td></tr>
 </thead>
 <tbody>
-<!-- SETTINGS TBD  -->
+<!-- SETTINGS NAVIGATION  -->
 <tr>
-	<td>SETTINGS_TBD</td>
-	<td>//TBD</td>
-	<td></td>
+    <td>SETTINGS_NAVIGATION</td>
+    <td>//*[contains(@class, 'button') and contains(text(),'${key_SettingsNavigation}')]</td>
+    <td></td>
+</tr>
+<!-- SETTINGS TOOLBAR -->
+<tr>
+    <td>DELETE_FROM_TOOLBAR</td>
+    <td>//*[contains(@class,'nav-btn')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>CONTINUE_BUTTON</td>
+    <td>//button[contains(.,'Continue') and not (contains(@class,'disabled'))]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SELECT_ALL_CHECKBOX</td>
+    <td>//input[contains(@data-testid, 'select-all')]</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

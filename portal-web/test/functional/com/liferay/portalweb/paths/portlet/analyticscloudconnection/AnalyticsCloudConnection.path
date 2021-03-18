@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ANALYTICS_CLOUD_TOKEN_INPUT</td>
-	<td>//input[contains(@class, 'input-root form-control text-truncate input-group-inset input-group-inset-after')]</td>
+	<td>//input[contains(@class, 'input-root') and contains(@class, 'input-group-inset') and contains(@class, 'input-group-inset-after')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>NEW_PROPERTY_BUTTON</td>
-	<td>//*[contains(@class, 'btn btn-primary nav-btn nav-btn-monospaced')]</td>
+	<td>//*[contains(@class, 'btn-primary') and contains(@class, 'nav-btn-monospaced')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -151,6 +151,11 @@
 <tr>
 	<td>SYNCED_SITES_LINK</td>
 	<td>//*[contains(@class, 'nav-link') and text()='Synced Sites']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNCED_SITES_SEARCH_FIELD</td>
+	<td>//input[contains(@class, 'input-group-inset-after')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -24,7 +24,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Analytics Cloud",
+			configurationName = "Analytics Cloud",
+			configurationScope = "Virtual Instance Scope");
 
 		Click(locator1 = "AnalyticsCloudConnection#DXP_TOKEN_INPUT");
 
@@ -39,6 +42,16 @@ definition {
 		Click(locator1 = "AnalyticsCloudConnection#SYNCED_SITES_LINK");
 
 		Click(locator1 = "AnalyticsCloudConnection#NEW_PROPERTY_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#SYNCED_SITES_SEARCH_FIELD");
+
+		Type(
+			locator1 = "AnalyticsCloudConnection#SYNCED_SITES_SEARCH_FIELD",
+			value1 = "${siteName}");
+
+		KeyPress(
+				locator1 = "ContentDashboard#SEARCH_TAG_FIELD",
+				value1 = "\ENTER");
 
 		Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
 
@@ -72,6 +85,8 @@ definition {
 		Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_SOURCE");
 
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECT_WITH_TOKEN_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
 
 		Copy(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
 	}

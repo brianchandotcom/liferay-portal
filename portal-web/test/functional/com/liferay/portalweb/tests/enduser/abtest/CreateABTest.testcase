@@ -32,13 +32,9 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Content Page");
-
 		// Connect and synchronyze with Analytics Cloud
 
-		AnalyticsCloud.syncAnalyticsCloud();
+		AnalyticsCloud.syncAnalyticsCloud(siteName = "Test Site Name");
 
 		// Create content page
 
@@ -52,13 +48,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Click(locator1 = "ABTest#AB_TEST_BUTTON");
-
 		AnalyticsCloud.teardownAnalyticsCloud();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.deletePage(pageName = "Content Page");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();

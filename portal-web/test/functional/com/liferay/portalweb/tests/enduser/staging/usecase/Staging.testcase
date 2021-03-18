@@ -676,23 +676,23 @@ definition {
 			webContentTitle = "Web Content Title");
 
 		WebContent.addWithStructureCP(
-				column = "1",
-				dmNavTab = "User Personal Folder",
-				navTab = "Web Content Images",
-				row = "1",
-				structureName = "Structure Name",
-				templateName = "Template Name",
-				webContentColor = "FF0D0D",
-				webContentDate = "10/10/2020",
-				webContentGrid = "true",
-				webContentImage = "Document_3.png",
-				webContentMultipleSelection = "Option 1",
-				webContentNumeric = "9",
-				webContentRichText = "This is a Rich Text field",
-				webContentSelectFromList = "Option 2",
-				webContentSingleSelection = "Option 3",
-				webContentText = "Web Content Content",
-				webContentTitle = "Web Content Title");
+			column = "1",
+			dmNavTab = "User Personal Folder",
+			navTab = "Web Content Images",
+			row = "1",
+			structureName = "Structure Name",
+			templateName = "Template Name",
+			webContentColor = "FF0D0D",
+			webContentDate = "10/10/2020",
+			webContentGrid = "true",
+			webContentImage = "Document_3.png",
+			webContentMultipleSelection = "Option 1",
+			webContentNumeric = "9",
+			webContentRichText = "This is a Rich Text field",
+			webContentSelectFromList = "Option 2",
+			webContentSingleSelection = "Option 3",
+			webContentText = "Web Content Content",
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
@@ -2471,23 +2471,23 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
 		WebContent.addWithStructureCP(
-				column = "1",
-				dmNavTab = "User Personal Folder",
-				navTab = "Web Content Images",
-				row = "1",
-				structureName = "Structure Name",
-				templateName = "Template Name",
-				webContentColor = "FF0D0D",
-				webContentDate = "10/10/2020",
-				webContentGrid = "true",
-				webContentImage = "Document_3.png",
-				webContentMultipleSelection = "Option 1",
-				webContentNumeric = "9",
-				webContentRichText = "Staging Web Content Body",
-				webContentSelectFromList = "Option 2",
-				webContentSingleSelection = "Option 3",
-				webContentText = "Staging Web Content Text",
-				webContentTitle = "Web Content Title");
+			column = "1",
+			dmNavTab = "User Personal Folder",
+			navTab = "Web Content Images",
+			row = "1",
+			structureName = "Structure Name",
+			templateName = "Template Name",
+			webContentColor = "FF0D0D",
+			webContentDate = "10/10/2020",
+			webContentGrid = "true",
+			webContentImage = "Document_3.png",
+			webContentMultipleSelection = "Option 1",
+			webContentNumeric = "9",
+			webContentRichText = "Staging Web Content Body",
+			webContentSelectFromList = "Option 2",
+			webContentSingleSelection = "Option 3",
+			webContentText = "Staging Web Content Text",
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 

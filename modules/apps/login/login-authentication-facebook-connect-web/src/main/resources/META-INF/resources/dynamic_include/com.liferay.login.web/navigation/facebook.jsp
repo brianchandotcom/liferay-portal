@@ -43,7 +43,7 @@ JSONObject stateJSONObject = JSONUtil.put(
 
 facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "state", stateJSONObject.toString());
 
-String taglibOpenFacebookConnectLoginWindow = "javascript: var facebookConnectLoginWindow = window.open('" + URLCodec.encodeURL(facebookAuthURL) + "', 'facebook', 'align=center,directories=no,height=560,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); facebookConnectLoginWindow.focus();";
+String taglibOpenFacebookConnectLoginWindow = "javascript:var facebookConnectLoginWindow = window.open('" + URLCodec.encodeURL(facebookAuthURL) + "', 'facebook', 'align=center,directories=no,height=560,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); facebookConnectLoginWindow.focus();";
 %>
 
 <liferay-ui:icon

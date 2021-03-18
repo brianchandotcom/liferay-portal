@@ -33,9 +33,9 @@ definition {
 	test AssertWebContentFromStructureNotBeDeletedOnLiveViaSAP {
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
-					content = "WC Content",
-					groupName = "Site Name",
-					title = "WC 1");
+				content = "WC Content",
+				groupName = "Site Name",
+				title = "WC 1");
 		}
 
 		task ("Activate Staging") {
@@ -178,9 +178,9 @@ definition {
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
-					content = "WC Content",
-					groupName = "Site Name",
-					title = "WC 1");
+				content = "WC Content",
+				groupName = "Site Name",
+				title = "WC 1");
 		}
 
 		task ("Activate Staging") {
@@ -266,50 +266,48 @@ definition {
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
-					content = "WC Content",
-					groupName = "Site Name",
-					title = "WC 1");
+				content = "WC Content",
+				groupName = "Site Name",
+				title = "WC 1");
 		}
-		
+
 		task ("Create structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			NavItem.gotoStructures();
 
 			WebContentStructures.addCP(
-					structureDescription = "WC Structure Description",
-					structureName = "WC Structure Name");
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
 
 			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
-			
 		}
 
 		task ("Set default values for the structure") {
-			WebContentStructures.editStructureDefaultValuesCP(
-					structureName = "WC Structure Name");
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-					column = "1",
-					dmNavTab = "User Personal Folder",
-					navTab = "Web Content Images",
-					row = "1",
-					structureName = "WC Structure Name",
-					webContentColor = "FF0D0D",
-					webContentDate = "10/10/2020",
-					webContentGrid = "true",
-					webContentImage = "Document_3.png",
-					webContentLinkToPage = "Staging Test Page",
-					webContentMultipleSelection = "Option 1",
-					webContentNumeric = "9",
-					webContentRichText = "This is a Rich Text field",
-					webContentSelectFromList = "Option 2",
-					webContentSingleSelection = "Option 3",
-					webContentText = "(Enter Text Here)",
-					webContentTitle = "Web Content Title",
-					webContentUpload = "Document_1.doc",
-					webContentWebContent = "WC 1");
+				column = "1",
+				dmNavTab = "User Personal Folder",
+				navTab = "Web Content Images",
+				row = "1",
+				structureName = "WC Structure Name",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Staging Test Page",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "(Enter Text Here)",
+				webContentTitle = "Web Content Title",
+				webContentUpload = "Document_1.doc",
+				webContentWebContent = "WC 1");
 
 			PortletEntry.save();
 		}
@@ -320,28 +318,25 @@ definition {
 			NavItem.gotoTemplates();
 
 			WebContentTemplates.addCP(
-					structureName = "WC Structure Name",
-					templateDescription = "WC Template Description",
-					templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
-					templateName = "WC Template Name");
-
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
+				templateName = "WC Template Name");
 		}
 
 		task ("Create and Publish Web Content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-			WebContentNavigator.gotoAddWithStructureCP(
-					structureName = "WC Structure Name");
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-					structureName = "WC Structure Name",
-					webContentText = "Web Content Text",
-					webContentTitle = "Web Content Title");
+				structureName = "WC Structure Name",
+				webContentText = "Web Content Text",
+				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
 
 			WebContent.viewTitle(webContentTitle = "Web Content Title");
-
 		}
 
 		task ("Export web content") {
@@ -361,19 +356,17 @@ definition {
 		}
 
 		task ("Import web content") {
-			WebContentNavigator.openWebContentAdmin(
-					siteURLKey = "site-name-b-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-b-staging");
 
 			LAR.importPortlet(larFileName = "WebContent_portlet.lar");
 		}
 
 		task ("Assert web content has been imported in staging") {
-			WebContentNavigator.openWebContentAdmin(
-					siteURLKey = "site-name-b-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-b-staging");
 
 			WebContent.viewWithStructureCP(
-					webContentText = "Web Content Text",
-					webContentTitle = "Web Content Title");
+				webContentText = "Web Content Text",
+				webContentTitle = "Web Content Title");
 		}
 
 		task ("Publish the site to live") {
@@ -383,20 +376,18 @@ definition {
 		}
 
 		task ("Assert no error") {
-			AssertConsoleTextNotPresent(
-					value1 = "ConstraintViolationException");
+			AssertConsoleTextNotPresent(value1 = "ConstraintViolationException");
 
 			AssertConsoleTextNotPresent(value1 = "SystemException");
 		}
 
 		task ("Assert web content has been published") {
-			WebContentNavigator.openWebContentAdmin(
-					siteURLKey = "site-name-b");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-b");
 
 			AssertTextEquals.assertPartialText(
-					key_webContentTitle = "Web Content Title",
-					locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
-					value1 = "Web Content Title");
+				key_webContentTitle = "Web Content Title",
+				locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
+				value1 = "Web Content Title");
 		}
 
 		task ("Delete created site") {
@@ -411,9 +402,9 @@ definition {
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
-					content = "WC Content",
-					groupName = "Site Name",
-					title = "WC 1");
+				content = "WC Content",
+				groupName = "Site Name",
+				title = "WC 1");
 		}
 
 		task ("Create structure") {
@@ -422,13 +413,12 @@ definition {
 			NavItem.gotoStructures();
 
 			WebContentStructures.addCP(
-					structureDescription = "WC Structure Description",
-					structureName = "WC Structure Name");
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
 
 			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
-
 		}
 
 		task ("Create a web content as draft") {
@@ -437,26 +427,26 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-					column = "1",
-					dmNavTab = "User Personal Folder",
-					navTab = "Web Content Images",
-					row = "1",
-					structureName = "WC Structure Name",
-					saveAsDraft = "true",
-					webContentColor = "FF0D0D",
-					webContentDate = "10/10/2020",
-					webContentGrid = "true",
-					webContentImage = "Document_3.png",
-					webContentLinkToPage = "Staging Test Page",
-					webContentMultipleSelection = "Option 1",
-					webContentNumeric = "9",
-					webContentRichText = "This is a Rich Text field",
-					webContentSelectFromList = "Option 2",
-					webContentSingleSelection = "Option 3",
-					webContentText = "(Enter Text Here)",
-					webContentTitle = "WC WebContent Title",
-					webContentUpload = "Document_1.doc",
-					webContentWebContent = "WC 1");
+				column = "1",
+				dmNavTab = "User Personal Folder",
+				navTab = "Web Content Images",
+				row = "1",
+				saveAsDraft = "true",
+				structureName = "WC Structure Name",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Staging Test Page",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "(Enter Text Here)",
+				webContentTitle = "WC WebContent Title",
+				webContentUpload = "Document_1.doc",
+				webContentWebContent = "WC 1");
 
 			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
@@ -465,17 +455,16 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			WebContentNavigator.gotoViewStatus(
-					webContentStatus = "DRAFT",
-					webContentTitle = "WC WebContent Title");
-
+				webContentStatus = "DRAFT",
+				webContentTitle = "WC WebContent Title");
 		}
 
 		task ("Activate Staging with page versioning") {
 			Staging.openStagingAdmin(siteURLKey = "site-name");
 
 			Staging.activateStagingCP(
-					pageVersioningEnabled = "true",
-					siteName = "Site Name");
+				pageVersioningEnabled = "true",
+				siteName = "Site Name");
 		}
 
 		task ("Check web content draft is not present in staging") {
@@ -498,19 +487,17 @@ definition {
 
 		task ("Create three web contents") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" ) {
-				WebContentNavigator.openWebContentAdmin(
-						siteURLKey = "site-name");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 				WebContentNavigator.gotoAddCP();
 
 				WebContent.addCP(
-						webContentContent = "WC WebContent Content",
-						webContentTitle = "${webContentTitle}");
+					webContentContent = "WC WebContent Content",
+					webContentTitle = "${webContentTitle}");
 
 				PortletEntry.publish();
 
-				WebContentNavigator.openWebContentAdmin(
-						siteURLKey = "site-name");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
 			}
@@ -524,28 +511,24 @@ definition {
 
 		task ("Edit the web contents") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-				WebContentNavigator.openWebContentAdmin(
-						siteURLKey = "site-name-staging");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
-				WebContentNavigator.gotoEditCP(
-						webContentTitle = "${webContentTitle}");
+				WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 
 				WebContent.editCP(
-						webContentContentEdit = "WC WebContent Content Edit",
-						webContentTitle = "${webContentTitle}",
-						webContentTitleEdit = "${webContentTitle} Edit");
+					webContentContentEdit = "WC WebContent Content Edit",
+					webContentTitle = "${webContentTitle}",
+					webContentTitleEdit = "${webContentTitle} Edit");
 			}
 		}
 
 		task ("Assert web content has been edited") {
 			for (var webContentTitle : list "WC WebContent Title 1 Edit,WC WebContent Title 2 Edit,WC WebContent Title 3 Edit") {
-				WebContentNavigator.openWebContentAdmin(
-						siteURLKey = "site-name-staging");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
-
 			}
 		}
-
 	}
+
 }

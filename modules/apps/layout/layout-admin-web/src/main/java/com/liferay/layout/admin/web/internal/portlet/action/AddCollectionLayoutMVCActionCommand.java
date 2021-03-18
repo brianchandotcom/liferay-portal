@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -189,7 +190,7 @@ public class AddCollectionLayoutMVCActionCommand
 		).put(
 			"CLASS_PK", classPK
 		).put(
-			"COLLECTION_NAME", assetListEntry.getTitle()
+			"COLLECTION_NAME", HtmlUtil.escape(assetListEntry.getTitle())
 		).build();
 
 		String collectionDefinition = StringUtil.read(

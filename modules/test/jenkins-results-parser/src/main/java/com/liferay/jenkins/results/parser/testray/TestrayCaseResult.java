@@ -187,7 +187,9 @@ public class TestrayCaseResult {
 
 	public static enum Status {
 
-		FAILED(3, "failed"), PASSED(2, "passed");
+		BLOCKED(4, "blocked"), DID_NOT_RUN(6, "dnr"), FAILED(3, "failed"),
+		IN_PROGRESS(1, "in-progress"), PASSED(2, "passed"),
+		TEST_FIX(7, "test-fix"), UNTESTED(1, "untested");
 
 		public static Status get(Integer id) {
 			return _statuses.get(id);

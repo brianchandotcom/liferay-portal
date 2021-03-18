@@ -927,8 +927,10 @@ public class TestrayImporter {
 			TestrayProductVersion testrayProductVersion =
 				testrayBuild.getTestrayProductVersion();
 
-			propertiesMap.put(
-				"testray.product.version", testrayProductVersion.getName());
+			if (testrayProductVersion != null) {
+				propertiesMap.put(
+					"testray.product.version", testrayProductVersion.getName());
+			}
 
 			TestrayProject testrayProject = testrayBuild.getTestrayProject();
 
@@ -940,9 +942,6 @@ public class TestrayImporter {
 				rootElement.addElement("properties"), propertiesMap);
 
 			List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
-
-			int passedCount = 0;
-			int failedCount = 0;
 
 			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
 				axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
@@ -990,13 +989,6 @@ public class TestrayImporter {
 
 				testcasePropertiesMap.put(
 					"testray.testcase.status", testrayCaseStatus.getName());
-
-				if (testrayCaseStatus == TestrayCaseResult.Status.PASSED) {
-					passedCount++;
-				}
-				else {
-					failedCount++;
-				}
 
 				Element propertiesElement = testcaseElement.addElement(
 					"properties");
@@ -1047,13 +1039,6 @@ public class TestrayImporter {
 					failureElement.addAttribute("message", errors);
 				}
 			}
-
-			Map<String, String> summaryMap = new HashMap<>();
-
-			summaryMap.put("failed", String.valueOf(failedCount));
-			summaryMap.put("passed", String.valueOf(passedCount));
-
-			_addPropertyElements(rootElement.addElement("summary"), summaryMap);
 
 			TestrayServer testrayServer = testrayBuild.getTestrayServer();
 

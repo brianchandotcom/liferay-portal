@@ -145,7 +145,11 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 	public Status getStatus() {
 		Build build = getBuild();
 
-		if ((build == null) || build.isFailing()) {
+		if (build == null) {
+			return Status.UNTESTED;
+		}
+
+		if (build.isFailing()) {
 			return Status.FAILED;
 		}
 

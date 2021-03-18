@@ -47,7 +47,13 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		TestClassResult testClassResult = getTestClassResult();
 
 		if (testClassResult == null) {
-			return "Failed to run on CI";
+			Build build = getBuild();
+
+			if (build == null) {
+				return "Failed to run on CI";
+			}
+
+			return "Failed prior to running test.";
 		}
 
 		if (!testClassResult.isFailing()) {
@@ -115,7 +121,11 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	public Status getStatus() {
 		TestClassResult testClassResult = getTestClassResult();
 
-		if ((testClassResult == null) || testClassResult.isFailing()) {
+		if (testClassResult == null) {
+			return Status.UNTESTED;
+		}
+
+		if (testClassResult.isFailing()) {
 			return Status.FAILED;
 		}
 

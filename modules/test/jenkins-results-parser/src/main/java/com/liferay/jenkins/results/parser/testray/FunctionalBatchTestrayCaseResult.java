@@ -98,7 +98,13 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		TestResult testResult = getTestResult();
 
 		if (testResult == null) {
-			return "Failed to run on CI";
+			Build build = getBuild();
+
+			if (build == null) {
+				return "Failed to run on CI";
+			}
+
+			return "Failed prior to running test";
 		}
 
 		if (!testResult.isFailing()) {
@@ -146,7 +152,11 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	public Status getStatus() {
 		TestResult testResult = getTestResult();
 
-		if ((testResult == null) || testResult.isFailing()) {
+		if (testResult == null) {
+			return Status.UNTESTED;
+		}
+
+		if (testResult.isFailing()) {
 			return Status.FAILED;
 		}
 

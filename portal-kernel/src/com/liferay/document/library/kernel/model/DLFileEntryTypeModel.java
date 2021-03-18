@@ -473,18 +473,18 @@ public interface DLFileEntryTypeModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
-	 * Returns the type of this document library file entry type.
+	 * Returns the scope of this document library file entry type.
 	 *
-	 * @return the type of this document library file entry type
+	 * @return the scope of this document library file entry type
 	 */
-	public int getType();
+	public int getScope();
 
 	/**
-	 * Sets the type of this document library file entry type.
+	 * Sets the scope of this document library file entry type.
 	 *
-	 * @param type the type of this document library file entry type
+	 * @param scope the scope of this document library file entry type
 	 */
-	public void setType(int type);
+	public void setScope(int scope);
 
 	/**
 	 * Returns the last publish date of this document library file entry type.

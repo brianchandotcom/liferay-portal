@@ -95,13 +95,13 @@ public class DLFileEntryTypeLocalServiceUtil {
 	public static DLFileEntryType addFileEntryType(
 			long userId, long groupId, long dataDefinitionId,
 			String fileEntryTypeKey, Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap, int type,
+			Map<java.util.Locale, String> descriptionMap, int scope,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFileEntryType(
 			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
-			descriptionMap, type, serviceContext);
+			descriptionMap, scope, serviceContext);
 	}
 
 	public static DLFileEntryType addFileEntryType(

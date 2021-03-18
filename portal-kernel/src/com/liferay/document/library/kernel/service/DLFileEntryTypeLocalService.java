@@ -108,7 +108,7 @@ public interface DLFileEntryTypeLocalService
 	public DLFileEntryType addFileEntryType(
 			long userId, long groupId, long dataDefinitionId,
 			String fileEntryTypeKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, int type,
+			Map<Locale, String> descriptionMap, int scope,
 			ServiceContext serviceContext)
 		throws PortalException;
 

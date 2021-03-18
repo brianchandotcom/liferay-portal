@@ -67,8 +67,8 @@ public class DLFileEntryTypeTable extends BaseTable<DLFileEntryTypeTable> {
 	public final Column<DLFileEntryTypeTable, String> description =
 		createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<DLFileEntryTypeTable, Integer> type = createColumn(
-		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<DLFileEntryTypeTable, Integer> scope = createColumn(
+		"scope", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<DLFileEntryTypeTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

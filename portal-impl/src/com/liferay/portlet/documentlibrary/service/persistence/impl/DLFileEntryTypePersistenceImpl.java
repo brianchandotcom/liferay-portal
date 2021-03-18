@@ -3377,7 +3377,6 @@ public class DLFileEntryTypePersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
-		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -4500,7 +4499,7 @@ public class DLFileEntryTypePersistenceImpl
 		ctStrictColumnNames.add("fileEntryTypeKey");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("type_");
+		ctStrictColumnNames.add("scope");
 		ctStrictColumnNames.add("lastPublishDate");
 		ctStrictColumnNames.add("folders");
 
@@ -4706,7 +4705,7 @@ public class DLFileEntryTypePersistenceImpl
 		DLFileEntryTypePersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "type"});
+		new String[] {"uuid"});
 
 	@Override
 	protected FinderCache getFinderCache() {

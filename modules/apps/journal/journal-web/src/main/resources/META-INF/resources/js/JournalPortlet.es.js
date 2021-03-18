@@ -279,12 +279,6 @@ class JournalPortlet extends PortletBase {
 		this._cleanInputIfNeeded('titleMapAsXML');
 		this._cleanInputIfNeeded('descriptionMapAsXML');
 
-		Array.from(form.querySelectorAll('button[type=submit]')).forEach(
-			(button) => {
-				button.disabled = true;
-			}
-		);
-
 		submitForm(form);
 	}
 

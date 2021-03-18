@@ -21,9 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Sarai Díaz
  */
-@ExtendedObjectClassDefinition(
-	category = "pages", scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
+@ExtendedObjectClassDefinition(category = "pages")
 @Meta.OCD(
 	id = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration",
 	localization = "content/Language",

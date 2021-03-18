@@ -137,8 +137,12 @@ definition {
 
 	@summary = "View default welcome page while signed in as '${userFirstName} ${userLastName}'"
 	macro viewWelcomePage {
+		AssertTextPresent(
+			locator1 = "HelloWorld#PORTLET_TITLE",
+			value1 = "Hello World");
+
 		AssertTextEquals.assertPartialText(
-			locator1 = "Portlet#MAIN_CONTENT",
+			locator1 = "HelloWorld#PORTLET_CONTENT",
 			value1 = "Welcome to Liferay");
 	}
 

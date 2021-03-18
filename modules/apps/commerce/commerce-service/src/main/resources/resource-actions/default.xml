@@ -53,6 +53,7 @@
 				<action-key>APPROVE_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>CHECKOUT_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>DELETE_COMMERCE_ORDERS</action-key>
+				<action-key>MANAGE_ALL_ACCOUNTS</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_NOTES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_PRICES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES</action-key>
@@ -70,6 +71,7 @@
 				<action-key>APPROVE_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>CHECKOUT_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>DELETE_COMMERCE_ORDERS</action-key>
+				<action-key>MANAGE_ALL_ACCOUNTS</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_NOTES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_PRICES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES</action-key>

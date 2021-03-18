@@ -4889,6 +4889,45 @@ paths:
                     description:
                         ""
             tags: ["ContentStructure"]
+    "/asset-libraries/{assetLibraryId}/content-structures/permissions":
+        get:
+            operationId: getAssetLibraryContentStructurePermissionsPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "ContentStructure" ]
+        put:
+            operationId: putAssetLibraryContentStructurePermission
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "ContentStructure" ]
     "/asset-libraries/{assetLibraryId}/content-templates":
         get:
             operationId: getAssetLibraryContentTemplatesPage
@@ -5026,6 +5065,45 @@ paths:
                     description:
                         ""
             tags: ["DocumentFolder"]
+    "/asset-libraries/{assetLibraryId}/document-folders/permissions":
+        get:
+            operationId: getAssetLibraryDocumentFolderPermissionsPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "DocumentFolder" ]
+        put:
+            operationId: putAssetLibraryDocumentFolderPermission
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "DocumentFolder" ]
     "/asset-libraries/{assetLibraryId}/documents":
         get:
             operationId: getAssetLibraryDocumentsPage
@@ -5114,6 +5192,45 @@ paths:
                     description:
                         ""
             tags: ["Document"]
+    "/asset-libraries/{assetLibraryId}/documents/permissions":
+        get:
+            operationId: getAssetLibraryDocumentPermissionsPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Document" ]
+        put:
+            operationId: putAssetLibraryDocumentPermission
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Document" ]
     "/asset-libraries/{assetLibraryId}/languages":
         get:
             # @review
@@ -5228,6 +5345,45 @@ paths:
                     description:
                         ""
             tags: ["StructuredContentFolder"]
+    "/asset-libraries/{assetLibraryId}/structured-content-folders/permissions":
+        get:
+            operationId: getAssetLibraryStructuredContentFolderPermissionsPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "StructuredContentFolder" ]
+        put:
+            operationId: putAssetLibraryStructuredContentFolderPermission
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "StructuredContentFolder" ]
     "/asset-libraries/{assetLibraryId}/structured-contents":
         get:
             operationId: getAssetLibraryStructuredContentsPage
@@ -5321,6 +5477,45 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
+    "/asset-libraries/{assetLibraryId}/structured-contents/permissions":
+        get:
+            operationId: getAssetLibraryStructuredContentPermissionsPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "StructuredContent" ]
+        put:
+            operationId: putAssetLibraryStructuredContentPermission
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "StructuredContent" ]
     "/blog-posting-images/{blogPostingImageId}":
         delete:
             description:
@@ -5661,6 +5856,45 @@ paths:
                     description:
                         ""
             tags: ["BlogPosting"]
+    "/blog-postings/{blogPostingId}/permissions":
+        get:
+            operationId: getBlogPostingPermissionsPage
+            parameters:
+                - in: path
+                  name: blogPostingId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["BlogPosting"]
+        put:
+            operationId: putBlogPostingPermission
+            parameters:
+                - in: path
+                  name: blogPostingId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["BlogPosting"]
     "/blog-postings/{blogPostingId}/rendered-content-by-display-page/{displayPageKey}":
         get:
             description:
@@ -5913,6 +6147,45 @@ paths:
                     description:
                         ""
             tags: ["ContentStructure"]
+    "/content-structures/{contentStructureId}/permissions":
+        get:
+            operationId: getContentStructurePermissionsPage
+            parameters:
+                - in: path
+                  name: contentStructureId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "ContentStructure" ]
+        put:
+            operationId: putContentStructurePermission
+            parameters:
+                - in: path
+                  name: contentStructureId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "ContentStructure" ]
     "/content-structures/{contentStructureId}/structured-contents":
         get:
             description:
@@ -6172,6 +6445,45 @@ paths:
                     description:
                         ""
             tags: ["Document"]
+    "/document-folders/{documentFolderId}/permissions":
+        get:
+            operationId: getDocumentFolderPermissionsPage
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "DocumentFolder" ]
+        put:
+            operationId: putDocumentFolderPermission
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "DocumentFolder" ]
     "/document-folders/{documentFolderId}/subscribe":
         put:
             operationId: putDocumentFolderSubscribe
@@ -6603,6 +6915,45 @@ paths:
                     description:
                         ""
             tags: ["Document"]
+    "/documents/{documentId}/permissions":
+        get:
+            operationId: getDocumentPermissionsPage
+            parameters:
+                - in: path
+                  name: documentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Document" ]
+        put:
+            operationId: putDocumentPermission
+            parameters:
+                - in: path
+                  name: documentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Document" ]
     "/documents/{documentId}/rendered-content-by-display-page/{displayPageKey}":
         get:
             description:
@@ -6905,6 +7256,45 @@ paths:
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-articles/{knowledgeBaseArticleId}/permissions":
+        get:
+            operationId: getKnowledgeBaseArticlePermissionsPage
+            parameters:
+                - in: path
+                  name: knowledgeBaseArticleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "KnowledgeBaseArticle" ]
+        put:
+            operationId: putKnowledgeBaseArticlePermission
+            parameters:
+                - in: path
+                  name: knowledgeBaseArticleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "KnowledgeBaseArticle" ]
     "/knowledge-base-articles/{knowledgeBaseArticleId}/subscribe":
         put:
             operationId: putKnowledgeBaseArticleSubscribe
@@ -7271,6 +7661,45 @@ paths:
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-folders/{knowledgeBaseFolderId}/permissions":
+        get:
+            operationId: getKnowledgeBaseFolderPermissionsPage
+            parameters:
+                - in: path
+                  name: knowledgeBaseFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "KnowledgeBaseFolder" ]
+        put:
+            operationId: putKnowledgeBaseFolderPermission
+            parameters:
+                - in: path
+                  name: knowledgeBaseFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "KnowledgeBaseFolder" ]
     "/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders":
         get:
             description:
@@ -7657,6 +8086,45 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardMessage"]
+    "/message-board-messages/{messageBoardMessageId}/permissions":
+        get:
+            operationId: getMessageBoardMessagePermissionsPage
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
+        put:
+            operationId: putMessageBoardMessagePermission
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
     "/message-board-messages/{messageBoardMessageId}/subscribe":
         put:
             operationId: putMessageBoardMessageSubscribe
@@ -7974,6 +8442,45 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardThread"]
+    "/message-board-sections/{messageBoardSectionId}/permissions":
+        get:
+            operationId: getMessageBoardSectionPermissionsPage
+            parameters:
+                - in: path
+                  name: messageBoardSectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardSection" ]
+        put:
+            operationId: putMessageBoardSectionPermission
+            parameters:
+                - in: path
+                  name: messageBoardSectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardSection" ]
     "/message-board-sections/{messageBoardSectionId}/subscribe":
         put:
             operationId: putMessageBoardSectionSubscribe
@@ -8504,6 +9011,45 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardThread"]
+    "/message-board-threads/{messageBoardThreadId}/permissions":
+        get:
+            operationId: getMessageBoardThreadPermissionsPage
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardThread" ]
+        put:
+            operationId: putMessageBoardThreadPermission
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardThread" ]
     "/message-board-threads/{messageBoardThreadId}/subscribe":
         put:
             operationId: putMessageBoardThreadSubscribe
@@ -8617,6 +9163,45 @@ paths:
                     description:
                         ""
             tags: ["NavigationMenu"]
+    "/navigation-menus/{navigationMenuId}/permissions":
+        get:
+            operationId: getNavigationMenuPermissionsPage
+            parameters:
+                - in: path
+                  name: navigationMenuId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "NavigationMenu" ]
+        put:
+            operationId: putNavigationMenuPermission
+            parameters:
+                - in: path
+                  name: navigationMenuId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "NavigationMenu" ]
     "/sites/{siteId}/blog-posting-images":
         get:
             description:
@@ -8791,6 +9376,45 @@ paths:
                     description:
                         ""
             tags: ["BlogPosting"]
+    "/sites/{siteId}/blog-postings/permissions":
+        get:
+            operationId: getSiteBlogPostingPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "BlogPosting" ]
+        put:
+            operationId: putSiteBlogPostingPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "BlogPosting" ]
     "/sites/{siteId}/blog-postings/subscribe":
         put:
             operationId: putSiteBlogPostingSubscribe
@@ -9015,6 +9639,45 @@ paths:
                     description:
                         ""
             tags: ["ContentStructure"]
+    "/sites/{siteId}/content-structures/permissions":
+        get:
+            operationId: getSiteContentStructurePermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "ContentStructure" ]
+        put:
+            operationId: putSiteContentStructurePermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "ContentStructure" ]
     "/sites/{siteId}/content-templates":
         get:
             operationId: getSiteContentTemplatesPage
@@ -9184,6 +9847,45 @@ paths:
                     description:
                         ""
             tags: ["DocumentFolder"]
+    "/sites/{siteId}/document-folders/permissions":
+        get:
+            operationId: getSiteDocumentFolderPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "DocumentFolder" ]
+        put:
+            operationId: putSiteDocumentFolderPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "DocumentFolder" ]
     "/sites/{siteId}/documents":
         get:
             description:
@@ -9278,6 +9980,45 @@ paths:
                     description:
                         ""
             tags: ["Document"]
+    "/sites/{siteId}/documents/permissions":
+        get:
+            operationId: getSiteDocumentPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Document" ]
+        put:
+            operationId: putSiteDocumentPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Document" ]
     "/sites/{siteId}/knowledge-base-articles":
         get:
             description:
@@ -9368,6 +10109,45 @@ paths:
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
+    "/sites/{siteId}/knowledge-base-articles/permissions":
+        get:
+            operationId: getSiteKnowledgeBaseArticlePermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "KnowledgeBaseArticle" ]
+        put:
+            operationId: putSiteKnowledgeBaseArticlePermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "KnowledgeBaseArticle" ]
     "/sites/{siteId}/knowledge-base-articles/subscribe":
         put:
             operationId: putSiteKnowledgeBaseArticleSubscribe
@@ -9471,6 +10251,45 @@ paths:
                     description:
                         ""
             tags: ["KnowledgeBaseFolder"]
+    "/sites/{siteId}/knowledge-base-folders/permissions":
+        get:
+            operationId: getSiteKnowledgeBaseFolderPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "KnowledgeBaseFolder" ]
+        put:
+            operationId: putSiteKnowledgeBaseFolderPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "KnowledgeBaseFolder" ]
     "/sites/{siteId}/languages":
         get:
             # @review
@@ -9685,6 +10504,45 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardMessage"]
+    "/sites/{siteId}/message-board-messages/permissions":
+        get:
+            operationId: getSiteMessageBoardMessagePermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
+        put:
+            operationId: putSiteMessageBoardMessagePermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
     "/sites/{siteId}/message-board-sections":
         get:
             description:
@@ -9775,6 +10633,45 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardSection"]
+    "/sites/{siteId}/message-board-sections/permissions":
+        get:
+            operationId: getSiteMessageBoardSectionPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardSection" ]
+        put:
+            operationId: putSiteMessageBoardSectionPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardSection" ]
     "/sites/{siteId}/message-board-threads":
         get:
             description:
@@ -9896,6 +10793,45 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardThread"]
+    "/sites/{siteId}/message-board-threads/permissions":
+        get:
+            operationId: getSiteMessageBoardThreadPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardThread" ]
+        put:
+            operationId: putSiteMessageBoardThreadPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "MessageBoardThread" ]
     "/sites/{siteId}/navigation-menus":
         get:
             description:
@@ -9964,6 +10900,45 @@ paths:
                     description:
                         ""
             tags: ["NavigationMenu"]
+    "/sites/{siteId}/navigation-menus/permissions":
+        get:
+            operationId: getSiteNavigationMenuPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "NavigationMenu" ]
+        put:
+            operationId: putSiteNavigationMenuPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "NavigationMenu" ]
     "/sites/{siteId}/site-pages":
         get:
             # @review
@@ -10277,6 +11252,45 @@ paths:
                     description:
                         ""
             tags: ["StructuredContentFolder"]
+    "/sites/{siteId}/structured-content-folders/permissions":
+        get:
+            operationId: getSiteStructuredContentFolderPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "StructuredContentFolder" ]
+        put:
+            operationId: putSiteStructuredContentFolderPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "StructuredContentFolder" ]
     "/sites/{siteId}/structured-contents":
         get:
             description:
@@ -10564,6 +11578,84 @@ paths:
                     description:
                         ""
             tags: ["WikiNode"]
+    "/sites/{siteId}/wiki-nodes/permissions":
+        get:
+            operationId: getSiteWikiNodePermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "WikiNode" ]
+        put:
+            operationId: putSiteWikiNodePermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "WikiNode" ]
+    "/structured-content-folder/{structuredContentFolderId}/permissions":
+        get:
+            operationId: getStructuredContentFolderPermissionsPage
+            parameters:
+                - in: path
+                  name: structuredContentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "StructuredContentFolder" ]
+        put:
+            operationId: putStructuredContentFolderPermission
+            parameters:
+                - in: path
+                  name: structuredContentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "StructuredContentFolder" ]
     "/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders":
         get:
             description:
@@ -11402,6 +12494,45 @@ paths:
                     description:
                         ""
             tags: ["WikiNode"]
+    "/wiki-nodes/{wikiNodeId}/permissions":
+        get:
+            operationId: getWikiNodePermissionsPage
+            parameters:
+                - in: path
+                  name: wikiNodeId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "WikiNode" ]
+        put:
+            operationId: putWikiNodePermission
+            parameters:
+                - in: path
+                  name: wikiNodeId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "WikiNode" ]
     "/wiki-nodes/{wikiNodeId}/subscribe":
         put:
             operationId: putWikiNodeSubscribe
@@ -11700,6 +12831,45 @@ paths:
                     description:
                         ""
             tags: ["WikiPage"]
+    "/wiki-pages/{wikiPageId}/permissions":
+        get:
+            operationId: getWikiPagePermissionsPage
+            parameters:
+                - in: path
+                  name: wikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "WikiPage" ]
+        put:
+            operationId: putWikiPagePermission
+            parameters:
+                - in: path
+                  name: wikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "WikiPage" ]
     "/wiki-pages/{wikiPageId}/subscribe":
         put:
             operationId: putWikiPageSubscribe

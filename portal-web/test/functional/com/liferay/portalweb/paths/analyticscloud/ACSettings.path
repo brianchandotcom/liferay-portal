@@ -30,6 +30,37 @@
     <td>//input[contains(@data-testid, 'select-all')]</td>
     <td></td>
 </tr>
+<!-- INTEREST KEYWORD -->
+<tr>
+    <td>KEYWORD_BUTTON</td>
+    <td>//*[contains(@class,'btn-primary')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>KEYWORD_DELETE_CHECKBOX</td>
+    <td>//h4[text()='${key_KeywordName}']/parent::td/preceding-sibling::td/input</td>
+    <td></td>
+</tr>
+<tr>
+    <td>KEYWORD_DELETE_ICON</td>
+    <td>//h4[text()='${key_KeywordName}']/parent::td/following-sibling::td[contains(@class,'row-inline-actions')]/span/button</td>
+    <td></td>
+</tr>
+<tr>
+    <td>KEYWORD_NAME</td>
+    <td>//*[contains(@class,'table-title') and (text()='${key_KeywordName}')]</td>
+    <td></td>
+</tr>	
+<tr>
+    <td>KEYWORD_SEND_BUTTON</td>
+    <td>//*[contains(@class,'btn-primary')]</td>
+    <td></td>
+</tr>	
+<tr>
+    <td>KEYWORD_TEXTFIELD</td>
+    <td>//*[@class='form-control-inset']</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

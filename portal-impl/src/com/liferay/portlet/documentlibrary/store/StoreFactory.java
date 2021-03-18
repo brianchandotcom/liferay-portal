@@ -20,19 +20,23 @@ import com.liferay.portal.change.tracking.store.CTStoreFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -190,18 +194,35 @@ public class StoreFactory {
 								public Store addingService(
 									ServiceReference<Store> serviceReference) {
 
-									Store store = registry.getService(
-										serviceReference);
+									String storeType = GetterUtil.getString(
+										serviceReference.getProperty(
+											"store.type"));
 
-									if (!GetterUtil.getBoolean(
-											serviceReference.getProperty(
-												"ct.aware"))) {
+									final Store store = _getStore(
+										serviceReference, storeType);
 
-										store = ctStoreFactory.createCTStore(
-											store,
-											GetterUtil.getString(
-												serviceReference.getProperty(
-													"store.type")));
+									if (StringUtil.equals(
+											storeType,
+											PropsValues.DL_STORE_IMPL)) {
+
+										Map<String, Object> properties =
+											HashMapBuilder.<String, Object>put(
+												"dl.store.upgrade",
+												GetterUtil.getObject("true")
+											).build();
+
+										_serviceRegistration =
+											registry.registerService(
+												StoreFactory.class,
+												new StoreFactory() {
+
+													@Override
+													public Store getStore() {
+														return store;
+													}
+
+												},
+												properties);
 									}
 
 									return store;
@@ -218,7 +239,36 @@ public class StoreFactory {
 									ServiceReference<Store> serviceReference,
 									Store service) {
 
+									String storeType = GetterUtil.getString(
+										serviceReference.getProperty(
+											"store.type"));
+
+									if (StringUtil.equals(
+											storeType,
+											PropsValues.DL_STORE_IMPL)) {
+
+										_serviceRegistration.unregister();
+									}
+
 									registry.ungetService(serviceReference);
+								}
+
+								private Store _getStore(
+									ServiceReference<Store> serviceReference,
+									String storeType) {
+
+									Store store = registry.getService(
+										serviceReference);
+
+									if (!GetterUtil.getBoolean(
+											serviceReference.getProperty(
+												"ct.aware"))) {
+
+										store = ctStoreFactory.createCTStore(
+											store, storeType);
+									}
+
+									return store;
 								}
 
 							});
@@ -239,6 +289,9 @@ public class StoreFactory {
 
 						registry.ungetService(serviceReference);
 					}
+
+					private ServiceRegistration<StoreFactory>
+						_serviceRegistration;
 
 				});
 

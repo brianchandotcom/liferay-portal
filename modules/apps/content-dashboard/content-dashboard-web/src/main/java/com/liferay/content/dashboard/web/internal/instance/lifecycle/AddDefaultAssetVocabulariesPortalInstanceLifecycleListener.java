@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
@@ -67,7 +68,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
-				company.getGroupId(), name);
+				company.getGroupId(), _getVocabularyName(name));
 
 		if (assetVocabulary != null) {
 			return;
@@ -107,6 +108,16 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 			StringPool.BLANK, titleMap, Collections.emptyMap(),
 			assetVocabularySettingsHelper.toString(), visibilityType,
 			serviceContext);
+	}
+
+	private String _getVocabularyName(String vocabularyName) {
+		if (vocabularyName != null) {
+			vocabularyName = vocabularyName.trim();
+
+			return StringUtil.toLowerCase(vocabularyName);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Reference

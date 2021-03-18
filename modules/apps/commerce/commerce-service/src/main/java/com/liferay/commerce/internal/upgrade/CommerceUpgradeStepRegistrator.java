@@ -201,6 +201,13 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			new CommercePermissionUpgradeProcess(
 				_resourceActionLocalService, _resourcePermissionLocalService));
 
+		registry.register(
+			"5.0.1", "6.0.0",
+			new com.liferay.commerce.internal.upgrade.v6_0_0.
+				CommerceCountryUpgradeProcess(),
+			new com.liferay.commerce.internal.upgrade.v6_0_0.
+				CommerceRegionUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

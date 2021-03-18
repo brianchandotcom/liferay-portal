@@ -126,13 +126,16 @@ definition {
 
 	@summary = "View default welcome content page while signed in as '${userFirstName} ${userLastName}' and check that image is present"
 	macro viewWelcomeContentPage {
-		AssertTextEquals.assertPartialText(
-			locator1 = "Portlet#MAIN_CONTENT",
+		AssertTextEquals(
+			key_fragmentName = "heading",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 			value1 = "Welcome to Liferay Portal");
 
-		AssertElementPresent(
-			key_imageName = "tree.png",
-			locator1 = "Portlet#MAIN_CONTENT");
+		AssertVisible(
+			id = "image-square",
+			key_image = "tree.png",
+			key_imageDescription = "Responsive Image",
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 	}
 
 	@summary = "View default welcome page while signed in as '${userFirstName} ${userLastName}'"

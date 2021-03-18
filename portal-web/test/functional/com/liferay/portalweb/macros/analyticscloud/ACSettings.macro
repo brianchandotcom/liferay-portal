@@ -3,7 +3,9 @@ definition {
 	macro addKeywords {
 		Click(locator1 = "ACSettings#KEYWORD_BUTTON");
 
-		Type(locator1 = "ACSettings#KEYWORD_TEXTFIELD", value1 = "${keyword}");
+		Type(
+			locator1 = "ACSettings#KEYWORD_TEXTFIELD",
+			value1 = "${keyword}");
 
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
@@ -12,12 +14,12 @@ definition {
 		var key_KeywordName = "${keyword}";
 
 		AssertTextEquals(
-			locator1 = "ACSettings#KEYWORD_NAME", 
+			locator1 = "ACSettings#KEYWORD_NAME",
 			value1 = "${keyword}");
 	}
 
 	macro deleteKeywordCheckbox {
-		if(isVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+		if (isVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
 			Click(locator1 = "ACSettings#KEYWORD_DELETE_CHECKBOX");
 
 			Click(locator1 = "ACSettings#DELETE_FROM_TOOLBAR");
@@ -27,7 +29,7 @@ definition {
 	}
 
 	macro deleteKeywordIcon {
-		if(isVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+		if (isVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
 			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
@@ -38,10 +40,6 @@ definition {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "APIs");
 	}
 
-	macro goToDefinitions {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "Definitions");
-	}
-
 	macro goToDataControlAndPrivacy {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "Data Control");
 	}
@@ -50,26 +48,30 @@ definition {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "Data Sources");
 	}
 
-	macro goToUserManagement {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "User Management");
+	macro goToDefinitions {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "Definitions");
 	}
 
 	macro goToProperties {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "Properties");
 	}
 
-	macro goToUsage {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "Usage");
-	}
-
-	macro goToWorkspace {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "Workspace");
-	}
-
 	macro goToSettingsNavigation {
 		var key_SettingsNavigation = "${settingsNavigation}";
 
 		Click(locator1 = "ACSettings#SETTINGS_NAVIGATION");
+	}
+
+	macro goToUsage {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "Usage");
+	}
+
+	macro goToUserManagement {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "User Management");
+	}
+
+	macro goToWorkspace {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "Workspace");
 	}
 
 }

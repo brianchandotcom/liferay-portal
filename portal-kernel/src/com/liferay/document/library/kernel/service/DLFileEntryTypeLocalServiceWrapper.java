@@ -96,13 +96,13 @@ public class DLFileEntryTypeLocalServiceWrapper
 			long userId, long groupId, long dataDefinitionId,
 			String fileEntryTypeKey,
 			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap, int type,
+			java.util.Map<java.util.Locale, String> descriptionMap, int scope,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryTypeLocalService.addFileEntryType(
 			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
-			descriptionMap, type, serviceContext);
+			descriptionMap, scope, serviceContext);
 	}
 
 	@Override

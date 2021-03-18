@@ -467,7 +467,7 @@ public class DLFileEntryTypeServiceHttp {
 	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFileEntryType> search(
 			HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-			String keywords, boolean includeBasicFileEntryType, int type,
+			String keywords, boolean includeBasicFileEntryType, int scope,
 			int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.document.library.kernel.model.DLFileEntryType>
@@ -480,7 +480,8 @@ public class DLFileEntryTypeServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupIds, keywords,
-				includeBasicFileEntryType, type, start, end, orderByComparator);
+				includeBasicFileEntryType, scope, start, end,
+				orderByComparator);
 
 			Object returnObj = null;
 
@@ -617,7 +618,7 @@ public class DLFileEntryTypeServiceHttp {
 
 	public static int searchCount(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-		String keywords, boolean includeBasicFileEntryType, int type) {
+		String keywords, boolean includeBasicFileEntryType, int scope) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -626,7 +627,7 @@ public class DLFileEntryTypeServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupIds, keywords,
-				includeBasicFileEntryType, type);
+				includeBasicFileEntryType, scope);
 
 			Object returnObj = null;
 

@@ -374,7 +374,7 @@ create table DLFileEntryType (
 	fileEntryTypeKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
-	type_ INTEGER,
+	scope INTEGER,
 	lastPublishDate DATE null,
 	primary key (fileEntryTypeId, ctCollectionId)
 );

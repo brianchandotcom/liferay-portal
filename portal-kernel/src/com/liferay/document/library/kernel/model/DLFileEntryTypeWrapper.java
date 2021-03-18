@@ -59,7 +59,7 @@ public class DLFileEntryTypeWrapper
 		attributes.put("fileEntryTypeKey", getFileEntryTypeKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("type", getType());
+		attributes.put("scope", getScope());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -151,10 +151,10 @@ public class DLFileEntryTypeWrapper
 			setDescription(description);
 		}
 
-		Integer type = (Integer)attributes.get("type");
+		Integer scope = (Integer)attributes.get("scope");
 
-		if (type != null) {
-			setType(type);
+		if (scope != null) {
+			setScope(scope);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -444,13 +444,13 @@ public class DLFileEntryTypeWrapper
 	}
 
 	/**
-	 * Returns the type of this document library file entry type.
+	 * Returns the scope of this document library file entry type.
 	 *
-	 * @return the type of this document library file entry type
+	 * @return the scope of this document library file entry type
 	 */
 	@Override
-	public int getType() {
-		return model.getType();
+	public int getScope() {
+		return model.getScope();
 	}
 
 	@Override
@@ -768,13 +768,13 @@ public class DLFileEntryTypeWrapper
 	}
 
 	/**
-	 * Sets the type of this document library file entry type.
+	 * Sets the scope of this document library file entry type.
 	 *
-	 * @param type the type of this document library file entry type
+	 * @param scope the scope of this document library file entry type
 	 */
 	@Override
-	public void setType(int type) {
-		model.setType(type);
+	public void setScope(int scope) {
+		model.setScope(scope);
 	}
 
 	/**

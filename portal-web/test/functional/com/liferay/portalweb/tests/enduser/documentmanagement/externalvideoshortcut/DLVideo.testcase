@@ -187,6 +187,32 @@ definition {
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
 
+	@description = "This test ensures that no internal video is not listed via item selector after disabling Xuggler."
+	@priority = "3"
+	test AssertNoVideoInItemSelectorAfterDisablingXuggler {
+		property test.name.skip.portal.instance = "DLVideo#AssertNoVideoInItemSelectorAfterDisablingXuggler";
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(enableXuggler = "false");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
+
+		ItemSelector.configureFilterViaSelectFile(
+			filterBy = "Everywhere",
+			navTab = "Documents and Media");
+
+		AssertElementNotPresent(
+			key_card = "DM Video Title In Site",
+			locator1 = "Card#CARD_TITLE");
+	}
+
 	@description = "This test ensures that a blog entry created with an internal video embedded in it can be exported and imported."
 	@priority = "5"
 	test ImportExportedBlogWithEmbeddedVideo {
@@ -343,32 +369,6 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
-	}
-
-	@description = "This test ensures that no internal video is not listed via item selector with disabling Xuggler."
-	@priority = "3"
-	test NoVideoInItemSelectorAfterDisablingXuggler {
-		property test.name.skip.portal.instance = "DLVideo#NoVideoInItemSelectorAfterDisablingXuggler";
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.configureExternalServices(enableXuggler = "false");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		BlogsNavigator.gotoAddEntry();
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
-
-		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
-
-		ItemSelector.configureFilterViaSelectFile(
-			filterBy = "Everywhere",
-			navTab = "Documents and Media");
-
-		AssertElementNotPresent(
-			key_card = "DM Video Title In Site",
-			locator1 = "Card#CARD_TITLE");
 	}
 
 	@description = "This ensures that a depot internal video cannot be viewed from the disconnected site."

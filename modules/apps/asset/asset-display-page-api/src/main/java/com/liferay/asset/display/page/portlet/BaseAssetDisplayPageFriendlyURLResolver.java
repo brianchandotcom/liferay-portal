@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -88,8 +89,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			_getLayoutDisplayPageObjectProvider(
 				layoutDisplayPageProvider, groupId, friendlyURL);
 
-		Object infoItem = _getInfoItem(
-			friendlyURL, layoutDisplayPageObjectProvider);
+		Object infoItem = _getInfoItem(layoutDisplayPageObjectProvider, params);
 
 		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
 
@@ -249,11 +249,11 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	}
 
 	private Object _getInfoItem(
-			String friendlyURL,
-			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider)
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+			Map<String, String[]> params)
 		throws NoSuchInfoItemException {
 
-		long classPK = _getVersionClassPK(friendlyURL);
+		long classPK = _getVersionClassPK(params);
 
 		if (classPK <= 0) {
 			return layoutDisplayPageObjectProvider.getDisplayObject();
@@ -375,29 +375,17 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	private String _getUrlTitle(String friendlyURL) {
 		String urlSeparator = _getURLSeparator(friendlyURL);
 
-		String urlTitle = friendlyURL.substring(urlSeparator.length());
-
-		long versionClassPK = _getVersionClassPK(friendlyURL);
-
-		if (versionClassPK > 0) {
-			String versionClassPKValue = String.valueOf(versionClassPK);
-
-			urlTitle = friendlyURL.substring(
-				urlSeparator.length(),
-				friendlyURL.length() - versionClassPKValue.length() - 1);
-		}
-
-		return urlTitle;
+		return friendlyURL.substring(urlSeparator.length());
 	}
 
-	private long _getVersionClassPK(String friendlyURL) {
-		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+	private long _getVersionClassPK(Map<String, String[]> params) {
+		String[] versions = params.get("version");
 
-		if (paths.size() < 3) {
+		if (ArrayUtil.isEmpty(versions)) {
 			return 0;
 		}
 
-		return GetterUtil.getLong(paths.get(paths.size() - 1));
+		return GetterUtil.getLong(versions[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

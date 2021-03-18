@@ -139,6 +139,10 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
 			value1 = "${contentBody}");
+
+		if (isSet(viewEllipsisIcon)) {
+			AssertVisible(locator1 = "Notifications#NOTIFICATIONS_VERTICAL_ELLIPSIS");
+		}
 	}
 
 	macro viewNewContent {

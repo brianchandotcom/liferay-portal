@@ -80,7 +80,9 @@ public class MySubscriptionsUtil {
 		return null;
 	}
 
-	public static String getAssetTypeDescription(Locale locale, String className) {
+	public static String getAssetTypeDescription(
+		Locale locale, String className) {
+
 		List<String> classNames = StringUtil.split(
 			className, CharPool.UNDERLINE);
 

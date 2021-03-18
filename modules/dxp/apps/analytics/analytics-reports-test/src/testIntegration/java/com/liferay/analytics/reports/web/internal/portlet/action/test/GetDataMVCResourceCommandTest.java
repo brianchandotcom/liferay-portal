@@ -546,7 +546,7 @@ public class GetDataMVCResourceCommandTest {
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
 
-	private Locale _locale = LocaleUtil.US;
+	private final Locale _locale = LocaleUtil.US;
 
 	@Inject(filter = "mvc.command.name=/analytics_reports/get_data")
 	private MVCResourceCommand _mvcResourceCommand;

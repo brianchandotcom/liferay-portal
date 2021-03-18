@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -43,15 +44,23 @@ public class SortContextProvider implements ContextProvider<Sort> {
 
 		String sortString = ParamUtil.getString(
 			httpServletRequest, "sort.field");
-
-		if (Validator.isNull(sortString)) {
-			return null;
-		}
-
 		String sortDir = ParamUtil.getString(httpServletRequest, "sort.dir");
 
-		return SortFactoryUtil.create(
-			StringUtil.trim(sortString), sortDir.equals("desc"));
+		if (Validator.isNotNull(sortString) && Validator.isNotNull(sortDir)) {
+			return SortFactoryUtil.create(
+				StringUtil.trim(sortString), sortDir.equals("desc"));
+		}
+
+		String sort = ParamUtil.getString(httpServletRequest, "sort");
+
+		if (Validator.isNotNull(sort)) {
+			String[] sortArray = StringUtil.split(sort, StringPool.COLON);
+
+			return SortFactoryUtil.create(
+				StringUtil.trim(sortArray[0]), sortArray[1].equals("desc"));
+		}
+
+		return null;
 	}
 
 }

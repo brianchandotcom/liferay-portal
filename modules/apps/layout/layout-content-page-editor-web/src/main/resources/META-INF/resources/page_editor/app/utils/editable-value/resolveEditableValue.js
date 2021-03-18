@@ -32,7 +32,7 @@ function resolveRawEditableValue(editableValue, languageId = null) {
 	let content = editableValue;
 
 	if (languageId) {
-		if (content[languageId]) {
+		if (content[languageId] || content[languageId] === '') {
 			content = content[languageId];
 		}
 		else if (content[config.defaultLanguageId]) {

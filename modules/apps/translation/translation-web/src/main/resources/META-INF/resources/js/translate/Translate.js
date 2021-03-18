@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 const TranslationFieldEditor = ({
 	editorConfiguration,
@@ -28,33 +28,43 @@ const TranslationFieldEditor = ({
 	sourceContentDir,
 	targetContent,
 	targetContentDir,
-}) => (
-	<ClayLayout.Row>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label">{label}</label>
-				<div
-					className="translation-editor-preview"
-					dangerouslySetInnerHTML={{__html: sourceContent}}
-					dir={sourceContentDir}
-				/>
-			</ClayForm.Group>
-		</ClayLayout.Col>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label">{label}</label>
-				<ClassicEditor
-					contents={targetContent}
-					editorConfig={{
-						...editorConfiguration.editorConfig,
-						contentsLangDirection: targetContentDir,
-					}}
-					name={id}
-				/>
-			</ClayForm.Group>
-		</ClayLayout.Col>
-	</ClayLayout.Row>
-);
+}) => {
+	const [value, setValue] = useState(targetContent);
+
+	return (
+		<ClayLayout.Row>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label">{label}</label>
+					<div
+						className="translation-editor-preview"
+						dangerouslySetInnerHTML={{__html: sourceContent}}
+						dir={sourceContentDir}
+					/>
+				</ClayForm.Group>
+			</ClayLayout.Col>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label">{label}</label>
+					<ClassicEditor
+						contents={targetContent}
+						editorConfig={{
+							...editorConfiguration.editorConfig,
+							contentsLangDirection: targetContentDir,
+						}}
+						name={id}
+						onChange={(data) => {
+							if (value !== data) {
+								setValue(data);
+							}
+						}}
+					/>
+					<input defaultValue={value} name={id} type="hidden" />
+				</ClayForm.Group>
+			</ClayLayout.Col>
+		</ClayLayout.Row>
+	);
+};
 
 const TranslationFieldInput = ({
 	id,
@@ -96,7 +106,7 @@ const TranslationFieldInput = ({
 	</ClayLayout.Row>
 );
 
-const TranslationFieldSetEntries = ({infoFieldSetEntries}) =>
+const TranslationFieldSetEntries = ({infoFieldSetEntries, portletNamespace}) =>
 	infoFieldSetEntries.map(({fields, legend}) => (
 		<React.Fragment key={legend}>
 			<ClayLayout.Row>
@@ -107,13 +117,15 @@ const TranslationFieldSetEntries = ({infoFieldSetEntries}) =>
 					<div className="fieldset-title">{legend}</div>
 				</ClayLayout.Col>
 			</ClayLayout.Row>
-			{fields.map((field) =>
-				field.html ? (
-					<TranslationFieldEditor key={field.id} {...field} />
+			{fields.map((field) => {
+				const id = `${portletNamespace}${field.id}`;
+
+				return field.html ? (
+					<TranslationFieldEditor key={field.id} {...field} id={id} />
 				) : (
-					<TranslationFieldInput key={field.id} {...field} />
-				)
-			)}
+					<TranslationFieldInput key={field.id} {...field} id={id} />
+				);
+			})}
 		</React.Fragment>
 	));
 
@@ -134,31 +146,31 @@ const TranslationHeader = ({sourceLanguageIdTitle, targetLanguageIdTitle}) => (
 
 const Translate = ({
 	infoFieldSetEntries,
+	portletNamespace,
 	sourceLanguageIdTitle,
 	targetLanguageIdTitle,
 	translationPermission,
 }) => (
-	<ClayLayout.ContainerFluid view>
-		<div className="sheet translation-edit-body-form">
-			{!translationPermission ? (
-				<ClayAlert>
-					{Liferay.Language.get(
-						'you-do-not-have-permissions-to-translate-to-any-of-the-available-languages'
-					)}
-				</ClayAlert>
-			) : (
-				<>
-					<TranslationHeader
-						sourceLanguageIdTitle={sourceLanguageIdTitle}
-						targetLanguageIdTitle={targetLanguageIdTitle}
-					/>
-					<TranslationFieldSetEntries
-						infoFieldSetEntries={infoFieldSetEntries}
-					/>
-				</>
-			)}
-		</div>
-	</ClayLayout.ContainerFluid>
+	<div className="sheet translation-edit-body-form">
+		{!translationPermission ? (
+			<ClayAlert>
+				{Liferay.Language.get(
+					'you-do-not-have-permissions-to-translate-to-any-of-the-available-languages'
+				)}
+			</ClayAlert>
+		) : (
+			<>
+				<TranslationHeader
+					sourceLanguageIdTitle={sourceLanguageIdTitle}
+					targetLanguageIdTitle={targetLanguageIdTitle}
+				/>
+				<TranslationFieldSetEntries
+					infoFieldSetEntries={infoFieldSetEntries}
+					portletNamespace={portletNamespace}
+				/>
+			</>
+		)}
+	</div>
 );
 
 Translate.propTypes = {
@@ -180,6 +192,7 @@ Translate.propTypes = {
 			legend: PropTypes.string,
 		})
 	),
+	portletNamespace: PropTypes.string.isRequired,
 	sourceLanguageIdTitle: PropTypes.string.isRequired,
 	targetLanguageIdTitle: PropTypes.string.isRequired,
 	translationPermission: PropTypes.bool.isRequired,

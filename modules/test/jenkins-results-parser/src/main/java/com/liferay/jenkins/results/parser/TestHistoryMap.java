@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.testray.TestrayAttachment;
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
 import com.liferay.jenkins.results.parser.testray.TestrayCaseResult;
 import com.liferay.jenkins.results.parser.testray.TestrayFactory;
@@ -102,21 +103,22 @@ public class TestHistoryMap
 
 				String jobVariant = null;
 
-				List<TestrayCaseResult.Attachment> attachments =
-					testrayCaseResult.getAttachments();
+				List<TestrayAttachment> testrayAttachments =
+					testrayCaseResult.getTestrayAttachments();
 
-				if (!attachments.isEmpty()) {
-					for (TestrayCaseResult.Attachment attachment :
-							attachments) {
+				if (!testrayAttachments.isEmpty()) {
+					for (TestrayAttachment testrayAttachment :
+							testrayAttachments) {
 
-						String attachmentValue = attachment.getValue();
+						String testrayAttachmentKey =
+							testrayAttachment.getKey();
 
 						Matcher matcher = _testrayLogPattern.matcher(
-							attachmentValue);
+							testrayAttachmentKey);
 
-						matcher.find();
-
-						jobVariant = matcher.group("jobVariant");
+						if (matcher.find()) {
+							jobVariant = matcher.group("jobVariant");
+						}
 					}
 				}
 

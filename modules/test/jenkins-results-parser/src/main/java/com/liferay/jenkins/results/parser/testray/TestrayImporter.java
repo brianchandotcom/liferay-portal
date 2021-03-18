@@ -1016,18 +1016,18 @@ public class TestrayImporter {
 				Element attachmentsElement = testcaseElement.addElement(
 					"attachments");
 
-				for (TestrayCaseResult.Attachment attachment :
-						testrayCaseResult.getAttachments()) {
+				for (TestrayAttachment testrayAttachment :
+						testrayCaseResult.getTestrayAttachments()) {
 
 					Element attachmentFileElement =
 						attachmentsElement.addElement("file");
 
 					attachmentFileElement.addAttribute(
-						"name", attachment.getName());
+						"name", testrayAttachment.getName());
 					attachmentFileElement.addAttribute(
-						"url", String.valueOf(attachment.getURL()));
+						"url", String.valueOf(testrayAttachment.getURL()));
 					attachmentFileElement.addAttribute(
-						"value", attachment.getValue());
+						"value", testrayAttachment.getKey());
 				}
 
 				String errors = testrayCaseResult.getErrors();

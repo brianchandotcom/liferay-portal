@@ -67,6 +67,15 @@ public class WorkflowHandlerWrapper<T> implements WorkflowHandler<T> {
 	}
 
 	@Override
+	public String getNotificationLink(
+			long workflowTaskId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return _workflowHandler.getNotificationLink(
+			workflowTaskId, serviceContext);
+	}
+
+	@Override
 	public String getSummary(
 		long classPK, PortletRequest portletRequest,
 		PortletResponse portletResponse) {

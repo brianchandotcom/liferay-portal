@@ -334,6 +334,7 @@ com.liferay.portal.kernel.util.PropertiesParamUtil#getProperties(ServiceContext,
 com.liferay.portal.kernel.util.SearchContainerReference#getId(HttpServletRequest)
 com.liferay.portal.kernel.util.SearchContainerReference#getId(HttpServletRequest,String)
 com.liferay.portal.kernel.workflow.WorkflowHandler#getURLEditWorkflowTask(long,ServiceContext)
+com.liferay.portal.kernel.workflow.WorkflowHandler#getNotificationLink(long,ServiceContext)
 com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil#startWorkflowInstance(long,long,long,String,long,T,ServiceContext)
 com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil#startWorkflowInstance(long,long,long,String,long,T,ServiceContext,Map<String, Serializable>)
 com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil#startWorkflowInstance(long,long,String,long,T,ServiceContext)

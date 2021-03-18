@@ -199,6 +199,10 @@ definition {
 	}
 
 	macro configureApplication {
+		DepotNavigator.gotoGeneral();
+
+		Panel.expandPanel(panel = "Applications");
+
 		if ("${status}" == "Enabled") {
 			for (var applicationList : list "${applicationList}") {
 				Check(

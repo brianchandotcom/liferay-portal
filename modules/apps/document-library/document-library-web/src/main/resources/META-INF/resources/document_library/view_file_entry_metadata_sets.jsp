@@ -120,8 +120,3 @@ DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayCont
 		</liferay-ui:search-container>
 	</clay:container-fluid>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= dlViewFileEntryMetadataSetsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="document_library/js/DDMStructuresManagementToolbarDefaultEventHandler.es"
-/>

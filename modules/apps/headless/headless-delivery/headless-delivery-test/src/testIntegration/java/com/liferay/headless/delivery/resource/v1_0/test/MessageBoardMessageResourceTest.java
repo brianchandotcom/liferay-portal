@@ -25,10 +25,8 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-
-import org.apache.log4j.Level;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,11 +99,10 @@ public class MessageBoardMessageResourceTest
 
 		randomMessageBoardMessage.setParentMessageBoardMessageId((Long)null);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.vulcan.internal.jaxrs.exception." +
-						"mapper.WebApplicationExceptionMapper",
-					Level.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.ERROR)) {
 
 			assertHttpResponseStatusCode(
 				400,

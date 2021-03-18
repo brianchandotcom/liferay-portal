@@ -26,7 +26,7 @@
 			"paddingBottom": "6",
 			"paddingLeft": "0",
 			"paddingRight": "0",
-			"paddingTop": "7",
+			"paddingTop": "6",
 			"shadow": "",
 			"textAlign": "",
 			"width": ""
@@ -66,7 +66,7 @@
 			"paddingBottom": 6,
 			"paddingLeft": 0,
 			"paddingRight": 0,
-			"paddingTop": 8,
+			"paddingTop": 6,
 			"widthType": "Fluid"
 		}
 	},
@@ -97,8 +97,8 @@
 					"opacity": "100",
 					"overflow": "",
 					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
+					"paddingLeft": "2",
+					"paddingRight": "2",
 					"paddingTop": "",
 					"shadow": "",
 					"textAlign": "",
@@ -107,21 +107,23 @@
 				"fragmentViewports": [
 					{
 						"fragmentViewportStyle": {
-							"marginBottom": "0"
+							"paddingLeft": "3"
 						},
 						"id": "landscapeMobile"
 					},
 					{
 						"fragmentViewportStyle": {
-							"marginBottom": "0",
-							"paddingLeft": "3",
-							"paddingRight": "3"
+							"paddingLeft": "4",
+							"paddingRight": "4"
 						},
 						"id": "portraitMobile"
 					},
 					{
 						"fragmentViewportStyle": {
-							"marginBottom": "3"
+							"marginLeft": "0",
+							"marginRight": "0",
+							"paddingLeft": "3",
+							"paddingRight": "3"
 						},
 						"id": "tablet"
 					}
@@ -168,6 +170,15 @@
 							"textAlign": "",
 							"width": ""
 						},
+						"fragmentViewports": [
+							{
+								"fragmentViewportStyle": {
+									"paddingLeft": "0",
+									"paddingRight": "0"
+								},
+								"id": "tablet"
+							}
+						],
 						"gutters": true,
 						"modulesPerRow": 2,
 						"numberOfColumns": 2,

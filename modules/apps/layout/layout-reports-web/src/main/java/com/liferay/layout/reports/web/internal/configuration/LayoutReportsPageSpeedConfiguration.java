@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface LayoutReportsPageSpeedConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean enabled();
 
 	@Meta.AD(required = false)

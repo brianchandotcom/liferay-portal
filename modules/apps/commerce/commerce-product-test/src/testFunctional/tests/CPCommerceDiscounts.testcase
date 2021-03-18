@@ -78,7 +78,7 @@ definition {
 		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
 
 		CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
-			discountPercentage = "25.00",
+			discountPercentage = "25",
 			productDiscountedPrice = "18.00",
 			productListPrice = "24.00");
 

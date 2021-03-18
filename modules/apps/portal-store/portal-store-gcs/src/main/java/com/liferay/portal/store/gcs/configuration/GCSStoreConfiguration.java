@@ -16,7 +16,9 @@ package com.liferay.portal.store.gcs.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.store.gcs.constants.ConfigurationGCSConstants;
 
 /**
  * @author Shanon Mathai
@@ -28,11 +30,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface GCSStoreConfiguration {
 
-	@Meta.AD(
-		deflt = "/opt/gcs/ExampleCredentialsFile.json",
-		description = "auth-file-help", name = "auth-file", required = false
+	@ExtendedAttributeDefinition(
+		descriptionArguments = ConfigurationGCSConstants.SERVICE_ACCOUNT_KEYS_URL,
+		requiredInput = true
 	)
-	public String authFileLocation();
+	@Meta.AD(
+		description = "service-account-key-help", name = "service-account-key",
+		required = false
+	)
+	public String serviceAccountKey();
 
 	@Meta.AD(
 		deflt = "mysamplebucket1", description = "bucket-name-help",

@@ -32,6 +32,18 @@ import java.util.Map;
  */
 public class TestrayFactory {
 
+	public static TestrayAttachment newTestrayAttachment(
+		TestrayCaseResult testrayCaseResult, String name, String key) {
+
+		TestrayServer testrayServer = testrayCaseResult.getTestrayServer();
+
+		if (testrayServer instanceof RsyncTestrayServer) {
+			return new DefaultTestrayAttachment(testrayCaseResult, name, key);
+		}
+
+		return new S3TestrayAttachment(testrayCaseResult, name, key);
+	}
+
 	public static TestrayAttachmentRecorder newTestrayAttachmentRecorder(
 		Build build) {
 

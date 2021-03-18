@@ -14,7 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.data.provider;
 
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -23,15 +23,19 @@ import com.liferay.portal.kernel.util.Validator;
 public class LayoutReportsDataProvider {
 
 	public LayoutReportsDataProvider(
-		LayoutReportsConfiguration layoutReportsConfiguration) {
+		LayoutReportsPageSpeedConfiguration
+			layoutReportsPageSpeedConfiguration) {
 
-		_layoutReportsConfiguration = layoutReportsConfiguration;
+		_layoutReportsPageSpeedConfiguration =
+			layoutReportsPageSpeedConfiguration;
 	}
 
 	public boolean isValidConnection() {
-		return Validator.isNotNull(_layoutReportsConfiguration.apiKey());
+		return Validator.isNotNull(
+			_layoutReportsPageSpeedConfiguration.apiKey());
 	}
 
-	private final LayoutReportsConfiguration _layoutReportsConfiguration;
+	private final LayoutReportsPageSpeedConfiguration
+		_layoutReportsPageSpeedConfiguration;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.portlet;
 
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsWebKeys;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration",
+	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -72,8 +72,9 @@ public class LayoutReportsPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutReportsConfiguration = ConfigurableUtil.createConfigurable(
-			LayoutReportsConfiguration.class, properties);
+		_layoutReportsPageSpeedConfiguration =
+			ConfigurableUtil.createConfigurable(
+				LayoutReportsPageSpeedConfiguration.class, properties);
 	}
 
 	@Override
@@ -98,7 +99,8 @@ public class LayoutReportsPortlet extends MVCPortlet {
 			LayoutReportsWebKeys.LAYOUT_REPORTS_DISPLAY_CONTEXT,
 			new LayoutReportsDisplayContext(
 				_groupLocalService, _layoutLocalService,
-				new LayoutReportsDataProvider(_layoutReportsConfiguration),
+				new LayoutReportsDataProvider(
+					_layoutReportsPageSpeedConfiguration),
 				_layoutSEOLinkManager, _language, _portal, renderRequest));
 
 		super.doDispatch(renderRequest, renderResponse);
@@ -113,7 +115,8 @@ public class LayoutReportsPortlet extends MVCPortlet {
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	private volatile LayoutReportsConfiguration _layoutReportsConfiguration;
+	private volatile LayoutReportsPageSpeedConfiguration
+		_layoutReportsPageSpeedConfiguration;
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

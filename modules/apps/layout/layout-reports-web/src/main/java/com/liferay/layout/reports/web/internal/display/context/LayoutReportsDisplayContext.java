@@ -15,7 +15,7 @@
 package com.liferay.layout.reports.web.internal.display.context;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
@@ -206,9 +206,9 @@ public class LayoutReportsDisplayContext {
 			_portal.getCurrentCompleteURL(
 				_portal.getHttpServletRequest(portletRequest)));
 		portletURL.setParameter(
-			"factoryPid", LayoutReportsConfiguration.class.getName());
+			"factoryPid", LayoutReportsPageSpeedConfiguration.class.getName());
 		portletURL.setParameter(
-			"pid", LayoutReportsConfiguration.class.getName());
+			"pid", LayoutReportsPageSpeedConfiguration.class.getName());
 
 		return portletURL.toString();
 	}

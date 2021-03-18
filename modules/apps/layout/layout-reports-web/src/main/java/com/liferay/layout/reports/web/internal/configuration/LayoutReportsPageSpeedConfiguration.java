@@ -25,11 +25,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "pages", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration",
+	id = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration",
 	localization = "content/Language",
-	name = "layout-reports-configuration-name"
+	name = "layout-reports-page-speed-configuration-name"
 )
-public interface LayoutReportsConfiguration {
+public interface LayoutReportsPageSpeedConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();

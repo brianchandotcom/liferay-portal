@@ -14,7 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -81,7 +81,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sarai Díaz
  */
 @Component(
-	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration",
+	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration",
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
@@ -196,7 +196,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (!_layoutReportsConfiguration.enabled()) {
+		if (!_layoutReportsPageSpeedConfiguration.enabled()) {
 			return false;
 		}
 
@@ -225,8 +225,9 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutReportsConfiguration = ConfigurableUtil.createConfigurable(
-			LayoutReportsConfiguration.class, properties);
+		_layoutReportsPageSpeedConfiguration =
+			ConfigurableUtil.createConfigurable(
+				LayoutReportsPageSpeedConfiguration.class, properties);
 
 		_portletNamespace = _portal.getPortletNamespace(
 			LayoutReportsPortletKeys.LAYOUT_REPORTS);
@@ -390,7 +391,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	private volatile LayoutReportsConfiguration _layoutReportsConfiguration;
+	private volatile LayoutReportsPageSpeedConfiguration
+		_layoutReportsPageSpeedConfiguration;
 
 	@Reference
 	private Portal _portal;

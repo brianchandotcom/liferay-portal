@@ -387,7 +387,11 @@ public class DefaultUserResolver implements UserResolver {
 		if (_samlProviderConfigurationHelper.isLDAPImportEnabled()) {
 			user = importLdapUser(companyId, subjectNameIdentifier, authType);
 		}
-		else {
+
+		if (user != null) {
+			return user;
+		}
+
 			user = getUser(companyId, subjectNameIdentifier, authType);
 
 			if (user != null) {
@@ -406,7 +410,6 @@ public class DefaultUserResolver implements UserResolver {
 					_log.debug("Added user " + user.toString());
 				}
 			}
-		}
 
 		return user;
 	}

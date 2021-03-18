@@ -145,8 +145,6 @@ exports[`Field DocumentLibrary has a label 1`] = `
       class="sr-only"
       id="uploadField_fieldDetails"
     >
-      label
-      <br />
        you-need-to-be-signed-in-to-edit-this-field
     </span>
   </div>
@@ -620,8 +618,6 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
       class="sr-only"
       id="uploadField_fieldDetails"
     >
-      text
-      <br />
        you-need-to-be-signed-in-to-edit-this-field
     </span>
   </div>

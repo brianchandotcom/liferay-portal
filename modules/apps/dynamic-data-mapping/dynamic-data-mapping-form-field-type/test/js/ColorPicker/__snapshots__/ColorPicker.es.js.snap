@@ -195,8 +195,6 @@ exports[`Field Color Picker renders field with label 1`] = `
       class="sr-only"
       id="colorPicker_fieldDetails"
     >
-      label
-      <br />
       Helptext
       <br />
     </span>

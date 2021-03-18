@@ -134,13 +134,7 @@ exports[`Field Radio has a label 1`] = `
         </label>
       </div>
     </div>
-    <span
-      class="sr-only"
-      id="radioField_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -513,13 +507,7 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
         </label>
       </div>
     </div>
-    <span
-      class="sr-only"
-      id="radioField_fieldDetails"
-    >
-      text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

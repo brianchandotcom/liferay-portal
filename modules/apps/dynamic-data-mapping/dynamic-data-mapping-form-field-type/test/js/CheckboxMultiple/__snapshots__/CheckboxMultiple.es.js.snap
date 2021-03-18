@@ -216,13 +216,7 @@ exports[`Field Checkbox Multiple has a label 1`] = `
         </label>
       </div>
     </div>
-    <span
-      class="sr-only"
-      id="undefined_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -829,13 +823,7 @@ exports[`Field Checkbox Multiple renders Label if showLabel is true 1`] = `
         </label>
       </div>
     </div>
-    <span
-      class="sr-only"
-      id="undefined_fieldDetails"
-    >
-      text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

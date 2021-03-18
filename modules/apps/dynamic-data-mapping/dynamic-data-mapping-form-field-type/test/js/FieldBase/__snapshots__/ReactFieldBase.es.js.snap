@@ -28,13 +28,7 @@ exports[`ReactFieldBase does not render the add button when repeatable is true a
       class="ddm-empty"
       tabindex="0"
     />
-    <span
-      class="sr-only"
-      id="undefined_fieldDetails"
-    >
-      Text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -116,13 +110,7 @@ exports[`ReactFieldBase renders the FieldBase with label 1`] = `
     >
       Text
     </label>
-    <span
-      class="sr-only"
-      id="undefined_fieldDetails"
-    >
-      Text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -154,8 +142,6 @@ exports[`ReactFieldBase renders the FieldBase with required 1`] = `
       class="sr-only"
       id="undefined_fieldDetails"
     >
-      undefined
-      <br />
       required
     </span>
   </div>
@@ -190,13 +176,7 @@ exports[`ReactFieldBase renders the add button when repeatable is true 1`] = `
       class="ddm-empty"
       tabindex="0"
     />
-    <span
-      class="sr-only"
-      id="undefined_fieldDetails"
-    >
-      Text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

@@ -3315,13 +3315,7 @@ exports[`Field LocalizableText has a label 1`] = `
         </div>
       </div>
     </div>
-    <span
-      class="sr-only"
-      id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

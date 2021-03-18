@@ -78,13 +78,7 @@ exports[`Grid has a label 1`] = `
         </table>
       </div>
     </div>
-    <span
-      class="sr-only"
-      id="undefined_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -486,13 +480,7 @@ exports[`Grid renders Label if showLabel is true 1`] = `
         </table>
       </div>
     </div>
-    <span
-      class="sr-only"
-      id="undefined_fieldDetails"
-    >
-      text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

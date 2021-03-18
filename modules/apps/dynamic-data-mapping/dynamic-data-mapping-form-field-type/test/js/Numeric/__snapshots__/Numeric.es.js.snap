@@ -72,13 +72,7 @@ exports[`Field Numeric has a label 1`] = `
       type="text"
       value=""
     />
-    <span
-      class="sr-only"
-      id="numericField_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -205,13 +199,7 @@ exports[`Field Numeric renders Label if showLabel is true 1`] = `
       type="text"
       value=""
     />
-    <span
-      class="sr-only"
-      id="numericField_fieldDetails"
-    >
-      Numeric Field
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

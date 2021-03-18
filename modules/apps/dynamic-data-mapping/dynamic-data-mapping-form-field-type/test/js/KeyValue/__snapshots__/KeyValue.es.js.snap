@@ -98,13 +98,7 @@ exports[`KeyValue has a label 1`] = `
         value=""
       />
     </div>
-    <span
-      class="sr-only"
-      id="keyValue_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -369,13 +363,7 @@ exports[`KeyValue renders Label if showLabel is true 1`] = `
         value=""
       />
     </div>
-    <span
-      class="sr-only"
-      id="keyValue_fieldDetails"
-    >
-      text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

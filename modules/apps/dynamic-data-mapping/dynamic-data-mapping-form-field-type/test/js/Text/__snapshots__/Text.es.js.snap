@@ -50,13 +50,7 @@ exports[`Field Text has a label 1`] = `
       type="text"
       value=""
     />
-    <span
-      class="sr-only"
-      id="textField_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -197,13 +191,7 @@ exports[`Field Text renders Label if showLabel is true 1`] = `
       type="text"
       value=""
     />
-    <span
-      class="sr-only"
-      id="textField_fieldDetails"
-    >
-      text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

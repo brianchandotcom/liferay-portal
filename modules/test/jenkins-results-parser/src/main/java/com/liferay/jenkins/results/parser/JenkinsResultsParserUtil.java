@@ -710,6 +710,8 @@ public class JenkinsResultsParserUtil {
 		url = url.replace(")", "%29");
 		url = url.replace("[", "%5B");
 		url = url.replace("]", "%5D");
+		url = url.replace("<", "%3C");
+		url = url.replace(">", "%3E");
 
 		return url;
 	}

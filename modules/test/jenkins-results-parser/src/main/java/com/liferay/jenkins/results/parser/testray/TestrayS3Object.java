@@ -68,12 +68,7 @@ public class TestrayS3Object {
 	}
 
 	public String getURLString() {
-		String urlString = String.valueOf(_url);
-
-		urlString = urlString.replace("(", "%28");
-		urlString = urlString.replace(")", "%29");
-
-		return urlString;
+		return JenkinsResultsParserUtil.fixURL(String.valueOf(_url));
 	}
 
 	public String getValue() {

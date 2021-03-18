@@ -3239,7 +3239,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/vorbis-java-tika.jar</file-name>
-				<version>0.8</version>
+				<version>0.8.LIFERAY-PATCHED-1</version>
 				<project-name>Vorbis</project-name>
 				<project-url>http://xiph.org/vorbis</project-url>
 				<licenses>

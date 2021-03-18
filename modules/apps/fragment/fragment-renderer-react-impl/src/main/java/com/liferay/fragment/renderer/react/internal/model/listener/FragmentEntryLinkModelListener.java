@@ -143,9 +143,6 @@ public class FragmentEntryLinkModelListener
 					StringPool.APOSTROPHE),
 				StringBundler.concat(
 					StringPool.APOSTROPHE, _PORTAL_REACT_DEPENDENCY,
-					StringPool.APOSTROPHE),
-				StringBundler.concat(
-					StringPool.APOSTROPHE, _PORTAL_REACT_DEPENDENCY,
 					StringPool.APOSTROPHE)
 			});
 	}
@@ -169,8 +166,7 @@ public class FragmentEntryLinkModelListener
 	}
 
 	private static final String[] _FRAGMENT_PLACEHOLDERS = {
-		"'__FRAGMENT_MODULE_NAME__'", "__PORTAL_REACT__",
-		"'frontend-js-react-web$react'"
+		"'__FRAGMENT_MODULE_NAME__'", "'frontend-js-react-web$react'"
 	};
 
 	private static final String _PORTAL_REACT_DEPENDENCY =

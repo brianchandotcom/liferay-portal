@@ -335,4 +335,100 @@ definition {
 		Notifications.viewNoNotificationEntry();
 	}
 
+	@description = "This test covers LPS-126145. This ensures that the notification can be viewed after restoring the entry from recycle bin."
+	@priority = "4"
+	test ViewNotificationAfterRestoring {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Site Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Test Site Name",
+			layoutName = "Test Site Page",
+			widgetName = "Web Content Display");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Site Page",
+			siteName = "Test Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		WebContentDisplayPortlet.configureSetupPG(metadataNameList = "Comments");
+
+		WebContentDisplayPortlet.saveConfiguration();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Site Page",
+			siteName = "Test Site Name");
+
+		Comments.subscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Site Page",
+			siteName = "Test Site Name");
+
+		Comments.addPG(entryComment = "WC WebContent Content Comment");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.moveToRecycleBinCP(webContentTitle = "WC WebContent Title");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewComment(
+			assetType = "comment",
+			content = "WC WebContent Title",
+			contentBody = "WC WebContent Content Comment",
+			user = "userfn userln",
+			viewEllipsisIcon = "true");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+		RecycleBin.restoreCP(
+			assetName = "WC WebContent Title",
+			assetType = "Web Content Article");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewComment(
+			assetType = "comment",
+			content = "WC WebContent Title",
+			contentBody = "WC WebContent Content Comment",
+			user = "userfn userln",
+			viewEllipsisIcon = "true");
+	}
+
 }

@@ -735,32 +735,26 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 					public String get(DDMFormFieldValue ddmFormFieldValue) {
 						Value value = ddmFormFieldValue.getValue();
 
+						DDMFormField ddmFormField =
+							ddmFormFieldValue.getDDMFormField();
+
+						DDMFormFieldOptions ddmFormFieldOptions =
+							(DDMFormFieldOptions)ddmFormField.getProperty(
+								"options");
+
+						Map<String, LocalizedValue> options =
+							ddmFormFieldOptions.getOptions();
+
 						if (StringUtil.equals(
-								assetRenderer.getClassName(),
-								JournalArticle.class.getName())) {
+								ddmFormField.getType(),
+								DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) &&
+							(options.size() == 1)) {
 
-							DDMFormField ddmFormField =
-								ddmFormFieldValue.getDDMFormField();
-
-							DDMFormFieldOptions ddmFormFieldOptions =
-								(DDMFormFieldOptions)ddmFormField.getProperty(
-									"options");
-
-							Map<String, LocalizedValue> options =
-								ddmFormFieldOptions.getOptions();
-
-							if (StringUtil.equals(
-									ddmFormField.getType(),
-									DDMFormFieldTypeConstants.
-										CHECKBOX_MULTIPLE) &&
-								(options.size() == 1)) {
-
-								if (Validator.isNull(value.getString(locale))) {
-									return Boolean.FALSE.toString();
-								}
-
-								return Boolean.TRUE.toString();
+							if (Validator.isNull(value.getString(locale))) {
+								return Boolean.FALSE.toString();
 							}
+
+							return Boolean.TRUE.toString();
 						}
 
 						return value.getString(locale);

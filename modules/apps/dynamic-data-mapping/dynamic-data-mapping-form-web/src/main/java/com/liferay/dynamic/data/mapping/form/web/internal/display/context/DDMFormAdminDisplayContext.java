@@ -601,7 +601,8 @@ public class DDMFormAdminDisplayContext {
 			_ddmFormBuilderContextFactory.create(ddmFormBuilderContextRequest);
 
 		return jsonFactory.createJSONObject(
-			ddmFormBuilderContextResponse.getContext());
+			jsonFactory.looseSerializeDeep(
+				ddmFormBuilderContextResponse.getContext()));
 	}
 
 	public List<NavigationItem> getFormBuilderNavigationItems() {

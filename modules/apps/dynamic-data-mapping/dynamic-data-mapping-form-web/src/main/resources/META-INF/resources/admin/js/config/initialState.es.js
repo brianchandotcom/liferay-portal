@@ -78,7 +78,7 @@ const normalizePages = (pages) => {
 	const visitor = new PagesVisitor(pages);
 
 	return visitor.mapFields(
-		({rows, settingsContext, ...otherProps}) => {
+		({settingsContext, ...otherProps}) => {
 			const visitor = new PagesVisitor(settingsContext.pages);
 
 			// Inferences the edited property to `true` of the options of a Field with
@@ -86,50 +86,33 @@ const normalizePages = (pages) => {
 			// implementation of the LayoutProvider, to remove this it is necessary
 			// to refactor the Options field to better deal with states and location.
 
-			settingsContext = {
-				...settingsContext,
-				pages: visitor.mapFields((field) => {
-					if (field.type === 'options') {
-						const languageIds = Object.keys(field.value);
-
-						return {
-							...field,
-							value: languageIds.reduce(
-								(previousValue, currentLanguageId) => ({
-									...previousValue,
-									[currentLanguageId]: field.value[
-										currentLanguageId
-									].map((option) => ({
-										...option,
-										edited: true,
-									})),
-								}),
-								{}
-							),
-						};
-					}
-
-					return field;
-				}),
-			};
-
-			if (!rows) {
-				return {
-					settingsContext,
-					...otherProps,
-				};
-			}
-
-			// Fixes the row structure of a FieldGroup to make the rest of the
-			// application unaware of the state of JSONArray or any other
-			// peculiarity of the backend.
-			//
-			// NOTE: This is considered a stopgap so that the backend can better
-			// deal with the structure.
-
 			return {
-				rows: rows.JSONArray ?? rows,
-				settingsContext,
+				settingsContext: {
+					...settingsContext,
+					pages: visitor.mapFields((field) => {
+						if (field.type === 'options') {
+							const languageIds = Object.keys(field.value);
+
+							return {
+								...field,
+								value: languageIds.reduce(
+									(previousValue, currentLanguageId) => ({
+										...previousValue,
+										[currentLanguageId]: field.value[
+											currentLanguageId
+										].map((option) => ({
+											...option,
+											edited: true,
+										})),
+									}),
+									{}
+								),
+							};
+						}
+
+						return field;
+					}),
+				},
 				...otherProps,
 			};
 		},

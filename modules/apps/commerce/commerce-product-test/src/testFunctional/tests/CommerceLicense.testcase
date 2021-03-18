@@ -21,11 +21,10 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AggregatedKeys {
 		property commerce.enabled = "true";
-		property commerce.license.file = "commerce-dxp-license-developer-combined.xml";
+		property commerce.license.file = "commerce-license-developer-aggregated.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}

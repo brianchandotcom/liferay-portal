@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>DataEngineRenderer</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DataEngineRenderer</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>UPLOAD_MEDIA_REPEATED_FIELD</td>
+	<td>xpath=(//div[contains(@class,'ddm-field')]//label[normalize-space(text())='${key_fieldName}'])[${key_index}]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

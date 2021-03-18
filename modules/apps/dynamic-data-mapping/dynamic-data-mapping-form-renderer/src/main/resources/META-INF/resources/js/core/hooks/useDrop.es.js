@@ -134,24 +134,6 @@ export const useDrop = ({
 				return;
 			}
 
-			const {
-				dataDefinition,
-				fieldSet,
-				name,
-				properties,
-				useFieldName,
-			} = data;
-
-			const {fieldType, label, settingsContext} =
-				(dataDefinition &&
-					DataConverter.getDataDefinitionFieldByFieldName({
-						dataDefinition,
-						editingLanguageId,
-						fieldName: name,
-						fieldTypes,
-					})) ??
-				{};
-			const {availableLanguageIds, defaultLanguageId} = fieldSet ?? {};
 			switch (type) {
 				case DragTypes.DRAG_FIELD_TYPE_ADD:
 					dispatch({
@@ -190,7 +172,20 @@ export const useDrop = ({
 						type: EVENT_TYPES.DND.MOVE,
 					});
 					break;
-				case DragTypes.DRAG_DATA_DEFINITION_FIELD_ADD:
+				case DragTypes.DRAG_DATA_DEFINITION_FIELD_ADD: {
+					const {dataDefinition, name} = data;
+
+					const {
+						fieldType,
+						label,
+						settingsContext,
+					} = DataConverter.getDataDefinitionFieldByFieldName({
+						dataDefinition,
+						editingLanguageId,
+						fieldName: name,
+						fieldTypes,
+					});
+
 					dispatch({
 						payload: {
 							data: {
@@ -218,7 +213,12 @@ export const useDrop = ({
 								: EVENT_TYPES.SECTION.ADD,
 					});
 					break;
-				case DragTypes.DRAG_FIELDSET_ADD:
+				}
+				case DragTypes.DRAG_FIELDSET_ADD: {
+					const {fieldSet, properties, useFieldName} = data;
+
+					const {availableLanguageIds, defaultLanguageId} = fieldSet;
+
 					dispatch({
 						payload: {
 							availableLanguageIds,
@@ -240,6 +240,7 @@ export const useDrop = ({
 						type: EVENT_TYPES.FIELD_SET.ADD,
 					});
 					break;
+				}
 				default:
 					break;
 			}

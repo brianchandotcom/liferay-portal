@@ -115,6 +115,50 @@ definition {
 			mentionsUserScreenName = "usersn");
 	}
 
+	@description = "This ensures that a guest is able to mention others in the comment section."
+	@priority = "3"
+	test ViewMentionViaBlogsEntryCommentAsGuest {
+		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=&quot;com.liferay.saml.addon.keep.alive.web,com.liferay.saml.api,com.liferay.saml.impl,com.liferay.saml.opensaml.integration,com.liferay.saml.persistence.api,com.liferay.saml.persistence.service,com.liferay.saml.web,saml-hook&quot;";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Pause(locator1 = "3000");
+
+		Mentions.addMentionViaComments(
+			entryComment = "Comment mentioning",
+			guest = "true",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn",
+			userEmailAddress = "guest@liferay.com",
+			userFirstName = "Guestfn",
+			userLastName = "Guestln");
+
+		AssertElementPresent(
+			key_mentionsUserScreenName = "usersn",
+			locator1 = "Mentions#MENTIONS_COMMENT_TAG_LINK");
+	}
+
 	@description = "This ensures that a user is able to mention others in comment section when editing."
 	@priority = "4"
 	test ViewMentionViaEditedBlogsEntryComment {

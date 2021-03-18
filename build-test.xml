@@ -5879,7 +5879,14 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<echo>${app.server.waiting.url} has loaded</echo>
 
-			<get-testcase-property property.name="commerce.enabled" />
+			<if>
+				<not>
+					<isset property="commerce.enabled" />
+				</not>
+				<then>
+					<get-testcase-property property.name="commerce.enabled" />
+				</then>
+			</if>
 
 			<if>
 				<and>

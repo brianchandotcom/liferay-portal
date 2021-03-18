@@ -120,7 +120,7 @@ definition {
 
 		License.deleteLicenseFile(licenseFileName = "portal-commerce-license.xml");
 
-		Portlet.startServer(deleteLiferayHome = "false");
+		Portlet.startServer(commerceEnabled = "false");
 
 		User.firstLoginPG();
 

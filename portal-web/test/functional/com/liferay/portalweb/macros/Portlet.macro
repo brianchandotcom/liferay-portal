@@ -362,7 +362,12 @@ definition {
 	macro startServer {
 		var appServerType = PropsUtil.get("app.server.type");
 
-		if ("${deleteLiferayHome}" == "false") {
+		if ("${commerceEnabled}" == "false") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "start-app-server -Dcommerce.enabled=false -Ddelete.liferay.home=false");
+		}
+		else if ("${deleteLiferayHome}" == "false") {
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "start-app-server -Ddelete.liferay.home=false");

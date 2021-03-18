@@ -27,7 +27,7 @@ export const Placeholder = ({
 	size,
 }) => {
 	const parentField = useContext(ParentFieldContext);
-	const {drop, overTarget} = useDrop({
+	const {canDrop, drop, overTarget} = useDrop({
 		columnIndex: columnIndex ?? 0,
 		origin: DND_ORIGIN_TYPE.EMPTY,
 		pageIndex,
@@ -46,7 +46,9 @@ export const Placeholder = ({
 			<div
 				className={classnames('ddm-target', {
 					'target-over targetOver':
-						overTarget && !parentField.root?.ddmStructureId,
+						overTarget &&
+						canDrop &&
+						!parentField.root?.ddmStructureId,
 				})}
 				ref={!parentField.root?.ddmStructureId ? drop : undefined}
 			/>

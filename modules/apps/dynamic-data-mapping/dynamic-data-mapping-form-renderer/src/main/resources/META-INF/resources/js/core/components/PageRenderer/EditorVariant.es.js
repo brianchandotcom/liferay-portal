@@ -61,7 +61,8 @@ export const Column = ({
 
 	const {canDrop, drop, overTarget} = useDrop({
 		columnIndex,
-		fieldName: column.fields[0]?.fieldName,
+		field: firstField,
+		fieldName: firstField?.fieldName,
 		origin: DND_ORIGIN_TYPE.FIELD,
 		pageIndex,
 		parentField,
@@ -71,8 +72,13 @@ export const Column = ({
 	const [{isDragging}, drag, preview] = useDrag({
 		item: {
 			data: firstField ?? undefined,
-			pageIndex,
 			preview: () => <FieldDragPreview containerRef={resizeRef} />,
+			sourceIndexes: {
+				columnIndex,
+				pageIndex,
+				rowIndex,
+			},
+			sourceParentField: parentField,
 			type: DragTypes.DRAG_FIELD_TYPE_MOVE,
 		},
 	});
@@ -124,7 +130,9 @@ export const Column = ({
 					selected: editable && firstField.fieldName === activeId,
 					'target-droppable': canDrop,
 					'target-over targetOver':
-						(!rootParentField.ddmStructureId && overTarget) ||
+						(!rootParentField.ddmStructureId &&
+							overTarget &&
+							canDrop) ||
 						resizing,
 				})}
 				column={column}

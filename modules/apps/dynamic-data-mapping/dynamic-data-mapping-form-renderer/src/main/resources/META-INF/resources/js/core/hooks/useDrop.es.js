@@ -24,9 +24,75 @@ export const DND_ORIGIN_TYPE = {
 	FIELD: 'field',
 };
 
+const isSameIndexes = (target, source) =>
+	target.pageIndex === source.pageIndex &&
+	target.rowIndex === source.rowIndex &&
+	target.columnIndex === source.columnIndex;
+
+/**
+ * Checks whether Field is moving into itself. In conventional mode, we would be
+ * visiting all the fields within it to check if the target belongs to the Field
+ * root (in this case the source), but this can be very slow depending on the
+ * depth and it is very expensive in this hot path instead this method implement
+ * heuristic algorithm based on two assumptions:
+ *
+ * - The target indexes are the same as the source indexes
+ * - The target depth is greater than the source
+ *
+ * The indexes are an Array<Object> that contains the index of the Field
+ * according to the depth level, the head of the array is the current loc and
+ * the tail is the root of the tree. It does not compare all target indexes just
+ * up to the same level of depth as the source.
+ *
+ * [
+ *  {pageIndex: 0, rowIndex: 1, columnIndex: 0}, <- Head (deeper)
+ *  {pageIndex: 0, rowIndex: 0, columnIndex: 0},
+ *  {pageIndex: 0, rowIndex: 0, columnIndex: 0}, <- Tail (root)
+ * ]
+ *
+ * The comparison of the indexes also fails in the first index that is not equal
+ * to the source index to fail early.
+ */
+const isMovingIntoItself = (targetParentLoc, sourceParentLoc) => {
+	const targetLocClosestSourceTree = targetParentLoc.slice(
+		-sourceParentLoc.length
+	);
+
+	return (
+		!targetLocClosestSourceTree.some(
+			(loc, index) => !isSameIndexes(loc, sourceParentLoc[index])
+		) && targetParentLoc.length > sourceParentLoc.length
+	);
+};
+
+/**
+ * Just check if the Field is a FieldGroup before checking if it is moving into
+ * itself. The index of the source and target are added to the loc, at the
+ * level where `useDrop` is used it is not visible the loc of the Field being
+ * rendered.
+ */
+const isFieldGroupMovingIntoItself = ({
+	sourceIndexes,
+	sourceParentField,
+	targetIndexes,
+	targetParentField,
+	type,
+}) =>
+	type === 'fieldset' &&
+	isMovingIntoItself(
+		[targetIndexes, ...(targetParentField?.loc ?? [])],
+		[sourceIndexes, ...(sourceParentField?.loc ?? [])]
+	);
+
+const isSameField = (targetField, sourceField) =>
+	targetField && targetField.fieldName === sourceField.fieldName;
+
+const isDroppingFieldGroupIntoField = (targetField, sourceField) =>
+	sourceField?.type === 'fieldset' && targetField !== undefined;
+
 export const useDrop = ({
 	columnIndex,
-	fieldName,
+	field,
 	origin,
 	pageIndex,
 	parentField,
@@ -45,14 +111,29 @@ export const useDrop = ({
 			DragTypes.DRAG_FIELD_TYPE_ADD,
 			DragTypes.DRAG_FIELDSET_ADD,
 		],
+		canDrop: (item) =>
+			!isSameField(field, item.data) &&
+			!isDroppingFieldGroupIntoField(field, item.data) &&
+			!isFieldGroupMovingIntoItself({
+				sourceIndexes: item.sourceIndexes,
+				sourceParentField: item.sourceParentField,
+				targetIndexes: {
+					columnIndex,
+					pageIndex,
+					rowIndex,
+				},
+				targetParentField: parentField,
+				type: item.data.type,
+			}),
 		collect: (monitor) => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver({shallow: true}),
 		}),
-		drop: ({data, pageIndex: sourceFieldPage, type}, monitor) => {
-			if (monitor.didDrop()) {
+		drop: ({data, sourceIndexes, type}, monitor) => {
+			if (monitor.didDrop() || !monitor.canDrop()) {
 				return;
 			}
+
 			const {
 				dataDefinition,
 				fieldSet,
@@ -76,7 +157,7 @@ export const useDrop = ({
 					dispatch({
 						payload: {
 							data: {
-								fieldName,
+								fieldName: field?.fieldName,
 								parentFieldName: parentField?.fieldName,
 							},
 							fieldType: {
@@ -97,8 +178,8 @@ export const useDrop = ({
 					dispatch({
 						payload: {
 							sourceFieldName: data.fieldName,
-							sourceFieldPage,
-							targetFieldName: fieldName,
+							sourceFieldPage: sourceIndexes.pageIndex,
+							targetFieldName: field?.fieldName,
 							targetIndexes: {
 								columnIndex,
 								pageIndex,
@@ -113,7 +194,7 @@ export const useDrop = ({
 					dispatch({
 						payload: {
 							data: {
-								fieldName,
+								fieldName: field?.fieldName,
 								parentFieldName: parentField?.fieldName,
 							},
 							fieldType: {
@@ -142,7 +223,7 @@ export const useDrop = ({
 						payload: {
 							availableLanguageIds,
 							defaultLanguageId,
-							fieldName,
+							fieldName: field?.fieldName,
 							indexes: {columnIndex, pageIndex, rowIndex},
 							parentFieldName: parentField?.fieldName,
 							properties,

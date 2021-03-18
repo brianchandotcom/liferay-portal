@@ -467,18 +467,26 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<var name="dxp.license.product.name" unset="true" />
 
-			<loadfile
-				property="dxp.license.content"
-				srcfile="${liferay.home}/osgi/modules/${dxp.license.file}"
-			/>
+			<if>
+				<equals arg1="${dxp.license.file}" arg2="dxp-license-dummy.xml" />
+				<then>
+					<property name="dxp.license.product.name" value="Digital Enterprise Production" />
+				</then>
+				<else>
+					<loadfile
+						property="dxp.license.content"
+						srcfile="${liferay.home}/osgi/modules/${dxp.license.file}"
+					/>
 
-			<propertyregex
-				casesensitive="false"
-				input="${dxp.license.content}"
-				property="dxp.license.product.name"
-				regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
-				select="\1"
-			/>
+					<propertyregex
+						casesensitive="false"
+						input="${dxp.license.content}"
+						property="dxp.license.product.name"
+						regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
+						select="\1"
+					/>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

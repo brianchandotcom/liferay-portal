@@ -53,11 +53,11 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test CombinedXML {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-dxp-license-developer-combined.xml";
+		property dxp.license = "dxp-license-dummy.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}

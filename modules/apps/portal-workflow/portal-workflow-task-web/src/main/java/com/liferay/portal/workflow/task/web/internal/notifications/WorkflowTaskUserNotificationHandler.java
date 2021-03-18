@@ -110,7 +110,7 @@ public class WorkflowTaskUserNotificationHandler
 		serviceContext.setAttribute(
 			"portletId", jsonObject.getString("portletId"));
 
-		return workflowHandler.getURLEditWorkflowTask(
+		return workflowHandler.getNotificationLink(
 			workflowTaskId, serviceContext);
 	}
 

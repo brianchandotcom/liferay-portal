@@ -176,21 +176,7 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 			long workflowTaskId, ServiceContext serviceContext)
 		throws PortalException {
 
-		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
-			portletURL.setParameter(
-				"workflowTaskId", String.valueOf(workflowTaskId));
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-
-			return portletURL.toString();
-		}
-		catch (WindowStateException windowStateException) {
-			throw new PortalException(windowStateException);
-		}
+		return getNotificationLink(workflowTaskId, serviceContext);
 	}
 
 	@Override

@@ -96,6 +96,8 @@ import javax.net.ssl.SSLContext;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -575,6 +577,30 @@ public class JenkinsResultsParserUtil {
 
 			ioException.printStackTrace();
 		}
+	}
+
+	public static boolean exists(URL url) {
+		try {
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)url.openConnection();
+
+			httpURLConnection.setRequestMethod("HEAD");
+
+			httpURLConnection.connect();
+
+			int responseCode = httpURLConnection.getResponseCode();
+
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				return true;
+			}
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException.getMessage(), ioException);
+			}
+		}
+
+		return false;
 	}
 
 	public static String expandSlaveRange(String value) {
@@ -4459,6 +4485,9 @@ public class JenkinsResultsParserUtil {
 
 	private static final String _URL_LOAD_BALANCER =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/load_balancer";
+
+	private static final Log _log = LogFactory.getLog(
+		JenkinsResultsParserUtil.class);
 
 	private static final Pattern _buildIDPattern = Pattern.compile(
 		"(?<cohortNumber>[\\d]{1})(?<masterNumber>[\\d]{2})" +

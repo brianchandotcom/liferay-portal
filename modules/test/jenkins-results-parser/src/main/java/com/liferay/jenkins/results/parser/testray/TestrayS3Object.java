@@ -18,7 +18,6 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.IOException;
 
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -32,25 +31,7 @@ public class TestrayS3Object {
 			return _exists;
 		}
 
-		try {
-			HttpURLConnection httpURLConnection =
-				(HttpURLConnection)_url.openConnection();
-
-			httpURLConnection.setRequestMethod("HEAD");
-			httpURLConnection.connect();
-
-			int responseCode = httpURLConnection.getResponseCode();
-
-			if (responseCode == HttpURLConnection.HTTP_OK) {
-				_exists = true;
-
-				return _exists;
-			}
-		}
-		catch (IOException ioException) {
-		}
-
-		_exists = false;
+		_exists = JenkinsResultsParserUtil.exists(getURL());
 
 		return _exists;
 	}

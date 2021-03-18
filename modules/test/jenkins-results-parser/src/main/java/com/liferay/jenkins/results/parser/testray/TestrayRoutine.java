@@ -130,7 +130,9 @@ public class TestrayRoutine {
 			}
 		}
 		catch (IOException ioException) {
-			_log.debug(ioException.getMessage(), ioException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException.getMessage(), ioException);
+			}
 		}
 
 		return getTestrayBuildByName(buildName);

@@ -1,7 +1,41 @@
 definition {
 
-	macro settings {
-		echo("TODO");
+	macro goToApis {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "APIs");
+	}
+
+	macro goToDefinitions {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "Definitions");
+	}
+
+	macro goToDataControlAndPrivacy {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "Data Control");
+	}
+
+	macro goToDataSources {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "Data Sources");
+	}
+
+	macro goToUserManagement {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "User Management");
+	}
+
+	macro goToProperties {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "Properties");
+	}
+
+	macro goToUsage {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "Usage");
+	}
+
+	macro goToWorkspace {
+		ACSettings.goToSettingsNavigation(settingsNavigation = "Workspace");
+	}
+
+	macro goToSettingsNavigation {
+		var key_SettingsNavigation = "${settingsNavigation}";
+
+		Click(locator1 = "ACSettings#SETTINGS_NAVIGATION");
 	}
 
 }

@@ -1109,7 +1109,9 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setShippingOptionName(shippingOptionName);
 		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
 		commerceOrder.setSubtotal(subtotal);
+		commerceOrder.setShippingAmount(shippingAmount);
 		commerceOrder.setSubtotalWithTaxAmount(subtotalWithTaxAmount);
+		commerceOrder.setShippingWithTaxAmount(shippingWithTaxAmount);
 
 		if (commerceContext != null) {
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation =
@@ -1127,7 +1129,7 @@ public class CommerceOrderLocalServiceImpl
 				CommerceMoney shippingDiscountAmountCommerceMoney =
 					shippingDiscountValue.getDiscountAmount();
 
-				shippingAmount = shippingAmount.subtract(
+				commerceOrder.setShippingDiscountAmount(
 					shippingDiscountAmountCommerceMoney.getPrice());
 			}
 
@@ -1139,14 +1141,12 @@ public class CommerceOrderLocalServiceImpl
 					shippingWithTaxAmountCommerceDiscountValue.
 						getDiscountAmount();
 
-				shippingWithTaxAmount = shippingWithTaxAmount.subtract(
+				commerceOrder.setShippingDiscountWithTaxAmount(
 					shippingDiscountWithTaxAmountCommerceMoney.getPrice());
 			}
 		}
 
-		commerceOrder.setShippingAmount(shippingAmount);
 		commerceOrder.setTotal(total);
-		commerceOrder.setShippingWithTaxAmount(shippingWithTaxAmount);
 		commerceOrder.setTotalWithTaxAmount(totalWithTaxAmount);
 		commerceOrder.setAdvanceStatus(advanceStatus);
 
@@ -1191,6 +1191,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setShippingOptionName(shippingOptionName);
 		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
 		commerceOrder.setSubtotal(subtotal);
+		commerceOrder.setShippingAmount(shippingAmount);
 
 		if (commerceContext != null) {
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation =
@@ -1208,12 +1209,11 @@ public class CommerceOrderLocalServiceImpl
 				CommerceMoney shippingDiscountAmountCommerceMoney =
 					shippingDiscountValue.getDiscountAmount();
 
-				shippingAmount = shippingAmount.subtract(
+				commerceOrder.setShippingDiscountAmount(
 					shippingDiscountAmountCommerceMoney.getPrice());
 			}
 		}
 
-		commerceOrder.setShippingAmount(shippingAmount);
 		commerceOrder.setTotal(total);
 		commerceOrder.setAdvanceStatus(advanceStatus);
 
@@ -1290,6 +1290,7 @@ public class CommerceOrderLocalServiceImpl
 			totalDiscountPercentageLevel3);
 		commerceOrder.setTotalDiscountPercentageLevel4(
 			totalDiscountPercentageLevel4);
+		commerceOrder.setManuallyAdjusted(true);
 
 		return commerceOrderPersistence.update(commerceOrder);
 	}
@@ -1400,6 +1401,7 @@ public class CommerceOrderLocalServiceImpl
 			totalDiscountPercentageLevel3WithTaxAmount);
 		commerceOrder.setTotalDiscountPercentageLevel4WithTaxAmount(
 			totalDiscountPercentageLevel4WithTaxAmount);
+		commerceOrder.setManuallyAdjusted(true);
 
 		return commerceOrderPersistence.update(commerceOrder);
 	}

@@ -233,6 +233,23 @@ public class LayoutReportsDisplayContext {
 
 			return portletURL.toString();
 		}
+		else if (_isSiteAdmin()) {
+			try {
+				PortletURL portletURL = _portal.getControlPanelPortletURL(
+					portletRequest,
+					_groupLocalService.getGroup(
+						_themeDisplay.getScopeGroupId()),
+					"com_liferay_site_admin_web_portlet_SiteSettingsPortlet", 0,
+					0, PortletRequest.RENDER_PHASE);
+
+				return portletURL.toString();
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
+
+				return null;
+			}
+		}
 
 		return null;
 	}
@@ -260,6 +277,13 @@ public class LayoutReportsDisplayContext {
 			PermissionThreadLocal.getPermissionChecker();
 
 		return permissionChecker.isOmniadmin();
+	}
+
+	private boolean _isSiteAdmin() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.isGroupAdmin(_themeDisplay.getScopeGroupId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

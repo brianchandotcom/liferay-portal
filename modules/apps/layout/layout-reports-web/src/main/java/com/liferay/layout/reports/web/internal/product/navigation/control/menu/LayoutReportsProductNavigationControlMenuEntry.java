@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -199,7 +201,10 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (!_isEnabled(_portal.getCompanyId(httpServletRequest))) {
+		if (!_isEnabled(
+				_groupLocalService.getGroup(
+					_portal.getScopeGroupId(httpServletRequest)))) {
+
 			return false;
 		}
 
@@ -284,7 +289,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		return false;
 	}
 
-	private boolean _isEnabled(long companyId) throws ConfigurationException {
+	private boolean _isEnabled(Group group) throws ConfigurationException {
 		if (!_layoutReportsPageSpeedConfiguration.enabled()) {
 			return false;
 		}
@@ -293,13 +298,14 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			layoutReportsPageSpeedCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					LayoutReportsPageSpeedCompanyConfiguration.class,
-					companyId);
+					group.getCompanyId());
 
 		if (!layoutReportsPageSpeedCompanyConfiguration.enabled()) {
 			return false;
 		}
 
-		return true;
+		return GetterUtil.get(
+			group.getTypeSettingsProperty("pageSpeedEnabled"), true);
 	}
 
 	private boolean _isPanelStateOpen(HttpServletRequest httpServletRequest) {
@@ -405,6 +411,9 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Html _html;

@@ -28,12 +28,15 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -105,7 +108,7 @@ public class LayoutReportsPortlet extends MVCPortlet {
 			Group group = _groupLocalService.getGroup(
 				_portal.getScopeGroupId(httpServletRequest));
 
-			if (!_isEnabled(group.getCompanyId())) {
+			if (!_isEnabled(group)) {
 				return;
 			}
 
@@ -113,8 +116,7 @@ public class LayoutReportsPortlet extends MVCPortlet {
 				LayoutReportsWebKeys.LAYOUT_REPORTS_DISPLAY_CONTEXT,
 				new LayoutReportsDisplayContext(
 					_groupLocalService, _layoutLocalService,
-					new LayoutReportsDataProvider(
-						_getApiKey(group.getCompanyId())),
+					new LayoutReportsDataProvider(_getApiKey(group)),
 					_layoutSEOLinkManager, _language, _portal, renderRequest));
 
 			super.doDispatch(renderRequest, renderResponse);
@@ -124,6 +126,19 @@ public class LayoutReportsPortlet extends MVCPortlet {
 		}
 	}
 
+	private String _getApiKey(Group group) throws ConfigurationException {
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		String pageSpeedApikey = unicodeProperties.getProperty(
+			"pageSpeedApiKey");
+
+		if (Validator.isNotNull(pageSpeedApikey)) {
+			return pageSpeedApikey;
+		}
+
+		return _getApiKey(group.getCompanyId());
+	}
+
 	private String _getApiKey(long companyId) throws ConfigurationException {
 		LayoutReportsPageSpeedCompanyConfiguration
 			layoutReportsPageSpeedCompanyConfiguration =
@@ -131,9 +146,21 @@ public class LayoutReportsPortlet extends MVCPortlet {
 					LayoutReportsPageSpeedCompanyConfiguration.class,
 					companyId);
 
-		return GetterUtil.getString(
-			layoutReportsPageSpeedCompanyConfiguration.apiKey(),
-			_layoutReportsPageSpeedConfiguration.apiKey());
+		String apiKey = layoutReportsPageSpeedCompanyConfiguration.apiKey();
+
+		if (Validator.isNotNull(apiKey)) {
+			return apiKey;
+		}
+
+		return _layoutReportsPageSpeedConfiguration.apiKey();
+	}
+
+	private boolean _isEnabled(Group group) throws ConfigurationException {
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		return GetterUtil.getBoolean(
+			unicodeProperties.getProperty("pageSpeedEnabled"),
+			_isEnabled(group.getCompanyId()));
 	}
 
 	private boolean _isEnabled(long companyId) throws ConfigurationException {
@@ -153,6 +180,9 @@ public class LayoutReportsPortlet extends MVCPortlet {
 
 		return true;
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

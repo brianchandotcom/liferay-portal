@@ -68,7 +68,6 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
@@ -359,19 +358,46 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
+		String commerceOrderUuidWebKey = getCookieName(
+			commerceChannel.getCommerceChannelId());
+
 		if (permissionChecker.isSignedIn()) {
 			httpServletRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
 
-			_commerceOrderThreadLocal.set(commerceOrder);
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(httpServletRequest);
+
+			HttpSession httpSession = originalHttpServletRequest.getSession();
+
+			httpSession.setAttribute(
+				commerceOrderUuidWebKey, commerceOrder.getUuid());
+
+			return;
 		}
+
+		Cookie cookie = new Cookie(
+			commerceOrderUuidWebKey, commerceOrder.getUuid());
+
+		String domain = CookieKeys.getDomain(httpServletRequest);
+
+		if (Validator.isNotNull(domain)) {
+			cookie.setDomain(domain);
+		}
+
+		cookie.setMaxAge(CookieKeys.MAX_AGE);
+		cookie.setPath(StringPool.SLASH);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_setGuestCommerceOrder(
-			commerceOrder, httpServletRequest, themeDisplay.getResponse());
+		CookieKeys.addCookie(
+			httpServletRequest, themeDisplay.getResponse(), cookie);
 	}
 
 	@Reference(
@@ -602,39 +628,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		}
 
 		return portletURL;
-	}
-
-	private void _setGuestCommerceOrder(
-			CommerceOrder commerceOrder, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException {
-
-		User user = _portal.getUser(httpServletRequest);
-
-		if ((user != null) && !user.isDefaultUser()) {
-			return;
-		}
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
-
-		String commerceOrderUuidWebKey = getCookieName(
-			commerceChannel.getCommerceChannelId());
-
-		Cookie cookie = new Cookie(
-			commerceOrderUuidWebKey, commerceOrder.getUuid());
-
-		String domain = CookieKeys.getDomain(httpServletRequest);
-
-		if (Validator.isNotNull(domain)) {
-			cookie.setDomain(domain);
-		}
-
-		cookie.setMaxAge(CookieKeys.MAX_AGE);
-		cookie.setPath(StringPool.SLASH);
-
-		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
 	}
 
 	private void _validateCommerceOrderItemVersions(

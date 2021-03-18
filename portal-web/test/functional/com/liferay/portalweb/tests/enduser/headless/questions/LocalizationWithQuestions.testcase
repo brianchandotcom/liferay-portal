@@ -48,6 +48,34 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can add multiple subtopics with non-Latin characters."
+	@priority = "3"
+	test AddMultipleSubTopics {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		for (var subTopicName : list "かながわけん,ほっかいどう,奈良県,おおさかふ,东京都") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
+			Questions.addSubTopic(
+				subTopicDescription = "トピック記述",
+				subTopicName = "${subTopicName}");
+
+			Questions.changeTopic(gotoParentTopic = "質問トピック");
+
+			Questions.changeTopic(
+				parentTopicName = "質問トピック",
+				subTopicName = "${subTopicName}");
+		}
+	}
+
 	@description = "Validate if the user can post a question with non-Latin characters via subtopic."
 	@priority = "4"
 	test AddQuestionViaSubTopic {

@@ -36,6 +36,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Díaz
@@ -72,8 +73,9 @@ public abstract class BaseLayoutsItemSelectorView
 		LayoutItemSelectorViewDisplayContext
 			layoutItemSelectorViewDisplayContext =
 				new LayoutItemSelectorViewDisplayContext(
-					layoutItemSelectorCriterion, itemSelectedEventName,
-					isPrivateLayout());
+					(HttpServletRequest)servletRequest,
+					layoutItemSelectorCriterion, portletURL,
+					itemSelectedEventName, isPrivateLayout());
 
 		servletRequest.setAttribute(
 			LayoutsItemSelectorWebKeys.

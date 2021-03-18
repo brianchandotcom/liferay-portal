@@ -20,6 +20,12 @@
 LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (LayoutItemSelectorViewDisplayContext)request.getAttribute(LayoutsItemSelectorWebKeys.LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 %>
 
+<c:if test="<%= layoutItemSelectorViewDisplayContext.isShowBreadcrumb() %>">
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= layoutItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>"
+	/>
+</c:if>
+
 <liferay-layout:select-layout
 	checkDisplayPage="<%= layoutItemSelectorViewDisplayContext.isCheckDisplayPage() %>"
 	enableCurrentPage="<%= layoutItemSelectorViewDisplayContext.isEnableCurrentPage() %>"

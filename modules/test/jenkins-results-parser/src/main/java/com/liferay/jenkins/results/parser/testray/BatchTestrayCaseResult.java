@@ -162,6 +162,7 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
 		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
+		testrayAttachments.add(_getJenkinsReportTestrayAttachment());
 
 		testrayAttachments.removeAll(Collections.singleton(null));
 
@@ -194,24 +195,7 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 
 		StringBuilder sb = new StringBuilder();
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Date date = new Date(topLevelBuild.getStartTime());
-
-		sb.append(
-			JenkinsResultsParserUtil.toDateString(
-				date, "yyyy-MM", "America/Los_Angeles"));
-
-		sb.append("/");
-
-		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
-
-		sb.append(jenkinsMaster.getName());
-
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-		sb.append("/");
-		sb.append(topLevelBuild.getBuildNumber());
+		sb.append(_getTopLevelBuildURLPath());
 		sb.append("/");
 		sb.append(axisBuild.getAxisName());
 
@@ -240,6 +224,55 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		}
 
 		return testrayAttachment;
+	}
+
+	private TestrayAttachment _getJenkinsReportTestrayAttachment() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (topLevelBuild == null) {
+			return null;
+		}
+
+		TestrayAttachment testrayAttachment =
+			TestrayFactory.newTestrayAttachment(
+				this, "Jenkins Report",
+				JenkinsResultsParserUtil.combine(
+					_getTopLevelBuildURLPath(), "/jenkins-report.html.gz"));
+
+		if (!testrayAttachment.exists()) {
+			return null;
+		}
+
+		return testrayAttachment;
+	}
+
+	private String _getTopLevelBuildURLPath() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (topLevelBuild == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		Date date = new Date(topLevelBuild.getStartTime());
+
+		sb.append(
+			JenkinsResultsParserUtil.toDateString(
+				date, "yyyy-MM", "America/Los_Angeles"));
+
+		sb.append("/");
+
+		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
+		sb.append(jenkinsMaster.getName());
+
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+
+		return sb.toString();
 	}
 
 	private final AxisTestClassGroup _axisTestClassGroup;

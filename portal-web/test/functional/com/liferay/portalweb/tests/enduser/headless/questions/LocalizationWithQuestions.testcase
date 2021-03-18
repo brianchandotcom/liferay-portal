@@ -90,6 +90,33 @@ definition {
 		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
 	}
 
+	@description = "Validate if the user can post a question with multiple tags that contain non-Latin characters."
+	@priority = "3"
+	test AddQuestionWithMultipleTags {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			tagLocatorList = "いち,に,さん,し,ご",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
+	}
+
 	@description = "Validate if the user can post a question with non-Latin characters， it also covers LPS-128639."
 	@priority = "5"
 	test AddQuestionWithNonLatinCharacters {

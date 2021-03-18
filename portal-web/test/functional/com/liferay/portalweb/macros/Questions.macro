@@ -450,6 +450,34 @@ definition {
 			locator1 = "Questions#ANSWER_BODY");
 	}
 
+	macro editQuestion {
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "${questionTitle}");
+
+		Click(locator1 = "Button#EDIT");
+
+		Type(
+			locator1 = "Questions#ASK_QUESTION_TITLE_FIELD",
+			value1 = "${titleFieldEdit}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${contentFieldEdit}");
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(
+			key_text = "Update Your Question",
+			locator1 = "Button#ANY");
+
+		AssertVisible(
+			key_questionTitle = "${titleFieldEdit}",
+			locator1 = "Questions#QUESTIONS_DETAILS_TITLE");
+	}
+
 	macro editRootTopic {
 		var key_categoryName = "${categoryName}";
 
@@ -711,6 +739,13 @@ definition {
 				key_text = "${text}",
 				locator1 = "Button#ANY");
 		}
+	}
+
+	macro viewMyActivityDefault {
+		AssertTextEquals(
+			key_emptyInfo = "No results found",
+			locator1 = "Questions#EMPTY_STATE_MESSAGE",
+			value1 = "No results found");
 	}
 
 	macro viewNoSearchResults {

@@ -42,17 +42,6 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		_axisTestClassGroup = axisTestClassGroup;
 	}
 
-	@Override
-	public List<Attachment> getAttachments() {
-		List<Attachment> attachments = new ArrayList<>();
-
-		attachments.add(_getJenkinsConsoleAttachment());
-
-		attachments.removeAll(Collections.singleton(null));
-
-		return attachments;
-	}
-
 	public AxisBuild getAxisBuild() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
@@ -169,6 +158,17 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
+	public List<TestrayAttachment> getTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
+
+		testrayAttachments.removeAll(Collections.singleton(null));
+
+		return testrayAttachments;
+	}
+
+	@Override
 	public String getType() {
 		try {
 			return JenkinsResultsParserUtil.getProperty(
@@ -222,20 +222,24 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		return _axisTestClassGroup;
 	}
 
-	private Attachment _getJenkinsConsoleAttachment() {
+	private TestrayAttachment _getJenkinsConsoleTestrayAttachment() {
 		AxisBuild axisBuild = getAxisBuild();
 
 		if (axisBuild == null) {
 			return null;
 		}
 
-		TestrayS3Object testrayS3Object =
-			TestrayS3ObjectFactory.newTestrayS3Object(
-				TestrayS3Bucket.getInstance(),
+		TestrayAttachment testrayAttachment =
+			TestrayFactory.newTestrayAttachment(
+				this, "Jenkins Console",
 				JenkinsResultsParserUtil.combine(
 					getAxisBuildURLPath(), "/jenkins-console.txt.gz"));
 
-		return new Attachment(this, testrayS3Object, "Jenkins Console");
+		if (!testrayAttachment.exists()) {
+			return null;
+		}
+
+		return testrayAttachment;
 	}
 
 	private final AxisTestClassGroup _axisTestClassGroup;

@@ -48,24 +48,6 @@ public class TestrayCaseResult {
 		jsonObject = new JSONObject();
 	}
 
-	public List<Attachment> getAttachments() {
-		List<Attachment> attachments = new ArrayList<>();
-
-		if (jsonObject.optJSONObject("attachments") != null) {
-			JSONObject attachmentsJSONObject = jsonObject.optJSONObject(
-				"attachments");
-
-			for (String key : attachmentsJSONObject.keySet()) {
-				Attachment attachment = new Attachment(
-					this, key, attachmentsJSONObject.getString(key));
-
-				attachments.add(attachment);
-			}
-		}
-
-		return attachments;
-	}
-
 	public String getCaseID() {
 		return jsonObject.optString("testrayCaseId");
 	}
@@ -108,6 +90,25 @@ public class TestrayCaseResult {
 
 	public String getTeamName() {
 		return jsonObject.getString("testrayTeamName");
+	}
+
+	public List<TestrayAttachment> getTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		if (jsonObject.optJSONObject("attachments") == null) {
+			return testrayAttachments;
+		}
+
+		JSONObject attachmentsJSONObject = jsonObject.optJSONObject(
+			"attachments");
+
+		for (String name : attachmentsJSONObject.keySet()) {
+			testrayAttachments.add(
+				TestrayFactory.newTestrayAttachment(
+					this, name, attachmentsJSONObject.getString(name)));
+		}
+
+		return testrayAttachments;
 	}
 
 	public TestrayBuild getTestrayBuild() {
@@ -218,60 +219,6 @@ public class TestrayCaseResult {
 
 		private final Integer _id;
 		private final String _name;
-
-	}
-
-	public class Attachment {
-
-		public Attachment(
-			TestrayCaseResult testrayCaseResult, String name, String value) {
-
-			_testrayCaseResult = testrayCaseResult;
-			_name = name;
-			_value = value;
-		}
-
-		public Attachment(
-			TestrayCaseResult testrayCaseResult,
-			TestrayS3Object testrayS3Object, String name) {
-
-			_testrayCaseResult = testrayCaseResult;
-			_testrayS3Object = testrayS3Object;
-			_name = name;
-
-			_value = testrayS3Object.getKey();
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public URL getURL() {
-			if (_testrayS3Object != null) {
-				return _testrayS3Object.getURL();
-			}
-
-			TestrayServer testrayServer = _testrayCaseResult.getTestrayServer();
-
-			try {
-				return new URL(
-					testrayServer.getURL(),
-					JenkinsResultsParserUtil.combine(
-						"/reports/production/logs/", getValue()));
-			}
-			catch (MalformedURLException malformedURLException) {
-				throw new RuntimeException(malformedURLException);
-			}
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		private final String _name;
-		private final TestrayCaseResult _testrayCaseResult;
-		private TestrayS3Object _testrayS3Object;
-		private final String _value;
 
 	}
 

@@ -676,24 +676,25 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		Company company = CompanyLocalServiceUtil.getCompany(
 			calendarBooking.getCompanyId());
 
+		String calendarBookingDescriptionText = StringUtil.replace(
+			calendarBooking.getDescription(user.getLocale()),
+			new String[] {"href=\"/", "src=\"/"},
+			new String[] {
+				"href=\"" + company.getPortalURL(calendarBooking.getGroupId()) +
+					"/",
+				"src=\"" + company.getPortalURL(calendarBooking.getGroupId()) +
+					"/"
+			});
+
 		String calendarBookingDescription = HtmlUtil.stripHtml(
-			StringUtil.replace(
-				calendarBooking.getDescription(user.getLocale()),
-				new String[] {"href=\"/", "src=\"/"},
-				new String[] {
-					"href=\"" +
-						company.getPortalURL(calendarBooking.getGroupId()) +
-							"/",
-					"src=\"" +
-						company.getPortalURL(calendarBooking.getGroupId()) + "/"
-				}));
+			calendarBookingDescriptionText);
 
 		Description description = new Description(calendarBookingDescription);
 
 		propertyList.add(description);
 
 		XProperty xProperty = new XProperty(
-			"X-ALT-DESC", calendarBookingDescription);
+			"X-ALT-DESC", calendarBookingDescriptionText);
 
 		ParameterList parameters = xProperty.getParameters();
 

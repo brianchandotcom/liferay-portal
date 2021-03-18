@@ -1,0 +1,17 @@
+definition {
+    macro addBreakdown {
+        Click(locator1 = "IndividualDetailsPage#ADD_BREAKDOWN_BUTTON");
+    }
+
+    macro nameBreakdown {
+        Type(locator1 = "IndividualDetailsPage#BREAKDOWN_NAME_FIELD", value1 = "${breakdownName}");
+    }
+
+    macro saveBreakdown {
+        Click(locator1 = "IndividualDetailsPage#SAVE_BREAKDOWN_BUTTON");
+    }
+
+    macro deleteBreakdown {
+        Click(locator1 = "IndividualDetailsPage#DELETE_BREAKDOWN_BUTTON");
+    }
+}

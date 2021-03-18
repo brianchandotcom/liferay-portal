@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>ACIndividualsDashboard</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACNavigation</td></tr>
+</thead>
+<tbody>
+<!-- INDIVIDUALS DASHBOARD  -->
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//header//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BREAKDOWN_BUTTON</td>
+	<td>//div[contains(@class,'tabs-root')]/button</td>
+	<td></td>
+</tr>
+<tr>
+    <td>BREAKDOWN_NAME_FIELD</td>
+    <td>//*[text()='Breakdown Name']/ancestor::label/following-sibling::input[@type='text']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SAVE_BREAKDOWN_BUTTON</td>
+    <td>//div[@class='form-navigation']/button[text()='Save']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DELETE_BREAKDOWN_BUTTON</td>
+    <td>//div[@class='tab-title active']/button</td>
+    <td></td>
+</tr>
+<tr>
+    <td>BREAKDOWN_TAB</td>
+    <td>//div[@class='card card-root distribution-card-root']//li/button[text()='${key_breakdownTabName}']</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

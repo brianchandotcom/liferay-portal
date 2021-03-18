@@ -155,9 +155,10 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "Document with Repeated Field");
 
-		DataEngine.assertFieldRepeated(
-			fieldName = "Repeatable Rich Text",
-			index = "2");
+		AssertElementPresent(
+			key_fieldName = "Repeatable Rich Text",
+			key_index = "2",
+			locator1 = "DataEngineRenderer#UPLOAD_MEDIA_REPEATED_FIELD");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

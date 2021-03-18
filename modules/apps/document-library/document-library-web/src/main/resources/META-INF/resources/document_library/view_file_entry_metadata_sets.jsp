@@ -18,14 +18,13 @@
 
 <%
 DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayContext = (DLViewFileEntryMetadataSetsDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT);
-
-DLViewFileEntryMetadataSetsManagementToolbarDisplayContext dlViewFileEntryMetadataSetsManagementToolbarDisplayContext = new DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dLViewFileEntryMetadataSetsDisplayContext);
 %>
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= dlViewFileEntryMetadataSetsManagementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= new DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dLViewFileEntryMetadataSetsDisplayContext) %>"
+	propsTransformer="document_library/js/DDMStructuresManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/document_library/delete_data_definition" var="deleteDataDefinitionURL">

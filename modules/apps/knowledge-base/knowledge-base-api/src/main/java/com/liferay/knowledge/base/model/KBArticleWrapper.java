@@ -256,6 +256,9 @@ public class KBArticleWrapper
 		}
 	}
 
+	/**
+	 * @see com.liferay.portal.model.impl.OrganizationBaseImpl#buildTreePath()
+	 */
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {

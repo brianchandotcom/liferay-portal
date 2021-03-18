@@ -30,6 +30,51 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-127369. This ensures that the applications in a depot can be disabled and enabled."
+	@priority = "4"
+	test DisableAndEnableApplications {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Documents and Media,Collections,Translation Processes,Web Content",
+			status = "Disabled");
+
+		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name");
+
+		for (var portletName : list "Web Content,Documents and Media,Collections,Translation Processes") {
+			AssertElementNotPresent(
+				key_card = "${portletName}",
+				locator1 = "Card#CARD_TITLE");
+		}
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Documents and Media,Collections,Translation Processes,Web Content",
+			status = "Enabled");
+
+		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name");
+
+		for (var portletName : list "Web Content,Documents and Media,Collections,Translation Processes") {
+			AssertTextEquals(
+				key_card = "${portletName}",
+				locator1 = "Card#CARD_TITLE",
+				value1 = "${portletName}");
+		}
+	}
+
 	@description = "This ensures that a depot can be edited via settings."
 	@priority = "4"
 	test EditName {

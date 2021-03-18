@@ -137,34 +137,41 @@ public class LayoutDDMFormFieldTemplateContextContributor
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			long groupId = GetterUtil.getLong(
+				defaultGroupId, serviceContext.getScopeGroupId());
+
 			if (jsonObject.has("groupId")) {
-				return value;
+				groupId = jsonObject.getLong("groupId");
 			}
 
 			boolean privateLayout = jsonObject.getBoolean("privateLayout");
 			long layoutId = jsonObject.getLong("layoutId");
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
 			Layout layout = _layoutLocalService.fetchLayout(
-				GetterUtil.getLong(
-					defaultGroupId, serviceContext.getScopeGroupId()),
-				privateLayout, layoutId);
+				groupId, privateLayout, layoutId);
 
 			if (layout == null) {
 				return StringPool.BLANK;
 			}
 
-			jsonObject.put(
-				"groupId", layout.getGroupId()
-			).put(
-				"id", layout.getUuid()
-			).put(
-				"name", layout.getName(defaultLocale)
-			).put(
-				"value", layout.getFriendlyURL(defaultLocale)
-			);
+			if (!jsonObject.has("groupId")) {
+				jsonObject.put("groupId", layout.getGroupId());
+			}
+
+			if (!jsonObject.has("id")) {
+				jsonObject.put("id", layout.getUuid());
+			}
+
+			if (!jsonObject.has("name")) {
+				jsonObject.put("name", layout.getName(defaultLocale));
+			}
+
+			if (!jsonObject.has("value")) {
+				jsonObject.put("value", layout.getFriendlyURL(defaultLocale));
+			}
 
 			return jsonObject.toJSONString();
 		}

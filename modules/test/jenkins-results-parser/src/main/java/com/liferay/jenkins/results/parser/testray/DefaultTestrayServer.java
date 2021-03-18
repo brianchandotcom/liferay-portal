@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TestrayResultsParserUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class DefaultTestrayServer extends BaseTestrayServer {
 
 	@Override
 	public void importCaseResults(JenkinsMaster jenkinsMaster) {
+		TestrayResultsParserUtil.processTestrayResultFiles(getResultsDir());
+
 		for (File resultFile :
 				JenkinsResultsParserUtil.findFiles(getResultsDir(), ".*.xml")) {
 

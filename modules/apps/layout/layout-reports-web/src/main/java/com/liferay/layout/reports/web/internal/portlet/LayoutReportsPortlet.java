@@ -14,6 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.portlet;
 
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsWebKeys;
@@ -21,11 +22,16 @@ import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataPr
 import com.liferay.layout.reports.web.internal.display.context.LayoutReportsDisplayContext;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -95,16 +101,61 @@ public class LayoutReportsPortlet extends MVCPortlet {
 			return;
 		}
 
-		httpServletRequest.setAttribute(
-			LayoutReportsWebKeys.LAYOUT_REPORTS_DISPLAY_CONTEXT,
-			new LayoutReportsDisplayContext(
-				_groupLocalService, _layoutLocalService,
-				new LayoutReportsDataProvider(
-					_layoutReportsPageSpeedConfiguration),
-				_layoutSEOLinkManager, _language, _portal, renderRequest));
+		try {
+			Group group = _groupLocalService.getGroup(
+				_portal.getScopeGroupId(httpServletRequest));
 
-		super.doDispatch(renderRequest, renderResponse);
+			if (!_isEnabled(group.getCompanyId())) {
+				return;
+			}
+
+			httpServletRequest.setAttribute(
+				LayoutReportsWebKeys.LAYOUT_REPORTS_DISPLAY_CONTEXT,
+				new LayoutReportsDisplayContext(
+					_groupLocalService, _layoutLocalService,
+					new LayoutReportsDataProvider(
+						_getApiKey(group.getCompanyId())),
+					_layoutSEOLinkManager, _language, _portal, renderRequest));
+
+			super.doDispatch(renderRequest, renderResponse);
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
 	}
+
+	private String _getApiKey(long companyId) throws ConfigurationException {
+		LayoutReportsPageSpeedCompanyConfiguration
+			layoutReportsPageSpeedCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					LayoutReportsPageSpeedCompanyConfiguration.class,
+					companyId);
+
+		return GetterUtil.getString(
+			layoutReportsPageSpeedCompanyConfiguration.apiKey(),
+			_layoutReportsPageSpeedConfiguration.apiKey());
+	}
+
+	private boolean _isEnabled(long companyId) throws ConfigurationException {
+		if (!_layoutReportsPageSpeedConfiguration.enabled()) {
+			return false;
+		}
+
+		LayoutReportsPageSpeedCompanyConfiguration
+			layoutReportsPageSpeedCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					LayoutReportsPageSpeedCompanyConfiguration.class,
+					companyId);
+
+		if (!layoutReportsPageSpeedCompanyConfiguration.enabled()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -196,7 +199,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (!_layoutReportsPageSpeedConfiguration.enabled()) {
+		if (!_isEnabled(_portal.getCompanyId(httpServletRequest))) {
 			return false;
 		}
 
@@ -279,6 +282,24 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		}
 
 		return false;
+	}
+
+	private boolean _isEnabled(long companyId) throws ConfigurationException {
+		if (!_layoutReportsPageSpeedConfiguration.enabled()) {
+			return false;
+		}
+
+		LayoutReportsPageSpeedCompanyConfiguration
+			layoutReportsPageSpeedCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					LayoutReportsPageSpeedCompanyConfiguration.class,
+					companyId);
+
+		if (!layoutReportsPageSpeedCompanyConfiguration.enabled()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isPanelStateOpen(HttpServletRequest httpServletRequest) {
@@ -381,6 +402,9 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutReportsProductNavigationControlMenuEntry.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Html _html;

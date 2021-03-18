@@ -15,6 +15,7 @@
 package com.liferay.layout.reports.web.internal.display.context;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
@@ -191,26 +192,49 @@ public class LayoutReportsDisplayContext {
 	}
 
 	private String _getConfigurePageSpeedURL(PortletRequest portletRequest) {
-		if (!_isOmniAdmin()) {
-			return null;
+		if (_isOmniAdmin()) {
+			PortletURL portletURL = _portal.getControlPanelPortletURL(
+				portletRequest, ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"mvcRenderCommandName",
+				"/configuration_admin/edit_configuration");
+			portletURL.setParameter(
+				"redirect",
+				_portal.getCurrentCompleteURL(
+					_portal.getHttpServletRequest(portletRequest)));
+			portletURL.setParameter(
+				"factoryPid",
+				LayoutReportsPageSpeedConfiguration.class.getName());
+			portletURL.setParameter(
+				"pid", LayoutReportsPageSpeedConfiguration.class.getName());
+
+			return portletURL.toString();
+		}
+		else if (_isCompanyAdmin()) {
+			PortletURL portletURL = _portal.getControlPanelPortletURL(
+				portletRequest, ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"mvcRenderCommandName",
+				"/configuration_admin/edit_configuration");
+			portletURL.setParameter(
+				"redirect",
+				_portal.getCurrentCompleteURL(
+					_portal.getHttpServletRequest(portletRequest)));
+			portletURL.setParameter(
+				"factoryPid",
+				LayoutReportsPageSpeedCompanyConfiguration.class.getName());
+			portletURL.setParameter(
+				"pid",
+				LayoutReportsPageSpeedCompanyConfiguration.class.getName());
+
+			return portletURL.toString();
 		}
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/configuration_admin/edit_configuration");
-		portletURL.setParameter(
-			"redirect",
-			_portal.getCurrentCompleteURL(
-				_portal.getHttpServletRequest(portletRequest)));
-		portletURL.setParameter(
-			"factoryPid", LayoutReportsPageSpeedConfiguration.class.getName());
-		portletURL.setParameter(
-			"pid", LayoutReportsPageSpeedConfiguration.class.getName());
-
-		return portletURL.toString();
+		return null;
 	}
 
 	private Locale _getDefaultLocale(Layout layout) {
@@ -222,6 +246,13 @@ public class LayoutReportsDisplayContext {
 
 			return LocaleUtil.getSiteDefault();
 		}
+	}
+
+	private boolean _isCompanyAdmin() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.isCompanyAdmin();
 	}
 
 	private boolean _isOmniAdmin() {

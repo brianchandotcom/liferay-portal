@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 
 <license>
+	<account-name>Liferay.com</account-name>
 	<owner>Liferay.com</owner>
 	<description>Liferay.com</description>
-	<product-name>DXP Production</product-name>
-	<product-version>7.1</product-version>
+	<product-name>Digital Enterprise Production</product-name>
+	<product-version>7.2</product-version>
+	<license-name>Digital Enterprise Production</license-name>
 	<license-type>production</license-type>
-	<license-version>3</license-version>
-	<start-date>Thursday, September 17, 2020 12:00:00 AM GMT</start-date>
-	<expiration-date>Saturday, August 24, 2120 12:00:00 AM GMT</expiration-date>
-	<max-http-sessions>5</max-http-sessions>
+	<license-version>6</license-version>
+	<start-date>Wednesday, August 26, 2020 12:00:00 AM GMT</start-date>
+	<expiration-date>Friday, August 2, 2120 12:00:00 AM GMT</expiration-date>
+	<max-servers>1</max-servers>
+	<instance-size>Sizing 2</instance-size>
 	<host-names>
 		<host-name>hostnameToReplace</host-name>
 	</host-names>

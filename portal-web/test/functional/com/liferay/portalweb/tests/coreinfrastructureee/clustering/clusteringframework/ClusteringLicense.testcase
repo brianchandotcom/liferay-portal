@@ -19,6 +19,71 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test LimitPreviouslyValidatedClusterNodes {
+		property commerce.enabled = "false";
+		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			nodePort = "8080");
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			nodePort = "9080");
+
+		Clustering.viewClusterStatusInConsole();
+
+		User.firstLoginPG();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Clustering.shutdownSpecificServer(nodePort = "9080");
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			nodePort = "10080");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		Navigator.openSpecificURL(url = "http://localhost:10080");
+
+		Page.assertNodePortPG(nodePort = "10080");
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "false",
+			nodePort = "9080");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "You have exceeded the maximum number of cluster nodes in cluster, overloaded nodes will be deactivated in 2 hours",
+			nodePort = "9080");
+
+		Pause(locator1 = "300000");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		Navigator.openSpecificURL(url = "http://localhost:10080");
+
+		Page.assertNodePortPG(nodePort = "10080");
+	}
+
 	@priority = "5"
 	test ViewNodeLimit {
 		property commerce.enabled = "false";

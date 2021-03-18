@@ -117,8 +117,10 @@ public class RsyncTestrayAttachmentUploader
 				JenkinsResultsParserUtil.combine(
 					"Uploaded ", String.valueOf(_getTestrayServerURL()),
 					"/reports/production/logs/",
-					JenkinsResultsParserUtil.getPathRelativeTo(
-						sourceTestrayLogsFile, _getSourceTestrayLogsDir())));
+					JenkinsResultsParserUtil.fixURL(
+						JenkinsResultsParserUtil.getPathRelativeTo(
+							sourceTestrayLogsFile,
+							_getSourceTestrayLogsDir()))));
 		}
 	}
 

@@ -616,6 +616,26 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static List<File> findDirs(File baseDir, String regex) {
+		List<File> dirs = new ArrayList<>();
+
+		for (File dir : baseDir.listFiles()) {
+			if (!dir.isDirectory()) {
+				continue;
+			}
+
+			String dirName = dir.getName();
+
+			if (dirName.matches(regex)) {
+				dirs.add(dir);
+			}
+
+			dirs.addAll(findDirs(dir, regex));
+		}
+
+		return dirs;
+	}
+
 	public static List<File> findFiles(File baseDir, String regex) {
 		List<File> files = new ArrayList<>();
 

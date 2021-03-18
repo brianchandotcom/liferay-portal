@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
+import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -148,11 +149,43 @@ public class TestrayAttachmentRecorder {
 		String portalUpstreamBranchName = _startProperties.getProperty(
 			"PORTAL_UPSTREAM_BRANCH_NAME");
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			return null;
+		}
+
 		_portalGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
 				portalUpstreamBranchName);
 
 		return _portalGitWorkingDirectory;
+	}
+
+	private GitWorkingDirectory _getQAWebsitesGitWorkingDirectory() {
+		if (_qaWebsitesGitWorkingDirectory != null) {
+			return _qaWebsitesGitWorkingDirectory;
+		}
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String upstreamBranchName = "master";
+
+		String upstreamDirPath = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "qa.websites.dir", upstreamBranchName);
+		String upstreamRepository = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "qa.websites.repository", upstreamBranchName);
+
+		_qaWebsitesGitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				upstreamBranchName, upstreamDirPath, upstreamRepository);
+
+		return _qaWebsitesGitWorkingDirectory;
 	}
 
 	private File _getTestrayLogsBuildDir() {
@@ -322,80 +355,112 @@ public class TestrayAttachmentRecorder {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			_getPortalGitWorkingDirectory();
 
-		File testResultsDir = new File(
-			portalGitWorkingDirectory.getWorkingDirectory(),
-			"portal-web/test-results");
+		List<File> testResultsDirs = new ArrayList<>();
 
-		if (!testResultsDir.exists()) {
+		if (portalGitWorkingDirectory != null) {
+			File testResultsDir = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"portal-web/test-results");
+
+			if (testResultsDir.exists()) {
+				testResultsDirs.add(testResultsDir);
+			}
+		}
+
+		if (testResultsDirs.isEmpty()) {
+			GitWorkingDirectory qaWebsitesGitWorkingDirectory =
+				_getQAWebsitesGitWorkingDirectory();
+
+			if (qaWebsitesGitWorkingDirectory != null) {
+				testResultsDirs.addAll(
+					JenkinsResultsParserUtil.findDirs(
+						qaWebsitesGitWorkingDirectory.getWorkingDirectory(),
+						"test-results"));
+			}
+		}
+
+		System.out.println("testResultsDirs=" + testResultsDirs);
+
+		if (testResultsDirs.isEmpty()) {
 			return;
 		}
 
-		List<File> poshiReportIndexFiles = JenkinsResultsParserUtil.findFiles(
-			testResultsDir, "index.html");
+		for (File testResultsDir : testResultsDirs) {
+			List<File> poshiReportIndexFiles =
+				JenkinsResultsParserUtil.findFiles(
+					testResultsDir, "index.html");
 
-		for (File poshiReportIndexFile : poshiReportIndexFiles) {
-			File sourcePoshiReportDir = poshiReportIndexFile.getParentFile();
+			System.out.println(
+				"poshiReportIndexFiles=" + poshiReportIndexFiles);
 
-			File poshiReportDir = new File(
-				_getTestrayLogsBuildDir(), sourcePoshiReportDir.getName());
+			for (File poshiReportIndexFile : poshiReportIndexFiles) {
+				File sourcePoshiReportDir =
+					poshiReportIndexFile.getParentFile();
 
-			try {
-				JenkinsResultsParserUtil.copy(
-					sourcePoshiReportDir, poshiReportDir);
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
+				File poshiReportDir = new File(
+					_getTestrayLogsBuildDir(), sourcePoshiReportDir.getName());
 
-			File poshiIndexFile = new File(poshiReportDir, "index.html");
-
-			if (poshiIndexFile.exists()) {
 				try {
-					String content = JenkinsResultsParserUtil.read(
-						poshiIndexFile);
+					JenkinsResultsParserUtil.copy(
+						sourcePoshiReportDir, poshiReportDir);
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
 
-					for (File poshiReportJPGFile :
-							JenkinsResultsParserUtil.findFiles(
-								poshiReportDir, ".*\\.jpg")) {
+				File poshiIndexFile = new File(poshiReportDir, "index.html");
 
-						String poshiReportJPGFileName =
-							poshiReportJPGFile.getName();
+				if (poshiIndexFile.exists()) {
+					try {
+						String content = JenkinsResultsParserUtil.read(
+							poshiIndexFile);
 
-						if (!content.contains("/" + poshiReportJPGFileName)) {
-							System.out.println(
-								"Removing unreferenced file " +
+						for (File poshiReportJPGFile :
+								JenkinsResultsParserUtil.findFiles(
+									poshiReportDir, ".*\\.jpg")) {
+
+							String poshiReportJPGFileName =
+								poshiReportJPGFile.getName();
+
+							if (!content.contains(
+									"/" + poshiReportJPGFileName)) {
+
+								System.out.println(
+									"Removing unreferenced file " +
+										poshiReportJPGFile);
+
+								JenkinsResultsParserUtil.delete(
 									poshiReportJPGFile);
 
-							JenkinsResultsParserUtil.delete(poshiReportJPGFile);
+								continue;
+							}
 
-							continue;
+							_convertToGzipFile(poshiReportJPGFile);
 						}
-
-						_convertToGzipFile(poshiReportJPGFile);
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
 					}
 				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
+
+				for (File poshiReportHTMLFile :
+						JenkinsResultsParserUtil.findFiles(
+							poshiReportDir, ".*\\.html")) {
+
+					try {
+						String content = JenkinsResultsParserUtil.read(
+							poshiReportHTMLFile);
+
+						JenkinsResultsParserUtil.write(
+							poshiReportHTMLFile,
+							content.replaceAll("\\.jpg", "\\.jpg\\.gz"));
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
+
+					_convertToGzipFile(poshiReportHTMLFile);
 				}
-			}
-
-			for (File poshiReportHTMLFile :
-					JenkinsResultsParserUtil.findFiles(
-						poshiReportDir, ".*\\.html")) {
-
-				try {
-					String content = JenkinsResultsParserUtil.read(
-						poshiReportHTMLFile);
-
-					JenkinsResultsParserUtil.write(
-						poshiReportHTMLFile,
-						content.replaceAll("\\.jpg", "\\.jpg\\.gz"));
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-
-				_convertToGzipFile(poshiReportHTMLFile);
 			}
 		}
 	}
@@ -403,6 +468,10 @@ public class TestrayAttachmentRecorder {
 	private void _recordPoshiWarnings() {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			_getPortalGitWorkingDirectory();
+
+		if (portalGitWorkingDirectory == null) {
+			return;
+		}
 
 		File sourcePoshiWarningsFile = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(),
@@ -421,9 +490,7 @@ public class TestrayAttachmentRecorder {
 
 			String content = JenkinsResultsParserUtil.read(poshiWarningsFile);
 
-			content = content.trim();
-
-			if (content.isEmpty()) {
+			if (content.matches("\\s*")) {
 				return;
 			}
 
@@ -445,6 +512,7 @@ public class TestrayAttachmentRecorder {
 
 	private final Build _build;
 	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private GitWorkingDirectory _qaWebsitesGitWorkingDirectory;
 	private boolean _recorded;
 	private final Properties _startProperties;
 

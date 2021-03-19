@@ -2355,7 +2355,9 @@ jdbc.default.password=${database.password}</echo>
 				</then>
 				<else>
 					<if>
-						<equals arg1="${selenium.remote.driver.enabled}" arg2="false" />
+						<not>
+							<isset property="selenium.remote.driver.url" />
+						</not>
 						<then>
 							<fail message="Operating system is not supported." />
 						</then>
@@ -2443,7 +2445,9 @@ jdbc.default.password=${database.password}</echo>
 				</then>
 				<else>
 					<if>
-						<equals arg1="${selenium.remote.driver.enabled}" arg2="false" />
+						<not>
+							<isset property="selenium.remote.driver.url" />
+						</not>
 						<then>
 							<fail message="Operating system is not supported." />
 						</then>
@@ -10182,12 +10186,11 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<equals arg1="${selenium.remote.driver.enabled}" arg2="true" />
+			<isset property="selenium.remote.driver.url" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
-					selenium.remote.driver.enabled=${selenium.remote.driver.enabled}
-					selenium.remote.driver.hub=${selenium.remote.driver.hub}
+					selenium.remote.driver.url=${selenium.remote.driver.url}
 				</echo>
 			</then>
 		</if>

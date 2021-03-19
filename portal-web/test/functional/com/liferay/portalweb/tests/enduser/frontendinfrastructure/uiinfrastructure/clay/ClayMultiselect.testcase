@@ -1,0 +1,98 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Clay";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoPage(pageName = "Clay Sample Test Page");
+
+		Portlet.addPG(portletName = "Clay Sample");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "3"
+	test SmokeAPI {
+		Navigator.gotoNavTab(navTab = "Form Elements");
+
+		Type(
+			key_label = "Multiselect 1",
+			locator1 = "ClaySamplePortlet#MULTISELECT_INPUT",
+			value1 = "three");
+
+		Click(
+			key_item = "three",
+			locator1 = "ClaySamplePortlet#MULTISELECT_DROPDOWN_ITEM");
+
+		AssertElementPresent(
+			key_item = "three",
+			key_label = "Multiselect 1",
+			locator1 = "ClaySamplePortlet#MULTISELECT_ITEM");
+
+		Click(
+			key_item = "three",
+			key_label = "Multiselect 1",
+			locator1 = "ClaySamplePortlet#MULTISELECT_ITEM_CLOSE");
+
+		AssertElementNotPresent(
+			key_item = "three",
+			key_label = "Multiselect 1",
+			locator1 = "ClaySamplePortlet#MULTISELECT_ITEM");
+
+		Type(
+			key_label = "Multiselect with Custom Menu Renderer",
+			locator1 = "ClaySamplePortlet#MULTISELECT_INPUT",
+			value1 = "three");
+
+		AssertElementPresent(
+			key_item = "three",
+			locator1 = "ClaySamplePortlet#MULTISELECT_DROPDOWN_ITEM_STICKER");
+
+		Click(
+			key_item = "three",
+			locator1 = "ClaySamplePortlet#MULTISELECT_DROPDOWN_ITEM");
+
+		AssertElementPresent(
+			key_item = "three",
+			key_label = "Multiselect with Custom Menu Renderer",
+			locator1 = "ClaySamplePortlet#MULTISELECT_ITEM");
+
+		Click(
+			key_item = "three",
+			key_label = "Multiselect with Custom Menu Renderer",
+			locator1 = "ClaySamplePortlet#MULTISELECT_ITEM_CLOSE");
+
+		AssertElementNotPresent(
+			key_item = "three",
+			key_label = "Multiselect with Custom Menu Renderer",
+			locator1 = "ClaySamplePortlet#MULTISELECT_ITEM");
+
+		takeScreenshot();
+	}
+
+}

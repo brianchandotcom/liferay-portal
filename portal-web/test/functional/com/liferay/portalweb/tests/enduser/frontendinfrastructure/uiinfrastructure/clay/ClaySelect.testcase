@@ -1,0 +1,98 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Clay";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoPage(pageName = "Clay Sample Test Page");
+
+		Portlet.addPG(portletName = "Clay Sample");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test SmokeMultipleSelect {
+		Navigator.gotoNavTab(navTab = "Form Elements");
+
+		AssertEditable(
+			key_label = "Multiple Select Element",
+			locator1 = "ClaySamplePortlet#SELECTOR");
+
+		Click(
+			key_label = "Multiple Select Element",
+			key_option = "Sample 1",
+			locator1 = "ClaySamplePortlet#SELECTOR_OPTION");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl");
+
+		Click(
+			key_label = "Multiple Select Element",
+			key_option = "Sample 2",
+			locator1 = "ClaySamplePortlet#SELECTOR_OPTION");
+
+		takeScreenshot();
+
+		SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#SELECTOR_MULTIPLE_PNG");
+
+		AssertNotEditable(
+			key_label = "Disabled Multiple Select Element",
+			locator1 = "ClaySamplePortlet#SELECTOR");
+	}
+
+	@priority = "5"
+	test SmokeRegularSelect {
+		Navigator.gotoNavTab(navTab = "Form Elements");
+
+		ScrollWebElementIntoView(
+			key_label = "Multiple Select Element",
+			locator1 = "ClaySamplePortlet#SELECTOR");
+
+		AssertEditable(
+			key_label = "Regular Select Element",
+			locator1 = "ClaySamplePortlet#SELECTOR");
+
+		Click(
+			key_label = "Regular Select Element",
+			key_option = "Sample 1",
+			locator1 = "ClaySamplePortlet#SELECTOR_OPTION");
+
+		Click(
+			key_label = "Regular Select Element",
+			locator1 = "ClaySamplePortlet#SELECTOR");
+
+		takeScreenshot();
+
+		SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#SELECTOR_REGULAR_PNG");
+
+		AssertNotEditable(
+			key_label = "Disabled Regular Select Element",
+			locator1 = "ClaySamplePortlet#SELECTOR");
+	}
+
+}

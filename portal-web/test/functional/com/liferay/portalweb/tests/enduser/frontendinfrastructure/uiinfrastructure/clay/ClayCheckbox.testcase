@@ -1,0 +1,103 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Clay";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoPage(pageName = "Clay Sample Test Page");
+
+		Portlet.addPG(portletName = "Clay Sample");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test SmokeAPI {
+		Navigator.gotoNavTab(navTab = "Form Elements");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_definition = "On",
+			locator1 = "ClaySamplePortlet#CHECKBOX");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_definition = "Off",
+			locator1 = "ClaySamplePortlet#CHECKBOX");
+
+		AssertEditable.assertEditableNotVisible(locator1 = "ClaySamplePortlet#CHECKBOX_WITH_CUSTOM_CLASS_AND_ID");
+
+		Check.checkNotVisible(
+			checkboxName = "Checkbox with Label",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		AssertNotEditable.assertNotEditableNotVisible(
+			key_definition = "On disabled",
+			locator1 = "ClaySamplePortlet#CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_definition = "On disabled",
+			locator1 = "ClaySamplePortlet#CHECKBOX");
+
+		AssertNotEditable.assertNotEditableNotVisible(
+			key_definition = "Off disabled",
+			locator1 = "ClaySamplePortlet#CHECKBOX");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_definition = "Off disabled",
+			locator1 = "ClaySamplePortlet#CHECKBOX");
+
+		AssertEditable.assertEditableNotVisible(
+			key_definition = "Indeterminate",
+			locator1 = "ClaySamplePortlet#CHECKBOX");
+	}
+
+	@priority = "5"
+	test ValidateDefaultCheckboxUI {
+		Navigator.gotoNavTab(navTab = "Form Elements");
+
+		Check.checkNotVisible(
+			checkboxName = "Checkbox with Label",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		takeScreenshot();
+
+		SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#CHECKBOX_CHECKED");
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Checkbox with Label",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		takeScreenshot();
+
+		SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#CHECKBOX_UNCHECKED");
+
+		SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#CHECKBOX_INDETERMINATE_PNG");
+
+		takeScreenshot();
+	}
+
+}

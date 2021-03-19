@@ -1096,6 +1096,72 @@ definition {
 			title = "Translation of WC WebContent Title to ja-JP");
 	}
 
+	@description = "This ensures that the modification date of a translation can be displayed correctly after editing."
+	@priority = "3"
+	test ViewEntryModifiedDate {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descriptionscripción",
+			webContentTitle = "WC WebContent Título");
+
+		Button.clickPublish();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Translation Processes");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			modifiedDate = "Seconds Ago",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		Pause(locator1 = "60000");
+
+		Refresh();
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			modifiedDate = "Minute Ago",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.translateFields(webContentTitle = "WC WebContent Título editar");
+
+		Button.clickPublish();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Translation Processes");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			modifiedDate = "Seconds Ago",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+	}
+
 	@description = "This ensures that the user can see translation options after move all available languages to current."
 	@priority = "4"
 	test ViewOptionsWithAllLanguages {

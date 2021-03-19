@@ -1592,18 +1592,14 @@ uuid''',
 
 		User.viewLoggedInPG();
 
-		// Assert user count at SP
+		// Assert duplicate user doesn't exist
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.searchCP(searchTerm = "test");
-
-		AssertTextEquals(
-			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
-			value1 = "1 Results for test");
+		AssertElementNotPresent(locator1 = "xpath=(//tr[contains(.,'Test Test')][2]/td[2]/a)");
 	}
 
 }

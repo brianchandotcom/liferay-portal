@@ -275,16 +275,26 @@ export const updateFieldLabel = (
 	};
 };
 
+const isLocalizedObjectValue = ({localizable, value}) => {
+	return typeof value === 'object' && localizable;
+};
+
 const getValueLocalized = (
 	localizable,
 	value,
 	defaultLanguageId,
 	editingLanguageId
 ) => {
-	if (localizable && value[editingLanguageId] !== undefined) {
+	if (
+		isLocalizedObjectValue({localizable, value}) &&
+		value[editingLanguageId] !== undefined
+	) {
 		return value[editingLanguageId];
 	}
-	else if (localizable && value[defaultLanguageId]) {
+	else if (
+		isLocalizedObjectValue({localizable, value}) &&
+		value[defaultLanguageId]
+	) {
 		return value[defaultLanguageId];
 	}
 

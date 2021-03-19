@@ -443,16 +443,23 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			if (ArrayUtil.isEmpty(log4jJars)) {
 				String portalJarPath =
-					PortalUtil.getPortalLibDir() + "log4j.jar";
+					PortalUtil.getPortalLibDir() + "log4j-api.jar";
 
 				FileUtil.copyFile(
-					portalJarPath, srcFile + "/WEB-INF/lib/log4j.jar", true);
+					portalJarPath, srcFile + "/WEB-INF/lib/log4j-api.jar",
+					true);
 
 				portalJarPath =
-					PortalUtil.getPortalLibDir() + "log4j-extras.jar";
+					PortalUtil.getPortalLibDir() + "log4j-1.2-api.jar";
 
 				FileUtil.copyFile(
-					portalJarPath, srcFile + "/WEB-INF/lib/log4j-extras.jar",
+					portalJarPath, srcFile + "/WEB-INF/lib/log4j-1.2-api.jar",
+					true);
+
+				portalJarPath = PortalUtil.getPortalLibDir() + "log4j-core.jar";
+
+				FileUtil.copyFile(
+					portalJarPath, srcFile + "/WEB-INF/lib/log4j-core.jar",
 					true);
 			}
 		}
@@ -703,7 +710,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		if (appServerType.equals(ServerDetector.JBOSS_ID) ||
 			appServerType.equals(ServerDetector.WILDFLY_ID)) {
 
-			excludes += "**/WEB-INF/lib/log4j.jar,";
+			excludes = StringBundler.concat(
+				excludes, "**/WEB-INF/lib/log4j-1.2-api.jar,",
+				"**/WEB-INF/lib/log4j-api.jar,**/WEB-INF/lib/log4j-core.jar,");
 		}
 		else if (appServerType.equals(ServerDetector.TOMCAT_ID)) {
 			String[] libs = FileUtil.listFiles(tomcatLibDir);

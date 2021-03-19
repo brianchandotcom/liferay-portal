@@ -222,27 +222,20 @@ Export-Package:\
 	org.apache.commons.logging;version="1.2",\
 	org.apache.commons.logging.impl;version="1.2",\
 	org.apache.commons.validator.routines;version='1.5.1',\
-	org.apache.log4j;version='1.2.17',\
-	org.apache.log4j.chainsaw;version='1.2.17',\
-	org.apache.log4j.config;version='1.2.17',\
-	org.apache.log4j.extras;version='1.1',\
-	org.apache.log4j.filter;version='1.1',\
-	org.apache.log4j.helpers;version='1.2.17',\
-	org.apache.log4j.jdbc;version='1.2.17',\
-	org.apache.log4j.jmx;version='1.2.17',\
-	org.apache.log4j.net;version='1.2.17',\
-	org.apache.log4j.nt;version='1.2.17',\
-	org.apache.log4j.or;version='1.2.17',\
-	org.apache.log4j.or.jms;version='1.2.17',\
-	org.apache.log4j.or.sax;version='1.2.17',\
-	org.apache.log4j.pattern;version='1.2.17',\
-	org.apache.log4j.rewrite;version='1.2.17',\
-	org.apache.log4j.rolling;version='1.1',\
-	org.apache.log4j.rolling.helper;version='1.1',\
-	org.apache.log4j.rule;version='1.1',\
-	org.apache.log4j.spi;version='1.2.17',\
-	org.apache.log4j.varia;version='1.2.17',\
-	org.apache.log4j.xml;version='1.2.17',\
+	org.apache.log4j;version='2.14.1',\
+	org.apache.log4j.spi;version='2.14.1',\
+	org.apache.logging.log4j;version='2.14.1',\
+	org.apache.logging.log4j.core;version='2.14.1',\
+	org.apache.logging.log4j.core.appender;version='2.14.1',\
+	org.apache.logging.log4j.core.config;version='2.14.1',\
+	org.apache.logging.log4j.core.config.composite;version='2.14.1',\
+	org.apache.logging.log4j.core.config.xml;version='2.14.1',\
+	org.apache.logging.log4j.core.impl;version='2.14.1',\
+	org.apache.logging.log4j.core.layout;version='2.14.1',\
+	org.apache.logging.log4j.core.selector;version='2.14.1',\
+	org.apache.logging.log4j.core.util;version='2.14.1',\
+	org.apache.logging.log4j.message;version='2.14.1',\
+	org.apache.logging.log4j.spi;version='2.14.1',\
 	org.apache.naming.java,\
 	org.apache.regexp;version='2.7.1',\
 	org.apache.tika.*;version='1.22.0',\
@@ -359,8 +352,9 @@ Provide-Capability:\
 	@../../../lib/portal/jodd-upload.jar,\
 	@../../../lib/portal/json-java.jar,\
 	@../../../lib/portal/liferay-icu4j.jar,\
-	@../../../lib/portal/log4j-extras.jar,\
-	@../../../lib/portal/log4j.jar,\
+	@../../../lib/portal/log4j-1.2-api.jar,\
+	@../../../lib/portal/log4j-api.jar,\
+	@../../../lib/portal/log4j-core.jar,\
 	@../../../lib/portal/portletmvc4spring-framework.jar,\
 	@../../../lib/portal/rome.jar,\
 	@../../../lib/portal/slf4j-api.jar,\

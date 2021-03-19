@@ -63,11 +63,11 @@ const getValue = (dataType, symbols, value = '') => {
 		newValue = value;
 	}
 
+	newValue = newValue.replace('$[DECIMAL_SYMBOL]', decimalSymbol);
+
 	if (newValue && !newValue.includes('.') && decimalSymbol != ',') {
 		decimalSymbol = ',';
 	}
-
-	newValue = newValue.replace('$[DECIMAL_SYMBOL]', decimalSymbol);
 
 	if (dataType === 'integer' && newValue) {
 		newValue = newValue.replace(decimalSymbol, '.');

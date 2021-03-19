@@ -256,8 +256,26 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	public StringProperty openAPIModule = new StringProperty("openAPIModule");
 	public Property<Operation> operations = new EnumProperty<>(
 		Operation.class, "operations");
+
 	public SchemaProperties outboundSchemaProperties = new SchemaProperties(
-		"outboundSchemaProperties");
+		"outboundSchemaProperties") {
+
+		public ValidationResult afterSchema() {
+			entitySchemaProperties.schema.setValue(
+				outboundSchemaProperties.schema.getValue());
+
+			inboundSchemaProperties.schema.setValue(
+				outboundSchemaProperties.schema.getValue());
+
+			rejectSchemaProperties.schema.setValue(
+				SchemaUtils.createRejectSchema(
+					outboundSchemaProperties.schema.getValue()));
+
+			return ValidationResult.OK;
+		}
+
+	};
+
 	public RequestParameterProperties parameters =
 		new RequestParameterProperties("parameters");
 	public SchemaProperties rejectSchemaProperties = new SchemaProperties(

@@ -1,49 +1,54 @@
 definition {
-    
-    //clickAccount(accountName="Account");
-    macro clickAccount {
-        var key_accountName = "${accountName}";
-        Click(locator1="ACAccounts#ACCOUNTS_TABLE_ROW");
-    }
 
-    //clickAccountDetailsTab(tabName = "tabname");
-    macro clickAccountHeaderTab {
-        var key_tabName = "${tabName}";
-        Click(locator1="ACAccounts#ACCOUNTS_HEADER_TAB_BUTTON");
-    }
+	//clickAccount(accountName="Account");
 
-    //assertAccountDetails(propertyName="name", propertyValue="value");
-    macro assertAccountDetails {
-        var key_propertyName = "${propertyName}";
-        var key_propertyValue = "${propertyValue}";
+	macro assertAccountActivitiesChart {
+		var key_expectedBarCount = "${expectedBarCount}";
+		AssertElementPresent(locator1 = "ACAccounts#ACCOUNT_ACTIVITY_BAR_GRAPH");
+	}
 
-        AssertTextEquals(
-            value1="${propertyValue}",
-            locator1="ACAccounts#ACCOUNT_DETAIL_PROPERTY");
-    }
+	macro assertAccountIndividuals {
+		echo("TODO");
+	}
 
+	// AssertAccountOverviewCards(cardTitleList="")
 
-    macro assertAccountActivitiesChart {
-        var key_expectedBarCount = "${expectedBarCount}";
-        AssertElementPresent(locator1="ACAccounts#ACCOUNT_ACTIVITY_BAR_GRAPH");
-    }
+	macro assertAccountOverviewCards {
+		for (var title : list "${cardTitleList}") {
+			var key_cardTitle = "${title}";
+			AssertElementPresent(locator1 = "ACAccounts#ACCOUNT_OVERVIEW_CARD_HEADER");
+		}
+	}
 
-    macro assertAccountInterests {
-        echo ("TODO");
-    }
+	macro assertAccountInterests {
+		echo("TODO");
+	}
 
-    macro assertAccountSegments {
-        echo ("TODO");
-    }
+	macro assertAccountSegments {
+		echo("TODO");
+	}
 
-    macro assertAccountIndividuals {
-        echo ("TODO");
-    }
-    //assertAccountOverviewCards(cardTitleList="")
-    macro assertAccountOverviewCards {
-        for (var title : list "${cardTitleList}") {
-            var key_cardTitle = "${title}";
-            AssertElementPresent(locator1="ACAccounts#ACCOUNT_OVERVIEW_CARD_HEADER");
-        }
-    }
+	macro clickAccount {
+		var key_accountName = "${accountName}";
+		Click(locator1 = "ACAccounts#ACCOUNTS_TABLE_ROW");
+	}
+
+	//clickAccountDetailsTab(tabName = "tabname");
+
+	macro clickAccountHeaderTab {
+		var key_tabName = "${tabName}";
+		Click(locator1 = "ACAccounts#ACCOUNTS_HEADER_TAB_BUTTON");
+	}
+
+	//assertAccountDetails(propertyName="name", propertyValue="value");
+
+	macro assertAccountDetails {
+		var key_propertyName = "${propertyName}";
+		var key_propertyValue = "${propertyValue}";
+
+		AssertTextEquals(
+			locator1 = "ACAccounts#ACCOUNT_DETAIL_PROPERTY",
+			value1 = "${propertyValue}");
+	}
+
 }

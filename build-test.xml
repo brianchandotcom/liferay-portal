@@ -141,18 +141,15 @@ module.framework.properties.osgi.console=11312</echo>
 			<if>
 				<not>
 					<or>
-						<equals arg1="${browser.type}" arg2="android" />
-						<equals arg1="${browser.type}" arg2="androidchrome" />
 						<equals arg1="${browser.type}" arg2="chrome" />
 						<equals arg1="${browser.type}" arg2="edge" />
 						<equals arg1="${browser.type}" arg2="firefox" />
 						<equals arg1="${browser.type}" arg2="internetexplorer" />
-						<equals arg1="${browser.type}" arg2="iossafari" />
 						<equals arg1="${browser.type}" arg2="safari" />
 					</or>
 				</not>
 				<then>
-					<fail>Please set "browser.type" to one of the following:${line.separator}android, androidchrome, chrome, edge, firefox, internetexplorer, iossafari, or safari.</fail>
+					<fail>Please set "browser.type" to one of the following:${line.separator}chrome, edge, firefox, internetexplorer, or safari.</fail>
 				</then>
 			</if>
 
@@ -1378,18 +1375,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						<get-operating-system-property property.name="operating.system.host" />
 
 						<var name="test.url" value="http://${operating.system.host}:8080" />
-					</then>
-				</elseif>
-				<elseif>
-					<or>
-						<equals arg1="${browser.type}" arg2="android" />
-						<equals arg1="${browser.type}" arg2="androidchrome" />
-						<equals arg1="${browser.type}" arg2="iossafari" />
-					</or>
-					<then>
-						<get-ip-address />
-
-						<var name="test.url" value="http://${ip.address}:8080" />
 					</then>
 				</elseif>
 				<elseif>
@@ -4425,69 +4410,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-android-device">
-		<sequential>
-			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
-
-			<echo file="${user.home}/.android/ddms.cfg">pingId=0</echo>
-
-			<execute>
-				echo no | ${mobile.android.home}/tools/android create avd -f -n deviceName -t android-19
-			</execute>
-
-			<echo append="true" file="${user.home}/.android/avd/deviceName.avd/config.ini">
-				hw.keyboard=yes
-			</echo>
-
-			<exec executable="/bin/bash" os="${os.apple},${os.unix}" spawn="true">
-				<arg value="-c" />
-				<arg value="${mobile.android.home}/tools/emulator -avd deviceName -no-boot-anim" />
-			</exec>
-
-			<exec executable="cmd.exe" os="${os.windows}">
-				<arg value="/c" />
-				<arg value="${mobile.android.home}/tools/emulator -avd deviceName -no-boot-anim" />
-			</exec>
-
-			<echo file="wait_for_android_device.sh">
-				<![CDATA[
-					#!/bin/bash
-
-					bootanim=""
-
-					until [[ $bootanim =~ "stopped" ]];
-					do
-						bootanim=`${mobile.android.home}/platform-tools/adb shell getprop init.svc.bootanim`
-
-						sleep 1
-					done
-				]]>
-			</echo>
-
-			<chmod
-				file="wait_for_android_device.sh"
-				perm="a+x"
-			/>
-
-			<exec executable="${basedir}/wait_for_android_device.sh" timeout="300000" />
-
-			<delete file="wait_for_android_device.sh" />
-
-			<execute>
-				${mobile.android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local
-				${mobile.android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local
-				${mobile.android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/tap.sh /data/local
-
-				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
-				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
-				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh
-
-				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell settings put system pointer_location 1
-				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell settings put system show_touches 1
-			</execute>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="start-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="true" name="delete.liferay.home" />
@@ -4632,51 +4554,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</daemons>
 					</parallel>
 				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="start-appium">
-		<sequential>
-			<if>
-				<or>
-					<equals arg1="${browser.type}" arg2="android" />
-					<equals arg1="${browser.type}" arg2="androidchrome" />
-				</or>
-				<then>
-					<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
-
-					<parallel>
-						<daemons>
-							<exec executable="/bin/bash" os="${os.apple},${os.unix}">
-								<env key="ANDROID_HOME" value="${mobile.android.home}" />
-								<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-								<arg value="-c" />
-								<arg value="${appium.unix.cmd}" />
-							</exec>
-
-							<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
-								<env key="ANDROID_HOME" value="${mobile.android.home}" />
-								<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-								<arg value="/c" />
-								<arg value="${appium.win32.cmd}" />
-							</exec>
-						</daemons>
-					</parallel>
-				</then>
-				<elseif>
-					<equals arg1="${browser.type}" arg2="iossafari" />
-					<then>
-						<parallel>
-							<daemons>
-								<exec executable="/bin/bash" os="${os.apple}">
-									<arg value="-c" />
-									<arg value="${appium.unix.cmd}" />
-								</exec>
-							</daemons>
-						</parallel>
-					</then>
-				</elseif>
 			</if>
 		</sequential>
 	</macrodef>
@@ -5044,17 +4921,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="stop-android-device">
-		<sequential>
-			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
-
-			<execute>
-				${mobile.android.home}/platform-tools/adb emu kill
-				${mobile.android.home}/tools/android delete avd -n deviceName
-			</execute>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="stop-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="0" name="app.server.explicit.stop.count" />
@@ -5240,25 +5106,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</exec>
 
 			<delete file="docker.process.pid" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-appium">
-		<sequential>
-			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
-				<arg value="-c" />
-				<arg value="killall node" />
-			</exec>
-
-			<exec executable="/bin/bash" os="${os.unix}">
-				<arg value="-c" />
-				<arg value="fuser -k 9515/tcp" />
-			</exec>
-
-			<exec executable="cmd.exe" os="${os.windows}">
-				<arg value="/c" />
-				<arg value="tskill node" />
-			</exec>
 		</sequential>
 	</macrodef>
 
@@ -6642,17 +6489,6 @@ go</echo>
 		<delete failonerror="false" file="${project.dir}/console-shut-down" />
 	</target>
 
-	<target name="clean-up-mobile-device">
-		<get-testcase-property property.name="browser.type" />
-
-		<if>
-			<equals arg1="${browser.type}" arg2="android" />
-			<then>
-				<stop-android-device />
-			</then>
-		</if>
-	</target>
-
 	<target name="clean-up-selenium-driver">
 		<if>
 			<equals arg1="${browser.type}" arg2="chrome" />
@@ -6679,17 +6515,6 @@ go</echo>
 			<equals arg1="${browser.type}" arg2="internetexplorer" />
 			<then>
 				<stop-ie-driver />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${browser.type}" arg2="android" />
-				<equals arg1="${browser.type}" arg2="androidchrome" />
-				<equals arg1="${browser.type}" arg2="iossafari" />
-			</or>
-			<then>
-				<stop-appium />
 			</then>
 		</if>
 	</target>
@@ -9022,12 +8847,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		</if>
 	</target>
 
-	<target name="prepare-mobile-device">
-		<stop-android-device />
-
-		<start-android-device />
-	</target>
-
 	<target name="prepare-osgi-module-configurations">
 		<get-testcase-property property.name="osgi.module.configurations" />
 
@@ -10077,53 +9896,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			browser.type=${browser.type}
 			browser.version=${browser.version}
 		</echo>
-
-		<if>
-			<or>
-				<equals arg1="${browser.type}" arg2="android" />
-				<equals arg1="${browser.type}" arg2="androidchrome" />
-				<equals arg1="${browser.type}" arg2="iossafari" />
-			</or>
-			<then>
-				<stop-appium />
-
-				<start-appium />
-
-				<echo append="true" file="${test.ext.properties.file}">
-					mobile.android.home=${mobile.android.home}
-					mobile.browser=true
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="android" />
-			<then>
-				<antcall target="prepare-mobile-device" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="androidchrome" />
-			<then>
-				<exec executable="/bin/bash" os="${os.apple},${os.unix}" outputproperty="mobile.device.name">
-					<arg value="-c" />
-					<arg value="${mobile.android.home}/platform-tools/adb devices" />
-				</exec>
-
-				<propertyregex
-					input="${mobile.device.name}"
-					override="true"
-					property="mobile.device.name"
-					regexp=".*\n([A-z0-9]*)"
-					select="\1"
-				/>
-
-				<echo append="true" file="${test.ext.properties.file}">
-					mobile.device.name=${mobile.device.name}
-				</echo>
-			</then>
-		</if>
 
 		<if>
 			<equals arg1="${browser.type}" arg2="chrome" />

@@ -108,9 +108,9 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 				).setRedirect(
 					currentURL
 				).setParameter(
-					"ddlRecordId", String.valueOf(record.getRecordId())
+					"ddlRecordId", record.getRecordId()
 				).setParameter(
-					"kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId())
+					"kaleoProcessId", kaleoProcess.getKaleoProcessId()
 				).setParameter(
 					"version", recordVersion.getVersion()
 				).build();

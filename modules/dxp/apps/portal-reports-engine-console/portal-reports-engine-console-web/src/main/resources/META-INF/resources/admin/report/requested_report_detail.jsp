@@ -194,7 +194,7 @@ renderResponse.setTitle(definition.getName(locale));
 			).setMVCPath(
 				"/admin/report/requested_report_detail.jsp"
 			).setParameter(
-				"entryId", String.valueOf(entryId)
+				"entryId", entryId
 			).setWindowState(
 				WindowState.NORMAL
 			).build();

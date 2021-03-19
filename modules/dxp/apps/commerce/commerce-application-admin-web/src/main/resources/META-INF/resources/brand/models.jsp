@@ -100,9 +100,9 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 						).setRedirect(
 							currentURL
 						).setParameter(
-							"commerceApplicationBrandId", String.valueOf(commerceApplicationModel.getCommerceApplicationBrandId())
+							"commerceApplicationBrandId", commerceApplicationModel.getCommerceApplicationBrandId()
 						).setParameter(
-							"commerceApplicationModelId", String.valueOf(commerceApplicationModel.getCommerceApplicationModelId())
+							"commerceApplicationModelId", commerceApplicationModel.getCommerceApplicationModelId()
 						).build()
 					%>'
 					property="name"

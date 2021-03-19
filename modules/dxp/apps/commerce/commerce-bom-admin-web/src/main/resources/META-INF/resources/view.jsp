@@ -131,9 +131,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 							).setRedirect(
 								currentURL
 							).setParameter(
-								"commerceBOMDefinitionId", String.valueOf(commerceBOMDefinition.getCommerceBOMDefinitionId())
+								"commerceBOMDefinitionId", commerceBOMDefinition.getCommerceBOMDefinitionId()
 							).setParameter(
-								"commerceBOMFolderId", String.valueOf(commerceBOMAdminDisplayContext.getCommerceBOMFolderId())
+								"commerceBOMFolderId", commerceBOMAdminDisplayContext.getCommerceBOMFolderId()
 							).build()
 						%>'
 						name="name"
@@ -152,7 +152,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 							PortletURLBuilder.create(
 								commerceBOMAdminDisplayContext.getPortletURL()
 							).setParameter(
-								"commerceBOMFolderId", String.valueOf(commerceBOMFolder.getCommerceBOMFolderId())
+								"commerceBOMFolderId", commerceBOMFolder.getCommerceBOMFolderId()
 							).build()
 						%>'
 						name="name"

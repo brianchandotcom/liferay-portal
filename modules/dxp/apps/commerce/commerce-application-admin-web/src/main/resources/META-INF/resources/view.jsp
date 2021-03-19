@@ -96,7 +96,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 						).setRedirect(
 							currentURL
 						).setParameter(
-							"commerceApplicationBrandId", String.valueOf(commerceApplicationBrand.getCommerceApplicationBrandId())
+							"commerceApplicationBrandId", commerceApplicationBrand.getCommerceApplicationBrandId()
 						).build()
 					%>'
 					property="name"

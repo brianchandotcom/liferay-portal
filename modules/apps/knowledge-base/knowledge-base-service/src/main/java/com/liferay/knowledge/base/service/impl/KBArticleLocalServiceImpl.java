@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -974,7 +975,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			curKBArticle.setKbFolderId(kbFolderId);
 			curKBArticle.setPriority(priority);
 
-			kbArticleLocalService.updateKBArticle(curKBArticle);
+			curKBArticle = kbArticlePersistence.update(curKBArticle);
+
+			indexKBArticle(curKBArticle);
 		}
 
 		if (kbArticle.getKbFolderId() != kbFolderId) {
@@ -990,15 +993,22 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				for (KBArticle kbArticleVersion : kbArticleVersions) {
 					kbArticleVersion.setKbFolderId(kbFolderId);
 
-					kbArticleLocalService.updateKBArticle(kbArticleVersion);
+					kbArticleVersion = kbArticlePersistence.update(
+						kbArticleVersion);
+
+					indexKBArticle(kbArticleVersion);
 				}
 			}
 		}
 
-		// Social
-
 		KBArticle latestKBArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		// Index
+
+		indexKBArticle(latestKBArticle);
+
+		// Social
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
 			"title", latestKBArticle.getTitle());
@@ -1696,6 +1706,21 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		return StringUtil.shorten(
 			uniqueUrlTitle, maxLength, StringPool.DASH + suffix);
+	}
+
+	protected void indexKBArticle(KBArticle kbArticle) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+
+				// Indexer
+
+				Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
+					KBArticle.class);
+
+				indexer.reindex(kbArticle);
+
+				return null;
+			});
 	}
 
 	protected String normalizeUrlTitle(String urlTitle) {

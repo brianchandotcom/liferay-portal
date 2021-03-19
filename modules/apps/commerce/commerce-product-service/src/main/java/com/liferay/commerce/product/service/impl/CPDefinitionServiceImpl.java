@@ -242,6 +242,10 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		return cpDefinitionLocalService.getCPDefinitionsCount(groupId, status);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getLayoutUuid(long cpDefinitionId) throws PortalException {
 		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
@@ -365,6 +369,10 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			cpDefinitionId, enable);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void updateCPDisplayLayout(
 			long cpDefinitionId, String layoutUuid,

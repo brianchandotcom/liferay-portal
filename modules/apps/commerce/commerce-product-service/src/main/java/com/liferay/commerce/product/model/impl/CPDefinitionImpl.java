@@ -142,7 +142,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 		CPDefinitionImpl cpDefinitionImpl = (CPDefinitionImpl)super.clone();
 
 		cpDefinitionImpl.setDescriptionMap(getDescriptionMap());
-		cpDefinitionImpl.setLayoutUuid(getLayoutUuid());
 		cpDefinitionImpl.setNameMap(getNameMap());
 		cpDefinitionImpl.setShortDescriptionMap(getShortDescriptionMap());
 		cpDefinitionImpl.setUrlTitleMap(getUrlTitleMap());
@@ -281,18 +280,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 				getCPDefinitionId());
 
 		return _descriptionMap;
-	}
-
-	@Override
-	public String getLayoutUuid() {
-		if (Validator.isNotNull(_layoutUuid)) {
-			return _layoutUuid;
-		}
-
-		_layoutUuid = CPDefinitionLocalServiceUtil.getLayoutUuid(
-			getCPDefinitionId());
-
-		return _layoutUuid;
 	}
 
 	@Override
@@ -452,11 +439,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
-	public void setLayoutUuid(String layoutUuid) {
-		_layoutUuid = layoutUuid;
-	}
-
-	@Override
 	public void setNameMap(Map<Locale, String> nameMap) {
 		_nameMap = nameMap;
 	}
@@ -502,7 +484,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	private UnicodeProperties
 		_deliverySubscriptionTypeSettingsUnicodeProperties;
 	private Map<Locale, String> _descriptionMap;
-	private String _layoutUuid;
 	private Map<Locale, String> _metaDescriptionMap;
 	private Map<Locale, String> _metaKeywordsMap;
 	private Map<Locale, String> _metaTitleMap;

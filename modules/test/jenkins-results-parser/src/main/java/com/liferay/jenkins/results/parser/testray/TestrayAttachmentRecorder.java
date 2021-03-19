@@ -76,8 +76,17 @@ public class TestrayAttachmentRecorder {
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(
 			_build);
 
+		String jobVariant = _build.getJobVariant();
+
+		if (jobVariant == null) {
+			jobVariant = "";
+		}
+		else {
+			jobVariant += "/";
+		}
+
 		_startProperties = buildDatabase.getProperties(
-			_build.getJobVariant() + "/start.properties");
+			jobVariant + "start.properties");
 	}
 
 	protected File getTestrayLogsDir() {

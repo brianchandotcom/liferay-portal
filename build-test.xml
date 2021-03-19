@@ -4173,6 +4173,15 @@ go</echo>
 						<var name="app.server.tomcat.version" value="9.0.37" />
 					</then>
 				</elseif>
+				<elseif>
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.2.10.4" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.1" />
+					</or>
+					<then>
+						<var name="app.server.tomcat.version" value="9.0.40" />
+					</then>
+				</elseif>
 			</if>
 
 			<var name="app.server.tomcat.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}" />

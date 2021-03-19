@@ -44,6 +44,7 @@ const getLocalizedValue = ({
 	localizable,
 	localizedValue,
 	localizedValueEdited,
+	type,
 	value,
 }) => {
 	if (!localizable) {
@@ -76,6 +77,13 @@ const getLocalizedValue = ({
 		_value = JSON.parse(_value);
 	}
 	catch (e) {}
+
+	if (type === 'image' && !_value.url) {
+		try {
+			return JSON.parse(value);
+		}
+		catch (e) {}
+	}
 
 	return _value;
 };
@@ -199,6 +207,7 @@ export default (state, action) => {
 							localizable,
 							localizedValue,
 							localizedValueEdited,
+							type: field.type,
 							value: previousValue,
 						}),
 					};

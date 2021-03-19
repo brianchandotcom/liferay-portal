@@ -2411,9 +2411,9 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/log4j.jar</file-name>
-				<version>1.2.17</version>
-				<project-name>Log4j</project-name>
+				<file-name>lib/portal/log4j-1.2-api.jar</file-name>
+				<version>2.14.1</version>
+				<project-name>Log4j 1.x Compatibility API</project-name>
 				<project-url>http://logging.apache.org/log4j</project-url>
 				<licenses>
 					<license>
@@ -2423,10 +2423,22 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/log4j-extras.jar</file-name>
-				<version>1.2.17</version>
-				<project-name>Log4j Extras</project-name>
-				<project-url>http://logging.apache.org/log4j/extras</project-url>
+				<file-name>lib/portal/log4j-api.jar</file-name>
+				<version>2.14.1.LIFERAY-PATCHED-1</version>
+				<project-name>Log4j API</project-name>
+				<project-url>http://logging.apache.org/log4j</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/log4j-core.jar</file-name>
+				<version>2.14.1.LIFERAY-PATCHED-1</version>
+				<project-name>Log4j Core</project-name>
+				<project-url>http://logging.apache.org/log4j</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>

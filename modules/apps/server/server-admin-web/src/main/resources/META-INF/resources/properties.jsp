@@ -30,7 +30,7 @@ int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, S
 		).setParameter(
 			"tabs1", tabs1
 		).setParameter(
-			"delta", String.valueOf(delta)
+			"delta", delta
 		).build()
 	%>'
 />

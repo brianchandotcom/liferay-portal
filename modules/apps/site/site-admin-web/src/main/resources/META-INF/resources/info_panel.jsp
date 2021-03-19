@@ -156,7 +156,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 							).setRedirect(
 								currentURL
 							).setParameter(
-								"groupId", String.valueOf(group.getGroupId())
+								"groupId", group.getGroupId()
 							).build();
 							%>
 

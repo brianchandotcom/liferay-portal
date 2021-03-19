@@ -76,7 +76,7 @@ List<Layout> mergeFailFriendlyURLLayouts = SitesUtil.getMergeFailFriendlyURLLayo
 			).setParameter(
 				"tabs1", layoutSet.isPrivateLayout() ? "private-pages" : "public-pages"
 			).setParameter(
-				"groupId", String.valueOf(groupId)
+				"groupId", groupId
 			).build();
 
 			for (Layout mergeFailFriendlyURLLayout : mergeFailFriendlyURLLayouts) {

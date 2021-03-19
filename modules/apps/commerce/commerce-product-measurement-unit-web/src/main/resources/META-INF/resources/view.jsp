@@ -103,9 +103,9 @@ CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasureme
 							).setRedirect(
 								currentURL
 							).setParameter(
-								"cpMeasurementUnitId", String.valueOf(cpMeasurementUnit.getCPMeasurementUnitId())
+								"cpMeasurementUnitId", cpMeasurementUnit.getCPMeasurementUnitId()
 							).setParameter(
-								"type", String.valueOf(cpMeasurementUnitsDisplayContext.getType())
+								"type", cpMeasurementUnitsDisplayContext.getType()
 							).build()
 						%>'
 						name="name"

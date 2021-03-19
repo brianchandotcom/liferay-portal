@@ -33,7 +33,7 @@ User selUser = PortalUtil.getSelectedUser(request, false);
 		).setMVCPath(
 			"/account_users_admin/edit_account_user.jsp"
 		).setParameter(
-			"p_u_i_d", String.valueOf(selUser.getUserId())
+			"p_u_i_d", selUser.getUserId()
 		).build()
 	%>'
 />

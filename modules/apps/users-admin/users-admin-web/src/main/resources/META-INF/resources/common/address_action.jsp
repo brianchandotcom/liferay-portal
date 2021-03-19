@@ -41,9 +41,9 @@ long addressId = ParamUtil.getLong(request, "addressId");
 	).setParameter(
 		"className", className
 	).setParameter(
-		"classPK", String.valueOf(classPK)
+		"classPK", classPK
 	).setParameter(
-		"primaryKey", String.valueOf(addressId)
+		"primaryKey", addressId
 	).build();
 	%>
 
@@ -62,11 +62,11 @@ long addressId = ParamUtil.getLong(request, "addressId");
 	).setParameter(
 		"className", className
 	).setParameter(
-		"classPK", String.valueOf(classPK)
+		"classPK", classPK
 	).setParameter(
 		"listType", ListTypeConstants.ADDRESS
 	).setParameter(
-		"primaryKey", String.valueOf(addressId)
+		"primaryKey", addressId
 	).build();
 
 	PortletURL makePrimaryURL = PortletURLBuilder.create(

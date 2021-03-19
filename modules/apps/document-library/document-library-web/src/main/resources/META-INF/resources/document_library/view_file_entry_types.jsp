@@ -57,7 +57,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 			).setRedirect(
 				currentURL
 			).setParameter(
-				"fileEntryTypeId", String.valueOf(fileEntryType.getFileEntryTypeId())
+				"fileEntryTypeId", fileEntryType.getFileEntryTypeId()
 			).build();
 			%>
 

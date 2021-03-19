@@ -108,7 +108,7 @@ PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getP
 					).setRedirect(
 						redirectURL.toString()
 					).setParameter(
-						"passwordPolicyId", String.valueOf(passwordPolicy.getPasswordPolicyId())
+						"passwordPolicyId", passwordPolicy.getPasswordPolicyId()
 					).build();
 
 					rowHREF = rowURL.toString();

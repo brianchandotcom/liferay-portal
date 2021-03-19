@@ -75,9 +75,9 @@ if (row == null) {
 		).setParameter(
 			"portletResource", portletDisplay.getId()
 		).setParameter(
-			"folderId", String.valueOf(folder.getFolderId())
+			"folderId", folder.getFolderId()
 		).setParameter(
-			"mergeWithParentFolderDisabled", String.valueOf(row == null)
+			"mergeWithParentFolderDisabled", row == null
 		).build();
 		%>
 

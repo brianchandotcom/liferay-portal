@@ -56,7 +56,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history
 			).setRedirect(
 				currentURL
 			).setParameter(
-				"nodeId", String.valueOf(node.getNodeId())
+				"nodeId", node.getNodeId()
 			).setParameter(
 				"title", wikiPage.getTitle()
 			).build()

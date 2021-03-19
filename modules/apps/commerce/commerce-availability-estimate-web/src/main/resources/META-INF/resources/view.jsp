@@ -97,7 +97,7 @@ CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayCo
 							).setRedirect(
 								currentURL
 							).setParameter(
-								"commerceAvailabilityEstimateId", String.valueOf(commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId())
+								"commerceAvailabilityEstimateId", commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId()
 							).build()
 						%>'
 						name="title"

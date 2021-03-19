@@ -29,7 +29,7 @@ if (group != null) {
 	).setMVCPath(
 		"/view.jsp"
 	).setParameter(
-		"groupId", String.valueOf(group.getParentGroupId())
+		"groupId", group.getParentGroupId()
 	).build();
 
 	portletDisplay.setURLBack(backURL.toString());

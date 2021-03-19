@@ -128,7 +128,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 						).setRedirect(
 							currentURL
 						).setParameter(
-							"entryId", String.valueOf(entry.getEntryId())
+							"entryId", entry.getEntryId()
 						).build()
 					%>'
 					name="title"

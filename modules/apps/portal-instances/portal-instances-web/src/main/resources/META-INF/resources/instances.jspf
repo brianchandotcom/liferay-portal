@@ -37,7 +37,7 @@
 		).setRedirect(
 			currentURL
 		).setParameter(
-			"companyId", String.valueOf(curCompany.getCompanyId())
+			"companyId", curCompany.getCompanyId()
 		).build();
 		%>
 

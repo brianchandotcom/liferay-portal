@@ -112,7 +112,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												).setMVCRenderCommandName(
 													"/fragment/view"
 												).setParameter(
-													"fragmentCollectionKey", String.valueOf(fragmentCollectionContributor.getFragmentCollectionKey())
+													"fragmentCollectionKey", fragmentCollectionContributor.getFragmentCollectionKey()
 												).build();
 												%>
 
@@ -141,7 +141,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												).setMVCRenderCommandName(
 													"/fragment/view"
 												).setParameter(
-													"fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId())
+													"fragmentCollectionId", fragmentCollection.getFragmentCollectionId()
 												).build();
 												%>
 
@@ -185,7 +185,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												).setMVCRenderCommandName(
 													"/fragment/view"
 												).setParameter(
-													"fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId())
+													"fragmentCollectionId", fragmentCollection.getFragmentCollectionId()
 												).build();
 												%>
 
@@ -223,7 +223,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												).setMVCRenderCommandName(
 													"/fragment/view"
 												).setParameter(
-													"fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId())
+													"fragmentCollectionId", fragmentCollection.getFragmentCollectionId()
 												).build();
 												%>
 

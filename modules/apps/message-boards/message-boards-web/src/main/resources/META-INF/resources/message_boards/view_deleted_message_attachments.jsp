@@ -50,7 +50,7 @@ String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(local
 			).setMVCRenderCommandName(
 				"/message_boards/view_deleted_message_attachments"
 			).setParameter(
-				"messageId", String.valueOf(messageId)
+				"messageId", messageId
 			).build()
 		%>'
 		total="<%= message.getDeletedAttachmentsFileEntriesCount() %>"

@@ -45,9 +45,9 @@ long phoneId = phone.getPhoneId();
 	).setParameter(
 		"className", className
 	).setParameter(
-		"classPK", String.valueOf(classPK)
+		"classPK", classPK
 	).setParameter(
-		"primaryKey", String.valueOf(phoneId)
+		"primaryKey", phoneId
 	).build();
 	%>
 
@@ -66,11 +66,11 @@ long phoneId = phone.getPhoneId();
 	).setParameter(
 		"className", className
 	).setParameter(
-		"classPK", String.valueOf(classPK)
+		"classPK", classPK
 	).setParameter(
 		"listType", ListTypeConstants.PHONE
 	).setParameter(
-		"primaryKey", String.valueOf(phoneId)
+		"primaryKey", phoneId
 	).build();
 
 	PortletURL makePrimaryURL = PortletURLBuilder.create(

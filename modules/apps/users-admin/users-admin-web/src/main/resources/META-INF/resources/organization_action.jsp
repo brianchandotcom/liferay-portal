@@ -94,7 +94,7 @@ long organizationGroupId = organization.getGroupId();
 		).setParameter(
 			"className", User.class.getName()
 		).setParameter(
-			"groupId", String.valueOf(organizationGroupId)
+			"groupId", organizationGroupId
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

@@ -48,7 +48,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 			).setParameter(
 				"className", className
 			).setParameter(
-				"classPK", String.valueOf(classPK)
+				"classPK", classPK
 			).build();
 			%>
 

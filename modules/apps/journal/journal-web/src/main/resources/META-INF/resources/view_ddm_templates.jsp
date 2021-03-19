@@ -74,7 +74,7 @@ if (ddmStructure != null) {
 				).setRedirect(
 					currentURL
 				).setParameter(
-					"ddmTemplateId", String.valueOf(ddmTemplate.getTemplateId())
+					"ddmTemplateId", ddmTemplate.getTemplateId()
 				).build();
 
 				rowHREF = rowURL.toString();

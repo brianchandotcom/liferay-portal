@@ -113,7 +113,7 @@ catch (Exception exception) {
 				).setMVCRenderCommandName(
 					"/message_boards/select_category"
 				).setParameter(
-					"mbCategoryId", String.valueOf(rootTopicId)
+					"mbCategoryId", rootTopicId
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

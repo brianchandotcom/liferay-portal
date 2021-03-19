@@ -97,13 +97,13 @@ if (layout != null) {
 					).setMVCPath(
 						"/edit_template.jsp"
 					).setParameter(
-						"groupId", String.valueOf(template.getGroupId())
+						"groupId", template.getGroupId()
 					).setParameter(
-						"templateId", String.valueOf(template.getTemplateId())
+						"templateId", template.getTemplateId()
 					).setParameter(
-						"classNameId", String.valueOf(classNameId)
+						"classNameId", classNameId
 					).setParameter(
-						"classPK", String.valueOf(template.getClassPK())
+						"classPK", template.getClassPK()
 					).setParameter(
 						"type", template.getType()
 					).setParameter(

@@ -135,7 +135,7 @@ boolean showMissingAttributeMessage = false;
 		).setMVCRenderCommandName(
 			"/portal_settings_authentication_ldap/test_ldap_users"
 		).setParameter(
-			"ldapServerId", String.valueOf(ldapServerId)
+			"ldapServerId", ldapServerId
 		).setParameter(
 			"baseProviderURL", baseProviderURL
 		).setParameter(

@@ -30,7 +30,7 @@
 	).setParameter(
 		"backURL", currentURL
 	).setParameter(
-		"groupId", String.valueOf(entityGroupId)
+		"groupId", entityGroupId
 	).setParameter(
 		"changesetUuid", changesetUuid
 	).setParameter(

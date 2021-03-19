@@ -100,7 +100,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 									).setParameter(
 										"portletResource", portletDisplay.getId()
 									).setParameter(
-										"entryId", String.valueOf(entry.getEntryId())
+										"entryId", entry.getEntryId()
 									).build();
 									%>
 

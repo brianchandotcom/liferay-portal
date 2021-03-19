@@ -45,9 +45,9 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	).setParameter(
 		"className", className
 	).setParameter(
-		"classPK", String.valueOf(classPK)
+		"classPK", classPK
 	).setParameter(
-		"primaryKey", String.valueOf(emailAddressId)
+		"primaryKey", emailAddressId
 	).build();
 	%>
 
@@ -66,11 +66,11 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	).setParameter(
 		"className", className
 	).setParameter(
-		"classPK", String.valueOf(classPK)
+		"classPK", classPK
 	).setParameter(
 		"listType", ListTypeConstants.EMAIL_ADDRESS
 	).setParameter(
-		"primaryKey", String.valueOf(emailAddressId)
+		"primaryKey", emailAddressId
 	).build();
 
 	PortletURL makePrimaryURL = PortletURLBuilder.create(

@@ -56,11 +56,11 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 			).setRedirect(
 				pageRedirect
 			).setParameter(
-				"cur", String.valueOf(cur)
+				"cur", cur
 			).setParameter(
 				"type", assetRendererFactory.getType()
 			).setParameter(
-				"groupId", String.valueOf(articleDisplay.getGroupId())
+				"groupId", articleDisplay.getGroupId()
 			).setParameter(
 				"urlTitle", articleDisplay.getUrlTitle()
 			).build()

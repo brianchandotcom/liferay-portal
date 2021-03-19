@@ -51,7 +51,7 @@ SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContex
 				).setMVCPath(
 					"/edit_team_assignments.jsp"
 				).setParameter(
-					"teamId", String.valueOf(team.getTeamId())
+					"teamId", team.getTeamId()
 				).build();
 			}
 

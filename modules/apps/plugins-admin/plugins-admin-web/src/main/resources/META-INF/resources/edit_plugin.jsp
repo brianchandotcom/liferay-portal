@@ -140,9 +140,9 @@ renderResponse.setTitle(title);
 												).setParameter(
 													"tabs1", "roles"
 												).setParameter(
-													"roleId", String.valueOf(role.getRoleId())
+													"roleId", role.getRoleId()
 												).setParameter(
-													"portletResource", String.valueOf(portlet.getPortletId())
+													"portletResource", portlet.getPortletId()
 												).build();
 												%>
 
@@ -200,9 +200,9 @@ renderResponse.setTitle(title);
 												).setParameter(
 													"tabs1", "roles"
 												).setParameter(
-													"roleId", String.valueOf(role.getRoleId())
+													"roleId", role.getRoleId()
 												).setParameter(
-													"portletResource", String.valueOf(portlet.getPortletId())
+													"portletResource", portlet.getPortletId()
 												).build();
 												%>
 

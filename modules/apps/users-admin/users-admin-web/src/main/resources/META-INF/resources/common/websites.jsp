@@ -48,7 +48,7 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 			).setParameter(
 				"className", className
 			).setParameter(
-				"classPK", String.valueOf(classPK)
+				"classPK", classPK
 			).build();
 			%>
 

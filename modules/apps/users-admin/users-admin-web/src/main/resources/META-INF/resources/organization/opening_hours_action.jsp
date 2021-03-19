@@ -42,9 +42,9 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 	).setParameter(
 		"className", Organization.class.getName()
 	).setParameter(
-		"classPK", String.valueOf(organizationId)
+		"classPK", organizationId
 	).setParameter(
-		"primaryKey", String.valueOf(orgLaborId)
+		"primaryKey", orgLaborId
 	).build();
 	%>
 

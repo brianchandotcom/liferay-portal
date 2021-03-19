@@ -114,7 +114,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 											PortletURL layoutPageTemplateCollectionURL = PortletURLBuilder.createRenderURL(
 												renderResponse
 											).setParameter(
-												"layoutPageTemplateCollectionId", String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId())
+												"layoutPageTemplateCollectionId", layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
 											).setParameter(
 												"tabs1", "page-templates"
 											).build();

@@ -58,7 +58,7 @@ WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
 			).setRedirect(
 				redirectURL
 			).setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId())
+				"nodeId", wikiPage.getNodeId()
 			).build();
 
 			try {

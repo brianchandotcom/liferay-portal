@@ -78,9 +78,9 @@ List<DDMDisplayTabItem> ddmDisplayTabItems = ddmDisplay.getTabItems();
 					).setRedirect(
 						currentURL
 					).setParameter(
-						"classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class))
+						"classNameId", PortalUtil.getClassNameId(DDMStructure.class)
 					).setParameter(
-						"classPK", String.valueOf(structure.getStructureId())
+						"classPK", structure.getStructureId()
 					).build();
 
 					rowHREF = rowURL.toString();

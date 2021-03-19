@@ -84,13 +84,13 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 				).setMVCRenderCommandName(
 					"/document_library/select_folder"
 				).setParameter(
-					"folderId", String.valueOf(folderId)
+					"folderId", folderId
 				).setParameter(
 					"ignoreRootFolder", Boolean.TRUE.toString()
 				).setParameter(
-					"selectedFolderId", String.valueOf(selectedFolderId)
+					"selectedFolderId", selectedFolderId
 				).setParameter(
-					"showMountFolder", String.valueOf(dlVisualizationHelper.isMountFolderVisible())
+					"showMountFolder", dlVisualizationHelper.isMountFolderVisible()
 				).build()
 			%>'
 			total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible()) %>"

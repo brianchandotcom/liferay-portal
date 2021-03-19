@@ -74,7 +74,7 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 				).setRedirect(
 					currentURL
 				).setParameter(
-					"ddmStructureId", String.valueOf(ddmStructure.getStructureId())
+					"ddmStructureId", ddmStructure.getStructureId()
 				).build();
 
 				rowHREF = rowURL.toString();

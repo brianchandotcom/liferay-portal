@@ -99,9 +99,9 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 											).setMVCPath(
 												"/edit_asset_list_entry.jsp"
 											).setParameter(
-												"assetListEntryId", String.valueOf(assetListEntrySegmentsEntryRel.getAssetListEntryId())
+												"assetListEntryId", assetListEntrySegmentsEntryRel.getAssetListEntryId()
 											).setParameter(
-												"segmentsEntryId", String.valueOf(assetListEntrySegmentsEntryRel.getSegmentsEntryId())
+												"segmentsEntryId", assetListEntrySegmentsEntryRel.getSegmentsEntryId()
 											).build();
 											%>
 

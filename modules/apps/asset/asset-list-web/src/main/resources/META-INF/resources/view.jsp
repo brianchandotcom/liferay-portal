@@ -62,7 +62,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 						).setRedirect(
 							currentURL
 						).setParameter(
-							"assetListEntryId", String.valueOf(assetListEntry.getAssetListEntryId())
+							"assetListEntryId", assetListEntry.getAssetListEntryId()
 						).build();
 
 						editURL = editAssetListEntryURL.toString();

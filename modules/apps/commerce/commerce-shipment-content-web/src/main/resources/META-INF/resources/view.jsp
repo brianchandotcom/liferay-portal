@@ -39,7 +39,7 @@ CommerceShipmentContentDisplayContext commerceShipmentContentDisplayContext = (C
 		).setRedirect(
 			currentURL
 		).setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipment.getCommerceShipmentId())
+			"commerceShipmentId", commerceShipment.getCommerceShipmentId()
 		).build();
 		%>
 

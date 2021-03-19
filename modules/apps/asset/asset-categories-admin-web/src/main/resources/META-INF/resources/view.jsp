@@ -106,7 +106,7 @@
 												).setMVCPath(
 													"/view.jsp"
 												).setParameter(
-													"vocabularyId", String.valueOf(vocabulary.getVocabularyId())
+													"vocabularyId", vocabulary.getVocabularyId()
 												).build();
 												%>
 
@@ -154,7 +154,7 @@
 												).setMVCPath(
 													"/view.jsp"
 												).setParameter(
-													"vocabularyId", String.valueOf(vocabulary.getVocabularyId())
+													"vocabularyId", vocabulary.getVocabularyId()
 												).build();
 												%>
 

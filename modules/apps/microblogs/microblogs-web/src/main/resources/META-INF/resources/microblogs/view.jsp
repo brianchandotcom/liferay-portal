@@ -156,7 +156,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	).setParameter(
 		"tabs1", tabs1
 	).setParameter(
-		"cur", String.valueOf(cur)
+		"cur", cur
 	).setWindowState(
 		LiferayWindowState.EXCLUSIVE
 	).build();

@@ -48,7 +48,7 @@ if (Validator.isNull(redirect)) {
 	).setParameter(
 		"backURL", backURL
 	).setParameter(
-		"roleId", String.valueOf(role.getRoleId())
+		"roleId", role.getRoleId()
 	).build();
 
 	redirect = portletURL.toString();

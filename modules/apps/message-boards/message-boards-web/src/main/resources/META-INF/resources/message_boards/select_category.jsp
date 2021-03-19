@@ -53,7 +53,7 @@ else {
 				).setMVCRenderCommandName(
 					"/message_boards/select_category"
 				).setParameter(
-					"mbCategoryId", String.valueOf(categoryId)
+					"mbCategoryId", categoryId
 				).build()
 			%>'
 			total="<%= MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, excludedCategoryId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"

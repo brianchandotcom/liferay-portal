@@ -217,9 +217,9 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					PortletURL rowURL = PortletURLBuilder.create(
 						journalArticleItemSelectorViewDisplayContext.getPortletURL()
 					).setParameter(
-						"groupId", String.valueOf(curFolder.getGroupId())
+						"groupId", curFolder.getGroupId()
 					).setParameter(
-						"folderId", String.valueOf(curFolder.getFolderId())
+						"folderId", curFolder.getFolderId()
 					).build();
 					%>
 

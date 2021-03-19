@@ -48,9 +48,9 @@
 		PortletURL searchEverywhereURL = PortletURLBuilder.create(
 			PortletURLUtil.clone(portletURL, liferayPortletResponse)
 		).setParameter(
-			"folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+			"folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID
 		).setParameter(
-			"searchFolderId", String.valueOf(folderId)
+			"searchFolderId", folderId
 		).setParameter(
 			"keywords", keywords
 		).build();
@@ -58,7 +58,7 @@
 		PortletURL searchFolderURL = PortletURLBuilder.create(
 			PortletURLUtil.clone(searchEverywhereURL, liferayPortletResponse)
 		).setParameter(
-			"folderId", String.valueOf(folderId)
+			"folderId", folderId
 		).build();
 		%>
 

@@ -121,7 +121,7 @@ else {
 				).setMVCPath(
 					"/edit_workflow_task.jsp"
 				).setParameter(
-					"workflowTaskId", String.valueOf(workflowTask.getWorkflowTaskId())
+					"workflowTaskId", workflowTask.getWorkflowTaskId()
 				).setParameter(
 					"closeRedirect", layoutURL
 				).setPortletMode(

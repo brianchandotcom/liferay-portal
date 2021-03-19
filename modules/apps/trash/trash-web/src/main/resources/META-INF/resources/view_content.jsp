@@ -66,9 +66,9 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 							).setMVCPath(
 								"/view_content.jsp"
 							).setParameter(
-								"classNameId", String.valueOf(PortalUtil.getClassNameId(curTrashRenderer.getClassName()))
+								"classNameId", PortalUtil.getClassNameId(curTrashRenderer.getClassName())
 							).setParameter(
-								"classPK", String.valueOf(curTrashRenderer.getClassPK())
+								"classPK", curTrashRenderer.getClassPK()
 							).build();
 							%>
 

@@ -48,7 +48,7 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 				).setParameter(
 					"className", Organization.class.getName()
 				).setParameter(
-					"classPK", String.valueOf(organizationId)
+					"classPK", organizationId
 				).build();
 				%>
 

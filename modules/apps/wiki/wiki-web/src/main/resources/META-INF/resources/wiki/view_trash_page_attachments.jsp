@@ -62,7 +62,7 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 	).setRedirect(
 		currentURL
 	).setParameter(
-		"nodeId", String.valueOf(wikiPage.getNodeId())
+		"nodeId", wikiPage.getNodeId()
 	).setParameter(
 		"title", wikiPage.getTitle()
 	).setWindowState(

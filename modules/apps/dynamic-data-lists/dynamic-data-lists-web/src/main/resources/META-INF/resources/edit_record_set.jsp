@@ -213,7 +213,7 @@ if (recordSet != null) {
 	).setMVCPath(
 		"/edit_record_set.jsp"
 	).setParameter(
-		"recordSetId", String.valueOf(recordSet.getRecordSetId())
+		"recordSetId", recordSet.getRecordSetId()
 	).build();
 
 	PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), portletURL.toString());

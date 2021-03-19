@@ -64,7 +64,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 			).setRedirect(
 				redirect
 			).setParameter(
-				"nodeId", String.valueOf(nodeId)
+				"nodeId", nodeId
 			).setParameter(
 				"keywords", keywords
 			).build()
@@ -132,7 +132,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 			).setRedirect(
 				currentURL
 			).setParameter(
-				"nodeId", String.valueOf(node.getNodeId())
+				"nodeId", node.getNodeId()
 			).setParameter(
 				"title", title
 			).build();

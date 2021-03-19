@@ -27,7 +27,7 @@ if (Validator.isNull(redirect) && Validator.isNull(backURL)) {
 	).setMVCPath(
 		"/view.jsp"
 	).setParameter(
-		"groupId", String.valueOf(groupId)
+		"groupId", groupId
 	).build();
 
 	backURL = portletURL.toString();

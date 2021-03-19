@@ -163,7 +163,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 						).setParameter(
 							"navigation", "all-pages"
 						).setParameter(
-							"nodeId", String.valueOf(node.getNodeId())
+							"nodeId", node.getNodeId()
 						).build();
 						%>
 

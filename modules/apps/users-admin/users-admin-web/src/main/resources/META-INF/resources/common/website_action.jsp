@@ -45,9 +45,9 @@ long websiteId = website.getWebsiteId();
 	).setParameter(
 		"className", className
 	).setParameter(
-		"classPK", String.valueOf(classPK)
+		"classPK", classPK
 	).setParameter(
-		"primaryKey", String.valueOf(websiteId)
+		"primaryKey", websiteId
 	).build();
 	%>
 
@@ -66,11 +66,11 @@ long websiteId = website.getWebsiteId();
 	).setParameter(
 		"className", className
 	).setParameter(
-		"classPK", String.valueOf(classPK)
+		"classPK", classPK
 	).setParameter(
 		"listType", ListTypeConstants.WEBSITE
 	).setParameter(
-		"primaryKey", String.valueOf(websiteId)
+		"primaryKey", websiteId
 	).build();
 
 	PortletURL makePrimaryURL = PortletURLBuilder.create(

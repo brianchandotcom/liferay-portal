@@ -276,7 +276,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 							).setMVCPath(
 								"/view_content.jsp"
 							).setParameter(
-								"assetEntryId", String.valueOf(assetEntry.getEntryId())
+								"assetEntryId", assetEntry.getEntryId()
 							).setParameter(
 								"viewMode", Constants.PRINT
 							).setParameter(
@@ -363,7 +363,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						PortletURL exportAssetURL = PortletURLBuilder.create(
 							assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse)
 						).setParameter(
-							"plid", String.valueOf(themeDisplay.getPlid())
+							"plid", themeDisplay.getPlid()
 						).setParameter(
 							"portletResource", portletDisplay.getId()
 						).setWindowState(

@@ -65,7 +65,7 @@ if (portletTitleBasedNavigation) {
 	).setRedirect(
 		currentURL
 	).setParameter(
-		"nodeId", String.valueOf(nodeId)
+		"nodeId", nodeId
 	).setParameter(
 		"title", title
 	).build();
@@ -77,7 +77,7 @@ if (portletTitleBasedNavigation) {
 	).setRedirect(
 		currentURL
 	).setParameter(
-		"nodeId", String.valueOf(nodeId)
+		"nodeId", nodeId
 	).setParameter(
 		"keywords", title
 	).build();

@@ -29,7 +29,7 @@ if (Validator.isNull(backURL)) {
 	).setParameter(
 		"screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS
 	).setParameter(
-		"accountEntryId", String.valueOf(accountEntryDisplay.getAccountEntryId())
+		"accountEntryId", accountEntryDisplay.getAccountEntryId()
 	).build();
 
 	backURL = viewAccountUserURL.toString();

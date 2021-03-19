@@ -67,7 +67,7 @@ PortletURL portletURL = PortletURLBuilder.create(
 							).setRedirect(
 								currentURL
 							).setParameter(
-								"dispatchTriggerId", String.valueOf(dispatchTrigger.getDispatchTriggerId())
+								"dispatchTriggerId", dispatchTrigger.getDispatchTriggerId()
 							).build()
 						%>'
 						property="name"

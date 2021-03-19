@@ -141,7 +141,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 								).setRedirect(
 									currentURL
 								).setParameter(
-									"cpOptionCategoryId", String.valueOf(cpOptionCategory.getCPOptionCategoryId())
+									"cpOptionCategoryId", cpOptionCategory.getCPOptionCategoryId()
 								).build();
 								%>
 

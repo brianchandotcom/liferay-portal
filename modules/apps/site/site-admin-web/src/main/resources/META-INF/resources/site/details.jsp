@@ -245,7 +245,7 @@ else {
 				).setParameter(
 					"includeCurrentGroup", Boolean.FALSE.toString()
 				).setParameter(
-					"groupId", String.valueOf(group.getGroupId())
+					"groupId", group.getGroupId()
 				).setParameter(
 					"eventName", liferayPortletResponse.getNamespace() + "selectGroup"
 				).setWindowState(

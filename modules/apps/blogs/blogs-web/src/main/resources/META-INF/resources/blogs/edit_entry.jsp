@@ -472,7 +472,7 @@ if (entry != null) {
 	).setMVCRenderCommandName(
 		"/blogs/view_entry"
 	).setParameter(
-		"entryId", String.valueOf(entry.getEntryId())
+		"entryId", entry.getEntryId()
 	).build();
 
 	PortalUtil.addPortletBreadcrumbEntry(request, BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), portletURL.toString());

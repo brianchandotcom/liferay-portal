@@ -98,9 +98,9 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 							).setRedirect(
 								currentURL
 							).setParameter(
-								"countryId", String.valueOf(region.getCountryId())
+								"countryId", region.getCountryId()
 							).setParameter(
-								"regionId", String.valueOf(region.getRegionId())
+								"regionId", region.getRegionId()
 							).build()
 						%>'
 						property="name"

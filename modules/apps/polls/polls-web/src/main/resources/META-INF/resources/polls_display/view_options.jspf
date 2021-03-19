@@ -98,7 +98,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 			).setParameter(
 				"referringPortletResource", portletDisplay.getId()
 			).setParameter(
-				"questionId", String.valueOf(question.getQuestionId())
+				"questionId", question.getQuestionId()
 			).setParameter(
 				"showHeader", Boolean.FALSE.toString()
 			).setWindowState(

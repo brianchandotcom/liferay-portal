@@ -54,7 +54,7 @@ if (Validator.isNull(redirect)) {
 	).setMVCRenderCommandName(
 		"/users_admin/edit_user"
 	).setParameter(
-		"p_u_i_d", String.valueOf(selUserId)
+		"p_u_i_d", selUserId
 	).setParameter(
 		"backURL", backURL
 	).build();

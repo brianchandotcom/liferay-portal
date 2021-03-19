@@ -97,7 +97,7 @@ CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayC
 							).setRedirect(
 								currentURL
 							).setParameter(
-								"cpTaxCategoryId", String.valueOf(cpTaxCategory.getCPTaxCategoryId())
+								"cpTaxCategoryId", cpTaxCategory.getCPTaxCategoryId()
 							).build()
 						%>'
 						name="name"

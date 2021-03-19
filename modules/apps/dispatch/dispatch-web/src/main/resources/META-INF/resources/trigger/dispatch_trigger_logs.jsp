@@ -61,7 +61,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 								).setRedirect(
 									currentURL
 								).setParameter(
-									"dispatchLogId", String.valueOf(dispatchLog.getDispatchLogId())
+									"dispatchLogId", dispatchLog.getDispatchLogId()
 								).build()
 							%>'
 							name="start-date"

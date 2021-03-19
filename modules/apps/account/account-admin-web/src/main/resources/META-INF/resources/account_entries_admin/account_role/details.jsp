@@ -93,7 +93,7 @@ if (accountRole != null) {
 			).setParameter(
 				"screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_ROLES
 			).setParameter(
-				"accountEntryId", String.valueOf(accountEntryId)
+				"accountEntryId", accountEntryId
 			).build();
 
 			backURL = viewAccountRolesURL.toString();

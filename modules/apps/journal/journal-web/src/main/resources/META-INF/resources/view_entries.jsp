@@ -79,13 +79,13 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 					).setParameter(
 						"referringPortletResource", referringPortletResource
 					).setParameter(
-						"groupId", String.valueOf(curArticle.getGroupId())
+						"groupId", curArticle.getGroupId()
 					).setParameter(
-						"folderId", String.valueOf(curArticle.getFolderId())
+						"folderId", curArticle.getFolderId()
 					).setParameter(
 						"articleId", curArticle.getArticleId()
 					).setParameter(
-						"version", String.valueOf(curArticle.getVersion())
+						"version", curArticle.getVersion()
 					).build();
 
 					editURL = editArticleURL.toString();
@@ -287,9 +287,9 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				PortletURL rowURL = PortletURLBuilder.createRenderURL(
 					liferayPortletResponse
 				).setParameter(
-					"groupId", String.valueOf(curFolder.getGroupId())
+					"groupId", curFolder.getGroupId()
 				).setParameter(
-					"folderId", String.valueOf(curFolder.getFolderId())
+					"folderId", curFolder.getFolderId()
 				).setParameter(
 					"displayStyle", journalDisplayContext.getDisplayStyle()
 				).build();

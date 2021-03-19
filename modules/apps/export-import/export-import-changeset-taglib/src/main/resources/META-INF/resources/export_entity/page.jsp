@@ -28,9 +28,9 @@
 	).setParameter(
 		"cmd", Constants.EXPORT
 	).setParameter(
-		"classNameId", String.valueOf(classNameId)
+		"classNameId", classNameId
 	).setParameter(
-		"groupId", String.valueOf(exportEntityGroupId)
+		"groupId", exportEntityGroupId
 	).setParameter(
 		"uuid", uuid
 	).setParameter(

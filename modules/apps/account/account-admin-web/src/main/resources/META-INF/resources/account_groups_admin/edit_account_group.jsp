@@ -29,7 +29,7 @@ AccountGroupDisplay accountGroupDisplay = (AccountGroupDisplay)request.getAttrib
 		).setMVCRenderCommandName(
 			"/account_admin/edit_account_group"
 		).setParameter(
-			"accountGroupId", String.valueOf(accountGroupDisplay.getAccountGroupId())
+			"accountGroupId", accountGroupDisplay.getAccountGroupId()
 		).build()
 	%>'
 />

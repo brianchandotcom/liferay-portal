@@ -80,7 +80,7 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 				PortletURL childGroupsURL = PortletURLBuilder.create(
 					siteItemSelectorViewDisplayContext.getPortletURL()
 				).setParameter(
-					"groupId", String.valueOf(group.getGroupId())
+					"groupId", group.getGroupId()
 				).build();
 
 				childGroupsHREF = childGroupsURL.toString();

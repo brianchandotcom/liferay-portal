@@ -132,7 +132,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 		).setRedirect(
 			redirect
 		).setParameter(
-			"questionId", String.valueOf(question.getQuestionId())
+			"questionId", question.getQuestionId()
 		).setParameter(
 			"viewResults", Boolean.TRUE.toString()
 		).build();

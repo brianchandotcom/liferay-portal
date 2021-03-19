@@ -103,7 +103,7 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 						).setRedirect(
 							currentURL
 						).setParameter(
-							"commerceCurrencyId", String.valueOf(commerceCurrency.getCommerceCurrencyId())
+							"commerceCurrencyId", commerceCurrency.getCommerceCurrencyId()
 						).build()
 					%>'
 					name="name"

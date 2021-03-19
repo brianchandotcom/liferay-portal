@@ -341,7 +341,7 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 							).setMVCPath(
 								"/view_content.jsp"
 							).setParameter(
-								"assetEntryId", String.valueOf(assetEntry.getEntryId())
+								"assetEntryId", assetEntry.getEntryId()
 							).setParameter(
 								"viewMode", Constants.PRINT
 							).setParameter(
@@ -425,7 +425,7 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 				PortletURL exportAssetURL = PortletURLBuilder.create(
 					assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse)
 				).setParameter(
-					"plid", String.valueOf(themeDisplay.getPlid())
+					"plid", themeDisplay.getPlid()
 				).setParameter(
 					"portletResource", portletDisplay.getId()
 				).setWindowState(

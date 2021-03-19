@@ -220,7 +220,7 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 											).setMVCPath(
 												"/view_content.jsp"
 											).setParameter(
-												"trashEntryId", String.valueOf(rootEntry.getEntryId())
+												"trashEntryId", rootEntry.getEntryId()
 											).build();
 
 											viewRootContentURLString = viewContentURL.toString();

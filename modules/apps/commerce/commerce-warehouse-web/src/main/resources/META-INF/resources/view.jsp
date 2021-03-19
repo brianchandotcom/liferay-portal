@@ -119,7 +119,7 @@ CommerceInventoryWarehousesDisplayContext commerceInventoryWarehousesDisplayCont
 						).setRedirect(
 							currentURL
 						).setParameter(
-							"commerceInventoryWarehouseId", String.valueOf(commerceInventoryWarehouse.getCommerceInventoryWarehouseId())
+							"commerceInventoryWarehouseId", commerceInventoryWarehouse.getCommerceInventoryWarehouseId()
 						).build()
 					%>'
 					name="name"

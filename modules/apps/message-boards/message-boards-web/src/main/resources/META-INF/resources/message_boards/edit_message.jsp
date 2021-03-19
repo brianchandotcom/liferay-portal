@@ -72,7 +72,7 @@ if (Validator.isNull(redirect)) {
 	).setMVCRenderCommandName(
 		"/message_boards/view_message"
 	).setParameter(
-		"messageId", String.valueOf(messageId)
+		"messageId", messageId
 	).build();
 
 	redirect = viewMessageURL.toString();

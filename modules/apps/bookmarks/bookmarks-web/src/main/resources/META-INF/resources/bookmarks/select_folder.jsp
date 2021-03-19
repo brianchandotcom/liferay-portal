@@ -50,7 +50,7 @@ if (folder != null) {
 				).setMVCRenderCommandName(
 					"/bookmarks/select_folder"
 				).setParameter(
-					"folderId", String.valueOf(folderId)
+					"folderId", folderId
 				).setParameter(
 					"eventName", eventName
 				).build()

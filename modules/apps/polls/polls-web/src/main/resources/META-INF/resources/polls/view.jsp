@@ -47,7 +47,7 @@
 				).setRedirect(
 					currentURL
 				).setParameter(
-					"questionId", String.valueOf(question.getQuestionId())
+					"questionId", question.getQuestionId()
 				).build();
 				%>
 

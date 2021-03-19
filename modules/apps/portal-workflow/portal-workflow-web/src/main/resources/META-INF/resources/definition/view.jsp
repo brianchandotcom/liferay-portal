@@ -84,7 +84,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			).setParameter(
 				"name", workflowDefinition.getName()
 			).setParameter(
-				"version", String.valueOf(workflowDefinition.getVersion())
+				"version", workflowDefinition.getVersion()
 			).build();
 			%>
 

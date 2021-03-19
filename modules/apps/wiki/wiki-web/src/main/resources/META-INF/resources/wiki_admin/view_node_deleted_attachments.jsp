@@ -75,7 +75,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
 	).setRedirect(
 		currentURL
 	).setParameter(
-		"nodeId", String.valueOf(node.getNodeId())
+		"nodeId", node.getNodeId()
 	).setParameter(
 		"viewTrashAttachments", Boolean.TRUE.toString()
 	).build();

@@ -186,7 +186,7 @@ for (int i = 0; i < results.size(); i++) {
 	).setParameter(
 		"tabs2", "roles"
 	).setParameter(
-		"roleId", String.valueOf(role.getRoleId())
+		"roleId", role.getRoleId()
 	).setParameter(
 		"portletResource", curPortletName
 	).build();

@@ -123,13 +123,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 		).setActionName(
 			"/wiki/export_page"
 		).setParameter(
-			"nodeId", String.valueOf(node.getNodeId())
+			"nodeId", node.getNodeId()
 		).setParameter(
 			"nodeName", node.getName()
 		).setParameter(
 			"title", wikiPage.getTitle()
 		).setParameter(
-			"version", String.valueOf(wikiPage.getVersion())
+			"version", wikiPage.getVersion()
 		).setWindowState(
 			LiferayWindowState.EXCLUSIVE
 		).build();
@@ -328,13 +328,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						).setMVCRenderCommandName(
 							"/wiki/edit_page"
 						).setParameter(
-							"nodeId", String.valueOf(wikiPage.getNodeId())
+							"nodeId", wikiPage.getNodeId()
 						).setParameter(
 							"title", StringPool.BLANK
 						).setParameter(
 							"editTitle", "1"
 						).setParameter(
-							"templateNodeId", String.valueOf(wikiPage.getNodeId())
+							"templateNodeId", wikiPage.getNodeId()
 						).setParameter(
 							"templateTitle", wikiPage.getTitle()
 						).build();

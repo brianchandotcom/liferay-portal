@@ -168,9 +168,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals("deleteChannel")) {
 				deleteChannel(actionRequest);
 			}
-			else if (cmd.equals("updateCPDisplayLayout")) {
-				updateCPDisplayLayout(actionRequest);
-			}
 			else if (cmd.equals("updateConfiguration")) {
 				Callable<Object> cpDefinitionConfigurationCallable =
 					new CPDefinitionConfigurationCallable(actionRequest);
@@ -447,21 +444,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
 			cpdAvailabilityEstimateEntryId, cpDefinitionId,
 			commerceAvailabilityEstimateId, serviceContext);
-	}
-
-	protected void updateCPDisplayLayout(ActionRequest actionRequest)
-		throws PortalException {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinition.class.getName(), actionRequest);
-
-		_cpDefinitionService.updateCPDisplayLayout(
-			cpDefinitionId, layoutUuid, serviceContext);
 	}
 
 	protected void updateShippingInfo(ActionRequest actionRequest)

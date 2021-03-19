@@ -37,23 +37,23 @@ definition {
 	}
 
 	macro goToApis {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "APIs");
+		ACSettings.goToSettingsNavigation(settingsNavigation = "apis");
 	}
 
 	macro goToDataControlAndPrivacy {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "Data Control");
+		ACSettings.goToSettingsNavigation(settingsNavigation = "data-privacy");
 	}
 
 	macro goToDataSources {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "Data Sources");
+		ACSettings.goToSettingsNavigation(settingsNavigation = "data-source");
 	}
 
 	macro goToDefinitions {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "Definitions");
+		ACSettings.goToSettingsNavigation(settingsNavigation = "definitions");
 	}
 
 	macro goToProperties {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "Properties");
+		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
 	}
 
 	macro goToSettingsNavigation {
@@ -63,15 +63,15 @@ definition {
 	}
 
 	macro goToUsage {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "Usage");
+		ACSettings.goToSettingsNavigation(settingsNavigation = "usage");
 	}
 
 	macro goToUserManagement {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "User Management");
+		ACSettings.goToSettingsNavigation(settingsNavigation = "users");
 	}
 
 	macro goToWorkspace {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "Workspace");
+		ACSettings.goToSettingsNavigation(settingsNavigation = "settings/workspace");
 	}
 
 }

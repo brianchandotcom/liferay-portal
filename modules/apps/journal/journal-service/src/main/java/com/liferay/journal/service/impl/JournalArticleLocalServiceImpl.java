@@ -4471,7 +4471,7 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return doFindByC_G_F_C_A_V_T_D_C_S_T_D_R_L(
+		return _search(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
 			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
@@ -4514,7 +4514,7 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return doFindByC_G_F_C_A_V_T_D_C_S_T_D_R_L(
+		return _search(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
 			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
@@ -4792,7 +4792,7 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status);
 
-		return doCountByC_G_F_C_A_V_T_D_C_S_T_D_R_L(
+		return _searchCount(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
 			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
@@ -4833,7 +4833,7 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status);
 
-		return doCountByC_G_F_C_A_V_T_D_C_S_T_D_R_L(
+		return _searchCount(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
 			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
@@ -7121,7 +7121,7 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	protected int doCountByC_G_F_C_A_V_T_D_C_S_T_D_R_L(
+	private int _searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String[] articleIds, Double version, String[] titles,
 		String[] descriptions, String[] contents, String[] ddmStructureKeys,
@@ -7151,7 +7151,7 @@ public class JournalArticleLocalServiceImpl
 		return count.intValue();
 	}
 
-	protected List<JournalArticle> doFindByC_G_F_C_A_V_T_D_C_S_T_D_R_L(
+	private List<JournalArticle> _search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String[] articleIds, Double version, String[] titles,
 		String[] descriptions, String[] contents, String[] ddmStructureKeys,

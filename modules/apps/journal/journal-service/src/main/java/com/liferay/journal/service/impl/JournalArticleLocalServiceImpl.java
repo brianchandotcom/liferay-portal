@@ -8800,7 +8800,7 @@ public class JournalArticleLocalServiceImpl
 
 		SearchDSLQuery searchDSLQuery = new SearchDSLQuery();
 
-		return searchDSLQuery.getSearchCountQuery(
+		return searchDSLQuery.countDistinct(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
 			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
@@ -8818,7 +8818,7 @@ public class JournalArticleLocalServiceImpl
 
 		SearchDSLQuery searchDSLQuery = new SearchDSLQuery();
 
-		return searchDSLQuery.getSearchQuery(
+		return searchDSLQuery.select(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
 			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
@@ -9033,7 +9033,7 @@ public class JournalArticleLocalServiceImpl
 
 	private class SearchDSLQuery {
 
-		public DSLQuery getSearchCountQuery(
+		public DSLQuery countDistinct(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String[] articleIds, Double version,
 			String[] titles, String[] descriptions, String[] contents,
@@ -9062,7 +9062,7 @@ public class JournalArticleLocalServiceImpl
 			);
 		}
 
-		public DSLQuery getSearchQuery(
+		public DSLQuery select(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String[] articleIds, Double version,
 			String[] titles, String[] descriptions, String[] contents,

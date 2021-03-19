@@ -82,7 +82,6 @@ function Price({
 			</span>
 			<span
 				className={classnames({
-					'price-standalone': standalone,
 					'price-value': true,
 					'price-value-inactive': hasPromo || hasDiscount,
 				})}

@@ -43,7 +43,7 @@ public class ExpandoTableSearchFixture {
 	}
 
 	public void addExpandoColumn(
-			Class<?> clazz, int indexType, String... columns)
+			Class<?> clazz, int indexType, int columnType, String... columns)
 		throws Exception {
 
 		ExpandoTable expandoTable = expandoTableLocalService.fetchTable(
@@ -60,7 +60,7 @@ public class ExpandoTableSearchFixture {
 
 		for (String column : columns) {
 			ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
-				expandoTable, column, ExpandoColumnConstants.STRING);
+				expandoTable, column, columnType);
 
 			expandoColumns.add(expandoColumn);
 
@@ -74,6 +74,14 @@ public class ExpandoTableSearchFixture {
 
 			expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 		}
+	}
+
+	public void addExpandoColumn(
+			Class<?> clazz, int indexType, String... columns)
+		throws Exception {
+
+		addExpandoColumn(
+			clazz, indexType, ExpandoColumnConstants.STRING, columns);
 	}
 
 	public List<ExpandoColumn> getExpandoColumns() {

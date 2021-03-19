@@ -173,8 +173,10 @@ public class CommerceProductUpgradeStepRegistrator
 			new com.liferay.commerce.product.internal.upgrade.v2_6_0.
 				CPInstanceUpgradeProcess());
 
+		registry.register("2.6.0", "2.6.1", new DummyUpgradeProcess());
+
 		registry.register(
-			"2.6.0", "3.0.0",
+			"2.6.1", "3.0.0",
 			new com.liferay.commerce.product.internal.upgrade.v3_0_0.
 				CPFriendlyURLEntryUpgradeProcess());
 
@@ -185,6 +187,8 @@ public class CommerceProductUpgradeStepRegistrator
 			new com.liferay.commerce.product.internal.upgrade.v3_2_0.
 				FriendlyURLEntryUpgradeProcess(
 					_classNameLocalService, _groupLocalService));
+
+		registry.register("3.2.0", "3.2.1", new DummyUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

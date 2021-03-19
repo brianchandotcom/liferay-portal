@@ -33,7 +33,13 @@ import {getValidName} from '../../utils/utils.es';
 import ListObjects from '../object/ListObjects.es';
 import CustomObjectPopover from './CustomObjectPopover.es';
 
-const queryFields = ['dateCreated', 'dateModified', 'id', 'name'].join(',');
+const queryFields = [
+	'dateCreated',
+	'dateModified',
+	'defaultLanguageId',
+	'id',
+	'name',
+].join(',');
 
 export default ({history}) => {
 	const {basePortletURL, baseResourceURL, namespace} = useContext(AppContext);

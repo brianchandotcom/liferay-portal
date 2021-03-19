@@ -787,10 +787,7 @@ public class StructuredContentResourceImpl
 			}
 		}
 
-		throw new BadRequestException(
-			StringBundler.concat(
-				"Unable to get content field value for \"", name,
-				"\" for content structure ", ddmStructure.getStructureId()));
+		return null;
 	}
 
 	private DDMFormField _getDDMFormField(
@@ -1119,7 +1116,16 @@ public class StructuredContentResourceImpl
 		}
 
 		for (ContentField contentField : contentFields) {
-			_getDDMFormField(ddmStructure, contentField.getName());
+			DDMFormField ddmFormField = _getDDMFormField(
+				ddmStructure, contentField.getName());
+
+			if (ddmFormField == null) {
+				throw new BadRequestException(
+					StringBundler.concat(
+						"Unable to get content field value for \"",
+						contentField.getName(), "\" for content structure ",
+						ddmStructure.getStructureId()));
+			}
 
 			_validateContentFields(
 				contentField.getNestedContentFields(), ddmStructure);

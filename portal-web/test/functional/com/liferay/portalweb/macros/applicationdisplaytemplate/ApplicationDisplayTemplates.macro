@@ -183,7 +183,7 @@ definition {
 	macro gotoWidgetTemplatesEllipsisItem {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = "${widgetTemplateName}",
-			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS_LINK");
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "${item}");
 	}

@@ -15,4 +15,18 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function assertEditableNotVisible {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent();
+
+		selenium.waitForEditable();
+
+		selenium.assertEditable();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 }

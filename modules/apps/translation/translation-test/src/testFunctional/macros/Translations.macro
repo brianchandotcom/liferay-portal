@@ -414,6 +414,23 @@ definition {
 				rowEntry = "${title}",
 				rowStatus = "${status}");
 		}
+
+		if (isSet(modifiedDate)) {
+			var toolTipModifiedDate = selenium.getAttribute("//td//span[contains(@class,'lfr-portal-tooltip')]@title");
+
+			LexiconEntry.viewEntryContent(
+				key_rowAny = "${modifiedDate}",
+				rowEntry = "${title}");
+
+			MouseOver(
+				key_rowAny = "${modifiedDate}",
+				key_rowEntry = "${title}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ANY");
+
+			AssertVisible(
+				key_content = "${toolTipModifiedDate}",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
 	}
 
 	macro viewTranslationOptions {

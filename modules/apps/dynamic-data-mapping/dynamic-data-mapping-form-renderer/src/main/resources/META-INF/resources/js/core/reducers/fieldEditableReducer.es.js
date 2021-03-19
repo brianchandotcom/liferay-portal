@@ -263,10 +263,20 @@ export default (state, action, config) => {
 						propertyValue
 					))
 			) {
-				focusedField = SettingsContext.updateFieldReference(
-					focusedField,
-					false,
-					true
+				const {defaultLanguageId, editingLanguageId} = state;
+
+				focusedField = SettingsContext.updateField(
+					{
+						defaultLanguageId,
+						editingLanguageId,
+					},
+					SettingsContext.updateFieldReference(
+						focusedField,
+						false,
+						true
+					),
+					propertyName,
+					focusedField.fieldName
 				);
 			}
 

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<license>
+	<account-name>Liferay.com</account-name>
+	<owner>Liferay.com</owner>
+	<description>Liferay.com</description>
+	<product-name>Portal Cluster</product-name>
+	<product-version>7.3</product-version>
+	<license-name>Portal Cluster</license-name>
+	<license-type>virtual-cluster</license-type>
+	<license-version>4</license-version>
+	<start-date>Friday, April 29, 2020 5:42:58 PM GMT</start-date>
+	<expiration-date>Friday, January 1, 2120 5:42:58 PM GMT</expiration-date>
+	<max-cluster-nodes>3</max-cluster-nodes>
+	<key>INVALID</key>
+</license>

@@ -9072,7 +9072,7 @@ public class JournalArticleLocalServiceImpl
 			QueryDefinition<JournalArticle> queryDefinition,
 			boolean inlineSQLHelper) {
 
-			DSLQuery dslQueryLeftJoinJournalArticleLocalization =
+			DSLQuery dslQuery =
 				DSLQueryFactoryUtil.select(
 					JournalArticleLocalizationTable.INSTANCE.companyId,
 					JournalArticleLocalizationTable.INSTANCE.articlePK,
@@ -9100,7 +9100,7 @@ public class JournalArticleLocalServiceImpl
 				JournalArticleTable.INSTANCE.as("tempJournalArticle"),
 				_leftJoinOnTempJournalArticlePredicate(queryDefinition)
 			).leftJoinOn(
-				dslQueryLeftJoinJournalArticleLocalization.as(
+				dslQuery.as(
 					"JournalArticleLocalization"),
 				_leftJoinOnJournalArticleLocalizationPredicate(locale)
 			).where(

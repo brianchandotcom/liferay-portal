@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.tax.engine.remote.internal;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.commerce.exception.CommerceTaxEngineException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -27,12 +24,13 @@ import com.liferay.commerce.tax.engine.remote.internal.configuration.RemoteComme
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.petra.apache.http.components.URIBuilder;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -211,18 +209,14 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 		).build();
 	}
 
-	private CommerceTaxValue _getCommerceTaxValue(String result)
+	private CommerceTaxValue _getCommerceTaxValue(String json)
 		throws Exception {
 
-		JsonNode jsonNode = _objectMapper.readTree(result);
-
-		JsonNode nameJsonNode = jsonNode.get("name");
-		JsonNode labelJsonNode = jsonNode.get("label");
-		JsonNode amountJsonNode = jsonNode.get("amount");
+		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 		return new CommerceTaxValue(
-			nameJsonNode.textValue(), labelJsonNode.textValue(),
-			BigDecimal.valueOf(amountJsonNode.doubleValue()));
+			jsonObject.getString("name"), jsonObject.getString("label"),
+			BigDecimal.valueOf(jsonObject.getDouble("amount")));
 	}
 
 	private HttpGet _getHttpGet(
@@ -311,7 +305,9 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private final ObjectMapper _objectMapper = new ObjectMapper();
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private PoolingHttpClientConnectionManager
 		_poolingHttpClientConnectionManager;
 

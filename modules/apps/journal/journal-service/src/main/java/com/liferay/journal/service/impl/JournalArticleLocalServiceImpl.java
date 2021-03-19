@@ -7121,63 +7121,6 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	private int _searchCount(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String[] articleIds, Double version, String[] titles,
-		String[] descriptions, String[] contents, String[] ddmStructureKeys,
-		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
-		Date reviewDate, Locale locale, boolean andOperator,
-		QueryDefinition<JournalArticle> queryDefinition,
-		boolean inlineSQLHelper) {
-
-		articleIds = _customSQL.keywords(articleIds, false);
-		titles = _customSQL.keywords(titles);
-		descriptions = _customSQL.keywords(descriptions, false);
-		contents = _customSQL.keywords(contents, false);
-		ddmStructureKeys = _customSQL.keywords(ddmStructureKeys, false);
-		ddmTemplateKeys = _customSQL.keywords(ddmTemplateKeys, false);
-		displayDateGT = CalendarUtil.getTimestamp(displayDateGT);
-		displayDateLT = CalendarUtil.getTimestamp(displayDateLT);
-		reviewDate = CalendarUtil.getTimestamp(reviewDate);
-
-		DSLQuery dslQuery = _getSearchCountDSLQuery(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
-			queryDefinition, inlineSQLHelper);
-
-		return GetterUtil.getInteger(
-			(Long)journalArticlePersistence.dslQuery(dslQuery));
-	}
-
-	private List<JournalArticle> _search(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String[] articleIds, Double version, String[] titles,
-		String[] descriptions, String[] contents, String[] ddmStructureKeys,
-		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
-		Date reviewDate, Locale locale, boolean andOperator,
-		QueryDefinition<JournalArticle> queryDefinition,
-		boolean inlineSQLHelper) {
-
-		articleIds = _customSQL.keywords(articleIds, false);
-		titles = _customSQL.keywords(titles);
-		descriptions = _customSQL.keywords(descriptions, false);
-		contents = _customSQL.keywords(contents, false);
-		ddmStructureKeys = _customSQL.keywords(ddmStructureKeys, false);
-		ddmTemplateKeys = _customSQL.keywords(ddmTemplateKeys, false);
-		displayDateGT = CalendarUtil.getTimestamp(displayDateGT);
-		displayDateLT = CalendarUtil.getTimestamp(displayDateLT);
-		reviewDate = CalendarUtil.getTimestamp(reviewDate);
-
-		DSLQuery dslQuery = _getSearchDSLQuery(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
-			queryDefinition, inlineSQLHelper);
-
-		return journalArticlePersistence.dslQuery(dslQuery);
-	}
-
 	protected void expireMaxVersionArticles(
 			JournalArticle article, long userId, ServiceContext serviceContext,
 			String articleURL)
@@ -8921,6 +8864,63 @@ public class JournalArticleLocalServiceImpl
 			});
 	}
 
+	private List<JournalArticle> _search(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String[] articleIds, Double version, String[] titles,
+		String[] descriptions, String[] contents, String[] ddmStructureKeys,
+		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
+		Date reviewDate, Locale locale, boolean andOperator,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		articleIds = _customSQL.keywords(articleIds, false);
+		titles = _customSQL.keywords(titles);
+		descriptions = _customSQL.keywords(descriptions, false);
+		contents = _customSQL.keywords(contents, false);
+		ddmStructureKeys = _customSQL.keywords(ddmStructureKeys, false);
+		ddmTemplateKeys = _customSQL.keywords(ddmTemplateKeys, false);
+		displayDateGT = CalendarUtil.getTimestamp(displayDateGT);
+		displayDateLT = CalendarUtil.getTimestamp(displayDateLT);
+		reviewDate = CalendarUtil.getTimestamp(reviewDate);
+
+		DSLQuery dslQuery = _getSearchDSLQuery(
+			companyId, groupId, folderIds, classNameId, articleIds, version,
+			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
+			queryDefinition, inlineSQLHelper);
+
+		return journalArticlePersistence.dslQuery(dslQuery);
+	}
+
+	private int _searchCount(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String[] articleIds, Double version, String[] titles,
+		String[] descriptions, String[] contents, String[] ddmStructureKeys,
+		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
+		Date reviewDate, Locale locale, boolean andOperator,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		articleIds = _customSQL.keywords(articleIds, false);
+		titles = _customSQL.keywords(titles);
+		descriptions = _customSQL.keywords(descriptions, false);
+		contents = _customSQL.keywords(contents, false);
+		ddmStructureKeys = _customSQL.keywords(ddmStructureKeys, false);
+		ddmTemplateKeys = _customSQL.keywords(ddmTemplateKeys, false);
+		displayDateGT = CalendarUtil.getTimestamp(displayDateGT);
+		displayDateLT = CalendarUtil.getTimestamp(displayDateLT);
+		reviewDate = CalendarUtil.getTimestamp(reviewDate);
+
+		DSLQuery dslQuery = _getSearchCountDSLQuery(
+			companyId, groupId, folderIds, classNameId, articleIds, version,
+			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
+			queryDefinition, inlineSQLHelper);
+
+		return GetterUtil.getInteger(
+			(Long)journalArticlePersistence.dslQuery(dslQuery));
+	}
+
 	private List<JournalArticleLocalization> _updateArticleLocalizedFields(
 		long companyId, long articleId, Map<Locale, String> titleMap,
 		Map<Locale, String> descriptionMap) {
@@ -9072,25 +9072,24 @@ public class JournalArticleLocalServiceImpl
 			QueryDefinition<JournalArticle> queryDefinition,
 			boolean inlineSQLHelper) {
 
-			DSLQuery dslQuery =
-				DSLQueryFactoryUtil.select(
-					JournalArticleLocalizationTable.INSTANCE.companyId,
-					JournalArticleLocalizationTable.INSTANCE.articlePK,
-					JournalArticleLocalizationTable.INSTANCE.title,
-					JournalArticleLocalizationTable.INSTANCE.description,
-					JournalArticleLocalizationTable.INSTANCE.languageId
-				).from(
-					JournalArticleLocalizationTable.INSTANCE
-				).where(
-					_journalArticleSearchLocalizationPredicate(
-						titles, descriptions, andOperator)
-				).groupBy(
-					JournalArticleLocalizationTable.INSTANCE.companyId,
-					JournalArticleLocalizationTable.INSTANCE.articlePK,
-					JournalArticleLocalizationTable.INSTANCE.title,
-					JournalArticleLocalizationTable.INSTANCE.description,
-					JournalArticleLocalizationTable.INSTANCE.languageId
-				);
+			DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+				JournalArticleLocalizationTable.INSTANCE.companyId,
+				JournalArticleLocalizationTable.INSTANCE.articlePK,
+				JournalArticleLocalizationTable.INSTANCE.title,
+				JournalArticleLocalizationTable.INSTANCE.description,
+				JournalArticleLocalizationTable.INSTANCE.languageId
+			).from(
+				JournalArticleLocalizationTable.INSTANCE
+			).where(
+				_journalArticleSearchLocalizationPredicate(
+					titles, descriptions, andOperator)
+			).groupBy(
+				JournalArticleLocalizationTable.INSTANCE.companyId,
+				JournalArticleLocalizationTable.INSTANCE.articlePK,
+				JournalArticleLocalizationTable.INSTANCE.title,
+				JournalArticleLocalizationTable.INSTANCE.description,
+				JournalArticleLocalizationTable.INSTANCE.languageId
+			);
 
 			return DSLQueryFactoryUtil.select(
 				JournalArticleTable.INSTANCE
@@ -9100,8 +9099,7 @@ public class JournalArticleLocalServiceImpl
 				JournalArticleTable.INSTANCE.as("tempJournalArticle"),
 				_leftJoinOnTempJournalArticlePredicate(queryDefinition)
 			).leftJoinOn(
-				dslQuery.as(
-					"JournalArticleLocalization"),
+				dslQuery.as("JournalArticleLocalization"),
 				_leftJoinOnJournalArticleLocalizationPredicate(locale)
 			).where(
 				_wherePredicate(

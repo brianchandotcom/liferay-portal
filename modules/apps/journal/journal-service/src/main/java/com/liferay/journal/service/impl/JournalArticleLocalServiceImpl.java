@@ -9124,57 +9124,57 @@ public class JournalArticleLocalServiceImpl
 				operand = Operand.OR;
 			}
 
-			Predicate innerPredicate = _keywordPredicate(
+			Predicate predicate = _keywordPredicate(
 				JournalArticleTable.INSTANCE.articleId,
 				_customSQL.keywords(articleIds, false));
 
 			if (GetterUtil.getDouble(version) > 0.0) {
-				innerPredicate = _nullSafeDefaultPredicate(
-					innerPredicate, operand,
+				predicate = _nullSafeDefaultPredicate(
+					predicate, operand,
 					JournalArticleTable.INSTANCE.version.eq(version));
 			}
 
-			innerPredicate = _nullSafeDefaultPredicate(
-				innerPredicate, operand,
+			predicate = _nullSafeDefaultPredicate(
+				predicate, operand,
 				_keywordPredicate(
 					DSLFunctionFactoryUtil.lower(
 						JournalArticleLocalizationTable.INSTANCE.title),
 					_customSQL.keywords(titles)));
 
-			innerPredicate = _nullSafeDefaultPredicate(
-				innerPredicate, operand,
+			predicate = _nullSafeDefaultPredicate(
+				predicate, operand,
 				_keywordPredicate(
 					JournalArticleLocalizationTable.INSTANCE.description,
 					_customSQL.keywords(descriptions, false)));
 
-			innerPredicate = _nullSafeDefaultPredicate(
-				innerPredicate, operand,
+			predicate = _nullSafeDefaultPredicate(
+				predicate, operand,
 				_keywordPredicate(
 					DSLFunctionFactoryUtil.castClobText(
 						JournalArticleTable.INSTANCE.content),
 					_customSQL.keywords(contents, false)));
 
 			if (displayDateGT != null) {
-				innerPredicate = _nullSafeDefaultPredicate(
-					innerPredicate, operand,
+				predicate = _nullSafeDefaultPredicate(
+					predicate, operand,
 					JournalArticleTable.INSTANCE.displayDate.gte(
 						displayDateGT));
 			}
 
 			if (displayDateLT != null) {
-				innerPredicate = _nullSafeDefaultPredicate(
-					innerPredicate, operand,
+				predicate = _nullSafeDefaultPredicate(
+					predicate, operand,
 					JournalArticleTable.INSTANCE.displayDate.lte(
 						displayDateLT));
 			}
 
 			if (reviewDate != null) {
-				innerPredicate = _nullSafeDefaultPredicate(
-					innerPredicate, operand,
+				predicate = _nullSafeDefaultPredicate(
+					predicate, operand,
 					JournalArticleTable.INSTANCE.reviewDate.lte(reviewDate));
 			}
 
-			return innerPredicate;
+			return predicate;
 		}
 
 		private Predicate _journalArticleSearchLocalizationPredicate(

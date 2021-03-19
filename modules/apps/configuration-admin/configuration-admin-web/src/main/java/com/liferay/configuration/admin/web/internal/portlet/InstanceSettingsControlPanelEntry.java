@@ -15,8 +15,8 @@
 package com.liferay.configuration.admin.web.internal.portlet;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.portal.kernel.portlet.AdministratorControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
-import com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,5 +29,5 @@ import org.osgi.service.component.annotations.Component;
 	service = ControlPanelEntry.class
 )
 public class InstanceSettingsControlPanelEntry
-	extends OmniadminControlPanelEntry {
+	extends AdministratorControlPanelEntry {
 }

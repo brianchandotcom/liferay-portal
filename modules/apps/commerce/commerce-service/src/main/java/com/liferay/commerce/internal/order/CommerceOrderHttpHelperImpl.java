@@ -362,7 +362,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 				commerceOrder.getGroupId());
 
-		String commerceOrderUuidWebKey = getCookieName(
+		String cookieName = getCookieName(
 			commerceChannel.getCommerceChannelId());
 
 		if (permissionChecker.isSignedIn()) {
@@ -374,14 +374,12 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 			HttpSession httpSession = originalHttpServletRequest.getSession();
 
-			httpSession.setAttribute(
-				commerceOrderUuidWebKey, commerceOrder.getUuid());
+			httpSession.setAttribute(cookieName, commerceOrder.getUuid());
 
 			return;
 		}
 
-		Cookie cookie = new Cookie(
-			commerceOrderUuidWebKey, commerceOrder.getUuid());
+		Cookie cookie = new Cookie(cookieName, commerceOrder.getUuid());
 
 		String domain = CookieKeys.getDomain(httpServletRequest);
 
@@ -436,8 +434,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
-		String commerceOrderUuidWebKey = getCookieName(
-			commerceOrder.getGroupId());
+		String cookieName = getCookieName(commerceOrder.getGroupId());
 
 		// Remove thread local order when used
 
@@ -447,7 +444,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		if ((threadLocalCommerceOrder != null) &&
 			threadLocalCommerceOrder.isGuestOrder()) {
 
-			httpSession.removeAttribute(commerceOrderUuidWebKey);
+			httpSession.removeAttribute(cookieName);
 
 			_commerceOrderThreadLocal.remove();
 		}
@@ -459,7 +456,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				CommerceOrderConstants.ORDER_STATUS_OPEN);
 
 		if (userCommerceOrder == null) {
-			httpSession.removeAttribute(commerceOrderUuidWebKey);
+			httpSession.removeAttribute(cookieName);
 
 			return _commerceOrderLocalService.updateAccount(
 				commerceOrder.getCommerceOrderId(), user.getUserId(),
@@ -481,7 +478,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			_commerceOrderThreadLocal.remove();
 		}
 
-		httpSession.removeAttribute(commerceOrderUuidWebKey);
+		httpSession.removeAttribute(cookieName);
 
 		return userCommerceOrder;
 	}

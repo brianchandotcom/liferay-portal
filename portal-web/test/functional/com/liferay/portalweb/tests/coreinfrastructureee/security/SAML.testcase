@@ -1563,18 +1563,18 @@ definition {
 		// Create IDP - SP link, with transient name id and attribute maps containing screenName and emailAddress
 
 		SAML.configureLiferaySAMLAsSP(
-			idpAttributes = '''screenName=screenName
-emailAddress=emailAddress
+			idpAttributes = '''emailAddress=emailAddress
 firstName=firstName
 lastName=lastName
+screenName=screenName
 uuid=uuid''',
 			nameIdentifierAttributeName = "static:CustomNameIDValue",
 			nameIdentifierFormat = "Transient",
 			samlEntityID = "samlsp",
-			spAttributes = '''screenName
-emailAddress
+			spAttributes = '''emailAddress
 firstName
 lastName
+screenName
 uuid''',
 			spURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");

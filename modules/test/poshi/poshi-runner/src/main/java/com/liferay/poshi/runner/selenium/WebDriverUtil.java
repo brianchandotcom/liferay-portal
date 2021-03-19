@@ -114,6 +114,14 @@ public class WebDriverUtil extends PropsValues {
 		return new ChromeDriver(chromeOptions);
 	}
 
+	private WebDriver _getChromeRemoteDriver() {
+		ChromeOptions chromeOptions = new ChromeOptions();
+
+		_setGenericCapabilities(chromeOptions);
+
+		return new RemoteWebDriver(_REMOTE_DRIVER_URL, chromeOptions);
+	}
+
 	private InternetExplorerOptions _getDefaultInternetExplorerOptions() {
 		InternetExplorerOptions internetExplorerOptions =
 			new InternetExplorerOptions();
@@ -137,16 +145,7 @@ public class WebDriverUtil extends PropsValues {
 
 		edgeOptions.setCapability("platform", "WINDOWS");
 
-		URL url = null;
-
-		try {
-			url = new URL(
-				PropsValues.SELENIUM_REMOTE_DRIVER_HUB + ":4444/wd/hub");
-		}
-		catch (MalformedURLException malformedURLException) {
-		}
-
-		return new RemoteWebDriver(url, edgeOptions);
+		return new RemoteWebDriver(_REMOTE_DRIVER_URL, edgeOptions);
 	}
 
 	private WebDriver _getFirefoxDriver() {
@@ -208,6 +207,14 @@ public class WebDriverUtil extends PropsValues {
 		return new FirefoxDriver(firefoxOptions);
 	}
 
+	private WebDriver _getFirefoxRemoteDriver() {
+		FirefoxOptions firefoxOptions = new FirefoxOptions();
+
+		_setGenericCapabilities(firefoxOptions);
+
+		return new RemoteWebDriver(_REMOTE_DRIVER_URL, firefoxOptions);
+	}
+
 	private WebDriver _getInternetExplorerDriver() {
 		return new InternetExplorerDriver(_getDefaultInternetExplorerOptions());
 	}
@@ -221,16 +228,7 @@ public class WebDriverUtil extends PropsValues {
 		internetExplorerOptions.setCapability(
 			"version", PropsValues.BROWSER_VERSION);
 
-		URL url = null;
-
-		try {
-			url = new URL(
-				PropsValues.SELENIUM_REMOTE_DRIVER_HUB + ":4444/wd/hub");
-		}
-		catch (MalformedURLException malformedURLException) {
-		}
-
-		return new RemoteWebDriver(url, internetExplorerOptions);
+		return new RemoteWebDriver(_REMOTE_DRIVER_URL, internetExplorerOptions);
 	}
 
 	private WebDriver _getSafariDriver() {
@@ -239,6 +237,14 @@ public class WebDriverUtil extends PropsValues {
 		_setGenericCapabilities(safariOptions);
 
 		return new SafariDriver();
+	}
+
+	private WebDriver _getSafariRemoteDriver() {
+		SafariOptions safariOptions = new SafariOptions();
+
+		_setGenericCapabilities(safariOptions);
+
+		return new RemoteWebDriver(_REMOTE_DRIVER_URL, safariOptions);
 	}
 
 	private WebDriver _getWebDriver() {
@@ -256,12 +262,31 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private void _startWebDriver() {
-		if (BROWSER_TYPE.equals("chrome")) {
+		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+			if (BROWSER_TYPE.equals("chrome")) {
+				_webDriver = _getChromeRemoteDriver();
+			}
+
+			if (BROWSER_TYPE.equals("edge")) {
+				_webDriver = _getEdgeRemoteDriver();
+			}
+
+			if (BROWSER_TYPE.equals("firefox")) {
+				_webDriver = _getFirefoxRemoteDriver();
+			}
+
+			if (BROWSER_TYPE.equals("internetexplorer")) {
+				_webDriver = _getInternetExplorerRemoteDriver();
+			}
+
+			if (BROWSER_TYPE.equals("safari")) {
+				_webDriver = _getSafariRemoteDriver();
+			}
+		}
+		else if (BROWSER_TYPE.equals("chrome")) {
 			_webDriver = _getChromeDriver();
 		}
-		else if (BROWSER_TYPE.equals("edge") &&
-				 !SELENIUM_REMOTE_DRIVER_ENABLED) {
-
+		else if (BROWSER_TYPE.equals("edge")) {
 			if (SELENIUM_EDGE_DRIVER_EXECUTABLE != null) {
 				System.setProperty(
 					"webdriver.edge.driver",
@@ -271,27 +296,18 @@ public class WebDriverUtil extends PropsValues {
 
 			_webDriver = _getEdgeDriver();
 		}
-		else if (BROWSER_TYPE.equals("edge") &&
-				 SELENIUM_REMOTE_DRIVER_ENABLED) {
-
-			_webDriver = _getEdgeRemoteDriver();
-		}
 		else if (BROWSER_TYPE.equals("firefox")) {
 			_webDriver = _getFirefoxDriver();
 		}
-		else if (BROWSER_TYPE.equals("internetexplorer") &&
-				 !SELENIUM_REMOTE_DRIVER_ENABLED) {
-
-			System.setProperty(
-				"webdriver.ie.driver",
-				SELENIUM_EXECUTABLE_DIR_NAME + SELENIUM_IE_DRIVER_EXECUTABLE);
+		else if (BROWSER_TYPE.equals("internetexplorer")) {
+			if (SELENIUM_IE_DRIVER_EXECUTABLE != null) {
+				System.setProperty(
+					"webdriver.ie.driver",
+					SELENIUM_EXECUTABLE_DIR_NAME +
+						SELENIUM_IE_DRIVER_EXECUTABLE);
+			}
 
 			_webDriver = _getInternetExplorerDriver();
-		}
-		else if (BROWSER_TYPE.equals("internetexplorer") &&
-				 SELENIUM_REMOTE_DRIVER_ENABLED) {
-
-			_webDriver = _getInternetExplorerRemoteDriver();
 		}
 		else if (BROWSER_TYPE.equals("safari")) {
 			_webDriver = _getSafariDriver();
@@ -309,6 +325,8 @@ public class WebDriverUtil extends PropsValues {
 		_webDriver = null;
 	}
 
+	private static final URL _REMOTE_DRIVER_URL;
+
 	private static final Map<String, Object> _genericCapabilities =
 		new HashMap<String, Object>() {
 			{
@@ -318,6 +336,24 @@ public class WebDriverUtil extends PropsValues {
 			}
 		};
 	private static final WebDriverUtil _webDriverUtil = new WebDriverUtil();
+
+	static {
+		try {
+			if (Validator.isNull(SELENIUM_REMOTE_DRIVER_URL)) {
+				_REMOTE_DRIVER_URL = new URL("http://localhost:4444/wd/hub");
+			}
+			else if (SELENIUM_REMOTE_DRIVER_URL.matches(".*\\/wd\\/hub\\/?$")) {
+				_REMOTE_DRIVER_URL = new URL(SELENIUM_REMOTE_DRIVER_URL);
+			}
+			else {
+				_REMOTE_DRIVER_URL = new URL(
+					SELENIUM_REMOTE_DRIVER_URL + "/wd/hub");
+			}
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
 
 	private WebDriver _webDriver;
 

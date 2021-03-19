@@ -9081,7 +9081,7 @@ public class JournalArticleLocalServiceImpl
 			).from(
 				JournalArticleLocalizationTable.INSTANCE
 			).where(
-				_journalArticleSearchLocalizationPredicate(
+				_journalArticleLocalizationPredicate(
 					titles, descriptions, andOperator)
 			).groupBy(
 				JournalArticleLocalizationTable.INSTANCE.companyId,
@@ -9177,7 +9177,7 @@ public class JournalArticleLocalServiceImpl
 			return predicate;
 		}
 
-		private Predicate _journalArticleSearchLocalizationPredicate(
+		private Predicate _journalArticleLocalizationPredicate(
 			String[] titles, String[] descriptions, boolean andOperator) {
 
 			Predicate predicate = _keywordPredicate(

@@ -336,7 +336,7 @@ export const findInvalidFieldReference = (focusedField, pages, value) => {
 
 			if (
 				focusedField.fieldName !== field.fieldName &&
-				fieldReference === value
+				fieldReference?.toLowerCase() === value?.toLowerCase()
 			) {
 				hasInvalidFieldReference = true;
 			}

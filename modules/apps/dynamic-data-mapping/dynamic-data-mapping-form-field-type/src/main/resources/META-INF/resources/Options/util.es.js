@@ -88,7 +88,9 @@ export const dedupValue = (
 
 	const recursive = (fields, currentValue) => {
 		const field = fields.find(
-			(field) => field[propertyName] === currentValue
+			(field) =>
+				field[propertyName]?.toLowerCase() ===
+				currentValue?.toLowerCase()
 		);
 
 		if (field && field.id !== id) {
@@ -160,7 +162,11 @@ export const normalizeValue = (
 export const normalizeFieldReference = (currentIndex, fields) => {
 	const duplicateReference = fields
 		.filter((field, index) => index !== currentIndex)
-		.some(({reference}) => reference === fields[currentIndex].reference);
+		.some(
+			({reference}) =>
+				reference?.toLowerCase() ===
+				fields[currentIndex]?.reference?.toLowerCase()
+		);
 
 	if (duplicateReference) {
 		fields[currentIndex].reference = getDefaultFieldName(true);

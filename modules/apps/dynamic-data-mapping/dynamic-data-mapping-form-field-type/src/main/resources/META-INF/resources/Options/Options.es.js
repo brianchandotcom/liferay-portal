@@ -337,7 +337,10 @@ const Options = ({
 	};
 
 	const checkValidReference = (fields, value, fieldName) => {
-		const field = fields.find((field) => field['reference'] === value);
+		const field = fields.find(
+			(field) =>
+				field['reference']?.toLowerCase() === value?.toLowerCase()
+		);
 
 		return field ? fieldName : null;
 	};

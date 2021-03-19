@@ -204,6 +204,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_LIST_VOTED_COUNT</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-caret-${key_text}')]]//span[contains(.,'${key_count}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_NAME_FIELD</td>
 	<td>//p[@title='${key_questionNameField}']</td>
 	<td></td>

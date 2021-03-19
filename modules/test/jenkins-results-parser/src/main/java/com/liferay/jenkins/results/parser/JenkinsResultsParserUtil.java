@@ -580,9 +580,10 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static boolean exists(URL url) {
+		HttpURLConnection httpURLConnection = null;
+
 		try {
-			HttpURLConnection httpURLConnection =
-				(HttpURLConnection)url.openConnection();
+			httpURLConnection = (HttpURLConnection)url.openConnection();
 
 			httpURLConnection.setRequestMethod("HEAD");
 
@@ -597,6 +598,11 @@ public class JenkinsResultsParserUtil {
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(ioException.getMessage(), ioException);
+			}
+		}
+		finally {
+			if (httpURLConnection != null) {
+				httpURLConnection.disconnect();
 			}
 		}
 

@@ -11,7 +11,7 @@
 <!-- SETTINGS NAVIGATION  -->
 <tr>
     <td>SETTINGS_NAVIGATION</td>
-    <td>//*[contains(@class, 'button') and contains(text(),'${key_SettingsNavigation}')]</td>
+    <td>//*[contains(@class, 'btn-link') and contains(@href,'${key_SettingsNavigation}')]</td>
     <td></td>
 </tr>
 <!-- SETTINGS TOOLBAR -->

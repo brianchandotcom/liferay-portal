@@ -110,6 +110,10 @@ public class ExpandoQueryContributorHelper {
 
 		String fieldName = getExpandoFieldName(attributeName, expandoBridge);
 
+		if (fieldName.endsWith("geolocation")) {
+			return;
+		}
+
 		boolean like = false;
 
 		if (indexType == ExpandoColumnConstants.INDEX_TYPE_TEXT) {
@@ -145,6 +149,10 @@ public class ExpandoQueryContributorHelper {
 				ExpandoColumnConstants.STRING_LOCALIZED) {
 
 			fieldName = getLocalizedName(fieldName);
+		}
+
+		if (expandoColumn.getType() == ExpandoColumnConstants.GEOLOCATION) {
+			fieldName = fieldName.concat("_geolocation");
 		}
 
 		return fieldName;

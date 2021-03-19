@@ -327,19 +327,23 @@ export const findInvalidFieldReference = (focusedField, pages, value) => {
 
 	const visitor = new PagesVisitor(pages);
 
-	visitor.mapFields((field) => {
-		const fieldReference = getSettingsContextProperty(
-			field.settingsContext,
-			'fieldReference'
-		);
+	visitor.mapFields(
+		(field) => {
+			const fieldReference = getSettingsContextProperty(
+				field.settingsContext,
+				'fieldReference'
+			);
 
-		if (
-			focusedField.fieldName !== field.fieldName &&
-			fieldReference === value
-		) {
-			hasInvalidFieldReference = true;
-		}
-	});
+			if (
+				focusedField.fieldName !== field.fieldName &&
+				fieldReference === value
+			) {
+				hasInvalidFieldReference = true;
+			}
+		},
+		true,
+		true
+	);
 
 	return hasInvalidFieldReference;
 };

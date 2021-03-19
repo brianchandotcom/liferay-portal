@@ -81,7 +81,9 @@ public class Log4jConfigUtil {
 					}
 				}
 
-				xmlContent = document.asXML();
+				if (removedAppenderNames.length > 0) {
+					xmlContent = document.asXML();
+				}
 
 				abstractConfiguration = new XmlConfiguration(
 					_centralizedConfiguration.getLoggerContext(),
@@ -102,7 +104,9 @@ public class Log4jConfigUtil {
 						priorityElement.attributeValue("value"));
 				}
 
-				xmlContent = document.asXML();
+				if (removedAppenderNames.length > 0) {
+					xmlContent = document.asXML();
+				}
 
 				abstractConfiguration =
 					new org.apache.log4j.xml.XmlConfiguration(

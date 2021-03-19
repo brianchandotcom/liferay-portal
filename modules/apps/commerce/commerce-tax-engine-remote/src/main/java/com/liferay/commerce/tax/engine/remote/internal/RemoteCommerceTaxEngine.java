@@ -152,19 +152,6 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 		}
 	}
 
-	protected CommerceAddress getCommerceAddress(long commerceAddressId)
-		throws PortalException {
-
-		return _commerceAddressService.getCommerceAddress(commerceAddressId);
-	}
-
-	protected CommerceTaxMethod getCommerceTaxMethod(long commerceTaxMethodId)
-		throws PortalException {
-
-		return _commerceTaxMethodService.getCommerceTaxMethod(
-			commerceTaxMethodId);
-	}
-
 	protected RemoteCommerceTaxConfiguration getRemoteCommerceTaxConfiguration(
 			long commerceChannelGroupId)
 		throws CommerceTaxEngineException {
@@ -185,7 +172,8 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 			long commerceAddressId, String prefix)
 		throws PortalException {
 
-		CommerceAddress commerceAddress = getCommerceAddress(commerceAddressId);
+		CommerceAddress commerceAddress =
+			_commerceAddressService.getCommerceAddress(commerceAddressId);
 
 		return HashMapBuilder.put(
 			prefix + "AddressCity", commerceAddress.getCity()
@@ -273,16 +261,20 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 			).addParameter(
 				"taxMethod",
 				() -> {
-					CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod(
-						commerceTaxCalculateRequest.getCommerceTaxMethodId());
+					CommerceTaxMethod commerceTaxMethod =
+						_commerceTaxMethodService.getCommerceTaxMethod(
+							commerceTaxCalculateRequest.
+								getCommerceTaxMethodId());
 
 					return commerceTaxMethod.getEngineKey();
 				}
 			).addParameter(
 				"taxMethodPercentage",
 				() -> {
-					CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod(
-						commerceTaxCalculateRequest.getCommerceTaxMethodId());
+					CommerceTaxMethod commerceTaxMethod =
+						_commerceTaxMethodService.getCommerceTaxMethod(
+							commerceTaxCalculateRequest.
+								getCommerceTaxMethodId());
 
 					return String.valueOf(commerceTaxMethod.isPercentage());
 				}

@@ -72,6 +72,52 @@ definition {
 		DMMetadataSet.delete(metadataSetName = "DM Metadata Set Name");
 	}
 
+	@description = "This ensures that a metadata set can be removed from the entry Menu."
+	@priority = "5"
+	test DeleteEntry {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.delete(metadataSetName = "DM Metadata Set Name");
+	}
+
+	@description = "This test covers LPS-128046. It ensures that a metadata set can be removed from the management bar."
+	@priority = "4"
+	test DeleteEntryViaManagementBar {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.delete(
+			deleteViaManagementBar = "true",
+			metadataSetName = "DM Metadata Set Name");
+	}
+
 	@description = "This ensures that the user can delete fields within a metadata set."
 	@priority = "3"
 	test DeleteFields {

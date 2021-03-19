@@ -197,3 +197,14 @@ set the above property) and you want to apply the TargetPlatformIDE plugin to
 the root workspace project. This will cause all of the BOM artifacts jars and
 their Java sources to be indexed by your IDE. Setting this property to true can
 slow down your IDE's project synchronization.
+
+$h2 platform.bndrun
+
+This file allows each module to be resolved against the target version of
+Liferay. Invoke the operation using the following command:
+`./gradlew resolve`
+
+SUCCESS: The successful result is a list of all the artifacts needed to run
+without any resolution errors.
+FAILURE: A failure will indicate missing a requirement. Correct the missing
+requirement and rerun the task.

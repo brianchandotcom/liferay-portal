@@ -1,15 +1,7 @@
 #set($h1 = '##')
 $h1
-$h1 This file allows each module to be resolved against the target version of
-$h1 Liferay. Invoke the operation using the following command:
-$h1
-$h1 `./gradlew resolve`
-$h1
-$h1 SUCCESS: The succesful result is a list of all the artifacts needed to run
-$h1 without any resolution errors.
-$h1
-$h1 FAILURE: A failure will indicate missing a requirement. Correct the missing
-$h1 requirement and rerun the task.
+$h1 Check GETTING_STARTED.markdown#platform.bndrun for 
+$h1 information regarding these values.
 $h1
 
 -distro: ${targetPlatformDistro};x-whitelist=osgi.wiring.host

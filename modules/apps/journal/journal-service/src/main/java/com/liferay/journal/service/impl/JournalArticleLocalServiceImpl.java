@@ -7146,9 +7146,8 @@ public class JournalArticleLocalServiceImpl
 			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
 			queryDefinition, inlineSQLHelper);
 
-		Long count = journalArticlePersistence.dslQuery(dslQuery);
-
-		return count.intValue();
+		return GetterUtil.getInteger(
+			(Long)journalArticlePersistence.dslQuery(dslQuery));
 	}
 
 	private List<JournalArticle> _search(

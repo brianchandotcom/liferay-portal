@@ -16,13 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortletURL portletURL = reportsEngineDisplayContext.getPortletURL();
-
-portletURL.setParameter("mvcPath", "/admin/view.jsp");
-%>
-
-<aui:form action="<%= portletURL %>" method="get" name="fm">
+<aui:form
+	action='<%=
+		PortletURLBuilder.create(
+			reportsEngineDisplayContext.getPortletURL()
+		).setMVCPath(
+			"/admin/view.jsp"
+		).build()
+	%>'
+	method="get"
+	name="fm"
+>
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 
 	<liferay-ui:search-container

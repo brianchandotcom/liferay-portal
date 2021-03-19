@@ -20,10 +20,6 @@
 CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (CommerceOrganizationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 User selectedUser = commerceOrganizationDisplayContext.getSelectedUser();
-
-PortletURL portletURL = commerceOrganizationDisplayContext.getPortletURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/commerce_organization/view_commerce_organization_user");
 %>
 
 <div class="account-management">

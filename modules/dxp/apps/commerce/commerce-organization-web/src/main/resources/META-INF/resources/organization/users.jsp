@@ -18,10 +18,6 @@
 
 <%
 CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (CommerceOrganizationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-PortletURL portletURL = currentURLObj;
-
-portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", backURL);
 %>
 
 <clay:data-set-display
@@ -48,7 +44,19 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 
 	<aui:form action="<%= inviteUserActionURL %>" method="post" name="inviteUserFm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ASSIGN %>" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL %>" />
+
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value='<%=
+				PortletURLBuilder.create(
+					currentURLObj
+				).setParameter(
+					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", backURL
+				).build()
+			%>'
+		/>
+
 		<aui:input name="organizationId" type="hidden" value="<%= commerceOrganizationDisplayContext.getOrganizationId() %>" />
 		<aui:input name="userId" type="hidden" />
 		<aui:input name="userIds" type="hidden" />

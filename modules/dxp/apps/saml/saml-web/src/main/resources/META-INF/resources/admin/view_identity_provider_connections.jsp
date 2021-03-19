@@ -16,16 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("tabs1", "identity-provider-connections");
-%>
-
 <liferay-ui:search-container
 	emptyResultsMessage="there-are-no-identity-providers"
 	headerNames="name"
-	iteratorURL="<%= portletURL %>"
+	iteratorURL='<%=
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setParameter(
+			"tabs1", "identity-provider-connections"
+		).build()
+	%>'
 	total="<%= GetterUtil.getInteger(renderRequest.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTIONS_COUNT)) %>"
 >
 	<liferay-ui:search-container-results

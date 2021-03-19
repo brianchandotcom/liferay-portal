@@ -64,9 +64,11 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 		portletDisplay.setShowBackIcon(true);
 
-		PortletURL backPortletURL = PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.RENDER_PHASE);
-
-		backPortletURL.setParameter("mvcPath", "/view.jsp");
+		PortletURL backPortletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view.jsp"
+		).build();
 
 		portletDisplay.setURLBack(backPortletURL.toString());
 

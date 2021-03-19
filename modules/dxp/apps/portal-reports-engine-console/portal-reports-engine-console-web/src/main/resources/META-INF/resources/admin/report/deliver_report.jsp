@@ -22,10 +22,13 @@ String fileName = ParamUtil.getString(request, "fileName");
 
 portletDisplay.setShowBackIcon(true);
 
-PortletURL backURL = reportsEngineDisplayContext.getPortletURL();
-
-backURL.setParameter("mvcPath", "/admin/report/requested_report_detail.jsp");
-backURL.setParameter("entryId", String.valueOf(entryId));
+PortletURL backURL = PortletURLBuilder.create(
+	reportsEngineDisplayContext.getPortletURL()
+).setMVCPath(
+	"/admin/report/requested_report_detail.jsp"
+).setParameter(
+	"entryId", String.valueOf(entryId)
+).build();
 
 portletDisplay.setURLBack(backURL.toString());
 

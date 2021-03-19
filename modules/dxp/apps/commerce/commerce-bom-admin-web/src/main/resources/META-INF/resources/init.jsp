@@ -41,6 +41,7 @@ page import="com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEnt
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@
 page import="com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver" %><%@
+page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -54,8 +55,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.configuration.UserFileUploadsConfiguration" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

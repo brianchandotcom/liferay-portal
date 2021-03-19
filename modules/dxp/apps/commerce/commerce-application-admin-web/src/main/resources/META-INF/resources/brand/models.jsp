@@ -90,19 +90,21 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 				keyProperty="commerceApplicationModelId"
 				modelVar="commerceApplicationModel"
 			>
-
-				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("mvcRenderCommandName", "/commerce_application_admin/edit_commerce_application_model");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("commerceApplicationBrandId", String.valueOf(commerceApplicationModel.getCommerceApplicationBrandId()));
-				rowURL.setParameter("commerceApplicationModelId", String.valueOf(commerceApplicationModel.getCommerceApplicationModelId()));
-				%>
-
 				<liferay-ui:search-container-column-text
 					cssClass="important table-cell-expand"
-					href="<%= rowURL %>"
+					href='<%=
+						PortletURLBuilder.createRenderURL(
+							renderResponse
+						).setMVCRenderCommandName(
+							"/commerce_application_admin/edit_commerce_application_model"
+						).setRedirect(
+							currentURL
+						).setParameter(
+							"commerceApplicationBrandId", String.valueOf(commerceApplicationModel.getCommerceApplicationBrandId())
+						).setParameter(
+							"commerceApplicationModelId", String.valueOf(commerceApplicationModel.getCommerceApplicationModelId())
+						).build()
+					%>'
 					property="name"
 				/>
 

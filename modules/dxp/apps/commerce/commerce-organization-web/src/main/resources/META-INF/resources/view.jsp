@@ -47,9 +47,11 @@ request.setAttribute("view.jsp-filterPerOrganization", false);
 			"title", LanguageUtil.get(request, curViewMode)
 		).build();
 
-		PortletURL portletURL = commerceOrganizationDisplayContext.getPortletURL();
-
-		portletURL.setParameter("viewMode", curViewMode);
+		PortletURL portletURL = PortletURLBuilder.create(
+			commerceOrganizationDisplayContext.getPortletURL()
+		).setParameter(
+			"viewMode", curViewMode
+		).build();
 	%>
 
 		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= portletURL.toString() %>" id="<%= liferayPortletResponse.getNamespace() + curViewMode %>">

@@ -21,9 +21,11 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 
 Organization organization = commerceOrganizationDisplayContext.getOrganization();
 
-PortletURL portletURL = commerceOrganizationDisplayContext.getPortletURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/commerce_organization/view_commerce_organization");
+PortletURL portletURL = PortletURLBuilder.create(
+	commerceOrganizationDisplayContext.getPortletURL()
+).setMVCRenderCommandName(
+	"/commerce_organization/view_commerce_organization"
+).build();
 %>
 
 <portlet:renderURL var="editCommerceOrganizationURL">

@@ -31,6 +31,7 @@ page import="com.liferay.commerce.application.exception.NoSuchApplicationModelEx
 page import="com.liferay.commerce.application.model.CommerceApplicationBrand" %><%@
 page import="com.liferay.commerce.application.model.CommerceApplicationModel" %><%@
 page import="com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel" %><%@
+page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
@@ -40,8 +41,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.configuration.UserFileUploadsConfiguration" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

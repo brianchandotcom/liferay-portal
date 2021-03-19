@@ -86,18 +86,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 				keyProperty="commerceApplicationBrandId"
 				modelVar="commerceApplicationBrand"
 			>
-
-				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("mvcRenderCommandName", "/commerce_application_admin/edit_commerce_application_brand");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("commerceApplicationBrandId", String.valueOf(commerceApplicationBrand.getCommerceApplicationBrandId()));
-				%>
-
 				<liferay-ui:search-container-column-text
 					cssClass="important table-cell-expand"
-					href="<%= rowURL %>"
+					href='<%=
+						PortletURLBuilder.createRenderURL(
+							renderResponse
+						).setMVCRenderCommandName(
+							"/commerce_application_admin/edit_commerce_application_brand"
+						).setRedirect(
+							currentURL
+						).setParameter(
+							"commerceApplicationBrandId", String.valueOf(commerceApplicationBrand.getCommerceApplicationBrandId())
+						).build()
+					%>'
 					property="name"
 				/>
 

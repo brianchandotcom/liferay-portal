@@ -121,19 +121,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 
 			<c:choose>
 				<c:when test="<%= commerceBOMDefinition != null %>">
-
-					<%
-					PortletURL rowURL = renderResponse.createRenderURL();
-
-					rowURL.setParameter("mvcRenderCommandName", "/commerce_bom_admin/edit_commerce_bom_definition");
-					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("commerceBOMDefinitionId", String.valueOf(commerceBOMDefinition.getCommerceBOMDefinitionId()));
-					rowURL.setParameter("commerceBOMFolderId", String.valueOf(commerceBOMAdminDisplayContext.getCommerceBOMFolderId()));
-					%>
-
 					<liferay-ui:search-container-column-text
 						cssClass="important table-cell-expand"
-						href="<%= rowURL %>"
+						href='<%=
+							PortletURLBuilder.createRenderURL(
+								renderResponse
+							).setMVCRenderCommandName(
+								"/commerce_bom_admin/edit_commerce_bom_definition"
+							).setRedirect(
+								currentURL
+							).setParameter(
+								"commerceBOMDefinitionId", String.valueOf(commerceBOMDefinition.getCommerceBOMDefinitionId())
+							).setParameter(
+								"commerceBOMFolderId", String.valueOf(commerceBOMAdminDisplayContext.getCommerceBOMFolderId())
+							).build()
+						%>'
 						name="name"
 						value="<%= commerceBOMDefinition.getName() %>"
 					/>
@@ -144,16 +146,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 					/>
 				</c:when>
 				<c:when test="<%= commerceBOMFolder != null %>">
-
-					<%
-					PortletURL rowURL = commerceBOMAdminDisplayContext.getPortletURL();
-
-					rowURL.setParameter("commerceBOMFolderId", String.valueOf(commerceBOMFolder.getCommerceBOMFolderId()));
-					%>
-
 					<liferay-ui:search-container-column-text
 						cssClass="important table-cell-expand"
-						href="<%= rowURL %>"
+						href='<%=
+							PortletURLBuilder.create(
+								commerceBOMAdminDisplayContext.getPortletURL()
+							).setParameter(
+								"commerceBOMFolderId", String.valueOf(commerceBOMFolder.getCommerceBOMFolderId())
+							).build()
+						%>'
 						name="name"
 						value="<%= commerceBOMFolder.getName() %>"
 					/>

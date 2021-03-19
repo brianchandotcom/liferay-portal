@@ -20,9 +20,11 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
-	PortletURL redirectURL = renderResponse.createRenderURL();
-
-	redirectURL.setParameter("mvcPath", "/admin/view.jsp");
+	PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+		renderResponse
+	).setMVCPath(
+		"/admin/view.jsp"
+	).build();
 
 	redirect = redirectURL.toString();
 }
@@ -45,9 +47,11 @@ if (kaleoProcess != null) {
 
 portletDisplay.setShowBackIcon(true);
 
-PortletURL backPortletURL = renderResponse.createRenderURL();
-
-backPortletURL.setParameter("mvcPath", "/admin/view.jsp");
+PortletURL backPortletURL = PortletURLBuilder.createRenderURL(
+	renderResponse
+).setMVCPath(
+	"/admin/view.jsp"
+).build();
 
 portletDisplay.setURLBack(backPortletURL.toString());
 

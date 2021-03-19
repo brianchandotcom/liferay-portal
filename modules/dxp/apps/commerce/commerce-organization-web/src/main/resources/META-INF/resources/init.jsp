@@ -31,6 +31,7 @@ page import="com.liferay.commerce.organization.web.internal.display.context.Comm
 page import="com.liferay.commerce.organization.web.internal.frontend.CommerceOrganizationAccountClayTableDataSetDisplayView" %><%@
 page import="com.liferay.commerce.organization.web.internal.frontend.CommerceOrganizationClayTableDataSetDisplayView" %><%@
 page import="com.liferay.commerce.organization.web.internal.frontend.CommerceOrganizationUserClayTableDataSetDisplayView" %><%@
+page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchOrganizationException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

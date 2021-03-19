@@ -18,11 +18,6 @@
 
 <%
 String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "reports");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/admin/view.jsp");
-portletURL.setParameter("tabs1", tabs1);
 %>
 
 <c:if test="<%= reportsEngineDisplayContext.isAdminPortlet() %>">

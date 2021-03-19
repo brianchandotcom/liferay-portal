@@ -20,9 +20,11 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
-	PortletURL redirectURL = renderResponse.createRenderURL();
-
-	redirectURL.setParameter("mvcPath", "/admin/view.jsp");
+	PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+		renderResponse
+	).setMVCPath(
+		"/admin/view.jsp"
+	).build();
 
 	redirect = redirectURL.toString();
 }
@@ -33,11 +35,15 @@ KaleoProcess kaleoProcess = kaleoFormsViewRecordsDisplayContext.getKaleoProcess(
 
 boolean hasSubmitPermission = KaleoProcessPermission.contains(permissionChecker, kaleoProcess, ActionKeys.SUBMIT);
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/admin/view_kaleo_process.jsp");
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId()));
+PortletURL portletURL = PortletURLBuilder.createRenderURL(
+	renderResponse
+).setMVCPath(
+	"/admin/view_kaleo_process.jsp"
+).setRedirect(
+	redirect
+).setParameter(
+	"kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId())
+).build();
 %>
 
 <clay:navigation-bar
@@ -95,13 +101,19 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 
 				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
 
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("mvcPath", "/admin/view_record.jsp");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("ddlRecordId", String.valueOf(record.getRecordId()));
-				rowURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId()));
-				rowURL.setParameter("version", recordVersion.getVersion());
+				PortletURL rowURL = PortletURLBuilder.createRenderURL(
+					renderResponse
+				).setMVCPath(
+					"/admin/view_record.jsp"
+				).setRedirect(
+					currentURL
+				).setParameter(
+					"ddlRecordId", String.valueOf(record.getRecordId())
+				).setParameter(
+					"kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId())
+				).setParameter(
+					"version", recordVersion.getVersion()
+				).build();
 
 				// Columns
 

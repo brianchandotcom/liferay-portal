@@ -23,10 +23,13 @@ String reportName = BeanParamUtil.getString(definition, request, "reportName");
 
 portletDisplay.setShowBackIcon(true);
 
-PortletURL searchDefinitionURL = reportsEngineDisplayContext.getPortletURL();
-
-searchDefinitionURL.setParameter("mvcPath", "/admin/view.jsp");
-searchDefinitionURL.setParameter("tabs1", "definitions");
+PortletURL searchDefinitionURL = PortletURLBuilder.create(
+	reportsEngineDisplayContext.getPortletURL()
+).setMVCPath(
+	"/admin/view.jsp"
+).setParameter(
+	"tabs1", "definitions"
+).build();
 
 portletDisplay.setURLBack(searchDefinitionURL.toString());
 

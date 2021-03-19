@@ -126,13 +126,16 @@ definition {
 		CommerceLicense.viewCommerceMissing();
 	}
 
-	@ignore = "true"
 	@priority = "3"
-	test DeployCommereceLicenseBinaryFile {
+	test DeployCommerceLicenseBinaryFile {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-binary-license-developer.li";
+		property dxp.license.file = "dxp-binary-license-developer.li";
 
-		AssertConsoleTextNotPresent(value1 = "Processing portal-commerce-license.xml");
+		AssertConsoleTextNotPresent(value1 = "Processing ci-license.xml");
+		AssertConsoleTextNotPresent(value1 = "Processing ci-portal-commerce-license.xml");
+
+		Pause(locator1 = "200000");
 
 		CommerceLicense.executeSmoke();
 	}

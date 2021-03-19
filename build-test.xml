@@ -468,9 +468,12 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<var name="dxp.license.product.name" unset="true" />
 
 			<if>
-				<equals arg1="${dxp.license.file}" arg2="dxp-license-dummy.xml" />
+				<or>
+					<equals arg1="${dxp.license.file}" arg2="dxp-license-dummy.xml" />
+					<equals arg1="${dxp.license.file}" arg2="dxp-binary-license-developer.li" />
+				</or>
 				<then>
-					<property name="dxp.license.product.name" value="Digital Enterprise Production" />
+					<property name="dxp.license.product.name" value="Portal Development" />
 				</then>
 				<else>
 					<loadfile
@@ -5570,6 +5573,16 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				todir="${liferay.home}/deploy"
 			/>
 
+			<if>
+				<equals arg1="@{dxp.license.file}" arg2="dxp-binary-license-developer.li" />
+				<then>
+					<copy
+						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
+						todir="${liferay.home}/data/license"
+					/>
+				</then>
+			</if>
+
 			<var name="expiration.leeway" value="2" />
 
 			<if>
@@ -6033,17 +6046,27 @@ war.path=${app.server.portal.dir}/</echo>
 
 	<macrodef name="wait-for-license-activation">
 		<sequential>
+			<get-poshi-method-name />
+
 			<get-commerce-license-product-name />
-
-			<wait-for-app-server-log-message log.message="${commerce.license.product.name} license validation passed" />
-
-			<wait-for-app-server-log-message log.message="License registered for ${commerce.license.product.name}" />
 
 			<get-dxp-license-product-name />
 
+			<wait-for-app-server-log-message log.message="${commerce.license.product.name} license validation passed" />
+
 			<wait-for-app-server-log-message log.message="${dxp.license.product.name} license validation passed" />
 
-			<wait-for-app-server-log-message log.message="License registered for ${dxp.license.product.name}" />
+			<if>
+				<equals arg1="${poshi.method.name}" arg2="DeployCommerceLicenseBinaryFile" />
+				<then>
+					<echo>Using license binary, not waiting for license registration</echo>
+				</then>
+				<else>
+					<wait-for-app-server-log-message log.message="License registered for ${commerce.license.product.name}" />
+
+					<wait-for-app-server-log-message log.message="License registered for ${dxp.license.product.name}" />
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

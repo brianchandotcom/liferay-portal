@@ -45,7 +45,6 @@ dependencies {
 	compileInclude project(":apps:fragment:fragment-service")
 	compileInclude project(":apps:friendly-url:friendly-url-api")
 	compileInclude project(":apps:friendly-url:friendly-url-service")
-	compileInclude project(":apps:hello-world:hello-world-web")
 	compileInclude project(":apps:journal:journal-api")
 	compileInclude project(":apps:journal:journal-service")
 	compileInclude project(":apps:layout:layout-api")

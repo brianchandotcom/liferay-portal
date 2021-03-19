@@ -84,6 +84,87 @@ definition {
 		Page.assertNodePortPG(nodePort = "10080");
 	}
 
+	@priority = "4"
+	test LimitPreviouslyValidatedClusterNodesWithCommerce {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-virtual-cluster.xml";
+		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			nodePort = "8080");
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			nodePort = "9080");
+
+		Clustering.viewClusterStatusInConsole();
+
+		User.firstLoginPG();
+
+		CommerceLicense.viewCommerceAvailable();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceLicense.viewCommerceAvailable();
+
+		Clustering.shutdownSpecificServer(nodePort = "9080");
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			nodePort = "10080");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSpecificURL(url = "http://localhost:10080");
+
+		CommerceLicense.viewCommerceAvailable();
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceLicense.viewCommerceAvailable();
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "false",
+			nodePort = "9080");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceLicense.viewCommerceAvailable();
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "You have exceeded the maximum number of cluster nodes in cluster, overloaded nodes will be deactivated in 2 hours",
+			nodePort = "9080");
+
+		Pause(locator1 = "300000");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceLicense.viewCommerceAvailable();
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceLicense.viewCommerceAvailable();
+	}
+
 	@priority = "5"
 	test ViewNodeLimit {
 		property commerce.enabled = "false";

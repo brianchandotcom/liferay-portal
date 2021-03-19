@@ -81,9 +81,13 @@ public class Log4jConfigUtil {
 					}
 				}
 
+				xmlContent = document.asXML();
+
 				abstractConfiguration = new XmlConfiguration(
 					_centralizedConfiguration.getLoggerContext(),
-					_getConfigurationSource(document));
+					new ConfigurationSource(
+						new UnsyncByteArrayInputStream(
+							xmlContent.getBytes(StringPool.UTF8))));
 			}
 			else {
 				_removeAppender(
@@ -98,10 +102,15 @@ public class Log4jConfigUtil {
 						priorityElement.attributeValue("value"));
 				}
 
+				xmlContent = document.asXML();
+
 				abstractConfiguration =
 					new org.apache.log4j.xml.XmlConfiguration(
 						_centralizedConfiguration.getLoggerContext(),
-						_getConfigurationSource(document), 0);
+						new ConfigurationSource(
+							new UnsyncByteArrayInputStream(
+								xmlContent.getBytes(StringPool.UTF8))),
+						0);
 			}
 
 			_centralizedConfiguration.addConfiguration(abstractConfiguration);
@@ -175,17 +184,6 @@ public class Log4jConfigUtil {
 
 	public static void shutdownLog4J() {
 		LogManager.shutdown();
-	}
-
-	private static ConfigurationSource _getConfigurationSource(
-			Document document)
-		throws Exception {
-
-		String xmlContent = document.asXML();
-
-		return new ConfigurationSource(
-			new UnsyncByteArrayInputStream(
-				xmlContent.getBytes(StringPool.UTF8)));
 	}
 
 	private static void _removeAppender(

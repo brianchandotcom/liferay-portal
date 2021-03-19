@@ -391,67 +391,92 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 	var form = document.<portlet:namespace />fm;
 
-	Liferay.on('<portlet:namespace />publishDefinition', (event) => {
-		var titleElement = Liferay.Util.getFormElement(
-			form,
-			'title_' + defaultLanguageId
-		);
+	var handlePublishDefinition = Liferay.on(
+		'<portlet:namespace />publishDefinition',
+		(event) => {
+			var titleElement = Liferay.Util.getFormElement(
+				form,
+				'title_' + defaultLanguageId
+			);
 
-		if (!titleElement) {
-			Liferay.Util.setFormValues(form, {
-				titleElement: '',
+			if (!titleElement) {
+				Liferay.Util.setFormValues(form, {
+					titleElement: '',
+				});
+			}
+
+			Liferay.Util.postForm(form, {
+				data: {
+					content: contentEditor.get(STR_VALUE),
+					titleValue: untitledWorkflowTitle,
+				},
+				url: '<%= deployWorkflowDefinitionURL %>',
 			});
 		}
+	);
 
-		Liferay.Util.postForm(form, {
-			data: {
-				content: contentEditor.get(STR_VALUE),
-				titleValue: untitledWorkflowTitle,
-			},
-			url: '<%= deployWorkflowDefinitionURL %>',
-		});
-	});
+	var handleSaveDefinition = Liferay.on(
+		'<portlet:namespace />saveDefinition',
+		(event) => {
+			var titleElement = Liferay.Util.getFormElement(
+				form,
+				'title_' + defaultLanguageId
+			);
 
-	Liferay.on('<portlet:namespace />saveDefinition', (event) => {
-		var titleElement = Liferay.Util.getFormElement(
-			form,
-			'title_' + defaultLanguageId
-		);
+			if (!titleElement) {
+				Liferay.Util.setFormValues(form, {
+					titleElement: '',
+				});
+			}
 
-		if (!titleElement) {
-			Liferay.Util.setFormValues(form, {
-				titleElement: '',
+			Liferay.Util.postForm(form, {
+				data: {
+					content: contentEditor.get(STR_VALUE),
+					titleValue: untitledWorkflowTitle,
+				},
+				url: '<%= saveWorkflowDefinitionURL %>',
 			});
 		}
+	);
 
-		Liferay.Util.postForm(form, {
-			data: {
-				content: contentEditor.get(STR_VALUE),
-				titleValue: untitledWorkflowTitle,
-			},
-			url: '<%= saveWorkflowDefinitionURL %>',
-		});
-	});
+	var handleUndoDefinition = Liferay.on(
+		'<portlet:namespace />undoDefinition',
+		(event) => {
+			if (contentEditor) {
+				contentEditor.set(STR_VALUE, previousContent);
 
-	Liferay.on('<portlet:namespace />undoDefinition', (event) => {
-		if (contentEditor) {
-			contentEditor.set(STR_VALUE, previousContent);
-
-			Liferay.WorkflowWeb.showActionUndoneSuccessMessage();
+				Liferay.WorkflowWeb.showActionUndoneSuccessMessage();
+			}
 		}
-	});
+	);
 
 	var duplicateWorkflowTitle = '<liferay-ui:message key="duplicate-workflow" />';
 
-	Liferay.on('<portlet:namespace />duplicateDefinition', function (event) {
-		Liferay.WorkflowWeb.confirmBeforeDuplicateDialog(
-			this,
-			'<%= duplicateWorkflowDefinition %>',
-			duplicateWorkflowTitle,
-			'<%= randomNamespace %>',
-			'<portlet:namespace />'
-		);
-	});
+	var handleDuplicateDefinition = Liferay.on(
+		'<portlet:namespace />duplicateDefinition',
+		function (event) {
+			Liferay.WorkflowWeb.confirmBeforeDuplicateDialog(
+				this,
+				'<%= duplicateWorkflowDefinition %>',
+				duplicateWorkflowTitle,
+				'<%= randomNamespace %>',
+				'<portlet:namespace />'
+			);
+		}
+	);
+
+	var onDestroyPortlet = function (event) {
+		if (event.portletId === '<%= portletDisplay.getId() %>') {
+			Liferay.detach(handleDuplicateDefinition);
+			Liferay.detach(handlePublishDefinition);
+			Liferay.detach(handleSaveDefinition);
+			Liferay.detach(handleUndoDefinition);
+
+			Liferay.detach('destroyPortlet', onDestroyPortlet);
+		}
+	};
+
+	Liferay.on('destroyPortlet', onDestroyPortlet);
 
 	var title = document.getElementById('<portlet:namespace />title');
 

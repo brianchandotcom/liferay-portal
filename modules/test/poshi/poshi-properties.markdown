@@ -139,13 +139,9 @@ Sets the directory path where all Selenium executables are found.
 
 Sets the name of the IEDriver executable file to be found in `selenium.executable.dir.name`.
 
-### selenium.remote.driver.enabled
+### selenium.remote.driver.url
 
-Sets a boolean for whether the RemoteDriver is enabled.
-
-### selenium.remote.driver.hub
-
-Sets the Remote Driver hub's base URL.
+Sets the Remote Driver URL.
 
 ### tcat.admin.repository
 

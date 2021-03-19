@@ -105,8 +105,8 @@ public class PropsValues {
 	public static final boolean SELENIUM_REMOTE_DRIVER_ENABLED =
 		GetterUtil.getBoolean(PropsUtil.get("selenium.remote.driver.enabled"));
 
-	public static final String SELENIUM_REMOTE_DRIVER_HUB = PropsUtil.get(
-		"selenium.remote.driver.hub");
+	public static final String SELENIUM_REMOTE_DRIVER_URL = PropsUtil.get(
+		"selenium.remote.driver.url");
 
 	public static final String TCAT_ADMIN_REPOSITORY = PropsUtil.get(
 		"tcat.admin.repository");

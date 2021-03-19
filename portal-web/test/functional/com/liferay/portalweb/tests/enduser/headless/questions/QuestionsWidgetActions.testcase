@@ -1706,4 +1706,80 @@ definition {
 		Questions.answerQuestion(contentField = "This is my second answer");
 	}
 
+	@description = "Validate if the user can view the voting style from the questions list."
+	@priority = "4"
+	test ViewVotingStyleFromQuestionsList {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestionWithTheTestBody",
+			titleField = "Title AddQuestion");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteQuestion(
+			currentVotedCount = "0",
+			voteUp = "true");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		AssertElementPresent(
+			key_count = "1",
+			key_text = "top",
+			locator1 = "Questions#QUESTIONS_LIST_VOTED_COUNT");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteQuestion(
+			currentVotedCount = "1",
+			voteDown = "true");
+
+		Questions.voteQuestion(
+			currentVotedCount = "0",
+			voteDown = "true");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		AssertElementPresent(
+			key_count = "-1",
+			key_text = "bottom",
+			locator1 = "Questions#QUESTIONS_LIST_VOTED_COUNT");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteQuestion(
+			currentVotedCount = "-1",
+			voteUp = "true");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		AssertElementPresent(
+			key_count = "0",
+			key_text = "top",
+			locator1 = "Questions#QUESTIONS_LIST_VOTED_COUNT");
+	}
+
 }

@@ -171,13 +171,13 @@ public class Log4jConfigUtil {
 
 		LoggerConfig loggerConfig = _centralizedConfiguration.getLogger(name);
 
-		if (loggerConfig != null) {
-			loggerConfig.setLevel(level);
-		}
-		else {
+		if (loggerConfig == null) {
 			loggerConfig = new LoggerConfig(name, level, true);
 
 			_centralizedConfiguration.addLogger(name, loggerConfig);
+		}
+		else {
+			loggerConfig.setLevel(level);
 		}
 
 		LoggerContext loggerContext =

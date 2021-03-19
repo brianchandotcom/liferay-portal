@@ -37,10 +37,10 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.WriterAppender;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.appender.WriterAppender;
+import org.apache.logging.log4j.core.layout.PatternLayout;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -168,14 +168,19 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		Logger rootLogger = Logger.getRootLogger();
+		PatternLayout.Builder build = PatternLayout.newBuilder();
 
-		_writerAppender = new WriterAppender(
-			new SimpleLayout(), new ThreadLocalWriter());
+		build.withPattern("%level - %m%n");
 
-		_writerAppender.setThreshold(Level.ALL);
+		PatternLayout patternLayout = build.build();
 
-		_writerAppender.activateOptions();
+		_writerAppender = WriterAppender.createAppender(
+			patternLayout, null, new ThreadLocalWriter(), "WriterAppender",
+			false, false);
+
+		_writerAppender.start();
+
+		Logger rootLogger = (Logger)LogManager.getRootLogger();
 
 		rootLogger.addAppender(_writerAppender);
 
@@ -225,7 +230,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 		_serviceRegistrations.clear();
 
-		Logger rootLogger = Logger.getRootLogger();
+		Logger rootLogger = (Logger)LogManager.getRootLogger();
 
 		if (rootLogger != null) {
 			rootLogger.removeAppender(_writerAppender);

@@ -203,8 +203,9 @@
 /portal/jws-api.jar
 /portal/kxml2.jar
 /portal/liferay-icu4j.jar
-/portal/log4j.jar
-/portal/log4j-extras.jar
+/portal/log4j-1.2-api.jar
+/portal/log4j-api.jar
+/portal/log4j-core.jar
 /portal/mchange-commons-java.jar
 /portal/metadata-extractor.jar
 /portal/mime4j-core.jar

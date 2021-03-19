@@ -226,8 +226,7 @@ public class Log4jConfigUtilTest {
 			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
-				"java.lang.Exception: <Configuration> strict attribute " +
-					"requires true",
+				"<Configuration> strict attribute requires true",
 				logEntry.getMessage());
 		}
 	}

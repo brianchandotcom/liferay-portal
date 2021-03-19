@@ -63,8 +63,10 @@ public class Log4jConfigUtil {
 				if (!GetterUtil.getBoolean(
 						rootElement.attributeValue("strict"))) {
 
-					throw new Exception(
+					_log.error(
 						"<Configuration> strict attribute requires true");
+
+					return Collections.emptyMap();
 				}
 
 				for (Element element : rootElement.elements()) {

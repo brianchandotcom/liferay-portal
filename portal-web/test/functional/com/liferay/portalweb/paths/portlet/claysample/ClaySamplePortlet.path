@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>ClaySamplePortlet</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ClaySamplePortlet</td></tr>
+</thead>
+<tbody>
+<!--FORM_ELEMENTS-->
+<tr>
+	<td>CHECKBOX</td>
+	<td>//td[normalize-space(text())='${key_definition}']/..//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_CHECKED</td>
+	<td>portal/screenshots/claysample/checked_checkbox.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_INDETERMINATE_PNG</td>
+	<td>portal/screenshots/claysample/indeterminate_checkbox.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_UNCHECKED</td>
+	<td>portal/screenshots/claysample/unchecked_checkbox.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_WITH_CUSTOM_CLASS_AND_ID</td>
+	<td>//input[@type='checkbox' and @id='customId' and contains(@class,'custom-css-class')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTOR</td>
+	<td>//label[normalize-space(text())='${key_label}']/following-sibling::select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTOR_OPTION</td>
+	<td>//label[normalize-space(text())='${key_label}']/following-sibling::select/option[normalize-space(text())='${key_option}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTOR_REGULAR_PNG</td>
+	<td>portal/screenshots/claysample/regular_select_element.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTOR_MULTIPLE_PNG</td>
+	<td>portal/screenshots/claysample/multiple_select_element.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTISELECT_ITEM</td>
+	<td>//label[normalize-space(text())='${key_label}']/following-sibling::div//span[contains(@class,'label-item-expand')][normalize-space(text())='${key_item}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTISELECT_ITEM_CLOSE</td>
+	<td>//label[normalize-space(text())='${key_label}']/following-sibling::div//span[normalize-space(text())='${key_item}']/..//button[@class='close']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTISELECT_INPUT</td>
+	<td>//label[normalize-space(text())='${key_label}']/following-sibling::div//input[not(@type='hidden')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTISELECT_DROPDOWN_ITEM</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//button[.='${key_item}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTISELECT_DROPDOWN_ITEM_STICKER</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//button[.='${key_item}']/..//span[contains(@class,'sticker-overlay')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

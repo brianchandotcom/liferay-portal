@@ -83,7 +83,7 @@ export const Column = ({
 
 	const handleResize = useCallback((resizing) => setResizing(resizing), []);
 
-	if (editable && column.fields.length === 0) {
+	if (column.fields.length === 0) {
 		return (
 			<Placeholder
 				columnIndex={columnIndex}

@@ -9277,16 +9277,18 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		private Predicate _nullSafeDefaultPredicate(
-			Predicate left, Operand operand, Predicate right) {
+			Predicate leftPredicate, Operand operand,
+			Predicate rightPredicate) {
 
-			if (right == null) {
-				return left;
+			if (rightPredicate == null) {
+				return leftPredicate;
 			}
-			else if (left == null) {
-				return right;
+			else if (leftPredicate == null) {
+				return rightPredicate;
 			}
 			else {
-				return new DefaultPredicate(left, operand, right);
+				return new DefaultPredicate(
+					leftPredicate, operand, rightPredicate);
 			}
 		}
 

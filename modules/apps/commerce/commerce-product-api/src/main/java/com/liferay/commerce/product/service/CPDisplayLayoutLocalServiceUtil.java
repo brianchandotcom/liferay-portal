@@ -46,19 +46,6 @@ public class CPDisplayLayoutLocalServiceUtil {
 	 */
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static CPDisplayLayout addCPDisplayLayout(
-			Class<?> clazz, long classPK, String layoutUuid,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addCPDisplayLayout(
-			clazz, classPK, layoutUuid, serviceContext);
-	}
-
-	/**
 	 * Adds the cp display layout to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -144,15 +131,8 @@ public class CPDisplayLayoutLocalServiceUtil {
 		return getService().deleteCPDisplayLayout(CPDisplayLayoutId);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void deleteCPDisplayLayoutByGroupIdAndLayoutUuid(
-		long groupId, String layoutUuid) {
-
-		getService().deleteCPDisplayLayoutByGroupIdAndLayoutUuid(
-			groupId, layoutUuid);
+	public static void deleteCPDisplayLayouts(Class<?> clazz, long classPK) {
+		getService().deleteCPDisplayLayouts(clazz, classPK);
 	}
 
 	/**
@@ -244,17 +224,6 @@ public class CPDisplayLayoutLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #fetchCPDisplayLayout(long, Class, long)}
-	 */
-	@Deprecated
-	public static CPDisplayLayout fetchCPDisplayLayout(
-		Class<?> clazz, long classPK) {
-
-		return getService().fetchCPDisplayLayout(clazz, classPK);
 	}
 
 	public static CPDisplayLayout fetchCPDisplayLayout(long CPDisplayLayoutId) {

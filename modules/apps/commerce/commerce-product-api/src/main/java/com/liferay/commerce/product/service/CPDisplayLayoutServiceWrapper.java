@@ -32,21 +32,6 @@ public class CPDisplayLayoutServiceWrapper
 		_cpDisplayLayoutService = cpDisplayLayoutService;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout
-			addCPDisplayLayout(
-				Class<?> clazz, long classPK, String layoutUuid,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDisplayLayoutService.addCPDisplayLayout(
-			clazz, classPK, layoutUuid, serviceContext);
-	}
-
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout
 			addCPDisplayLayout(
@@ -56,17 +41,6 @@ public class CPDisplayLayoutServiceWrapper
 
 		return _cpDisplayLayoutService.addCPDisplayLayout(
 			userId, groupId, clazz, classPK, layoutUuid);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void deleteCPDisplayLayout(Class<?> clazz, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_cpDisplayLayoutService.deleteCPDisplayLayout(clazz, classPK);
 	}
 
 	@Override

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -66,15 +65,6 @@ public interface CPDisplayLayoutLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp display layout local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPDisplayLayoutLocalServiceUtil} if injection and service tracking are not available.
 	 */
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public CPDisplayLayout addCPDisplayLayout(
-			Class<?> clazz, long classPK, String layoutUuid,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	 * Adds the cp display layout to the database. Also notifies the appropriate model listeners.
@@ -142,12 +132,7 @@ public interface CPDisplayLayoutLocalService
 	public CPDisplayLayout deleteCPDisplayLayout(long CPDisplayLayoutId)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void deleteCPDisplayLayoutByGroupIdAndLayoutUuid(
-		long groupId, String layoutUuid);
+	public void deleteCPDisplayLayouts(Class<?> clazz, long classPK);
 
 	/**
 	 * @throws PortalException
@@ -224,14 +209,6 @@ public interface CPDisplayLayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #fetchCPDisplayLayout(long, Class, long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout fetchCPDisplayLayout(Class<?> clazz, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDisplayLayout fetchCPDisplayLayout(long CPDisplayLayoutId);

@@ -561,17 +561,6 @@ public class CPDisplayLayoutPersistenceTest {
 				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(cpDisplayLayout.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				cpDisplayLayout, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classNameId"));
-		Assert.assertEquals(
-			Long.valueOf(cpDisplayLayout.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				cpDisplayLayout, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classPK"));
-
-		Assert.assertEquals(
 			Long.valueOf(cpDisplayLayout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				cpDisplayLayout, "getColumnOriginalValue",

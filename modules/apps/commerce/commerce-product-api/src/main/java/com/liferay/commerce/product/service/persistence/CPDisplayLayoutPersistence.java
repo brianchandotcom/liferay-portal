@@ -843,45 +843,150 @@ public interface CPDisplayLayoutPersistence
 	public int countByG_L(long groupId, String layoutUuid);
 
 	/**
-	 * Returns the cp display layout where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchCPDisplayLayoutException</code> if it could not be found.
+	 * Returns all the cp display layouts where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @return the matching cp display layout
+	 * @return the matching cp display layouts
+	 */
+	public java.util.List<CPDisplayLayout> findByC_C(
+		long classNameId, long classPK);
+
+	/**
+	 * Returns a range of all the cp display layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDisplayLayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp display layouts
+	 * @param end the upper bound of the range of cp display layouts (not inclusive)
+	 * @return the range of matching cp display layouts
+	 */
+	public java.util.List<CPDisplayLayout> findByC_C(
+		long classNameId, long classPK, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cp display layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDisplayLayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp display layouts
+	 * @param end the upper bound of the range of cp display layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp display layouts
+	 */
+	public java.util.List<CPDisplayLayout> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cp display layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDisplayLayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp display layouts
+	 * @param end the upper bound of the range of cp display layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp display layouts
+	 */
+	public java.util.List<CPDisplayLayout> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp display layout
 	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
 	 */
-	public CPDisplayLayout findByC_C(long classNameId, long classPK)
+	public CPDisplayLayout findByC_C_First(
+			long classNameId, long classPK,
+			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
+				orderByComparator)
 		throws NoSuchCPDisplayLayoutException;
 
 	/**
-	 * Returns the cp display layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
 	 */
-	public CPDisplayLayout fetchByC_C(long classNameId, long classPK);
+	public CPDisplayLayout fetchByC_C_First(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
+			orderByComparator);
 
 	/**
-	 * Returns the cp display layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp display layout
+	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
 	 */
-	public CPDisplayLayout fetchByC_C(
-		long classNameId, long classPK, boolean useFinderCache);
-
-	/**
-	 * Removes the cp display layout where classNameId = &#63; and classPK = &#63; from the database.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the cp display layout that was removed
-	 */
-	public CPDisplayLayout removeByC_C(long classNameId, long classPK)
+	public CPDisplayLayout findByC_C_Last(
+			long classNameId, long classPK,
+			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
+				orderByComparator)
 		throws NoSuchCPDisplayLayoutException;
+
+	/**
+	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
+	 */
+	public CPDisplayLayout fetchByC_C_Last(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
+			orderByComparator);
+
+	/**
+	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param CPDisplayLayoutId the primary key of the current cp display layout
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp display layout
+	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
+	 */
+	public CPDisplayLayout[] findByC_C_PrevAndNext(
+			long CPDisplayLayoutId, long classNameId, long classPK,
+			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
+				orderByComparator)
+		throws NoSuchCPDisplayLayoutException;
+
+	/**
+	 * Removes all the cp display layouts where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 */
+	public void removeByC_C(long classNameId, long classPK);
 
 	/**
 	 * Returns the number of cp display layouts where classNameId = &#63; and classPK = &#63;.

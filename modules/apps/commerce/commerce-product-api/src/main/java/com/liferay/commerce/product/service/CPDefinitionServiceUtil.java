@@ -196,6 +196,10 @@ public class CPDefinitionServiceUtil {
 		return getService().getCPDefinitionsCount(groupId, status);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String getLayoutUuid(long cpDefinitionId)
 		throws PortalException {
 
@@ -290,6 +294,10 @@ public class CPDefinitionServiceUtil {
 			cpDefinitionId, enable);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void updateCPDisplayLayout(
 			long cpDefinitionId, String layoutUuid,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

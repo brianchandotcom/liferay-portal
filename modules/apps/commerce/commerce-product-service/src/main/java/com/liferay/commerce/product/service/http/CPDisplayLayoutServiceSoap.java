@@ -63,31 +63,6 @@ import java.rmi.RemoteException;
 @Deprecated
 public class CPDisplayLayoutServiceSoap {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static com.liferay.commerce.product.model.CPDisplayLayoutSoap
-			addCPDisplayLayout(
-				Class<?> clazz, long classPK, String layoutUuid,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.product.model.CPDisplayLayout returnValue =
-				CPDisplayLayoutServiceUtil.addCPDisplayLayout(
-					clazz, classPK, layoutUuid, serviceContext);
-
-			return com.liferay.commerce.product.model.CPDisplayLayoutSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CPDisplayLayoutSoap
 			addCPDisplayLayout(
 				long userId, long groupId, Class<?> clazz, long classPK,
@@ -101,23 +76,6 @@ public class CPDisplayLayoutServiceSoap {
 
 			return com.liferay.commerce.product.model.CPDisplayLayoutSoap.
 				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void deleteCPDisplayLayout(Class<?> clazz, long classPK)
-		throws RemoteException {
-
-		try {
-			CPDisplayLayoutServiceUtil.deleteCPDisplayLayout(clazz, classPK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

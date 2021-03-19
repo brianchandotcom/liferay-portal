@@ -1093,58 +1093,182 @@ public class CPDisplayLayoutUtil {
 	}
 
 	/**
-	 * Returns the cp display layout where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchCPDisplayLayoutException</code> if it could not be found.
+	 * Returns all the cp display layouts where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @return the matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
+	 * @return the matching cp display layouts
 	 */
-	public static CPDisplayLayout findByC_C(long classNameId, long classPK)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
+	public static List<CPDisplayLayout> findByC_C(
+		long classNameId, long classPK) {
 
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
 	/**
-	 * Returns the cp display layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the cp display layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDisplayLayoutModelImpl</code>.
+	 * </p>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
+	 * @param start the lower bound of the range of cp display layouts
+	 * @param end the upper bound of the range of cp display layouts (not inclusive)
+	 * @return the range of matching cp display layouts
 	 */
-	public static CPDisplayLayout fetchByC_C(long classNameId, long classPK) {
-		return getPersistence().fetchByC_C(classNameId, classPK);
+	public static List<CPDisplayLayout> findByC_C(
+		long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByC_C(classNameId, classPK, start, end);
 	}
 
 	/**
-	 * Returns the cp display layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the cp display layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDisplayLayoutModelImpl</code>.
+	 * </p>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp display layouts
+	 * @param end the upper bound of the range of cp display layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp display layouts
+	 */
+	public static List<CPDisplayLayout> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<CPDisplayLayout> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp display layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDisplayLayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp display layouts
+	 * @param end the upper bound of the range of cp display layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
+	 * @return the ordered range of matching cp display layouts
 	 */
-	public static CPDisplayLayout fetchByC_C(
-		long classNameId, long classPK, boolean useFinderCache) {
+	public static List<CPDisplayLayout> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<CPDisplayLayout> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().fetchByC_C(
-			classNameId, classPK, useFinderCache);
+		return getPersistence().findByC_C(
+			classNameId, classPK, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
-	 * Removes the cp display layout where classNameId = &#63; and classPK = &#63; from the database.
+	 * Returns the first cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @return the cp display layout that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp display layout
+	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
 	 */
-	public static CPDisplayLayout removeByC_C(long classNameId, long classPK)
+	public static CPDisplayLayout findByC_C_First(
+			long classNameId, long classPK,
+			OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPDisplayLayoutException {
 
-		return getPersistence().removeByC_C(classNameId, classPK);
+		return getPersistence().findByC_C_First(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the first cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
+	 */
+	public static CPDisplayLayout fetchByC_C_First(
+		long classNameId, long classPK,
+		OrderByComparator<CPDisplayLayout> orderByComparator) {
+
+		return getPersistence().fetchByC_C_First(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp display layout
+	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
+	 */
+	public static CPDisplayLayout findByC_C_Last(
+			long classNameId, long classPK,
+			OrderByComparator<CPDisplayLayout> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDisplayLayoutException {
+
+		return getPersistence().findByC_C_Last(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
+	 */
+	public static CPDisplayLayout fetchByC_C_Last(
+		long classNameId, long classPK,
+		OrderByComparator<CPDisplayLayout> orderByComparator) {
+
+		return getPersistence().fetchByC_C_Last(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param CPDisplayLayoutId the primary key of the current cp display layout
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp display layout
+	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
+	 */
+	public static CPDisplayLayout[] findByC_C_PrevAndNext(
+			long CPDisplayLayoutId, long classNameId, long classPK,
+			OrderByComparator<CPDisplayLayout> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDisplayLayoutException {
+
+		return getPersistence().findByC_C_PrevAndNext(
+			CPDisplayLayoutId, classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Removes all the cp display layouts where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 */
+	public static void removeByC_C(long classNameId, long classPK) {
+		getPersistence().removeByC_C(classNameId, classPK);
 	}
 
 	/**

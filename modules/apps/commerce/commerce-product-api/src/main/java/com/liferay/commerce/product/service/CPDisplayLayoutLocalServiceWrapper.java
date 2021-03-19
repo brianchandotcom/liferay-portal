@@ -34,21 +34,6 @@ public class CPDisplayLayoutLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout
-			addCPDisplayLayout(
-				Class<?> clazz, long classPK, String layoutUuid,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDisplayLayoutLocalService.addCPDisplayLayout(
-			clazz, classPK, layoutUuid, serviceContext);
-	}
-
-	/**
 	 * Adds the cp display layout to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -151,16 +136,9 @@ public class CPDisplayLayoutLocalServiceWrapper
 			CPDisplayLayoutId);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
 	@Override
-	public void deleteCPDisplayLayoutByGroupIdAndLayoutUuid(
-		long groupId, String layoutUuid) {
-
-		_cpDisplayLayoutLocalService.
-			deleteCPDisplayLayoutByGroupIdAndLayoutUuid(groupId, layoutUuid);
+	public void deleteCPDisplayLayouts(Class<?> clazz, long classPK) {
+		_cpDisplayLayoutLocalService.deleteCPDisplayLayouts(clazz, classPK);
 	}
 
 	/**
@@ -269,19 +247,6 @@ public class CPDisplayLayoutLocalServiceWrapper
 
 		return _cpDisplayLayoutLocalService.dynamicQueryCount(
 			dynamicQuery, projection);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #fetchCPDisplayLayout(long, Class, long)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout
-		fetchCPDisplayLayout(Class<?> clazz, long classPK) {
-
-		return _cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-			clazz, classPK);
 	}
 
 	@Override

@@ -680,16 +680,6 @@ public class CPDefinitionLocalServiceWrapper
 		return _cpDefinitionLocalService.getIndexableActionableDynamicQuery();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getLayoutUuid(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public String getLayoutUuid(long cpDefinitionId) {
-		return _cpDefinitionLocalService.getLayoutUuid(cpDefinitionId);
-	}
-
 	@Override
 	public String getLayoutUuid(long groupId, long cpDefinitionId) {
 		return _cpDefinitionLocalService.getLayoutUuid(groupId, cpDefinitionId);

@@ -53,50 +53,6 @@ public class CPDisplayLayoutServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDisplayLayout
 			addCPDisplayLayout(
-				HttpPrincipal httpPrincipal, Class<?> clazz, long classPK,
-				String layoutUuid,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CPDisplayLayoutServiceUtil.class, "addCPDisplayLayout",
-				_addCPDisplayLayoutParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, clazz, classPK, layoutUuid, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.product.model.CPDisplayLayout)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDisplayLayout
-			addCPDisplayLayout(
 				HttpPrincipal httpPrincipal, long userId, long groupId,
 				Class<?> clazz, long classPK, String layoutUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -104,7 +60,7 @@ public class CPDisplayLayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPDisplayLayoutServiceUtil.class, "addCPDisplayLayout",
-				_addCPDisplayLayoutParameterTypes1);
+				_addCPDisplayLayoutParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId, clazz, classPK, layoutUuid);
@@ -139,49 +95,13 @@ public class CPDisplayLayoutServiceHttp {
 	}
 
 	public static void deleteCPDisplayLayout(
-			HttpPrincipal httpPrincipal, Class<?> clazz, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CPDisplayLayoutServiceUtil.class, "deleteCPDisplayLayout",
-				_deleteCPDisplayLayoutParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, clazz, classPK);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static void deleteCPDisplayLayout(
 			HttpPrincipal httpPrincipal, long cpDisplayLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPDisplayLayoutServiceUtil.class, "deleteCPDisplayLayout",
-				_deleteCPDisplayLayoutParameterTypes3);
+				_deleteCPDisplayLayoutParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDisplayLayoutId);
@@ -218,7 +138,7 @@ public class CPDisplayLayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPDisplayLayoutServiceUtil.class, "fetchCPDisplayLayout",
-				_fetchCPDisplayLayoutParameterTypes4);
+				_fetchCPDisplayLayoutParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDisplayLayoutId);
@@ -263,7 +183,7 @@ public class CPDisplayLayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPDisplayLayoutServiceUtil.class, "searchCPDisplayLayout",
-				_searchCPDisplayLayoutParameterTypes5);
+				_searchCPDisplayLayoutParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, className, keywords, start, end,
@@ -307,7 +227,7 @@ public class CPDisplayLayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPDisplayLayoutServiceUtil.class, "updateCPDisplayLayout",
-				_updateCPDisplayLayoutParameterTypes6);
+				_updateCPDisplayLayoutParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDisplayLayoutId, layoutUuid);
@@ -346,25 +266,18 @@ public class CPDisplayLayoutServiceHttp {
 
 	private static final Class<?>[] _addCPDisplayLayoutParameterTypes0 =
 		new Class[] {
-			Class.class, long.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _addCPDisplayLayoutParameterTypes1 =
-		new Class[] {
 			long.class, long.class, Class.class, long.class, String.class
 		};
-	private static final Class<?>[] _deleteCPDisplayLayoutParameterTypes2 =
-		new Class[] {Class.class, long.class};
-	private static final Class<?>[] _deleteCPDisplayLayoutParameterTypes3 =
+	private static final Class<?>[] _deleteCPDisplayLayoutParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _fetchCPDisplayLayoutParameterTypes4 =
+	private static final Class<?>[] _fetchCPDisplayLayoutParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _searchCPDisplayLayoutParameterTypes5 =
+	private static final Class<?>[] _searchCPDisplayLayoutParameterTypes3 =
 		new Class[] {
 			long.class, long.class, String.class, String.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateCPDisplayLayoutParameterTypes6 =
+	private static final Class<?>[] _updateCPDisplayLayoutParameterTypes4 =
 		new Class[] {long.class, String.class};
 
 }

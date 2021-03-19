@@ -203,6 +203,10 @@ public class CPDefinitionServiceWrapper
 		return _cpDefinitionService.getCPDefinitionsCount(groupId, status);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getLayoutUuid(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -309,6 +313,10 @@ public class CPDefinitionServiceWrapper
 			cpDefinitionId, enable);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void updateCPDisplayLayout(
 			long cpDefinitionId, String layoutUuid,

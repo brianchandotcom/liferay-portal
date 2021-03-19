@@ -155,6 +155,10 @@ public interface CPDefinitionService extends BaseService {
 	public int getCPDefinitionsCount(long groupId, int status)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getLayoutUuid(long cpDefinitionId) throws PortalException;
 
@@ -208,6 +212,10 @@ public interface CPDefinitionService extends BaseService {
 			long cpDefinitionId, boolean enable)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void updateCPDisplayLayout(
 			long cpDefinitionId, String layoutUuid,
 			ServiceContext serviceContext)

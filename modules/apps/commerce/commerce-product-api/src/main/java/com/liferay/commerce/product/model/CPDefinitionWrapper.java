@@ -760,11 +760,6 @@ public class CPDefinitionWrapper
 		return model.getLastPublishDate();
 	}
 
-	@Override
-	public String getLayoutUuid() {
-		return model.getLayoutUuid();
-	}
-
 	/**
 	 * Returns the max subscription cycles of this cp definition.
 	 *
@@ -1635,11 +1630,6 @@ public class CPDefinitionWrapper
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
-	}
-
-	@Override
-	public void setLayoutUuid(String layoutUuid) {
-		model.setLayoutUuid(layoutUuid);
 	}
 
 	/**

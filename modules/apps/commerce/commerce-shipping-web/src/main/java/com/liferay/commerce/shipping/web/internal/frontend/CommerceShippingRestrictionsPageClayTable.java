@@ -27,6 +27,8 @@ import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.selectable.BaseSelectableTableClayDataSetDisplayView;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
@@ -101,9 +103,15 @@ public class CommerceShippingRestrictionsPageClayTable
 			_commerceShippingMethodService.getCommerceShippingMethods(
 				commerceChannel.getGroupId());
 
+		String orderByFieldName = BeanPropertiesUtil.getString(
+			sort, "fieldName", StringPool.BLANK);
+
 		String orderByType = "asc";
 
-		if (sort.isReverse()) {
+		boolean reverse = BeanPropertiesUtil.getBooleanSilent(
+			sort, "reverse", false);
+
+		if (reverse) {
 			orderByType = "desc";
 		}
 
@@ -113,7 +121,7 @@ public class CommerceShippingRestrictionsPageClayTable
 				filter.getKeywords(), pagination.getStartPosition(),
 				pagination.getEndPosition(),
 				CommerceUtil.getCountryOrderByComparator(
-					sort.getFieldName(), orderByType));
+					orderByFieldName, orderByType));
 
 		for (Country country : baseModelSearchResult.getBaseModels()) {
 			shippingRestrictions.add(

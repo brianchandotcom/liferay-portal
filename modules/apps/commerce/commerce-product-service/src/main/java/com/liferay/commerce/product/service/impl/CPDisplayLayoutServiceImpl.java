@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
@@ -36,21 +35,6 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
  * @author Alessio Antonio Rendina
  */
 public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDisplayLayout addCPDisplayLayout(
-			Class<?> clazz, long classPK, String layoutUuid,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpDisplayLayoutService.addCPDisplayLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), clazz,
-			classPK, layoutUuid);
-	}
 
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
@@ -65,32 +49,6 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 		return cpDisplayLayoutLocalService.addCPDisplayLayout(
 			userId, groupId, clazz, classPK, layoutUuid);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void deleteCPDisplayLayout(Class<?> clazz, long classPK)
-		throws PortalException {
-
-		CPDisplayLayout cpDisplayLayout =
-			cpDisplayLayoutLocalService.fetchCPDisplayLayout(clazz, classPK);
-
-		if (cpDisplayLayout == null) {
-			return;
-		}
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), cpDisplayLayout.getGroupId(),
-			ActionKeys.ADD_LAYOUT);
-
-		_checkCPDisplayLayout(
-			cpDisplayLayout.getClassName(), cpDisplayLayout.getClassPK(),
-			ActionKeys.VIEW);
-
-		cpDisplayLayoutLocalService.deleteCPDisplayLayout(cpDisplayLayout);
 	}
 
 	@Override

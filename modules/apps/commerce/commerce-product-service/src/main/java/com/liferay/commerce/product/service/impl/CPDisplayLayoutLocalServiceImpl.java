@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -52,21 +51,6 @@ import java.util.Map;
  */
 public class CPDisplayLayoutLocalServiceImpl
 	extends CPDisplayLayoutLocalServiceBaseImpl {
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDisplayLayout addCPDisplayLayout(
-			Class<?> clazz, long classPK, String layoutUuid,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpDisplayLayoutLocalService.addCPDisplayLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), clazz,
-			classPK, layoutUuid);
-	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
@@ -143,30 +127,12 @@ public class CPDisplayLayoutLocalServiceImpl
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
 	@Override
-	public void deleteCPDisplayLayoutByGroupIdAndLayoutUuid(
-		long groupId, String layoutUuid) {
-
-		cpDisplayLayoutPersistence.removeByG_L(groupId, layoutUuid);
-	}
 	public void deleteCPDisplayLayouts(Class<?> clazz, long classPK) {
 		List<CPDisplayLayout> cpDisplayLayouts =
 			cpDisplayLayoutPersistence.findByC_C(
 				classNameLocalService.getClassNameId(clazz), classPK);
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * #fetchCPDisplayLayout(long, Class, long)}
-	 */
-	@Deprecated
-	@Override
-	public CPDisplayLayout fetchCPDisplayLayout(Class<?> clazz, long classPK) {
-		return cpDisplayLayoutPersistence.fetchByC_C(
-			classNameLocalService.getClassNameId(clazz), classPK);
 		for (CPDisplayLayout cpDisplayLayout : cpDisplayLayouts) {
 			cpDisplayLayoutLocalService.deleteCPDisplayLayout(cpDisplayLayout);
 		}

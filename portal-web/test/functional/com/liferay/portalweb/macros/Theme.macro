@@ -128,6 +128,10 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Restore");
 
+		AssertTextPresent(
+			locator1 = "HelloWorld#PORTLET_CONTENT",
+			value1 = "Welcome to Liferay");
+
 		// Refresh step is a workaround for LPS-91762
 
 		Refresh();

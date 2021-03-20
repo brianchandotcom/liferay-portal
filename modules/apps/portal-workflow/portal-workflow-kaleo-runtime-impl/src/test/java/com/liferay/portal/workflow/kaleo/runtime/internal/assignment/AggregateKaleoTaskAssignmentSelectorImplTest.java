@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateTaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateKaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +34,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.powermock.api.support.membermodification.MemberMatcher;
@@ -45,26 +43,23 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Rafael Praxedes
  */
 @RunWith(PowerMockRunner.class)
-public class AggregateTaskAssignmentSelectorImplTest {
+public class AggregateKaleoTaskAssignmentSelectorImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_aggregateTaskAssignmentSelector =
-			new AggregateTaskAssignmentSelectorImpl();
-
-		_setUpTaskAssignmentSelectorRegistry();
+		_setUpAggregateKaleoTaskAssignmentSelectorImpl();
 	}
 
 	@Test
-	public void testCalculateTaskAssignments() throws Exception {
+	public void testGetKaleoTaskAssignments() throws Exception {
 		ArrayList<String> assigneeClassNames = new ArrayList<>(
-			_taskAssignmentSelectors.keySet());
+			_kaleoTaskAssignmentSelectors.keySet());
 
 		KaleoTaskAssignment kaleoTaskAssignment1 = _createKaleoTaskAssignment(
 			assigneeClassNames.get(0), RandomTestUtil.randomLong());
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments1 =
-			_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+			_aggregateKaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 				Arrays.asList(kaleoTaskAssignment1),
 				Mockito.mock(ExecutionContext.class));
 
@@ -75,7 +70,7 @@ public class AggregateTaskAssignmentSelectorImplTest {
 			assigneeClassNames.get(1), RandomTestUtil.randomLong());
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments2 =
-			_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+			_aggregateKaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 				Arrays.asList(kaleoTaskAssignment2),
 				Mockito.mock(ExecutionContext.class));
 
@@ -83,7 +78,7 @@ public class AggregateTaskAssignmentSelectorImplTest {
 			kaleoTaskAssignments2.toString(), 2, kaleoTaskAssignments2.size());
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments3 =
-			_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+			_aggregateKaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 				Arrays.asList(kaleoTaskAssignment1, kaleoTaskAssignment2),
 				Mockito.mock(ExecutionContext.class));
 
@@ -145,22 +140,21 @@ public class AggregateTaskAssignmentSelectorImplTest {
 		return kaleoTaskAssignment;
 	}
 
-	private void _setUpTaskAssignmentSelectorRegistry() throws Exception {
-		TaskAssignmentSelectorRegistry taskAssignmentSelectorRegistry =
-			Mockito.mock(TaskAssignmentSelectorRegistry.class);
+	private void _setUpAggregateKaleoTaskAssignmentSelectorImpl()
+		throws Exception {
+
+		KaleoTaskAssignmentSelectorTracker kaleoTaskAssignmentSelectorTracker =
+			new KaleoTaskAssignmentSelectorTracker();
 
 		for (Map.Entry<String, List<KaleoTaskAssignment>> entry :
-				_taskAssignmentSelectors.entrySet()) {
+				_kaleoTaskAssignmentSelectors.entrySet()) {
 
-			Mockito.when(
-				taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
-					Matchers.eq(entry.getKey()))
-			).thenReturn(
-				new TaskAssignmentSelector() {
+			kaleoTaskAssignmentSelectorTracker.addKaleoTaskAssignmentSelector(
+				new KaleoTaskAssignmentSelector() {
 
 					@Override
 					public Collection<KaleoTaskAssignment>
-							calculateTaskAssignments(
+							getKaleoTaskAssignments(
 								KaleoTaskAssignment kaleoTaskAssignment,
 								ExecutionContext executionContext)
 						throws PortalException {
@@ -168,21 +162,28 @@ public class AggregateTaskAssignmentSelectorImplTest {
 						return entry.getValue();
 					}
 
-				}
-			);
+				},
+				HashMapBuilder.<String, Object>put(
+					"assignee.class.name", entry.getKey()
+				).build());
 		}
 
+		_aggregateKaleoTaskAssignmentSelector =
+			new AggregateKaleoTaskAssignmentSelectorImpl();
+
 		MemberMatcher.field(
-			AggregateTaskAssignmentSelectorImpl.class,
-			"_taskAssignmentSelectorRegistry"
+			AggregateKaleoTaskAssignmentSelectorImpl.class,
+			"_kaleoTaskAssignmentSelectorRegistry"
 		).set(
-			_aggregateTaskAssignmentSelector, taskAssignmentSelectorRegistry
+			_aggregateKaleoTaskAssignmentSelector,
+			kaleoTaskAssignmentSelectorTracker
 		);
 	}
 
-	private AggregateTaskAssignmentSelector _aggregateTaskAssignmentSelector;
+	private AggregateKaleoTaskAssignmentSelector
+		_aggregateKaleoTaskAssignmentSelector;
 	private final Map<String, List<KaleoTaskAssignment>>
-		_taskAssignmentSelectors =
+		_kaleoTaskAssignmentSelectors =
 			HashMapBuilder.<String, List<KaleoTaskAssignment>>put(
 				RandomTestUtil.randomString(),
 				Arrays.asList(

@@ -76,7 +76,7 @@ public class TestrayAttachmentRecorder {
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(
 			_build);
 
-		String jobVariant = _build.getJobVariant();
+		String jobVariant = _build.getParameterValue("JOB_VARIANT");
 
 		if (jobVariant == null) {
 			jobVariant = "";

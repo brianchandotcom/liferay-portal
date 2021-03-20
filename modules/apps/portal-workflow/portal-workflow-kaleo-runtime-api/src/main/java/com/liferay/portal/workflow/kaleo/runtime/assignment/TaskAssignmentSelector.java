@@ -22,7 +22,10 @@ import java.util.Collection;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             KaleoTaskAssignmentSelector}
  */
+@Deprecated
 public interface TaskAssignmentSelector {
 
 	public Collection<KaleoTaskAssignment> calculateTaskAssignments(

@@ -29,13 +29,10 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
- *             BaseKaleoTaskAssignmentSelector}
  */
-@Deprecated
 @ProviderType
-public abstract class BaseTaskAssignmentSelector
-	implements TaskAssignmentSelector {
+public abstract class BaseKaleoTaskAssignmentSelector
+	implements KaleoTaskAssignmentSelector {
 
 	@SuppressWarnings("unchecked")
 	protected Collection<KaleoTaskAssignment> getKaleoTaskAssignments(

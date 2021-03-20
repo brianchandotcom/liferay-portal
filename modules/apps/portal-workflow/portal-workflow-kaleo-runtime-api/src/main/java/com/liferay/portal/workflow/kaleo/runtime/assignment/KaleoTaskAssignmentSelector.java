@@ -14,18 +14,20 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.assignment;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+
+import java.util.Collection;
 
 /**
  * @author Michael C. Han
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
- *              KaleoTaskAssignmentSelectorRegistry}
  */
-@Deprecated
-@ProviderType
-public interface TaskAssignmentSelectorRegistry {
+public interface KaleoTaskAssignmentSelector {
 
-	public TaskAssignmentSelector getTaskAssignmentSelector(
-		String assigneeClassName);
+	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
+			KaleoTaskAssignment kaleoTaskAssignment,
+			ExecutionContext executionContext)
+		throws PortalException;
 
 }

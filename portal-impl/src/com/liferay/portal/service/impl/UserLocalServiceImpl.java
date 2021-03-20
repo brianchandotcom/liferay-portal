@@ -6015,7 +6015,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		if (params != null) {
-			Long groupId = (Long)params.remove(Field.GROUP_ID);
+			Long groupId = (Long)params.get(Field.GROUP_ID);
 
 			if (groupId == null) {
 				groupId = 0L;

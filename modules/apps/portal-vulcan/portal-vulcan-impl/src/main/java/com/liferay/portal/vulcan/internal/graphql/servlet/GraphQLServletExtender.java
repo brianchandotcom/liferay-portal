@@ -372,13 +372,25 @@ public class GraphQLServletExtender {
 						).build();
 					}
 					else {
-						graphQLType = new OutputObjectBuilder(
-							graphQLObjectInfoRetriever, parentalSearch,
-							breadthFirstSearch, _graphQLFieldRetriever,
-							graphQLInterfaceRetriever, graphQLExtensionsHandler
-						).getOutputObjectBuilder(
-							clazz, processingElementsContainer
-						).build();
+						GraphQLObjectType.Builder outputObjectBuilder =
+							new OutputObjectBuilder(
+								graphQLObjectInfoRetriever, parentalSearch,
+								breadthFirstSearch, _graphQLFieldRetriever,
+								graphQLInterfaceRetriever,
+								graphQLExtensionsHandler
+							).getOutputObjectBuilder(
+								clazz, processingElementsContainer
+							);
+
+						GraphQLName annotation = clazz.getAnnotation(
+							GraphQLName.class);
+
+						if (annotation != null) {
+							outputObjectBuilder.description(
+								annotation.description());
+						}
+
+						graphQLType = outputObjectBuilder.build();
 					}
 				}
 

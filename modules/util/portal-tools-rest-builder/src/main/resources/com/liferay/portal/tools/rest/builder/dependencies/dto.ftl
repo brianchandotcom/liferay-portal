@@ -80,7 +80,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 </#if>
 
 @Generated("")
-@GraphQLName("${schemaName}")
+@GraphQLName(
+	<#if schema.description?has_content>
+		description = "${schema.description?j_string}", value = "${schemaName}"
+	<#else>
+		"${schemaName}"
+	</#if>
+)
 @JsonFilter("Liferay.Vulcan")
 <#if schema.requiredPropertySchemaNames?has_content>
 	@Schema(

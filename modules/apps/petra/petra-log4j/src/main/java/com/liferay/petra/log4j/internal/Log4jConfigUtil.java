@@ -33,6 +33,7 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.AbstractConfiguration;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.core.config.plugins.util.PluginManager;
 import org.apache.logging.log4j.core.config.xml.XmlConfiguration;
 
 import org.dom4j.Document;
@@ -225,6 +226,8 @@ public class Log4jConfigUtil {
 		LoggerContext.getContext();
 
 	static {
+		PluginManager.addPackage("com.liferay.petra.log4j");
+
 		_centralizedConfiguration = new CentralizedConfiguration(
 			_loggerContext);
 

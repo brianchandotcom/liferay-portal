@@ -29,8 +29,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelectorRegistry;
 import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.internal.assignment.TaskAssignerHelper;
@@ -103,15 +103,14 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 		for (KaleoTaskAssignment configuredKaleoTaskAssignment :
 				configuredKaleoTaskAssignments) {
 
-			TaskAssignmentSelector taskAssignmentSelector =
-				_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
-					configuredKaleoTaskAssignment.getAssigneeClassName());
+			KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
+				_kaleoTaskAssignmentSelectorRegistry.
+					getKaleoTaskAssignmentSelector(
+						configuredKaleoTaskAssignment.getAssigneeClassName());
 
-			Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
-				taskAssignmentSelector.calculateTaskAssignments(
-					configuredKaleoTaskAssignment, executionContext);
-
-			kaleoTaskAssignments.addAll(calculatedKaleoTaskAssignments);
+			kaleoTaskAssignments.addAll(
+				kaleoTaskAssignmentSelector.getKaleoTaskAssignments(
+					configuredKaleoTaskAssignment, executionContext));
 		}
 
 		return _kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
@@ -218,6 +217,10 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 	private KaleoLogLocalService _kaleoLogLocalService;
 
 	@Reference
+	private KaleoTaskAssignmentSelectorRegistry
+		_kaleoTaskAssignmentSelectorRegistry;
+
+	@Reference
 	private KaleoTaskInstanceTokenLocalService
 		_kaleoTaskInstanceTokenLocalService;
 
@@ -226,8 +229,5 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private TaskAssignerHelper _taskAssignerHelper;
-
-	@Reference
-	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;
 
 }

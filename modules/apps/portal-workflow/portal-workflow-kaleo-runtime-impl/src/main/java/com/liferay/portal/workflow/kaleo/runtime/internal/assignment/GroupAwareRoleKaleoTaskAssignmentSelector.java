@@ -27,7 +27,7 @@ import com.liferay.portal.workflow.kaleo.KaleoTaskAssignmentFactory;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.util.validator.GroupAwareRoleValidator;
 
 import java.util.ArrayList;
@@ -46,13 +46,13 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	immediate = true,
 	property = "assignee.class.name=com.liferay.portal.kernel.model.Role",
-	service = TaskAssignmentSelector.class
+	service = KaleoTaskAssignmentSelector.class
 )
-public class GroupAwareRoleTaskAssignmentSelector
-	implements TaskAssignmentSelector {
+public class GroupAwareRoleKaleoTaskAssignmentSelector
+	implements KaleoTaskAssignmentSelector {
 
 	@Override
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
 			KaleoTaskAssignment kaleoTaskAssignment,
 			ExecutionContext executionContext)
 		throws PortalException {

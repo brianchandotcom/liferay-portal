@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Form")
+@GraphQLName(description = "https://www.schema.org/Form", value = "Form")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Form")
 public class Form implements Serializable {

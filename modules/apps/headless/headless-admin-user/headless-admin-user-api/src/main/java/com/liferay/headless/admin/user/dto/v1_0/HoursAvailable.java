@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("HoursAvailable")
+@GraphQLName(
+	description = "A list of hours when the organization is open. This follows the [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification) specification.",
+	value = "HoursAvailable"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "HoursAvailable")
 public class HoursAvailable implements Serializable {

@@ -50,7 +50,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Instance")
+@GraphQLName(
+	description = "https://www.schema.org/Instance", value = "Instance"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Instance")
 public class Instance implements Serializable {

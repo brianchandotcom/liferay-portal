@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ColumnViewportConfig")
+@GraphQLName(
+	description = "Deprecated as of Athanasius (7.3.x), replaced by columnViewports",
+	value = "ColumnViewportConfig"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ColumnViewportConfig")
 public class ColumnViewportConfig implements Serializable {

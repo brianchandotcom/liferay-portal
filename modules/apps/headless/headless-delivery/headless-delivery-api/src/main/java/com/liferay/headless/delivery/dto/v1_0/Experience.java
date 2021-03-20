@@ -45,7 +45,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Experience")
+@GraphQLName(
+	description = "Represents a customized experience for a given page.",
+	value = "Experience"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Experience")
 public class Experience implements Serializable {

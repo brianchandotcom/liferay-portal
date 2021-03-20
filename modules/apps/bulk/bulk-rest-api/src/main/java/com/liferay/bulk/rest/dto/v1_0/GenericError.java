@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("GenericError")
+@GraphQLName(
+	description = "https://www.schema.org/GenericError", value = "GenericError"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "GenericError")
 public class GenericError implements Serializable {

@@ -50,7 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SLAResult")
+@GraphQLName(description = "https://www.schema.org/SLA", value = "SLAResult")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SLAResult")
 public class SLAResult implements Serializable {

@@ -50,7 +50,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WikiNode")
+@GraphQLName(
+	description = "Represents a wiki node that can be used to organize wiki pages.",
+	value = "WikiNode"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WikiNode")
 public class WikiNode implements Serializable {

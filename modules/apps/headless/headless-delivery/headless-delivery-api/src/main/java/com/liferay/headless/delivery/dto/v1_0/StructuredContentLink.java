@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("StructuredContentLink")
+@GraphQLName(
+	description = "A link to structured content on the server.",
+	value = "StructuredContentLink"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "StructuredContentLink")
 public class StructuredContentLink implements Serializable {

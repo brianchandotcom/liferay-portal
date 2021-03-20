@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BackgroundImage")
+@GraphQLName(
+	description = "Deprecated as of Athanasius (7.3.x), replaced by backgroundFragmentImage",
+	value = "BackgroundImage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BackgroundImage")
 public class BackgroundImage implements Serializable {

@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SiteBrief")
+@GraphQLName(
+	description = "Represents a site's basic information.", value = "SiteBrief"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SiteBrief")
 public class SiteBrief implements Serializable {

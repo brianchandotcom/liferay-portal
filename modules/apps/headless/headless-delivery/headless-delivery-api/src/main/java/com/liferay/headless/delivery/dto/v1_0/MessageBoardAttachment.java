@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("MessageBoardAttachment")
+@GraphQLName(
+	description = "A binary file attached to a message on a message board (`MessageBoardMessage`).",
+	value = "MessageBoardAttachment"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MessageBoardAttachment")
 public class MessageBoardAttachment implements Serializable {

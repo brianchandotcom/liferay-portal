@@ -46,7 +46,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BlogPostingImage")
+@GraphQLName(
+	description = "Represents a blog post's image. Properties follow the [image](https://schema.org/image) specification.",
+	value = "BlogPostingImage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BlogPostingImage")
 public class BlogPostingImage implements Serializable {

@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("OrganizationContactInformation")
+@GraphQLName(
+	description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`.",
+	value = "OrganizationContactInformation"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrganizationContactInformation")
 public class OrganizationContactInformation implements Serializable {

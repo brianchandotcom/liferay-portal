@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WebUrl")
+@GraphQLName(
+	description = "Represents a URL to an external site. This is modeled internally as a `WebSite`.",
+	value = "WebUrl"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WebUrl")
 public class WebUrl implements Serializable {

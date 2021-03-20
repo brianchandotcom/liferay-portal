@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("KnowledgeBaseAttachment")
+@GraphQLName(
+	description = "Represents a binary file attached to a Knowledge Base article.",
+	value = "KnowledgeBaseAttachment"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "KnowledgeBaseAttachment")
 public class KnowledgeBaseAttachment implements Serializable {

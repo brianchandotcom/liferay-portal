@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Comment")
+@GraphQLName(
+	description = "Represents a comment. See [Comment](https://www.schema.org/Comment) for more details.",
+	value = "Comment"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Comment")
 public class Comment implements Serializable {

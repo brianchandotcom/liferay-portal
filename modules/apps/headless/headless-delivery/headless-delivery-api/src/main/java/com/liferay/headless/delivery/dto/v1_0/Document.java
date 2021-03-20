@@ -50,7 +50,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Document")
+@GraphQLName(
+	description = "Represents a Document Library file, storing binary and metadata information. Properties follow the [MediaObject](https://schema.org/MediaObject) specification.",
+	value = "Document"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Document")
 public class Document implements Serializable {

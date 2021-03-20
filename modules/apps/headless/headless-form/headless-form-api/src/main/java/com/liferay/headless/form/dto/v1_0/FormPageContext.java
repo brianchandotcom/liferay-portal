@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FormPageContext")
+@GraphQLName(
+	description = "https://www.schema.org/FormPageContext",
+	value = "FormPageContext"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormPageContext")
 public class FormPageContext implements Serializable {

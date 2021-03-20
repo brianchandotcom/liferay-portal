@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Option")
+@GraphQLName(
+	description = "The list of different possible values.", value = "Option"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Option")
 public class Option implements Serializable {

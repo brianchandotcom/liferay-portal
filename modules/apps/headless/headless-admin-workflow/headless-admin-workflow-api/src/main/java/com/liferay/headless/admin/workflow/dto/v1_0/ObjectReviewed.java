@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ObjectReviewed")
+@GraphQLName(
+	description = "Represents the resource modified by the current workflow.",
+	value = "ObjectReviewed"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ObjectReviewed")
 public class ObjectReviewed implements Serializable {

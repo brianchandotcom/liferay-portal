@@ -50,7 +50,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WorkflowLog")
+@GraphQLName(
+	description = "Represents the log containing the workflow's activity history (e.g., transitions, assignees, etc.).",
+	value = "WorkflowLog"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WorkflowLog")
 public class WorkflowLog implements Serializable {

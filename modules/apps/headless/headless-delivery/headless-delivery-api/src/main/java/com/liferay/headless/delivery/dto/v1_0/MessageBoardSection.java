@@ -51,7 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("MessageBoardSection")
+@GraphQLName(
+	description = "Represents a section/folder on a message board, used to organize messages.",
+	value = "MessageBoardSection"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a section/folder on a message board, used to organize messages.",

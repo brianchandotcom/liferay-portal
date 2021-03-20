@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Transition")
+@GraphQLName(
+	description = "Represents the transition to be launched by the task's workflow.",
+	value = "Transition"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Transition")
 public class Transition implements Serializable {

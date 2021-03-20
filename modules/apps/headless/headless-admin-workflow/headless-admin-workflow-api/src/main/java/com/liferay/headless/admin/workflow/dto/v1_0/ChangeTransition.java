@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ChangeTransition")
+@GraphQLName(
+	description = "Represents a write-only schema to update a workflow's transition.",
+	value = "ChangeTransition"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ChangeTransition")
 public class ChangeTransition implements Serializable {

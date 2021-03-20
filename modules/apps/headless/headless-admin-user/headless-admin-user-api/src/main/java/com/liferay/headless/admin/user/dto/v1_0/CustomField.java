@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CustomField")
+@GraphQLName(
+	description = "Represents the value of each custom field. Fields can contain different information types (e.g., geolocation, strings, etc.).",
+	value = "CustomField"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CustomField")
 public class CustomField implements Serializable {

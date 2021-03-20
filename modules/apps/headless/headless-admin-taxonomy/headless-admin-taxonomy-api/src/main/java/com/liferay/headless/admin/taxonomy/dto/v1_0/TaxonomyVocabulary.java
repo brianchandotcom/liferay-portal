@@ -51,7 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("TaxonomyVocabulary")
+@GraphQLName(
+	description = "Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).",
+	value = "TaxonomyVocabulary"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).",

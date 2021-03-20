@@ -49,7 +49,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Keyword")
+@GraphQLName(
+	description = "Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.",
+	value = "Keyword"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.",

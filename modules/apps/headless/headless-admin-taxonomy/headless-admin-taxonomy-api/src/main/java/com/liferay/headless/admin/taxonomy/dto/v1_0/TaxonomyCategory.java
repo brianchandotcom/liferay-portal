@@ -51,7 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("TaxonomyCategory")
+@GraphQLName(
+	description = "Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.",
+	value = "TaxonomyCategory"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.",

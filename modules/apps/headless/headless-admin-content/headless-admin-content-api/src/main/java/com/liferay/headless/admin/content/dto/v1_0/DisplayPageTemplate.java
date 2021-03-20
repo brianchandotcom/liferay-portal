@@ -52,7 +52,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DisplayPageTemplate")
+@GraphQLName(
+	description = "Represents a Display Page Template that has fields and is tied to a content type",
+	value = "DisplayPageTemplate"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a Display Page Template that has fields and is tied to a content type",

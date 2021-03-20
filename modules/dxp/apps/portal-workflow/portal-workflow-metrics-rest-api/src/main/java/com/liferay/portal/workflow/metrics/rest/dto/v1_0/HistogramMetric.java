@@ -46,7 +46,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("HistogramMetric")
+@GraphQLName(
+	description = "https://www.schema.org/HistogramMetric",
+	value = "HistogramMetric"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "HistogramMetric")
 public class HistogramMetric implements Serializable {

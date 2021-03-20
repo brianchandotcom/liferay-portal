@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ParentTaxonomyVocabulary")
+@GraphQLName(
+	description = "The parent category's `TaxonomyVocabulary`, if such a parent category exists.",
+	value = "ParentTaxonomyVocabulary"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentTaxonomyVocabulary")
 public class ParentTaxonomyVocabulary implements Serializable {

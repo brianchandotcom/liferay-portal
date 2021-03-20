@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Service")
+@GraphQLName(
+	description = "A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification.",
+	value = "Service"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Service")
 public class Service implements Serializable {

@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentAssociation")
+@GraphQLName(
+	description = "Describes the content that is tied to a Display Page Template",
+	value = "ContentAssociation"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentAssociation")
 public class ContentAssociation implements Serializable {

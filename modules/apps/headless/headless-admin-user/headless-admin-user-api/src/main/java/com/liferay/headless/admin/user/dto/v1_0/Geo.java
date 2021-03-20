@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Geo")
+@GraphQLName(
+	description = "A point determined by latitude and longitude.", value = "Geo"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Geo")
 public class Geo implements Serializable {

@@ -51,7 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SitePage")
+@GraphQLName(
+	description = "Represents a site page. This is modeled internally as a `Layout`.",
+	value = "SitePage"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a site page. This is modeled internally as a `Layout`.",

@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AggregateRating")
+@GraphQLName(
+	description = "Represents the average rating. See [AggregateRating](https://www.schema.org/AggregateRating) for more information.",
+	value = "AggregateRating"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AggregateRating")
 public class AggregateRating implements Serializable {

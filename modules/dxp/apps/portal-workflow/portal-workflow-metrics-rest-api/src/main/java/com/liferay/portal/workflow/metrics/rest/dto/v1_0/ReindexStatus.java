@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ReindexStatus")
+@GraphQLName(
+	description = "https://www.schema.org/ReindexStatus",
+	value = "ReindexStatus"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ReindexStatus")
 public class ReindexStatus implements Serializable {

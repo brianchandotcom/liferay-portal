@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentFieldValue")
+@GraphQLName(
+	description = "Represents the value of a content field. Can contain different information types (e.g., geolocation, documents, etc.).",
+	value = "ContentFieldValue"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentFieldValue")
 public class ContentFieldValue implements Serializable {

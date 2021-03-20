@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentSetElement")
+@GraphQLName(
+	description = "Represents each member of a content set and can contain different types of assets.",
+	value = "ContentSetElement"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentSetElement")
 public class ContentSetElement implements Serializable {

@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("StyleBook")
+@GraphQLName(
+	description = "Defines the StyleBook that is applied to the Page",
+	value = "StyleBook"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "StyleBook")
 public class StyleBook implements Serializable {

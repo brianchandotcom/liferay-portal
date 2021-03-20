@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentStructureField")
+@GraphQLName(
+	description = "Represents each field in a content structure, backed by a content field.",
+	value = "ContentStructureField"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentStructureField")
 public class ContentStructureField implements Serializable {

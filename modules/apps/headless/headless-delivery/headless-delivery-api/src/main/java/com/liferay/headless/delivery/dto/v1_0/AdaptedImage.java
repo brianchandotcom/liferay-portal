@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AdaptedImage")
+@GraphQLName(
+	description = "An array of images in several resolutions and sizes, created by the Adaptive Media framework.",
+	value = "AdaptedImage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AdaptedImage")
 public class AdaptedImage implements Serializable {

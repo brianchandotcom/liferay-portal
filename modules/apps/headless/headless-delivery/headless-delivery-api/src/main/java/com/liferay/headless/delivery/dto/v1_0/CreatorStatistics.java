@@ -46,7 +46,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CreatorStatistics")
+@GraphQLName(
+	description = "Detailed info of the creator.", value = "CreatorStatistics"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CreatorStatistics")
 public class CreatorStatistics implements Serializable {

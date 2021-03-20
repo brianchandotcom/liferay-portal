@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WorkflowInstance")
+@GraphQLName(
+	description = "Represents an instance to be executed in a workflow.",
+	value = "WorkflowInstance"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WorkflowInstance")
 public class WorkflowInstance implements Serializable {

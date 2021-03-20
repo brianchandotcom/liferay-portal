@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("EmailAddress")
+@GraphQLName(
+	description = "Represents an email address. Properties follow the [email](https://schema.org/email) specification.",
+	value = "EmailAddress"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "EmailAddress")
 public class EmailAddress implements Serializable {

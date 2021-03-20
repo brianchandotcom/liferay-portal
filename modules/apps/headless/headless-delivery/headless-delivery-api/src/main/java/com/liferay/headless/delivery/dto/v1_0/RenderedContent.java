@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RenderedContent")
+@GraphQLName(
+	description = "Rendered content, which results from using a template or display page to process the content and return HTML.",
+	value = "RenderedContent"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RenderedContent")
 public class RenderedContent implements Serializable {

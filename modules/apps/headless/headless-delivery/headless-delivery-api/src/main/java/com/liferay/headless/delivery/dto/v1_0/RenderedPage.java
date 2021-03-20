@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RenderedPage")
+@GraphQLName(
+	description = "A list of rendered pages, which results from using a page template and the appropriate viewport to process the page and return HTML.",
+	value = "RenderedPage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RenderedPage")
 public class RenderedPage implements Serializable {

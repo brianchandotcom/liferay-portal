@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Rating")
+@GraphQLName(
+	description = "Represents a rating/score received by any kind of asset. Properties follow the [Rating](https://schema.org/Rating) specification.",
+	value = "Rating"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Rating")
 public class Rating implements Serializable {

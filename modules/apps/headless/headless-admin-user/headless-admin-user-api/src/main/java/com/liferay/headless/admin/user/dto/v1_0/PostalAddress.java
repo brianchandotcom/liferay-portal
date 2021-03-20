@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PostalAddress")
+@GraphQLName(
+	description = "Represents a mailing address. This follows the [`PostalAddress`](https://www.schema.org/PostalAddress) specification.",
+	value = "PostalAddress"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PostalAddress")
 public class PostalAddress implements Serializable {

@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Image")
+@GraphQLName(description = "The blog post's cover image.", value = "Image")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Image")
 public class Image implements Serializable {

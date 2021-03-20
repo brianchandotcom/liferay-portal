@@ -51,7 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DocumentFolder")
+@GraphQLName(
+	description = "Represents a document folder that can contain documents and other folders.",
+	value = "DocumentFolder"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a document folder that can contain documents and other folders.",

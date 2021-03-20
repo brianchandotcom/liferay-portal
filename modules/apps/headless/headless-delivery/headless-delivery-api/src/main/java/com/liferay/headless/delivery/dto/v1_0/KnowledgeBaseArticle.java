@@ -51,7 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("KnowledgeBaseArticle")
+@GraphQLName(
+	description = "Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.",
+	value = "KnowledgeBaseArticle"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.",

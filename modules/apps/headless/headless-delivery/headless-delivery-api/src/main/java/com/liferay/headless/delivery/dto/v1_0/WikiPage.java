@@ -51,7 +51,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WikiPage")
+@GraphQLName(description = "Represents a wiki page.", value = "WikiPage")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a wiki page.",

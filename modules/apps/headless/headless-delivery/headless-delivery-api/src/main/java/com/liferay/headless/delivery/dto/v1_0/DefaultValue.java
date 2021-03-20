@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DefaultValue")
+@GraphQLName(
+	description = "Deprecated as of Athanasius (7.3.x), replaced by defaultFragmentInlineValue",
+	value = "DefaultValue"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DefaultValue")
 public class DefaultValue implements Serializable {

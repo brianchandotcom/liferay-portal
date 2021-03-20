@@ -46,7 +46,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("TimeRange")
+@GraphQLName(
+	description = "https://www.schema.org/TimeRange", value = "TimeRange"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TimeRange")
 public class TimeRange implements Serializable {

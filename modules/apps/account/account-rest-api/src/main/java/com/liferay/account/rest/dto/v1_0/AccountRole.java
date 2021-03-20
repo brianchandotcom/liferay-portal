@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountRole")
+@GraphQLName(
+	description = "A role that belongs to an account", value = "AccountRole"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountRole")
 public class AccountRole implements Serializable {

@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProcessMetric")
+@GraphQLName(
+	description = "https://www.schema.org/ProcessMetric",
+	value = "ProcessMetric"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProcessMetric")
 public class ProcessMetric implements Serializable {

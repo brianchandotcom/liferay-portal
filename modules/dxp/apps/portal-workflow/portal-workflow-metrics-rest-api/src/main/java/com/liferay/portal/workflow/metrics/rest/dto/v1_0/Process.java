@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Process")
+@GraphQLName(description = "https://www.schema.org/Process", value = "Process")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Process")
 public class Process implements Serializable {

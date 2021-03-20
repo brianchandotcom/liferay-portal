@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Site")
+@GraphQLName(
+	description = "Represents the site where the content is created. Properties follow the [WebSite](https://schema.org/WebSite) specification.",
+	value = "Site"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Site")
 public class Site implements Serializable {

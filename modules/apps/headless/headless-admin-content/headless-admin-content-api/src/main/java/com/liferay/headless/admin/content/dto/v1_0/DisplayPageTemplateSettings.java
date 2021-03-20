@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DisplayPageTemplateSettings")
+@GraphQLName(
+	description = "Specific settings related to the display page",
+	value = "DisplayPageTemplateSettings"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DisplayPageTemplateSettings")
 public class DisplayPageTemplateSettings implements Serializable {

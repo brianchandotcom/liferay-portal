@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SEOSettingsMapping")
+@GraphQLName(
+	description = "Specific settings related to SEO",
+	value = "SEOSettingsMapping"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SEOSettingsMapping")
 public class SEOSettingsMapping implements Serializable {

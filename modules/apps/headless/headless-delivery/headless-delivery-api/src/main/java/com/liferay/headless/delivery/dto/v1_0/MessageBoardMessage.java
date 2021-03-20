@@ -50,7 +50,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("MessageBoardMessage")
+@GraphQLName(
+	description = "Represents a message on a message board. Properties follow the [Discussion Forum Posting](https://schema.org/DiscussionForumPosting) specification.",
+	value = "MessageBoardMessage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MessageBoardMessage")
 public class MessageBoardMessage implements Serializable {

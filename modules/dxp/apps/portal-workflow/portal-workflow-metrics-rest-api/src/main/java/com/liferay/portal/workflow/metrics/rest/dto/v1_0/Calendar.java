@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Calendar")
+@GraphQLName(
+	description = "https://www.schema.org/Calendar", value = "Calendar"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Calendar")
 public class Calendar implements Serializable {

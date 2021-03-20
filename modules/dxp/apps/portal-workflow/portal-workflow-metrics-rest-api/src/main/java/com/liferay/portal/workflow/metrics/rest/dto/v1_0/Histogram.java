@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Histogram")
+@GraphQLName(
+	description = "https://www.schema.org/Histogram", value = "Histogram"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Histogram")
 public class Histogram implements Serializable {

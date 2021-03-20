@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("NodeKey")
+@GraphQLName(description = "https://www.schema.org/NodeKey", value = "NodeKey")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NodeKey")
 public class NodeKey implements Serializable {

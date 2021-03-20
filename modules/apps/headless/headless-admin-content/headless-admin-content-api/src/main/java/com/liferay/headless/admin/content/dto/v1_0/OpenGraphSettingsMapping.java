@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("OpenGraphSettingsMapping")
+@GraphQLName(
+	description = "Specific settings related to Open Graph",
+	value = "OpenGraphSettingsMapping"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OpenGraphSettingsMapping")
 public class OpenGraphSettingsMapping implements Serializable {

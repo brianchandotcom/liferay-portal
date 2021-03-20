@@ -51,7 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("KnowledgeBaseFolder")
+@GraphQLName(
+	description = "Represents a folder for organizing Knowledge Base articles.",
+	value = "KnowledgeBaseFolder"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a folder for organizing Knowledge Base articles.",

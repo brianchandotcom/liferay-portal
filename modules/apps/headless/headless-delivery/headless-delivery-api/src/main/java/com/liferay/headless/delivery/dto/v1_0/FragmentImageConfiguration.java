@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentImageConfiguration")
+@GraphQLName(
+	description = "Represents the Adaptive Media fragment image configuration for different viewports.",
+	value = "FragmentImageConfiguration"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentImageConfiguration")
 public class FragmentImageConfiguration implements Serializable {

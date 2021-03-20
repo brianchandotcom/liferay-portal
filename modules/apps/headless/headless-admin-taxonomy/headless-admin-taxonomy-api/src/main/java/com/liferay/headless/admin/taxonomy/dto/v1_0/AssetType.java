@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AssetType")
+@GraphQLName(
+	description = "Represents the asset type associated with a `TaxonomyCategory`.",
+	value = "AssetType"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssetType")
 public class AssetType implements Serializable {

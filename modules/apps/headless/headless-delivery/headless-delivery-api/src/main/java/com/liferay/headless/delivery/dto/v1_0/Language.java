@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Language")
+@GraphQLName(
+	description = "Describes a specific language in the platform",
+	value = "Language"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Language")
 public class Language implements Serializable {

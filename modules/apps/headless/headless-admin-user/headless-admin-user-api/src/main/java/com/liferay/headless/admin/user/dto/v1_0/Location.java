@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Location")
+@GraphQLName(
+	description = "The organization's postal information (country and region).",
+	value = "Location"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Location")
 public class Location implements Serializable {

@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RelatedContent")
+@GraphQLName(
+	description = "Represents a relationship between two resources, internally modeled as AssetLink.",
+	value = "RelatedContent"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RelatedContent")
 public class RelatedContent implements Serializable {

@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DataRecord")
+@GraphQLName(
+	description = "https://www.schema.org/DataRecord", value = "DataRecord"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DataRecord")
 public class DataRecord implements Serializable {

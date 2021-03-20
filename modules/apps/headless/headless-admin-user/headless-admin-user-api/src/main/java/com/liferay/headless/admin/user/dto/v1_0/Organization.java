@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Organization")
+@GraphQLName(
+	description = "Represents an organization. Organizations can contain other organizations (suborganizations). Properties follow the [Organization](https://schema.org/Organization) specification.",
+	value = "Organization"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Organization")
 public class Organization implements Serializable {

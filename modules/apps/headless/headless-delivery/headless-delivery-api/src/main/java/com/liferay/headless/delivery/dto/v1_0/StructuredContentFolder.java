@@ -51,7 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("StructuredContentFolder")
+@GraphQLName(
+	description = "Represents a folder that can be used to organize structured content.",
+	value = "StructuredContentFolder"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a folder that can be used to organize structured content.",

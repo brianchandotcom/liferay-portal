@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("NodeMetric")
+@GraphQLName(
+	description = "https://www.schema.org/NodeMetric", value = "NodeMetric"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NodeMetric")
 public class NodeMetric implements Serializable {

@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WikiPageAttachment")
+@GraphQLName(
+	description = "A binary file attached to a wiki page.",
+	value = "WikiPageAttachment"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WikiPageAttachment")
 public class WikiPageAttachment implements Serializable {

@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ParentKnowledgeBaseFolder")
+@GraphQLName(
+	description = "The folder's parent Knowledge Base folder, if it exists.",
+	value = "ParentKnowledgeBaseFolder"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentKnowledgeBaseFolder")
 public class ParentKnowledgeBaseFolder implements Serializable {

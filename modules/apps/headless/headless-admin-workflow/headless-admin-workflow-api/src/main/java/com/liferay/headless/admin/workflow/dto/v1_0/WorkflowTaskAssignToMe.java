@@ -46,7 +46,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WorkflowTaskAssignToMe")
+@GraphQLName(
+	description = "Represents a write-only schema to assign a workflow task to the currently logged-in user.",
+	value = "WorkflowTaskAssignToMe"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WorkflowTaskAssignToMe")
 public class WorkflowTaskAssignToMe implements Serializable {

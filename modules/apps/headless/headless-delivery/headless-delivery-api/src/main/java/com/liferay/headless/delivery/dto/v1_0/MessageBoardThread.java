@@ -51,7 +51,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("MessageBoardThread")
+@GraphQLName(
+	description = "Represents a discussion thread in a message board.",
+	value = "MessageBoardThread"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	description = "Represents a discussion thread in a message board.",

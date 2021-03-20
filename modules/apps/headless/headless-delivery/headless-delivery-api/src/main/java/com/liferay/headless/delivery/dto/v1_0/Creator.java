@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Creator")
+@GraphQLName(
+	description = "Represents the user account of the content's creator/author. Properties follow the [creator](https://schema.org/creator) specification.",
+	value = "Creator"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Creator")
 public class Creator implements Serializable {

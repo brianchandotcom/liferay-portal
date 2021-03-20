@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Phone")
+@GraphQLName(
+	description = "Represents a phone number. This follows the [telephone](https://schema.org/telephone) specification.",
+	value = "Phone"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Phone")
 public class Phone implements Serializable {

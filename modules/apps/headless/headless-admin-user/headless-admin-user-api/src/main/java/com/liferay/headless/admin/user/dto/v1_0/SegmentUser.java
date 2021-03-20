@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SegmentUser")
+@GraphQLName(
+	description = "Represents a user who belongs to a segment.",
+	value = "SegmentUser"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SegmentUser")
 public class SegmentUser implements Serializable {

@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RoleBrief")
+@GraphQLName(
+	description = "Represents a role's basic information, to be embedded with other resources. The ID of this resource can be used to query the role's complete information.",
+	value = "RoleBrief"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RoleBrief")
 public class RoleBrief implements Serializable {

@@ -19,7 +19,7 @@ definition {
 	}
 
 	macro deleteKeywordCheckbox {
-		if (isVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
 			Click(locator1 = "ACSettings#KEYWORD_DELETE_CHECKBOX");
 
 			Click(locator1 = "ACSettings#DELETE_FROM_TOOLBAR");
@@ -29,7 +29,7 @@ definition {
 	}
 
 	macro deleteKeywordIcon {
-		if (isVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
 			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");

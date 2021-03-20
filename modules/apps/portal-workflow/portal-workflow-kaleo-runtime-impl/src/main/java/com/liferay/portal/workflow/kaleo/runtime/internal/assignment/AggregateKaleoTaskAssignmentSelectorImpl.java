@@ -17,9 +17,9 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateTaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateKaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelectorRegistry;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -33,12 +33,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = AggregateTaskAssignmentSelector.class)
-public class AggregateTaskAssignmentSelectorImpl
-	implements AggregateTaskAssignmentSelector {
+@Component(
+	immediate = true, service = AggregateKaleoTaskAssignmentSelector.class
+)
+public class AggregateKaleoTaskAssignmentSelectorImpl
+	implements AggregateKaleoTaskAssignmentSelector {
 
 	@Override
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
 			List<KaleoTaskAssignment> kaleoTaskAssignments,
 			ExecutionContext executionContext)
 		throws PortalException {
@@ -53,12 +55,13 @@ public class AggregateTaskAssignmentSelectorImpl
 			comparator);
 
 		for (KaleoTaskAssignment kaleoTaskAssignment : kaleoTaskAssignments) {
-			TaskAssignmentSelector taskAssignmentSelector =
-				_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
-					kaleoTaskAssignment.getAssigneeClassName());
+			KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
+				_kaleoTaskAssignmentSelectorRegistry.
+					getKaleoTaskAssignmentSelector(
+						kaleoTaskAssignment.getAssigneeClassName());
 
 			kaleoTaskAssignmentsSet.addAll(
-				taskAssignmentSelector.calculateTaskAssignments(
+				kaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 					kaleoTaskAssignment, executionContext));
 		}
 
@@ -66,6 +69,7 @@ public class AggregateTaskAssignmentSelectorImpl
 	}
 
 	@Reference
-	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;
+	private KaleoTaskAssignmentSelectorRegistry
+		_kaleoTaskAssignmentSelectorRegistry;
 
 }

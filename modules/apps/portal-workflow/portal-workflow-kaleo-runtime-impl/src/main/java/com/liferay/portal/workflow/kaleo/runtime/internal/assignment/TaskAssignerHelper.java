@@ -19,7 +19,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateKaleoTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
@@ -48,7 +48,7 @@ public class TaskAssignerHelper {
 		kaleoTaskInstanceToken =
 			_kaleoTaskInstanceTokenLocalService.assignKaleoTaskInstanceToken(
 				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
-				_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+				_aggregateTaskAssignmentSelector.getKaleoTaskAssignments(
 					kaleoTaskAssignments, executionContext),
 				executionContext.getWorkflowContext(),
 				executionContext.getServiceContext());
@@ -60,7 +60,8 @@ public class TaskAssignerHelper {
 	}
 
 	@Reference
-	private AggregateTaskAssignmentSelector _aggregateTaskAssignmentSelector;
+	private AggregateKaleoTaskAssignmentSelector
+		_aggregateTaskAssignmentSelector;
 
 	@Reference
 	private KaleoLogLocalService _kaleoLogLocalService;

@@ -61,9 +61,9 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.TaskManager;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateTaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateKaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelectorRegistry;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoTaskInstanceTokenOrderByComparator;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
@@ -274,18 +274,16 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			long assignedUserId = _getAssignedUserId(workflowTaskId);
 
-			Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
-				_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+			Collection<KaleoTaskAssignment> taskAssignments =
+				_aggregateTaskAssignmentSelector.getKaleoTaskAssignments(
 					_kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(
 						kaleoTaskInstanceToken.getKaleoTaskId()),
 					_createExecutionContext(kaleoTaskInstanceToken));
 
-			for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
-					calculatedKaleoTaskAssignments) {
-
+			for (KaleoTaskAssignment taskAssignment : taskAssignments) {
 				_populateAssignableUsers(
-					calculatedKaleoTaskAssignment, kaleoTaskInstanceToken,
-					assignableUsers, assignedUserId);
+					taskAssignment, kaleoTaskInstanceToken, assignableUsers,
+					assignedUserId);
 			}
 
 			return ListUtil.fromCollection(assignableUsers);
@@ -711,16 +709,16 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			for (KaleoTaskAssignment configuredKaleoTaskAssignment :
 					configuredKaleoTaskAssignments) {
 
-				Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
+				Collection<KaleoTaskAssignment> kaleoTaskAssignments =
 					_getKaleoTaskAssignments(
 						configuredKaleoTaskAssignment, executionContext);
 
-				for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
-						calculatedKaleoTaskAssignments) {
+				for (KaleoTaskAssignment kaleoTaskAssignment :
+						kaleoTaskAssignments) {
 
 					if (_hasAssignableUsers(
-							calculatedKaleoTaskAssignment,
-							kaleoTaskInstanceToken, assignedUserId)) {
+							kaleoTaskAssignment, kaleoTaskInstanceToken,
+							assignedUserId)) {
 
 						return true;
 					}
@@ -1129,11 +1127,11 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		TaskAssignmentSelector taskAssignmentSelector =
-			_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
+		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
+			_kaleoTaskAssignmentSelectorRegistry.getKaleoTaskAssignmentSelector(
 				kaleoTaskAssignment.getAssigneeClassName());
 
-		return taskAssignmentSelector.calculateTaskAssignments(
+		return kaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 			kaleoTaskAssignment, executionContext);
 	}
 
@@ -1373,7 +1371,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		WorkflowTaskManagerImpl.class);
 
 	@Reference
-	private AggregateTaskAssignmentSelector _aggregateTaskAssignmentSelector;
+	private AggregateKaleoTaskAssignmentSelector
+		_aggregateTaskAssignmentSelector;
 
 	@Reference
 	private KaleoSignaler _kaleoSignaler;
@@ -1384,6 +1383,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Reference
 	private KaleoTaskAssignmentLocalService _kaleoTaskAssignmentLocalService;
+
+	@Reference
+	private KaleoTaskAssignmentSelectorRegistry
+		_kaleoTaskAssignmentSelectorRegistry;
 
 	@Reference
 	private KaleoTaskInstanceTokenLocalService
@@ -1397,9 +1400,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;
 
 	@Reference
 	private TaskManager _taskManager;

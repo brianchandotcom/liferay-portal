@@ -18,14 +18,11 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
- *              KaleoTaskAssignmentSelectorRegistry}
  */
-@Deprecated
 @ProviderType
-public interface TaskAssignmentSelectorRegistry {
+public interface KaleoTaskAssignmentSelectorRegistry {
 
-	public TaskAssignmentSelector getTaskAssignmentSelector(
+	public KaleoTaskAssignmentSelector getKaleoTaskAssignmentSelector(
 		String assigneeClassName);
 
 }

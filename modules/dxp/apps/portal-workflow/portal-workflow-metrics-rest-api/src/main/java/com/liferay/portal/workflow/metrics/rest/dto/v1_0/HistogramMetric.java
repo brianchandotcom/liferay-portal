@@ -228,6 +228,7 @@ public class HistogramMetric implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.HistogramMetric",
 		name = "x-class-name"
 	)

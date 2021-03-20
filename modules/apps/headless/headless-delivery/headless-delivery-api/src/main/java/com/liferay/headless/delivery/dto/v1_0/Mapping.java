@@ -167,6 +167,7 @@ public class Mapping implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Mapping",
 		name = "x-class-name"
 	)

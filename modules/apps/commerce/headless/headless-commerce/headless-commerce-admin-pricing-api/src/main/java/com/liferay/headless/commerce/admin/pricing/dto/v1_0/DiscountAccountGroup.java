@@ -295,6 +295,7 @@ public class DiscountAccountGroup implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountAccountGroup",
 		name = "x-class-name"
 	)

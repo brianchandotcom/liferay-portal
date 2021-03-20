@@ -364,6 +364,7 @@ public class ProductSpecification implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductSpecification",
 		name = "x-class-name"
 	)

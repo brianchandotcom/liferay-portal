@@ -465,6 +465,7 @@ public class Keyword implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword",
 		name = "x-class-name"
 	)

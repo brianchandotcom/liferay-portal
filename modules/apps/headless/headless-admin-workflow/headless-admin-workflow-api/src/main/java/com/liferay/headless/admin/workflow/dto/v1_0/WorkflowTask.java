@@ -717,6 +717,7 @@ public class WorkflowTask implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask",
 		name = "x-class-name"
 	)

@@ -164,6 +164,7 @@ public class ParentTaxonomyVocabulary implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyVocabulary",
 		name = "x-class-name"
 	)

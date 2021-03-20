@@ -206,6 +206,7 @@ public class Calendar implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar",
 		name = "x-class-name"
 	)

@@ -216,6 +216,7 @@ public class ClassFieldReference implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ClassFieldReference",
 		name = "x-class-name"
 	)

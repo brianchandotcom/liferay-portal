@@ -249,6 +249,7 @@ public class ObjectReviewed implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.ObjectReviewed",
 		name = "x-class-name"
 	)

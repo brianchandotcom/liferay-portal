@@ -138,6 +138,7 @@ public class FragmentSettingsUnallowed implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentSettingsUnallowed",
 		name = "x-class-name"
 	)

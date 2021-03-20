@@ -179,6 +179,7 @@ public class ContentAssociation implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.content.dto.v1_0.ContentAssociation",
 		name = "x-class-name"
 	)

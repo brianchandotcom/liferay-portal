@@ -403,6 +403,7 @@ public class ExportTask implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.batch.engine.dto.v1_0.ExportTask",
 		name = "x-class-name"
 	)

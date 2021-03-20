@@ -376,6 +376,7 @@ public class ProductGroupProduct implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroupProduct",
 		name = "x-class-name"
 	)

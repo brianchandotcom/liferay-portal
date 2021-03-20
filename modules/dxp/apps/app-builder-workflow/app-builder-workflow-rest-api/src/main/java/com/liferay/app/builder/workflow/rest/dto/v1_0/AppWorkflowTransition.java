@@ -205,6 +205,7 @@ public class AppWorkflowTransition implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTransition",
 		name = "x-class-name"
 	)

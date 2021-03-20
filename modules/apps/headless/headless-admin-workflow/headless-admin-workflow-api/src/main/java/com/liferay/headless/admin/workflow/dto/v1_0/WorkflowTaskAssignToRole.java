@@ -227,6 +227,7 @@ public class WorkflowTaskAssignToRole implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToRole",
 		name = "x-class-name"
 	)

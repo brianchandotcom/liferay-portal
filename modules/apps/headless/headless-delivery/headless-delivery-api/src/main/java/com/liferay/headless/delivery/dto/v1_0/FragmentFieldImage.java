@@ -164,6 +164,7 @@ public class FragmentFieldImage implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage",
 		name = "x-class-name"
 	)

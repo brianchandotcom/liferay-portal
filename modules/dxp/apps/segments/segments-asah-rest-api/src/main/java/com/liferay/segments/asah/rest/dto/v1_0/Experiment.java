@@ -415,6 +415,7 @@ public class Experiment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.segments.asah.rest.dto.v1_0.Experiment",
 		name = "x-class-name"
 	)

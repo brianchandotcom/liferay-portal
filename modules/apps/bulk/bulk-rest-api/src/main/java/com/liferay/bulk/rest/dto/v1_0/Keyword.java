@@ -124,6 +124,7 @@ public class Keyword implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.bulk.rest.dto.v1_0.Keyword",
 		name = "x-class-name"
 	)

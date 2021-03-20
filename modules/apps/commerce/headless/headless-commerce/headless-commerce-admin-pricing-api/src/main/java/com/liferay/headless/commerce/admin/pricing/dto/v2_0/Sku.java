@@ -325,6 +325,7 @@ public class Sku implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.Sku",
 		name = "x-class-name"
 	)

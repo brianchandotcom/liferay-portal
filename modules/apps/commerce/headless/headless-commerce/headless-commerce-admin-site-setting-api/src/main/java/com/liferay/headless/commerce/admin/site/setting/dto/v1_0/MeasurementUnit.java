@@ -400,6 +400,7 @@ public class MeasurementUnit implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.site.setting.dto.v1_0.MeasurementUnit",
 		name = "x-class-name"
 	)

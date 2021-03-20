@@ -455,6 +455,7 @@ public class ImportTask implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.batch.engine.dto.v1_0.ImportTask",
 		name = "x-class-name"
 	)

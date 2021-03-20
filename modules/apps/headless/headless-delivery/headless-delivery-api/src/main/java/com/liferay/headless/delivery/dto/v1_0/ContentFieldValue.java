@@ -330,6 +330,7 @@ public class ContentFieldValue implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentFieldValue",
 		name = "x-class-name"
 	)

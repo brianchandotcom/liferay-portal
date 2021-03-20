@@ -419,6 +419,7 @@ public class Creator implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Creator",
 		name = "x-class-name"
 	)

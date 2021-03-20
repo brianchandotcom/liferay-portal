@@ -417,6 +417,7 @@ public class WarehouseItem implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem",
 		name = "x-class-name"
 	)

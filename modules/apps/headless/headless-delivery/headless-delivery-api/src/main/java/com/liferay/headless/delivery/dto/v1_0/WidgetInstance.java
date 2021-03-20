@@ -260,6 +260,7 @@ public class WidgetInstance implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.WidgetInstance",
 		name = "x-class-name"
 	)

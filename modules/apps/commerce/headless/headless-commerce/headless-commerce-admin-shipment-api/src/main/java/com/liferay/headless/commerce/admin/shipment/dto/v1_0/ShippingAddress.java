@@ -661,6 +661,7 @@ public class ShippingAddress implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress",
 		name = "x-class-name"
 	)

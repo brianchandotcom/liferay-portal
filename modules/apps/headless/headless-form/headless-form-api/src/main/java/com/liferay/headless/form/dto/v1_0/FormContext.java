@@ -306,6 +306,7 @@ public class FormContext implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormContext",
 		name = "x-class-name"
 	)

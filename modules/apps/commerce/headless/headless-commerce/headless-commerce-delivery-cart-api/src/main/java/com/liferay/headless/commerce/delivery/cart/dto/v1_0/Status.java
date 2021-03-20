@@ -204,6 +204,7 @@ public class Status implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status",
 		name = "x-class-name"
 	)

@@ -306,6 +306,7 @@ public class AreaData implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.AreaData",
 		name = "x-class-name"
 	)

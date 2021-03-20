@@ -458,6 +458,7 @@ public class ShipmentItem implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem",
 		name = "x-class-name"
 	)

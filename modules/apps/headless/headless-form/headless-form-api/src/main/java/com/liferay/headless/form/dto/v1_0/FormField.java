@@ -1248,6 +1248,7 @@ public class FormField implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormField",
 		name = "x-class-name"
 	)

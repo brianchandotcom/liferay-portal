@@ -374,6 +374,7 @@ public class Subscription implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Subscription",
 		name = "x-class-name"
 	)

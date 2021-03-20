@@ -284,6 +284,7 @@ public class AppWorkflowTask implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask",
 		name = "x-class-name"
 	)

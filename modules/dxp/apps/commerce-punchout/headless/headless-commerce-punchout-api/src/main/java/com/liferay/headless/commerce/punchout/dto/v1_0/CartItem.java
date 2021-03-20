@@ -629,6 +629,7 @@ public class CartItem implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.punchout.dto.v1_0.CartItem",
 		name = "x-class-name"
 	)

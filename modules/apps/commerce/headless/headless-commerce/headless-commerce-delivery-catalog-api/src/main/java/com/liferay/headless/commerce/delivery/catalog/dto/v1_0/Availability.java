@@ -164,6 +164,7 @@ public class Availability implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability",
 		name = "x-class-name"
 	)

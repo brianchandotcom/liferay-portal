@@ -213,6 +213,7 @@ public class Brand implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Brand",
 		name = "x-class-name"
 	)

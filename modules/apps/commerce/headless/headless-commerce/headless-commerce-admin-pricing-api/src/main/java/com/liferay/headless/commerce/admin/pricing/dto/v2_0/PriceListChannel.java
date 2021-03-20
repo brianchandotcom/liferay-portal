@@ -418,6 +418,7 @@ public class PriceListChannel implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListChannel",
 		name = "x-class-name"
 	)

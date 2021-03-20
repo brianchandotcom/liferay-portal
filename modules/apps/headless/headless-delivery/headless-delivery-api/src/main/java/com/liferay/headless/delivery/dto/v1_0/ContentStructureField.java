@@ -704,6 +704,7 @@ public class ContentStructureField implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentStructureField",
 		name = "x-class-name"
 	)

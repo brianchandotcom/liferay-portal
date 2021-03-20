@@ -212,6 +212,7 @@ public class Option implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Option",
 		name = "x-class-name"
 	)

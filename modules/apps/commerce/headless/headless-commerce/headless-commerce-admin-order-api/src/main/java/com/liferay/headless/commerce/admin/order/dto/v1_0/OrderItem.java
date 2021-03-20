@@ -1501,6 +1501,7 @@ public class OrderItem implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem",
 		name = "x-class-name"
 	)

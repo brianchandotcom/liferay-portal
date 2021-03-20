@@ -170,6 +170,7 @@ public class ClassPKReference implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ClassPKReference",
 		name = "x-class-name"
 	)

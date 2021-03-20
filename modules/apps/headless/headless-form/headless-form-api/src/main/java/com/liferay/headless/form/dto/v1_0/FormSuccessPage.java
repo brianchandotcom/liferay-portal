@@ -289,6 +289,7 @@ public class FormSuccessPage implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormSuccessPage",
 		name = "x-class-name"
 	)

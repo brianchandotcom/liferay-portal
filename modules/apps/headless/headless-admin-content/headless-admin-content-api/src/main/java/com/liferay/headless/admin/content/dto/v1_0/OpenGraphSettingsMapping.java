@@ -278,6 +278,7 @@ public class OpenGraphSettingsMapping implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.content.dto.v1_0.OpenGraphSettingsMapping",
 		name = "x-class-name"
 	)

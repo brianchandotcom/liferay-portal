@@ -290,6 +290,7 @@ public class TaxonomyVocabulary implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary",
 		name = "x-class-name"
 	)

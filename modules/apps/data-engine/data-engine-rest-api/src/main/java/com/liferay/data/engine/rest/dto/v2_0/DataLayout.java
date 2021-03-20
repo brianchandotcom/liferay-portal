@@ -671,6 +671,7 @@ public class DataLayout implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataLayout",
 		name = "x-class-name"
 	)

@@ -211,6 +211,7 @@ public class AssetType implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.AssetType",
 		name = "x-class-name"
 	)

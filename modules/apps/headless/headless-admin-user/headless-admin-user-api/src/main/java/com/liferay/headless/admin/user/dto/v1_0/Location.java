@@ -259,6 +259,7 @@ public class Location implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Location",
 		name = "x-class-name"
 	)

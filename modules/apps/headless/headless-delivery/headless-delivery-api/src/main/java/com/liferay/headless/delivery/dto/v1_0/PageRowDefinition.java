@@ -464,6 +464,7 @@ public class PageRowDefinition implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageRowDefinition",
 		name = "x-class-name"
 	)

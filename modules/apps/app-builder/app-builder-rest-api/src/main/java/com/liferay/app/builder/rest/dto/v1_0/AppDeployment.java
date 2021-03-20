@@ -165,6 +165,7 @@ public class AppDeployment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.rest.dto.v1_0.AppDeployment",
 		name = "x-class-name"
 	)

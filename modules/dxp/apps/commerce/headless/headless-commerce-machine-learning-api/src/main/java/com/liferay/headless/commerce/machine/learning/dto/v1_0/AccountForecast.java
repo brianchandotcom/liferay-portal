@@ -369,6 +369,7 @@ public class AccountForecast implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountForecast",
 		name = "x-class-name"
 	)

@@ -461,6 +461,7 @@ public class AccountUser implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.account.rest.dto.v1_0.AccountUser",
 		name = "x-class-name"
 	)

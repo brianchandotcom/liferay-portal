@@ -253,6 +253,7 @@ public class PageSettings implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageSettings",
 		name = "x-class-name"
 	)

@@ -246,6 +246,7 @@ public class Settings implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.punchout.dto.v1_0.Settings",
 		name = "x-class-name"
 	)

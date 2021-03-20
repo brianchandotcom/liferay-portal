@@ -3910,6 +3910,7 @@ public class Order implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.order.dto.v1_0.Order",
 		name = "x-class-name"
 	)

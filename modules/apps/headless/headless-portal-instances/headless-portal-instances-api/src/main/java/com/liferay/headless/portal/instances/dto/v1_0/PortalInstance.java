@@ -290,6 +290,7 @@ public class PortalInstance implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.portal.instances.dto.v1_0.PortalInstance",
 		name = "x-class-name"
 	)

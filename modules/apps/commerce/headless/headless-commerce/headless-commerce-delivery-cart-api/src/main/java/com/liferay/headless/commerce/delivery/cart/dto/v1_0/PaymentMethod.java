@@ -206,6 +206,7 @@ public class PaymentMethod implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.cart.dto.v1_0.PaymentMethod",
 		name = "x-class-name"
 	)

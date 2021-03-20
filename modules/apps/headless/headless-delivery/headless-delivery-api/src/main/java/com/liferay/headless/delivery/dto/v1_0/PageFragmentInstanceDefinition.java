@@ -357,6 +357,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition",
 		name = "x-class-name"
 	)

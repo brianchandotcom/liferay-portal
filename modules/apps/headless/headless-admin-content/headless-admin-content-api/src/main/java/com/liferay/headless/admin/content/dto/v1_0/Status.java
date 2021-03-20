@@ -206,6 +206,7 @@ public class Status implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.content.dto.v1_0.Status",
 		name = "x-class-name"
 	)

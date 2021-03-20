@@ -422,6 +422,7 @@ public class FormRecord implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormRecord",
 		name = "x-class-name"
 	)

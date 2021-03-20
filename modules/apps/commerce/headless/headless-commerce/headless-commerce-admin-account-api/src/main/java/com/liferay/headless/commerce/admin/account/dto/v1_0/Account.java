@@ -828,6 +828,7 @@ public class Account implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.Account",
 		name = "x-class-name"
 	)

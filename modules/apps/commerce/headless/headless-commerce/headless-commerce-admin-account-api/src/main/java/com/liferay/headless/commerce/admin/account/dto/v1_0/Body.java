@@ -124,6 +124,7 @@ public class Body implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.Body",
 		name = "x-class-name"
 	)

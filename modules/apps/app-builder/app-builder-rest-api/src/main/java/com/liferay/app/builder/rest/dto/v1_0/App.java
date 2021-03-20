@@ -779,6 +779,7 @@ public class App implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.rest.dto.v1_0.App",
 		name = "x-class-name"
 	)

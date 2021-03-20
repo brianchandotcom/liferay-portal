@@ -328,6 +328,7 @@ public class Channel implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel",
 		name = "x-class-name"
 	)

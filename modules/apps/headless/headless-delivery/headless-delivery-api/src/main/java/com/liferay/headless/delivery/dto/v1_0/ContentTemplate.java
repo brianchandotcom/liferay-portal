@@ -717,6 +717,7 @@ public class ContentTemplate implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentTemplate",
 		name = "x-class-name"
 	)

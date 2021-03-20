@@ -167,6 +167,7 @@ public class StyleBook implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.StyleBook",
 		name = "x-class-name"
 	)

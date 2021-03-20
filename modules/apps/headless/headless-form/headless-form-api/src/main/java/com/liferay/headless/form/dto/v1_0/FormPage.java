@@ -335,6 +335,7 @@ public class FormPage implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormPage",
 		name = "x-class-name"
 	)

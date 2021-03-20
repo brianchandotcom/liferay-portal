@@ -233,6 +233,7 @@ public class KeywordBulkSelection implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.bulk.rest.dto.v1_0.KeywordBulkSelection",
 		name = "x-class-name"
 	)

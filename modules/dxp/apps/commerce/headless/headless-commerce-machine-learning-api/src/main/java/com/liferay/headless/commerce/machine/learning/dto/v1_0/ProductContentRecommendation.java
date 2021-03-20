@@ -329,6 +329,7 @@ public class ProductContentRecommendation implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductContentRecommendation",
 		name = "x-class-name"
 	)

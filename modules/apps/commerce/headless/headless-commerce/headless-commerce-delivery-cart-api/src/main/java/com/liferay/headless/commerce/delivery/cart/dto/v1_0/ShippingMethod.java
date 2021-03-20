@@ -254,6 +254,7 @@ public class ShippingMethod implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod",
 		name = "x-class-name"
 	)

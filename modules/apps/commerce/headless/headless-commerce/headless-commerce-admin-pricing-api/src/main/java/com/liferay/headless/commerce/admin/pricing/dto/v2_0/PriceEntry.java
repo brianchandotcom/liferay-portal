@@ -1110,6 +1110,7 @@ public class PriceEntry implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry",
 		name = "x-class-name"
 	)

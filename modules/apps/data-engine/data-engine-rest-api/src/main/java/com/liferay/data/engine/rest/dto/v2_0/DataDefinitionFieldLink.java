@@ -225,6 +225,7 @@ public class DataDefinitionFieldLink implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataDefinitionFieldLink",
 		name = "x-class-name"
 	)

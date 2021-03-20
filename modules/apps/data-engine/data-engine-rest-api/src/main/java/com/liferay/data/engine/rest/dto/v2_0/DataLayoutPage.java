@@ -215,6 +215,7 @@ public class DataLayoutPage implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataLayoutPage",
 		name = "x-class-name"
 	)

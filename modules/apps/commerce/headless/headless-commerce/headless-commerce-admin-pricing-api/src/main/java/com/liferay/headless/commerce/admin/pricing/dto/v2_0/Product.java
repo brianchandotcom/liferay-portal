@@ -245,6 +245,7 @@ public class Product implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.Product",
 		name = "x-class-name"
 	)

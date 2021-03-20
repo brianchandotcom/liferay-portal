@@ -254,6 +254,7 @@ public class Error implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.channel.dto.v1_0.Error",
 		name = "x-class-name"
 	)

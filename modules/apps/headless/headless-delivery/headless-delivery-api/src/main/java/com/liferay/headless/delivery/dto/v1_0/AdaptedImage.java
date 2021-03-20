@@ -335,6 +335,7 @@ public class AdaptedImage implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.AdaptedImage",
 		name = "x-class-name"
 	)

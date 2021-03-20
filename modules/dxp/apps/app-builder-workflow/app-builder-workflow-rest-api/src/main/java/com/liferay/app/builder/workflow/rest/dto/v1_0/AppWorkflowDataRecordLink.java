@@ -165,6 +165,7 @@ public class AppWorkflowDataRecordLink implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowDataRecordLink",
 		name = "x-class-name"
 	)

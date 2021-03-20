@@ -202,6 +202,7 @@ public class PortraitMobile implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PortraitMobile",
 		name = "x-class-name"
 	)

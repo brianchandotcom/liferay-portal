@@ -215,6 +215,7 @@ public class DisplayPageTemplateSettings implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.content.dto.v1_0.DisplayPageTemplateSettings",
 		name = "x-class-name"
 	)

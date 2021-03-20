@@ -143,6 +143,7 @@ public class ContextReference implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContextReference",
 		name = "x-class-name"
 	)

@@ -329,6 +329,7 @@ public class ProductInteractionRecommendation implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductInteractionRecommendation",
 		name = "x-class-name"
 	)

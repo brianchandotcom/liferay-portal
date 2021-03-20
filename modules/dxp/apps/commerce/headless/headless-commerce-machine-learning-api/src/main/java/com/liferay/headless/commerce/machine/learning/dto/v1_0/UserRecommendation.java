@@ -374,6 +374,7 @@ public class UserRecommendation implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.UserRecommendation",
 		name = "x-class-name"
 	)

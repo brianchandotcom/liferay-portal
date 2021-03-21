@@ -86,7 +86,7 @@ public class Log4jConfigUtil {
 				}
 
 				abstractConfiguration = new XmlConfiguration(
-					_centralizedConfiguration.getLoggerContext(),
+					_loggerContext,
 					new ConfigurationSource(
 						new UnsyncByteArrayInputStream(
 							xmlContent.getBytes(StringPool.UTF8))));
@@ -110,7 +110,7 @@ public class Log4jConfigUtil {
 
 				abstractConfiguration =
 					new org.apache.log4j.xml.XmlConfiguration(
-						_centralizedConfiguration.getLoggerContext(),
+						_loggerContext,
 						new ConfigurationSource(
 							new UnsyncByteArrayInputStream(
 								xmlContent.getBytes(StringPool.UTF8))),
@@ -180,10 +180,7 @@ public class Log4jConfigUtil {
 			loggerConfig.setLevel(level);
 		}
 
-		LoggerContext loggerContext =
-			_centralizedConfiguration.getLoggerContext();
-
-		loggerContext.updateLoggers();
+		_loggerContext.updateLoggers();
 	}
 
 	public static void shutdownLog4J() {
@@ -223,7 +220,15 @@ public class Log4jConfigUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		Log4jConfigUtil.class);
 
-	private static final CentralizedConfiguration _centralizedConfiguration =
-		new CentralizedConfiguration();
+	private static final CentralizedConfiguration _centralizedConfiguration;
+	private static final LoggerContext _loggerContext =
+		LoggerContext.getContext();
+
+	static {
+		_centralizedConfiguration = new CentralizedConfiguration(
+			_loggerContext);
+
+		_loggerContext.setConfiguration(_centralizedConfiguration);
+	}
 
 }

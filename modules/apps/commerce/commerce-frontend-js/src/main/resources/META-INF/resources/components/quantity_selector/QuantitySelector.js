@@ -17,7 +17,11 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {UPDATE_AFTER, generateQuantityOptions} from './utils/index';
+import {
+	UPDATE_AFTER,
+	generateQuantityOptions,
+	getMinMultipleQuantity,
+} from './utils/index';
 
 function QuantitySelector({
 	componentId,
@@ -29,12 +33,15 @@ function QuantitySelector({
 	quantity,
 	...optionSettings
 }) {
-	const [selectedQuantity, setSelectedQuantity] = useState(
-		Math.max(
-			optionSettings.minQuantity * optionSettings.multipleQuantity,
-			quantity
-		)
+	const initialQuantity = Math.max(
+		getMinMultipleQuantity(
+			optionSettings.minQuantity,
+			optionSettings.multipleQuantity
+		),
+		quantity
 	);
+
+	const [selectedQuantity, setSelectedQuantity] = useState(initialQuantity);
 
 	const isDropdown =
 		optionSettings.allowedQuantities?.length > 0 || forceDropdown;
@@ -53,13 +60,7 @@ function QuantitySelector({
 			);
 		}
 		else {
-			setSelectedQuantity(
-				Math.max(
-					optionSettings.minQuantity *
-						optionSettings.multipleQuantity,
-					quantity
-				)
-			);
+			setSelectedQuantity(initialQuantity);
 		}
 	};
 
@@ -101,10 +102,10 @@ function QuantitySelector({
 			) : (
 				<ClayInput
 					max={optionSettings.maxQuantity}
-					min={
-						optionSettings.minQuantity *
+					min={getMinMultipleQuantity(
+						optionSettings.minQuantity,
 						optionSettings.multipleQuantity
-					}
+					)}
 					step={optionSettings.multipleQuantity}
 					type="number"
 					{...commonProps}

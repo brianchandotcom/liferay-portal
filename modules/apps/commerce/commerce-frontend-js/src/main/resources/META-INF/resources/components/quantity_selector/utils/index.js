@@ -19,7 +19,6 @@ export const UPDATE_AFTER = 500;
 export const generateQuantityOptions = ({
 	allowedQuantities = [],
 	maxQuantity = 1,
-	minQuantity = 1,
 	multipleQuantity = 1,
 }) => {
 	if (allowedQuantities?.length > 0) {
@@ -28,8 +27,6 @@ export const generateQuantityOptions = ({
 			value,
 		}));
 	}
-
-	const quantityOptions = [];
 
 	/**
 	 * As this is used to render a ClaySelectWithOption component,
@@ -43,7 +40,9 @@ export const generateQuantityOptions = ({
 		maxQuantity / multipleQuantity
 	);
 
-	for (let i = minQuantity; i <= quantityOptionsCap; i++) {
+	const quantityOptions = [];
+
+	for (let i = 1; i <= quantityOptionsCap; i++) {
 		const value = i * multipleQuantity;
 
 		quantityOptions.push({
@@ -54,3 +53,11 @@ export const generateQuantityOptions = ({
 
 	return quantityOptions;
 };
+
+export function getMinMultipleQuantity(minQuantity, multipleQuantity) {
+	if (minQuantity <= multipleQuantity) {
+		return multipleQuantity;
+	}
+
+	return minQuantity - (minQuantity % multipleQuantity) + multipleQuantity;
+}

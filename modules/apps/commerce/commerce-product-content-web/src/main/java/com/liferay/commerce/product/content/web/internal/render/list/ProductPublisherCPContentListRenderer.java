@@ -62,7 +62,7 @@ public class ProductPublisherCPContentListRenderer
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "product-publisher");
+		return LanguageUtil.get(resourceBundle, "default");
 	}
 
 	@Override

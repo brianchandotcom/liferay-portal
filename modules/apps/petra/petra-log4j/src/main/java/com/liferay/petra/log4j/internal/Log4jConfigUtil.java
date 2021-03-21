@@ -90,7 +90,13 @@ public class Log4jConfigUtil {
 					_loggerContext,
 					new ConfigurationSource(
 						new UnsyncByteArrayInputStream(
-							xmlContent.getBytes(StringPool.UTF8))));
+							xmlContent.getBytes(StringPool.UTF8)))) {
+
+					@Override
+					protected void setToDefault() {
+					}
+
+				};
 			}
 			else {
 				_removeAppender(
@@ -115,7 +121,13 @@ public class Log4jConfigUtil {
 						new ConfigurationSource(
 							new UnsyncByteArrayInputStream(
 								xmlContent.getBytes(StringPool.UTF8))),
-						0);
+						0) {
+
+						@Override
+						protected void setToDefault() {
+						}
+
+					};
 			}
 
 			_centralizedConfiguration.addConfiguration(abstractConfiguration);

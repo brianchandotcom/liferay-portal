@@ -606,7 +606,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		category.setParentCategoryId(parentCategoryId);
 
-		return mbCategoryPersistence.update(category);
+		category = mbCategoryPersistence.update(category);
+
+		_reindex(MBCategory.class, category);
+
+		return category;
 	}
 
 	@Override

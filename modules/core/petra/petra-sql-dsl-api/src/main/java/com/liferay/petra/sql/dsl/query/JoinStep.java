@@ -17,6 +17,8 @@ package com.liferay.petra.sql.dsl.query;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 
+import java.util.function.Supplier;
+
 /**
  * @author Preston Crary
  */
@@ -24,6 +26,18 @@ public interface JoinStep extends WhereStep {
 
 	public JoinStep innerJoinON(Table<?> table, Predicate predicate);
 
+	public default JoinStep innerJoinON(
+		Table<?> table, Supplier<Predicate> supplier) {
+
+		return innerJoinON(table, supplier.get());
+	}
+
 	public JoinStep leftJoinOn(Table<?> table, Predicate predicate);
+
+	public default JoinStep leftJoinOn(
+		Table<?> table, Supplier<Predicate> supplier) {
+
+		return leftJoinOn(table, supplier.get());
+	}
 
 }

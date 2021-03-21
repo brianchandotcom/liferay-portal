@@ -17,7 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean clickToChatEnabled = GetterUtil.getBoolean(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_ENABLED));
+boolean systemSettingsEnabled = GetterUtil.getBoolean(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_SYSTEM_SETTINGS_ENABLED));
+boolean clickToChatEnabled = GetterUtil.getBoolean(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_ENABLED));
+boolean clickToChatSignedInUsersOnly = GetterUtil.getBoolean(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_SIGNED_IN_USERS_ONLY));
+String groupProviderTokenStrategy = GetterUtil.getString(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_PROVIDER_TOKEN_STRATEGY));
 %>
 
-<aui:input checked="<%= clickToChatEnabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "enable-click-to-chat") %>' labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--clickToChatEnabled--" type="toggle-switch" value="<%= clickToChatEnabled %>" />
+<aui:input checked="<%= clickToChatEnabled %>" disabled="<%= !systemSettingsEnabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "enable-click-to-chat") %>' labelCssClass="simple-toggle-switch" name='<%= "TypeSettingsProperties--" + ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_ENABLED + "--" %>' type="toggle-switch" value="<%= clickToChatEnabled %>" />
+<aui:input checked="<%= clickToChatSignedInUsersOnly %>" disabled="<%= !systemSettingsEnabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "signed-in-users-only") %>' labelCssClass="simple-toggle-switch" name='<%= "TypeSettingsProperties--" + ClickToChatWebKeys.CLICK_TO_CHAT_SIGNED_IN_USERS_ONLY + "--" %>' type="toggle-switch" value="<%= clickToChatSignedInUsersOnly %>" />
+<aui:input disabled="<%= !systemSettingsEnabled || Objects.equals(groupProviderTokenStrategy, GroupProviderTokenStrategy.ALWAYS_INHERIT.getValue()) %>" label="group-provider-account-token" name='<%= "TypeSettingsProperties--" + ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_PROVIDER_TOKEN_STRATEGY + "--" %>' type="text" value="<%= GetterUtil.getString(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_PROVIDER_ACCOUNT_TOKEN)) %>" />

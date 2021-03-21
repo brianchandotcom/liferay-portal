@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,18 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+package com.liferay.click.to.chat.web.internal.providers;
 
-<%@ page import="com.liferay.click.to.chat.web.internal.configuration.GroupProviderTokenStrategy" %><%@
-page import="com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %>
+import com.liferay.portal.kernel.model.User;
 
-<%@ page import="java.util.Objects" %>
+/**
+ * @author José Abelenda
+ */
+public abstract class ProviderDynamicInclude {
 
-<liferay-frontend:defineObjects />
+	public ProviderDynamicInclude(String providerAccountToken, User user) {
+		this.providerAccountToken = providerAccountToken;
+		this.user = user;
+	}
 
-<%@ include file="/init-ext.jsp" %>
+	public abstract String getContentToInclude();
+
+	protected final String providerAccountToken;
+	protected final User user;
+
+}

@@ -41,10 +41,8 @@ import org.apache.logging.log4j.core.filter.AbstractFilterable;
  */
 public class CentralizedConfiguration extends AbstractConfiguration {
 
-	public CentralizedConfiguration() {
-		super(
-			(LoggerContext)LogManager.getContext(),
-			ConfigurationSource.COMPOSITE_SOURCE);
+	public CentralizedConfiguration(LoggerContext loggerContext) {
+		super(loggerContext, ConfigurationSource.COMPOSITE_SOURCE);
 
 		PluginManager.addPackage("com.liferay.petra.log4j");
 

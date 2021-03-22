@@ -154,6 +154,66 @@ definition {
 			webContentTitle = "Digital Transformation or Digital Experience?");
 	}
 
+	@description = "This ensures that the depot auto-tagging can be disabled and enabled at the instance level."
+	@priority = "4"
+	test DisableAndEnableAtInstanceScope {
+		property test.name.skip.portal.instance = "DepotAutoTagging#DisableAndEnableAtInstanceScope";
+
+		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Instance Settings");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		AssertElementNotPresent(
+			key_panel = "Asset Auto Tagging",
+			locator1 = "Panel#PANEL");
+
+		AutoTagging.enableAutoTagging(enableAutoTaggingFor = "Instance Settings");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "Asset Auto Tagging");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+	}
+
+	@description = "This ensures that the depot auto-tagging can be disabled and enabled at the system level."
+	@priority = "4"
+	test DisableAndEnableAtSystemScope {
+		property test.name.skip.portal.instance = "DepotAutoTagging#DisableAndEnableAtSystemScope";
+
+		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "System Settings");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		AssertElementNotPresent(
+			key_panel = "Asset Auto Tagging",
+			locator1 = "Panel#PANEL");
+
+		AutoTagging.enableAutoTagging(enableAutoTaggingFor = "System Settings");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "Asset Auto Tagging");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+	}
+
 	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a depot that has auto-tagging disabled."
 	@priority = "5"
 	test DisableForImage {

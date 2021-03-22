@@ -6,9 +6,7 @@ ${dataFactory.toInsertSQL(fragmentCollectionModel)}
 
 ${dataFactory.toInsertSQL(fragmentEntryModel)}
 
-<#assign contentLayoutModels = dataFactory.newContentLayoutModels(groupId) />
-
-<#list contentLayoutModels as contentLayoutModel>
+<#list dataFactory.newContentLayoutModels(groupId) as contentLayoutModel>
 	<@insertContentLayout
 		_fragmentEntryModel=fragmentEntryModel
 		_layoutModel=contentLayoutModel

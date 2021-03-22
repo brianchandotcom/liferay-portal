@@ -128,6 +128,120 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
+	public void testAreStagingAndLiveTeamRolePermissionsIndependent()
+		throws Exception {
+
+		_user = UserTestUtil.addUser();
+
+		_userLocalService.addGroupUser(_group.getGroupId(), _user.getUserId());
+
+		Team team = TeamLocalServiceUtil.addTeam(
+			_user.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		TeamLocalServiceUtil.addUserTeam(_user.getUserId(), team.getTeamId());
+
+		JournalFolder journalFolder = JournalFolderLocalServiceUtil.addFolder(
+			_user.getUserId(), _group.getGroupId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_resourceLocalService.addResources(
+			_user.getCompanyId(), _group.getGroupId(), 0,
+			JournalFolder.class.getName(), journalFolder.getFolderId(), false,
+			false, false);
+
+		try {
+			Role teamRole = team.getRole();
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				_user.getCompanyId(), JournalFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(journalFolder.getFolderId()),
+				teamRole.getRoleId(), new String[] {ActionKeys.ADD_SUBFOLDER});
+
+			try {
+				Assert.assertFalse(_group.isStaged());
+
+				GroupTestUtil.enableLocalStaging(_group, _user.getUserId());
+
+				Assert.assertTrue(_group.isStaged());
+
+				Group stagingGroup = _group.getStagingGroup();
+
+				Team stagingTeam = TeamLocalServiceUtil.getTeam(
+					stagingGroup.getGroupId(), team.getName());
+
+				Role stagingTeamRole = stagingTeam.getRole();
+
+				JournalFolder stagingFolder =
+					JournalFolderLocalServiceUtil.
+						getJournalFolderByUuidAndGroupId(
+							journalFolder.getUuid(), stagingGroup.getGroupId());
+
+				_resourcePermissionLocalService.removeResourcePermission(
+					_user.getCompanyId(), JournalFolder.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(stagingFolder.getFolderId()),
+					stagingTeamRole.getRoleId(), ActionKeys.ADD_SUBFOLDER);
+
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(_user);
+
+				boolean hasPermission = permissionChecker.hasPermission(
+					stagingGroup.getGroupId(), JournalFolder.class.getName(),
+					stagingFolder.getFolderId(), ActionKeys.ADD_SUBFOLDER);
+
+				Assert.assertFalse(hasPermission);
+
+				hasPermission = permissionChecker.hasPermission(
+					_group.getGroupId(), JournalFolder.class.getName(),
+					journalFolder.getFolderId(), ActionKeys.ADD_SUBFOLDER);
+
+				Assert.assertTrue(hasPermission);
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					_user.getCompanyId(), JournalFolder.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(stagingFolder.getFolderId()),
+					stagingTeamRole.getRoleId(),
+					new String[] {ActionKeys.ADD_SUBFOLDER});
+
+				_resourcePermissionLocalService.removeResourcePermission(
+					_user.getCompanyId(), JournalFolder.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(journalFolder.getFolderId()),
+					teamRole.getRoleId(), ActionKeys.ADD_SUBFOLDER);
+
+				hasPermission = permissionChecker.hasPermission(
+					stagingGroup.getGroupId(), JournalFolder.class.getName(),
+					stagingFolder.getFolderId(), ActionKeys.ADD_SUBFOLDER);
+
+				Assert.assertTrue(hasPermission);
+
+				hasPermission = permissionChecker.hasPermission(
+					_group.getGroupId(), JournalFolder.class.getName(),
+					journalFolder.getFolderId(), ActionKeys.ADD_SUBFOLDER);
+
+				Assert.assertFalse(hasPermission);
+			}
+			finally {
+				_resourcePermissionLocalService.deleteResourcePermissions(
+					_user.getCompanyId(), JournalFolder.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					journalFolder.getFolderId());
+			}
+		}
+		finally {
+			_resourceLocalService.deleteResource(
+				_user.getCompanyId(), JournalFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				journalFolder.getFolderId());
+		}
+	}
+
+	@Test
 	public void testHasPermissionOnDefaultPortletResourcesWhenPortletDeploys()
 		throws Exception {
 

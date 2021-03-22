@@ -180,21 +180,25 @@ export const normalizeValue = (
 };
 
 export const normalizeFields = (fields, generateValueUsingLabel) => {
-	return fields.map((field) => {
+	return fields.map((field, index) => {
+		const value = normalizeValue(
+			fields,
+			field,
+			generateValueUsingLabel,
+			'value'
+		);
+
 		return {
 			...field,
-			reference: normalizeValue(
+			reference: normalizeReference(
 				fields,
-				field,
-				generateValueUsingLabel,
-				'reference'
+				{
+					...field,
+					value,
+				},
+				index
 			),
-			value: normalizeValue(
-				fields,
-				field,
-				generateValueUsingLabel,
-				'value'
-			),
+			value,
 		};
 	});
 };

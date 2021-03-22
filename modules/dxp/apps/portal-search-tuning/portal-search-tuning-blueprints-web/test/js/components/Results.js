@@ -21,7 +21,7 @@ function renderResults(props) {
 	return render(
 		<Results
 			activePage={1}
-			items={RESOURCE.items}
+			hits={RESOURCE.hits}
 			onPageChange={jest.fn()}
 			query="test"
 			totalHits={2000}
@@ -35,18 +35,18 @@ describe('BlueprintsSearch', () => {
 	it('displays titles of results', () => {
 		const {getByText} = renderResults();
 
-		RESOURCE.items.map((item) => getByText(item.title));
+		RESOURCE.hits.map((item) => getByText(item.title));
 	});
 
 	it('displays descriptions of results', () => {
 		const {getByText} = renderResults();
 
-		RESOURCE.items.map((item) => getByText(item.description));
+		RESOURCE.hits.map((item) => getByText(item.description));
 	});
 
 	it('displays dates of results', () => {
 		const {getByText} = renderResults();
 
-		RESOURCE.items.map((item) => getByText(`on ${item.date}`));
+		RESOURCE.hits.map((item) => getByText(`on ${item.date}`));
 	});
 });

@@ -34,7 +34,7 @@ const ICON_MAP = {
 
 export default function Results({
 	activePage,
-	items,
+	hits,
 	onPageChange,
 	query,
 	totalHits,
@@ -51,7 +51,7 @@ export default function Results({
 			</p>
 
 			<ClayList className="search-results-list">
-				{items.map((item, index) => (
+				{hits.map((item, index) => (
 					<ClayList.Item flex key={index}>
 						<ClayList.ItemField>
 							<ClaySticker displayType="secondary" size="md">
@@ -137,7 +137,7 @@ export default function Results({
 
 Results.propTypes = {
 	activePage: PropTypes.number,
-	items: PropTypes.arrayOf(PropTypes.object),
+	hits: PropTypes.arrayOf(PropTypes.object),
 	onPageChange: PropTypes.func,
 	query: PropTypes.string,
 	totalHits: PropTypes.number,

@@ -153,7 +153,7 @@ export default function BlueprintsSearch({fetchResultsURL, suggestionsURL}) {
 		);
 	}
 
-	function updateSelectedFacets(param, facets) {
+	function _handleChangeSelectedFacets(param, facets) {
 		setSelectedFacets((selectedFacets) => ({
 			...selectedFacets,
 			[`${param}`]: facets,
@@ -213,8 +213,8 @@ export default function BlueprintsSearch({fetchResultsURL, suggestionsURL}) {
 							{resource.facets && (
 								<Facet
 									facets={resource.facets}
+									onChange={_handleChangeSelectedFacets}
 									selectedFacets={selectedFacets}
-									updateSelectedFacets={updateSelectedFacets}
 								/>
 							)}
 
@@ -226,17 +226,17 @@ export default function BlueprintsSearch({fetchResultsURL, suggestionsURL}) {
 
 							<ClayLayout.Row justify="end">
 								<SortSelect
-									sortBy={sortBy}
-									updateSortBy={(val) => {
+									onChange={(val) => {
 										setActivePage(1);
 										setSortBy(val);
 									}}
+									value={sortBy}
 								/>
 							</ClayLayout.Row>
 
 							<Results
 								activePage={activePage}
-								items={resource.hits}
+								hits={resource.hits}
 								onPageChange={(page) => {
 									setActivePage(page);
 								}}

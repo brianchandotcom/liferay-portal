@@ -97,47 +97,36 @@ export const RESOURCE = {
 			],
 		},
 	],
-	items: [
+	hits: [
 		{
-			result: {
-				assetTagNames: ['test', 'staging', 'official'],
-				content_highlight:
-					'Staging <liferay-hl>Test</liferay-hl> Plan Staging <liferay-hl>Test</liferay-hl>',
-				date: '7/23/18',
-				description: 'Staging Test Plan Staging Test Cases Upgrade',
-				entryClassPK: '898797',
-				official_content: 'true',
-				title: 'Title Staging Testing',
-				type: 'Web Content',
-				viewURL: '/',
-			},
+			assetTagNames: ['test', 'staging', 'official'],
+			content_highlight:
+				'Staging <liferay-hl>Test</liferay-hl> Plan Staging <liferay-hl>Test</liferay-hl>',
+			date: '7/23/18',
+			description: 'Staging Test Plan Staging Test Cases Upgrade',
+			entryClassPK: '898797',
+			official_content: 'true',
+			title: 'Title Staging Testing',
+			type: 'Web Content',
+			viewURL: '/',
 		},
 		{
-			result: {
-				date: '5/22/19',
-				description: 'Creating a LRSUPPORT Ticket',
-				entryClassPK: '1360528',
-				title: 'Title Support Testing',
-				type: 'Blog',
-				viewURL: '/',
-			},
+			date: '5/22/19',
+			description: 'Creating a LRSUPPORT Ticket',
+			entryClassPK: '1360528',
+			title: 'Title Support Testing',
+			type: 'Blog',
+			viewURL: '/',
 		},
 		{
-			result: {
-				assetTagNames: [
-					'testing',
-					'fixpack',
-					'gauntlet',
-					'cnqa test tips',
-				],
-				date: '1/17/18',
-				description:
-					'Definition Gauntlets that the ER team trigger everyday',
-				entryClassPK: '682986',
-				title: 'Title Gauntlet Testing',
-				type: 'Web Content',
-				viewURL: '/',
-			},
+			assetTagNames: ['testing', 'fixpack', 'gauntlet', 'cnqa test tips'],
+			date: '1/17/18',
+			description:
+				'Definition Gauntlets that the ER team trigger everyday',
+			entryClassPK: '682986',
+			title: 'Title Gauntlet Testing',
+			type: 'Web Content',
+			viewURL: '/',
 		},
 	],
 	meta: {

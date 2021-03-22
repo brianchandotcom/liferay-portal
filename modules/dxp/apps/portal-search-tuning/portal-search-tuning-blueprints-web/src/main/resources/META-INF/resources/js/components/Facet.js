@@ -57,7 +57,7 @@ FacetInput.propTypes = {
 	values: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default function Facet({facets, selectedFacets, updateSelectedFacets}) {
+export default function Facet({facets, onChange, selectedFacets}) {
 	return (
 		<div className="search-facets">
 			{facets.map((facet, index) => (
@@ -65,7 +65,7 @@ export default function Facet({facets, selectedFacets, updateSelectedFacets}) {
 					items={selectedFacets[facet.parameterName]}
 					key={index}
 					onItemsChange={(items) =>
-						updateSelectedFacets(facet.parameterName, items)
+						onChange(facet.parameterName, items)
 					}
 					{...facet}
 				/>
@@ -76,6 +76,6 @@ export default function Facet({facets, selectedFacets, updateSelectedFacets}) {
 
 Facet.propTypes = {
 	facets: PropTypes.arrayOf(PropTypes.object),
+	onChange: PropTypes.func,
 	selectedFacets: PropTypes.object,
-	updateSelectedFacets: PropTypes.func,
 };

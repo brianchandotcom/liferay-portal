@@ -33,7 +33,7 @@ export default function SearchBar({handleSubmit, suggestionsURL}) {
 
 	const timeout = useRef();
 
-	function handleKeyDown(event) {
+	function _handleKeyDown(event) {
 		if (event.key === 'Enter') {
 			const trimValue = event.currentTarget.value.trim();
 
@@ -93,7 +93,7 @@ export default function SearchBar({handleSubmit, suggestionsURL}) {
 					onClick={() => {
 						setView(true);
 					}}
-					onKeyDown={handleKeyDown}
+					onKeyDown={_handleKeyDown}
 					placeholder={Liferay.Language.get('search')}
 					value={value}
 				/>

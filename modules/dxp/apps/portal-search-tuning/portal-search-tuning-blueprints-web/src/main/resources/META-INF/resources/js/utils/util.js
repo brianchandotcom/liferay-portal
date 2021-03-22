@@ -30,27 +30,6 @@ export function buildUrl(baseUrl, params) {
 }
 
 /**
- * Utility function for filtering out a key in an object.
- *
- * Examples:
- * filterObject({file: 'pdf', name: 'Workplace Training', size: '30'}, ['size'])
- * => {file: 'pdf', name: 'Workplace Training'}
- *
- * @param {Object} json Object
- * @param {Array} removed List of keys to be removed
- * @return {Object} Object that has been filtered out
- */
-export function filterObject(json, removed) {
-	return Object.keys(json)
-		.filter((key) => !removed.includes(key))
-		.reduce((obj, key) => {
-			obj[key] = json[key];
-
-			return obj;
-		}, {});
-}
-
-/**
  * Utility function for formatting date into YYYY-MM-DD.
  *
  * Examples:

@@ -21,8 +21,8 @@ function renderFacets(props) {
 	return render(
 		<Facet
 			facets={RESOURCE.facets}
+			onChange={jest.fn()}
 			selectedFacets={{}}
-			updateSelectedFacets={jest.fn()}
 			{...props}
 		/>
 	);
@@ -57,16 +57,16 @@ describe('BlueprintsSearch', () => {
 		);
 	});
 
-	it('calls updateSelectedFacets when facets are clicked on', () => {
-		const updateSelectedFacets = jest.fn();
+	it('calls onChange when facets are clicked on', () => {
+		const onChange = jest.fn();
 
 		const {getAllByLabelText} = renderFacets({
+			onChange,
 			selectedFacets: SELECTED_FACETS,
-			updateSelectedFacets,
 		});
 
 		fireEvent.click(getAllByLabelText('Remove', {exact: false})[0]);
 
-		expect(updateSelectedFacets).toHaveBeenCalled();
+		expect(onChange).toHaveBeenCalled();
 	});
 });

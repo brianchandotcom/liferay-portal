@@ -17,9 +17,7 @@ import SortSelect from '../../../src/main/resources/META-INF/resources/js/compon
 import '@testing-library/jest-dom/extend-expect';
 
 function renderSortSelect(props) {
-	return render(
-		<SortSelect sortBy={{}} updateSortBy={jest.fn()} {...props} />
-	);
+	return render(<SortSelect onChange={jest.fn()} value={{}} {...props} />);
 }
 
 describe('TimeSelect', () => {
@@ -29,27 +27,27 @@ describe('TimeSelect', () => {
 		getByLabelText('sort-by');
 	});
 
-	it('calls updateSortBy when option is selected', () => {
-		const updateSortBy = jest.fn();
+	it('calls onChange when option is selected', () => {
+		const onChange = jest.fn();
 
-		const {getByLabelText} = renderSortSelect({updateSortBy});
+		const {getByLabelText} = renderSortSelect({onChange});
 
 		fireEvent.change(getByLabelText('sort-by'), {
 			target: {value: 'title'},
 		});
 
-		expect(updateSortBy).toHaveBeenCalled();
+		expect(onChange).toHaveBeenCalled();
 	});
 
-	it('calls updateSortBy when order button is clicked', () => {
-		const updateSortBy = jest.fn();
+	it('calls onChange when order button is clicked', () => {
+		const onChange = jest.fn();
 
 		const {getByLabelText} = renderSortSelect({
-			updateSortBy,
+			onChange,
 		});
 
 		fireEvent.click(getByLabelText('sort-direction'));
 
-		expect(updateSortBy).toHaveBeenCalled();
+		expect(onChange).toHaveBeenCalled();
 	});
 });

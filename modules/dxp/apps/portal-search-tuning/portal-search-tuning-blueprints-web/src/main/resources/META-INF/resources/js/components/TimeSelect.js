@@ -22,7 +22,7 @@ const YEAR_RANGE = {
 	start: 1997,
 };
 
-export default function TimeSelect({children, timeRange, updateTimeRange}) {
+export default function TimeSelect({children, onChange, value}) {
 	const DEFAULT_TIME = 'any';
 
 	const TIME_OPTIONS = [
@@ -56,33 +56,33 @@ export default function TimeSelect({children, timeRange, updateTimeRange}) {
 		},
 	];
 
-	function updateTimeOption(event) {
+	function _handleChangeTimeOption(event) {
 		const value = event.target.value;
 
 		if (value === DEFAULT_TIME) {
-			updateTimeRange({});
+			onChange({});
 		}
 		else {
-			updateTimeRange({time: value});
+			onChange({time: value});
 		}
 	}
 
-	function updateTimeFrom(value) {
-		updateTimeRange({
-			...timeRange,
-			timeFrom: value,
+	function _handleChangeTimeFrom(timeFrom) {
+		onChange({
+			...value,
+			timeFrom,
 		});
 	}
 
-	function updateTimeTo(value) {
-		updateTimeRange({
-			...timeRange,
-			timeTo: value,
+	function _handleChangeTimeTo(timeTo) {
+		onChange({
+			...value,
+			timeTo,
 		});
 	}
 
 	const _hasError = () =>
-		timeRange.timeTo && timeRange.timeFrom && !validDateRange(timeRange);
+		value.timeTo && value.timeFrom && !validDateRange(value);
 
 	return (
 		<>
@@ -92,12 +92,8 @@ export default function TimeSelect({children, timeRange, updateTimeRange}) {
 						<div className="form-group-item">
 							<ClaySelect
 								aria-label={Liferay.Language.get('time-range')}
-								onChange={updateTimeOption}
-								value={
-									timeRange.time
-										? timeRange.time
-										: DEFAULT_TIME
-								}
+								onChange={_handleChangeTimeOption}
+								value={value.time ? value.time : DEFAULT_TIME}
 							>
 								{TIME_OPTIONS.map((item) => (
 									<ClaySelect.Option
@@ -116,7 +112,7 @@ export default function TimeSelect({children, timeRange, updateTimeRange}) {
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 
-			{timeRange.time === 'custom-range' && (
+			{value.time === 'custom-range' && (
 				<ClayLayout.Row justify="center">
 					<ClayLayout.Col size={8}>
 						<ClayForm.Group
@@ -134,9 +130,9 @@ export default function TimeSelect({children, timeRange, updateTimeRange}) {
 									ariaLabels={Liferay.Language.get(
 										'time-from'
 									)}
-									onValueChange={updateTimeFrom}
+									onValueChange={_handleChangeTimeFrom}
 									placeholder="YYYY-MM-DD"
-									value={timeRange.timeFrom}
+									value={value.timeFrom}
 									years={YEAR_RANGE}
 								/>
 							</div>
@@ -148,9 +144,9 @@ export default function TimeSelect({children, timeRange, updateTimeRange}) {
 							<div className="form-group-item">
 								<ClayDatePicker
 									ariaLabels={Liferay.Language.get('time-to')}
-									onValueChange={updateTimeTo}
+									onValueChange={_handleChangeTimeTo}
 									placeholder="YYYY-MM-DD"
-									value={timeRange.timeTo}
+									value={value.timeTo}
 									years={YEAR_RANGE}
 								/>
 								{_hasError() && (
@@ -174,6 +170,6 @@ export default function TimeSelect({children, timeRange, updateTimeRange}) {
 }
 
 TimeSelect.propTypes = {
-	timeRange: PropTypes.object,
-	updateTimeRange: PropTypes.func,
+	onChange: PropTypes.func,
+	value: PropTypes.object,
 };

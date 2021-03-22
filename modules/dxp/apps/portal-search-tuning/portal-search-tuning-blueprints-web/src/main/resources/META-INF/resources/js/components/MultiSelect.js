@@ -274,10 +274,7 @@ export default function MultiSelect({
 					)}
 
 				<ClayInput.GroupItem shrink>
-					<ClayIcon
-						className="component-action"
-						symbol="caret-double-l"
-					/>
+					<ClayIcon symbol="caret-double-l" />
 				</ClayInput.GroupItem>
 
 				{sourceItems.length > 0 && (

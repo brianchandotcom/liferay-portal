@@ -16,7 +16,7 @@ import ClayLayout from '@clayui/layout';
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
-export default function SortSelect({sortBy, updateSortBy}) {
+export default function SortSelect({onChange, value}) {
 	const DEFAULT_DIRECTION = 'desc';
 	const DEFAULT_FIELD = 'sort1';
 
@@ -50,17 +50,17 @@ export default function SortSelect({sortBy, updateSortBy}) {
 		},
 	];
 
-	function updateSortField(event) {
-		updateSortBy({
-			direction: sortBy.direction ? sortBy.direction : DEFAULT_DIRECTION,
+	function _handleChangeSortField(event) {
+		onChange({
+			direction: value.direction ? value.direction : DEFAULT_DIRECTION,
 			field: event.target.value,
 		});
 	}
 
-	function updateSortDirection() {
-		updateSortBy({
-			direction: sortBy.direction === 'asc' ? 'desc' : 'asc',
-			field: sortBy.field ? sortBy.field : DEFAULT_FIELD,
+	function _handleChangeSortDirection() {
+		onChange({
+			direction: value.direction === 'asc' ? 'desc' : 'asc',
+			field: value.field ? value.field : DEFAULT_FIELD,
 		});
 	}
 
@@ -74,8 +74,8 @@ export default function SortSelect({sortBy, updateSortBy}) {
 				<div className="form-group-item">
 					<ClaySelect
 						aria-label={Liferay.Language.get('sort-by')}
-						onChange={updateSortField}
-						value={sortBy.field ? sortBy.field : DEFAULT_FIELD}
+						onChange={_handleChangeSortField}
+						value={value.field ? value.field : DEFAULT_FIELD}
 					>
 						{SORT_OPTIONS.map((item) => (
 							<ClaySelect.Option
@@ -90,17 +90,17 @@ export default function SortSelect({sortBy, updateSortBy}) {
 				<ClayButton
 					aria-label={Liferay.Language.get('sort-direction')}
 					displayType="secondary"
-					onClick={updateSortDirection}
+					onClick={_handleChangeSortDirection}
 					title={
-						sortBy.direction
-							? DIRECTIONS[sortBy.direction].title
+						value.direction
+							? DIRECTIONS[value.direction].title
 							: DIRECTIONS[DEFAULT_DIRECTION].title
 					}
 				>
 					<ClayIcon
 						symbol={
-							sortBy.direction
-								? DIRECTIONS[sortBy.direction].icon
+							value.direction
+								? DIRECTIONS[value.direction].icon
 								: DIRECTIONS[DEFAULT_DIRECTION].icon
 						}
 					/>
@@ -111,6 +111,6 @@ export default function SortSelect({sortBy, updateSortBy}) {
 }
 
 SortSelect.propTypes = {
-	sortBy: PropTypes.object,
-	updateSortBy: PropTypes.func,
+	onChange: PropTypes.func,
+	value: PropTypes.object,
 };

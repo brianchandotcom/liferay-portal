@@ -40,36 +40,6 @@ addDecorator((storyFn) => {
 	);
 });
 
-const FETCH_URL =
-	'https://run.mocky.io/v3/98cd9b49-8fe6-47b9-8e07-62caa7e9c3bd';
-
-//https://designer.mocky.io/manage/delete/98cd9b49-8fe6-47b9-8e07-62caa7e9c3bd/zkkGktbUnpxZeTGAkqGHktZd1jQhkam8REy5
-
-const SUGGEST_URL =
-	'https://run.mocky.io/v3/8a9f5981-378f-4e4d-96a1-369d286f8954';
-
-//https://designer.mocky.io/manage/delete/8a9f5981-378f-4e4d-96a1-369d286f8954/FZty6MiQkyL8FB6owdovyjVJbDbfjuLWfCHe
-
-const EMPTY_URL =
-	'https://run.mocky.io/v3/f1a9653a-fcac-4722-8fee-64df94df5bf9';
-
-//https://designer.mocky.io/manage/delete/f1a9653a-fcac-4722-8fee-64df94df5bf9/wkN7nAjQk7lkODBz20PYT2kP4AzzygA3j3IE
-
-const EMPTY_SUGGEST_URL =
-	'https://run.mocky.io/v3/dce05a29-ff94-43fa-9c66-aaca57d4a6b8';
-
-//https://designer.mocky.io/manage/delete/dce05a29-ff94-43fa-9c66-aaca57d4a6b8/G1A8oEVgo90gTTm3xsPQaoaoRnDLgdVhylNg
-
-const BAD_REQUEST_URL =
-	'https://run.mocky.io/v3/8c8ab5a2-c99f-4694-b7dc-12b445163a19';
-
-//https://designer.mocky.io/manage/delete/8c8ab5a2-c99f-4694-b7dc-12b445163a19/CKxgru5fFLRPMMp9DDygnbtItINuNOXzZPwD
-
-const ERROR_URL =
-	'https://run.mocky.io/v3/4e507ddb-afa4-4845-9ad6-a10a6ddab801';
-
-//https://designer.mocky.io/manage/delete/4e507ddb-afa4-4845-9ad6-a10a6ddab801/QV8czujaGUho78WzE95yDZ0bHMIi46u14bMl
-
 const withSheet = (storyFn) => (
 	<div
 		className="portlet-search-tuning-blueprints-web sheet sheet-lg"
@@ -83,25 +53,19 @@ storiesOf('Pages|BlueprintsWebApp', module)
 	.addDecorator(withSheet)
 	.add('default', () => (
 		<BlueprintsSearch
-			fetchResultsURL={FETCH_URL}
-			suggestionsURL={SUGGEST_URL}
+			fetchResultsURL="https://run.mocky.io/v3/fc407a61-2fc5-4cd9-b147-877581580dcc"
+			suggestionsURL="https://run.mocky.io/v3/8a9f5981-378f-4e4d-96a1-369d286f8954"
 		/>
 	))
 	.add('empty', () => (
 		<BlueprintsSearch
-			fetchResultsURL={EMPTY_URL}
-			suggestionsURL={EMPTY_SUGGEST_URL}
-		/>
-	))
-	.add('bad request', () => (
-		<BlueprintsSearch
-			fetchResultsURL={BAD_REQUEST_URL}
-			suggestionsURL={BAD_REQUEST_URL}
+			fetchResultsURL="https://run.mocky.io/v3/89d0381c-be15-4b67-8356-202974a64b67"
+			suggestionsURL="https://run.mocky.io/v3/dce05a29-ff94-43fa-9c66-aaca57d4a6b8"
 		/>
 	))
 	.add('error', () => (
 		<BlueprintsSearch
-			fetchResultsURL={ERROR_URL}
-			suggestionsURL={ERROR_URL}
+			fetchResultsURL="https://run.mocky.io/v3/4e507ddb-afa4-4845-9ad6-a10a6ddab801"
+			suggestionsURL="https://run.mocky.io/v3/4e507ddb-afa4-4845-9ad6-a10a6ddab801"
 		/>
 	));

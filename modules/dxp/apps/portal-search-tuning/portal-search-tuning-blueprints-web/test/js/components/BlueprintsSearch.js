@@ -57,6 +57,6 @@ describe('BlueprintsSearch', () => {
 			getByText('x-results-for-x', {exact: false})
 		);
 
-		RESOURCE.items.map((item) => getByText(item.description));
+		RESOURCE.hits.map((item) => getByText(item.description));
 	});
 });

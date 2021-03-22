@@ -17,9 +17,7 @@ import TimeSelect from '../../../src/main/resources/META-INF/resources/js/compon
 import '@testing-library/jest-dom/extend-expect';
 
 function renderTimeSelect(props) {
-	return render(
-		<TimeSelect timeRange={{}} updateTimeRange={jest.fn()} {...props} />
-	);
+	return render(<TimeSelect onChange={jest.fn()} value={{}} {...props} />);
 }
 
 describe('TimeSelect', () => {
@@ -29,21 +27,21 @@ describe('TimeSelect', () => {
 		getByLabelText('time-range');
 	});
 
-	it('calls updateTimeRange when option is selected', () => {
-		const updateTimeRange = jest.fn();
+	it('calls onChange when option is selected', () => {
+		const onChange = jest.fn();
 
-		const {getByLabelText} = renderTimeSelect({updateTimeRange});
+		const {getByLabelText} = renderTimeSelect({onChange});
 
 		fireEvent.change(getByLabelText('time-range'), {
 			target: {value: 'last-hour'},
 		});
 
-		expect(updateTimeRange).toHaveBeenCalled();
+		expect(onChange).toHaveBeenCalled();
 	});
 
 	it('opens the calendar when custom time range is selected', () => {
 		const {getAllByPlaceholderText} = renderTimeSelect({
-			timeRange: {time: 'custom-range'},
+			value: {time: 'custom-range'},
 		});
 
 		expect(getAllByPlaceholderText('YYYY-MM-DD')[0]).toBeVisible();

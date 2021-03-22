@@ -636,6 +636,56 @@ describe('Options', () => {
 	});
 
 	describe('Normalize option reference during the onBlur event', () => {
+		it('changes to the option value when the reference is duplicated', () => {
+			mockLiferayLanguage();
+
+			const {container} = render(
+				<OptionsWithProvider
+					name="options"
+					onChange={jest.fn()}
+					spritemap={spritemap}
+					value={{
+						[themeDisplay.getLanguageId()]: [
+							{
+								id: 'option1',
+								label: 'Option 1',
+								reference: 'Reference1',
+								value: 'Option1',
+							},
+							{
+								id: 'option2',
+								label: 'Option 2',
+								reference: 'Reference2',
+								value: 'Option2',
+							},
+						],
+					}}
+				/>
+			);
+
+			const referenceInputs = container.querySelectorAll(
+				'.key-value-reference-input'
+			);
+
+			expect(referenceInputs[0].value).toBe('Reference1');
+			expect(referenceInputs[1].value).toBe('Reference2');
+
+			fireEvent.input(referenceInputs[0], {
+				target: {value: 'Reference2'},
+			});
+
+			fireEvent.blur(referenceInputs[0]);
+
+			act(() => {
+				jest.runAllTimers();
+			});
+
+			expect(referenceInputs[0].value).toBe('Option1');
+			expect(referenceInputs[1].value).toBe('Reference2');
+
+			unmockLiferayLanguage();
+		});
+
 		it('changes to the option value when the reference is empty', () => {
 			mockLiferayLanguage();
 

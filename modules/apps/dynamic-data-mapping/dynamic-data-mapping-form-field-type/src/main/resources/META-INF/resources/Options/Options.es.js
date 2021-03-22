@@ -337,10 +337,12 @@ const Options = ({
 	};
 
 	const checkValidReference = (fields, value, fieldName) => {
-		const field = fields.find(
-			(field) =>
-				field['reference']?.toLowerCase() === value?.toLowerCase()
-		);
+		const field = fields
+			.filter(({value}) => value !== fieldName)
+			.find(
+				({reference}) =>
+					reference?.toLowerCase() === value?.toLowerCase()
+			);
 
 		return field ? fieldName : null;
 	};

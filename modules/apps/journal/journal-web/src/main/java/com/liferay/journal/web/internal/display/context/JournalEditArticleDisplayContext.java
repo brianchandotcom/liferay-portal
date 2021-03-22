@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -578,6 +579,69 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return _smallImageSource;
+	}
+
+	public Map<String, Object> getTemplateComponentContext() {
+		return HashMapBuilder.<String, Object>put(
+			"currentURL", _themeDisplay::getURLCurrent
+		).put(
+			"ddmTemplateId",
+			() -> {
+				DDMTemplate ddmTemplate = getDDMTemplate();
+
+				if (ddmTemplate != null) {
+					return String.valueOf(ddmTemplate.getTemplateId());
+				}
+
+				return "0";
+			}
+		).put(
+			"editDDMTemplateURL",
+			() -> PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/edit_ddm_template.jsp"
+			).setParameter(
+				"ddmTemplateId",
+				() -> {
+					DDMTemplate ddmTemplate = getDDMTemplate();
+
+					if (ddmTemplate != null) {
+						return ddmTemplate.getTemplateId();
+					}
+
+					return 0;
+				}
+			).setParameter(
+				"redirect", _themeDisplay.getURLCurrent()
+			).buildString()
+		).put(
+			"previewArticleContentTemplateURL",
+			() -> PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/preview_article_content_template.jsp"
+			).setParameter(
+				"groupId", getGroupId()
+			).setParameter(
+				"articleId", getArticleId()
+			).setParameter(
+				"version", getVersion()
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
+		).put(
+			"selectDDMTemplateURL",
+			() -> PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/select_ddm_template.jsp"
+			).setParameter(
+				"ddmStructureId", _ddmStructure.getStructureId()
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
+		).build();
 	}
 
 	public Map<String, Object> getValues(DDMStructure ddmStructure)

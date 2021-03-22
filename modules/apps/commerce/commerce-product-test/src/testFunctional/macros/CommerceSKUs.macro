@@ -27,7 +27,8 @@ definition {
 
 			CommerceEntry.addSKUsEntry(
 				optionValue = "${optionValue}",
-				productSKU = "${optionValueUppercase}SKU");
+				productSKU = "${optionValueUppercase}SKU",
+				noOption = "${noOption}");
 
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Purchasable",

@@ -165,7 +165,8 @@ public class DDMDataDefinitionConverterImpl
 
 	@Override
 	public String convertDDMFormLayoutDataDefinition(
-			String structureLayoutDataDefinition,
+			long groupId, long structureId,
+			String structureLayoutDataDefinition, long structureLayoutId,
 			String structureVersionDataDefinition)
 		throws Exception {
 
@@ -185,7 +186,40 @@ public class DDMDataDefinitionConverterImpl
 						ddmFormLayout
 					).build());
 
-		return ddmFormLayoutSerializerSerializeResponse.getContent();
+		String content = ddmFormLayoutSerializerSerializeResponse.getContent();
+
+		_addDataDefinitionFieldLinks(
+			structureId, structureLayoutId, ddmForm, _getFieldNames(content),
+			groupId);
+
+		return content;
+	}
+
+	private void _addDataDefinitionFieldLinks(
+			long dataDefinitionId, long dataLayoutId, DDMForm ddmForm,
+			List<String> fieldNames, long groupId)
+		throws Exception {
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		for (String fieldName : fieldNames) {
+			long classNameId = _portal.getClassNameId(DDMStructureLayout.class);
+
+			_deDataDefinitionFieldLinkLocalService.addDEDataDefinitionFieldLink(
+				groupId, classNameId, dataLayoutId, dataDefinitionId,
+				fieldName);
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
+
+			if (ddmFormField != null) {
+				_addDataDefinitionFieldLinks(
+					classNameId, dataLayoutId,
+					Collections.singletonList(ddmFormField), groupId);
+			}
+		}
+	}
+
 	private void _addDataDefinitionFieldLinks(
 			long classNameId, long dataDefinitionId,
 			List<DDMFormField> ddmFormFields, long groupId)
@@ -287,6 +321,13 @@ public class DDMDataDefinitionConverterImpl
 		localizedValue.addString(defaultLocale, StringPool.BLANK);
 
 		return localizedValue;
+	}
+
+	private List<String> _getFieldNames(String content) {
+		DocumentContext documentContext = JsonPath.parse(content);
+
+		return documentContext.read(
+			"$[\"pages\"][*][\"rows\"][*][\"columns\"][*][\"fieldNames\"][*]");
 	}
 
 	private LocalizedValue _getLocalizedPredefinedValue(

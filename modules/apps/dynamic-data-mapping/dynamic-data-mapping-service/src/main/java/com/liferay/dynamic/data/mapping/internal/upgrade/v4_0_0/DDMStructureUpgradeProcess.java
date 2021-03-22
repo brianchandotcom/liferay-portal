@@ -121,7 +121,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 		sb1.append("select DDMStructure.structureId, ");
 		sb1.append("DDMStructure.parentStructureId, DDMStructure.classNameId ");
-		sb1.append(", DDMStructure.structureKey, ");
+		sb1.append(", DDMStructure.structureKey, DDMStructureLayout.groupId, ");
 		sb1.append("DDMStructureLayout.structureLayoutId, ");
 		sb1.append("DDMStructureLayout.definition as ");
 		sb1.append("structureLayoutDefinition, ");
@@ -162,7 +162,10 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 						1,
 						_ddmDataDefinitionConverter.
 							convertDDMFormLayoutDataDefinition(
+								rs.getLong("groupId"),
+								rs.getLong("structureId"),
 								structureLayoutDefinition,
+								rs.getLong("structureLayoutId"),
 								structureVersionDefinition));
 
 					ps2.setLong(2, rs.getLong("classNameId"));

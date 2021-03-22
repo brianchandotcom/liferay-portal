@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
@@ -111,7 +112,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 	}
 
 	private String _getVocabularyName(String vocabularyName) {
-		if (vocabularyName != null) {
+		if (Validator.isNotNull(vocabularyName)) {
 			vocabularyName = vocabularyName.trim();
 
 			return StringUtil.toLowerCase(vocabularyName);

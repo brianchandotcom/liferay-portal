@@ -111,6 +111,8 @@ public class ModuleSelfContainedDependencyClosureTest {
 				Path deployedJarPath = modulesPath.resolve(
 					jarPath.getFileName());
 
+				deployedJarPath = deployedJarPath.normalize();
+
 				File deployedJarFile = deployedJarPath.toFile();
 
 				URI uri = deployedJarFile.toURI();

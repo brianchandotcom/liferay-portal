@@ -70,6 +70,6 @@ else {
 
 <aui:script>
 	function <portlet:namespace />saveCommerceRegion() {
-	submitForm(document.<portlet:namespace />fm);
+		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

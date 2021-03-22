@@ -157,6 +157,34 @@ public abstract class BaseBlueprintsTestCase {
 		return JSONFactoryUtil.createJSONArray();
 	}
 
+	protected JSONObject getAdvancedConfiguration() {
+		return JSONUtil.put(
+			AdvancedConfigurationKeys.QUERY_PROCESSING.getJsonKey(),
+			JSONUtil.put(
+				QueryProcessingConfigurationKeys.EXCLUDE_QUERY_CONTRIBUTORS.
+					getJsonKey(),
+				""
+			).put(
+				QueryProcessingConfigurationKeys.EXCLUDE_QUERY_POST_PROCESSORS.
+					getJsonKey(),
+				""
+			)
+		).put(
+			"source",
+			JSONUtil.put(
+				SourceConfigurationKeys.FETCH_SOURCE.getJsonKey(), true
+			).put(
+				SourceConfigurationKeys.SOURCE_EXCLUDES.getJsonKey(), ""
+			).put(
+				SourceConfigurationKeys.SOURCE_INCLUDES.getJsonKey(), ""
+			)
+		);
+	}
+
+	protected JSONArray getAggregationConfiguration() {
+		return createJSONArray();
+	}
+
 	protected BlueprintsAttributes getBlueprintsAttributes(String keywords)
 		throws Exception {
 
@@ -189,38 +217,16 @@ public abstract class BaseBlueprintsTestCase {
 	protected JSONObject getConfigurationJSONObject(JSONArray jsonArray) {
 		return JSONUtil.put(
 			BlueprintKeys.ADVANCED_CONFIGURATION.getJsonKey(),
-			JSONUtil.put(
-				AdvancedConfigurationKeys.QUERY_PROCESSING.getJsonKey(),
-				JSONUtil.put(
-					QueryProcessingConfigurationKeys.EXCLUDE_QUERY_CONTRIBUTORS.
-						getJsonKey(),
-					""
-				).put(
-					QueryProcessingConfigurationKeys.
-						EXCLUDE_QUERY_POST_PROCESSORS.getJsonKey(),
-					""
-				)
-			).put(
-				"source",
-				JSONUtil.put(
-					SourceConfigurationKeys.FETCH_SOURCE.getJsonKey(), true
-				).put(
-					SourceConfigurationKeys.SOURCE_EXCLUDES.getJsonKey(), ""
-				).put(
-					SourceConfigurationKeys.SOURCE_INCLUDES.getJsonKey(), ""
-				)
-			)
+			getAdvancedConfiguration()
 		).put(
 			BlueprintKeys.AGGREGATION_CONFIGURATION.getJsonKey(),
-			createJSONArray()
+			getAggregationConfiguration()
 		).put(
 			FacetsBlueprintContributorKeys.CONFIGURATION_SECTION,
-			createJSONArray()
+			getConfigurationSection()
 		).put(
 			BlueprintKeys.FRAMEWORK_CONFIGURATION.getJsonKey(),
-			JSONUtil.put(
-				FrameworkConfigurationKeys.APPLY_INDEXER_CLAUSES.getJsonKey(),
-				true)
+			getFrameworkConfiguration()
 		).put(
 			BlueprintKeys.PARAMETER_CONFIGURATION.getJsonKey(),
 			JSONUtil.put(null, null)
@@ -228,15 +234,21 @@ public abstract class BaseBlueprintsTestCase {
 			BlueprintKeys.QUERY_CONFIGURATION.getJsonKey(), jsonArray
 		).put(
 			BlueprintKeys.SORT_CONFIGURATION.getJsonKey(),
-			JSONUtil.put(null, null)
+			getSortConfiguration()
 		);
 	}
 
-	protected String getConfigurationString(JSONObject jsonObject) {
+	protected JSONArray getConfigurationSection() {
+		return createJSONArray();
+	}
+
+	protected String getConfigurationString(JSONObject... jsonObjects) {
 		JSONArray jsonArray = createJSONArray();
 
-		if (jsonObject != null) {
-			jsonArray.put(jsonObject);
+		if (jsonObjects != null) {
+			for (JSONObject jsonObject : jsonObjects) {
+				jsonArray.put(jsonObject);
+			}
 		}
 
 		JSONObject configurationJSONObject = getConfigurationJSONObject(
@@ -253,6 +265,20 @@ public abstract class BaseBlueprintsTestCase {
 
 		return JSONFactoryUtil.createJSONObject(
 			boostWebContentsByKeywordMatchJsonString);
+	}
+
+	protected JSONObject getFrameworkConfiguration() {
+		return JSONUtil.put(
+			FrameworkConfigurationKeys.APPLY_INDEXER_CLAUSES.getJsonKey(),
+			true);
+	}
+
+	protected JSONObject getParameterConfiguration() {
+		return JSONUtil.put(null, null);
+	}
+
+	protected JSONObject getSortConfiguration() {
+		return JSONUtil.put(null, null);
 	}
 
 	protected String getTimeZoneID() throws Exception {

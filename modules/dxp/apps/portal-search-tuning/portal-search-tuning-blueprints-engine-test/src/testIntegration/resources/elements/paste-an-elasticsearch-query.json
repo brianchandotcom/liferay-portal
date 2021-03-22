@@ -1,0 +1,57 @@
+{
+	"elementTemplateJSON": {
+		"category": "custom",
+		"clauses": [
+			{
+				"context": "query",
+				"occur": "${config.occur}",
+				"query": {
+					"query": "${config.query}"
+				},
+				"type": "wrapper"
+			}
+		],
+		"conditions": [
+		],
+		"description": {
+			"en_US": "Paste any Elasticsearch query body in the element as is"
+		},
+		"enabled": true,
+		"icon": "custom-field",
+		"title": {
+			"en_US": "Paste any Elasticsearch query"
+		}
+	},
+	"uiConfigurationJSON": [
+		{
+			"defaultValue": "must",
+			"key": "occur",
+			"label": "Occur",
+			"type": "select",
+			"typeOptions": [
+				{
+					"label": "MUST",
+					"value": "must"
+				},
+				{
+					"label": "SHOULD",
+					"value": "should"
+				},
+				{
+					"label": "MUST NOT",
+					"value": "must_not"
+				},
+				{
+					"label": "FILTER",
+					"value": "filter"
+				}
+			]
+		},
+		{
+			"defaultValue": {
+			},
+			"key": "query",
+			"type": "json"
+		}
+	]
+}

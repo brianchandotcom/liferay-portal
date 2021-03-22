@@ -57,8 +57,9 @@ public class AddAppBuilderAppMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AppResource appResource = AppResource.builder(
-		).user(
+		AppResource.Builder appResourceBuilder = _appResourceFactory.create();
+
+		AppResource appResource = appResourceBuilder.user(
 			themeDisplay.getUser()
 		).build();
 
@@ -66,10 +67,13 @@ public class AddAppBuilderAppMVCResourceCommand
 			ParamUtil.getLong(resourceRequest, "dataDefinitionId"),
 			App.toDTO(ParamUtil.getString(resourceRequest, "app")));
 
-		AppWorkflowResource appWorkflowResource = AppWorkflowResource.builder(
-		).user(
-			themeDisplay.getUser()
-		).build();
+		AppWorkflowResource.Builder appWorkflowResourceBuilder =
+			_appWorkflowResourceFactory.create();
+
+		AppWorkflowResource appWorkflowResource =
+			appWorkflowResourceBuilder.user(
+				themeDisplay.getUser()
+			).build();
 
 		appWorkflowResource.postAppWorkflow(
 			app.getId(),
@@ -90,6 +94,12 @@ public class AddAppBuilderAppMVCResourceCommand
 
 		return Optional.of(app);
 	}
+
+	@Reference
+	private AppResource.Factory _appResourceFactory;
+
+	@Reference
+	private AppWorkflowResource.Factory _appWorkflowResourceFactory;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

@@ -27,6 +27,7 @@ import java.util.Optional;
 import javax.portlet.ResourceRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -49,23 +50,33 @@ public class DeleteAppBuilderAppMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AppResource appResource = AppResource.builder(
-		).user(
+		AppResource.Builder appResourceBuilder = _appResourceFactory.create();
+
+		AppResource appResource = appResourceBuilder.user(
 			themeDisplay.getUser()
 		).build();
 
 		appResource.deleteApp(
 			ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
 
-		AppWorkflowResource appWorkflowResource = AppWorkflowResource.builder(
-		).user(
-			themeDisplay.getUser()
-		).build();
+		AppWorkflowResource.Builder appWorkflowResourceBuilder =
+			_appWorkflowResourceFactory.create();
+
+		AppWorkflowResource appWorkflowResource =
+			appWorkflowResourceBuilder.user(
+				themeDisplay.getUser()
+			).build();
 
 		appWorkflowResource.deleteAppWorkflow(
 			ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
 
 		return Optional.empty();
 	}
+
+	@Reference
+	private AppResource.Factory _appResourceFactory;
+
+	@Reference
+	private AppWorkflowResource.Factory _appWorkflowResourceFactory;
 
 }

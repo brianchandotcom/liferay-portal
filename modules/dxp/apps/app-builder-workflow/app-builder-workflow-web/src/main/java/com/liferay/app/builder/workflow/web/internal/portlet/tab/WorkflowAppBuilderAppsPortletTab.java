@@ -38,10 +38,13 @@ public class WorkflowAppBuilderAppsPortletTab
 
 	@Override
 	public void deleteApp(long appBuilderAppId, User user) throws Exception {
-		AppWorkflowResource appWorkflowResource = AppWorkflowResource.builder(
-		).user(
-			user
-		).build();
+		AppWorkflowResource.Builder appWorkflowResourceBuilder =
+			_appWorkflowResourceFactory.create();
+
+		AppWorkflowResource appWorkflowResource =
+			appWorkflowResourceBuilder.user(
+				user
+			).build();
 
 		appWorkflowResource.deleteAppWorkflow(appBuilderAppId);
 	}
@@ -65,6 +68,9 @@ public class WorkflowAppBuilderAppsPortletTab
 		return _npmResolver.resolveModuleName(
 			"app-builder-workflow-web/js/pages/apps/ListApps.es");
 	}
+
+	@Reference
+	private AppWorkflowResource.Factory _appWorkflowResourceFactory;
 
 	@Reference
 	private Language _language;

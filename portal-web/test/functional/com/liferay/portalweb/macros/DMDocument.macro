@@ -403,7 +403,7 @@ definition {
 	}
 
 	macro addMultiplePG {
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Multiple Files Upload");
 

@@ -33,7 +33,7 @@ definition {
 	}
 
 	macro gotoAddDocumentTypePG {
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+		LexiconEntry.gotoAdd();
 
 		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
 

@@ -38,8 +38,9 @@ public class StandardAppBuilderAppsPortletTab
 
 	@Override
 	public void deleteApp(long appBuilderAppId, User user) throws Exception {
-		AppResource appResource = AppResource.builder(
-		).user(
+		AppResource.Builder appResourceBuilder = _appResourceFactory.create();
+
+		AppResource appResource = appResourceBuilder.user(
 			user
 		).build();
 
@@ -65,6 +66,9 @@ public class StandardAppBuilderAppsPortletTab
 		return _npmResolver.resolveModuleName(
 			"app-builder-web/js/pages/apps/ListStandardApps.es");
 	}
+
+	@Reference
+	private AppResource.Factory _appResourceFactory;
 
 	@Reference
 	private Language _language;

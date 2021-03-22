@@ -142,7 +142,7 @@ public class TranslateDisplayContext {
 		return _infoForm.getInfoFieldSetEntries();
 	}
 
-	public HashMap<String, Object> getInfoFieldSetEntriesData() {
+	public Map<String, Object> getInfoFieldSetEntriesData() {
 		List<HashMap<String, Object>> infoFieldSetEntries = new ArrayList<>();
 
 		for (InfoFieldSetEntry infoFieldSetEntry : getInfoFieldSetEntries()) {
@@ -152,12 +152,12 @@ public class TranslateDisplayContext {
 				continue;
 			}
 
-			Stream<InfoField> infoFieldsStream = infoFields.stream();
+			Stream<InfoField> stream = infoFields.stream();
 
 			infoFieldSetEntries.add(
 				HashMapBuilder.<String, Object>put(
 					"fields",
-					infoFieldsStream.map(
+					stream.map(
 						infoField -> {
 							String infoFieldId =
 								"infoField--" + infoField.getName() + "--";

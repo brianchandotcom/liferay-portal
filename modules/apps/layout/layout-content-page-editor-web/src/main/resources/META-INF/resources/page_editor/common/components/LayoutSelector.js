@@ -13,18 +13,35 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {config} from '../../app/config/index';
 import itemSelectorValueToLayout from '../../app/utils/item-selector-value/itemSelectorValueToLayout';
 import ItemSelector from './ItemSelector';
 
 export const LayoutSelector = ({mappedLayout, onLayoutSelect}) => {
+	const itemSelectorURL = useMemo(() => {
+		if (mappedLayout?.layoutUuid) {
+			const url = new URL(config.layoutItemSelectorURL);
+
+			url.searchParams.set(
+				`${Liferay.Util.getPortletNamespace(
+					Liferay.PortletKeys.ITEM_SELECTOR
+				)}layoutUuid`,
+				mappedLayout.layoutUuid
+			);
+
+			return url.toString();
+		}
+
+		return config.layoutItemSelectorURL;
+	}, [mappedLayout]);
+
 	return (
 		<div className="mb-3">
 			<ItemSelector
 				eventName={`${config.portletNamespace}selectLayout`}
-				itemSelectorURL={config.layoutItemSelectorURL}
+				itemSelectorURL={itemSelectorURL}
 				label={Liferay.Language.get('page')}
 				onItemSelect={(layout) => onLayoutSelect(layout)}
 				selectedItemTitle={mappedLayout?.title || ''}
@@ -36,6 +53,9 @@ export const LayoutSelector = ({mappedLayout, onLayoutSelect}) => {
 };
 
 LayoutSelector.propTypes = {
-	mappedLayout: PropTypes.shape({title: PropTypes.string.isRequired}),
+	mappedLayout: PropTypes.shape({
+		layoutUuid: PropTypes.string,
+		title: PropTypes.string.isRequired,
+	}),
 	onLayoutSelect: PropTypes.func.isRequired,
 };

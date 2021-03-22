@@ -1815,10 +1815,9 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
-		AssertElementPresent(
-			key_count = "1",
-			key_text = "top",
-			locator1 = "Questions#QUESTIONS_LIST_VOTED_COUNT");
+		Questions.viewVotedResult(
+			votedCaret = "top",
+			votedCount = "1");
 
 		Questions.gotoDetails(
 			questionTabField = "Questions",
@@ -1836,10 +1835,9 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
-		AssertElementPresent(
-			key_count = "-1",
-			key_text = "bottom",
-			locator1 = "Questions#QUESTIONS_LIST_VOTED_COUNT");
+		Questions.viewVotedResult(
+			votedCaret = "bottom",
+			votedCount = "-1");
 
 		Questions.gotoDetails(
 			questionTabField = "Questions",
@@ -1853,10 +1851,9 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
-		AssertElementPresent(
-			key_count = "0",
-			key_text = "top",
-			locator1 = "Questions#QUESTIONS_LIST_VOTED_COUNT");
+		Questions.viewVotedResult(
+			votedCaret = "top",
+			votedCount = "0");
 	}
 
 }

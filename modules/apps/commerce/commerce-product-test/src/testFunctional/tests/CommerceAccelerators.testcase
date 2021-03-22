@@ -127,6 +127,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Account Users");
+
 		CommerceLogin.editPasswordCP(
 			newPassword = "ttest",
 			requirePasswordReset = "true",
@@ -204,6 +208,10 @@ definition {
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Account Users");
 
 		CommerceLogin.editPasswordCP(
 			newPassword = "ttest",
@@ -403,6 +411,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Account Users");
+
 		CommerceLogin.editPasswordCP(
 			newPassword = "ttest",
 			requirePasswordReset = "true",
@@ -547,6 +559,10 @@ definition {
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Account Users");
 
 		CommerceLogin.editPasswordCP(
 			newPassword = "ttest",

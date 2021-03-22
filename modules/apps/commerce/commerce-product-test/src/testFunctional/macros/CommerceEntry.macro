@@ -612,11 +612,13 @@ definition {
 				locator1 = "CommerceEntry#OPTION_VALUE");
 		}
 		else {
-			Click(locator1 = "CommerceEntry#OPTION_SELECT");
+			if ("${noOption}" != "true") {
+				Click(locator1 = "CommerceEntry#OPTION_SELECT");
 
-			Click(
-				key_selectValue = "${optionValue}",
-				locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+				Click(
+					key_selectValue = "${optionValue}",
+					locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+			}
 		}
 	}
 

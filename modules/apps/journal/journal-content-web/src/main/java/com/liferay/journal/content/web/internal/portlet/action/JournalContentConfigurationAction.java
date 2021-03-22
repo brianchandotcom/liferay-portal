@@ -19,10 +19,10 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
@@ -200,10 +200,8 @@ public class JournalContentConfigurationAction
 			return 0;
 		}
 
-		com.liferay.dynamic.data.mapping.kernel.DDMTemplate ddmTemplate =
-			_ddmTemplateManager.fetchTemplate(
-				getArticleGroupId(portletRequest), _CLASS_NAME_ID,
-				ddmTemplateKey);
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			getArticleGroupId(portletRequest), _CLASS_NAME_ID, ddmTemplateKey);
 
 		if (ddmTemplate == null) {
 			return 0;
@@ -253,7 +251,7 @@ public class JournalContentConfigurationAction
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 	@Reference
-	private DDMTemplateManager _ddmTemplateManager;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate)"

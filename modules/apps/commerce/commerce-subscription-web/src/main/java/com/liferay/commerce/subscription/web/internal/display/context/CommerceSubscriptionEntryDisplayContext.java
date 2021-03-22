@@ -219,7 +219,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 				_httpServletRequest, themeDisplay.getScopeGroup(),
 				CommerceOrder.class.getName(), PortletProvider.Action.MANAGE)
 		).setMVCRenderCommandName(
-			"/commerce_open_order_content/edit_commerce_order"
+			"/commerce_order/edit_commerce_order"
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).setParameter(
@@ -284,6 +284,10 @@ public class CommerceSubscriptionEntryDisplayContext {
 				fetchCommercePaymentMethodGroupRel(
 					commerceOrder.getGroupId(), paymentMethodKey);
 
+		if (commercePaymentMethodGroupRel == null) {
+			return StringPool.BLANK;
+		}
+
 		return commercePaymentMethodGroupRel.getImageURL(
 			_cpRequestHelper.getThemeDisplay());
 	}
@@ -304,6 +308,10 @@ public class CommerceSubscriptionEntryDisplayContext {
 			_commercePaymentMethodGroupRelLocalService.
 				fetchCommercePaymentMethodGroupRel(
 					commerceOrder.getGroupId(), paymentMethodKey);
+
+		if (commercePaymentMethodGroupRel == null) {
+			return StringPool.BLANK;
+		}
 
 		return commercePaymentMethodGroupRel.getName(
 			_cpRequestHelper.getLocale());

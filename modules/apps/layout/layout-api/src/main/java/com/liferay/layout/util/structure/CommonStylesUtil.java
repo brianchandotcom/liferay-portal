@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -66,8 +67,15 @@ public class CommonStylesUtil {
 			ResourceBundle resourceBundle)
 		throws Exception {
 
-		if (_commonStylesJSONArray != null) {
-			return _commonStylesJSONArray;
+		JSONArray commonStylesJSONArray = null;
+
+		if (resourceBundle != null) {
+			commonStylesJSONArray = _commonStyles.get(
+				resourceBundle.getLocale());
+		}
+
+		if (commonStylesJSONArray != null) {
+			return commonStylesJSONArray;
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
@@ -117,7 +125,7 @@ public class CommonStylesUtil {
 			});
 
 		if (resourceBundle != null) {
-			_commonStylesJSONArray = jsonArray;
+			_commonStyles.put(resourceBundle.getLocale(), jsonArray);
 		}
 
 		return jsonArray;
@@ -222,7 +230,7 @@ public class CommonStylesUtil {
 	}
 
 	private static List<String> _availableStyleNames;
-	private static JSONArray _commonStylesJSONArray;
+	private static final Map<Locale, JSONArray> _commonStyles = new HashMap<>();
 	private static Map<String, Object> _defaultValues;
 	private static Map<String, String> _responsiveTemplates;
 

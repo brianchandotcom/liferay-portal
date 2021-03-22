@@ -420,12 +420,29 @@ definition {
 			vimeo = "true");
 	}
 
-	@description = "This ensures that a video shortcut can be added with a YouTube shortened URL."
+	@description = "This ensures that a video shortcut can be added with a YouTube shortened URL on a content page."
 	@priority = "5"
 	test AddWithShortenedURL {
 		property portal.acceptance = "true";
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Test Content Page Name");
 
 		VideoShortcut.addPG(
 			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",

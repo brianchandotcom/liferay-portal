@@ -579,6 +579,7 @@ definition {
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.docx");
 	}
 
+	@description = "This test ensures that repositories can be added both on site admin and on a content page."
 	@priority = "4"
 	test ViewRepository {
 		property test.name.skip.portal.instance = "SharepointREST#ViewRepository";
@@ -588,6 +589,45 @@ definition {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
 		DMRepository.viewBreadcrumb(dmRepositoryName = "Collaboration Test Application");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoAddRepositoryCP();
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Collaboration Test Application 2");
+
+		DMRepository.addSharepoint(
+			dmRepositoryLibraryPath = "Documentos compartidos",
+			dmRepositoryName = "Sharepoint (CollabQA)",
+			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com",
+			permissionDefinitionKey = "ACCESS",
+			roleTitle = "Guest");
+
+		PortletEntry.save();
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application 2");
+
+		DMRepository.viewBreadcrumb(dmRepositoryName = "Collaboration Test Application 2");
 	}
 
 }

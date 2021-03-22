@@ -142,15 +142,33 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "liferay");
 	}
 
+	@description = "This ensures that a user can move google doc to a folder on a content page."
 	@priority = "5"
 	test MoveGoogleDocToFolder {
 		property test.name.skip.portal.instance = "GoogleDriveShortcut#MoveGoogleDocToFolder";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
 
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Navigator.gotoPage(pageName = "Test Content Page Name");
+
+		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Google Drive Shortcut");
 
@@ -170,7 +188,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.gotoPage(pageName = "Test Content Page Name");
 
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "liferay",

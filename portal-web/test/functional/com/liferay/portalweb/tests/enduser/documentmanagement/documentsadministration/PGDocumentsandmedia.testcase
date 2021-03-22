@@ -551,9 +551,26 @@ definition {
 		DMDocument.cancelCheckoutPG(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This test covers LPS-94508. It ensures that a tag can be created when selecting an item from autocomplete."
+	@description = "This test covers LPS-94508 and LPS-129430. It ensures that a tag can be created when selecting an item from autocomplete on a content page."
 	@priority = "5"
 	test CreateTagUsingAutocomplete {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.docx");
 
 		for (var tagName : list "tagone,tagtwo,tagthree") {
@@ -569,7 +586,7 @@ definition {
 
 			DMDocument.viewTag(tagName = "${tagName}");
 
-			Navigator.gotoPage(pageName = "Documents and Media Page");
+			Navigator.gotoPage(pageName = "Test Content Page Name");
 		}
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -846,9 +863,25 @@ definition {
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name Edit");
 	}
 
+	@description = "This test ensures that user can edit document in folder via a content page."
 	@priority = "5"
 	test EditFolderDocument {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
@@ -868,7 +901,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTitleEdit = "DM Document Title Edit");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.gotoPage(pageName = "Test Content Page Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 

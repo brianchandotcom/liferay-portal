@@ -52,9 +52,9 @@ else {
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" name="name" />
 
-				<aui:input name="code" />
+				<aui:input label="code" name="regionCode" />
 
-				<aui:input name="priority" />
+				<aui:input label="position" name="position" />
 
 				<aui:input checked="<%= (region == null) ? false : region.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 			</aui:fieldset>
@@ -70,6 +70,6 @@ else {
 
 <aui:script>
 	function <portlet:namespace />saveCommerceRegion() {
-		submitForm(document.<portlet:namespace />fm);
+	submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

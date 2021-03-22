@@ -219,13 +219,15 @@ public class TranslateDisplayContext {
 		).put(
 			"publishButtonDisabled", isPublishButtonDisabled()
 		).put(
-			"publishButtonLabel", getPublishButtonLabel()
+			"publishButtonLabel",
+			LanguageUtil.get(_httpServletRequest, getPublishButtonLabel())
 		).put(
 			"redirectURL", ParamUtil.getString(_httpServletRequest, "redirect")
 		).put(
 			"saveButtonDisabled", isSaveButtonDisabled()
 		).put(
-			"saveButtonLabel", getSaveButtonLabel()
+			"saveButtonLabel",
+			LanguageUtil.get(_httpServletRequest, getSaveButtonLabel())
 		).put(
 			"sourceLanguageIdTitle", getLanguageIdTitle(getSourceLanguageId())
 		).put(

@@ -216,7 +216,7 @@ const Translate = ({
 										small
 										type="submit"
 									>
-										{Liferay.Language.get(saveButtonLabel)}
+										{saveButtonLabel}
 									</ClayButton>
 									<ClayButton
 										disabled={publishButtonDisabled}
@@ -224,9 +224,7 @@ const Translate = ({
 										small
 										type="submit"
 									>
-										{Liferay.Language.get(
-											publishButtonLabel
-										)}
+										{publishButtonLabel}
 									</ClayButton>
 								</ClayButton.Group>
 							</div>

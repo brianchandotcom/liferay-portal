@@ -185,6 +185,7 @@ describe('Options', () => {
 						{
 							id: 'option1',
 							label: 'Option 1',
+							reference: 'Reference1',
 							value: 'Option1',
 						},
 					],
@@ -634,45 +635,45 @@ describe('Options', () => {
 		unmockLiferayLanguage();
 	});
 
-	it('adds the default option value to the reference property when it is empty and leaves the field', () => {
-		mockLiferayLanguage();
+	describe('Normalize option reference during the onBlur event', () => {
+		it('changes to the option value when the reference is empty', () => {
+			mockLiferayLanguage();
 
-		const {container} = render(
-			<OptionsWithProvider
-				name="options"
-				onChange={jest.fn()}
-				spritemap={spritemap}
-				value={{
-					[themeDisplay.getLanguageId()]: [
-						{
-							id: 'bar',
-							label: 'Bar',
-							reference: 'Bar',
-							value: 'Bar',
-						},
-					],
-				}}
-			/>
-		);
+			const {container} = render(
+				<OptionsWithProvider
+					name="options"
+					onChange={jest.fn()}
+					spritemap={spritemap}
+					value={{
+						[themeDisplay.getLanguageId()]: [
+							{
+								id: 'id',
+								label: 'Label',
+								reference: 'Reference',
+								value: 'Value',
+							},
+						],
+					}}
+				/>
+			);
 
-		const referenceInput = container.querySelector(
-			'.key-value-reference-input'
-		);
+			const referenceInput = container.querySelector(
+				'.key-value-reference-input'
+			);
 
-		expect(referenceInput.value).toBe('Bar');
+			expect(referenceInput.value).toBe('Reference');
 
-		fireEvent.input(referenceInput, {target: {value: ''}});
+			fireEvent.input(referenceInput, {target: {value: ''}});
 
-		fireEvent.blur(referenceInput);
+			fireEvent.blur(referenceInput);
 
-		act(() => {
-			jest.runAllTimers();
+			act(() => {
+				jest.runAllTimers();
+			});
+
+			expect(referenceInput.value).toEqual('Value');
+
+			unmockLiferayLanguage();
 		});
-
-		expect(referenceInput.value).toEqual(
-			expect.stringMatching(DEFAULT_OPTION_NAME_REGEX)
-		);
-
-		unmockLiferayLanguage();
 	});
 });

@@ -1706,6 +1706,83 @@ definition {
 		Questions.answerQuestion(contentField = "This is my second answer");
 	}
 
+	@description = "Validate if the user can view the voting style from the answers list."
+	@priority = "4"
+	test ViewVotingStyleFromAnswersList {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Body AddQuestionWithTheTestBody",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Title AddQuestion");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.answerQuestion(contentField = "This is my answer for voting");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteAnswer(
+			currentVotedCount = "0",
+			voteUp = "true");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteAnswer(
+			currentVotedCount = "1",
+			voteDown = "true");
+
+		Questions.voteAnswer(
+			currentVotedCount = "0",
+			voteDown = "true");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteAnswer(
+			currentVotedCount = "-1",
+			voteUp = "true");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.viewVotedResult(
+			answersList = "true",
+			votedCount = "0");
+	}
+
 	@description = "Validate if the user can view the voting style from the questions list."
 	@priority = "4"
 	test ViewVotingStyleFromQuestionsList {

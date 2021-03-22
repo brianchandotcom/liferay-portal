@@ -377,7 +377,9 @@ definition {
 			locator1 = "CommerceEntry#SKU_FIELD",
 			value1 = "${productSKU}");
 
-		CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValue}");
+		CommerceEntry.selectAssociatedOptionsValue(
+			optionValue = "${optionValue}",
+			noOption = "${noOption}");
 	}
 
 	macro checkImageName {

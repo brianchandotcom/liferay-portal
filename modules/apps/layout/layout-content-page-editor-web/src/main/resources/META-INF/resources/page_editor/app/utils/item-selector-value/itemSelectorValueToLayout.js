@@ -14,6 +14,7 @@
 
 export default function itemSelectorValueToLayout({
 	groupId,
+	id,
 	layoutId,
 	privateLayout,
 	title,
@@ -21,6 +22,7 @@ export default function itemSelectorValueToLayout({
 	return {
 		groupId,
 		layoutId,
+		layoutUuid: id,
 		privateLayout,
 		title,
 	};

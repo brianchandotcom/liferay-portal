@@ -35,15 +35,11 @@ public interface GCSStoreConfiguration {
 		requiredInput = true
 	)
 	@Meta.AD(
-		description = "service-account-key-help", name = "service-account-key",
-		required = false
+		description = "service-account-key-help", name = "service-account-key"
 	)
 	public String serviceAccountKey();
 
-	@Meta.AD(
-		deflt = "mysamplebucket1", description = "bucket-name-help",
-		name = "bucket-name", required = false
-	)
+	@Meta.AD(description = "bucket-name-help", name = "bucket-name")
 	public String bucketName();
 
 	@Meta.AD(

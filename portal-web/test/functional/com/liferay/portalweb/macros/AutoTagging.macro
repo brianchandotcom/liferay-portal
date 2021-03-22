@@ -33,7 +33,7 @@ definition {
 				configurationName = "Asset Auto Tagging",
 				configurationScope = "Virtual Instance Scope");
 
-			Uncheck(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+			FormFields.disableCheckbox(fieldName = "enabled");
 		}
 
 		else if ("${disableAutoTaggingFor}" == "Site Settings") {

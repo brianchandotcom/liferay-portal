@@ -255,6 +255,7 @@ export default (state, action, config) => {
 			let focusedField = state.focusedField;
 
 			if (
+				Object.keys(focusedField).length &&
 				propertyName === 'fieldReference' &&
 				(propertyValue === '' ||
 					FieldUtil.findInvalidFieldReference(

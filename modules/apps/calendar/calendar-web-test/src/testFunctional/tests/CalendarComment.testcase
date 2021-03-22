@@ -1,5 +1,4 @@
 @component-name = "portal-calendar"
-@ignore = "true"
 definition {
 
 	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
@@ -96,6 +95,8 @@ definition {
 
 	@priority = "4"
 	test AddToEventRegular {
+		property portal.acceptance = "true";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();

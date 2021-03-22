@@ -15,6 +15,8 @@
 package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -44,12 +48,14 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +79,9 @@ public class PermissionCheckerTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -594,6 +602,94 @@ public class PermissionCheckerTest {
 			if (!found) {
 				throw throwable;
 			}
+		}
+	}
+
+	@Test
+	public void testHasTeamPermissionWithStagingEnabled() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		_userLocalService.addGroupUser(_group.getGroupId(), _user.getUserId());
+
+		Team team = TeamLocalServiceUtil.addTeam(
+			_user.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		TeamLocalServiceUtil.addUserTeam(_user.getUserId(), team.getTeamId());
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
+
+		JournalFolder journalFolder = JournalFolderLocalServiceUtil.addFolder(
+			_user.getUserId(), _group.getGroupId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_resourceLocalService.addResources(
+			_user.getCompanyId(), _group.getGroupId(), 0,
+			JournalFolder.class.getName(), journalFolder.getFolderId(), false,
+			false, false);
+
+		try {
+			boolean hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), JournalFolder.class.getName(),
+				journalFolder.getFolderId(), ActionKeys.ADD_SUBFOLDER);
+
+			Assert.assertFalse(hasPermission);
+
+			Role teamRole = team.getRole();
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				_user.getCompanyId(), JournalFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(journalFolder.getFolderId()),
+				teamRole.getRoleId(), new String[] {ActionKeys.ADD_SUBFOLDER});
+
+			try {
+				hasPermission = permissionChecker.hasPermission(
+					_group.getGroupId(), JournalFolder.class.getName(),
+					journalFolder.getFolderId(), ActionKeys.ADD_SUBFOLDER);
+
+				Assert.assertTrue(hasPermission);
+
+				Assert.assertFalse(_group.isStaged());
+
+				GroupTestUtil.enableLocalStaging(_group, _user.getUserId());
+
+				Assert.assertTrue(_group.isStaged());
+
+				hasPermission = permissionChecker.hasPermission(
+					_group.getGroupId(), JournalFolder.class.getName(),
+					journalFolder.getFolderId(), ActionKeys.ADD_SUBFOLDER);
+
+				Assert.assertTrue(hasPermission);
+
+				Group stagingGroup = _group.getStagingGroup();
+
+				JournalFolder stagingFolder =
+					JournalFolderLocalServiceUtil.
+						getJournalFolderByUuidAndGroupId(
+							journalFolder.getUuid(), stagingGroup.getGroupId());
+
+				hasPermission = permissionChecker.hasPermission(
+					stagingGroup.getGroupId(), JournalFolder.class.getName(),
+					stagingFolder.getFolderId(), ActionKeys.ADD_SUBFOLDER);
+
+				Assert.assertTrue(hasPermission);
+			}
+			finally {
+				_resourcePermissionLocalService.deleteResourcePermissions(
+					_user.getCompanyId(), JournalFolder.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					journalFolder.getFolderId());
+			}
+		}
+		finally {
+			_resourceLocalService.deleteResource(
+				_user.getCompanyId(), JournalFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				journalFolder.getFolderId());
 		}
 	}
 

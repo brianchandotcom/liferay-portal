@@ -73,7 +73,9 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-		CommerceSKUs.addSKU(optionValuesList = "Shoes:50.0");
+		CommerceSKUs.addSKU(
+			optionValuesList = "Shoes:50.0",
+			noOption = "true");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -24,7 +24,7 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
 		<ul class="tbar-nav">
 			<li class="tbar-item">
-				<aui:select label="" name="ddmTemplateId" onChange="previewArticleContentTemplate()" wrapperCssClass="form-group-sm mb-0 ml-4">
+				<aui:select cssClass="mr-3" label="" name="ddmTemplateId" onChange="previewArticleContentTemplate()" wrapperCssClass="form-group-sm mb-0 ml-4">
 					<aui:option label="no-template" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), -1) %>" value="<%= -1 %>" />
 
 					<%

@@ -42,6 +42,13 @@ public class UserGroupPermissionImpl implements UserGroupPermission {
 		PermissionChecker permissionChecker, long userGroupId,
 		String actionId) {
 
+		if (permissionChecker.hasOwnerPermission(
+				permissionChecker.getCompanyId(), UserGroup.class.getName(),
+				userGroupId, permissionChecker.getUserId(), actionId)) {
+
+			return true;
+		}
+
 		return permissionChecker.hasPermission(
 			null, UserGroup.class.getName(), userGroupId, actionId);
 	}

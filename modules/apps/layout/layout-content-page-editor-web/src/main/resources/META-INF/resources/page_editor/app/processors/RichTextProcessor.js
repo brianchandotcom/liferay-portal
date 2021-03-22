@@ -12,5 +12,5 @@
  * details.
  */
 
-import getAllowEditorProcessor from './getAlloyEditorProcessor';
-export default getAllowEditorProcessor('rich-text');
+import getAlloyEditorProcessor from './getAlloyEditorProcessor';
+export default getAlloyEditorProcessor('rich-text');

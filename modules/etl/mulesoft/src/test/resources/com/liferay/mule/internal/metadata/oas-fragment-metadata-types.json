@@ -57,6 +57,9 @@
 					"nestedEntityField": {
 						"$ref": "#/components/schemas/NestedEntity"
 					},
+					"parentEntity": {
+						"$ref": "#/components/schemas/Entity"
+					},
 					"stringField": {
 						"type": "string"
 					}

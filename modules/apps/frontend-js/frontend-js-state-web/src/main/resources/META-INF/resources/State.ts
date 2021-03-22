@@ -15,6 +15,8 @@
 import SubscriberMap from './SubscriberMap';
 import deepFreeze from './deepFreeze';
 
+import type {Immutable} from './types';
+
 const ATOM = Symbol('Liferay.State.ATOM');
 const SELECTOR = Symbol('Liferay.State.SELECTOR');
 

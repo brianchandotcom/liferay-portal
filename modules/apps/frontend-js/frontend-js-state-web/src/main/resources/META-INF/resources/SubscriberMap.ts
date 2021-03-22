@@ -13,6 +13,7 @@
  */
 
 import type {Atom, Selector} from './State';
+import type {Immutable} from './types';
 
 /**
  * `Map` wrapper for type safety. While a vanilla `Map` is totally adequate for

@@ -21,7 +21,7 @@ type Builtin = Date | Error | Function | Primitive | RegExp;
  *
  * See: https://github.com/microsoft/TypeScript/issues/13923
  */
-type Immutable<T> = T extends Builtin
+export type Immutable<T> = T extends Builtin
 	? T
 	: T extends Map<infer K, infer V>
 	? ReadonlyMap<Immutable<K>, Immutable<V>>

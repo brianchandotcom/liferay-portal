@@ -12,6 +12,8 @@
  * details.
  */
 
+import type {Immutable} from './types';
+
 export default function deepFreeze<T>(value: T): Immutable<T> {
 	if (process.env.NODE_ENV === 'development') {
 		if (Array.isArray(value)) {

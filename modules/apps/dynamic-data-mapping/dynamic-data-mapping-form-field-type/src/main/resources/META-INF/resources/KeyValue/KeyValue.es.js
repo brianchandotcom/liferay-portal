@@ -58,7 +58,7 @@ const Main = ({
 	onReferenceChange,
 	placeholder,
 	readOnly,
-	reference: initalReference,
+	reference,
 	required,
 	showKeyword = false,
 	showLabel,
@@ -68,7 +68,6 @@ const Main = ({
 	...otherProps
 }) => {
 	const [keyword, setKeyword] = useSyncValue(initialKeyword);
-	const [reference, setReference] = useSyncValue(initalReference);
 
 	const generateKeywordRef = useRef(generateKeyword);
 
@@ -126,7 +125,6 @@ const Main = ({
 				onBlur={onReferenceBlur}
 				onChange={(event) => {
 					onReferenceChange(event);
-					setReference(event.target.value);
 				}}
 				value={reference}
 			/>

@@ -112,6 +112,19 @@ export const dedupValue = (
 	return value;
 };
 
+export const findDuplicateReference = (
+	fields,
+	currentIndex,
+	currentReference
+) => {
+	return fields
+		.filter((field, index) => index !== currentIndex)
+		.some(
+			({reference}) =>
+				reference?.toLowerCase() === currentReference?.toLowerCase()
+		);
+};
+
 export const getDefaultOptionValue = (
 	generateOptionValueUsingOptionLabel,
 	optionLabel
@@ -159,20 +172,14 @@ export const normalizeValue = (
 	return normalizeFieldName(value);
 };
 
-export const normalizeFieldReference = (currentIndex, fields) => {
-	const duplicateReference = fields
-		.filter((field, index) => index !== currentIndex)
-		.some(
-			({reference}) =>
-				reference?.toLowerCase() ===
-				fields[currentIndex]?.reference?.toLowerCase()
-		);
+export const normalizeFieldReference = (fields, currentField, index) => {
+	const {reference, value} = currentField;
 
-	if (duplicateReference) {
-		fields[currentIndex].reference = getDefaultFieldName(true);
+	if (!reference || findDuplicateReference(fields, index, reference)) {
+		return value ? value : getDefaultFieldName(true);
 	}
 
-	return fields;
+	return reference;
 };
 
 export const normalizeFields = (

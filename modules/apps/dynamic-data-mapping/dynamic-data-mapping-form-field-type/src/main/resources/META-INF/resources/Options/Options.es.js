@@ -438,12 +438,13 @@ const Options = ({
 	const normalize = (fields, index) => {
 		clearError();
 
-		return [
-			normalizeFields(
-				normalizeFieldReference(index, fields),
-				generateOptionValueUsingOptionLabel
-			),
-		];
+		fields[index]['reference'] = normalizeFieldReference(
+			fields,
+			fields[index],
+			index
+		);
+
+		return [normalizeFields(fields, generateOptionValueUsingOptionLabel)];
 	};
 
 	const composedAdd = compose(clone, dedup, add, set);

@@ -26,9 +26,9 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceEntry.addSKUsEntry(
+				noOption = "${noOption}",
 				optionValue = "${optionValue}",
-				productSKU = "${optionValueUppercase}SKU",
-				noOption = "${noOption}");
+				productSKU = "${optionValueUppercase}SKU");
 
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Purchasable",

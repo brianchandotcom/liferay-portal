@@ -378,8 +378,8 @@ definition {
 			value1 = "${productSKU}");
 
 		CommerceEntry.selectAssociatedOptionsValue(
-			optionValue = "${optionValue}",
-			noOption = "${noOption}");
+			noOption = "${noOption}",
+			optionValue = "${optionValue}");
 	}
 
 	macro checkImageName {

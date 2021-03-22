@@ -382,15 +382,31 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		int count = TeamLocalServiceUtil.getGroupTeamsCount(group.getGroupId());
 
-		if (count == 0) {
-			return;
+		List<Role> roles;
+
+		if (count > 0) {
+			roles = RoleLocalServiceUtil.getUserTeamRoles(
+				userId, group.getGroupId());
+
+			for (Role role : roles) {
+				roleIds.add(role.getRoleId());
+			}
 		}
 
-		List<Role> roles = RoleLocalServiceUtil.getUserTeamRoles(
-			userId, group.getGroupId());
+		if (group.isStaged()) {
+			Group stagingGroup = group.getStagingGroup();
 
-		for (Role role : roles) {
-			roleIds.add(role.getRoleId());
+			count = TeamLocalServiceUtil.getGroupTeamsCount(
+				stagingGroup.getGroupId());
+
+			if (count > 0) {
+				roles = RoleLocalServiceUtil.getUserTeamRoles(
+					userId, stagingGroup.getGroupId());
+
+				for (Role role : roles) {
+					roleIds.add(role.getRoleId());
+				}
+			}
 		}
 	}
 

@@ -873,6 +873,55 @@ definition {
 		}
 	}
 
+	macro viewVotedResult {
+		if (isSet(answersList)) {
+			AssertTextEquals(
+				key_votedResult = "${votedCount}",
+				locator1 = "Questions#VOTED_RESULT_ANSWER",
+				value1 = "${votedCount}");
+		}
+		else {
+			AssertTextEquals(
+				key_count = "${votedCount}",
+				key_text = "${votedCaret}",
+				locator1 = "Questions#QUESTIONS_LIST_VOTED_COUNT",
+				value1 = "${votedCount}");
+		}
+	}
+
+	macro voteAnswer {
+		AssertTextEquals(
+			key_votedResult = "${currentVotedCount}",
+			locator1 = "Questions#VOTED_RESULT_ANSWER",
+			value1 = "${currentVotedCount}");
+
+		if (isSet(voteUp)) {
+			Click(
+				key_caretName = "caret-top",
+				locator1 = "Questions#VOTE_BUTTON_2");
+
+			var newVotedCount = ${currentVotedCount} + 1;
+
+			AssertTextEquals(
+				key_votedResult = "${newVotedCount}",
+				locator1 = "Questions#VOTED_RESULT_ANSWER",
+				value1 = "${newVotedCount}");
+		}
+
+		if (isSet(voteDown)) {
+			Click(
+				key_caretName = "caret-bottom",
+				locator1 = "Questions#VOTE_BUTTON_2");
+
+			var newVotedCount = ${currentVotedCount} - 1;
+
+			AssertTextEquals(
+				key_votedResult = "${newVotedCount}",
+				locator1 = "Questions#VOTED_RESULT_ANSWER",
+				value1 = "${newVotedCount}");
+		}
+	}
+
 	macro voteQuestion {
 		AssertTextEquals(
 			key_votedResult = "${currentVotedCount}",

@@ -105,17 +105,21 @@ public abstract class BaseStyledLayoutStructureItemMapper
 	protected boolean isSaveFragmentMappedValue(
 		JSONObject jsonObject, boolean saveMapping) {
 
-		if (saveMapping && jsonObject.has("classNameId") &&
-			jsonObject.has("classPK") && jsonObject.has("fieldId")) {
+		if (!saveMapping) {
+			return false;
+		}
+
+		if (jsonObject.has("classNameId") && jsonObject.has("classPK") &&
+			jsonObject.has("fieldId")) {
 
 			return true;
 		}
 
-		if (saveMapping && jsonObject.has("collectionFieldId")) {
+		if (jsonObject.has("collectionFieldId")) {
 			return true;
 		}
 
-		if (saveMapping && jsonObject.has("mappedField")) {
+		if (jsonObject.has("mappedField")) {
 			return true;
 		}
 

@@ -28,9 +28,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Arthur Chan
  */
+@Component(
+	property = "configuration.pid=com.liferay.portal.crypto.hash.provider.message.digest.internal.configuration.MessageDigestCryptoHashProviderConfiguration",
+	service = CryptoHashProviderFactory.class
+)
 public class MessageDigestCryptoHashProviderFactory
 	implements CryptoHashProviderFactory {
 
@@ -72,9 +78,10 @@ public class MessageDigestCryptoHashProviderFactory
 
 			_messageDigest = MessageDigest.getInstance(
 				MapUtil.getString(
-					cryptoHashProviderProperties, "algorithm", "SHA-256"));
+					cryptoHashProviderProperties, "message.digest.algorithm",
+					"SHA-256"));
 			_saltSize = MapUtil.getInteger(
-				cryptoHashProviderProperties, "salt.size", 32);
+				cryptoHashProviderProperties, "message.digest.salt.size", 32);
 		}
 
 		@Override

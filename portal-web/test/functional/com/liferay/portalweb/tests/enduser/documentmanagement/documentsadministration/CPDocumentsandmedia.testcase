@@ -458,6 +458,29 @@ definition {
 		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "document_1_Edit.jpg");
 	}
 
+	@description = "This ensures that multiple documents can be downloaded simultaneously."
+	@priority = "5"
+	test DownloadMultipleDocumentsSimultaneously {
+		JSONGroup.addGroup(groupName = "Site_1");
+
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}.jpg",
+				groupName = "Site_1",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site_1");
+
+		DMDocument.downloadMultipleCP(dmDocumentTitleList = "Document_1.jpg,Document_2.jpg");
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Site_1.zip");
+	}
+
 	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."
 	@priority = "5"
 	test EditDocument {

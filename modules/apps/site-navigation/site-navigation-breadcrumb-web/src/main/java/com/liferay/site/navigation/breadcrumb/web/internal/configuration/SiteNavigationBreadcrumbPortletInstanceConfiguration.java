@@ -42,19 +42,21 @@ public interface SiteNavigationBreadcrumbPortletInstanceConfiguration {
 	@Meta.AD(name = "display-style", required = false)
 	public String displayStyle();
 
-	@Meta.AD(deflt = "true", name = "show-current-group", required = false)
+	@Meta.AD(deflt = "true", name = "show-current-site", required = false)
 	public boolean showCurrentGroup();
 
-	@Meta.AD(deflt = "false", name = "show-guest-group", required = false)
+	@Meta.AD(deflt = "false", name = "show-guest-site", required = false)
 	public boolean showGuestGroup();
 
-	@Meta.AD(deflt = "true", name = "show-layout", required = false)
+	@Meta.AD(deflt = "true", name = "show-page", required = false)
 	public boolean showLayout();
 
-	@Meta.AD(deflt = "true", name = "show-parent-groups", required = false)
+	@Meta.AD(deflt = "true", name = "show-parent-sites", required = false)
 	public boolean showParentGroups();
 
-	@Meta.AD(deflt = "true", name = "show-portlet-breadcrumb", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-application-breadcrumb", required = false
+	)
 	public boolean showPortletBreadcrumb();
 
 }

@@ -279,6 +279,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VOTE_BUTTON_2</td>
+	<td>xpath=(//button[contains(@class,'text-reset')]//*[name()='svg'][contains(@class,'${key_caretName}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VOTE_BUTTON_DISABLED</td>
 	<td>//button[contains(@class,'text-reset') and @disabled]//*[name()='svg'][contains(@class,'${key_caretName}')]</td>
 	<td></td>
@@ -286,6 +291,11 @@
 <tr>
 	<td>VOTED_RESULT</td>
 	<td>//div[contains(@class,'questions-container')]//span[contains(@class,'c-px-2') and normalize-space()='${key_votedResult}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTED_RESULT_ANSWER</td>
+	<td>//div[contains(@class,'questions-answer')]//span[contains(@class,'c-px-2') and normalize-space()='${key_votedResult}']</td>
 	<td></td>
 </tr>
 <tr>

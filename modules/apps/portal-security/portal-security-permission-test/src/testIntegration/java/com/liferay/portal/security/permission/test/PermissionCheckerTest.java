@@ -659,6 +659,8 @@ public class PermissionCheckerTest {
 
 				Assert.assertTrue(_group.isStaged());
 
+				permissionChecker = _permissionCheckerFactory.create(_user);
+
 				hasPermission = permissionChecker.hasPermission(
 					_group.getGroupId(), JournalFolder.class.getName(),
 					journalFolder.getFolderId(), ActionKeys.ADD_SUBFOLDER);

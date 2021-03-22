@@ -16,6 +16,7 @@ package com.liferay.data.engine.internal.upgrade;
 
 import com.liferay.data.engine.internal.upgrade.v1_0_0.SchemaUpgradeProcess;
 import com.liferay.data.engine.internal.upgrade.v2_0_0.UpgradeCompanyId;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -35,7 +36,9 @@ public class DEServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register("1.0.0", "1.1.0", new SchemaUpgradeProcess());
 
-		registry.register("1.1.0", "2.0.0", new UpgradeCompanyId());
+		registry.register("1.1.0", "1.1.1", new DummyUpgradeStep());
+
+		registry.register("1.1.1", "2.0.0", new UpgradeCompanyId());
 
 		registry.register(
 			"2.0.0", "2.1.0",

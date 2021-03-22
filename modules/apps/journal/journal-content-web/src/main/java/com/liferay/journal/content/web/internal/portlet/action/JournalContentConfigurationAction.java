@@ -201,7 +201,8 @@ public class JournalContentConfigurationAction
 		}
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			getArticleGroupId(portletRequest), _CLASS_NAME_ID, ddmTemplateKey);
+			getArticleGroupId(portletRequest), _CLASS_NAME_ID, ddmTemplateKey,
+			true);
 
 		if (ddmTemplate == null) {
 			return 0;

@@ -28,6 +28,8 @@ import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.method.CommercePaymentMethod;
+import com.liferay.commerce.payment.util.CommercePaymentUtils;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
@@ -49,6 +51,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.math.BigDecimal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -270,12 +274,25 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			_commerceOrderItemService.countSubscriptionCommerceOrderItems(
 				commerceOrder.getCommerceOrderId());
 
+		BigDecimal subtotal = commerceOrder.getSubtotal();
+
 		if ((subscriptionCommerceOrderItemsCount > 0) &&
 			commercePaymentMethodKey.isEmpty() &&
-			_commerceCheckoutStepHelper.
-				isActivePaymentMethodCommerceCheckoutStep(httpServletRequest)) {
+			(subtotal.compareTo(BigDecimal.ZERO) > 0)) {
 
 			throw new CommerceOrderPaymentMethodException();
+		}
+
+		if (commerceOrder.isSubscriptionOrder() &&
+			!commercePaymentMethodKey.isEmpty()) {
+
+			CommercePaymentMethod commercePaymentMethod =
+				_commercePaymentUtils.getCommercePaymentMethod(
+					commerceOrder.getCommerceOrderId());
+
+			if (!commercePaymentMethod.isProcessRecurringEnabled()) {
+				throw new CommerceOrderPaymentMethodException();
+			}
 		}
 	}
 
@@ -311,6 +328,9 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;
+
+	@Reference
+	private CommercePaymentUtils _commercePaymentUtils;
 
 	@Reference
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;

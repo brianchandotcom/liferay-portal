@@ -34,6 +34,7 @@ import com.liferay.commerce.discount.validator.helper.CommerceDiscountValidatorH
 import com.liferay.commerce.exception.CommerceOrderAccountLimitException;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderDateException;
+import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
 import com.liferay.commerce.exception.CommerceOrderRequestedDeliveryDateException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
@@ -2145,6 +2146,15 @@ public class CommerceOrderLocalServiceImpl
 			_commerceShippingHelper.isShippable(commerceOrder)) {
 
 			throw new CommerceOrderShippingMethodException();
+		}
+
+		BigDecimal subtotal = commerceOrder.getSubtotal();
+
+		if (commerceOrder.isSubscriptionOrder() &&
+			Validator.isNull(commerceOrder.getCommercePaymentMethodKey()) &&
+			(subtotal.compareTo(BigDecimal.ZERO) > 0)) {
+
+			throw new CommerceOrderPaymentMethodException();
 		}
 	}
 

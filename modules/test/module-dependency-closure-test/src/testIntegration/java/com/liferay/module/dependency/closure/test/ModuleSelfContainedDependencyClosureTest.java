@@ -28,8 +28,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Dictionary;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -64,14 +65,32 @@ public class ModuleSelfContainedDependencyClosureTest {
 			FrameworkWiring.class);
 
 		for (Bundle testBundle : testBundles) {
-			Collection<Bundle> dependencyClosure =
-				frameworkWiring.getDependencyClosure(Arrays.asList(testBundle));
+			Set<Bundle> dependencyClosure = new HashSet<>(
+				frameworkWiring.getDependencyClosure(
+					Arrays.asList(testBundle)));
+
+			dependencyClosure.removeAll(testBundles);
+
+			if (!dependencyClosure.isEmpty()) {
+				Iterator<Bundle> iterator = dependencyClosure.iterator();
+
+				while (iterator.hasNext()) {
+					Bundle dependencyBundle = iterator.next();
+
+					Dictionary<String, String> headers =
+						dependencyBundle.getHeaders(null);
+
+					if (headers.get("Test-Bridge-Pass-Code") != null) {
+						iterator.remove();
+					}
+				}
+			}
 
 			Assert.assertTrue(
-				"Test bundle " + testBundle + " has a dependency closure " +
-					dependencyClosure + " that is larger than self contained " +
+				"Test bundle " + testBundle + " has dependencies " +
+					dependencyClosure + " that are not in self contained " +
 						"scope " + testBundles,
-				testBundles.containsAll(dependencyClosure));
+				dependencyClosure.isEmpty());
 		}
 	}
 

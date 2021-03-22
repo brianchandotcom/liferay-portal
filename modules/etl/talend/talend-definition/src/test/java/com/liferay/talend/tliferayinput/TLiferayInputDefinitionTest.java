@@ -102,12 +102,9 @@ public class TLiferayInputDefinitionTest {
 
 	@Test
 	public void testGetRuntimeInfoWrongTopology() {
-		expectedException.expect(TalendRuntimeException.class);
-		expectedException.expectMessage(
-			"WRONG_CONNECTOR:{component=tLiferayInput}");
-
-		_tLiferayInputDefinition.getRuntimeInfo(
-			ExecutionEngine.DI, null, ConnectorTopology.INCOMING);
+		Assert.assertNull(
+			_tLiferayInputDefinition.getRuntimeInfo(
+				ExecutionEngine.DI, null, ConnectorTopology.INCOMING));
 	}
 
 	@Test

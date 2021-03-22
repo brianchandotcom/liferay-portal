@@ -14,18 +14,18 @@ import {ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import {ChartDispatchContext} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
 
 export default function TimeSpanSelector({
 	disabledNextTimeSpan,
 	disabledPreviousPeriodButton,
-	onNextTimeSpanClick,
-	onPreviousTimeSpanClick,
-	onTimeSpanChange,
 	timeSpanKey,
 	timeSpanOptions,
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
+
+	const dispatch = useContext(ChartDispatchContext);
 
 	return (
 		<div className="d-flex">
@@ -33,7 +33,14 @@ export default function TimeSpanSelector({
 				aria-label={Liferay.Language.get('select-date-range')}
 				className="bg-white"
 				disabled={!validAnalyticsConnection}
-				onChange={onTimeSpanChange}
+				onChange={(event) => {
+					const {value} = event.target;
+
+					dispatch({
+						payload: {key: value},
+						type: 'CHANGE_TIME_SPAN_KEY',
+					});
+				}}
 				value={timeSpanKey}
 			>
 				{timeSpanOptions.map((option) => {
@@ -57,7 +64,7 @@ export default function TimeSpanSelector({
 						disabledPreviousPeriodButton
 					}
 					displayType="secondary"
-					onClick={onPreviousTimeSpanClick}
+					onClick={() => dispatch({type: 'PREV_TIME_SPAN'})}
 					small
 					symbol="angle-left"
 					title={
@@ -73,7 +80,7 @@ export default function TimeSpanSelector({
 					aria-label={Liferay.Language.get('next-period')}
 					disabled={!validAnalyticsConnection || disabledNextTimeSpan}
 					displayType="secondary"
-					onClick={onNextTimeSpanClick}
+					onClick={() => dispatch({type: 'NEXT_TIME_SPAN'})}
 					small
 					symbol="angle-right"
 				/>
@@ -85,9 +92,6 @@ export default function TimeSpanSelector({
 TimeSpanSelector.propTypes = {
 	disabledNextTimeSpan: PropTypes.bool.isRequired,
 	disabledPreviousPeriodButton: PropTypes.bool.isRequired,
-	onNextTimeSpanClick: PropTypes.func.isRequired,
-	onPreviousTimeSpanClick: PropTypes.func.isRequired,
-	onTimeSpanChange: PropTypes.func.isRequired,
 	timeSpanKey: PropTypes.string.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({

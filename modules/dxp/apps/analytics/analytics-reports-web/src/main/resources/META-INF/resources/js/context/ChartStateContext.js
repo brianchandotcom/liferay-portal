@@ -142,6 +142,7 @@ function reducer(state, action) {
 		case CHANGE_TIME_SPAN_KEY:
 			nextState = {
 				...state,
+				loading: true,
 				timeSpanKey: action.payload.key,
 				timeSpanOffset: 0,
 			};
@@ -149,12 +150,14 @@ function reducer(state, action) {
 		case NEXT_TIME_SPAN:
 			nextState = {
 				...state,
+				loading: true,
 				timeSpanOffset: state.timeSpanOffset - 1,
 			};
 			break;
 		case PREV_TIME_SPAN:
 			nextState = {
 				...state,
+				loading: true,
 				timeSpanOffset: state.timeSpanOffset + 1,
 			};
 			break;

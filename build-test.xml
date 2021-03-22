@@ -499,21 +499,17 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 					<beanshell>
 						<![CDATA[
-							import java.util.regex.Matcher;
-							import java.util.regex.Pattern;
-
 							String patchFileZipURL = project.getProperty("patch.file.zip.url");
+							String patchFileZipURLRegex = "https?://.*/liferay-fix-pack-(de|dxp)-(\\d+)-\\d{4}[^/]*.zip";
+
 							String patchRequirements = project.getProperty("patch.requirements");
+							String patchRequirementsRegex = "(de|dxp)-(\\d+)(-\\d{4})?";
 
-							Pattern pattern = Pattern.compile("https?://.*/liferay-fix-pack-de-(\\d+)-\\d{4}[^/]*.zip");
-
-							Matcher matcher = pattern.matcher(patchFileZipURL);
-
-							if (matcher.find()) {
-								project.setProperty("fixpack.version", matcher.group(1));
+							if ((patchFileZipURL != null) && patchFileZipURL.matches(patchFileZipURLRegex)) {
+								project.setProperty("fixpack.version", patchFileZipURL.replaceAll(patchFileZipURLRegex, "$2"));
 							}
-							else if ((patchRequirements != null) && patchRequirements.startsWith("de-")) {
-								project.setProperty("fixpack.version", patchRequirements.substring(3));
+							else if ((patchRequirements != null) && patchRequirements.matches(patchRequirementsRegex)) {
+								project.setProperty("fixpack.version", patchRequirements.replaceAll(patchRequirementsRegex, "$2"));
 							}
 						]]>
 					</beanshell>
@@ -1577,15 +1573,7 @@ war.path=${app.server.portal.dir}/</echo>
 					</not>
 				</and>
 				<then>
-					<local name="patch.build.version" />
 					<local name="patch.portal.version" />
-
-					<propertyregex
-						input="@{patch.file.zip.url}"
-						property="patch.build.version"
-						regexp=".+\/liferay-(hotfix|.*security)-.+-(\d)(\d)(\d\d).zip"
-						replace="\2\3\4"
-					/>
 
 					<propertyregex
 						input="@{patch.file.zip.url}"
@@ -1594,9 +1582,30 @@ war.path=${app.server.portal.dir}/</echo>
 						replace="\2.\3.\4"
 					/>
 
+					<local name="fixpack.build.name" />
+
+					<if>
+						<matches pattern=".*-\d{4}" string="${patch.requirements}" />
+						<then>
+							<property name="fixpack.build.name" value="${patch.requirements}" />
+						</then>
+						<else>
+							<local name="patch.build.version" />
+
+							<propertyregex
+								input="@{patch.file.zip.url}"
+								property="patch.build.version"
+								regexp=".+\/liferay-(hotfix|.*security)-.+-(\d)(\d)(\d\d).zip"
+								replace="\2\3\4"
+							/>
+
+							<property name="fixpack.build.name" value="${patch.requirements}-${patch.build.version}" />
+						</else>
+					</if>
+
 					<mirrors-get
 						dest="@{patching.tool.dir}/patches"
-						src="http://files.liferay.com/private/ee/fix-packs/${patch.portal.version}/dxp/liferay-fix-pack-${patch.requirements}-${patch.build.version}.zip"
+						src="http://files.liferay.com/private/ee/fix-packs/${patch.portal.version}/dxp/liferay-fix-pack-${fixpack.build.name}.zip"
 					/>
 				</then>
 			</if>

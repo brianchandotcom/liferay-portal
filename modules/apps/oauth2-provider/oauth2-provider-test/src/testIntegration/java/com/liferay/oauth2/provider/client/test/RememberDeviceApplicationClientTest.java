@@ -315,9 +315,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", generateCodeChallenge(codeVerifierString)
 				).queryParam(
-					"response_type", "code"
-				).queryParam(
 					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
 				),
 				_getExtraParameters(), false));
 
@@ -350,9 +350,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", generateCodeChallenge(codeVerifierString)
 				).queryParam(
-					"response_type", "code"
-				).queryParam(
 					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
@@ -409,9 +409,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 					formData.add("client_id", applicationClientId);
 					formData.add("client_secret", "oauthTestApplicationSecret");
-					formData.add("grant_type", "authorization_code");
 					formData.add(
 						"code", parseAuthorizationCodeString(response));
+					formData.add("grant_type", "authorization_code");
 
 					return tokenInvocationBuilder.post(Entity.form(formData));
 				},
@@ -450,9 +450,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", generateCodeChallenge(codeVerifierString)
 				).queryParam(
-					"response_type", "code"
-				).queryParam(
 					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
 				),
 				_getExtraParameters(), false));
 
@@ -488,9 +488,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 							"code_challenge",
 							generateCodeChallenge(codeVerifierString)
 						).queryParam(
-							"response_type", "code"
-						).queryParam(
 							"redirect_uri", "http://redirecturi:8080"
+						).queryParam(
+							"response_type", "code"
 						),
 						true),
 					invocationBuilder -> invocationBuilder.cookie(
@@ -555,9 +555,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 					formData.add("client_id", applicationClientId);
 					formData.add("client_secret", "oauthTestApplicationSecret");
-					formData.add("grant_type", "authorization_code");
 					formData.add(
 						"code", parseAuthorizationCodeString(response2));
+					formData.add("grant_type", "authorization_code");
 
 					return tokenInvocationBuilder.post(Entity.form(formData));
 				},
@@ -594,9 +594,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", generateCodeChallenge(codeVerifierString)
 				).queryParam(
-					"response_type", "code"
-				).queryParam(
 					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
 				),
 				_getExtraParameters(), false));
 
@@ -627,9 +627,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", codeVerifierString
 				).queryParam(
-					"response_type", "code"
-				).queryParam(
 					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
@@ -666,9 +666,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						).queryParam(
 							"code_challenge", codeVerifierString
 						).queryParam(
-							"response_type", "code"
-						).queryParam(
 							"redirect_uri", "http://redirecturi:8080"
+						).queryParam(
+							"response_type", "code"
 						),
 						true),
 					invocationBuilder -> invocationBuilder.cookie(

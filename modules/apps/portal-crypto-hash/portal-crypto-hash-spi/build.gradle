@@ -1,4 +1,5 @@
 dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:portal-crypto-hash:portal-crypto-hash-api")
 }

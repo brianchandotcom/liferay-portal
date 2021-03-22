@@ -77,20 +77,13 @@ export const isOptionValueGenerated = (
  * value in the fields, always incrementing an integer
  * in front of the value to be friendly for the user.
  */
-export const dedupValue = (
-	fields,
-	value,
-	id,
-	generateValueUsingLabel,
-	propertyName
-) => {
+export const dedupValue = (fields, value, id, generateValueUsingLabel) => {
 	let counter = 0;
 
 	const recursive = (fields, currentValue) => {
 		const field = fields.find(
 			(field) =>
-				field[propertyName]?.toLowerCase() ===
-				currentValue?.toLowerCase()
+				field.value?.toLowerCase() === currentValue?.toLowerCase()
 		);
 
 		if (field && field.id !== id) {
@@ -156,37 +149,26 @@ export const normalizeReference = (fields, currentField, index) => {
 export const normalizeValue = (
 	fields,
 	currentField,
-	generateValueUsingLabel,
-	propertyName
+	generateValueUsingLabel
 ) => {
-	const {label} = currentField;
-	let value = currentField[propertyName]
-		? currentField[propertyName]
+	const {label, value: prevValue} = currentField;
+
+	let value = prevValue
+		? prevValue
 		: getDefaultOptionValue(generateValueUsingLabel, label);
 
 	if (!value) {
 		value = Liferay.Language.get('option');
 	}
 
-	value = dedupValue(
-		fields,
-		value,
-		currentField.id,
-		generateValueUsingLabel,
-		propertyName
-	);
+	value = dedupValue(fields, value, currentField.id, generateValueUsingLabel);
 
 	return normalizeFieldName(value);
 };
 
 export const normalizeFields = (fields, generateValueUsingLabel) => {
 	return fields.map((field, index) => {
-		const value = normalizeValue(
-			fields,
-			field,
-			generateValueUsingLabel,
-			'value'
-		);
+		const value = normalizeValue(fields, field, generateValueUsingLabel);
 
 		return {
 			...field,

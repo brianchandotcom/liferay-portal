@@ -1,5 +1,12 @@
 definition {
 
+	macro assertPageHeader {
+		AssertTextEquals(
+			locator1 = "ACHeader#HEADER_TITLE",
+			value1 = "${headerTitle}"
+		);
+	}
+
 	macro clickHeaderTab {
 		Click(
 			key_tabName = "${tabName}",

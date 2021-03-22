@@ -138,7 +138,7 @@ definition {
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
 			value1 = "AB test title");
 
-		SelectWindow(locator1 = "title=Content Page - Liferay DXP");
+		SelectWindow(locator1 = "title=Content Page - Test Site Name - Liferay DXP");
 
 		Refresh();
 

@@ -24,10 +24,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Analytics Cloud",
-			configurationName = "Analytics Cloud",
-			configurationScope = "Virtual Instance Scope");
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
 
 		Click(locator1 = "AnalyticsCloudConnection#DXP_TOKEN_INPUT");
 
@@ -50,7 +47,7 @@ definition {
 			value1 = "${siteName}");
 
 		KeyPress(
-				locator1 = "ContentDashboard#SEARCH_TAG_FIELD",
+				locator1 = "AnalyticsCloudConnection#SYNCED_SITES_SEARCH_FIELD",
 				value1 = "\ENTER");
 
 		Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");

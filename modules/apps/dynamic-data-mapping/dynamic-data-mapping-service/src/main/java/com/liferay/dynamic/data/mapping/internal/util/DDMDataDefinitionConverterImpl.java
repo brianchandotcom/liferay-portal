@@ -14,6 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.internal.util;
 
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
+
+import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
@@ -29,6 +33,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
@@ -41,6 +47,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -48,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -90,6 +98,25 @@ public class DDMDataDefinitionConverterImpl
 
 		ddmForm = convertDDMFormDataDefinition(
 			ddmForm, parentStructureId, parentStructureLayoutId);
+
+		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
+	}
+
+	@Override
+	public String convertDDMFormDataDefinition(
+			String dataDefinition, long groupId, long parentStructureId,
+			long parentStructureLayoutId, long structureId)
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
+			_ddmFormDeserializer, dataDefinition);
+
+		ddmForm = convertDDMFormDataDefinition(
+			ddmForm, parentStructureId, parentStructureLayoutId);
+
+		_addDataDefinitionFieldLinks(
+			_portal.getClassNameId(DDMStructure.class), structureId,
+			ddmForm.getDDMFormFields(), groupId);
 
 		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 	}
@@ -159,6 +186,26 @@ public class DDMDataDefinitionConverterImpl
 					).build());
 
 		return ddmFormLayoutSerializerSerializeResponse.getContent();
+	private void _addDataDefinitionFieldLinks(
+			long classNameId, long dataDefinitionId,
+			List<DDMFormField> ddmFormFields, long groupId)
+		throws Exception {
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			long fieldSetDDMStructureId = GetterUtil.getLong(
+				ddmFormField.getProperty("ddmStructureId"));
+
+			if (fieldSetDDMStructureId != 0) {
+				_deDataDefinitionFieldLinkLocalService.
+					addDEDataDefinitionFieldLink(
+						groupId, classNameId, dataDefinitionId,
+						fieldSetDDMStructureId, ddmFormField.getName());
+
+				_addDataDefinitionFieldLinks(
+					classNameId, dataDefinitionId,
+					ddmFormField.getNestedDDMFormFields(), groupId);
+			}
+		}
 	}
 
 	private DDMFormField _createFieldSetDDMFormField(
@@ -672,5 +719,12 @@ public class DDMDataDefinitionConverterImpl
 
 	@Reference
 	private DDMFormSerializer _ddmFormSerializer;
+
+	@Reference
+	private DEDataDefinitionFieldLinkLocalService
+		_deDataDefinitionFieldLinkLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -34,7 +34,8 @@ String fixIssueButton = "fixIssueButton" + row.getRowId();
 			event
 		) {
 			var data = {
-				<portlet:namespace />key: '<%= HtmlUtil.escapeJS(commerceHealthHttpStatus.getKey()) %>',
+				<portlet:namespace />key:
+					'<%= HtmlUtil.escapeJS(commerceHealthHttpStatus.getKey()) %>',
 			};
 
 			this.attr('disabled', true);

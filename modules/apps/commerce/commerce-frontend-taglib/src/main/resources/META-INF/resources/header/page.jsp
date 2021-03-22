@@ -280,16 +280,22 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 
 							<c:if test="<%= submitCheck && Validator.isNotNull(action.getFormId()) %>">
 								<aui:script>
-									document.getElementById('<%= HtmlUtil.escapeJS(actionId) %>').addEventListener('click', (e) => {
-										e.preventDefault();
-										var form = document.getElementById('<%= HtmlUtil.escapeJS(action.getFormId()) %>');
-										if (!form) {
-											throw new Error(
-												'Form with id: ' + <%= HtmlUtil.escapeJS(action.getFormId()) %> + ' not found!'
+									document
+										.getElementById('<%= HtmlUtil.escapeJS(actionId) %>')
+										.addEventListener('click', (e) => {
+											e.preventDefault();
+											var form = document.getElementById(
+												'<%= HtmlUtil.escapeJS(action.getFormId()) %>'
 											);
-										}
-										submitForm(form);
-									});
+											if (!form) {
+												throw new Error(
+													'Form with id: ' +
+														<%= HtmlUtil.escapeJS(action.getFormId()) %> +
+														' not found!'
+												);
+											}
+											submitForm(form);
+										});
 								</aui:script>
 							</c:if>
 

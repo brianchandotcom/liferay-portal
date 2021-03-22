@@ -296,7 +296,7 @@ public abstract class BaseTestPreparatorBundleActivator
 				companyId, user.getUserId(), user.getLogin(),
 				allowedGrantTypesList, user.getUserId(), clientId, 0,
 				clientSecret, "test oauth application",
-				Collections.singletonList("token_introspection"),
+				Collections.singletonList("token.introspection"),
 				"http://localhost:8080", 0, "test application",
 				"http://localhost:8080", redirectURIsList, rememberDevice,
 				scopeAliasesList, trustedApplication, new ServiceContext());

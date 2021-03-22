@@ -31,12 +31,12 @@ public class OAuth2ProviderRESTEndpointConstants {
 	public static final String PROPERTY_KEY_CLIENT_FEATURE_PREFIX = "feature.";
 
 	public static final String PROPERTY_KEY_CLIENT_FEATURE_TOKEN_INTROSPECTION =
-		"token_introspection";
+		"token.introspection";
 
 	public static final String PROPERTY_KEY_CLIENT_FEATURES = "features";
 
 	public static final String PROPERTY_KEY_CLIENT_REMEMBER_DEVICE =
-		"remember_device";
+		"remember.device";
 
 	public static final String PROPERTY_KEY_CLIENT_REMOTE_ADDR =
 		"client.remote.addr";
@@ -45,7 +45,7 @@ public class OAuth2ProviderRESTEndpointConstants {
 		"client.remote.host";
 
 	public static final String PROPERTY_KEY_CLIENT_TRUSTED_APPLICATION =
-		"trusted_application";
+		"trusted.application";
 
 	public static final String PROPERTY_KEY_COMPANY_ID = "company.id";
 

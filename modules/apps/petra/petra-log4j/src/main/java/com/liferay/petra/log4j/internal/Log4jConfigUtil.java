@@ -238,7 +238,7 @@ public class Log4jConfigUtil {
 		LoggerContext.getContext();
 
 	static {
-		PluginManager.addPackage("com.liferay.petra.log4j");
+		PluginManager.addPackage("com.liferay.petra.log4j.internal");
 
 		_centralizedConfiguration = new CentralizedConfiguration(
 			_loggerContext);

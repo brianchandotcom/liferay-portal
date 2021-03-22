@@ -67,10 +67,11 @@ public class CryptoHashGeneratorTest {
 		_cryptoHashGenerators = Arrays.asList(
 			new CryptoHashGeneratorImpl(
 				bCryptCryptoHashProviderFactory.create(
-					Collections.singletonMap("rounds", "10"))),
+					Collections.singletonMap("bcrypt.rounds", "10"))),
 			new CryptoHashGeneratorImpl(
 				messageDigestCryptoHashProviderFactory.create(
-					Collections.singletonMap("algorithm", "SHA-256"))));
+					Collections.singletonMap(
+						"message.digest.algorithm", "SHA-256"))));
 
 		_cryptoHashVerifier = new CryptoHashVerifierImpl(
 			cryptoHashProviderFactoryRegistry);

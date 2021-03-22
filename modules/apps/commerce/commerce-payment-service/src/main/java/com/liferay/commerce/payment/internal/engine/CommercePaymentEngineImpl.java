@@ -462,11 +462,9 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 		long userId = _portal.getUserId(httpServletRequest);
 
 		CommerceOrder commerceOrder =
-			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
-
-		_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
-			userId, commerceOrderId, CommerceOrderConstants.PAYMENT_STATUS_PAID,
-			StringPool.BLANK);
+			_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
+				userId, commerceOrderId,
+				CommerceOrderConstants.PAYMENT_STATUS_PAID, StringPool.BLANK);
 
 		_commerceOrderPaymentLocalService.addCommerceOrderPayment(
 			commerceOrderId, CommerceOrderConstants.PAYMENT_STATUS_PAID,

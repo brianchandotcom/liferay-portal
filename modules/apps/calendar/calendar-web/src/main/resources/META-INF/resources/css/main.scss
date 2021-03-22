@@ -198,6 +198,17 @@
 		text-transform: capitalize;
 	}
 
+	.popover.scheduler-event-recorder-popover {
+		max-width: none;
+		padding: 10px 15px 0;
+
+		.popover-content .close {
+			position: absolute;
+			right: 10px;
+			top: 5px;
+		}
+	}
+
 	.scheduler-event-content,
 	.scheduler-event-title {
 		font-family: inherit;
@@ -431,6 +442,10 @@
 	.scheduler-event-disabled {
 		opacity: 0.8;
 	}
+}
+
+.col-md-4 .calendar-portlet .popover.scheduler-event-recorder-popover {
+	max-width: 232px;
 }
 
 .portal-popup .calendar-portlet .fieldset {

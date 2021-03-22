@@ -81,7 +81,7 @@ export const dedupValue = (
 	fields,
 	value,
 	id,
-	generateOptionValueUsingOptionLabel,
+	generateValueUsingLabel,
 	propertyName
 ) => {
 	let counter = 0;
@@ -94,7 +94,7 @@ export const dedupValue = (
 		);
 
 		if (field && field.id !== id) {
-			if (generateOptionValueUsingOptionLabel) {
+			if (generateValueUsingLabel) {
 				counter += 1;
 				recursive(fields, value + counter);
 			}
@@ -125,54 +125,15 @@ export const findDuplicateReference = (
 		);
 };
 
-export const getDefaultOptionValue = (
-	generateOptionValueUsingOptionLabel,
-	optionLabel
-) => {
-	const defaultValue = generateOptionValueUsingOptionLabel
+export const getDefaultOptionValue = (generateValueUsingLabel, optionLabel) => {
+	const defaultValue = generateValueUsingLabel
 		? optionLabel
 		: getDefaultFieldName(true);
 
 	return defaultValue;
 };
 
-/**
- * If the value is null or undefined, normalize follows a
- * verification order and the final stage of normalization
- * is to deduplicate the value if necessary.
- *
- * 1. If the current value is null, use the default value that can be the label
- * or the default option name, the parameter generateOptionValueUsingOptionLabel
- * decides which of these two values will be used.
- * 2. If the default value is null, use the string Option.
- */
-export const normalizeValue = (
-	fields,
-	currentField,
-	generateOptionValueUsingOptionLabel,
-	propertyName
-) => {
-	const {label} = currentField;
-	let value = currentField[propertyName]
-		? currentField[propertyName]
-		: getDefaultOptionValue(generateOptionValueUsingOptionLabel, label);
-
-	if (!value) {
-		value = Liferay.Language.get('option');
-	}
-
-	value = dedupValue(
-		fields,
-		value,
-		currentField.id,
-		generateOptionValueUsingOptionLabel,
-		propertyName
-	);
-
-	return normalizeFieldName(value);
-};
-
-export const normalizeFieldReference = (fields, currentField, index) => {
+export const normalizeReference = (fields, currentField, index) => {
 	const {reference, value} = currentField;
 
 	if (!reference || findDuplicateReference(fields, index, reference)) {
@@ -182,23 +143,56 @@ export const normalizeFieldReference = (fields, currentField, index) => {
 	return reference;
 };
 
-export const normalizeFields = (
+/**
+ * If the value is null or undefined, normalize follows a
+ * verification order and the final stage of normalization
+ * is to deduplicate the value if necessary.
+ *
+ * 1. If the current value is null, use the default value that can be the label
+ * or the default option name, the parameter generateValueUsingLabel
+ * decides which of these two values will be used.
+ * 2. If the default value is null, use the string Option.
+ */
+export const normalizeValue = (
 	fields,
-	generateOptionValueUsingOptionLabel
+	currentField,
+	generateValueUsingLabel,
+	propertyName
 ) => {
+	const {label} = currentField;
+	let value = currentField[propertyName]
+		? currentField[propertyName]
+		: getDefaultOptionValue(generateValueUsingLabel, label);
+
+	if (!value) {
+		value = Liferay.Language.get('option');
+	}
+
+	value = dedupValue(
+		fields,
+		value,
+		currentField.id,
+		generateValueUsingLabel,
+		propertyName
+	);
+
+	return normalizeFieldName(value);
+};
+
+export const normalizeFields = (fields, generateValueUsingLabel) => {
 	return fields.map((field) => {
 		return {
 			...field,
 			reference: normalizeValue(
 				fields,
 				field,
-				generateOptionValueUsingOptionLabel,
+				generateValueUsingLabel,
 				'reference'
 			),
 			value: normalizeValue(
 				fields,
 				field,
-				generateOptionValueUsingOptionLabel,
+				generateValueUsingLabel,
 				'value'
 			),
 		};

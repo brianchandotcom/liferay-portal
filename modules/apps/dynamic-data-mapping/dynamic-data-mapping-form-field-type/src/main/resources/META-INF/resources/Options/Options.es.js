@@ -31,8 +31,8 @@ import {
 	dedupValue,
 	getDefaultOptionValue,
 	isOptionValueGenerated,
-	normalizeFieldReference,
 	normalizeFields,
+	normalizeReference,
 	random,
 } from './util.es';
 
@@ -438,7 +438,7 @@ const Options = ({
 	const normalize = (fields, index) => {
 		clearError();
 
-		fields[index]['reference'] = normalizeFieldReference(
+		fields[index]['reference'] = normalizeReference(
 			fields,
 			fields[index],
 			index

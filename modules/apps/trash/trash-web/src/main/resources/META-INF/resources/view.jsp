@@ -290,8 +290,3 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 		</clay:container-fluid>
 	</div>
 </div>
-
-<liferay-frontend:component
-	componentId="<%= trashManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
-/>

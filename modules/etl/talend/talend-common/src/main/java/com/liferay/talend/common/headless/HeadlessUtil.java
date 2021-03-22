@@ -32,9 +32,8 @@ import javax.ws.rs.core.UriBuilder;
  */
 public class HeadlessUtil {
 
-	public static boolean isValidOpenAPISpecURL(String endpointURL) {
-		Matcher serverURLMatcher = _liferayOpenAPIURLPattern.matcher(
-			endpointURL);
+	public static boolean isValidOpenAPISpecURL(String url) {
+		Matcher serverURLMatcher = _liferayOpenAPIURLPattern.matcher(url);
 
 		if (serverURLMatcher.matches()) {
 			return true;
@@ -43,8 +42,8 @@ public class HeadlessUtil {
 		return false;
 	}
 
-	public static String sanitizeOpenAPIModuleURI(String url) {
-		String value = url;
+	public static String sanitizeOpenAPIModuleURI(String uri) {
+		String value = uri;
 
 		if (!value.startsWith("/")) {
 			value = "/" + value;
@@ -65,9 +64,9 @@ public class HeadlessUtil {
 		return value;
 	}
 
-	public static URI toURI(String href) {
+	public static URI toURI(String uri) {
 		try {
-			return new URI(StringUtil.removeQuotes(href));
+			return new URI(StringUtil.removeQuotes(uri));
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			throw new RuntimeException(uriSyntaxException);
@@ -91,12 +90,12 @@ public class HeadlessUtil {
 		return uriBuilder.build();
 	}
 
-	public static void validateOpenAPISpecURL(String openAPISpecURL) {
-		if (openAPISpecURL == null) {
+	public static void validateOpenAPISpecURL(String url) {
+		if (url == null) {
 			throw new MalformedURLException("OpenAPI spec URL is null");
 		}
 
-		if (!isValidOpenAPISpecURL(openAPISpecURL)) {
+		if (!isValidOpenAPISpecURL(url)) {
 			throw new MalformedURLException(
 				"Provided OpenAPI specification URL does not match pattern: " +
 					_liferayOpenAPIURLPattern.pattern());

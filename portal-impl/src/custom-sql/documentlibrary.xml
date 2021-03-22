@@ -268,7 +268,6 @@
 			WHERE
 				(DLFileEntryType.companyId = ?) AND
 				[$GROUP_ID$]
-				[$SCOPE$]
 				(
 					(LOWER(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
@@ -305,7 +304,6 @@
 			WHERE
 				(DLFileEntryType.companyId = ?) AND
 				[$GROUP_ID$]
-				[$SCOPE$]
 				(
 					(LOWER(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])

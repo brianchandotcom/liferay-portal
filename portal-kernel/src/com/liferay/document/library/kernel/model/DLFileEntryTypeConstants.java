@@ -53,8 +53,6 @@ public class DLFileEntryTypeConstants {
 	public static final String FILE_ENTRY_TYPE_KEY_SALES_PRESENTATION =
 		"SALES PRESENTATION";
 
-	public static final int FILE_ENTRY_TYPE_SCOPE_ANY = -1;
-
 	public static final int FILE_ENTRY_TYPE_SCOPE_DEFAULT = 0;
 
 	public static final int FILE_ENTRY_TYPE_SCOPE_SYSTEM = 1;

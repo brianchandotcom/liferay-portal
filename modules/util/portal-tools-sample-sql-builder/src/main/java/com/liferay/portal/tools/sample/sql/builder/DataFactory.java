@@ -542,6 +542,10 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT;
 	}
 
+	public int getMaxContentLayoutCount() {
+		return BenchmarksPropsValues.MAX_CONTENT_LAYOUT_COUNT;
+	}
+
 	public int getMaxDDLRecordCount() {
 		return BenchmarksPropsValues.MAX_DDL_RECORD_COUNT;
 	}

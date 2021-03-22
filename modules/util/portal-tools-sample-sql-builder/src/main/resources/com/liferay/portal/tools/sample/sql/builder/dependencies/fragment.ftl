@@ -1,16 +1,18 @@
-<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
+<#if (dataFactory.maxContentLayoutCount > 0)>
+	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
 
-${dataFactory.toInsertSQL(fragmentCollectionModel)}
+	${dataFactory.toInsertSQL(fragmentCollectionModel)}
 
-<#assign fragmentEntryModel = dataFactory.newFragmentEntryModel(groupId, fragmentCollectionModel) />
+	<#assign fragmentEntryModel = dataFactory.newFragmentEntryModel(groupId, fragmentCollectionModel) />
 
-${dataFactory.toInsertSQL(fragmentEntryModel)}
+	${dataFactory.toInsertSQL(fragmentEntryModel)}
 
-<#list dataFactory.newContentLayoutModels(groupId) as contentLayoutModel>
-	<@insertContentLayout
-		_fragmentEntryModel=fragmentEntryModel
-		_layoutModel=contentLayoutModel
-	/>
+	<#list dataFactory.newContentLayoutModels(groupId) as contentLayoutModel>
+		<@insertContentLayout
+			_fragmentEntryModel=fragmentEntryModel
+			_layoutModel=contentLayoutModel
+		/>
 
-	${csvFileWriter.write("fragment", contentLayoutModel.friendlyURL + "\n")}
-</#list>
+		${csvFileWriter.write("fragment", contentLayoutModel.friendlyURL + "\n")}
+	</#list>
+</#if>

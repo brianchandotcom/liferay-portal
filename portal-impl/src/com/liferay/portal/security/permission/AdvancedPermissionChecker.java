@@ -393,7 +393,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 		}
 
-		if (group.isStaged()) {
+		if (group.isStaged() && !group.isStagedRemotely()) {
 			Group stagingGroup = group.getStagingGroup();
 
 			count = TeamLocalServiceUtil.getGroupTeamsCount(

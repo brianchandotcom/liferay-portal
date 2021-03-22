@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference path="../../../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/State/types.d.ts"/>
-
 import State from '@liferay/frontend-js-state-web/src/main/resources/META-INF/resources/State';
 import {useCallback, useEffect, useState} from 'react';
 
@@ -21,6 +19,7 @@ import type {
 	Atom,
 	Selector,
 } from '@liferay/frontend-js-state-web/src/main/resources/META-INF/resources/State';
+import type {Immutable} from '@liferay/frontend-js-state-web/src/main/resources/META-INF/resources/types';
 
 /**
  * Hook-based abstraction over `State.read()`, `State.write()`, and

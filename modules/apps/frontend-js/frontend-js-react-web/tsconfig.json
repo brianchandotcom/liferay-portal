@@ -21,5 +21,10 @@
 	"include": [
 		"src/**/*",
 		"test/**/*"
+	],
+	"references": [
+		{
+			"path": "../frontend-js-state-web"
+		}
 	]
 }

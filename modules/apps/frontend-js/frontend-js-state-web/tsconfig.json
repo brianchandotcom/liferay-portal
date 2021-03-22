@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
+		"composite": true,
 		"module": "es6",
 		"moduleResolution": "node",
 		"outDir": "./build/node/packageRunBuild/dist/",

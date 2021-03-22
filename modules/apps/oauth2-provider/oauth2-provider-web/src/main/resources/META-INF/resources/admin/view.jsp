@@ -133,6 +133,13 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 							value="<%= String.valueOf(oAuth2AdminPortletDisplayContext.getOAuth2AuthorizationsCount(oAuth2Application)) %>"
 						/>
 
+						<c:if test="<%= oAuth2AdminPortletDisplayContext.hasAddTrustedApplicationPermission() || oAuth2AdminPortletDisplayContext.hasRememberDevicePermission() %>">
+							<liferay-ui:search-container-column-text
+								name="extra-properties"
+								value="<%= oAuth2AdminPortletDisplayContext.getExtraPropertiesContent(oAuth2Application) %>"
+							/>
+						</c:if>
+
 						<liferay-ui:search-container-column-jsp
 							align="right"
 							path="/admin/application_actions.jsp"

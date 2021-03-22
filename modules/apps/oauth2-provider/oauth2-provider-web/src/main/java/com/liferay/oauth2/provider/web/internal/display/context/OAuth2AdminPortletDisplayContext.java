@@ -24,7 +24,9 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -57,6 +60,27 @@ public class OAuth2AdminPortletDisplayContext
 		this.oAuth2ApplicationScopeAliasesLocalService =
 			oAuth2ApplicationScopeAliasesLocalService;
 		_oAuth2ProviderConfiguration = oAuth2ProviderConfiguration;
+
+		_resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", themeDisplay.getLocale(), getClass());
+	}
+
+	public String getExtraPropertiesContent(
+		OAuth2Application oAuth2Application) {
+
+		if (hasRememberDevicePermission() &&
+			oAuth2Application.isRememberDevice()) {
+
+			return LanguageUtil.get(_resourceBundle, "remember-device-is-on");
+		}
+
+		if (hasAddTrustedApplicationPermission() &&
+			oAuth2Application.isTrustedApplication()) {
+
+			return LanguageUtil.get(_resourceBundle, "trusted");
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public List<GrantType> getGrantTypes(
@@ -125,5 +149,6 @@ public class OAuth2AdminPortletDisplayContext
 		oAuth2ApplicationScopeAliasesLocalService;
 
 	private final OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
+	private final ResourceBundle _resourceBundle;
 
 }

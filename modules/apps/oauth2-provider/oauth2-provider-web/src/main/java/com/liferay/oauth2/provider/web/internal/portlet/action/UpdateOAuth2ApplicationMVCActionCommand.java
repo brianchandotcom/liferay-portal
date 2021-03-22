@@ -92,7 +92,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 			new OAuth2AdminPortletDisplayContext(
 				_dlurlHelper, _oAuth2ApplicationScopeAliasesLocalService,
 				_oAuth2ApplicationService, _oAuth2ProviderConfiguration,
-				request, null);
+				request, themeDisplay);
 
 		String[] oAuth2Features =
 			oAuth2AdminPortletDisplayContext.getOAuth2Features(

@@ -37,6 +37,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-6118. ActiveAllTaxCalculations"
+	@ignore = "true"
+	@priority = "3"
+	test ActiveAllTaxCalculations {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6118 ActiveAllTaxCalculations
+
+	}
+
+	@description = "This is a test for COMMERCE-6116. AddShippingOptionFedEx"
+	@ignore = "true"
+	@priority = "3"
+	test AddShippingOptionFedEx {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6116 AddShippingOptionFedEx
+	}
+
+	@description = "This is a test for COMMERCE-6111. AddShippingOptionFlatRate"
+	@ignore = "true"
+	@priority = "3"
+	test AddShippingOptionFlatRate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6111 AddShippingOptionFlatRate
+	}
+
+	@description = "This is a test for COMMERCE-6113. AddShippingOptionSettingVariableRate"
+	@ignore = "true"
+	@priority = "3"
+	test AddShippingOptionSettingVariableRate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6113 AddShippingOptionSettingVariableRate
+	}
+
+	@description = "This is a test for COMMERCE-6110. AddShippingOptionVariableRate"
+	@ignore = "true"
+	@priority = "3"
+	test AddShippingOptionVariableRate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6110 AddShippingOptionVariableRate
+	}
+
+	@description = "This is a test for COMMERCE-6120. AddTaxRateSettingsByAddressTaxCalculation"
+	@ignore = "true"
+	@priority = "3"
+	test AddTaxRateSettingsByAddressTaxCalculation {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6120 AddTaxRateSettingsByAddressTaxCalculation
+	}
+
+	@description = "This is a test for COMMERCE-6123. AddTaxRateSettingsFixedTaxRateTaxCalculation"
+	@ignore = "true"
+	@priority = "3"
+	test AddTaxRateSettingsFixedTaxRateTaxCalculation {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6123 AddTaxRateSettingsFixedTaxRateTaxCalculation
+	}
+
 	test CreateNewChannel {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewChannel";
@@ -65,6 +129,15 @@ definition {
 			channelCurrency = "US Dollar",
 			channelName = "Test Channel",
 			channelType = "Site");
+	}
+
+	@description = "This is a test for COMMERCE-6102. CreateNewChannelCompileAll"
+	@ignore = "true"
+	@priority = "3"
+	test CreateNewChannelCompileAll {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6102 CreateNewChannelCompileAll
 	}
 
 	test CreateNewNotificationTemplate {
@@ -98,56 +171,6 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@description = "This is a test for COMMERCE-6101. UseSearchBar"
-	@ignore = "true"
-	@priority = "3"
-	test UseSearchBar {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6101 UseSearchBar
-
-	}
-
-	@description = "This is a test for COMMERCE-6102. CreateNewChannelCompileAll"
-	@ignore = "true"
-	@priority = "3"
-	test CreateNewChannelCompileAll {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6102 CreateNewChannelCompileAll
-
-	}
-
-	@description = "This is a test for COMMERCE-6105. EditMoneyOrderPaymentMethod"
-	@ignore = "true"
-	@priority = "3"
-	test EditMoneyOrderPaymentMethod {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6105 EditMoneyOrderPaymentMethod
-
-	}
-
-	@description = "This is a test for COMMERCE-6106. EditPaypalPaymentMethod"
-	@ignore = "true"
-	@priority = "3"
-	test EditPaypalPaymentMethod {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6106 EditPaypalPaymentMethod
-
-	}
-
-	@description = "This is a test for COMMERCE-6107. EditMercanetPaymentMethod"
-	@ignore = "true"
-	@priority = "3"
-	test EditMercanetPaymentMethod {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6107 EditMercanetPaymentMethod
-
-	}
-
 	@description = "This is a test for COMMERCE-6109. EditAuthorizePaymentMethod"
 	@ignore = "true"
 	@priority = "3"
@@ -155,87 +178,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6109 EditAuthorizePaymentMethod
-
-	}
-
-	@description = "This is a test for COMMERCE-6110. AddShippingOptionVariableRate"
-	@ignore = "true"
-	@priority = "3"
-	test AddShippingOptionVariableRate {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6110 AddShippingOptionVariableRate
-
-	}
-
-	@description = "This is a test for COMMERCE-6111. AddShippingOptionFlatRate"
-	@ignore = "true"
-	@priority = "3"
-	test AddShippingOptionFlatRate {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6111 AddShippingOptionFlatRate
-
-	}
-
-	@description = "This is a test for COMMERCE-6112. RemoveShippingOptionVariableRate"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveShippingOptionVariableRate {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6112 RemoveShippingOptionVariableRate
-
-	}
-
-	@description = "This is a test for COMMERCE-6113. AddShippingOptionSettingVariableRate"
-	@ignore = "true"
-	@priority = "3"
-	test AddShippingOptionSettingVariableRate {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6113 AddShippingOptionSettingVariableRate
-
-	}
-
-	@description = "This is a test for COMMERCE-6114. RemoveShippingOptionFlatRate"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveShippingOptionFlatRate {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6114 RemoveShippingOptionFlatRate
-
-	}
-
-	@description = "This is a test for COMMERCE-6115. RemoveShippingSettingOptionVariableRate"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveShippingSettingOptionVariableRate {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6115 RemoveShippingSettingOptionVariableRate
-
-	}
-
-	@description = "This is a test for COMMERCE-6116. AddShippingOptionFedEx"
-	@ignore = "true"
-	@priority = "3"
-	test AddShippingOptionFedEx {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6116 AddShippingOptionFedEx
-
-	}
-
-	@description = "This is a test for COMMERCE-6118. ActiveAllTaxCalculations"
-	@ignore = "true"
-	@priority = "3"
-	test ActiveAllTaxCalculations {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6118 ActiveAllTaxCalculations
-
 	}
 
 	@description = "This is a test for COMMERCE-6119. EditAvalaraTaxCalculation"
@@ -245,27 +187,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6119 EditAvalaraTaxCalculation
-
-	}
-
-	@description = "This is a test for COMMERCE-6120. AddTaxRateSettingsByAddressTaxCalculation"
-	@ignore = "true"
-	@priority = "3"
-	test AddTaxRateSettingsByAddressTaxCalculation {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6120 AddTaxRateSettingsByAddressTaxCalculation
-
-	}
-
-	@description = "This is a test for COMMERCE-6121. RemoveTaxRateSettingsByAddressTaxCalculation"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveTaxRateSettingsByAddressTaxCalculation {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6121 RemoveTaxRateSettingsByAddressTaxCalculation
-
 	}
 
 	@description = "This is a test for COMMERCE-6122. EditConfigurationRemoteTaxCalculation"
@@ -275,17 +196,69 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6122 EditConfigurationRemoteTaxCalculation
-
 	}
 
-	@description = "This is a test for COMMERCE-6123. AddTaxRateSettingsFixedTaxRateTaxCalculation"
+	@description = "This is a test for COMMERCE-6107. EditMercanetPaymentMethod"
 	@ignore = "true"
 	@priority = "3"
-	test AddTaxRateSettingsFixedTaxRateTaxCalculation {
+	test EditMercanetPaymentMethod {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6123 AddTaxRateSettingsFixedTaxRateTaxCalculation
+		// TODO COMMERCE-6107 EditMercanetPaymentMethod
+	}
 
+	@description = "This is a test for COMMERCE-6105. EditMoneyOrderPaymentMethod"
+	@ignore = "true"
+	@priority = "3"
+	test EditMoneyOrderPaymentMethod {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6105 EditMoneyOrderPaymentMethod
+	}
+
+	@description = "This is a test for COMMERCE-6106. EditPaypalPaymentMethod"
+	@ignore = "true"
+	@priority = "3"
+	test EditPaypalPaymentMethod {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6106 EditPaypalPaymentMethod
+	}
+
+	@description = "This is a test for COMMERCE-6114. RemoveShippingOptionFlatRate"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveShippingOptionFlatRate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6114 RemoveShippingOptionFlatRate
+	}
+
+	@description = "This is a test for COMMERCE-6112. RemoveShippingOptionVariableRate"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveShippingOptionVariableRate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6112 RemoveShippingOptionVariableRate
+	}
+
+	@description = "This is a test for COMMERCE-6115. RemoveShippingSettingOptionVariableRate"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveShippingSettingOptionVariableRate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6115 RemoveShippingSettingOptionVariableRate
+	}
+
+	@description = "This is a test for COMMERCE-6121. RemoveTaxRateSettingsByAddressTaxCalculation"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveTaxRateSettingsByAddressTaxCalculation {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6121 RemoveTaxRateSettingsByAddressTaxCalculation
 	}
 
 	@description = "This is a test for COMMERCE-6124. RemoveTaxRateSettingsFixedTaxRateTaxCalculation"
@@ -295,7 +268,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6124 RemoveTaxRateSettingsFixedTaxRateTaxCalculation
+	}
 
+	@description = "This is a test for COMMERCE-6101. UseSearchBar"
+	@ignore = "true"
+	@priority = "3"
+	test UseSearchBar {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6101 UseSearchBar
 	}
 
 }

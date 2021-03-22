@@ -37,26 +37,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-6086. AddAChannelFilter"
-	@ignore = "true"
-	@priority = "3"
-	test AddAChannelFilter {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6086 AddAChannelFilter
-
-	}
-
-	@description = "This is a test for COMMERCE-6087. RemoveAChannelFilter"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveAChannelFilter {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6087 RemoveAChannelFilter
-
-	}
-
 	@description = "This is a test for COMMERCE-6088. AddAccountGroupFilter"
 	@ignore = "true"
 	@priority = "3"
@@ -67,6 +47,15 @@ definition {
 
 	}
 
+	@description = "This is a test for COMMERCE-6086. AddAChannelFilter"
+	@ignore = "true"
+	@priority = "3"
+	test AddAChannelFilter {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6086 AddAChannelFilter
+	}
+
 	@description = "This is a test for COMMERCE-6089. RemoveAccountGroupFilter"
 	@ignore = "true"
 	@priority = "3"
@@ -74,7 +63,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6089 RemoveAccountGroupFilter
+	}
 
+	@description = "This is a test for COMMERCE-6087. RemoveAChannelFilter"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAChannelFilter {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6087 RemoveAChannelFilter
 	}
 
 }

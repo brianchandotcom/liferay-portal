@@ -47,16 +47,6 @@ definition {
 
 	}
 
-	@description = "This is a test for COMMERCE-6063. RemoveAProductRelations"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveAProductRelations {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6063 RemoveAProductRelations
-
-	}
-
 	@description = "This is a test for COMMERCE-6064. EditAProductRelations"
 	@ignore = "true"
 	@priority = "3"
@@ -64,7 +54,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6064 EditAProductRelations
+	}
 
+	@description = "This is a test for COMMERCE-6063. RemoveAProductRelations"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAProductRelations {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6063 RemoveAProductRelations
 	}
 
 }

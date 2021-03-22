@@ -37,16 +37,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-6065. AddAPreExistingProductGroup"
-	@ignore = "true"
-	@priority = "3"
-	test AddAPreExistingProductGroup {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6065 AddAPreExistingProductGroup
-
-	}
-
 	@description = "This is a test for COMMERCE-6066. AddANewProductGroup"
 	@ignore = "true"
 	@priority = "3"
@@ -57,14 +47,13 @@ definition {
 
 	}
 
-	@description = "This is a test for COMMERCE-6067. RemoveAProductGroup"
+	@description = "This is a test for COMMERCE-6065. AddAPreExistingProductGroup"
 	@ignore = "true"
 	@priority = "3"
-	test RemoveAProductGroup {
+	test AddAPreExistingProductGroup {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6067 RemoveAProductGroup
-
+		// TODO COMMERCE-6065 AddAPreExistingProductGroup
 	}
 
 	@description = "This is a test for COMMERCE-6068. EditAProductGroup"
@@ -74,6 +63,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6068 EditAProductGroup
-
 	}
+
+	@description = "This is a test for COMMERCE-6067. RemoveAProductGroup"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAProductGroup {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6067 RemoveAProductGroup
+	}
+
 }

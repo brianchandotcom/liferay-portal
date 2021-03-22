@@ -37,46 +37,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-6025. AddAnImage"
-	@ignore = "true"
-	@priority = "3"
-	test AddAnImage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6025 AddAnImage
-
-	}
-
-	@description = "This is a test for COMMERCE-6026. RemoveAnImage"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveAnImage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6026 RemoveAnImage
-
-	}
-
-	@description = "This is a test for COMMERCE-6027. EditAnImage"
-	@ignore = "true"
-	@priority = "3"
-	test EditAnImage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6027 EditAnImage
-
-	}
-
-	@description = "This is a test for COMMERCE-6028. AddAnImageToAnOption"
-	@ignore = "true"
-	@priority = "3"
-	test AddAnImageToAnOption {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6028 AddAnImageToAnOption
-
-	}
-
 	@description = "This is a test for COMMERCE-6030. AddAnAttachment"
 	@ignore = "true"
 	@priority = "3"
@@ -87,16 +47,6 @@ definition {
 
 	}
 
-	@description = "This is a test for COMMERCE-6031. EditAnAttachment"
-	@ignore = "true"
-	@priority = "3"
-	test EditAnAttachment {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6031 EditAnAttachment
-
-	}
-
 	@description = "This is a test for COMMERCE-6032. AddAnAttachmentToAnOption"
 	@ignore = "true"
 	@priority = "3"
@@ -104,7 +54,42 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6032 AddAnAttachmentToAnOption
+	}
 
+	@description = "This is a test for COMMERCE-6025. AddAnImage"
+	@ignore = "true"
+	@priority = "3"
+	test AddAnImage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6025 AddAnImage
+	}
+
+	@description = "This is a test for COMMERCE-6028. AddAnImageToAnOption"
+	@ignore = "true"
+	@priority = "3"
+	test AddAnImageToAnOption {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6028 AddAnImageToAnOption
+	}
+
+	@description = "This is a test for COMMERCE-6031. EditAnAttachment"
+	@ignore = "true"
+	@priority = "3"
+	test EditAnAttachment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6031 EditAnAttachment
+	}
+
+	@description = "This is a test for COMMERCE-6027. EditAnImage"
+	@ignore = "true"
+	@priority = "3"
+	test EditAnImage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6027 EditAnImage
 	}
 
 	@description = "This is a test for COMMERCE-6033. RemoveAnAttachment"
@@ -114,7 +99,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6033 RemoveAnAttachment
+	}
 
+	@description = "This is a test for COMMERCE-6026. RemoveAnImage"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAnImage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6026 RemoveAnImage
 	}
 
 }

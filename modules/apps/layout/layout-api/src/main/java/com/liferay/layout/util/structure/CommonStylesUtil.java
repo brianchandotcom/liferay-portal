@@ -41,7 +41,7 @@ public class CommonStylesUtil {
 
 		List<String> availableStyleNames = new ArrayList<>();
 
-		JSONArray jsonArray = getCommongStylesJSONArray(null);
+		JSONArray jsonArray = getCommonStylesJSONArray(null);
 
 		Iterator<JSONObject> iterator = jsonArray.iterator();
 
@@ -62,7 +62,7 @@ public class CommonStylesUtil {
 		return _availableStyleNames;
 	}
 
-	public static JSONArray getCommongStylesJSONArray(
+	public static JSONArray getCommonStylesJSONArray(
 			ResourceBundle resourceBundle)
 		throws Exception {
 
@@ -146,7 +146,7 @@ public class CommonStylesUtil {
 
 		Map<String, Object> defaultValues = new HashMap<>();
 
-		JSONArray jsonArray = getCommongStylesJSONArray(null);
+		JSONArray jsonArray = getCommonStylesJSONArray(null);
 
 		Iterator<JSONObject> iterator = jsonArray.iterator();
 
@@ -193,7 +193,7 @@ public class CommonStylesUtil {
 	private static void _loadResponsiveTemplates() throws Exception {
 		Map<String, String> responsiveTemplates = new HashMap<>();
 
-		JSONArray jsonArray = getCommongStylesJSONArray(null);
+		JSONArray jsonArray = getCommonStylesJSONArray(null);
 
 		Iterator<JSONObject> iterator = jsonArray.iterator();
 

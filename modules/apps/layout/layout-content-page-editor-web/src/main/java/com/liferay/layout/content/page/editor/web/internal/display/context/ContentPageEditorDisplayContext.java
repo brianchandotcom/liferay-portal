@@ -287,7 +287,7 @@ public class ContentPageEditorDisplayContext {
 				"collectionSelectorURL", _getCollectionSelectorURL()
 			).put(
 				"commonStyles",
-				CommonStylesUtil.getCommongStylesJSONArray(
+				CommonStylesUtil.getCommonStylesJSONArray(
 					_resourceBundleLoader.loadResourceBundle(
 						themeDisplay.getLocale()))
 			).put(

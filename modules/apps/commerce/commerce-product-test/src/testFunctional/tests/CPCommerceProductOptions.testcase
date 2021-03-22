@@ -1,0 +1,60 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceStoreFrontSetUp();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6017. CreateAnOptionForAllTheFieldType"
+	@ignore = "true"
+	@priority = "3"
+	test CreateAnOptionForAllTheFieldType {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6017 CreateAnOptionForAllTheFieldType
+
+	}
+
+	@description = "This is a test for COMMERCE-6019. EditAndRemoveAnOptionWithValues"
+	@ignore = "true"
+	@priority = "3"
+	test EditAndRemoveAnOptionWithValues {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6019 EditAndRemoveAnOptionWithValues
+
+	}
+
+}

@@ -1,0 +1,79 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceStoreFrontSetUp();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6065. AddAPreExistingProductGroup"
+	@ignore = "true"
+	@priority = "3"
+	test AddAPreExistingProductGroup {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6065 AddAPreExistingProductGroup
+
+	}
+
+	@description = "This is a test for COMMERCE-6066. AddANewProductGroup"
+	@ignore = "true"
+	@priority = "3"
+	test AddANewProductGroup {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6066 AddANewProductGroup
+
+	}
+
+	@description = "This is a test for COMMERCE-6067. RemoveAProductGroup"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAProductGroup {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6067 RemoveAProductGroup
+
+	}
+
+	@description = "This is a test for COMMERCE-6068. EditAProductGroup"
+	@ignore = "true"
+	@priority = "3"
+	test EditAProductGroup {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6068 EditAProductGroup
+
+	}
+}

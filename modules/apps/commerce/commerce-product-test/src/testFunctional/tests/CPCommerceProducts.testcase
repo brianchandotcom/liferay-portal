@@ -216,4 +216,86 @@ definition {
 			value1 = "Amortiguador");
 	}
 
+	@description = "This is a test for COMMERCE-5803. UseSortingByNameAndDate"
+	@ignore = "true"
+	@priority = "3"
+	test UseSortingByNameAndDate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5803 UseSortingByNameAndDate
+
+	}
+
+	@description = "This is a test for COMMERCE-5805. UseSearchBarAndPagination"
+	@ignore = "true"
+	@priority = "3"
+	test UseSearchBarAndPagination {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5805 UseSearchBarAndPagination
+
+	}
+
+	@description = "This is a test for COMMERCE-5801. UseSkuSearchBarAndPagination"
+	@ignore = "true"
+	@priority = "3"
+	test UseSkuSearchBarAndPagination {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5801 UseSkuSearchBarAndPagination
+
+	}
+
+	@description = "This is a test for COMMERCE-5807. EditSkuAndDelete"
+	@ignore = "true"
+	@priority = "3"
+	test EditSkuAndDelete {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5807 EditSkuAndDelete
+
+	}
+
+	@description = "This is a test for COMMERCE-5808. EditAProduct"
+	@ignore = "true"
+	@priority = "3"
+	test EditAProduct {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5808 EditAProduct
+
+	}
+
+	@description = "This is a test for COMMERCE-6018. CreateProductBundleWithPriceTypeStatic"
+	@ignore = "true"
+	@priority = "3"
+	test CreateProductBundleWithPriceTypeStatic {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6018 CreateProductBundleWithPriceTypeStatic
+
+	}
+
+	@description = "This is a test for COMMERCE-6020. AddASKU"
+	@ignore = "true"
+	@priority = "3"
+	test AddASKU {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6020 AddASKU
+
+	}
+
+	@description = "This is a test for COMMERCE-6022. EditASKU"
+	@ignore = "true"
+	@priority = "3"
+	test EditASKU {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6022 EditASKU
+
+	}
+
+
+
 }

@@ -1,0 +1,80 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceStoreFrontSetUp();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6086. AddAChannelFilter"
+	@ignore = "true"
+	@priority = "3"
+	test AddAChannelFilter {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6086 AddAChannelFilter
+
+	}
+
+	@description = "This is a test for COMMERCE-6087. RemoveAChannelFilter"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAChannelFilter {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6087 RemoveAChannelFilter
+
+	}
+
+	@description = "This is a test for COMMERCE-6088. AddAccountGroupFilter"
+	@ignore = "true"
+	@priority = "3"
+	test AddAccountGroupFilter {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6088 AddAccountGroupFilter
+
+	}
+
+	@description = "This is a test for COMMERCE-6089. RemoveAccountGroupFilter"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAccountGroupFilter {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6089 RemoveAccountGroupFilter
+
+	}
+
+}

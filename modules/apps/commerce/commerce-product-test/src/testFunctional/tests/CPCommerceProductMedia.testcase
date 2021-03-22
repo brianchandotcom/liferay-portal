@@ -1,0 +1,120 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceStoreFrontSetUp();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6025. AddAnImage"
+	@ignore = "true"
+	@priority = "3"
+	test AddAnImage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6025 AddAnImage
+
+	}
+
+	@description = "This is a test for COMMERCE-6026. RemoveAnImage"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAnImage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6026 RemoveAnImage
+
+	}
+
+	@description = "This is a test for COMMERCE-6027. EditAnImage"
+	@ignore = "true"
+	@priority = "3"
+	test EditAnImage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6027 EditAnImage
+
+	}
+
+	@description = "This is a test for COMMERCE-6028. AddAnImageToAnOption"
+	@ignore = "true"
+	@priority = "3"
+	test AddAnImageToAnOption {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6028 AddAnImageToAnOption
+
+	}
+
+	@description = "This is a test for COMMERCE-6030. AddAnAttachment"
+	@ignore = "true"
+	@priority = "3"
+	test AddAnAttachment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6030 AddAnAttachment
+
+	}
+
+	@description = "This is a test for COMMERCE-6031. EditAnAttachment"
+	@ignore = "true"
+	@priority = "3"
+	test EditAnAttachment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6031 EditAnAttachment
+
+	}
+
+	@description = "This is a test for COMMERCE-6032. AddAnAttachmentToAnOption"
+	@ignore = "true"
+	@priority = "3"
+	test AddAnAttachmentToAnOption {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6032 AddAnAttachmentToAnOption
+
+	}
+
+	@description = "This is a test for COMMERCE-6033. RemoveAnAttachment"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAnAttachment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6033 RemoveAnAttachment
+
+	}
+
+}

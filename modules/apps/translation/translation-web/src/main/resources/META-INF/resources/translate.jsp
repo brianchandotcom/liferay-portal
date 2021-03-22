@@ -37,16 +37,7 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 		<nav class="component-tbar subnav-tbar-light tbar">
 			<clay:container-fluid>
 				<ul class="tbar-nav">
-					<li class="tbar-item tbar-item-expand">
-						<c:if test="<%= translateDisplayContext.hasTranslationPermission() %>">
-							<div class="tbar-section text-left">
-								<react:component
-									module="js/translate/TranslateLanguagesSelector"
-									props="<%= translateDisplayContext.getTranslateLanguagesSelectorData() %>"
-								/>
-							</div>
-						</c:if>
-					</li>
+					<li class="tbar-item tbar-item-expand"></li>
 					<li class="tbar-item">
 						<div class="metadata-type-button-row tbar-section text-right">
 							<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
@@ -190,7 +181,7 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 												</div>
 											</c:when>
 											<c:otherwise>
-												<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name='<%= "infoField--" + infoField.getName() + "--" %>' onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
+												<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' disabled="<%= true %>" label="<%= label %>" name='<%= "infoField--" + infoField.getName() + "--" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
 											</c:otherwise>
 										</c:choose>
 									</clay:col>
@@ -223,12 +214,4 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 
 		workflowActionInput.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
 	});
-
-	function <portlet:namespace />onInputChange(value) {
-		var translateLanguageComponent = Liferay.component(
-			'<portlet:namespace />TranslateLanguagesSelector'
-		);
-
-		translateLanguageComponent.onFormChange();
-	}
 </script>

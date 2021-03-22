@@ -12,45 +12,25 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React from 'react';
 
 import LanguageSelector from './LanguageSelector';
 
 const TranslateLanguagesSelector = ({
 	currentUrl,
+	formHaschanges,
 	portletNamespace,
 	sourceAvailableLanguages,
 	sourceLanguageId,
 	targetAvailableLanguages,
 	targetLanguageId,
 }) => {
-	const namespace = `${portletNamespace}`;
-	const [formHaschanges, setFormHasChanges] = useState(false);
-
-	const bridgeComponentId = `${namespace}TranslateLanguagesSelector`;
-
-	if (!Liferay.component(bridgeComponentId)) {
-		Liferay.component(
-			bridgeComponentId,
-			{
-				onFormChange: () => {
-					if (!formHaschanges) {
-						setFormHasChanges(true);
-					}
-				},
-			},
-			{
-				destroyOnNavigate: true,
-			}
-		);
-	}
-
 	const refreshPage = (sourceId, targetId) => {
 		const url = new URL(currentUrl);
 		const search_params = url.searchParams;
 
-		search_params.set(namespace + 'sourceLanguageId', sourceId);
-		search_params.set(namespace + 'targetLanguageId', targetId);
+		search_params.set(`${portletNamespace}sourceLanguageId`, sourceId);
+		search_params.set(`${portletNamespace}targetLanguageId`, targetId);
 
 		url.search = search_params.toString();
 

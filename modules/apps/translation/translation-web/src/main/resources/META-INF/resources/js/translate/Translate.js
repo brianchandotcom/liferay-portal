@@ -13,12 +13,18 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+
+import TranslateLanguagesSelector from './TranslateLanguagesSelector';
+
+const noop = () => {};
 
 const TranslationFieldEditor = ({
 	editorConfiguration,
@@ -28,6 +34,7 @@ const TranslationFieldEditor = ({
 	sourceContentDir,
 	targetContent,
 	targetContentDir,
+	onChange = noop,
 }) => {
 	const [value, setValue] = useState(targetContent);
 
@@ -54,8 +61,9 @@ const TranslationFieldEditor = ({
 						}}
 						name={id}
 						onChange={(data) => {
-							if (value !== data) {
+							if (value !== data.trim()) {
 								setValue(data);
+								onChange(data);
 							}
 						}}
 					/>
@@ -74,39 +82,54 @@ const TranslationFieldInput = ({
 	sourceContentDir,
 	targetContent,
 	targetContentDir,
-}) => (
-	<ClayLayout.Row>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label">{label}</label>
-				<ClayInput
-					component={multiline ? 'textarea' : undefined}
-					defaultValue={sourceContent}
-					dir={sourceContentDir}
-					readOnly
-					type="text"
-				/>
-			</ClayForm.Group>
-		</ClayLayout.Col>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label" htmlFor={id}>
-					{label}
-				</label>
-				<ClayInput
-					component={multiline ? 'textarea' : undefined}
-					defaultValue={targetContent}
-					dir={targetContentDir}
-					id={id}
-					name={id}
-					type="text"
-				/>
-			</ClayForm.Group>
-		</ClayLayout.Col>
-	</ClayLayout.Row>
-);
+	onChange = noop,
+}) => {
+	const [value, setValue] = useState(targetContent);
 
-const TranslationFieldSetEntries = ({infoFieldSetEntries, portletNamespace}) =>
+	return (
+		<ClayLayout.Row>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label">{label}</label>
+					<ClayInput
+						component={multiline ? 'textarea' : undefined}
+						defaultValue={sourceContent}
+						dir={sourceContentDir}
+						readOnly
+						type="text"
+					/>
+				</ClayForm.Group>
+			</ClayLayout.Col>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label" htmlFor={id}>
+						{label}
+					</label>
+					<ClayInput
+						component={multiline ? 'textarea' : undefined}
+						dir={targetContentDir}
+						id={id}
+						name={id}
+						onChange={(event) => {
+							const data = event.target.value;
+
+							setValue(data);
+							onChange(data);
+						}}
+						type="text"
+						value={value}
+					/>
+				</ClayForm.Group>
+			</ClayLayout.Col>
+		</ClayLayout.Row>
+	);
+};
+
+const TranslationFieldSetEntries = ({
+	infoFieldSetEntries,
+	onChange,
+	portletNamespace,
+}) =>
 	infoFieldSetEntries.map(({fields, legend}) => (
 		<React.Fragment key={legend}>
 			<ClayLayout.Row>
@@ -118,12 +141,16 @@ const TranslationFieldSetEntries = ({infoFieldSetEntries, portletNamespace}) =>
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 			{fields.map((field) => {
-				const id = `${portletNamespace}${field.id}`;
+				const fieldProps = {
+					...field,
+					id: `${portletNamespace}${field.id}`,
+					onChange,
+				};
 
 				return field.html ? (
-					<TranslationFieldEditor key={field.id} {...field} id={id} />
+					<TranslationFieldEditor key={field.id} {...fieldProps} />
 				) : (
-					<TranslationFieldInput key={field.id} {...field} id={id} />
+					<TranslationFieldInput key={field.id} {...fieldProps} />
 				);
 			})}
 		</React.Fragment>
@@ -147,31 +174,92 @@ const TranslationHeader = ({sourceLanguageIdTitle, targetLanguageIdTitle}) => (
 const Translate = ({
 	infoFieldSetEntries,
 	portletNamespace,
+	publishButtonDisabled,
+	publishButtonLabel,
+	redirectURL,
+	saveButtonDisabled,
+	saveButtonLabel,
 	sourceLanguageIdTitle,
 	targetLanguageIdTitle,
+	translateLanguagesSelectorData,
 	translationPermission,
-}) => (
-	<div className="sheet translation-edit-body-form">
-		{!translationPermission ? (
-			<ClayAlert>
-				{Liferay.Language.get(
-					'you-do-not-have-permissions-to-translate-to-any-of-the-available-languages'
-				)}
-			</ClayAlert>
-		) : (
-			<>
-				<TranslationHeader
-					sourceLanguageIdTitle={sourceLanguageIdTitle}
-					targetLanguageIdTitle={targetLanguageIdTitle}
-				/>
-				<TranslationFieldSetEntries
-					infoFieldSetEntries={infoFieldSetEntries}
-					portletNamespace={portletNamespace}
-				/>
-			</>
-		)}
-	</div>
-);
+}) => {
+	const [formHaschanges, setFormHaschanges] = useState(false);
+
+	return (
+		<>
+			<nav
+				className="component-tbar subnav-tbar-light tbar"
+			>
+				<ClayLayout.ContainerFluid view>
+					<ul className="tbar-nav">
+						<li className="tbar-item tbar-item-expand">
+							<TranslateLanguagesSelector
+								{...translateLanguagesSelectorData}
+								formHaschanges={formHaschanges}
+								portletNamespace={portletNamespace}
+							/>
+						</li>
+						<li className="tbar-item">
+							<div className="metadata-type-button-row tbar-section text-right">
+								<ClayButton.Group spaced>
+									<ClayLink
+										button={{small: true}}
+										displayType="secondary"
+										href={redirectURL}
+									>
+										{Liferay.Language.get('cancel')}
+									</ClayLink>
+									<ClayButton
+										disabled={saveButtonDisabled}
+										displayType="secondary"
+										small
+										type="submit"
+									>
+										{Liferay.Language.get(saveButtonLabel)}
+									</ClayButton>
+									<ClayButton
+										disabled={publishButtonDisabled}
+										displayType="primary"
+										small
+										type="submit"
+									>
+										{Liferay.Language.get(
+											publishButtonLabel
+										)}
+									</ClayButton>
+								</ClayButton.Group>
+							</div>
+						</li>
+					</ul>
+				</ClayLayout.ContainerFluid>
+			</nav>
+			<ClayLayout.ContainerFluid view>
+				<div className="sheet translation-edit-body-form">
+					{!translationPermission ? (
+						<ClayAlert>
+							{Liferay.Language.get(
+								'you-do-not-have-permissions-to-translate-to-any-of-the-available-languages'
+							)}
+						</ClayAlert>
+					) : (
+						<>
+							<TranslationHeader
+								sourceLanguageIdTitle={sourceLanguageIdTitle}
+								targetLanguageIdTitle={targetLanguageIdTitle}
+							/>
+							<TranslationFieldSetEntries
+								infoFieldSetEntries={infoFieldSetEntries}
+								onChange={() => setFormHaschanges(() => true)}
+								portletNamespace={portletNamespace}
+							/>
+						</>
+					)}
+				</div>
+			</ClayLayout.ContainerFluid>
+		</>
+	);
+};
 
 Translate.propTypes = {
 	infoFieldSetEntries: PropTypes.arrayOf(

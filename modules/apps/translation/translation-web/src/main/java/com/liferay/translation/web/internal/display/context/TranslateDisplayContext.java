@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -216,9 +217,22 @@ public class TranslateDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"infoFieldSetEntries", infoFieldSetEntries
 		).put(
+			"publishButtonDisabled", isPublishButtonDisabled()
+		).put(
+			"publishButtonLabel", getPublishButtonLabel()
+		).put(
+			"redirectURL", ParamUtil.getString(_httpServletRequest, "redirect")
+		).put(
+			"saveButtonDisabled", isSaveButtonDisabled()
+		).put(
+			"saveButtonLabel", getSaveButtonLabel()
+		).put(
 			"sourceLanguageIdTitle", getLanguageIdTitle(getSourceLanguageId())
 		).put(
 			"targetLanguageIdTitle", getLanguageIdTitle(getTargetLanguageId())
+		).put(
+			"translateLanguagesSelectorData",
+			getTranslateLanguagesSelectorData()
 		).put(
 			"translationPermission", hasTranslationPermission()
 		).build();

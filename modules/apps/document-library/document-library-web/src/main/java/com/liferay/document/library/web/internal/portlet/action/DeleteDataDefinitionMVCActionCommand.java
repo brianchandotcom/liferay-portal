@@ -26,6 +26,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -64,9 +65,11 @@ public class DeleteDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "rowIds");
 		}
 
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
 		DataDefinitionResource dataDefinitionResource =
-			DataDefinitionResource.builder(
-			).user(
+			dataDefinitionResourceBuilder.user(
 				themeDisplay.getUser()
 			).build();
 
@@ -74,5 +77,8 @@ public class DeleteDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			dataDefinitionResource.deleteDataDefinition(deleteDataDefinitionId);
 		}
 	}
+
+	@Reference
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 }

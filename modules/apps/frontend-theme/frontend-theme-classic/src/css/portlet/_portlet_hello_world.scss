@@ -1,32 +1,5 @@
-.portlet-hello-world .portlet .portlet-content {
-	background: #6f5245 url(../images/portlet_hello_world/welcome_bg.jpg) bottom
-		left;
-	background-clip: padding-box;
-	background-size: cover;
-	color: $white;
-	min-height: 390px;
-	padding-top: 30px;
-
-	@include media-breakpoint-up(sm) {
-		padding-left: 50px;
-	}
-
-	.portlet-header {
-		margin-bottom: 0;
-	}
-
-	.portlet-title-text {
-		color: $white;
-		font-size: 2rem;
-		font-weight: 700;
-		text-transform: none;
-	}
-
-	.portlet-body {
-		padding-right: 30%;
-
-		@include media-breakpoint-up(sm) {
-			padding-right: 60%;
-		}
-	}
+.portlet-hello-world .portlet .portlet-content .portlet-title-text {
+	font-size: 2rem;
+	font-weight: 700;
+	text-transform: none;
 }

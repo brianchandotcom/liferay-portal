@@ -136,13 +136,17 @@ public class FragmentEntryLinkModelListener
 		return StringUtil.replace(
 			fragmentEntryLink.getJs(),
 			new String[] {
-				"'__FRAGMENT_MODULE_NAME__'", "'frontend-js-react-web$react'"
+				"'__FRAGMENT_MODULE_NAME__'", "'frontend-js-react-web$react'",
+				"'__REACT_PROVIDER__$react'"
 			},
 			new String[] {
 				StringBundler.concat(
 					StringPool.APOSTROPHE,
 					ModuleNameUtil.getModuleResolvedId(
 						_jsPackage, _getModuleName(fragmentEntryLink)),
+					StringPool.APOSTROPHE),
+				StringBundler.concat(
+					StringPool.APOSTROPHE, _DEPENDENCY_PORTAL_REACT,
 					StringPool.APOSTROPHE),
 				StringBundler.concat(
 					StringPool.APOSTROPHE, _DEPENDENCY_PORTAL_REACT,

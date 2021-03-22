@@ -53,6 +53,10 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 		pageNumber="<%= 1 %>"
 		portletURL="<%= commerceTaxFixedRateAddressRelsDisplayContext.getPortletURL() %>"
 	/>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>

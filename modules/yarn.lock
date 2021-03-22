@@ -4091,7 +4091,7 @@ clay-loading-indicator@2.22.2, clay-loading-indicator@^2.22.2:
     metal-dom "^2.16.0"
     metal-state "^2.16.0"
 
-clay-management-toolbar@2.22.3, clay-management-toolbar@^2.22.3:
+clay-management-toolbar@^2.22.3:
   version "2.22.3"
   resolved "https://registry.yarnpkg.com/clay-management-toolbar/-/clay-management-toolbar-2.22.3.tgz#07e8fcc69fd8d0d797afebf30601538e6ef66510"
   integrity sha512-WqSGJgngtBeYOntCpveN5AY2Yn+q+dTP9klUvYl+be3jScExRdE1wpy6QX+uwYrk99016MrKyA1MpVojcp5PwA==
@@ -9565,10 +9565,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-liferay-ckeditor@4.14.1-liferay.18:
-  version "4.14.1-liferay.18"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.14.1-liferay.18.tgz#991e84184c272b49a323a64e2ed81902dd454ae9"
-  integrity sha512-YPHV9vQcxC7EJVaMkT96/TKKRAiuxy1aeGPT+8+Gq4CBPtQgSE4jj+1t2Ybbjc5/Ec9+g9R+BNiUlEELEC3dMA==
+liferay-ckeditor@4.14.1-liferay.20:
+  version "4.14.1-liferay.20"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.14.1-liferay.20.tgz#a6a2ef4f46184806f15cb66b2b5cd55156873d56"
+  integrity sha512-Z7RjtjbweLA3+CB3L7Ij87UVkYP+O5XfppOJyTuOjDjpdDjapOt0tgcxuQaxnCevN87Z/CGq8nCgmUtWbC/zCw==
 
 liferay-font-awesome@3.4.0:
   version "3.4.0"

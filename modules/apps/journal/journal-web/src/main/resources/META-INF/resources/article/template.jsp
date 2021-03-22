@@ -59,14 +59,14 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 				<aui:button id="clearDDMTemplate" value="clear" />
 			</c:if>
 		</div>
+
+		<liferay-frontend:component
+			componentId='<%= liferayPortletResponse.getNamespace() + "selectStructureField" %>'
+			context="<%= journalEditArticleDisplayContext.getTemplateComponentContext() %>"
+			module="js/article/Template"
+		/>
 	</c:when>
 	<c:otherwise>
 		<p class="text-secondary"><liferay-ui:message key="there-are-no-templates" /></p>
 	</c:otherwise>
 </c:choose>
-
-<liferay-frontend:component
-	componentId='<%= liferayPortletResponse.getNamespace() + "selectStructureField" %>'
-	context="<%= journalEditArticleDisplayContext.getTemplateComponentContext() %>"
-	module="js/article/Template"
-/>

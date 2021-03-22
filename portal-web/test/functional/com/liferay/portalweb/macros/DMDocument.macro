@@ -942,6 +942,22 @@ definition {
 		DownloadTempFile();
 	}
 
+	macro downloadMultipleCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		for (var dmDocumentTitle : list "${dmDocumentTitleList}") {
+			Check(
+				key_dmDocumentTitle = "${dmDocumentTitle}",
+				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
+		}
+
+		Click(
+			key_text = "download",
+			locator1 = "Icon#ANY");
+
+		DownloadTempFile();
+	}
+
 	macro downloadPG {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 

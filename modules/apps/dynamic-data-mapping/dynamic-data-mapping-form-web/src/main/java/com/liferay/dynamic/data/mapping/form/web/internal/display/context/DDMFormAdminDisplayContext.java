@@ -344,7 +344,11 @@ public class DDMFormAdminDisplayContext {
 					_ddmFormTemplateContextFactory.create(
 						ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
-				jsonObject.put("settingsContext", ddmFormTemplateContext);
+				jsonObject.put(
+					"settingsContext",
+					jsonFactory.createJSONObject(
+						jsonFactory.looseSerializeDeep(
+							ddmFormTemplateContext)));
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException, portalException);

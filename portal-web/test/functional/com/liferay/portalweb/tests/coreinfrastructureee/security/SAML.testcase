@@ -17,7 +17,6 @@ definition {
 
 	@priority = "5"
 	test AddUserInheritedRolesAsSAMLAttributeStatements {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#AddUserInheritedRolesAsSAMLAttributeStatements";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
@@ -174,11 +173,11 @@ definition {
 			value1 = "The identity provider role has been disabled. It can be re-enabled in System Settings.");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AssertKeepAliveToKeepMySAMLSessionAlive {
 		property app.server.bundles.size = "2";
 		property databases.size = "2";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#AssertKeepAliveToKeepMySAMLSessionAlive";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
@@ -749,7 +748,6 @@ definition {
 	@priority = "4"
 	test ConfigureSAMLToImportUsersFromLDAP {
 		property apacheds.enabled = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#ConfigureSAMLToImportUsersFromLDAP";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
@@ -1199,11 +1197,11 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
 		property app.server.bundles.size = "2";
 		property databases.size = "2";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutAndForceAuthWithMultipleSPs";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");

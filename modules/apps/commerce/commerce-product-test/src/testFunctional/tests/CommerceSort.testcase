@@ -1,0 +1,77 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "COMMERCE-6173. As a buyer, I want to sort products by Name(ascending) using Sort widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreSortedByNameAscending {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6173 AssertProductsAreSortedByNameAscending pending implementation
+
+	}
+
+	@description = "COMMERCE-6174. As a buyer, I want to sort products by Name(descending) using Sort widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreSortedByNameDescending {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6174 AssertProductsAreSortedByNameDescending pending implementation
+	}
+
+	@description = "COMMERCE-6176. As a buyer, I want to sort products by New Items using Sort widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreSortedByNewItems {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6176 AssertProductsAreSortedByNewItems pending implementation
+	}
+
+	@description = "COMMERCE-6171. As a buyer, I want to sort products by Price High to Low using Sort widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreSortedByPriceHighToLow {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6171 AssertProductsAreSortedByPriceHighToLow pending implementation
+	}
+
+	@description = "COMMERCE-6172. As a buyer, I want to sort products by Price Low to High using Sort widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreSortedByPriceLowToHigh {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6172 AssertProductsAreSortedByPriceLowToHigh pending implementation
+	}
+
+	@description = "COMMERCE-6175. As a buyer, I want to sort products by Relevance using Sort widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreSortedByRelevance {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6175 AssertProductsAreSortedByRelevance pending implementation
+	}
+
+}

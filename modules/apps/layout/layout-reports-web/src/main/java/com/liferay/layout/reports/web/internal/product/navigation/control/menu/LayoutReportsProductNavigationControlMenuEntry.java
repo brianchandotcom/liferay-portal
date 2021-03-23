@@ -324,7 +324,9 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		return Optional.ofNullable(
 			_layoutLocalService.fetchLayout(plid)
 		).filter(
-			layout -> layout.isTypePortlet() || layout.isTypeAssetDisplay()
+			layout ->
+				layout.isTypeAssetDisplay() || layout.isTypeContent() ||
+				layout.isTypePortlet()
 		).filter(
 			layout -> !_isEmbeddedPersonalApplicationLayout(layout)
 		).filter(

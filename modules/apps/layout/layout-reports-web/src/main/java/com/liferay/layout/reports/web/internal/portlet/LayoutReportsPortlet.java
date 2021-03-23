@@ -14,6 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.portlet;
 
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
@@ -115,7 +116,8 @@ public class LayoutReportsPortlet extends MVCPortlet {
 			httpServletRequest.setAttribute(
 				LayoutReportsWebKeys.LAYOUT_REPORTS_DISPLAY_CONTEXT,
 				new LayoutReportsDisplayContext(
-					_groupLocalService, _layoutLocalService,
+					_groupLocalService, _infoItemServiceTracker,
+					_layoutLocalService,
 					new LayoutReportsDataProvider(_getApiKey(group)),
 					_layoutSEOLinkManager, _language, _portal, renderRequest));
 
@@ -189,6 +191,9 @@ public class LayoutReportsPortlet extends MVCPortlet {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Language _language;

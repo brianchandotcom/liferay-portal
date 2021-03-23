@@ -15,6 +15,10 @@
 package com.liferay.layout.reports.web.internal.display.context;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
@@ -57,12 +61,14 @@ public class LayoutReportsDisplayContext {
 
 	public LayoutReportsDisplayContext(
 		GroupLocalService groupLocalService,
+		InfoItemServiceTracker infoItemServiceTracker,
 		LayoutLocalService layoutLocalService,
 		LayoutReportsDataProvider layoutReportsDataProvider,
 		LayoutSEOLinkManager layoutSEOLinkManager, Language language,
 		Portal portal, RenderRequest renderRequest) {
 
 		_groupLocalService = groupLocalService;
+		_infoItemServiceTracker = infoItemServiceTracker;
 		_layoutLocalService = layoutLocalService;
 		_layoutReportsDataProvider = layoutReportsDataProvider;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
@@ -174,14 +180,7 @@ public class LayoutReportsDisplayContext {
 			).put(
 				"languageId", LocaleUtil.toW3cLanguageId(locale)
 			).put(
-				"title",
-				Optional.ofNullable(
-					layout.getTitle(locale)
-				).filter(
-					Validator::isNotNull
-				).orElseGet(
-					() -> layout.getName(locale)
-				)
+				"title", _getTitle(layout, locale)
 			).build()
 		).collect(
 			Collectors.toList()
@@ -274,6 +273,41 @@ public class LayoutReportsDisplayContext {
 		}
 	}
 
+	private String _getTitle(Layout layout, Locale locale) {
+		if (layout.isTypeAssetDisplay()) {
+			return Optional.ofNullable(
+				(InfoItemDetails)_renderRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_DETAILS)
+			).map(
+				infoItemDetails ->
+					_infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemFieldValuesProvider.class,
+						infoItemDetails.getClassName())
+			).map(
+				infoItemFieldValuesProvider ->
+					infoItemFieldValuesProvider.getInfoItemFieldValue(
+						_renderRequest.getAttribute(
+							InfoDisplayWebKeys.INFO_ITEM),
+						"title")
+			).map(
+				infoFieldValue -> (String)infoFieldValue.getValue(locale)
+			).orElse(
+				StringPool.BLANK
+			);
+		}
+		else if (layout.isTypeContent() || layout.isTypePortlet()) {
+			return Optional.ofNullable(
+				layout.getTitle(locale)
+			).filter(
+				Validator::isNotNull
+			).orElseGet(
+				() -> layout.getName(locale)
+			);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private boolean _isCompanyAdmin() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -300,6 +334,7 @@ public class LayoutReportsDisplayContext {
 
 	private Map<String, Object> _data;
 	private final GroupLocalService _groupLocalService;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final Language _language;
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutReportsDataProvider _layoutReportsDataProvider;

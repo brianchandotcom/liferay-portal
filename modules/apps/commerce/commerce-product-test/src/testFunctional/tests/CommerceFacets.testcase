@@ -1,0 +1,59 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "COMMERCE-6169. As a buyer, I want to filter products using Category Facet widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreFilteredByCategoryFacet {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6169 AssertProductsAreFilteredByCategoryFacet pending implementation
+
+	}
+
+	@description = "COMMERCE-6165. As a buyer, I want to filter products using Option Facet widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreFilteredByOptionFacet {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6165 AssertProductsAreFilteredByOptionFacet pending implementation
+	}
+
+	@description = "COMMERCE-6170. As a buyer, I want to filter products using Price Range Facet widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreFilteredByPriceRangeFacet {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6170 AssertProductsAreFilteredByPriceRangeFacet pending implementation
+	}
+
+	@description = "COMMERCE-6166. As a buyer, I want to filter products using Specification Facet widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductsAreFilteredBySpecificationFacet {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6166 AssertProductsAreFilteredBySpecificationFacet pending implementation
+	}
+
+}

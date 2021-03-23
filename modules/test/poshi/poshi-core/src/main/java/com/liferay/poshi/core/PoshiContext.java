@@ -59,6 +59,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -378,7 +379,7 @@ public class PoshiContext {
 
 		Map<Properties, Collection<String>> map = multimap.asMap();
 
-		List<List<String>> testBatchGroups = new ArrayList<>();
+		Map<String, List<String>> orderedTestBatchGroups = new TreeMap<>();
 
 		for (Collection<String> value : map.values()) {
 			List<String> classCommandNameGroup = new ArrayList<>(value);
@@ -391,11 +392,16 @@ public class PoshiContext {
 
 			int groupSize = MathUtil.quotient(testCount, groupCount, true);
 
-			testBatchGroups.addAll(
-				Lists.partition(classCommandNameGroup, groupSize));
+			List<List<String>> testBatchGroups = Lists.partition(
+				classCommandNameGroup, groupSize);
+
+			for (List<String> testBatchGroup : testBatchGroups) {
+				orderedTestBatchGroups.put(
+					testBatchGroup.get(0), testBatchGroup);
+			}
 		}
 
-		return testBatchGroups;
+		return new ArrayList<>(orderedTestBatchGroups.values());
 	}
 
 	public static Element getTestCaseCommandElement(

@@ -158,6 +158,10 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 	private String _getModule() {
 		if (Validator.isBlank(getModule())) {
+			if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
+				return "data_layout_builder/new-js/App.es";
+			}
+
 			return "data_layout_builder/js/App.es";
 		}
 

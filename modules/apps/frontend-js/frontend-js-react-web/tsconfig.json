@@ -7,7 +7,7 @@
 		"outDir": "./build/node/packageRunBuild/dist/",
 		"paths": {
 			"@liferay/frontend-js-state-web": [
-				"../frontend-js-state-web/*"
+				"../frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
 			]
 		},
 		"sourceMap": true,

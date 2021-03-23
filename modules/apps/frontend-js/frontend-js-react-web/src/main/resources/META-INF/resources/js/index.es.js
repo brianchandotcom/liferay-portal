@@ -18,6 +18,7 @@ export {default as render} from './render.es';
 export {default as useEventListener} from './hooks/useEventListener.es';
 export {default as useInterval} from './hooks/useInterval.es';
 export {default as useIsMounted} from './hooks/useIsMounted.es';
+export {default as useLiferayState} from './hooks/useLiferayState';
 export {default as usePrevious} from './hooks/usePrevious.es';
 export {default as useStateSafe} from './hooks/useStateSafe.es';
 export {default as useThunk} from './hooks/useThunk.es';

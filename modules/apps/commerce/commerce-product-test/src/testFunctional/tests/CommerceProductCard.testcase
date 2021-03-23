@@ -1129,8 +1129,17 @@ definition {
 	test ViewProductCardPrice {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5864 ViewProductCardPrice pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		Click(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "24.00");
 	}
 
 	@description = "COMMERCE-6158. As a buyer, I want to see the barred list price and a discount price of a product, if set"

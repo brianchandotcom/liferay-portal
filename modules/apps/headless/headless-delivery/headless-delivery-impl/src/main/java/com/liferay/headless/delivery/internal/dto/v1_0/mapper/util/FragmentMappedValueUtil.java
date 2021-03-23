@@ -14,12 +14,44 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.mapper.util;
 
+import com.liferay.headless.delivery.dto.v1_0.ClassFieldReference;
+import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
+import com.liferay.headless.delivery.dto.v1_0.ContextReference;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Jürgen Kappler
  */
 public class FragmentMappedValueUtil {
+
+	public static String getFieldKey(JSONObject jsonObject) {
+		String collectionFieldId = jsonObject.getString("collectionFieldId");
+
+		if (Validator.isNotNull(collectionFieldId)) {
+			return collectionFieldId;
+		}
+
+		String fieldId = jsonObject.getString("fieldId");
+
+		if (Validator.isNotNull(fieldId)) {
+			return fieldId;
+		}
+
+		String mappedField = jsonObject.getString("mappedField");
+
+		if (Validator.isNotNull(mappedField)) {
+			return mappedField;
+		}
+
+		return null;
+	}
 
 	public static boolean isSaveFragmentMappedValue(
 		JSONObject jsonObject, boolean saveMapping) {
@@ -48,5 +80,145 @@ public class FragmentMappedValueUtil {
 
 		return false;
 	}
+
+	public static Object toItemReference(JSONObject jsonObject) {
+		String collectionFieldId = jsonObject.getString("collectionFieldId");
+		String fieldId = jsonObject.getString("fieldId");
+		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
+		String mappedField = jsonObject.getString("mappedField");
+
+		if (Validator.isNull(collectionFieldId) && Validator.isNull(fieldId) &&
+			(layoutJSONObject == null) && Validator.isNull(mappedField)) {
+
+			return null;
+		}
+
+		if (Validator.isNotNull(collectionFieldId)) {
+			return new ContextReference() {
+				{
+					contextSource = ContextSource.COLLECTION_ITEM;
+				}
+			};
+		}
+
+		if (layoutJSONObject != null) {
+			final Layout layout;
+
+			try {
+				layout = LayoutLocalServiceUtil.getLayout(
+					layoutJSONObject.getLong("groupId"),
+					layoutJSONObject.getBoolean("privateLayout"),
+					layoutJSONObject.getLong("layoutId"));
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Item reference could not be set since no layout " +
+							"could be obtained",
+						portalException);
+				}
+
+				return null;
+			}
+
+			return new ClassFieldReference() {
+				{
+					className = Layout.class.getName();
+					fieldName = "plid";
+					fieldValue = String.valueOf(layout.getPlid());
+				}
+			};
+		}
+
+		if (Validator.isNotNull(mappedField)) {
+			return new ContextReference() {
+				{
+					contextSource = ContextSource.DISPLAY_PAGE_ITEM;
+				}
+			};
+		}
+
+		return new ClassPKReference() {
+			{
+				className = _toItemClassName(jsonObject);
+				classPK = _toItemClassPK(jsonObject);
+			}
+		};
+	}
+
+	private static String _toItemClassName(JSONObject jsonObject) {
+		String classNameIdString = jsonObject.getString("classNameId");
+
+		if (Validator.isNull(classNameIdString)) {
+			return null;
+		}
+
+		long classNameId = 0;
+
+		try {
+			classNameId = Long.parseLong(classNameIdString);
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"Item class name could not be set since class name " +
+							"ID %s could not be parsed to a long",
+						classNameIdString),
+					numberFormatException);
+			}
+
+			return null;
+		}
+
+		String className = null;
+
+		try {
+			className = PortalUtil.getClassName(classNameId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Item class name could not be set since no class name " +
+						"could be obtained for class name ID " + classNameId,
+					exception);
+			}
+
+			return null;
+		}
+
+		return className;
+	}
+
+	private static Long _toItemClassPK(JSONObject jsonObject) {
+		String classPKString = jsonObject.getString("classPK");
+
+		if (Validator.isNull(classPKString)) {
+			return null;
+		}
+
+		Long classPK = null;
+
+		try {
+			classPK = Long.parseLong(classPKString);
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"Item class PK could not be set since class PK %s " +
+							"could not be parsed to a long",
+						classPKString),
+					numberFormatException);
+			}
+
+			return null;
+		}
+
+		return classPK;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentMappedValueUtil.class);
 
 }

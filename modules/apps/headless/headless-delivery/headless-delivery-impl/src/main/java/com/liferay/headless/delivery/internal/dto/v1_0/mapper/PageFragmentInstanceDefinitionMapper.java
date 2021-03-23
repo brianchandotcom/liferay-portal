@@ -22,9 +22,7 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.headless.delivery.dto.v1_0.ClassFieldReference;
 import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
-import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
@@ -51,7 +49,6 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -60,7 +57,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -768,172 +764,12 @@ public class PageFragmentInstanceDefinitionMapper {
 				mapping = new Mapping() {
 					{
 						defaultFragmentInlineValue = fragmentInlineValue;
-						itemReference = _toItemReference(jsonObject);
-
-						setFieldKey(
-							() -> {
-								String collectionFieldId = jsonObject.getString(
-									"collectionFieldId");
-
-								if (Validator.isNotNull(collectionFieldId)) {
-									return collectionFieldId;
-								}
-
-								String fieldId = jsonObject.getString(
-									"fieldId");
-
-								if (Validator.isNotNull(fieldId)) {
-									return fieldId;
-								}
-
-								String mappedField = jsonObject.getString(
-									"mappedField");
-
-								if (Validator.isNotNull(mappedField)) {
-									return mappedField;
-								}
-
-								return null;
-							});
+						fieldKey = FragmentMappedValueUtil.getFieldKey(
+							jsonObject);
+						itemReference = FragmentMappedValueUtil.toItemReference(
+							jsonObject);
 					}
 				};
-			}
-		};
-	}
-
-	private String _toItemClassName(JSONObject jsonObject) {
-		String classNameIdString = jsonObject.getString("classNameId");
-
-		if (Validator.isNull(classNameIdString)) {
-			return null;
-		}
-
-		long classNameId = 0;
-
-		try {
-			classNameId = Long.parseLong(classNameIdString);
-		}
-		catch (NumberFormatException numberFormatException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					String.format(
-						"Item class name could not be set since class name " +
-							"ID %s could not be parsed to a long",
-						classNameIdString),
-					numberFormatException);
-			}
-
-			return null;
-		}
-
-		String className = null;
-
-		try {
-			className = _portal.getClassName(classNameId);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Item class name could not be set since no class name " +
-						"could be obtained for class name ID " + classNameId,
-					exception);
-			}
-
-			return null;
-		}
-
-		return className;
-	}
-
-	private Long _toItemClassPK(JSONObject jsonObject) {
-		String classPKString = jsonObject.getString("classPK");
-
-		if (Validator.isNull(classPKString)) {
-			return null;
-		}
-
-		Long classPK = null;
-
-		try {
-			classPK = Long.parseLong(classPKString);
-		}
-		catch (NumberFormatException numberFormatException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					String.format(
-						"Item class PK could not be set since class PK %s " +
-							"could not be parsed to a long",
-						classPKString),
-					numberFormatException);
-			}
-
-			return null;
-		}
-
-		return classPK;
-	}
-
-	private Object _toItemReference(JSONObject jsonObject) {
-		String collectionFieldId = jsonObject.getString("collectionFieldId");
-		String fieldId = jsonObject.getString("fieldId");
-		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
-		String mappedField = jsonObject.getString("mappedField");
-
-		if (Validator.isNull(collectionFieldId) && Validator.isNull(fieldId) &&
-			(layoutJSONObject == null) && Validator.isNull(mappedField)) {
-
-			return null;
-		}
-
-		if (Validator.isNotNull(collectionFieldId)) {
-			return new ContextReference() {
-				{
-					contextSource = ContextSource.COLLECTION_ITEM;
-				}
-			};
-		}
-
-		if (layoutJSONObject != null) {
-			final Layout layout;
-
-			try {
-				layout = _layoutLocalService.getLayout(
-					layoutJSONObject.getLong("groupId"),
-					layoutJSONObject.getBoolean("privateLayout"),
-					layoutJSONObject.getLong("layoutId"));
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Item reference could not be set since no layout " +
-							"could be obtained",
-						portalException);
-				}
-
-				return null;
-			}
-
-			return new ClassFieldReference() {
-				{
-					className = Layout.class.getName();
-					fieldName = "plid";
-					fieldValue = String.valueOf(layout.getPlid());
-				}
-			};
-		}
-
-		if (Validator.isNotNull(mappedField)) {
-			return new ContextReference() {
-				{
-					contextSource = ContextSource.DISPLAY_PAGE_ITEM;
-				}
-			};
-		}
-
-		return new ClassPKReference() {
-			{
-				className = _toItemClassName(jsonObject);
-				classPK = _toItemClassPK(jsonObject);
 			}
 		};
 	}

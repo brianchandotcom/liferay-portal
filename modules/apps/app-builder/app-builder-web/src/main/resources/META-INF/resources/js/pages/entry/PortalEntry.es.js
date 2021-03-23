@@ -24,6 +24,12 @@ import PersonalMenu from './PersonalMenuEntry.es';
 
 const STORAGE_KEY = '@app-builder/standalone/language';
 
+const portalKeys = {
+	APP_STANDALONE_NAME: '#appStandaloneName',
+	PERSONAL_MENU: ' #app-personal-menu',
+	TRANSLATION_MANAGER: '#appTranslationManager',
+};
+
 const setStorageLanguageId = (appId, value) => {
 	localStorage.setItem(`${STORAGE_KEY}/${appId}`, value);
 };
@@ -43,6 +49,11 @@ const TranslationManagerPortal = ({
 	userLanguageId,
 }) => {
 	const {view: viewPermission} = usePermissions();
+	const [standaloneNameContainer, setStandaloneNameContainer] = useState();
+	const [
+		translationManagerContainer,
+		setTranslationManagerContainer,
+	] = useState();
 
 	const [{app, dataDefinition}, setState] = useState({
 		app: {
@@ -60,6 +71,26 @@ const TranslationManagerPortal = ({
 		setStorageLanguageId(appId, languageId);
 		setUserLanguageId(languageId);
 	};
+
+	useEffect(() => {
+		if (standaloneNameContainer) {
+			return;
+		}
+
+		setStandaloneNameContainer(
+			document.querySelector(portalKeys.APP_STANDALONE_NAME)
+		);
+	}, [standaloneNameContainer]);
+
+	useEffect(() => {
+		if (translationManagerContainer) {
+			return;
+		}
+
+		setTranslationManagerContainer(
+			document.querySelector(portalKeys.TRANSLATION_MANAGER)
+		);
+	}, [translationManagerContainer]);
 
 	useEffect(() => {
 		if (viewPermission && showAppName) {
@@ -102,11 +133,6 @@ const TranslationManagerPortal = ({
 		return defaultLanguageId;
 	};
 
-	const appStandaloneName = document.querySelector('#appStandaloneName');
-	const appTranslationManager = document.querySelector(
-		'#appTranslationManager'
-	);
-
 	if (!viewPermission) {
 		return <></>;
 	}
@@ -114,17 +140,17 @@ const TranslationManagerPortal = ({
 	return (
 		<div>
 			{showAppName &&
-				appStandaloneName &&
+				standaloneNameContainer &&
 				createPortal(
 					getLocalizedUserPreferenceValue(
 						app.name,
 						userLanguageId,
 						defaultLanguageId
 					),
-					appStandaloneName
+					standaloneNameContainer
 				)}
 
-			{appTranslationManager &&
+			{translationManagerContainer &&
 				createPortal(
 					<TranslationManager
 						availableLanguageIds={availableLanguageIds}
@@ -132,7 +158,7 @@ const TranslationManagerPortal = ({
 						onEditingLanguageIdChange={onEditingLanguageIdChange}
 						showUserView
 					/>,
-					appTranslationManager
+					translationManagerContainer
 				)}
 		</div>
 	);
@@ -140,11 +166,20 @@ const TranslationManagerPortal = ({
 
 export default (props) => {
 	const {appId, portraitURL} = useContext(AppContext);
-	const appPersonalMenu = document.querySelector('#app-personal-menu');
+	const [appPersonalContainer, setAppPersonalContainer] = useState(null);
+
+	useEffect(() => {
+		if (appPersonalContainer !== null) {
+			return;
+		}
+		setAppPersonalContainer(
+			document.querySelector(portalKeys.PERSONAL_MENU)
+		);
+	}, [appPersonalContainer]);
 
 	return (
 		<>
-			{appPersonalMenu &&
+			{appPersonalContainer &&
 				themeDisplay.isSignedIn() &&
 				createPortal(
 					<PersonalMenu
@@ -165,7 +200,7 @@ export default (props) => {
 						]}
 						portraitURL={portraitURL}
 					/>,
-					appPersonalMenu
+					appPersonalContainer
 				)}
 			<TranslationManagerPortal appId={appId} {...props} />
 		</>

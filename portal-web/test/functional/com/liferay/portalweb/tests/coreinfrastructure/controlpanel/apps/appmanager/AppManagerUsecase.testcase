@@ -13,6 +13,448 @@ definition {
 		Page.tearDownCP();
 	}
 
+	@description = "This ensures that the Adaptive Media app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateAdaptiveMedia {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateAdaptiveMedia";
+		property testray.main.component.name = "Adaptive Media";
+
+		var appName = "Adaptive Media";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Asset Libraries app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateAssetLibraries {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateAssetLibraries";
+		property testray.main.component.name = "Depot";
+
+		var appName = "Asset Libraries";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Blogs app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateBlogs {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateBlogs";
+		property testray.main.component.name = "Blogs";
+
+		var appName = "Blogs";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Comment app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateComment {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateComment";
+		property testray.main.component.name = "Content Page Review";
+
+		var appName = "Comment";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Document Library Opener app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateDocumentLibraryOpener {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateDocumentLibraryOpener";
+		property testray.main.component.name = "Documents Management";
+
+		var appName = "Document Library Opener";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Knowledge Base app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateKnowledgeBase {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateKnowledgeBase";
+		property testray.main.component.name = "Knowledge Base";
+
+		var appName = "Knowledge Base";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Message Boards app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateMessageBoards {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateMessageBoards";
+		property testray.main.component.name = "Message Boards";
+
+		var appName = "Message Boards";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Notifications app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateNotifications {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateNotifications";
+		property testray.main.component.name = "Notifications";
+
+		var appName = "Notifications";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Questions app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateQuestions {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateQuestions";
+		property testray.main.component.name = "Questions";
+
+		var appName = "Questions";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Ratings app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateRatings {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateRatings";
+		property testray.main.component.name = "Ratings";
+
+		var appName = "Ratings";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Sharing app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateSharing {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateSharing";
+		property testray.main.component.name = "Asset Sharing";
+
+		var appName = "Sharing";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Translation app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateTranslation {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateTranslation";
+		property testray.main.component.name = "Translations Management";
+
+		var appName = "Translation";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@description = "This ensures that the Wiki app in the app manager can be deactivated and reactivated."
+	@priority = "5"
+	test DeactivateAndActivateWiki {
+		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateWiki";
+		property testray.main.component.name = "Wiki";
+
+		var appName = "Wiki";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
 	@priority = "5"
 	test InstallUninstallApp {
 		property test.name.skip.portal.instance = "AppManagerUsecase#InstallUninstallApp";

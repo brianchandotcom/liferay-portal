@@ -21,6 +21,8 @@ import com.liferay.portal.search.tuning.blueprints.keyword.index.constants.Keywo
 import com.liferay.portal.search.tuning.blueprints.keyword.index.index.KeywordEntry;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.web.internal.util.KeywordIndexUtil;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -84,6 +86,13 @@ public class KeywordEntryToDocumentTranslatorImpl
 			documentBuilder.setDate(
 				KeywordEntryFields.MODIFIED,
 				KeywordIndexUtil.toIndexDateString(keywordEntry.getModified()));
+		}
+
+		if (keywordEntry.getReports() != null) {
+			List<String> reports = keywordEntry.getReports();
+
+			documentBuilder.setStrings(
+				KeywordEntryFields.REPORTS, reports.toArray(new String[0]));
 		}
 
 		if (keywordEntry.getReportCount() != null) {

@@ -73,10 +73,9 @@ public class EditKeywordEntryMVCActionCommand extends BaseMVCActionCommand {
 		String[] keywordEntryIds = _getKeywordEntryIds(actionRequest);
 
 		if (keywordEntryIds == null) {
-			_keywordIndexHelper.addKeywordEntry(
+			_keywordIndexHelper.addActiveKeywordEntry(
 				_portal.getCompanyId(actionRequest), _getGroupId(actionRequest),
-				_getLanguageId(actionRequest), _getContent(actionRequest),
-				KeywordEntryStatus.ACTIVE);
+				_getLanguageId(actionRequest), _getContent(actionRequest));
 
 			return;
 		}

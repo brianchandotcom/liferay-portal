@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.tuning.blueprints.keyword.index.web.internal.index;
 
-import com.liferay.portal.search.tuning.blueprints.keyword.index.constants.Reason;
+import com.liferay.portal.search.tuning.blueprints.content.analysis.constants.ModerationReason;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.index.KeywordEntry;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.index.name.KeywordIndexName;
 
@@ -26,7 +26,8 @@ public interface KeywordIndexWriter {
 	public void addHit(KeywordIndexName keywordIndexName, String id);
 
 	public void addReport(
-		KeywordIndexName keywordIndexName, String id, Reason reason);
+		KeywordIndexName keywordIndexName, String id,
+		ModerationReason moderationReason, String reporter);
 
 	public String create(
 		KeywordIndexName keywordIndexName, KeywordEntry keywordEntry);

@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+String lastReporter = KeywordIndexUtil.getLastReporter(entry);
+%>
+
 <portlet:renderURL var="viewEntryURL">
 	<portlet:param name="mvcRenderCommandName" value="<%= KeywordIndexMVCCommandNames.VIEW_KEYWORD_ENTRY %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -31,13 +35,19 @@
 				</aui:a>
 			</h4>
 
+			<c:if test='<%= !lastReporter.equals("") %>'>
+				<h5 class="text-default text-truncate">
+					<span class="id-text">
+						<liferay-ui:message key="reporter" /> <%= lastReporter %>
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getCreated().getTime(), true) %>" key="x-ago" />
+					</span>
+				</h5>
+			</c:if>
+
 			<h5 class="text-default text-truncate">
 				<span class="id-text">
 					<liferay-ui:message key="site" />:
 					<%= KeywordIndexUtil.getSiteName(entry.getGroupId(), locale) %>,
-				</span>
-				<span class="id-text">
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getCreated().getTime(), true) %>" key="created-x-ago" />
 				</span>
 			</h5>
 
@@ -56,8 +66,15 @@
 			cssClass="table-cell-expand table-cell-minw-150 table-title"
 			href="<%= viewEntryURL %>"
 			name="content"
-			value="<%= entry.getContent() %>"
-		/>
+		>
+			<%= entry.getContent() %>
+			<c:if test='<%= !lastReporter.equals("") %>'>
+				<span class="reporter">
+					<liferay-ui:message key="reporter" /> <%= lastReporter %>
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getCreated().getTime(), true) %>" key="x-ago" />
+				</span>
+			</c:if>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-date
 			cssClass="table-cell-minw-150"

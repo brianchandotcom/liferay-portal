@@ -25,9 +25,12 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
+import com.liferay.portal.search.tuning.blueprints.content.analysis.constants.ModerationReason;
+import com.liferay.portal.search.tuning.blueprints.content.analysis.request.ContentAnalysisRequest;
+import com.liferay.portal.search.tuning.blueprints.content.analysis.response.ModerationAnalysisResponse;
+import com.liferay.portal.search.tuning.blueprints.content.analysis.service.ContentAnalysisService;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.configuration.KeywordIndexConfiguration;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.constants.KeywordEntryStatus;
-import com.liferay.portal.search.tuning.blueprints.keyword.index.constants.Reason;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.index.KeywordEntry;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.index.name.KeywordIndexName;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.index.name.KeywordIndexNameBuilder;
@@ -59,9 +62,8 @@ import org.osgi.service.component.annotations.Reference;
 public class KeywordIndexHelperImpl implements KeywordIndexHelper {
 
 	@Override
-	public void addKeywordEntry(
-		long companyId, long groupId, String languageId, String keywords,
-		KeywordEntryStatus keywordEntryStatus) {
+	public void addActiveKeywordEntry(
+		long companyId, long groupId, String languageId, String keywords) {
 
 		_keywordIndexWriter.create(
 			_keywordIndexNameBuilder.getKeywordIndexName(companyId),
@@ -82,9 +84,48 @@ public class KeywordIndexHelperImpl implements KeywordIndexHelper {
 			).modified(
 				new Date()
 			).status(
-				keywordEntryStatus
+				KeywordEntryStatus.ACTIVE
 			).statusDate(
 				new Date()
+			).build());
+	}
+
+	@Override
+	public void addReportedKeywordEntry(
+		long companyId, long groupId, String languageId, String keywords,
+		KeywordEntryStatus keywordEntryStatus,
+		ModerationReason moderationReason, String reporter) {
+
+		Date now = new Date();
+
+		_keywordIndexWriter.create(
+			_keywordIndexNameBuilder.getKeywordIndexName(companyId),
+			new KeywordEntry.KeywordEntryBuilder().companyId(
+				companyId
+			).addReport(
+				KeywordIndexUtil.createReportEntry(moderationReason, reporter)
+			).content(
+				keywords
+			).created(
+				new Date()
+			).groupId(
+				groupId
+			).hitCount(
+				1L
+			).languageId(
+				languageId
+			).lastAccessed(
+				now
+			).modified(
+				now
+			).lastReported(
+				now
+			).reportCount(
+				1L
+			).status(
+				keywordEntryStatus
+			).statusDate(
+				now
 			).build());
 	}
 
@@ -146,9 +187,7 @@ public class KeywordIndexHelperImpl implements KeywordIndexHelper {
 			_updateHitcount(companyId, queryStringIdOptional.get());
 		}
 		else {
-			addKeywordEntry(
-				companyId, groupId, languageId, keywords,
-				KeywordEntryStatus.ACTIVE);
+			_indexKeywords(companyId, groupId, languageId, keywords);
 		}
 	}
 
@@ -158,7 +197,8 @@ public class KeywordIndexHelperImpl implements KeywordIndexHelper {
 
 	@Override
 	public void reportKeywordEntry(
-		long companyId, long groupId, String keywords, Reason reason) {
+		long companyId, long groupId, String keywords,
+		ModerationReason moderationReason, String reporter) {
 
 		KeywordIndexName keywordIndexName =
 			_keywordIndexNameBuilder.getKeywordIndexName(companyId);
@@ -169,13 +209,15 @@ public class KeywordIndexHelperImpl implements KeywordIndexHelper {
 
 		if (keywordEntryIdOptional.isPresent()) {
 			_keywordIndexWriter.addReport(
-				keywordIndexName, keywordEntryIdOptional.get(), reason);
+				keywordIndexName, keywordEntryIdOptional.get(),
+				moderationReason, reporter);
 		}
 	}
 
 	@Override
 	public void reportKeywordEntry(
-		long companyId, String keywordEntryId, Reason reason) {
+		long companyId, String keywordEntryId,
+		ModerationReason moderationReason, String reporter) {
 
 		KeywordIndexName keywordIndexName =
 			_keywordIndexNameBuilder.getKeywordIndexName(companyId);
@@ -186,7 +228,7 @@ public class KeywordIndexHelperImpl implements KeywordIndexHelper {
 
 		if (keywordEntryOptional.isPresent()) {
 			_keywordIndexWriter.addReport(
-				keywordIndexName, keywordEntryId, reason);
+				keywordIndexName, keywordEntryId, moderationReason, reporter);
 		}
 	}
 
@@ -200,15 +242,14 @@ public class KeywordIndexHelperImpl implements KeywordIndexHelper {
 	private void _deleteCompanyKeywordEntries(
 		long companyId, SearchHits searchHits) {
 
-		KeywordIndexName keywordIndexName =
-			_keywordIndexNameBuilder.getKeywordIndexName(companyId);
-
 		List<SearchHit> hits = searchHits.getSearchHits();
 
 		Stream<SearchHit> stream = hits.stream();
 
 		stream.forEach(
-			s -> _keywordIndexWriter.remove(keywordIndexName, s.getId()));
+			s -> _keywordIndexWriter.remove(
+				_keywordIndexNameBuilder.getKeywordIndexName(companyId),
+				s.getId()));
 	}
 
 	private String _getKeywordIndexName(long companyId) {
@@ -216,6 +257,49 @@ public class KeywordIndexHelperImpl implements KeywordIndexHelper {
 			_keywordIndexNameBuilder.getKeywordIndexName(companyId);
 
 		return keywordIndexName.getIndexName();
+	}
+
+	private void _indexKeywords(
+		long companyId, long groupId, String languageId, String keywords) {
+
+		Optional<List<ModerationAnalysisResponse>>
+			moderationAnalysisResponsesOptional =
+				_contentAnalysisService.analyzeModeration(
+					new ContentAnalysisRequest.Builder().payload(
+						keywords
+					).mimeType(
+						"text/plain"
+					).build());
+
+		if (!moderationAnalysisResponsesOptional.isPresent()) {
+			addActiveKeywordEntry(companyId, groupId, languageId, keywords);
+
+			return;
+		}
+
+		List<ModerationAnalysisResponse> moderationAnalysisResponses =
+			moderationAnalysisResponsesOptional.get();
+
+		boolean reported = false;
+
+		for (ModerationAnalysisResponse moderationAnalysisResponse :
+				moderationAnalysisResponses) {
+
+			if (moderationAnalysisResponse.isModerationRecommended()) {
+				addReportedKeywordEntry(
+					companyId, groupId, languageId, keywords,
+					KeywordEntryStatus.BLACKLISTED,
+					moderationAnalysisResponse.getModerationReason(),
+					moderationAnalysisResponse.getReporter());
+				reported = true;
+
+				break;
+			}
+		}
+
+		if (!reported) {
+			addActiveKeywordEntry(companyId, groupId, languageId, keywords);
+		}
 	}
 
 	private SearchHits _searchCompanyKeywordEntries(
@@ -264,6 +348,9 @@ public class KeywordIndexHelperImpl implements KeywordIndexHelper {
 		_keywordIndexWriter.addHit(
 			_keywordIndexNameBuilder.getKeywordIndexName(companyId), id);
 	}
+
+	@Reference
+	private ContentAnalysisService _contentAnalysisService;
 
 	@Reference
 	private DocumentToKeywordEntryTranslator _documentToKeywordEntryTranslator;

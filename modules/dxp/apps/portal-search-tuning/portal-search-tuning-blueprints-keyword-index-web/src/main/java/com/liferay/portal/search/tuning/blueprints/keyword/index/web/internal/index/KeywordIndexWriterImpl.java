@@ -25,8 +25,8 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.search.script.Scripts;
+import com.liferay.portal.search.tuning.blueprints.content.analysis.constants.ModerationReason;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.constants.KeywordEntryStatus;
-import com.liferay.portal.search.tuning.blueprints.keyword.index.constants.Reason;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.index.KeywordEntry;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.index.name.KeywordIndexName;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.web.internal.util.KeywordIndexUtil;
@@ -57,11 +57,13 @@ public class KeywordIndexWriterImpl implements KeywordIndexWriter {
 
 	@Override
 	public void addReport(
-		KeywordIndexName keywordIndexName, String id, Reason reason) {
+		KeywordIndexName keywordIndexName, String id,
+		ModerationReason moderationReason, String reporter) {
 
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 			new UpdateByQueryDocumentRequest(
-				_queries.term("_id", id), _getAddReportScript(reason),
+				_queries.term("_id", id),
+				_getAddReportScript(moderationReason, reporter),
 				keywordIndexName.getIndexName());
 
 		updateByQueryDocumentRequest.setRefresh(true);
@@ -131,10 +133,12 @@ public class KeywordIndexWriterImpl implements KeywordIndexWriter {
 		).build();
 	}
 
-	private Script _getAddReportScript(Reason reason) {
+	private Script _getAddReportScript(
+		ModerationReason moderationReason, String reporter) {
+
 		Date now = new Date();
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(12);
 
 		sb.append("ctx._source.");
 		sb.append(KeywordEntryFields.STATUS);
@@ -147,9 +151,8 @@ public class KeywordIndexWriterImpl implements KeywordIndexWriter {
 		sb.append("L;ctx._source.reportCount++;ctx._source.");
 		sb.append(KeywordEntryFields.REPORTS);
 		sb.append("=");
-		sb.append(now);
-		sb.append("-");
-		sb.append(reason.name());
+		sb.append(
+			KeywordIndexUtil.createReportEntry(moderationReason, reporter));
 
 		return _scripts.builder(
 		).idOrCode(

@@ -16,6 +16,7 @@ package com.liferay.portal.search.tuning.blueprints.keyword.index.index;
 
 import com.liferay.portal.search.tuning.blueprints.keyword.index.constants.KeywordEntryStatus;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -107,6 +108,16 @@ public class KeywordEntry {
 			_keywordEntry = keywordEntry;
 		}
 
+		public KeywordEntryBuilder addReport(String report) {
+			if (_keywordEntry._reports == null) {
+				_keywordEntry._reports = new ArrayList<>();
+			}
+
+			_keywordEntry._reports.add(report);
+
+			return this;
+		}
+
 		public KeywordEntry build() {
 			return new KeywordEntry(_keywordEntry);
 		}
@@ -171,14 +182,14 @@ public class KeywordEntry {
 			return this;
 		}
 
-		public KeywordEntryBuilder reportCount(List<String> reports) {
-			_keywordEntry._reports = reports;
+		public KeywordEntryBuilder reportCount(Long reportCount) {
+			_keywordEntry._reportCount = reportCount;
 
 			return this;
 		}
 
-		public KeywordEntryBuilder reportCount(Long reportCount) {
-			_keywordEntry._reportCount = reportCount;
+		public KeywordEntryBuilder reports(List<String> reports) {
+			_keywordEntry._reports = reports;
 
 			return this;
 		}

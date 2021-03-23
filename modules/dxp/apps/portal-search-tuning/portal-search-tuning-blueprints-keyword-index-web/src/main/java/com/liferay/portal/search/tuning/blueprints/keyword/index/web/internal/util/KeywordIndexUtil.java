@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.tuning.blueprints.content.analysis.constants.ModerationReason;
+import com.liferay.portal.search.tuning.blueprints.keyword.index.index.KeywordEntry;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -54,6 +56,61 @@ public class KeywordIndexUtil {
 				add("zh");
 			}
 		};
+
+	public static String createReportEntry(
+		ModerationReason moderationReason, String reporter) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(toIndexDateString(new Date()));
+		sb.append("---");
+		sb.append(moderationReason.name());
+		sb.append("---");
+		sb.append(reporter);
+
+		return sb.toString();
+	}
+
+	public static Date fromIndexDateString(String dateStringFieldValue) {
+		if (Validator.isBlank(dateStringFieldValue)) {
+			return null;
+		}
+
+		try {
+			DateFormat dateFormat = new SimpleDateFormat(INDEX_DATE_FORMAT);
+
+			return dateFormat.parse(dateStringFieldValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception.getMessage(), exception);
+		}
+
+		return null;
+	}
+
+	public static final Date getLastReported(KeywordEntry keywordEntry) {
+		String report = _getLastReport(keywordEntry);
+
+		if (report == null) {
+			return null;
+		}
+
+		String[] arr = report.split("---");
+
+		return fromIndexDateString(arr[0]);
+	}
+
+	public static final String getLastReporter(KeywordEntry keywordEntry) {
+		String report = _getLastReport(keywordEntry);
+
+		if (report == null) {
+			return StringPool.BLANK;
+		}
+
+		String[] arr = report.split("---");
+
+		return arr[2];
+	}
 
 	public static String getLocalizedFieldName(
 		String fieldName, String languageId) {
@@ -106,6 +163,16 @@ public class KeywordIndexUtil {
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
+	}
+
+	private static String _getLastReport(KeywordEntry keywordEntry) {
+		List<String> reports = keywordEntry.getReports();
+
+		if ((reports == null) || reports.isEmpty()) {
+			return null;
+		}
+
+		return reports.get(reports.size() - 1);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

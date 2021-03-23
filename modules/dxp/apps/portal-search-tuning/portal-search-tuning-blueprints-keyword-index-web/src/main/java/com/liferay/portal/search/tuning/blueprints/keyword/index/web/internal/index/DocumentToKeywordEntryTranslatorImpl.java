@@ -17,7 +17,6 @@ package com.liferay.portal.search.tuning.blueprints.keyword.index.web.internal.i
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -25,10 +24,6 @@ import com.liferay.portal.search.tuning.blueprints.keyword.index.constants.Keywo
 import com.liferay.portal.search.tuning.blueprints.keyword.index.index.KeywordEntry;
 import com.liferay.portal.search.tuning.blueprints.keyword.index.web.internal.util.KeywordIndexUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -47,7 +42,7 @@ public class DocumentToKeywordEntryTranslatorImpl
 		return new KeywordEntry.KeywordEntryBuilder().content(
 			document.getString(KeywordEntryFields.CONTENT)
 		).created(
-			_parseDateStringFieldValue(
+			KeywordIndexUtil.fromIndexDateString(
 				document.getDate(KeywordEntryFields.CREATED))
 		).groupId(
 			document.getLong(KeywordEntryFields.GROUP_ID)
@@ -56,23 +51,25 @@ public class DocumentToKeywordEntryTranslatorImpl
 		).languageId(
 			document.getString(KeywordEntryFields.LANGUAGE_ID)
 		).lastAccessed(
-			_parseDateStringFieldValue(
+			KeywordIndexUtil.fromIndexDateString(
 				document.getDate(KeywordEntryFields.LAST_ACCESSED))
 		).lastReported(
-			_parseDateStringFieldValue(
+			KeywordIndexUtil.fromIndexDateString(
 				document.getDate(KeywordEntryFields.LAST_REPORTED))
 		).modified(
-			_parseDateStringFieldValue(
+			KeywordIndexUtil.fromIndexDateString(
 				document.getDate(KeywordEntryFields.MODIFIED))
 		).keywordEntryId(
 			id
 		).reportCount(
 			document.getLong(KeywordEntryFields.REPORT_COUNT)
+		).reports(
+			document.getStrings(KeywordEntryFields.REPORTS)
 		).status(
 			_parseStatusFieldValue(
 				document.getString(KeywordEntryFields.STATUS))
 		).statusDate(
-			_parseDateStringFieldValue(
+			KeywordIndexUtil.fromIndexDateString(
 				document.getDate(KeywordEntryFields.STATUS_DATE))
 		).build();
 	}
@@ -92,24 +89,6 @@ public class DocumentToKeywordEntryTranslatorImpl
 
 	protected KeywordEntry.KeywordEntryBuilder builder() {
 		return new KeywordEntry.KeywordEntryBuilder();
-	}
-
-	private Date _parseDateStringFieldValue(String dateStringFieldValue) {
-		if (Validator.isBlank(dateStringFieldValue)) {
-			return null;
-		}
-
-		try {
-			DateFormat dateFormat = new SimpleDateFormat(
-				KeywordIndexUtil.INDEX_DATE_FORMAT);
-
-			return dateFormat.parse(dateStringFieldValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception.getMessage(), exception);
-		}
-
-		return null;
 	}
 
 	private KeywordEntryStatus _parseStatusFieldValue(String status) {

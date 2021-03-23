@@ -260,6 +260,23 @@ public class StructuredContentFolderResourceImpl
 			journalFolder.getGroupId(), journalFolder.getFolderId());
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		JournalFolder journalFolder = _journalFolderService.getFolder((Long)id);
+
+		return journalFolder.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.journal";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return JournalFolder.class.getName();
+	}
+
 	private StructuredContentFolder _addStructuredContentFolder(
 			Long siteId, Long parentFolderId,
 			StructuredContentFolder structuredContentFolder)

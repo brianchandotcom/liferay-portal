@@ -305,6 +305,32 @@ public class WikiPageResourceImpl
 			wikiPage.getNodeId(), wikiPage.getTitle());
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		com.liferay.wiki.model.WikiPage wikiPage =
+			_wikiPageLocalService.getPageByPageId((Long)id);
+
+		return wikiPage.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.wiki";
+	}
+
+	@Override
+	protected Long getPermissionCheckerResourceId(Object id) throws Exception {
+		com.liferay.wiki.model.WikiPage wikiPage =
+			_wikiPageLocalService.getPageByPageId((Long)id);
+
+		return wikiPage.getResourcePrimKey();
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return com.liferay.wiki.model.WikiPage.class.getName();
+	}
+
 	private String _getEncodingFormat(
 		com.liferay.wiki.model.WikiPage wikiPage) {
 

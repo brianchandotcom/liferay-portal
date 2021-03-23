@@ -345,6 +345,23 @@ public class MessageBoardMessageResourceImpl
 			mbMessage.getMessageId(), messageBoardMessage);
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		MBMessage mbMessage = _mbMessageService.getMessage((Long)id);
+
+		return mbMessage.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.message.boards";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return MBMessage.class.getName();
+	}
+
 	private MessageBoardMessage _addMessageBoardMessage(
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {

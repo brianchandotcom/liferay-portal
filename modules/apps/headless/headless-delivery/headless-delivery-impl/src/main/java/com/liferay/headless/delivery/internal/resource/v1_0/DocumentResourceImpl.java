@@ -394,6 +394,23 @@ public class DocumentResourceImpl
 			rating.getRatingValue(), documentId);
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		FileEntry fileEntry = _dlAppService.getFileEntry((Long)id);
+
+		return fileEntry.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.document.library";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return DLFileEntry.class.getName();
+	}
+
 	private Document _addDocument(
 			Long repositoryId, long documentFolderId, Long groupId,
 			MultipartBody multipartBody)

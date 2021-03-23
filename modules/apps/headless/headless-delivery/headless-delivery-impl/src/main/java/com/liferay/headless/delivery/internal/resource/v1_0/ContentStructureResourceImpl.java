@@ -20,10 +20,12 @@ import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentStructureEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -99,6 +101,26 @@ public class ContentStructureResourceImpl
 			document -> _toContentStructure(
 				_ddmStructureService.getStructure(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		DDMStructure ddmStructure = _ddmStructureService.getStructure((Long)id);
+
+		return ddmStructure.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.dynamic.data.mapping";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id)
+		throws Exception {
+
+		return ResourceActionsUtil.getCompositeModelName(
+			DDMStructure.class.getName(), JournalArticle.class.getName());
 	}
 
 	private ContentStructure _toContentStructure(DDMStructure ddmStructure) {

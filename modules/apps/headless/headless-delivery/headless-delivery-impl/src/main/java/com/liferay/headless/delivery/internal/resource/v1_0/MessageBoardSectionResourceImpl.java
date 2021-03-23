@@ -236,6 +236,23 @@ public class MessageBoardSectionResourceImpl
 			mbCategory.getGroupId(), mbCategory.getCategoryId());
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		MBCategory mbCategory = _mbCategoryService.getCategory((Long)id);
+
+		return mbCategory.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.message.boards";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return MBCategory.class.getName();
+	}
+
 	private MessageBoardSection _addMessageBoardSection(
 			long siteId, Long parentMessageBoardSectionId,
 			MessageBoardSection messageBoardSection)

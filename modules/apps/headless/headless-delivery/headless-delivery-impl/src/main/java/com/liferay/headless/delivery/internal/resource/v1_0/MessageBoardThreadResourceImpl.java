@@ -434,6 +434,30 @@ public class MessageBoardThreadResourceImpl
 		_mbMessageService.unsubscribeMessage(mbThread.getRootMessageId());
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		MBThread mbThread = _mbThreadLocalService.getThread((Long)id);
+
+		return mbThread.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.message.boards";
+	}
+
+	@Override
+	protected Long getPermissionCheckerResourceId(Object id) throws Exception {
+		MBThread mbThread = _mbThreadLocalService.getThread((Long)id);
+
+		return mbThread.getRootMessageId();
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return MBMessage.class.getName();
+	}
+
 	private MessageBoardThread _addMessageBoardThread(
 			Long siteId, Long messageBoardSectionId,
 			MessageBoardThread messageBoardThread)

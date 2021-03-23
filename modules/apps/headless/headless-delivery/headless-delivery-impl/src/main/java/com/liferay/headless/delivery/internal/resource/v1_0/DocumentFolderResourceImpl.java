@@ -241,6 +241,23 @@ public class DocumentFolderResourceImpl
 			folder.getGroupId(), folder.getFolderId());
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		Folder folder = _dlAppService.getFolder((Long)id);
+
+		return folder.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.document.library";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return DLFolder.class.getName();
+	}
+
 	private DocumentFolder _addFolder(
 			Long siteId, Long parentDocumentFolderId,
 			DocumentFolder documentFolder)

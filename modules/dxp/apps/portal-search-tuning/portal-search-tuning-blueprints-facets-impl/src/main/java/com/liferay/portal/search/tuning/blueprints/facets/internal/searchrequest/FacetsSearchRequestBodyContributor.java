@@ -299,7 +299,7 @@ public class FacetsSearchRequestBodyContributor
 				configurationJSONArray.getJSONObject(i);
 
 			Optional<JSONObject> parsedConfigurationJSONObjectOptional =
-				_blueprintTemplateVariableParser.parse(
+				_blueprintTemplateVariableParser.parseObject(
 					configurationJSONObject, parameterData, messages);
 
 			if (!parsedConfigurationJSONObjectOptional.isPresent()) {

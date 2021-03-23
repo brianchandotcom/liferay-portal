@@ -102,7 +102,7 @@ public class AggsSearchRequestBodyContributor
 
 		try {
 			Optional<JSONObject> bodyJSONObjectOptional =
-				_blueprintTemplateVariableParser.parse(
+				_blueprintTemplateVariableParser.parseObject(
 					configurationJSONObject.getJSONObject(
 						AggregationConfigurationKeys.BODY.getJsonKey()),
 					parameterData, messages);

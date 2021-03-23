@@ -89,7 +89,7 @@ public class DefaultConditionHandler implements ConditionHandler {
 		}
 
 		Optional<Object> parsedValueOptional =
-			_blueprintTemplateVariableParser.parseObject(
+			_blueprintTemplateVariableParser.parse(
 				configurationJSONObject.get(
 					ConditionConfigurationKeys.VALUE.getJsonKey()),
 				parameterData, messages);

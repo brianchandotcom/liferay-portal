@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.blueprints.engine.util;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterData;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
@@ -25,10 +26,13 @@ import java.util.Optional;
  */
 public interface BlueprintTemplateVariableParser {
 
-	public Optional<JSONObject> parse(
-		JSONObject jsonObject, ParameterData parameterData, Messages messages);
-
-	public Optional<Object> parseObject(
+	public Optional<Object> parse(
 		Object object, ParameterData parameterData, Messages messages);
+
+	public Optional<JSONArray> parseArray(
+		JSONArray jsonArray, ParameterData parameterData, Messages messages);
+
+	public Optional<JSONObject> parseObject(
+		JSONObject jsonObject, ParameterData parameterData, Messages messages);
 
 }

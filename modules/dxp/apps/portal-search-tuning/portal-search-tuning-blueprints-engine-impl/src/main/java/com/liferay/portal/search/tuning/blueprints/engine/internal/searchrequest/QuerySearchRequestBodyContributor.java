@@ -297,7 +297,7 @@ public class QuerySearchRequestBodyContributor
 
 		try {
 			Optional<JSONObject> parsedClauseJSONObjectOptional =
-				_blueprintTemplateVariableParser.parse(
+				_blueprintTemplateVariableParser.parseObject(
 					clauseJSONObject.getJSONObject(
 						ClauseConfigurationKeys.QUERY.getJsonKey()),
 					parameterData, messages);

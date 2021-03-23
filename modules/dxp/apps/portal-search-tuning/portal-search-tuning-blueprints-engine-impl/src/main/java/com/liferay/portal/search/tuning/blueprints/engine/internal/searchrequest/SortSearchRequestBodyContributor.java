@@ -83,7 +83,7 @@ public class SortSearchRequestBodyContributor
 		}
 
 		Optional<JSONObject> parsedConfigurationJSONObjectOptional =
-			_blueprintTemplateVariableParser.parse(
+			_blueprintTemplateVariableParser.parseObject(
 				configurationJSONObject, parameterData, messages);
 
 		if (!parsedConfigurationJSONObjectOptional.isPresent()) {
@@ -185,7 +185,7 @@ public class SortSearchRequestBodyContributor
 		}
 
 		Optional<JSONObject> parsedConfigurationJSONObjectOptional =
-			_blueprintTemplateVariableParser.parse(
+			_blueprintTemplateVariableParser.parseObject(
 				configurationJSONObject, parameterData, messages);
 
 		if (!parsedConfigurationJSONObjectOptional.isPresent()) {

@@ -48,21 +48,7 @@ public class BlueprintTemplateVariableParserImpl
 	implements BlueprintTemplateVariableParser {
 
 	@Override
-	public Optional<JSONObject> parse(
-		JSONObject jsonObject, ParameterData parameterData, Messages messages) {
-
-		Optional<Object> optional = parseObject(
-			jsonObject, parameterData, messages);
-
-		if (optional.isPresent()) {
-			return Optional.of((JSONObject)optional.get());
-		}
-
-		return Optional.empty();
-	}
-
-	@Override
-	public Optional<Object> parseObject(
+	public Optional<Object> parse(
 		Object object, ParameterData parameterData, Messages messages) {
 
 		if (object == null) {
@@ -92,25 +78,70 @@ public class BlueprintTemplateVariableParserImpl
 			}
 		}
 		catch (JSONException jsonException) {
-			messages.addMessage(
-				new Message.Builder().className(
-					getClass().getName()
-				).localizationKey(
-					"core.error.unknown-template-variable-parsing-error"
-				).msg(
-					jsonException.getMessage()
-				).rootObject(
-					object.toString()
-				).severity(
-					Severity.ERROR
-				).throwable(
-					jsonException
-				).build());
+			_logException(jsonException, object, messages);
 
-			_log.error(jsonException.getMessage(), jsonException);
+			return Optional.empty();
 		}
 
 		return Optional.of(object);
+	}
+
+	@Override
+	public Optional<JSONArray> parseArray(
+		JSONArray jsonArray, ParameterData parameterData, Messages messages) {
+
+		if (jsonArray == null) {
+			return Optional.empty();
+		}
+
+		List<Parameter> parameters = parameterData.getParameters();
+
+		if (parameters.isEmpty()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No parameters available");
+			}
+
+			return Optional.of(jsonArray);
+		}
+
+		try {
+			return Optional.ofNullable(
+				_parseJSONArray(jsonArray, parameterData, messages));
+		}
+		catch (JSONException jsonException) {
+			_logException(jsonException, jsonArray, messages);
+		}
+
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<JSONObject> parseObject(
+		JSONObject jsonObject, ParameterData parameterData, Messages messages) {
+
+		if (jsonObject == null) {
+			return Optional.empty();
+		}
+
+		List<Parameter> parameters = parameterData.getParameters();
+
+		if (parameters.isEmpty()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No parameters available");
+			}
+
+			return Optional.of(jsonObject);
+		}
+
+		try {
+			return Optional.ofNullable(
+				_parseJSONObject(jsonObject, parameterData, messages));
+		}
+		catch (JSONException jsonException) {
+			_logException(jsonException, jsonObject, messages);
+		}
+
+		return Optional.empty();
 	}
 
 	private Map<String, String> _getParameterOptions(String optionsString)
@@ -153,6 +184,27 @@ public class BlueprintTemplateVariableParserImpl
 		}
 
 		return false;
+	}
+
+	private void _logException(
+		Exception exception, Object rootObject, Messages messages) {
+
+		_log.error(exception.getMessage(), exception);
+
+		messages.addMessage(
+			new Message.Builder().className(
+				getClass().getName()
+			).localizationKey(
+				"core.error.unknown-template-variable-parsing-error"
+			).msg(
+				exception.getMessage()
+			).rootObject(
+				rootObject.toString()
+			).severity(
+				Severity.ERROR
+			).throwable(
+				exception
+			).build());
 	}
 
 	private JSONArray _parseJSONArray(
@@ -232,22 +284,7 @@ public class BlueprintTemplateVariableParserImpl
 			return str;
 		}
 		catch (Exception exception) {
-			messages.addMessage(
-				new Message.Builder().className(
-					getClass().getName()
-				).localizationKey(
-					"core.error.unknown-template-variable-parsing-error"
-				).msg(
-					exception.getMessage()
-				).rootObject(
-					str
-				).severity(
-					Severity.ERROR
-				).throwable(
-					exception
-				).build());
-
-			_log.error(exception.getMessage(), exception);
+			_logException(exception, str, messages);
 		}
 
 		return null;

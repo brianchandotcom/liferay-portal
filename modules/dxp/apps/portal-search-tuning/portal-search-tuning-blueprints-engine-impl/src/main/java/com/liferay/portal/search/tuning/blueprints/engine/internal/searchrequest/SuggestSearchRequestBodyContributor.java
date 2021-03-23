@@ -104,7 +104,7 @@ public class SuggestSearchRequestBodyContributor
 
 		try {
 			Optional<JSONObject> suggestConfigurationJSONObjectOptional =
-				_blueprintTemplateVariableParser.parse(
+				_blueprintTemplateVariableParser.parseObject(
 					configurationJSONObject.getJSONObject(
 						SuggesterConfigurationKeys.CONFIGURATION.getJsonKey()),
 					parameterData, messages);

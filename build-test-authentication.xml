@@ -32,6 +32,12 @@
 
 			<delete dir="${app.server.deploy.dir}/cas-web.war" />
 
+			<echo file="${app.server.deploy.dir}/cas-web/META-INF/context.xml"><![CDATA[<Context>
+	<JarScanner>
+		<JarScanFilter className="com.liferay.support.tomcat.util.scan.LiferayJarScanFilter" pluggabilityScan="*" pluggabilitySkip="" tldScan="*" tldSkip="" />
+	</JarScanner>
+</Context>]]></echo>
+
 			<replace
 				file="${app.server.deploy.dir}/cas-web/WEB-INF/deployerConfigContext.xml"
 			>

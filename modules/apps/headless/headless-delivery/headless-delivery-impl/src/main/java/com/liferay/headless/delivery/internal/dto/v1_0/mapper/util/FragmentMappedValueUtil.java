@@ -56,7 +56,7 @@ public class FragmentMappedValueUtil {
 	public static boolean isSaveFragmentMappedValue(
 		JSONObject jsonObject, boolean saveMapping) {
 
-		if (!saveMapping) {
+		if ((jsonObject == null) || !saveMapping) {
 			return false;
 		}
 

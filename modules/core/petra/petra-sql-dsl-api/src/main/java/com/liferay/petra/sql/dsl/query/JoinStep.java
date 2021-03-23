@@ -24,12 +24,20 @@ import java.util.function.Supplier;
  */
 public interface JoinStep extends WhereStep {
 
+	public default JoinStep innerJoinON(Table<?> table) {
+		return innerJoinON(table, (Predicate)null);
+	}
+
 	public JoinStep innerJoinON(Table<?> table, Predicate predicate);
 
 	public default JoinStep innerJoinON(
 		Table<?> table, Supplier<Predicate> supplier) {
 
 		return innerJoinON(table, supplier.get());
+	}
+
+	public default JoinStep leftJoinOn(Table<?> table) {
+		return leftJoinOn(table, (Predicate)null);
 	}
 
 	public JoinStep leftJoinOn(Table<?> table, Predicate predicate);

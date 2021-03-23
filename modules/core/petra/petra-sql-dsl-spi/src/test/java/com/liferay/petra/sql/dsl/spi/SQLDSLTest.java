@@ -658,13 +658,13 @@ public class SQLDSLTest {
 		).from(
 			MainExampleTable.INSTANCE
 		).leftJoinOn(
-			MainExampleTable.INSTANCE, null
+			MainExampleTable.INSTANCE
 		).innerJoinON(
 			ReferenceExampleTable.INSTANCE,
 			ReferenceExampleTable.INSTANCE.mainExampleId.eq(
 				MainExampleTable.INSTANCE.mainExampleId)
 		).innerJoinON(
-			ReferenceExampleTable.INSTANCE, null
+			ReferenceExampleTable.INSTANCE
 		).where(
 			MainExampleTable.INSTANCE.name.neq("")
 		);

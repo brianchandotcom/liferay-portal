@@ -52,6 +52,23 @@ export const openSuccessToast = (config) => {
 export const isDefined = (item) => item !== null && typeof item !== 'undefined';
 
 /**
+ * Checks if a value is blank. For example: `''` or `{}`.
+ * @param {*} value The value to check.
+ * @return {boolean}
+ */
+export const isEmpty = (value) => {
+	if (typeof value === 'string' && value === '') {
+		return true;
+	}
+
+	if (typeof value === 'object' && !Object.keys(value).length) {
+		return true;
+	}
+
+	return !isDefined(value);
+};
+
+/**
  * Function to replace all instances of a string.
  *
  * Example:

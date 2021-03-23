@@ -14,6 +14,7 @@ import {
 	getElementOutput,
 	getUIConfigurationValues,
 	isDefined,
+	isEmpty,
 	renameKeys,
 	replaceStr,
 } from '../../../src/main/resources/META-INF/resources/js/utils/utils';
@@ -46,6 +47,28 @@ describe('utils', () => {
 
 		it('returns true for object', () => {
 			expect(isDefined({test: [1, 2, 3]})).toEqual(true);
+		});
+	});
+
+	describe('isEmpty', () => {
+		it('returns true for an empty string', () => {
+			expect(isEmpty('')).toEqual(true);
+		});
+
+		it('returns true for an empty object', () => {
+			expect(isEmpty({})).toEqual(true);
+		});
+
+		it('returns false for an object with a property', () => {
+			expect(isEmpty({test: 'abc'})).toEqual(false);
+		});
+
+		it('returns false for a string with a single character', () => {
+			expect(isEmpty('a')).toEqual(false);
+		});
+
+		it('returns false for a number', () => {
+			expect(isEmpty(0)).toEqual(false);
 		});
 	});
 

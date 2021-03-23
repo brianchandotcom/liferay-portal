@@ -21,7 +21,7 @@ import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {INPUT_TYPES} from '../../utils/inputTypes';
-import {getDefaultValue, getElementOutput} from '../../utils/utils';
+import {getDefaultValue, getElementOutput, isEmpty} from '../../utils/utils';
 import CodeMirrorEditor from '../CodeMirrorEditor';
 import PreviewModal from '../PreviewModal';
 import ThemeContext from '../ThemeContext';
@@ -84,6 +84,10 @@ function Element({
 			},
 		});
 	};
+
+	const _hasDescription =
+		!isEmpty(elementTemplateJSON.description) ||
+		!isEmpty(elementTemplateJSON.description[locale]);
 
 	const _hasConfigurationValues =
 		!!uiConfigurationJSON &&
@@ -247,7 +251,7 @@ function Element({
 							</ClayList.ItemTitle>
 						)}
 
-						{elementTemplateJSON.description && (
+						{_hasDescription && (
 							<ClayList.ItemText subtext={true}>
 								{elementTemplateJSON.description[locale] ||
 									(typeof elementTemplateJSON.description ==

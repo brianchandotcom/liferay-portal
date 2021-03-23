@@ -45,7 +45,7 @@ definition {
 			fieldFieldLabel = "Localization",
 			searchableType = "Disable");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
@@ -57,7 +57,7 @@ definition {
 			fieldFieldLabel = "Localization",
 			searchableType = "Keyword");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
@@ -69,7 +69,7 @@ definition {
 			fieldFieldLabel = "Localization",
 			searchableType = "Text");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
@@ -84,7 +84,6 @@ definition {
 		property portal.acceptance = "false";
 
 		var key_Label = "Localization";
-
 		var key_fieldLabel = "Copy of ${key_Label}";
 
 		DataEngine.addField(
@@ -93,7 +92,7 @@ definition {
 
 		DataEngine.duplicate(fieldFieldLabel = "${key_Label}");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
@@ -113,13 +112,13 @@ definition {
 
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Localization");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		Navigator.gotoNavItem(navItem = "Web Content");
 
@@ -143,7 +142,7 @@ definition {
 	test SetGeolocationLabelHelpTextAndReference {
 		property portal.acceptance = "false";
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
@@ -156,7 +155,7 @@ definition {
 			fieldFieldLabel = "Localization",
 			fieldHelp = "your localization");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
@@ -164,7 +163,7 @@ definition {
 			fieldHelpText = "your localization",
 			fieldName = "Geolocation");
 		
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
@@ -205,7 +204,7 @@ definition {
 			fieldFieldLabel = "Geolocation",
 			showLabel = "false");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
@@ -218,7 +217,7 @@ definition {
 	@priority = "4"
 	test VerifyDuplicatedGeolocationOnWebContent {
 		var key_fieldName = "Geolocation";
-		
+
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "${key_fieldName}");
 
 		WebContentStructures.saveCP();
@@ -254,7 +253,7 @@ definition {
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "${key_fieldLabel}");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
@@ -269,7 +268,7 @@ definition {
 			key_toggleSwitchLabel = "Required Field",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 

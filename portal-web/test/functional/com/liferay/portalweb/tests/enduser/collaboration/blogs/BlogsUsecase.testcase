@@ -537,6 +537,8 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "target-site-name");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		for (var i : list "1,2,3") {
 			AssertTextEquals(
 				key_rowNumber = "${i}",

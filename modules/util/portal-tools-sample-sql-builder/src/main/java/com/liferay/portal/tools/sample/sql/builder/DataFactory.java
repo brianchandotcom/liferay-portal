@@ -2160,7 +2160,8 @@ public class DataFactory {
 		return newDDMStructureLayoutModel(
 			_globalGroupId, _defaultUserId,
 			_defaultJournalDDMStructureVersionId,
-			_journalDDMStructureLayoutContent);
+			_journalDDMStructureLayoutContent,
+			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY);
 	}
 
 	public DDMStructureModel newDefaultJournalDDMStructureModel() {
@@ -4315,6 +4316,15 @@ public class DataFactory {
 	protected DDMStructureLayoutModel newDDMStructureLayoutModel(
 		long groupId, long userId, long structureVersionId, String definition) {
 
+		return newDDMStructureLayoutModel(
+			groupId, userId, structureVersionId, definition, 0,
+			String.valueOf(_counter.get()));
+	}
+
+	protected DDMStructureLayoutModel newDDMStructureLayoutModel(
+		long groupId, long userId, long structureVersionId, String definition,
+		long classNameId, String structureLayoutKey) {
+
 		DDMStructureLayoutModel ddmStructureLayoutModel =
 			new DDMStructureLayoutModelImpl();
 
@@ -4340,8 +4350,8 @@ public class DataFactory {
 
 		// Other fields
 
-		ddmStructureLayoutModel.setStructureLayoutKey(
-			String.valueOf(_counter.get()));
+		ddmStructureLayoutModel.setClassNameId(classNameId);
+		ddmStructureLayoutModel.setStructureLayoutKey(structureLayoutKey);
 		ddmStructureLayoutModel.setStructureVersionId(structureVersionId);
 		ddmStructureLayoutModel.setDefinition(definition);
 

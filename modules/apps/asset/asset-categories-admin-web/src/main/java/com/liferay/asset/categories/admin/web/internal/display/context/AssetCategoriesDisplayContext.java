@@ -526,8 +526,10 @@ public class AssetCategoriesDisplayContext {
 		Company company = _themeDisplay.getCompany();
 
 		if (company.getGroupId() != _themeDisplay.getScopeGroupId()) {
+			Group group = company.getGroup();
+
 			_inheritedVocabularies.put(
-				LanguageUtil.get(_httpServletRequest, "global"),
+				group.getDescriptiveName(_themeDisplay.getLocale()),
 				AssetVocabularyServiceUtil.getGroupVocabularies(
 					company.getGroupId(), false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,

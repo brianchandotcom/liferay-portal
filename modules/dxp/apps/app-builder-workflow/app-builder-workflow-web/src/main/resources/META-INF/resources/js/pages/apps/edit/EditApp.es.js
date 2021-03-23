@@ -44,6 +44,7 @@ import {
 } from './actions.es';
 import configReducer, {
 	UPDATE_CONFIG,
+	UPDATE_DATA_DEFINITION_FIELDS,
 	UPDATE_FORM_VIEW,
 	UPDATE_LIST_ITEMS,
 	getInitialConfig,
@@ -97,12 +98,13 @@ export default ({
 	const [isLoading, setLoading] = useState(false);
 	const [isSaving, setSaving] = useState(false);
 
-	const openFormViewModal = (
+	const openFormViewModal = ({
 		dataDefinitionId,
+		dataLayoutId,
 		defaultLanguageId,
+		firstFormView,
 		selectFormView,
-		dataLayoutId
-	) => {
+	}) => {
 		const event = window.top?.Liferay.once(
 			'newFormViewCreated',
 			({dataDefinition, newFormView}) => {
@@ -123,6 +125,14 @@ export default ({
 							},
 							type: UPDATE_LIST_ITEMS,
 						});
+
+						if (firstFormView) {
+							dispatchConfig({
+								dataDefinitionFields:
+									dataDefinition.dataDefinitionFields,
+								type: UPDATE_DATA_DEFINITION_FIELDS,
+							});
+						}
 
 						const currentFormView = checkedFormViews.find(
 							({id}) => id === newFormView.id

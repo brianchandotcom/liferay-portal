@@ -247,7 +247,12 @@ export default function DataAndViewsTab({
 			type: 'custom',
 		});
 
-		openFormViewModal(id, defaultLanguageId, updateFormView);
+		openFormViewModal({
+			dataDefinitionId: id,
+			defaultLanguageId,
+			firstFormView: true,
+			selectFormView: updateFormView,
+		});
 	};
 
 	const AddButton = (props) => (
@@ -264,11 +269,11 @@ export default function DataAndViewsTab({
 	const addFormViewButton = (selectFormView) => (
 		<AddButton
 			onClick={() =>
-				openFormViewModal(
-					dataObject.id,
-					dataObject.defaultLanguageId,
-					selectFormView
-				)
+				openFormViewModal({
+					dataDefinitionId: dataObject.id,
+					defaultLanguageId: dataObject.defaultLanguageId,
+					selectFormView,
+				})
 			}
 			title={Liferay.Language.get('new-form-view')}
 		/>
@@ -351,16 +356,17 @@ export default function DataAndViewsTab({
 									openButtonProps={{
 										disabled: !name,
 										onClick: () =>
-											openFormViewModal(
-												dataObject.id,
-												dataObject.defaultLanguageId,
-												(formView) =>
+											openFormViewModal({
+												dataDefinitionId: dataObject.id,
+												dataLayoutId,
+												defaultLanguageId:
+													dataObject.defaultLanguageId,
+												selectFormView: (formView) =>
 													updateStepFormView(
 														formView,
 														index
 													),
-												dataLayoutId
-											),
+											}),
 									}}
 									selectedValue={name}
 								/>
@@ -476,12 +482,13 @@ export default function DataAndViewsTab({
 								openButtonProps={{
 									disabled: !formView.name,
 									onClick: () =>
-										openFormViewModal(
-											dataObject.id,
-											dataObject.defaultLanguageId,
-											updateFormView,
-											formView.id
-										),
+										openFormViewModal({
+											dataDefinitionId: dataObject.id,
+											dataLayoutId: formView.id,
+											defaultLanguageId:
+												dataObject.defaultLanguageId,
+											selectFormView: updateFormView,
+										}),
 								}}
 								selectedValue={formView.name}
 								warningIcon={getWarningIcon(formView)}

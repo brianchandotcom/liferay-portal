@@ -27,6 +27,8 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,6 +55,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -98,6 +102,16 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 		editableValuesJSONObject = JSONFactoryUtil.createJSONObject(content);
 
+		for (ExportImportContentProcessor<JSONObject>
+				exportImportContentProcessor :
+					_fragmentEntryLinkEditableValuesExportImportProcessors) {
+
+			editableValuesJSONObject =
+				exportImportContentProcessor.replaceExportContentReferences(
+					portletDataContext, stagedModel, editableValuesJSONObject,
+					exportReferencedContent, escapeContent);
+		}
+
 		_replaceEditableExportContentReferences(
 			editableValuesJSONObject, exportReferencedContent,
 			portletDataContext, stagedModel);
@@ -135,6 +149,15 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 		editableValuesJSONObject = JSONFactoryUtil.createJSONObject(content);
 
+		for (ExportImportContentProcessor<JSONObject>
+				exportImportContentProcessor :
+					_fragmentEntryLinkEditableValuesExportImportProcessors) {
+
+			editableValuesJSONObject =
+				exportImportContentProcessor.replaceImportContentReferences(
+					portletDataContext, stagedModel, editableValuesJSONObject);
+		}
+
 		_replaceEditableImportContentReferences(
 			editableValuesJSONObject, portletDataContext);
 
@@ -147,6 +170,16 @@ public class FragmentEntryLinkExportImportContentProcessor
 	@Override
 	public void validateContentReferences(long groupId, String content)
 		throws PortalException {
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_fragmentEntryLinkEditableValuesExportImportProcessors =
+			ServiceTrackerListFactory.open(
+				bundleContext,
+				(Class<ExportImportContentProcessor<JSONObject>>)
+					(Class<?>)ExportImportContentProcessor.class,
+				"(content.processor.type=FragmentEntryLinkEditableValues)");
 	}
 
 	private void _exportDDMTemplateReference(
@@ -650,6 +683,11 @@ public class FragmentEntryLinkExportImportContentProcessor
 	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
+
+	private ServiceTrackerList
+		<ExportImportContentProcessor<JSONObject>,
+		 ExportImportContentProcessor<JSONObject>>
+			_fragmentEntryLinkEditableValuesExportImportProcessors;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

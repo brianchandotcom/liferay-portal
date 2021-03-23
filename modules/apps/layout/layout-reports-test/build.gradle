@@ -1,4 +1,5 @@
 dependencies {
+	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:product-navigation:product-navigation-control-menu-api")

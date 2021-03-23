@@ -15,15 +15,25 @@
 package com.liferay.layout.reports.web.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -39,6 +49,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -46,6 +57,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.test.MockLiferayPortletContext;
+import com.liferay.registry.ServiceRegistration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,6 +71,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Cristina González
@@ -124,12 +140,17 @@ public class LayoutReportsDisplayContextTest {
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
 				canonicalURL1.get("languageId"));
+			Assert.assertEquals(
+				layout.getName(LocaleUtil.SPAIN), canonicalURL1.get("title"));
 
 			Map<String, Object> canonicalURL2 = canonicalURLs.get(1);
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
 				canonicalURL2.get("languageId"));
+
+			Assert.assertEquals(
+				layout.getName(LocaleUtil.BRAZIL), canonicalURL1.get("title"));
 
 			String configurePageSpeedURL = (String)context.get(
 				"configurePageSpeedURL");
@@ -195,6 +216,114 @@ public class LayoutReportsDisplayContextTest {
 	}
 
 	@Test
+	public void testGetDataWithLayoutTypeAssetDisplay() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			LayoutReportsDisplayContextTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		org.osgi.framework.ServiceRegistration<InfoItemFieldValuesProvider<?>>
+			infoItemFieldValuesProviderServiceRegistration =
+				bundleContext.registerService(
+					(Class<InfoItemFieldValuesProvider<?>>)
+						(Class<?>)InfoItemFieldValuesProvider.class,
+					new MockInfoItemFieldValuesProvider(),
+					new HashMapDictionary<>());
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.layout.reports.web.internal.configuration." +
+						"LayoutReportsPageSpeedConfiguration",
+					new HashMapDictionary<String, Object>() {
+						{
+							put("apiKey", RandomTestUtil.randomString());
+							put("enabled", true);
+						}
+					})) {
+
+			Layout layout = LayoutTestUtil.addLayout(_group);
+
+			layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
+
+			layout = _layoutLocalService.updateLayout(layout);
+
+			GroupTestUtil.updateDisplaySettings(
+				_group.getGroupId(),
+				Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
+				LocaleUtil.SPAIN);
+
+			InfoItemClassDetails infoItemClassDetails =
+				new InfoItemClassDetails(MockObject.class.getName());
+
+			InfoItemDetails infoItemDetails = new InfoItemDetails(
+				infoItemClassDetails, null);
+
+			Map<String, Object> data = ReflectionTestUtil.invoke(
+				_getLayoutReportsDisplayContext(
+					layout,
+					new ObjectValuePair[] {
+						new ObjectValuePair<>(
+							InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+							infoItemDetails),
+						new ObjectValuePair<>(
+							InfoDisplayWebKeys.INFO_ITEM, new MockObject())
+					}),
+				"getData", new Class<?>[0]);
+
+			Map<String, Object> context = (Map<String, Object>)data.get(
+				"context");
+
+			String assetsPath = (String)context.get("assetsPath");
+
+			Assert.assertTrue(assetsPath.contains("assets"));
+
+			List<Map<String, Object>> canonicalURLs =
+				(List<Map<String, Object>>)context.get("canonicalURLs");
+
+			Assert.assertEquals(
+				String.valueOf(canonicalURLs), 2, canonicalURLs.size());
+
+			Map<String, Object> canonicalURL1 = canonicalURLs.get(0);
+
+			Assert.assertEquals(
+				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
+				canonicalURL1.get("languageId"));
+			Assert.assertEquals(
+				"defaultMappedTitle", canonicalURL1.get("title"));
+
+			Map<String, Object> canonicalURL2 = canonicalURLs.get(1);
+
+			Assert.assertEquals(
+				LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
+				canonicalURL2.get("languageId"));
+			Assert.assertEquals(
+				"defaultMappedTitle", canonicalURL2.get("title"));
+
+			String configurePageSpeedURL = (String)context.get(
+				"configurePageSpeedURL");
+
+			Assert.assertTrue(
+				configurePageSpeedURL.contains("configuration_admin"));
+
+			Assert.assertEquals(
+				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
+				context.get("defaultLanguageId"));
+
+			Assert.assertTrue((Boolean)context.get("validConnection"));
+		}
+		finally {
+			infoItemFieldValuesProviderServiceRegistration.unregister();
+
+			ServiceContextThreadLocal.popServiceContext();
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
+	}
+
+	@Test
 	public void testGetDataWithoutApiKey() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -228,13 +357,21 @@ public class LayoutReportsDisplayContextTest {
 		}
 	}
 
-	private Object _getLayoutReportsDisplayContext(Layout layout)
+	private Object _getLayoutReportsDisplayContext(
+			Layout layout, ObjectValuePair<String, Object>... objectValuePairs)
 		throws Exception {
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest(layout);
+
+		for (ObjectValuePair<String, Object> objectValuePair :
+				objectValuePairs) {
+
+			mockLiferayPortletRenderRequest.setAttribute(
+				objectValuePair.getKey(), objectValuePair.getValue());
+		}
 
 		mvcPortlet.render(
 			mockLiferayPortletRenderRequest,
@@ -283,6 +420,8 @@ public class LayoutReportsDisplayContextTest {
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setPlid(layout.getPlid());
+		themeDisplay.setRequest(
+			mockLiferayPortletRenderRequest.getHttpServletRequest());
 		themeDisplay.setSiteGroupId(layout.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
@@ -301,9 +440,37 @@ public class LayoutReportsDisplayContextTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
 	@Inject(
 		filter = "component.name=com.liferay.layout.reports.web.internal.portlet.LayoutReportsPortlet"
 	)
 	private Portlet _portlet;
+
+	private static class MockInfoItemFieldValuesProvider
+		implements InfoItemFieldValuesProvider<MockObject> {
+
+		@Override
+		public InfoItemFieldValues getInfoItemFieldValues(
+			MockObject mockObject) {
+
+			return InfoItemFieldValues.builder(
+			).infoFieldValue(
+				new InfoFieldValue<>(
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						"title"
+					).build(),
+					"defaultMappedTitle")
+			).build();
+		}
+
+	}
+
+	private static class MockObject {
+	}
 
 }

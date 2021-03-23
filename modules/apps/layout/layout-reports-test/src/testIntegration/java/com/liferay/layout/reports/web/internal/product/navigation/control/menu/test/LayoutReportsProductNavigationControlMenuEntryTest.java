@@ -20,7 +20,9 @@ import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -86,6 +88,29 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
+	public void testIsShowWithLayoutTypeAssetDisplay() throws Exception {
+		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.layout.reports.web.internal.configuration." +
+						"LayoutReportsPageSpeedConfiguration",
+					new HashMapDictionary<String, Object>() {
+						{
+							put("apiKey", RandomTestUtil.randomString());
+							put("enabled", true);
+						}
+					})) {
+
+			Assert.assertTrue(
+				_productNavigationControlMenuEntry.isShow(
+					_getHttpServletRequest()));
+		}
+	}
+
+	@Test
 	public void testIsShowWithoutEnableConfiguration() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -130,6 +155,9 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.layout.reports.web.internal.product.navigation.control.menu.LayoutReportsProductNavigationControlMenuEntry"

@@ -16,6 +16,7 @@ package com.liferay.portal.search.tuning.blueprints.engine.internal.searchreques
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.highlight.FieldConfigBuilder;
 import com.liferay.portal.search.highlight.HighlightBuilder;
 import com.liferay.portal.search.highlight.Highlights;
@@ -23,6 +24,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced.HighlightingConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterData;
 import com.liferay.portal.search.tuning.blueprints.engine.spi.searchrequest.SearchRequestBodyContributor;
+import com.liferay.portal.search.tuning.blueprints.engine.util.BlueprintTemplateVariableParser;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.util.BlueprintHelper;
@@ -55,7 +57,8 @@ public class HighlightSearchRequestBodyContributor
 		}
 
 		_contribute(
-			searchRequestBuilder, configurationJSONObjectOptional.get());
+			searchRequestBuilder, configurationJSONObjectOptional.get(),
+			parameterData, messages);
 	}
 
 	private void _addFieldConfigs(
@@ -112,7 +115,8 @@ public class HighlightSearchRequestBodyContributor
 
 	private void _contribute(
 		SearchRequestBuilder searchRequestBuilder,
-		JSONObject configurationJSONObject) {
+		JSONObject configurationJSONObject, ParameterData parameterData,
+		Messages messages) {
 
 		boolean enabled = configurationJSONObject.getBoolean(
 			HighlightingConfigurationKeys.ENABLED.getJsonKey());
@@ -144,6 +148,24 @@ public class HighlightSearchRequestBodyContributor
 		}
 
 		if (configurationJSONObject.has(
+				HighlightingConfigurationKeys.POST_TAGS.getJsonKey())) {
+
+			highlightBuilder.postTags(
+				JSONUtil.toStringArray(
+					configurationJSONObject.getJSONArray(
+						HighlightingConfigurationKeys.POST_TAGS.getJsonKey())));
+		}
+
+		if (configurationJSONObject.has(
+				HighlightingConfigurationKeys.PRE_TAGS.getJsonKey())) {
+
+			highlightBuilder.preTags(
+				JSONUtil.toStringArray(
+					configurationJSONObject.getJSONArray(
+						HighlightingConfigurationKeys.PRE_TAGS.getJsonKey())));
+		}
+
+		if (configurationJSONObject.has(
 				HighlightingConfigurationKeys.REQUIRE_FIELD_MATCH.
 					getJsonKey())) {
 
@@ -156,20 +178,27 @@ public class HighlightSearchRequestBodyContributor
 		if (configurationJSONObject.has(
 				HighlightingConfigurationKeys.FIELDS.getJsonKey())) {
 
-			JSONArray fieldsJSONArray = configurationJSONObject.getJSONArray(
-				HighlightingConfigurationKeys.FIELDS.getJsonKey());
+			Optional<JSONArray> fieldsJSONArrayOptional =
+				_blueprintTemplateVariableParser.parseArray(
+					configurationJSONObject.getJSONArray(
+						HighlightingConfigurationKeys.FIELDS.getJsonKey()),
+					parameterData, messages);
 
-			_addFieldConfigs(highlightBuilder, fieldsJSONArray);
+			if (fieldsJSONArrayOptional.isPresent()) {
+				JSONArray fieldsJSONArray = fieldsJSONArrayOptional.get();
+
+				_addFieldConfigs(highlightBuilder, fieldsJSONArray);
+			}
 		}
 
-		// TODO: https://issues.liferay.com/browse/LPS-121365
-
-		// searchRequestBuilder.setHightlight(highlightBuilder.build());
-
+		searchRequestBuilder.highlight(highlightBuilder.build());
 	}
 
 	@Reference
 	private BlueprintHelper _blueprintHelper;
+
+	@Reference
+	private BlueprintTemplateVariableParser _blueprintTemplateVariableParser;
 
 	@Reference
 	private Highlights _highlights;

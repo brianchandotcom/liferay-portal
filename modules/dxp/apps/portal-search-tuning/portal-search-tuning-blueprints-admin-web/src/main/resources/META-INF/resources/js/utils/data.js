@@ -67,7 +67,7 @@ export const DEFAULT_ADVANCED_CONFIGURATION = {
 		enabled: true,
 		fields: [
 			{
-				field: 'localized_title${context.language_id}',
+				field: 'title${context.language_id}',
 				fragment_size: 50,
 				number_of_fragments: 3,
 			},
@@ -77,6 +77,8 @@ export const DEFAULT_ADVANCED_CONFIGURATION = {
 		],
 		fragment_size: 100,
 		number_of_fragments: 5,
+		post_tags: ['</liferay-hl>'],
+		pre_tags: ['<liferay-hl>'],
 		require_field_match: true,
 	},
 	query_processing: {

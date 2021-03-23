@@ -58,11 +58,17 @@ export default function ItemSelector({
 
 	const selectContentIcon = selectedItemTitle ? 'change' : 'plus';
 
-	const selectContentButtonTitle = Liferay.Util.sub(
-		selectedItemTitle
-			? Liferay.Language.get('change-x')
-			: Liferay.Language.get('select-x'),
-		label
+	const getContentButtonName = (label) =>
+		Liferay.Util.sub(
+			selectedItemTitle
+				? Liferay.Language.get('change-x')
+				: Liferay.Language.get('select-x'),
+			label
+		);
+
+	const contentButtonTitle = getContentButtonName(label);
+	const contentButtonAriaLabel = getContentButtonName(
+		Liferay.Language.get('content-button')
 	);
 
 	return (
@@ -97,15 +103,13 @@ export default function ItemSelector({
 							onActiveChange={setActive}
 							trigger={
 								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'select-content-button'
-									)}
+									aria-label={contentButtonAriaLabel}
 									className="page-editor__item-selector__content-button"
 									displayType="secondary"
 									onClick={() => setActive(true)}
 									small
 									symbol={selectContentIcon}
-									title={selectContentButtonTitle}
+									title={contentButtonTitle}
 								/>
 							}
 						>
@@ -135,15 +139,13 @@ export default function ItemSelector({
 						</ClayDropDown>
 					) : (
 						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get(
-								'select-content-button'
-							)}
+							aria-label={contentButtonAriaLabel}
 							className="page-editor__item-selector__content-button"
 							displayType="secondary"
 							onClick={openModal}
 							small
 							symbol={selectContentIcon}
-							title={selectContentButtonTitle}
+							title={contentButtonTitle}
 						/>
 					))}
 

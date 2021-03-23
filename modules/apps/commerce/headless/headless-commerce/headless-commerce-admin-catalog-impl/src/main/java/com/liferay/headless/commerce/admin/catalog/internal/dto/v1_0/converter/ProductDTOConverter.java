@@ -36,7 +36,10 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -116,6 +119,9 @@ public class ProductDTOConverter
 					cpDefinition, dtoConverterContext.getLocale());
 				tags = _getTags(cpDefinition);
 				thumbnail = cpDefinition.getDefaultImageThumbnailSrc();
+				urls = _getUrlTitleMap(
+					_cpDefinitionService.getUrlTitleMap(
+						cpDefinition.getCPDefinitionId()));
 				workflowStatusInfo = _getWorkflowStatusInfo(
 					cpDefinition.getStatus(), productStatusLabel,
 					productStatusLabelI18n);
@@ -164,6 +170,23 @@ public class ProductDTOConverter
 		).toArray(
 			String[]::new
 		);
+	}
+
+	private Map<String, String> _getUrlTitleMap(
+		Map<Locale, String> urlTitleMap) {
+
+		Set<Map.Entry<Locale, String>> entries = urlTitleMap.entrySet();
+
+		Stream<Map.Entry<Locale, String>> stream = entries.stream();
+
+		return stream.collect(
+			Collectors.toMap(
+				entry -> {
+					Locale key = entry.getKey();
+
+					return key.toString();
+				},
+				Map.Entry::getValue));
 	}
 
 	private Status _getWorkflowStatusInfo(

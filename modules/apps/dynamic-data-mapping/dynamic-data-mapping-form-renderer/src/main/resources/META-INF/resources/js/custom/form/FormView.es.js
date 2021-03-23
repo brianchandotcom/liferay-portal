@@ -58,6 +58,18 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 				.validate()
 				.then((validForm) => {
 					if (validForm) {
+						const liferayForm =
+							event.target.id &&
+							Liferay.Form.get(event.target.id);
+
+						const validLiferayForm = !Object.keys(
+							liferayForm?.formValidator?.errors ?? {}
+						).length;
+
+						if (!validLiferayForm) {
+							return;
+						}
+
 						Liferay.Util.submitForm(event.target);
 
 						Liferay.fire('ddmFormSubmit', {

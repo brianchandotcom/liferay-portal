@@ -47,6 +47,42 @@ definition {
 		// TODO COMMERCE-5907 AssertMultipleSKUProductCannotBeDirectlyAddedToCart pending implementation
 	}
 
+	@description = "COMMERCE-6160. As a buyer, I want to be able to select only the allowed quantities of a product, if set"
+	@ignore = "true"
+	@priority = "3"
+	test AssertOnlyAllowedQuantitiesAreSelectable {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6160 AssertOnlyAllowedQuantitiesAreSelectable pending implementation
+	}
+
+	@description = "COMMERCE-6162. As a buyer, I want to be able to select the quantity of a product by multiple value, if set"
+	@ignore = "true"
+	@priority = "3"
+	test AssertOnlyMultipleValuesAreSelectableQuantities {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6162 AssertOnlyMultipleValuesAreSelectableQuantities pending implementation
+	}
+
+	@description = "COMMERCE-6164. As a buyer I want to be able to add a product to the cart regardless of the availability, if back ordererabilty of that product is enabled"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductCanBeAddedToCartIfBackOrderIsEnabled {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6164 AssertProductCanBeAddedToCartIfBackOrderIsEnabled pending implementation
+	}
+
+	@description = "COMMERCE-6163. As a buyer I don't want to be able to add a product to the cart if the product is not purchasable"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductCannotBeAddedToCartIfProductIsNotPurchasable {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6163 AssertProductCannotBeAddedToCartIfProductIsNotPurchasable pending implementation
+	}
+
 	@description = "COMMERCE-5860. As a buyer, I want to change the channel currency and view the product price with the changed currency"
 	@ignore = "true"
 	@priority = "3"
@@ -110,6 +146,15 @@ definition {
 		// TODO COMMERCE-5861 AssertProductNameIsTranslated pending implementation
 	}
 
+	@description = "COMMERCE-6161. As a buyer, I want to be able to select the quantity of a product starting from a minimum quantity, if set"
+	@ignore = "true"
+	@priority = "3"
+	test AssertSelectableQuantitiesStartFromMinimumQuantitySet {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6161 AssertSelectableQuantitiesStartFromMinimumQuantitySet pending implementation
+	}
+
 	@description = "COMMERCE-5873. As a buyer, I want to be able to navigate to the product detail page via primary CTA, to check its variants"
 	@ignore = "true"
 	@priority = "3"
@@ -146,6 +191,24 @@ definition {
 		// TODO COMMERCE-5867 RemoveProductFromWishList pending implementation
 	}
 
+	@description = "COMMERCE-6193. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
+	@ignore = "true"
+	@priority = "3"
+	test ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6193 ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity pending implementation
+	}
+
+	@description = "COMMERCE-6194. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
+	@ignore = "true"
+	@priority = "3"
+	test ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6194 ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity pending implementation
+	}
+
 	@description = "COMMERCE-5864. As a buyer, I want to view the product price"
 	@ignore = "true"
 	@priority = "3"
@@ -153,6 +216,33 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5864 ViewProductCardPrice pending implementation
+	}
+
+	@description = "COMMERCE-6158. As a buyer, I want to see the barred list price and a discount price of a product, if set"
+	@ignore = "true"
+	@priority = "3"
+	test ViewProductCardPriceWithDiscount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6158 ViewProductCardPriceWithDiscount pending implementation
+	}
+
+	@description = "COMMERCE-6159. As a buyer, I want to see the barred list price and the sale price of a product, if a price modifier is set"
+	@ignore = "true"
+	@priority = "3"
+	test ViewProductCardPriceWithPriceModifier {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6159 ViewProductCardPriceWithPriceModifier pending implementation
+	}
+
+	@description = "COMMERCE-6157. As a buyer, I want to see the barred list price and a sale price of a product, if a promotion is set"
+	@ignore = "true"
+	@priority = "3"
+	test ViewProductCardPriceWithPromotion {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6157 ViewProductCardPriceWithPromotion pending implementation
 	}
 
 	@description = "COMMERCE-5862. As a buyer, I want to view the product SKU, if set(single SKU)"

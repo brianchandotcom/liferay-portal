@@ -49,7 +49,8 @@ public class ConditionHandlerFactoryImpl implements ConditionHandlerFactory {
 
 	@Override
 	public String[] getHandlerNames() {
-		return ServiceComponentReferenceUtil.getComponentKeys(_conditionHandlers);
+		return ServiceComponentReferenceUtil.getComponentKeys(
+			_conditionHandlers);
 	}
 
 	@Reference(
@@ -58,15 +59,16 @@ public class ConditionHandlerFactoryImpl implements ConditionHandlerFactory {
 	)
 	protected void registerConditionHandler(
 		ConditionHandler conditionHandler, Map<String, Object> properties) {
+
 		ServiceComponentReferenceUtil.addToMapByName(
-				_conditionHandlers, conditionHandler, properties);
+			_conditionHandlers, conditionHandler, properties);
 	}
 
 	protected void unregisterConditionHandler(
 		ConditionHandler conditionHandler, Map<String, Object> properties) {
 
 		ServiceComponentReferenceUtil.removeFromMapByName(
-				_conditionHandlers, conditionHandler, properties);
+			_conditionHandlers, conditionHandler, properties);
 	}
 
 	private volatile Map<String, ServiceComponentReference<ConditionHandler>>

@@ -116,6 +116,7 @@ Set this property to override the default setting provided by
 develop and test against. By setting this property, it enables the target
 platform features such as dependency management and OSGi resolve tasks. Use the
 version that matches the Liferay Portal or DXP bundle version in this workspace.
+See GETTING_STARTED#Overwrite-specific-dependency-in-one-project for overrides.
 
 For a list of all available target platform versions, see
 https://bit.ly/2IkAwwW for Liferay Portal and https://bit.ly/2GIyfZF for
@@ -187,10 +188,12 @@ slow down your IDE's project synchronization.
 
 $h2 Build Customizations via `build.gradle`
 
-To overwrite the version of a specific dependency, you must use `force = true`.
-See `https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#forced_dependencies_vs_strict_dependencies`.
+$h3 Overwrite specific dependency in one project
+Set `force = true` to overwrite the version of a specific dependency. See
+`https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#forced_dependencies_vs_strict_dependencies`.
 
-To overwrite the version of a dependency for the project, set the following
+$h3 Overwrite dependency in multiple projects
+Set the following to overwrite the version of a dependency for the project.
 ```
 subprojects {
 	configurations.all {

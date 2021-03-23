@@ -30,7 +30,6 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
-import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.util.PortletConfigurationImporterHelper;
@@ -51,7 +50,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -317,7 +315,7 @@ public class FragmentLayoutStructureItemImporter
 				"defaultValue", defaultFragmentInlineValueMap.get("value"));
 		}
 
-		_processMapping(jsonObject, (Map<String, Object>)map.get("mapping"));
+		processMapping(jsonObject, (Map<String, Object>)map.get("mapping"));
 
 		return jsonObject;
 	}
@@ -468,8 +466,7 @@ public class FragmentLayoutStructureItemImporter
 			jsonObject.put("href", value);
 		}
 
-		_processMapping(
-			jsonObject, (Map<String, Object>)hrefMap.get("mapping"));
+		processMapping(jsonObject, (Map<String, Object>)hrefMap.get("mapping"));
 
 		return jsonObject;
 	}
@@ -663,114 +660,6 @@ public class FragmentLayoutStructureItemImporter
 			resourceBundle,
 			"fragment-with-key-x-was-ignored-because-it-does-not-exist",
 			new String[] {fragmentKey});
-	}
-
-	private void _processMapping(
-		JSONObject jsonObject, Map<String, Object> map) {
-
-		if (map == null) {
-			return;
-		}
-
-		String fieldKey = (String)map.get("fieldKey");
-
-		Map<String, Object> itemReferenceMap = (Map<String, Object>)map.get(
-			"itemReference");
-
-		if (itemReferenceMap == null) {
-			return;
-		}
-
-		String contextSource = (String)itemReferenceMap.get("contextSource");
-
-		if (Objects.equals(
-				ContextReference.ContextSource.COLLECTION_ITEM.getValue(),
-				contextSource)) {
-
-			jsonObject.put("collectionFieldId", fieldKey);
-
-			return;
-		}
-
-		if (Objects.equals(
-				ContextReference.ContextSource.DISPLAY_PAGE_ITEM.getValue(),
-				contextSource)) {
-
-			jsonObject.put("mappedField", fieldKey);
-
-			return;
-		}
-
-		if (Validator.isNotNull(fieldKey)) {
-			jsonObject.put("fieldId", fieldKey);
-		}
-
-		String className = (String)itemReferenceMap.get("className");
-
-		if (Objects.equals(className, Layout.class.getName())) {
-			if (!Objects.equals(itemReferenceMap.get("fieldName"), "plid")) {
-				return;
-			}
-
-			String fieldValue = (String)itemReferenceMap.get("fieldValue");
-
-			Layout layout = _layoutLocalService.fetchLayout(
-				GetterUtil.getLong(fieldValue));
-
-			if (layout == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to process mapping because layout could not " +
-							"be obtained for PLID " + fieldValue);
-				}
-
-				return;
-			}
-
-			jsonObject.put(
-				"layout",
-				JSONUtil.put(
-					"groupId", String.valueOf(layout.getGroupId())
-				).put(
-					"id", layout.getUuid()
-				).put(
-					"layoutId", String.valueOf(layout.getLayoutId())
-				).put(
-					"privateLayout", layout.isPrivateLayout()
-				).put(
-					"title", layout.getName(LocaleUtil.getMostRelevantLocale())
-				).put(
-					"value", layout.getFriendlyURL()
-				));
-
-			return;
-		}
-
-		String classNameId = null;
-
-		try {
-			classNameId = String.valueOf(_portal.getClassNameId(className));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to process mapping because class name ID could " +
-						"not be obtained for class name " + className,
-					exception);
-			}
-
-			return;
-		}
-
-		String classPK = String.valueOf(itemReferenceMap.get("classPK"));
-
-		if (Validator.isNotNull(classNameId) && Validator.isNotNull(classPK)) {
-			jsonObject.put(
-				"classNameId", classNameId
-			).put(
-				"classPK", classPK
-			);
-		}
 	}
 
 	private void _processWidgetInstances(
@@ -1094,9 +983,6 @@ public class FragmentLayoutStructureItemImporter
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

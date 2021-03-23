@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -84,10 +87,6 @@ public abstract class BaseLayoutStructureItemImporter {
 
 		String fieldKey = (String)map.get("fieldKey");
 
-		if (Validator.isNull(fieldKey)) {
-			return;
-		}
-
 		Map<String, Object> itemReferenceMap = (Map<String, Object>)map.get(
 			"itemReference");
 
@@ -115,11 +114,52 @@ public abstract class BaseLayoutStructureItemImporter {
 			return;
 		}
 
-		jsonObject.put("fieldId", fieldKey);
-
-		String classNameId = null;
+		if (Validator.isNotNull(fieldKey)) {
+			jsonObject.put("fieldId", fieldKey);
+		}
 
 		String className = (String)itemReferenceMap.get("className");
+
+		if (Objects.equals(className, Layout.class.getName())) {
+			if (!Objects.equals(itemReferenceMap.get("fieldName"), "plid")) {
+				return;
+			}
+
+			String fieldValue = (String)itemReferenceMap.get("fieldValue");
+
+			Layout layout = layoutLocalService.fetchLayout(
+				GetterUtil.getLong(fieldValue));
+
+			if (layout == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to process mapping because layout could not " +
+							"be obtained for PLID " + fieldValue);
+				}
+
+				return;
+			}
+
+			jsonObject.put(
+				"layout",
+				JSONUtil.put(
+					"groupId", String.valueOf(layout.getGroupId())
+				).put(
+					"id", layout.getUuid()
+				).put(
+					"layoutId", String.valueOf(layout.getLayoutId())
+				).put(
+					"privateLayout", layout.isPrivateLayout()
+				).put(
+					"title", layout.getName(LocaleUtil.getMostRelevantLocale())
+				).put(
+					"value", layout.getFriendlyURL()
+				));
+
+			return;
+		}
+
+		String classNameId = null;
 
 		try {
 			classNameId = String.valueOf(portal.getClassNameId(className));
@@ -316,6 +356,9 @@ public abstract class BaseLayoutStructureItemImporter {
 			"width", styles.get("width")
 		);
 	}
+
+	@Reference
+	protected LayoutLocalService layoutLocalService;
 
 	@Reference
 	protected Portal portal;

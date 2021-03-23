@@ -39,6 +39,9 @@ module.exports = {
 						'react-dnd-html5-backend': '>=7.0.2',
 						'react-dom': '>=16.8.6',
 					},
+					'@liferay/frontend-js-state-web': {
+						'/': '>=1.0.0',
+					},
 					'@liferay/frontend-taglib': {
 						'/': '>=1.0.0',
 					},

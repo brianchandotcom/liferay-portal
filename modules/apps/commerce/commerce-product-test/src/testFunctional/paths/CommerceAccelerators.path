@@ -156,7 +156,7 @@
 </tr>
 <tr>
 	<td>SPEEDWELL_MY_ORDERS_ORDER_ACCOUNT</td>
-	<td>//tbody/tr//td[3][contains(.,'${key_accountName}')]</td>
+	<td>//div[contains(@class,'tr')]//div[contains(@class,'td') and text()='${key_accountName}']</td>
 	<td></td>
 </tr>
 <tr>

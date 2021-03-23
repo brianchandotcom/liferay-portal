@@ -37,6 +37,8 @@ public interface TestClassGroup {
 
 		public List<TestClassMethod> getTestClassMethods();
 
+		public boolean isIgnored();
+
 		public static class TestClassMethod {
 
 			public String getName() {

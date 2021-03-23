@@ -128,6 +128,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return _gitWorkingDirectory.getWorkingDirectory();
 		}
 
+		@Override
+		public boolean isIgnored() {
+			return _classIgnored;
+		}
+
 		protected static JunitBatchTestClass getInstance(
 			File testClassFile, GitWorkingDirectory gitWorkingDirectory,
 			File javaFile) {
@@ -306,13 +311,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			Matcher classHeaderMatcher = _classHeaderPattern.matcher(
 				_srcFileContent);
 
-			boolean classIgnored = false;
+			_classIgnored = false;
 
 			if (classHeaderMatcher.find()) {
 				String annotations = classHeaderMatcher.group("annotations");
 
 				if ((annotations != null) && annotations.contains("@Ignore")) {
-					classIgnored = true;
+					_classIgnored = true;
 				}
 			}
 
@@ -324,7 +329,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 				boolean methodIgnored = false;
 
-				if (classIgnored || annotations.contains("@Ignore")) {
+				if (_classIgnored || annotations.contains("@Ignore")) {
 					methodIgnored = true;
 				}
 
@@ -351,8 +356,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			for (TestClassGroup.TestClass.TestClassMethod testClassMethod :
 					parentJunitBatchTestClass.getTestClassMethods()) {
 
-				if (classIgnored) {
-					addTestClassMethod(classIgnored, testClassMethod.getName());
+				if (_classIgnored) {
+					addTestClassMethod(
+						_classIgnored, testClassMethod.getName());
 
 					continue;
 				}
@@ -372,6 +378,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				"\\t(?<annotations>(@[\\s\\S]+?))public\\s+void\\s+",
 				"(?<methodName>[^\\(\\s]+)"));
 
+		private boolean _classIgnored;
 		private final String _className;
 		private final GitWorkingDirectory _gitWorkingDirectory;
 		private final String _packageName;
@@ -581,6 +588,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 							TestClass testClass = _getPackagePathClassFile(
 								filePath);
+
+							if (testClass.isIgnored()) {
+								return FileVisitResult.CONTINUE;
+							}
 
 							List<TestClass.TestClassMethod> testClassMethods =
 								testClass.getTestClassMethods();

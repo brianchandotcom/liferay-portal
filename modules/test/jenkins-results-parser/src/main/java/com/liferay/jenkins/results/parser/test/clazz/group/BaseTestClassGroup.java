@@ -64,6 +64,11 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 			return _testClassMethods;
 		}
 
+		@Override
+		public boolean isIgnored() {
+			return false;
+		}
+
 		protected BaseTestClass(File testClassFile) {
 			_testClassFile = testClassFile;
 		}

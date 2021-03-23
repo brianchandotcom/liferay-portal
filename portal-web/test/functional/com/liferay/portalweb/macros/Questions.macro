@@ -517,7 +517,12 @@ definition {
 
 		FormFields.viewCheckboxChecked(fieldName = "enableRedirectToLogin");
 
-		Button.clickSave();
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Button.clickUpdate();
+		}
+		else {
+			Button.clickSave();
+		}
 
 		Alert.viewSuccessMessage();
 	}

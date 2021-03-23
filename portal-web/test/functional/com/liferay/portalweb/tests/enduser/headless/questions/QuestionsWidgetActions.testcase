@@ -309,7 +309,7 @@ definition {
 			subTopicName = "SubTopicB");
 	}
 
-	@description = "Validate if the anonymous user can ask questions and redirected to login."
+	@description = "Validate if the anonymous user can ask questions and redirected to login, it also covers LPS-129203."
 	@priority = "4"
 	test AskQuestionsThroughAnonymousUser {
 		Questions.enableRedirectToLogin();

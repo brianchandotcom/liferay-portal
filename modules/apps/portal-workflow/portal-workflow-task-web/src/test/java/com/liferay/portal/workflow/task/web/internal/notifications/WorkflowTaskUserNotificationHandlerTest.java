@@ -265,6 +265,18 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 						}
 
 						@Override
+						public String getNotificationLink(
+							long workflowTaskId,
+							ServiceContext serviceContext) {
+
+							if (_serviceContext == serviceContext) {
+								return _VALID_LINK;
+							}
+
+							return null;
+						}
+
+						@Override
 						public String getType(Locale locale) {
 							return null;
 						}
@@ -274,11 +286,8 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 							long workflowTaskId,
 							ServiceContext serviceContext) {
 
-							if (_serviceContext == serviceContext) {
-								return _VALID_LINK;
-							}
-
-							return null;
+							return getNotificationLink(
+								workflowTaskId, serviceContext);
 						}
 
 						@Override

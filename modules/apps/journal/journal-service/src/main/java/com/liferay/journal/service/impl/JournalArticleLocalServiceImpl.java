@@ -84,9 +84,13 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
@@ -8725,47 +8729,144 @@ public class JournalArticleLocalServiceImpl
 		return friendlyURLMap;
 	}
 
+	private GroupByStep _getGroupByStep(
+		FromStep fromStep, Table<?> journalArticleLocalizationTable,
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String[] articleIds, Double version, String[] titles,
+		String[] descriptions, String[] contents, String[] ddmStructureKeys,
+		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
+		Date reviewDate, Locale locale, boolean andOperator,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		JoinStep joinStep = fromStep.from(
+			JournalArticleTable.INSTANCE
+		).leftJoinOn(
+			JournalArticleTable.INSTANCE.as("tempJournalArticle"),
+			() -> {
+				Predicate predicate = JournalArticleTable.INSTANCE.articleId.eq(
+					JournalArticleTable.INSTANCE.as(
+						"tempJournalArticle").articleId
+				).and(
+					JournalArticleTable.INSTANCE.groupId.eq(
+						JournalArticleTable.INSTANCE.as(
+							"tempJournalArticle").groupId)
+				).and(
+					JournalArticleTable.INSTANCE.version.lt(
+						JournalArticleTable.INSTANCE.as(
+							"tempJournalArticle").version)
+				);
+
+				int status = queryDefinition.getStatus();
+
+				if (status == WorkflowConstants.STATUS_ANY) {
+					return predicate;
+				}
+
+				Operand statusOperand = Operand.EQUAL;
+
+				if (queryDefinition.isExcludeStatus()) {
+					statusOperand = Operand.NOT_EQUAL;
+				}
+
+				return predicate.and(
+					new DefaultPredicate(
+						JournalArticleTable.INSTANCE.status, statusOperand,
+						new Scalar<>(status))
+				).and(
+					new DefaultPredicate(
+						JournalArticleTable.INSTANCE.as(
+							"tempJournalArticle").status,
+						statusOperand, new Scalar<>(status))
+				);
+			}
+		).leftJoinOn(
+			journalArticleLocalizationTable,
+			JournalArticleTable.INSTANCE.id.eq(
+				JournalArticleLocalizationTable.INSTANCE.articlePK
+			).and(
+				JournalArticleTable.INSTANCE.companyId.eq(
+					JournalArticleLocalizationTable.INSTANCE.companyId)
+			).and(
+				JournalArticleLocalizationTable.INSTANCE.languageId.eq(
+					LocaleUtil.toLanguageId(locale))
+			)
+		);
+
+		return joinStep.where(
+			() -> {
+				Predicate predicate = JournalArticleTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					JournalArticleTable.INSTANCE.classNameId.eq(classNameId)
+				).and(
+					JournalArticleTable.INSTANCE.as(
+						"tempJournalArticle"
+					).id.isNull()
+				);
+
+				if (inlineSQLHelper) {
+					predicate = predicate.and(
+						_inlineSQLHelper.getPermissionWherePredicate(
+							JournalArticle.class,
+							JournalArticleTable.INSTANCE.resourcePrimKey,
+							groupId));
+				}
+
+				if (groupId > 0) {
+					predicate = predicate.and(
+						JournalArticleTable.INSTANCE.groupId.eq(groupId));
+				}
+
+				if (ListUtil.isNotEmpty(folderIds)) {
+					predicate = predicate.and(
+						JournalArticleTable.INSTANCE.folderId.in(
+							folderIds.toArray(new Long[0])));
+				}
+
+				predicate = predicate.and(
+					_keywordPredicate(
+						JournalArticleTable.INSTANCE.DDMStructureKey,
+						_customSQL.keywords(ddmStructureKeys, false))
+				).and(
+					_keywordPredicate(
+						JournalArticleTable.INSTANCE.DDMTemplateKey,
+						_customSQL.keywords(ddmTemplateKeys, false))
+				);
+
+				int status = queryDefinition.getStatus();
+
+				if (status != WorkflowConstants.STATUS_ANY) {
+					Operand statusOperand = Operand.EQUAL;
+
+					if (queryDefinition.isExcludeStatus()) {
+						statusOperand = Operand.NOT_EQUAL;
+					}
+
+					predicate = predicate.and(
+						new DefaultPredicate(
+							JournalArticleTable.INSTANCE.status, statusOperand,
+							new Scalar<>(status)));
+				}
+
+				Predicate innerWherePredicate = _innerWherePredicate(
+					articleIds, version, titles, descriptions, contents,
+					displayDateGT, displayDateLT, reviewDate, andOperator);
+
+				if (innerWherePredicate != null) {
+					predicate = predicate.and(
+						innerWherePredicate.withParentheses());
+				}
+
+				return predicate;
+			});
+	}
+
 	private JournalArticleModelValidator _getModelValidator() {
 		ModelValidator<JournalArticle> modelValidator =
 			ModelValidatorRegistryUtil.getModelValidator(JournalArticle.class);
 
 		return (JournalArticleModelValidator)modelValidator;
-	}
-
-	private DSLQuery _getSearchCountDSLQuery(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String[] articleIds, Double version, String[] titles,
-		String[] descriptions, String[] contents, String[] ddmStructureKeys,
-		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
-		Date reviewDate, Locale locale, boolean andOperator,
-		QueryDefinition<JournalArticle> queryDefinition,
-		boolean inlineSQLHelper) {
-
-		SearchDSLQuery searchDSLQuery = new SearchDSLQuery();
-
-		return searchDSLQuery.countDistinct(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
-			queryDefinition, inlineSQLHelper);
-	}
-
-	private DSLQuery _getSearchDSLQuery(
-		long companyId, long groupId, List<Long> folderIds, long classNameId,
-		String[] articleIds, Double version, String[] titles,
-		String[] descriptions, String[] contents, String[] ddmStructureKeys,
-		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
-		Date reviewDate, Locale locale, boolean andOperator,
-		QueryDefinition<JournalArticle> queryDefinition,
-		boolean inlineSQLHelper) {
-
-		SearchDSLQuery searchDSLQuery = new SearchDSLQuery();
-
-		return searchDSLQuery.select(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
-			queryDefinition, inlineSQLHelper);
 	}
 
 	private int _getUniqueUrlTitleCount(
@@ -8841,6 +8942,105 @@ public class JournalArticleLocalServiceImpl
 		return urlTitleMap;
 	}
 
+	private Predicate _innerWherePredicate(
+		String[] articleIds, Double version, String[] titles,
+		String[] descriptions, String[] contents, Date displayDateGT,
+		Date displayDateLT, Date reviewDate, boolean andOperator) {
+
+		Operand operand = Operand.AND;
+
+		if (!andOperator) {
+			operand = Operand.OR;
+		}
+
+		Predicate predicate = _keywordPredicate(
+			JournalArticleTable.INSTANCE.articleId,
+			_customSQL.keywords(articleIds, false));
+
+		if (GetterUtil.getDouble(version) > 0.0) {
+			predicate = _nullSafeDefaultPredicate(
+				predicate, operand,
+				JournalArticleTable.INSTANCE.version.eq(version));
+		}
+
+		predicate = _nullSafeDefaultPredicate(
+			predicate, operand,
+			_keywordPredicate(
+				DSLFunctionFactoryUtil.lower(
+					JournalArticleLocalizationTable.INSTANCE.title),
+				_customSQL.keywords(titles)));
+
+		predicate = _nullSafeDefaultPredicate(
+			predicate, operand,
+			_keywordPredicate(
+				JournalArticleLocalizationTable.INSTANCE.description,
+				_customSQL.keywords(descriptions, false)));
+
+		predicate = _nullSafeDefaultPredicate(
+			predicate, operand,
+			_keywordPredicate(
+				DSLFunctionFactoryUtil.castClobText(
+					JournalArticleTable.INSTANCE.content),
+				_customSQL.keywords(contents, false)));
+
+		if (displayDateGT != null) {
+			predicate = _nullSafeDefaultPredicate(
+				predicate, operand,
+				JournalArticleTable.INSTANCE.displayDate.gte(displayDateGT));
+		}
+
+		if (displayDateLT != null) {
+			predicate = _nullSafeDefaultPredicate(
+				predicate, operand,
+				JournalArticleTable.INSTANCE.displayDate.lte(displayDateLT));
+		}
+
+		if (reviewDate != null) {
+			predicate = _nullSafeDefaultPredicate(
+				predicate, operand,
+				JournalArticleTable.INSTANCE.reviewDate.lte(reviewDate));
+		}
+
+		return predicate;
+	}
+
+	private Predicate _keywordPredicate(
+		Expression<String> expression, String[] keywords) {
+
+		Predicate keywordsPredicate = null;
+
+		for (String keyword : keywords) {
+			if (keyword == null) {
+				continue;
+			}
+
+			Predicate keywordPredicate = expression.like(keyword);
+
+			if (keywordsPredicate == null) {
+				keywordsPredicate = keywordPredicate;
+			}
+			else {
+				keywordsPredicate = keywordsPredicate.or(keywordPredicate);
+			}
+		}
+
+		return keywordsPredicate;
+	}
+
+	private Predicate _nullSafeDefaultPredicate(
+		Predicate leftPredicate, Operand operand, Predicate rightPredicate) {
+
+		if (rightPredicate == null) {
+			return leftPredicate;
+		}
+		else if (leftPredicate == null) {
+			return rightPredicate;
+		}
+		else {
+			return new DefaultPredicate(leftPredicate, operand, rightPredicate);
+		}
+	}
+
 	private String _replaceTempImages(JournalArticle article, String content)
 		throws PortalException {
 
@@ -8874,8 +9074,9 @@ public class JournalArticleLocalServiceImpl
 		boolean inlineSQLHelper) {
 
 		articleIds = _customSQL.keywords(articleIds, false);
-		titles = _customSQL.keywords(titles);
-		descriptions = _customSQL.keywords(descriptions, false);
+		final String[] titleKeywords = _customSQL.keywords(titles);
+		final String[] descriptionKeywords = _customSQL.keywords(
+			descriptions, false);
 		contents = _customSQL.keywords(contents, false);
 		ddmStructureKeys = _customSQL.keywords(ddmStructureKeys, false);
 		ddmTemplateKeys = _customSQL.keywords(ddmTemplateKeys, false);
@@ -8883,13 +9084,55 @@ public class JournalArticleLocalServiceImpl
 		displayDateLT = CalendarUtil.getTimestamp(displayDateLT);
 		reviewDate = CalendarUtil.getTimestamp(reviewDate);
 
-		DSLQuery dslQuery = _getSearchDSLQuery(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
-			queryDefinition, inlineSQLHelper);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			JournalArticleLocalizationTable.INSTANCE.companyId,
+			JournalArticleLocalizationTable.INSTANCE.articlePK,
+			JournalArticleLocalizationTable.INSTANCE.title,
+			JournalArticleLocalizationTable.INSTANCE.description,
+			JournalArticleLocalizationTable.INSTANCE.languageId
+		).from(
+			JournalArticleLocalizationTable.INSTANCE
+		).where(
+			() -> {
+				Predicate predicate = _keywordPredicate(
+					DSLFunctionFactoryUtil.lower(
+						JournalArticleLocalizationTable.INSTANCE.title),
+					_customSQL.keywords(titleKeywords));
 
-		return journalArticlePersistence.dslQuery(dslQuery);
+				Operand operand = Operand.AND;
+
+				if (!andOperator) {
+					operand = Operand.OR;
+				}
+
+				return _nullSafeDefaultPredicate(
+					predicate, operand,
+					_keywordPredicate(
+						JournalArticleLocalizationTable.INSTANCE.description,
+						_customSQL.keywords(descriptionKeywords, false)));
+			}
+		).groupBy(
+			JournalArticleLocalizationTable.INSTANCE.companyId,
+			JournalArticleLocalizationTable.INSTANCE.articlePK,
+			JournalArticleLocalizationTable.INSTANCE.title,
+			JournalArticleLocalizationTable.INSTANCE.description,
+			JournalArticleLocalizationTable.INSTANCE.languageId
+		);
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.select(JournalArticleTable.INSTANCE),
+				dslQuery.as("JournalArticleLocalization"), companyId, groupId,
+				folderIds, classNameId, articleIds, version, titles,
+				descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
+				displayDateGT, displayDateLT, reviewDate, locale, andOperator,
+				queryDefinition, inlineSQLHelper
+			).orderBy(
+				JournalArticleTable.INSTANCE,
+				queryDefinition.getOrderByComparator()
+			).limit(
+				queryDefinition.getStart(), queryDefinition.getEnd()
+			));
 	}
 
 	private int _searchCount(
@@ -8911,14 +9154,17 @@ public class JournalArticleLocalServiceImpl
 		displayDateLT = CalendarUtil.getTimestamp(displayDateLT);
 		reviewDate = CalendarUtil.getTimestamp(reviewDate);
 
-		DSLQuery dslQuery = _getSearchCountDSLQuery(
-			companyId, groupId, folderIds, classNameId, articleIds, version,
-			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, locale, andOperator,
-			queryDefinition, inlineSQLHelper);
+		Long count = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.countDistinct(
+					JournalArticleTable.INSTANCE.articleId),
+				JournalArticleLocalizationTable.INSTANCE, companyId, groupId,
+				folderIds, classNameId, articleIds, version, titles,
+				descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
+				displayDateGT, displayDateLT, reviewDate, locale, andOperator,
+				queryDefinition, inlineSQLHelper));
 
-		return GetterUtil.getInteger(
-			(Long)journalArticlePersistence.dslQuery(dslQuery));
+		return GetterUtil.getInteger(count);
 	}
 
 	private List<JournalArticleLocalization> _updateArticleLocalizedFields(
@@ -9030,344 +9276,5 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private TrashVersionLocalService _trashVersionLocalService;
-
-	private class SearchDSLQuery {
-
-		public DSLQuery countDistinct(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String[] articleIds, Double version,
-			String[] titles, String[] descriptions, String[] contents,
-			String[] ddmStructureKeys, String[] ddmTemplateKeys,
-			Date displayDateGT, Date displayDateLT, Date reviewDate,
-			Locale locale, boolean andOperator,
-			QueryDefinition<JournalArticle> queryDefinition,
-			boolean inlineSQLHelper) {
-
-			return DSLQueryFactoryUtil.countDistinct(
-				JournalArticleTable.INSTANCE.articleId
-			).from(
-				JournalArticleTable.INSTANCE
-			).leftJoinOn(
-				JournalArticleTable.INSTANCE.as("tempJournalArticle"),
-				_leftJoinOnTempJournalArticlePredicate(queryDefinition)
-			).leftJoinOn(
-				JournalArticleLocalizationTable.INSTANCE,
-				_leftJoinOnJournalArticleLocalizationPredicate(locale)
-			).where(
-				_wherePredicate(
-					companyId, groupId, folderIds, classNameId, articleIds,
-					version, titles, descriptions, contents, ddmStructureKeys,
-					ddmTemplateKeys, displayDateGT, displayDateLT, reviewDate,
-					andOperator, queryDefinition, inlineSQLHelper)
-			);
-		}
-
-		public DSLQuery select(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String[] articleIds, Double version,
-			String[] titles, String[] descriptions, String[] contents,
-			String[] ddmStructureKeys, String[] ddmTemplateKeys,
-			Date displayDateGT, Date displayDateLT, Date reviewDate,
-			Locale locale, boolean andOperator,
-			QueryDefinition<JournalArticle> queryDefinition,
-			boolean inlineSQLHelper) {
-
-			DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-				JournalArticleLocalizationTable.INSTANCE.companyId,
-				JournalArticleLocalizationTable.INSTANCE.articlePK,
-				JournalArticleLocalizationTable.INSTANCE.title,
-				JournalArticleLocalizationTable.INSTANCE.description,
-				JournalArticleLocalizationTable.INSTANCE.languageId
-			).from(
-				JournalArticleLocalizationTable.INSTANCE
-			).where(
-				_journalArticleLocalizationPredicate(
-					titles, descriptions, andOperator)
-			).groupBy(
-				JournalArticleLocalizationTable.INSTANCE.companyId,
-				JournalArticleLocalizationTable.INSTANCE.articlePK,
-				JournalArticleLocalizationTable.INSTANCE.title,
-				JournalArticleLocalizationTable.INSTANCE.description,
-				JournalArticleLocalizationTable.INSTANCE.languageId
-			);
-
-			return DSLQueryFactoryUtil.select(
-				JournalArticleTable.INSTANCE
-			).from(
-				JournalArticleTable.INSTANCE
-			).leftJoinOn(
-				JournalArticleTable.INSTANCE.as("tempJournalArticle"),
-				_leftJoinOnTempJournalArticlePredicate(queryDefinition)
-			).leftJoinOn(
-				dslQuery.as("JournalArticleLocalization"),
-				_leftJoinOnJournalArticleLocalizationPredicate(locale)
-			).where(
-				_wherePredicate(
-					companyId, groupId, folderIds, classNameId, articleIds,
-					version, titles, descriptions, contents, ddmStructureKeys,
-					ddmTemplateKeys, displayDateGT, displayDateLT, reviewDate,
-					andOperator, queryDefinition, inlineSQLHelper)
-			).orderBy(
-				JournalArticleTable.INSTANCE,
-				queryDefinition.getOrderByComparator()
-			);
-		}
-
-		private Predicate _innerWherePredicate(
-			String[] articleIds, Double version, String[] titles,
-			String[] descriptions, String[] contents, Date displayDateGT,
-			Date displayDateLT, Date reviewDate, boolean andOperator) {
-
-			Operand operand = Operand.AND;
-
-			if (!andOperator) {
-				operand = Operand.OR;
-			}
-
-			Predicate predicate = _keywordPredicate(
-				JournalArticleTable.INSTANCE.articleId,
-				_customSQL.keywords(articleIds, false));
-
-			if (GetterUtil.getDouble(version) > 0.0) {
-				predicate = _nullSafeDefaultPredicate(
-					predicate, operand,
-					JournalArticleTable.INSTANCE.version.eq(version));
-			}
-
-			predicate = _nullSafeDefaultPredicate(
-				predicate, operand,
-				_keywordPredicate(
-					DSLFunctionFactoryUtil.lower(
-						JournalArticleLocalizationTable.INSTANCE.title),
-					_customSQL.keywords(titles)));
-
-			predicate = _nullSafeDefaultPredicate(
-				predicate, operand,
-				_keywordPredicate(
-					JournalArticleLocalizationTable.INSTANCE.description,
-					_customSQL.keywords(descriptions, false)));
-
-			predicate = _nullSafeDefaultPredicate(
-				predicate, operand,
-				_keywordPredicate(
-					DSLFunctionFactoryUtil.castClobText(
-						JournalArticleTable.INSTANCE.content),
-					_customSQL.keywords(contents, false)));
-
-			if (displayDateGT != null) {
-				predicate = _nullSafeDefaultPredicate(
-					predicate, operand,
-					JournalArticleTable.INSTANCE.displayDate.gte(
-						displayDateGT));
-			}
-
-			if (displayDateLT != null) {
-				predicate = _nullSafeDefaultPredicate(
-					predicate, operand,
-					JournalArticleTable.INSTANCE.displayDate.lte(
-						displayDateLT));
-			}
-
-			if (reviewDate != null) {
-				predicate = _nullSafeDefaultPredicate(
-					predicate, operand,
-					JournalArticleTable.INSTANCE.reviewDate.lte(reviewDate));
-			}
-
-			return predicate;
-		}
-
-		private Predicate _journalArticleLocalizationPredicate(
-			String[] titles, String[] descriptions, boolean andOperator) {
-
-			Predicate predicate = _keywordPredicate(
-				DSLFunctionFactoryUtil.lower(
-					JournalArticleLocalizationTable.INSTANCE.title),
-				_customSQL.keywords(titles));
-
-			Operand operand = Operand.AND;
-
-			if (!andOperator) {
-				operand = Operand.OR;
-			}
-
-			return _nullSafeDefaultPredicate(
-				predicate, operand,
-				_keywordPredicate(
-					JournalArticleLocalizationTable.INSTANCE.description,
-					_customSQL.keywords(descriptions, false)));
-		}
-
-		private Predicate _keywordPredicate(
-			Expression<String> expression, String[] keywords) {
-
-			Predicate keywordsPredicate = null;
-
-			for (String keyword : keywords) {
-				if (keyword == null) {
-					continue;
-				}
-
-				Predicate keywordPredicate = expression.like(keyword);
-
-				if (keywordsPredicate == null) {
-					keywordsPredicate = keywordPredicate;
-				}
-				else {
-					keywordsPredicate = keywordsPredicate.or(keywordPredicate);
-				}
-			}
-
-			return keywordsPredicate;
-		}
-
-		private Predicate _leftJoinOnJournalArticleLocalizationPredicate(
-			Locale locale) {
-
-			return JournalArticleTable.INSTANCE.id.eq(
-				JournalArticleLocalizationTable.INSTANCE.articlePK
-			).and(
-				JournalArticleTable.INSTANCE.companyId.eq(
-					JournalArticleLocalizationTable.INSTANCE.companyId)
-			).and(
-				JournalArticleLocalizationTable.INSTANCE.languageId.eq(
-					LocaleUtil.toLanguageId(locale))
-			);
-		}
-
-		private Predicate _leftJoinOnTempJournalArticlePredicate(
-			QueryDefinition<JournalArticle> queryDefinition) {
-
-			Predicate leftJoinTempJournalArticlePredicate =
-				JournalArticleTable.INSTANCE.articleId.eq(
-					JournalArticleTable.INSTANCE.as(
-						"tempJournalArticle").articleId
-				).and(
-					JournalArticleTable.INSTANCE.groupId.eq(
-						JournalArticleTable.INSTANCE.as(
-							"tempJournalArticle").groupId)
-				).and(
-					JournalArticleTable.INSTANCE.version.lt(
-						JournalArticleTable.INSTANCE.as(
-							"tempJournalArticle").version)
-				);
-
-			int status = queryDefinition.getStatus();
-
-			if (status == WorkflowConstants.STATUS_ANY) {
-				return leftJoinTempJournalArticlePredicate;
-			}
-
-			Operand statusOperand = Operand.EQUAL;
-
-			if (queryDefinition.isExcludeStatus()) {
-				statusOperand = Operand.NOT_EQUAL;
-			}
-
-			return leftJoinTempJournalArticlePredicate.and(
-				new DefaultPredicate(
-					JournalArticleTable.INSTANCE.status, statusOperand,
-					new Scalar<>(status))
-			).and(
-				new DefaultPredicate(
-					JournalArticleTable.INSTANCE.as(
-						"tempJournalArticle").status,
-					statusOperand, new Scalar<>(status))
-			);
-		}
-
-		private Predicate _nullSafeDefaultPredicate(
-			Predicate leftPredicate, Operand operand,
-			Predicate rightPredicate) {
-
-			if (rightPredicate == null) {
-				return leftPredicate;
-			}
-			else if (leftPredicate == null) {
-				return rightPredicate;
-			}
-			else {
-				return new DefaultPredicate(
-					leftPredicate, operand, rightPredicate);
-			}
-		}
-
-		private Predicate _wherePredicate(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String[] articleIds, Double version,
-			String[] titles, String[] descriptions, String[] contents,
-			String[] ddmStructureKeys, String[] ddmTemplateKeys,
-			Date displayDateGT, Date displayDateLT, Date reviewDate,
-			boolean andOperator,
-			QueryDefinition<JournalArticle> queryDefinition,
-			boolean inlineSQLHelper) {
-
-			Predicate wherePredicate =
-				JournalArticleTable.INSTANCE.companyId.eq(
-					companyId
-				).and(
-					JournalArticleTable.INSTANCE.classNameId.eq(classNameId)
-				).and(
-					JournalArticleTable.INSTANCE.as(
-						"tempJournalArticle"
-					).id.isNull()
-				);
-
-			if (inlineSQLHelper) {
-				wherePredicate = wherePredicate.and(
-					_inlineSQLHelper.getPermissionWherePredicate(
-						JournalArticle.class,
-						JournalArticleTable.INSTANCE.resourcePrimKey, groupId));
-			}
-
-			if (groupId > 0) {
-				wherePredicate = wherePredicate.and(
-					JournalArticleTable.INSTANCE.groupId.eq(groupId));
-			}
-
-			if (ListUtil.isNotEmpty(folderIds)) {
-				wherePredicate = wherePredicate.and(
-					JournalArticleTable.INSTANCE.folderId.in(
-						folderIds.toArray(new Long[0])));
-			}
-
-			wherePredicate = wherePredicate.and(
-				_keywordPredicate(
-					JournalArticleTable.INSTANCE.DDMStructureKey,
-					_customSQL.keywords(ddmStructureKeys, false))
-			).and(
-				_keywordPredicate(
-					JournalArticleTable.INSTANCE.DDMTemplateKey,
-					_customSQL.keywords(ddmTemplateKeys, false))
-			);
-
-			int status = queryDefinition.getStatus();
-
-			if (status != WorkflowConstants.STATUS_ANY) {
-				Operand statusOperand = Operand.EQUAL;
-
-				if (queryDefinition.isExcludeStatus()) {
-					statusOperand = Operand.NOT_EQUAL;
-				}
-
-				wherePredicate = wherePredicate.and(
-					new DefaultPredicate(
-						JournalArticleTable.INSTANCE.status, statusOperand,
-						new Scalar<>(status)));
-			}
-
-			Predicate innerWherePredicate = _innerWherePredicate(
-				articleIds, version, titles, descriptions, contents,
-				displayDateGT, displayDateLT, reviewDate, andOperator);
-
-			if (innerWherePredicate != null) {
-				wherePredicate = wherePredicate.and(
-					innerWherePredicate.withParentheses());
-			}
-
-			return wherePredicate;
-		}
-
-	}
 
 }

@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
-import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -146,14 +146,12 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 					localRepository);
 			}
 		}
-		catch (UndeployedExternalRepositoryException
-					undeployedExternalRepositoryException) {
-
+		catch (RepositoryException repositoryException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Repository deletion events for this repository will not " +
 						"be triggered",
-					undeployedExternalRepositoryException);
+					repositoryException);
 			}
 		}
 

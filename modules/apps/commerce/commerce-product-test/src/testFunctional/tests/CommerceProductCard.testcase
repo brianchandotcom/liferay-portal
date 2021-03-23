@@ -155,15 +155,6 @@ definition {
 		// TODO COMMERCE-5864 ViewProductCardPrice pending implementation
 	}
 
-	@description = "COMMERCE-5865. As a buyer, I want to view the product price range"
-	@ignore = "true"
-	@priority = "3"
-	test ViewProductCardPriceRange {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-5865 ViewProductCardPriceRange pending implementation
-	}
-
 	@description = "COMMERCE-5862. As a buyer, I want to view the product SKU, if set(single SKU)"
 	@ignore = "true"
 	@priority = "3"
@@ -171,6 +162,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5862 ViewProductCardSKU pending implementation
+	}
+
+	@description = "COMMERCE-5865. As a buyer, I want to view starting price on product card when product has different SKUs with different prices"
+	@ignore = "true"
+	@priority = "3"
+	test ViewProductCardStartingPrice {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5865 ViewProductCardStartingPrice pending implementation
 	}
 
 }

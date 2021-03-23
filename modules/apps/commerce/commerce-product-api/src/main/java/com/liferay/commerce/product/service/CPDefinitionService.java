@@ -170,6 +170,10 @@ public interface CPDefinitionService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, String> getUrlTitleMap(long cpDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws PortalException;
 

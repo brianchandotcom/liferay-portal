@@ -225,6 +225,14 @@ public class CPDefinitionServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<java.util.Locale, String> getUrlTitleMap(
+			long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionService.getUrlTitleMap(cpDefinitionId);
+	}
+
+	@Override
 	public String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

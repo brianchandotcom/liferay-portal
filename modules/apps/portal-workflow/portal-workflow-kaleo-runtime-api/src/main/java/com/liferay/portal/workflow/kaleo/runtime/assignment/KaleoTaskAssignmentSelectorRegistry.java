@@ -20,9 +20,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface TaskAssignmentSelectorRegistry {
+public interface KaleoTaskAssignmentSelectorRegistry {
 
-	public TaskAssignmentSelector getTaskAssignmentSelector(
+	public KaleoTaskAssignmentSelector getKaleoTaskAssignmentSelector(
 		String assigneeClassName);
 
 }

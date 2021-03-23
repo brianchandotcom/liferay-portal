@@ -23,9 +23,9 @@ import java.util.Collection;
 /**
  * @author Michael C. Han
  */
-public interface TaskAssignmentSelector {
+public interface KaleoTaskAssignmentSelector {
 
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
 			KaleoTaskAssignment kaleoTaskAssignment,
 			ExecutionContext executionContext)
 		throws PortalException;

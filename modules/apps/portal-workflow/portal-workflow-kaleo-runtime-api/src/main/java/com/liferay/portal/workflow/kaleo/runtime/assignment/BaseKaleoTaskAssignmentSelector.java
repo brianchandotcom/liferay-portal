@@ -24,13 +24,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
-public abstract class BaseTaskAssignmentSelector
-	implements TaskAssignmentSelector {
+@ProviderType
+public abstract class BaseKaleoTaskAssignmentSelector
+	implements KaleoTaskAssignmentSelector {
 
 	@SuppressWarnings("unchecked")
 	protected Collection<KaleoTaskAssignment> getKaleoTaskAssignments(

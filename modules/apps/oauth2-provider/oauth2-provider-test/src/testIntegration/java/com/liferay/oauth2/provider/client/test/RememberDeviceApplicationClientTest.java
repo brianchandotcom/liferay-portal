@@ -697,6 +697,66 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						cookieName, newCookie.getValue()))));
 	}
 
+	@Test
+	public void testUseExistingDifferentCookieRememberApplicationCode() {
+		String applicationClientId = "oauthTestRememberApplicationCode";
+
+		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
+
+		Response response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", applicationClientId
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
+				),
+				_getExtraParameters(), false));
+
+		Map<String, NewCookie> cookies = response.getCookies();
+
+		NewCookie newCookie = cookies.get(cookieName);
+
+		String authorizationCodeString = parseAuthorizationCodeString(response);
+
+		getToken(
+			applicationClientId, null,
+			(clientId, tokenInvocationBuilder) -> {
+				MultivaluedMap<String, String> formData =
+					new MultivaluedHashMap<>();
+
+				formData.add("client_id", applicationClientId);
+				formData.add("client_secret", "oauthTestApplicationSecret");
+				formData.add("grant_type", "authorization_code");
+				formData.add("code", authorizationCodeString);
+
+				return tokenInvocationBuilder.post(Entity.form(formData));
+			},
+			this::parseTokenString);
+
+		String applicationClientIdPKCE = "oauthTestRememberApplicationCodePKCE";
+
+		Assert.assertNull(
+			parseAuthorizationCodeString(
+				getCodeResponse(
+					"test@liferay.com", "test", null,
+					getCodeFunction(
+						webTarget -> webTarget.queryParam(
+							"client_id", applicationClientIdPKCE
+						).queryParam(
+							"code_challenge", RandomTestUtil.randomString()
+						).queryParam(
+							"response_type", "code"
+						).queryParam(
+							"redirect_uri", "http://redirecturi:8080"
+						),
+						true),
+					invocationBuilder -> invocationBuilder.cookie(
+						cookieName, newCookie.getValue()))));
+	}
+
 	public static class RememberApplicationClientTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 

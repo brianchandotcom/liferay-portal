@@ -110,14 +110,6 @@ module.exports = {
 					},
 					'frontend-js-web': {
 						'/': '>=1.0.0',
-						'@liferay/amd-loader': '>=4.3.1',
-						'lodash.escape': '>=4.0.1',
-						'lodash.groupby': '>=4.6.0',
-						'lodash.isequal': '>=4.5.0',
-						'lodash.memoize': '>=4.1.2',
-						'lodash.unescape': '>=4.0.1',
-						svg4everybody: '>=2.1.9',
-						uuid: '>=3.3.2',
 					},
 					'frontend-taglib-chart': {
 						'clay-charts': '>=2.9.0',

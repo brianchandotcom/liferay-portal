@@ -137,14 +137,24 @@ export default function getAlloyEditorProcessor(
 				nativeEditor.on('blur', () => {
 					if (_editor._mainUI.state.hidden) {
 						if (_callbacks.changeCallback) {
-							_callbacks.changeCallback(nativeEditor.getData());
+							_callbacks
+								.changeCallback(nativeEditor.getData())
+								.then(() => {
+									if (_callbacks.destroyCallback) {
+										_callbacks.destroyCallback();
+									}
+								})
+								.catch(() => {
+									if (_callbacks.destroyCallback) {
+										_callbacks.destroyCallback();
+									}
+								});
 						}
-
-						requestAnimationFrame(() => {
-							if (_callbacks.destroyCallback) {
-								_callbacks.destroyCallback();
-							}
-						});
+						else if (_callbacks.destroyCallback) {
+							requestAnimationFrame(() =>
+								_callbacks.destroyCallback()
+							);
+						}
 					}
 				}),
 

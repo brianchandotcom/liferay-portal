@@ -30,7 +30,6 @@ import {useSelector} from '../store/index';
 import {deepEqual} from '../utils/checkDeepEqual';
 import {useSetCollectionActiveItemContext} from './CollectionActiveItemContext';
 import {useActivationOrigin, useIsActive, useSelectItem} from './Controls';
-import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
 import FragmentWithControls from './layout-data-items/FragmentWithControls';
 import {
 	CollectionItemWithControls,
@@ -139,12 +138,7 @@ export default function Layout({mainItemId}) {
 					onClick={onClick}
 					ref={layoutRef}
 				>
-					<EditableProcessorContextProvider>
-						<LayoutDataItem
-							item={mainItem}
-							layoutData={layoutData}
-						/>
-					</EditableProcessorContextProvider>
+					<LayoutDataItem item={mainItem} layoutData={layoutData} />
 				</div>
 			)}
 		</>

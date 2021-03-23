@@ -31,6 +31,7 @@ import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import URLParser from './URLParser';
+import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
 
 const DEFAULT_SESSION_LENGTH = 60 * 1000;
 
@@ -57,17 +58,19 @@ export default function App({state}) {
 			<ControlsProvider>
 				<CollectionActiveItemContextProvider>
 					<DragAndDropContextProvider>
-						<DragPreview />
-						<Toolbar />
-						<ShortcutManager />
+						<EditableProcessorContextProvider>
+							<DragPreview />
+							<Toolbar />
+							<ShortcutManager />
 
-						<GlobalContextProvider>
-							<LayoutViewport />
+							<GlobalContextProvider>
+								<LayoutViewport />
 
-							<StyleBookContextProvider>
-								<Sidebar />
-							</StyleBookContextProvider>
-						</GlobalContextProvider>
+								<StyleBookContextProvider>
+									<Sidebar />
+								</StyleBookContextProvider>
+							</GlobalContextProvider>
+						</EditableProcessorContextProvider>
 					</DragAndDropContextProvider>
 				</CollectionActiveItemContextProvider>
 			</ControlsProvider>

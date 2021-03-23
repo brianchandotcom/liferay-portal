@@ -66,7 +66,7 @@ const ClassicEditor = React.forwardRef(
 		}, [contents]);
 
 		const onChangeCallback = () => {
-			if (!onChangeMethodName && !onChange || !editorRef.current) {
+			if (!onChangeMethodName && !onChange) {
 				return;
 			}
 
@@ -83,6 +83,16 @@ const ClassicEditor = React.forwardRef(
 				editor.resetDirty();
 			}
 		};
+
+		const editorRefsCallback = useCallback(
+			(element) => {
+				if (ref) {
+					ref.current = element;
+				}
+				editorRef.current = element;
+			},
+			[ref, editorRef]
+		);
 
 		useEffect(() => {
 			setToolbarSet(initialToolbarSet);
@@ -147,12 +157,7 @@ const ClassicEditor = React.forwardRef(
 					onInstanceReady={({editor}) => {
 						editor.setData(contents);
 					}}
-					ref={(element) => {
-						if (ref) {
-							ref.current = element;
-						}
-						editorRef.current = element;
-					}}
+					ref={editorRefsCallback}
 					{...otherProps}
 				/>
 			</div>

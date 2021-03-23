@@ -330,12 +330,17 @@ public class LogAssertionTestRule
 				sb.append(", message=");
 				sb.append(loggingEvent.getMessage());
 
+				Throwable throwable = null;
+
 				ThrowableInformation throwableInformation =
 					loggingEvent.getThrowableInformation();
 
+				if (throwableInformation != null) {
+					throwable = throwableInformation.getThrowable();
+				}
+
 				LogAssertionTestRule.caughtFailure(
-					new AssertionError(
-						sb.toString(), throwableInformation.getThrowable()));
+					new AssertionError(sb.toString(), throwable));
 			}
 		}
 

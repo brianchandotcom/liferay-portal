@@ -8609,6 +8609,43 @@ public class JournalArticleLocalServiceImpl
 		return true;
 	}
 
+	private Predicate _buildNullSafePredicate(
+		Predicate leftPredicate, Operand operand, Predicate rightPredicate) {
+
+		if (rightPredicate == null) {
+			return leftPredicate;
+		}
+		else if (leftPredicate == null) {
+			return rightPredicate;
+		}
+		else {
+			return new DefaultPredicate(leftPredicate, operand, rightPredicate);
+		}
+	}
+
+	private Predicate _buildPredicateFromKeywords(
+		Expression<String> expression, String[] keywords) {
+
+		Predicate keywordsPredicate = null;
+
+		for (String keyword : keywords) {
+			if (keyword == null) {
+				continue;
+			}
+
+			Predicate keywordPredicate = expression.like(keyword);
+
+			if (keywordsPredicate == null) {
+				keywordsPredicate = keywordPredicate;
+			}
+			else {
+				keywordsPredicate = keywordsPredicate.or(keywordPredicate);
+			}
+		}
+
+		return keywordsPredicate;
+	}
+
 	private Map<Locale, String> _checkFriendlyURLMap(
 		Locale defaultLocale, Map<Locale, String> friendlyURLMap,
 		Map<Locale, String> titleMap) {
@@ -8825,11 +8862,11 @@ public class JournalArticleLocalServiceImpl
 				}
 
 				predicate = predicate.and(
-					_keywordPredicate(
+					_buildPredicateFromKeywords(
 						JournalArticleTable.INSTANCE.DDMStructureKey,
 						_customSQL.keywords(ddmStructureKeys, false))
 				).and(
-					_keywordPredicate(
+					_buildPredicateFromKeywords(
 						JournalArticleTable.INSTANCE.DDMTemplateKey,
 						_customSQL.keywords(ddmTemplateKeys, false))
 				);
@@ -8953,92 +8990,55 @@ public class JournalArticleLocalServiceImpl
 			operand = Operand.OR;
 		}
 
-		Predicate predicate = _keywordPredicate(
+		Predicate predicate = _buildPredicateFromKeywords(
 			JournalArticleTable.INSTANCE.articleId,
 			_customSQL.keywords(articleIds, false));
 
 		if (GetterUtil.getDouble(version) > 0.0) {
-			predicate = _nullSafeDefaultPredicate(
+			predicate = _buildNullSafePredicate(
 				predicate, operand,
 				JournalArticleTable.INSTANCE.version.eq(version));
 		}
 
-		predicate = _nullSafeDefaultPredicate(
+		predicate = _buildNullSafePredicate(
 			predicate, operand,
-			_keywordPredicate(
+			_buildPredicateFromKeywords(
 				DSLFunctionFactoryUtil.lower(
 					JournalArticleLocalizationTable.INSTANCE.title),
 				_customSQL.keywords(titles)));
 
-		predicate = _nullSafeDefaultPredicate(
+		predicate = _buildNullSafePredicate(
 			predicate, operand,
-			_keywordPredicate(
+			_buildPredicateFromKeywords(
 				JournalArticleLocalizationTable.INSTANCE.description,
 				_customSQL.keywords(descriptions, false)));
 
-		predicate = _nullSafeDefaultPredicate(
+		predicate = _buildNullSafePredicate(
 			predicate, operand,
-			_keywordPredicate(
+			_buildPredicateFromKeywords(
 				DSLFunctionFactoryUtil.castClobText(
 					JournalArticleTable.INSTANCE.content),
 				_customSQL.keywords(contents, false)));
 
 		if (displayDateGT != null) {
-			predicate = _nullSafeDefaultPredicate(
+			predicate = _buildNullSafePredicate(
 				predicate, operand,
 				JournalArticleTable.INSTANCE.displayDate.gte(displayDateGT));
 		}
 
 		if (displayDateLT != null) {
-			predicate = _nullSafeDefaultPredicate(
+			predicate = _buildNullSafePredicate(
 				predicate, operand,
 				JournalArticleTable.INSTANCE.displayDate.lte(displayDateLT));
 		}
 
 		if (reviewDate != null) {
-			predicate = _nullSafeDefaultPredicate(
+			predicate = _buildNullSafePredicate(
 				predicate, operand,
 				JournalArticleTable.INSTANCE.reviewDate.lte(reviewDate));
 		}
 
 		return predicate;
-	}
-
-	private Predicate _keywordPredicate(
-		Expression<String> expression, String[] keywords) {
-
-		Predicate keywordsPredicate = null;
-
-		for (String keyword : keywords) {
-			if (keyword == null) {
-				continue;
-			}
-
-			Predicate keywordPredicate = expression.like(keyword);
-
-			if (keywordsPredicate == null) {
-				keywordsPredicate = keywordPredicate;
-			}
-			else {
-				keywordsPredicate = keywordsPredicate.or(keywordPredicate);
-			}
-		}
-
-		return keywordsPredicate;
-	}
-
-	private Predicate _nullSafeDefaultPredicate(
-		Predicate leftPredicate, Operand operand, Predicate rightPredicate) {
-
-		if (rightPredicate == null) {
-			return leftPredicate;
-		}
-		else if (leftPredicate == null) {
-			return rightPredicate;
-		}
-		else {
-			return new DefaultPredicate(leftPredicate, operand, rightPredicate);
-		}
 	}
 
 	private String _replaceTempImages(JournalArticle article, String content)
@@ -9094,7 +9094,7 @@ public class JournalArticleLocalServiceImpl
 			JournalArticleLocalizationTable.INSTANCE
 		).where(
 			() -> {
-				Predicate predicate = _keywordPredicate(
+				Predicate predicate = _buildPredicateFromKeywords(
 					DSLFunctionFactoryUtil.lower(
 						JournalArticleLocalizationTable.INSTANCE.title),
 					_customSQL.keywords(titleKeywords));
@@ -9105,9 +9105,9 @@ public class JournalArticleLocalServiceImpl
 					operand = Operand.OR;
 				}
 
-				return _nullSafeDefaultPredicate(
+				return _buildNullSafePredicate(
 					predicate, operand,
-					_keywordPredicate(
+					_buildPredicateFromKeywords(
 						JournalArticleLocalizationTable.INSTANCE.description,
 						_customSQL.keywords(descriptionKeywords, false)));
 			}

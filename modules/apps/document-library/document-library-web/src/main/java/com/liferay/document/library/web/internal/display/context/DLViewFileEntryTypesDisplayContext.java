@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
@@ -132,6 +133,20 @@ public class DLViewFileEntryTypesDisplayContext {
 		SearchContainer<DLFileEntryType> searchContainer = getSearchContainer();
 
 		return searchContainer.getTotal();
+	}
+
+	public boolean isSearchDisabled() throws PortalException {
+		SearchContainer<DLFileEntryType> searchContainer = getSearchContainer();
+
+		DisplayTerms searchTerms = searchContainer.getSearchTerms();
+
+		if ((searchContainer.getTotal() == 0) &&
+			Validator.isNull(searchTerms.getKeywords())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected PortletURL getPortletURL() {

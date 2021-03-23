@@ -185,8 +185,12 @@ const Translate = ({
 	translateLanguagesSelectorData,
 	translationPermission,
 	updateTranslationPortletURL,
+	workflowActions,
 }) => {
 	const [formHaschanges, setFormHaschanges] = useState(false);
+	const [workflowAction, setWorkflowAction] = useState(
+		workflowActions.PUBLISH
+	);
 
 	return (
 		<form
@@ -195,6 +199,11 @@ const Translate = ({
 			method="POST"
 			name="translate_fm"
 		>
+			<input
+				defaultValue={workflowAction}
+				name={`${portletNamespace}workflowAction`}
+				type="hidden"
+			/>
 			{Object.entries(aditionalFields).map(([name, value]) => (
 				<input
 					defaultValue={value}
@@ -227,6 +236,11 @@ const Translate = ({
 									<ClayButton
 										disabled={saveButtonDisabled}
 										displayType="secondary"
+										onClick={() => {
+											setWorkflowAction(
+												workflowActions.SAVE_DRAFT
+											);
+										}}
 										small
 										type="submit"
 									>
@@ -297,6 +311,10 @@ Translate.propTypes = {
 	targetLanguageIdTitle: PropTypes.string.isRequired,
 	translationPermission: PropTypes.bool.isRequired,
 	updateTranslationPortletURL: PropTypes.string.isRequired,
+	workflowActions: PropTypes.shape({
+		PUBLISH: PropTypes.string.isRequired,
+		SAVE_DRAFT: PropTypes.string.isRequired,
+	}).isRequired,
 };
 
 export default Translate;

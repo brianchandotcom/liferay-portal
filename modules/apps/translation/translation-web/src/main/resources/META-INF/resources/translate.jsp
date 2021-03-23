@@ -203,15 +203,3 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 		props="<%= translateDisplayContext.getInfoFieldSetEntriesData() %>"
 	/>
 </div>
-
-<script>
-	var saveDraftBtn = document.getElementById('<portlet:namespace />saveDraftBtn');
-
-	saveDraftBtn.addEventListener('click', () => {
-		var workflowActionInput = document.getElementById(
-			'<portlet:namespace />workflowAction'
-		);
-
-		workflowActionInput.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
-	});
-</script>

@@ -222,9 +222,6 @@ public class TranslateDisplayContext {
 				"sourceLanguageId", getSourceLanguageId()
 			).put(
 				"targetLanguageId", getTargetLanguageId()
-			).put(
-				"workflowAction",
-				String.valueOf(WorkflowConstants.ACTION_PUBLISH)
 			).build()
 		).put(
 			"infoFieldSetEntries", infoFieldSetEntries
@@ -252,6 +249,14 @@ public class TranslateDisplayContext {
 		).put(
 			"updateTranslationPortletURL",
 			String.valueOf(getUpdateTranslationPortletURL())
+		).put(
+			"workflowActions",
+			HashMapBuilder.<String, Object>put(
+				"PUBLISH", String.valueOf(WorkflowConstants.ACTION_PUBLISH)
+			).put(
+				"SAVE_DRAFT",
+				String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT)
+			).build()
 		).build();
 	}
 

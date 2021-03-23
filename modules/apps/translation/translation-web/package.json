@@ -5,13 +5,10 @@
 		"@clayui/drop-down": "3.25.1",
 		"@clayui/form": "3.14.4",
 		"@clayui/icon": "3.1.0",
-		"@clayui/label": "3.4.1",
 		"@clayui/layout": "3.3.0",
 		"@clayui/link": "3.2.0",
 		"frontend-editor-ckeditor-web": "*",
-		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
-		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},

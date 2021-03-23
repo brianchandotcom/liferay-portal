@@ -255,6 +255,15 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
+	public Map<Locale, String> getUrlTitleMap(long cpDefinitionId)
+		throws PortalException {
+
+		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLocalService.getUrlTitleMap(cpDefinitionId);
+	}
+
+	@Override
 	public String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws PortalException {
 

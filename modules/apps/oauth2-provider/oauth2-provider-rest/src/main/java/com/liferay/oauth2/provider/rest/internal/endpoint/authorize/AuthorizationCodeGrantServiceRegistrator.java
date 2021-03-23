@@ -91,9 +91,10 @@ public class AuthorizationCodeGrantServiceRegistrator {
 					oAuthRedirectionState, client, requestedScopesList,
 					approvedScopesList, userSubject, serverAccessToken);
 
-			String clientId = client.getClientId();
+			String cookieName = _getCookieName(client.getClientId());
 
-			String rememberDeviceContent = _getRememberDeviceContent(clientId);
+			String rememberDeviceContent = _getRememberDeviceContent(
+				cookieName);
 
 			if (rememberDeviceContent == null) {
 				return serverAuthorizationCodeGrant;
@@ -117,7 +118,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 			liferayOAuthDataProvider.doRevokeAuthorization(oAuth2Authorization);
 
-			Cookie cookie = _getCookie(clientId);
+			Cookie cookie = _getCookie(cookieName);
 
 			MessageContext messageContext = getMessageContext();
 
@@ -161,7 +162,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			}
 
 			String rememberDeviceContent = _getRememberDeviceContent(
-				client.getClientId());
+				_getCookieName(client.getClientId()));
 
 			if (rememberDeviceContent == null) {
 				return super.canAuthorizationBeSkipped(
@@ -266,7 +267,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 				return oAuthRedirectionState;
 			}
 
-			Cookie cookie = _getCookie(client.getClientId());
+			Cookie cookie = _getCookie(_getCookieName(client.getClientId()));
 
 			MessageContext messageContext = getMessageContext();
 
@@ -285,13 +286,9 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			return oAuthRedirectionState;
 		}
 
-		private Cookie _getCookie(String clientId) {
+		private Cookie _getCookie(String cookieName) {
 			UUID uuid = new UUID(
 				SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
-
-			String cookieName =
-				OAuth2ProviderRESTEndpointConstants.
-					COOKIE_NAME_REMEMBER_DEVICE_PREFIX.concat(clientId);
 
 			Cookie cookie = new Cookie(cookieName, uuid.toString());
 
@@ -306,15 +303,11 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			return (LiferayOAuthDataProvider)getDataProvider();
 		}
 
-		private String _getRememberDeviceContent(String clientId) {
+		private String _getRememberDeviceContent(String cookieName) {
 			MessageContext messageContext = getMessageContext();
 
 			HttpServletRequest httpServletRequest =
 				messageContext.getHttpServletRequest();
-
-			String cookieName =
-				OAuth2ProviderRESTEndpointConstants.
-					COOKIE_NAME_REMEMBER_DEVICE_PREFIX.concat(clientId);
 
 			return Stream.of(
 				httpServletRequest.getCookies()
@@ -376,6 +369,11 @@ public class AuthorizationCodeGrantServiceRegistrator {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
+	}
+
+	private static String _getCookieName(String clientId) {
+		return OAuth2ProviderRESTEndpointConstants.
+			COOKIE_NAME_REMEMBER_DEVICE_PREFIX.concat(clientId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

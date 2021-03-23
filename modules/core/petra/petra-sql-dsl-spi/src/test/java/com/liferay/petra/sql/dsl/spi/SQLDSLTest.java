@@ -1221,6 +1221,15 @@ public class SQLDSLTest {
 	}
 
 	@Test
+	public void testSupplierPredicate() {
+		Predicate predicate = MainExampleTable.INSTANCE.name.eq("test");
+
+		Predicate defaultPredicate = DefaultPredicate.from(() -> predicate);
+
+		Assert.assertSame(predicate, defaultPredicate);
+	}
+
+	@Test
 	public void testTable() {
 		Assert.assertEquals(
 			"MainExample", MainExampleTable.INSTANCE.toString());

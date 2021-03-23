@@ -524,6 +524,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	@description = "Ignore test due to OpenAM 12 doesn't support Tomcat 9"
 	@ignore = "true"
 	@priority = "5"
 	test OpenSSOSmoke {

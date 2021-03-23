@@ -21,6 +21,7 @@ export const REMOVE_STEP = 'REMOVE_STEP';
 export const REMOVE_STEP_ACTION = 'REMOVE_STEP_ACTION';
 export const REMOVE_STEP_FORM_VIEW = 'REMOVE_STEP_FORM_VIEW';
 export const UPDATE_CONFIG = 'UPDATE_CONFIG';
+export const UPDATE_DATA_DEFINITION_FIELDS = 'UPDATE_DATA_DEFINITION_FIELDS';
 export const UPDATE_DATA_OBJECT = 'UPDATE_DATA_OBJECT';
 export const UPDATE_FORM_VIEW = 'UPDATE_FORM_VIEW';
 export const UPDATE_LIST_ITEMS = 'UPDATE_LIST_ITEMS';
@@ -240,6 +241,15 @@ export default (state, action) => {
 				...state,
 				...action.config,
 				draftConfig: JSON.parse(JSON.stringify(action.config)),
+			};
+		}
+		case UPDATE_DATA_DEFINITION_FIELDS: {
+			return {
+				...state,
+				dataObject: {
+					...state.dataObject,
+					dataDefinitionFields: action.dataDefinitionFields,
+				},
 			};
 		}
 		case UPDATE_DATA_OBJECT: {

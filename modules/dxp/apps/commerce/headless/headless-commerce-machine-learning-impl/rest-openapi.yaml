@@ -232,6 +232,28 @@ components:
                     format: float
                     type: number
             type: object
+        SkuForecast:
+            properties:
+                actual:
+                    format: float
+                    type: number
+                forecast:
+                    format: float
+                    type: number
+                forecastLowerBound:
+                    format: float
+                    type: number
+                forecastUpperBound:
+                    format: float
+                    type: number
+                sku:
+                    type: string
+                timestamp:
+                    format: date-time
+                    type: string
+                unit:
+                    type: string
+            type: object
         UserRecommendation:
             properties:
                 assetCategoryIds:

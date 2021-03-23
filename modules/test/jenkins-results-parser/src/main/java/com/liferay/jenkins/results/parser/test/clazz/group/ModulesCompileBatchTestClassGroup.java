@@ -28,6 +28,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -188,6 +189,8 @@ public class ModulesCompileBatchTestClassGroup
 						JenkinsResultsParserUtil.getCanonicalPath(moduleDir)),
 					portalModulesBaseDir));
 		}
+
+		Collections.sort(testClasses);
 	}
 
 }

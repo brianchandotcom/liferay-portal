@@ -23,6 +23,7 @@ patch {
 	}
 
 	fileNames "org/apache/felix/cm/impl/ConfigurationImpl.java"
+	fileNames "org/apache/felix/cm/impl/ConfigurationManager.java"
 
 	originalLibModuleName = "org.apache.felix.configadmin"
 }

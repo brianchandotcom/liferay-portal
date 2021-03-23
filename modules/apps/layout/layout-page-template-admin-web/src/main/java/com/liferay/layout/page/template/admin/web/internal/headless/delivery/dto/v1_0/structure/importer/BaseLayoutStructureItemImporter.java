@@ -120,10 +120,8 @@ public abstract class BaseLayoutStructureItemImporter {
 
 		String className = (String)itemReferenceMap.get("className");
 
-		if (Objects.equals(className, Layout.class.getName())) {
-			if (!Objects.equals(itemReferenceMap.get("fieldName"), "plid")) {
-				return;
-			}
+		if (Objects.equals(className, Layout.class.getName()) &&
+			Objects.equals(itemReferenceMap.get("fieldName"), "plid")) {
 
 			String fieldValue = (String)itemReferenceMap.get("fieldValue");
 

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints Content Analysis API
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.content.analysis.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.tuning.blueprints.content.analysis.constants,\
+	com.liferay.portal.search.tuning.blueprints.content.analysis.request,\
+	com.liferay.portal.search.tuning.blueprints.content.analysis.response,\
+	com.liferay.portal.search.tuning.blueprints.content.analysis.service

@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelCreateDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.RepositoryEntry;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -62,6 +64,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
+import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -2277,7 +2280,7 @@ public class CMISRepository extends BaseCmisRepository {
 			return repositoryEntry.getMappedId();
 		}
 
-		DLFolder dlFolder = dlFolderLocalService.fetchFolder(folderId);
+		DLFolder dlFolder = _fetchDLFolder(folderId);
 
 		if (dlFolder == null) {
 			throw new NoSuchFolderException(
@@ -2342,6 +2345,21 @@ public class CMISRepository extends BaseCmisRepository {
 		if (objectId != null) {
 			throw new DuplicateFolderNameException(title);
 		}
+	}
+
+	private DLFolder _fetchDLFolder(long folderId) {
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return dlFolderLocalService.fetchFolder(folderId);
+		}
+
+		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+			getRepositoryId());
+
+		if (repository == null) {
+			return null;
+		}
+
+		return dlFolderLocalService.fetchFolder(repository.getDlFolderId());
 	}
 
 	private final <T> Set<T> _toSet(T... items) {

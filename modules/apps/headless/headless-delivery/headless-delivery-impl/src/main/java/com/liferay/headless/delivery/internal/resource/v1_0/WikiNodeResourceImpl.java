@@ -142,6 +142,24 @@ public class WikiNodeResourceImpl
 		_wikiNodeService.unsubscribeNode(wikiNodeId);
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		com.liferay.wiki.model.WikiNode wikiNode = _wikiNodeService.getNode(
+			(Long)id);
+
+		return wikiNode.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.wiki";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return com.liferay.wiki.model.WikiNode.class.getName();
+	}
+
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
 		throws Exception {
 

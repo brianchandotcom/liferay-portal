@@ -255,6 +255,23 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry((Long)id);
+
+		return blogsEntry.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.blogs";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return BlogsEntry.class.getName();
+	}
+
+	@Override
 	protected void preparePatch(
 		BlogPosting blogPosting, BlogPosting existingBlogPosting) {
 

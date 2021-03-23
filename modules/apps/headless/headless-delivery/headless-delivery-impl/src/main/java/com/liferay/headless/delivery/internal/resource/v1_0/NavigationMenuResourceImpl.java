@@ -152,6 +152,24 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				navigationMenuId, navigationMenu.getName(), serviceContext));
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuService.fetchSiteNavigationMenu((Long)id);
+
+		return siteNavigationMenu.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.site.navigation";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return SiteNavigationMenu.class.getName();
+	}
+
 	private void _createNavigationMenuItem(
 			NavigationMenuItem navigationMenuItem, long parentNavigationMenuId,
 			long siteId, long siteNavigationMenuId)

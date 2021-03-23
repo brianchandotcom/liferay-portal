@@ -178,6 +178,23 @@ public class KnowledgeBaseFolderResourceImpl
 					contextHttpServletRequest, null)));
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		KBFolder kbFolder = _kbFolderService.getKBFolder((Long)id);
+
+		return kbFolder.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.knowledge.base.admin";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return KBFolder.class.getName();
+	}
+
 	private long _getClassNameId() {
 		return _portal.getClassNameId(KBFolder.class.getName());
 	}

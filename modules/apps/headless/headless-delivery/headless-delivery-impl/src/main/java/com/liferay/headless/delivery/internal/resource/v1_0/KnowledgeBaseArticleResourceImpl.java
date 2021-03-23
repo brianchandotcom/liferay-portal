@@ -385,6 +385,24 @@ public class KnowledgeBaseArticleResourceImpl
 			siteId, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+			(Long)id, WorkflowConstants.STATUS_APPROVED);
+
+		return kbArticle.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.knowledge.base.admin";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return KBArticle.class.getName();
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		KnowledgeBaseArticle knowledgeBaseArticle) {
 

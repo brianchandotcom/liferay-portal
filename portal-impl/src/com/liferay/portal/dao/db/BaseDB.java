@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBColumnType;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
@@ -48,6 +49,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -55,6 +57,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import javax.naming.NamingException;
 
@@ -826,11 +829,20 @@ public abstract class BaseDB implements DB {
 		"@table@", "@old-column@", "@new-column@", "@type@", "@nullable@"
 	};
 
-	protected static final String[] TEMPLATE = {
-		"##", "TRUE", "FALSE", "'01/01/1970'", "CURRENT_TIMESTAMP", " BLOB",
-		" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",
-		" STRING", " TEXT", " VARCHAR", " IDENTITY", "COMMIT_TRANSACTION"
-	};
+	protected static final String[] TEMPLATE;
+
+	static {
+		Stream<DBColumnType> stream = Arrays.stream(DBColumnType.values());
+
+		TEMPLATE = ArrayUtil.append(
+			new String[] {
+				"##", "TRUE", "FALSE", "'01/01/1970'", "CURRENT_TIMESTAMP",
+				" IDENTITY", "COMMIT_TRANSACTION"
+			},
+			(String[])stream.map(
+				templateType -> StringPool.SPACE + templateType.getTypeName()
+			).toArray());
+	}
 
 	private String _applyMaxStringIndexLengthLimitation(String template) {
 		if (!template.contains("[$COLUMN_LENGTH:")) {

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBColumnType;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
@@ -246,12 +247,22 @@ public abstract class UpgradeProcess
 		public AlterTableAddColumn(String columnName) {
 			_columnName = columnName;
 
-			_columnType = StringPool.BLANK;
+			_columnType = null;
 		}
 
-		public AlterTableAddColumn(String columnName, String columnType) {
+		public AlterTableAddColumn(String columnName, DBColumnType columnType) {
 			_columnName = columnName;
 			_columnType = columnType;
+		}
+
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+		 *             #AlterTableAddColumn(String, DBColumnType)}
+		 */
+		@Deprecated
+		public AlterTableAddColumn(String columnName, String columnType) {
+			_columnName = columnName;
+			_columnType = DBColumnType.valueOf(columnType);
 		}
 
 		@Override
@@ -263,7 +274,10 @@ public abstract class UpgradeProcess
 			sb.append(" add ");
 			sb.append(_columnName);
 			sb.append(StringPool.SPACE);
-			sb.append(_columnType);
+
+			if (_columnName != null) {
+				sb.append(_columnType);
+			}
 
 			return StringUtil.trim(sb.toString());
 		}
@@ -279,7 +293,7 @@ public abstract class UpgradeProcess
 		}
 
 		private final String _columnName;
-		private final String _columnType;
+		private final DBColumnType _columnType;
 
 	}
 

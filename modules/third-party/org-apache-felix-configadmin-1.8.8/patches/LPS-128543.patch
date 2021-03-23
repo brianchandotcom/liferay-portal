@@ -1,0 +1,19 @@
+diff --git a/org/apache/felix/cm/impl/ConfigurationImpl.java b/org/apache/felix/cm/impl/ConfigurationImpl.java
+index 9ecde3002fafc..1b74117b1fc4c 100644
+--- a/org/apache/felix/cm/impl/ConfigurationImpl.java
++++ b/org/apache/felix/cm/impl/ConfigurationImpl.java
+@@ -383,6 +383,8 @@ public class ConfigurationImpl extends ConfigurationBase
+             // finally assign the configuration for use
+             configure( newProperties );
+ 
++            getConfigurationManager().removeConfiguration(this);
++
+             // if this is a factory configuration, update the factory with
+             // do this only after configuring with current properties such
+             // that a concurrently registered ManagedServiceFactory service
+@@ -633,3 +635,4 @@ public class ConfigurationImpl extends ConfigurationBase
+         properties.remove( ConfigurationAdmin.SERVICE_BUNDLELOCATION );
+     }
+ }
++/* @generated */
+\ No newline at end of file

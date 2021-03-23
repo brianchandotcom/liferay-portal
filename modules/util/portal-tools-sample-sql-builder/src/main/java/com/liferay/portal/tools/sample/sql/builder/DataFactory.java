@@ -2888,13 +2888,6 @@ public class DataFactory {
 		return journalContentSearchModel;
 	}
 
-	public List<PortletPreferencesModel> newJournalPortletPreferencesModels(
-		long plid) {
-
-		return Collections.singletonList(
-			newPortletPreferencesModel(plid, JournalPortletKeys.JOURNAL));
-	}
-
 	public LayoutFriendlyURLModel newLayoutFriendlyURLModel(
 		LayoutModel layoutModel) {
 

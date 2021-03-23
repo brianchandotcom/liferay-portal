@@ -19,12 +19,6 @@
 
 	<@insertLayout _layoutModel=layoutModel />
 
-	<#assign portletPreferencesModels = dataFactory.newJournalPortletPreferencesModels(layoutModel.plid) />
-
-	<#list portletPreferencesModels as portletPreferencesModel>
-		${dataFactory.toInsertSQL(portletPreferencesModel)}
-	</#list>
-
 	<#assign journalArticleCounts = dataFactory.getSequence(dataFactory.maxJournalArticleCount) />
 
 	<#list journalArticleCounts as journalArticleCount>

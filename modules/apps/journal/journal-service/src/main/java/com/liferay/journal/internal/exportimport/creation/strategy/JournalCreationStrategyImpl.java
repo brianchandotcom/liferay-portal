@@ -37,6 +37,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = JournalCreationStrategy.class)
 public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean addGroupPermissions(
 			PortletDataContext context, Object journalObject)
@@ -45,6 +49,10 @@ public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean addGuestPermissions(
 			PortletDataContext context, Object journalObject)

@@ -49,7 +49,9 @@ public interface JournalCreationStrategy {
 	 * @return <code>true</code> if default group permissions should be added to
 	 *         the specified journalObject
 	 * @throws Exception if an exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
+	@Deprecated
 	public boolean addGroupPermissions(
 			PortletDataContext context, Object journalObject)
 		throws Exception;
@@ -63,7 +65,9 @@ public interface JournalCreationStrategy {
 	 * @return <code>true</code> if default guest permissions should be added to
 	 *         the specified journalObject
 	 * @throws Exception if an exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
+	@Deprecated
 	public boolean addGuestPermissions(
 			PortletDataContext context, Object journalObject)
 		throws Exception;

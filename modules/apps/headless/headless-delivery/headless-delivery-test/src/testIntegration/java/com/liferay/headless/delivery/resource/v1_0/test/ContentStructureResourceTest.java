@@ -51,13 +51,23 @@ public class ContentStructureResourceTest
 
 	@Override
 	protected ContentStructure
+			testGetAssetLibraryContentStructurePermissionsPage_addContentStructure()
+		throws Exception {
+
+		return testGetContentStructure_addContentStructure();
+	}
+
+	@Override
+	protected ContentStructure
 			testGetAssetLibraryContentStructuresPage_addContentStructure(
 				Long assetLibraryId, ContentStructure contentStructure)
 		throws Exception {
 
 		return _toContentStructure(
 			_addDDMStructure(
-				testDepotEntry.getGroup(), contentStructure.getName()));
+				(assetLibraryId == irrelevantDepotEntry.getDepotEntryId()) ?
+					irrelevantDepotEntry.getGroup() : testDepotEntry.getGroup(),
+				contentStructure.getName()));
 	}
 
 	@Override
@@ -66,6 +76,22 @@ public class ContentStructureResourceTest
 
 		return _toContentStructure(
 			_addDDMStructure(testGroup, RandomTestUtil.randomString()));
+	}
+
+	@Override
+	protected ContentStructure
+			testGetContentStructurePermissionsPage_addContentStructure()
+		throws Exception {
+
+		return testGetContentStructure_addContentStructure();
+	}
+
+	@Override
+	protected ContentStructure
+			testGetSiteContentStructurePermissionsPage_addContentStructure()
+		throws Exception {
+
+		return testGetContentStructure_addContentStructure();
 	}
 
 	@Override
@@ -82,6 +108,30 @@ public class ContentStructureResourceTest
 
 	@Override
 	protected ContentStructure testGraphQLContentStructure_addContentStructure()
+		throws Exception {
+
+		return testGetContentStructure_addContentStructure();
+	}
+
+	@Override
+	protected ContentStructure
+			testPutAssetLibraryContentStructurePermission_addContentStructure()
+		throws Exception {
+
+		return testGetContentStructure_addContentStructure();
+	}
+
+	@Override
+	protected ContentStructure
+			testPutContentStructurePermission_addContentStructure()
+		throws Exception {
+
+		return testGetContentStructure_addContentStructure();
+	}
+
+	@Override
+	protected ContentStructure
+			testPutSiteContentStructurePermission_addContentStructure()
 		throws Exception {
 
 		return testGetContentStructure_addContentStructure();

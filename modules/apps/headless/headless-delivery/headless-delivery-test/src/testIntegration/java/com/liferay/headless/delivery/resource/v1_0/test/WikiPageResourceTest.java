@@ -110,6 +110,13 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 	}
 
 	@Override
+	protected WikiPage testPutWikiPagePermission_addWikiPage()
+		throws Exception {
+
+		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
+	}
+
+	@Override
 	protected WikiPage testPutWikiPageSubscribe_addWikiPage() throws Exception {
 		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
 	}

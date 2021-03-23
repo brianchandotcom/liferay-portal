@@ -16,7 +16,7 @@ import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import useLazy from '../../core/hooks/useLazy';
@@ -24,6 +24,7 @@ import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
 import * as Actions from '../actions/index';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
+import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import redo from '../thunks/redo';
@@ -37,6 +38,7 @@ import PreviewModal from './PreviewModal';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
 import ViewportSizeSelector from './ViewportSizeSelector';
+import {useEditableProcessorUniqueId} from './fragment-content/EditableProcessorContext';
 import Undo from './undo/Undo';
 
 const {Suspense, useCallback, useRef} = React;
@@ -44,11 +46,15 @@ const {Suspense, useCallback, useRef} = React;
 function ToolbarBody() {
 	const dispatch = useDispatch();
 	const dropClearRef = useDropClear();
+	const editableProcessorUniqueId = useEditableProcessorUniqueId();
+	const formRef = useRef();
 	const {getInstance, register} = usePlugins();
 	const isMounted = useIsMounted();
 	const load = useLoad();
 	const selectItem = useSelectItem();
 	const store = useSelector((state) => state);
+
+	const [publishPending, setPublishPending] = useState(false);
 
 	const {
 		network,
@@ -135,15 +141,17 @@ function ToolbarBody() {
 	};
 
 	const handleSubmit = (event) => {
+		event.preventDefault();
+
 		if (
-			config.masterUsed &&
-			!confirm(
+			!config.masterUsed ||
+			confirm(
 				Liferay.Language.get(
 					'changes-made-on-this-master-are-going-to-be-propagated-to-all-page-templates,-display-page-templates,-and-pages-using-it.are-you-sure-you-want-to-proceed'
 				)
 			)
 		) {
-			event.preventDefault();
+			setPublishPending(true);
 		}
 	};
 
@@ -172,6 +180,18 @@ function ToolbarBody() {
 	else if (config.workflowEnabled) {
 		publishButtonLabel = Liferay.Language.get('submit-for-publication');
 	}
+
+	useEffect(() => {
+		if (
+			(network.status === SERVICE_NETWORK_STATUS_TYPES.draftSaved ||
+				!network.status) &&
+			!editableProcessorUniqueId &&
+			publishPending &&
+			formRef.current
+		) {
+			formRef.current.submit();
+		}
+	}, [publishPending, network, editableProcessorUniqueId]);
 
 	return (
 		<ClayLayout.ContainerFluid
@@ -285,7 +305,11 @@ function ToolbarBody() {
 				)}
 
 				<li className="nav-item">
-					<form action={config.publishURL} method="POST">
+					<form
+						action={config.publishURL}
+						method="POST"
+						ref={formRef}
+					>
 						<input
 							name={`${config.portletNamespace}redirect`}
 							type="hidden"

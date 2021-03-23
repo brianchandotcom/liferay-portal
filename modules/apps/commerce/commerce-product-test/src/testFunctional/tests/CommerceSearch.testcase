@@ -17,6 +17,13 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
 	}
 
 	@description = "COMMERCE-6148. As a buyer, I want to search a product by its name using the Search Bar widget and I want the results to be visible on the Search Results widget"

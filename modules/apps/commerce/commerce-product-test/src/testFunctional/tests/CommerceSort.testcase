@@ -17,6 +17,13 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
 	}
 
 	@description = "COMMERCE-6173. As a buyer, I want to sort products by Name(ascending) using Sort widget and the results should be visible on the Search Results widget"

@@ -17,6 +17,13 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
 	}
 
 	@description = "COMMERCE-5937. As a buyer, I want open Account Selector to close if I open the Global Search"

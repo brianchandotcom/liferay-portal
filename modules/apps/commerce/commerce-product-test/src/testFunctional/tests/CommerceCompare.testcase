@@ -17,6 +17,13 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
 	}
 
 	@description = "COMMERCE-5912. As a buyer, I want to select an item in Product Details for compare in Product Widget"

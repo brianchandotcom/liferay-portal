@@ -17,6 +17,13 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
 	}
 
 	@description = "COMMERCE-5866. As a buyer, I want to be able to add a product to my wish list, by clicking on an Add To Wish List button"

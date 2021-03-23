@@ -842,9 +842,45 @@ definition {
 	test SortOrdersByOrderDate {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5982 SortOrdersByOrderDate Pending Implementation
-		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "2");
+
+		Pause(locator1 = "5000");
+
+		CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "Ball Joints",
+			productQuantity = "3");
+
+		Pause(locator1 = "5000");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		Button.click(button = "Order Date");
 	}
 
 	@description = "This is a test for COMMERCE-5845. As a product specialist I want to see if a SKU is on order"

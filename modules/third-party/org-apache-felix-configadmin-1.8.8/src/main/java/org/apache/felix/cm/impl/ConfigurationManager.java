@@ -20,6 +20,7 @@ package org.apache.felix.cm.impl;
 
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -1247,8 +1248,18 @@ public class ConfigurationManager implements BundleActivator, BundleListener
         Object log = logTracker.getService();
         if ( log != null )
         {
-            ( ( LogService ) log ).log( getServiceReference(), level, message, t );
-            return;
+            Class<?> clazz = log.getClass();
+
+            try {
+                Method method = clazz.getDeclaredMethod(
+                        "log", Integer.class, String.class, Throwable.class);
+
+                method.invoke(getServiceReference(), level, message, t);
+
+                return;
+            }
+            catch (Exception exception) {
+            }
         }
 
         // Otherwise only log if more serious than the configured level
@@ -2058,4 +2069,4 @@ public class ConfigurationManager implements BundleActivator, BundleListener
         }
     }
 }
-
+/* @generated */

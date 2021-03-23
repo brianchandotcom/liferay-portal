@@ -147,6 +147,8 @@ public abstract class BaseLayoutStructureItemImporter {
 				).put(
 					"layoutId", String.valueOf(layout.getLayoutId())
 				).put(
+					"layoutUuid", layout.getUuid()
+				).put(
 					"privateLayout", layout.isPrivateLayout()
 				).put(
 					"title", layout.getName(LocaleUtil.getMostRelevantLocale())

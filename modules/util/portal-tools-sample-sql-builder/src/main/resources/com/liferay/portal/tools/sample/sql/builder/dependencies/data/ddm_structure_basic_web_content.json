@@ -3,24 +3,31 @@
 		"en_US"
 	],
 	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
 	"fields": [
 		{
-			"dataType": "html",
+			"dataType": "string",
 			"fieldNamespace": "ddm",
+			"fieldReference": "content",
 			"indexType": "text",
 			"label": {
-				"en_US": "Content"
+				"en_US": "content"
 			},
 			"localizable": true,
 			"name": "content",
-			"readOnly": false,
-			"repeatable": false,
-			"required": false,
-			"showLabel": true,
-			"type": "ddm-text-html",
-			"validation": {
+			"predefinedValue": {
 			},
-			"visibilityExpression": ""
+			"showLabel": true,
+			"tip": {
+			},
+			"type": "rich_text"
 		}
-	]
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
 }

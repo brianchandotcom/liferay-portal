@@ -129,10 +129,13 @@ import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
+import com.liferay.layout.model.LayoutClassedModelUsageModel;
+import com.liferay.layout.model.impl.LayoutClassedModelUsageModelImpl;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureModel;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelModel;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureModelImpl;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelModelImpl;
+import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
@@ -182,6 +185,7 @@ import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferenceValueModel;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
@@ -2887,6 +2891,49 @@ public class DataFactory {
 			journalArticleModel.getArticleId());
 
 		return journalContentSearchModel;
+	}
+
+	public LayoutClassedModelUsageModel newLayoutClassedModelUsageModel(
+		long groupId, long plid, String containerKey,
+		JournalArticleResourceModel journalArticleResourceModel) {
+
+		LayoutClassedModelUsageModel layoutClassedModelUsageModel =
+			new LayoutClassedModelUsageModelImpl();
+
+		// UUID
+
+		layoutClassedModelUsageModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		layoutClassedModelUsageModel.setLayoutClassedModelUsageId(
+			_counter.get());
+
+		// Group instance
+
+		layoutClassedModelUsageModel.setGroupId(groupId);
+
+		// Audit fields
+
+		layoutClassedModelUsageModel.setCompanyId(_companyId);
+		layoutClassedModelUsageModel.setCreateDate(new Date());
+		layoutClassedModelUsageModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		layoutClassedModelUsageModel.setClassNameId(
+			getClassNameId(JournalArticle.class));
+		layoutClassedModelUsageModel.setClassPK(
+			journalArticleResourceModel.getResourcePrimKey());
+		layoutClassedModelUsageModel.setContainerKey(containerKey);
+		layoutClassedModelUsageModel.setContainerType(
+			getClassNameId(Portlet.class));
+		layoutClassedModelUsageModel.setPlid(plid);
+		layoutClassedModelUsageModel.setType(
+			LayoutClassedModelUsageConstants.TYPE_LAYOUT);
+		layoutClassedModelUsageModel.setLastPublishDate(new Date());
+
+		return layoutClassedModelUsageModel;
 	}
 
 	public LayoutFriendlyURLModel newLayoutFriendlyURLModel(

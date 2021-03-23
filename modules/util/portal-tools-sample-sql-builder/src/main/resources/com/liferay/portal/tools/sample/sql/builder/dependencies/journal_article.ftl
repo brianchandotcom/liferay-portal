@@ -50,6 +50,8 @@
 			_mbThreadId=dataFactory.getCounterNext()
 		/>
 
+		${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}
+
 		<#assign journalArticleResourcePortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount) />
 
 		${dataFactory.toInsertSQL(journalArticleResourcePortletPreferencesModel)}

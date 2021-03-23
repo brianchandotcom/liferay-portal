@@ -42,12 +42,17 @@ function renderItemSelector({mappedInfoItems = [], selectedItemTitle = ''}) {
 		mappedInfoItems,
 	};
 
+	Liferay.Util.sub.mockImplementation((langKey, args) =>
+		langKey.replace('x', args)
+	);
+
 	return render(
 		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
 			<ItemSelector
 				label="itemSelectorLabel"
 				onItemSelect={() => {}}
 				selectedItemTitle={selectedItemTitle}
+				transformValueCallback={() => {}}
 			/>
 		</StoreAPIContextProvider>
 	);
@@ -64,6 +69,28 @@ describe('ItemSelector', () => {
 		const {getByText} = renderItemSelector({});
 
 		expect(getByText('itemSelectorLabel')).toBeInTheDocument();
+	});
+
+	it('renders the placeholder correctly', () => {
+		const {getByPlaceholderText} = renderItemSelector({});
+
+		expect(
+			getByPlaceholderText('select-itemSelectorLabel')
+		).toBeInTheDocument();
+	});
+
+	it('renders the aria label button correctly when no item is selected', () => {
+		const {getByLabelText} = renderItemSelector({});
+
+		expect(getByLabelText('select-content-button')).toBeInTheDocument();
+	});
+
+	it('renders the aria label button correctly when an item is selected', () => {
+		const selectedItemTitle = 'itemTitle';
+
+		const {getByLabelText} = renderItemSelector({selectedItemTitle});
+
+		expect(getByLabelText('change-content-button')).toBeInTheDocument();
 	});
 
 	it('shows selected item title correctly when receiving it in props', () => {
@@ -106,5 +133,17 @@ describe('ItemSelector', () => {
 		expect(getByText('Mapped Item Title')).toBeInTheDocument();
 
 		expect(openItemSelector).not.toBeCalled();
+	});
+
+	it('removes selected item correctly when clear button is clicked', () => {
+		const selectedItemTitle = 'itemTitle';
+
+		const {getByLabelText} = renderItemSelector({
+			selectedItemTitle,
+		});
+
+		fireEvent.click(getByLabelText('clear-content-button'));
+
+		expect(getByLabelText('itemSelectorLabel')).toBeEmpty();
 	});
 });

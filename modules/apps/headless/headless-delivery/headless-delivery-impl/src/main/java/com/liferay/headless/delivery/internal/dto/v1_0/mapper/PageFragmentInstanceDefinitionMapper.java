@@ -43,6 +43,7 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
 import com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.FragmentMappedValueUtil;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -332,30 +333,6 @@ public class PageFragmentInstanceDefinitionMapper {
 		return widgetInstances.toArray(new WidgetInstance[0]);
 	}
 
-	private boolean _isSaveFragmentMappedValue(
-		JSONObject jsonObject, boolean saveMapping) {
-
-		if (saveMapping && jsonObject.has("classNameId") &&
-			jsonObject.has("classPK") && jsonObject.has("fieldId")) {
-
-			return true;
-		}
-
-		if (saveMapping && jsonObject.has("collectionFieldId")) {
-			return true;
-		}
-
-		if (saveMapping && jsonObject.has("layout")) {
-			return true;
-		}
-
-		if (saveMapping && jsonObject.has("mappedField")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private Map<String, ClassPKReference> _toClassPKReferences(
 		Map<String, JSONObject> localizedJSONObjects) {
 
@@ -550,8 +527,9 @@ public class PageFragmentInstanceDefinitionMapper {
 
 						setUrl(
 							() -> {
-								if (_isSaveFragmentMappedValue(
-										jsonObject, saveMapping)) {
+								if (FragmentMappedValueUtil.
+										isSaveFragmentMappedValue(
+											jsonObject, saveMapping)) {
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
@@ -579,7 +557,7 @@ public class PageFragmentInstanceDefinitionMapper {
 			{
 				setHtml(
 					() -> {
-						if (_isSaveFragmentMappedValue(
+						if (FragmentMappedValueUtil.isSaveFragmentMappedValue(
 								jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
@@ -629,8 +607,9 @@ public class PageFragmentInstanceDefinitionMapper {
 									return null;
 								}
 
-								if (_isSaveFragmentMappedValue(
-										jsonObject, saveMapping)) {
+								if (FragmentMappedValueUtil.
+										isSaveFragmentMappedValue(
+											jsonObject, saveMapping)) {
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
@@ -661,7 +640,7 @@ public class PageFragmentInstanceDefinitionMapper {
 
 				setText(
 					() -> {
-						if (_isSaveFragmentMappedValue(
+						if (FragmentMappedValueUtil.isSaveFragmentMappedValue(
 								jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
@@ -732,9 +711,12 @@ public class PageFragmentInstanceDefinitionMapper {
 	private FragmentLinkValue _toFragmentLinkValue(
 		JSONObject configJSONObject, boolean saveMapping) {
 
+		boolean saveFragmentMappedValue =
+			FragmentMappedValueUtil.isSaveFragmentMappedValue(
+				configJSONObject, saveMapping);
+
 		if ((configJSONObject == null) ||
-			(configJSONObject.isNull("href") &&
-			 !_isSaveFragmentMappedValue(configJSONObject, saveMapping))) {
+			(configJSONObject.isNull("href") && !saveFragmentMappedValue)) {
 
 			return null;
 		}
@@ -743,9 +725,7 @@ public class PageFragmentInstanceDefinitionMapper {
 			{
 				setHref(
 					() -> {
-						if (_isSaveFragmentMappedValue(
-								configJSONObject, saveMapping)) {
-
+						if (saveFragmentMappedValue) {
 							return _toFragmentMappedValue(
 								_toDefaultMappingValue(configJSONObject, null),
 								configJSONObject);

@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
 import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.FragmentViewportStyle;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.FragmentMappedValueUtil;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -102,30 +103,6 @@ public abstract class BaseStyledLayoutStructureItemMapper
 		};
 	}
 
-	protected boolean isSaveFragmentMappedValue(
-		JSONObject jsonObject, boolean saveMapping) {
-
-		if (!saveMapping) {
-			return false;
-		}
-
-		if (jsonObject.has("classNameId") && jsonObject.has("classPK") &&
-			jsonObject.has("fieldId")) {
-
-			return true;
-		}
-
-		if (jsonObject.has("collectionFieldId")) {
-			return true;
-		}
-
-		if (jsonObject.has("mappedField")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected FragmentImage toBackgroundFragmentImage(
 		JSONObject jsonObject, boolean saveMappingConfiguration) {
 
@@ -141,7 +118,7 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 				setUrl(
 					() -> {
-						if (isSaveFragmentMappedValue(
+						if (FragmentMappedValueUtil.isSaveFragmentMappedValue(
 								jsonObject, saveMappingConfiguration)) {
 
 							return toFragmentMappedValue(

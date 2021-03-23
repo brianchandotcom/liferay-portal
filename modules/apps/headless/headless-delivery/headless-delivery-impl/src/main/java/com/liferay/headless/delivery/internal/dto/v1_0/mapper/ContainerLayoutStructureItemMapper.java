@@ -19,6 +19,7 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.FragmentMappedValueUtil;
 import com.liferay.layout.page.template.util.AlignConverter;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
 import com.liferay.layout.page.template.util.JustifyConverter;
@@ -107,9 +108,11 @@ public class ContainerLayoutStructureItemMapper
 			return null;
 		}
 
-		if (jsonObject.isNull("href") &&
-			!isSaveFragmentMappedValue(jsonObject, saveMapping)) {
+		boolean saveFragmentMappedValue =
+			FragmentMappedValueUtil.isSaveFragmentMappedValue(
+				jsonObject, saveMapping);
 
+		if (jsonObject.isNull("href") && !saveFragmentMappedValue) {
 			return null;
 		}
 
@@ -117,9 +120,7 @@ public class ContainerLayoutStructureItemMapper
 			{
 				setHref(
 					() -> {
-						if (isSaveFragmentMappedValue(
-								jsonObject, saveMapping)) {
-
+						if (saveFragmentMappedValue) {
 							return toFragmentMappedValue(
 								toDefaultMappingValue(jsonObject, null),
 								jsonObject);

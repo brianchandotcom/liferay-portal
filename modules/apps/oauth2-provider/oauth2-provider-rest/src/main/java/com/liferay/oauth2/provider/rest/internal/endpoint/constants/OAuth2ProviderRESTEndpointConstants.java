@@ -25,8 +25,8 @@ public class OAuth2ProviderRESTEndpointConstants {
 	public static final String AUTHORIZATION_CODE_PKCE_GRANT =
 		"authorization_code_pkce";
 
-	public static final String COOKIE_NAME_REMEMBER_DEVICE =
-		"OAUTH2_REMEMBER_DEVICE";
+	public static final String COOKIE_NAME_REMEMBER_DEVICE_PREFIX =
+		"OAUTH2_REMEMBER_DEVICE_";
 
 	public static final String PROPERTY_KEY_CLIENT_FEATURE_PREFIX = "feature.";
 

@@ -21,12 +21,17 @@ import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
 
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * @author Preston Crary
  */
 public class DefaultPredicate
 	extends BaseASTNode implements DefaultExpression<Boolean>, Predicate {
+
+	public static Predicate from(Supplier<Predicate> supplier) {
+		return supplier.get();
+	}
 
 	public DefaultPredicate(
 		Expression<?> leftExpression, Operand operand,

@@ -23,7 +23,9 @@ import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -32,6 +34,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -51,9 +56,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.EntityExtensionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -73,7 +76,7 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return new StructuredContentEntityModel();
+		return _entityModel;
 	}
 
 	@Override
@@ -82,6 +85,9 @@ public class StructuredContentResourceImpl
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
+
+		boolean permissionToManageVersions = _hasPermissionToManageVersions(
+			siteId);
 
 		return SearchUtil.search(
 			HashMapBuilder.put(
@@ -106,18 +112,25 @@ public class StructuredContentResourceImpl
 			},
 			filter, JournalArticle.class, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ARTICLE_ID, Field.SCOPE_GROUP_ID),
+				Field.ARTICLE_ID, Field.SCOPE_GROUP_ID,
+				Field.ROOT_ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.addVulcanAggregation(aggregation);
-				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_ANY);
-				searchContext.setAttribute("head", Boolean.FALSE);
-				searchContext.setAttribute("latest", Boolean.TRUE);
+
+				if (permissionToManageVersions) {
+					searchContext.setAttribute(
+						Field.STATUS, WorkflowConstants.STATUS_ANY);
+					searchContext.setAttribute("latest", Boolean.TRUE);
+				}
+				else {
+					searchContext.setAttribute(
+						Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+					searchContext.setAttribute("head", Boolean.TRUE);
+				}
+
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
-				if (siteId != null) {
-					searchContext.setGroupIds(new long[] {siteId});
-				}
+				searchContext.setGroupIds(new long[] {siteId});
 
 				SearchRequestBuilder searchRequestBuilder =
 					_searchRequestBuilderFactory.builder(searchContext);
@@ -132,11 +145,22 @@ public class StructuredContentResourceImpl
 			},
 			sorts,
 			document -> {
-				JournalArticle journalArticle =
-					_journalArticleService.getLatestArticle(
-						GetterUtil.getLong(document.get(Field.SCOPE_GROUP_ID)),
-						document.get(Field.ARTICLE_ID),
-						WorkflowConstants.STATUS_ANY);
+				JournalArticle journalArticle;
+
+				if (permissionToManageVersions) {
+					journalArticle =
+						_journalArticleLocalService.getLatestArticle(
+							GetterUtil.getLong(
+								document.get(Field.ROOT_ENTRY_CLASS_PK)),
+							WorkflowConstants.STATUS_ANY, false);
+				}
+				else {
+					journalArticle =
+						_journalArticleLocalService.getLatestArticle(
+							GetterUtil.getLong(
+								document.get(Field.ROOT_ENTRY_CLASS_PK)),
+							WorkflowConstants.STATUS_APPROVED, true);
+				}
 
 				return _toExtensionStructuredContent(journalArticle);
 			});
@@ -147,22 +171,40 @@ public class StructuredContentResourceImpl
 			Long structuredContentId)
 		throws Exception {
 
-		List<StructuredContent> structuredContents = new ArrayList<>();
+		JournalArticle journalArticle =
+			_journalArticleLocalService.getLatestArticle(
+				structuredContentId, WorkflowConstants.STATUS_ANY, false);
 
-		JournalArticle journalArticle = _journalArticleService.getArticle(
-			structuredContentId);
-
-		List<JournalArticle> journalArticles =
-			_journalArticleService.getArticlesByArticleId(
-				journalArticle.getGroupId(), journalArticle.getArticleId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		for (JournalArticle curJournalArticle : journalArticles) {
-			structuredContents.add(
-				_toExtensionStructuredContent(curJournalArticle));
+		if (_hasPermissionToManageVersions(journalArticle.getGroupId())) {
+			return Page.of(
+				transform(
+					_journalArticleService.getArticlesByArticleId(
+						journalArticle.getGroupId(),
+						journalArticle.getArticleId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null),
+					this::_toExtensionStructuredContent));
 		}
 
-		return Page.of(structuredContents);
+		return Page.of(
+			transform(
+				_journalArticleService.search(
+					journalArticle.getCompanyId(), journalArticle.getGroupId(),
+					Collections.singletonList(journalArticle.getFolderId()),
+					journalArticle.getClassNameId(),
+					journalArticle.getArticleId(), null, null, null, null,
+					(String)null, null, null, null,
+					WorkflowConstants.STATUS_APPROVED, null, true,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				this::_toExtensionStructuredContent));
+	}
+
+	private boolean _hasPermissionToManageVersions(Long siteId) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.hasPermission(
+			siteId, JournalPortletKeys.JOURNAL, 0,
+			ActionKeys.ACCESS_IN_CONTROL_PANEL);
 	}
 
 	private StructuredContent _toExtensionStructuredContent(
@@ -202,6 +244,11 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	private final EntityModel _entityModel = new StructuredContentEntityModel();
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

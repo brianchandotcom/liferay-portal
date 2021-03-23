@@ -206,10 +206,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		boolean newDBPartitionAdded = DBPartitionUtil.addDBPartition(
 			company.getCompanyId());
 
-		try (SafeClosable safeClosable =
-				CompanyThreadLocal.setInitializingCompanyId(
-					company.getCompanyId())) {
+		SafeClosable safeClosable = CompanyThreadLocal.setInitializingCompanyId(
+			company.getCompanyId());
 
+		try {
 			if (newDBPartitionAdded) {
 				dlFileEntryTypeLocalService.
 					createBasicDocumentDLFileEntryType();
@@ -249,7 +249,26 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				return company;
 			}
 
-			return _checkCompany(company, mx);
+			company = _checkCompany(company, mx);
+
+			TransactionCommitCallbackUtil.registerCallback(
+				new Callable<Void>() {
+
+					@Override
+					public Void call() throws Exception {
+						safeClosable.close();
+
+						return null;
+					}
+
+				});
+
+			return company;
+		}
+		catch (Exception exception) {
+			safeClosable.close();
+
+			throw exception;
 		}
 	}
 

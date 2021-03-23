@@ -1,0 +1,131 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "COMMERCE-6148. As a buyer, I want to search a product by its name using the Search Bar widget and I want the results to be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test SearchBarWidgetSearchProductByName {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6148 SearchBarWidgetSearchProductByName pending implementation
+
+	}
+
+	@description = "COMMERCE-6149.As a buyer, I want to search a product by its name using double quotes in the Search Bar widget and that product should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test SearchBarWidgetSearchProductByNameDoubleQuotes {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6149 SearchBarWidgetSearchProductByNameDoubleQuotes pending implementation
+	}
+
+	@description = "COMMERCE-6150. As a buyer, I want to search a product by its name using single quotes in the Search Bar widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test SearchBarWidgetSearchProductByNameSingleQuotes {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6150 SearchBarWidgetSearchProductByNameSingleQuotes pending implementation
+	}
+
+	@description = "COMMERCE-6151. As a buyer, I want to search a product by typing its SKU in the Search Bar widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test SearchBarWidgetSearchProductBySKU {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6151 SearchBarWidgetSearchProductBySKU pending implementation
+	}
+
+	@description = "COMMERCE-6155. As a buyer, I want to search for products by typing a Category in Search Bar widget and the results should be visible on Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test SearchBarWidgetSearchProductsByCategory {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6155 SearchBarWidgetSearchProductsByCategory pending implementation
+	}
+
+	@description = "COMMERCE-6156. As a buyer, I want to search for products by typing different Categories in Search Bar widget and the results should be visible on Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test SearchBarWidgetSearchProductsByDifferentCategories {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6156 SearchBarWidgetSearchProductsByDifferentCategories pending implementation
+	}
+
+	@description = "COMMERCE-6152. As a buyer, I want to search for different products by typing their SKUs in the Search Bar widget and the results should be visible on the Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test SearchBarWidgetSearchProductsByDifferentSKUs {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6152 SearchBarWidgetSearchProductsByDifferentSKUs pending implementation
+	}
+
+	@description = "COMMERCE-6154. As a buyer, I want to search for products by typing different Specification Values in Search Bar widget and the results should be visible on Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test SearchBarWidgetSearchProductsByDifferentSpecificationValues {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6154 SearchBarWidgetSearchProductsByDifferentSpecificationValues pending implementation
+	}
+
+	@description = "COMMERCE-6153. As a buyer, I want to search for products by typing a Specifications Value in Search Bar widget and the results should be visible on Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test SearchBarWidgetSearchProductsBySpecificationValue {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6153 SearchBarWidgetSearchProductsBySpecificationValue pending implementation
+	}
+
+	@description = "COMMERCE-6145. As a buyer, I want to change the number of items to display for every page from Search Results widget pagination bar"
+	@ignore = "true"
+	@priority = "3"
+	test SearchResultsWidgetChangeNumberOfItemsToDisplayFromPaginationBar {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6145 SearchResultsWidgetChangeNumberOfItemsToDisplayFromPaginationBar pending implementation
+	}
+
+	@description = "COMMERCE-6147. As a buyer, I want to switch from one results page to another in Search Results"
+	@ignore = "true"
+	@priority = "3"
+	test SearchResultsWidgetChangeResultsPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6147 SearchResultsWidgetChangeResultsPage pending implementation
+	}
+
+	@description = "COMMERCE-6146. As a buyer, I want to change the number of items to display for every page from Search Results widget configuration"
+	@ignore = "true"
+	@priority = "3"
+	test SearchResultsWidgetEditNumberOfItemsToDisplayFromConfiguration {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6146 SearchResultsWidgetEditNumberOfItemsToDisplayFromConfiguration pending implementation
+	}
+
+}

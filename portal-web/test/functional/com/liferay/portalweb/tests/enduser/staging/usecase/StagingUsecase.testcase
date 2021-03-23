@@ -896,12 +896,10 @@ definition {
 			teamName = "Site Team Name");
 	}
 
-	// Ignore test until LPS-126081 is resolved
-
-	@ignore = "true"
 	@priority = "5"
 	test PublishThemeFromStagedToLive {
-		property test.name.skip.portal.instance = "Theme#PublishThemeFromStagedToLive";
+		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "StagingUsecase#PublishThemeFromStagedToLive";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 

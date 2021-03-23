@@ -172,6 +172,7 @@ const TranslationHeader = ({sourceLanguageIdTitle, targetLanguageIdTitle}) => (
 );
 
 const Translate = ({
+	aditionalFields,
 	infoFieldSetEntries,
 	portletNamespace,
 	publishButtonDisabled,
@@ -183,14 +184,27 @@ const Translate = ({
 	targetLanguageIdTitle,
 	translateLanguagesSelectorData,
 	translationPermission,
+	updateTranslationPortletURL,
 }) => {
 	const [formHaschanges, setFormHaschanges] = useState(false);
 
 	return (
-		<>
-			<nav
-				className="component-tbar subnav-tbar-light tbar"
-			>
+		<form
+			action={updateTranslationPortletURL}
+			className="translation-edit"
+			method="POST"
+			name="translate_fm"
+		>
+			{Object.entries(aditionalFields).map(([name, value]) => (
+				<input
+					defaultValue={value}
+					key={name}
+					name={`${portletNamespace}${name}`}
+					type="hidden"
+				/>
+			))}
+
+			<nav className="component-tbar subnav-tbar-light tbar">
 				<ClayLayout.ContainerFluid view>
 					<ul className="tbar-nav">
 						<li className="tbar-item tbar-item-expand">
@@ -255,7 +269,7 @@ const Translate = ({
 					)}
 				</div>
 			</ClayLayout.ContainerFluid>
-		</>
+		</form>
 	);
 };
 
@@ -282,6 +296,7 @@ Translate.propTypes = {
 	sourceLanguageIdTitle: PropTypes.string.isRequired,
 	targetLanguageIdTitle: PropTypes.string.isRequired,
 	translationPermission: PropTypes.bool.isRequired,
+	updateTranslationPortletURL: PropTypes.string.isRequired,
 };
 
 export default Translate;

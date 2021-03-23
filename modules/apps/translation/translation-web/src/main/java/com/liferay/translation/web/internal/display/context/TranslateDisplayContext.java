@@ -215,6 +215,18 @@ public class TranslateDisplayContext {
 		}
 
 		return HashMapBuilder.<String, Object>put(
+			"aditionalFields",
+			HashMapBuilder.<String, Object>put(
+				"redirect", ParamUtil.getString(_httpServletRequest, "redirect")
+			).put(
+				"sourceLanguageId", getSourceLanguageId()
+			).put(
+				"targetLanguageId", getTargetLanguageId()
+			).put(
+				"workflowAction",
+				String.valueOf(WorkflowConstants.ACTION_PUBLISH)
+			).build()
+		).put(
 			"infoFieldSetEntries", infoFieldSetEntries
 		).put(
 			"publishButtonDisabled", isPublishButtonDisabled()
@@ -237,6 +249,9 @@ public class TranslateDisplayContext {
 			getTranslateLanguagesSelectorData()
 		).put(
 			"translationPermission", hasTranslationPermission()
+		).put(
+			"updateTranslationPortletURL",
+			String.valueOf(getUpdateTranslationPortletURL())
 		).build();
 	}
 

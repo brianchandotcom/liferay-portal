@@ -195,13 +195,13 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 					</c:otherwise>
 				</c:choose>
 			</div>
-
-			<react:component
-				module="js/translate/Translate"
-				props="<%= translateDisplayContext.getInfoFieldSetEntriesData() %>"
-			/>
 		</clay:container-fluid>
 	</aui:form>
+
+	<react:component
+		module="js/translate/Translate"
+		props="<%= translateDisplayContext.getInfoFieldSetEntriesData() %>"
+	/>
 </div>
 
 <script>

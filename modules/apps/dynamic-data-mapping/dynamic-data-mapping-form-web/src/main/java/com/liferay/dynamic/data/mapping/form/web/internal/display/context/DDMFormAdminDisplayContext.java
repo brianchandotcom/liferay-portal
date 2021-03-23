@@ -76,6 +76,8 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -91,6 +93,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -103,6 +106,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -349,6 +353,30 @@ public class DDMFormAdminDisplayContext {
 					jsonFactory.createJSONObject(
 						jsonFactory.looseSerializeDeep(
 							ddmFormTemplateContext)));
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				if ((themeDisplay != null) &&
+					StringUtil.equals(
+						ddmFormFieldType.getName(), "rich_text")) {
+
+					EditorConfiguration editorConfiguration =
+						EditorConfigurationFactoryUtil.getEditorConfiguration(
+							StringPool.BLANK, ddmFormFieldType.getName(),
+							"ckeditor_classic", new HashMap<String, Object>(),
+							themeDisplay,
+							RequestBackedPortletURLFactoryUtil.create(
+								httpServletRequest));
+
+					Map<String, Object> editorConfigurationData =
+						editorConfiguration.getData();
+
+					jsonObject.put(
+						"editorConfig",
+						editorConfigurationData.get("editorConfig"));
+				}
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException, portalException);

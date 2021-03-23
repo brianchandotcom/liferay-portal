@@ -478,6 +478,20 @@ public class JournalTransformer {
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(name);
 
 			if (ddmFormField == null) {
+				String data = StringPool.BLANK;
+
+				Element dynamicContentElement = dynamicElementElement.element(
+					"dynamic-content");
+
+				if (dynamicContentElement != null) {
+					data = dynamicContentElement.getText();
+				}
+
+				templateNodes.add(
+					new TemplateNode(
+						themeDisplay, name, StringUtil.stripCDATA(data),
+						StringPool.BLANK, new HashMap<>()));
+
 				continue;
 			}
 

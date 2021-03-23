@@ -343,7 +343,7 @@ export default (state, action, config) => {
 				generateFieldNameUsingFieldLabel
 			);
 
-			if (propertyName === 'name' || propertyValue === '') {
+			if (propertyName === 'name' && propertyValue === '') {
 				return state;
 			}
 

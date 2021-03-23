@@ -739,12 +739,12 @@
 								"query": {
 									"query": {
 										"multi_match": {
-											"boost": "${config.boost}",
-											"fields": "${config.fields}",
-											"fuzziness": "${config.fuzziness}",
-											"operator": "${config.operator}",
+											"boost": "${configuration.boost}",
+											"fields": "${configuration.fields}",
+											"fuzziness": "${configuration.fuzziness}",
+											"operator": "${configuration.operator}",
 											"query": "${keywords}",
-											"type": "${config.type}"
+											"type": "${configuration.type}"
 										}
 									}
 								},
@@ -762,121 +762,117 @@
 							"en_US": "Text Match Over Multiple Fields"
 						}
 					},
-					"uiConfigurationJSON": [
-						{
-							"boost": true,
-							"defaultValue": [
-								{
-									"boost": "2",
-									"field": "localized_title",
-									"locale": "${context.language_id}"
-								},
-								{
-									"boost": "1",
-									"field": "content",
-									"locale": "${context.language_id}"
-								}
-							],
-							"key": "fields",
-							"label": "Fields",
-							"type": "field-list",
-							"typeOptions": [
-								{
-									"label": "Title",
-									"value": "localized_title"
-								},
-								{
-									"label": "Description",
-									"value": "description"
-								},
-								{
-									"label": "Content",
-									"value": "content"
-								},
-								{
-									"label": "Name",
-									"value": "name"
-								}
-							]
-						},
-						{
-							"defaultValue": "or",
-							"key": "operator",
-							"label": "Operator",
-							"type": "select",
-							"typeOptions": [
-								{
-									"label": "OR",
-									"value": "or"
-								},
-								{
-									"label": "AND",
-									"value": "and"
-								}
-							]
-						},
-						{
-							"defaultValue": "best_fields",
-							"key": "type",
-							"label": "Match Type",
-							"type": "select",
-							"typeOptions": [
-								{
-									"label": "Best Fields",
-									"value": "best_fields"
-								},
-								{
-									"label": "Most Fields",
-									"value": "most_fields"
-								},
-								{
-									"label": "Cross Fields",
-									"value": "cross_fields"
-								},
-								{
-									"label": "Phrase",
-									"value": "phrase"
-								},
-								{
-									"label": "Phrase Prefix",
-									"value": "phrase_prefix"
-								},
-								{
-									"label": "Boolean Prefix",
-									"value": "bool_prefix"
-								}
-							]
-						},
-						{
-							"key": "fuzziness",
-							"label": "Fuzziness",
-							"type": "select",
-							"typeOptions": [
-								{
-									"label": "Auto",
-									"value": "AUTO"
-								},
-								{
-									"label": "0",
-									"value": "0"
-								},
-								{
-									"label": "1",
-									"value": "1"
-								},
-								{
-									"label": "2",
-									"value": "2"
-								}
-							]
-						},
-						{
-							"defaultValue": 1,
-							"key": "boost",
-							"label": "Boost",
-							"type": "slider"
-						}
-					],
+					"uiConfigurationJSON": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"defaultValue": [
+											{
+												"boost": "2",
+												"field": "localized_title",
+												"locale": "${context.language_id}"
+											},
+											{
+												"boost": "1",
+												"field": "content",
+												"locale": "${context.language_id}"
+											}
+										],
+										"label": "Fields",
+										"name": "fields",
+										"type": "fieldMappingList",
+										"typeOptions": {
+											"boost": true
+										}
+									},
+									{
+										"defaultValue": "or",
+										"label": "Operator",
+										"name": "operator",
+										"type": "select",
+										"typeOptions": {
+											"options": [
+												{
+													"label": "OR",
+													"value": "or"
+												},
+												{
+													"label": "AND",
+													"value": "and"
+												}
+											]
+										}
+									},
+									{
+										"defaultValue": "best_fields",
+										"label": "Match Type",
+										"name": "type",
+										"type": "select",
+										"typeOptions": {
+											"options": [
+												{
+													"label": "Best Fields",
+													"value": "best_fields"
+												},
+												{
+													"label": "Most Fields",
+													"value": "most_fields"
+												},
+												{
+													"label": "Cross Fields",
+													"value": "cross_fields"
+												},
+												{
+													"label": "Phrase",
+													"value": "phrase"
+												},
+												{
+													"label": "Phrase Prefix",
+													"value": "phrase_prefix"
+												},
+												{
+													"label": "Boolean Prefix",
+													"value": "bool_prefix"
+												}
+											]
+										}
+									},
+									{
+										"label": "Fuzziness",
+										"name": "fuzziness",
+										"type": "select",
+										"typeOptions": {
+											"options": [
+												{
+													"label": "Auto",
+													"value": "AUTO"
+												},
+												{
+													"label": "0",
+													"value": "0"
+												},
+												{
+													"label": "1",
+													"value": "1"
+												},
+												{
+													"label": "2",
+													"value": "2"
+												}
+											]
+										}
+									},
+									{
+										"defaultValue": 1,
+										"label": "Boost",
+										"name": "boost",
+										"type": "slider"
+									}
+								]
+							}
+						]
+					},
 					"uiConfigurationValues": {
 						"boost": 1,
 						"fields": [
@@ -1009,8 +1005,8 @@
 							"en_US": "Hide Default User"
 						}
 					},
-					"uiConfigurationJSON": [
-					],
+					"uiConfigurationJSON": {
+					},
 					"uiConfigurationValues": {
 					}
 				},
@@ -1115,8 +1111,8 @@
 							"en_US": "Hide Hidden Contents"
 						}
 					},
-					"uiConfigurationJSON": [
-					],
+					"uiConfigurationJSON": {
+					},
 					"uiConfigurationValues": {
 					}
 				},
@@ -1221,8 +1217,8 @@
 							"en_US": "Hide Comments"
 						}
 					},
-					"uiConfigurationJSON": [
-					],
+					"uiConfigurationJSON": {
+					},
 					"uiConfigurationValues": {
 					}
 				},
@@ -1349,8 +1345,8 @@
 							"en_US": "Limit Search to HEAD Version"
 						}
 					},
-					"uiConfigurationJSON": [
-					],
+					"uiConfigurationJSON": {
+					},
 					"uiConfigurationValues": {
 					}
 				},
@@ -1409,8 +1405,8 @@
 							"en_US": "Limit Search to Published Contents"
 						}
 					},
-					"uiConfigurationJSON": [
-					],
+					"uiConfigurationJSON": {
+					},
 					"uiConfigurationValues": {
 					}
 				},
@@ -1591,8 +1587,8 @@
 							"en_US": "Scheduling Aware"
 						}
 					},
-					"uiConfigurationJSON": [
-					],
+					"uiConfigurationJSON": {
+					},
 					"uiConfigurationValues": {
 					}
 				},
@@ -1711,8 +1707,8 @@
 							"en_US": "Staging Aware"
 						}
 					},
-					"uiConfigurationJSON": [
-					],
+					"uiConfigurationJSON": {
+					},
 					"uiConfigurationValues": {
 					}
 				},
@@ -1805,8 +1801,8 @@
 							"en_US": "Publications Aware"
 						}
 					},
-					"uiConfigurationJSON": [
-					],
+					"uiConfigurationJSON": {
+					},
 					"uiConfigurationValues": {
 					}
 				}

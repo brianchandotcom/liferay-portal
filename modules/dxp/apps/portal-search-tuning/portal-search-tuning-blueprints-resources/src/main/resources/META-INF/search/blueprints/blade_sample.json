@@ -6,7 +6,7 @@
 					"enabled": "true",
 					"fields": [
 						{
-							"field": "localized_title${context.language_id}"
+							"field": "title${context.language_id}"
 						},
 						{
 							"field": "content${context.language_id}"

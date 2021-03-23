@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services.configuration;
+package com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services.configuration.MicrosoftContentModeratorConfiguration",
+	id = "com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services.internal.configuration.MicrosoftContentModeratorConfiguration",
 	localization = "content/Language",
 	name = "microsoft-content-moderator-configuration-name"
 )

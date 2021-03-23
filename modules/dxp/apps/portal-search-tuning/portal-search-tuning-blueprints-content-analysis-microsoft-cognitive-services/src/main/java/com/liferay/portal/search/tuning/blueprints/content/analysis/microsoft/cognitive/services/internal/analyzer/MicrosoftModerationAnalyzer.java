@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services;
+package com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services.internal.analyzer;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.tuning.blueprints.content.analysis.constants.ModerationReason;
-import com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services.configuration.MicrosoftContentModeratorConfiguration;
+import com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services.internal.configuration.MicrosoftContentModeratorConfiguration;
 import com.liferay.portal.search.tuning.blueprints.content.analysis.request.ContentAnalysisRequest;
 import com.liferay.portal.search.tuning.blueprints.content.analysis.response.ModerationAnalysisResponse;
 import com.liferay.portal.search.tuning.blueprints.content.analysis.response.ModerationAnalysisResponse.ModerationAnalysisResponseBuilder;
@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services.configuration.MicrosoftContentModeratorConfiguration",
+	configurationPid = "com.liferay.portal.search.tuning.blueprints.content.analysis.microsoft.cognitive.services.internal.configuration.MicrosoftContentModeratorConfiguration",
 	immediate = true, property = "name=microsoft-cognitive-services",
 	service = ModerationAnalyzer.class
 )

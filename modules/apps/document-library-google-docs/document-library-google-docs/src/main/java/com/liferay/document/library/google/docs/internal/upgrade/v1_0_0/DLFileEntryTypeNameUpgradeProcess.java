@@ -12,35 +12,33 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.internal.upgrade.v2_0_0;
+package com.liferay.document.library.google.docs.internal.upgrade.v1_0_0;
 
 import com.liferay.document.library.google.docs.internal.util.constants.GoogleDocsConstants;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.sql.SQLException;
+
+import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Alejandro Tardín
  */
-public class FileEntryTypeUpgradeProcess extends UpgradeProcess {
+public class DLFileEntryTypeNameUpgradeProcess extends UpgradeProcess {
 
-	public FileEntryTypeUpgradeProcess(
-		ClassNameLocalService classNameLocalService,
-		DDMStructureLocalService ddmStructureLocalService,
+	public DLFileEntryTypeNameUpgradeProcess(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 
-		_classNameLocalService = classNameLocalService;
-		_ddmStructureLocalService = ddmStructureLocalService;
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
@@ -55,29 +53,9 @@ public class FileEntryTypeUpgradeProcess extends UpgradeProcess {
 					RestrictionsFactoryUtil.eq(
 						"fileEntryTypeKey",
 						GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY)));
-
-			long dlFileEntryMetadataClassNameId =
-				_classNameLocalService.getClassNameId(
-					DLFileEntryMetadata.class);
-
 			actionableDynamicQuery.setPerformActionMethod(
-				(DLFileEntryType dlFileEntryType) -> {
-					dlFileEntryType.setScope(
-						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM);
-
-					_dlFileEntryTypeLocalService.updateDLFileEntryType(
-						dlFileEntryType);
-
-					DDMStructure ddmStructure =
-						_ddmStructureLocalService.getStructure(
-							dlFileEntryType.getGroupId(),
-							dlFileEntryMetadataClassNameId,
-							GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY);
-
-					ddmStructure.setType(DDMStructureConstants.TYPE_AUTO);
-
-					_ddmStructureLocalService.updateDDMStructure(ddmStructure);
-				});
+				(DLFileEntryType dlFileEntryType) ->
+					_upgradeGoogleDocsDLFileEntryType(dlFileEntryType));
 
 			actionableDynamicQuery.performActions();
 		}
@@ -86,8 +64,40 @@ public class FileEntryTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private final ClassNameLocalService _classNameLocalService;
-	private final DDMStructureLocalService _ddmStructureLocalService;
+	private void _upgradeGoogleDocsDLFileEntryType(
+			DLFileEntryType dlFileEntryType)
+		throws UpgradeException {
+
+		try {
+			Locale locale = LocaleUtil.fromLanguageId(
+				UpgradeProcessUtil.getDefaultLanguageId(
+					dlFileEntryType.getCompanyId()));
+
+			boolean hasDefaultName = Objects.equals(
+				dlFileEntryType.getName(locale), "Google Docs");
+
+			if (hasDefaultName) {
+				dlFileEntryType.setName(
+					GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME, locale);
+			}
+
+			boolean hasDefaultDescription = Objects.equals(
+				dlFileEntryType.getDescription(locale), "Google Docs");
+
+			if (hasDefaultDescription) {
+				dlFileEntryType.setDescription(StringPool.BLANK, locale);
+			}
+
+			if (hasDefaultName || hasDefaultDescription) {
+				_dlFileEntryTypeLocalService.updateDLFileEntryType(
+					dlFileEntryType);
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new UpgradeException(sqlException);
+		}
+	}
+
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 }

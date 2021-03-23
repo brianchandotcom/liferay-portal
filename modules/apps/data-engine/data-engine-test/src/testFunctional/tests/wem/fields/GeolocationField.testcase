@@ -215,36 +215,29 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
-	@ignore = "true"
 	@priority = "4"
 	test VerifyDuplicatedGeolocationOnWebContent {
-		property portal.acceptance = "false";
+		var key_fieldName = "Geolocation";
+		
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "${key_fieldName}");
 
-		var key_Label = "Localization";
+		WebContentStructures.saveCP();
 
-		var key_fieldLabel = "Copy of ${key_Label}";
+		Navigator.gotoNavTab(navTab = "Web Content");
 
-		DataEngine.addField(
-			fieldFieldLabel = "${key_Label}",
-			fieldName = "Geolocation");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "My Structure Name");
 
-		DataEngine.duplicate(fieldFieldLabel = "${key_Label}");
+		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name");
-
-		Navigator.gotoNavItem(navItem = "Web Content");
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "My Structure Name");
-
-		WebContent.addCP(webContentTitle = "My Web Content Name 1");
+		DataEngine.addRepeatableField(fieldName = "${key_fieldName}");
 
 		Button.clickPublish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content Name 1");
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		AssertElementPresent(locator1 = "FormFields#LABEL");
+		DataEngine.assertFieldRepeated(
+			fieldName = "${key_fieldName}",
+			index = "2");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

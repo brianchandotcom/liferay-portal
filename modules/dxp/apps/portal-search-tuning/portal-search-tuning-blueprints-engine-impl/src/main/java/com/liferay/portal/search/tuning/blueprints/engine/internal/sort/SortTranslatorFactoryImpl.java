@@ -14,15 +14,11 @@
 
 package com.liferay.portal.search.tuning.blueprints.engine.internal.sort;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.engine.spi.sort.SortTranslator;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,15 +33,15 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class SortTranslatorFactoryImpl implements SortTranslatorFactory {
 
 	@Override
-	public SortTranslator getTranslator(String type)
+	public SortTranslator getTranslator(String name)
 		throws IllegalArgumentException {
 
 		ServiceComponentReference<SortTranslator> serviceComponentReference =
-			_sortTranslators.get(type);
+			_sortTranslators.get(name);
 
 		if (serviceComponentReference == null) {
 			throw new IllegalArgumentException(
-				"Unable to find sort translator " + type);
+				"Unable to find sort translator " + name);
 		}
 
 		return serviceComponentReference.getServiceComponent();
@@ -53,9 +49,7 @@ public class SortTranslatorFactoryImpl implements SortTranslatorFactory {
 
 	@Override
 	public String[] getTranslatorTypes() {
-		Set<String> set = _sortTranslators.keySet();
-
-		return set.toArray(new String[0]);
+		return ServiceComponentReferenceUtil.getComponentKeys(_sortTranslators);
 	}
 
 	@Reference(
@@ -65,53 +59,16 @@ public class SortTranslatorFactoryImpl implements SortTranslatorFactory {
 	protected void registerSortTranslator(
 		SortTranslator sortTranslator, Map<String, Object> properties) {
 
-		String type = (String)properties.get("type");
-
-		if (Validator.isBlank(type)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = sortTranslator.getClass();
-
-				_log.warn(
-					"Unable to add sort translator " + clazz.getName() +
-						". Type property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<SortTranslator> serviceComponentReference =
-			new ServiceComponentReference<>(sortTranslator, serviceRanking);
-
-		if (_sortTranslators.containsKey(type)) {
-			ServiceComponentReference<SortTranslator> previousReference =
-				_sortTranslators.get(type);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_sortTranslators.put(type, serviceComponentReference);
-			}
-		}
-		else {
-			_sortTranslators.put(type, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_sortTranslators, sortTranslator, properties);
 	}
 
 	protected void unregisterSortTranslator(
 		SortTranslator sortTranslator, Map<String, Object> properties) {
 
-		String type = (String)properties.get("type");
-
-		if (Validator.isBlank(type)) {
-			return;
-		}
-
-		_sortTranslators.remove(type);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_sortTranslators, sortTranslator, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SortTranslatorFactoryImpl.class);
 
 	private volatile Map<String, ServiceComponentReference<SortTranslator>>
 		_sortTranslators = new ConcurrentHashMap<>();

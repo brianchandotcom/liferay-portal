@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=double", service = ParameterBuilder.class
+	immediate = true, property = "name=double", service = ParameterBuilder.class
 )
 public class DoubleParameterBuilder implements ParameterBuilder {
 

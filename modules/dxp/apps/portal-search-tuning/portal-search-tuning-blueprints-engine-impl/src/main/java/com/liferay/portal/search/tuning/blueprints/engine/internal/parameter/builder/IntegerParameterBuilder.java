@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=integer",
+	immediate = true, property = "name=integer",
 	service = ParameterBuilder.class
 )
 public class IntegerParameterBuilder implements ParameterBuilder {

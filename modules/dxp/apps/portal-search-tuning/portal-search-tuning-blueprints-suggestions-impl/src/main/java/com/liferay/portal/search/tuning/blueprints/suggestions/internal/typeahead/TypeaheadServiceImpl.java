@@ -16,15 +16,14 @@ package com.liferay.portal.search.tuning.blueprints.suggestions.internal.typeahe
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.suggestions.attributes.SuggestionsAttributes;
 import com.liferay.portal.search.tuning.blueprints.suggestions.constants.SuggestionsConstants;
 import com.liferay.portal.search.tuning.blueprints.suggestions.spi.provider.TypeaheadDataProvider;
 import com.liferay.portal.search.tuning.blueprints.suggestions.suggestion.Suggestion;
 import com.liferay.portal.search.tuning.blueprints.suggestions.typeahead.TypeaheadService;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -111,51 +110,16 @@ public class TypeaheadServiceImpl implements TypeaheadService {
 		TypeaheadDataProvider typeaheadDataProvider,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = typeaheadDataProvider.getClass();
-
-				_log.warn(
-					"Unable to register typeahead data provider " +
-						clazz.getName() + ". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<TypeaheadDataProvider>
-			serviceComponentReference = new ServiceComponentReference<>(
-				typeaheadDataProvider, serviceRanking);
-
-		if (_typeaheadDataProviders.containsKey(name)) {
-			ServiceComponentReference<TypeaheadDataProvider> previousReference =
-				_typeaheadDataProviders.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_typeaheadDataProviders.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_typeaheadDataProviders.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_typeaheadDataProviders, typeaheadDataProvider, properties);
 	}
 
 	protected void unregisterTypeaheadDataProvider(
 		TypeaheadDataProvider typeaheadDataProvider,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_typeaheadDataProviders.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_typeaheadDataProviders, typeaheadDataProvider, properties);
 	}
 
 	private void _combineResults(

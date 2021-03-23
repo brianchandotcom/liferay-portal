@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.internal.aggregation;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.aggregation.AggregationJSONTranslator;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,7 +38,7 @@ public class AggregationJSONTranslatorFactoryImpl
 		throws IllegalArgumentException {
 
 		ServiceComponentReference<AggregationJSONTranslator>
-			serviceComponentReference = _aggregationResponseBuilders.get(type);
+			serviceComponentReference = _aggregationJSONTranslators.get(type);
 
 		if (serviceComponentReference == null) {
 			throw new IllegalArgumentException(
@@ -53,73 +50,32 @@ public class AggregationJSONTranslatorFactoryImpl
 
 	@Override
 	public String[] getBuilderTypes() {
-		return _aggregationResponseBuilders.keySet(
-		).toArray(
-			new String[0]
-		);
+		return ServiceComponentReferenceUtil.getComponentKeys(
+			_aggregationJSONTranslators);
 	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
 	)
-	protected void registerAggregationResponseBuilder(
-		AggregationJSONTranslator aggregationResponseBuilder,
+	protected void registerAggregationJSONTranslator(
+		AggregationJSONTranslator aggregationJSONTranslator,
 		Map<String, Object> properties) {
 
-		String type = (String)properties.get("type");
-
-		if (Validator.isBlank(type)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = aggregationResponseBuilder.getClass();
-
-				_log.warn(
-					"Unable to add aggregation JSON translator " +
-						clazz.getName() + ". Type property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<AggregationJSONTranslator>
-			serviceComponentReference = new ServiceComponentReference<>(
-				aggregationResponseBuilder, serviceRanking);
-
-		if (_aggregationResponseBuilders.containsKey(type)) {
-			ServiceComponentReference<AggregationJSONTranslator>
-				previousReference = _aggregationResponseBuilders.get(type);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_aggregationResponseBuilders.put(
-					type, serviceComponentReference);
-			}
-		}
-		else {
-			_aggregationResponseBuilders.put(type, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_aggregationJSONTranslators, aggregationJSONTranslator, properties);
 	}
 
-	protected void unregisterAggregationResponseBuilder(
-		AggregationJSONTranslator aggregationResponseBuilder,
+	protected void unregisterAggregationJSONTranslator(
+		AggregationJSONTranslator aggregationJSONTranslator,
 		Map<String, Object> properties) {
 
-		String type = (String)properties.get("type");
-
-		if (Validator.isBlank(type)) {
-			return;
-		}
-
-		_aggregationResponseBuilders.remove(type);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_aggregationJSONTranslators, aggregationJSONTranslator, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AggregationJSONTranslatorFactoryImpl.class);
 
 	private volatile Map
 		<String, ServiceComponentReference<AggregationJSONTranslator>>
-			_aggregationResponseBuilders = new ConcurrentHashMap<>();
+			_aggregationJSONTranslators = new ConcurrentHashMap<>();
 
 }

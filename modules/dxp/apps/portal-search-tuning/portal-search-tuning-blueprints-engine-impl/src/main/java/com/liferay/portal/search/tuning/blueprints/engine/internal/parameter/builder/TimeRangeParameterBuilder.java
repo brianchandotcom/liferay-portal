@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=time_range",
+	immediate = true, property = "name=time_range",
 	service = ParameterBuilder.class
 )
 public class TimeRangeParameterBuilder implements ParameterBuilder {

@@ -16,11 +16,10 @@ package com.liferay.portal.search.tuning.blueprints.searchresponse.json.translat
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.internal.result.builder.DefaultResultBuilder;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.result.ResultBuilder;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,14 +36,14 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class ResultBuilderFactoryImpl implements ResultBuilderFactory {
 
 	@Override
-	public ResultBuilder getBuilder(String type) {
+	public ResultBuilder getBuilder(String className) {
 		ServiceComponentReference<ResultBuilder> serviceComponentReference =
-			_resultBuilders.get(type);
+			_resultBuilders.get(className);
 
 		if (serviceComponentReference == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to find result builder for " + type +
+					"Unable to find result builder for " + className +
 						". Falling back to default.");
 			}
 
@@ -61,49 +60,15 @@ public class ResultBuilderFactoryImpl implements ResultBuilderFactory {
 	protected void registerResultBuilder(
 		ResultBuilder resultBuilder, Map<String, Object> properties) {
 
-		String type = (String)properties.get("model.class.name");
-
-		Class<?> clazz = resultBuilder.getClass();
-
-		if (Validator.isBlank(type)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to add result builder " + clazz.getName() +
-						". model.class.name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<ResultBuilder> serviceComponentReference =
-			new ServiceComponentReference<>(resultBuilder, serviceRanking);
-
-		if (_resultBuilders.containsKey(type)) {
-			ServiceComponentReference<ResultBuilder> previousReference =
-				_resultBuilders.get(type);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_resultBuilders.put(type, serviceComponentReference);
-			}
-		}
-		else {
-			_resultBuilders.put(type, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByProperty(
+			_resultBuilders, resultBuilder, properties, "model.class.name");
 	}
 
 	protected void unregisterResultBuilder(
 		ResultBuilder resultBuilder, Map<String, Object> properties) {
 
-		String type = (String)properties.get("model.class.name");
-
-		if (Validator.isBlank(type)) {
-			return;
-		}
-
-		_resultBuilders.remove(type);
+		ServiceComponentReferenceUtil.removeFromMapByProperty(
+			_resultBuilders, resultBuilder, properties, "model.class.name");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

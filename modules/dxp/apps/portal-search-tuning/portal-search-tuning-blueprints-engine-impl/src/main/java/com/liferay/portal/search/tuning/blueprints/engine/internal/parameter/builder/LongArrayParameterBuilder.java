@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=long_array",
+	immediate = true, property = "name=long_array",
 	service = ParameterBuilder.class
 )
 public class LongArrayParameterBuilder implements ParameterBuilder {

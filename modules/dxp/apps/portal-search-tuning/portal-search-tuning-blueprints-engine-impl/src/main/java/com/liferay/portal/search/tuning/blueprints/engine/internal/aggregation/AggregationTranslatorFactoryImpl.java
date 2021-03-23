@@ -14,16 +14,12 @@
 
 package com.liferay.portal.search.tuning.blueprints.engine.internal.aggregation;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.engine.spi.aggregation.AggregationTranslator;
 import com.liferay.portal.search.tuning.blueprints.engine.spi.aggregation.AggregationTranslatorFactory;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,15 +35,15 @@ public class AggregationTranslatorFactoryImpl
 	implements AggregationTranslatorFactory {
 
 	@Override
-	public AggregationTranslator getTranslator(String type)
+	public AggregationTranslator getTranslator(String name)
 		throws IllegalArgumentException {
 
 		ServiceComponentReference<AggregationTranslator>
-			serviceComponentReference = _aggregationTranslators.get(type);
+			serviceComponentReference = _aggregationTranslators.get(name);
 
 		if (serviceComponentReference == null) {
 			throw new IllegalArgumentException(
-				"Unable to find aggregation translator " + type);
+				"Unable to find aggregation translator " + name);
 		}
 
 		return serviceComponentReference.getServiceComponent();
@@ -55,9 +51,8 @@ public class AggregationTranslatorFactoryImpl
 
 	@Override
 	public String[] getTranslatorTypes() {
-		Set<String> set = _aggregationTranslators.keySet();
-
-		return set.toArray(new String[0]);
+		return ServiceComponentReferenceUtil.getComponentKeys(
+			_aggregationTranslators);
 	}
 
 	@Reference(
@@ -68,55 +63,17 @@ public class AggregationTranslatorFactoryImpl
 		AggregationTranslator aggregationTranslator,
 		Map<String, Object> properties) {
 
-		String type = (String)properties.get("type");
-
-		if (Validator.isBlank(type)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = aggregationTranslator.getClass();
-
-				_log.warn(
-					"Unable to add aggregation translator " + clazz.getName() +
-						". Type property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<AggregationTranslator>
-			serviceComponentReference = new ServiceComponentReference<>(
-				aggregationTranslator, serviceRanking);
-
-		if (_aggregationTranslators.containsKey(type)) {
-			ServiceComponentReference<AggregationTranslator> previousReference =
-				_aggregationTranslators.get(type);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_aggregationTranslators.put(type, serviceComponentReference);
-			}
-		}
-		else {
-			_aggregationTranslators.put(type, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_aggregationTranslators, aggregationTranslator, properties);
 	}
 
 	protected void unregisterAggregationTranslator(
 		AggregationTranslator aggregationTranslator,
 		Map<String, Object> properties) {
 
-		String type = (String)properties.get("type");
-
-		if (Validator.isBlank(type)) {
-			return;
-		}
-
-		_aggregationTranslators.remove(type);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_aggregationTranslators, aggregationTranslator, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AggregationTranslatorFactoryImpl.class);
 
 	private volatile Map
 		<String, ServiceComponentReference<AggregationTranslator>>

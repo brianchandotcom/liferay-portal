@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=float", service = ParameterBuilder.class
+	immediate = true, property = "name=float", service = ParameterBuilder.class
 )
 public class FloatParameterBuilder implements ParameterBuilder {
 

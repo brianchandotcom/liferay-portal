@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=terms",
+	immediate = true, property = "name=terms",
 	service = AggregationJSONTranslator.class
 )
 public class TermsAggregationJSONTranslator

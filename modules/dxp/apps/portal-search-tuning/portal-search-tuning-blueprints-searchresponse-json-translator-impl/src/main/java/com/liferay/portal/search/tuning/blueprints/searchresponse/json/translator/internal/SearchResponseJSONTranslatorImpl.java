@@ -17,18 +17,15 @@ package com.liferay.portal.search.tuning.blueprints.searchresponse.json.translat
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.SearchResponseJSONTranslator;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.contributor.JSONTranslationContributor;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -81,56 +78,18 @@ public class SearchResponseJSONTranslatorImpl
 		JSONTranslationContributor jsonTranslationContributor,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = jsonTranslationContributor.getClass();
-
-				_log.warn(
-					"Unable to add response contributor " + clazz.getName() +
-						". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<JSONTranslationContributor>
-			serviceComponentReference = new ServiceComponentReference<>(
-				jsonTranslationContributor, serviceRanking);
-
-		if (_jsonTranslationContributors.containsKey(name)) {
-			ServiceComponentReference<JSONTranslationContributor>
-				previousReference = _jsonTranslationContributors.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_jsonTranslationContributors.put(
-					name, serviceComponentReference);
-			}
-		}
-		else {
-			_jsonTranslationContributors.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_jsonTranslationContributors, jsonTranslationContributor,
+			properties);
 	}
 
 	protected void unregisterJSONTranslationContributor(
 		JSONTranslationContributor responseContributor,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_jsonTranslationContributors.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_jsonTranslationContributors, responseContributor, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SearchResponseJSONTranslatorImpl.class);
 
 	@Reference
 	private BlueprintService _blueprintService;

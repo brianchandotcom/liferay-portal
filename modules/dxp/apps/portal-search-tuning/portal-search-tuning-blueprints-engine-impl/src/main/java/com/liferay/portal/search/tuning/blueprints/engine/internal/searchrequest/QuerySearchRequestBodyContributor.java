@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
@@ -33,7 +32,6 @@ import com.liferay.portal.search.tuning.blueprints.constants.json.keys.query.Que
 import com.liferay.portal.search.tuning.blueprints.constants.json.values.ClauseContext;
 import com.liferay.portal.search.tuning.blueprints.constants.json.values.Occur;
 import com.liferay.portal.search.tuning.blueprints.constants.json.values.Operator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.engine.internal.clause.ClauseTranslatorFactory;
 import com.liferay.portal.search.tuning.blueprints.engine.internal.condition.ConditionHandlerFactory;
 import com.liferay.portal.search.tuning.blueprints.engine.internal.util.BlueprintValueUtil;
@@ -48,6 +46,8 @@ import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.message.Severity;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.util.BlueprintHelper;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -95,49 +95,15 @@ public class QuerySearchRequestBodyContributor
 	protected void registerQueryContributor(
 		QueryContributor queryContributor, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = queryContributor.getClass();
-
-				_log.warn(
-					"Unable to register query contributor " + clazz.getName() +
-						". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<QueryContributor> serviceComponentReference =
-			new ServiceComponentReference<>(queryContributor, serviceRanking);
-
-		if (_queryContributors.containsKey(name)) {
-			ServiceComponentReference<QueryContributor> previousReference =
-				_queryContributors.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_queryContributors.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_queryContributors.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_queryContributors, queryContributor, properties);
 	}
 
 	protected void unregisterQueryContributor(
 		QueryContributor queryContributor, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_queryContributors.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_queryContributors, queryContributor, properties);
 	}
 
 	private void _addPostFilterClause(

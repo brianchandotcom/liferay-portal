@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=geo_distance",
+	immediate = true, property = "name=geo_distance",
 	service = SortTranslator.class
 )
 public class GeoDistanceSortTranslator implements SortTranslator {

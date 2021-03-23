@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=terms",
+	immediate = true, property = "name=terms",
 	service = AggregationTranslator.class
 )
 public class TermsAggregationTranslator implements AggregationTranslator {

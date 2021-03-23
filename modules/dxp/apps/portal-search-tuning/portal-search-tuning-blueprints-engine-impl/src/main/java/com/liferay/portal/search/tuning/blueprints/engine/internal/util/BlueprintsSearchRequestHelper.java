@@ -19,10 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.engine.exception.BlueprintsEngineException;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.Parameter;
@@ -35,6 +32,8 @@ import com.liferay.portal.search.tuning.blueprints.message.Severity;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
 import com.liferay.portal.search.tuning.blueprints.util.BlueprintHelper;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -155,52 +154,18 @@ public class BlueprintsSearchRequestHelper {
 		SearchRequestBodyContributor searchRequestBodyContributor,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = searchRequestBodyContributor.getClass();
-
-				_log.warn(
-					"Unable to register search request contributor " +
-						clazz.getName() + ". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<SearchRequestBodyContributor>
-			serviceComponentReference = new ServiceComponentReference<>(
-				searchRequestBodyContributor, serviceRanking);
-
-		if (_searchRequestBodyContributors.containsKey(name)) {
-			ServiceComponentReference<SearchRequestBodyContributor>
-				previousReference = _searchRequestBodyContributors.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_searchRequestBodyContributors.put(
-					name, serviceComponentReference);
-			}
-		}
-		else {
-			_searchRequestBodyContributors.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_searchRequestBodyContributors, searchRequestBodyContributor,
+			properties);
 	}
 
 	protected void unregisterSearchRequestBodyContributor(
 		SearchRequestBodyContributor searchRequestBodyContributor,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_searchRequestBodyContributors.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_searchRequestBodyContributors, searchRequestBodyContributor,
+			properties);
 	}
 
 	private List<String> _getExcludedSearchRequestBodyContributors(

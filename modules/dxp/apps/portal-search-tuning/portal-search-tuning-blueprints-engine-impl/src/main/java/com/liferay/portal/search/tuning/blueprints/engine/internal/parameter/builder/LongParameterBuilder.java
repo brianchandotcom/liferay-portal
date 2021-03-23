@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=long", service = ParameterBuilder.class
+	immediate = true, property = "name=long", service = ParameterBuilder.class
 )
 public class LongParameterBuilder implements ParameterBuilder {
 

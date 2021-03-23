@@ -16,8 +16,6 @@ package com.liferay.portal.search.tuning.blueprints.engine.internal.executor;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.rescore.Rescore;
@@ -27,12 +25,13 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sort;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterData;
 import com.liferay.portal.search.tuning.blueprints.engine.spi.query.QueryPostProcessor;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.util.BlueprintHelper;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,50 +70,15 @@ public class SearchExecutorImpl implements SearchExecutor {
 	protected void registerQueryPostProcessor(
 		QueryPostProcessor queryPostProcessor, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = queryPostProcessor.getClass();
-
-				_log.warn(
-					"Unable to register query post processor " +
-						clazz.getName() + ". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<QueryPostProcessor>
-			serviceComponentReference = new ServiceComponentReference<>(
-				queryPostProcessor, serviceRanking);
-
-		if (_queryPostProcessors.containsKey(name)) {
-			ServiceComponentReference<QueryPostProcessor> previousReference =
-				_queryPostProcessors.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_queryPostProcessors.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_queryPostProcessors.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_queryPostProcessors, queryPostProcessor, properties);
 	}
 
 	protected void unregisterQueryPostProcessor(
 		QueryPostProcessor queryPostProcessor, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_queryPostProcessors.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_queryPostProcessors, queryPostProcessor, properties);
 	}
 
 	private SearchResponse _execute(

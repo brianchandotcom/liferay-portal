@@ -20,13 +20,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter.CustomParameterConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter.PageConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter.ParameterConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.sort.SortConfigurationKeys;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.engine.internal.parameter.builder.ParameterBuilder;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.BooleanParameter;
@@ -44,6 +42,8 @@ import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.message.Severity;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.util.BlueprintHelper;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,37 +147,8 @@ public class ParameterDataCreatorImpl implements ParameterDataCreator {
 	protected void registerKeywordsProcessor(
 		KeywordsProcessor keywordsProcessor, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = keywordsProcessor.getClass();
-
-				_log.warn(
-					"Unable to register keywords processor " + clazz.getName() +
-						". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<KeywordsProcessor> serviceComponentReference =
-			new ServiceComponentReference<>(keywordsProcessor, serviceRanking);
-
-		if (_keywordsProcessors.containsKey(name)) {
-			ServiceComponentReference<KeywordsProcessor> previousReference =
-				_keywordsProcessors.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_keywordsProcessors.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_keywordsProcessors.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_keywordsProcessors, keywordsProcessor, properties);
 	}
 
 	@Reference(
@@ -188,63 +159,23 @@ public class ParameterDataCreatorImpl implements ParameterDataCreator {
 		ParameterContributor parameterContributor,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = parameterContributor.getClass();
-
-				_log.warn(
-					"Unable to register parameter contributor " +
-						clazz.getName() + ". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<ParameterContributor>
-			serviceComponentReference = new ServiceComponentReference<>(
-				parameterContributor, serviceRanking);
-
-		if (_parameterContributors.containsKey(name)) {
-			ServiceComponentReference<ParameterContributor> previousReference =
-				_parameterContributors.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_parameterContributors.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_parameterContributors.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_parameterContributors, parameterContributor, properties);
 	}
 
 	protected void unregisterKeywordsProcessor(
 		KeywordsProcessor keywordsProcessor, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_keywordsProcessors.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_keywordsProcessors, keywordsProcessor, properties);
 	}
 
 	protected void unregisterParameterContributor(
 		ParameterContributor parameterContributor,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_parameterContributors.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_parameterContributors, parameterContributor, properties);
 	}
 
 	private void _addCustomParameter(

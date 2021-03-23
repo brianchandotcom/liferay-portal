@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=field", service = SortTranslator.class
+	immediate = true, property = "name=field", service = SortTranslator.class
 )
 public class FieldSortTranslator implements SortTranslator {
 

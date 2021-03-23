@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=integer_array",
+	immediate = true, property = "name=integer_array",
 	service = ParameterBuilder.class
 )
 public class IntegerArrayParameterBuilder implements ParameterBuilder {

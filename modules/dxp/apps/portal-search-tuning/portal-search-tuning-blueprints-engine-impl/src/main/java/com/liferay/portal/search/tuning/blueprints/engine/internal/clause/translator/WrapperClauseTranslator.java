@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=wrapper",
+	immediate = true, property = "name=wrapper",
 	service = ClauseTranslator.class
 )
 public class WrapperClauseTranslator implements ClauseTranslator {

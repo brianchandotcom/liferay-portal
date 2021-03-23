@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=simple_query_string",
+	immediate = true, property = "name=simple_query_string",
 	service = ClauseTranslator.class
 )
 public class SimpleQueryStringClauseTranslator implements ClauseTranslator {

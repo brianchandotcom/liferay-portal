@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.engine.component;
+package com.liferay.portal.search.tuning.blueprints.util.component;
 
 /**
  * @author Petteri Karttunen

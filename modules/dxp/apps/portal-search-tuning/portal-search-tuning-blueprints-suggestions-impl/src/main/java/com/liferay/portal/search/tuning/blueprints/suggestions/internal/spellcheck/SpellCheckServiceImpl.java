@@ -16,15 +16,14 @@ package com.liferay.portal.search.tuning.blueprints.suggestions.internal.spellch
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.suggestions.attributes.SuggestionsAttributes;
 import com.liferay.portal.search.tuning.blueprints.suggestions.constants.SuggestionsConstants;
 import com.liferay.portal.search.tuning.blueprints.suggestions.spellcheck.SpellCheckService;
 import com.liferay.portal.search.tuning.blueprints.suggestions.spi.provider.SpellCheckDataProvider;
 import com.liferay.portal.search.tuning.blueprints.suggestions.suggestion.Suggestion;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -113,51 +112,16 @@ public class SpellCheckServiceImpl implements SpellCheckService {
 		SpellCheckDataProvider spellCheckDataProvider,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = spellCheckDataProvider.getClass();
-
-				_log.warn(
-					"Unable to register spellCheck data provider " +
-						clazz.getName() + ". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<SpellCheckDataProvider>
-			serviceComponentReference = new ServiceComponentReference<>(
-				spellCheckDataProvider, serviceRanking);
-
-		if (_spellCheckDataProviders.containsKey(name)) {
-			ServiceComponentReference<SpellCheckDataProvider>
-				previousReference = _spellCheckDataProviders.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_spellCheckDataProviders.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_spellCheckDataProviders.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_spellCheckDataProviders, spellCheckDataProvider, properties);
 	}
 
 	protected void unregisterSpellCheckDataProvider(
 		SpellCheckDataProvider spellCheckDataProvider,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_spellCheckDataProviders.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_spellCheckDataProviders, spellCheckDataProvider, properties);
 	}
 
 	private void _combineResults(

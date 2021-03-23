@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.tuning.blueprints.engine.internal.parameter;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.engine.internal.parameter.builder.ParameterBuilder;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,53 +54,16 @@ public class ParameterBuilderFactoryImpl implements ParameterBuilderFactory {
 	protected void registerParameterBuilder(
 		ParameterBuilder parameterBuilder, Map<String, Object> properties) {
 
-		String type = (String)properties.get("type");
-
-		if (Validator.isBlank(type)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = parameterBuilder.getClass();
-
-				_log.warn(
-					"Unable to add parameter builder " + clazz.getName() +
-						". Type property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<ParameterBuilder> serviceComponentReference =
-			new ServiceComponentReference<>(parameterBuilder, serviceRanking);
-
-		if (_parameterBuilders.containsKey(type)) {
-			ServiceComponentReference<ParameterBuilder> previousReference =
-				_parameterBuilders.get(type);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_parameterBuilders.put(type, serviceComponentReference);
-			}
-		}
-		else {
-			_parameterBuilders.put(type, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_parameterBuilders, parameterBuilder, properties);
 	}
 
 	protected void unregisterParameterBuilder(
 		ParameterBuilder parameterBuilder, Map<String, Object> properties) {
 
-		String type = (String)properties.get("type");
-
-		if (Validator.isBlank(type)) {
-			return;
-		}
-
-		_parameterBuilders.remove(type);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_parameterBuilders, parameterBuilder, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ParameterBuilderFactoryImpl.class);
 
 	private volatile Map<String, ServiceComponentReference<ParameterBuilder>>
 		_parameterBuilders = new ConcurrentHashMap<>();

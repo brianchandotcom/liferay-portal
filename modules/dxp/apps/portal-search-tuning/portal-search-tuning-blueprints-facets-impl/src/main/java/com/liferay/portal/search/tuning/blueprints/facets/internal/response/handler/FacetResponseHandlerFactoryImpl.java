@@ -14,15 +14,11 @@
 
 package com.liferay.portal.search.tuning.blueprints.facets.internal.response.handler;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.response.FacetResponseHandler;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,9 +50,8 @@ public class FacetResponseHandlerFactoryImpl
 
 	@Override
 	public String[] getHandlerNames() {
-		Set<String> set = _facetResponseHandlers.keySet();
-
-		return set.toArray(new String[0]);
+		return ServiceComponentReferenceUtil.getComponentKeys(
+			_facetResponseHandlers);
 	}
 
 	@Reference(
@@ -67,55 +62,17 @@ public class FacetResponseHandlerFactoryImpl
 		FacetResponseHandler facetResponseHandler,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = facetResponseHandler.getClass();
-
-				_log.warn(
-					"Unable to add facet response handler " + clazz.getName() +
-						". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<FacetResponseHandler>
-			serviceComponentReference = new ServiceComponentReference<>(
-				facetResponseHandler, serviceRanking);
-
-		if (_facetResponseHandlers.containsKey(name)) {
-			ServiceComponentReference<FacetResponseHandler> previousReference =
-				_facetResponseHandlers.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_facetResponseHandlers.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_facetResponseHandlers.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_facetResponseHandlers, facetResponseHandler, properties);
 	}
 
 	protected void unregisterFacetResponseHandler(
 		FacetResponseHandler facetResponseHandler,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_facetResponseHandlers.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_facetResponseHandlers, facetResponseHandler, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FacetResponseHandlerFactoryImpl.class);
 
 	private volatile Map
 		<String, ServiceComponentReference<FacetResponseHandler>>

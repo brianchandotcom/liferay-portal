@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=date", service = ParameterBuilder.class
+	immediate = true, property = "name=date", service = ParameterBuilder.class
 )
 public class DateParameterBuilder implements ParameterBuilder {
 

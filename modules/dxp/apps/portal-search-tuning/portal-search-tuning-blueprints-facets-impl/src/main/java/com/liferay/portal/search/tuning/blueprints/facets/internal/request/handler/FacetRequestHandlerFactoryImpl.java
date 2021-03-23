@@ -17,13 +17,11 @@ package com.liferay.portal.search.tuning.blueprints.facets.internal.request.hand
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.request.FacetRequestHandler;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,9 +62,8 @@ public class FacetRequestHandlerFactoryImpl
 
 	@Override
 	public String[] getHandlerNames() {
-		Set<String> set = _facetRequestHandlers.keySet();
-
-		return set.toArray(new String[0]);
+		return ServiceComponentReferenceUtil.getComponentKeys(
+			_facetRequestHandlers);
 	}
 
 	@Reference(
@@ -77,51 +74,16 @@ public class FacetRequestHandlerFactoryImpl
 		FacetRequestHandler facetRequestHandler,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = facetRequestHandler.getClass();
-
-				_log.warn(
-					"Unable to add facet request handler " + clazz.getName() +
-						". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<FacetRequestHandler>
-			serviceComponentReference = new ServiceComponentReference<>(
-				facetRequestHandler, serviceRanking);
-
-		if (_facetRequestHandlers.containsKey(name)) {
-			ServiceComponentReference<FacetRequestHandler> previousReference =
-				_facetRequestHandlers.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_facetRequestHandlers.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_facetRequestHandlers.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_facetRequestHandlers, facetRequestHandler, properties);
 	}
 
 	protected void unregisterFacetRequestHandler(
 		FacetRequestHandler facetRequestHandler,
 		Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_facetRequestHandlers.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_facetRequestHandlers, facetRequestHandler, properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -39,7 +39,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.constants.ResponseAttributeKeys;
@@ -48,6 +47,8 @@ import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translato
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.contributor.JSONTranslationContributor;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.hit.HitContributor;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.result.ResultBuilder;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -89,49 +90,15 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 	protected void registerHitContributor(
 		HitContributor hitContributor, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = hitContributor.getClass();
-
-				_log.warn(
-					"Unable to add hit contributor " + clazz.getName() +
-						". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<HitContributor> serviceComponentReference =
-			new ServiceComponentReference<>(hitContributor, serviceRanking);
-
-		if (_hitContributors.containsKey(name)) {
-			ServiceComponentReference<HitContributor> previousReference =
-				_hitContributors.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_hitContributors.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_hitContributors.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_hitContributors, hitContributor, properties);
 	}
 
 	protected void unregisterHitContributor(
-		HitContributor resultContributor, Map<String, Object> properties) {
+		HitContributor hitContributor, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_hitContributors.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_hitContributors, hitContributor, properties);
 	}
 
 	private void _addResultFields(

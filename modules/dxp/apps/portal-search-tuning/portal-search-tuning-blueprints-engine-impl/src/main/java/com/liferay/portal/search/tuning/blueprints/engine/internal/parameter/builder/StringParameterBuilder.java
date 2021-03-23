@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "type=string", service = ParameterBuilder.class
+	immediate = true, property = "name=string", service = ParameterBuilder.class
 )
 public class StringParameterBuilder implements ParameterBuilder {
 

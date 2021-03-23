@@ -14,15 +14,11 @@
 
 package com.liferay.portal.search.tuning.blueprints.engine.internal.condition;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.engine.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.engine.spi.clause.ConditionHandler;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
+import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,9 +49,8 @@ public class ConditionHandlerFactoryImpl implements ConditionHandlerFactory {
 
 	@Override
 	public String[] getHandlerNames() {
-		Set<String> set = _conditionHandlers.keySet();
-
-		return set.toArray(new String[0]);
+		return ServiceComponentReferenceUtil.getComponentKeys(
+			_conditionHandlers);
 	}
 
 	@Reference(
@@ -65,53 +60,16 @@ public class ConditionHandlerFactoryImpl implements ConditionHandlerFactory {
 	protected void registerConditionHandler(
 		ConditionHandler conditionHandler, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			if (_log.isWarnEnabled()) {
-				Class<?> clazz = conditionHandler.getClass();
-
-				_log.warn(
-					"Unable to add condition handler " + clazz.getName() +
-						". Name property empty.");
-			}
-
-			return;
-		}
-
-		int serviceRanking = GetterUtil.get(
-			properties.get("service.ranking"), 0);
-
-		ServiceComponentReference<ConditionHandler> serviceComponentReference =
-			new ServiceComponentReference<>(conditionHandler, serviceRanking);
-
-		if (_conditionHandlers.containsKey(name)) {
-			ServiceComponentReference<ConditionHandler> previousReference =
-				_conditionHandlers.get(name);
-
-			if (previousReference.compareTo(serviceComponentReference) < 0) {
-				_conditionHandlers.put(name, serviceComponentReference);
-			}
-		}
-		else {
-			_conditionHandlers.put(name, serviceComponentReference);
-		}
+		ServiceComponentReferenceUtil.addToMapByName(
+			_conditionHandlers, conditionHandler, properties);
 	}
 
 	protected void unregisterConditionHandler(
 		ConditionHandler conditionHandler, Map<String, Object> properties) {
 
-		String name = (String)properties.get("name");
-
-		if (Validator.isBlank(name)) {
-			return;
-		}
-
-		_conditionHandlers.remove(name);
+		ServiceComponentReferenceUtil.removeFromMapByName(
+			_conditionHandlers, conditionHandler, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ConditionHandlerFactoryImpl.class);
 
 	private volatile Map<String, ServiceComponentReference<ConditionHandler>>
 		_conditionHandlers = new ConcurrentHashMap<>();

@@ -57,48 +57,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 	@Test
 	public void testCookieResponseApplicationCode() {
-		Response response = getCodeResponse(
-			"test@liferay.com", "test", null,
-			getCodeFunction(
-				webTarget -> webTarget.queryParam(
-					"client_id", "oauthTestApplicationCode"
-				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
-				).queryParam(
-					"response_type", "code"
-				),
-				_getExtraParameters(), false));
-
-		Map<String, NewCookie> newCookies = response.getCookies();
-
-		Assert.assertNull(newCookies.get(_COOKIE_NAME));
-	}
-
-	@Test
-	public void testCookieResponseApplicationCodePKCE() {
-		Response response = getCodeResponse(
-			"test@liferay.com", "test", null,
-			getCodeFunction(
-				webTarget -> webTarget.queryParam(
-					"client_id", "oauthTestApplicationCodePKCE"
-				).queryParam(
-					"code_challenge",
-					generateCodeChallenge(RandomTestUtil.randomString())
-				).queryParam(
-					"response_type", "code"
-				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
-				),
-				_getExtraParameters(), false));
-
-		Map<String, NewCookie> newCookies = response.getCookies();
-
-		Assert.assertNull(newCookies.get(_COOKIE_NAME));
-	}
-
-	@Test
-	public void testRememberApplicationCode() {
-		String applicationClientId = "oauthTestRememberApplicationCode";
+		String applicationClientId = "oauthTestApplicationCode";
 
 		Response response = getCodeResponse(
 			"test@liferay.com", "test", null,
@@ -114,7 +73,56 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response.getCookies();
 
-		NewCookie newCookie1 = newCookies.get(_COOKIE_NAME);
+		Assert.assertNull(
+			newCookies.get(_COOKIE_NAME_PREFIX.concat(applicationClientId)));
+	}
+
+	@Test
+	public void testCookieResponseApplicationCodePKCE() {
+		String applicationClientId = "oauthTestApplicationCodePKCE";
+
+		Response response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", applicationClientId
+				).queryParam(
+					"code_challenge",
+					generateCodeChallenge(RandomTestUtil.randomString())
+				).queryParam(
+					"response_type", "code"
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				),
+				_getExtraParameters(), false));
+
+		Map<String, NewCookie> newCookies = response.getCookies();
+
+		Assert.assertNull(
+			newCookies.get(_COOKIE_NAME_PREFIX.concat(applicationClientId)));
+	}
+
+	@Test
+	public void testRememberApplicationCode() {
+		String applicationClientId = "oauthTestRememberApplicationCode";
+
+		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
+
+		Response response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", applicationClientId
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
+				),
+				_getExtraParameters(), false));
+
+		Map<String, NewCookie> newCookies = response.getCookies();
+
+		NewCookie newCookie1 = newCookies.get(cookieName);
 
 		Assert.assertNotNull(newCookie1);
 
@@ -149,13 +157,13 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				null, true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_COOKIE_NAME, newCookie1.getValue()));
+				cookieName, newCookie1.getValue()));
 
 		Assert.assertNotNull(parseAuthorizationCodeString(response));
 
 		newCookies = response.getCookies();
 
-		NewCookie newCookie2 = newCookies.get(_COOKIE_NAME);
+		NewCookie newCookie2 = newCookies.get(cookieName);
 
 		Assert.assertNotEquals(newCookie1.getValue(), newCookie2.getValue());
 	}
@@ -163,6 +171,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 	@Test
 	public void testRememberApplicationCodePKCE() {
 		String applicationClientId = "oauthTestRememberApplicationCodePKCE";
+
+		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		String codeVerifierString = RandomTestUtil.randomString();
 
@@ -182,7 +192,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response.getCookies();
 
-		NewCookie newCookie1 = newCookies.get(_COOKIE_NAME);
+		NewCookie newCookie1 = newCookies.get(cookieName);
 
 		Assert.assertNotNull(newCookie1);
 
@@ -219,13 +229,13 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_COOKIE_NAME, newCookie1.getValue()));
+				cookieName, newCookie1.getValue()));
 
 		Assert.assertNotNull(parseAuthorizationCodeString(response));
 
 		newCookies = response.getCookies();
 
-		NewCookie newCookie2 = newCookies.get(_COOKIE_NAME);
+		NewCookie newCookie2 = newCookies.get(cookieName);
 
 		Assert.assertNotEquals(newCookie1.getValue(), newCookie2.getValue());
 	}
@@ -233,6 +243,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 	@Test
 	public void testRequestTokenInvalidatePreviousTokenRememberApplicationCode() {
 		String applicationClientId = "oauthTestRememberApplicationCode";
+
+		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		Response response1 = getCodeResponse(
 			"test@liferay.com", "test", null,
@@ -248,7 +260,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response1.getCookies();
 
-		NewCookie newCookie = newCookies.get(_COOKIE_NAME);
+		NewCookie newCookie = newCookies.get(cookieName);
 
 		String token = getToken(
 			applicationClientId, null,
@@ -279,7 +291,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_COOKIE_NAME, newCookie.getValue()));
+				cookieName, newCookie.getValue()));
 
 		getToken(
 			applicationClientId, null,
@@ -305,6 +317,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 	public void testRequestTokenInvalidatePreviousTokenRememberApplicationCodePKCE() {
 		String applicationClientId = "oauthTestRememberApplicationCodePKCE";
 
+		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
+
 		String codeVerifierString = RandomTestUtil.randomString();
 
 		Response response1 = getCodeResponse(
@@ -323,7 +337,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response1.getCookies();
 
-		NewCookie newCookie = newCookies.get(_COOKIE_NAME);
+		NewCookie newCookie = newCookies.get(cookieName);
 
 		String token = getToken(
 			applicationClientId, null,
@@ -356,7 +370,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_COOKIE_NAME, newCookie.getValue()));
+				cookieName, newCookie.getValue()));
 
 		getToken(
 			applicationClientId, null,
@@ -384,6 +398,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		String applicationClientId = "oauthTestRememberApplicationCode";
 
+		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
+
 		Response response = getCodeResponse(
 			"test@liferay.com", "test", null,
 			getCodeFunction(
@@ -398,7 +414,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response.getCookies();
 
-		NewCookie newCookie = newCookies.get(_COOKIE_NAME);
+		NewCookie newCookie = newCookies.get(cookieName);
 
 		_revokeOAuth2AuthorizationByAccessToken(
 			getToken(
@@ -431,7 +447,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						),
 						true),
 					invocationBuilder -> invocationBuilder.cookie(
-						_COOKIE_NAME, newCookie.getValue()))));
+						cookieName, newCookie.getValue()))));
 	}
 
 	@Test
@@ -439,6 +455,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		throws PortalException {
 
 		String applicationClientId = "oauthTestRememberApplicationCodePKCE";
+
+		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		String codeVerifierString = RandomTestUtil.randomString();
 
@@ -458,7 +476,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response.getCookies();
 
-		NewCookie newCookie = newCookies.get(_COOKIE_NAME);
+		NewCookie newCookie = newCookies.get(cookieName);
 
 		_revokeOAuth2AuthorizationByAccessToken(
 			getToken(
@@ -494,12 +512,14 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						),
 						true),
 					invocationBuilder -> invocationBuilder.cookie(
-						_COOKIE_NAME, newCookie.getValue()))));
+						cookieName, newCookie.getValue()))));
 	}
 
 	@Test
 	public void testSingleUseCookieRememberApplicationCode() {
 		String applicationClientId = "oauthTestRememberApplicationCode";
+
+		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		Response response1 = getCodeResponse(
 			"test@liferay.com", "test", null,
@@ -515,7 +535,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response1.getCookies();
 
-		NewCookie newCookie = newCookies.get(_COOKIE_NAME);
+		NewCookie newCookie = newCookies.get(cookieName);
 
 		getToken(
 			applicationClientId, null,
@@ -544,7 +564,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_COOKIE_NAME, newCookie.getValue()));
+				cookieName, newCookie.getValue()));
 
 		Assert.assertNotNull(
 			getToken(
@@ -577,12 +597,14 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						),
 						null, true),
 					invocationBuilder -> invocationBuilder.cookie(
-						_COOKIE_NAME, newCookie.getValue()))));
+						cookieName, newCookie.getValue()))));
 	}
 
 	@Test
 	public void testSingleUseCookieRememberApplicationCodePKCE() {
 		String applicationClientId = "oauthTestRememberApplicationCodePKCE";
+
+		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		final String codeVerifierString = RandomTestUtil.randomString();
 
@@ -602,7 +624,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response1.getCookies();
 
-		NewCookie newCookie = newCookies.get(_COOKIE_NAME);
+		NewCookie newCookie = newCookies.get(cookieName);
 
 		getToken(
 			applicationClientId, null,
@@ -633,7 +655,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
-				_COOKIE_NAME, newCookie.getValue()));
+				cookieName, newCookie.getValue()));
 
 		String authorizationCodeString = parseAuthorizationCodeString(
 			response2);
@@ -672,7 +694,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						),
 						true),
 					invocationBuilder -> invocationBuilder.cookie(
-						_COOKIE_NAME, newCookie.getValue()))));
+						cookieName, newCookie.getValue()))));
 	}
 
 	public static class RememberApplicationClientTestPreparatorBundleActivator
@@ -732,7 +754,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				getOAuth2AuthorizationByAccessTokenContent(token));
 	}
 
-	private static final String _COOKIE_NAME = "OAUTH2_REMEMBER_DEVICE";
+	private static final String _COOKIE_NAME_PREFIX = "OAUTH2_REMEMBER_DEVICE_";
 
 	@Inject
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;

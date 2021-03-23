@@ -50,12 +50,12 @@
 </tr>
 <tr>
 	<td>ADD_TO_CART_BUTTON_DISABLED</td>
-	<td>//a[contains(.,'${key_productName}')]//..//button[contains(@class,'add-to-cart') and @disabled]</td>
+	<td>//a[contains(.,'${key_productName}')]//../../..//button[contains(@class,'add-to-cart') and @disabled]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_TO_CART_BUTTON_ENABLED</td>
-	<td>//a[contains(.,'${key_productName}')]//..//button[contains(@class,'add-to-cart') and not(@disabled)]</td>
+	<td>//a[contains(.,'${key_productName}')]//../../..//button[contains(@class,'add-to-cart') and not(@disabled)]</td>
 	<td></td>
 </tr>
 <tr>

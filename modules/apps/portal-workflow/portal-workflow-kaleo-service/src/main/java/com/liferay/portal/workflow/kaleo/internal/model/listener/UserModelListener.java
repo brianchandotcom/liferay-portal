@@ -35,8 +35,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelectorRegistry;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
@@ -112,12 +112,13 @@ public class UserModelListener extends BaseModelListener<User> {
 		for (KaleoTaskAssignment kaleoTaskAssignment :
 				kaleoTask.getKaleoTaskAssignments()) {
 
-			TaskAssignmentSelector taskAssignmentSelector =
-				_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
-					kaleoTaskAssignment.getAssigneeClassName());
+			KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
+				_kaleoTaskAssignmentSelectorRegistry.
+					getKaleoTaskAssignmentSelector(
+						kaleoTaskAssignment.getAssigneeClassName());
 
 			kaleoTaskAssignments.addAll(
-				taskAssignmentSelector.calculateTaskAssignments(
+				kaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 					kaleoTaskAssignment, executionContext));
 		}
 
@@ -198,6 +199,10 @@ public class UserModelListener extends BaseModelListener<User> {
 		_kaleoTaskAssignmentInstanceLocalService;
 
 	@Reference
+	private KaleoTaskAssignmentSelectorRegistry
+		_kaleoTaskAssignmentSelectorRegistry;
+
+	@Reference
 	private KaleoTaskInstanceTokenLocalService
 		_kaleoTaskInstanceTokenLocalService;
 
@@ -206,8 +211,5 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Reference
 	private NotificationHelper _notificationHelper;
-
-	@Reference
-	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;
 
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelectorRegistry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,15 +29,16 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = TaskAssignmentSelectorRegistry.class)
-public class TaskAssignmentSelectorTracker
-	implements TaskAssignmentSelectorRegistry {
+@Component(
+	immediate = true, service = KaleoTaskAssignmentSelectorRegistry.class
+)
+public class KaleoTaskAssignmentSelectorTracker
+	implements KaleoTaskAssignmentSelectorRegistry {
 
-	@Override
-	public TaskAssignmentSelector getTaskAssignmentSelector(
+	public KaleoTaskAssignmentSelector getKaleoTaskAssignmentSelector(
 		String assigneeClassName) {
 
-		return _taskAssignmentSelectors.get(assigneeClassName);
+		return _kaleoTaskAssignmentSelectors.get(assigneeClassName);
 	}
 
 	@Reference(
@@ -46,27 +47,27 @@ public class TaskAssignmentSelectorTracker
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(assignee.class.name=*)"
 	)
-	protected void addTaskAssignmentSelector(
-		TaskAssignmentSelector taskAssignmentSelector,
+	protected void addKaleoTaskAssignmentSelector(
+		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
 		Map<String, Object> properties) {
 
 		Object assigneeClassName = properties.get("assignee.class.name");
 
-		_taskAssignmentSelectors.put(
-			assigneeClassName.toString(), taskAssignmentSelector);
+		_kaleoTaskAssignmentSelectors.put(
+			assigneeClassName.toString(), kaleoTaskAssignmentSelector);
 	}
 
-	protected void removeTaskAssignmentSelector(
-		TaskAssignmentSelector taskAssignmentSelector,
+	protected void removeKaleoTaskAssignmentSelector(
+		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
 		Map<String, Object> properties) {
 
 		String assigneeClassName = (String)properties.get(
 			"assignee.class.name");
 
-		_taskAssignmentSelectors.remove(assigneeClassName);
+		_kaleoTaskAssignmentSelectors.remove(assigneeClassName);
 	}
 
-	private final Map<String, TaskAssignmentSelector> _taskAssignmentSelectors =
-		new ConcurrentHashMap<>();
+	private final Map<String, KaleoTaskAssignmentSelector>
+		_kaleoTaskAssignmentSelectors = new ConcurrentHashMap<>();
 
 }

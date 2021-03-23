@@ -19,13 +19,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelectorRegistry;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,16 +51,14 @@ public class TaskAssignerHelper {
 			new ArrayList<>();
 
 		for (KaleoTaskAssignment kaleoTaskAssignment : kaleoTaskAssignments) {
-			TaskAssignmentSelector taskAssignmentSelector =
-				_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
-					kaleoTaskAssignment.getAssigneeClassName());
-
-			Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
-				taskAssignmentSelector.calculateTaskAssignments(
-					kaleoTaskAssignment, executionContext);
+			KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
+				_kaleoTaskAssignmentSelectorRegistry.
+					getKaleoTaskAssignmentSelector(
+						kaleoTaskAssignment.getAssigneeClassName());
 
 			reassignedKaleoTaskAssignments.addAll(
-				calculatedKaleoTaskAssignments);
+				kaleoTaskAssignmentSelector.getKaleoTaskAssignments(
+					kaleoTaskAssignment, executionContext));
 		}
 
 		kaleoTaskInstanceToken =
@@ -81,10 +78,11 @@ public class TaskAssignerHelper {
 	private KaleoLogLocalService _kaleoLogLocalService;
 
 	@Reference
-	private KaleoTaskInstanceTokenLocalService
-		_kaleoTaskInstanceTokenLocalService;
+	private KaleoTaskAssignmentSelectorRegistry
+		_kaleoTaskAssignmentSelectorRegistry;
 
 	@Reference
-	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 }

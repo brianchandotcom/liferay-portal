@@ -61,8 +61,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.TaskManager;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelectorRegistry;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoTaskInstanceTokenOrderByComparator;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
@@ -1148,11 +1148,11 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		TaskAssignmentSelector taskAssignmentSelector =
-			_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
+		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
+			_kaleoTaskAssignmentSelectorRegistry.getKaleoTaskAssignmentSelector(
 				kaleoTaskAssignment.getAssigneeClassName());
 
-		return taskAssignmentSelector.calculateTaskAssignments(
+		return kaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 			kaleoTaskAssignment, executionContext);
 	}
 
@@ -1402,6 +1402,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	private KaleoTaskAssignmentLocalService _kaleoTaskAssignmentLocalService;
 
 	@Reference
+	private KaleoTaskAssignmentSelectorRegistry
+		_kaleoTaskAssignmentSelectorRegistry;
+
+	@Reference
 	private KaleoTaskInstanceTokenLocalService
 		_kaleoTaskInstanceTokenLocalService;
 
@@ -1413,9 +1417,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;
 
 	@Reference
 	private TaskManager _taskManager;

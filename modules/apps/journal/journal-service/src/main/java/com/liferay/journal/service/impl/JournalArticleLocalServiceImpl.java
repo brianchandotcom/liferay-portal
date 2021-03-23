@@ -8886,9 +8886,70 @@ public class JournalArticleLocalServiceImpl
 							new Scalar<>(status)));
 				}
 
-				Predicate innerWherePredicate = _innerWherePredicate(
-					articleIds, version, titles, descriptions, contents,
-					displayDateGT, displayDateLT, reviewDate, andOperator);
+				Predicate innerWherePredicate = DefaultPredicate.from(
+					() -> {
+						Operand operand = Operand.AND;
+
+						if (!andOperator) {
+							operand = Operand.OR;
+						}
+
+						Predicate innerPredicate = _buildPredicateFromKeywords(
+							JournalArticleTable.INSTANCE.articleId,
+							_customSQL.keywords(articleIds, false));
+
+						if (GetterUtil.getDouble(version) > 0.0) {
+							innerPredicate = _buildNullSafePredicate(
+								innerPredicate, operand,
+								JournalArticleTable.INSTANCE.version.eq(
+									version));
+						}
+
+						innerPredicate = _buildNullSafePredicate(
+							innerPredicate, operand,
+							_buildPredicateFromKeywords(
+								DSLFunctionFactoryUtil.lower(
+									JournalArticleLocalizationTable.INSTANCE.
+										title),
+								_customSQL.keywords(titles)));
+
+						innerPredicate = _buildNullSafePredicate(
+							innerPredicate, operand,
+							_buildPredicateFromKeywords(
+								JournalArticleLocalizationTable.INSTANCE.
+									description,
+								_customSQL.keywords(descriptions, false)));
+
+						innerPredicate = _buildNullSafePredicate(
+							innerPredicate, operand,
+							_buildPredicateFromKeywords(
+								DSLFunctionFactoryUtil.castClobText(
+									JournalArticleTable.INSTANCE.content),
+								_customSQL.keywords(contents, false)));
+
+						if (displayDateGT != null) {
+							innerPredicate = _buildNullSafePredicate(
+								innerPredicate, operand,
+								JournalArticleTable.INSTANCE.displayDate.gte(
+									displayDateGT));
+						}
+
+						if (displayDateLT != null) {
+							innerPredicate = _buildNullSafePredicate(
+								innerPredicate, operand,
+								JournalArticleTable.INSTANCE.displayDate.lte(
+									displayDateLT));
+						}
+
+						if (reviewDate != null) {
+							innerPredicate = _buildNullSafePredicate(
+								innerPredicate, operand,
+								JournalArticleTable.INSTANCE.reviewDate.lte(
+									reviewDate));
+						}
+
+						return innerPredicate;
+					});
 
 				if (innerWherePredicate != null) {
 					predicate = predicate.and(
@@ -8977,68 +9038,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return urlTitleMap;
-	}
-
-	private Predicate _innerWherePredicate(
-		String[] articleIds, Double version, String[] titles,
-		String[] descriptions, String[] contents, Date displayDateGT,
-		Date displayDateLT, Date reviewDate, boolean andOperator) {
-
-		Operand operand = Operand.AND;
-
-		if (!andOperator) {
-			operand = Operand.OR;
-		}
-
-		Predicate predicate = _buildPredicateFromKeywords(
-			JournalArticleTable.INSTANCE.articleId,
-			_customSQL.keywords(articleIds, false));
-
-		if (GetterUtil.getDouble(version) > 0.0) {
-			predicate = _buildNullSafePredicate(
-				predicate, operand,
-				JournalArticleTable.INSTANCE.version.eq(version));
-		}
-
-		predicate = _buildNullSafePredicate(
-			predicate, operand,
-			_buildPredicateFromKeywords(
-				DSLFunctionFactoryUtil.lower(
-					JournalArticleLocalizationTable.INSTANCE.title),
-				_customSQL.keywords(titles)));
-
-		predicate = _buildNullSafePredicate(
-			predicate, operand,
-			_buildPredicateFromKeywords(
-				JournalArticleLocalizationTable.INSTANCE.description,
-				_customSQL.keywords(descriptions, false)));
-
-		predicate = _buildNullSafePredicate(
-			predicate, operand,
-			_buildPredicateFromKeywords(
-				DSLFunctionFactoryUtil.castClobText(
-					JournalArticleTable.INSTANCE.content),
-				_customSQL.keywords(contents, false)));
-
-		if (displayDateGT != null) {
-			predicate = _buildNullSafePredicate(
-				predicate, operand,
-				JournalArticleTable.INSTANCE.displayDate.gte(displayDateGT));
-		}
-
-		if (displayDateLT != null) {
-			predicate = _buildNullSafePredicate(
-				predicate, operand,
-				JournalArticleTable.INSTANCE.displayDate.lte(displayDateLT));
-		}
-
-		if (reviewDate != null) {
-			predicate = _buildNullSafePredicate(
-				predicate, operand,
-				JournalArticleTable.INSTANCE.reviewDate.lte(reviewDate));
-		}
-
-		return predicate;
 	}
 
 	private String _replaceTempImages(JournalArticle article, String content)

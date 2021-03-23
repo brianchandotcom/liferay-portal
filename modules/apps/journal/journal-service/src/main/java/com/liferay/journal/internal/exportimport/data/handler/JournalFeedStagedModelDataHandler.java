@@ -221,18 +221,6 @@ public class JournalFeedStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			feed);
 
-		boolean addGroupPermissions =
-			_journalCreationStrategy.addGroupPermissions(
-				portletDataContext, feed);
-
-		serviceContext.setAddGroupPermissions(addGroupPermissions);
-
-		boolean addGuestPermissions =
-			_journalCreationStrategy.addGuestPermissions(
-				portletDataContext, feed);
-
-		serviceContext.setAddGuestPermissions(addGuestPermissions);
-
 		JournalFeed importedFeed = null;
 
 		try {

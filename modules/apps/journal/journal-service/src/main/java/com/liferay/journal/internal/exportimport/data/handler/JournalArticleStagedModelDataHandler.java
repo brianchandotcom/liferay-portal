@@ -873,18 +873,8 @@ public class JournalArticleStagedModelDataHandler
 
 			String articleURL = null;
 
-			boolean addGroupPermissions =
-				_journalCreationStrategy.addGroupPermissions(
-					portletDataContext, article);
-			boolean addGuestPermissions =
-				_journalCreationStrategy.addGuestPermissions(
-					portletDataContext, article);
-
 			ServiceContext serviceContext =
 				portletDataContext.createServiceContext(article);
-
-			serviceContext.setAddGroupPermissions(addGroupPermissions);
-			serviceContext.setAddGuestPermissions(addGuestPermissions);
 
 			if ((expirationDate != null) && expirationDate.before(new Date())) {
 				article.setStatus(WorkflowConstants.STATUS_EXPIRED);

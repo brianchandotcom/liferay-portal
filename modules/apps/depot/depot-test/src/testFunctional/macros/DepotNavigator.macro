@@ -186,6 +186,20 @@ definition {
 		MenuItem.click(menuItem = "Share");
 	}
 
+	macro gotoShareFromInfoPanel {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		LexiconEntry.gotoEntry(rowEntry = "${dmDocumentTitle}");
+
+		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
+
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		AssertElementPresent(locator1 = "Button#SHARE_SIDEBAR");
+
+		Click(locator1 = "Button#SHARE_SIDEBAR");
+	}
+
 	macro gotoSites {
 		Click(
 			key_tab = "Sites",

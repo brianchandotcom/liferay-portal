@@ -1293,6 +1293,14 @@ public class GitWorkingDirectory {
 			getLocalGitBranchesShaMap();
 
 		for (String localGitBranchName : localGitBranchNames) {
+			if (!localGitBranchesShaMap.containsKey(localGitBranchName)) {
+				System.out.println(
+					"Unable to find SHA for local git branch " +
+						localGitBranchName);
+
+				continue;
+			}
+
 			localGitBranches.add(
 				GitBranchFactory.newLocalGitBranch(
 					localGitRepository, localGitBranchName,

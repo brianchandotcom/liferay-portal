@@ -299,6 +299,73 @@ definition {
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
 	}
 
+	@description = "This test ensures that the same document can be shared by different users with sharing permissions."
+	@priority = "4"
+	test ShareSameDocumentByDifferentUsers {
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.jpg");
+
+		Asset.share(
+			sharingPermissions = "View",
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoShareFromInfoPanel(dmDocumentTitle = "Document_1.jpg");
+
+		Asset.share(
+			sharingPermissions = "Update",
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+
+		AssertTextEquals(
+			key_contentTitle = "Document_1.jpg",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
+			value1 = "Document_1.jpg");
+
+		AssertElementNotPresent(
+			key_contentTitle = "Document_1.jpg",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
+	}
+
 	@description = "This test makes sure all collaborators will view all collaborators of a depot document that was shared to him. It also covers that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."
 	@priority = "5"
 	test ViewAndRemoveCollaborators {

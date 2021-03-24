@@ -33,6 +33,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-6226. Price Entry lifecycle"
+	@ignore = "true"
+	@priority = "3"
+	test AddEditAndDeletePriceEntry {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6226 AddEditAndDeletePriceEntry Pending Implementation
+
+	}
+
+	@description = "This is a test for COMMERCE-6225. Price Modifier lifecycle"
+	@ignore = "true"
+	@priority = "3"
+	test AddEditAndDeletePriceModifier {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6225 AddEditAndDeletePriceModifier Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6227. Tier Price Entry lifecycle"
+	@ignore = "true"
+	@priority = "3"
+	test AddEditAndDeleteTierPriceEntry {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6227 AddEditAndDeleteTierPriceEntry Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6234. Price List Qualifier Lifecycle"
+	@ignore = "true"
+	@priority = "3"
+	test AddEditAndRemovePLQualifier {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6234 AddEditAndRemovePLQualifier Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6235. Product Group Lifecycle"
+	@ignore = "true"
+	@priority = "3"
+	test AddEditAndRemoveProductGroupFromPL {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6235 AddEditAndRemoveProductGroupFromPL Pending Implementation
+	}
+
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -393,6 +439,24 @@ definition {
 			value1 = "50.00");
 	}
 
+	@description = "This is a test for COMMERCE-6220. When creating a price list only catalogs for which the user has permission should be visible in the drop down"
+	@ignore = "true"
+	@priority = "3"
+	test CheckOnlyPermittedCatalogIsSelectable {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6220 CheckOnlyPermittedCatalogIsSelectable Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6236. Check info about where a product group is used"
+	@ignore = "true"
+	@priority = "3"
+	test CheckPLProductGroupUsageInfo {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6236 CheckPLProductGroupUsageInfo Pending Implementation
+	}
+
 	test CreateNewPriceList {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -515,6 +579,51 @@ definition {
 		AssertElementNotPresent(
 			key_menuItem = "Test Price List",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+	}
+
+	@description = "This is a test for COMMERCE-6221. Price List expiration management"
+	@ignore = "true"
+	@priority = "3"
+	test ViewExpiredPL {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6221 ViewExpiredPL Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6222. Price Entry expiration management"
+	@ignore = "true"
+	@priority = "3"
+	test ViewExpiredPriceEntry {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6222 ViewExpiredPriceEntry Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6224. Price Modifier expiration management"
+	@ignore = "true"
+	@priority = "3"
+	test ViewExpiredPriceModifier {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6224 ViewExpiredPriceModifier Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6223. Tier Price Entry expiration management"
+	@ignore = "true"
+	@priority = "3"
+	test ViewExpiredTierPriceEntry {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6223 ViewExpiredTierPriceEntry Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6228. Check that an expired entity is not considered in the price calculation"
+	@ignore = "true"
+	@priority = "3"
+	test ViewPriceNotAffectedByExpiredPriceEntities {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6228 ViewPriceNotAffectedByExpiredPriceEntities Pending Implementation
 	}
 
 }

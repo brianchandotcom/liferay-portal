@@ -518,6 +518,82 @@ definition {
 			value1 = "test@liferay.com");
 	}
 
+	@description = "This is a use case for LPS-126597."
+	@priority = "4"
+	test AuthorizeExternalApplicationWithRememberDeviceEnabled {
+		property test.name.skip.portal.instance = "OAuth2#AuthorizeExternalApplicationWithRememberDeviceEnabled";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		var clientId = "abc123";
+		var clientSecret = "abc123";
+		var portalURL = PropsUtil.get("portal.url");
+
+		OAuth2.addApplication(
+			applicationName = "Third-party Application",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			checkboxCheckList = "Remember Device",
+			clientProfile = "Web Application");
+
+		OAuth2.inputApplicationValues(
+			clientId = "${clientId}",
+			clientSecret = "${clientSecret}");
+
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(
+			applicationName = "Third-party Application",
+			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
+			resourcePanels = "Portal Services");
+
+		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
+			value1 = "${clientId}");
+
+		Button.click(button = "Authorize My Application");
+
+		Check(
+			key_checkboxName = "Remember Device",
+			locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
+
+		Button.click(button = "Authorize");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
+			value1 = "${clientSecret}");
+
+		Button.click(button = "Obtain OAuth2 Access");
+
+		// Re-open test harness to check if Device is remembered
+
+		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
+			value1 = "${clientId}");
+
+		Button.click(button = "Authorize My Application");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
+			value1 = "${clientSecret}");
+
+		Button.click(button = "Obtain OAuth2 Access");
+
+		// Execute a request as final verification
+
+		Button.click(button = "Launch Request");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com");
+	}
+
 	@description = "This is a use case for LPS-126596."
 	@priority = "4"
 	test AuthorizeExternalTrustedApplication {

@@ -1129,13 +1129,13 @@ definition {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupName = "Guest",
 			layoutName = "Test Content Page Name",
 			type = "content");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
-			siteName = "Site Name");
+			siteName = "Guest");
 
 		PageEditor.addWidget(portletName = "Documents and Media");
 

@@ -303,7 +303,7 @@
 </tr>
 <tr>
     <td>SIDEBAR_PROPERTIES_TAB</td>
-    <td>//a[contains(@class,'tab') and .='Properties'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Properties')]</td>
+    <td>//a[contains(@class,'tab') and .='Properties'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Properties')] | //button[@title='Properties']</td>
     <td></td>
 </tr>
 <tr>

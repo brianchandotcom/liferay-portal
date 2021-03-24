@@ -541,7 +541,6 @@ class Sidebar extends Component {
 	}
 
 	_handleDocumentMouseDown({target}) {
-		const {transitionEnd} = this;
 		const {open} = this.state;
 
 		const ckeContext = target
@@ -560,11 +559,7 @@ class Sidebar extends Component {
 		) {
 			this.close();
 
-			this.refs.container.addEventListener(
-				transitionEnd,
-				() => this.dispatchFieldBlurred(),
-				{once: true}
-			);
+			this.dispatchFieldBlurred();
 
 			if (!this._isModalElement(target)) {
 				setTimeout(() => this.dispatchFieldBlurred(), 500);

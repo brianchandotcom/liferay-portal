@@ -21,7 +21,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -74,9 +77,15 @@ public class CommerceDashboardForecastConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		String[] assetCategoryIds = ArrayUtil.toStringArray(
+			serviceContext.getAssetCategoryIds());
+
 		setPreference(
 			actionRequest, "assetCategoryIds",
-			ParamUtil.getString(actionRequest, "assetCategoryIds"));
+			StringUtil.merge(assetCategoryIds));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

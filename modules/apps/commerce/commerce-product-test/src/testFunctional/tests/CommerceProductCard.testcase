@@ -1213,8 +1213,14 @@ definition {
 	test ViewProductCardSKU {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5862 ViewProductCardSKU pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		ApplicationsMenu.gotoSite(site = "Minium");
 
+		AssertElementPresent(
+			key_productSKU = "MIN55861",
+			key_productName = "U-Joint",
+			locator1 = "CommerceEntry#PRODUCT_CARD_SKU"
+		);
 	}
 
 	@description = "COMMERCE-5865. As a buyer, I want to view starting price on product card when product has different SKUs with different prices"

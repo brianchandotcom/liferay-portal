@@ -409,6 +409,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCALIZATION_GENERIC_2</td>
+	<td>xpath=(//div[contains(@class,'form-group')]//div[contains(@class,'localized')]//button[contains(@class,'localized')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZATION_OPEN_GRAPH</td>
 	<td>//div[contains(@id,'${key_fieldName}')]//button[contains(@class,'localized')]</td>
 	<td></td>

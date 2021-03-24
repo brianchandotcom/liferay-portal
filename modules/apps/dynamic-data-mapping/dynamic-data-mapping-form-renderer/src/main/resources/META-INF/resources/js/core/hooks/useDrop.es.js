@@ -87,11 +87,35 @@ const isFieldGroupMovingIntoItself = ({
 		[sourceIndexes, ...(sourceParentField?.loc ?? [])]
 	);
 
-const isSameField = (targetField, sourceField) =>
-	targetField && targetField.fieldName === sourceField.fieldName;
-
 const isDroppingFieldGroupIntoField = (targetField, sourceField) =>
 	sourceField?.type === 'fieldset' && targetField !== undefined;
+
+/**
+ * Determines whether the source Field is being moved into inside a Field
+ * where its parent is a FieldGroup with just that element.
+ */
+const isDroppingFieldIntoSingleField = (origin, targetParentField) =>
+	origin === DND_ORIGIN_TYPE.FIELD &&
+	targetParentField?.type === 'fieldset' &&
+	targetParentField.nestedFields.length === 1;
+
+/**
+ * Determines whether are moving the source Field into inside the Field
+ * in the same FieldGroup to create another FieldGroup but with only
+ * two fields.
+ */
+const isDroppingFieldIntoFieldAndSameGroup = (
+	origin,
+	sourceParentField,
+	targetParentField
+) =>
+	origin === DND_ORIGIN_TYPE.FIELD &&
+	sourceParentField?.type === 'fieldset' &&
+	sourceParentField?.fieldName === targetParentField?.fieldName &&
+	targetParentField.nestedFields.length === 2;
+
+const isSameField = (targetField, sourceField) =>
+	targetField && targetField.fieldName === sourceField.fieldName;
 
 export const useDrop = ({
 	columnIndex,
@@ -134,8 +158,17 @@ export const useDrop = ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver({shallow: true}),
 		}),
-		drop: ({data, sourceIndexes, type}, monitor) => {
-			if (monitor.didDrop() || !monitor.canDrop()) {
+		drop: ({data, sourceIndexes, sourceParentField, type}, monitor) => {
+			if (
+				monitor.didDrop() ||
+				!monitor.canDrop() ||
+				isDroppingFieldIntoSingleField(origin, parentField) ||
+				isDroppingFieldIntoFieldAndSameGroup(
+					origin,
+					sourceParentField,
+					parentField
+				)
+			) {
 				return;
 			}
 
@@ -167,6 +200,7 @@ export const useDrop = ({
 						payload: {
 							sourceFieldName: data.fieldName,
 							sourceFieldPage: sourceIndexes.pageIndex,
+							sourceParentField,
 							targetFieldName: field?.fieldName,
 							targetIndexes: indexes,
 							targetParentFieldName: parentField?.fieldName,

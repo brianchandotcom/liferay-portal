@@ -605,6 +605,17 @@ class Sidebar extends Component {
 				'.ddm-field'
 			);
 
+			const totalFieldsInParentField = data.target
+				.closest('.ddm-field-types-fieldset__nested')
+				?.querySelectorAll('.col-ddm:not(.col-empty)').length;
+
+			if (
+				totalFieldsInParentField === 1 &&
+				data.target.dataset.fieldName
+			) {
+				return;
+			}
+
 			if (parentFieldNode) {
 				parentFieldName = parentFieldNode.dataset.fieldName;
 			}

@@ -70,9 +70,9 @@ export default (state, action, config) => {
 			);
 
 			if (
-				sourceField &&
+				sourceParentField &&
 				targetFieldName &&
-				sourceField.fieldName === targetFieldName
+				sourceParentField.fieldName === targetFieldName
 			) {
 				return state;
 			}

@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that the title displayed on the structures list is the title defined on the default language."
 	@priority = "4"
 	test CheckDefaultStructureTitleDisplayedOnStructureList {
 		var defaultStructureName = "WC Structure Title EN";
@@ -60,7 +60,7 @@ definition {
 			value1 = "${defaultStructureName_pt}");
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that the user can click on the Locale Selector."
 	@priority = "4"
 	test CheckLanguageSelector {
 		WebContentStructures.addCP(
@@ -72,7 +72,7 @@ definition {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH");
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that localization persists."
 	@priority = "4"
 	test CheckLocalizationOfFieldsUponLanguageChange {
 		var defaultStructureName = "WC Structure Title";
@@ -117,7 +117,7 @@ definition {
 			value1 = "Nome da Estrutura WC");
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures the default title is carried to a locale, until it gets translated."
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		WebContentStructures.addCP(
@@ -131,7 +131,7 @@ definition {
 			value1 = "WC Structure Title");
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that translating the title for another locale does not changes the default title."
 	@priority = "4"
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		var defaultStructureName = "WC Structure Title";
@@ -169,7 +169,7 @@ definition {
 			value1 = "${defaultStructureName}");
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that the translation of the title is not carried to the default language."
 	@priority = "4"
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
 		property portal.acceptance = "false";
@@ -217,7 +217,7 @@ definition {
 			value1 = "Nome da Estrutura WC");
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that the translation of a field labels are carried when duplicating the field."
 	@priority = "4"
 	test DuplicateTranslatedField {
 		var defaultStructureName = "WC Structure Title";
@@ -255,7 +255,7 @@ definition {
 			fieldName = "Text");
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that the translations for all fields in a structure persists for each field."
 	@priority = "5"
 	test TranslateStructureWithAllFields {
 		property portal.acceptance = "false";
@@ -361,7 +361,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that user cannot save a structure without default title."
 	@priority = "4"
 	test TranslateStructureWithoutDefaultTitle {
 		LexiconEntry.gotoAdd();
@@ -389,7 +389,7 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Please enter a valid title for the default language: en-US");
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that translations persists and do not interfere with each other."
 	@priority = "5"
 	test TranslationDoesNotInterfereWithAnother {
 		var defaultStructureName = "WC Structure Title";
@@ -470,7 +470,7 @@ definition {
 			fieldName = "Text");
 	}
 
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
+	@description = "This test ensures that the default language is the first one shown to the user."
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
 		var defaultStructureName = "WC Structure Title";

@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {config} from '../../config/index';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import {useSelector} from '../../store/index';
@@ -72,7 +73,7 @@ const Container = React.forwardRef(
 			width,
 		} = itemConfig.styles;
 
-		const {widthType} = itemConfig;
+		const {align, contentDisplay, justify, widthType} = itemConfig;
 
 		const backgroundImageValue = useBackgroundImageValue(
 			elementId,
@@ -155,11 +156,21 @@ const Container = React.forwardRef(
 					`pr-${paddingRight || 0}`,
 					`pt-${paddingTop || 0}`,
 					{
+						[align]: !!align,
 						[`container-fluid`]: widthType === 'fixed',
 						[`container-fluid-max-xl`]: widthType === 'fixed',
+						'd-block':
+							contentDisplay === CONTAINER_DISPLAY_OPTIONS.block,
+						'd-flex flex-column':
+							contentDisplay ===
+							CONTAINER_DISPLAY_OPTIONS.flexColumn,
+						'd-flex flex-row':
+							contentDisplay ===
+							CONTAINER_DISPLAY_OPTIONS.flexRow,
 						empty: !item.children.length && !height,
 						[`bg-${backgroundColor}`]:
 							backgroundColor && !backgroundColor.startsWith('#'),
+						[justify]: !!justify,
 						[`ml-${marginLeft || 0}`]:
 							widthType !== 'fixed' && !withinTopper,
 						[`mr-${marginRight || 0}`]:

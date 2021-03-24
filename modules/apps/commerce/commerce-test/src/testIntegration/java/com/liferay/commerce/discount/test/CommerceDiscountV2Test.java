@@ -769,6 +769,82 @@ public class CommerceDiscountV2Test {
 	}
 
 	@Test
+	public void testCommercePercentageDiscountWithMaximumAmount()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Apply a percentage price discount with a maximum amount lower " +
+				"than the discount amount"
+		).given(
+			"A product with a base price"
+		).and(
+			"A discount with fixed value"
+		).when(
+			"I try to get the final price of the product"
+		).then(
+			"The final price will be calculated taking into consideration " +
+				"the discount"
+		);
+
+		CommerceCatalog catalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			catalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
+				catalog.getGroupId());
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryTestUtil.addCommercePriceEntry(
+				StringPool.BLANK, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(),
+				BigDecimal.valueOf(25));
+
+		CommerceDiscount commerceDiscount =
+			CommerceDiscountTestUtil.addPercentageCommerceDiscount(
+				_group.getGroupId(), BigDecimal.valueOf(25),
+				CommerceDiscountConstants.LEVEL_L1,
+				CommerceDiscountConstants.TARGET_PRODUCTS,
+				cpDefinition.getCPDefinitionId());
+
+		commerceDiscount.setMaximumDiscountAmount(BigDecimal.ONE);
+
+		_commerceDiscountLocalService.updateCommerceDiscount(commerceDiscount);
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, null, _user, _group, _commerceAccount, null);
+
+		CommerceProductPrice commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(), 1, commerceContext);
+
+		BigDecimal price = commercePriceEntry.getPrice();
+
+		BigDecimal expectedPrice = price.subtract(BigDecimal.ONE);
+
+		BigDecimal actualPrice = BigDecimal.ZERO;
+
+		if (commerceProductPrice != null) {
+			CommerceMoney finalPriceCommerceMoney =
+				commerceProductPrice.getFinalPrice();
+
+			actualPrice = finalPriceCommerceMoney.getPrice();
+		}
+
+		Assert.assertEquals(
+			expectedPrice.stripTrailingZeros(),
+			actualPrice.stripTrailingZeros());
+	}
+
+	@Test
 	public void testCouponCodeDiscount() throws Exception {
 		frutillaRule.scenario(
 			"Discounts can be applied by coupon code"

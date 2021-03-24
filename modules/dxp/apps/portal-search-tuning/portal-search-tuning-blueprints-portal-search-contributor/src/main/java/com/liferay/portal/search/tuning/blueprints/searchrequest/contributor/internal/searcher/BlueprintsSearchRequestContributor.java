@@ -17,6 +17,8 @@ package com.liferay.portal.search.tuning.blueprints.searchrequest.contributor.in
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
@@ -39,6 +41,7 @@ import com.liferay.portal.search.tuning.blueprints.util.BlueprintHelper;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,19 +62,15 @@ public class BlueprintsSearchRequestContributor
 	public SearchRequest contribute(SearchRequest searchRequest) {
 		long blueprintId = getBlueprintId(searchRequest);
 
-		long userId = getUserId(searchRequest);
-
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Executing Search Blueprints search request contributor");
 			_log.debug("Blueprint ID " + blueprintId);
-			_log.debug("User ID " + userId);
 		}
 
-		if ((blueprintId == 0) || (userId == 0)) {
+		if (blueprintId == 0) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Blueprint and user ID have to be set in search context");
+				_log.debug("Blueprint must be set in search context");
 			}
 
 			return searchRequest;
@@ -148,7 +147,7 @@ public class BlueprintsSearchRequestContributor
 		blueprintsAttributesBuilder.companyId(
 			getCompanyId(searchRequest)
 		).keywords(
-			getKeywords(searchRequest)
+			searchRequest.getQueryString()
 		).locale(
 			getLocale(searchRequest)
 		).userId(
@@ -211,11 +210,11 @@ public class BlueprintsSearchRequestContributor
 		);
 	}
 
-	protected String getKeywords(SearchRequest searchRequest) {
+	protected Layout getLayout(SearchRequest searchRequest) {
 		return _searchRequestBuilderFactory.builder(
 			searchRequest
 		).withSearchContextGet(
-			searchContext -> searchContext.getKeywords()
+			SearchContext::getLayout
 		);
 	}
 
@@ -223,42 +222,57 @@ public class BlueprintsSearchRequestContributor
 		return _searchRequestBuilderFactory.builder(
 			searchRequest
 		).withSearchContextGet(
-			searchContext -> searchContext.getLocale()
+			SearchContext::getLocale
 		);
 	}
 
-	protected long getPlid(SearchRequest searchRequest) {
-		return _searchRequestBuilderFactory.builder(
-			searchRequest
-		).withSearchContextGet(
-			searchContext -> searchContext.getLayout(
-			).getPlid()
-		);
+	protected Long getPlid(SearchRequest searchRequest) {
+		Layout layout = getLayout(searchRequest);
+
+		if (layout == null) {
+			return null;
+		}
+
+		return layout.getPlid();
 	}
 
-	protected long getScopeGroupId(SearchRequest searchRequest) {
-		return _searchRequestBuilderFactory.builder(
-			searchRequest
-		).withSearchContextGet(
-			searchContext -> searchContext.getLayout(
-			).getGroupId()
-		);
+	protected Long getScopeGroupId(SearchRequest searchRequest) {
+		Layout layout = getLayout(searchRequest);
+
+		if (layout == null) {
+			return null;
+		}
+
+		return layout.getGroupId();
 	}
 
 	protected String getTimezoneId(SearchRequest searchRequest) {
-		return _searchRequestBuilderFactory.builder(
+		TimeZone timeZone = _searchRequestBuilderFactory.builder(
 			searchRequest
 		).withSearchContextGet(
-			searchContext -> searchContext.getTimeZone(
-			).getID()
+			SearchContext::getTimeZone
 		);
+
+		if (timeZone == null) {
+			return null;
+		}
+
+		return timeZone.getID();
 	}
 
-	protected long getUserId(SearchRequest searchRequest) {
+	protected Long getUserId(SearchRequest searchRequest) {
 		return _searchRequestBuilderFactory.builder(
 			searchRequest
 		).withSearchContextGet(
-			searchContext -> searchContext.getUserId()
+			searchContext -> {
+				long userId = searchContext.getUserId();
+
+				if (userId == 0) {
+					return null;
+				}
+
+				return Long.valueOf(userId);
+			}
 		);
 	}
 

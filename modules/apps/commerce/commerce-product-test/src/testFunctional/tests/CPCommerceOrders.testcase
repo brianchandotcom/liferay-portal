@@ -36,6 +36,25 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-6215. Maximum open order per account"
+	@ignore = "true"
+	@priority = "3"
+	test AccountMaximumOpenOrderActive {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6215 AccountMaximumOpenOrderActive Pending Implementation
+
+	}
+
+	@description = "This is a test for COMMERCE-6210. Shipment cancelled"
+	@ignore = "true"
+	@priority = "3"
+	test CancelShipmentAndCreateNewFromPendingOrder {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6210 CancelShipmentAndCreateNewFromPendingOrder Pending Implementation
+	}
+
 	test EditOrder {
 		property portal.acceptance = "quarantine";
 		property portal.release = "quarantine";
@@ -204,7 +223,6 @@ definition {
 
 		// TODO COMMERCE-5980 EditOrderPaymentMethod Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
-
 	}
 
 	@description = "This is a test for COMMERCE-5980. As an order manager, I want to edit the payment method and payment status of a submitted order"
@@ -255,6 +273,69 @@ definition {
 
 		// TODO COMMERCE-5997 FilterOrderByStatus Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+	}
+
+	@description = "This is a test for COMMERCE-6209. Admin order fulfillment"
+	@ignore = "true"
+	@priority = "3"
+	test FulfillOrder {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6209 FulfillOrder Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6213. Buyer Order Approval Workflow"
+	@ignore = "true"
+	@priority = "3"
+	test FulfillOrderWithBuyerOrderApprovalWorkflowActive {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6213 FulfillOrderWithBuyerOrderApprovalWorkflowActive Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6214. Seller Order Acceptance Workflow"
+	@ignore = "true"
+	@priority = "3"
+	test FulfillOrderWithSellerOrderAcceptanceWorkflowActive {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6214 FulfillOrderWithSellerOrderAcceptanceWorkflowActive Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6211. Stock management from order"
+	@ignore = "true"
+	@priority = "3"
+	test ManageBackOrdersFromOrder {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6211 ManageBackOrdersFromOrder Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6211. Stock management from order"
+	@ignore = "true"
+	@priority = "3"
+	test ManageProductAvailabilityFromOrder {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6211 ManageProductAvailabilityFromOrder Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6217. Order Permission Management"
+	@ignore = "true"
+	@priority = "3"
+	test OrderPermissionManagement {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6217 OrderPermissionManagement Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6216. Search Order from UI"
+	@ignore = "true"
+	@priority = "3"
+	test SearchOrder {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6216 SearchOrder Pending Implementation
 	}
 
 	@description = "This is a test for COMMERCE-5982. As an order manager, I want to sort orders by ascending or descending order date"

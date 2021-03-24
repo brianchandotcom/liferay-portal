@@ -215,22 +215,23 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
 		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
+		List<Map<String, Object>> classSubtypes = new ArrayList<>();
+
 		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;
 		}
 
-		List<Map<String, Object>> classSubtypes = new ArrayList<>();
-
 		for (ClassType classType : assetAvailableClassTypes) {
 			List<ClassTypeField> classTypeFields = classType.getClassTypeFields();
+
+			List<Map<String, Object>> classTypeFieldsList = new ArrayList<>();
 
 			if (classTypeFields.isEmpty()) {
 				continue;
 			}
 
-			List<Map<String, Object>> classTypeFieldsList = new ArrayList<>();
 			String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
 			String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 

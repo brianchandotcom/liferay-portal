@@ -133,10 +133,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
 			GradleUtil.applyPlugin(project, SoyPlugin.class);
 			GradleUtil.applyPlugin(project, SoyTranslationPlugin.class);
-			GradleUtil.applyPlugin(
-				project, UpgradeTableBuilderPlugin.class);
+			GradleUtil.applyPlugin(project, UpgradeTableBuilderPlugin.class);
 			GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
-
 
 			if (GradleUtil.hasTask(
 					project, NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME)) {

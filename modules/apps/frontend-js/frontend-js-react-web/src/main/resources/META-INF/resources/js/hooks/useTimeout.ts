@@ -12,29 +12,27 @@
  * details.
  */
 
-import React from 'react';
+import {useCallback} from 'react';
 
-import useIsMounted from './useIsMounted.es';
-
-const {useCallback, useState} = React;
+import useIsMounted from './useIsMounted';
 
 /**
- * Wrapper for `useState` that does an `isMounted()` check behind the scenes
- * before triggering side-effects.
+ * Hook for delaying a function call by the specified interval (in
+ * milliseconds).
  */
-export default function useStateSafe(initialValue) {
+export default function useTimeout() {
 	const isMounted = useIsMounted();
 
-	const [state, setState] = useState(initialValue);
+	return useCallback(
+		function delay(fn, ms) {
+			const handle = setTimeout(() => {
+				if (isMounted()) {
+					fn();
+				}
+			}, ms);
 
-	const setStateSafe = useCallback(
-		(newValue) => {
-			if (isMounted()) {
-				setState(newValue);
-			}
+			return () => clearTimeout(handle);
 		},
 		[isMounted]
 	);
-
-	return [state, setStateSafe];
 }

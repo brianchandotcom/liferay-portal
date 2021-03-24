@@ -14,7 +14,7 @@
 
 import {useCallback} from 'react';
 
-import useIsMounted from './useIsMounted.es';
+import useIsMounted from './useIsMounted';
 
 /**
  * Hook for scheduling a repeating function call with the specified
@@ -24,7 +24,7 @@ export default function useInterval() {
 	const isMounted = useIsMounted();
 
 	return useCallback(
-		function schedule(fn, ms) {
+		function schedule(fn: () => void, ms: number | undefined) {
 			const handle = setInterval(() => {
 				if (isMounted()) {
 					fn();

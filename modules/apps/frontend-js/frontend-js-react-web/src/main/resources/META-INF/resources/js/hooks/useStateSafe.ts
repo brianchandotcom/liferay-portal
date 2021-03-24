@@ -12,20 +12,29 @@
  * details.
  */
 
-import {useEffect, useRef} from 'react';
+import React from 'react';
+
+import useIsMounted from './useIsMounted';
+
+const {useCallback, useState} = React;
 
 /**
- * Hook for comparing current and previous values (of state, props or any
- * arbitrary value).
- *
- * @see https://reactjs.org/docs/hooks-faq.html#how-to-get-the-previous-props-or-state
+ * Wrapper for `useState` that does an `isMounted()` check behind the scenes
+ * before triggering side-effects.
  */
-export default function usePrevious(value) {
-	const ref = useRef();
+export default function useStateSafe<T = unknown>(initialValue: T | (() => T)) {
+	const isMounted = useIsMounted();
 
-	useEffect(() => {
-		ref.current = value;
-	});
+	const [state, setState] = useState(initialValue);
 
-	return ref.current;
+	const setStateSafe = useCallback(
+		(newValue) => {
+			if (isMounted()) {
+				setState(newValue);
+			}
+		},
+		[isMounted]
+	);
+
+	return [state, setStateSafe];
 }

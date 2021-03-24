@@ -12,27 +12,20 @@
  * details.
  */
 
-import {useCallback} from 'react';
-
-import useIsMounted from './useIsMounted.es';
+import {useEffect, useRef} from 'react';
 
 /**
- * Hook for delaying a function call by the specified interval (in
- * milliseconds).
+ * Hook for comparing current and previous values (of state, props or any
+ * arbitrary value).
+ *
+ * @see https://reactjs.org/docs/hooks-faq.html#how-to-get-the-previous-props-or-state
  */
-export default function useTimeout() {
-	const isMounted = useIsMounted();
+export default function usePrevious<T = unknown>(value: T): T | undefined {
+	const ref = useRef<T>();
 
-	return useCallback(
-		function delay(fn, ms) {
-			const handle = setTimeout(() => {
-				if (isMounted()) {
-					fn();
-				}
-			}, ms);
+	useEffect(() => {
+		ref.current = value;
+	});
 
-			return () => clearTimeout(handle);
-		},
-		[isMounted]
-	);
+	return ref.current;
 }

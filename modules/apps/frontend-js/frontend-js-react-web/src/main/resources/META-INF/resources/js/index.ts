@@ -18,35 +18,14 @@ import process from 'process';
 
 export {default as render} from './render.es';
 
-// @ts-ignore
-
-export {default as useEventListener} from './hooks/useEventListener.es';
-
-// @ts-ignore
-
-export {default as useInterval} from './hooks/useInterval.es';
-
-// @ts-ignore
-
-export {default as useIsMounted} from './hooks/useIsMounted.es';
-
+export {default as useEventListener} from './hooks/useEventListener';
+export {default as useInterval} from './hooks/useInterval';
+export {default as useIsMounted} from './hooks/useIsMounted';
 export {default as useLiferayState} from './hooks/useLiferayState';
-
-// @ts-ignore
-
-export {default as usePrevious} from './hooks/usePrevious.es';
-
-// @ts-ignore
-
-export {default as useStateSafe} from './hooks/useStateSafe.es';
-
-// @ts-ignore
-
-export {default as useThunk} from './hooks/useThunk.es';
-
-// @ts-ignore
-
-export {default as useTimeout} from './hooks/useTimeout.es';
+export {default as usePrevious} from './hooks/usePrevious';
+export {default as useStateSafe} from './hooks/useStateSafe';
+export {default as useThunk} from './hooks/useThunk';
+export {default as useTimeout} from './hooks/useTimeout';
 
 // Egregious hack because react-dnd expects `window.process` to exist:
 //

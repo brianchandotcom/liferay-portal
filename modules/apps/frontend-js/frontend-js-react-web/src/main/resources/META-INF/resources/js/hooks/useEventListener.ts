@@ -24,7 +24,12 @@ import {useEffect} from 'react';
  * outside of your component's DOM (eg. attaching a "scroll" or "resize"
  * listener to the `window`).
  */
-export default function useEventListener(eventName, handler, phase, target) {
+export default function useEventListener(
+	eventName: string,
+	handler: EventListenerOrEventListenerObject,
+	phase: boolean,
+	target: Node
+) {
 	useEffect(() => {
 		if (target) {
 			target.addEventListener(eventName, handler, phase);

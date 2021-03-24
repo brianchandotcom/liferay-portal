@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import useIsMounted from './useIsMounted.es';
+import useIsMounted from './useIsMounted';
 
 const {useRef} = React;
 
@@ -23,16 +23,16 @@ const {useRef} = React;
  * thunks (ie. functions that dispatch actions) as well as plain actions (ie.
  * objects).
  */
-export default function useThunk([state, dispatch]) {
+export default function useThunk([state, dispatch]: [any, any]) {
 	const isMounted = useIsMounted();
 
 	// Use a ref to ensure our `dispatch` is stable across renders, just
 	// like the React-provided `dispatch` that we're wrapping.
 
-	const thunkDispatch = useRef((action) => {
+	const thunkDispatch = useRef((action: any) => {
 		if (isMounted()) {
 			if (typeof action === 'function') {
-				return action((payload) => {
+				return action((payload: any) => {
 					if (isMounted()) {
 						dispatch(payload);
 					}

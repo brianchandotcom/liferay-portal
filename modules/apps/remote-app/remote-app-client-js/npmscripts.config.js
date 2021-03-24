@@ -13,9 +13,5 @@
  */
 
 module.exports = {
-	build: {
-		bundler: {
-			preset: false,
-		},
-	},
+	bundling: false,
 };

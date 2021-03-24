@@ -784,7 +784,6 @@ definition {
 	}
 
 	@description = "This test ensures that the default language is the first shown to the user."
-	@ignore = "true"
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

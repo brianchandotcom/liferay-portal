@@ -21,10 +21,10 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 %>
 
 <clay:management-toolbar
-	displayContext="<%= (SelectOrganizationsManagementToolbarDisplayContext)request.getAttribute(BlueprintsAdminWebKeys.SELECT_ORGANIZATIONS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT) %>"
+	managementToolbarDisplayContext="<%= (SelectOrganizationsManagementToolbarDisplayContext)request.getAttribute(BlueprintsAdminWebKeys.SELECT_ORGANIZATIONS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT) %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:search-container
 		id="<%= selectOrganizationsDisplayContext.getSearchContainerId() %>"
 		searchContainer="<%= selectOrganizationsDisplayContext.getOrganizationSearchContainer() %>"
@@ -46,20 +46,20 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content table-title"
+				cssClass="table-cell-expand table-title"
 				name="name"
 				orderable="<%= true %>"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="parent-organization"
 				value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="type"
 				orderable="<%= true %>"
 				value="<%= LanguageUtil.get(request, organization.getType()) %>"
@@ -75,6 +75,6 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 
 <liferay-util:include page="/field/select_js.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="displayStyle" value="<%= selectOrganizationsDisplayContext.getDisplayStyle() %>" />
-	<liferay-util:param name="searchContainerId" value="selectSegmentsEntryOrganizations" />
+	<liferay-util:param name="searchContainerId" value="selectElementsEntryOrganizations" />
 	<liferay-util:param name="selectEventName" value="<%= selectOrganizationsDisplayContext.getEventName() %>" />
 </liferay-util:include>

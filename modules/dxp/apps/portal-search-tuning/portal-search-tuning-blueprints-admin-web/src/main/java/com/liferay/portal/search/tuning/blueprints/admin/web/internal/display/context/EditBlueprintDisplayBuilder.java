@@ -90,7 +90,7 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 	private JSONObject _getEntityJSONObject() {
 		String[] entityClassNames = {
 			Group.class.getName(), Organization.class.getName(),
-			Team.class.getName(), Role.class.getName(), User.class.getName(),
+			Role.class.getName(), Team.class.getName(), User.class.getName(),
 			UserGroup.class.getName()
 		};
 
@@ -192,6 +192,8 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
 				renderRequest, className, PortletProvider.Action.BROWSE);
 
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
 			if (portletURL == null) {
 				return null;
 			}
@@ -199,23 +201,17 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 			boolean multiple = false;
 
 			if (className.equals(User.class.getName())) {
-				_prepareSelectEntityURL(
-					portletURL, BlueprintsAdminMVCCommandNames.SELECT_USERS);
+				portletURL = _getSelectEntityURL(
+					BlueprintsAdminMVCCommandNames.SELECT_USERS);
 
 				multiple = true;
 			}
-
-			/*
-			LPS-129056 - Address selector functionality
-
 			else if (className.equals(Organization.class.getName())) {
-				_prepareSelectEntityURL(
-					portletURL,
+				portletURL = _getSelectEntityURL(
 					BlueprintsAdminMVCCommandNames.SELECT_ORGANIZATIONS);
 
 				multiple = true;
 			}
-			*/
 
 			return JSONUtil.put(
 				"multiple", multiple
@@ -241,17 +237,18 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 		return LanguageUtil.format(locale, "select-x", title);
 	}
 
-	private void _prepareSelectEntityURL(
-			PortletURL portletURL, String mvcRenderCommandName)
+	private PortletURL _getSelectEntityURL(String mvcRenderCommandName)
 		throws WindowStateException {
 
-		portletURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			renderRequest, BlueprintsPortletKeys.BLUEPRINTS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 		portletURL.setParameter("eventName", "selectEntity");
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

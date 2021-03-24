@@ -92,7 +92,7 @@ public class SelectUsersDisplayContext {
 
 		_eventName = ParamUtil.getString(
 			_httpServletRequest, "eventName",
-			_renderResponse.getNamespace() + "selectSegmentsEntryUsers");
+			_renderResponse.getNamespace() + "selectElementsEntryUsers");
 
 		return _eventName;
 	}
@@ -202,7 +202,7 @@ public class SelectUsersDisplayContext {
 	}
 
 	public String getSearchContainerId() {
-		return "selectSegmentsEntryUsers";
+		return "selectElementsEntryUsers";
 	}
 
 	public String getSortingURL() {

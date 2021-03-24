@@ -31,7 +31,13 @@ function ItemSelectorInput({
 				multiple: true,
 				onSelect: (selectedItems) => {
 					if (selectedItems) {
-						onChange(key, selectedItems);
+						onChange(
+							key,
+							selectedItems.map((item) => ({
+								label: item.name,
+								value: item.id,
+							}))
+						);
 					}
 				},
 				selectEventName: 'selectEntity',

@@ -21,10 +21,10 @@ SelectUsersDisplayContext selectUsersDisplayContext = (SelectUsersDisplayContext
 %>
 
 <clay:management-toolbar
-	displayContext="<%= (SelectUsersManagementToolbarDisplayContext)request.getAttribute(BlueprintsAdminWebKeys.SELECT_USERS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT) %>"
+	managementToolbarDisplayContext="<%= (SelectUsersManagementToolbarDisplayContext)request.getAttribute(BlueprintsAdminWebKeys.SELECT_USERS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT) %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:search-container
 		id="<%= selectUsersDisplayContext.getSearchContainerId() %>"
 		searchContainer="<%= selectUsersDisplayContext.getUserSearchContainer() %>"
@@ -33,16 +33,16 @@ SelectUsersDisplayContext selectUsersDisplayContext = (SelectUsersDisplayContext
 			className="com.liferay.portal.kernel.model.User"
 			escapedModel="<%= true %>"
 			keyProperty="userId"
-			modelVar="user2"
+			modelVar="user"
 			rowIdProperty="screenName"
 		>
 
 			<%
 			row.setData(
 				HashMapBuilder.<String, Object>put(
-					"id", user2.getUserId()
+					"id", user.getUserId()
 				).put(
-					"name", user2.getFullName()
+					"name", user.getFullName()
 				).build());
 			%>
 
@@ -55,36 +55,36 @@ SelectUsersDisplayContext selectUsersDisplayContext = (SelectUsersDisplayContext
 
 					<liferay-ui:search-container-column-text>
 						<clay:user-card
-							userCard="<%= new SelectUserUserCard(user2, renderRequest, searchContainer.getRowChecker()) %>"
+							userCard="<%= new SelectUserUserCard(user, renderRequest, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(selectUsersDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<liferay-ui:user-portrait
-							userId="<%= user2.getUserId() %>"
+							userId="<%= user.getUserId() %>"
 						/>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5 class="table-title"><%= user2.getFullName() %></h5>
+						<h5 class="table-title"><%= user.getFullName() %></h5>
 
 						<h6 class="text-default">
-							<span><%= user2.getScreenName() %></span>
+							<span><%= user.getScreenName() %></span>
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content table-title"
+						cssClass="table-cell-expand table-title"
 						name="name"
 						property="fullName"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="screen-name"
 						property="screenName"
 					/>
@@ -101,6 +101,6 @@ SelectUsersDisplayContext selectUsersDisplayContext = (SelectUsersDisplayContext
 
 <liferay-util:include page="/field/select_js.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="displayStyle" value="<%= selectUsersDisplayContext.getDisplayStyle() %>" />
-	<liferay-util:param name="searchContainerId" value="selectSegmentsEntryUsers" />
+	<liferay-util:param name="searchContainerId" value="selectElementsEntryUsers" />
 	<liferay-util:param name="selectEventName" value="<%= selectUsersDisplayContext.getEventName() %>" />
 </liferay-util:include>

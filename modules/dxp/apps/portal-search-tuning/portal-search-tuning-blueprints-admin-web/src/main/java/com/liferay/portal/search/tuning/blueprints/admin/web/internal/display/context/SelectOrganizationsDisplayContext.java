@@ -251,7 +251,7 @@ public class SelectOrganizationsDisplayContext {
 	}
 
 	public String getSearchContainerId() {
-		return "selectSegmentsEntryOrganizations";
+		return "selectElementsEntryOrganizations";
 	}
 
 	public String getSortingURL() {

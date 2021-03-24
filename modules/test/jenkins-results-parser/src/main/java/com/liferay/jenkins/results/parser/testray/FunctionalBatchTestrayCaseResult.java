@@ -76,7 +76,17 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			Build build = getBuild();
 
 			if (build == null) {
-				return "Failed to run on CI";
+				return "Failed to run build on CI";
+			}
+
+			String result = build.getResult();
+
+			if (result == null) {
+				return "Failed to finish build on CI";
+			}
+
+			if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
+				return "Failed to run test on CI";
 			}
 
 			return "Failed prior to running test";
@@ -125,10 +135,24 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 	@Override
 	public Status getStatus() {
+		Build build = getBuild();
+
+		if (build == null) {
+			return Status.UNTESTED;
+		}
+
 		TestResult testResult = getTestResult();
 
 		if (testResult == null) {
-			return Status.UNTESTED;
+			String result = build.getResult();
+
+			if ((result == null) || result.equals("SUCCESS") ||
+				result.equals("UNSTABLE")) {
+
+				return Status.UNTESTED;
+			}
+
+			return Status.FAILED;
 		}
 
 		if (testResult.isFailing()) {

@@ -51,6 +51,18 @@ public class Pagination {
 		return (_page - 1) * _pageSize;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("{\"page\":");
+
+		sb.append(_page);
+		sb.append(", \"pageSize\":");
+		sb.append(_pageSize);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private Pagination(int page, int pageSize) {
 		_page = page;
 		_pageSize = pageSize;

@@ -19,9 +19,11 @@ import com.liferay.headless.commerce.admin.inventory.client.json.BaseJSONParser;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -113,6 +115,34 @@ public class Page<T> {
 
 	public void setTotalCount(long totalCount) {
 		_totalCount = totalCount;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("{\"actions\":");
+
+		sb.append(_toString((Map)_actions));
+		sb.append(", \"items\":[");
+
+		Iterator<T> iterator = _items.iterator();
+
+		while (iterator.hasNext()) {
+			sb.append(iterator.next());
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("], \"page\":");
+		sb.append(_page);
+		sb.append(", \"pageSize\":");
+		sb.append(_pageSize);
+		sb.append(", \"totalCount\":");
+		sb.append(_totalCount);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public static class PageJSONParser<T> extends BaseJSONParser<Page> {
@@ -219,6 +249,41 @@ public class Page<T> {
 
 		private final Function<String, T> _toDTOFunction;
 
+	}
+
+	private String _toString(Map<String, Object> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		Set<Map.Entry<String, Object>> entries = map.entrySet();
+
+		Iterator<Map.Entry<String, Object>> iterator = entries.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, Object> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			Object value = entry.getValue();
+
+			if (value instanceof Map) {
+				sb.append(_toString((Map)value));
+			}
+			else {
+				sb.append("\"");
+				sb.append(value);
+				sb.append("\"");
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private Map<String, Map> _actions;

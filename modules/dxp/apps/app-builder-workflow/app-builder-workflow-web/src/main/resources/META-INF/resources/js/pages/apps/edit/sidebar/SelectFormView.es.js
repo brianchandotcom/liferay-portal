@@ -31,12 +31,12 @@ const Item = ({
 	const onClickPopover = () => {
 		setShowPopover(false);
 
-		openFormViewModal(
-			dataObject.id,
-			dataObject.defaultLanguageId,
-			updateFormView,
-			id
-		);
+		openFormViewModal({
+			dataDefinitionId: dataObject.id,
+			dataLayoutId: id,
+			defaultLanguageId: dataObject.defaultLanguageId,
+			selectFormView: updateFormView,
+		});
 	};
 
 	return (

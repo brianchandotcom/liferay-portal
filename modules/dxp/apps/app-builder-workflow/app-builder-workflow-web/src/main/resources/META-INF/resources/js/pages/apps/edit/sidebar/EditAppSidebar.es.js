@@ -319,12 +319,15 @@ export default function EditAppSidebar() {
 													onClick={() => {
 														setShowPopover(false);
 
-														openFormViewModal(
-															dataObject.id,
-															dataObject.defaultLanguageId,
-															updateFormView,
-															formView.id
-														);
+														openFormViewModal({
+															dataDefinitionId:
+																dataObject.id,
+															dataLayoutId:
+																formView.id,
+															defaultLanguageId:
+																dataObject.defaultLanguageId,
+															selectFormView: updateFormView,
+														});
 													}}
 													setShowPopover={
 														setShowPopover

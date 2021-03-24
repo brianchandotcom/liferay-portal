@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -74,7 +75,7 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 			_getItemSelectorFragmentConfigurationFields(
 				(FragmentEntryLink)stagedModel);
 
-		if (fragmentConfigurationFields.isEmpty()) {
+		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
 			return editableValuesJSONObject;
 		}
 
@@ -109,7 +110,7 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 			_getItemSelectorFragmentConfigurationFields(
 				(FragmentEntryLink)stagedModel);
 
-		if (fragmentConfigurationFields.isEmpty()) {
+		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
 			return editableValuesJSONObject;
 		}
 

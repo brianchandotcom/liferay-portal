@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -59,7 +60,7 @@ public class EditableValuesNavigationMenuSelectorExportImportContentProcessor
 			_getNavigationMenuSelectorFragmentConfigurationFields(
 				(FragmentEntryLink)stagedModel);
 
-		if (fragmentConfigurationFields.isEmpty()) {
+		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
 			return editableValuesJSONObject;
 		}
 
@@ -94,7 +95,7 @@ public class EditableValuesNavigationMenuSelectorExportImportContentProcessor
 			_getNavigationMenuSelectorFragmentConfigurationFields(
 				(FragmentEntryLink)stagedModel);
 
-		if (fragmentConfigurationFields.isEmpty()) {
+		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
 			return editableValuesJSONObject;
 		}
 

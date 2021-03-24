@@ -31,6 +31,6 @@ public interface BlueprintsAttributesBuilder {
 
 	public BlueprintsAttributesBuilder locale(Locale locale);
 
-	public BlueprintsAttributesBuilder userId(long userId);
+	public BlueprintsAttributesBuilder userId(Long userId);
 
 }

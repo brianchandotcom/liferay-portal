@@ -21,6 +21,7 @@ import CodeMirrorEditor from '../shared/CodeMirrorEditor';
 import PreviewModal from '../shared/PreviewModal';
 
 const RESULTS_DEFAULT_KEYS = ['type', 'description', 'date', 'userName'];
+const RESULTS_HIDE_KEYS = ['explanation'];
 
 function ResultListItem({item}) {
 	const [collapse, setCollapse] = useState(true);
@@ -70,7 +71,12 @@ function ResultListItem({item}) {
 
 				{!collapse &&
 					Object.keys(item).map((property) => {
-						if (!RESULTS_DEFAULT_KEYS.includes(property)) {
+						if (
+							![
+								...RESULTS_DEFAULT_KEYS,
+								...RESULTS_HIDE_KEYS,
+							].includes(property)
+						) {
 							return _renderListRow(property);
 						}
 					})}

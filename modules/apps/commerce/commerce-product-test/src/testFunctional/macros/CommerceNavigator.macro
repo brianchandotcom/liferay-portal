@@ -113,4 +113,18 @@ definition {
 			value1 = "${sortFieldName}");
 	}
 
+	macro viewFilterResultsSpecificOrder {
+		var resultOrder = "0";
+
+		for (var searchAssetTitle : list "${resultsList}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertTextEquals.assertPartialText(
+				key_entryName = "${searchAssetTitle}",
+				locator1 = "CommerceNavigation#ENTRY_NAME",
+				resultOrder = "${resultOrder}",
+				value1 = "${searchAssetTitle}");
+		}
+	}
+
 }

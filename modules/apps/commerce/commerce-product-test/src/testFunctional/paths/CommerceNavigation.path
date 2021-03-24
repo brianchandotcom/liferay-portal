@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>SORT_FIELD</td>
+    <td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>ORGANIZATIONS_TABLE_CHECKBOX</td>
 	<td>//tr[@data-name="${key_orgName}"]//input[@type="checkbox"]</td>
 	<td></td>

@@ -351,7 +351,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5803. UseSortingByNameAndDate"
-	@ignore = "true"
 	@priority = "3"
 	test UseSortingByNameAndDate {
 		property portal.acceptance = "false";
@@ -363,35 +362,19 @@ definition {
 			portlet = "Products");
 		CommerceNavigator.sortField(sortFieldName = "Name");
 
-		CommerceNavigator.assertEntry(entryName = "ABS Sensor");
-
-		CommerceNavigator.assertEntry(entryName = "Ball Joints");
-
-		CommerceNavigator.assertEntry(entryName = "Bearings");
+		CommerceNavigator.viewFilterResultsSpecificOrder(resultsList = "ABS Sensor,Ball Joints,Bearings");
 
 		CommerceNavigator.sortField(sortFieldName = "Name");
 
-		CommerceNavigator.assertEntry(entryName = "Wheel Seal - Front");
-
-		CommerceNavigator.assertEntry(entryName = "Wheel Bearing Grease");
-
-		CommerceNavigator.assertEntry(entryName = "Wear Sensors");
+		CommerceNavigator.viewFilterResultsSpecificOrder(resultsList = "Wheel Seal - Front,Wheel Bearing Grease,Wear Sensors");
 
 		CommerceNavigator.sortField(sortFieldName = "Modified Date");
 
-		CommerceNavigator.assertEntry(entryName = "ABS Sensor");
-
-		CommerceNavigator.assertEntry(entryName = "Brake Fluid");
-
-		CommerceNavigator.assertEntry(entryName = "Premium Brake Fluid");
+		CommerceNavigator.viewFilterResultsSpecificOrder(resultsList = "ABS Sensor,Brake Fluid,Premium Brake Fluid");
 
 		CommerceNavigator.sortField(sortFieldName = "Modified Date");
 
-		CommerceNavigator.assertEntry(entryName = "U-Joint");
-
-		CommerceNavigator.assertEntry(entryName = "Transmission Cooler Line Assembly");
-
-		CommerceNavigator.assertEntry(entryName = "Torque Converters");
+		CommerceNavigator.viewFilterResultsSpecificOrder(resultsList = "U-Joint,Transmission Cooler Line Assembly,Torque Converters");
 	}
 
 }

@@ -44,10 +44,9 @@ import javax.portlet.ReadOnlyException;
 /**
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BasePortletPreferencesUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
+public abstract class BasePortletPreferencesUpgradeProcess
+	extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

@@ -20,10 +20,8 @@ import java.sql.PreparedStatement;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseRepositoryUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradeRepository extends UpgradeProcess {
+public abstract class BaseRepositoryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

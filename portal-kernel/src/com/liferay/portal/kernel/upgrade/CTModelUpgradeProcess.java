@@ -23,12 +23,10 @@ import java.sql.ResultSet;
 
 /**
  * @author Preston Crary
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link CTModelUpgradeProcess}
  */
-@Deprecated
-public class UpgradeCTModel extends UpgradeProcess {
+public class CTModelUpgradeProcess extends UpgradeProcess {
 
-	public UpgradeCTModel(String... tableNames) {
+	public CTModelUpgradeProcess(String... tableNames) {
 		if (tableNames.length == 0) {
 			throw new IllegalArgumentException("Table names is empty");
 		}
@@ -44,7 +42,7 @@ public class UpgradeCTModel extends UpgradeProcess {
 
 		for (String tableName : _tableNames) {
 			try (LoggingTimer loggingTimer = new LoggingTimer(
-					UpgradeCTModel.class, tableName)) {
+					CTModelUpgradeProcess.class, tableName)) {
 
 				_upgradeCTModel(databaseMetaData, dbInspector, tableName);
 			}

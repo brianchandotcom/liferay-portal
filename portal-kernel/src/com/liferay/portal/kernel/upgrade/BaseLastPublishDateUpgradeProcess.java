@@ -33,10 +33,8 @@ import java.util.List;
 
 /**
  * @author Máté Thurzó
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseLastPublishDateUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
+public abstract class BaseLastPublishDateUpgradeProcess extends UpgradeProcess {
 
 	protected void addLastPublishDateColumn(String tableName) throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
@@ -217,6 +215,6 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseUpgradeLastPublishDate.class);
+		BaseLastPublishDateUpgradeProcess.class);
 
 }

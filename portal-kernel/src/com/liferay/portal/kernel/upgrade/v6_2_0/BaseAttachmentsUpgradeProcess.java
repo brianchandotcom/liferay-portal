@@ -44,10 +44,8 @@ import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseAttachmentsUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradeAttachments extends UpgradeProcess {
+public abstract class BaseAttachmentsUpgradeProcess extends UpgradeProcess {
 
 	protected long addDLFileEntry(
 			long groupId, long companyId, long userId, String className,
@@ -613,7 +611,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		"com.liferay.portal.repository.liferayrepository.LiferayRepository";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseUpgradeAttachments.class);
+		BaseAttachmentsUpgradeProcess.class);
 
 	private final Map<String, Map<String, Long>> _bitwiseValues =
 		new HashMap<>();

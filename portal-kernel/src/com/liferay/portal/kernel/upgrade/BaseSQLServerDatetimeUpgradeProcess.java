@@ -30,12 +30,10 @@ import java.util.Map;
 
 /**
  * @author José Ángel Jiménez
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseSQLServerDatetimeUpgradeProcess}
  */
-@Deprecated
-public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
+public class BaseSQLServerDatetimeUpgradeProcess extends UpgradeProcess {
 
-	public BaseUpgradeSQLServerDatetime(Class<?>[] tableClasses) {
+	public BaseSQLServerDatetimeUpgradeProcess(Class<?>[] tableClasses) {
 		_tableClasses = tableClasses;
 	}
 
@@ -131,7 +129,7 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 	private static final String _NEW_TYPE = "datetime2";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseUpgradeSQLServerDatetime.class);
+		BaseSQLServerDatetimeUpgradeProcess.class);
 
 	private final Class<?>[] _tableClasses;
 

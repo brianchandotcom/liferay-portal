@@ -32,10 +32,8 @@ import java.util.List;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link MVCCVersionUpgradeProcess}
  */
-@Deprecated
-public class UpgradeMVCCVersion extends UpgradeProcess {
+public class MVCCVersionUpgradeProcess extends UpgradeProcess {
 
 	public void upgradeMVCCVersion(
 			DatabaseMetaData databaseMetaData, String tableName)
@@ -150,6 +148,6 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeMVCCVersion.class);
+		MVCCVersionUpgradeProcess.class);
 
 }

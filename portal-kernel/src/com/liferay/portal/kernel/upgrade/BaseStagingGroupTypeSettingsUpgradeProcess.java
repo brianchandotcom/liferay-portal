@@ -28,12 +28,10 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Gergely Mathe
  * @author Balázs Sáfrány-Kovalik
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseStagingGroupTypeSettingsUpgradeProcess}
  */
-@Deprecated
-public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
+public class BaseStagingGroupTypeSettingsUpgradeProcess extends UpgradeProcess {
 
-	public BaseUpgradeStagingGroupTypeSettings(
+	public BaseStagingGroupTypeSettingsUpgradeProcess(
 		CompanyLocalService companyLocalService,
 		GroupLocalService groupLocalService, String oldPortletId,
 		String newPortletId) {

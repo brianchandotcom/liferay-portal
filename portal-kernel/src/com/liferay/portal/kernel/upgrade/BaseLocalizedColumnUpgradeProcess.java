@@ -35,10 +35,8 @@ import java.util.Set;
 
 /**
  * @author Leon Chi
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseLocalizedColumnUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
+public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link

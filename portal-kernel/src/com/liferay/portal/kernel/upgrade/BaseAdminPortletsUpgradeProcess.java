@@ -26,10 +26,8 @@ import java.sql.ResultSet;
 /**
  * @author Juan Fernández
  * @author Sergio González
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseAdminPortletsUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {
+public abstract class BaseAdminPortletsUpgradeProcess extends UpgradeProcess {
 
 	protected void addResourcePermission(
 			long resourcePermissionId, long companyId, String name, int scope,

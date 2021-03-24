@@ -18,10 +18,8 @@ import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Alberto Chaparro
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseThemeIdUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradeThemeId extends UpgradeProcess {
+public abstract class BaseThemeIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

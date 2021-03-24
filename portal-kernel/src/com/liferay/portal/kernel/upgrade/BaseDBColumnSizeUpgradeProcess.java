@@ -33,12 +33,10 @@ import java.util.Set;
 
 /**
  * @author Preston Crary
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseDBColumnSizeUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradeDBColumnSize extends UpgradeProcess {
+public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
 
-	public BaseUpgradeDBColumnSize(
+	public BaseDBColumnSizeUpgradeProcess(
 		DBType dbType, String oldColumnType, int size) {
 
 		_dbType = dbType;
@@ -138,7 +136,7 @@ public abstract class BaseUpgradeDBColumnSize extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseUpgradeDBColumnSize.class);
+		BaseDBColumnSizeUpgradeProcess.class);
 
 	private final DBType _dbType;
 	private final String _oldColumnType;

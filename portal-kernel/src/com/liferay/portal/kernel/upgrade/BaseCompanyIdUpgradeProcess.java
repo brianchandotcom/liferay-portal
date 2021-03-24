@@ -36,10 +36,8 @@ import java.util.concurrent.Future;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseCompanyIdUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
+public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -214,6 +212,6 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseUpgradeCompanyId.class);
+		BaseCompanyIdUpgradeProcess.class);
 
 }

@@ -42,10 +42,8 @@ import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BasePortletIdUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradePortletId extends UpgradeProcess {
+public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -726,6 +724,6 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseUpgradePortletId.class);
+		BasePortletIdUpgradeProcess.class);
 
 }

@@ -36,10 +36,8 @@ import java.util.Map;
 
 /**
  * @author Tina Tian
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseBadColumnNamesUpgradeProcess}
  */
-@Deprecated
-public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {
+public abstract class BaseBadColumnNamesUpgradeProcess extends UpgradeProcess {
 
 	protected void upgradeBadColumnNames(
 			Class<?> tableClass, String... columnNames)
@@ -148,6 +146,6 @@ public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseUpgradeBadColumnNames.class);
+		BaseBadColumnNamesUpgradeProcess.class);
 
 }

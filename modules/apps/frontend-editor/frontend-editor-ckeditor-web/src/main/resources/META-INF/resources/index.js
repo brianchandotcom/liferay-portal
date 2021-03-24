@@ -12,6 +12,7 @@
  * details.
  */
 
+export {BalloonEditor} from './editor/BalloonEditor';
 export {ClassicEditor} from './editor/ClassicEditor';
 export {Editor} from './editor/Editor';
 export {InlineEditor} from './editor/InlineEditor';

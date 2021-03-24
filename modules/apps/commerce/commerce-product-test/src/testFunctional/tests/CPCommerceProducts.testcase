@@ -356,7 +356,42 @@ definition {
 	test UseSortingByNameAndDate {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5803 UseSortingByNameAndDate
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+		CommerceNavigator.sortField(sortFieldName = "Name");
+
+		CommerceNavigator.assertEntry(entryName = "ABS Sensor");
+
+		CommerceNavigator.assertEntry(entryName = "Ball Joints");
+
+		CommerceNavigator.assertEntry(entryName = "Bearings");
+
+		CommerceNavigator.sortField(sortFieldName = "Name");
+
+		CommerceNavigator.assertEntry(entryName = "Wheel Seal - Front");
+
+		CommerceNavigator.assertEntry(entryName = "Wheel Bearing Grease");
+
+		CommerceNavigator.assertEntry(entryName = "Wear Sensors");
+
+		CommerceNavigator.sortField(sortFieldName = "Modified Date");
+
+		CommerceNavigator.assertEntry(entryName = "ABS Sensor");
+
+		CommerceNavigator.assertEntry(entryName = "Brake Fluid");
+
+		CommerceNavigator.assertEntry(entryName = "Premium Brake Fluid");
+
+		CommerceNavigator.sortField(sortFieldName = "Modified Date");
+
+		CommerceNavigator.assertEntry(entryName = "U-Joint");
+
+		CommerceNavigator.assertEntry(entryName = "Transmission Cooler Line Assembly");
+
+		CommerceNavigator.assertEntry(entryName = "Torque Converters");
 	}
 
 }

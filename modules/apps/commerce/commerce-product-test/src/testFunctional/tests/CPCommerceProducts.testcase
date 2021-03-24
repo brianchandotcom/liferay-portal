@@ -183,7 +183,25 @@ definition {
 	test EditAProduct {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5808 EditAProduct
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "ABS");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "ABS");
 	}
 
 	@description = "This is a test for COMMERCE-6022. EditASKU"

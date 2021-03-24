@@ -143,6 +143,16 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		CKEditor.addSourceContent(content = " ");
+
+		SelectFrame(value1 = "relative=top");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected web content?",
 			entry = "WC WebContent Title");

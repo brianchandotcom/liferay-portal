@@ -19,31 +19,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateAdaptiveMedia";
 		property testray.main.component.name = "Adaptive Media";
 
-		var appName = "Adaptive Media";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Adaptive Media",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Adaptive Media");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Adaptive Media",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Adaptive Media");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Adaptive Media",
 			appStatus = "Active");
 	}
 
@@ -53,31 +51,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateAssetLibraries";
 		property testray.main.component.name = "Depot";
 
-		var appName = "Asset Libraries";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Asset Libraries",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Asset Libraries");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Asset Libraries",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Asset Libraries");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Asset Libraries",
 			appStatus = "Active");
 	}
 
@@ -87,31 +83,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateBlogs";
 		property testray.main.component.name = "Blogs";
 
-		var appName = "Blogs";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Blogs",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Blogs");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Blogs",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Blogs");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Blogs",
 			appStatus = "Active");
 	}
 
@@ -121,31 +115,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateComment";
 		property testray.main.component.name = "Content Page Review";
 
-		var appName = "Comment";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Comment",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Comment");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Comment",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Comment");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Comment",
 			appStatus = "Active");
 	}
 
@@ -155,31 +147,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateDocumentLibraryOpener";
 		property testray.main.component.name = "Documents Management";
 
-		var appName = "Document Library Opener";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Document Library Opener",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Document Library Opener");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Document Library Opener",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Document Library Opener");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Document Library Opener",
 			appStatus = "Active");
 	}
 
@@ -189,31 +179,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateKnowledgeBase";
 		property testray.main.component.name = "Knowledge Base";
 
-		var appName = "Knowledge Base";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Knowledge Base",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Knowledge Base");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Knowledge Base",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Knowledge Base");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Knowledge Base",
 			appStatus = "Active");
 	}
 
@@ -223,31 +211,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateMessageBoards";
 		property testray.main.component.name = "Message Boards";
 
-		var appName = "Message Boards";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Message Boards",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Message Boards");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Message Boards",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Message Boards");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Message Boards}",
 			appStatus = "Active");
 	}
 
@@ -257,31 +243,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateNotifications";
 		property testray.main.component.name = "Notifications";
 
-		var appName = "Notifications";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Notifications",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Notifications");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Notifications",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Notifications");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Notifications",
 			appStatus = "Active");
 	}
 
@@ -291,31 +275,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateQuestions";
 		property testray.main.component.name = "Questions";
 
-		var appName = "Questions";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Questions",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Questions");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Questions",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Questions");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Questions",
 			appStatus = "Active");
 	}
 
@@ -325,31 +307,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateRatings";
 		property testray.main.component.name = "Ratings";
 
-		var appName = "Ratings";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Ratings",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Ratings");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Ratings",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Ratings");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Ratings",
 			appStatus = "Active");
 	}
 
@@ -359,31 +339,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateSharing";
 		property testray.main.component.name = "Asset Sharing";
 
-		var appName = "Sharing";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Sharing",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Sharing");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Sharing",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Sharing");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Sharing",
 			appStatus = "Active");
 	}
 
@@ -393,31 +371,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateTranslation";
 		property testray.main.component.name = "Translations Management";
 
-		var appName = "Translation";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Translation",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Translation");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Translation",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Translation");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Translation",
 			appStatus = "Active");
 	}
 
@@ -427,31 +403,29 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#DeactivateAndActivateWiki";
 		property testray.main.component.name = "Wiki";
 
-		var appName = "Wiki";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Wiki",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateAppCP(appName = "Wiki");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Wiki",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateAppCP(appName = "Wiki");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "${appName}",
+			appName = "Wiki",
 			appStatus = "Active");
 	}
 

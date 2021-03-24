@@ -56,6 +56,102 @@ definition {
 		Depot.viewCurrentLanguages(currentLanguages = "English (United States),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain),Swedish (Sweden),Arabic (Saudi Arabia)");
 	}
 
+	@description = "This ensures that the custom type language can be set in a depot."
+	@priority = "4"
+	test ViewCustomLanguagesOrderForCustomType {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+		Button.click(button = "Edit");
+
+		Depot.configureCurrentLanguages(
+			currentLanguages = "English (United States),French (France),Japanese (Japan),Spanish (Spain)",
+			defaultDepotLanguage = "English (United States)");
+
+		Depot.changeLanguagesOrder(
+			fromRowNumber = "2",
+			toRowNumber = "3");
+
+		Depot.changeLanguagesOrder(
+			fromRowNumber = "4",
+			toRowNumber = "1");
+
+		Button.click(button = "Save");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
+
+		Pause(locator1 = "3000");
+
+		for (var fieldName : list "Name,Description") {
+			Click(
+				key_fieldName = "${fieldName}",
+				locator1 = "Button#LOCALIZATION");
+
+			Depot.view4LanguagesOrder(
+				localizationName1 = "en-US",
+				localizationName2 = "es-ES",
+				localizationName3 = "ja-JP",
+				localizationName4 = "fr-FR");
+		}
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		Click(locator1 = "Button#LOCALIZATION_GENERIC");
+
+		Depot.view4LanguagesOrder(
+			localizationName1 = "en-US",
+			localizationName2 = "es-ES",
+			localizationName3 = "ja-JP",
+			localizationName4 = "fr-FR");
+
+		DMDocumentType.gotoTab(tabName = "Details");
+
+		Click(locator1 = "Button#LOCALIZATION_GENERIC_2");
+
+		Depot.view4LanguagesOrder(
+			localizationName1 = "en-US",
+			localizationName2 = "es-ES",
+			localizationName3 = "ja-JP",
+			localizationName4 = "fr-FR");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoMetadataSets();
+
+		LexiconEntry.gotoAdd();
+
+		Click(locator1 = "Button#LOCALIZATION_GENERIC");
+
+		Depot.view4LanguagesOrder(
+			localizationName1 = "en-US",
+			localizationName2 = "es-ES",
+			localizationName3 = "ja-JP",
+			localizationName4 = "fr-FR");
+
+		Click(locator1 = "Form#SIDEBAR_PROPERTIES_TAB");
+
+		Click(locator1 = "Button#LOCALIZATION_GENERIC_2");
+
+		Depot.view4LanguagesOrder(
+			localizationName1 = "en-US",
+			localizationName2 = "es-ES",
+			localizationName3 = "ja-JP",
+			localizationName4 = "fr-FR");
+	}
+
 	@description = "This ensures that the web content language can be set in a depot."
 	@priority = "5"
 	test ViewCustomLanguagesOrderForWebContent {

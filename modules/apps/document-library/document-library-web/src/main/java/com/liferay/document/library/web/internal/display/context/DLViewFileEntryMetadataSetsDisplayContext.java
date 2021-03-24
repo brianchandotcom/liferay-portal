@@ -392,17 +392,29 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			ActionRequest.ACTION_NAME,
 			"/document_library/delete_data_definition");
 		actionURL.setParameter(
+			"dataDefinitionId", String.valueOf(ddmStructure.getStructureId()));
+		actionURL.setParameter("keywords", _getKeywords());
+		actionURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view");
 		actionURL.setParameter("navigation", "file_entry_metadata_sets");
-		actionURL.setParameter(
-			"dataDefinitionId", String.valueOf(ddmStructure.getStructureId()));
 
 		return actionURL;
+	}
+
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_liferayPortletRequest, "keywords");
+
+		return _keywords;
 	}
 
 	private final DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 	private final DDMStructureService _ddmStructureService;
 	private final DLRequestHelper _dlRequestHelper;
+	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Portal _portal;

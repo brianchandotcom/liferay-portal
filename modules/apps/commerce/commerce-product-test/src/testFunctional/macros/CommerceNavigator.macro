@@ -1,5 +1,12 @@
 definition {
 
+	macro assertEntry {
+		AssertElementPresent(
+			key_entryName = "${entryName}",
+			locator1 = "CommerceNavigation#ENTRY_NAME",
+			value1 = "${entryName}");
+	}
+
 	macro gotoCommercePortletNavItem {
 		AssertClick(
 			key_navItem = "${navItem}",
@@ -97,6 +104,13 @@ definition {
 		KeyPress(
 			locator1 = "CommerceNavigation#SEARCH_FIELD",
 			value1 = "\RETURN");
+	}
+
+	macro sortField {
+		Click(
+			key_sortFieldName = "${sortFieldName}",
+			locator1 = "CommerceNavigation#SORT_FIELD",
+			value1 = "${sortFieldName}");
 	}
 
 }

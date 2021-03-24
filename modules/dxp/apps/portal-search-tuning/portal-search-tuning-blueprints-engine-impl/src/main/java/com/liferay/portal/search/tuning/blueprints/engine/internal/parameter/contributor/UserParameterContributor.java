@@ -71,15 +71,17 @@ public class UserParameterContributor implements ParameterContributor {
 		ParameterDataBuilder parameterDataBuilder, Blueprint blueprint,
 		BlueprintsAttributes blueprintsAttributes, Messages messages) {
 
-		User user = _getUser(blueprintsAttributes, messages);
-
-		_addUserInfo(parameterDataBuilder, messages, user);
-
-		_addUserGroupIds(parameterDataBuilder, user);
-
-		_addUserRoleIds(parameterDataBuilder, user);
-
-		_addUserSegments(parameterDataBuilder, blueprintsAttributes, user);
+		try {
+			_contribute(parameterDataBuilder, blueprintsAttributes);
+		}
+		catch (UserIdUnsetException userIdUnsetException) {
+		}
+		catch (UserNotFoundException userNotFoundException) {
+			messages.addMessage(_toMessage(userNotFoundException));
+		}
+		catch (UnforeseenException unforeseenException) {
+			messages.addMessage(_toMessage(unforeseenException));
+		}
 	}
 
 	@Override
@@ -235,8 +237,7 @@ public class UserParameterContributor implements ParameterContributor {
 	}
 
 	private void _addUserInfo(
-		ParameterDataBuilder parameterDataBuilder, Messages messages,
-		User user) {
+		ParameterDataBuilder parameterDataBuilder, User user) {
 
 		parameterDataBuilder.addParameter(
 			new LongParameter(
@@ -320,42 +321,10 @@ public class UserParameterContributor implements ParameterContributor {
 						ReservedParameterNames.USER_IS_GENDER_X.getKey()),
 					!user.isFemale() && !user.isMale()));
 		}
-		catch (NumberFormatException numberFormatException) {
-			messages.addMessage(
-				new Message.Builder().className(
-					getClass().getName()
-				).localizationKey(
-					"core.error.unknown-exception"
-				).msg(
-					numberFormatException.getMessage()
-				).rootValue(
-					String.valueOf(user.getUserId())
-				).severity(
-					Severity.ERROR
-				).throwable(
-					numberFormatException
-				).build());
+		catch (NumberFormatException | PortalException exception) {
+			_log.error(exception.getMessage(), exception);
 
-			_log.error(
-				numberFormatException.getMessage(), numberFormatException);
-		}
-		catch (PortalException portalException) {
-			messages.addMessage(
-				new Message.Builder().className(
-					getClass().getName()
-				).localizationKey(
-					"core.error.unknown-exception"
-				).msg(
-					portalException.getMessage()
-				).rootValue(
-					String.valueOf(user.getUserId())
-				).severity(
-					Severity.ERROR
-				).throwable(
-					portalException
-				).build());
-
-			_log.error(portalException.getMessage(), portalException);
+			throw new UnforeseenException(user.getUserId(), exception);
 		}
 
 		parameterDataBuilder.addParameter(
@@ -433,6 +402,21 @@ public class UserParameterContributor implements ParameterContributor {
 				stream2.toArray(String[]::new)));
 	}
 
+	private void _contribute(
+		ParameterDataBuilder parameterDataBuilder,
+		BlueprintsAttributes blueprintsAttributes) {
+
+		User user = _getUser(_getUserId(blueprintsAttributes));
+
+		_addUserInfo(parameterDataBuilder, user);
+
+		_addUserGroupIds(parameterDataBuilder, user);
+
+		_addUserRoleIds(parameterDataBuilder, user);
+
+		_addUserSegments(parameterDataBuilder, blueprintsAttributes, user);
+	}
+
 	private String _getTemplateVariableName(String key) {
 		StringBundler sb = new StringBundler(3);
 
@@ -443,38 +427,15 @@ public class UserParameterContributor implements ParameterContributor {
 		return sb.toString();
 	}
 
-	private User _getUser(
-		BlueprintsAttributes blueprintsAttributes, Messages messages) {
-
-		long userId = blueprintsAttributes.getUserId();
-
-		if (userId == 0) {
-			return null;
-		}
-
+	private User _getUser(Long userId) {
 		try {
 			return _userLocalService.getUser(userId);
 		}
 		catch (PortalException portalException) {
-			messages.addMessage(
-				new Message.Builder().className(
-					getClass().getName()
-				).localizationKey(
-					"core.error.user-not-found"
-				).msg(
-					portalException.getMessage()
-				).rootValue(
-					String.valueOf(userId)
-				).severity(
-					Severity.ERROR
-				).throwable(
-					portalException
-				).build());
-
 			_log.error(portalException.getMessage(), portalException);
-		}
 
-		return null;
+			throw new UserNotFoundException(userId, portalException);
+		}
 	}
 
 	private long[] _getUserAccessibleSiteGroupIds(long companyId, User user) {
@@ -536,8 +497,54 @@ public class UserParameterContributor implements ParameterContributor {
 		return email.substring(email.indexOf("@") + 1);
 	}
 
+	private Long _getUserId(BlueprintsAttributes blueprintsAttributes) {
+		Long userId = blueprintsAttributes.getUserId();
+
+		if (GetterUtil.getLong(userId) == 0) {
+			throw new UserIdUnsetException();
+		}
+
+		return userId;
+	}
+
 	private Boolean _isSignedIn(User user) {
 		return !user.isDefaultUser();
+	}
+
+	private Message _toMessage(UnforeseenException unforeseenException) {
+		Throwable throwable = unforeseenException.getCause();
+
+		return new Message.Builder().className(
+			UserParameterContributor.class.getName()
+		).localizationKey(
+			"core.error.unknown-exception"
+		).msg(
+			throwable.getMessage()
+		).rootValue(
+			String.valueOf(unforeseenException._userId)
+		).severity(
+			Severity.ERROR
+		).throwable(
+			throwable
+		).build();
+	}
+
+	private Message _toMessage(UserNotFoundException userNotFoundException) {
+		Throwable throwable = userNotFoundException.getCause();
+
+		return new Message.Builder().className(
+			UserParameterContributor.class.getName()
+		).localizationKey(
+			"core.error.user-not-found"
+		).msg(
+			throwable.getMessage()
+		).rootValue(
+			String.valueOf(userNotFoundException._userId)
+		).severity(
+			Severity.ERROR
+		).throwable(
+			throwable
+		).build();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -557,5 +564,32 @@ public class UserParameterContributor implements ParameterContributor {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private class UnforeseenException extends RuntimeException {
+
+		public UnforeseenException(long userId, Throwable throwable) {
+			super(throwable);
+
+			_userId = userId;
+		}
+
+		private final long _userId;
+
+	}
+
+	private class UserIdUnsetException extends RuntimeException {
+	}
+
+	private class UserNotFoundException extends RuntimeException {
+
+		public UserNotFoundException(long userId, Throwable throwable) {
+			super(throwable);
+
+			_userId = userId;
+		}
+
+		private final long _userId;
+
+	}
 
 }

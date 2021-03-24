@@ -170,8 +170,6 @@ export default function Chart({
 	useEffect(() => {
 		let gone = false;
 
-		chartDispatch({type: 'SET_LOADING'});
-
 		const timeSpanComparator =
 			timeSpanKey === LAST_24_HOURS
 				? HOUR_IN_MILLISECONDS

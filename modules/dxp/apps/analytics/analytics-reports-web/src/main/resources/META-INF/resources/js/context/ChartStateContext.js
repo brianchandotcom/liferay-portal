@@ -123,6 +123,7 @@ function reducer(state, action) {
 
 	switch (action.type) {
 		case ADD_DATA_SET_ITEMS:
+			nextState = setLoadingState(state);
 			nextState = [...action.payload.keys].reduce((state, key) => {
 				const dataSetItem =
 					action.payload.dataSetItems?.[key] ??

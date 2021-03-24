@@ -244,6 +244,63 @@ definition {
 			viewNoLocationInfo = "Site Name");
 	}
 
+	@description = "This test ensures that web content using a structure can be filtered from the current depot."
+	@priority = "5"
+	test FilterCustomWCFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "Web Content Title",
+			assetType = "WC Structure Name",
+			itemSubtype = "WC Structure Name",
+			itemType = "Web Content Article");
+	}
+
 	@description = "This test ensures that a folder can be filtered from the current depot."
 	@priority = "5"
 	test FilterFolderFromCurrentDepot {
@@ -364,6 +421,66 @@ definition {
 			noWebContentTitle = "Web Content From Depot",
 			viewNoLocationInfo = "Site Name",
 			webContentTitle = "Web Content From Site");
+	}
+
+	@description = "This test ensures that the web content folder can be filtered from the current depot."
+	@priority = "5"
+	test FilterWCFolderFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONWebcontent.addFolder(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC WebContent Title");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "WC Folder Name",
+			assetType = "Web Content Folder",
+			itemType = "Web Content Folder");
+	}
+
+	@description = "This test ensures that web content can be filtered from the current depot."
+	@priority = "5"
+	test FilterWCFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC WebContent Title");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content",
+			itemSubtype = "Basic Web Content",
+			itemType = "Web Content Article");
 	}
 
 	@description = "This ensures that the background image of a fragment can be added."

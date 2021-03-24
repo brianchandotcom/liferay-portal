@@ -80,7 +80,7 @@ public class BlueprintsAttributesBuilderImpl
 	}
 
 	@Override
-	public BlueprintsAttributesBuilder userId(long userId) {
+	public BlueprintsAttributesBuilder userId(Long userId) {
 		_userId = userId;
 
 		return this;
@@ -90,11 +90,10 @@ public class BlueprintsAttributesBuilderImpl
 		BlueprintsAttributes blueprintsAttributes) {
 
 		if ((blueprintsAttributes.getCompanyId() == null) ||
-			(blueprintsAttributes.getLocale() == null) ||
-			(blueprintsAttributes.getUserId() == null)) {
+			(blueprintsAttributes.getLocale() == null)) {
 
 			throw new IllegalStateException(
-				"Company id, locale and user id are mandatory attributes");
+				"Company id and locale are mandatory attributes");
 		}
 	}
 

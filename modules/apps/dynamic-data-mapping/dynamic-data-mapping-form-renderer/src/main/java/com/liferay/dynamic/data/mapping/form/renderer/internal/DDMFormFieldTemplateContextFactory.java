@@ -144,6 +144,9 @@ public class DDMFormFieldTemplateContextFactory {
 			_ddmFormRenderingContext.isReturnFullContext());
 		ddmFormFieldRenderingContext.setViewMode(
 			_ddmFormRenderingContext.isViewMode());
+		ddmFormFieldRenderingContext.setProperty("formInstanceId",
+			_ddmFormRenderingContext.getProperty("formInstanceId"));
+
 
 		return ddmFormFieldRenderingContext;
 	}

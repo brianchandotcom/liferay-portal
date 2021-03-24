@@ -12,9 +12,6 @@
  * details.
  */
 
-export const INITIAL_STATE = {
-	activePage: 0,
-	defaultLanguageId: themeDisplay.getLanguageId(),
-	focusedField: {},
-	pages: [],
-};
+import {INITIAL_CONFIG_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
+
+export default INITIAL_CONFIG_STATE;

@@ -25,7 +25,6 @@ export const BUILDER_INITIAL_STATE = {
 	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	fieldSets: [],
 	fieldTypes: [],
-	focusedField: {},
 	formInstanceId: 0,
 	functionsMetadata: {},
 	initialSuccessPageSettings: {

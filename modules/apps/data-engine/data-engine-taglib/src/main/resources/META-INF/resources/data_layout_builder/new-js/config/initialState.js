@@ -12,10 +12,12 @@
  * details.
  */
 
-import React from 'react';
+import {INITIAL_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
 
-const App = () => {
-	return <h1>{Liferay.Language.get('dummy')}</h1>;
+const DATA_ENGINE_INITIAL_STATE = {
+	...INITIAL_STATE,
+	editingLanguageId: themeDisplay.getDefaultLanguageId(),
+	rules: [],
 };
 
-export default App;
+export default DATA_ENGINE_INITIAL_STATE;

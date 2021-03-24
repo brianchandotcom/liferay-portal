@@ -14,12 +14,12 @@
 
 package com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v3_0_0;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeCompanyId;
+import com.liferay.portal.kernel.upgrade.BaseCompanyIdUpgradeProcess;
 
 /**
  * @author Alberto Chaparro
  */
-public class UpgradeCompanyId extends BaseUpgradeCompanyId {
+public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 
 	@Override
 	protected TableUpdater[] getTableUpdaters() {

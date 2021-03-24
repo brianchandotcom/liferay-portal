@@ -15,12 +15,12 @@
 package com.liferay.knowledge.base.web.internal.upgrade.v1_0_0;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {

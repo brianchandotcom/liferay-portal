@@ -16,12 +16,12 @@ package com.liferay.portal.upgrade.v7_1_x;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeDBColumnSize;
+import com.liferay.portal.kernel.upgrade.BaseDBColumnSizeUpgradeProcess;
 
 /**
  * @author Preston Crary
  */
-public class UpgradeDB2 extends BaseUpgradeDBColumnSize {
+public class UpgradeDB2 extends BaseDBColumnSizeUpgradeProcess {
 
 	public UpgradeDB2() {
 		super(DBType.DB2, "varchar", 750);

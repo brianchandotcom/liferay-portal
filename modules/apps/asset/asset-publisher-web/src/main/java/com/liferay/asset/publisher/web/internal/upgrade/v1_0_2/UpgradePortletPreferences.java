@@ -17,7 +17,7 @@ package com.liferay.asset.publisher.web.internal.upgrade.v1_0_2;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import javax.portlet.PortletPreferences;
@@ -25,7 +25,8 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Cristina Rodríguez
  */
-public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
+public class UpgradePortletPreferences
+	extends BasePortletPreferencesUpgradeProcess {
 
 	@Override
 	protected String[] getPortletIds() {

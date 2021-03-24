@@ -14,7 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_2_x;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.upgrade.v7_2_x.util.AccountTable;
 import com.liferay.portal.upgrade.v7_2_x.util.AddressTable;
 import com.liferay.portal.upgrade.v7_2_x.util.AnnouncementsEntryTable;
@@ -68,7 +68,8 @@ import com.liferay.portal.upgrade.v7_2_x.util.WorkflowInstanceLinkTable;
 /**
  * @author José Ángel Jiménez
  */
-public class UpgradeSQLServerDatetime extends BaseUpgradeSQLServerDatetime {
+public class UpgradeSQLServerDatetime
+	extends BaseSQLServerDatetimeUpgradeProcess {
 
 	public UpgradeSQLServerDatetime() {
 		super(_TABLE_CLASSES);

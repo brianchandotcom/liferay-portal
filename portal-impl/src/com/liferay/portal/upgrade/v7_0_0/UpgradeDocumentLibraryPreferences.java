@@ -15,7 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 
 import javax.portlet.PortletPreferences;
 
@@ -23,7 +23,7 @@ import javax.portlet.PortletPreferences;
  * @author Iván Zaera
  */
 public class UpgradeDocumentLibraryPreferences
-	extends BaseUpgradePortletPreferences {
+	extends BasePortletPreferencesUpgradeProcess {
 
 	@Override
 	protected String[] getPortletIds() {

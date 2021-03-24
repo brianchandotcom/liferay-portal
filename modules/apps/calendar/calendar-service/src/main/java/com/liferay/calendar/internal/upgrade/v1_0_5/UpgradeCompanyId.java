@@ -14,12 +14,12 @@
 
 package com.liferay.calendar.internal.upgrade.v1_0_5;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeCompanyId;
+import com.liferay.portal.kernel.upgrade.BaseCompanyIdUpgradeProcess;
 
 /**
  * @author Inácio Nery
  */
-public class UpgradeCompanyId extends BaseUpgradeCompanyId {
+public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 
 	@Override
 	protected TableUpdater[] getTableUpdaters() {

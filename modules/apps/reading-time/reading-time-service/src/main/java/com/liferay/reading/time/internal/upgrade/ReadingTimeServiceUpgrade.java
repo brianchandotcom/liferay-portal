@@ -17,7 +17,7 @@ package com.liferay.reading.time.internal.upgrade;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.reading.time.internal.upgrade.v2_0_0.util.ReadingTimeEntryTable;
@@ -37,7 +37,7 @@ public class ReadingTimeServiceUpgrade implements UpgradeStepRegistrator {
 		if (db.getDBType() == DBType.SQLSERVER) {
 			registry.register(
 				"1.0.0", "2.0.0",
-				new BaseUpgradeSQLServerDatetime(
+				new BaseSQLServerDatetimeUpgradeProcess(
 					new Class<?>[] {ReadingTimeEntryTable.class}));
 		}
 		else {

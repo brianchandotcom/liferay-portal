@@ -14,12 +14,12 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v1_3_5;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
+import com.liferay.portal.kernel.upgrade.BaseLastPublishDateUpgradeProcess;
 
 /**
  * @author Máté Thurzó
  */
-public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
+public class UpgradeLastPublishDate extends BaseLastPublishDateUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

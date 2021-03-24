@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.upgrade.v1_0_0;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletPreferences;
@@ -26,7 +26,7 @@ import javax.portlet.PortletPreferences;
  * @author Pedro Queiroz
  */
 public class UpgradeDDMFormPortletPreferences
-	extends BaseUpgradePortletPreferences {
+	extends BasePortletPreferencesUpgradeProcess {
 
 	@Override
 	protected String[] getPortletIds() {

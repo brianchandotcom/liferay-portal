@@ -14,13 +14,13 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
+import com.liferay.portal.kernel.upgrade.BaseLastPublishDateUpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
  * @author Levente Hudák
  */
-public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
+public class UpgradeLastPublishDate extends BaseLastPublishDateUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

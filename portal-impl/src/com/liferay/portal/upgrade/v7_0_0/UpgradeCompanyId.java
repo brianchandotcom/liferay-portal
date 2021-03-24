@@ -15,7 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeCompanyId;
+import com.liferay.portal.kernel.upgrade.BaseCompanyIdUpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UpgradeCompanyId extends BaseUpgradeCompanyId {
+public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 
 	@Override
 	protected TableUpdater[] getTableUpdaters() {

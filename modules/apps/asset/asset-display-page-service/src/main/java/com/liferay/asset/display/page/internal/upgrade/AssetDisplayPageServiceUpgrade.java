@@ -24,11 +24,11 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,7 +44,7 @@ public class AssetDisplayPageServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {AssetDisplayPageEntryTable.class}));
 
 		registry.register(
@@ -61,7 +61,7 @@ public class AssetDisplayPageServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.1.1", "2.2.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {
@@ -79,7 +79,8 @@ public class AssetDisplayPageServiceUpgrade implements UpgradeStepRegistrator {
 			new AssetDisplayLayoutFriendlyURLPrivateLayoutUpgradeProcess());
 
 		registry.register(
-			"2.2.2", "2.3.0", new UpgradeCTModel("AssetDisplayPageEntry"));
+			"2.2.2", "2.3.0",
+			new CTModelUpgradeProcess("AssetDisplayPageEntry"));
 
 		registry.register("2.3.0", "2.3.1", new DummyUpgradeStep());
 

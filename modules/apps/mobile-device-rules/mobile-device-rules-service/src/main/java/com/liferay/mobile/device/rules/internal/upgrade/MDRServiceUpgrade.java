@@ -18,9 +18,9 @@ import com.liferay.mobile.device.rules.internal.upgrade.v2_0_0.util.MDRActionTab
 import com.liferay.mobile.device.rules.internal.upgrade.v2_0_0.util.MDRRuleGroupInstanceTable;
 import com.liferay.mobile.device.rules.internal.upgrade.v2_0_0.util.MDRRuleGroupTable;
 import com.liferay.mobile.device.rules.internal.upgrade.v2_0_0.util.MDRRuleTable;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,7 +39,7 @@ public class MDRServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.1", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {
 					MDRActionTable.class, MDRRuleGroupInstanceTable.class,
 					MDRRuleGroupTable.class, MDRRuleTable.class
@@ -47,7 +47,7 @@ public class MDRServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.0", "2.1.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {

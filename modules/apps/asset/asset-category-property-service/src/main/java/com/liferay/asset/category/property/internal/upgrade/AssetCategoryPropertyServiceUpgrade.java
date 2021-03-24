@@ -17,9 +17,9 @@ package com.liferay.asset.category.property.internal.upgrade;
 import com.liferay.asset.category.property.internal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.asset.category.property.internal.upgrade.v2_0_0.util.AssetCategoryPropertyTable;
 import com.liferay.asset.category.property.internal.upgrade.v2_2_0.AssetCategoryPropertyUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,12 +37,12 @@ public class AssetCategoryPropertyServiceUpgrade
 
 		registry.register(
 			"1.0.0", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {AssetCategoryPropertyTable.class}));
 
 		registry.register(
 			"2.0.0", "2.1.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {
@@ -55,7 +55,8 @@ public class AssetCategoryPropertyServiceUpgrade
 			"2.1.0", "2.2.0", new AssetCategoryPropertyUpgradeProcess());
 
 		registry.register(
-			"2.2.0", "2.3.0", new UpgradeCTModel("AssetCategoryProperty"));
+			"2.2.0", "2.3.0",
+			new CTModelUpgradeProcess("AssetCategoryProperty"));
 	}
 
 }

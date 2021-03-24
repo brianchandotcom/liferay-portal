@@ -15,12 +15,12 @@
 package com.liferay.mail.reader.web.internal.upgrade.v1_0_0;
 
 import com.liferay.mail.reader.constants.MailPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 
 /**
  * @author Peter Fellwock
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {

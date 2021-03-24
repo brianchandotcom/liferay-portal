@@ -18,7 +18,7 @@ import com.liferay.comment.page.comments.web.internal.constants.PageCommentsPort
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -37,7 +37,7 @@ public class PageCommentsWebUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
-		UpgradeStep upgradePortletId = new BaseUpgradePortletId() {
+		UpgradeStep upgradePortletId = new BasePortletIdUpgradeProcess() {
 
 			@Override
 			protected String[][] getRenamePortletIdsArray() {

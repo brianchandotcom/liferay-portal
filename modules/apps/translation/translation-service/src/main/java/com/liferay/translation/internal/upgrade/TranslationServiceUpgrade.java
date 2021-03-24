@@ -14,7 +14,7 @@
 
 package com.liferay.translation.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.translation.model.TranslationEntryTable;
 
@@ -30,7 +30,8 @@ public class TranslationServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.1.0",
-			new UpgradeCTModel(TranslationEntryTable.INSTANCE.getName()));
+			new CTModelUpgradeProcess(
+				TranslationEntryTable.INSTANCE.getName()));
 	}
 
 }

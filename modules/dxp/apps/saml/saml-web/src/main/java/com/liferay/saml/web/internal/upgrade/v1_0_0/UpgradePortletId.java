@@ -14,13 +14,13 @@
 
 package com.liferay.saml.web.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.saml.constants.SamlPortletKeys;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {

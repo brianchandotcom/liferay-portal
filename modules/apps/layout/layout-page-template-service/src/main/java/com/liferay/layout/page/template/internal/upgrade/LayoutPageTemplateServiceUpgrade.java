@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
@@ -68,7 +68,7 @@ public class LayoutPageTemplateServiceUpgrade
 
 		registry.register(
 			"1.2.0", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {
 					LayoutPageTemplateCollectionTable.class,
 					LayoutPageTemplateEntryTable.class
@@ -93,7 +93,7 @@ public class LayoutPageTemplateServiceUpgrade
 
 		registry.register(
 			"3.0.1", "3.1.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {
@@ -135,7 +135,7 @@ public class LayoutPageTemplateServiceUpgrade
 
 		registry.register(
 			"3.3.1", "3.4.0",
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"LayoutPageTemplateCollection", "LayoutPageTemplateEntry",
 				"LayoutPageTemplateStructure",
 				"LayoutPageTemplateStructureRel"));

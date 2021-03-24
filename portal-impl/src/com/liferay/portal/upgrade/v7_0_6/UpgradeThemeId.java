@@ -14,12 +14,12 @@
 
 package com.liferay.portal.upgrade.v7_0_6;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeThemeId;
+import com.liferay.portal.kernel.upgrade.BaseThemeIdUpgradeProcess;
 
 /**
  * @author Michael Bowerman
  */
-public class UpgradeThemeId extends BaseUpgradeThemeId {
+public class UpgradeThemeId extends BaseThemeIdUpgradeProcess {
 
 	@Override
 	public String[][] getThemeIds() {

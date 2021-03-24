@@ -21,7 +21,7 @@ import com.liferay.document.library.web.internal.upgrade.v1_0_0.UpgradePortletSe
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeStagingGroupTypeSettings;
+import com.liferay.portal.kernel.upgrade.BaseStagingGroupTypeSettingsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -44,7 +44,7 @@ public class DLWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "1.0.1",
-			new BaseUpgradeStagingGroupTypeSettings(
+			new BaseStagingGroupTypeSettingsUpgradeProcess(
 				_companyLocalService, _groupLocalService,
 				DLPortletKeys.DOCUMENT_LIBRARY,
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN));

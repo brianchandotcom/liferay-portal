@@ -25,8 +25,8 @@ import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordSetV
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordTable;
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordVersionTable;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,7 +69,7 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.1.1", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {
 					DDLRecordSetTable.class, DDLRecordSetVersionTable.class,
 					DDLRecordTable.class, DDLRecordVersionTable.class
@@ -87,7 +87,7 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.2.0", "2.3.0",
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"DDLRecord", "DDLRecordSet", "DDLRecordSetVersion",
 				"DDLRecordVersion"));
 	}

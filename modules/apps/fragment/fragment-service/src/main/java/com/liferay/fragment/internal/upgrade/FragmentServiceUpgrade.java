@@ -22,10 +22,10 @@ import com.liferay.fragment.internal.upgrade.v2_1_0.SchemaUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_4_0.FragmentEntryLinkUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_6_0.FragmentEntryVersionUpgradeProcess;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
@@ -60,7 +60,7 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.1.0", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {
 					FragmentCollectionTable.class, FragmentEntryLinkTable.class,
 					FragmentEntryTable.class
@@ -82,7 +82,7 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.1.3", "2.2.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {
@@ -122,10 +122,10 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.6.0", "2.7.0",
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"FragmentCollection", "FragmentComposition", "FragmentEntry",
 				"FragmentEntryLink", "FragmentEntryVersion"),
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {

@@ -14,12 +14,12 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v2_0_0;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeRepository;
+import com.liferay.portal.kernel.upgrade.BaseRepositoryUpgradeProcess;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeRepository extends BaseUpgradeRepository {
+public class UpgradeRepository extends BaseRepositoryUpgradeProcess {
 
 	@Override
 	protected String[][] getRenamePortletNamesArray() {

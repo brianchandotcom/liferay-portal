@@ -15,12 +15,13 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v3_7_0;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
+import com.liferay.portal.kernel.upgrade.BaseLastPublishDateUpgradeProcess;
 
 /**
  * @author Carolina Barbosa
  */
-public class UpgradeDDMDataProviderInstance extends BaseUpgradeLastPublishDate {
+public class UpgradeDDMDataProviderInstance
+	extends BaseLastPublishDateUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

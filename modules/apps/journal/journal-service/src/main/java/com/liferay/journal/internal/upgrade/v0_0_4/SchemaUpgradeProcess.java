@@ -16,7 +16,7 @@ package com.liferay.journal.internal.upgrade.v0_0_4;
 
 import com.liferay.journal.internal.upgrade.v0_0_4.util.JournalArticleTable;
 import com.liferay.journal.internal.upgrade.v0_0_4.util.JournalFeedTable;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -33,7 +33,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 		runSQLTemplateString(template, false);
 
-		upgrade(new UpgradeMVCCVersion());
+		upgrade(new MVCCVersionUpgradeProcess());
 
 		alter(
 			JournalArticleTable.class,

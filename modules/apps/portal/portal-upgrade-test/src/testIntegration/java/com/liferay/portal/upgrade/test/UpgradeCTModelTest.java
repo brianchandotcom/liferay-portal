@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -85,7 +85,7 @@ public class UpgradeCTModelTest {
 
 	@Test
 	public void testUpgradeCTModel() throws Exception {
-		UpgradeCTModel upgradeCTModel = new UpgradeCTModel(
+		CTModelUpgradeProcess upgradeCTModel = new CTModelUpgradeProcess(
 			"UpgradeCTModelTest");
 
 		upgradeCTModel.upgrade();
@@ -142,7 +142,7 @@ public class UpgradeCTModelTest {
 
 	@Test
 	public void testUpgradeCTModelMapping() throws Exception {
-		UpgradeCTModel upgradeCTModel = new UpgradeCTModel(
+		CTModelUpgradeProcess upgradeCTModel = new CTModelUpgradeProcess(
 			"UpgradeCTModelMappingTest");
 
 		upgradeCTModel.upgrade();

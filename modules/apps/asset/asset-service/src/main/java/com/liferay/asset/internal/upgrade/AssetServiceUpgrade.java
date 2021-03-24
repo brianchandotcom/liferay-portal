@@ -17,10 +17,10 @@ package com.liferay.asset.internal.upgrade;
 import com.liferay.asset.internal.upgrade.v1_0_0.AssetEntryUsageUpgradeProcess;
 import com.liferay.asset.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 
@@ -40,7 +40,7 @@ public class AssetServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "1.1.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {
@@ -51,13 +51,13 @@ public class AssetServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.1.0", "2.0.0", new UpgradeCompanyId(),
-			new UpgradeViewCount(
+			new ViewCountUpgradeProcess(
 				"AssetEntry", AssetEntry.class, "entryId", "viewCount"));
 
 		registry.register("2.0.0", "2.0.1", new DummyUpgradeStep());
 
 		registry.register(
-			"2.0.1", "2.1.0", new UpgradeCTModel("AssetEntryUsage"));
+			"2.0.1", "2.1.0", new CTModelUpgradeProcess("AssetEntryUsage"));
 	}
 
 	/**

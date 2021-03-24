@@ -14,8 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_3_x;
 
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -46,7 +46,7 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(7, 1, 0),
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"AssetCategory", "AssetCategoryProperty", "AssetEntry",
 				"AssetLink", "AssetTag", "AssetVocabulary", "Layout",
 				"LayoutFriendlyURL", "PortletPreferences",
@@ -56,7 +56,7 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(8, 1, 0),
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"AssetEntries_AssetCategories", "AssetEntries_AssetTags"));
 
 		upgradeProcesses.put(
@@ -72,7 +72,7 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(8, 5, 0),
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"Group_", "Groups_Orgs", "Groups_Roles", "Groups_UserGroups",
 				"Image", "LayoutSet", "Organization_", "Role_", "Team", "User_",
 				"UserGroup", "UserGroupGroupRole", "UserGroupRole",
@@ -81,7 +81,7 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(8, 6, 0),
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"DLFileEntry", "DLFileEntryMetadata", "DLFileEntryType",
 				"DLFileEntryTypes_DLFolders", "DLFileShortcut", "DLFileVersion",
 				"DLFolder"));
@@ -100,28 +100,28 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(8, 11, 0),
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"ExpandoColumn", "ExpandoRow", "ExpandoTable", "ExpandoValue"));
 
 		upgradeProcesses.put(
 			new Version(8, 12, 0),
-			new UpgradeCTModel("RatingsEntry", "RatingsStats"));
+			new CTModelUpgradeProcess("RatingsEntry", "RatingsStats"));
 
 		upgradeProcesses.put(
 			new Version(8, 13, 0),
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"WorkflowDefinitionLink", "WorkflowInstanceLink"));
 
 		upgradeProcesses.put(
 			new Version(8, 14, 0),
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"SocialActivity", "SocialActivityAchievement",
 				"SocialActivityCounter", "SocialActivityLimit",
 				"SocialActivitySet", "SocialActivitySetting", "SocialRelation",
 				"SocialRequest"));
 
 		upgradeProcesses.put(
-			new Version(8, 15, 0), new UpgradeCTModel("SystemEvent"));
+			new Version(8, 15, 0), new CTModelUpgradeProcess("SystemEvent"));
 
 		upgradeProcesses.put(
 			new Version(8, 16, 0), new UpgradeDLFileEntryType());

@@ -15,7 +15,7 @@
 package com.liferay.license.manager.web.internal.upgrade.v1_0_1;
 
 import com.liferay.license.manager.web.internal.constants.LicenseManagerPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +25,7 @@ import java.sql.SQLException;
  * @author David Zhang
  * @author Alberto Chaparro
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

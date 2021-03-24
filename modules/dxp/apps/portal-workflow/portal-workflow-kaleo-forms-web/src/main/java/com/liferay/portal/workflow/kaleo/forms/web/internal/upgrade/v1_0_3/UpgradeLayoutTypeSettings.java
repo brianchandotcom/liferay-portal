@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Inácio Nery
  */
-public class UpgradeLayoutTypeSettings extends BaseUpgradePortletId {
+public class UpgradeLayoutTypeSettings extends BasePortletIdUpgradeProcess {
 
 	protected void deleteLayoutTypeSettingsColumnKeyWithoutValue()
 		throws Exception {

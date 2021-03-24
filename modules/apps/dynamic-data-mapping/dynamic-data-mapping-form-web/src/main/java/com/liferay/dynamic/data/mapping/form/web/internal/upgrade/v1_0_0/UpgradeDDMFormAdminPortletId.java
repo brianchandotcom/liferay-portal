@@ -15,12 +15,12 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 
 /**
  * @author Rafael Praxedes
  */
-public class UpgradeDDMFormAdminPortletId extends BaseUpgradePortletId {
+public class UpgradeDDMFormAdminPortletId extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {

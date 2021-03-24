@@ -15,7 +15,7 @@
 package com.liferay.calendar.web.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.upgrade.RenameUpgradePortalPreferences;
+import com.liferay.portal.kernel.upgrade.PortalPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * @author Bryan Engler
  */
-public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
+public class UpgradePortalPreferences extends PortalPreferencesUpgradeProcess {
 
 	public UpgradePortalPreferences() {
 		_preferenceNamesMap.put(

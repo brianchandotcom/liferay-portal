@@ -14,13 +14,13 @@
 
 package com.liferay.wiki.navigation.web.internal.upgrade.v1_0_1;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.wiki.navigation.web.internal.constants.WikiNavigationPortletKeys;
 
 /**
  * @author Sergio González
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {

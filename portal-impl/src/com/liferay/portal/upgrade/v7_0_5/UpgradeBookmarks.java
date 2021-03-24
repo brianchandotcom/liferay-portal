@@ -16,7 +16,7 @@ package com.liferay.portal.upgrade.v7_0_5;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletPreferences;
@@ -24,7 +24,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Jonathan McCann
  */
-public class UpgradeBookmarks extends BaseUpgradePortletPreferences {
+public class UpgradeBookmarks extends BasePortletPreferencesUpgradeProcess {
 
 	@Override
 	protected String[] getPortletIds() {

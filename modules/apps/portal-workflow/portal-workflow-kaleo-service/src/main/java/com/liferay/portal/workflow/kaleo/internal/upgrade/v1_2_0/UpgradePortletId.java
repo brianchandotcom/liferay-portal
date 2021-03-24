@@ -14,13 +14,13 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_2_0;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 /**
  * @author Sam Ziemer
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {

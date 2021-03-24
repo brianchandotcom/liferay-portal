@@ -15,8 +15,8 @@
 package com.liferay.subscription.internal.upgrade;
 
 import com.liferay.portal.kernel.lock.LockManager;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.internal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.subscription.internal.upgrade.v2_0_0.util.SubscriptionTable;
@@ -36,10 +36,11 @@ public class SubscriptionServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {SubscriptionTable.class}));
 
-		registry.register("2.0.0", "2.1.0", new UpgradeCTModel("Subscription"));
+		registry.register(
+			"2.0.0", "2.1.0", new CTModelUpgradeProcess("Subscription"));
 	}
 
 	@Reference(unbind = "-")

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.audit.storage.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.security.audit.storage.internal.upgrade.v1_0_1.SchemaUpgradeProcess;
@@ -66,7 +66,7 @@ public class AuditStorageServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.1", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {AuditEventTable.class}));
 
 		registry.register("2.0.0", "2.0.1", new DummyUpgradeStep());

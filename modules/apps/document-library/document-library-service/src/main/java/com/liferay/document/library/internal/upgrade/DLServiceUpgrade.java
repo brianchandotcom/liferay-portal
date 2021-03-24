@@ -28,10 +28,10 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
@@ -71,7 +71,7 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.0", "3.0.0",
-			new UpgradeViewCount(
+			new ViewCountUpgradeProcess(
 				"DLFileEntry", DLFileEntry.class, "fileEntryId", "readCount"));
 
 		registry.register(
@@ -83,7 +83,7 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.0.1", "3.1.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {
@@ -91,7 +91,7 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			},
-			new UpgradeCTModel("DLFileVersionPreview"));
+			new CTModelUpgradeProcess("DLFileVersionPreview"));
 
 		registry.register("3.1.0", "3.1.1", new DummyUpgradeStep());
 

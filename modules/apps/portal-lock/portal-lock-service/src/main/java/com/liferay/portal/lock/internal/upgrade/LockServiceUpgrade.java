@@ -14,7 +14,7 @@
 
 package com.liferay.portal.lock.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.lock.internal.upgrade.v1_0_0.LockUpgradeProcess;
 import com.liferay.portal.lock.internal.upgrade.v2_0_0.util.LockTable;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -33,7 +33,8 @@ public class LockServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(new Class<?>[] {LockTable.class}));
+			new BaseSQLServerDatetimeUpgradeProcess(
+				new Class<?>[] {LockTable.class}));
 
 		registry.register(
 			"2.0.0", "2.0.1",

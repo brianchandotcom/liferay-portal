@@ -14,8 +14,8 @@
 
 package com.liferay.asset.auto.tagger.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,7 +30,7 @@ public class AssetAutoTaggerServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.1.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {
@@ -40,7 +40,8 @@ public class AssetAutoTaggerServiceUpgrade implements UpgradeStepRegistrator {
 			});
 
 		registry.register(
-			"1.1.0", "1.2.0", new UpgradeCTModel("AssetAutoTaggerEntry"));
+			"1.1.0", "1.2.0",
+			new CTModelUpgradeProcess("AssetAutoTaggerEntry"));
 	}
 
 }

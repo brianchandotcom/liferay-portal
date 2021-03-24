@@ -16,7 +16,7 @@ package com.liferay.layout.seo.internal.upgrade;
 
 import com.liferay.layout.seo.internal.upgrade.v2_0_0.SEOEntryUpgradeProcess;
 import com.liferay.layout.seo.internal.upgrade.v2_1_0.SchemaUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +35,7 @@ public class LayoutSEOServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.1.0", "2.2.0",
-			new UpgradeCTModel("LayoutSEOEntry", "LayoutSEOSite"));
+			new CTModelUpgradeProcess("LayoutSEOEntry", "LayoutSEOSite"));
 	}
 
 }

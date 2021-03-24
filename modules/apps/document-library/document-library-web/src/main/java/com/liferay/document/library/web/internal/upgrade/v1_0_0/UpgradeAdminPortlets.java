@@ -15,12 +15,12 @@
 package com.liferay.document.library.web.internal.upgrade.v1_0_0;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
+import com.liferay.portal.kernel.upgrade.BaseAdminPortletsUpgradeProcess;
 
 /**
  * @author Sergio González
  */
-public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
+public class UpgradeAdminPortlets extends BaseAdminPortletsUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

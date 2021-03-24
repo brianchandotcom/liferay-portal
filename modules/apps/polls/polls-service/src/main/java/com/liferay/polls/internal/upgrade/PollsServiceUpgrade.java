@@ -20,9 +20,9 @@ import com.liferay.polls.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.polls.internal.upgrade.v2_0_0.util.PollsChoiceTable;
 import com.liferay.polls.internal.upgrade.v2_0_0.util.PollsQuestionTable;
 import com.liferay.polls.internal.upgrade.v2_0_0.util.PollsVoteTable;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,7 +49,7 @@ public class PollsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.4", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {
 					PollsChoiceTable.class, PollsQuestionTable.class,
 					PollsVoteTable.class
@@ -57,7 +57,7 @@ public class PollsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.0", "2.1.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {

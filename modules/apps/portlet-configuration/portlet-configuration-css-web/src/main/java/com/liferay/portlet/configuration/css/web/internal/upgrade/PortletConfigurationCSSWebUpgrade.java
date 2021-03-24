@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.configuration.css.web.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSPortletKeys;
@@ -34,7 +34,7 @@ public class PortletConfigurationCSSWebUpgrade
 
 		registry.register(
 			"0.0.1", "1.0.0",
-			new BaseUpgradePortletId() {
+			new BasePortletIdUpgradeProcess() {
 
 				@Override
 				protected String[][] getRenamePortletIdsArray() {

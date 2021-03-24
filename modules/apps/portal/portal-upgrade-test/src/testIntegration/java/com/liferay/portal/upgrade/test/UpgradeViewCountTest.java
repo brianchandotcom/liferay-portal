@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
+import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -76,7 +76,7 @@ public class UpgradeViewCountTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		UpgradeViewCount upgradeCTModel = new UpgradeViewCount(
+		ViewCountUpgradeProcess upgradeCTModel = new ViewCountUpgradeProcess(
 			"UpgradeViewCount", UpgradeViewCountTest.class, "primaryKey",
 			"readCount");
 

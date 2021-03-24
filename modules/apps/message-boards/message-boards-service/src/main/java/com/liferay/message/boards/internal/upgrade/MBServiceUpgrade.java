@@ -36,10 +36,10 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
+import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 
@@ -66,7 +66,7 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.1.0", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
+			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {
 					MBBanTable.class, MBCategoryTable.class,
 					MBDiscussionTable.class, MBMailingListTable.class,
@@ -76,7 +76,7 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.0", "3.0.0",
-			new UpgradeViewCount(
+			new ViewCountUpgradeProcess(
 				"MBThread", MBThread.class, "threadId", "viewCount"),
 			new MBMessageTreePathUpgradeProcess());
 
@@ -89,7 +89,7 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"4.0.0", "5.0.0", new MBThreadMessageCountUpgradeProcess(),
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {
@@ -103,7 +103,7 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"5.0.0", "5.1.0",
-			new UpgradeCTModel(
+			new CTModelUpgradeProcess(
 				"MBBan", "MBCategory", "MBDiscussion", "MBMailingList",
 				"MBMessage", "MBStatsUser", "MBThread", "MBThreadFlag"));
 

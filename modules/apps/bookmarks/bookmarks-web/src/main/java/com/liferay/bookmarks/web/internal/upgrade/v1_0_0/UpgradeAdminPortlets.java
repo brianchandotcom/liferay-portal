@@ -15,12 +15,12 @@
 package com.liferay.bookmarks.web.internal.upgrade.v1_0_0;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
+import com.liferay.portal.kernel.upgrade.BaseAdminPortletsUpgradeProcess;
 
 /**
  * @author Miguel Pastor
  */
-public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
+public class UpgradeAdminPortlets extends BaseAdminPortletsUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

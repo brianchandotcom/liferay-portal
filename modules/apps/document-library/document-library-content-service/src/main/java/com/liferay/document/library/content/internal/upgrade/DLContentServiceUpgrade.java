@@ -15,8 +15,8 @@
 package com.liferay.document.library.content.internal.upgrade;
 
 import com.liferay.document.library.content.internal.upgrade.v1_0_0.UpgradeClassNames;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +33,7 @@ public class DLContentServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "1.1.0",
-			new UpgradeMVCCVersion() {
+			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getModuleTableNames() {
@@ -42,7 +42,8 @@ public class DLContentServiceUpgrade implements UpgradeStepRegistrator {
 
 			});
 
-		registry.register("1.1.0", "1.2.0", new UpgradeCTModel("DLContent"));
+		registry.register(
+			"1.1.0", "1.2.0", new CTModelUpgradeProcess("DLContent"));
 	}
 
 }

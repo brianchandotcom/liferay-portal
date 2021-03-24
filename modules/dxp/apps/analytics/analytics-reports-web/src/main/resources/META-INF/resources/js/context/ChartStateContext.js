@@ -165,7 +165,7 @@ function reducer(state, action) {
 			nextState = setLoadingState(state);
 			break;
 		default:
-			state = nextState;
+			nextState = state;
 			break;
 	}
 

@@ -28,16 +28,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "4"
-	test CheckDefaultStructureTitleDisplayedOnStructureList {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 CheckDefaultStructureTitleDisplayedOnStructureList pending implementation
-
-	}
-
 	@description = "This test verifies if a pop-up with the flag, label, and translation status is shown up when the user clicks on the language flag."
 	@priority = "4"
 	test CheckLanguageSelector {

@@ -229,6 +229,43 @@ public class OAuth2AuthorizationServiceHttp {
 		}
 	}
 
+	public static void revokeAllOAuth2Authorizations(
+			HttpPrincipal httpPrincipal, long oAuth2ApplicationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				OAuth2AuthorizationServiceUtil.class,
+				"revokeAllOAuth2Authorizations",
+				_revokeAllOAuth2AuthorizationsParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, oAuth2ApplicationId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void revokeOAuth2Authorization(
 			HttpPrincipal httpPrincipal, long oAuth2AuthorizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -237,7 +274,7 @@ public class OAuth2AuthorizationServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				OAuth2AuthorizationServiceUtil.class,
 				"revokeOAuth2Authorization",
-				_revokeOAuth2AuthorizationParameterTypes4);
+				_revokeOAuth2AuthorizationParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, oAuth2AuthorizationId);
@@ -285,7 +322,11 @@ public class OAuth2AuthorizationServiceHttp {
 		};
 	private static final Class<?>[]
 		_getUserOAuth2AuthorizationsCountParameterTypes3 = new Class[] {};
-	private static final Class<?>[] _revokeOAuth2AuthorizationParameterTypes4 =
+	private static final Class<?>[]
+		_revokeAllOAuth2AuthorizationsParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _revokeOAuth2AuthorizationParameterTypes5 =
 		new Class[] {long.class};
 
 }

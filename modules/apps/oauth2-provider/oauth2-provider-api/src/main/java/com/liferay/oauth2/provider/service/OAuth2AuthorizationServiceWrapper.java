@@ -85,6 +85,14 @@ public class OAuth2AuthorizationServiceWrapper
 	}
 
 	@Override
+	public void revokeAllOAuth2Authorizations(long oAuth2ApplicationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
+			oAuth2ApplicationId);
+	}
+
+	@Override
 	public void revokeOAuth2Authorization(long oAuth2AuthorizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

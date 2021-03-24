@@ -76,6 +76,9 @@ public interface OAuth2AuthorizationService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserOAuth2AuthorizationsCount() throws PortalException;
 
+	public void revokeAllOAuth2Authorizations(long oAuth2ApplicationId)
+		throws PortalException;
+
 	public void revokeOAuth2Authorization(long oAuth2AuthorizationId)
 		throws PortalException;
 

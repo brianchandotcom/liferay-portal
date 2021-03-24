@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.base.OAuth2AuthorizationServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
@@ -82,6 +83,30 @@ public class OAuth2AuthorizationServiceImpl
 
 		return oAuth2AuthorizationLocalService.getUserOAuth2AuthorizationsCount(
 			user.getUserId());
+	}
+
+	@Override
+	public void revokeAllOAuth2Authorizations(long oAuth2ApplicationId)
+		throws PortalException {
+
+		List<OAuth2Authorization> oAuth2Authorizations =
+			oAuth2AuthorizationLocalService.getOAuth2Authorizations(
+				oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		User user = getUser();
+
+		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
+			if (user.getUserId() != oAuth2Authorization.getUserId()) {
+				_oAuth2ApplicationModelResourcePermission.check(
+					getPermissionChecker(),
+					oAuth2Authorization.getOAuth2ApplicationId(),
+					OAuth2ProviderActionKeys.ACTION_REVOKE_TOKEN);
+			}
+
+			oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
+				oAuth2Authorization);
+		}
 	}
 
 	@Override

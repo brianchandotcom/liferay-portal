@@ -152,6 +152,20 @@ public class OAuth2AuthorizationServiceSoap {
 		}
 	}
 
+	public static void revokeAllOAuth2Authorizations(long oAuth2ApplicationId)
+		throws RemoteException {
+
+		try {
+			OAuth2AuthorizationServiceUtil.revokeAllOAuth2Authorizations(
+				oAuth2ApplicationId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void revokeOAuth2Authorization(long oAuth2AuthorizationId)
 		throws RemoteException {
 

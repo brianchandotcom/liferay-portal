@@ -80,6 +80,12 @@ public class OAuth2AuthorizationServiceUtil {
 		return getService().getUserOAuth2AuthorizationsCount();
 	}
 
+	public static void revokeAllOAuth2Authorizations(long oAuth2ApplicationId)
+		throws PortalException {
+
+		getService().revokeAllOAuth2Authorizations(oAuth2ApplicationId);
+	}
+
 	public static void revokeOAuth2Authorization(long oAuth2AuthorizationId)
 		throws PortalException {
 

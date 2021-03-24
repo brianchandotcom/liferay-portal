@@ -507,6 +507,47 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#NEW_TOPIC");
 	}
 
+	@description = "Validate if the guest user cannot ask question, it also covers LPS-128823."
+	@priority = "4"
+	test CannotAskQuestionAsGuest {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "Questions Test Category Description",
+			rootTopicName = "Questions Test Category");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		AssertElementPresent(
+			key_emptyInfo = "This topic is empty.",
+			locator1 = "Questions#EMPTY_STATE_MESSAGE");
+
+		AssertElementNotPresent(locator1 = "Questions#ASK_QUESTION_BUTTON");
+	}
+
 	@description = "Validate if the user can setup the landing page topic navigation for the widget."
 	@priority = "4"
 	test ConfigureLandingPageTopicNavigation {

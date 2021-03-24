@@ -1,8 +1,0 @@
-{
-    "ignore": [
-        "**/config.js",
-        "**/custom_fields.js",
-        "**/ddm_form.js",
-        "**/main.js"
-    ]
-}

@@ -17,30 +17,17 @@ module.exports = {
 		bundler: {
 			config: {
 				imports: {
-					'dynamic-data-mapping-form-field-type': {
-						'/': '>=5.0.0',
-					},
-					'dynamic-data-mapping-form-renderer': {
-						'/': '>=5.0.0',
-					},
-					'frontend-editor-ckeditor-web': {
-						'/': '>=4.0.0',
-					},
-					'map-openstreetmap': {
-						'/': '>=5.0.0',
-					},
-					'map-google-maps': {
-						'/': '>=4.0.0',
-					},
 					'map-common': {
-						'/': '>=5.0.0',
+						'/': '>=3.0.2',
+					},
+					'frontend-js-metal-web': {
+						metal: '>=2.16.5',
+						'metal-dom': '>=2.16.5',
+						'metal-events': '>=2.16.5',
+						'metal-state': '>=2.16.5',
 					},
 				},
 			},
 		},
-		dependencies: [
-			'dynamic-data-mapping-form-field-type',
-			'dynamic-data-mapping-form-renderer',
-		],
 	},
 };

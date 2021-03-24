@@ -15,32 +15,12 @@
 module.exports = {
 	build: {
 		bundler: {
-			config: {
-				imports: {
-					'dynamic-data-mapping-form-field-type': {
-						'/': '>=5.0.0',
-					},
-					'dynamic-data-mapping-form-renderer': {
-						'/': '>=5.0.0',
-					},
-					'frontend-editor-ckeditor-web': {
-						'/': '>=4.0.0',
-					},
-					'map-openstreetmap': {
-						'/': '>=5.0.0',
-					},
-					'map-google-maps': {
-						'/': '>=4.0.0',
-					},
-					'map-common': {
-						'/': '>=5.0.0',
-					},
-				},
-			},
+			ignore: [
+				'**/config.js',
+				'**/custom_fields.js',
+				'**/ddm_form.js',
+				'**/main.js',
+			],
 		},
-		dependencies: [
-			'dynamic-data-mapping-form-field-type',
-			'dynamic-data-mapping-form-renderer',
-		],
 	},
 };

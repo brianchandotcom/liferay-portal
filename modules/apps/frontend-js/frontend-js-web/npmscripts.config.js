@@ -13,6 +13,23 @@
  */
 
 module.exports = {
+	build: {
+		bundler: {
+			exclude: {
+				'*': true,
+			},
+			ignore: [
+				'**/global.bundle.js',
+				'**/liferay/dom_task_runner.js',
+				'**/liferay/events.js',
+				'**/liferay/lazy_load.js',
+				'**/liferay/liferay.js',
+				'**/liferay/portlet.js',
+				'**/liferay/workflow.js',
+				'**/loader/config.js',
+			],
+		},
+	},
 	bridges: [
 		'lodash.escape',
 		'lodash.groupby',
@@ -23,3 +40,5 @@ module.exports = {
 		'uuid',
 	],
 };
+
+/*******/

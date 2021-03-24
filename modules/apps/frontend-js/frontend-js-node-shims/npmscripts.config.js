@@ -13,6 +13,17 @@
  */
 
 module.exports = {
+	build: {
+		bundler: {
+			exclude: {
+				'*': ['test?(s)/**/*', 'test.js'],
+				'vm-browserify': ['example/**/*', 'test/**/*'],
+			},
+			output: 'build/node/packageRunBuild/resources',
+			preset: 'liferay-npm-bundler-preset-standard',
+			sources: ['src/main/resources/META-INF/resources'],
+		},
+	},
 	check: [],
 	fix: [],
 };

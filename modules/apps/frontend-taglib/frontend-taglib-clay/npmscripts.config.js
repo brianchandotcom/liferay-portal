@@ -1,0 +1,135 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+module.exports = {
+	build: {
+		bundler: {
+			config: {
+				imports: {
+					'frontend-js-metal-web': {
+						metal: '>=2.16.5',
+						'metal-component': '>=2.16.5',
+						'metal-debounce': '>=2.0.1',
+						'metal-events': '>=2.16.5',
+						'metal-position': '>=2.1.1',
+						'metal-soy': '>=2.16.5',
+						'metal-state': '>=2.16.5',
+						'metal-web-component': '>=2.16.5',
+					},
+					'@liferay/frontend-js-react-web': {
+						'/': '>=4.0.11',
+						react: '>=16.6.3',
+						'react-dom': '>=16.6.3',
+					},
+					"@liferay/frontend-js-state-web": {
+						"/": "*"
+					},
+					'frontend-js-web': {
+						'/': '>=3.0.0',
+					},
+					'frontend-taglib-chart': {
+						'billboard.js': '>=1.5.0',
+						d3: '>=1.0.0',
+						'd3-array': '>=1.0.0',
+						'd3-axis': '>=1.0.0',
+						'd3-brush': '>=1.0.0',
+						'd3-chord': '>=1.0.0',
+						'd3-collection': '>=1.0.0',
+						'd3-color': '>=1.0.0',
+						'd3-contour': '>=1.0.0',
+						'd3-dispatch': '>=1.0.0',
+						'd3-drag': '>=1.0.0',
+						'd3-dsv': '>=1.0.0',
+						'd3-ease': '>=1.0.0',
+						'd3-fetch': '>=1.0.0',
+						'd3-force': '>=1.0.0',
+						'd3-format': '>=1.0.0',
+						'd3-geo': '>=1.0.0',
+						'd3-hierarchy': '>=1.0.0',
+						'd3-interpolate': '>=1.0.0',
+						'd3-path': '>=1.0.0',
+						'd3-polygon': '>=1.0.0',
+						'd3-quadtree': '>=1.0.0',
+						'd3-random': '>=1.0.0',
+						'd3-scale-chromatic': '>=1.0.0',
+						'd3-scale': '>=1.0.0',
+						'd3-selection': '>=1.0.0',
+						'd3-shape': '>=1.0.0',
+						'd3-time-format': '>=1.0.0',
+						'd3-time': '>=1.0.0',
+						'd3-timer': '>=1.0.0',
+						'd3-transition': '>=1.0.0',
+						'd3-voronoi': '>=1.0.0',
+						'd3-zoom': '>=1.0.0',
+					},
+				},
+			},
+			exclude: {
+				'*': ['src/__tests__/**/*'],
+				commander: true,
+				'core-js': true,
+				'billboard.js': true,
+				d3: true,
+				'd3-array': true,
+				'd3-axis': true,
+				'd3-brush': true,
+				'd3-chord': true,
+				'd3-collection': true,
+				'd3-color': true,
+				'd3-contour': true,
+				'd3-dispatch': true,
+				'd3-drag': true,
+				'd3-dsv': true,
+				'd3-ease': true,
+				'd3-fetch': true,
+				'd3-force': true,
+				'd3-format': true,
+				'd3-geo': true,
+				'd3-hierarchy': true,
+				'd3-interpolate': true,
+				'd3-path': true,
+				'd3-polygon': true,
+				'd3-quadtree': true,
+				'd3-random': true,
+				'd3-scale-chromatic': true,
+				'd3-scale': true,
+				'd3-selection': true,
+				'd3-shape': true,
+				'd3-time-format': true,
+				'd3-time': true,
+				'd3-timer': true,
+				'd3-transition': true,
+				'd3-voronoi': true,
+				'd3-zoom': true,
+				'incremental-dom': true,
+				'incremental-dom-string': true,
+				metal: true,
+				'metal-anim': true,
+				'metal-component': true,
+				'metal-events': true,
+				'metal-incremental-dom': true,
+				'metal-position': true,
+				'metal-soy': true,
+				'metal-soy-bundle': true,
+				'metal-state': true,
+				'metal-web-component': true,
+				'xss-filters': true,
+			},
+			ignore: ['__generated__/**/*'],
+			output: 'build/node/packageRunBuild/resources',
+			preset: 'liferay-npm-bundler-preset-standard',
+			sources: ['src/main/resources/META-INF/resources'],
+		},
+	},
+};

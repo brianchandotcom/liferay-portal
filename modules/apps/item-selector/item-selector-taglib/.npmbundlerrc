@@ -1,6 +1,0 @@
-{
-	"ignore": [
-		"**/image_selector.js",
-		"**/config.js"
-	]
-}

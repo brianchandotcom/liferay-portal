@@ -14,6 +14,31 @@
 
 module.exports = {
 	build: {
+		bundler: {
+			config: {
+				imports: {
+					'dynamic-data-mapping-form-builder': {
+						'/': '>=3.0.31',
+					},
+					'dynamic-data-mapping-form-renderer': {
+						'/': '>=5.0.0',
+					},
+					'frontend-editor-ckeditor-web': {
+						'/': '>=4.0.0',
+					},
+					'map-openstreetmap': {
+						'/': '>=5.0.0',
+					},
+					'map-google-maps': {
+						'/': '>=4.0.0',
+					},
+					'map-common': {
+						'/': '>=5.0.0',
+					},
+				},
+			},
+			ignore: ['!**/*.scss.js', '**/__tests__/*.js'],
+		},
 		dependencies: [
 			'data-engine-taglib',
 			'dynamic-data-mapping-form-builder',

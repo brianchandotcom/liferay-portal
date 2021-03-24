@@ -16,11 +16,10 @@ import {Context as ModalContext} from '@clayui/modal';
 import {DragLayer} from 'data-engine-taglib';
 import {Pages, useForm, useFormState} from 'dynamic-data-mapping-form-renderer';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
+import fieldDelete from 'dynamic-data-mapping-form-renderer/js/core/thunks/fieldDelete.es';
 import React, {useContext} from 'react';
 
-import fieldDelete from './thunks/fieldDelete';
-
-const FormBuilder = () => {
+const DataEngineFormBuilder = () => {
 	const dispatch = useForm();
 	const [{onClose}, modalDispatch] = useContext(ModalContext);
 
@@ -71,4 +70,4 @@ const FormBuilder = () => {
 	);
 };
 
-export default FormBuilder;
+export default DataEngineFormBuilder;

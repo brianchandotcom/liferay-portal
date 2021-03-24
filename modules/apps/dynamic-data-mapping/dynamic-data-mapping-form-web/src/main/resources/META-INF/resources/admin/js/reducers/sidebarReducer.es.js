@@ -12,7 +12,11 @@
  * details.
  */
 
-import {RulesSupport} from 'dynamic-data-mapping-form-builder';
+import {
+	FieldUtil,
+	RulesSupport,
+	SettingsContext,
+} from 'dynamic-data-mapping-form-builder';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {EVENT_TYPES} from '../eventTypes.es';
@@ -23,10 +27,54 @@ import {EVENT_TYPES} from '../eventTypes.es';
  */
 export default (state, action) => {
 	switch (action.type) {
-		case EVENT_TYPES.SIDEBAR.BLUR:
+		case EVENT_TYPES.SIDEBAR.BLUR: {
+			const {focusedField} = state;
+
+			if (
+				Object.keys(focusedField).length &&
+				(focusedField.fieldReference === '' ||
+					FieldUtil.findInvalidFieldReference(
+						focusedField,
+						state.pages,
+						focusedField.fieldReference
+					))
+			) {
+				const {defaultLanguageId, editingLanguageId, pages} = state;
+
+				const visitor = new PagesVisitor(pages);
+
+				return {
+					focusedField: {},
+					pages: visitor.mapFields(
+						(field) => {
+							if (field.fieldName === focusedField.fieldName) {
+								return SettingsContext.updateField(
+									{
+										defaultLanguageId,
+										editingLanguageId,
+									},
+									SettingsContext.updateFieldReference(
+										focusedField,
+										false,
+										true
+									),
+									'fieldReference',
+									focusedField.fieldName
+								);
+							}
+
+							return field;
+						},
+						true,
+						true
+					),
+				};
+			}
+
 			return {
 				focusedField: {},
 			};
+		}
 		case EVENT_TYPES.SIDEBAR.CHANGES_CANCEL: {
 			const {focusedField, pages, previousFocusedField} = state;
 

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -254,6 +255,14 @@ public class AppWorkflowTestHelper {
 		};
 	}
 
+	public void deleteWorkflowInstance(DDLRecord ddlRecord) throws Exception {
+		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+			ddlRecord.getCompanyId(), ddlRecord.getGroupId(),
+			ResourceActionsUtil.getCompositeModelName(
+				AppBuilderApp.class.getName(), DDLRecord.class.getName()),
+			ddlRecord.getRecordId());
+	}
+
 	private DDLRecordSet _addDDLRecordSet(
 			DDMStructure ddmStructure, Group group)
 		throws Exception {
@@ -320,5 +329,8 @@ public class AppWorkflowTestHelper {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

@@ -110,6 +110,35 @@ public class AppWorkflowDataRecordLinkResourceTest
 			(List<AppWorkflowDataRecordLink>)page.getItems());
 
 		assertValid(page);
+
+		_appWorkflowTestHelper.deleteWorkflowInstance(ddlRecord2);
+
+		page =
+			appWorkflowDataRecordLinkResource.
+				postAppAppWorkflowDataRecordLinksPage(
+					_appBuilderApp.getAppBuilderAppId(),
+					new DataRecordIds() {
+						{
+							dataRecordIds = new Long[] {
+								ddlRecord1.getRecordId(),
+								ddlRecord2.getRecordId()
+							};
+						}
+					});
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEquals(
+			Arrays.asList(
+				new AppWorkflowDataRecordLink() {
+					{
+						appWorkflow = postAppWorkflow;
+						dataRecordId = ddlRecord1.getRecordId();
+					}
+				}),
+			(List<AppWorkflowDataRecordLink>)page.getItems());
+
+		assertValid(page);
 	}
 
 	@Override

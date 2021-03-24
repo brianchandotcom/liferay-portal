@@ -884,6 +884,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMFolder.addPG(
+			contentPage = "true",
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
 

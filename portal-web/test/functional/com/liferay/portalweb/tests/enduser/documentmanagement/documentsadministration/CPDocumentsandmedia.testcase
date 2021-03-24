@@ -1155,6 +1155,7 @@ definition {
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
 		DMDocument.addDMShortcutCP(
+			contentPage = "true",
 			dmDocumentTitle = "Document_1.jpg",
 			siteName = "Site Name");
 

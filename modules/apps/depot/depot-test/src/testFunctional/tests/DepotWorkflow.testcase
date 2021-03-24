@@ -896,6 +896,87 @@ definition {
 			webContentTitle = "Depot WebContent Title");
 	}
 
+	@description = "This ensures that a DM folder workflow can be restored to default from other settings."
+	@priority = "4"
+	test RestoreDMFolderWorkflowToDefault {
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name");
+
+		DMFolder.configureWorkflowCP(
+			dmDocumentTypeName = "Basic Document",
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Specific Restrictions");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder Name",
+			workflowRestriction = "Parent Folder");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Depot Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Depot Document Title");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.viewCPStatus(
+			dmDocumentStatus = "Approved",
+			dmDocumentTitle = "Depot Document Title");
+	}
+
+	@description = "This ensures that a WC folder workflow can be restored to default from other settings."
+	@priority = "4"
+	test RestoreWCFolderWorkflowToDefault {
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name");
+
+		WebContentFolder.configureWorkflowCP(
+			folderName = "WC Folder Name",
+			structureName = "Basic Web Content",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Specific Restrictions");
+
+		WebContentFolder.configureWorkflowCP(
+			folderName = "WC Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		WebContentFolder.configureWorkflowCP(
+			folderName = "WC Folder Name",
+			workflowRestriction = "Parent Folder");
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Depot WebContent Content",
+			webContentTitle = "Depot WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Approved",
+			webContentTitle = "Depot WebContent Title");
+	}
+
 	@description = "This ensures that the workflow can be set in an asset library."
 	@priority = "5"
 	test Smoke {

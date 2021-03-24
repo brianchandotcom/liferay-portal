@@ -70,11 +70,21 @@ public class ContainerStyledLayoutStructureItem
 		return _widthType;
 	}
 
+	public String getContentDisplay() {
+		return _contentDisplay;
+	}
+
 	@Override
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
 		return jsonObject.put(
+			"align", _align
+		).put(
+			"contentDisplay", _contentDisplay
+		).put(
+			"justify", _justify
+		).put(
 			"link", _linkJSONObject
 		).put(
 			"widthType", _widthType
@@ -108,11 +118,8 @@ public class ContainerStyledLayoutStructureItem
 		return HashUtil.hash(0, getItemId());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
 	public void setAlign(String align) {
+		_align = align;
 	}
 
 	/**
@@ -160,18 +167,12 @@ public class ContainerStyledLayoutStructureItem
 		_widthType = containerType;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
 	public void setContentDisplay(String contentDisplay) {
+		_contentDisplay = contentDisplay;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
 	public void setJustify(String justify) {
+		_justify = justify;
 	}
 
 	public void setLinkJSONObject(JSONObject linkJSONObject) {
@@ -265,6 +266,18 @@ public class ContainerStyledLayoutStructureItem
 		_convertStyleProperties(itemConfigJSONObject);
 
 		super.updateItemConfig(itemConfigJSONObject);
+
+		if (itemConfigJSONObject.has("align")) {
+			setAlign(itemConfigJSONObject.getString("align"));
+		}
+
+		if (itemConfigJSONObject.has("contentDisplay")) {
+			setContentDisplay(itemConfigJSONObject.getString("contentDisplay"));
+		}
+
+		if (itemConfigJSONObject.has("justify")) {
+			setJustify(itemConfigJSONObject.getString("justify"));
+		}
 
 		if (itemConfigJSONObject.has("link")) {
 			setLinkJSONObject(itemConfigJSONObject.getJSONObject("link"));
@@ -364,6 +377,9 @@ public class ContainerStyledLayoutStructureItem
 		"shadow-sm", "0 .125rem .25rem rgba(0, 0, 0, 0.075)"
 	).build();
 
+	private String _align = "";
+	private String _contentDisplay = "block";
+	private String _justify = "";
 	private JSONObject _linkJSONObject;
 	private String _widthType = "fluid";
 

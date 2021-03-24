@@ -133,6 +133,7 @@ function QueryBuilder({
 							key={element.id}
 							onDeleteElement={onDeleteElement}
 							onUpdateElement={onUpdateElement}
+							prefixedId={`${ELEMENT_PREFIX.QUERY}-${element.id}`}
 						/>
 					);
 				})}

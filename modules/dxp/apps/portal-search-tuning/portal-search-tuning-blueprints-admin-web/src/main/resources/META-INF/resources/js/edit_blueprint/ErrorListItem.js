@@ -49,7 +49,7 @@ function ErrorListItem({item, onFocusElement}) {
 				<span className="description">{item.msg}</span>
 			</span>
 
-			{item.elementId > -1 && (
+			{!!item.elementId && (
 				<div className="scroll-button">
 					<ClayButton
 						alert

@@ -409,6 +409,7 @@ Element.propTypes = {
 	initialUIConfigurationValues: PropTypes.object,
 	onDeleteElement: PropTypes.func,
 	onUpdateElement: PropTypes.func,
+	prefixedId: PropTypes.string,
 	uiConfigurationJSON: PropTypes.object,
 	uiConfigurationValues: PropTypes.object,
 };

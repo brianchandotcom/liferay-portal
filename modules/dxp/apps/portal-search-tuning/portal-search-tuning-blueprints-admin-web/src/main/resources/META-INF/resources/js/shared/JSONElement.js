@@ -28,6 +28,7 @@ function JSONElement({
 	id,
 	onDeleteElement,
 	onUpdateElement,
+	prefixedId,
 }) {
 	const {locale} = useContext(ThemeContext);
 
@@ -56,7 +57,7 @@ function JSONElement({
 	}
 
 	return (
-		<div className="element sheet">
+		<div className="element sheet" id={prefixedId}>
 			{useMemo(() => {
 				return (
 					<ClayList className="configuration-header-list">
@@ -182,6 +183,7 @@ JSONElement.propTypes = {
 	id: PropTypes.number,
 	onDeleteElement: PropTypes.func,
 	onUpdateElement: PropTypes.func,
+	prefixedId: PropTypes.string,
 };
 
 export default React.memo(JSONElement);

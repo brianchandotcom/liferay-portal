@@ -2862,10 +2862,12 @@ public class DataFactory {
 
 	public PortletPreferenceValueModel
 		newJournalContentPortletPreferenceValueModel(
-			PortletPreferencesModel portletPreferencesModel) {
+			PortletPreferencesModel portletPreferencesModel,
+			JournalArticleModel journalArticleModel) {
 
 		return newPortletPreferenceValueModel(
-			portletPreferencesModel, "articleId", 0, _defaultJournalArticleId);
+			portletPreferencesModel, "articleId", 0,
+			journalArticleModel.getArticleId());
 	}
 
 	public JournalContentSearchModel newJournalContentSearchModel(

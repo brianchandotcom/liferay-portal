@@ -312,6 +312,8 @@ definition {
 	@description = "Validate if the anonymous user can ask questions and redirected to login, it also covers LPS-129203."
 	@priority = "4"
 	test AskQuestionsThroughAnonymousUser {
+		property test.name.skip.portal.instance = "QuestionsWidgetActions#AskQuestionsThroughAnonymousUser";
+
 		Questions.enableRedirectToLogin();
 
 		ApplicationsMenu.gotoPortlet(

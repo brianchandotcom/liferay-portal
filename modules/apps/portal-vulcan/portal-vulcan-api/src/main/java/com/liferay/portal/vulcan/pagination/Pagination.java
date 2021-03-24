@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.pagination;
 
+import com.liferay.petra.string.StringBundler;
+
 /**
  * @author Alejandro Hernández
  * @author Zoltán Takács
@@ -46,6 +48,18 @@ public class Pagination {
 		}
 
 		return (_page - 1) * _pageSize;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler("{\"page\":");
+
+		sb.append(_page);
+		sb.append(", \"pageSize\":");
+		sb.append(_pageSize);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private Pagination(int page, int pageSize) {

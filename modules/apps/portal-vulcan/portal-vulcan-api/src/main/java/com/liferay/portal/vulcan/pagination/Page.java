@@ -19,13 +19,16 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.vulcan.aggregation.Facet;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Alejandro Hernández
@@ -121,6 +124,34 @@ public class Page<T> {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler("{\"actions\":");
+
+		sb.append(_toString((Map)_actions));
+		sb.append(", \"items\":[");
+
+		Iterator<T> iterator = _items.iterator();
+
+		while (iterator.hasNext()) {
+			sb.append(iterator.next());
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("], \"page\":");
+		sb.append(_page);
+		sb.append(", \"pageSize\":");
+		sb.append(_pageSize);
+		sb.append(", \"totalCount\":");
+		sb.append(_totalCount);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private Page(
 		Map<String, Map<String, String>> actions, Collection<T> items) {
 
@@ -150,6 +181,41 @@ public class Page<T> {
 		}
 
 		_totalCount = totalCount;
+	}
+
+	private String _toString(Map<String, Object> map) {
+		StringBundler sb = new StringBundler("{");
+
+		Set<Map.Entry<String, Object>> entries = map.entrySet();
+
+		Iterator<Map.Entry<String, Object>> iterator = entries.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, Object> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			Object value = entry.getValue();
+
+			if (value instanceof Map) {
+				sb.append(_toString((Map)value));
+			}
+			else {
+				sb.append("\"");
+				sb.append(value);
+				sb.append("\"");
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final Map<String, Map<String, String>> _actions;

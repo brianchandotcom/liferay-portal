@@ -111,7 +111,7 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		String testClassName = JenkinsResultsParserUtil.getCanonicalPath(
 			_testClass.getTestClassFile());
 
-		testClassName = testClassName.replaceAll(".*/(com/0.*)\\.java", "$1");
+		testClassName = testClassName.replaceAll(".*/(com/.*)\\.java", "$1");
 
 		return testClassName.replace("/", ".");
 	}

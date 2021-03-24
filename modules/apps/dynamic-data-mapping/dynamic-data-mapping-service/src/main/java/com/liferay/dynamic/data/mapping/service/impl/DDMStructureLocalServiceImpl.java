@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -1524,7 +1525,9 @@ public class DDMStructureLocalServiceImpl
 
 		structure.setVersion(latestStructureVersion.getVersion());
 
-		structure.setNameMap(nameMap);
+		structure.setNameMap(
+			nameMap,
+			LocaleUtil.fromLanguageId(structure.getDefaultLanguageId()));
 		structure.setVersionUserId(user.getUserId());
 		structure.setVersionUserName(user.getFullName());
 		structure.setModifiedDate(new Date());

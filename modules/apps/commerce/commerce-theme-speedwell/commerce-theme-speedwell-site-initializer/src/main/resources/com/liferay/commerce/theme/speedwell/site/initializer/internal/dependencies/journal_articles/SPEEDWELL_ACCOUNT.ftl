@@ -19,7 +19,7 @@
 		</div>
 	</a>
 
-	<a class="account-dashboard__pill" href="${base_friendly_url}login-security">
+	<a class="account-dashboard__pill" href="${base_friendly_url}/login-security">
 		<div class="pill__icon">
 			<svg fill="none" height="60" viewBox="0 0 48 60" width="48" xmlns="http://www.w3.org/2000/svg">
 				<path

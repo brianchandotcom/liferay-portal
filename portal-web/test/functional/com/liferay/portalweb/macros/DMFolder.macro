@@ -46,7 +46,12 @@ definition {
 	}
 
 	macro addPG {
-		LexiconEntry.gotoAdd();
+		if (isSet(contentPage)) {
+			LexiconEntry.gotoAdd();
+		}
+		else {
+			Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+		}
 
 		AssertClick.assertTextClickAt(
 			key_menuItem = "Folder",

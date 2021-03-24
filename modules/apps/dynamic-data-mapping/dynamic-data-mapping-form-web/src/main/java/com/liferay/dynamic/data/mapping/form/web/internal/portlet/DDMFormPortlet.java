@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -231,6 +233,7 @@ public class DDMFormPortlet extends MVCPortlet {
 			_ddmFormValuesFactory, _ddmFormValuesMerger,
 			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration(),
 			_ddmStorageAdapterTracker, _groupLocalService, _jsonFactory,
+			_roleLocalService, _userLocalService,
 			_workflowDefinitionLinkLocalService, _portal);
 
 		renderRequest.setAttribute(
@@ -293,6 +296,12 @@ public class DDMFormPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

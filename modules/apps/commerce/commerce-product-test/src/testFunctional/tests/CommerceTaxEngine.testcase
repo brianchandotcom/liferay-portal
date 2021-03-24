@@ -1,0 +1,102 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6258. UI lifecycle for activating a tax engine (ByAddress)"
+	@ignore = "true"
+	@priority = "3"
+	test ActivateByAddressTaxEngine {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6258 ActivateByAddressTaxEngine Pending Implementation
+
+	}
+
+	@description = "This is a test for COMMERCE-6258. UI lifecycle for activating a tax engine (Fixed)"
+	@ignore = "true"
+	@priority = "3"
+	test ActivateFixedTaxEngine {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6258 ActivateFixedTaxEngine Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6259. Add tax rates to the newly activated engine (ByAddress)"
+	@ignore = "true"
+	@priority = "3"
+	test AddTaxRateToByAddressTaxEngine {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6259 AddTaxRateToByAddressTaxEngine Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6259. Add tax rates to the newly activated engine (Fixed)"
+	@ignore = "true"
+	@priority = "3"
+	test AddTaxRateToFixedTaxEngine {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6259 AddTaxRateToFixedTaxEngine Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6262. Test address restriction on tax calculation"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAddressRestrictiedTaxIsCorrectlyCalculated {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6262 AssertAddressRestrictiedTaxIsCorrectlyCalculated Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6260. Test tax calculation"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductTaxCategoryIsCorrectlyCalculated {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6260 AssertProductTaxCategoryIsCorrectlyCalculated Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6263. Configure tax properties at channel level"
+	@ignore = "true"
+	@priority = "3"
+	test ConfigureChannelShippingTaxCategory {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6263 ConfigureChannelShippingTaxCategory Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6264. Add/update/delete tax category from UI"
+	@ignore = "true"
+	@priority = "3"
+	test TaxCategoryLifecycle {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6263 TaxCategoryLifecycle Pending Implementation
+	}
+
+}

@@ -13,13 +13,11 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
-import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import TranslateLanguagesSelector from './components/TranslateLanguagesSelector';
+import TranslateActionBar from './components/TranslateActionBar';
 import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
 import TranslateHeader from './components/TranslateHeader';
 
@@ -44,6 +42,10 @@ const Translate = ({
 		workflowActions.PUBLISH
 	);
 
+	const handleOnSaveDraft = () => {
+		setWorkflowAction(workflowActions.SAVE_DRAFT);
+	};
+
 	return (
 		<form
 			action={updateTranslationPortletURL}
@@ -65,53 +67,18 @@ const Translate = ({
 				/>
 			))}
 
-			<nav className="component-tbar subnav-tbar-light tbar">
-				<ClayLayout.ContainerFluid view>
-					<ul className="tbar-nav">
-						<li className="tbar-item tbar-item-expand">
-							<TranslateLanguagesSelector
-								{...translateLanguagesSelectorData}
-								formHaschanges={formHaschanges}
-								portletNamespace={portletNamespace}
-							/>
-						</li>
-						<li className="tbar-item">
-							<div className="metadata-type-button-row tbar-section text-right">
-								<ClayButton.Group spaced>
-									<ClayLink
-										button={{small: true}}
-										displayType="secondary"
-										href={redirectURL}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayLink>
-									<ClayButton
-										disabled={saveButtonDisabled}
-										displayType="secondary"
-										onClick={() => {
-											setWorkflowAction(
-												workflowActions.SAVE_DRAFT
-											);
-										}}
-										small
-										type="submit"
-									>
-										{saveButtonLabel}
-									</ClayButton>
-									<ClayButton
-										disabled={publishButtonDisabled}
-										displayType="primary"
-										small
-										type="submit"
-									>
-										{publishButtonLabel}
-									</ClayButton>
-								</ClayButton.Group>
-							</div>
-						</li>
-					</ul>
-				</ClayLayout.ContainerFluid>
-			</nav>
+			<TranslateActionBar
+				formHaschanges={formHaschanges}
+				onSaveButtonClick={handleOnSaveDraft}
+				portletNamespace={portletNamespace}
+				publishButtonDisabled={publishButtonDisabled}
+				publishButtonLabel={publishButtonLabel}
+				redirectURL={redirectURL}
+				saveButtonDisabled={saveButtonDisabled}
+				saveButtonLabel={saveButtonLabel}
+				translateLanguagesSelectorData={translateLanguagesSelectorData}
+			/>
+
 			<ClayLayout.ContainerFluid view>
 				<div className="sheet translation-edit-body-form">
 					{!translationPermission ? (

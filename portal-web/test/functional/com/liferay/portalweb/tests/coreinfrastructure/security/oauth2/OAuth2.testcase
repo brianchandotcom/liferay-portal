@@ -1222,4 +1222,56 @@ definition {
 			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
 	}
 
+	@description = "This is a use case for LPS-129395."
+	@priority = "4"
+	test ViewExternalOptionsRememberDevice {
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		var clientId = "abc123";
+		var portalURL = PropsUtil.get("portal.url");
+
+		OAuth2.addApplication(
+			applicationName = "Remember Device Application",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			checkboxCheckList = "Remember Device",
+			clientProfile = "Web Application");
+
+		Navigator.gotoBack();
+
+		AssertTextEquals(
+			key_columnName = "lfr-extra-properties",
+			key_tableEntry = "Remember Device Application",
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+			value1 = "Remember Device is on");
+	}
+
+	@description = "This is a use case for LPS-129395."
+	@priority = "4"
+	test ViewExternalOptionsTrusted {
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		var clientId = "abc123";
+		var portalURL = PropsUtil.get("portal.url");
+
+		OAuth2.addApplication(
+			applicationName = "Trusted Application",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			checkboxCheckList = "Trusted Application",
+			clientProfile = "Web Application");
+
+		Navigator.gotoBack();
+
+		AssertTextEquals(
+			key_columnName = "lfr-extra-properties",
+			key_tableEntry = "Trusted Application",
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+			value1 = "Trusted");
+	}
+
 }

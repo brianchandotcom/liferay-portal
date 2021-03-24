@@ -3412,9 +3412,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!javax.mail.jar</file-name>
-				<version>1.6.2</version>
+				<version>1.6.6</version>
 				<project-name>JavaMail API</project-name>
-				<project-url>http://www.oracle.com</project-url>
+				<project-url>https://eclipse-ee4j.github.io/mail/</project-url>
 				<licenses>
 					<license>
 						<license-name>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</license-name>

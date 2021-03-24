@@ -495,9 +495,9 @@
 			</library>
 			<library>
 				<file-name>lib/development/mail.jar</file-name>
-				<version>1.6.2</version>
+				<version>1.6.6</version>
 				<project-name>JavaMail</project-name>
-				<project-url>http://java.sun.com/products/javamail</project-url>
+				<project-url>https://eclipse-ee4j.github.io/mail/</project-url>
 				<licenses>
 					<license>
 						<license-name>Common Development and Distribution License 1.0</license-name>

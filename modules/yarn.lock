@@ -966,10 +966,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.1"
 
-"@clayui/css@3.25.2":
-  version "3.25.2"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.25.2.tgz#2a27a218b2f888d07cbfbafb7a77cb17170c994a"
-  integrity sha512-ZGQUDM1FrqDs6ityBXcqKIdSSh9dtKZ02trxOnTHLkKSQOKXgD9Ru6nNeqDIoK9Hw17ZDY9zrWOrgdEd5IQUrw==
+"@clayui/css@3.25.3":
+  version "3.25.3"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.25.3.tgz#5c68e4f98ddf40664d06e8517fbdcf65493ca3d0"
+  integrity sha512-BWMkPn0nMpqhog3iCc9ktazoKKG3oChoNr2zzAzF9LusDGZVVo2pamQjdlAZfkfD/daAC5Bo5rlOLazHc45oKg==
 
 "@clayui/data-provider@3.3.10":
   version "3.3.10"
@@ -1112,10 +1112,10 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/multi-select@3.25.1":
-  version "3.25.1"
-  resolved "https://registry.yarnpkg.com/@clayui/multi-select/-/multi-select-3.25.1.tgz#6702bd023c295537e8bad3f8a8bf2b0b6cd0cfba"
-  integrity sha512-uSNTysdf2QkTs8HkUtndUN5QZVwDiNTVKdOIus5L72bKyMAnjHQpJadJlmk3CpIe2ryGZIeOFeRctfM6j/xdyw==
+"@clayui/multi-select@3.25.3":
+  version "3.25.3"
+  resolved "https://registry.yarnpkg.com/@clayui/multi-select/-/multi-select-3.25.3.tgz#8b9924a86370f4a3be12c85314da394e626c9f29"
+  integrity sha512-2MbgxINQpuvm8WfhO2HUuMcR9RlEDrjadbQrOmUmr14jXdvcz1s576NqRCM5nBaMgKqDhe54k6PtZqAJdR1D9Q==
   dependencies:
     "@clayui/autocomplete" "^3.25.1"
     "@clayui/button" "^3.6.0"
@@ -9600,7 +9600,7 @@ liferay-npm-bridge-generator@2.24.1:
     read-json-sync "^2.0.1"
     yargs "^14.0.0"
 
-liferay-npm-build-tools-common@2.23.0, liferay-npm-build-tools-common@^2.17.1:
+liferay-npm-build-tools-common@2.23.0:
   version "2.23.0"
   resolved "https://registry.yarnpkg.com/liferay-npm-build-tools-common/-/liferay-npm-build-tools-common-2.23.0.tgz#c5b8ee849de1da23a5eeb5850dcbb74f9678e4f6"
   integrity sha512-aqWDPaKKL+YuSfKQdFWSP2J+Dk6nqyZZhWtp2bLEqyVUE5kQIP6mQkJrk5ZG2PnURgYp7GhL0h7B3R2aWpAVIw==
@@ -9614,7 +9614,7 @@ liferay-npm-build-tools-common@2.23.0, liferay-npm-build-tools-common@^2.17.1:
     read-json-sync "^2.0.1"
     resolve "^1.8.1"
 
-liferay-npm-build-tools-common@2.24.1:
+liferay-npm-build-tools-common@2.24.1, liferay-npm-build-tools-common@^2.17.1:
   version "2.24.1"
   resolved "https://registry.yarnpkg.com/liferay-npm-build-tools-common/-/liferay-npm-build-tools-common-2.24.1.tgz#70e78f04d45eea34e57ec79f686ad1c33058a621"
   integrity sha512-Dp0uisf1ycNeAz+buswjGBi1l/cVmE1/DDH92YZYuWllkZ96O3U8P6fH5ev/hkHMLRVKWMzKTIpttb/Xsyymrw==

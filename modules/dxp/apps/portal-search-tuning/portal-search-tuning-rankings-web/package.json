@@ -10,7 +10,7 @@
 		"@clayui/loading-indicator": "3.2.0",
 		"@clayui/management-toolbar": "3.3.0",
 		"@clayui/modal": "3.8.5",
-		"@clayui/multi-select": "3.25.1",
+		"@clayui/multi-select": "3.25.3",
 		"@clayui/pagination-bar": "3.25.1",
 		"@clayui/tabs": "3.3.5",
 		"@liferay/frontend-js-react-web": "*",

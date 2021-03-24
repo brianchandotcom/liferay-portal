@@ -23,13 +23,11 @@ import com.liferay.app.builder.workflow.rest.dto.v1_0.DataRecordIds;
 import com.liferay.app.builder.workflow.rest.internal.dto.v1_0.util.AppWorkflowUtil;
 import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowDataRecordLinkResource;
 import com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
@@ -85,11 +83,7 @@ public class AppWorkflowDataRecordLinkResourceImpl
 					true));
 
 		if (ListUtil.isEmpty(workflowInstances)) {
-			throw new WorkflowException(
-				StringBundler.concat(
-					"Workflow instance not found with company ID ",
-					contextCompany.getCompanyId(), " and asset class PK ",
-					appBuilderAppDataRecordLink.getDdlRecordId()));
+			return null;
 		}
 
 		WorkflowInstance workflowInstance = workflowInstances.get(0);

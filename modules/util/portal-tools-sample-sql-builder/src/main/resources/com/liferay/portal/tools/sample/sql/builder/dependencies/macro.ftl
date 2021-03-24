@@ -171,6 +171,18 @@
 	</#list>
 </#macro>
 
+<#macro insertJournalArticle
+	_journalArticleModel
+	_journalDDMStructureModel
+	_journalDDMTemplateModel
+>
+	${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateModel.templateId))}
+
+	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId))}
+
+	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(_journalArticleModel))}
+</#macro>
+
 <#macro insertLayout
 	_layoutModel
 >

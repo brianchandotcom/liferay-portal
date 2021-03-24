@@ -12,11 +12,11 @@
  * details.
  */
 
-import {InlineEditor} from 'frontend-editor-ckeditor-web';
+import {BalloonEditor} from 'frontend-editor-ckeditor-web';
 import React from 'react';
 
 import '../css/main.scss';
 
 export default function ({portletNamespace, ...otherProps}) {
-	return <InlineEditor name={`${portletNamespace}-editor`} {...otherProps} />;
+	return <BalloonEditor name={`${portletNamespace}editor`} {...otherProps} />;
 }

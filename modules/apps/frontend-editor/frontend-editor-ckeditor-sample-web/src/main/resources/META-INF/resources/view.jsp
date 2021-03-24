@@ -16,13 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<h3>CKEditor Sample</h3>
 <div>
 	<react:component
 		module="js/index"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"foo", "bar"
+				"contents", "<h1>Ballon Editor</h1><p>More text goes here</p>"
 			).build()
 		%>'
 	/>

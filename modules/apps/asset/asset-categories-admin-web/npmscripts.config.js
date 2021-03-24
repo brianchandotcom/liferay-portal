@@ -25,13 +25,4 @@ module.exports = {
 		},
 		dependencies: ['asset-taglib'],
 	},
-	federation: {
-		exposes: [
-			'<inputDir>/js/ActionsComponentPropsTransformer.js',
-			'<inputDir>/js/AssetCategoriesManagementToolbarPropsTransformer.js',
-			'<inputDir>/js/AssetCategoriesSelectorTag.es.js',
-			'<inputDir>/js/DetailsItemSelector.js',
-		],
-		remotes: ['asset-taglib'],
-	},
 };

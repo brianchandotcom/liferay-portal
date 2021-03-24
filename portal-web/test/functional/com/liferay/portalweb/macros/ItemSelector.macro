@@ -758,6 +758,56 @@ definition {
 		}
 	}
 
+	macro viewFilteredResultsViaAssetLists {
+		var key_assetType = "${assetType}";
+
+		if (isSet(assetListName)) {
+			Click(
+				key_title = "${assetListName}",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+		}
+
+		if (IsElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT")) {
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "${itemSubtype}",
+				itemType = "${itemType}");
+		}
+
+		Click(locator1 = "AssetLists#ASSET_LIST_SELECT_BUTTON");
+
+		Click(locator1 = "AssetLists#ASSET_TYPE_DROPDOWN_ITEM");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextEquals(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "AssetLists#ASSET_TITLE_ROW",
+			value1 = "${assetTitle}");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Current Asset Library");
+
+		AssertTextEquals(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "AssetLists#ASSET_TITLE_ROW",
+			value1 = "${assetTitle}");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Everywhere");
+
+		AssertTextEquals(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "AssetLists#ASSET_TITLE_ROW",
+			value1 = "${assetTitle}");
+
+		Click(locator1 = "Link#CLEAR");
+
+		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
+
+		AssertTextEquals(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "AssetLists#ASSET_TITLE_ROW",
+			value1 = "${assetTitle}");
+	}
+
 	macro viewListThumbnails {
 		if (isSet(depotName)) {
 			ItemSelector.changeWorkspaces(

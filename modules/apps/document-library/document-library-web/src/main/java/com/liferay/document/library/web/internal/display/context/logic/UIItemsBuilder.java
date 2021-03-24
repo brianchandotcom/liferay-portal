@@ -524,6 +524,20 @@ public class UIItemsBuilder {
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
 	}
 
+	public void addEditImageItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		PortletURL portletURL = _getControlPanelRenderURL(
+			"/document_library/edit_image");
+
+		portletURL.setParameter("backURL", _getCurrentURL());
+
+		_addJavaScriptUIItem(
+			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.EDIT_IMAGE,
+			LanguageUtil.get(_resourceBundle, "edit-image"),
+			_getEditImageOnClickJavaScript());
+	}
+
 	public void addEditMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -1139,6 +1153,15 @@ public class UIItemsBuilder {
 		}
 
 		return _getActionURL(mvcActionCommandName, cmd);
+	}
+
+	private String _getEditImageOnClickJavaScript() {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append(getNamespace());
+		sb.append("editWithImageEditor();");
+
+		return sb.toString();
 	}
 
 	private LiferayPortletRequest _getLiferayPortletRequest() {

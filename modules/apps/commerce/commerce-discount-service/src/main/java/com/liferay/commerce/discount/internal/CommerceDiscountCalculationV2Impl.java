@@ -282,10 +282,6 @@ public class CommerceDiscountCalculationV2Impl
 			CommerceBigDecimalUtil.gt(
 				discountPercentage, currentDiscountLevel)) {
 
-			if (usePercentage) {
-				return commerceDiscountValue;
-			}
-
 			return discountPercentage;
 		}
 

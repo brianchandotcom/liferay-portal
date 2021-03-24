@@ -22,7 +22,7 @@ import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import TranslateLanguagesSelector from './TranslateLanguagesSelector';
+import TranslateLanguagesSelector from './components/TranslateLanguagesSelector';
 
 const noop = () => {};
 

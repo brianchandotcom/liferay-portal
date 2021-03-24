@@ -163,6 +163,7 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 
 		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
 		testrayAttachments.add(_getJenkinsReportTestrayAttachment());
+		testrayAttachments.add(_getJenkinsConsoleTopLevelTestrayAttachment());
 
 		testrayAttachments.removeAll(Collections.singleton(null));
 
@@ -226,6 +227,26 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		return testrayAttachment;
 	}
 
+	private TestrayAttachment _getJenkinsConsoleTopLevelTestrayAttachment() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (topLevelBuild == null) {
+			return null;
+		}
+
+		TestrayAttachment testrayAttachment =
+			TestrayFactory.newTestrayAttachment(
+				this, "Jenkins Console (Top Level)",
+				JenkinsResultsParserUtil.combine(
+					_getTopLevelBuildURLPath(), "/jenkins-console.txt.gz"));
+
+		if (!testrayAttachment.exists()) {
+			return null;
+		}
+
+		return testrayAttachment;
+	}
+
 	private TestrayAttachment _getJenkinsReportTestrayAttachment() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
@@ -235,7 +256,7 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 
 		TestrayAttachment testrayAttachment =
 			TestrayFactory.newTestrayAttachment(
-				this, "Jenkins Report",
+				this, "Jenkins Report (Top Level)",
 				JenkinsResultsParserUtil.combine(
 					_getTopLevelBuildURLPath(), "/jenkins-report.html.gz"));
 

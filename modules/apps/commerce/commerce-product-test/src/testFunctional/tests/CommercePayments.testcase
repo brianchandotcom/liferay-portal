@@ -1,0 +1,48 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6219. MoneyOrder Payment Method lifecycle"
+	@ignore = "true"
+	@priority = "3"
+	test CancelPayment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6219 CancelPayment Pending Implementation
+
+	}
+
+	@description = "This is a test for COMMERCE-6218. MoneyOrder Payment Method lifecycle"
+	@ignore = "true"
+	@priority = "3"
+	test MoneyOrderCheckout {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6218 MoneyOrderCheckout Pending Implementation
+	}
+
+}

@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.tuning.blueprints.constants.json.values.EvaluationType;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
-import com.liferay.portal.search.tuning.blueprints.test.BaseBlueprintsTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class BoostContentInCategoryForAUserSegmentTest
-	extends BaseBlueprintsTestCase {
+	extends BaseBoostContentInCategoryTestCase {
 
 	@ClassRule
 	@Rule
@@ -63,25 +63,24 @@ public class BoostContentInCategoryForAUserSegmentTest
 
 	@Test
 	public void testContainsCondition() throws Exception {
-		Role role = RoleTestUtil.addRole(
-			"Customers", RoleConstants.TYPE_REGULAR);
+		Role role = RoleTestUtil.addRole("User A", RoleConstants.TYPE_REGULAR);
 
 		User user = UserTestUtil.addGroupUser(group, role.getName());
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(role);
+		_segmentsEntry = _addSegmentsEntry(role);
 
 		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.addDefaultVocabulary(
 				group.getGroupId());
 
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+		_assetCategory = AssetCategoryLocalServiceUtil.addCategory(
 			user.getUserId(), group.getGroupId(), "Promoted",
 			assetVocabulary.getVocabularyId(), serviceContext);
 
 		addJournalArticle("Coca Cola", "cola cola");
 
 		serviceContext.setAssetCategoryIds(
-			new long[] {assetCategory.getCategoryId()});
+			new long[] {_assetCategory.getCategoryId()});
 
 		addJournalArticle("Pepsi Cola", "");
 
@@ -89,24 +88,67 @@ public class BoostContentInCategoryForAUserSegmentTest
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""),
-			getConfigurationString(null), "", 1);
+			getConfigurationString((JSONObject[])null), "", 1);
 
 		assertSearch(blueprint, null, "[coca cola, pepsi cola]", "cola", null);
 
 		String configurationString = getConfigurationString(
-			_getQueryElementJSONObject(
-				1000, assetCategory.getCategoryId(),
-				EvaluationType.CONTAINS.getjsonValue(),
-				segmentsEntry.getSegmentsEntryId()));
+			getQueryElementJSONObject(
+				1000, _assetCategory.getCategoryId(),
+				EvaluationType.CONTAINS.getjsonValue()));
 
-		String selectedElementString = _getSelectedElementString(
-			1000, assetCategory.getCategoryId(),
-			EvaluationType.CONTAINS.getjsonValue(),
-			segmentsEntry.getSegmentsEntryId());
+		String selectedElementString = getSelectedElementString(
+			1000, _assetCategory.getCategoryId(),
+			EvaluationType.CONTAINS.getjsonValue());
 
 		assertSearch(
 			blueprint, configurationString, "[pepsi cola, coca cola]", "cola",
 			selectedElementString);
+	}
+
+	@Override
+	protected JSONArray getConditions() {
+		return createJSONArray().put(
+			JSONUtil.put(
+				"configuration",
+				JSONUtil.put(
+					"evaluation_type", EvaluationType.CONTAINS.getjsonValue()
+				).put(
+					"parameter_name", "${user.user_segment_entry_ids}"
+				).put(
+					"value", _segmentsEntry.getSegmentsEntryId()
+				)));
+	}
+
+	@Override
+	protected JSONObject getDescription() {
+		return JSONUtil.put(
+			"en_US",
+			"Boost contents in a category for users belonging to a user " +
+				"segment");
+	}
+
+	@Override
+	protected JSONObject getElementTemplateJSONObject() throws Exception {
+		return getElementTemplateJSONObject(
+			"/elements/boost-content-in-category-for-a-user-segment-test.json");
+	}
+
+	@Override
+	protected JSONObject getTitle() {
+		return JSONUtil.put(
+			"en_US", "Boost Contents in a Category for a User Segment");
+	}
+
+	@Override
+	protected JSONObject getUIConfigurationValuesJSONObject() {
+		return JSONUtil.put(
+			"asset_category_id", _assetCategory.getCategoryId()
+		).put(
+			"boost", 1000
+		).put(
+			"user_segment_id", _segmentsEntry.getSegmentsEntryId()
+		);
 	}
 
 	private SegmentsEntry _addSegmentsEntry(Role role) throws Exception {
@@ -121,154 +163,8 @@ public class BoostContentInCategoryForAUserSegmentTest
 			User.class.getName());
 	}
 
-	private JSONObject _getQueryElementJSONObject(
-		int boost, long categoryId, String evaluationType, long segmentId) {
-
-		return JSONUtil.put(
-			"category", "conditional"
-		).put(
-			"clauses",
-			createJSONArray().put(
-				JSONUtil.put(
-					"context", "query"
-				).put(
-					"occur", "should"
-				).put(
-					"query",
-					JSONUtil.put(
-						"query",
-						JSONUtil.put(
-							"term",
-							JSONUtil.put(
-								"assetCategoryIds",
-								JSONUtil.put(
-									"boost", boost
-								).put(
-									"value", categoryId
-								))))
-				).put(
-					"type", "wrapper"
-				))
-		).put(
-			"conditions",
-			createJSONArray().put(
-				JSONUtil.put(
-					"configuration",
-					JSONUtil.put(
-						"evaluation_type", evaluationType
-					).put(
-						"parameter_name", "${user.user_segment_entry_ids}"
-					).put(
-						"value", segmentId
-					)))
-		).put(
-			"description",
-			JSONUtil.put(
-				"en_US",
-				"Boost contents in a category for users belonging to a user " +
-					"segment")
-		).put(
-			"enabled", true
-		).put(
-			"icon", "thumbs-up"
-		).put(
-			"title",
-			JSONUtil.put(
-				"en_US", "Boost Contents in a Category for a User Segment")
-		);
-	}
-
-	private String _getSelectedElementString(
-			int boost, long categoryId, String evaluationType, long segmentId)
-		throws Exception {
-
-		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject(
-			"/elements/boost-content-in-category-for-a-user-segment-test.json");
-
-		return JSONUtil.put(
-			"query_configuration",
-			createJSONArray().put(
-				JSONUtil.put(
-					"elementOutput",
-					JSONUtil.put(
-						"category", "conditional"
-					).put(
-						"clauses",
-						createJSONArray().put(
-							JSONUtil.put(
-								"context", "query"
-							).put(
-								"occur", "should"
-							).put(
-								"query",
-								JSONUtil.put(
-									"query",
-									JSONUtil.put(
-										"term",
-										JSONUtil.put(
-											"assetCategoryIds",
-											JSONUtil.put(
-												"boost", boost
-											).put(
-												"value", categoryId
-											))))
-							).put(
-								"type", "wrapper"
-							))
-					).put(
-						"conditions",
-						createJSONArray().put(
-							JSONUtil.put(
-								"configuration",
-								JSONUtil.put(
-									"evaluation_type", evaluationType
-								).put(
-									"parameter_name",
-									"${user.user_segment_entry_ids}"
-								).put(
-									"value", createJSONArray().put(segmentId)
-								)))
-					).put(
-						"description",
-						JSONUtil.put(
-							"en_US",
-							"Boost contents in a category for users " +
-								"belonging to a user segment")
-					).put(
-						"enabled", true
-					).put(
-						"icon", "thumbs-up"
-					).put(
-						"title",
-						JSONUtil.put(
-							"en_US",
-							"Boost Contents in a Category for a User Segment")
-					)
-				).put(
-					"elementTemplateJSON",
-					elementTemplateJSONObject.get("elementTemplateJSON")
-				).put(
-					"uiConfigurationJSON",
-					elementTemplateJSONObject.get("uiConfigurationJSON")
-				).put(
-					"uiConfigurationValues",
-					_getUIConfigurationValuesJSONObject(
-						categoryId, boost, segmentId)
-				))
-		).toString();
-	}
-
-	private JSONObject _getUIConfigurationValuesJSONObject(
-		long categoryId, int boost, long segmentId) {
-
-		return JSONUtil.put(
-			"asset_category_id", categoryId
-		).put(
-			"boost", boost
-		).put(
-			"user_segment_id", segmentId
-		);
-	}
+	private AssetCategory _assetCategory;
+	private SegmentsEntry _segmentsEntry;
 
 	@Inject(
 		filter = "segments.criteria.contributor.key=user",

@@ -1,0 +1,148 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.portal.search.tuning.blueprints.condition.test;
+
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.search.tuning.blueprints.test.BaseBlueprintsTestCase;
+
+/**
+ * @author Wade Cao
+ */
+public abstract class BaseBoostContentInCategoryTestCase
+	extends BaseBlueprintsTestCase {
+
+	protected abstract JSONArray getConditions();
+
+	protected abstract JSONObject getDescription();
+
+	protected abstract JSONObject getElementTemplateJSONObject()
+		throws Exception;
+
+	protected String getIcon() {
+		return "thumbs-up";
+	}
+
+	protected JSONObject getQueryElementJSONObject(
+		int boost, long categoryId, String evaluationType) {
+
+		return JSONUtil.put(
+			"category", "conditional"
+		).put(
+			"clauses",
+			createJSONArray().put(
+				JSONUtil.put(
+					"context", "query"
+				).put(
+					"occur", "should"
+				).put(
+					"query",
+					JSONUtil.put(
+						"query",
+						JSONUtil.put(
+							"term",
+							JSONUtil.put(
+								"assetCategoryIds",
+								JSONUtil.put(
+									"boost", boost
+								).put(
+									"value", categoryId
+								))))
+				).put(
+					"type", "wrapper"
+				))
+		).put(
+			"conditions", getConditions()
+		).put(
+			"description", getDescription()
+		).put(
+			"enabled", isEnabled()
+		).put(
+			"icon", getIcon()
+		).put(
+			"title", getTitle()
+		);
+	}
+
+	protected String getSelectedElementString(
+			int boost, long categoryId, String evaluationType)
+		throws Exception {
+
+		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject();
+
+		return JSONUtil.put(
+			"query_configuration",
+			createJSONArray().put(
+				JSONUtil.put(
+					"elementOutput",
+					JSONUtil.put(
+						"category", "conditional"
+					).put(
+						"clauses",
+						createJSONArray().put(
+							JSONUtil.put(
+								"context", "query"
+							).put(
+								"occur", "should"
+							).put(
+								"query",
+								JSONUtil.put(
+									"query",
+									JSONUtil.put(
+										"term",
+										JSONUtil.put(
+											"assetCategoryIds",
+											JSONUtil.put(
+												"boost", boost
+											).put(
+												"value", categoryId
+											))))
+							).put(
+								"type", "wrapper"
+							))
+					).put(
+						"conditions", getConditions()
+					).put(
+						"description", getDescription()
+					).put(
+						"enabled", isEnabled()
+					).put(
+						"icon", getIcon()
+					).put(
+						"title", getTitle()
+					)
+				).put(
+					"elementTemplateJSON",
+					elementTemplateJSONObject.get("elementTemplateJSON")
+				).put(
+					"uiConfigurationJSON",
+					elementTemplateJSONObject.get("uiConfigurationJSON")
+				).put(
+					"uiConfigurationValues",
+					getUIConfigurationValuesJSONObject()
+				))
+		).toString();
+	}
+
+	protected abstract JSONObject getTitle();
+
+	protected abstract JSONObject getUIConfigurationValuesJSONObject();
+
+	protected boolean isEnabled() {
+		return true;
+	}
+
+}

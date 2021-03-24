@@ -26,6 +26,25 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-6231. Discount lifecycle"
+	@ignore = "true"
+	@priority = "3"
+	test AddEditAndDeleteDiscountEntry {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6231 AddEditAndDeleteDiscountEntry Pending Implementation
+
+	}
+
+	@description = "This is a test for COMMERCE-6232. Discount Rules lifecycle"
+	@ignore = "true"
+	@priority = "3"
+	test AddEditAndRemoveDiscountRule {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6232 AddEditAndRemoveDiscountRule Pending Implementation
+	}
+
 	test AssertDiscountIsAppliedToChannel {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -146,6 +165,33 @@ definition {
 			discountTarget = "Products",
 			discountType = "Percentage",
 			maximumDiscountAmount = "10.00");
+	}
+
+	@description = "This is a test for COMMERCE-6230. Discount coupon code limitations"
+	@ignore = "true"
+	@priority = "3"
+	test LimitCouponCodeUsability {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6230 LimitCouponCodeUsability Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6229. Discount coupon code validators"
+	@ignore = "true"
+	@priority = "3"
+	test ViewCouponCodeNotAppliedToNotQualifiedAccount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6229 ViewCouponCodeNotAppliedToNotQualifiedAccount Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6233. Discount expiration"
+	@ignore = "true"
+	@priority = "3"
+	test ViewExpiredDiscountEntry {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6233 ViewExpiredDiscountEntry Pending Implementation
 	}
 
 }

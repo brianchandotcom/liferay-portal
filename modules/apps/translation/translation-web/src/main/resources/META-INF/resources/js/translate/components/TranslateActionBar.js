@@ -20,7 +20,7 @@ import React from 'react';
 import TranslateLanguagesSelector from './TranslateLanguagesSelector';
 
 const TransLateActionBar = ({
-	formHaschanges,
+	formHasChanges,
 	onSaveButtonClick,
 	portletNamespace,
 	publishButtonDisabled,
@@ -36,7 +36,7 @@ const TransLateActionBar = ({
 				<li className="tbar-item tbar-item-expand">
 					<TranslateLanguagesSelector
 						{...translateLanguagesSelectorData}
-						formHaschanges={formHaschanges}
+						formHasChanges={formHasChanges}
 						portletNamespace={portletNamespace}
 					/>
 				</li>

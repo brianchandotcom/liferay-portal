@@ -18,7 +18,7 @@ import LanguageSelector from './LanguageSelector';
 
 const TranslateLanguagesSelector = ({
 	currentUrl,
-	formHaschanges,
+	formHasChanges,
 	portletNamespace,
 	sourceAvailableLanguages,
 	sourceLanguageId,
@@ -38,7 +38,7 @@ const TranslateLanguagesSelector = ({
 	};
 
 	const changePage = (sourceId, targetId) => {
-		if (!formHaschanges) {
+		if (!formHasChanges) {
 			refreshPage(sourceId, targetId);
 		}
 		else if (

@@ -37,7 +37,7 @@ const Translate = ({
 	updateTranslationPortletURL,
 	workflowActions,
 }) => {
-	const [formHaschanges, setFormHaschanges] = useState(false);
+	const [formHasChanges, setFormHasChanges] = useState(false);
 	const [workflowAction, setWorkflowAction] = useState(
 		workflowActions.PUBLISH
 	);
@@ -68,7 +68,7 @@ const Translate = ({
 			))}
 
 			<TranslateActionBar
-				formHaschanges={formHaschanges}
+				formHasChanges={formHasChanges}
 				onSaveButtonClick={handleOnSaveDraft}
 				portletNamespace={portletNamespace}
 				publishButtonDisabled={publishButtonDisabled}
@@ -95,7 +95,7 @@ const Translate = ({
 							/>
 							<TranslateFieldSetEntries
 								infoFieldSetEntries={infoFieldSetEntries}
-								onChange={() => setFormHaschanges(() => true)}
+								onChange={() => setFormHasChanges(true)}
 								portletNamespace={portletNamespace}
 							/>
 						</>

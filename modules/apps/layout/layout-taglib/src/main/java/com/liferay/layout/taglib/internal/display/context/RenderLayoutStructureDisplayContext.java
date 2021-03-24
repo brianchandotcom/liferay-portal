@@ -460,7 +460,7 @@ public class RenderLayoutStructureDisplayContext {
 					containerStyledLayoutStructureItem.getWidthType(),
 					"fixed")) {
 
-				cssClassSB.append(" container");
+				cssClassSB.append(" container-fluid container-fluid-max-xl");
 
 				addHorizontalMargin = false;
 			}

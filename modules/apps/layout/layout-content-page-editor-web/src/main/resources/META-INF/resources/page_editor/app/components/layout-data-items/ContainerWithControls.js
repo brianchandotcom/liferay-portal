@@ -58,7 +58,8 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
-				container: widthType === 'fixed',
+				[`container-fluid`]: widthType === 'fixed',
+				[`container-fluid-max-xl`]: widthType === 'fixed',
 				[`ml-${marginLeft}`]: widthType !== 'fixed',
 				[`mr-${marginRight}`]: widthType !== 'fixed',
 				'p-0': widthType === 'fixed',

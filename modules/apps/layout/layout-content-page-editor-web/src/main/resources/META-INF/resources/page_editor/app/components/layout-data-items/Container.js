@@ -155,7 +155,8 @@ const Container = React.forwardRef(
 					`pr-${paddingRight || 0}`,
 					`pt-${paddingTop || 0}`,
 					{
-						container: widthType === 'fixed',
+						[`container-fluid`]: widthType === 'fixed',
+						[`container-fluid-max-xl`]: widthType === 'fixed',
 						empty: !item.children.length && !height,
 						[`bg-${backgroundColor}`]:
 							backgroundColor && !backgroundColor.startsWith('#'),

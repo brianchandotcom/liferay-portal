@@ -28,7 +28,7 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 	disabled="<%= userOAuth2AuthorizationsCount == 0 %>"
 	filterDropdownItems="<%= oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= userOAuth2AuthorizationsCount %>"
-	propsTransformer="connected_applications/js/OAuth2ConnectedApplicationsManagementToolbarPropsTransformer"
+	propsTransformer="connected_applications/js/oAuth2ConnectedApplicationsManagementToolbarPropsTransformer"
 	searchContainerId="oAuth2ConnectedApplicationsSearchContainer"
 	selectable="<%= true %>"
 	showSearch="<%= false %>"

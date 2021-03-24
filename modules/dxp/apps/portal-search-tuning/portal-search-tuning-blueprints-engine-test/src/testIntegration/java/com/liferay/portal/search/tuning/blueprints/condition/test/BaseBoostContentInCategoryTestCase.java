@@ -14,9 +14,18 @@
 
 package com.liferay.portal.search.tuning.blueprints.condition.test;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.search.tuning.blueprints.test.BaseBlueprintsTestCase;
 
 /**
@@ -24,6 +33,23 @@ import com.liferay.portal.search.tuning.blueprints.test.BaseBlueprintsTestCase;
  */
 public abstract class BaseBoostContentInCategoryTestCase
 	extends BaseBlueprintsTestCase {
+
+	protected AssetCategory getAssetCategory(
+			String categoryTitle, String roleName)
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(roleName, RoleConstants.TYPE_REGULAR);
+
+		User user = UserTestUtil.addGroupUser(group, role.getName());
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addDefaultVocabulary(
+				group.getGroupId());
+
+		return AssetCategoryLocalServiceUtil.addCategory(
+			user.getUserId(), group.getGroupId(), categoryTitle,
+			assetVocabulary.getVocabularyId(), serviceContext);
+	}
 
 	protected abstract JSONArray getConditions();
 

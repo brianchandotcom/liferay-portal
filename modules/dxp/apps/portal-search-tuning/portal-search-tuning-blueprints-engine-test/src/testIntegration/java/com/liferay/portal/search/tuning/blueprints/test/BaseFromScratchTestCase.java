@@ -150,7 +150,7 @@ public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
 		throws Exception {
 
 		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject(
-			"/elements/paste-an-elasticsearch-query.json");
+			"/elements/paste-an-elasticsearch-query-test.json");
 
 		JSONObject jsonObject = JSONUtil.put(
 			"elementTemplateJSON",
@@ -210,7 +210,7 @@ public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
 		throws Exception {
 
 		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject(
-			"/elements/text-match-over-multiple-fields.json");
+			"/elements/text-match-over-multiple-fields-test.json");
 
 		return JSONUtil.put(
 			"elementOutput",

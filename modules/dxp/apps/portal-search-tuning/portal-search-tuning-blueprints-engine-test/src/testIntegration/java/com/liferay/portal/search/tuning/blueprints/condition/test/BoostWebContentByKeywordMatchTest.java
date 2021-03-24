@@ -57,7 +57,7 @@ public class BoostWebContentByKeywordMatchTest extends BaseBlueprintsTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""),
-			getConfigurationString(null), "", 1);
+			getConfigurationString((JSONObject[])null), "", 1);
 
 		assertSearch(blueprint, null, "[coca cola, pepsi cola]", "cola", null);
 

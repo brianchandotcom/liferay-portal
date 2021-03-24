@@ -16,18 +16,10 @@ package com.liferay.portal.search.tuning.blueprints.condition.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.framework.FrameworkConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.values.EvaluationType;
@@ -58,18 +50,7 @@ public class BoostContentInCategoryForNewUserAccountsTest
 
 	@Test
 	public void testInRangeCondition() throws Exception {
-		Role role = RoleTestUtil.addRole(
-			"Customers", RoleConstants.TYPE_REGULAR);
-
-		User user = UserTestUtil.addGroupUser(group, role.getName());
-
-		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.addDefaultVocabulary(
-				group.getGroupId());
-
-		_assetCategory = AssetCategoryLocalServiceUtil.addCategory(
-			user.getUserId(), group.getGroupId(), "For New Recruits",
-			assetVocabulary.getVocabularyId(), serviceContext);
+		_assetCategory = getAssetCategory("For New Recruits", "Employee");
 
 		addJournalArticle(
 			"Company policies for All Employees Recruits", "policies policies");
@@ -134,8 +115,8 @@ public class BoostContentInCategoryForNewUserAccountsTest
 	@Override
 	protected JSONObject getElementTemplateJSONObject() throws Exception {
 		return getElementTemplateJSONObject(
-			"/elements/boost-contents-in-a-category-for-new-user-" +
-				"accounts.json");
+			"/elements/boost-contents-in-a-category-for-new-user-accounts-" +
+				"test.json");
 	}
 
 	@Override

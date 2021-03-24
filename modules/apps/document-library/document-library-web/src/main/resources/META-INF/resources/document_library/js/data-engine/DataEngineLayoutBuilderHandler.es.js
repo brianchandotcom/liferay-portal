@@ -119,7 +119,7 @@ export default function ({defaultLanguageId, namespace}) {
 	const detectClickOutside = async (event) => {
 		if (
 			!event.target.closest(
-				'.ddm-form-builder-wrapper, .multi-panel-sidebar'
+				'.ddm-form-builder-wrapper, .multi-panel-sidebar, .dropdown-menu'
 			)
 		) {
 			const dataLayoutBuilder = await getDataLayoutBuilder();

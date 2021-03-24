@@ -1,0 +1,201 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6238. Add shipment items to a shipment"
+	@ignore = "true"
+	@priority = "3"
+	test AddItemsToShipment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6238 AddItemsToShipment Pending Implementation
+
+	}
+
+	@description = "This is a test for COMMERCE-6248. It should not be possible to add non-shippable items to a shipment"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAddingNonShippableItemToShipmentNotPossible {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6248 AssertAddingNonShippableItemToShipmentNotPossible Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6252. Check that shipment information set at product level are overriden by the shipment info at cpInstance level"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductShipmentInfoOverrideCPInstanceShipmentInfo {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6252 AssertProductShipmentInfoOverrideCPInstanceShipmentInfo Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6253. Shipment dimensions should be correctly calculated"
+	@ignore = "true"
+	@priority = "3"
+	test AssertShipmentDimensionsIsCorrectlyCalculated {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6253 AssertShipmentDimensionsCorrectlyCalculated Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6249. Shipment items should be taken only from active warehouses"
+	@ignore = "true"
+	@priority = "3"
+	test AssertShipmentItemTakenFromActiveWarehouses {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6249 AssertShipmentItemTakenFromActiveWarehouses Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6254. Shipment weight should be correctly calculated"
+	@ignore = "true"
+	@priority = "3"
+	test AssertShipmentWeightIsCorrectlyCalculated {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6254 AssertShipmentWeightIsCorrectlyCalculated Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6251. Delete shipment"
+	@ignore = "true"
+	@priority = "3"
+	test AssertShippedShipmentNotDeletable {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6251 AssertStateShippedShipmentNotDeletable Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6247. Multiple shipment for the same order"
+	@ignore = "true"
+	@priority = "3"
+	test CreateMultipleShipmentsForOneOrder {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6247 CreateMultipleShipmentsForOneOrder Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6237. Create a shipment from an order"
+	@ignore = "true"
+	@priority = "3"
+	test CreateOrderShipment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6237 CreateOrderShipment Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6250. Delete shipment"
+	@ignore = "true"
+	@priority = "3"
+	test DeleteShipment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6250 DeleteShipment Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6241. Execute the shipment workflow"
+	@ignore = "true"
+	@priority = "3"
+	test ExecuteShipmentWorkflow {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6241 ExecuteShipmentWorkflow Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6255. Filter, Sort shipment from shipment UI"
+	@ignore = "true"
+	@priority = "3"
+	test FilterAndSortShipments {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6255 FilterAndSortShipments Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6240. Remove shipment items from a shipment"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveItemFromShipment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6240 RemoveItemFromShipment Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6256. Search shipment from shipment UI"
+	@ignore = "true"
+	@priority = "3"
+	test SearchShipment {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6256 SearchShipment Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6242. Update address"
+	@ignore = "true"
+	@priority = "3"
+	test UpdateShipmentAddress {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6242 UpdateShipmentAddress Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6239. Update shipment items to a shipment"
+	@ignore = "true"
+	@priority = "3"
+	test UpdateShipmentItems {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6239 UpdateShipmentItems Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6243. Update address"
+	@ignore = "true"
+	@priority = "3"
+	test ValidateShipmentAddress {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6243 ValidateShipmentAddress Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6245. Check that shipping amount is correctly calculated in the order"
+	@ignore = "true"
+	@priority = "3"
+	test ViewOrderShipmentAmountIsCorrect {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6245 ViewOrderShipmentAmountIsCorrect Pending Implementation
+	}
+
+	@description = "This is a test for COMMERCE-6246. Check that shipping discount amount is correctly calculated in the order"
+	@ignore = "true"
+	@priority = "3"
+	test ViewOrderShipmentDiscountAmountIsCorrect {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6246 ViewOrderShipmentDiscountAmountIsCorrect Pending Implementation
+	}
+
+}

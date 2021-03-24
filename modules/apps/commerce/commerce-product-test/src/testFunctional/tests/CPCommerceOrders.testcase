@@ -889,9 +889,62 @@ definition {
 	test ViewOrderSKU {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5845 ViewOrderSKU Pending Implementation
-		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyertester@test.com",
+			role = "Buyer");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		Pause(locator1 = "5000");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+		
+		Button.click(button = "Checkout");
+
+		Pause(locator1 = "3000");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Inventory");
+
+		CommerceNavigator.searchEntry(entryName = "MIN55861");
+
+		CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+		Navigator.gotoNavTab(navTab = "On Order");
+
+		AssertElementPresent(locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
 	}
 
 }

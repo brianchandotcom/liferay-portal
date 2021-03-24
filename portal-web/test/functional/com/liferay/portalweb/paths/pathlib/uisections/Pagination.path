@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGINATION_ITEMS_PER_PAGE</td>
+	<td>//div[@class='dropdown pagination-items-per-page']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PARTICULAR_PAGE</td>
 	<td>//div[@class='lfr-pagination-page-selector']/div/a[contains(.,'Page ${key_pageNumber}')]</td>
 	<td></td>
@@ -78,6 +83,11 @@
 <tr>
 	<td>RESULTS</td>
 	<td>//p[@class='pagination-results']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_2</td>
+	<td>//div[@class='pagination-results']</td>
 	<td></td>
 </tr>
 <tr>

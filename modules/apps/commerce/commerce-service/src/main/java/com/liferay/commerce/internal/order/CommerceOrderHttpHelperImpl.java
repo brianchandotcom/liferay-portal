@@ -36,13 +36,18 @@ import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceCheckoutStep;
+import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -60,6 +65,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -209,11 +215,42 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = _getPortletURL(
+		LiferayPortletURL portletURL = (LiferayPortletURL)_getPortletURL(
 			httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT);
 
 		CommerceOrder commerceOrder = getCurrentCommerceOrder(
 			httpServletRequest);
+
+		httpServletRequest.setAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String checkoutStepName = StringPool.BLANK;
+
+		try {
+			List<CommerceCheckoutStep> commerceCheckoutSteps =
+				_commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
+					httpServletRequest, themeDisplay.getResponse());
+
+			if ((commerceCheckoutSteps != null) &&
+				!commerceCheckoutSteps.isEmpty()) {
+
+				CommerceCheckoutStep commerceCheckoutStep =
+					commerceCheckoutSteps.get(0);
+
+				checkoutStepName = commerceCheckoutStep.getName();
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		portletURL.setParameter("checkoutStepName", checkoutStepName);
+		portletURL.setParameter("commerceOrderUuid", commerceOrder.getUuid());
+		portletURL.setParameter("p_p_state", "normal");
 
 		if ((commerceOrder != null) &&
 			(commerceOrder.getCommerceAccountId() ==
@@ -250,10 +287,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				if (Validator.isNotNull(domain)) {
 					cookie.setDomain(domain);
 				}
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
 
 				cookie.setMaxAge(CookieKeys.MAX_AGE);
 				cookie.setPath(StringPool.SLASH);
@@ -648,6 +681,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrderHttpHelperImpl.class);
+
 	private static ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission;
 	private static final ThreadLocal<CommerceOrder> _commerceOrderThreadLocal =
@@ -656,6 +692,10 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceCheckoutStepServicesTracker
+		_commerceCheckoutStepServicesTracker;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

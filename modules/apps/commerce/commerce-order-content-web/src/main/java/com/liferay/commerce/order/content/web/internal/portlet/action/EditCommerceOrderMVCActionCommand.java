@@ -127,8 +127,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		PortletURL portletURL = PortletURLBuilder.create(
 			_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
 				_portal.getHttpServletRequest(actionRequest))
-		).setParameter(
-			"commerceOrderId", commerceOrderId
 		).build();
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());

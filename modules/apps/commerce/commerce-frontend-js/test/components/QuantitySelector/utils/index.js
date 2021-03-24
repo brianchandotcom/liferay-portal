@@ -46,7 +46,7 @@ describe('QuantitySelector Util -> generateQuantityOptions', () => {
 				minQuantity: 2,
 			})
 		).toEqual(
-			[2, 3, 4, 5].map((value) => ({
+			[1, 2, 3, 4, 5].map((value) => ({
 				label: value.toString(),
 				value,
 			}))

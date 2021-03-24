@@ -55,21 +55,17 @@ describe('QuantitySelector', () => {
 			expect(element).toBeInTheDocument();
 
 			expect(element.max).toEqual(defaultProps.maxQuantity.toString());
-			expect(element.min).toEqual(defaultProps.minQuantity.toString());
+			expect(element.min).toEqual('');
 			expect(element.step).toEqual(
 				defaultProps.multipleQuantity.toString()
 			);
 			expect(element.type).toEqual('number');
-			expect(element.value).toEqual(defaultProps.quantity.toString());
+			expect(element.value).toEqual('');
 		});
 
 		it('accepts only number-typed input values', async () => {
 			const element = Component.container.querySelector('input');
 			const updatedValue = 'abc';
-
-			const defaultProps = {
-				quantity: 1,
-			};
 
 			await act(async () => {
 				fireEvent.change(element, {target: {value: updatedValue}});
@@ -77,7 +73,7 @@ describe('QuantitySelector', () => {
 
 			await wait(() => {
 				expect(element.value).not.toEqual(updatedValue);
-				expect(element.value).toEqual(defaultProps.quantity.toString());
+				expect(element.value).toEqual('');
 			});
 		});
 
@@ -98,16 +94,12 @@ describe('QuantitySelector', () => {
 			const element = Component.container.querySelector('input');
 			const updatedValue = '';
 
-			const defaultProps = {
-				quantity: 1,
-			};
-
 			await act(async () => {
 				fireEvent.change(element, {target: {value: updatedValue}});
 			});
 
 			await wait(() => {
-				expect(element.value).toEqual(defaultProps.quantity.toString());
+				expect(element.value).toEqual('');
 			});
 		});
 
@@ -301,7 +293,7 @@ describe('QuantitySelector', () => {
 				fireEvent.change(element, {target: {value: updatedValue}});
 			});
 
-			expect(element.value).toEqual(defaultProps.minQuantity.toString());
+			expect(element.value).toEqual('');
 		});
 
 		it('disables the input element if required via prop', () => {

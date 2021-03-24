@@ -244,6 +244,66 @@ definition {
 			viewNoLocationInfo = "Site Name");
 	}
 
+	@description = "This test ensures that a folder can be filtered from the current depot."
+	@priority = "5"
+	test FilterFolderFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpeg",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "DM Folder Name",
+			assetType = "Documents Folder",
+			itemType = "Documents Folder");
+	}
+
+	@description = "This test ensures that a document can be filtered from the current depot."
+	@priority = "5"
+	test FilterImageFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpeg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpeg");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "Document_1.jpeg",
+			assetType = "Basic Document",
+			itemSubtype = "Basic Document",
+			itemType = "Document");
+	}
+
 	@description = "This test ensures that web contents can filter by the current site in the item selector."
 	@priority = "5"
 	test FilterWCByCurrentSite {

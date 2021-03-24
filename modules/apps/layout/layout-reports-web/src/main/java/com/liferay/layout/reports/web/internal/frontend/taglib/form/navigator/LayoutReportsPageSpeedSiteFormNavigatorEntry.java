@@ -23,6 +23,8 @@ import com.liferay.layout.reports.web.internal.display.context.LayoutReportsPage
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -153,6 +155,8 @@ public class LayoutReportsPageSpeedSiteFormNavigatorEntry
 			return _layoutReportsPageSpeedConfiguration.apiKey();
 		}
 		catch (ConfigurationException configurationException) {
+			_log.error(configurationException, configurationException);
+
 			return StringPool.BLANK;
 		}
 	}
@@ -181,9 +185,14 @@ public class LayoutReportsPageSpeedSiteFormNavigatorEntry
 			return true;
 		}
 		catch (ConfigurationException configurationException) {
+			_log.error(configurationException, configurationException);
+
 			return false;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutReportsPageSpeedSiteFormNavigatorEntry.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

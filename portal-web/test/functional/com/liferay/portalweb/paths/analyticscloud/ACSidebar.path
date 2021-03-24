@@ -1,0 +1,32 @@
+<html>
+<head>
+  <title>ACSidebar</title>
+</head>
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+  <thead>
+  <tr>
+    <td colspan="3" rowspan="1">ACSidebar</td>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- SIDE BAR ELEMENTS -->
+  <tr>
+    <td>CURRENT_PROPERTY</td>
+    <td>//div[@class='channels-menu-label']</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PROPERTY_MENU_ITEM_BY_NAME</td>
+    <td>//div[@class='channels-menu-dropdown-body']//span[text()='${key_propertyName}']</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PROPERTY_MENU_BUTTON</td>
+    <td>//div[@class='channels-menu-label']</td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

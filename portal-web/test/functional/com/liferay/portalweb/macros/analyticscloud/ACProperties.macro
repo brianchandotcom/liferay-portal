@@ -1,0 +1,30 @@
+definition {
+
+	@summary = "Asserts that the workspace is scoped by a specific Property"
+	macro assertCurrentActiveProperty {
+		AssertTextEquals(
+			locator1 = "ACSidebar#CURRENT_PROPERTY",
+			value1 = "${propertyName}");
+	}
+
+	@summary = "Asserts the list of properties shown in the Property Menu"
+	macro assertPropertyMenuList {
+		for (var key_propertyName : list "${propertyList}") {
+			AssertElementPresent(
+				locator1 = "ACSidebar#PROPERTY_MENU_ITEM_BY_NAME");
+		}
+	}
+
+	@summary = "Clicks the Property Menu Dropdown Button in the sidebar"
+	macro clickPropertyMenuButton {
+		Click(locator1 = "ACSidebar#PROPERTY_MENU_BUTTON");
+	}
+
+	@summary = "Clicks a property in the property dropdown menu"
+	macro clickPropertyMenuItem {
+		var key_propertyName = "${propertyName}";
+
+		Click(locator1 = "ACSidebar#PROPERTY_MENU_ITEM_BY_NAME");
+	}
+
+}

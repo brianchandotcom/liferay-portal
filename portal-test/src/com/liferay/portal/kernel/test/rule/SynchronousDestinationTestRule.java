@@ -161,6 +161,8 @@ public class SynchronousDestinationTestRule
 				DestinationNames.SUBSCRIPTION_SENDER);
 			Filter tensorflowModelDownloadFilter = _registerDestinationFilter(
 				"liferay/tensorflow_model_download");
+			Filter videoProcessorFilter = _registerDestinationFilter(
+				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
 
 			_waitForDependencies(
 				auditFilter, asyncFilter, backgroundTaskFilter,
@@ -170,7 +172,7 @@ public class SynchronousDestinationTestRule
 				ddmStructureReindexFilter, kaleoGraphWalkerFilter, mailFilter,
 				pdfProcessorFilter, rawMetaDataProcessorFilter,
 				segmentsEntryReindexFilter, subscrpitionSenderFilter,
-				tensorflowModelDownloadFilter);
+				tensorflowModelDownloadFilter, videoProcessorFilter);
 
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
@@ -187,6 +189,8 @@ public class SynchronousDestinationTestRule
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
+			replaceDestination(
+				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
 			replaceDestination(DestinationNames.MAIL);
 			replaceDestination(DestinationNames.SCHEDULER_ENGINE);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);

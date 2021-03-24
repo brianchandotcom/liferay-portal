@@ -37,7 +37,9 @@ import javax.imageio.ImageIO;
  * @author Juan González
  * @author Sergio González
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.document.library.kernel.util.VideoConverter}
  */
+@Deprecated
 public class LiferayVideoThumbnailConverter extends LiferayConverter {
 
 	public LiferayVideoThumbnailConverter(

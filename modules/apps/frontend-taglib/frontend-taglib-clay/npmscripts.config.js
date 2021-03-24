@@ -30,7 +30,8 @@ module.exports = {
 					'@liferay/frontend-js-react-web': {
 						'/': '>=4.0.11',
 						react: '>=16.6.3',
-						'react-dom': '>=16.6.3',
+						'r			ignore: ['__generated__/**/*'],
+eact-dom': '>=16.6.3',
 					},
 					"@liferay/frontend-js-state-web": {
 						"/": "*"
@@ -126,10 +127,6 @@ module.exports = {
 				'metal-web-component': true,
 				'xss-filters': true,
 			},
-			ignore: ['__generated__/**/*'],
-			output: 'build/node/packageRunBuild/resources',
-			preset: 'liferay-npm-bundler-preset-standard',
-			sources: ['src/main/resources/META-INF/resources'],
 		},
 	},
 };

@@ -32,8 +32,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Preston Crary
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseDBColumnSizeUpgradeProcess}
+ * @author     Preston Crary
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseDBColumnSizeUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradeDBColumnSize extends UpgradeProcess {

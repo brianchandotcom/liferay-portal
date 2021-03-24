@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Julio Camarero
+ * @author     Julio Camarero
  * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
  *             com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry}
  */

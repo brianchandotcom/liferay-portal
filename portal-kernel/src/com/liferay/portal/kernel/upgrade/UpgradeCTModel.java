@@ -22,8 +22,9 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 
 /**
- * @author Preston Crary
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link CTModelUpgradeProcess}
+ * @author     Preston Crary
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             CTModelUpgradeProcess}
  */
 @Deprecated
 public class UpgradeCTModel extends UpgradeProcess {

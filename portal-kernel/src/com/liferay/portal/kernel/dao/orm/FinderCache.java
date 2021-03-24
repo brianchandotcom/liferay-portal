@@ -31,7 +31,7 @@ public interface FinderCache {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * 			#clearCache(Class)}
+	 *             #clearCache(Class)}
 	 */
 	@Deprecated
 	public void clearCache(String className);
@@ -42,7 +42,7 @@ public interface FinderCache {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * 			#getResult(FinderPath, Object[])}
+	 *             #getResult(FinderPath, Object[])}
 	 */
 	@Deprecated
 	public Object getResult(
@@ -55,7 +55,7 @@ public interface FinderCache {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * 			#putResult(FinderPath, Object[], Object)}
+	 *             #putResult(FinderPath, Object[], Object)}
 	 */
 	@Deprecated
 	public void putResult(

@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Sergio González
+ * @author     Sergio González
  * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
  *             com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryUtil}
  */

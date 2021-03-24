@@ -20,8 +20,7 @@ import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 /**
- * @author Carlos Sierra Andrés
- *
+ * @author     Carlos Sierra Andrés
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
  *             com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil}
  */

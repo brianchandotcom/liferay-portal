@@ -43,8 +43,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Eudaldo Alonso
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseAttachmentsUpgradeProcess}
+ * @author     Eudaldo Alonso
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseAttachmentsUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradeAttachments extends UpgradeProcess {

@@ -20,8 +20,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import java.sql.PreparedStatement;
 
 /**
- * @author Samuel Trong Tran
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link ViewCountUpgradeProcess}
+ * @author     Samuel Trong Tran
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             ViewCountUpgradeProcess}
  */
 @Deprecated
 public class UpgradeViewCount extends UpgradeProcess {

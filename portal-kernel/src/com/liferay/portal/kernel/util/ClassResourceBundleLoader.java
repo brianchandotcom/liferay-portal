@@ -20,8 +20,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * @author Adolfo Pérez
- *
+ * @author     Adolfo Pérez
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
  *             com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader}
  */

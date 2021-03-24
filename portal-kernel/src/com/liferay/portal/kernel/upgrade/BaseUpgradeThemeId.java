@@ -17,8 +17,9 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.petra.string.StringBundler;
 
 /**
- * @author Alberto Chaparro
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseThemeIdUpgradeProcess}
+ * @author     Alberto Chaparro
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseThemeIdUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradeThemeId extends UpgradeProcess {

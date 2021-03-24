@@ -41,8 +41,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BasePortletIdUpgradeProcess}
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BasePortletIdUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradePortletId extends UpgradeProcess {

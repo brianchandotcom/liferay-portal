@@ -19,8 +19,9 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import java.sql.PreparedStatement;
 
 /**
- * @author Adolfo Pérez
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseRepositoryUpgradeProcess}
+ * @author     Adolfo Pérez
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseRepositoryUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradeRepository extends UpgradeProcess {

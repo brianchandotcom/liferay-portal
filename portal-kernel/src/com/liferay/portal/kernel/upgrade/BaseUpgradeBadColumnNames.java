@@ -35,8 +35,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Tina Tian
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseBadColumnNamesUpgradeProcess}
+ * @author     Tina Tian
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseBadColumnNamesUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradeBadColumnNames extends UpgradeProcess {

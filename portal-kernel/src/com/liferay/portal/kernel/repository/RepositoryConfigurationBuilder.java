@@ -36,7 +36,8 @@ public class RepositoryConfigurationBuilder {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #RepositoryConfigurationBuilder(ResourceBundleLoader, String[])}
+	 *             #RepositoryConfigurationBuilder(ResourceBundleLoader,
+	 *             String[])}
 	 */
 	@Deprecated
 	public RepositoryConfigurationBuilder(

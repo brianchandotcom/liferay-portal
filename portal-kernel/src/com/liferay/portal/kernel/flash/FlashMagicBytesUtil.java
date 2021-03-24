@@ -21,8 +21,8 @@ import java.io.InputStream;
 import java.io.PushbackInputStream;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Mika Koivisto
+ * @author     Brian Wing Shun Chan
+ * @author     Mika Koivisto
  * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Deprecated

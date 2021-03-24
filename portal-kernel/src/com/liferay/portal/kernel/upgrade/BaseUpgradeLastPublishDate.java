@@ -32,8 +32,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Máté Thurzó
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseLastPublishDateUpgradeProcess}
+ * @author     Máté Thurzó
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseLastPublishDateUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {

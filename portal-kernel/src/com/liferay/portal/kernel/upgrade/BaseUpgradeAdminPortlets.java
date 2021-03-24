@@ -24,9 +24,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
- * @author Juan Fernández
- * @author Sergio González
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseAdminPortletsUpgradeProcess}
+ * @author     Juan Fernández
+ * @author     Sergio González
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseAdminPortletsUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {

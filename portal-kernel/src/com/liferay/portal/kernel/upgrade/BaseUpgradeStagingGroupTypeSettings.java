@@ -26,9 +26,10 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
- * @author Gergely Mathe
- * @author Balázs Sáfrány-Kovalik
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseStagingGroupTypeSettingsUpgradeProcess}
+ * @author     Gergely Mathe
+ * @author     Balázs Sáfrány-Kovalik
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseStagingGroupTypeSettingsUpgradeProcess}
  */
 @Deprecated
 public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {

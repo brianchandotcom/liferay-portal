@@ -35,8 +35,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseCompanyIdUpgradeProcess}
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseCompanyIdUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradeCompanyId extends UpgradeProcess {

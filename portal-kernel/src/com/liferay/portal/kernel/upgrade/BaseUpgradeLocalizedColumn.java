@@ -34,8 +34,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Leon Chi
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseLocalizedColumnUpgradeProcess}
+ * @author     Leon Chi
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             BaseLocalizedColumnUpgradeProcess}
  */
 @Deprecated
 public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {

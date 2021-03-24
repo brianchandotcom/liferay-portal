@@ -644,7 +644,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "576px",
+							"defaultValue": "540px",
 							"label": "small",
 							"mappings": [
 								{
@@ -656,7 +656,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "768px",
+							"defaultValue": "720px",
 							"label": "medium",
 							"mappings": [
 								{
@@ -668,7 +668,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "992px",
+							"defaultValue": "960px",
 							"label": "large",
 							"mappings": [
 								{
@@ -680,7 +680,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "1280px",
+							"defaultValue": "1248px",
 							"label": "extra-large",
 							"mappings": [
 								{

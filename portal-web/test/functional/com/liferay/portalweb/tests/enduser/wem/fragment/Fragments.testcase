@@ -199,17 +199,41 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98241. Basic Component Button can be configured."
+	@description = "This is a test for LPS-98241 and LPS-128667. Basic Component Button can be configured. Interact with layout selector of fragment."
 	@priority = "4"
 	test ConfigureBasicComponentButton {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+		}
+
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Content Page Name",
 				type = "content");
+		}
 
+		task ("Publish the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 		}
 
@@ -243,10 +267,73 @@ definition {
 			PageEditor.removeFragment(fragmentName = "Button");
 		}
 
-		task ("Add a basic component") {
+		task ("Add a Button fragment") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Button");
+		}
+
+		task ("Link the widget page to Button fragment") {
+			PageEditorEditableLink.mapEditableFieldToPage(
+				fragmentName = "Button",
+				id = "link",
+				pageName = "Test Widget Page Name",
+				target = "Self");
+		}
+
+		task ("View selected page is linked to Button fragment") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			AssertVisible(
+				key_append = "/parent::div[contains(@class,'component-button')]",
+				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("View the selected page is shown in Page field") {
+			AssertVisible(
+				key_contentName = "Test Widget Page Name",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("Link the content page to Button fragment") {
+			PageEditorEditableLink.mapEditableFieldToPage(
+				fragmentName = "Button",
+				id = "link",
+				pageName = "Test Content Page Name",
+				target = "Self");
+		}
+
+		task ("View selected page is linked to Button fragment") {
+			AssertVisible(
+				key_append = "/parent::div[contains(@class,'component-button')]",
+				key_URL = "${baseURL}/web/test-site-name/test-content-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("View the selected page is shown in Page field") {
+			AssertVisible(
+				key_contentName = "Test Content Page Name",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("Clear the selection") {
+			PageEditor.clearSelection(fieldLabel = "Page");
+		}
+
+		task ("View the default link is shown in Button fragment") {
+			AssertVisible(
+				key_append = "/parent::div[contains(@class,'component-button')]",
+				key_URL = "#",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("View the text placeholder is shown in Page field") {
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_contentName = "",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Select Page");
 		}
 
 		task ("Duplicate the fragment") {

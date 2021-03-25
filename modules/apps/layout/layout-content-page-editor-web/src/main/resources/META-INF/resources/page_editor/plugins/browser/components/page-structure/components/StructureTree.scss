@@ -1,0 +1,65 @@
+@import 'atlas-variables';
+
+.page-editor__page-structure__structure-tree {
+	padding: 0 16px;
+
+	.lfr-treeview-node-list {
+		border-left: none;
+
+		& .lfr-treeview-node-list {
+			border-left: none;
+			margin-left: 18px;
+		}
+
+		&-item {
+			display: flex;
+			outline: none;
+			padding: 0;
+
+			&,
+			&:not(:first-child) {
+				margin: 2px 0 0;
+			}
+
+			&__button {
+				background-color: transparent;
+				cursor: pointer;
+				margin: 0;
+				position: static;
+
+				&:focus {
+					border-radius: 4px;
+					box-shadow: inset 0 0 0 1px $primary-l1;
+				}
+
+				&:focus .lfr-treeview-node-list-item__button-icon {
+					box-shadow: none;
+				}
+
+				&-icon {
+					background-color: transparent;
+					color: $secondary;
+					height: 16px;
+					padding: 5px 4px 4px;
+					width: 16px;
+
+					&:hover {
+						color: $dark;
+					}
+				}
+			}
+
+			&__node {
+				flex-grow: 1;
+
+				&:first-child {
+					padding-left: 16px;
+				}
+			}
+
+			&__children {
+				padding-left: 8px !important;
+			}
+		}
+	}
+}

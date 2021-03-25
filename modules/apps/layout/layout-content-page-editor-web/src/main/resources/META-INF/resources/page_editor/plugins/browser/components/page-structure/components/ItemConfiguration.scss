@@ -1,0 +1,45 @@
+@import 'atlas-variables';
+
+@import '../../../../../app/components/variables';
+
+.page-editor__sidebar {
+	.page-editor__page-structure__item-configuration {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		overflow: hidden;
+
+		.tab-content {
+			overflow: auto;
+		}
+
+		&-tab {
+			font-size: 0.75rem;
+		}
+
+		label {
+			font-size: 12px;
+		}
+
+		.btn,
+		.btn-group,
+		.form-group,
+		.form-group-autofit {
+			margin-bottom: $pageEditorSpacing * 2;
+
+			&:last-child {
+				margin: 0;
+			}
+		}
+
+		.btn {
+			&:nth-last-child(2) {
+				margin: 0;
+			}
+		}
+
+		.form-group .btn {
+			border-color: $gray-300;
+		}
+	}
+}

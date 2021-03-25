@@ -17,10 +17,12 @@ import React, {useState} from 'react';
 
 import {useId} from '../../../app/utils/useId';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import PageStructureSidebar from './page-structure/components/PageStructureSidebar';
 
 const TABS = [
 	{
-		component: 'page-elements',
+		className: 'page-editor__page-structure__content',
+		component: <PageStructureSidebar />,
 		label: Liferay.Language.get('page-elements'),
 	},
 	{
@@ -66,6 +68,7 @@ export default function BrowserSidebar({title}) {
 				{TABS.map((tab, index) => (
 					<ClayTabs.TabPane
 						aria-labelledby={getTabId(index)}
+						className={tab.className}
 						id={getTabPanelId(index)}
 						key={index}
 					>

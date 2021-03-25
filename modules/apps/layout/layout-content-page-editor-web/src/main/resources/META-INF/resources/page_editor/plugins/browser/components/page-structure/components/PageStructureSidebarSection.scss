@@ -1,0 +1,37 @@
+@import 'atlas-variables';
+
+@import '../../../../../app/components/variables';
+
+.page-editor__page-structure__section {
+	flex-basis: 0;
+	flex-grow: 1;
+	overflow: auto;
+
+	&.resized {
+		flex-basis: auto;
+		flex-shrink: 0;
+	}
+
+	& ~ & {
+		border-top: solid $gray-300 thin;
+	}
+
+	&__custom-styles {
+		border-bottom: 1px solid $secondary-l3;
+		margin-bottom: $pageEditorSpacing;
+		padding-bottom: $pageEditorSpacing * 2;
+	}
+
+	&__resize-handler {
+		cursor: row-resize;
+		height: 10px;
+
+		&:hover {
+			background: $gray-300;
+		}
+
+		&.active {
+			background: $gray-400;
+		}
+	}
+}

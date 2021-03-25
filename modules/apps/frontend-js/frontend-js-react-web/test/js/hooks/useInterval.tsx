@@ -15,45 +15,58 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import useTimeout from '../../../src/main/resources/META-INF/resources/js/hooks/useTimeout';
+import useInterval from '../../../src/main/resources/META-INF/resources/js/hooks/useInterval';
 
-const {useEffect, useState} = React;
+const {useState} = React;
 
 const INTERVAL = 100;
 
-const Component = ({callback, onDelay, onRender}) => {
-	const delay = useTimeout();
+type Callback = ReturnType<typeof jest.fn>;
+type Schedule = ReturnType<typeof useInterval>;
 
-	useEffect(() => {
-		if (onRender) {
-			onRender(delay);
-		}
-	});
+const Component = ({
+	callback,
+	onRender,
+	onSchedule,
+}: {
+	callback?: Callback;
+	onRender?: (schedule: Schedule) => void;
+	onSchedule?: (callback: () => void) => void;
+}) => {
+	const schedule = useInterval();
 
-	const [, forceUpdate] = useState();
+	if (onRender) {
+		onRender(schedule);
+	}
+
+	const [, forceUpdate] = useState(1);
 
 	const invoke = () => {
-		const cancel = delay(callback, INTERVAL);
+		if (callback) {
+			const cancel = schedule(callback, INTERVAL);
 
-		if (onDelay) {
-			onDelay(cancel);
+			if (onSchedule) {
+				onSchedule(cancel);
+			}
 		}
 	};
 
 	return (
 		<>
 			<button onClick={invoke}>Invoke</button>
-			<button onClick={forceUpdate}>Update</button>
+			<button onClick={() => forceUpdate((count) => count + 1)}>
+				Update
+			</button>
 		</>
 	);
 };
 
-describe('useTimeout()', () => {
-	beforeEach(jest.useFakeTimers);
+describe('useInterval()', () => {
+	beforeEach(() => jest.useFakeTimers());
 
 	afterEach(cleanup);
 
-	it('runs a function after a delay', () => {
+	it('runs a function on a schedule', () => {
 		const fn = jest.fn();
 
 		const {getByText} = render(<Component callback={fn} />);
@@ -62,33 +75,41 @@ describe('useTimeout()', () => {
 
 		expect(fn).not.toHaveBeenCalled();
 
-		jest.runAllTimers();
+		jest.advanceTimersByTime(INTERVAL);
 
-		expect(fn).toHaveBeenCalled();
+		expect(fn).toHaveBeenCalledTimes(1);
+
+		jest.advanceTimersByTime(INTERVAL);
+
+		expect(fn).toHaveBeenCalledTimes(2);
 	});
 
-	it('returns a function that cancels the timeout', () => {
+	it('returns a function that cancels the schedule', () => {
 		const fn = jest.fn();
 
-		let cancel;
+		let cancel: () => void;
 
-		const onDelay = (handle) => {
-			cancel = handle;
+		const onSchedule = (callback: () => void): void => {
+			cancel = callback;
 		};
 
 		const {getByText} = render(
-			<Component callback={fn} onDelay={onDelay} />
+			<Component callback={fn} onSchedule={onSchedule} />
 		);
 
 		fireEvent.click(getByText('Invoke'));
 
 		expect(fn).not.toHaveBeenCalled();
 
-		cancel();
+		jest.advanceTimersByTime(INTERVAL);
 
-		jest.runAllTimers();
+		expect(fn).toHaveBeenCalledTimes(1);
 
-		expect(fn).not.toHaveBeenCalled();
+		cancel!();
+
+		jest.advanceTimersByTime(INTERVAL);
+
+		expect(fn).toHaveBeenCalledTimes(1);
 	});
 
 	it('does not run if unmounted', () => {
@@ -100,7 +121,7 @@ describe('useTimeout()', () => {
 
 		unmount();
 
-		jest.runAllTimers();
+		jest.advanceTimersByTime(INTERVAL);
 
 		expect(fn).not.toHaveBeenCalled();
 	});
@@ -116,16 +137,16 @@ describe('useTimeout()', () => {
 
 		render(<Component callback={fn} />);
 
-		jest.runAllTimers();
+		jest.advanceTimersByTime(INTERVAL);
 
 		expect(fn).not.toHaveBeenCalled();
 	});
 
-	it('preserves the identity of the delay function', () => {
-		const functions = [];
+	it('preserves the identity of the schedule function', () => {
+		const functions: Array<Schedule> = [];
 
 		const {getByText} = render(
-			<Component onRender={(delay) => functions.push(delay)} />
+			<Component onRender={(schedule) => functions.push(schedule)} />
 		);
 
 		expect(functions.length).toBe(1);

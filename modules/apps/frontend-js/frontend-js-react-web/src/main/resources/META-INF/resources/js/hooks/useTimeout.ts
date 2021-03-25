@@ -24,7 +24,7 @@ export default function useTimeout() {
 	const isMounted = useIsMounted();
 
 	return useCallback(
-		function delay(fn, ms) {
+		function delay(fn: () => void, ms: number | undefined) {
 			const handle = setTimeout(() => {
 				if (isMounted()) {
 					fn();

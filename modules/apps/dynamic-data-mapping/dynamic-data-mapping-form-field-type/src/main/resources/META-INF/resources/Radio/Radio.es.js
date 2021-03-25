@@ -20,6 +20,11 @@ import {useSyncValue} from '../hooks/useSyncValue.es';
 import {setJSONArrayValue} from '../util/setters.es';
 
 const Radio = ({
+	inline,
+	name,
+	onBlur,
+	onChange,
+	onFocus,
 	options = [
 		{
 			label: 'Option 1',
@@ -30,11 +35,6 @@ const Radio = ({
 			value: 'option2',
 		},
 	],
-	inline,
-	name,
-	onBlur,
-	onChange,
-	onFocus,
 	predefinedValue,
 	readOnly: disabled,
 	value: initialValue,

@@ -18,16 +18,23 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.io.File;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 
 import org.apache.log4j.ConsoleAppender;
@@ -148,7 +155,7 @@ public class Log4jConfigUtilTest {
 	}
 
 	@Test
-	public void testConfigureLog4JWithCompatibility() {
+	public void testConfigureLog4JWithCompatibility() throws Exception {
 		String loggerName = StringUtil.randomString();
 
 		Logger logger = (Logger)LogManager.getLogger(loggerName);
@@ -195,6 +202,21 @@ public class Log4jConfigUtilTest {
 		_assertAppenders(
 			logger, ConsoleAppender.class.getName(),
 			WriterAppender.class.getName());
+
+		Log4jConfigUtil.configureLog4J(
+			_generateLog4j1XMLConfigurationContent(
+				loggerName, _ERROR,
+				LinkedHashMapBuilder.put(
+					"org.apache.log4j.rolling.RollingFileAppender", "TEXT_FILE"
+				).put(
+					WriterAppender.class.getName(), "WRITER_APPENDER"
+				).build()));
+
+		_assertAppenders(
+			logger, ConsoleAppender.class.getName(),
+			WriterAppender.class.getName(),
+			"TEXT_FILE_" + Log4jConfigUtilTest.class.getSimpleName(),
+			"WRITER_APPENDER");
 	}
 
 	@Test
@@ -400,6 +422,68 @@ public class Log4jConfigUtilTest {
 		for (Class<?> appenderType : appenderTypes) {
 			sb.append("<appender-ref ref=\"");
 			sb.append(appenderType.getName());
+			sb.append("\" />");
+		}
+
+		sb.append("</category></log4j:configuration>");
+
+		return sb.toString();
+	}
+
+	private String _generateLog4j1XMLConfigurationContent(
+			String loggerName, String priority, Map<String, String> appenders)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(10 + (appenders.size() * 17));
+
+		sb.append("<?xml version=\"1.0\"?>");
+		sb.append("<!DOCTYPE log4j:configuration SYSTEM \"log4j.dtd\">");
+		sb.append("<log4j:configuration xmlns:log4j=");
+		sb.append("\"http://jakarta.apache.org/log4j/\">");
+
+		for (Map.Entry<String, String> appenderEntry : appenders.entrySet()) {
+			sb.append("<appender class=\"");
+			sb.append(appenderEntry.getKey());
+			sb.append("\" name=\"");
+			sb.append(appenderEntry.getValue());
+			sb.append("\">");
+
+			if (Objects.equals(
+					appenderEntry.getKey(),
+					"org.apache.log4j.rolling.RollingFileAppender")) {
+
+				Path tempDirPath = Files.createTempDirectory(
+					Log4jConfigUtilTest.class.getName());
+
+				File tempDir = tempDirPath.toFile();
+
+				tempDir.mkdirs();
+				tempDir.deleteOnExit();
+
+				sb.append("<rollingPolicy class=\"");
+				sb.append("org.apache.log4j.rolling.TimeBasedRollingPolicy\">");
+				sb.append("<param name=\"FileNamePattern\" ");
+				sb.append("value=\"");
+				sb.append(tempDir);
+				sb.append("/");
+				sb.append(Log4jConfigUtilTest.class.getSimpleName());
+				sb.append(".%d{yyyy-MM-dd}.log\" />");
+				sb.append("<param name=\"paramName\" value=\"paramValue\" />");
+				sb.append("\t\t</rollingPolicy>");
+			}
+
+			sb.append("</appender>");
+		}
+
+		sb.append("<category name=\"");
+		sb.append(loggerName);
+		sb.append("\"><priority value=\"");
+		sb.append(priority);
+		sb.append("\" />");
+
+		for (String appenderName : appenders.values()) {
+			sb.append("<appender-ref ref=\"");
+			sb.append(appenderName);
 			sb.append("\" />");
 		}
 

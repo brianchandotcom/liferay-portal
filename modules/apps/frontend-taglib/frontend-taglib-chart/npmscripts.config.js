@@ -150,6 +150,6 @@ module.exports = {
 			},
 		},
 	},
-	check: [],
-	fix: [],
+	check: false,
+	fix: false,
 };

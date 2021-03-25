@@ -1392,7 +1392,6 @@ definition {
 	test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
 		property app.server.bundles.size = "1";
 		property databases.size = "1";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";
 
 		ApplicationsMenu.gotoPortlet(

@@ -15,7 +15,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import useTimeout from '../../../src/main/resources/META-INF/resources/js/hooks/useTimeout.es';
+import useTimeout from '../../../src/main/resources/META-INF/resources/js/hooks/useTimeout';
 
 const {useEffect, useState} = React;
 

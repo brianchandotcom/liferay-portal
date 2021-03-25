@@ -15,7 +15,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import useInterval from '../../../src/main/resources/META-INF/resources/js/hooks/useInterval.es';
+import useInterval from '../../../src/main/resources/META-INF/resources/js/hooks/useInterval';
 
 const {useEffect, useState} = React;
 

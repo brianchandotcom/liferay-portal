@@ -16,12 +16,12 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import useStateSafe from '../../../src/main/resources/META-INF/resources/js/hooks/useStateSafe.es';
+import useStateSafe from '../../../src/main/resources/META-INF/resources/js/hooks/useStateSafe';
 
 const {useEffect, useState} = React;
 
 describe('useStateSafe()', () => {
-	let states;
+	let states: Array<[boolean, boolean]>;
 
 	beforeEach(() => {
 		jest.useFakeTimers();
@@ -37,7 +37,7 @@ describe('useStateSafe()', () => {
 		useEffect(() => {
 			setTimeout(
 				() =>
-					setLoading((previous) => {
+					setLoading((previous: boolean) => {
 						states.push([previous, false]);
 
 						return false;

@@ -12,8 +12,12 @@
  * details.
  */
 
-/* eslint-env node */
-
 module.exports = {
-	testMatch: ['**/test/**/*.{js,ts,tsx}'],
+	rules: {
+		'@typescript-eslint/no-use-before-define': [
+			'error',
+			{functions: false},
+		],
+		'no-use-before-define': 'off',
+	},
 };

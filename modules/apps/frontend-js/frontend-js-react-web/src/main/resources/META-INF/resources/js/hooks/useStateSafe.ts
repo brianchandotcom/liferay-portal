@@ -28,7 +28,7 @@ export default function useStateSafe<T = unknown>(initialValue: T | (() => T)) {
 	const [state, setState] = useState(initialValue);
 
 	const setStateSafe = useCallback(
-		(newValue) => {
+		(newValue: T | ((previousValue: T) => T)) => {
 			if (isMounted()) {
 				setState(newValue);
 			}
@@ -36,5 +36,5 @@ export default function useStateSafe<T = unknown>(initialValue: T | (() => T)) {
 		[isMounted]
 	);
 
-	return [state, setStateSafe];
+	return [state, setStateSafe] as const;
 }

@@ -121,6 +121,20 @@ definition {
 			value1 = "Invoke");
 	}
 
+	macro addUserToDepot {
+		Variables.assertDefined(parameterList = "${depotName},${userEmailAddress}");
+
+		var depotId = JSONUserSetter.setGroupId(
+			groupName = "${depotName}",
+			site = "false");
+
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+
+		JSONUserAPI._addUserToSite(
+			groupId = "${depotId}",
+			userId = "${userId}");
+	}
+
 	macro addUserToSite {
 		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 

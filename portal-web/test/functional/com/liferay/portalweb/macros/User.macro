@@ -1377,6 +1377,26 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro editEmailAddressCP {
+		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+			value1 = "${userEmailAddress}");
+
+		Button.clickSave();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIRM_PASSWORD");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#PASSWORD_CONFIRM_PASSWORD_FIELD",
+			value1 = "${password}");
+
+		Button.clickConfirm();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editPasswordCP {
 		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 

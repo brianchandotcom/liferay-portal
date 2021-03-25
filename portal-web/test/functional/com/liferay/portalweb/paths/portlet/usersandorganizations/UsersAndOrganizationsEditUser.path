@@ -101,6 +101,11 @@
 </tr>
 <!--PASSWORD-->
 <tr>
+	<td>PASSWORD_CONFIRM_PASSWORD_FIELD</td>
+	<td>//input[contains(@id,'password')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PASSWORD_NEW_PASSWORD_FIELD</td>
 	<td>//input[contains(@id,'password1')]</td>
 	<td></td>

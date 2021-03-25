@@ -397,6 +397,45 @@ paths:
                     description:
                         ""
             tags: ["Keyword"]
+    "/asset-libraries/{assetLibraryId}/keywords/permissions":
+        get:
+            operationId: getAssetLibraryKeywordPermissionsPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Keyword" ]
+        put:
+            operationId: putAssetLibraryKeywordPermission
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Keyword" ]
     "/asset-libraries/{assetLibraryId}/taxonomy-vocabularies":
         get:
             operationId: getAssetLibraryTaxonomyVocabulariesPage
@@ -472,6 +511,45 @@ paths:
                     description:
                         ""
             tags: ["TaxonomyVocabulary"]
+    "/asset-libraries/{assetLibraryId}/taxonomy-vocabularies/permissions":
+        get:
+            operationId: getAssetLibraryTaxonomyVocabularyPermissionsPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "TaxonomyVocabulary" ]
+        put:
+            operationId: putAssetLibraryTaxonomyVocabularyPermission
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "TaxonomyVocabulary" ]
     "/keywords/ranked":
         get:
             operationId: getKeywordsRankedPage
@@ -584,6 +662,45 @@ paths:
                     description:
                         ""
             tags: ["Keyword"]
+    "/keywords/{keywordId}/permissions":
+        get:
+            operationId: getKeywordPermissionsPage
+            parameters:
+                - in: path
+                  name: keywordId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Keyword" ]
+        put:
+            operationId: putKeywordPermission
+            parameters:
+                - in: path
+                  name: keywordId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Keyword" ]
     "/sites/{siteId}/keywords":
         get:
             description:
@@ -663,6 +780,45 @@ paths:
                     description:
                         ""
             tags: ["Keyword"]
+    "/sites/{siteId}/keywords/permissions":
+        get:
+            operationId: getSiteKeywordPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Keyword" ]
+        put:
+            operationId: putSiteKeywordPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "Keyword" ]
     "/sites/{siteId}/taxonomy-vocabularies":
         get:
             description:
@@ -742,6 +898,45 @@ paths:
                     description:
                         ""
             tags: ["TaxonomyVocabulary"]
+    "/sites/{siteId}/taxonomy-vocabularies/permissions":
+        get:
+            operationId: getSiteTaxonomyVocabularyPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "TaxonomyVocabulary" ]
+        put:
+            operationId: putSiteTaxonomyVocabularyPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "TaxonomyVocabulary" ]
     "/taxonomy-categories/ranked":
         get:
             operationId: getTaxonomyCategoryRankedPage
@@ -955,6 +1150,43 @@ paths:
                     description:
                         ""
             tags: ["TaxonomyCategory"]
+    "/taxonomy-categories/{taxonomyCategoryId}/permissions":
+        get:
+            operationId: getTaxonomyCategoryPermissionsPage
+            parameters:
+                - in: path
+                  name: taxonomyCategoryId
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "TaxonomyCategory" ]
+        put:
+            operationId: putTaxonomyCategoryPermission
+            parameters:
+                - in: path
+                  name: taxonomyCategoryId
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "TaxonomyCategory" ]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}":
         delete:
             description:
@@ -1061,6 +1293,45 @@ paths:
                     description:
                         ""
             tags: ["TaxonomyVocabulary"]
+    "/taxonomy-vocabularies/{taxonomyVocabularyId}/permissions":
+        get:
+            operationId: getTaxonomyVocabularyPermissionsPage
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "TaxonomyVocabulary" ]
+        put:
+            operationId: putTaxonomyVocabularyPermission
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "TaxonomyVocabulary" ]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories":
         get:
             description:

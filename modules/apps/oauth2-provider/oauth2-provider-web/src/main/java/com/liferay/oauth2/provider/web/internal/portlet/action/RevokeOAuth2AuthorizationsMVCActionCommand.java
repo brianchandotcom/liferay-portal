@@ -54,13 +54,24 @@ public class RevokeOAuth2AuthorizationsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
+		long oAuth2ApplicationId = ParamUtil.getLong(
+			actionRequest, "oAuth2ApplicationId", -1);
+
 		long[] oAuth2AuthorizationIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "oAuth2AuthorizationIds"), 0L);
 
 		try {
-			for (long oAuth2AuthorizationId : oAuth2AuthorizationIds) {
-				_oAuth2AuthorizationService.revokeOAuth2Authorization(
-					oAuth2AuthorizationId);
+			if ((oAuth2AuthorizationIds.length == 0) &&
+				(oAuth2ApplicationId != -1)) {
+
+				_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
+					oAuth2ApplicationId);
+			}
+			else {
+				for (long oAuth2AuthorizationId : oAuth2AuthorizationIds) {
+					_oAuth2AuthorizationService.revokeOAuth2Authorization(
+						oAuth2AuthorizationId);
+				}
 			}
 		}
 		catch (PortalException portalException) {

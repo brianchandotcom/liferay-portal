@@ -11,11 +11,11 @@
 
 import ClayAlert from '@clayui/alert';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 
 import {useChartState} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
+import {StoreStateContext} from '../context/StoreContext';
 import APIService from '../utils/APIService';
 import Detail from './Detail';
 import Main from './Main';
@@ -31,22 +31,15 @@ export default function Navigation({
 	timeSpanOptions,
 	viewURLs,
 }) {
-	const dispatch = useContext(StoreDispatchContext);
-
-	const {
-		endpoints,
-		namespace,
-		page,
-		publishedToday,
-		trafficSources,
-		warning,
-	} = useContext(StoreStateContext);
+	const {endpoints, namespace, page, publishedToday, warning} = useContext(
+		StoreStateContext
+	);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const {plid} = page;
-
 	const [currentPage, setCurrentPage] = useState({view: 'main'});
+
+	const [trafficSources, setTrafficSources] = useState([]);
 
 	const [trafficSourceName, setTrafficSourceName] = useState('');
 
@@ -54,76 +47,59 @@ export default function Navigation({
 
 	const {timeSpanKey, timeSpanOffset} = chartState;
 
-	useEffect(() => {
-		const requests = Object.keys(endpoints).map((request) => {
-			if (request === 'analyticsReportsHistoricalReadsURL') {
-				return APIService.getHistoricalReads(
-					endpoints.analyticsReportsHistoricalReadsURL,
-					{
-						namespace,
-						plid,
-						timeSpanKey,
-						timeSpanOffset,
-					}
-				);
-			}
-			else if (request === 'analyticsReportsHistoricalViewsURL') {
-				return APIService.getHistoricalViews(
-					endpoints.analyticsReportsHistoricalViewsURL,
-					{
-						namespace,
-						plid,
-						timeSpanKey,
-						timeSpanOffset,
-					}
-				);
-			}
-			else if (request === 'analyticsReportsTotalReadsURL') {
-				return APIService.getTotalReads(
-					endpoints.analyticsReportsTotalReadsURL,
-					{namespace, plid}
-				);
-			}
-			else if (request === 'analyticsReportsTotalViewsURL') {
-				return APIService.getTotalViews(
-					endpoints.analyticsReportsTotalViewsURL,
-					{namespace, plid}
-				);
-			}
-			else if (request === 'analyticsReportsTrafficSourcesURL') {
-				return APIService.getTrafficSources(
-					endpoints.analyticsReportsTrafficSourcesURL,
-					{namespace, plid}
-				);
-			}
-		});
-
-		let metrics = {};
-
-		allSettled(requests)
-			.then((data) => {
-				for (var i = 0; i < data.length; i++) {
-					if (data[i].status === 'fulfilled') {
-						metrics = {
-							...metrics,
-							...data[i].value,
-						};
-					}
-					else {
-						dispatch({type: 'ADD_WARNING'});
-					}
-				}
-			})
-			.then(() => {
-				dispatch({payload: metrics, type: 'SET_METRICS'});
-			});
-	}, [dispatch, endpoints, namespace, plid, timeSpanKey, timeSpanOffset]);
-
 	const handleCurrentPage = useCallback((currentPage) => {
 		setCurrentPage({view: currentPage.view});
 	}, []);
 
-	const handleTrafficSourceClick = (trafficSourceName) => {
+	const handleHistoricalReads = useCallback(() => {
+		return APIService.getHistoricalReads(
+			endpoints.analyticsReportsHistoricalReadsURL,
+			{namespace, plid: page.plid, timeSpanKey, timeSpanOffset}
+		).then((response) => response);
+	}, [
+		endpoints.analyticsReportsHistoricalReadsURL,
+		namespace,
+		page.plid,
+		timeSpanKey,
+		timeSpanOffset,
+	]);
+
+	const handleHistoricalViews = useCallback(() => {
+		return APIService.getHistoricalReads(
+			endpoints.analyticsReportsHistoricalViewsURL,
+			{namespace, plid: page.plid, timeSpanKey, timeSpanOffset}
+		).then((response) => response);
+	}, [
+		endpoints.analyticsReportsHistoricalViewsURL,
+		namespace,
+		page.plid,
+		timeSpanKey,
+		timeSpanOffset,
+	]);
+
+	const handleTotalReads = useCallback(() => {
+		return APIService.getTotalReads(
+			endpoints.analyticsReportsTotalReadsURL,
+			{namespace, plid: page.plid}
+		).then(({analyticsReportsTotalReads}) => analyticsReportsTotalReads);
+	}, [endpoints.analyticsReportsTotalReadsURL, namespace, page.plid]);
+
+	const handleTotalViews = useCallback(() => {
+		return APIService.getTotalReads(
+			endpoints.analyticsReportsTotalViewsURL,
+			{namespace, plid: page.plid}
+		).then(({analyticsReportsTotalViews}) => analyticsReportsTotalViews);
+	}, [endpoints.analyticsReportsTotalViewsURL, namespace, page.plid]);
+
+	const handleTrafficSources = useCallback(() => {
+		return APIService.getTrafficSources(
+			endpoints.analyticsReportsTrafficSourcesURL,
+			{namespace, plid: page.plid}
+		).then(({trafficSources}) => trafficSources);
+	}, [endpoints.analyticsReportsTrafficSourcesURL, namespace, page.plid]);
+
+	const handleTrafficSourceClick = (trafficSources, trafficSourceName) => {
+		setTrafficSources(trafficSources);
 		setTrafficSourceName(trafficSourceName);
 
 		const trafficSource = trafficSources.find((trafficSource) => {
@@ -186,11 +162,22 @@ export default function Navigation({
 					<Main
 						author={author}
 						canonicalURL={canonicalURL}
+						chartDataProviders={
+							endpoints.analyticsReportsHistoricalReadsURL
+								? [handleHistoricalViews, handleHistoricalReads]
+								: [handleHistoricalViews]
+						}
 						onSelectedLanguageClick={onSelectedLanguageClick}
 						onTrafficSourceClick={handleTrafficSourceClick}
 						pagePublishDate={pagePublishDate}
 						pageTitle={pageTitle}
 						timeSpanOptions={timeSpanOptions}
+						totalReadsDataProvider={
+							endpoints.analyticsReportsTotalReadsURL &&
+							handleTotalReads
+						}
+						totalViewsDataProvider={handleTotalViews}
+						trafficSourcesDataProvider={handleTrafficSources}
 						viewURLs={viewURLs}
 					/>
 				</div>
@@ -207,20 +194,6 @@ export default function Navigation({
 				/>
 			)}
 		</>
-	);
-}
-
-function allSettled(promises) {
-	return Promise.all(
-		promises.map((promise) => {
-			return promise
-				.then((value) => {
-					return {status: 'fulfilled', value};
-				})
-				.catch((reason) => {
-					return {reason, status: 'rejected'};
-				});
-		})
 	);
 }
 

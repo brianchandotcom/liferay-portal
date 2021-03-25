@@ -15,18 +15,23 @@
 package com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.message.Message;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.SearchResponseJSONTranslator;
+import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.constants.JSONKeys;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.contributor.JSONTranslationContributor;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
 import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
@@ -70,6 +75,46 @@ public class SearchResponseJSONTranslatorImpl
 		return responseJSONObject;
 	}
 
+	@Override
+	public JSONObject translateErrorMessages(
+		List<Message> errorMessages, ResourceBundle resourceBundle) {
+
+		JSONObject responseJSONObject = _jsonFactory.createJSONObject();
+
+		JSONArray errorMessagesJSONArray = _jsonFactory.createJSONArray();
+
+		for (Message message : errorMessages) {
+			JSONObject errorMessageJSONObject = _jsonFactory.createJSONObject();
+
+			errorMessageJSONObject.put(
+				"className", message.getClassName()
+			).put(
+				"elementId", message.getElementId()
+			).put(
+				"localizedMessage",
+				_language.get(resourceBundle, message.getLocalizationKey())
+			).put(
+				"msg", message.getMsg()
+			).put(
+				"rootObject", message.getRootObject()
+			).put(
+				"rootProperty", message.getRootProperty()
+			).put(
+				"rootValue", message.getRootValue()
+			).put(
+				"severity", message.getSeverity()
+			).put(
+				"throwable", message.getThrowable()
+			);
+
+			errorMessagesJSONArray.put(errorMessageJSONObject);
+		}
+
+		responseJSONObject.put(JSONKeys.ERRORS, errorMessagesJSONArray);
+
+		return responseJSONObject;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
@@ -100,5 +145,8 @@ public class SearchResponseJSONTranslatorImpl
 	private volatile Map
 		<String, ServiceComponentReference<JSONTranslationContributor>>
 			_jsonTranslationContributors = new ConcurrentHashMap<>();
+
+	@Reference
+	private Language _language;
 
 }

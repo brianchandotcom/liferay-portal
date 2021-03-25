@@ -334,6 +334,7 @@ const openSelectionModal = ({
 	multiple = false,
 	onClose,
 	onSelect,
+	searchContainerId,
 	selectEventName,
 	selectedData,
 	size,
@@ -377,7 +378,9 @@ const openSelectionModal = ({
 				onClose();
 			}
 		},
-		onOpen: ({container, processClose}) => {
+		onOpen: ({iframeWindow, processClose}) => {
+			const container = iframeWindow.document.body;
+
 			const selectEventHandler = Liferay.on(selectEventName, (event) => {
 				selectedItem = event.data || event;
 
@@ -414,6 +417,25 @@ const openSelectionModal = ({
 						Liferay.fire(selectEventName, delegateTarget.dataset);
 					}
 				});
+			}
+
+			if (searchContainerId && multiple) {
+				iframeWindow.Liferay.componentReady(searchContainerId).then(
+					(searchContainer) => {
+						searchContainer.on('rowToggled', (event) => {
+							const allSelectedElements =
+								event.elements.allSelectedElements;
+
+							if (!allSelectedElements.isEmpty()) {
+								selectedItem = {
+									value: allSelectedElements
+										.get('value')
+										.join(','),
+								};
+							}
+						});
+					}
+				);
 			}
 		},
 		size,
@@ -489,7 +511,7 @@ class Iframe extends React.Component {
 
 		if (this.props.onOpen) {
 			this.props.onOpen({
-				container: iframeWindow.document.body,
+				iframeWindow,
 				processClose: this.props.processClose,
 			});
 		}

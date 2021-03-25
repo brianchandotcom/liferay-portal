@@ -23,7 +23,10 @@ const {useRef} = React;
  * thunks (ie. functions that dispatch actions) as well as plain actions (ie.
  * objects).
  */
-export default function useThunk([state, dispatch]: [any, any]) {
+export default function useThunk<R extends React.Reducer<any, any>>([
+	state,
+	dispatch,
+]: [React.ReducerState<R>, React.Dispatch<React.ReducerAction<R>>]) {
 	const isMounted = useIsMounted();
 
 	// Use a ref to ensure our `dispatch` is stable across renders, just

@@ -56,6 +56,47 @@ definition {
 			value1 = "Link");
 	}
 
+	macro mapEditableFieldToPage {
+		PageEditorEditableLink.gotoEditableFieldLink(
+			fragmentName = "${fragmentName}",
+			id = "${id}");
+
+		Select(
+			key_fieldLabel = "Link",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Page");
+
+		Pause(locator1 = "3000");
+
+		var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Page']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+
+		if ("${itemSelectorContentInputValue}" == "") {
+			Click(
+				key_fieldLabel = "Page",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+		else {
+			Click(
+				key_fieldLabel = "Page",
+				key_text = "change",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Portlet.expandTree();
+
+		AssertClick.assertPartialTextClickAt(
+			key_nodeName = "${pageName}",
+			locator1 = "Treeview#NODE_UNSELECTED",
+			value1 = "${pageName}");
+
+		SelectFrameTop();
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro mapURLToAsset {
 		PageEditorEditableLink._gotoFromContentField();
 

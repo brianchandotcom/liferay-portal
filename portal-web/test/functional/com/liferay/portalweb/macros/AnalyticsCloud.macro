@@ -47,8 +47,8 @@ definition {
 			value1 = "${siteName}");
 
 		KeyPress(
-				locator1 = "AnalyticsCloudConnection#SYNCED_SITES_SEARCH_FIELD",
-				value1 = "\ENTER");
+			locator1 = "AnalyticsCloudConnection#SYNCED_SITES_SEARCH_FIELD",
+			value1 = "\ENTER");
 
 		Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
 

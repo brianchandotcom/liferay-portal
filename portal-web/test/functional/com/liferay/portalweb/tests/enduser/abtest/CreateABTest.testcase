@@ -48,6 +48,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		Click(locator1 = "ABTest#AB_TEST_BUTTON");
+
 		AnalyticsCloud.teardownAnalyticsCloud();
 
 		if ("${testPortalInstance}" == "true") {

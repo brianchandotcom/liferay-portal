@@ -1,4 +1,4 @@
-#set($h1 = '##')
+#set ($h1 = '##')
 $h1 Check GETTING_STARTED.markdown#platform.bndrun for more information.
 
 -distro: ${targetPlatformDistro};x-whitelist=osgi.wiring.host

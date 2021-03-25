@@ -1,7 +1,7 @@
-#set($h1 = '#')
-#set($h2 = '##')
-#set($h3 = '###')
-#set($h4 = '####')
+#set ($h1 = '#')
+#set ($h2 = '##')
+#set ($h3 = '###')
+#set ($h4 = '####')
 $h1 Getting Started with Liferay Workspace
 
 Complete documentation for Liferay Workspace can be found

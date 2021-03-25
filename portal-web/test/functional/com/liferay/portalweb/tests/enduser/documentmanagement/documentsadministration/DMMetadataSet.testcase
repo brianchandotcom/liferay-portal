@@ -79,6 +79,8 @@ definition {
 
 		DMNavigator.gotoMetadataSets();
 
+		DMMetadataSet.viewDefaultCP();
+
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
 		DataEngine.addField(
@@ -92,6 +94,8 @@ definition {
 		DMNavigator.gotoMetadataSets();
 
 		DMMetadataSet.delete(metadataSetName = "DM Metadata Set Name");
+
+		DMMetadataSet.viewDefaultCP();
 	}
 
 	@description = "This test covers LPS-128046. It ensures that a metadata set can be removed from the management bar."

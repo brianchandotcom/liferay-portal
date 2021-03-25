@@ -187,6 +187,23 @@ public class KeywordResourceImpl
 			_assetTagService.updateTag(keywordId, keyword.getName(), null));
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		AssetTag assetTag = _assetTagService.getTag((Long)id);
+
+		return assetTag.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.asset.tags";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return "com.liferay.asset.tags";
+	}
+
 	private ProjectionList _getProjectionList() {
 		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
 

@@ -333,6 +333,23 @@ public class TaxonomyCategoryResourceImpl
 			_assetCategoryLocalService.updateAssetCategory(assetCategory));
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		AssetCategory assetCategory = _getAssetCategory((String)id);
+
+		return assetCategory.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.asset.categories";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return AssetCategory.class.getName();
+	}
+
 	private TaxonomyCategory _addTaxonomyCategory(
 			long groupId, String languageId, TaxonomyCategory taxonomyCategory,
 			long taxonomyCategoryId, long taxonomyVocabularyId)

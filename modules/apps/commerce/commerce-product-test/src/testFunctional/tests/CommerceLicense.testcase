@@ -57,7 +57,7 @@ definition {
 	test CombinedXML {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-dxp-license-developer-combined.xml";
-		property dxp.license = "dxp-license-dummy.xml";
+		property dxp.license.file = "dxp-license-dummy.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}

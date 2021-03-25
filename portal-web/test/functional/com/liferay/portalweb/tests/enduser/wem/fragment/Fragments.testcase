@@ -505,8 +505,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98241. Contributed fragment components Paragraph can be configured."
-	@priority = "4"
+	@description = "This is a test for LPS-98241 and LPS-128667. Contributed fragment components Paragraph can be configured. Interact with color picker selector of fragment."
+	@priority = "5"
 	test ConfigureBasicComponentParagraph {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -538,6 +538,35 @@ definition {
 				alignment = "right",
 				fragmentName = "paragraph",
 				textColor = "warning");
+		}
+
+		task ("Change the Text Color to Success") {
+			PageEditor.configureFragment(textColor = "Success");
+		}
+
+		task ("View the Text Color of Paragraph") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "paragraph",
+				textColor = "success");
+		}
+
+		task ("Clear the selection") {
+			PageEditor.clearSelection(fieldLabel = "Text Color");
+		}
+
+		task ("View the Text Color of Paragraph") {
+			AssertCssValue(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				locator2 = "color",
+				value1 = "rgba(39, 40, 51, 1)");
+		}
+
+		task ("View the Default is shown in Text Color field") {
+			AssertTextEquals(
+				key_text = "Text Color",
+				locator1 = "TextInput#ANY",
+				value1 = "Default");
 		}
 
 		task ("Remove the fragment") {

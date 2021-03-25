@@ -61,6 +61,31 @@ String oAuth2ApplicationId = String.valueOf(oAuth2Application.getOAuth2Applicati
 		/>
 	</c:if>
 
+	<c:if test="<%= oAuth2AdminPortletDisplayContext.hasRevokeTokenPermission(oAuth2Application) %>">
+		<portlet:actionURL name="/admin/revoke_oauth2_authorizations" var="revokeOAuth2AuthorizationsURL">
+			<portlet:param name="oAuth2ApplicationId" value="<%= oAuth2ApplicationId %>" />
+		</portlet:actionURL>
+
+		<%
+		int authorizationsCount = oAuth2AdminPortletDisplayContext.getOAuth2AuthorizationsCount(oAuth2Application);
+
+		String confirmation = LanguageUtil.get(request, "are-you-sure-you-want-to-revoke-all-authorizations-there-are-no-authorizations-or-associated-tokens");
+
+		if (authorizationsCount == 1) {
+			confirmation = LanguageUtil.get(request, "are-you-sure-you-want-to-revoke-all-authorizations-this-action-revokes-one-authorization-and-associated-tokens");
+		}
+		else if (authorizationsCount > 0) {
+			confirmation = LanguageUtil.format(request, "are-you-sure-you-want-to-revoke-all-authorizations-this-action-revokes-x-authorizations-and-associated-tokens", new String[] {String.valueOf(authorizationsCount)});
+		}
+		%>
+
+		<liferay-ui:icon-delete
+			confirmation="<%= confirmation %>"
+			message="revoke-authorizations"
+			url="<%= revokeOAuth2AuthorizationsURL.toString() %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= oAuth2AdminPortletDisplayContext.hasDeletePermission(oAuth2Application) %>">
 		<portlet:actionURL name="/oauth2_provider/delete_oauth2_applications" var="deleteURL">
 			<portlet:param name="oAuth2ApplicationIds" value="<%= oAuth2ApplicationId %>" />

@@ -114,4 +114,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-129182. View react fragment is rendered correctly in page."
+	@priority = "5"
+	test ViewReactFragmentInPage {
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Import the react fragment") {
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "react-fragment-example.zip");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a react fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "React Fragment Example");
+		}
+
+		task ("Assert the react fragment is rendered correctly in page editor") {
+			AssertElementPresent(
+				key_fragmentName = "React Fragment Example",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertVisible(locator1 = "//h1[normalize-space(text())='Hello World']");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the react fragment is rendered correctly in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(locator1 = "//h1[normalize-space(text())='Hello World']");
+		}
+	}
+
 }

@@ -6641,7 +6641,7 @@ go</echo>
 			<then>
 				<delete failonerror="false" includeemptydirs="true">
 					<fileset
-						dir="${app.server.lib.global.dir}"
+						dir="${app.server.lib.portal.dir}"
 						includes="${jdbc.db2.driver}"
 					/>
 				</delete>
@@ -6692,7 +6692,7 @@ go</echo>
 				<and>
 					<equals arg1="${database.type}" arg2="mariadb" />
 					<not>
-						<available file="${app.server.lib.global.dir}/${jdbc.mariadb.driver}" />
+						<available file="${app.server.lib.portal.dir}/${jdbc.mariadb.driver}" />
 					</not>
 				</and>
 				<then>
@@ -6710,7 +6710,7 @@ go</echo>
 				<and>
 					<equals arg1="${database.type}" arg2="mysql" />
 					<not>
-						<available file="${app.server.lib.global.dir}/${jdbc.mysql.driver}" />
+						<available file="${app.server.lib.portal.dir}/${jdbc.mysql.driver}" />
 					</not>
 				</and>
 				<then>
@@ -6731,7 +6731,7 @@ go</echo>
 				<then>
 					<delete failonerror="false" includeemptydirs="true">
 						<fileset
-							dir="${app.server.lib.global.dir}"
+							dir="${app.server.lib.portal.dir}"
 							includes="${jdbc.oracle.driver}"
 						/>
 					</delete>
@@ -6746,7 +6746,7 @@ go</echo>
 				<and>
 					<equals arg1="${database.type}" arg2="postgresql" />
 					<not>
-						<available file="${app.server.lib.global.dir}/${jdbc.postgresql.driver}" />
+						<available file="${app.server.lib.portal.dir}/${jdbc.postgresql.driver}" />
 					</not>
 				</and>
 				<then>
@@ -6765,7 +6765,7 @@ go</echo>
 				<then>
 					<delete failonerror="false" includeemptydirs="true">
 						<fileset
-							dir="${app.server.lib.global.dir}"
+							dir="${app.server.lib.portal.dir}"
 							includes="${jdbc.sqlserver.driver}"
 						/>
 					</delete>
@@ -6783,7 +6783,7 @@ go</echo>
 				<then>
 					<delete failonerror="false" includeemptydirs="true">
 						<fileset
-							dir="${app.server.lib.global.dir}"
+							dir="${app.server.lib.portal.dir}"
 							includes="${jdbc.sybase.driver}"
 						/>
 					</delete>
@@ -6794,79 +6794,6 @@ go</echo>
 					/>
 				</then>
 			</elseif>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="jboss" />
-				<equals arg1="${app.server.type}" arg2="wildfly" />
-			</or>
-			<then>
-				<propertycopy from="app.server.${app.server.type}.lib.global.dir" name="app.server.lib.global.dir" override="true" />
-
-				<if>
-					<equals arg1="${database.type}" arg2="db2" />
-					<then>
-						<replace
-							file="${app.server.lib.global.dir}/module.xml"
-						>
-							<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									<resource-root path="db2jcc4.jar" />
-									<resource-root path="db2jcc_license_cu.jar" />
-									<resource-root path="hsql.jar" />
-								]]>
-							</replacevalue>
-						</replace>
-					</then>
-					<elseif>
-						<equals arg1="${database.type}" arg2="mariadb" />
-						<then>
-							<replace
-								file="${app.server.lib.global.dir}/module.xml"
-							>
-								<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
-								<replacevalue>
-									<![CDATA[
-										<resource-root path="hsql.jar" />
-										<resource-root path="mariadb.jar" />
-									]]>
-								</replacevalue>
-							</replace>
-						</then>
-					</elseif>
-					<elseif>
-						<equals arg1="${database.type}" arg2="oracle" />
-						<then>
-							<replace
-								file="${app.server.lib.global.dir}/module.xml"
-							>
-								<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
-								<replacevalue>
-									<![CDATA[
-										<resource-root path="hsql.jar" />
-										<resource-root path="ojdbc6.jar" />
-									]]>
-								</replacevalue>
-							</replace>
-						</then>
-					</elseif>
-					<else>
-						<replace
-							file="${app.server.lib.global.dir}/module.xml"
-						>
-							<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									<resource-root path="hsql.jar" />
-									<resource-root path="mysql.jar" />
-								]]>
-							</replacevalue>
-						</replace>
-					</else>
-				</if>
-			</then>
 		</if>
 	</target>
 
@@ -7777,7 +7704,7 @@ virtualHostname="localhost"
 			srcfile="${mysql.input.file}"
 		/>
 
-		<sql classpath="${app.server.lib.global.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${mysql.output.file}" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
+		<sql classpath="${app.server.lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${mysql.output.file}" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
 			<![CDATA[
 				${mysql.statement}
 			]]>
@@ -12157,7 +12084,7 @@ go</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
-							<sql classpath="${app.server.lib.global.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="data.pump.log" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
+							<sql classpath="${app.server.lib.portal.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="data.pump.log" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
 								<![CDATA[
 									drop user lportal cascade;
 									select directory_name, directory_path from dba_directories where directory_name='DATA_PUMP_DIR';
@@ -12974,7 +12901,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		</if>
 
 		<antcall inheritAll="false" target="copy-optional-jars">
-			<param name="todir" value="${app.server.lib.global.dir}" />
+			<param name="todir" value="${app.server.lib.portal.dir}" />
 		</antcall>
 
 		<get-testcase-property property.name="index.search.spell.checker.enabled" />

@@ -267,7 +267,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.cart.taglib.jar!jackson-annotations.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-annotations</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -279,7 +279,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.cart.taglib.jar!jackson-core.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-core</project-name>
 				<project-url>https://github.com/FasterXML/jackson-core</project-url>
 				<licenses>
@@ -291,7 +291,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.cart.taglib.jar!jackson-databind.jar</file-name>
-				<version>2.10.5.1</version>
+				<version>2.12.4</version>
 				<project-name>jackson-databind</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -303,7 +303,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.frontend.impl.jar!jackson-annotations.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-annotations</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -315,7 +315,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.frontend.impl.jar!jackson-core.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-core</project-name>
 				<project-url>https://github.com/FasterXML/jackson-core</project-url>
 				<licenses>
@@ -327,7 +327,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.frontend.impl.jar!jackson-databind.jar</file-name>
-				<version>2.10.5.1</version>
+				<version>2.12.4</version>
 				<project-name>jackson-databind</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -422,7 +422,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.mercanet.jar!jackson-annotations.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-annotations</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -434,7 +434,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.mercanet.jar!jackson-core.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-core</project-name>
 				<project-url>https://github.com/FasterXML/jackson-core</project-url>
 				<licenses>
@@ -446,7 +446,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.mercanet.jar!jackson-databind.jar</file-name>
-				<version>2.10.5.1</version>
+				<version>2.12.4</version>
 				<project-name>jackson-databind</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -2188,7 +2188,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.petra.json.web.service.client.jar!jackson-annotations.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-annotations</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -2200,7 +2200,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.petra.json.web.service.client.jar!jackson-core.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-core</project-name>
 				<project-url>https://github.com/FasterXML/jackson-core</project-url>
 				<licenses>
@@ -2212,7 +2212,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.petra.json.web.service.client.jar!jackson-databind.jar</file-name>
-				<version>2.10.5.1</version>
+				<version>2.12.4</version>
 				<project-name>jackson-databind</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -3689,7 +3689,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!jackson-core.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-core</project-name>
 				<project-url>https://github.com/FasterXML/jackson-core</project-url>
 				<licenses>
@@ -3929,7 +3929,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!jackson-annotations.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-annotations</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -3941,7 +3941,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!jackson-core.jar</file-name>
-				<version>2.10.3</version>
+				<version>2.12.4</version>
 				<project-name>Jackson-core</project-name>
 				<project-url>https://github.com/FasterXML/jackson-core</project-url>
 				<licenses>
@@ -3953,7 +3953,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!jackson-databind.jar</file-name>
-				<version>2.10.5.1</version>
+				<version>2.12.4</version>
 				<project-name>jackson-databind</project-name>
 				<project-url>http://github.com/FasterXML/jackson</project-url>
 				<licenses>
@@ -6576,7 +6576,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jackson-databind.jar</file-name>
-				<version>2.10.5.1</version>
+				<version>2.12.4</version>
 				<project-name>Jackson Databind</project-name>
 				<project-url>https://github.com/FasterXML/jackson-databind</project-url>
 				<licenses>

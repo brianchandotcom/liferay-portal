@@ -451,6 +451,143 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-109407. View the background color of nodes in the Page Structure when hover on them or they are selected."
+	@priority = "3"
+	test ViewBackgroundColorOfNodesInSelectionPanel {
+		task ("Add a Container element to the page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Grid into the Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+		}
+
+		task ("Add a Heading fragment into the first module of Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "1",
+				fragmentName = "Heading",
+				navTab = "Fragments");
+		}
+
+		task ("Click the editable field of Heading fragment") {
+			PageEditor.clickEditableField(
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Assert the background color of Container node when hover on it") {
+			MouseOver(
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Container')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("Assert the background color of Container node when it is selected") {
+			Click(
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Container')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("Assert the background color of Grid node when hover on it") {
+			MouseOver(
+				key_nodeName = "Grid",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Grid')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("Assert the background color of Grid node when it is selected") {
+			Click(
+				key_nodeName = "Grid",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Grid')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("Assert the background color of Module nodes when hover on them") {
+			for (var position : list "3,6,7") {
+				MouseOver(
+					key_nodeName = "Module",
+					key_position = "${position}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
+
+				AssertCssValue(
+					locator1 = "xpath=(//div[contains(@role,'treeitem')])[${position}]//div[contains(@class,'list-item__node')][contains(.,'Module')]/div[contains(@class,'tree-node')]",
+					locator2 = "background-color",
+					value1 = "rgba(240, 245, 255, 1)");
+			}
+		}
+
+		task ("Assert the background color of Heading node when hover on it") {
+			MouseOver(
+				key_nodeName = "Heading",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Heading')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("Assert the background color of Heading node when it is selected") {
+			Click(
+				key_nodeName = "Heading",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Heading')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("Assert the background color of element-text node when hover on it") {
+			MouseOver(
+				key_nodeName = "element-text",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'element-text')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("Assert the background color of Heading node when it is selected") {
+			Click(
+				key_nodeName = "element-text",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'element-text')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+	}
+
 	@description = "This is a test for LPS-121626. The elements information of Slider is organized in Selection panel."
 	@priority = "5"
 	test ViewElementInfoOrderOfSliderInSelectionPanel {

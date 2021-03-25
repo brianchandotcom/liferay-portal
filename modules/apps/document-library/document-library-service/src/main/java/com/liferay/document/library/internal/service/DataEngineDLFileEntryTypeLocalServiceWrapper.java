@@ -61,6 +61,23 @@ public class DataEngineDLFileEntryTypeLocalServiceWrapper
 	public DLFileEntryType addFileEntryType(
 			long userId, long groupId, long dataDefinitionId,
 			String fileEntryTypeKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, int scope,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFileEntryType fileEntryType = super.addFileEntryType(
+			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
+			descriptionMap, scope, serviceContext);
+
+		_updateDDMStructure(dataDefinitionId);
+
+		return fileEntryType;
+	}
+
+	@Override
+	public DLFileEntryType addFileEntryType(
+			long userId, long groupId, long dataDefinitionId,
+			String fileEntryTypeKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 

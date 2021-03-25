@@ -88,6 +88,7 @@ definition {
 		property custom.properties = "database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
 		property database.types = "mysql";
 		property portal.acceptance = "true";
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompany";
 
 		PortalInstances.openVirtualInstancesAdmin();

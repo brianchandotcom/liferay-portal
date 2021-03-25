@@ -93,7 +93,7 @@ JavaModuleJavaxPortletInitParamTemplatePathCheck | .java | Validates the value o
 JavaModuleServiceProxyFactoryCheck | .java | Finds cases of `ServiceProxyFactory.newServiceTrackedInstance`. |
 JavaModuleServiceReferenceCheck | .java | Finds cases where `@BeanReference` annotation should be used instead of `@ServiceReference` annotation. |
 [JavaModuleTestCheck](checks/java_module_test_check.markdown#javamoduletestcheck) | .java | Checks package names in tests. |
-JavaOSGiReferenceCheck | .java | Performs several checks on classes with `@Component` annotation. |
+[JavaOSGiReferenceCheck](checks/java_osgi_reference_check.markdown#javaosgireferencecheck) | .java | Performs several checks on classes with `@Component` annotation. |
 [JavaPackagePathCheck](checks/java_package_path_check.markdown#javapackagepathcheck) | .java | Checks that the package name matches the file location. |
 JavaParameterAnnotationsCheck | .java | Performs several checks on parameters with annotations. |
 [JavaProcessCallableCheck](checks/java_process_callable_check.markdown#javaprocesscallablecheck) | .java | Checks that a class implementing `ProcessCallable` assigns a `serialVersionUID`. |

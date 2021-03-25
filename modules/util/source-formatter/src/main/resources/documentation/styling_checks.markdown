@@ -102,7 +102,7 @@ NestedIfStatementCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds nested if
 NonbreakingSpaceCheck | | Finds `no break space` (`\u00a0`) characters. |
 NotRequireThisCheck | .java | Finds cases of unnecessary use of `this.`. |
 NumberSuffixCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | Verifies that uppercase `D`, `F`, or `L` is used when denoting Double/Float/Long. |
-OSGiResourceBuilderCheck | .java | Avoid using *Resource.builder. |
+[OSGiResourceBuilderCheck](checks/osgi_resource_builder_check.markdown#osgiresourcebuildercheck) | .java | Avoid using *Resource.builder. |
 [OneStatementPerLineCheck](https://checkstyle.sourceforge.io/config_coding.html#OneStatementPerLine) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that there is only one statement per line. |
 OperatorOperandCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | Verifies that operand do not go over too many lines and make the operator hard to read. |
 OperatorOrderCheck | .java | Verifies that when an operator has a literal string or a number as one of the operands, it is always on the right hand side. |

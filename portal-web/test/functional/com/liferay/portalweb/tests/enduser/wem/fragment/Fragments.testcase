@@ -400,8 +400,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98241. Basic Component Image can be configured."
-	@priority = "3"
+	@description = "This is a test for LPS-98241 and LPS-128667. Basic Component Image can be configured. Interact with image selector of fragment."
+	@priority = "5"
 	test ConfigureBasicComponentImage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -441,10 +441,57 @@ definition {
 			PageEditor.removeFragment(fragmentName = "Image");
 		}
 
-		task ("Add a basic component") {
+		task ("Add an Image fragment to page") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Image");
+		}
+
+		task ("Directly select an Image in Image fragment") {
+			PageEditor.editFragmentImage(
+				fileName = "Document_1.jpg",
+				fragmentName = "Image",
+				id = "image-square");
+		}
+
+		task ("View the selected image is shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.jpg");
+		}
+
+		task ("Directly select another Image in Image fragment") {
+			PageEditor.editFragmentImage(
+				fileName = "Document_2.jpg",
+				fragmentName = "Image",
+				id = "image-square");
+		}
+
+		task ("View the selected image is shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_2.jpg");
+		}
+
+		task ("Clear the selection") {
+			PageEditor.clearSelection(fieldLabel = "Image");
+		}
+
+		task ("View the image placeholder is shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "data:image/png");
+		}
+
+		task ("View the text placeholder is shown in Image field") {
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_contentName = "",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Select Image");
 		}
 
 		task ("Duplicate the fragment") {

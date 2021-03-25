@@ -19,7 +19,6 @@ module.exports = {
 				'babel-runtime': true,
 				'iconv-lite': true,
 				'isomorphic-fetch': true,
-				lodash: ['fp/**/*', 'lodash*'],
 				'lodash-es': true,
 				'loose-envify': true,
 				'node-fetch': true,

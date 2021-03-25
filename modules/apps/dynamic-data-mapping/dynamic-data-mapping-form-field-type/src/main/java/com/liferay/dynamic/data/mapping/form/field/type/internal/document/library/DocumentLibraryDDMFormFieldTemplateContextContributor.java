@@ -243,7 +243,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
 		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+			GetterUtil.getString(
+				portal.getPortletId(httpServletRequest),
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM));
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME,

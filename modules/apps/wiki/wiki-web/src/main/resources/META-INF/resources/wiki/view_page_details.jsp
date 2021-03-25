@@ -367,12 +367,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 
 						<%
-						PortletURL frontPageURL = PortletURLBuilder.create(
-							PortletURLUtil.clone(viewPageURL, renderResponse)
-						).setParameter(
-							"title", wikiGroupServiceConfiguration.frontPageName()
-						).build();
-
 						PortletURL deletePageURL = PortletURLBuilder.create(
 							PortletURLUtil.clone(editPageURL, PortletRequest.ACTION_PHASE, renderResponse)
 						).setActionName(
@@ -386,7 +380,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 							deletePageURL.setParameter(Constants.CMD, Constants.DELETE);
 						}
 
-						deletePageURL.setParameter("redirect", frontPageURL.toString());
+						deletePageURL.setParameter(
+							"redirect",
+							PortletURLBuilder.create(
+								PortletURLUtil.clone(viewPageURL, renderResponse)
+							).setParameter(
+								"title", wikiGroupServiceConfiguration.frontPageName()
+							).buildString());
 						%>
 
 						<liferay-ui:icon-delete

@@ -27,13 +27,12 @@ Definition definition = DefinitionLocalServiceUtil.getDefinition(entry.getDefini
 
 portletDisplay.setShowBackIcon(true);
 
-PortletURL searchRequestURL = PortletURLBuilder.create(
-	reportsEngineDisplayContext.getPortletURL()
-).setMVCPath(
-	"/admin/view.jsp"
-).build();
-
-portletDisplay.setURLBack(searchRequestURL.toString());
+portletDisplay.setURLBack(
+	PortletURLBuilder.create(
+		reportsEngineDisplayContext.getPortletURL()
+	).setMVCPath(
+		"/admin/view.jsp"
+	).buildString());
 
 renderResponse.setTitle(definition.getName(locale));
 %>

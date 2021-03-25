@@ -102,21 +102,21 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 
 				toggleCustomizedViewMessage = LanguageUtil.get(resourceBundle, toggleCustomizedViewMessage);
 
-				PortletURL resetCustomizationViewURL = PortletURLBuilder.create(
+				String resetCustomizationViewURL = PortletURLBuilder.create(
 					PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.ACTION_PHASE)
 				).setActionName(
 					"/layout_admin/reset_customization_view"
-				).build();
+				).buildString();
 
-				String resetCustomizationsViewURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(resetCustomizationViewURL.toString()) + "');}";
+				String resetCustomizationsViewURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(resetCustomizationViewURL) + "');}";
 
-				PortletURL toggleCustomizationViewPortletURL = PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.ACTION_PHASE)
-				).setActionName(
-					"/layout_admin/toggle_customized_view"
-				).build();
-
-				String toggleCustomizationViewURL = HttpUtil.addParameter(toggleCustomizationViewPortletURL.toString(), "customized_view", !layoutTypePortlet.isCustomizedView());
+				String toggleCustomizationViewURL = HttpUtil.addParameter(
+					PortletURLBuilder.create(
+						PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.ACTION_PHASE)
+					).setActionName(
+						"/layout_admin/toggle_customized_view"
+					).buildString(),
+					"customized_view", !layoutTypePortlet.isCustomizedView());
 				%>
 
 				<li class="control-menu-nav-item d-md-block d-none">

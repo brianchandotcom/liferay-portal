@@ -77,13 +77,11 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 			String childGroupsHREF = null;
 
 			if (!childGroups.isEmpty()) {
-				PortletURL childGroupsURL = PortletURLBuilder.create(
+				childGroupsHREF = PortletURLBuilder.create(
 					siteItemSelectorViewDisplayContext.getPortletURL()
 				).setParameter(
 					"groupId", group.getGroupId()
-				).build();
-
-				childGroupsHREF = childGroupsURL.toString();
+				).buildString();
 			}
 			%>
 

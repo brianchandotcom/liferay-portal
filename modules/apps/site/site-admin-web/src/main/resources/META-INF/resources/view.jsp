@@ -24,15 +24,14 @@ Group group = siteAdminDisplayContext.getGroup();
 if (group != null) {
 	portletDisplay.setShowBackIcon(true);
 
-	PortletURL backURL = PortletURLBuilder.createRenderURL(
-		renderResponse
-	).setMVCPath(
-		"/view.jsp"
-	).setParameter(
-		"groupId", group.getParentGroupId()
-	).build();
-
-	portletDisplay.setURLBack(backURL.toString());
+	portletDisplay.setURLBack(
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"groupId", group.getParentGroupId()
+		).buildString());
 
 	renderResponse.setTitle(group.getDescriptiveName(locale));
 }

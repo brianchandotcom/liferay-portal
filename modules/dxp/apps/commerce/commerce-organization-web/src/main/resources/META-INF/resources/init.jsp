@@ -49,8 +49,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.users.admin.configuration.UserFileUploadsConfiguration" %>
 
-<%@ page import="java.util.Map" %>
-
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />

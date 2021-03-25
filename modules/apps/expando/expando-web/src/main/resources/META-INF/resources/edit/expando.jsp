@@ -88,17 +88,17 @@ if (expandoColumn != null) {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "edit-x", new Object[] {expandoColumn.getName()}, false), null);
 }
 else {
-	PortletURL newCustomFieldURL = PortletURLBuilder.createRenderURL(
-		renderResponse
-	).setMVCPath(
-		"/edit/select_field_type.jsp"
-	).setRedirect(
-		redirect
-	).setParameter(
-		"modelResource", modelResource
-	).build();
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-custom-field"), newCustomFieldURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(
+		request, LanguageUtil.get(request, "new-custom-field"),
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/edit/select_field_type.jsp"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"modelResource", modelResource
+		).buildString());
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "new-x", new Object[] {propertyDisplayType}), null);
 }

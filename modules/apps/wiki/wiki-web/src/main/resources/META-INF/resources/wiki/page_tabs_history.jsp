@@ -20,22 +20,20 @@
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-PortletURL viewPageURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCRenderCommandName(
-	"/wiki/view"
-).setParameter(
-	"nodeName", node.getName()
-).setParameter(
-	"title", wikiPage.getTitle()
-).build();
-
 PortletURL viewPageHistoryURL = PortletURLBuilder.createRenderURL(
 	renderResponse
 ).setMVCRenderCommandName(
 	"/wiki/view_page_history"
 ).setRedirect(
-	viewPageURL.toString()
+	PortletURLBuilder.createRenderURL(
+		renderResponse
+	).setMVCRenderCommandName(
+		"/wiki/view"
+	).setParameter(
+		"nodeName", node.getName()
+	).setParameter(
+		"title", wikiPage.getTitle()
+	).buildString()
 ).setParameter(
 	"nodeId", String.valueOf(node.getNodeId())
 ).setParameter(

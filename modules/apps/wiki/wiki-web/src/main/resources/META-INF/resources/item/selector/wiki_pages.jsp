@@ -63,13 +63,13 @@ else {
 </style>
 
 <%
-PortletURL searchBaseURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-).setParameter(
-	"resetCur", Boolean.TRUE.toString()
-).build();
-
-String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPortletResponse.getNamespace() + "keywords");
+String searchURL = HttpUtil.removeParameter(
+	PortletURLBuilder.create(
+		PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+	).setParameter(
+		"resetCur", Boolean.TRUE.toString()
+	).buildString(),
+	liferayPortletResponse.getNamespace() + "keywords");
 %>
 
 <clay:management-toolbar

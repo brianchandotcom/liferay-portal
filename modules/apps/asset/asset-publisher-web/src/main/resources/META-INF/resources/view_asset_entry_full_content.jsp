@@ -28,13 +28,11 @@ redirect = PortalUtil.escapeRedirect(redirect);
 boolean showBackURL = GetterUtil.getBoolean(request.getAttribute("view.jsp-showBackURL"));
 
 if (Validator.isNull(redirect)) {
-	PortletURL portletURL = PortletURLBuilder.createRenderURL(
+	redirect = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setMVCPath(
 		"/view.jsp"
-	).build();
-
-	redirect = portletURL.toString();
+	).buildString();
 }
 
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");

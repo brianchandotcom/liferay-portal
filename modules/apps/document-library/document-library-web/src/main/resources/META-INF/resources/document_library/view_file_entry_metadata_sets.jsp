@@ -56,7 +56,7 @@ DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayCont
 				String rowHREF = StringPool.BLANK;
 
 				if (DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE)) {
-					PortletURL rowURL = PortletURLBuilder.createRenderURL(
+					rowHREF = PortletURLBuilder.createRenderURL(
 						renderResponse
 					).setMVCRenderCommandName(
 						"/document_library/edit_ddm_structure"
@@ -64,9 +64,7 @@ DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayCont
 						currentURL
 					).setParameter(
 						"ddmStructureId", ddmStructure.getStructureId()
-					).build();
-
-					rowHREF = rowURL.toString();
+					).buildString();
 				}
 				%>
 

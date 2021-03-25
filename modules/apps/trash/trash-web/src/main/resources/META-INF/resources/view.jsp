@@ -215,15 +215,13 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 										String viewRootContentURLString = null;
 
 										if (rootTrashRenderer != null) {
-											PortletURL viewContentURL = PortletURLBuilder.createRenderURL(
+											viewRootContentURLString = PortletURLBuilder.createRenderURL(
 												renderResponse
 											).setMVCPath(
 												"/view_content.jsp"
 											).setParameter(
 												"trashEntryId", rootEntry.getEntryId()
-											).build();
-
-											viewRootContentURLString = viewContentURL.toString();
+											).buildString();
 										}
 										%>
 

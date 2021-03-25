@@ -49,7 +49,7 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
-	PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+	redirect = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setMVCRenderCommandName(
 		"/users_admin/edit_user"
@@ -57,9 +57,7 @@ if (Validator.isNull(redirect)) {
 		"p_u_i_d", selUserId
 	).setParameter(
 		"backURL", backURL
-	).build();
-
-	redirect = redirectURL.toString();
+	).buildString();
 }
 
 redirect = HttpUtil.addParameter(redirect, liferayPortletResponse.getNamespace() + "screenNavigationCategoryKey", screenNavigationCategoryKey);

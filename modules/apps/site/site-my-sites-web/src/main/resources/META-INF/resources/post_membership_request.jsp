@@ -20,13 +20,11 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
-	PortletURL portletURL = PortletURLBuilder.createRenderURL(
+	redirect = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setParameter(
 		"tabs1", "available-sites"
-	).build();
-
-	redirect = portletURL.toString();
+	).buildString();
 }
 
 long groupId = ParamUtil.getLong(request, "groupId");

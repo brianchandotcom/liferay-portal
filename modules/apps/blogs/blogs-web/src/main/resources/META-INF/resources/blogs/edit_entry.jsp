@@ -467,15 +467,15 @@ if (entry != null) {
 
 <%
 if (entry != null) {
-	PortletURL portletURL = PortletURLBuilder.createRenderURL(
-		renderResponse
-	).setMVCRenderCommandName(
-		"/blogs/view_entry"
-	).setParameter(
-		"entryId", entry.getEntryId()
-	).build();
-
-	PortalUtil.addPortletBreadcrumbEntry(request, BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(
+		request, BlogsEntryUtil.getDisplayTitle(resourceBundle, entry),
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/blogs/view_entry"
+		).setParameter(
+			"entryId", entry.getEntryId()
+		).buildString());
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }

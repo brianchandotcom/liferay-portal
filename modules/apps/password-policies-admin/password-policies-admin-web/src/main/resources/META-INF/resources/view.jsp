@@ -101,7 +101,7 @@ PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getP
 				if (passwordPolicyDisplayContext.hasPermission(ActionKeys.UPDATE, passwordPolicy.getPasswordPolicyId())) {
 					PortletURL redirectURL = passwordPolicySearchContainer.getIteratorURL();
 
-					PortletURL rowURL = PortletURLBuilder.createRenderURL(
+					rowHREF = PortletURLBuilder.createRenderURL(
 						renderResponse
 					).setMVCPath(
 						"/edit_password_policy.jsp"
@@ -109,9 +109,7 @@ PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getP
 						redirectURL.toString()
 					).setParameter(
 						"passwordPolicyId", passwordPolicy.getPasswordPolicyId()
-					).build();
-
-					rowHREF = rowURL.toString();
+					).buildString();
 				}
 				%>
 

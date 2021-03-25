@@ -17,15 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
+String redirect = PortletURLBuilder.createRenderURL(
 	renderResponse
 ).setMVCRenderCommandName(
 	"/configuration_admin/view_configuration_screen"
 ).setParameter(
 	"configurationScreenKey", "2-synced-contact-data"
-).build();
-
-String redirect = portletURL.toString();
+).buildString();
 
 AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
 AnalyticsUsersManager analyticsUsersManager = (AnalyticsUsersManager)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_USERS_MANAGER);

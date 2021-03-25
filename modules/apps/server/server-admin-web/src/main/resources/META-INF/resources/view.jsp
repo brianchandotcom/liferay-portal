@@ -19,7 +19,6 @@
 <%
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
-String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <portlet:renderURL var="redirectURL">
@@ -27,7 +26,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	<portlet:param name="tabs1" value="<%= tabs1 %>" />
 	<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
 	<portlet:param name="delta" value="<%= String.valueOf(delta) %>" />
-	<portlet:param name="keywords" value="<%= keywords %>" />
+	<portlet:param name="keywords" value='<%= ParamUtil.getString(request, "keywords") %>' />
 </portlet:renderURL>
 
 <aui:form

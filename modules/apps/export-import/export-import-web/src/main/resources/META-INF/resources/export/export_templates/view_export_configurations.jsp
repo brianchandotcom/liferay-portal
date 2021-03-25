@@ -19,13 +19,12 @@
 <%
 portletDisplay.setShowBackIcon(true);
 
-PortletURL exportProcessesURL = PortletURLBuilder.create(
-	PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.EXPORT, PortletRequest.RENDER_PHASE)
-).setMVCPath(
-	"/export/view_export_layouts.jsp"
-).build();
-
-portletDisplay.setURLBack(exportProcessesURL.toString());
+portletDisplay.setURLBack(
+	PortletURLBuilder.create(
+		PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.EXPORT, PortletRequest.RENDER_PHASE)
+	).setMVCPath(
+		"/export/view_export_layouts.jsp"
+	).buildString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "export-templates"));
 %>

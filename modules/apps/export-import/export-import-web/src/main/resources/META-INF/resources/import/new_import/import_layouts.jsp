@@ -24,13 +24,12 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(groupId, ExportImpor
 
 portletDisplay.setShowBackIcon(true);
 
-PortletURL importProcessesURL = PortletURLBuilder.create(
-	PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.IMPORT, PortletRequest.RENDER_PHASE)
-).setMVCPath(
-	"/import/view_import_layouts.jsp"
-).build();
-
-portletDisplay.setURLBack(importProcessesURL.toString());
+portletDisplay.setURLBack(
+	PortletURLBuilder.create(
+		PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.IMPORT, PortletRequest.RENDER_PHASE)
+	).setMVCPath(
+		"/import/view_import_layouts.jsp"
+	).buildString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "new-import-process"));
 %>

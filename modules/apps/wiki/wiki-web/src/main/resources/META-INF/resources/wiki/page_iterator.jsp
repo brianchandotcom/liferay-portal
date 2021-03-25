@@ -56,13 +56,13 @@ else if (navigation.equals("history")) {
 		PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), portletURL.toString());
 	}
 
-	PortletURL viewPageHistoryURL = PortletURLBuilder.create(
-		PortletURLUtil.clone(portletURL, renderResponse)
-	).setMVCRenderCommandName(
-		"/wiki/view_page_activities"
-	).build();
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history"), viewPageHistoryURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(
+		request, LanguageUtil.get(request, "history"),
+		PortletURLBuilder.create(
+			PortletURLUtil.clone(portletURL, renderResponse)
+		).setMVCRenderCommandName(
+			"/wiki/view_page_activities"
+		).buildString());
 }
 else if (navigation.equals("incoming-links")) {
 	if (wikiPage != null) {

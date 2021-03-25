@@ -20,13 +20,11 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
-	PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+	redirect = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setMVCPath(
 		"/admin/view.jsp"
-	).build();
-
-	redirect = redirectURL.toString();
+	).buildString();
 }
 
 String historyKey = ParamUtil.getString(request, "historyKey");

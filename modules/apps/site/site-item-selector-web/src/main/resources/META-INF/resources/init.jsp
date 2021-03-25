@@ -43,8 +43,6 @@ page import="com.liferay.site.util.GroupURLProvider" %>
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

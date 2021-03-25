@@ -45,13 +45,13 @@ String bundleName = GetterUtil.getString(headers.get(Constants.BUNDLE_NAME));
 renderResponse.setTitle(bundleName);
 
 if (Validator.isNull(app)) {
-	PortletURL viewURL = PortletURLBuilder.createRenderURL(
-		renderResponse
-	).setMVCPath(
-		"/view.jsp"
-	).build();
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), viewURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(
+		request, LanguageUtil.get(request, "app-manager"),
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/view.jsp"
+		).buildString());
 
 	PortalUtil.addPortletBreadcrumbEntry(request, bundleName, null);
 }

@@ -47,8 +47,7 @@ page import="com.liferay.site.my.sites.web.internal.servlet.taglib.clay.SiteVert
 <%@ page import="java.util.List" %><%@
 page import="java.util.Objects" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.WindowState" %>
 
 <liferay-frontend:defineObjects />
 

@@ -59,7 +59,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 		<c:if test="<%= showAddPollIcon %>">
 
 			<%
-			PortletURL editQuestionURL = PortletURLBuilder.create(
+			String editQuestionURL = PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), PollsPortletKeys.POLLS, 0, plid, PortletRequest.RENDER_PHASE)
 			).setRedirect(
 				redirectURL.toString()
@@ -71,9 +71,9 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				"showHeader", Boolean.FALSE.toString()
 			).setWindowState(
 				LiferayWindowState.POP_UP
-			).build();
+			).buildString();
 
-			String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "new-poll")) + "', uri:'" + HtmlUtil.escapeJS(editQuestionURL.toString()) + "'});";
+			String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "new-poll")) + "', uri:'" + HtmlUtil.escapeJS(editQuestionURL) + "'});";
 			%>
 
 			<liferay-ui:icon
@@ -89,7 +89,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 		<c:if test="<%= showEditPollIcon %>">
 
 			<%
-			PortletURL editQuestionURL = PortletURLBuilder.create(
+			String editQuestionURL = PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(request, PollsPortletKeys.POLLS, PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
 				"/polls/edit_question"
@@ -103,9 +103,9 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				"showHeader", Boolean.FALSE.toString()
 			).setWindowState(
 				LiferayWindowState.POP_UP
-			).build();
+			).buildString();
 
-			String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + HtmlUtil.escapeJS(ResourceActionsUtil.getModelResource(locale, PollsQuestion.class.getName())) + "', uri:'" + HtmlUtil.escapeJS(editQuestionURL.toString()) + "'});";
+			String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + HtmlUtil.escapeJS(ResourceActionsUtil.getModelResource(locale, PollsQuestion.class.getName())) + "', uri:'" + HtmlUtil.escapeJS(editQuestionURL) + "'});";
 			%>
 
 			<liferay-ui:icon

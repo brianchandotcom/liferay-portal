@@ -42,15 +42,15 @@ request.setAttribute("view.jsp-filterPerOrganization", false);
 		else {
 			cssClass = "btn-secondary " + cssClass;
 		}
-
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
-			"title", LanguageUtil.get(request, curViewMode)
-		).build();
 	%>
 
 		<aui:a
 			cssClass="<%= cssClass %>"
-			data="<%= data %>"
+			data='<%=
+				HashMapBuilder.<String, Object>put(
+					"title", LanguageUtil.get(request, curViewMode)
+				).build()
+			%>'
 			href='<%=
 				PortletURLBuilder.create(
 					commerceOrganizationDisplayContext.getPortletURL()

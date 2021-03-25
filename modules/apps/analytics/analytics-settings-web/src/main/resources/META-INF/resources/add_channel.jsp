@@ -17,15 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
+String redirect = PortletURLBuilder.createRenderURL(
 	renderResponse
 ).setMVCRenderCommandName(
 	"/configuration_admin/view_configuration_screen"
 ).setParameter(
 	"configurationScreenKey", "1-synced-sites"
-).build();
-
-String redirect = portletURL.toString();
+).buildString();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", redirect));

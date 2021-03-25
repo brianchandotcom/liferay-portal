@@ -67,15 +67,13 @@ if (message != null) {
 boolean allowPingbacks = PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(message, request, "allowPingbacks", true);
 
 if (Validator.isNull(redirect)) {
-	PortletURL viewMessageURL = PortletURLBuilder.createRenderURL(
+	redirect = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setMVCRenderCommandName(
 		"/message_boards/view_message"
 	).setParameter(
 		"messageId", messageId
-	).build();
-
-	redirect = viewMessageURL.toString();
+	).buildString();
 }
 
 if (curParentMessage != null) {

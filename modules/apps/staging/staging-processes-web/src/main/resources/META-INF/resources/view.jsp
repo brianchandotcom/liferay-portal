@@ -32,13 +32,12 @@ boolean showStagingConfiguration = ParamUtil.getBoolean(request, "showStagingCon
 		if (group.isStaged() || group.hasLocalOrRemoteStagingGroup()) {
 			portletDisplay.setShowBackIcon(true);
 
-			PortletURL stagingProcessesURL = PortletURLBuilder.create(
-				PortalUtil.getControlPanelPortletURL(request, StagingProcessesPortletKeys.STAGING_PROCESSES, PortletRequest.RENDER_PHASE)
-			).setMVCPath(
-				"/view.jsp"
-			).build();
-
-			portletDisplay.setURLBack(stagingProcessesURL.toString());
+			portletDisplay.setURLBack(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(request, StagingProcessesPortletKeys.STAGING_PROCESSES, PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/view.jsp"
+				).buildString());
 		}
 		%>
 

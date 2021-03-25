@@ -22,15 +22,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
 
 if (Validator.isNull(redirect) && Validator.isNull(backURL)) {
-	PortletURL portletURL = PortletURLBuilder.createRenderURL(
+	backURL = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setMVCPath(
 		"/view.jsp"
 	).setParameter(
 		"groupId", groupId
-	).build();
-
-	backURL = portletURL.toString();
+	).buildString();
 }
 
 long ruleGroupId = ParamUtil.getLong(request, "ruleGroupId");

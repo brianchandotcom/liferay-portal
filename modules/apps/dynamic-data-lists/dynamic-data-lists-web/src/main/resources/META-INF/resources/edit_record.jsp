@@ -296,15 +296,15 @@ else {
 </aui:script>
 
 <%
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCPath(
-	"/view_record_set.jsp"
-).setParameter(
-	"recordSetId", String.valueOf(recordSetId)
-).build();
-
-PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), portletURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(
+	request, recordSet.getName(locale),
+	PortletURLBuilder.createRenderURL(
+		renderResponse
+	).setMVCPath(
+		"/view_record_set.jsp"
+	).setParameter(
+		"recordSetId", String.valueOf(recordSetId)
+	).buildString());
 
 if (record != null) {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false), currentURL);

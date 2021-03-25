@@ -67,7 +67,7 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 			String rowHREF = StringPool.BLANK;
 
 			if (DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE)) {
-				PortletURL rowURL = PortletURLBuilder.createRenderURL(
+				rowHREF = PortletURLBuilder.createRenderURL(
 					renderResponse
 				).setMVCPath(
 					"/edit_data_definition.jsp"
@@ -75,9 +75,7 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 					currentURL
 				).setParameter(
 					"ddmStructureId", ddmStructure.getStructureId()
-				).build();
-
-				rowHREF = rowURL.toString();
+				).buildString();
 			}
 
 			row.setData(

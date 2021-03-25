@@ -59,32 +59,30 @@ PortletURL viewPageDetailsURL = PortletURLBuilder.createRenderURL(
 	"title", wikiPage.getTitle()
 ).build();
 
-PortletURL viewPageHistoryURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(viewPageDetailsURL, renderResponse)
-).setMVCRenderCommandName(
-	"/wiki/view_page_activities"
-).build();
-
-PortletURL viewPageIncomingLinksURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(viewPageDetailsURL, renderResponse)
-).setMVCRenderCommandName(
-	"/wiki/view_page_incoming_links"
-).build();
-
-PortletURL viewPageOutgoingLinksURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(viewPageDetailsURL, renderResponse)
-).setMVCRenderCommandName(
-	"/wiki/view_page_outgoing_links"
-).build();
-
-PortletURL viewPageAttachmentsURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(viewPageDetailsURL, renderResponse)
-).setMVCRenderCommandName(
-	"/wiki/view_page_attachments"
-).build();
-
 String[] tabs1Names = {"details", "history", "incoming-links", "outgoing-links", "attachments"};
-String[] tabs1URLs = {viewPageDetailsURL.toString(), viewPageHistoryURL.toString(), viewPageIncomingLinksURL.toString(), viewPageOutgoingLinksURL.toString(), viewPageAttachmentsURL.toString()};
+String[] tabs1URLs = {
+	viewPageDetailsURL.toString(),
+	PortletURLBuilder.create(
+		PortletURLUtil.clone(viewPageDetailsURL, renderResponse)
+	).setMVCRenderCommandName(
+		"/wiki/view_page_activities"
+	).buildString(),
+	PortletURLBuilder.create(
+		PortletURLUtil.clone(viewPageDetailsURL, renderResponse)
+	).setMVCRenderCommandName(
+		"/wiki/view_page_incoming_links"
+	).buildString(),
+	PortletURLBuilder.create(
+		PortletURLUtil.clone(viewPageDetailsURL, renderResponse)
+	).setMVCRenderCommandName(
+		"/wiki/view_page_outgoing_links"
+	).buildString(),
+	PortletURLBuilder.create(
+		PortletURLUtil.clone(viewPageDetailsURL, renderResponse)
+	).setMVCRenderCommandName(
+		"/wiki/view_page_attachments"
+	).buildString()
+};
 
 if (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) {
 	tabs1Names = ArrayUtil.append(new String[] {"content"}, tabs1Names);

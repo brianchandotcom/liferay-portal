@@ -70,7 +70,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				String editURL = StringPool.BLANK;
 
 				if (JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE)) {
-					PortletURL editArticleURL = PortletURLBuilder.createRenderURL(
+					editURL = PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
 						"/edit_article.jsp"
@@ -86,9 +86,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						"articleId", curArticle.getArticleId()
 					).setParameter(
 						"version", curArticle.getVersion()
-					).build();
-
-					editURL = editArticleURL.toString();
+					).buildString();
 				}
 				%>
 

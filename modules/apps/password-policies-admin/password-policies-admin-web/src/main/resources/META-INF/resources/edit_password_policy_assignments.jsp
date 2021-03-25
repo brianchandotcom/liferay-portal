@@ -40,13 +40,13 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 
 renderResponse.setTitle(passwordPolicy.getName());
 
-PortletURL homeURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCPath(
-	"/view.jsp"
-).build();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "password-policies"), homeURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(
+	request, LanguageUtil.get(request, "password-policies"),
+	PortletURLBuilder.createRenderURL(
+		renderResponse
+	).setMVCPath(
+		"/view.jsp"
+	).buildString());
 
 PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 

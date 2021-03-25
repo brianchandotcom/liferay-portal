@@ -20,20 +20,16 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
-	PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+	redirect = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setMVCPath(
 		"/admin/view.jsp"
-	).build();
-
-	redirect = redirectURL.toString();
+	).buildString();
 }
 
 KaleoFormsViewRecordsDisplayContext kaleoFormsViewRecordsDisplayContext = kaleoFormsAdminDisplayContext.getKaleoFormsViewRecordsDisplayContext();
 
 KaleoProcess kaleoProcess = kaleoFormsViewRecordsDisplayContext.getKaleoProcess();
-
-boolean hasSubmitPermission = KaleoProcessPermission.contains(permissionChecker, kaleoProcess, ActionKeys.SUBMIT);
 %>
 
 <clay:navigation-bar
@@ -142,7 +138,7 @@ boolean hasSubmitPermission = KaleoProcessPermission.contains(permissionChecker,
 				}
 				%>
 
-				<c:if test="<%= hasSubmitPermission %>">
+				<c:if test="<%= KaleoProcessPermission.contains(permissionChecker, kaleoProcess, ActionKeys.SUBMIT) %>">
 					<liferay-ui:search-container-column-status
 						name="status"
 						status="<%= recordVersion.getStatus() %>"

@@ -92,7 +92,7 @@ if (layout != null) {
 				String rowHREF = StringPool.BLANK;
 
 				if (DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.UPDATE)) {
-					PortletURL rowURL = PortletURLBuilder.createRenderURL(
+					rowHREF = PortletURLBuilder.createRenderURL(
 						renderResponse
 					).setMVCPath(
 						"/edit_template.jsp"
@@ -108,9 +108,7 @@ if (layout != null) {
 						"type", template.getType()
 					).setParameter(
 						"structureAvailableFields", liferayPortletResponse.getNamespace() + "getAvailableFields"
-					).build();
-
-					rowHREF = rowURL.toString();
+					).buildString();
 				}
 				%>
 

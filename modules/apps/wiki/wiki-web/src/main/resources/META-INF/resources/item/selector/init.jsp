@@ -65,8 +65,6 @@ page import="com.liferay.wiki.web.internal.item.selector.view.display.context.Wi
 page import="java.util.Date" %><%@
 page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

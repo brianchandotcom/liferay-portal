@@ -20,13 +20,11 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
-	PortletURL portletURL = PortletURLBuilder.createRenderURL(
+	redirect = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setMVCPath(
 		"/view_membership_requests.jsp"
-	).build();
-
-	redirect = portletURL.toString();
+	).buildString();
 }
 
 long membershipRequestId = ParamUtil.getLong(request, "membershipRequestId");

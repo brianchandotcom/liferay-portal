@@ -394,8 +394,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		actionURL.setParameter(
 			"dataDefinitionId", String.valueOf(ddmStructure.getStructureId()));
 		actionURL.setParameter("keywords", _getKeywords());
-		actionURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
 		actionURL.setParameter("navigation", "file_entry_metadata_sets");
 
 		return actionURL;

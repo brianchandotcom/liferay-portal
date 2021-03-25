@@ -50,4 +50,13 @@ definition {
 			optionName = "Color");
 	}
 
+	@description = "This is a test for COMMERCE-6280. RemoveAnOption"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAnOption {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6280 RemoveAnOption
+	}
+
 }

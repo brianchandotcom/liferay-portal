@@ -14,18 +14,40 @@
 
 import ClayLayout from '@clayui/layout';
 import {Context as ModalContext} from '@clayui/modal';
-import {Pages, useForm, useFormState} from 'dynamic-data-mapping-form-renderer';
+import {
+	Pages,
+	useConfig,
+	useForm,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
 import fieldDelete from 'dynamic-data-mapping-form-renderer/js/core/thunks/fieldDelete.es';
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 
+import MultiPanelSidebar from '../js/components/sidebar/MultiPanelSidebar.es';
+import initializeSidebarConfig from '../js/components/sidebar/initializeSidebarConfig.es';
 import DragLayer from '../js/drag-and-drop/DragLayer.es';
 
 const DataEngineFormBuilder = () => {
 	const dispatch = useForm();
 	const [{onClose}, modalDispatch] = useContext(ModalContext);
+	const {
+		rules,
+		sidebarOpen,
+		sidebarPanelId,
+		sidebarPanels: initialSidebarPanels,
+	} = useFormState();
 
-	const {rules} = useFormState();
+	const {portletNamespace} = useConfig();
+
+	const {panels, sidebarPanels, sidebarVariant} = useMemo(
+		() =>
+			initializeSidebarConfig({
+				portletNamespace,
+				sidebarPanels: initialSidebarPanels,
+			}),
+		[initialSidebarPanels, portletNamespace]
+	);
 
 	return (
 		<div className="data-engine-form-builder ddm-form-builder pb-5">
@@ -64,6 +86,32 @@ const DataEngineFormBuilder = () => {
 									label: Liferay.Language.get('delete'),
 								},
 							]}
+						/>
+						<MultiPanelSidebar
+							createPlugin={({
+								panel,
+								sidebarOpen,
+								sidebarPanelId,
+							}) => ({
+								dispatch,
+								panel,
+								sidebarOpen,
+								sidebarPanelId,
+							})}
+							currentPanelId={sidebarPanelId}
+							onChange={({sidebarOpen, sidebarPanelId}) =>
+								dispatch({
+									payload: {
+										sidebarOpen,
+										sidebarPanelId,
+									},
+									type: 'SWITCH_SIDEBAR_PANEL',
+								})
+							}
+							open={sidebarOpen}
+							panels={panels}
+							sidebarPanels={sidebarPanels}
+							variant={sidebarVariant}
 						/>
 					</div>
 				</div>

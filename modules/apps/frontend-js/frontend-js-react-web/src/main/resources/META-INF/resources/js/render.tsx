@@ -36,11 +36,23 @@ let counter = 0;
  *
  * @see https://reactjs.org/docs/react-dom.html#render
  */
-export default function render(renderable, renderData, container) {
-	if (!Liferay.SPA || Liferay.SPA.app) {
+export default function render(
+	renderable:
+		| NonNullable<React.ReactNode>
+		| NonNullable<React.ForwardRefExoticComponent<any>>
+		| (() => NonNullable<React.ReactNode>),
+	renderData: {
+		componentId?: string;
+		portletId?: string;
+		[key: string]: unknown;
+	},
+	container: Element | DocumentFragment
+) {
+	if (!(window.Liferay as any).SPA || (window.Liferay as any).SPA.app) {
 		const {portletId} = renderData;
 		const spritemap =
-			Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
+			(window.Liferay as any).ThemeDisplay.getPathThemeImages() +
+			'/clay/icons.svg';
 
 		let {componentId} = renderData;
 
@@ -50,7 +62,7 @@ export default function render(renderable, renderData, container) {
 			componentId = `__UNNAMED_COMPONENT__${portletId}__${counter++}`;
 		}
 
-		Liferay.component(
+		(window.Liferay as any).component(
 			componentId,
 			{
 				destroy: () => {
@@ -63,10 +75,10 @@ export default function render(renderable, renderData, container) {
 			}
 		);
 
-		const Component =
+		const Component: React.ElementType =
 			typeof renderable === 'function' ||
-			renderable.$$typeof === Symbol.for('react.forward_ref')
-				? renderable
+			(renderable as any).$$typeof === Symbol.for('react.forward_ref')
+				? (renderable as any)
 				: null;
 
 		// eslint-disable-next-line @liferay/portal/no-react-dom-render
@@ -80,7 +92,7 @@ export default function render(renderable, renderData, container) {
 		);
 	}
 	else {
-		Liferay.once('SPAReady', () => {
+		(window.Liferay as any).once('SPAReady', () => {
 			render(renderable, renderData, container);
 		});
 	}

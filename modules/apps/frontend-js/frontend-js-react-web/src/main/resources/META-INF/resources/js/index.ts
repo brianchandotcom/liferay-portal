@@ -14,10 +14,7 @@
 
 import process from 'process';
 
-// @ts-ignore
-
-export {default as render} from './render.es';
-
+export {default as render} from './render';
 export {default as useEventListener} from './hooks/useEventListener';
 export {default as useInterval} from './hooks/useInterval';
 export {default as useIsMounted} from './hooks/useIsMounted';

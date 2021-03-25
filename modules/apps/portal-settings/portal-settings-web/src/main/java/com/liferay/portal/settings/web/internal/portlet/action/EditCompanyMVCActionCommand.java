@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
@@ -62,6 +61,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -329,13 +329,44 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		String newCompanyLanguageIds = unicodeProperties.getProperty(
 			PropsKeys.LOCALES);
 
+		String[] removedLanguageIds = ArrayUtil.filter(
+			LocaleUtil.toLanguageIds(
+				LanguageUtil.getCompanyAvailableLocales(companyId)),
+			languageId -> !StringUtil.contains(
+				newCompanyLanguageIds, languageId, StringPool.COMMA));
+
+		if (ArrayUtil.isEmpty(removedLanguageIds)) {
+			return;
+		}
+
 		for (Group group : groups) {
-			if (group.getType() == GroupConstants.TYPE_SITE_OPEN) {
+			if (group.isSite()) {
 				UnicodeProperties groupTypeSettingsUnicodeProperties =
 					group.getTypeSettingsProperties();
 
+				boolean inheritLocales = GetterUtil.getBoolean(
+					groupTypeSettingsUnicodeProperties.getProperty(
+						"inheritLocales"),
+					true);
+
+				if (inheritLocales) {
+					continue;
+				}
+
+				String[] groupLocales = GetterUtil.getStringValues(
+					groupTypeSettingsUnicodeProperties.getProperty(
+						PropsKeys.LOCALES));
+
+				for (String removedLanguageId : removedLanguageIds) {
+					if (ArrayUtil.contains(groupLocales, removedLanguageId)) {
+						groupLocales = ArrayUtil.remove(
+							groupLocales, removedLanguageId);
+					}
+				}
+
 				groupTypeSettingsUnicodeProperties.setProperty(
-					PropsKeys.LOCALES, newCompanyLanguageIds);
+					PropsKeys.LOCALES,
+					StringUtil.merge(groupLocales, StringPool.COMMA));
 
 				_groupLocalService.updateGroup(group);
 			}

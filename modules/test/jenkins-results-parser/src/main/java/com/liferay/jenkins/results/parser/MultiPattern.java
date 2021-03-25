@@ -64,6 +64,16 @@ public class MultiPattern {
 		return null;
 	}
 
+	public boolean matchesAll(String... inputs) {
+		for (String input : inputs) {
+			if (matches(input) == null) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private final List<Pattern> _patterns;
 
 }

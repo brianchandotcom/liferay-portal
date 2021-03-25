@@ -611,7 +611,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			try {
 				JarUtil.downloadAndInstallJar(
 					new URL(url),
-					Paths.get(PropsValues.LIFERAY_LIB_GLOBAL_DIR, name),
+					Paths.get(PropsValues.LIFERAY_LIB_PORTAL_DIR, name),
 					(URLClassLoader)classLoader);
 			}
 			catch (Exception exception) {

@@ -54,7 +54,7 @@ public class CKEditorBBCodeConfigContributor
 			"enterMode", 2
 		).put(
 			"extraPlugins",
-			"a11yhelpbtn,bbcode,itemselector,sourcearea,wikilink"
+			"a11yhelpbtn,bbcode,itemselector,sourcearea"
 		).put(
 			"fontSize_defaultLabel", "14"
 		).put(

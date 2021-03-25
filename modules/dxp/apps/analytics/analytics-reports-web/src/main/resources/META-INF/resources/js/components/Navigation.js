@@ -98,26 +98,25 @@ export default function Navigation({
 			}
 		});
 
-		allSettled(requests).then((data) => {
-			let addWarning = false;
+		let metrics = {};
 
-			const metrics = data.reduce((result, {status, value}) => {
-				if (status === 'fulfilled') {
-					return {...result, ...value};
+		allSettled(requests)
+			.then((data) => {
+				for (var i = 0; i < data.length; i++) {
+					if (data[i].status === 'fulfilled') {
+						metrics = {
+							...metrics,
+							...data[i].value,
+						};
+					}
+					else {
+						dispatch({type: 'ADD_WARNING'});
+					}
 				}
-				else {
-					addWarning = true;
-
-					return result;
-				}
-			}, {});
-
-			if (addWarning) {
-				dispatch({type: 'ADD_WARNING'});
-			}
-
-			dispatch({...metrics, type: 'SET_METRICS'});
-		});
+			})
+			.then(() => {
+				dispatch({payload: metrics, type: 'SET_METRICS'});
+			});
 	}, [dispatch, endpoints, namespace, plid, timeSpanKey, timeSpanOffset]);
 
 	const handleCurrentPage = useCallback((currentPage) => {

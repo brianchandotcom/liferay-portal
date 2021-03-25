@@ -17,10 +17,5 @@ module.exports = {
 		bundler: {
 			ignore: ['!**/*.scss.js', '**/__tests__/*.js'],
 		},
-		dependencies: [
-			'data-engine-taglib',
-			'dynamic-data-mapping-form-builder',
-			'dynamic-data-mapping-form-renderer',
-		],
 	},
 };

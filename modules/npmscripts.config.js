@@ -349,6 +349,15 @@ module.exports = {
 				'source-map': true,
 			},
 		},
+		dependencies: [
+			'asset-taglib',
+			'commerce-frontend-taglib',
+			'commerce-product-options-web',
+			'data-engine-taglib',
+			'dynamic-data-mapping-form-builder',
+			'dynamic-data-mapping-form-field-type',
+			'dynamic-data-mapping-form-renderer',
+		],
 	},
 	federation: {
 		mode: 'disabled',

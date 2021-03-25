@@ -48,6 +48,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		Refresh();
+
 		Click(locator1 = "ABTest#AB_TEST_BUTTON");
 
 		AnalyticsCloud.teardownAnalyticsCloud();
@@ -149,6 +151,8 @@ definition {
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}
+
+		Refresh();
 
 		ABTest.terminateTest();
 	}

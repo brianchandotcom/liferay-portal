@@ -41,6 +41,19 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _addOrganizationToSite {
+		Variables.assertDefined(parameterList = "${groupId},${organizationId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/organization/add-group-organizations/group-id/${groupId}/organization-ids/${organizationId} \
+				-u test@liferay.com:test
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _assignUserToOrganization {
 		Variables.assertDefined(parameterList = "${organizationId},${userId}");
 

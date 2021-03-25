@@ -16,6 +16,36 @@ definition {
 			parentOrganizationId = "${parentOrganizationId}");
 	}
 
+	macro addOrganizationToDepot {
+		Variables.assertDefined(parameterList = "${organizationName},${depotName}");
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = "${organizationName}"
+		);
+
+		var depotId = JSONUserSetter.setGroupId(
+			groupName = "${depotName}",
+			site = "false");
+
+		JSONOrganizationAPI._addOrganizationToSite(
+			groupId = "${depotId}",
+			organizationId = "${organizationId}");
+	}
+
+	macro addOrganizationToSite {
+		Variables.assertDefined(parameterList = "${organizationName},${siteName}");
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = "${organizationName}"
+		);
+
+		var groupId = JSONUserSetter.setGroupId(groupName = "${siteName}");
+
+		JSONOrganizationAPI._addOrganizationToSite(
+			groupId = "${groupId}",
+			organizationId = "${organizationId}");
+	}
+
 	macro assignUserToOrganization {
 		Variables.assertDefined(parameterList = "${organizationName},${userEmailAddress}");
 

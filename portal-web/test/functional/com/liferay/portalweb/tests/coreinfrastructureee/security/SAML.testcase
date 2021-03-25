@@ -600,7 +600,6 @@ definition {
 	@description = "This is a use case for LPS-128578 and LPS-69388"
 	@priority = "4"
 	test AssertSSOWithSignAuthnRequests {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#AssertSSOWithSignAuthnRequests";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");

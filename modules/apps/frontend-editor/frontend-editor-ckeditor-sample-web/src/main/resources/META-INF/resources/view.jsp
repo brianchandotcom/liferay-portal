@@ -17,12 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <div>
-	<react:component
-		module="js/index"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"contents", "<h1>Ballon Editor</h1><p>More text goes here</p>"
-			).build()
-		%>'
+	<liferay-editor:editor
+		contents="<h1>Ballon Editor</h1><p>More text goes here</p>"
+		editorName="ballooneditor"
+		name="contentEditor"
+		placeholder="content"
 	/>
 </div>

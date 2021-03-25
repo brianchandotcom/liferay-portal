@@ -295,6 +295,9 @@ public class ContentPageEditorDisplayContext {
 				_ffLayoutContentPageEditorConfiguration.
 					containerItemFlexEnabled()
 			).put(
+				"contentBrowsingEnabled",
+				_ffLayoutContentPageEditorConfiguration.contentBrowsingEnabled()
+			).put(
 				"defaultEditorConfigurations", _getDefaultConfigurations()
 			).put(
 				"defaultLanguageId",

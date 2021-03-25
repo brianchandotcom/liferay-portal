@@ -80,6 +80,8 @@ export interface Config {
 
 	containerItemFlexEnabled: boolean;
 
+	contentBrowsingEnabled: boolean;
+
 	defaultEditorConfigurations: Record<
 		'comment' | 'rich-text' | 'text',
 		{

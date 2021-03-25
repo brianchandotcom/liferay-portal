@@ -10,8 +10,7 @@ definition {
 	@summary = "Asserts the list of properties shown in the Property Menu"
 	macro assertPropertyMenuList {
 		for (var key_propertyName : list "${propertyList}") {
-			AssertElementPresent(
-				locator1 = "ACSidebar#PROPERTY_MENU_ITEM_BY_NAME");
+			AssertElementPresent(locator1 = "ACSidebar#PROPERTY_MENU_ITEM_BY_NAME");
 		}
 	}
 

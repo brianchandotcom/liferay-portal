@@ -1,8 +1,5 @@
 #set($h1 = '##')
-$h1
-$h1 Check GETTING_STARTED.markdown#platform.bndrun for 
-$h1 information regarding these values.
-$h1
+$h1 Check GETTING_STARTED.markdown#platform.bndrun for more information.
 
 -distro: ${targetPlatformDistro};x-whitelist=osgi.wiring.host
 -resolve.effective: active

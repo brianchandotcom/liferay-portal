@@ -203,6 +203,13 @@ definition {
 				url = "${url}");
 		}
 
+		if (isSet(customField)) {
+			Type(
+				key_fieldLabel = "${customField}",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldValue}");
+		}
+
 		PortletEntry.save();
 	}
 

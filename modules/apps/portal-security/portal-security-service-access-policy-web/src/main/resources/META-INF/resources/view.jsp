@@ -32,14 +32,6 @@ OrderByComparator<SAPEntry> orderByComparator = new SAPEntryNameComparator(order
 int sapEntriesCount = SAPEntryServiceUtil.getCompanySAPEntriesCount(company.getCompanyId());
 
 PortletURL portletURL = renderResponse.createRenderURL();
-
-PortletURL sortingURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setParameter(
-	"displayStyle", displayStyle
-).setParameter(
-	"orderByType", orderByAsc ? "desc" : "asc"
-).build();
 %>
 
 <clay:management-toolbar
@@ -55,7 +47,15 @@ PortletURL sortingURL = PortletURLBuilder.createRenderURL(
 	showCreationMenu="<%= SAPPermission.contains(permissionChecker, SAPActionKeys.ACTION_ADD_SAP_ENTRY) %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= orderByType %>"
-	sortingURL="<%= sortingURL.toString() %>"
+	sortingURL='<%=
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setParameter(
+			"displayStyle", displayStyle
+		).setParameter(
+			"orderByType", orderByAsc ? "desc" : "asc"
+		).buildString()
+	%>'
 />
 
 <clay:container-fluid>

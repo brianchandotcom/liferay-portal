@@ -17,27 +17,24 @@
 <%@ include file="/publish_model_menu_item/init.jsp" %>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(), ActionKeys.EXPORT_IMPORT_PORTLET_INFO) && showMenuItem %>">
-
-	<%
-	PortletURL portletURL = PortletURLBuilder.create(
-		PortletURLFactoryUtil.create(request, ChangesetPortletKeys.CHANGESET, PortletRequest.ACTION_PHASE)
-	).setMVCRenderCommandName(
-		"/export_import_changeset/export_import_changeset"
-	).setActionName(
-		"/export_import_changeset/export_import_changeset"
-	).setParameter(
-		"cmd", Constants.PUBLISH
-	).setParameter(
-		"backURL", currentURL
-	).setParameter(
-		"changesetUuid", changesetUuid
-	).setParameter(
-		"portletId", portletDisplay.getId()
-	).build();
-	%>
-
 	<liferay-ui:icon
 		message="publish-to-live"
-		url="<%= portletURL.toString() %>"
+		url='<%=
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(request, ChangesetPortletKeys.CHANGESET, PortletRequest.ACTION_PHASE)
+			).setMVCRenderCommandName(
+				"/export_import_changeset/export_import_changeset"
+			).setActionName(
+				"/export_import_changeset/export_import_changeset"
+			).setParameter(
+				"cmd", Constants.PUBLISH
+			).setParameter(
+				"backURL", currentURL
+			).setParameter(
+				"changesetUuid", changesetUuid
+			).setParameter(
+				"portletId", portletDisplay.getId()
+			).buildString()
+		%>'
 	/>
 </c:if>

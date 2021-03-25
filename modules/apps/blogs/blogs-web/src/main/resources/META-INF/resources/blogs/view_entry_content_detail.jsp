@@ -89,22 +89,21 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						>
 							<div class="dropdown dropdown-action">
 								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-
-									<%
-									PortletURL editEntryURL = PortletURLBuilder.create(
-										PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), BlogsPortletKeys.BLOGS_ADMIN, 0, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
-									).setMVCRenderCommandName(
-										"/blogs/edit_entry"
-									).setRedirect(
-										currentURL
-									).setParameter(
-										"portletResource", portletDisplay.getId()
-									).setParameter(
-										"entryId", entry.getEntryId()
-									).build();
-									%>
-
-									<a href="<%= editEntryURL.toString() %>">
+									<a
+										href="<%=
+											PortletURLBuilder.create(
+												PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), BlogsPortletKeys.BLOGS_ADMIN, 0, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+											).setMVCRenderCommandName(
+												"/blogs/edit_entry"
+											).setRedirect(
+												currentURL
+											).setParameter(
+												"portletResource", portletDisplay.getId()
+											).setParameter(
+												"entryId", entry.getEntryId()
+											).buildString()
+										%>"
+									>
 										<span class="hide-accessible"><liferay-ui:message key="edit-entry" /></span>
 
 										<clay:icon

@@ -37,26 +37,23 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 		<clay:content-col>
 			<span class="heading-end">
-
-				<%
-				PortletURL editURL = PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCPath(
-					"/organization/edit_opening_hours.jsp"
-				).setRedirect(
-					currentURL
-				).setParameter(
-					"className", Organization.class.getName()
-				).setParameter(
-					"classPK", organizationId
-				).build();
-				%>
-
 				<liferay-ui:icon
 					label="<%= true %>"
 					linkCssClass="add-opening-hours-link btn btn-secondary btn-sm"
 					message="add"
-					url="<%= editURL.toString() %>"
+					url='<%=
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCPath(
+							"/organization/edit_opening_hours.jsp"
+						).setRedirect(
+							currentURL
+						).setParameter(
+							"className", Organization.class.getName()
+						).setParameter(
+							"classPK", organizationId
+						).buildString()
+					%>'
 				/>
 			</span>
 		</clay:content-col>

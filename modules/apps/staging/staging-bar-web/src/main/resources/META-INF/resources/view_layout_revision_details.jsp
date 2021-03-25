@@ -115,20 +115,6 @@ else {
 
 				layoutURL = HttpUtil.addParameter(layoutURL, "layoutSetBranchId", layoutRevision.getLayoutSetBranchId());
 				layoutURL = HttpUtil.addParameter(layoutURL, "layoutRevisionId", layoutRevision.getLayoutRevisionId());
-
-				PortletURL portletURL = PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(request, PortletKeys.MY_WORKFLOW_TASK, PortletRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/edit_workflow_task.jsp"
-				).setParameter(
-					"workflowTaskId", workflowTask.getWorkflowTaskId()
-				).setParameter(
-					"closeRedirect", layoutURL
-				).setPortletMode(
-					PortletMode.VIEW
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).build();
 				%>
 
 				<liferay-ui:icon
@@ -137,7 +123,21 @@ else {
 					id="reviewTaskIcon"
 					message="workflow"
 					method="get"
-					url="<%= portletURL.toString() %>"
+					url='<%=
+						PortletURLBuilder.create(
+							PortalUtil.getControlPanelPortletURL(request, PortletKeys.MY_WORKFLOW_TASK, PortletRequest.RENDER_PHASE)
+						).setMVCPath(
+							"/edit_workflow_task.jsp"
+						).setParameter(
+							"workflowTaskId", workflowTask.getWorkflowTaskId()
+						).setParameter(
+							"closeRedirect", layoutURL
+						).setPortletMode(
+							PortletMode.VIEW
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString()
+					%>'
 					useDialog="<%= true %>"
 				/>
 			</c:if>

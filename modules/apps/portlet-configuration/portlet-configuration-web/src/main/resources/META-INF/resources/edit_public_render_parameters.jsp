@@ -21,18 +21,6 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 
 List<PublicRenderParameterConfiguration> publicRenderParameterConfigurations = (List<PublicRenderParameterConfiguration>)request.getAttribute(WebKeys.PUBLIC_RENDER_PARAMETER_CONFIGURATIONS);
 Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)request.getAttribute(WebKeys.PUBLIC_RENDER_PARAMETERS);
-
-PortletURL editPublicRenderParameterURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCPath(
-	"/edit_public_render_parameters.jsp"
-).setRedirect(
-	ParamUtil.getString(request, "redirect")
-).setParameter(
-	"returnToFullPageURL", returnToFullPageURL
-).setParameter(
-	"portletResource", portletResource
-).build();
 %>
 
 <portlet:actionURL name="editPublicRenderParameters" var="editPublicRenderParametersURL">
@@ -51,7 +39,24 @@ PortletURL editPublicRenderParameterURL = PortletURLBuilder.createRenderURL(
 		method="post"
 		name="fm"
 	>
-		<aui:input name="redirect" type="hidden" value="<%= editPublicRenderParameterURL.toString() %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value='<%=
+				PortletURLBuilder.createRenderURL(
+					renderResponse
+				).setMVCPath(
+					"/edit_public_render_parameters.jsp"
+				).setRedirect(
+					ParamUtil.getString(request, "redirect")
+				).setParameter(
+					"returnToFullPageURL", returnToFullPageURL
+				).setParameter(
+					"portletResource", portletResource
+				).buildString()
+			%>'
+		/>
+
 		<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 

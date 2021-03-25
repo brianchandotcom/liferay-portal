@@ -17,29 +17,26 @@
 <%@ include file="/export_entity/init.jsp" %>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(), ActionKeys.EXPORT_IMPORT_PORTLET_INFO) && showMenuItem %>">
-
-	<%
-	PortletURL portletURL = PortletURLBuilder.create(
-		PortletURLFactoryUtil.create(request, ChangesetPortletKeys.CHANGESET, PortletRequest.ACTION_PHASE)
-	).setMVCRenderCommandName(
-		"exportImportEntity"
-	).setActionName(
-		"exportImportEntity"
-	).setParameter(
-		"cmd", Constants.EXPORT
-	).setParameter(
-		"classNameId", classNameId
-	).setParameter(
-		"groupId", exportEntityGroupId
-	).setParameter(
-		"uuid", uuid
-	).setParameter(
-		"portletId", portletDisplay.getId()
-	).build();
-	%>
-
 	<liferay-ui:icon
 		message="export"
-		url="<%= portletURL.toString() %>"
+		url='<%=
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(request, ChangesetPortletKeys.CHANGESET, PortletRequest.ACTION_PHASE)
+			).setMVCRenderCommandName(
+				"exportImportEntity"
+			).setActionName(
+				"exportImportEntity"
+			).setParameter(
+				"cmd", Constants.EXPORT
+			).setParameter(
+				"classNameId", classNameId
+			).setParameter(
+				"groupId", exportEntityGroupId
+			).setParameter(
+				"uuid", uuid
+			).setParameter(
+				"portletId", portletDisplay.getId()
+			).buildString()
+		%>'
 	/>
 </c:if>

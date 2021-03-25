@@ -39,66 +39,66 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 
 						<ul class="nav nav-stacked">
 							<li class="nav-item">
-
-								<%
-								PortletURL allNavigationURL = PortletURLBuilder.create(
-									layoutClassedModelUsagesDisplayContext.getPortletURL()
-								).setParameter(
-									"navigation", "all"
-								).setParameter(
-									"resetCur", Boolean.TRUE.toString()
-								).build();
-								%>
-
-								<a class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>" href="<%= allNavigationURL.toString() %>">
+								<a
+									class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>"
+									href="<%=
+										PortletURLBuilder.create(
+											layoutClassedModelUsagesDisplayContext.getPortletURL()
+										).setParameter(
+											"navigation", "all"
+										).setParameter(
+											"resetCur", Boolean.TRUE.toString()
+										).buildString()
+									%>"
+								>
 									<liferay-ui:message arguments="<%= layoutClassedModelUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />
 								</a>
 							</li>
 							<li class="nav-item">
-
-								<%
-								PortletURL pagesNavigationURL = PortletURLBuilder.create(
-									layoutClassedModelUsagesDisplayContext.getPortletURL()
-								).setParameter(
-									"navigation", "pages"
-								).setParameter(
-									"resetCur", Boolean.TRUE.toString()
-								).build();
-								%>
-
-								<a class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>" href="<%= pagesNavigationURL.toString() %>">
+								<a
+									class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>"
+									href="<%=
+										PortletURLBuilder.create(
+											layoutClassedModelUsagesDisplayContext.getPortletURL()
+										).setParameter(
+											"navigation", "pages"
+										).setParameter(
+											"resetCur", Boolean.TRUE.toString()
+										).buildString()
+									%>"
+								>
 									<liferay-ui:message arguments="<%= layoutClassedModelUsagesDisplayContext.getPagesUsageCount() %>" key="pages-x" />
 								</a>
 							</li>
 							<li class="nav-item">
-
-								<%
-								PortletURL pageTemplatesNavigationURL = PortletURLBuilder.create(
-									layoutClassedModelUsagesDisplayContext.getPortletURL()
-								).setParameter(
-									"navigation", "page-templates"
-								).setParameter(
-									"resetCur", Boolean.TRUE.toString()
-								).build();
-								%>
-
-								<a class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>" href="<%= pageTemplatesNavigationURL.toString() %>">
+								<a
+									class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>"
+									href="<%=
+										PortletURLBuilder.create(
+											layoutClassedModelUsagesDisplayContext.getPortletURL()
+										).setParameter(
+											"navigation", "page-templates"
+										).setParameter(
+											"resetCur", Boolean.TRUE.toString()
+										).buildString()
+									%>"
+								>
 									<liferay-ui:message arguments="<%= layoutClassedModelUsagesDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
 								</a>
 							</li>
 							<li class="nav-item">
-
-								<%
-								PortletURL displayPagesNavigationURL = PortletURLBuilder.create(
-									layoutClassedModelUsagesDisplayContext.getPortletURL()
-								).setParameter(
-									"navigation", "display-page-templates"
-								).setParameter(
-									"resetCur", Boolean.TRUE.toString()
-								).build();
-								%>
-
-								<a class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">
+								<a
+									class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>"
+									href="<%=
+										PortletURLBuilder.create(
+											layoutClassedModelUsagesDisplayContext.getPortletURL()
+										).setParameter(
+											"navigation", "display-page-templates"
+										).setParameter(
+											"resetCur", Boolean.TRUE.toString()
+										).buildString()
+									%>"
+								>
 									<liferay-ui:message arguments="<%= layoutClassedModelUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
 								</a>
 							</li>

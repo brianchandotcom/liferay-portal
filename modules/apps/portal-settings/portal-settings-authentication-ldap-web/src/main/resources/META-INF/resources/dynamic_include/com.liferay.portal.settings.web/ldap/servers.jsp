@@ -37,18 +37,19 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 </c:if>
 
 <aui:button-row>
-
-	<%
-	PortletURL addServerURL = PortletURLBuilder.createRenderURL(
-		renderResponse
-	).setMVCRenderCommandName(
-		"/portal_settings_authentication_ldap/edit_ldap_server"
-	).setRedirect(
-		authenticationURL
-	).build();
-	%>
-
-	<aui:button href="<%= addServerURL.toString() %>" name="addButton" value="add" />
+	<aui:button
+		href='<%=
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCRenderCommandName(
+				"/portal_settings_authentication_ldap/edit_ldap_server"
+			).setRedirect(
+				authenticationURL
+			).buildString()
+		%>'
+		name="addButton"
+		value="add"
+	/>
 </aui:button-row>
 
 <aui:fieldset>

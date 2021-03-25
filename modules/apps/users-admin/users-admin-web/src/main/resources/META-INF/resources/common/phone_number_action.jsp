@@ -34,26 +34,23 @@ long phoneId = phone.getPhoneId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-
-	<%
-	PortletURL editURL = PortletURLBuilder.createRenderURL(
-		liferayPortletResponse
-	).setMVCPath(
-		"/common/edit_phone_number.jsp"
-	).setRedirect(
-		currentURL
-	).setParameter(
-		"className", className
-	).setParameter(
-		"classPK", classPK
-	).setParameter(
-		"primaryKey", phoneId
-	).build();
-	%>
-
 	<liferay-ui:icon
 		message="edit"
-		url="<%= editURL.toString() %>"
+		url='<%=
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCPath(
+				"/common/edit_phone_number.jsp"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"className", className
+			).setParameter(
+				"classPK", classPK
+			).setParameter(
+				"primaryKey", phoneId
+			).buildString()
+		%>'
 	/>
 
 	<%
@@ -72,29 +69,27 @@ long phoneId = phone.getPhoneId();
 	).setParameter(
 		"primaryKey", phoneId
 	).build();
-
-	PortletURL makePrimaryURL = PortletURLBuilder.create(
-		PortletURLUtil.clone(portletURL, renderResponse)
-	).setParameter(
-		Constants.CMD, "makePrimary"
-	).build();
 	%>
 
 	<liferay-ui:icon
 		message="make-primary"
-		url="<%= makePrimaryURL.toString() %>"
+		url='<%=
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(portletURL, renderResponse)
+			).setParameter(
+				Constants.CMD, "makePrimary"
+			).buildString()
+		%>'
 	/>
-
-	<%
-	PortletURL removePhoneURL = PortletURLBuilder.create(
-		PortletURLUtil.clone(portletURL, renderResponse)
-	).setParameter(
-		Constants.CMD, Constants.DELETE
-	).build();
-	%>
 
 	<liferay-ui:icon
 		message="remove"
-		url="<%= removePhoneURL.toString() %>"
+		url="<%=
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(portletURL, renderResponse)
+			).setParameter(
+				Constants.CMD, Constants.DELETE
+			).buildString()
+		%>"
 	/>
 </liferay-ui:icon-menu>

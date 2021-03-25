@@ -91,15 +91,6 @@ if (organization != null) {
 			</c:choose>
 
 			<c:if test="<%= site %>">
-
-				<%
-				PortletURL editOrganizationSiteURL = PortletURLBuilder.create(
-					PortletProviderUtil.getPortletURL(request, organizationGroup, Group.class.getName(), PortletProvider.Action.EDIT)
-				).setParameter(
-					"viewOrganizationsRedirect", currentURL
-				).build();
-				%>
-
 				<aui:input inlineField="<%= true %>" name="siteId" type="resource" value="<%= String.valueOf(organizationGroup.getGroupId()) %>" />
 
 				<div class="form-group">
@@ -107,7 +98,13 @@ if (organization != null) {
 						iconCssClass="icon-cog"
 						label="<%= true %>"
 						message="manage-site"
-						url="<%= editOrganizationSiteURL.toString() %>"
+						url='<%=
+							PortletURLBuilder.create(
+								PortletProviderUtil.getPortletURL(request, organizationGroup, Group.class.getName(), PortletProvider.Action.EDIT)
+							).setParameter(
+								"viewOrganizationsRedirect", currentURL
+							).buildString()
+						%>'
 					/>
 				</div>
 			</c:if>

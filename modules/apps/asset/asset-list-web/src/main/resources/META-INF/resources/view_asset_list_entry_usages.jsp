@@ -49,58 +49,58 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 
 						<ul class="nav nav-stacked">
 							<li class="nav-item">
-
-								<%
-								PortletURL allNavigationURL = PortletURLBuilder.create(
-									assetListEntryUsagesDisplayContext.getPortletURL()
-								).setParameter(
-									"navigation", "all"
-								).build();
-								%>
-
-								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>" href="<%= allNavigationURL.toString() %>">
+								<a
+									class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>"
+									href="<%=
+										PortletURLBuilder.create(
+											assetListEntryUsagesDisplayContext.getPortletURL()
+										).setParameter(
+											"navigation", "all"
+										).buildString()
+									%>"
+								>
 									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />
 								</a>
 							</li>
 							<li class="nav-item">
-
-								<%
-								PortletURL pagesNavigationURL = PortletURLBuilder.create(
-									assetListEntryUsagesDisplayContext.getPortletURL()
-								).setParameter(
-									"navigation", "pages"
-								).build();
-								%>
-
-								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>" href="<%= pagesNavigationURL.toString() %>">
+								<a
+									class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>"
+									href="<%=
+										PortletURLBuilder.create(
+											assetListEntryUsagesDisplayContext.getPortletURL()
+										).setParameter(
+											"navigation", "pages"
+										).buildString()
+									%>"
+								>
 									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getPagesUsageCount() %>" key="pages-x" />
 								</a>
 							</li>
 							<li class="nav-item">
-
-								<%
-								PortletURL pageTemplatesNavigationURL = PortletURLBuilder.create(
-									assetListEntryUsagesDisplayContext.getPortletURL()
-								).setParameter(
-									"navigation", "page-templates"
-								).build();
-								%>
-
-								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>" href="<%= pageTemplatesNavigationURL.toString() %>">
+								<a
+									class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>"
+									href="<%=
+										PortletURLBuilder.create(
+											assetListEntryUsagesDisplayContext.getPortletURL()
+										).setParameter(
+											"navigation", "page-templates"
+										).buildString()
+									%>"
+								>
 									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
 								</a>
 							</li>
 							<li class="nav-item">
-
-								<%
-								PortletURL displayPagesNavigationURL = PortletURLBuilder.create(
-									assetListEntryUsagesDisplayContext.getPortletURL()
-								).setParameter(
-									"navigation", "display-page-templates"
-								).build();
-								%>
-
-								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">
+								<a
+									class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>"
+									href="<%=
+										PortletURLBuilder.create(
+											assetListEntryUsagesDisplayContext.getPortletURL()
+										).setParameter(
+											"navigation", "display-page-templates"
+										).buildString()
+									%>"
+								>
 									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
 								</a>
 							</li>

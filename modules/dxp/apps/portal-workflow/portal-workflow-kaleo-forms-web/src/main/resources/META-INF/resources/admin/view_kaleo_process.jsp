@@ -34,16 +34,6 @@ KaleoFormsViewRecordsDisplayContext kaleoFormsViewRecordsDisplayContext = kaleoF
 KaleoProcess kaleoProcess = kaleoFormsViewRecordsDisplayContext.getKaleoProcess();
 
 boolean hasSubmitPermission = KaleoProcessPermission.contains(permissionChecker, kaleoProcess, ActionKeys.SUBMIT);
-
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCPath(
-	"/admin/view_kaleo_process.jsp"
-).setRedirect(
-	redirect
-).setParameter(
-	"kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId())
-).build();
 %>
 
 <clay:navigation-bar
@@ -79,7 +69,21 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "formContainer" %>'
 >
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
+	<aui:form
+		action='<%=
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCPath(
+				"/admin/view_kaleo_process.jsp"
+			).setRedirect(
+				redirect
+			).setParameter(
+				"kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId())
+			).buildString()
+		%>'
+		method="post"
+		name="searchContainerForm"
+	>
 		<aui:input name="ddlRecordIds" type="hidden" />
 
 		<liferay-ui:search-container

@@ -34,12 +34,6 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 ).setMVCRenderCommandName(
 	"/monitoring/view"
 ).build();
-
-PortletURL sortingURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(portletURL, renderResponse)
-).setParameter(
-	"orderByType", orderByType.equals("asc") ? "desc" : "asc"
-).build();
 %>
 
 <clay:management-toolbar
@@ -47,7 +41,13 @@ PortletURL sortingURL = PortletURLBuilder.create(
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= orderByType %>"
-	sortingURL="<%= sortingURL.toString() %>"
+	sortingURL='<%=
+		PortletURLBuilder.create(
+			PortletURLUtil.clone(portletURL, renderResponse)
+		).setParameter(
+			"orderByType", orderByType.equals("asc") ? "desc" : "asc"
+		).buildString()
+	%>'
 />
 
 <clay:container-fluid>

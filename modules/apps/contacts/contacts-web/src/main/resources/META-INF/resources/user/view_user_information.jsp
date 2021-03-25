@@ -165,21 +165,18 @@ if (Validator.isNull(jabberSn) && Validator.isNull(skypeSn)) {
 
 <c:if test="<%= showInstantMessenger && (Validator.isNotNull(jabberSn) || Validator.isNotNull(skypeSn)) %>">
 	<div class="field-group section" data-title="<%= LanguageUtil.get(request, "instant-messenger") %>">
-
-		<%
-		PortletURL editInstantMessengerURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE)
-		).setParameter(
-			"screenNavigationCategoryKey", "contact"
-		).setParameter(
-			"screenNavigationEntryKey", "contact-information"
-		).build();
-		%>
-
 		<liferay-ui:icon
 			icon="pencil"
 			markupView="lexicon"
-			url="<%= editInstantMessengerURL.toString() %>"
+			url='<%=
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE)
+				).setParameter(
+					"screenNavigationCategoryKey", "contact"
+				).setParameter(
+					"screenNavigationEntryKey", "contact-information"
+				).buildString()
+			%>'
 		/>
 
 		<h3><liferay-ui:message key="instant-messenger" />:</h3>

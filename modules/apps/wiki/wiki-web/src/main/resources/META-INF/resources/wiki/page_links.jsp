@@ -50,8 +50,13 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 								<%
 								for (WikiPage incomingLinkPage : incomingLinkPages) {
 									WikiNode wikiNode = incomingLinkPage.getNode();
+								%>
 
-									PortletURL portletURL = PortletURLBuilder.createRenderURL(
+									<dt class="h5">
+										<h4>
+											<a
+												class="text-default" href="<%=
+PortletURLBuilder.createRenderURL(
 										liferayPortletResponse
 									).setMVCRenderCommandName(
 										"/wiki/view"
@@ -61,12 +66,8 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 										"nodeName", wikiNode.getName()
 									).setParameter(
 										"title", incomingLinkPage.getTitle()
-									).build();
-								%>
-
-									<dt class="h5">
-										<h4>
-											<a class="text-default" href="<%= portletURL.toString() %>"><%= incomingLinkPage.getTitle() %></a>
+									).buildString() %>"><%= incomingLinkPage.getTitle() %></a
+											>
 										</h4>
 									</dt>
 									<dd>
@@ -115,8 +116,13 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 
 											<%
 											WikiNode wikiNode = outgoingLinkPage.getNode();
+											%>
 
-											PortletURL portletURL = PortletURLBuilder.createRenderURL(
+											<dt class="h5">
+												<h4 class="text-truncate">
+													<a
+														class="text-default" href="<%=
+PortletURLBuilder.createRenderURL(
 												liferayPortletResponse
 											).setMVCRenderCommandName(
 												"/wiki/view"
@@ -126,12 +132,8 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 												"nodeName", wikiNode.getName()
 											).setParameter(
 												"title", outgoingLinkPage.getTitle()
-											).build();
-											%>
-
-											<dt class="h5">
-												<h4 class="text-truncate">
-													<a class="text-default" href="<%= portletURL.toString() %>"><%= outgoingLinkPage.getTitle() %></a>
+											).buildString() %>"><%= outgoingLinkPage.getTitle() %></a
+													>
 												</h4>
 											</dt>
 											<dd>

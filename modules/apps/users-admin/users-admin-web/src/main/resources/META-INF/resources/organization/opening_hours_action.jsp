@@ -31,26 +31,23 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-
-	<%
-	PortletURL editURL = PortletURLBuilder.createRenderURL(
-		liferayPortletResponse
-	).setMVCPath(
-		"/organization/edit_opening_hours.jsp"
-	).setRedirect(
-		currentURL
-	).setParameter(
-		"className", Organization.class.getName()
-	).setParameter(
-		"classPK", organizationId
-	).setParameter(
-		"primaryKey", orgLaborId
-	).build();
-	%>
-
 	<liferay-ui:icon
 		message="edit"
-		url="<%= editURL.toString() %>"
+		url='<%=
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCPath(
+				"/organization/edit_opening_hours.jsp"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"className", Organization.class.getName()
+			).setParameter(
+				"classPK", organizationId
+			).setParameter(
+				"primaryKey", orgLaborId
+			).buildString()
+		%>'
 	/>
 
 	<portlet:actionURL name="/users_admin/update_contact_information" var="removeOpeningHoursUrl">

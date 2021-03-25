@@ -50,24 +50,21 @@ else {
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-
-		<%
-		PortletURL editURL = PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/bookmarks/edit_entry"
-		).setRedirect(
-			currentURL
-		).setParameter(
-			"portletResource", portletDisplay.getId()
-		).setParameter(
-			"entryId", entry.getEntryId()
-		).build();
-		%>
-
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editURL.toString() %>"
+			url='<%=
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/bookmarks/edit_entry"
+				).setRedirect(
+					currentURL
+				).setParameter(
+					"portletResource", portletDisplay.getId()
+				).setParameter(
+					"entryId", entry.getEntryId()
+				).buildString()
+			%>'
 		/>
 
 		<portlet:renderURL var="moveURL">

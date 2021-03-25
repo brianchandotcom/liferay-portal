@@ -49,12 +49,6 @@ int exportImportConfigurationsCount = ExportImportConfigurationLocalServiceUtil.
 
 exportImportConfigurationSearchContainer.setResults(exportImportConfigurations);
 exportImportConfigurationSearchContainer.setTotal(exportImportConfigurationsCount);
-
-PortletURL clearResultsURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(currentURLObj, renderResponse)
-).setParameter(
-	"keywords", StringPool.BLANK
-).build();
 %>
 
 <div class="export-dialog-tree">
@@ -69,7 +63,13 @@ PortletURL clearResultsURL = PortletURLBuilder.create(
 		</liferay-portlet:renderURL>
 
 		<clay:management-toolbar
-			clearResultsURL="<%= clearResultsURL.toString() %>"
+			clearResultsURL='<%=
+				PortletURLBuilder.create(
+					PortletURLUtil.clone(currentURLObj, renderResponse)
+				).setParameter(
+					"keywords", StringPool.BLANK
+				).buildString()
+			%>'
 			itemsTotal="<%= exportImportConfigurationsCount %>"
 			searchActionURL="<%= searchURL.toString() %>"
 			selectable="<%= false %>"

@@ -71,38 +71,32 @@ long organizationGroupId = organization.getGroupId();
 	</c:if>
 
 	<c:if test="<%= organizationGroup.isSite() && (GroupPermissionUtil.contains(permissionChecker, organizationGroup, ActionKeys.MANAGE_STAGING) || hasUpdatePermission) %>">
-
-		<%
-		PortletURL editSettingsURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(request, organizationGroup, Group.class.getName(), PortletProvider.Action.EDIT)
-		).setParameter(
-			"viewOrganizationsRedirect", currentURL
-		).build();
-		%>
-
 		<liferay-ui:icon
 			message="manage-site"
-			url="<%= editSettingsURL.toString() %>"
+			url='<%=
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(request, organizationGroup, Group.class.getName(), PortletProvider.Action.EDIT)
+				).setParameter(
+					"viewOrganizationsRedirect", currentURL
+				).buildString()
+			%>'
 		/>
 	</c:if>
 
 	<c:if test="<%= permissionChecker.isGroupOwner(organizationGroupId) || OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_USER_ROLES) %>">
-
-		<%
-		PortletURL assignUserRolesURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(request, UserGroupRole.class.getName(), PortletProvider.Action.EDIT)
-		).setParameter(
-			"className", User.class.getName()
-		).setParameter(
-			"groupId", organizationGroupId
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).build();
-		%>
-
 		<liferay-ui:icon
 			message="assign-organization-roles"
-			url="<%= assignUserRolesURL.toString() %>"
+			url='<%=
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(request, UserGroupRole.class.getName(), PortletProvider.Action.EDIT)
+				).setParameter(
+					"className", User.class.getName()
+				).setParameter(
+					"groupId", organizationGroupId
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString()
+			%>'
 			useDialog="<%= true %>"
 		/>
 	</c:if>

@@ -92,20 +92,20 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 									%>
 
 										<li class="nav-item">
-
-											<%
-											PortletURL editAssetListEntryURL = PortletURLBuilder.createRenderURL(
-												renderResponse
-											).setMVCPath(
-												"/edit_asset_list_entry.jsp"
-											).setParameter(
-												"assetListEntryId", assetListEntrySegmentsEntryRel.getAssetListEntryId()
-											).setParameter(
-												"segmentsEntryId", assetListEntrySegmentsEntryRel.getSegmentsEntryId()
-											).build();
-											%>
-
-											<a class="nav-link text-truncate <%= (editAssetListDisplayContext.getSegmentsEntryId() == assetListEntrySegmentsEntryRel.getSegmentsEntryId()) ? "active" : StringPool.BLANK %>" href="<%= editAssetListEntryURL.toString() %>">
+											<a
+												class="nav-link text-truncate <%= (editAssetListDisplayContext.getSegmentsEntryId() == assetListEntrySegmentsEntryRel.getSegmentsEntryId()) ? "active" : StringPool.BLANK %>"
+												href="<%=
+													PortletURLBuilder.createRenderURL(
+														renderResponse
+													).setMVCPath(
+														"/edit_asset_list_entry.jsp"
+													).setParameter(
+														"assetListEntryId", assetListEntrySegmentsEntryRel.getAssetListEntryId()
+													).setParameter(
+														"segmentsEntryId", assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+													).buildString()
+												%>"
+											>
 												<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(assetListEntrySegmentsEntryRel.getSegmentsEntryId(), locale)) %>
 											</a>
 										</li>

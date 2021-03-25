@@ -285,23 +285,21 @@ if (portletTitleBasedNavigation) {
 									</c:if>
 								</c:if>
 
-								<%
-								PortletURL viewPageDetailsURL = PortletURLBuilder.create(
-									PortletURLUtil.clone(viewPageURL, renderResponse)
-								).setMVCRenderCommandName(
-									"/wiki/view_page_details"
-								).setRedirect(
-									currentURL
-								).build();
-								%>
-
 								<liferay-ui:icon
 									icon="document"
 									label="<%= true %>"
 									markupView="lexicon"
 									message="details"
 									method="get"
-									url="<%= viewPageDetailsURL.toString() %>"
+									url='<%=
+										PortletURLBuilder.create(
+											PortletURLUtil.clone(viewPageURL, renderResponse)
+										).setMVCRenderCommandName(
+											"/wiki/view_page_details"
+										).setRedirect(
+											currentURL
+										).buildString()
+%>'
 								/>
 
 								<liferay-ui:icon
@@ -483,16 +481,14 @@ if (portletTitleBasedNavigation) {
 
 							<li class="list-group-item">
 								<h3>
-
-									<%
-									PortletURL rowURL = PortletURLBuilder.create(
+									<aui:a
+										href="<%=
+PortletURLBuilder.create(
 										PortletURLUtil.clone(viewPageURL, renderResponse)
 									).setParameter(
 										"title", childPage.getTitle()
-									).build();
-									%>
-
-									<aui:a href="<%= rowURL.toString() %>"><%= childPage.getTitle() %></aui:a>
+									).buildString() %>"><%= childPage.getTitle() %></aui:a
+									>
 								</h3>
 
 								<%

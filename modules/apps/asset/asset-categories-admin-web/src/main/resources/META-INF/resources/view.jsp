@@ -99,18 +99,18 @@
 										%>
 
 											<li class="nav-item">
-
-												<%
-												PortletURL vocabularyURL = PortletURLBuilder.createRenderURL(
-													renderResponse
-												).setMVCPath(
-													"/view.jsp"
-												).setParameter(
-													"vocabularyId", vocabulary.getVocabularyId()
-												).build();
-												%>
-
-												<a class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
+												<a
+													class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>"
+													href="<%=
+														PortletURLBuilder.createRenderURL(
+															renderResponse
+														).setMVCPath(
+															"/view.jsp"
+														).setParameter(
+															"vocabularyId", vocabulary.getVocabularyId()
+														).buildString()
+													%>"
+												>
 													<span class="text-truncate"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></span>
 
 													<liferay-ui:icon
@@ -147,18 +147,18 @@
 										%>
 
 											<li class="nav-item">
-
-												<%
-												PortletURL vocabularyURL = PortletURLBuilder.createRenderURL(
-													renderResponse
-												).setMVCPath(
-													"/view.jsp"
-												).setParameter(
-													"vocabularyId", vocabulary.getVocabularyId()
-												).build();
-												%>
-
-												<a class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
+												<a
+													class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>"
+													href="<%=
+														PortletURLBuilder.createRenderURL(
+															renderResponse
+														).setMVCPath(
+															"/view.jsp"
+														).setParameter(
+															"vocabularyId", vocabulary.getVocabularyId()
+														).buildString()
+													%>"
+												>
 													<span class="text-truncate"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></span>
 
 													<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>">

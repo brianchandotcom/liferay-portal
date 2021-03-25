@@ -46,15 +46,20 @@ request.setAttribute("view.jsp-filterPerOrganization", false);
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(
 			"title", LanguageUtil.get(request, curViewMode)
 		).build();
-
-		PortletURL portletURL = PortletURLBuilder.create(
-			commerceOrganizationDisplayContext.getPortletURL()
-		).setParameter(
-			"viewMode", curViewMode
-		).build();
 	%>
 
-		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= portletURL.toString() %>" id="<%= liferayPortletResponse.getNamespace() + curViewMode %>">
+		<aui:a
+			cssClass="<%= cssClass %>"
+			data="<%= data %>"
+			href='<%=
+				PortletURLBuilder.create(
+					commerceOrganizationDisplayContext.getPortletURL()
+				).setParameter(
+					"viewMode", curViewMode
+				).buildString()
+			%>'
+			id="<%= liferayPortletResponse.getNamespace() + curViewMode %>"
+		>
 			<c:if test="<%= Validator.isNotNull(icon) %>">
 				<aui:icon image="<%= icon %>" markupView="lexicon" />
 			</c:if>

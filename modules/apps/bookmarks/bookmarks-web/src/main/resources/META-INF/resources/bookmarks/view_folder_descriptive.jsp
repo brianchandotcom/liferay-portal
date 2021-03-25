@@ -22,20 +22,22 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 BookmarksFolder folder = (BookmarksFolder)row.getObject();
 
 folder = folder.toEscapedModel();
-
-PortletURL rowURL = PortletURLBuilder.createRenderURL(
-	liferayPortletResponse
-).setMVCRenderCommandName(
-	"/bookmarks/view_folder"
-).setRedirect(
-	currentURL
-).setParameter(
-	"folderId", String.valueOf(folder.getFolderId())
-).build();
 %>
 
 <h4>
-	<aui:a href="<%= rowURL.toString() %>">
+	<aui:a
+		href='<%=
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/bookmarks/view_folder"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"folderId", String.valueOf(folder.getFolderId())
+			).buildString()
+		%>'
+	>
 		<%= folder.getName() %>
 	</aui:a>
 </h4>

@@ -22,7 +22,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 String backURL = ParamUtil.getString(request, "backURL");
 
 if (Validator.isNull(backURL)) {
-	PortletURL viewAccountUserURL = PortletURLBuilder.createRenderURL(
+	backURL = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setMVCRenderCommandName(
 		"/account_admin/edit_account_entry"
@@ -30,9 +30,7 @@ if (Validator.isNull(backURL)) {
 		"screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS
 	).setParameter(
 		"accountEntryId", accountEntryDisplay.getAccountEntryId()
-	).build();
-
-	backURL = viewAccountUserURL.toString();
+	).buildString();
 }
 
 portletDisplay.setShowBackIcon(true);

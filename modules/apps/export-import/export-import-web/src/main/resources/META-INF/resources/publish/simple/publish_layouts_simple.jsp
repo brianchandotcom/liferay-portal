@@ -42,24 +42,6 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
 
 Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
-
-PortletURL advancedPublishURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCRenderCommandName(
-	"/export_import/publish_layouts"
-).setParameter(
-	Constants.CMD, cmd
-).setParameter(
-	"tabs1", privateLayout ? "private-pages" : "public-pages"
-).setParameter(
-	"groupId", String.valueOf(groupDisplayContextHelper.getGroupId())
-).setParameter(
-	"layoutSetBranchId", MapUtil.getString(parameterMap, "layoutSetBranchId")
-).setParameter(
-	"selPlid", String.valueOf(selPlid)
-).setParameter(
-	"privateLayout", String.valueOf(privateLayout)
-).build();
 %>
 
 <clay:container-fluid
@@ -67,7 +49,25 @@ PortletURL advancedPublishURL = PortletURLBuilder.createRenderURL(
 >
 	<clay:link
 		displayType="link"
-		href="<%= advancedPublishURL.toString() %>"
+		href='<%=
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCRenderCommandName(
+				"/export_import/publish_layouts"
+			).setParameter(
+				Constants.CMD, cmd
+			).setParameter(
+				"tabs1", privateLayout ? "private-pages" : "public-pages"
+			).setParameter(
+				"groupId", String.valueOf(groupDisplayContextHelper.getGroupId())
+			).setParameter(
+				"layoutSetBranchId", MapUtil.getString(parameterMap, "layoutSetBranchId")
+			).setParameter(
+				"selPlid", String.valueOf(selPlid)
+			).setParameter(
+				"privateLayout", String.valueOf(privateLayout)
+			).buildString()
+		%>'
 		label="switch-to-advanced-publish-process"
 		small="<%= true %>"
 		type="button"

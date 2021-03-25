@@ -321,52 +321,46 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 					</c:if>
 
 					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
-
-						<%
-						PortletURL copyPageURL = PortletURLBuilder.create(
-							PortletURLUtil.clone(viewPageURL, renderResponse)
-						).setMVCRenderCommandName(
-							"/wiki/edit_page"
-						).setParameter(
-							"nodeId", wikiPage.getNodeId()
-						).setParameter(
-							"title", StringPool.BLANK
-						).setParameter(
-							"editTitle", "1"
-						).setParameter(
-							"templateNodeId", wikiPage.getNodeId()
-						).setParameter(
-							"templateTitle", wikiPage.getTitle()
-						).build();
-						%>
-
 						<liferay-ui:icon
 							icon="paste"
 							label="<%= true %>"
 							markupView="lexicon"
 							message="copy"
-							url="<%= copyPageURL.toString() %>"
+							url='<%=
+								PortletURLBuilder.create(
+									PortletURLUtil.clone(viewPageURL, renderResponse)
+								).setMVCRenderCommandName(
+									"/wiki/edit_page"
+								).setParameter(
+									"nodeId", wikiPage.getNodeId()
+								).setParameter(
+									"title", StringPool.BLANK
+								).setParameter(
+									"editTitle", "1"
+								).setParameter(
+									"templateNodeId", wikiPage.getNodeId()
+								).setParameter(
+									"templateTitle", wikiPage.getTitle()
+								).buildString()
+							%>'
 						/>
 					</c:if>
 
 					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
-
-						<%
-						PortletURL movePageURL = PortletURLBuilder.create(
-							PortletURLUtil.clone(viewPageURL, renderResponse)
-						).setMVCRenderCommandName(
-							"/wiki/move_page"
-						).setRedirect(
-							viewPageURL.toString()
-						).build();
-						%>
-
 						<liferay-ui:icon
 							icon="move"
 							label="<%= true %>"
 							markupView="lexicon"
 							message="move"
-							url="<%= movePageURL.toString() %>"
+							url='<%=
+								PortletURLBuilder.create(
+									PortletURLUtil.clone(viewPageURL, renderResponse)
+								).setMVCRenderCommandName(
+									"/wiki/move_page"
+								).setRedirect(
+									viewPageURL.toString()
+								).buildString()
+							%>'
 						/>
 					</c:if>
 

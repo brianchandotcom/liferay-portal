@@ -66,12 +66,6 @@ else {
 	contacts = EntryLocalServiceUtil.searchUsersAndContacts(themeDisplay.getCompanyId(), user.getUserId(), name, 0, ContactsConstants.MAX_RESULT_COUNT);
 	contactsCount = EntryLocalServiceUtil.searchUsersAndContactsCount(themeDisplay.getCompanyId(), user.getUserId(), name);
 }
-
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setWindowState(
-	WindowState.NORMAL
-).build();
 %>
 
 <c:choose>
@@ -85,7 +79,17 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		</clay:row>
 	</c:when>
 	<c:otherwise>
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+		<aui:form
+			action="<%=
+				PortletURLBuilder.createRenderURL(
+					renderResponse
+				).setWindowState(
+					WindowState.NORMAL
+				).buildString()
+			%>"
+			method="post"
+			name="fm"
+		>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 			<aui:input name="redirect" type="hidden" value="" />
 			<aui:input name="userIds" type="hidden" value="" />

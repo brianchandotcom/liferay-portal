@@ -30,43 +30,38 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 	value='<%= (String)request.getAttribute("liferay-frontend:management-bar-sort:orderByColLabel") %>'
 />
 
-<%
-PortletURL orderByColAscURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(portletURL, liferayPortletResponse)
-).setParameter(
-	"orderByCol", orderByCol
-).setParameter(
-	"orderByType", "asc"
-).build();
-%>
-
 <li>
 	<liferay-frontend:management-bar-button
 		active='<%= Validator.isNotNull(orderByType) && orderByType.equals("asc") %>'
 		cssClass="d-none d-sm-block"
 		disabled="<%= disabled %>"
-		href="<%= orderByColAscURL.toString() %>"
+		href='<%=
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(portletURL, liferayPortletResponse)
+			).setParameter(
+				"orderByCol", orderByCol
+			).setParameter(
+				"orderByType", "asc"
+			).buildString()
+		%>'
 		icon="caret-top"
 		label="ascending"
 	/>
 </li>
-
-<%
-PortletURL orderByColDescURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(portletURL, liferayPortletResponse)
-).setParameter(
-	"orderByCol", orderByCol
-).setParameter(
-	"orderByType", "desc"
-).build();
-%>
-
 <li>
 	<liferay-frontend:management-bar-button
 		active='<%= Validator.isNotNull(orderByType) && orderByType.equals("desc") %>'
 		cssClass="d-none d-sm-block"
 		disabled="<%= disabled %>"
-		href="<%= orderByColDescURL.toString() %>"
+		href='<%=
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(portletURL, liferayPortletResponse)
+			).setParameter(
+				"orderByCol", orderByCol
+			).setParameter(
+				"orderByType", "desc"
+			).buildString()
+		%>'
 		icon="caret-bottom"
 		label="descending"
 	/>

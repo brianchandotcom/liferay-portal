@@ -40,14 +40,6 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 			if (hasVisibleAttributes) {
 				action = PortletProvider.Action.MANAGE;
 			}
-
-			PortletURL customFieldsURL = PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(request, ExpandoColumn.class.getName(), action)
-			).setRedirect(
-				currentURL
-			).setParameter(
-				"modelResource", User.class.getName()
-			).build();
 			%>
 
 			<liferay-ui:icon
@@ -56,7 +48,15 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 				linkCssClass="btn btn-secondary btn-sm"
 				message='<%= hasVisibleAttributes ? "manage" : "add" %>'
 				method="get"
-				url="<%= customFieldsURL.toString() %>"
+				url='<%=
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(request, ExpandoColumn.class.getName(), action)
+					).setRedirect(
+						currentURL
+					).setParameter(
+						"modelResource", User.class.getName()
+					).buildString()
+				%>'
 			/>
 		</clay:content-col>
 	</c:if>

@@ -69,20 +69,22 @@ if (fileShortcut == null) {
 else {
 	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
 }
-
-PortletURL rowURL = PortletURLBuilder.createRenderURL(
-	liferayPortletResponse
-).setMVCRenderCommandName(
-	"/document_library/view_file_entry"
-).setRedirect(
-	HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax")
-).setParameter(
-	"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
-).build();
 %>
 
 <h2 class="h5">
-	<aui:a href="<%= rowURL.toString() %>">
+	<aui:a
+		href='<%=
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/document_library/view_file_entry"
+			).setRedirect(
+				HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax")
+			).setParameter(
+				"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
+			).buildString()
+		%>'
+	>
 		<%= latestFileVersion.getTitle() %>
 	</aui:a>
 </h2>

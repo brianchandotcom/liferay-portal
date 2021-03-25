@@ -37,26 +37,23 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 
 	<clay:content-col>
 		<span class="heading-end">
-
-			<%
-			PortletURL editURL = PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setMVCPath(
-				"/common/edit_phone_number.jsp"
-			).setRedirect(
-				currentURL
-			).setParameter(
-				"className", className
-			).setParameter(
-				"classPK", classPK
-			).build();
-			%>
-
 			<liferay-ui:icon
 				label="<%= true %>"
 				linkCssClass="add-phone-number-link btn btn-secondary btn-sm"
 				message="add"
-				url="<%= editURL.toString() %>"
+				url='<%=
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/common/edit_phone_number.jsp"
+					).setRedirect(
+						currentURL
+					).setParameter(
+						"className", className
+					).setParameter(
+						"classPK", classPK
+					).buildString()
+				%>'
 			/>
 		</span>
 	</clay:content-col>

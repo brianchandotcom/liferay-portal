@@ -37,26 +37,23 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 
 	<clay:content-col>
 		<span class="heading-end">
-
-			<%
-			PortletURL editURL = PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setMVCPath(
-				"/common/edit_email_address.jsp"
-			).setRedirect(
-				currentURL
-			).setParameter(
-				"className", className
-			).setParameter(
-				"classPK", classPK
-			).build();
-			%>
-
 			<liferay-ui:icon
 				label="<%= true %>"
 				linkCssClass="add-email-address-link btn btn-secondary btn-sm"
 				message="add"
-				url="<%= editURL.toString() %>"
+				url='<%=
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/common/edit_email_address.jsp"
+					).setRedirect(
+						currentURL
+					).setParameter(
+						"className", className
+					).setParameter(
+						"classPK", classPK
+					).buildString()
+				%>'
 			/>
 		</span>
 	</clay:content-col>

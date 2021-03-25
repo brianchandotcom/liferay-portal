@@ -37,8 +37,6 @@ page import="com.liferay.portal.settings.authentication.ldap.web.internal.portle
 
 <%@ page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

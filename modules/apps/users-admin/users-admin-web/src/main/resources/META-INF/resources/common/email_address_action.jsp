@@ -34,26 +34,23 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-
-	<%
-	PortletURL editURL = PortletURLBuilder.createRenderURL(
-		liferayPortletResponse
-	).setMVCPath(
-		"/common/edit_email_address.jsp"
-	).setRedirect(
-		currentURL
-	).setParameter(
-		"className", className
-	).setParameter(
-		"classPK", classPK
-	).setParameter(
-		"primaryKey", emailAddressId
-	).build();
-	%>
-
 	<liferay-ui:icon
 		message="edit"
-		url="<%= editURL.toString() %>"
+		url='<%=
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCPath(
+				"/common/edit_email_address.jsp"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"className", className
+			).setParameter(
+				"classPK", classPK
+			).setParameter(
+				"primaryKey", emailAddressId
+			).buildString()
+		%>'
 	/>
 
 	<%
@@ -72,29 +69,27 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	).setParameter(
 		"primaryKey", emailAddressId
 	).build();
-
-	PortletURL makePrimaryURL = PortletURLBuilder.create(
-		PortletURLUtil.clone(portletURL, renderResponse)
-	).setParameter(
-		Constants.CMD, "makePrimary"
-	).build();
 	%>
 
 	<liferay-ui:icon
 		message="make-primary"
-		url="<%= makePrimaryURL.toString() %>"
+		url='<%=
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(portletURL, renderResponse)
+			).setParameter(
+				Constants.CMD, "makePrimary"
+			).buildString()
+		%>'
 	/>
-
-	<%
-	PortletURL removeEmailAddressURL = PortletURLBuilder.create(
-		PortletURLUtil.clone(portletURL, renderResponse)
-	).setParameter(
-		Constants.CMD, Constants.DELETE
-	).build();
-	%>
 
 	<liferay-ui:icon
 		message="remove"
-		url="<%= removeEmailAddressURL.toString() %>"
+		url="<%=
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(portletURL, renderResponse)
+			).setParameter(
+				Constants.CMD, Constants.DELETE
+			).buildString()
+		%>"
 	/>
 </liferay-ui:icon-menu>

@@ -24,8 +24,7 @@ taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigat
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.layout.item.selector.web.internal.constants.LayoutsItemSelectorWebKeys" %><%@
-page import="com.liferay.layout.item.selector.web.internal.display.context.LayoutItemSelectorViewDisplayContext" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+page import="com.liferay.layout.item.selector.web.internal.display.context.LayoutItemSelectorViewDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

@@ -243,7 +243,35 @@ public class Log4jConfigUtil {
 					Objects.equals(
 						appenderName, element.attributeValue("name"))) {
 
-					element.addAttribute("name", appenderName.concat(suffix));
+					for (Element childElement :
+							element.elements("rollingPolicy")) {
+
+						for (Element paramElement :
+								childElement.elements("param")) {
+
+							if (Objects.equals(
+									paramElement.attributeValue("name"),
+									"FileNamePattern")) {
+
+								String value = paramElement.attributeValue(
+									"value");
+
+								value = value.substring(
+									value.lastIndexOf(StringPool.SLASH) + 1);
+
+								suffix = value.substring(
+									0, value.indexOf(StringPool.PERIOD));
+							}
+						}
+					}
+
+					element.addAttribute(
+						"name",
+						appenderName.concat(
+							StringPool.UNDERLINE
+						).concat(
+							suffix
+						));
 
 					renamed = true;
 				}
@@ -255,7 +283,12 @@ public class Log4jConfigUtil {
 							appenderName, childElement.attributeValue("ref"))) {
 
 						childElement.addAttribute(
-							"ref", appenderName.concat(suffix));
+							"ref",
+							appenderName.concat(
+								StringPool.UNDERLINE
+							).concat(
+								suffix
+							));
 					}
 				}
 			}

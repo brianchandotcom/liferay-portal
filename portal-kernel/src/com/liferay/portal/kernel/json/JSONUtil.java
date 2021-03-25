@@ -250,18 +250,6 @@ public class JSONUtil {
 		return false;
 	}
 
-	public static boolean isEmpty(String json) {
-		if (Validator.isNull(json)) {
-			return true;
-		}
-
-		if (Objects.equals(json, "[]") || Objects.equals(json, "{}")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public static boolean isValid(String json) {
 		try {
 			_createJSONObject(json);

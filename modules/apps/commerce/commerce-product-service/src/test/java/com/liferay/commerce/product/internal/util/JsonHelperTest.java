@@ -113,39 +113,39 @@ public class JsonHelperTest {
 
 		Assert.assertFalse(
 			"{\"key\":\"value\"} is not a JSON array",
-			JSONUtil.isEmpty("{\"key\":\"value\"}"));
+			JSONUtil.isArray("{\"key\":\"value\"}"));
 
-		Assert.assertFalse(
+		Assert.assertTrue(
 			"[{\"key\":\"value\"}] is a JSON array",
-			JSONUtil.isEmpty("[{\"key\":\"value\"}]"));
+			JSONUtil.isArray("[{\"key\":\"value\"}]"));
 
-		Assert.assertFalse(
+		Assert.assertTrue(
 			"[\"value1\",\"value2\"] is a JSON array",
-			JSONUtil.isEmpty("[\"value1\",\"value2\"]"));
+			JSONUtil.isArray("[\"value1\",\"value2\"]"));
 	}
 
 	@Test
-	public void testIsEmpty() {
+	public void testisValid() {
 		Assert.assertTrue(
-			"null is an empty JSON string", JSONUtil.isEmpty(null));
+			"null is an empty JSON string", JSONUtil.isValid(null));
 
-		Assert.assertTrue("\"\" is an empty JSON string", JSONUtil.isEmpty(""));
+		Assert.assertTrue("\"\" is an empty JSON string", JSONUtil.isValid(""));
 
-		Assert.assertTrue("[] is an empty JSON string", JSONUtil.isEmpty("[]"));
+		Assert.assertTrue("[] is an empty JSON string", JSONUtil.isValid("[]"));
 
-		Assert.assertTrue("{} is an empty JSON string", JSONUtil.isEmpty("{}"));
+		Assert.assertTrue("{} is an empty JSON string", JSONUtil.isValid("{}"));
 
-		Assert.assertFalse(
+		Assert.assertTrue(
 			"{\"key\":\"value\"} is not an empty JSON string",
-			JSONUtil.isEmpty("{\"key\":\"value\"}"));
+			JSONUtil.isValid("{\"key\":\"value\"}"));
 
-		Assert.assertFalse(
+		Assert.assertTrue(
 			"[{\"key\":\"value\"}] is not an empty JSON string",
-			JSONUtil.isEmpty("[{\"key\":\"value\"}]"));
+			JSONUtil.isValid("[{\"key\":\"value\"}]"));
 
-		Assert.assertFalse(
+		Assert.assertTrue(
 			"[\"value1\",\"value2\"] is not an empty JSON string",
-			JSONUtil.isEmpty("[\"value1\",\"value2\"]"));
+			JSONUtil.isValid("[\"value1\",\"value2\"]"));
 	}
 
 	private void _assertException(

@@ -68,13 +68,10 @@ public class BoostContentInCategoryByKeywordMatchTest
 		assertSearch(blueprint, null, "[coca cola, pepsi cola]", "cola", null);
 
 		String configurationString = getConfigurationString(
-			getQueryElementJSONObject(
-				100, _assetCategory.getCategoryId(),
-				EvaluationType.ANY_WORD_IN.getjsonValue()));
+			getQueryElementJSONObject(100, _assetCategory.getCategoryId()));
 
 		String selectedElementString = getSelectedElementString(
-			100, _assetCategory.getCategoryId(),
-			EvaluationType.ANY_WORD_IN.getjsonValue());
+			100, _assetCategory.getCategoryId());
 
 		assertSearch(
 			blueprint, configurationString, "[pepsi cola, coca cola]", "cola",

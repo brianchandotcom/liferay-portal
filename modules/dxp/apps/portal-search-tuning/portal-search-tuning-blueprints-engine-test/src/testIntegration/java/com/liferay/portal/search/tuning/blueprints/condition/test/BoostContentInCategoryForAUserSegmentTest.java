@@ -93,13 +93,10 @@ public class BoostContentInCategoryForAUserSegmentTest
 		assertSearch(blueprint, null, "[coca cola, pepsi cola]", "cola", null);
 
 		String configurationString = getConfigurationString(
-			getQueryElementJSONObject(
-				1000, _assetCategory.getCategoryId(),
-				EvaluationType.CONTAINS.getjsonValue()));
+			getQueryElementJSONObject(1000, _assetCategory.getCategoryId()));
 
 		String selectedElementString = getSelectedElementString(
-			1000, _assetCategory.getCategoryId(),
-			EvaluationType.CONTAINS.getjsonValue());
+			1000, _assetCategory.getCategoryId());
 
 		assertSearch(
 			blueprint, configurationString, "[pepsi cola, coca cola]", "cola",

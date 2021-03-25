@@ -62,9 +62,7 @@ public abstract class BaseBoostContentInCategoryTestCase
 		return "thumbs-up";
 	}
 
-	protected JSONObject getQueryElementJSONObject(
-		int boost, long categoryId, String evaluationType) {
-
+	protected JSONObject getQueryElementJSONObject(int boost, long categoryId) {
 		return JSONUtil.put(
 			"category", "conditional"
 		).put(
@@ -103,8 +101,7 @@ public abstract class BaseBoostContentInCategoryTestCase
 		);
 	}
 
-	protected String getSelectedElementString(
-			int boost, long categoryId, String evaluationType)
+	protected String getSelectedElementString(int boost, long categoryId)
 		throws Exception {
 
 		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject();

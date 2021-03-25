@@ -73,13 +73,10 @@ public class BoostContentInCategoryForNewUserAccountsTest
 			"policies", null);
 
 		String configurationString = getConfigurationString(
-			getQueryElementJSONObject(
-				1000, _assetCategory.getCategoryId(),
-				EvaluationType.IN_RANGE.getjsonValue()));
+			getQueryElementJSONObject(1000, _assetCategory.getCategoryId()));
 
 		String selectedElementString = getSelectedElementString(
-			1000, _assetCategory.getCategoryId(),
-			EvaluationType.IN_RANGE.getjsonValue());
+			1000, _assetCategory.getCategoryId());
 
 		assertSearch(
 			blueprint, configurationString,

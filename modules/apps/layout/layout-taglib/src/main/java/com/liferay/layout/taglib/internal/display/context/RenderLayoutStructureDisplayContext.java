@@ -406,7 +406,7 @@ public class RenderLayoutStructureDisplayContext {
 			StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
-		StringBundler cssClassSB = new StringBundler(33);
+		StringBundler cssClassSB = new StringBundler(34);
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getAlign())) {
 			cssClassSB.append(" ");
@@ -436,9 +436,15 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		if (Objects.equals(
-				styledLayoutStructureItem.getContentDisplay(), "flex")) {
+				styledLayoutStructureItem.getContentDisplay(), "flex-column")) {
 
-			cssClassSB.append(" d-flex");
+			cssClassSB.append(" d-flex flex-column");
+		}
+
+		if (Objects.equals(
+				styledLayoutStructureItem.getContentDisplay(), "flex-row")) {
+
+			cssClassSB.append(" d-flex flex-row");
 		}
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getJustify())) {

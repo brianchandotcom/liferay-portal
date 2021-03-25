@@ -42,6 +42,10 @@ public class DDMFormFieldRenderingContext {
 		return _childElementsHTML;
 	}
 
+	public long getDDMFormInstanceId() {
+		return _ddmFormInstanceId;
+	}
+
 	public Fields getFields() {
 		return _fields;
 	}
@@ -116,6 +120,10 @@ public class DDMFormFieldRenderingContext {
 
 	public boolean isVisible() {
 		return MapUtil.getBoolean(_properties, "visible");
+	}
+
+	public void setDDMFormInstanceId(long ddmFormInstanceId) {
+		_ddmFormInstanceId = ddmFormInstanceId;
 	}
 
 	public void setField(Field field) {
@@ -205,6 +213,7 @@ public class DDMFormFieldRenderingContext {
 	}
 
 	private String _childElementsHTML;
+	private long _ddmFormInstanceId;
 	private Fields _fields;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;

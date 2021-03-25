@@ -57,7 +57,9 @@ definition {
 	}
 
 	macro addPG {
-		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
+		DMNavigator.gotoAddDocumentTypePG(
+			contentPage = "${contentPage}",
+			dmDocumentTypeName = "External Video Shortcut");
 
 		Type(
 			key_text = "Video URL",

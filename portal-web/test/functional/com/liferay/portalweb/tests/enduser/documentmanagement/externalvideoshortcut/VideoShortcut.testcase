@@ -445,6 +445,7 @@ definition {
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
 		VideoShortcut.addPG(
+			contentPage = "true",
 			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",

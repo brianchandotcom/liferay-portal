@@ -202,6 +202,29 @@ public class Log4jConfigUtil {
 		LogManager.shutdown();
 	}
 
+	private static String _getLog4j1AppenderSuffix(Element element) {
+		String suffix = StringUtil.randomString();
+
+		for (Element childElement : element.elements("rollingPolicy")) {
+			for (Element paramElement : childElement.elements("param")) {
+				if (Objects.equals(
+						paramElement.attributeValue("name"),
+						"FileNamePattern")) {
+
+					String value = paramElement.attributeValue("value");
+
+					value = value.substring(
+						value.lastIndexOf(StringPool.SLASH) + 1);
+
+					suffix = value.substring(
+						0, value.indexOf(StringPool.PERIOD));
+				}
+			}
+		}
+
+		return StringPool.UNDERLINE.concat(suffix);
+	}
+
 	private static void _removeAppender(
 		Element parentElement, String appenderRefTagName,
 		String appenderTagName, String... removedAppenderNames) {
@@ -236,42 +259,16 @@ public class Log4jConfigUtil {
 		boolean renamed = false;
 
 		for (String appenderName : _RESERVED_APPENDER_NAMES) {
-			String suffix = StringUtil.randomString();
+			String suffix = null;
 
 			for (Element element : parentElement.elements()) {
 				if (Objects.equals("appender", element.getName()) &&
 					Objects.equals(
 						appenderName, element.attributeValue("name"))) {
 
-					for (Element childElement :
-							element.elements("rollingPolicy")) {
+					suffix = _getLog4j1AppenderSuffix(element);
 
-						for (Element paramElement :
-								childElement.elements("param")) {
-
-							if (Objects.equals(
-									paramElement.attributeValue("name"),
-									"FileNamePattern")) {
-
-								String value = paramElement.attributeValue(
-									"value");
-
-								value = value.substring(
-									value.lastIndexOf(StringPool.SLASH) + 1);
-
-								suffix = value.substring(
-									0, value.indexOf(StringPool.PERIOD));
-							}
-						}
-					}
-
-					element.addAttribute(
-						"name",
-						appenderName.concat(
-							StringPool.UNDERLINE
-						).concat(
-							suffix
-						));
+					element.addAttribute("name", appenderName.concat(suffix));
 
 					renamed = true;
 				}
@@ -283,12 +280,7 @@ public class Log4jConfigUtil {
 							appenderName, childElement.attributeValue("ref"))) {
 
 						childElement.addAttribute(
-							"ref",
-							appenderName.concat(
-								StringPool.UNDERLINE
-							).concat(
-								suffix
-							));
+							"ref", appenderName.concat(suffix));
 					}
 				}
 			}

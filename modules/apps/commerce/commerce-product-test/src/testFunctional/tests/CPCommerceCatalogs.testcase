@@ -35,6 +35,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-6278. AddAnImageToCatalogAndRemove"
+	@ignore = "true"
+	@priority = "3"
+	test AddAnImageToCatalogAndRemove {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6278 AddAnImageToCatalogAndRemove
+
+	}
+
 	test CreateNewCatalog {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceCatalogs#CreateNewCatalog";
@@ -68,15 +78,6 @@ definition {
 			catalogName = "Test Catalog");
 	}
 
-	@description = "This is a test for COMMERCE-6272. RemoveACatalog"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveACatalog {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6272 RemoveACatalog
-	}
-
 	@description = "This is a test for COMMERCE-6273. EditACatalog"
 	@ignore = "true"
 	@priority = "3"
@@ -86,15 +87,6 @@ definition {
 		// TODO COMMERCE-6273 EditACatalog
 	}
 
-	@description = "This is a test for COMMERCE-6278. AddAnImageToCatalogAndRemove"
-	@ignore = "true"
-	@priority = "3"
-	test AddAnImageToCatalogAndRemove {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6278 AddAnImageToCatalogAndRemove
-	}
-
 	@description = "This is a test for COMMERCE-6279. EditAPermissionOnACatalog"
 	@ignore = "true"
 	@priority = "3"
@@ -102,6 +94,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6279 EditAPermissionOnACatalog
+	}
+
+	@description = "This is a test for COMMERCE-6272. RemoveACatalog"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveACatalog {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6272 RemoveACatalog
 	}
 
 }

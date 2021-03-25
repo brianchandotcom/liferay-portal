@@ -37,16 +37,26 @@ definition {
 		}
 	}
 
-    @description = "This is a test for COMMERCE-6281. RemoveSpecificationLabel"
+	@description = "This is a test for COMMERCE-6283. EditSpecificationGroup"
 	@ignore = "true"
 	@priority = "3"
-	test RemoveSpecificationLabel {
+	test EditSpecificationGroup {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6281 RemoveSpecificationLabel
+		// TODO COMMERCE-6283 EditSpecificationGroup
+
 	}
 
-    @description = "This is a test for COMMERCE-6282. RemoveSpecificationGroup"
+	@description = "This is a test for COMMERCE-6284. EditSpecificationLabel"
+	@ignore = "true"
+	@priority = "3"
+	test EditSpecificationLabel {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6284 EditSpecificationLabel
+	}
+
+	@description = "This is a test for COMMERCE-6282. RemoveSpecificationGroup"
 	@ignore = "true"
 	@priority = "3"
 	test RemoveSpecificationGroup {
@@ -55,21 +65,13 @@ definition {
 		// TODO COMMERCE-6282 RemoveSpecificationGroup
 	}
 
-    @description = "This is a test for COMMERCE-6283. EditSpecificationGroup"
+	@description = "This is a test for COMMERCE-6281. RemoveSpecificationLabel"
 	@ignore = "true"
 	@priority = "3"
-	test EditSpecificationGroup {
+	test RemoveSpecificationLabel {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6283 EditSpecificationGroup
+		// TODO COMMERCE-6281 RemoveSpecificationLabel
 	}
 
-    @description = "This is a test for COMMERCE-6284. EditSpecificationLabel"
-	@ignore = "true"
-	@priority = "3"
-	test EditSpecificationLabel {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6284 EditSpecificationLabel
-	}
 }

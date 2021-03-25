@@ -101,6 +101,15 @@ definition {
 		// TODO COMMERCE-6123 AddTaxRateSettingsFixedTaxRateTaxCalculation
 	}
 
+	@description = "This is a test for COMMERCE-6195. CreateCategoryDisplayPage"
+	@ignore = "true"
+	@priority = "3"
+	test CreateCategoryDisplayPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6195 CreateCategoryDisplayPage
+	}
+
 	test CreateNewChannel {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewChannel";
@@ -171,6 +180,15 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
+	@description = "This is a test for COMMERCE-6197. CreateProductDisplayPage"
+	@ignore = "true"
+	@priority = "3"
+	test CreateProductDisplayPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6197 CreateProductDisplayPage
+	}
+
 	@description = "This is a test for COMMERCE-6109. EditAuthorizePaymentMethod"
 	@ignore = "true"
 	@priority = "3"
@@ -187,6 +205,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6119 EditAvalaraTaxCalculation
+	}
+
+	@description = "This is a test for COMMERCE-6275. EditCategoryDisplayPage"
+	@ignore = "true"
+	@priority = "3"
+	test EditCategoryDisplayPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6275 EditCategoryDisplayPage
 	}
 
 	@description = "This is a test for COMMERCE-6122. EditConfigurationRemoteTaxCalculation"
@@ -216,6 +243,15 @@ definition {
 		// TODO COMMERCE-6105 EditMoneyOrderPaymentMethod
 	}
 
+	@description = "This is a test for COMMERCE-6276. EditNotificationTemplate"
+	@ignore = "true"
+	@priority = "3"
+	test EditNotificationTemplate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6276 EditNotificationTemplate
+	}
+
 	@description = "This is a test for COMMERCE-6106. EditPaypalPaymentMethod"
 	@ignore = "true"
 	@priority = "3"
@@ -223,6 +259,51 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6106 EditPaypalPaymentMethod
+	}
+
+	@description = "This is a test for COMMERCE-6274. EditProductDisplayPage"
+	@ignore = "true"
+	@priority = "3"
+	test EditProductDisplayPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6274 EditProductDisplayPage
+	}
+
+	@description = "This is a test for COMMERCE-6198. RemoveCategoryDisplayPage"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveCategoryDisplayPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6198 RemoveCategoryDisplayPage
+	}
+
+	@description = "This is a test for COMMERCE-6270. RemoveNotificationQueue"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveNotificationQueue {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6270 RemoveNotificationQueue
+	}
+
+	@description = "This is a test for COMMERCE-6271. RemoveNotificationTemplate"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveNotificationTemplate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6271 RemoveNotificationTemplate
+	}
+
+	@description = "This is a test for COMMERCE-6196. RemoveProductDisplayPage"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveProductDisplayPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6196 RemoveProductDisplayPage
 	}
 
 	@description = "This is a test for COMMERCE-6114. RemoveShippingOptionFlatRate"
@@ -270,60 +351,6 @@ definition {
 		// TODO COMMERCE-6124 RemoveTaxRateSettingsFixedTaxRateTaxCalculation
 	}
 
-	@description = "This is a test for COMMERCE-6101. UseSearchBar"
-	@ignore = "true"
-	@priority = "3"
-	test UseSearchBar {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6101 UseSearchBar
-	}
-
-	@description = "This is a test for COMMERCE-6195. CreateCategoryDisplayPage"
-	@ignore = "true"
-	@priority = "3"
-	test CreateCategoryDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6195 CreateCategoryDisplayPage
-	}
-
-	@description = "This is a test for COMMERCE-6196. RemoveProductDisplayPage"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveProductDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6196 RemoveProductDisplayPage
-	}
-
-	@description = "This is a test for COMMERCE-6197. CreateProductDisplayPage"
-	@ignore = "true"
-	@priority = "3"
-	test CreateProductDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6197 CreateProductDisplayPage
-	}
-
-	@description = "This is a test for COMMERCE-6198. RemoveCategoryDisplayPage"
-	@ignore = "true"
-	@priority = "3"
-	test RemoveCategoryDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6198 RemoveCategoryDisplayPage
-	}
-
-	@description = "This is a test for COMMERCE-6266. VerifyNotificationQueue"
-	@ignore = "true"
-	@priority = "3"
-	test VerifyNotificationQueue {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6266 VerifyNotificationQueue
-	}
-
 	@description = "This is a test for COMMERCE-6267. UsePunchOut"
 	@ignore = "true"
 	@priority = "3"
@@ -333,49 +360,22 @@ definition {
 		// TODO COMMERCE-6267 UsePunchOut
 	}
 
-	@description = "This is a test for COMMERCE-6270. RemoveNotificationQueue"
+	@description = "This is a test for COMMERCE-6101. UseSearchBar"
 	@ignore = "true"
 	@priority = "3"
-	test RemoveNotificationQueue {
+	test UseSearchBar {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6270 RemoveNotificationQueue
+		// TODO COMMERCE-6101 UseSearchBar
 	}
 
-	@description = "This is a test for COMMERCE-6271. RemoveNotificationTemplate"
+	@description = "This is a test for COMMERCE-6266. VerifyNotificationQueue"
 	@ignore = "true"
 	@priority = "3"
-	test RemoveNotificationTemplate {
+	test VerifyNotificationQueue {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6271 RemoveNotificationTemplate
-	}
-
-	@description = "This is a test for COMMERCE-6274. EditProductDisplayPage"
-	@ignore = "true"
-	@priority = "3"
-	test EditProductDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6274 EditProductDisplayPage
-	}
-
-	@description = "This is a test for COMMERCE-6275. EditCategoryDisplayPage"
-	@ignore = "true"
-	@priority = "3"
-	test EditCategoryDisplayPage {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6275 EditCategoryDisplayPage
-	}
-
-	@description = "This is a test for COMMERCE-6276. EditNotificationTemplate"
-	@ignore = "true"
-	@priority = "3"
-	test EditNotificationTemplate {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6276 EditNotificationTemplate
+		// TODO COMMERCE-6266 VerifyNotificationQueue
 	}
 
 }

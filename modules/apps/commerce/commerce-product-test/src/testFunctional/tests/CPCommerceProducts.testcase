@@ -37,6 +37,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-6269. AddAnOptionAndVerifyIfIsPresent"
+	@ignore = "true"
+	@priority = "3"
+	test AddAnOptionAndVerifyIfIsPresent {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6269 AddAnOptionAndVerifyIfIsPresent
+
+	}
+
 	@description = "This is a test for COMMERCE-6020. AddASKU"
 	@ignore = "true"
 	@priority = "3"
@@ -44,7 +54,33 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6020 AddASKU
+	}
 
+	@description = "This is a test for COMMERCE-6287. AddASpecificationAndVerifyIfIsPresent"
+	@ignore = "true"
+	@priority = "3"
+	test AddASpecificationAndVerifyIfIsPresent {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6287 AddASpecificationAndVerifyIfIsPresent
+	}
+
+	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"
+	@ignore = "true"
+	@priority = "3"
+	test AddGroupedProduct {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6302 AddGroupedProduct
+	}
+
+	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"
+	@ignore = "true"
+	@priority = "3"
+	test AddVirtualProduct {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6301 AddVirtualProduct
 	}
 
 	test CreateProductBundleWithPriceTypeDynamic {
@@ -278,6 +314,24 @@ definition {
 			value1 = "Amortiguador");
 	}
 
+	@description = "This is a test for COMMERCE-6304. UseFriendlyURL"
+	@ignore = "true"
+	@priority = "3"
+	test UseFriendlyURL {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6304 UseFriendlyURL
+	}
+
+	@description = "This is a test for COMMERCE-6303. UseSchedule"
+	@ignore = "true"
+	@priority = "3"
+	test UseSchedule {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6303 UseSchedule
+	}
+
 	@description = "This is a test for COMMERCE-5805. UseSearchBarAndPagination"
 	@ignore = "true"
 	@priority = "3"
@@ -305,57 +359,4 @@ definition {
 		// TODO COMMERCE-5803 UseSortingByNameAndDate
 	}
 
-	@description = "This is a test for COMMERCE-6269. AddAnOptionAndVerifyIfIsPresent"
-	@ignore = "true"
-	@priority = "3"
-	test AddAnOptionAndVerifyIfIsPresent {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6269 AddAnOptionAndVerifyIfIsPresent
-	}
-
-	@description = "This is a test for COMMERCE-6287. AddASpecificationAndVerifyIfIsPresent"
-	@ignore = "true"
-	@priority = "3"
-	test AddASpecificationAndVerifyIfIsPresent {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6287 AddASpecificationAndVerifyIfIsPresent
-	}
-
-	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"
-	@ignore = "true"
-	@priority = "3"
-	test AddVirtualProduct {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6301 AddVirtualProduct
-	}
-
-	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"
-	@ignore = "true"
-	@priority = "3"
-	test AddGroupedProduct {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6302 AddGroupedProduct
-	}
-
-	@description = "This is a test for COMMERCE-6303. UseSchedule"
-	@ignore = "true"
-	@priority = "3"
-	test UseSchedule {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6303 UseSchedule
-	}
-
-	@description = "This is a test for COMMERCE-6304. UseFriendlyURL"
-	@ignore = "true"
-	@priority = "3"
-	test UseFriendlyURL {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6304 UseFriendlyURL
-	}
 }

@@ -86,7 +86,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			return getDefaultCPInstance(cpDefinitionId);
 		}
 
-		if (JSONUtil.isEmpty(serializedDDMFormValues)) {
+		if (JSONUtil.isValid(serializedDDMFormValues)) {
 			return null;
 		}
 

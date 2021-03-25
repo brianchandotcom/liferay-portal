@@ -147,7 +147,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 				// Collect filters and outputs
 
-				if (JSONUtil.isEmpty(parameterValue)) {
+				if (JSONUtil.isValid(parameterValue)) {
 					requestedCPDefinitionOptionRels.add(cpDefinitionOptionRel);
 
 					continue;
@@ -319,7 +319,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 			String optionValueKey = parameterValue;
 
 			if (JSONUtil.isArray(parameterValue) &&
-				!JSONUtil.isEmpty(parameterValue)) {
+				!JSONUtil.isValid(parameterValue)) {
 
 				optionValueKey = JSONUtil.getFirstElementStringValue(
 					parameterValue);

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, wait} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -20,13 +20,17 @@ import '@testing-library/jest-dom/extend-expect';
 describe('TotalCount', () => {
 	afterEach(cleanup);
 
-	it('renders text, help text and total count number', () => {
+	it('renders text, help text and total count number', async () => {
+		const mockDataProvider = jest.fn(() => {
+			return Promise.resolve(9999);
+		});
+
 		const testProps = {
+			dataProvider: mockDataProvider,
 			label: 'Total Views',
 			popoverHeader: 'Total Views',
 			popoverMessage:
 				'This number refers to the total number of views since the content was published.',
-			value: 9999,
 		};
 
 		const {getByRole, getByText} = render(
@@ -35,9 +39,10 @@ describe('TotalCount', () => {
 				label={testProps.label}
 				popoverHeader={testProps.popoverHeader}
 				popoverMessage={testProps.popoverMessage}
-				value={testProps.value}
 			/>
 		);
+
+		await wait(() => expect(mockDataProvider).toHaveBeenCalled());
 
 		expect(getByText('9,999')).toBeInTheDocument();
 
@@ -51,15 +56,21 @@ describe('TotalCount', () => {
 		getByText(
 			'This number refers to the total number of views since the content was published.'
 		);
+
+		expect(mockDataProvider).toHaveBeenCalledTimes(1);
 	});
 
-	it('renders a dash instead of total count number when there is an error', () => {
+	it('renders a dash instead of total count number when there is an error', async () => {
+		const mockDataProvider = jest.fn(() => {
+			return Promise.reject('-');
+		});
+
 		const testProps = {
+			dataProvider: mockDataProvider,
 			label: 'Total Views',
 			popoverHeader: 'Total Views',
 			popoverMessage:
 				'This number refers to the total number of views since the content was published.',
-			value: {undefined},
 		};
 
 		const {getByText} = render(
@@ -71,6 +82,10 @@ describe('TotalCount', () => {
 			/>
 		);
 
+		await wait(() => expect(mockDataProvider).toHaveBeenCalled());
+
 		expect(getByText('-')).toBeInTheDocument();
+
+		expect(mockDataProvider).toHaveBeenCalledTimes(1);
 	});
 });

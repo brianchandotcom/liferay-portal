@@ -26,8 +26,6 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 if (selectAccountUsersManagementToolbarDisplayContext.isSingleSelect()) {
 	userSearchContainer.setRowChecker(null);
 }
-
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "assignAccountUsers");
 %>
 
 <liferay-portlet:renderURL portletName="<%= AccountPortletKeys.ACCOUNT_USERS_ADMIN %>" var="addAccountEntryUserURL">
@@ -117,33 +115,3 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
-
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />accountUsers'
-	);
-
-	searchContainer.on('rowToggled', (event) => {
-		var selectedItems = event.elements.allSelectedElements;
-
-		var result = {};
-
-		if (!selectedItems.isEmpty()) {
-			result = {
-				data: {
-					value: selectedItems.get('value').join(','),
-				},
-			};
-		}
-
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(eventName) %>',
-			result
-		);
-	});
-
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectAccountUser',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
-</aui:script>

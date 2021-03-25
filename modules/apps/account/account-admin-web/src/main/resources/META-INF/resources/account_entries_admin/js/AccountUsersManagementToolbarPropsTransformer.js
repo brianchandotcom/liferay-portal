@@ -76,6 +76,7 @@ export default function propsTransformer({
 						}
 					}
 				},
+				searchContainerId: otherProps.searchContainerId,
 				selectEventName: `${portletNamespace}assignAccountUsers`,
 				title: Liferay.Util.sub(
 					Liferay.Language.get('assign-users-to-x'),

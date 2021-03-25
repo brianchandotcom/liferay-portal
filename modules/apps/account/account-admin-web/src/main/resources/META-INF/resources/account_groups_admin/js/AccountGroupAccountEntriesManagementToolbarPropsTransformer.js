@@ -75,6 +75,7 @@ export default function propsTransformer({
 						}
 					}
 				},
+				searchContainerId: otherProps.searchContainerId,
 				selectEventName: `${portletNamespace}selectAccountEntries`,
 				title: Liferay.Util.sub(
 					Liferay.Language.get('assign-accounts-to-x'),

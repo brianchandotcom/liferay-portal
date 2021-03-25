@@ -104,10 +104,3 @@ accountEntryAddressDisplaySearchContainer.setRowChecker(null);
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
-
-<script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectDefaultAddress',
-		'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectDefaultAddress") %>'
-	);
-</script>

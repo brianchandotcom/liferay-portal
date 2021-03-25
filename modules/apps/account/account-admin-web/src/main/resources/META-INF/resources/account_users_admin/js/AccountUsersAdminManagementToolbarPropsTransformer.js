@@ -87,6 +87,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					navigate(redirectURL);
 				}
 			},
+			searchContainerId: `${portletNamespace}accountEntries`,
 			selectEventName: `${portletNamespace}selectAccountEntries`,
 			title: itemData?.dialogTitle,
 			url: itemData?.accountEntriesSelectorURL,

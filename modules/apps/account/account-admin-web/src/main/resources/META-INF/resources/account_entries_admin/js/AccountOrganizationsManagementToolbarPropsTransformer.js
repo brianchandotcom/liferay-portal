@@ -70,6 +70,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						}
 					}
 				},
+				searchContainerId: `${portletNamespace}organizations`,
 				selectEventName: `${portletNamespace}assignAccountOrganizations`,
 				title: Liferay.Util.sub(
 					Liferay.Language.get('assign-organizations-to-x'),

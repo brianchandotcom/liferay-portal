@@ -44,9 +44,16 @@ definition {
 
 		PortletEntry.inputName(name = "${adtType} Test ADT");
 
-		UploadCommonFile(
-			locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
-			value1 = "${adtFile}");
+		if (isSet(templateScript)) {
+			Type.typeAceEditor(
+				locator1 = "TextArea#ACE_EDITOR",
+				value1 = "${templateScript}");
+		}
+		else {
+			UploadCommonFile(
+				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
+				value1 = "${adtFile}");
+		}
 
 		PortletEntry.save();
 

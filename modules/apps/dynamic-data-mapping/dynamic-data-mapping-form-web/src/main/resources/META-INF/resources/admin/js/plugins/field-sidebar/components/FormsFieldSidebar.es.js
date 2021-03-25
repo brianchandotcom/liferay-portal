@@ -22,7 +22,7 @@ import {
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
 import React from 'react';
 
-import {EVENT_TYPES} from '../../../../eventTypes.es';
+import {EVENT_TYPES} from '../../../eventTypes.es';
 import ElementSetList from './ElementSetList.es';
 
 const sortFieldTypes = (fieldTypes) =>

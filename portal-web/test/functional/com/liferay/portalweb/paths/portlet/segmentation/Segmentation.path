@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_FIELDS_TYPE</td>
+	<td>//a[contains(@class, 'sidebar-collapse-header') and contains(text(),'${key_typeName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_OPTIONS_MENU</td>
 	<td>//*[@id='qfkd____']</td>
 	<td></td>

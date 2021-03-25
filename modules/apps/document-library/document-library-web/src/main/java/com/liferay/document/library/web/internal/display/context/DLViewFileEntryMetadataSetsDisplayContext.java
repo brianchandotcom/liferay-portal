@@ -395,6 +395,7 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			"dataDefinitionId", String.valueOf(ddmStructure.getStructureId()));
 		actionURL.setParameter("keywords", _getKeywords());
 		actionURL.setParameter("navigation", "file_entry_metadata_sets");
+		actionURL.setParameter("redirect", String.valueOf(_getRedirect()));
 
 		return actionURL;
 	}
@@ -407,6 +408,14 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		_keywords = ParamUtil.getString(_liferayPortletRequest, "keywords");
 
 		return _keywords;
+	}
+
+	private String _getRedirect() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getURLCurrent();
 	}
 
 	private final DDMStructureLinkLocalService _ddmStructureLinkLocalService;

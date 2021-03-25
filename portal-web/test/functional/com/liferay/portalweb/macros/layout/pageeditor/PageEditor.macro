@@ -731,6 +731,15 @@ definition {
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
 	}
 
+	macro clearSelection {
+		Click(
+			key_fieldLabel = "${fieldLabel}",
+			key_text = "times-circle",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro clickBack {
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 	}

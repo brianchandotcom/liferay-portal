@@ -1,0 +1,16 @@
+@import 'atlas-variables';
+
+.page-editor__sidebar__browser {
+	height: calc(100% - 16px);
+
+	&__tabs {
+		border-bottom: 1px solid $gray-300;
+		font-size: 12px;
+		margin-bottom: 16px;
+		padding: 0 16px;
+	}
+
+	&__tab-content {
+		height: calc(100% - 96px);
+	}
+}

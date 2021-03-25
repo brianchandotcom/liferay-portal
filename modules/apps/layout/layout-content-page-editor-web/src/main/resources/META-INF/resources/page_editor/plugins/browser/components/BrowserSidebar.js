@@ -12,16 +12,67 @@
  * details.
  */
 
-import React from 'react';
+import ClayTabs from '@clayui/tabs';
+import React, {useState} from 'react';
 
+import {useId} from '../../../app/utils/useId';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 
+const TABS = [
+	{
+		component: 'page-elements',
+		label: Liferay.Language.get('page-elements'),
+	},
+	{
+		component: 'page-content',
+		label: Liferay.Language.get('page-content'),
+	}
+];
+
 export default function BrowserSidebar({title}) {
+	const [activeTabId, setActiveTabId] = useState(0);
+	const tabIdNamespace = useId();
+
+	const getTabId = (tabId) => `${tabIdNamespace}tab${tabId}`;
+	const getTabPanelId = (tabId) => `${tabIdNamespace}tabPanel${tabId}`;
+
 	return (
 		<div className="page-editor__sidebar__browser">
 			<SidebarPanelHeader>
 				{title}
 			</SidebarPanelHeader>
+
+			<ClayTabs className="page-editor__sidebar__browser__tabs" modern>
+				{TABS.map((tab, index) => (
+					<ClayTabs.Item
+						active={activeTabId === index}
+						innerProps={{
+							'aria-controls': getTabPanelId(index),
+							id: getTabId(index),
+						}}
+						key={index}
+						onClick={() => setActiveTabId(index)}
+					>
+						{tab.label}
+					</ClayTabs.Item>
+				))}
+			</ClayTabs>
+
+			<ClayTabs.Content
+				activeIndex={activeTabId}
+				className="page-editor__sidebar__browser__tab-content"
+				fade
+			>
+				{TABS.map((tab, index) => (
+					<ClayTabs.TabPane
+						aria-labelledby={getTabId(index)}
+						id={getTabPanelId(index)}
+						key={index}
+					>
+						{tab.component}
+					</ClayTabs.TabPane>
+				))}
+			</ClayTabs.Content>
 		</div>
 	);
 }

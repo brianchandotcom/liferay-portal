@@ -203,4 +203,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "This is a use case for LPS-103516."
+	@priority = "5"
+	test ViewSegmentFieldsType {
+		LexiconEntry.gotoAdd();
+		for (var fieldType : list "User,Organization,Session") {
+			AssertElementPresent(
+				key_typeName = "${fieldType}",
+				locator1 = "Segmentation#SEGMENT_FIELDS_TYPE");
+		}
+	}
+
 }

@@ -21,25 +21,14 @@
 		<#list dataFactory.getSequence(dataFactory.maxJournalArticleVersionCount) as versionCount>
 			<#assign
 				journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount)
-				journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(journalArticleModel, journalArticleCount, versionCount)
 			/>
 
-			${dataFactory.toInsertSQL(journalArticleModel)}
-
-			${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
-
 			<@insertJournalArticle
+				_insertAssetEntry=(versionCount==dataFactory.maxJournalArticleVersionCount)
 				_journalArticleModel=journalArticleModel
 				_journalDDMStructureModel=defaultJournalDDMStructureModel
 				_journalDDMTemplateModel=defaultJournalDDMTemplateModel
 			/>
-
-			<#if versionCount = dataFactory.maxJournalArticleVersionCount>
-				<@insertAssetEntry
-					_categoryAndTag=true
-					_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
-				/>
-			</#if>
 		</#list>
 
 		<@insertMBDiscussion

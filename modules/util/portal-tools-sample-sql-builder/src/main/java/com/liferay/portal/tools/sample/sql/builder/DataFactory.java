@@ -2685,18 +2685,10 @@ public class DataFactory {
 	}
 
 	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
-		JournalArticleModel journalArticleModel, int articleIndex,
-		int versionIndex) {
+		JournalArticleModel journalArticleModel) {
 
 		JournalArticleLocalizationModel journalArticleLocalizationModel =
 			new JournalArticleLocalizationModelImpl();
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("TestJournalArticle_");
-		sb.append(articleIndex);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(versionIndex);
 
 		// PK fields
 
@@ -2712,7 +2704,8 @@ public class DataFactory {
 
 		journalArticleLocalizationModel.setArticlePK(
 			journalArticleModel.getId());
-		journalArticleLocalizationModel.setTitle(sb.toString());
+		journalArticleLocalizationModel.setTitle(
+			journalArticleModel.getUrlTitle());
 		journalArticleLocalizationModel.setLanguageId(
 			journalArticleModel.getDefaultLanguageId());
 

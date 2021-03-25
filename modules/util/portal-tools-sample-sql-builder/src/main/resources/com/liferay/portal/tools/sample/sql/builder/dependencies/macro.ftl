@@ -176,12 +176,26 @@
 	_journalArticleModel
 	_journalDDMStructureModel
 	_journalDDMTemplateModel
+	_insertAssetEntry
 >
+	${dataFactory.toInsertSQL(_journalArticleModel)}
+
+	<#local journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(_journalArticleModel)>
+
+	${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
+
 	${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateModel.templateId))}
 
 	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId))}
 
 	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(_journalArticleModel))}
+
+	<#if _insertAssetEntry>
+		<@insertAssetEntry
+			_categoryAndTag=true
+			_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
+		/>
+	</#if>
 </#macro>
 
 <#macro insertLayout

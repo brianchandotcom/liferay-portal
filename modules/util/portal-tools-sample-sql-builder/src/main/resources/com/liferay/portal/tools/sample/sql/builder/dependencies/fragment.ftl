@@ -2,24 +2,15 @@
 	<#assign
 		journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId)
 		journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, 0, 1)
-		journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(journalArticleModel, 0, 1)
 	/>
 
 	${dataFactory.toInsertSQL(journalArticleResourceModel)}
 
-	${dataFactory.toInsertSQL(journalArticleModel)}
-
-	${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
-
 	<@insertJournalArticle
+		_insertAssetEntry=true
 		_journalArticleModel=journalArticleModel
 		_journalDDMStructureModel=defaultJournalDDMStructureModel
 		_journalDDMTemplateModel=defaultJournalDDMTemplateModel
-	/>
-
-	<@insertAssetEntry
-		_categoryAndTag=true
-		_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
 	/>
 
 	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />

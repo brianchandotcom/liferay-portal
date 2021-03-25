@@ -111,7 +111,9 @@ public class Log4jConfigUtil {
 						priorityElement.attributeValue("value"));
 				}
 
-				if (removedAppenderNames.length > 0) {
+				if ((removedAppenderNames.length > 0) ||
+					_renameLog4j1Appenders(rootElement)) {
+
 					xmlContent = document.asXML();
 				}
 
@@ -229,6 +231,42 @@ public class Log4jConfigUtil {
 			}
 		}
 	}
+
+	private static boolean _renameLog4j1Appenders(Element parentElement) {
+		boolean renamed = false;
+
+		for (String appenderName : _RESERVED_APPENDER_NAMES) {
+			String suffix = StringUtil.randomString();
+
+			for (Element element : parentElement.elements()) {
+				if (Objects.equals("appender", element.getName()) &&
+					Objects.equals(
+						appenderName, element.attributeValue("name"))) {
+
+					element.addAttribute("name", appenderName.concat(suffix));
+
+					renamed = true;
+				}
+
+				for (Element childElement : element.elements()) {
+					if (Objects.equals(
+							childElement.getName(), "appender-ref") &&
+						Objects.equals(
+							appenderName, childElement.attributeValue("ref"))) {
+
+						childElement.addAttribute(
+							"ref", appenderName.concat(suffix));
+					}
+				}
+			}
+		}
+
+		return renamed;
+	}
+
+	private static final String[] _RESERVED_APPENDER_NAMES = {
+		"TEXT_FILE", "XML_FILE"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		Log4jConfigUtil.class);

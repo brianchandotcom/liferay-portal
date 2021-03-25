@@ -18,9 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.message.Message;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -33,5 +35,8 @@ public interface SearchResponseJSONTranslator {
 			BlueprintsAttributes blueprintsAttributes,
 			ResourceBundle resourceBundle, Messages messages)
 		throws PortalException;
+
+	public JSONObject translateErrorMessages(
+		List<Message> errorMessages, ResourceBundle getResourceBundle);
 
 }

@@ -1058,10 +1058,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5805. UseSearchBarAndPagination"
-	@ignore = "true"
 	@priority = "3"
 	test UseSearchBarAndPagination {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProducts#UseSearchBarAndPagination";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

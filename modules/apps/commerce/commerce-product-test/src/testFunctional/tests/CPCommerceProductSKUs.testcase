@@ -210,13 +210,35 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6023. RemoveASKU"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveASKU {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductSKUs#RemoveASKU";
 
-		// TODO COMMERCE-6023. RemoveASKU
+		CommerceConfiguration.reindexAllSearchIndexes();
 
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceSKUs.addSKU(
+			noOption = "true",
+			optionValuesList = "BLACK:10.0");
+
+		Alert.viewSuccessMessage();
+
+		if (IsElementPresent(locator1 = "//a[contains(text(),'BLACKSKU')]")) {
+			CommerceEntry.deleteCommerceEntry();
+		}
+
+		Alert.viewSuccessMessage();
 	}
 
 }

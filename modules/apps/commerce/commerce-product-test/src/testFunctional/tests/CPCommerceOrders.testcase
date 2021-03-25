@@ -108,7 +108,76 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6210 CancelShipmentAndCreateNewFromPendingOrder Pending Implementation
+	}
 
+	test DeactivateCurrency {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceOrders#DeactivateCurrency";
+
+		var currencyName = "British Pound";
+		var currencyAbbreviation = "GBP";
+		var key_buttonAction = "Deactivate";
+		var catalogName = "Master";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Currencies");
+
+		CommerceNavigator.gotoEntry(entryName = "British Pound");
+
+		ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium");
+
+		Click(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM");
+
+		AssertElementNotPresent(
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${currencyName}");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+		Click(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM");
+
+		AssertElementNotPresent(
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${currencyAbbreviation}");
+
+		Button.clickPublish();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		Click(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM");
+
+		AssertElementNotPresent(
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${currencyAbbreviation}");
+
+		Button.clickSave();
 	}
 
 	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
@@ -837,10 +906,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5982. As an order manager, I want to sort orders by ascending or descending order date"
-	@ignore = "true"
 	@priority = "3"
 	test SortOrdersByOrderDate {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceOrders#SortOrdersByOrderDate";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -884,10 +953,10 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5845. As a product specialist I want to see if a SKU is on order"
-	@ignore = "true"
 	@priority = "3"
 	test ViewOrderSKU {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceOrders#ViewOrderSKU";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

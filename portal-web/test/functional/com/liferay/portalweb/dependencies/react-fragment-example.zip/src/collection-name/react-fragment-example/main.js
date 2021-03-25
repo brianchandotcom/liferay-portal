@@ -1,7 +1,7 @@
 Liferay.Loader.define('__FRAGMENT_MODULE_NAME__', [
     'module',
     'require',
-    '@liferay!frontend-js-react-web$react'
+    '__REACT_PROVIDER__$react'
 ], function (__MODULE__, __REQUIRE__) {
     (function (modules) {
         var installedModules = {};
@@ -75,11 +75,11 @@ Liferay.Loader.define('__FRAGMENT_MODULE_NAME__', [
         './src/collection-name/react-fragment-example/main.js': function (module, __webpack_exports__, __webpack_require__) {
             'use strict';
             __webpack_require__.r(__webpack_exports__);
-            var React_raw = __REQUIRE__('frontend-js-react-web$react');
+            var React_raw = __REQUIRE__('__REACT_PROVIDER__$react');
             var React = React_raw && React_raw.__esModule ? React_raw['default'] : React_raw;
             __webpack_exports__['default'] = function (props) {
                 console.log('props', props);
-                return React.createElement('h1', null, 'Hello world');
+                return React.createElement('h1', null, 'Hello World');
             };
         }
     }));

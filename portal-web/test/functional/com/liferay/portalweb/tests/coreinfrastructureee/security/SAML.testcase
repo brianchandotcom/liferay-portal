@@ -1391,20 +1391,54 @@ definition {
 
 	@priority = "4"
 	test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
-		property app.server.bundles.size = "2";
-		property databases.size = "2";
+		property app.server.bundles.size = "1";
+		property databases.size = "1";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		PortalInstances.viewCP(virtualHost = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		User.openUsersAdmin(baseURL = "http://www.able.com:8080");
+
+		User.editEmailAddressCP(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			userScreenName = "test");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		User.logoutPG(specificURL = "http://www.able.com:8080/");
+
+		User.viewLoggedOutPG();
+
+		User.firstLoginPG();
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsIdP(
-			idpURL = "http://www.able.com:9080",
+			idpURL = "http://www.able.com:8080",
 			samlEntityID = "samlidp2");
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.baker.com:10080");
+			spURL = "http://www.baker.com:9080");
 
 		User.logoutPG();
 
@@ -1412,11 +1446,11 @@ definition {
 
 		SAML.connectSPAndIdP(
 			idpEntityID = "samlidp2",
-			idpURL = "http://www.able.com:9080",
+			idpURL = "http://www.able.com:8080",
 			spEntityID = "samlsp",
-			spURL = "http://www.baker.com:10080");
+			spURL = "http://www.baker.com:9080");
 
-		User.logoutPG(specificURL = "http://www.able.com:9080");
+		User.logoutPG(specificURL = "http://www.able.com:8080");
 
 		User.viewLoggedOutPG();
 
@@ -1425,7 +1459,7 @@ definition {
 		SAML.executeSPInitiatedSSO(
 			idpName = "samlidp",
 			samlMultiIdPs = "true",
-			specificURL = "http://www.baker.com:10080");
+			specificURL = "http://www.baker.com:9080");
 
 		User.viewLoggedInPG();
 
@@ -1437,7 +1471,7 @@ definition {
 
 		// Initiate Single Logout via SP with first IdP
 
-		User.logoutPG(specificURL = "http://www.baker.com:10080");
+		User.logoutPG(specificURL = "http://www.baker.com:9080");
 
 		User.viewLoggedOutPG();
 
@@ -1452,25 +1486,25 @@ definition {
 		SAML.executeSPInitiatedSSO(
 			idpName = "samlidp2",
 			samlMultiIdPs = "true",
-			specificURL = "http://www.baker.com:10080");
+			specificURL = "http://www.baker.com:9080");
 
 		User.viewLoggedInPG();
 
 		// Verify second IdP is logged in
 
-		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		User.viewLoggedInPG();
 
 		// Initiate Single Logout via SP with second IdP
 
-		User.logoutPG(specificURL = "http://www.baker.com:10080");
+		User.logoutPG(specificURL = "http://www.baker.com:9080");
 
 		User.viewLoggedOutPG();
 
 		// Verify second IdP is logged out
 
-		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		User.viewLoggedOutPG();
 
@@ -1478,7 +1512,7 @@ definition {
 			idpName = "samlidp",
 			password = "test",
 			samlMultiIdPs = "true",
-			specificURL = "http://www.baker.com:10080",
+			specificURL = "http://www.baker.com:9080",
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -1500,13 +1534,13 @@ definition {
 			locator1 = "CPSAMLAdmin#INFO_MESSAGE",
 			value1 = "You must configure at least one identity provider connection for SAML to function.");
 
-		User.logoutPG(specificURL = "http://www.baker.com:10080");
+		User.logoutPG(specificURL = "http://www.baker.com:9080");
 
 		User.viewLoggedOutPG();
 
 		User.loginPG(
 			password = "test",
-			specificURL = "http://www.baker.com:10080",
+			specificURL = "http://www.baker.com:9080",
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -1518,7 +1552,7 @@ definition {
 
 		SAMLPortlet.configureServiceProvider(allowShowingTheLoginPortlet = "disable");
 
-		User.logoutPG(specificURL = "http://www.baker.com:10080");
+		User.logoutPG(specificURL = "http://www.baker.com:9080");
 
 		User.viewLoggedOutPG();
 

@@ -10,7 +10,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
@@ -36,7 +35,6 @@ export default function Navigation({
 
 	const {
 		endpoints,
-		loading,
 		namespace,
 		page,
 		publishedToday,
@@ -157,9 +155,7 @@ export default function Navigation({
 		return Promise.resolve(trafficSource?.value ?? '-');
 	}, [trafficSourceName, trafficSources]);
 
-	return loading ? (
-		<ClayLoadingIndicator small />
-	) : (
+	return (
 		<>
 			{!validAnalyticsConnection && (
 				<ClayAlert displayType="danger" variant="stripe">

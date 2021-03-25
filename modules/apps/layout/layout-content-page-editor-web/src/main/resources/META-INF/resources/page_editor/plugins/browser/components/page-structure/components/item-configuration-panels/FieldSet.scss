@@ -6,6 +6,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	margin-bottom: $pageEditorSpacing * 2;
 
 	&__field {
 		margin-bottom: $pageEditorSpacing;
@@ -17,8 +18,9 @@
 	}
 
 	&-label {
-		color: $gray-600;
+		border-top: 1px solid $secondary-l3;
+		color: $black;
 		font-size: 0.75rem;
-		font-weight: 600;
+		font-weight: 700;
 	}
 }

@@ -58,7 +58,7 @@ export const FieldSet = ({
 			<>
 				{label && (
 					<div className="align-items-center d-flex justify-content-between page-editor__sidebar__fieldset-label pt-2">
-						<p className="mb-2 text-uppercase">{label}</p>
+						<p className="mb-3 text-uppercase">{label}</p>
 					</div>
 				)}
 

@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -256,42 +258,38 @@ public class Log4jConfigUtil {
 	}
 
 	private static boolean _renameLog4j1Appenders(Element parentElement) {
-		boolean renamed = false;
+		Map<String, String> newAppenderNames = new HashMap<>();
 
-		for (String appenderName : _RESERVED_APPENDER_NAMES) {
-			String suffix = null;
+		for (Element element : parentElement.elements("appender")) {
+			String appenderName = element.attributeValue("name");
 
-			for (Element element : parentElement.elements()) {
-				if (Objects.equals("appender", element.getName()) &&
-					Objects.equals(
-						appenderName, element.attributeValue("name"))) {
+			if (_reservedAppenderNames.contains(appenderName)) {
+				String newAppenderName = appenderName.concat(
+					_getLog4j1AppenderSuffix(element));
 
-					suffix = _getLog4j1AppenderSuffix(element);
+				newAppenderNames.put(appenderName, newAppenderName);
 
-					element.addAttribute("name", appenderName.concat(suffix));
+				element.addAttribute("name", newAppenderName);
+			}
+		}
 
-					renamed = true;
-				}
+		if (newAppenderNames.isEmpty()) {
+			return false;
+		}
 
-				for (Element childElement : element.elements()) {
-					if (Objects.equals(
-							childElement.getName(), "appender-ref") &&
-						Objects.equals(
-							appenderName, childElement.attributeValue("ref"))) {
+		for (Element element : parentElement.elements()) {
+			for (Element childElement : element.elements("appender-ref")) {
+				String newAppenderName = newAppenderNames.get(
+					childElement.attributeValue("ref"));
 
-						childElement.addAttribute(
-							"ref", appenderName.concat(suffix));
-					}
+				if (newAppenderName != null) {
+					childElement.addAttribute("ref", newAppenderName);
 				}
 			}
 		}
 
-		return renamed;
+		return true;
 	}
-
-	private static final String[] _RESERVED_APPENDER_NAMES = {
-		"TEXT_FILE", "XML_FILE"
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		Log4jConfigUtil.class);
@@ -299,6 +297,8 @@ public class Log4jConfigUtil {
 	private static final CentralizedConfiguration _centralizedConfiguration;
 	private static final LoggerContext _loggerContext =
 		LoggerContext.getContext();
+	private static final List<String> _reservedAppenderNames = Arrays.asList(
+		"TEXT_FILE", "XML_FILE");
 
 	static {
 		PluginManager.addPackage("com.liferay.petra.log4j.internal");

@@ -32,6 +32,7 @@ import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -396,38 +397,17 @@ public class Log4jConfigUtilTest {
 	}
 
 	private String _generateLog4j1XMLConfigurationContent(
-		String loggerName, String priority, Class<?>... appenderTypes) {
+			String loggerName, String priority, Class<?>... appenderTypes)
+		throws Exception {
 
-		StringBundler sb = new StringBundler(10 + (8 * appenderTypes.length));
-
-		sb.append("<?xml version=\"1.0\"?>");
-		sb.append("<!DOCTYPE log4j:configuration SYSTEM \"log4j.dtd\">");
-		sb.append("<log4j:configuration xmlns:log4j=");
-		sb.append("\"http://jakarta.apache.org/log4j/\">");
+		Map<String, String> appenders = new LinkedHashMap<>();
 
 		for (Class<?> appenderType : appenderTypes) {
-			sb.append("<appender class=\"");
-			sb.append(appenderType.getName());
-			sb.append("\" name=\"");
-			sb.append(appenderType.getName());
-			sb.append("\"></appender>");
+			appenders.put(appenderType.getName(), appenderType.getName());
 		}
 
-		sb.append("<category name=\"");
-		sb.append(loggerName);
-		sb.append("\"><priority value=\"");
-		sb.append(priority);
-		sb.append("\" />");
-
-		for (Class<?> appenderType : appenderTypes) {
-			sb.append("<appender-ref ref=\"");
-			sb.append(appenderType.getName());
-			sb.append("\" />");
-		}
-
-		sb.append("</category></log4j:configuration>");
-
-		return sb.toString();
+		return _generateLog4j1XMLConfigurationContent(
+			loggerName, priority, appenders);
 	}
 
 	private String _generateLog4j1XMLConfigurationContent(

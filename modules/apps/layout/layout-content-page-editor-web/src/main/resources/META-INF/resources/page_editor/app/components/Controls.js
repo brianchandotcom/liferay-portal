@@ -17,6 +17,7 @@ import React, {useCallback, useContext, useReducer} from 'react';
 import switchSidebarPanel from '../actions/switchSidebarPanel';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
+import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import {useFromControlsId, useToControlsId} from './CollectionItemContext';
 
@@ -180,12 +181,19 @@ const useSelectItem = () => {
 
 			if (
 				itemId &&
-				!['page-structure', 'comments'].includes(sidebarPanelId)
+				![
+					config.contentBrowsingEnabled
+						? 'browser'
+						: 'page-structure',
+					'comments',
+				].includes(sidebarPanelId)
 			) {
 				storeDispatch(
 					switchSidebarPanel({
 						sidebarOpen: true,
-						sidebarPanelId: 'page-structure',
+						sidebarPanelId: config.contentBrowsingEnabled
+							? 'browser'
+							: 'page-structure',
 					})
 				);
 			}

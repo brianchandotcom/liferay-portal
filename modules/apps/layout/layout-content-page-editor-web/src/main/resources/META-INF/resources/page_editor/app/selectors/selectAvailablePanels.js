@@ -13,9 +13,18 @@
  */
 
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
+import {config} from '../config/index';
 
-export const CONTENT_CHANGE_PANELS = ['comments', 'contents', 'page-structure'];
-export const RESPONSIVE_PANELS = ['comments', 'contents', 'page-structure'];
+export const CONTENT_CHANGE_PANELS = [
+	'comments',
+	'contents',
+	config.contentBrowsingEnabled ? 'browser ' : 'page-structure',
+];
+export const RESPONSIVE_PANELS = [
+	'comments',
+	'contents',
+	config.contentBrowsingEnabled ? 'browser ' : 'page-structure',
+];
 
 /**
  * @param {Array<Array<string>>} panels

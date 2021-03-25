@@ -12,12 +12,14 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import {Context as ModalContext} from '@clayui/modal';
-import {DragLayer} from 'data-engine-taglib';
 import {Pages, useForm, useFormState} from 'dynamic-data-mapping-form-renderer';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
 import fieldDelete from 'dynamic-data-mapping-form-renderer/js/core/thunks/fieldDelete.es';
 import React, {useContext} from 'react';
+
+import DragLayer from '../js/drag-and-drop/DragLayer.es';
 
 const DataEngineFormBuilder = () => {
 	const dispatch = useForm();
@@ -27,7 +29,7 @@ const DataEngineFormBuilder = () => {
 
 	return (
 		<div className="data-engine-form-builder ddm-form-builder pb-5">
-			<div className="sheet">
+			<ClayLayout.Sheet>
 				<div className="ddm-form-builder-wrapper">
 					<div className="container ddm-form-builder">
 						<DragLayer />
@@ -65,7 +67,7 @@ const DataEngineFormBuilder = () => {
 						/>
 					</div>
 				</div>
-			</div>
+			</ClayLayout.Sheet>
 		</div>
 	);
 };

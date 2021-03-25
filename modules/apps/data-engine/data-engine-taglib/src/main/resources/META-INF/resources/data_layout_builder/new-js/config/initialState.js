@@ -14,10 +14,4 @@
 
 import {INITIAL_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
 
-const DATA_ENGINE_INITIAL_STATE = {
-	...INITIAL_STATE,
-	editingLanguageId: themeDisplay.getDefaultLanguageId(),
-	rules: [],
-};
-
-export default DATA_ENGINE_INITIAL_STATE;
+export default INITIAL_STATE;

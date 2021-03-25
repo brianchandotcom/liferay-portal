@@ -15,6 +15,8 @@
 export const INITIAL_STATE = {
 	activePage: 0,
 	defaultLanguageId: themeDisplay.getLanguageId(),
+	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	focusedField: {},
 	pages: [],
+	rules: [],
 };

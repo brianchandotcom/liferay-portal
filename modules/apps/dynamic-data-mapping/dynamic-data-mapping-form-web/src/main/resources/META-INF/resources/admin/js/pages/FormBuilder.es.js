@@ -282,7 +282,7 @@ export const FormBuilder = () => {
 	return (
 		<>
 			<ManagementToolbar
-				onPlusClick={onOpenSidebar}
+				onPlusClick={dataEngineSidebar ? null : onOpenSidebar}
 				onPreviewClick={onPreviewClick}
 				onPublishClick={onPublishClick}
 				onSaveClick={onSaveClick}

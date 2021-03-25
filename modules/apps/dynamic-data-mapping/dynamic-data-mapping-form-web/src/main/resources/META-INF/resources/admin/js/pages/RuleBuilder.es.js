@@ -132,10 +132,9 @@ export const RuleBuilder = ({history, location}) => {
 	return (
 		<ClayLayout.Container>
 			<ManagementToolbar
-				onPlusClick={onAddRule}
+				onPlusClick={location.pathname === '/rules' ? onAddRule : null}
 				portletNamespace={portletNamespace}
 				variant="rules"
-				visiblePlus={location.pathname === '/rules'}
 			/>
 			<Switch>
 				<Route exact path="/rules">

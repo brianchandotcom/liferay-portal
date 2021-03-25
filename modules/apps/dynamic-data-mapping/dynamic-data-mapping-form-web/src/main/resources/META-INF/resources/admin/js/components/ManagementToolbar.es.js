@@ -81,7 +81,6 @@ export const ManagementToolbar = ({
 	onShareClick,
 	portletNamespace,
 	variant = 'builder',
-	visiblePlus = true,
 }) => {
 	const {published, showPublishAlert} = useConfig();
 
@@ -100,13 +99,13 @@ export const ManagementToolbar = ({
 	useEffect(() => {
 		const button = document.getElementById('addFieldButton');
 
-		if (visiblePlus) {
+		if (onPlusClick) {
 			button.classList.remove('hide');
 		}
 		else {
 			button.classList.add('hide');
 		}
-	}, [visiblePlus]);
+	}, [onPlusClick]);
 
 	useEffect(() => {
 		const shareButton = document.querySelector('.lfr-ddm-share-url-button');

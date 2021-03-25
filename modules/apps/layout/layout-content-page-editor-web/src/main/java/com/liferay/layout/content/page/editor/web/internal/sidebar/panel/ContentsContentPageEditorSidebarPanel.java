@@ -15,7 +15,9 @@
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
+import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,15 +27,18 @@ import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
+	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration",
 	immediate = true, property = "service.ranking:Integer=400",
 	service = ContentPageEditorSidebarPanel.class
 )
@@ -62,6 +67,10 @@ public class ContentsContentPageEditorSidebarPanel
 	public boolean isVisible(
 		PermissionChecker permissionChecker, long plid, int layoutType) {
 
+		if (_ffLayoutContentPageEditorConfiguration.contentBrowsingEnabled()) {
+			return false;
+		}
+
 		try {
 			if (_layoutPermission.contains(
 					permissionChecker, plid, ActionKeys.UPDATE) ||
@@ -83,8 +92,18 @@ public class ContentsContentPageEditorSidebarPanel
 		return false;
 	}
 
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ffLayoutContentPageEditorConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFLayoutContentPageEditorConfiguration.class, properties);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentsContentPageEditorSidebarPanel.class);
+
+	private FFLayoutContentPageEditorConfiguration
+		_ffLayoutContentPageEditorConfiguration;
 
 	@Reference
 	private LayoutPermission _layoutPermission;

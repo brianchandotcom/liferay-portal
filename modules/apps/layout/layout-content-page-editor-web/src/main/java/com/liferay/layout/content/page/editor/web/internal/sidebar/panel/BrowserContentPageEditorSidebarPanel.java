@@ -40,17 +40,17 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true, property = "service.ranking:Integer=700",
 	service = ContentPageEditorSidebarPanel.class
 )
-public class PageStructureContentPageEditorSidebarPanel
+public class BrowserContentPageEditorSidebarPanel
 	implements ContentPageEditorSidebarPanel {
 
 	@Override
 	public String getIcon() {
-		return "pages-tree";
+		return "cursor";
 	}
 
 	@Override
 	public String getId() {
-		return "page-structure";
+		return "browser";
 	}
 
 	@Override
@@ -58,19 +58,17 @@ public class PageStructureContentPageEditorSidebarPanel
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "selection");
+		return LanguageUtil.get(resourceBundle, "browser");
 	}
 
 	@Override
 	public boolean isVisible(
 		PermissionChecker permissionChecker, long plid, int layoutType) {
 
-		if (_ffLayoutContentPageEditorConfiguration.contentBrowsingEnabled()) {
-			return false;
-		}
-
 		try {
-			if (LayoutPermissionUtil.contains(
+			if (_ffLayoutContentPageEditorConfiguration.
+					contentBrowsingEnabled() &&
+				LayoutPermissionUtil.contains(
 					permissionChecker, plid,
 					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
 
@@ -94,7 +92,7 @@ public class PageStructureContentPageEditorSidebarPanel
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PageStructureContentPageEditorSidebarPanel.class);
+		BrowserContentPageEditorSidebarPanel.class);
 
 	private FFLayoutContentPageEditorConfiguration
 		_ffLayoutContentPageEditorConfiguration;

@@ -54,7 +54,7 @@ public class CKEditorBBCodeConfigContributor
 			"enterMode", 2
 		).put(
 			"extraPlugins",
-			"a11yhelpbtn,bbcode,itemselector,sourcearea"
+			"a11yhelpbtn,bbcode,filebrowser,itemselector,sourcearea"
 		).put(
 			"fontSize_defaultLabel", "14"
 		).put(
@@ -73,7 +73,7 @@ public class CKEditorBBCodeConfigContributor
 		).put(
 			"removePlugins",
 			"bidi,codemirror,div,elementspath,forms,indentblock,keystrokes," +
-				"link,maximize,newpage,pagebreak,preview,print,save," +
+				"maximize,newpage,pagebreak,preview,print,save," +
 					"showblocks,templates,video"
 		).put(
 			"smiley_descriptions",

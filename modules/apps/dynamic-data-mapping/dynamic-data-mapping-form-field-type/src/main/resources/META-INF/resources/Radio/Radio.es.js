@@ -20,6 +20,7 @@ import {useSyncValue} from '../hooks/useSyncValue.es';
 import {setJSONArrayValue} from '../util/setters.es';
 
 const Radio = ({
+	editingLanguageId,
 	inline,
 	name,
 	onBlur,
@@ -50,7 +51,7 @@ const Radio = ({
 	const [currentValue, setCurrentValue] = useSyncValue(
 		initialValue ? initialValue : predefinedValueMemo,
 		true,
-		true
+		editingLanguageId
 	);
 
 	return (

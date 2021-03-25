@@ -100,10 +100,6 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
 		WebContent.addWithPriorityCP(
 			assetPriority = "1.1",
 			webContentContent = "Web Content Content",

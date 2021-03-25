@@ -582,7 +582,7 @@ public class JournalTransformer {
 			List<TemplateNode> siblingsTemplateNodes =
 				templateNode.getSiblings();
 
-			if (siblingsTemplateNodes.size() > 1) {
+			if (!siblingsTemplateNodes.isEmpty()) {
 				List<TemplateNode> firstChildSiblingsTemplateNodes =
 					firstChildTemplateNode.getSiblings();
 

@@ -20,6 +20,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.message.boards.test.util.PropsValuesReplacer;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -52,19 +53,23 @@ public class MBSubscriptionLocalizedContentTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+		try (PropsValuesReplacer propsValuesReplacer = new PropsValuesReplacer(
+				"MESSAGE_BOARDS_EMAIL_BULK", false)) {
 
-		MBTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), userId);
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			userId, RandomTestUtil.randomString(), group.getGroupId(),
-			containerModelId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			MBTestUtil.populateNotificationsServiceContext(
+				serviceContext, Constants.ADD);
 
-		return message.getMessageId();
+			MBMessage message = MBMessageLocalServiceUtil.addMessage(
+				userId, RandomTestUtil.randomString(), group.getGroupId(),
+				containerModelId, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), serviceContext);
+
+			return message.getMessageId();
+		}
 	}
 
 	@Override
@@ -100,18 +105,23 @@ public class MBSubscriptionLocalizedContentTest
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
+		try (PropsValuesReplacer propsValuesReplacer = new PropsValuesReplacer(
+				"MESSAGE_BOARDS_EMAIL_BULK", false)) {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				message.getGroupId(), userId);
+			MBMessage message = MBMessageLocalServiceUtil.getMessage(
+				baseModelId);
 
-		MBTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.UPDATE);
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					message.getGroupId(), userId);
 
-		MBMessageLocalServiceUtil.updateMessage(
-			userId, message.getMessageId(), RandomTestUtil.randomString(),
-			serviceContext);
+			MBTestUtil.populateNotificationsServiceContext(
+				serviceContext, Constants.UPDATE);
+
+			MBMessageLocalServiceUtil.updateMessage(
+				userId, message.getMessageId(), RandomTestUtil.randomString(),
+				serviceContext);
+		}
 	}
 
 }

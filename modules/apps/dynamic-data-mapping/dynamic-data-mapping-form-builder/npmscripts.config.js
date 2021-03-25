@@ -14,24 +14,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			config: {
-				imports: {
-					'data-engine-taglib': {
-						'/': '>=3.0.0',
-					},
-					'dynamic-data-mapping-form-web': {
-						'/': '>=4.0.0',
-					},
-					'dynamic-data-mapping-form-field-type': {
-						'/': '>=5.0.0',
-					},
-					'dynamic-data-mapping-form-renderer': {
-						'/': '>=6.0.0',
-					},
-				},
-			},
-		},
 		dependencies: ['dynamic-data-mapping-form-renderer'],
 	},
 };

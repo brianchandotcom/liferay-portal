@@ -15,16 +15,6 @@
 module.exports = {
 	build: {
 		bundler: {
-			config: {
-				imports: {
-					'asset-taglib': {
-						'/': '>=4.0.0',
-					},
-					'data-engine-taglib': {
-						'/': '>=2.0.0',
-					},
-				},
-			},
 			ignore: ['**/document_library/js/legacy/*.js'],
 		},
 		dependencies: ['asset-taglib'],

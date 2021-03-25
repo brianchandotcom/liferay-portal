@@ -15,17 +15,6 @@
 module.exports = {
 	build: {
 		bundler: {
-			config: {
-				imports: {
-					'frontend-js-node-shims': {
-						path: '>=0.0.0',
-						url: '>=0.11.0',
-					},
-					'frontend-js-spa-web': {
-						senna: '>=2.5.6',
-					},
-				},
-			},
 			exclude: {
 				bootstrap: true,
 				querystring: ['test/**/*'],

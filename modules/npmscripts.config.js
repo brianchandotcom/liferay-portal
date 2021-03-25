@@ -45,6 +45,36 @@ module.exports = {
 					'@liferay/frontend-taglib': {
 						'/': '>=1.0.0',
 					},
+					'app-builder-web': {
+						'/': '>=1.0.32',
+					},
+					'asset-taglib': {
+						'/': '>=1.0.0',
+					},
+					'commerce-frontend-js': {
+						'/': '>=4.0.0',
+					},
+					'data-engine-js-components-web': {
+						'/': '>=1.0.0',
+					},
+					'data-engine-taglib': {
+						'/': '>=2.0.0',
+					},
+					'dynamic-data-mapping-form-builder': {
+						'/': '>=2.0.0',
+					},
+					'dynamic-data-mapping-form-field-type': {
+						'/': '>=4.0.0',
+					},
+					'dynamic-data-mapping-form-renderer': {
+						'/': '>=4.0.0',
+					},
+					'dynamic-data-mapping-form-web': {
+						'/': '>=4.0.0',
+					},
+					'frontend-editor-ckeditor-web': {
+						'/': '>=4.0.0',
+					},
 					'frontend-js-components-web': {
 						'/': '>=1.0.0',
 					},
@@ -105,6 +135,9 @@ module.exports = {
 						util: '>=0.10.3',
 						vm: '>=0.0.4',
 					},
+					'frontend-js-recharts': {
+						recharts: '>=1.8.5',
+					},
 					'frontend-js-spa-web': {
 						senna: '>=2.6.1',
 					},
@@ -112,9 +145,43 @@ module.exports = {
 						'/': '>=1.0.0',
 					},
 					'frontend-taglib-chart': {
+						'billboard.js': '>=1.5.0',
 						'clay-charts': '>=2.9.0',
+						d3: '>=1.0.0',
+						'd3-array': '>=1.0.0',
+						'd3-axis': '>=1.0.0',
+						'd3-brush': '>=1.0.0',
+						'd3-chord': '>=1.0.0',
+						'd3-collection': '>=1.0.0',
+						'd3-color': '>=1.0.0',
+						'd3-contour': '>=1.0.0',
+						'd3-dispatch': '>=1.0.0',
+						'd3-drag': '>=1.0.0',
+						'd3-dsv': '>=1.0.0',
+						'd3-ease': '>=1.0.0',
+						'd3-fetch': '>=1.0.0',
+						'd3-force': '>=1.0.0',
+						'd3-format': '>=1.0.0',
+						'd3-geo': '>=1.0.0',
+						'd3-hierarchy': '>=1.0.0',
+						'd3-interpolate': '>=1.0.0',
+						'd3-path': '>=1.0.0',
+						'd3-polygon': '>=1.0.0',
+						'd3-quadtree': '>=1.0.0',
+						'd3-random': '>=1.0.0',
+						'd3-scale': '>=1.0.0',
+						'd3-scale-chromatic': '>=1.0.0',
+						'd3-selection': '>=1.0.0',
+						'd3-shape': '>=1.0.0',
+						'd3-time': '>=1.0.0',
+						'd3-time-format': '>=1.0.0',
+						'd3-timer': '>=1.0.0',
+						'd3-transition': '>=1.0.0',
+						'd3-voronoi': '>=1.0.0',
+						'd3-zoom': '>=1.0.0',
 					},
 					'frontend-taglib-clay': {
+						'/': '>=4.0.0',
 						'@clayui/alert': '>=3.0.0',
 						'@clayui/autocomplete': '>=3.0.0',
 						'@clayui/badge': '>=3.0.0',
@@ -188,6 +255,15 @@ module.exports = {
 					},
 					'item-selector-taglib': {
 						'/': '>=1.0.0',
+					},
+					'map-common': {
+						'/': '>=5.0.0',
+					},
+					'map-google-maps': {
+						'/': '>=4.0.0',
+					},
+					'map-openstreetmap': {
+						'/': '>=5.0.0',
 					},
 				},
 			},

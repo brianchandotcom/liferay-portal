@@ -14,15 +14,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			config: {
-				imports: {
-					'asset-taglib': {
-						'/': '>=4.0.0',
-					},
-				},
-			},
-		},
 		dependencies: ['asset-taglib'],
 	},
 };

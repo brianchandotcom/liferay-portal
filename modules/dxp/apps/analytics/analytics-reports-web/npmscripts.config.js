@@ -23,16 +23,4 @@
  * details.
  */
 
-module.exports = {
-	build: {
-		bundler: {
-			config: {
-				imports: {
-					'frontend-js-recharts': {
-						recharts: '>=1.8.5',
-					},
-				},
-			},
-		},
-	},
-};
+module.exports = {};

@@ -26,18 +26,6 @@
 module.exports = {
 	build: {
 		bundler: {
-			config: {
-				imports: {
-					'frontend-js-node-shims': {
-						buffer: '>=5.0.7',
-						string_decoder: '>=1.0.3',
-					},
-					'frontend-js-web': {
-						'/': '>=3.0.0',
-					},
-				},
-			},
-			'dump-report': false,
 			exclude: {
 				'*': [
 					'demo/**',

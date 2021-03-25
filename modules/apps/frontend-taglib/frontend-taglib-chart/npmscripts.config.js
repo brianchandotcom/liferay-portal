@@ -15,26 +15,11 @@
 module.exports = {
 	build: {
 		bundler: {
-			config: {
-				imports: {
-					'frontend-js-metal-web': {
-						'incremental-dom': '>=0.5.1',
-						'incremental-dom-string': '>=0.0.3',
-						metal: '>=2.16.5',
-						'metal-component': '>=2.16.5',
-						'metal-events': '>=2.16.5',
-						'metal-incremental-dom': '>=2.16.5',
-						'metal-jsx': '>=2.16.5',
-						'metal-soy': '>=2.16.5',
-						'metal-soy-bundle': '>=2.16.5',
-						'metal-state': '>=2.16.5',
-					},
-				},
-			},
 			exclude: {
-				'clay-charts': ['src/jsx/**/*', 'src/__tests__/**/*'],
 				'billboard.js': ['src/**/*', 'dist/*.min.js', 'dist/*.pkgd.js'],
+				'clay-charts': ['src/jsx/**/*', 'src/__tests__/**/*'],
 				commander: true,
+				d3: ['rollup.config.js', 'dist/d3.js'],
 				'd3-array': [
 					'rollup.config.js',
 					'dist/**/*.min.js',
@@ -116,12 +101,12 @@ module.exports = {
 					'dist/**/*.min.js',
 					'src/**/*',
 				],
-				'd3-scale-chromatic': [
+				'd3-scale': [
 					'rollup.config.js',
 					'dist/**/*.min.js',
 					'src/**/*',
 				],
-				'd3-scale': [
+				'd3-scale-chromatic': [
 					'rollup.config.js',
 					'dist/**/*.min.js',
 					'src/**/*',
@@ -136,12 +121,12 @@ module.exports = {
 					'dist/**/*.min.js',
 					'src/**/*',
 				],
+				'd3-time': ['rollup.config.js', 'dist/**/*.min.js', 'src/**/*'],
 				'd3-time-format': [
 					'rollup.config.js',
 					'dist/**/*.min.js',
 					'src/**/*',
 				],
-				'd3-time': ['rollup.config.js', 'dist/**/*.min.js', 'src/**/*'],
 				'd3-timer': [
 					'rollup.config.js',
 					'dist/**/*.min.js',
@@ -158,7 +143,6 @@ module.exports = {
 					'src/**/*',
 				],
 				'd3-zoom': ['rollup.config.js', 'dist/**/*.min.js', 'src/**/*'],
-				d3: ['rollup.config.js', 'dist/d3.js'],
 				'iconv-lite': true,
 				rw: true,
 				'safer-buffer': ['tests.js'],

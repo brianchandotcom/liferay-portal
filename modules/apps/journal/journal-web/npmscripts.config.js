@@ -15,13 +15,6 @@
 module.exports = {
 	build: {
 		bundler: {
-			config: {
-				imports: {
-					'data-engine-taglib': {
-						'/': '>=2.0.0',
-					},
-				},
-			},
 			ignore: ['**/config.js', '**/navigation.js', '**/main.js'],
 		},
 	},

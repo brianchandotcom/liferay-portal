@@ -14,15 +14,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			config: {
-				imports: {
-					'commerce-frontend-js': {
-						'/': '>=4.0.0',
-					},
-				},
-			},
-		},
 		dependencies: ['commerce-product-options-web'],
 	},
 };

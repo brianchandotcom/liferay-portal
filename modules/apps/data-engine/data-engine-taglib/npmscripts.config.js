@@ -15,19 +15,6 @@
 module.exports = {
 	build: {
 		bundler: {
-			config: {
-				imports: {
-					'dynamic-data-mapping-form-builder': {
-						'/': '>=2.0.0',
-					},
-					'dynamic-data-mapping-form-field-type': {
-						'/': '>=4.0.0',
-					},
-					'dynamic-data-mapping-form-renderer': {
-						'/': '>=4.0.0',
-					},
-				},
-			},
 			ignore: ['**/__tests__/*.js', '!**/*.es.js', '!**/*.soy.js'],
 		},
 	},

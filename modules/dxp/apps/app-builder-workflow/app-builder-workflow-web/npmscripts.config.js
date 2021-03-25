@@ -23,25 +23,4 @@
  * details.
  */
 
-module.exports = {
-	build: {
-		bundler: {
-			config: {
-				imports: {
-					'app-builder-web': {
-						'/': '>=1.0.32',
-					},
-					'data-engine-js-components-web': {
-						'/': '>=1.0.0',
-					},
-					'data-engine-taglib': {
-						'/': '>=2.0.0',
-					},
-					'dynamic-data-mapping-form-renderer': {
-						'/': '>=5.0.0',
-					},
-				},
-			},
-		},
-	},
-};
+module.exports = {};

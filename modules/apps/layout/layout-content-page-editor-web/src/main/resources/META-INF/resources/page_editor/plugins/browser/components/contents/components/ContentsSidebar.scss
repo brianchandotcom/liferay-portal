@@ -1,0 +1,10 @@
+@import 'atlas-variables';
+
+.page-editor__contents__page-content {
+	border-top: solid thin $secondary-l2;
+
+	&--mapped-item-hovered {
+		background-color: fade_out($purple, 0.9);
+		transition: background-color ease 0.3s;
+	}
+}

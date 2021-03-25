@@ -17,6 +17,7 @@ import React, {useState} from 'react';
 
 import {useId} from '../../../app/utils/useId';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import ContentsSidebar from './contents/components/ContentsSidebar';
 import PageStructureSidebar from './page-structure/components/PageStructureSidebar';
 
 const TABS = [
@@ -26,9 +27,9 @@ const TABS = [
 		label: Liferay.Language.get('page-elements'),
 	},
 	{
-		component: 'page-content',
+		component: <ContentsSidebar />,
 		label: Liferay.Language.get('page-content'),
-	}
+	},
 ];
 
 export default function BrowserSidebar({title}) {
@@ -40,9 +41,7 @@ export default function BrowserSidebar({title}) {
 
 	return (
 		<div className="page-editor__sidebar__browser">
-			<SidebarPanelHeader>
-				{title}
-			</SidebarPanelHeader>
+			<SidebarPanelHeader>{title}</SidebarPanelHeader>
 
 			<ClayTabs className="page-editor__sidebar__browser__tabs" modern>
 				{TABS.map((tab, index) => (

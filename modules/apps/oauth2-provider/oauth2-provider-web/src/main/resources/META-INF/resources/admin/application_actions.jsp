@@ -22,6 +22,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 OAuth2Application oAuth2Application = (OAuth2Application)row.getObject();
 
 String oAuth2ApplicationId = String.valueOf(oAuth2Application.getOAuth2ApplicationId());
+
+int authorizationsCount = oAuth2AdminPortletDisplayContext.getOAuth2AuthorizationsCount(oAuth2Application);
 %>
 
 <liferay-ui:icon-menu
@@ -61,21 +63,16 @@ String oAuth2ApplicationId = String.valueOf(oAuth2Application.getOAuth2Applicati
 		/>
 	</c:if>
 
-	<c:if test="<%= oAuth2AdminPortletDisplayContext.hasRevokeTokenPermission(oAuth2Application) %>">
+	<c:if test="<%= oAuth2AdminPortletDisplayContext.hasRevokeTokenPermission(oAuth2Application) && (authorizationsCount > 0) %>">
 		<portlet:actionURL name="/admin/revoke_oauth2_authorizations" var="revokeOAuth2AuthorizationsURL">
 			<portlet:param name="oAuth2ApplicationId" value="<%= oAuth2ApplicationId %>" />
 		</portlet:actionURL>
 
 		<%
-		int authorizationsCount = oAuth2AdminPortletDisplayContext.getOAuth2AuthorizationsCount(oAuth2Application);
-
-		String confirmation = LanguageUtil.get(request, "are-you-sure-you-want-to-revoke-all-authorizations-there-are-no-authorizations-or-associated-tokens");
+		String confirmation = LanguageUtil.format(request, "are-you-sure-you-want-to-revoke-all-authorizations-this-action-revokes-x-authorizations-and-associated-tokens", new String[] {String.valueOf(authorizationsCount)});
 
 		if (authorizationsCount == 1) {
 			confirmation = LanguageUtil.get(request, "are-you-sure-you-want-to-revoke-all-authorizations-this-action-revokes-one-authorization-and-associated-tokens");
-		}
-		else if (authorizationsCount > 0) {
-			confirmation = LanguageUtil.format(request, "are-you-sure-you-want-to-revoke-all-authorizations-this-action-revokes-x-authorizations-and-associated-tokens", new String[] {String.valueOf(authorizationsCount)});
 		}
 		%>
 
@@ -92,8 +89,6 @@ String oAuth2ApplicationId = String.valueOf(oAuth2Application.getOAuth2Applicati
 		</portlet:actionURL>
 
 		<%
-		int authorizationsCount = oAuth2AdminPortletDisplayContext.getOAuth2AuthorizationsCount(oAuth2Application);
-
 		String confirmation = LanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-application-there-are-no-authorizations-or-associated-tokens");
 
 		if (authorizationsCount == 1) {

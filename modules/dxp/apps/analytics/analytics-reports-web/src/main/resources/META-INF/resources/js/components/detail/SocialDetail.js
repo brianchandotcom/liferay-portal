@@ -45,10 +45,10 @@ export default function SocialDetail({
 	currentPage,
 	showTimeSpanSelector = false,
 	timeSpanOptions,
+	trafficShareDataProvider,
+	trafficVolumeDataProvider,
 }) {
-	const {languageTag, trafficShare, trafficVolume} = useContext(
-		StoreStateContext
-	);
+	const {languageTag} = useContext(StoreStateContext);
 
 	const {referringSocialMedia} = currentPage.data;
 
@@ -127,6 +127,7 @@ export default function SocialDetail({
 
 			<TotalCount
 				className="c-mb-2"
+				dataProvider={trafficVolumeDataProvider}
 				label={Liferay.Util.sub(Liferay.Language.get('traffic-volume'))}
 				popoverAlign={ALIGN_POSITIONS.Bottom}
 				popoverHeader={Liferay.Language.get('traffic-volume')}
@@ -134,18 +135,17 @@ export default function SocialDetail({
 					'traffic-volume-is-the-number-of-page-views-coming-from-one-channel'
 				)}
 				popoverPosition="bottom"
-				value={trafficVolume}
 			/>
 
 			<TotalCount
 				className="c-mb-3"
+				dataProvider={trafficShareDataProvider}
 				label={Liferay.Util.sub(Liferay.Language.get('traffic-share'))}
 				percentage={true}
 				popoverHeader={Liferay.Language.get('traffic-share')}
 				popoverMessage={Liferay.Language.get(
 					'traffic-share-is-the-percentage-of-traffic-sent-to-your-page-by-one-channel'
 				)}
-				value={trafficShare}
 			/>
 
 			<ClayList className="list-group-pages-list">
@@ -226,4 +226,6 @@ SocialDetail.propTypes = {
 			label: PropTypes.string,
 		})
 	).isRequired,
+	trafficShareDataProvider: PropTypes.func.isRequired,
+	trafficVolumeDataProvider: PropTypes.func.isRequired,
 };

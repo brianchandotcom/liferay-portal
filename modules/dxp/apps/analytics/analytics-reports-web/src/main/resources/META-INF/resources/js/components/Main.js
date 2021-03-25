@@ -9,14 +9,11 @@
  * distribution rights of the Software.
  */
 
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {StoreStateContext} from '../context/StoreContext';
 import BasicInformation from './BasicInformation';
 import Chart from './Chart';
-import Hint from './Hint';
 import TotalCount from './TotalCount';
 import TrafficSources from './TrafficSources';
 import Translation from './Translation';
@@ -24,20 +21,18 @@ import Translation from './Translation';
 export default function Main({
 	author,
 	canonicalURL,
+	chartDataProviders,
 	onSelectedLanguageClick,
 	onTrafficSourceClick,
 	pagePublishDate,
 	pageTitle,
 	timeSpanOptions,
+	totalReadsDataProvider,
+	totalViewsDataProvider,
+	trafficSourcesDataProvider,
 	viewURLs,
 }) {
-	const {endpoints, loading, totalReads, totalViews} = useContext(
-		StoreStateContext
-	);
-
-	return loading ? (
-		<ClayLoadingIndicator small />
-	) : (
+	return (
 		<div className="c-p-3">
 			<BasicInformation
 				author={author}
@@ -59,16 +54,17 @@ export default function Main({
 
 			<TotalCount
 				className="mb-2"
+				dataProvider={totalViewsDataProvider}
 				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
 				popoverHeader={Liferay.Language.get('total-views')}
 				popoverMessage={Liferay.Language.get(
 					'this-number-refers-to-the-total-number-of-views-since-the-content-was-published'
 				)}
-				value={totalViews}
 			/>
 
-			{endpoints.analyticsReportsTotalReadsURL && (
+			{totalReadsDataProvider && (
 				<TotalCount
+					dataProvider={totalReadsDataProvider}
 					label={Liferay.Util.sub(
 						Liferay.Language.get('total-reads')
 					)}
@@ -76,25 +72,19 @@ export default function Main({
 					popoverMessage={Liferay.Language.get(
 						'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
 					)}
-					value={totalReads}
 				/>
 			)}
 
 			<Chart
+				dataProviders={chartDataProviders}
 				publishDate={pagePublishDate}
 				timeSpanOptions={timeSpanOptions}
 			/>
 
-			<h5 className="mt-3 sheet-subtitle">
-				{Liferay.Language.get('traffic-channels')}
-				<Hint
-					message={Liferay.Language.get('traffic-channels-help')}
-					secondary={true}
-					title={Liferay.Language.get('traffic-channels')}
-				/>
-			</h5>
-
-			<TrafficSources onTrafficSourceClick={onTrafficSourceClick} />
+			<TrafficSources
+				dataProvider={trafficSourcesDataProvider}
+				onTrafficSourceClick={onTrafficSourceClick}
+			/>
 		</div>
 	);
 }
@@ -102,6 +92,7 @@ export default function Main({
 Main.proptypes = {
 	author: PropTypes.object.isRequired,
 	canonicalURL: PropTypes.string.isRequired,
+	chartDataProviders: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,
 	onSelectedLanguageClick: PropTypes.func.isRequired,
 	onTrafficSourceClick: PropTypes.func.isRequired,
 	pagePublishDate: PropTypes.string.isRequired,
@@ -112,6 +103,9 @@ Main.proptypes = {
 			label: PropTypes.string,
 		})
 	).isRequired,
+	totalReadsDataProvider: PropTypes.func.isRequired,
+	totalViewsDataProvider: PropTypes.func.isRequired,
+	trafficSourcesDataProvider: PropTypes.func.isRequired,
 	viewURLs: PropTypes.arrayOf(
 		PropTypes.shape({
 			default: PropTypes.bool.isRequired,

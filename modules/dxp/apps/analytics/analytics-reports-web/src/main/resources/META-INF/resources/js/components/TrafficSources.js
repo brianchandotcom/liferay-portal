@@ -10,6 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {useStateSafe} from '@liferay/frontend-js-react-web';
 import className from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
@@ -44,16 +45,27 @@ const FALLBACK_COLOR = '#e92563';
 
 const getColorByName = (name) => COLORS_MAP[name] || FALLBACK_COLOR;
 
-export default function TrafficSources({onTrafficSourceClick}) {
+export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 	const [highlighted, setHighlighted] = useState(null);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const dispatch = useContext(StoreDispatchContext);
 
-	const {languageTag, publishedToday, trafficSources} = useContext(
-		StoreStateContext
-	);
+	const {languageTag, publishedToday} = useContext(StoreStateContext);
+
+	const [trafficSources, setTrafficSources] = useStateSafe([]);
+
+	useEffect(() => {
+		if (validAnalyticsConnection) {
+			dataProvider()
+				.then((trafficSources) => setTrafficSources(trafficSources))
+				.catch(() => {
+					setTrafficSources([]);
+					dispatch({type: 'ADD_WARNING'});
+				});
+		}
+	}, [dispatch, dataProvider, setTrafficSources, validAnalyticsConnection]);
 
 	const fullPieChart = useMemo(
 		() =>
@@ -84,6 +96,15 @@ export default function TrafficSources({onTrafficSourceClick}) {
 
 	return (
 		<>
+			<h5 className="mt-3 sheet-subtitle">
+				{Liferay.Language.get('traffic-channels')}
+				<Hint
+					message={Liferay.Language.get('traffic-channels-help')}
+					secondary={true}
+					title={Liferay.Language.get('traffic-channels')}
+				/>
+			</h5>
+
 			{!fullPieChart && !missingTrafficSourceValue && (
 				<div className="mb-3 text-secondary">
 					{Liferay.Language.get(
@@ -91,7 +112,6 @@ export default function TrafficSources({onTrafficSourceClick}) {
 					)}
 				</div>
 			)}
-
 			<div className="pie-chart-wrapper">
 				<div className="pie-chart-wrapper--legend">
 					<table>
@@ -141,6 +161,7 @@ export default function TrafficSources({onTrafficSourceClick}) {
 													displayType="link"
 													onClick={() =>
 														onTrafficSourceClick(
+															trafficSources,
 															entry.name
 														)
 													}
@@ -289,5 +310,6 @@ function TrafficSourcesCustomTooltip(props) {
 }
 
 TrafficSources.propTypes = {
+	dataProvider: PropTypes.func.isRequired,
 	onTrafficSourceClick: PropTypes.func.isRequired,
 };

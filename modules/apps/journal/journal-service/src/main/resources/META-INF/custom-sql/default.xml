@@ -80,7 +80,7 @@
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_S_T_D_R">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+				COUNT(JournalArticle.articleId) AS COUNT_VALUE
 			FROM
 				JournalArticle
 			LEFT JOIN
@@ -91,9 +91,12 @@
 					(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
 				JournalArticleLocalization ON
-					(1 = ?) AND
 					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
 					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
+			LEFT JOIN
+				JournalArticleLocalization tempJournalArticleLocalization ON
+					(JournalArticleLocalization.articlePK = tempJournalArticleLocalization.articlePK) AND
+					(JournalArticleLocalization.articleLocalizationId < tempJournalArticleLocalization.articleLocalizationId)
 			WHERE
 				(JournalArticle.companyId = ?) AND
 				(JournalArticle.groupId = ?) AND
@@ -102,6 +105,7 @@
 				([$STATUS$]) AND
 				([$STRUCTURE_TEMPLATE$]) AND
 				(tempJournalArticle.id_ IS NULL) AND
+				(tempJournalArticleLocalization.articleLocalizationId IS NULL) AND
 				(
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
@@ -427,22 +431,13 @@
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
 					(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
-				(
-					SELECT
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description
-					FROM
-						JournalArticleLocalization
-					WHERE
-						(1 = ?) AND
-						(
-							(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$])
-						)
-					GROUP BY
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description
-				) JournalArticleLocalization ON
+				JournalArticleLocalization ON
 					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
 					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
+			LEFT JOIN
+				JournalArticleLocalization tempJournalArticleLocalization ON
+					(JournalArticleLocalization.articlePK = tempJournalArticleLocalization.articlePK) AND
+					(JournalArticleLocalization.articleLocalizationId < tempJournalArticleLocalization.articleLocalizationId)
 			WHERE
 				(JournalArticle.companyId = ?) AND
 				(JournalArticle.groupId = ?) AND
@@ -451,6 +446,7 @@
 				([$STATUS$]) AND
 				([$STRUCTURE_TEMPLATE$]) AND
 				(tempJournalArticle.id_ IS NULL) AND
+				(tempJournalArticleLocalization.articleLocalizationId IS NULL) AND
 				(
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]

@@ -78,7 +78,7 @@ const getLocalizedValue = ({
 	}
 	catch (e) {}
 
-	if (type === 'image' && !_value.url) {
+	if (type === 'image') {
 		try {
 			return JSON.parse(value);
 		}

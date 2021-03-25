@@ -14,7 +14,14 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import React, {useState} from 'react';
 
-const ERROR_OMIT_KEYS = ['elementId', 'msg', 'severity', 'localizationKey'];
+const ERROR_OMIT_KEYS = [
+	'className',
+	'elementId',
+	'localizedMessage',
+	'msg',
+	'throwable',
+	'severity',
+];
 
 // Types from portal-search-tuning-blueprints-api/src/main/java/com/liferay/portal/search/tuning/blueprints/message/Severity.java
 
@@ -33,8 +40,12 @@ function ErrorListItem({item, onFocusElement}) {
 
 	const itemKeys = Object.keys(item);
 
-	const _handleClick = () => {
+	const _handleCollapse = () => {
 		setCollapse(!collapse);
+	};
+
+	const _handleFocusElement = () => {
+		onFocusElement(item.elementId);
 	};
 
 	return (
@@ -42,20 +53,17 @@ function ErrorListItem({item, onFocusElement}) {
 			className="error-list-item"
 			displayType={SEVERITY_DISPLAY_TYPE[item.severity] || 'danger'}
 		>
-			<span className="message" onClick={_handleClick}>
-				{/* TODO: Get translated `localizationKey` */}
+			<span className="message" onClick={_handleCollapse}>
+				<span className="title">
+					{item.localizedMessage || Liferay.Language.get('error')}
+				</span>
 
-				<span className="title">{Liferay.Language.get('error')}</span>
 				<span className="description">{item.msg}</span>
 			</span>
 
 			{!!item.elementId && (
 				<div className="scroll-button">
-					<ClayButton
-						alert
-						onClick={() => onFocusElement(item.elementId)}
-						small
-					>
+					<ClayButton alert onClick={_handleFocusElement} small>
 						{Liferay.Language.get('view-element')}
 					</ClayButton>
 				</div>
@@ -66,7 +74,7 @@ function ErrorListItem({item, onFocusElement}) {
 					borderless
 					className="collapse-button text-danger"
 					displayType="unstyled"
-					onClick={_handleClick}
+					onClick={_handleCollapse}
 					small
 					symbol={collapse ? 'angle-right' : 'angle-down'}
 				/>

@@ -108,7 +108,9 @@ public class PreviewBlueprintMVCResourceCommand extends BaseMVCResourceCommand {
 
 			stream.forEach(message -> _log.error(message));
 
-			responseJSONObject = JSONUtil.put(JSONKeys.ERRORS, errorMessages);
+			responseJSONObject =
+				_blueprintsJSONResponseBuilder.translateErrorMessages(
+					errorMessages, _getResourceBundle(resourceRequest));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException.getMessage(), portalException);

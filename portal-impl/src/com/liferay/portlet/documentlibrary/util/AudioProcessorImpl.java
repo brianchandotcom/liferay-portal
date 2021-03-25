@@ -392,13 +392,14 @@ public class AudioProcessorImpl
 				future.get();
 			}
 			else {
-				LiferayConverter liferayConverter = new LiferayAudioConverter(
-					srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
-					containerType,
-					PropsUtil.getProperties(
-						PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
+				LiferayAudioConverter liferayAudioConverter =
+					new LiferayAudioConverter(
+						srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
+						containerType,
+						PropsUtil.getProperties(
+							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
 
-				liferayConverter.convert();
+				liferayAudioConverter.convert();
 			}
 		}
 		catch (CancellationException cancellationException) {
@@ -524,12 +525,13 @@ public class AudioProcessorImpl
 				new Log4jLogFactoryImpl(), _customLogSettings);
 
 			try {
-				LiferayConverter liferayConverter = new LiferayAudioConverter(
-					_inputFile.getCanonicalPath(),
-					_outputFile.getCanonicalPath(), _audioContainer,
-					_audioProperties);
+				LiferayAudioConverter liferayAudioConverter =
+					new LiferayAudioConverter(
+						_inputFile.getCanonicalPath(),
+						_outputFile.getCanonicalPath(), _audioContainer,
+						_audioProperties);
 
-				liferayConverter.convert();
+				liferayAudioConverter.convert();
 			}
 			catch (Exception exception) {
 				throw new ProcessException(exception);

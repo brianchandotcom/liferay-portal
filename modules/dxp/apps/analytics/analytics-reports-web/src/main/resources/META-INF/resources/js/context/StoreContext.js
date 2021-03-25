@@ -12,17 +12,15 @@
 import React, {createContext, useReducer} from 'react';
 
 const ADD_WARNING = 'ADD_WARNING';
-const SET_METRICS = 'SET_METRICS';
 
 const INITIAL_STATE = {
-	loading: true,
 	publishedToday: false,
 	warning: false,
 };
 
 const noop = () => {};
 
-export const StoreDispatchContext = createContext(() => {});
+export const StoreDispatchContext = React.createContext(() => {});
 export const StoreStateContext = createContext([INITIAL_STATE, noop]);
 
 function reducer(state = INITIAL_STATE, action) {
@@ -31,23 +29,6 @@ function reducer(state = INITIAL_STATE, action) {
 	switch (action.type) {
 		case ADD_WARNING:
 			nextState = state.warning ? state : {...state, warning: true};
-			break;
-		case SET_METRICS:
-			nextState = {
-				...state,
-				historicalReads: {
-					analyticsReportsHistoricalReads:
-						action.analyticsReportsHistoricalReads,
-				},
-				historicalViews: {
-					analyticsReportsHistoricalViews:
-						action.analyticsReportsHistoricalViews,
-				},
-				loading: false,
-				totalReads: action.analyticsReportsTotalReads,
-				totalViews: action.analyticsReportsTotalViews,
-				trafficSources: action.trafficSources,
-			};
 			break;
 		default:
 			return state;

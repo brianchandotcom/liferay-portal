@@ -272,6 +272,24 @@ public class TaxonomyVocabularyResourceImpl
 				new ServiceContext()));
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
+			(Long)id);
+
+		return assetVocabulary.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return "com.liferay.asset.categories";
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return AssetVocabulary.class.getName();
+	}
+
 	private AssetType _getAssetType(
 		long groupId, long classNameId, long classTypePK,
 		long[] requiredClassNameIds) {

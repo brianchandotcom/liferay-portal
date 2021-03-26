@@ -38,9 +38,10 @@ definition {
 
 		// Create content page
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Content Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page",
+			type = "content");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 	}
@@ -97,6 +98,8 @@ definition {
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}
+
+		Refresh();
 
 		ABTest.terminateTest();
 	}

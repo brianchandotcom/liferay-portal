@@ -47,6 +47,19 @@ public class CalendarPortletDataHandlerTest
 	}
 
 	@Override
+	protected String[] getDataPortletPreferences() {
+		return new String[] {
+			"defaultDuration", "defaultView", "displaySchedulerHeader",
+			"displaySchedulerOnly", "enableRss", "eventsPerPage",
+			"maxDaysDisplayed", "portletSetupCss", "portletSetupUseCustomTitle",
+			"rssDelta", "rssDisplayStyle", "rssFeedType", "rssTimeInterval",
+			"showAgendaView", "showDayView", "showMonthView", "showUserEvents",
+			"showWeekView", "timeFormat", "timeZoneId", "usePortalTimeZone",
+			"weekStartsOn"
+		};
+	}
+
+	@Override
 	protected String getPortletId() {
 		return CalendarPortletKeys.CALENDAR;
 	}
@@ -64,6 +77,11 @@ public class CalendarPortletDataHandlerTest
 	@Override
 	protected boolean isDataSiteLevel() {
 		return false;
+	}
+
+	@Override
+	protected boolean isDisplayPortlet() {
+		return true;
 	}
 
 }

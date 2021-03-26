@@ -231,6 +231,7 @@ definition {
 
 	test AssertSidecarAutoInstall {
 		property delete.sidecar.bundle = "true";
+		property embedded.elasticsearch.only = "true";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
@@ -252,6 +253,7 @@ definition {
 	test AssertSidecarDoesNotCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
+		property embedded.elasticsearch.only = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#AssertSidecarDoesNotCluster";
 
@@ -511,6 +513,7 @@ definition {
 
 	@priority = "5"
 	test OSGiConfigSmokeTest {
+		property embedded.elasticsearch.only = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
 		property osgi.module.configurations = "clusterName=&quot;LiferayElasticsearchCluster1&quot;";
 		property portal.acceptance = "true";
@@ -521,6 +524,7 @@ definition {
 	}
 
 	test SearchWithNonLiferayIndex {
+		property embedded.elasticsearch.only = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#SearchWithNonLiferayIndex";
 
 		Navigator.openSpecificURL(url = "http://localhost:9201");
@@ -577,6 +581,7 @@ definition {
 	}
 
 	test SwitchSidecarToRemote {
+		property embedded.elasticsearch.only = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#SwitchSidecarToRemote";
 
 		JSONWebcontent.addWebContent(
@@ -635,6 +640,7 @@ definition {
 	@description = "This is a use case for LPS-57894."
 	@priority = "3"
 	test UpdateSystemSettingsWithoutPortalRestart {
+		property embedded.elasticsearch.only = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#UpdateSystemSettingsWithoutPortalRestart";
 
 		JSONWebcontent.addWebContent(

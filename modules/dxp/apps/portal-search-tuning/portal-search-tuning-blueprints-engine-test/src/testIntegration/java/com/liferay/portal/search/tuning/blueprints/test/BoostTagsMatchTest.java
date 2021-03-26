@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.condition.test;
+package com.liferay.portal.search.tuning.blueprints.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
-import com.liferay.portal.search.tuning.blueprints.test.BaseBlueprintsTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -54,27 +55,35 @@ public class BoostTagsMatchTest extends BaseBlueprintsTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		addJournalArticle("Coca Cola", "cola cola");
+		_prefixRandomString = "cola" + RandomTestUtil.randomInt();
 
-		AssetTag assetTag = AssetTestUtil.addTag(group.getGroupId(), "cola");
+		serviceContext.setAssetTagNames(new String[0]);
+
+		addJournalArticle("coca " + _prefixRandomString, _prefixRandomString);
+
+		AssetTag assetTag = AssetTestUtil.addTag(
+			group.getGroupId(), _prefixRandomString);
 
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
-		addJournalArticle("Pepsi Cola", "");
+		addJournalArticle("pepsi " + _prefixRandomString, "");
 	}
 
 	@Test
 	public void testKeywoardMatchToAssetTagName() throws Exception {
-		String configurationString = getConfigurationString(
-			_getQueryElementJSONObject(100));
-
 		Blueprint blueprint = addCompanyBlueprint(
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
-			Collections.singletonMap(LocaleUtil.US, ""), configurationString,
+			Collections.singletonMap(LocaleUtil.US, ""),
+			getConfigurationString(_getQueryElementJSONObject(100)),
 			_getSelectedElementString(100), 1);
 
-		assertSearch(blueprint, null, "[pepsi cola, coca cola]", "cola", null);
+		assertSearch(
+			blueprint, null,
+			StringBundler.concat(
+				"[pepsi ", _prefixRandomString, ", coca ", _prefixRandomString,
+				"]"),
+			_prefixRandomString, null);
 	}
 
 	@Test
@@ -83,9 +92,14 @@ public class BoostTagsMatchTest extends BaseBlueprintsTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""),
-			getConfigurationString(null), "", 1);
+			getConfigurationString((JSONObject[])null), "", 1);
 
-		assertSearch(blueprint, null, "[coca cola, pepsi cola]", "cola", null);
+		assertSearch(
+			blueprint, null,
+			StringBundler.concat(
+				"[coca ", _prefixRandomString, ", pepsi ", _prefixRandomString,
+				"]"),
+			_prefixRandomString, null);
 	}
 
 	@Rule
@@ -194,5 +208,7 @@ public class BoostTagsMatchTest extends BaseBlueprintsTestCase {
 				))
 		).toString();
 	}
+
+	private String _prefixRandomString;
 
 }

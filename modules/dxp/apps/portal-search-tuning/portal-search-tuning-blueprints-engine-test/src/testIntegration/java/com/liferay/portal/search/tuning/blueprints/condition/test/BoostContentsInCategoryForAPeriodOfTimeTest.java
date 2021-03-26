@@ -20,15 +20,19 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.search.tuning.blueprints.constants.json.keys.framework.FrameworkConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.values.EvaluationType;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,8 +42,8 @@ import org.junit.runner.RunWith;
  * @author Wade Cao
  */
 @RunWith(Arquillian.class)
-public class BoostContentInCategoryForNewUserAccountsTest
-	extends BaseBoostContentInCategoryTestCase {
+public class BoostContentsInCategoryForAPeriodOfTimeTest
+	extends BaseBoostContentsInCategoryTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,17 +52,25 @@ public class BoostContentInCategoryForNewUserAccountsTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_startDate = new Date(System.currentTimeMillis());
+
+		_endDate = _getNextDay();
+	}
+
 	@Test
 	public void testInRangeCondition() throws Exception {
-		_assetCategory = getAssetCategory("For New Recruits", "Employee");
+		_assetCategory = getAssetCategory("Promoted", "Custmers");
 
-		addJournalArticle(
-			"Company policies for All Employees Recruits", "policies policies");
+		addJournalArticle("Coca Cola", "cola cola");
 
 		serviceContext.setAssetCategoryIds(
 			new long[] {_assetCategory.getCategoryId()});
 
-		addJournalArticle("Company Policies for New Recruits", "");
+		addJournalArticle("Pepsi Cola", "");
 
 		Blueprint blueprint = addCompanyBlueprint(
 			Collections.singletonMap(
@@ -66,11 +78,7 @@ public class BoostContentInCategoryForNewUserAccountsTest
 			Collections.singletonMap(LocaleUtil.US, ""),
 			getConfigurationString((JSONObject[])null), "", 1);
 
-		assertSearch(
-			blueprint, null,
-			"[company policies for all employees recruits, company policies " +
-				"for new recruits]",
-			"policies", null);
+		assertSearch(blueprint, null, "[coca cola, pepsi cola]", "cola", null);
 
 		String configurationString = getConfigurationString(
 			getQueryElementJSONObject(1000, _assetCategory.getCategoryId()));
@@ -79,10 +87,8 @@ public class BoostContentInCategoryForNewUserAccountsTest
 			1000, _assetCategory.getCategoryId());
 
 		assertSearch(
-			blueprint, configurationString,
-			"[company policies for new recruits, company policies for all " +
-				"employees recruits]",
-			"policies", selectedElementString);
+			blueprint, configurationString, "[pepsi cola, coca cola]", "cola",
+			selectedElementString);
 	}
 
 	@Override
@@ -97,7 +103,7 @@ public class BoostContentInCategoryForNewUserAccountsTest
 				).put(
 					"parameter_name", "${time.current_date}"
 				).put(
-					"value", _getCurrentDateModifierDateJSONArray()
+					"value", _getStartDateEndDateJSONArray()
 				)));
 	}
 
@@ -105,37 +111,20 @@ public class BoostContentInCategoryForNewUserAccountsTest
 	protected JSONObject getDescription() {
 		return JSONUtil.put(
 			"en_US",
-			"Boost contents in a category for user accounts created withing " +
-				"the given time");
+			"Boost contents in a category for the given period of time");
 	}
 
 	@Override
 	protected JSONObject getElementTemplateJSONObject() throws Exception {
 		return getElementTemplateJSONObject(
-			"/elements/boost-contents-in-a-category-for-new-user-accounts-" +
+			"/elements/boost-contents-in-a-category-for-a-period-of-time-" +
 				"test.json");
-	}
-
-	@Override
-	protected JSONObject getFrameworkConfiguration() {
-		JSONArray fieldsJSONArray = createJSONArray();
-
-		return JSONUtil.put(
-			FrameworkConfigurationKeys.APPLY_INDEXER_CLAUSES.getJsonKey(), true
-		).put(
-			"searchable_asset_types",
-			fieldsJSONArray.put(
-				"com.liferay.wiki.model.WikiPage"
-			).put(
-				"com.liferay.journal.model.JournalArticle"
-			)
-		);
 	}
 
 	@Override
 	protected JSONObject getTitle() {
 		return JSONUtil.put(
-			"en_US", "Boost Contents in a Category for New User Accounts");
+			"en_US", "Boost Contents in a Category for a Period of Time");
 	}
 
 	@Override
@@ -145,19 +134,31 @@ public class BoostContentInCategoryForNewUserAccountsTest
 		).put(
 			"boost", 1000
 		).put(
-			"time_range", 30
+			"end_date", _endDate.getTime()
+		).put(
+			"start_date", _startDate.getTime()
 		);
 	}
 
-	private JSONArray _getCurrentDateModifierDateJSONArray() {
-		JSONArray jsonArray = createJSONArray().put(
-			"${time.current_date|modifier=-30d,dateFormat=yyyyMMdd}");
+	private Date _getNextDay() {
+		Calendar cal = CalendarFactoryUtil.getCalendar();
 
-		jsonArray.put("${time.current_date|modifier=+1d,dateFormat=yyyyMMdd}");
+		cal.add(Calendar.DAY_OF_YEAR, 1);
+
+		return cal.getTime();
+	}
+
+	private JSONArray _getStartDateEndDateJSONArray() {
+		JSONArray jsonArray = createJSONArray().put(
+			DateUtil.getDate(_startDate, "yyyyMMdd", LocaleUtil.US));
+
+		jsonArray.put(DateUtil.getDate(_endDate, "yyyyMMdd", LocaleUtil.US));
 
 		return jsonArray;
 	}
 
 	private AssetCategory _assetCategory;
+	private Date _endDate;
+	private Date _startDate;
 
 }

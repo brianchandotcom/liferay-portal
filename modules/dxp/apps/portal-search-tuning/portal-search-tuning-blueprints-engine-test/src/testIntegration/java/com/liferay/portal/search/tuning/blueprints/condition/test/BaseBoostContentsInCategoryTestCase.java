@@ -31,7 +31,7 @@ import com.liferay.portal.search.tuning.blueprints.test.BaseBlueprintsTestCase;
 /**
  * @author Wade Cao
  */
-public abstract class BaseBoostContentInCategoryTestCase
+public abstract class BaseBoostContentsInCategoryTestCase
 	extends BaseBlueprintsTestCase {
 
 	protected AssetCategory getAssetCategory(

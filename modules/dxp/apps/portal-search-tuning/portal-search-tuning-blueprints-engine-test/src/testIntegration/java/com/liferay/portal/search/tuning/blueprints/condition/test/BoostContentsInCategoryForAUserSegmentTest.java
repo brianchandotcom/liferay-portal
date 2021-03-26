@@ -51,8 +51,8 @@ import org.junit.runner.RunWith;
  * @author Wade Cao
  */
 @RunWith(Arquillian.class)
-public class BoostContentInCategoryForAUserSegmentTest
-	extends BaseBoostContentInCategoryTestCase {
+public class BoostContentsInCategoryForAUserSegmentTest
+	extends BaseBoostContentsInCategoryTestCase {
 
 	@ClassRule
 	@Rule
@@ -128,7 +128,8 @@ public class BoostContentInCategoryForAUserSegmentTest
 	@Override
 	protected JSONObject getElementTemplateJSONObject() throws Exception {
 		return getElementTemplateJSONObject(
-			"/elements/boost-content-in-category-for-a-user-segment-test.json");
+			"/elements/boost-contents-in-a-category-for-a-user-segment-" +
+				"test.json");
 	}
 
 	@Override

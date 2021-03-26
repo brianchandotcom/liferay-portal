@@ -41,7 +41,7 @@ import org.junit.runner.RunWith;
  * @author Wade Cao
  */
 @RunWith(Arquillian.class)
-public class LimitSearchToMySitesTest extends BaseBlueprintsTestCase {
+public class BoostContentsOnMySitesTest extends BaseBlueprintsTestCase {
 
 	@ClassRule
 	@Rule
@@ -51,7 +51,7 @@ public class LimitSearchToMySitesTest extends BaseBlueprintsTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testSearchWithLimitSearchToMyGroups() throws Exception {
+	public void testSearchWithBoost() throws Exception {
 		Group groupA = GroupTestUtil.addGroup(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, "SiteA", serviceContext);
 		Group groupB = GroupTestUtil.addGroup(
@@ -60,41 +60,40 @@ public class LimitSearchToMySitesTest extends BaseBlueprintsTestCase {
 		_groups.add(groupA);
 		_groups.add(groupB);
 
-		user = UserTestUtil.addUser(groupA.getGroupId(), groupB.getGroupId());
+		addJournalArticle(groupA.getGroupId(), "coca cola", "cola cola");
+		addJournalArticle(groupB.getGroupId(), "pepsi cola", "");
+
+		user = UserTestUtil.addUser(groupA.getGroupId());
 
 		serviceContext.setUserId(user.getUserId());
-
-		addJournalArticle(groupA.getGroupId(), "cola coca");
-		addJournalArticle(groupB.getGroupId(), "cola pepsi");
-
-		String configurationString = getConfigurationString(
-			_getQueryElementJSONObject());
 
 		Blueprint blueprint = addCompanyBlueprint(
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
-			Collections.singletonMap(LocaleUtil.US, ""), configurationString,
-			_getSelectedElementString(), 1);
+			Collections.singletonMap(LocaleUtil.US, ""),
+			getConfigurationString((JSONObject[])null), "", 1);
 
-		assertSearchIgnoreRelevance(
-			blueprint, null, "[cola coca, cola pepsi]", "cola", null);
+		assertSearch(blueprint, null, "[coca cola, pepsi cola]", "cola", null);
 
-		user = UserTestUtil.addUser(groupA.getGroupId());
+		user = UserTestUtil.addUser(groupB.getGroupId());
 
-		assertSearchIgnoreRelevance(
-			blueprint, null, "[cola coca]", "cola", null);
+		serviceContext.setUserId(user.getUserId());
+
+		assertSearch(
+			blueprint, getConfigurationString(_getQueryElementJSONObject(100)),
+			"[pepsi cola, coca cola]", "cola", _getSelectedElementString(100));
 	}
 
-	private JSONObject _getQueryElementJSONObject() {
+	private JSONObject _getQueryElementJSONObject(int boost) {
 		return JSONUtil.put(
-			"category", "filter"
+			"category", "boost"
 		).put(
 			"clauses",
 			createJSONArray().put(
 				JSONUtil.put(
 					"context", "query"
 				).put(
-					"occur", "filter"
+					"occur", "should"
 				).put(
 					"query",
 					JSONUtil.put(
@@ -102,7 +101,10 @@ public class LimitSearchToMySitesTest extends BaseBlueprintsTestCase {
 						JSONUtil.put(
 							"terms",
 							JSONUtil.put(
-								"scopeGroupId", "${user.user_group_ids}")))
+								"boost", boost
+							).put(
+								"groupId", "${user.user_group_ids}"
+							)))
 				).put(
 					"type", "wrapper"
 				))
@@ -110,72 +112,31 @@ public class LimitSearchToMySitesTest extends BaseBlueprintsTestCase {
 			"conditions", createJSONArray()
 		).put(
 			"description",
-			JSONUtil.put(
-				"en_US", "Limit search scope to the sites user is member of")
+			JSONUtil.put("en_US", "Boost contents on sites I'm a member of")
 		).put(
 			"enabled", true
 		).put(
 			"icon", "thumbs-up"
 		).put(
-			"title", JSONUtil.put("en_US", "Limit Search to My Sites")
+			"title", JSONUtil.put("en_US", "Boost Contents on My Sites")
 		);
 	}
 
-	private String _getSelectedElementString() throws Exception {
+	private String _getSelectedElementString(int boost) throws Exception {
 		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject(
-			"/elements/limit-search-to-my-sites-test.json");
+			"/elements/boost-contents-on-my-sites-test.json");
 
 		return JSONUtil.put(
 			"query_configuration",
 			createJSONArray().put(
 				JSONUtil.put(
-					"elementOutput",
-					JSONUtil.put(
-						"category", "filter"
-					).put(
-						"clauses",
-						createJSONArray().put(
-							JSONUtil.put(
-								"context", "query"
-							).put(
-								"occur", "filter"
-							).put(
-								"query",
-								JSONUtil.put(
-									"query",
-									JSONUtil.put(
-										"terms",
-										JSONUtil.put(
-											"scopeGroupId",
-											"${user.user_group_ids}")))
-							).put(
-								"type", "wrapper"
-							))
-					).put(
-						"conditions",
-						createJSONArray().put(
-							JSONUtil.put("configuration", createJSONArray()))
-					).put(
-						"description",
-						JSONUtil.put(
-							"en_US",
-							"Limit search scope to the sites user is member of")
-					).put(
-						"enabled", true
-					).put(
-						"icon", "filter"
-					).put(
-						"title",
-						JSONUtil.put("en_US", "Limit Search to My Sites")
-					)
-				).put(
 					"elementTemplateJSON",
 					elementTemplateJSONObject.get("elementTemplateJSON")
 				).put(
 					"uiConfigurationJSON",
 					elementTemplateJSONObject.get("uiConfigurationJSON")
 				).put(
-					"uiConfigurationValues", JSONUtil.put(null, null)
+					"uiConfigurationValues", JSONUtil.put("boost", boost)
 				))
 		).toString();
 	}

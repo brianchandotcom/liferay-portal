@@ -46,12 +46,6 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpDirectoryModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "clean-up-expired-journal-article-module-data",
-		required = false
-	)
-	public boolean cleanUpExpiredJournalArticleModuleData();
-
-	@Meta.AD(
 		deflt = "false", name = "clean-up-hello-world-module-data",
 		required = false
 	)
@@ -91,5 +85,11 @@ public interface DataCleanupConfiguration {
 		deflt = "false", name = "clean-up-twitter-module-data", required = false
 	)
 	public boolean cleanUpTwitterModuleData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-expired-journal-articles",
+		required = false
+	)
+	public boolean removeExpiredJournalArticles();
 
 }

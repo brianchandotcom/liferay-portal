@@ -59,13 +59,6 @@ public class DataCleanup implements UpgradeStepRegistrator {
 				"com.liferay.directory.web", DirectoryUpgradeProcess::new);
 
 			_cleanUpModuleData(
-				_dataCleanupConfiguration::
-					cleanUpExpiredJournalArticleModuleData,
-				"com.liferay.journal.service",
-				() -> new UpgradeExpiredJournalArticle(
-					_journalArticleLocalService));
-
-			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpImageEditorModuleData,
 				"com.liferay.frontend.image.editor.web",
 				ImageEditorUpgradeProcess::new);
@@ -97,6 +90,12 @@ public class DataCleanup implements UpgradeStepRegistrator {
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpTwitterModuleData,
 				"com.liferay.twitter.service", TwitterUpgradeProcess::new);
+
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::removeExpiredJournalArticles,
+				"com.liferay.journal.service",
+				() -> new ExpiredJournalArticleUpgradeProcess(
+					_journalArticleLocalService));
 		}
 		catch (UpgradeException upgradeException) {
 			ReflectionUtil.throwException(upgradeException);

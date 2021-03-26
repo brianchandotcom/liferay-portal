@@ -78,7 +78,7 @@ public class CommerceShippingRestrictionsPageClayTable
 
 	@Override
 	public String getFirstColumnName() {
-		return "country";
+		return "countryName";
 	}
 
 	@Override
@@ -126,8 +126,8 @@ public class CommerceShippingRestrictionsPageClayTable
 		for (Country country : baseModelSearchResult.getBaseModels()) {
 			shippingRestrictions.add(
 				new ShippingRestriction(
-					country.getTitle(themeDisplay.getLocale()),
 					country.getCountryId(),
+					country.getTitle(themeDisplay.getLocale()),
 					_getFields(
 						country.getCountryId(), commerceShippingMethods,
 						themeDisplay.getLanguageId())));

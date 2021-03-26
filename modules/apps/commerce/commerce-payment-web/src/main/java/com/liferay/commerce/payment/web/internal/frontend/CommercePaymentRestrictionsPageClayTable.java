@@ -78,7 +78,7 @@ public class CommercePaymentRestrictionsPageClayTable
 
 	@Override
 	public String getFirstColumnName() {
-		return "country";
+		return "countryName";
 	}
 
 	@Override

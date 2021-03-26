@@ -112,6 +112,39 @@ public class JSONUtilTest {
 	}
 
 	@Test
+	public void testGetFirstElementStringValue() throws Exception {
+		String json = "[\"commerce\"]";
+
+		String firstElementValue = null;
+
+		if (JSONUtil.isArray(json)) {
+			JSONArray jsonArray = JSONUtil.getValueAsJSONArray(json);
+
+			if (jsonArray.length() > 0) {
+				firstElementValue = (String)jsonArray.get(0);
+			}
+		}
+
+		Assert.assertEquals(
+			"First element string value", "commerce", firstElementValue);
+
+		json = "[\"commerce\",\"value2\"]";
+
+		firstElementValue = null;
+
+		if (JSONUtil.isArray(json)) {
+			JSONArray jsonArray = JSONUtil.getValueAsJSONArray(json);
+
+			if (jsonArray.length() > 0) {
+				firstElementValue = (String)jsonArray.get(0);
+			}
+		}
+
+		Assert.assertEquals(
+			"First element string value", "commerce", firstElementValue);
+	}
+
+	@Test
 	public void testGetValue() {
 		JSONObject jsonObject = JSONUtil.put(
 			"alpha", JSONUtil.put("beta", JSONUtil.put("gamma")));
@@ -123,12 +156,91 @@ public class JSONUtilTest {
 	}
 
 	@Test
+	public void testGetValueAsJSONArray() throws Exception {
+		JSONObject jsonObject = _createJSONObject("{\"array\":[]}");
+
+		JSONArray jsonArray = JSONUtil.getValueAsJSONArray("array", jsonObject);
+
+		Assert.assertNotNull("JSONArray is not null", jsonArray);
+
+		Assert.assertEquals("JSONArray length", 0, jsonArray.length());
+
+		jsonObject = _createJSONObject(
+			"{\"array\":[\"commerce\"]}");
+
+		jsonArray = JSONUtil.getValueAsJSONArray("array", jsonObject);
+
+		Assert.assertEquals("JSONArray length", 1, jsonArray.length());
+
+		Assert.assertEquals(
+			"JSONArray first string element value", "commerce",
+			jsonArray.getString(0));
+
+		jsonObject = _createJSONObject("{\"array\":[1,2,300,4]}");
+
+		jsonArray = JSONUtil.getValueAsJSONArray("array", jsonObject);
+
+		Assert.assertEquals("JSONArray length", 4, jsonArray.length());
+
+		Assert.assertEquals(
+			"JSONArray first string element value", "300",
+			jsonArray.getString(2));
+	}
+
+	@Test
 	public void testHasValue() {
 		Assert.assertFalse(
 			JSONUtil.hasValue(JSONUtil.putAll("alpha", "beta", "gamma"), "1"));
 		Assert.assertTrue(
 			JSONUtil.hasValue(
 				JSONUtil.putAll("alpha", "beta", "gamma"), "gamma"));
+	}
+
+	@Test
+	public void testIsArray() {
+		Assert.assertFalse("null is not a JSON array", JSONUtil.isArray(null));
+
+		Assert.assertFalse("\"\" is not a JSON array", JSONUtil.isArray(""));
+
+		Assert.assertFalse("{} is not a JSON array", JSONUtil.isArray("{}"));
+
+		Assert.assertTrue("[] is an empty JSON array", JSONUtil.isArray("[]"));
+
+		Assert.assertFalse(
+			"{\"key\":\"value\"} is not a JSON array",
+			JSONUtil.isArray("{\"key\":\"value\"}"));
+
+		Assert.assertTrue(
+			"[{\"key\":\"value\"}] is a JSON array",
+			JSONUtil.isArray("[{\"key\":\"value\"}]"));
+
+		Assert.assertTrue(
+			"[\"value1\",\"value2\"] is a JSON array",
+			JSONUtil.isArray("[\"value1\",\"value2\"]"));
+	}
+
+	@Test
+	public void testisValid() {
+		Assert.assertTrue(
+			"null is an empty JSON string", JSONUtil.isValid(null));
+
+		Assert.assertTrue("\"\" is an empty JSON string", JSONUtil.isValid(""));
+
+		Assert.assertTrue("{} is an empty JSON string", JSONUtil.isValid("{}"));
+
+		Assert.assertFalse("[] is an empty JSON string", JSONUtil.isValid("[]"));
+
+		Assert.assertTrue(
+			"{\"key\":\"value\"} is not an empty JSON string",
+			JSONUtil.isValid("{\"key\":\"value\"}"));
+
+		Assert.assertTrue(
+			"[{\"key\":\"value\"}] is not an empty JSON string",
+			JSONUtil.isValid("[{\"key\":\"value\"}]"));
+
+		Assert.assertTrue(
+			"[\"value1\",\"value2\"] is not an empty JSON string",
+			JSONUtil.isValid("[\"value1\",\"value2\"]"));
 	}
 
 	@Test
@@ -721,6 +833,10 @@ public class JSONUtilTest {
 
 	private JSONObject _createJSONObject() {
 		return JSONFactoryUtil.createJSONObject();
+	}
+
+	private JSONObject _createJSONObject(String json) throws Exception {
+		return JSONFactoryUtil.createJSONObject(json);
 	}
 
 }

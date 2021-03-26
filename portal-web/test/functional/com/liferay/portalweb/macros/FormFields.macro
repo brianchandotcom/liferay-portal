@@ -29,6 +29,13 @@ definition {
 		}
 	}
 
+	macro assertGridOptionChecked {
+		AssertElementPresent(
+			key_columnValue = "${columnValue}",
+			key_rowValue = "${rowValue}",
+			locator1 = "FormFields#GRID_OPTIONS_OPTION_CHECKED");
+	}
+
 	macro changeFieldType {
 		Pause(locator1 = "2000");
 

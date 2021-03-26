@@ -3191,7 +3191,7 @@ definition {
 			fieldType = "Paragraph");
 
 		var fieldParagraphField = FormFields.getFieldName();
-		
+
 		FormFields.editParagraphBody(content = "Paragraph body text.");
 
 		Form.closeSidebar();
@@ -3489,9 +3489,14 @@ definition {
 			formPageCurrent = "Page 1",
 			formPageNext = "Page 2");
 
-		// FormFields.viewTextLabel( 
-		// 	fieldLabel = "Grid Field Survey", JA TAVA COMENTADO
-		// 	fieldName = "${fieldGridField}");
+		for (var optionNumber : list "1:1,2:2,3:3") {
+			var columnNumber = StringUtil.extractLast("${optionNumber}", ":");
+			var rowNumber = StringUtil.extractFirst("${optionNumber}", ":");
+
+			FormFields.assertGridOptionChecked(
+				columnValue = "Category ${rowNumber}",
+				rowValue = "Option ${columnNumber}");
+		}
 
 		FormPortlet.nextPage(
 			formPageCurrent = "Page 2",

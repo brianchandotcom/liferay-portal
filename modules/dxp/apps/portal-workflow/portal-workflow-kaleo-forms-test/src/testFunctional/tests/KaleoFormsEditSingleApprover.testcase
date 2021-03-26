@@ -406,7 +406,6 @@ definition {
 
 	@priority = "3"
 	test ViewApprovedProcessNotificationWithComments {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "KaleoFormsEditSingleApprover#ViewApprovedProcessNotificationWithComments";
 
 		Navigator.openURL();

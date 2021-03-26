@@ -1244,10 +1244,17 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Content Pages,Item Selector";
 
-		JSONBlog.addEntry(
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
 			entryContent = "This content maps from blog content",
+			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
-			groupName = "Test Site Name");
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		Button.clickPublish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -1268,6 +1275,10 @@ definition {
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
+
+		AssertVisible(
+			key_imageFileName = "Document_1.jpg",
+			locator1 = "PageEditor#CONTENT_PAGE_IMAGE_CONTENT");
 
 		AssertTextEquals(
 			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",

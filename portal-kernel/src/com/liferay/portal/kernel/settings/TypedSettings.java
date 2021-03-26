@@ -82,7 +82,7 @@ public class TypedSettings {
 	public LocalizedValuesMap getLocalizedValuesMap(String key) {
 		String value = getValue(key, null);
 
-		if (JSONUtil.isValid(value)) {
+		if (JSONUtil.isJSONObject(value)) {
 			try {
 				return _toLocalizedValuesMap(
 					JSONFactoryUtil.createJSONObject(value));

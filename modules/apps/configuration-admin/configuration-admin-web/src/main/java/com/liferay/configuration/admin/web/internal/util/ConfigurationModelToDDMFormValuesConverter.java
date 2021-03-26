@@ -187,7 +187,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		String type = getDDMFormFieldType(ddmFormFieldValue.getName());
 
 		if (type.equals(DDMFormFieldType.LOCALIZABLE_TEXT) &&
-			!JSONUtil.isValid(value)) {
+			!JSONUtil.isJSONObject(value)) {
 
 			value = String.valueOf(
 				JSONUtil.put(LocaleUtil.toLanguageId(_locale), value));

@@ -234,7 +234,7 @@ public class DDMFormValuesToPropertiesConverter {
 		String stringValue = String.valueOf(value);
 
 		if ((type == ExtendedAttributeDefinition.LOCALIZED_VALUES_MAP) &&
-			JSONUtil.isValid(stringValue)) {
+			JSONUtil.isJSONObject(stringValue)) {
 
 			try {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(

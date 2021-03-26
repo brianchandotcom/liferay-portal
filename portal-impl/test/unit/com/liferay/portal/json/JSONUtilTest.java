@@ -222,25 +222,25 @@ public class JSONUtilTest {
 	@Test
 	public void testisValid() {
 		Assert.assertTrue(
-			"null is an empty JSON string", JSONUtil.isValid(null));
+			"null is an empty JSON string", JSONUtil.isJSONObject(null));
 
-		Assert.assertTrue("\"\" is an empty JSON string", JSONUtil.isValid(""));
+		Assert.assertTrue("\"\" is an empty JSON string", JSONUtil.isJSONObject(""));
 
-		Assert.assertTrue("{} is an empty JSON string", JSONUtil.isValid("{}"));
+		Assert.assertTrue("{} is an empty JSON string", JSONUtil.isJSONObject("{}"));
 
-		Assert.assertFalse("[] is an empty JSON string", JSONUtil.isValid("[]"));
+		Assert.assertFalse("[] is an empty JSON string", JSONUtil.isJSONObject("[]"));
 
 		Assert.assertTrue(
 			"{\"key\":\"value\"} is not an empty JSON string",
-			JSONUtil.isValid("{\"key\":\"value\"}"));
+			JSONUtil.isJSONObject("{\"key\":\"value\"}"));
 
 		Assert.assertTrue(
 			"[{\"key\":\"value\"}] is not an empty JSON string",
-			JSONUtil.isValid("[{\"key\":\"value\"}]"));
+			JSONUtil.isJSONObject("[{\"key\":\"value\"}]"));
 
 		Assert.assertTrue(
 			"[\"value1\",\"value2\"] is not an empty JSON string",
-			JSONUtil.isValid("[\"value1\",\"value2\"]"));
+			JSONUtil.isJSONObject("[\"value1\",\"value2\"]"));
 	}
 
 	@Test

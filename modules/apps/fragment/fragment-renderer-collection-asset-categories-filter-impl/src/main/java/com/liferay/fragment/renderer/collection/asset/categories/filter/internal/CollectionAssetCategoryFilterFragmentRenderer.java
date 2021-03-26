@@ -157,7 +157,7 @@ public class CollectionAssetCategoryFilterFragmentRenderer
 			"source");
 
 		if (Validator.isNull(sourceObject) ||
-			!JSONUtil.isValid(sourceObject.toString())) {
+			!JSONUtil.isJSONObject(sourceObject.toString())) {
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/page.jsp");

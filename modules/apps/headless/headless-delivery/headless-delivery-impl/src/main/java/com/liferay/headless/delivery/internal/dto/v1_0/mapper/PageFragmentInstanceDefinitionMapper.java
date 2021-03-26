@@ -454,7 +454,7 @@ public class PageFragmentInstanceDefinitionMapper {
 			return null;
 		}
 
-		if (JSONUtil.isValid(alt)) {
+		if (JSONUtil.isJSONObject(alt)) {
 			JSONObject localizedJSONObject = configJSONObject.getJSONObject(
 				"alt");
 

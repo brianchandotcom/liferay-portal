@@ -147,7 +147,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 				// Collect filters and outputs
 
-				if (JSONUtil.isValid(parameterValue)) {
+				if (JSONUtil.isJSONObject(parameterValue)) {
 					requestedCPDefinitionOptionRels.add(cpDefinitionOptionRel);
 
 					continue;

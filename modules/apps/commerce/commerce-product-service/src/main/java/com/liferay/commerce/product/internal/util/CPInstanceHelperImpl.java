@@ -375,7 +375,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 						cpInstanceId);
 
-		JSONArray keyValuesJSONArray = JSONUtil.toJSONArray(
+		JSONArray keyValuesJSONArray = JSONUtil.createJSONArrayFromKeyValueMap(
 			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =

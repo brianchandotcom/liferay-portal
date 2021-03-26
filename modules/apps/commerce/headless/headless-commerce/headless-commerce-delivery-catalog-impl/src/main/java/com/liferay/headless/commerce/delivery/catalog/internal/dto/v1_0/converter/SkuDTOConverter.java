@@ -164,7 +164,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 						cpInstance.getCPInstanceId());
 
-		JSONArray keyValuesJSONArray = JSONUtil.toJSONArray(
+		JSONArray keyValuesJSONArray = JSONUtil.createJSONArrayFromKeyValueMap(
 			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>

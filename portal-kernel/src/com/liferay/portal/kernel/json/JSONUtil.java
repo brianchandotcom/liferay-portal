@@ -354,11 +354,13 @@ public class JSONUtil {
 		return jsonArray;
 	}
 
-	public static JSONArray toJSONArray(Map<String, List<String>> keyValues) {
+	public static JSONArray createJSONArrayFromKeyValueMap(
+			Map<String, List<String>> map) {
+
 		JSONArray jsonArray = _createJSONArray();
 
 		for (Map.Entry<String, List<String>> keyValuesEntry :
-				keyValues.entrySet()) {
+				map.entrySet()) {
 
 			JSONObject arrayEntryJSONObject = _createJSONObject();
 

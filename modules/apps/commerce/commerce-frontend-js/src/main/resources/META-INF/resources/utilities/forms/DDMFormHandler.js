@@ -33,7 +33,7 @@ class DDMFormHandler {
 	_attachFormListener() {
 		this.DDMFormInstance.unstable_onEvent(
 			({payload: field, type: eventName}) => {
-				if (eventName === 'fieldEdited') {
+				if (eventName === 'field_change') {
 					this.fields = updateFields(this.fields, field);
 					this.checkCPInstance();
 				}

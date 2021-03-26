@@ -24,27 +24,28 @@ import java.util.List;
 public class ShippingRestriction {
 
 	public ShippingRestriction(
-		String country, long countryId, List<RestrictionField> fields) {
+		long countryId, String countryName,
+		List<RestrictionField> restrictionFields) {
 
-		_country = country;
 		_countryId = countryId;
-		_fields = fields;
-	}
-
-	public String getCountry() {
-		return _country;
+		_countryName = countryName;
+		_restrictionFields = restrictionFields;
 	}
 
 	public long getCountryId() {
 		return _countryId;
 	}
 
-	public List<RestrictionField> getFields() {
-		return _fields;
+	public String getCountryName() {
+		return _countryName;
 	}
 
-	private final String _country;
+	public List<RestrictionField> getRestrictionFields() {
+		return _restrictionFields;
+	}
+
 	private final long _countryId;
-	private final List<RestrictionField> _fields;
+	private final String _countryName;
+	private final List<RestrictionField> _restrictionFields;
 
 }

@@ -214,7 +214,7 @@ public abstract class BaseBlueprintsTestCase {
 		return blueprintsAttributesBuilder.build();
 	}
 
-	protected JSONObject getConfigurationJSONObject(JSONArray jsonArray) {
+	protected JSONObject getConfigurationJSONObject(JSONArray queryJSONArray) {
 		return JSONUtil.put(
 			BlueprintKeys.ADVANCED_CONFIGURATION.getJsonKey(),
 			getAdvancedConfiguration()
@@ -231,7 +231,7 @@ public abstract class BaseBlueprintsTestCase {
 			BlueprintKeys.PARAMETER_CONFIGURATION.getJsonKey(),
 			JSONUtil.put(null, null)
 		).put(
-			BlueprintKeys.QUERY_CONFIGURATION.getJsonKey(), jsonArray
+			BlueprintKeys.QUERY_CONFIGURATION.getJsonKey(), queryJSONArray
 		).put(
 			BlueprintKeys.SORT_CONFIGURATION.getJsonKey(),
 			getSortConfiguration()

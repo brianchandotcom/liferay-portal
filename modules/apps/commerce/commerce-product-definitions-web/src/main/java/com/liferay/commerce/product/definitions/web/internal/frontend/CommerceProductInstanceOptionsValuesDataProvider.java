@@ -156,8 +156,11 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 				String optionValueKey = parameterValue;
 
 				if (JSONUtil.isArray(parameterValue)) {
-					optionValueKey = JSONUtil.getFirstElementStringValue(
-						parameterValue);
+					JSONArray jsonArray = JSONUtil.getJSONArray(parameterValue);
+
+					if (jsonArray.length() > 0) {
+						optionValueKey = (String)jsonArray.get(0);
+					}
 				}
 
 				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
@@ -318,11 +321,12 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 			String optionValueKey = parameterValue;
 
-			if (JSONUtil.isArray(parameterValue) &&
-				!JSONUtil.isValid(parameterValue)) {
+			if (JSONUtil.isArray(parameterValue)) {
+				JSONArray jsonArray = JSONUtil.getJSONArray(parameterValue);
 
-				optionValueKey = JSONUtil.getFirstElementStringValue(
-					parameterValue);
+				if (jsonArray.length() > 0) {
+					optionValueKey = (String)jsonArray.get(0);
+				}
 			}
 
 			CPDefinitionOptionValueRel selectedCPDefinitionOptionValueRel =

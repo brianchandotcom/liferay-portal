@@ -53,20 +53,36 @@ public class JsonHelperTest {
 	}
 
 	@Test
-	public void testGetFirstElementStringValue() {
-		Assert.assertEquals(
-			"First element string value", "commerce",
-			JSONUtil.getFirstElementStringValue("[\"commerce\"]"));
+	public void testGetFirstElementStringValue() throws Exception {
+		String json = "[\"commerce\"]";
+
+		String firstElementValue = null;
+
+		if (JSONUtil.isArray(json)) {
+			JSONArray jsonArray = JSONUtil.getJSONArray(json);
+
+			if (jsonArray.length() > 0) {
+				firstElementValue = (String)jsonArray.get(0);
+			}
+		}
 
 		Assert.assertEquals(
-			"First element string value", "commerce",
-			JSONUtil.getFirstElementStringValue("[\"commerce\",\"value2\"]"));
+			"First element string value", "commerce", firstElementValue);
 
-		_assertException(
-			"[\"commerce\",\"value2\"", IllegalArgumentException.class);
-		_assertException("{\"key\":\"value\"}", IllegalArgumentException.class);
-		_assertException("[]", IndexOutOfBoundsException.class);
-		_assertException("[210,300]", IndexOutOfBoundsException.class);
+		json = "[\"commerce\",\"value2\"]";
+
+		firstElementValue = null;
+
+		if (JSONUtil.isArray(json)) {
+			JSONArray jsonArray = JSONUtil.getJSONArray(json);
+
+			if (jsonArray.length() > 0) {
+				firstElementValue = (String)jsonArray.get(0);
+			}
+		}
+
+		Assert.assertEquals(
+			"First element string value", "commerce", firstElementValue);
 	}
 
 	@Test
@@ -146,24 +162,6 @@ public class JsonHelperTest {
 		Assert.assertTrue(
 			"[\"value1\",\"value2\"] is not an empty JSON string",
 			JSONUtil.isValid("[\"value1\",\"value2\"]"));
-	}
-
-	private void _assertException(
-		String failingExpression, Class<?> exceptionClass) {
-
-		Exception exception1 = null;
-
-		try {
-			JSONUtil.getFirstElementStringValue(failingExpression);
-		}
-		catch (Exception exception2) {
-			exception1 = exception2;
-		}
-
-		Assert.assertNotNull("Exception instance", exception1);
-
-		Assert.assertEquals(
-			"Exception class", exception1.getClass(), exceptionClass);
 	}
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();

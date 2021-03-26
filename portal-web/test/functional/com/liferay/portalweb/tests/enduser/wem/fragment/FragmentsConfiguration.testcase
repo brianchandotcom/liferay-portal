@@ -72,4 +72,110 @@ definition {
 		FragmentsEditor.publish();
 	}
 
+	@description = "This is a test for LPS-109138. When type integer in the configuration text field, the field can constraint min and max value."
+	@priority = "4"
+	test ViewValidationInTextFieldWithNumberConstraintRules {
+		task ("Add a fragment with number constraint rules in configuration text field") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "Age",
+					"name": "age",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "25",
+						"validation": {
+							"errorMessage": "Please enter a valid age",
+							"type": "number",
+							"min": 18,
+							"max": 65
+						}
+					}
+				}
+			]
+		}
+	]
+}
+			''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			Pause(locator1 = "3000");
+
+			FragmentsEditor.gotoCodeTab();
+
+			var htmlSnippet = '''
+<div class="fragment_example">
+	<div class="portlet-msg-info">Please enter info in configuration.</div>
+</div>
+			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add the new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+
+			AssertVisible(
+				key_fragmentName = "Fragment Name",
+				key_messageIfo = "Please enter info in configuration.",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+
+		task ("View alert message is shown when type 10 in Age field") {
+			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
+
+			Type(
+				key_text = "Age",
+				locator1 = "TextInput#ANY",
+				value1 = "10");
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Please enter a valid age");
+		}
+
+		task ("View alert message is shown when type 70 in Age field") {
+			Type(
+				key_text = "Age",
+				locator1 = "TextInput#ANY",
+				value1 = "70");
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Please enter a valid age");
+		}
+
+		task ("View alert message is not shown when type 30 in Age field") {
+			Type(
+				key_text = "Age",
+				locator1 = "TextInput#ANY",
+				value1 = "30");
+
+			AssertElementNotPresent(locator1 = "Message#WARNING_FEEDBACK");
+		}
+	}
+
 }

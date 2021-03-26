@@ -943,14 +943,12 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 	<macrodef name="prepare-suite-search-engine">
 		<sequential>
-			<propertycopy from="suite.elastic.version[${env.CI_TEST_SUITE}]" name="suite.elastic.version" silent="true" />
+			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 
 			<if>
-				<isset property="suite.elastic.version" />
+				<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
 				<then>
-					<ant antfile="build-test-elasticsearch7.xml" target="redeploy-sidecar">
-						<property name="sidecar.redeploy.version" value="${suite.elastic.version}" />
-					</ant>
+					<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
 				</then>
 			</if>
 		</sequential>
@@ -2959,6 +2957,10 @@ log.sanitizer.enabled=false</echo>
 						<param name="test.class.groups.size" value="${test.batch.size}" />
 					</antcall>
 				</test-set-up>
+
+				<test-tear-down>
+					<stop-suite-search-engine />
+				</test-tear-down>
 			</run-batch-test>
 		</sequential>
 	</macrodef>
@@ -3421,6 +3423,17 @@ log.sanitizer.enabled=false</echo>
 							CATALINA_OPTS="${CATALINA_OPTS} ${print.final.flags}"
 						]]>
 					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-suite-search-engine">
+		<sequential>
+			<if>
+				<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+				<then>
+					<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
 				</then>
 			</if>
 		</sequential>

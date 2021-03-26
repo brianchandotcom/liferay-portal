@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Array;
 
@@ -171,7 +170,7 @@ public class JSONUtil {
 	public static JSONArray getValueAsJSONArray(String json)
 			throws JSONException {
 
-		if (isArray(json)) {
+		if (isJSONArray(json)) {
 			return _createJSONArray(json);
 		}
 
@@ -234,18 +233,15 @@ public class JSONUtil {
 		return false;
 	}
 
-	public static boolean isArray(String json) {
-		if (Validator.isNull(json)) {
-			return false;
-		}
-
-		if (json.startsWith(StringPool.OPEN_BRACKET) &&
-			json.endsWith(StringPool.CLOSE_BRACKET)) {
+	public static boolean isJSONArray(String json) {
+		try {
+			_createJSONArray(json);
 
 			return true;
 		}
-
-		return false;
+		catch (JSONException jsonException) {
+			return false;
+		}
 	}
 
 	public static boolean isValid(String json) {

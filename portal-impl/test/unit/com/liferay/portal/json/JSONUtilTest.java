@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.poshi.core.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -206,17 +207,18 @@ public class JSONUtilTest {
 
 	@Test
 	public void testIsJSONArray() {
-		Assert.assertFalse(
-			"null is not a JSON array", JSONUtil.isJSONArray(null));
+		Assert.assertTrue(
+			"null is an empty JSON array", JSONUtil.isJSONArray(null));
 
-		Assert.assertFalse(
-			"\"\" is not a JSON array", JSONUtil.isJSONArray(""));
-
-		Assert.assertFalse(
-			"{} is not a JSON array", JSONUtil.isJSONArray("{}"));
+		Assert.assertTrue(
+			"\"\" is an empty JSON array",
+			JSONUtil.isJSONArray(StringPool.BLANK));
 
 		Assert.assertTrue(
 			"[] is an empty JSON array", JSONUtil.isJSONArray("[]"));
+
+		Assert.assertFalse(
+			"{} is not a JSON array", JSONUtil.isJSONArray("{}"));
 
 		Assert.assertFalse(
 			"{\"key\":\"value\"} is not a JSON array",
@@ -237,7 +239,8 @@ public class JSONUtilTest {
 			"null is an empty JSON string", JSONUtil.isJSONObject(null));
 
 		Assert.assertTrue(
-			"\"\" is an empty JSON string", JSONUtil.isJSONObject(""));
+			"\"\" is an empty JSON string",
+			JSONUtil.isJSONObject(StringPool.BLANK));
 
 		Assert.assertTrue(
 			"{} is an empty JSON string", JSONUtil.isJSONObject("{}"));
@@ -246,15 +249,15 @@ public class JSONUtilTest {
 			"[] is an empty JSON string", JSONUtil.isJSONObject("[]"));
 
 		Assert.assertTrue(
-			"{\"key\":\"value\"} is not an empty JSON string",
+			"{\"key\":\"value\"} is a JSON object",
 			JSONUtil.isJSONObject("{\"key\":\"value\"}"));
 
-		Assert.assertTrue(
-			"[{\"key\":\"value\"}] is not an empty JSON string",
+		Assert.assertFalse(
+			"[{\"key\":\"value\"}] is not a JSON object",
 			JSONUtil.isJSONObject("[{\"key\":\"value\"}]"));
 
-		Assert.assertTrue(
-			"[\"value1\",\"value2\"] is not an empty JSON string",
+		Assert.assertFalse(
+			"[\"value1\",\"value2\"] is not a JSON object",
 			JSONUtil.isJSONObject("[\"value1\",\"value2\"]"));
 	}
 

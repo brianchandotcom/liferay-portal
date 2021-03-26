@@ -100,8 +100,9 @@ public class CommerceProductInstanceDataSetDataProvider
 
 			String cpDefinitionName = cpDefinition.getName(languageId);
 
-			JSONArray keyValuesJSONArray = JSONUtil.toJSONArray(
-				cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
+			JSONArray keyValuesJSONArray =
+				JSONUtil.createJSONArrayFromKeyValueMap(
+					cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
 			int stockQuantity = _commerceInventoryEngine.getStockQuantity(
 				cpInstance.getCompanyId(), cpInstance.getSku());

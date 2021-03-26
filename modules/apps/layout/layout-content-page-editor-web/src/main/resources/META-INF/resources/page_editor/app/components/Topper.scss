@@ -5,6 +5,7 @@
 .page-editor__topper {
 	$borderWidth: 2px;
 	$color: $white;
+	$emptyItemMinWidth: 180px;
 	$showDuration: 0.2s;
 
 	position: relative;
@@ -35,6 +36,10 @@
 
 	&.dragged {
 		opacity: 0.5;
+	}
+
+	&.empty {
+		min-width: $emptyItemMinWidth;
 	}
 
 	&__bar {

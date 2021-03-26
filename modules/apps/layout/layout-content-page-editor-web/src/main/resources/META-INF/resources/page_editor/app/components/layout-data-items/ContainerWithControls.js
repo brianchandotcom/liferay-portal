@@ -62,6 +62,7 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 				[`container-fluid`]: widthType === CONTAINER_WIDTH_TYPES.fixed,
 				[`container-fluid-max-xl`]:
 					widthType === CONTAINER_WIDTH_TYPES.fixed,
+				empty: !item.children.length,
 				[`ml-${marginLeft}`]: widthType !== CONTAINER_WIDTH_TYPES.fixed,
 				[`mr-${marginRight}`]:
 					widthType !== CONTAINER_WIDTH_TYPES.fixed,

@@ -25,18 +25,7 @@ definition {
 
 	macro getServerVersion {
 		if (!(isSet(port))) {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-			var fileContent = FileUtil.read("${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config");
-
-			var remoteMode = RegexUtil.replace("${fileContent}", "productionModeEnabled=&quot;(.*)&quot;", "1");
-
-			if ("${remoteMode}" == "true") {
-				var port = "9200";
-			}
-			else {
-				var port = "9201";
-			}
+			var port = Elasticsearch.getServerPort();
 		}
 
 		var curl = "http://localhost:${port}";

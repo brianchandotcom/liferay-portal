@@ -57,9 +57,10 @@ definition {
 		Portlet.addPG(portletName = "Asset Publisher");
 
 		var companyId = JSONCompany.getCompanyId();
+		var port = Elasticsearch.getServerPort();
 
 		var curl = '''
-			http://localhost:9201/liferay-${companyId}/_delete_by_query?pretty \
+			http://localhost:${port}/liferay-${companyId}/_delete_by_query?pretty \
 			-H 'Content-Type: application/json' \
 			-d '{
 				"query": {

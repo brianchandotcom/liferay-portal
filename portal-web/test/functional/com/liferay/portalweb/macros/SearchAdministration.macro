@@ -25,12 +25,9 @@ definition {
 		var searchEngineVendor = selenium.getText("SearchAdmin#SEARCH_ENGINE_VENDOR");
 
 		if (contains("${searchEngineVendor}", "Elasticsearch")) {
-			if (contains("${searchEngineVendor}", "Sidecar")) {
-				var curl = "http://localhost:9201/_tasks";
-			}
-			else {
-				var curl = "http://localhost:9200/_tasks";
-			}
+			var port = Elasticsearch.getServerPort();
+
+			var curl = "http://localhost:${port}/_tasks";
 		}
 
 		var reindexElapsedTime = "0";

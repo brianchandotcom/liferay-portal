@@ -18,7 +18,6 @@ import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLProcessor;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
@@ -71,13 +70,7 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 				renderRequest.setAttribute(
 					FileVersion.class.getName(), fileVersion);
 
-				if (_isPreviewFailure(fileVersion)) {
-					return "/embed/error.jsp";
-				}
-				else if (!_videoProcessor.hasVideo(fileVersion)) {
-					return "/embed/generating.jsp";
-				}
-				else {
+				if (_videoProcessor.hasVideo(fileVersion)) {
 					String videoPosterURL = _getVideoPosterURL(
 						fileVersion,
 						(ThemeDisplay)renderRequest.getAttribute(
@@ -92,6 +85,12 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 						DLVideoWebKeys.VIDEO_POSTER_URL, videoPosterURL);
 
 					return "/embed/video.jsp";
+				}
+				else if (_isPreviewFailure(fileVersion)) {
+					return "/embed/error.jsp";
+				}
+				else {
+					return "/embed/generating.jsp";
 				}
 			}
 		}
@@ -181,7 +180,7 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 			return true;
 		}
 
-		if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+		if (!_videoProcessor.isVideoSupported(fileVersion)) {
 			return true;
 		}
 

@@ -1097,6 +1097,8 @@ public class TestrayImporter {
 
 		_setupProfileDXP();
 
+		_setupPortalBundle();
+
 		_callPrepareTCK();
 
 		_checkoutPluginsBranch();
@@ -1292,6 +1294,34 @@ public class TestrayImporter {
 			portalBranchInformationBuild.getPortalBranchInformation());
 
 		portalGitWorkingDirectory.displayLog();
+
+		try {
+			JenkinsResultsParserUtil.write(
+				new File(
+					portalGitWorkingDirectory.getWorkingDirectory(),
+					JenkinsResultsParserUtil.combine(
+						"app.server.", System.getenv("HOSTNAME"),
+						".properties")),
+				JenkinsResultsParserUtil.combine(
+					"app.server.parent.dir=",
+					JenkinsResultsParserUtil.getCanonicalPath(
+						portalGitWorkingDirectory.getWorkingDirectory()),
+					"/bundles"));
+
+			JenkinsResultsParserUtil.write(
+				new File(
+					portalGitWorkingDirectory.getWorkingDirectory(),
+					JenkinsResultsParserUtil.combine(
+						"build.", System.getenv("HOSTNAME"), ".properties")),
+				JenkinsResultsParserUtil.combine(
+					"liferay.home=",
+					JenkinsResultsParserUtil.getCanonicalPath(
+						portalGitWorkingDirectory.getWorkingDirectory()),
+					"/bundles"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private void _checkoutQAWebsitesBranch() {
@@ -1927,6 +1957,69 @@ public class TestrayImporter {
 		}
 
 		return string;
+	}
+
+	private void _setupPortalBundle() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		if (portalGitWorkingDirectory == null) {
+			return;
+		}
+
+		PortalRelease portalRelease = getPortalRelease();
+
+		if (portalRelease == null) {
+			return;
+		}
+
+		Map<String, String> parameters = new HashMap<>();
+
+		parameters.put(
+			"liferay.portal.bundle", portalRelease.getPortalVersion());
+		parameters.put(
+			"test.build.bundle.zip.url",
+			String.valueOf(portalRelease.getTomcatURL()));
+
+		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
+		PortalHotfixRelease portalHotfixRelease = getPortalHotfixRelease();
+
+		if ((portalFixpackRelease != null) || (portalHotfixRelease != null)) {
+			try {
+				parameters.put(
+					"test.fix.pack.base.url",
+					JenkinsResultsParserUtil.getBuildProperty(
+						"portal.test.properties[test.fix.pack.base.url]"));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+
+			if (portalHotfixRelease != null) {
+				parameters.put(
+					"test.build.fix.pack.zip.url",
+					String.valueOf(
+						portalHotfixRelease.getPortalHotfixReleaseURL()));
+			}
+			else {
+				parameters.put(
+					"test.build.fix.pack.zip.url",
+					String.valueOf(portalFixpackRelease.getPortalFixpackURL()));
+			}
+		}
+
+		try {
+			AntUtil.callTarget(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"build-test.xml", "set-tomcat-version-number", parameters);
+
+			AntUtil.callTarget(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"build-test.xml", "prepare-test-bundle", parameters);
+		}
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
+		}
 	}
 
 	private void _setupProfileDXP() {

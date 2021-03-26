@@ -5698,8 +5698,6 @@ log.sanitizer.enabled=false</echo>
 			<test-set-up>
 				<setup-test-environment />
 
-				<prepare-suite-search-engine />
-
 				<antcall inheritAll="false" target="record-test-class-file-names">
 					<param name="test.class.groups.size" value="${test.batch.size}" />
 				</antcall>

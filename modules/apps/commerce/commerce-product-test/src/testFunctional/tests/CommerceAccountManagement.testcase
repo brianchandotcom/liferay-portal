@@ -1,0 +1,138 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
+
+	@description = "COMMERCE-6368. In Addresses tab, I want to be able to add addresses to the account(Billing, Shipping, Billing and Shipping)"
+	@ignore = "true"
+	@priority = "3"
+	test AddAddressToAccount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6368 AddAddressToAccount pending implementation
+
+	}
+
+	@description = "COMMERCE-6337. In Info tab, I want to be able to add an organization to the account"
+	@ignore = "true"
+	@priority = "3"
+	test AddOrganizationToAccount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6337 AddOrganizationToAccount pending implementation
+	}
+
+	@description = "COMMERCE-6347. In Info tab, I want to be unable to add an organization that is already added to the account"
+	@ignore = "true"
+	@priority = "3"
+	test AssertOrganizationThatIsPartOfTheAccountCannotBeAddedAgain {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6347 AssertOrganizationThatIsPartOfTheAccountCannotBeAddedAgain pending implementation
+	}
+
+	@description = "COMMERCE-6357. In Members tab, I want to be unable to add a user that is already a member of the account"
+	@ignore = "true"
+	@priority = "3"
+	test AssertUserThatIsPartOfTheAccountCannotBeAddedAgain {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6357 AssertUserThatIsPartOfTheAccountCannotBeAddedAgain pending implementation
+	}
+
+	@description = "COMMERCE-6378. In Account Details page, I want to be able to edit account by clicking 'Edit Account'(Account Image, Account Name, VAT Number, Email, Default Billing/Shipping address) and I want to be able to see changes I made in Account details page"
+	@ignore = "true"
+	@priority = "3"
+	test EditAccountDetails {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6378 EditAccountDetails pending implementation
+	}
+
+	@description = "COMMERCE-6372. In Addresses tab, I want to be able to edit an address added to the account"
+	@ignore = "true"
+	@priority = "3"
+	test EditAddressInAccount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6372 EditAddressInAccount pending implementation
+	}
+
+	@description = "COMMERCE-6373. In Addresses tab, I want to be able to remove addresses from the account"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveAddressFromAccount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6373 RemoveAddressFromAccount pending implementation
+	}
+
+	@description = "COMMERCE-6351. In Info tab, I want to be able to remove an organization from the account by clicking 'Delete'"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveOrganizationFromAccount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6351 RemoveOrganizationFromAccount pending implementation
+	}
+
+	@description = "COMMERCE-6361. In Members tab, I want to be able to remove users from the account"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveUserFromAccount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6361 RemoveUserFromAccount pending implementation
+	}
+
+	@description = "COMMERCE-6376. In Addresses tab, I want to be able to search for an address using the search bar"
+	@ignore = "true"
+	@priority = "3"
+	test SearchAnAccountAddress {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6376 SearchAnAccountAddress pending implementation
+	}
+
+	@description = "COMMERCE-6365. In Members tab, I want to be able to search for an account member using the search bar"
+	@ignore = "true"
+	@priority = "3"
+	test SearchAnAccountMember {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6365 SearchAnAccountMember pending implementation
+	}
+
+	@description = "COMMERCE-6352. In Info tab, I want to be able to search for an organization in the account using the search bar"
+	@ignore = "true"
+	@priority = "3"
+	test SearchAnAccountOrganization {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6352 SearchAnAccountOrganization pending implementation
+	}
+
+}

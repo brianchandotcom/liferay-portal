@@ -2560,6 +2560,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Version page
 
+			if (versionPage.equals(page)) {
+				versionPage = page;
+			}
+
 			versionPage.setNodeId(newNodeId);
 			versionPage.setTitle(page.getTitle());
 			versionPage.setParentTitle(newParentTitle);

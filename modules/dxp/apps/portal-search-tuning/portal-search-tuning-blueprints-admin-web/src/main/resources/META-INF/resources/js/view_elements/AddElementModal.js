@@ -14,6 +14,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -128,9 +129,9 @@ const AddElementModal = ({
 						/>
 
 						<div
-							className={`form-group ${
-								errorMessage ? 'has-error' : ''
-							}`}
+							className={getCN('form-group', {
+								'has-error': errorMessage,
+							})}
 						>
 							<label
 								className="control-label"

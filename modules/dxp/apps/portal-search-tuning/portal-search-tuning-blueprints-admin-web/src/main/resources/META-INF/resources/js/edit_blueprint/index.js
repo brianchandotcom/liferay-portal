@@ -13,19 +13,23 @@ import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayToolbar from '@clayui/toolbar';
 import getCN from 'classnames';
+import {useFormik} from 'formik';
 import {fetch, navigate} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
-import React, {useCallback, useContext, useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 
 import ErrorBoundary from '../shared/ErrorBoundary';
 import PageToolbar from '../shared/PageToolbar';
 import ThemeContext from '../shared/ThemeContext';
 import {CUSTOM_JSON_ELEMENT} from '../utils/data';
+import {INPUT_TYPES} from '../utils/inputTypes';
 import {
 	getElementOutput,
 	getUIConfigurationValues,
+	isDefined,
 	openErrorToast,
 	openSuccessToast,
+	sub,
 } from '../utils/utils';
 import Preview from './Preview';
 import Sidebar from './Sidebar';
@@ -67,58 +71,292 @@ function EditBlueprintForm({
 		CUSTOM_JSON_ELEMENT,
 	]);
 
-	const [isSubmitting, setIsSubmitting] = useState(false);
-
 	const initialConfiguration = JSON.parse(initialConfigurationString);
 	const initialSelectedElements = JSON.parse(initialSelectedElementsString);
 
-	const initialSelectedElementsId = initialSelectedElements[
-		'query_configuration'
-	].map((selectedElement, index) => ({
-		...selectedElement,
-		id: index,
-	}));
+	const elementIdCounter = useRef(
+		initialSelectedElements['query_configuration'].length
+	);
 
-	const elementIdCounter = useRef(initialSelectedElementsId.length);
+	const validate = (values) => {
+		const errors = {};
 
-	const [advancedConfig, setAdvancedConfig] = useState(
-		JSON.stringify(
-			initialConfiguration['advanced_configuration'],
-			null,
-			'\t'
-		)
-	);
-	const [aggregationConfig, setAggregationConfig] = useState(
-		JSON.stringify(
-			initialConfiguration['aggregation_configuration'],
-			null,
-			'\t'
-		)
-	);
-	const [facetConfig, setFacetConfig] = useState(
-		JSON.stringify(initialConfiguration['facet_configuration'], null, '\t')
-	);
-	const [frameworkConfig, setFrameworkConfig] = useState(
-		initialConfiguration['framework_configuration']
-	);
-	const [parameterConfig, setParameterConfig] = useState(
-		JSON.stringify(
-			initialConfiguration['parameter_configuration'],
-			null,
-			'\t'
-		)
-	);
-	const [sortConfig, setSortConfig] = useState(
-		JSON.stringify(initialConfiguration['sort_configuration'], null, '\t')
-	);
-	const [selectedQueryElements, setSelectedQueryElements] = useState(
-		initialSelectedElementsId
-	);
+		const selectedQueryElementsArray = [];
+
+		values.selectedQueryElements.map((element, index) => {
+			const configErrors = {};
+
+			if (
+				element.uiConfigurationJSON &&
+				element.uiConfigurationJSON.fieldSets
+			) {
+				element.uiConfigurationJSON.fieldSets.map(({fields = []}) => {
+					fields.map(({name, type, typeOptions = {}}) => {
+						const configValue = element.uiConfigurationValues[name];
+
+						if (
+							!typeOptions.optional &&
+							(configValue === '' ||
+								JSON.stringify(configValue) === '[]' ||
+								(type === INPUT_TYPES.FIELD_MAPPING &&
+									!configValue.field) ||
+								(type === INPUT_TYPES.FIELD_MAPPING_LIST &&
+									configValue.every(({field}) => !field)))
+						) {
+							configErrors[name] = Liferay.Language.get(
+								'required'
+							);
+						}
+						else if (
+							(name === 'boost' && configValue < 0) ||
+							(type === INPUT_TYPES.FIELD_MAPPING &&
+								configValue.boost < 0) ||
+							(type === INPUT_TYPES.FIELD_MAPPING_LIST &&
+								configValue.some(({boost}) => boost < 0))
+						) {
+							configErrors[name] = Liferay.Language.get(
+								'boost-must-be-greater-than-or-equal-to-0'
+							);
+						}
+						else if (
+							type === INPUT_TYPES.NUMBER ||
+							type === INPUT_TYPES.SLIDER
+						) {
+							if (
+								isDefined(typeOptions.min) &&
+								configValue < typeOptions.min
+							) {
+								configErrors[name] = sub(
+									Liferay.Language.get(
+										'please-enter-a-value-greater-than-or-equal-to-x'
+									),
+									[typeOptions.min]
+								);
+							}
+
+							if (
+								isDefined(typeOptions.max) &&
+								configValue > typeOptions.max
+							) {
+								configErrors[name] = sub(
+									Liferay.Language.get(
+										'please-enter-a-value-less-than-or-equal-to-x'
+									),
+									[typeOptions.max]
+								);
+							}
+						}
+						else if (type === INPUT_TYPES.JSON) {
+							try {
+								JSON.parse(configValue);
+							}
+							catch {
+								configErrors[name] = Liferay.Language.get(
+									'unable-to-apply-changes-due-to-invalid-json'
+								);
+							}
+						}
+					});
+				});
+			}
+			else {
+				const configValue =
+					element.uiConfigurationValues.elementTemplateJSON;
+
+				if (isDefined(configValue)) {
+					try {
+						JSON.parse(configValue);
+					}
+					catch {
+						configErrors.elementTemplateJSON = Liferay.Language.get(
+							'unable-to-apply-changes-due-to-invalid-json'
+						);
+					}
+
+					if (configValue == '') {
+						configErrors.elementTemplateJSON = Liferay.Language.get(
+							'required'
+						);
+					}
+				}
+			}
+
+			if (Object.keys(configErrors).length > 0) {
+				selectedQueryElementsArray[index] = {
+					uiConfigurationValues: configErrors,
+				};
+			}
+		});
+
+		if (selectedQueryElementsArray.length > 0) {
+			errors.selectedQueryElements = selectedQueryElementsArray;
+		}
+
+		[
+			'advancedConfig',
+			'aggregationConfig',
+			'facetConfig',
+			'parameterConfig',
+			'sortConfig',
+		].map((configName) => {
+			try {
+				JSON.parse(values[configName]);
+			}
+			catch {
+				errors[configName] = Liferay.Language.get(
+					'unable-to-apply-changes-due-to-invalid-json'
+				);
+			}
+
+			if (values[configName] == '') {
+				errors[configName] = Liferay.Language.get('required');
+			}
+		});
+
+		return errors;
+	};
 
 	const [previewInfo, setPreviewInfo] = useState(() => ({
 		loading: false,
 		results: {},
 	}));
+
+	const _handleFocusElement = (prefixedId) => {
+		const element = document.getElementById(prefixedId);
+
+		if (element) {
+			window.scrollTo({
+				behavior: 'smooth',
+				top:
+					element.getBoundingClientRect().top +
+					window.pageYOffset -
+					55 - // Control menu height
+					104 - // Page toolbar height
+					20, // Additional padding
+			});
+
+			element.classList.remove('focus');
+
+			void element.offsetWidth; // Triggers reflow to restart animation
+
+			element.classList.add('focus');
+		}
+	};
+
+	const _handleSubmit = (values) => {
+		const formData = new FormData(form.current);
+
+		try {
+			formData.append(
+				`${namespace}configuration`,
+				JSON.stringify({
+					advanced_configuration: JSON.parse(values.advancedConfig),
+					aggregation_configuration: JSON.parse(
+						values.aggregationConfig
+					),
+					facet_configuration: JSON.parse(values.facetConfig),
+					framework_configuration: values.frameworkConfig,
+					parameter_configuration: JSON.parse(values.parameterConfig),
+					query_configuration: values.selectedQueryElements.map(
+						getElementOutput
+					),
+					sort_configuration: JSON.parse(values.sortConfig),
+				})
+			);
+
+			formData.append(
+				`${namespace}selectedElements`,
+				JSON.stringify({
+					query_configuration: values.selectedQueryElements.map(
+						(item) =>
+							item.uiConfigurationJSON
+								? {
+										elementTemplateJSON:
+											item.elementTemplateJSON,
+										uiConfigurationJSON:
+											item.uiConfigurationJSON,
+										uiConfigurationValues:
+											item.uiConfigurationValues,
+								  } // Removes ID field
+								: {
+										elementTemplateJSON: getElementOutput(
+											item
+										),
+								  }
+					),
+				})
+			);
+		}
+		catch {
+			return;
+		}
+
+		formData.append(`${namespace}blueprintId`, blueprintId);
+		formData.append(`${namespace}redirect`, redirectURL);
+
+		return fetch(submitFormURL, {
+			body: formData,
+			method: 'POST',
+		})
+			.then((response) => response.json())
+			.then((responseContent) => {
+				if (
+					Object.prototype.hasOwnProperty.call(
+						responseContent,
+						'errors'
+					)
+				) {
+					responseContent.errors.forEach((message) =>
+						openErrorToast({message})
+					);
+				}
+				else {
+					navigate(redirectURL);
+				}
+			})
+			.catch(() => {
+				openErrorToast();
+			});
+	};
+
+	const formik = useFormik({
+		initialValues: {
+			advancedConfig: JSON.stringify(
+				initialConfiguration['advanced_configuration'],
+				null,
+				'\t'
+			),
+			aggregationConfig: JSON.stringify(
+				initialConfiguration['aggregation_configuration'],
+				null,
+				'\t'
+			),
+			facetConfig: JSON.stringify(
+				initialConfiguration['facet_configuration'],
+				null,
+				'\t'
+			),
+			frameworkConfig: initialConfiguration['framework_configuration'],
+			parameterConfig: JSON.stringify(
+				initialConfiguration['parameter_configuration'],
+				null,
+				'\t'
+			),
+			selectedQueryElements: initialSelectedElements[
+				'query_configuration'
+			].map((selectedElement, index) => ({
+				...selectedElement,
+				id: index,
+			})),
+			sortConfig: JSON.stringify(
+				initialConfiguration['sort_configuration'],
+				null,
+				'\t'
+			),
+		},
+		onSubmit: _handleSubmit,
+		validate,
+	});
 
 	const _handleFetchPreviewSearch = (value, delta, page) => {
 		setPreviewInfo((previewInfo) => ({
@@ -126,25 +364,7 @@ function EditBlueprintForm({
 			loading: true,
 		}));
 
-		const formData = new FormData(form.current);
-
-		try {
-			formData.append(
-				`${namespace}configuration`,
-				JSON.stringify({
-					advanced_configuration: JSON.parse(advancedConfig),
-					aggregation_configuration: JSON.parse(aggregationConfig),
-					facet_configuration: JSON.parse(facetConfig),
-					framework_configuration: frameworkConfig,
-					parameter_configuration: JSON.parse(parameterConfig),
-					query_configuration: selectedQueryElements.map(
-						getElementOutput
-					),
-					sort_configuration: JSON.parse(sortConfig),
-				})
-			);
-		}
-		catch {
+		if (!formik.isValid) {
 			setPreviewInfo({
 				loading: false,
 				results: {
@@ -157,6 +377,34 @@ function EditBlueprintForm({
 				},
 			});
 
+			return;
+		}
+
+		const formData = new FormData(form.current);
+
+		try {
+			formData.append(
+				`${namespace}configuration`,
+				JSON.stringify({
+					advanced_configuration: JSON.parse(
+						formik.values.advancedConfig
+					),
+					aggregation_configuration: JSON.parse(
+						formik.values.aggregationConfig
+					),
+					facet_configuration: JSON.parse(formik.values.facetConfig),
+					framework_configuration: formik.values.frameworkConfig,
+					parameter_configuration: JSON.parse(
+						formik.values.parameterConfig
+					),
+					query_configuration: formik.values.selectedQueryElements.map(
+						getElementOutput
+					),
+					sort_configuration: JSON.parse(formik.values.sortConfig),
+				})
+			);
+		}
+		catch {
 			return;
 		}
 
@@ -194,8 +442,18 @@ function EditBlueprintForm({
 			});
 	};
 
-	const _handleAddElement = useCallback((element) => {
-		setSelectedQueryElements((selectedElements) => [
+	const _handleAddElement = (element) => {
+		if (formik.touched && formik.touched.selectedQueryElements) {
+			formik.setTouched({
+				...formik.touched,
+				selectedQueryElements: [
+					undefined,
+					...formik.touched.selectedQueryElements,
+				],
+			});
+		}
+
+		formik.setFieldValue('selectedQueryElements', [
 			{
 				...element,
 				id: elementIdCounter.current++,
@@ -203,180 +461,48 @@ function EditBlueprintForm({
 					element.uiConfigurationJSON
 				),
 			},
-			...selectedElements,
+			...formik.values.selectedQueryElements,
 		]);
-	}, []);
+	};
 
-	const _handleDeleteElement = useCallback((id) => {
-		setSelectedQueryElements((selectedElements) =>
-			selectedElements.filter((item) => item.id !== id)
+	const _handleDeleteElement = (id) => {
+		const index = formik.values.selectedQueryElements.findIndex(
+			(item) => item.id == id
+		);
+
+		if (formik.touched && formik.touched.selectedQueryElements) {
+			formik.setTouched({
+				...formik.touched,
+				selectedQueryElements: formik.touched.selectedQueryElements.filter(
+					(_, i) => i !== index
+				),
+			});
+		}
+
+		formik.setFieldValue(
+			'selectedQueryElements',
+			formik.values.selectedQueryElements.filter((item) => item.id !== id)
 		);
 
 		openSuccessToast({
 			message: Liferay.Language.get('element-removed'),
 		});
-	}, []);
-
-	const _handleFocusElement = (prefixedId) => {
-		const element = document.getElementById(prefixedId);
-
-		if (element) {
-			window.scrollTo({
-				behavior: 'smooth',
-				top:
-					element.getBoundingClientRect().top +
-					window.pageYOffset -
-					55 - // Control menu height
-					104 - // Page toolbar height
-					20, // Additional padding
-			});
-
-			element.classList.remove('focus');
-
-			void element.offsetWidth; // Triggers reflow to restart animation
-
-			element.classList.add('focus');
-		}
 	};
-
-	const _handleFrameworkConfigChange = (value) => {
-		setFrameworkConfig({...frameworkConfig, ...value});
-	};
-
-	const _handleSubmit = useCallback(
-		(event) => {
-			event.preventDefault();
-
-			setIsSubmitting(true);
-
-			const formData = new FormData(form.current);
-
-			try {
-				formData.append(
-					`${namespace}configuration`,
-					JSON.stringify({
-						advanced_configuration: JSON.parse(advancedConfig),
-						aggregation_configuration: JSON.parse(
-							aggregationConfig
-						),
-						facet_configuration: JSON.parse(facetConfig),
-						framework_configuration: frameworkConfig,
-						parameter_configuration: JSON.parse(parameterConfig),
-						query_configuration: selectedQueryElements.map(
-							getElementOutput
-						),
-						sort_configuration: JSON.parse(sortConfig),
-					})
-				);
-
-				formData.append(
-					`${namespace}selectedElements`,
-					JSON.stringify({
-						query_configuration: selectedQueryElements.map(
-							(item) => ({
-								elementTemplateJSON: item.elementTemplateJSON,
-								uiConfigurationJSON: item.uiConfigurationJSON,
-								uiConfigurationValues:
-									item.uiConfigurationValues,
-							})
-						), // Removes ID field
-					})
-				);
-			}
-			catch {
-				openErrorToast({
-					message: Liferay.Language.get('the-json-is-invalid'),
-				});
-
-				setIsSubmitting(false);
-
-				return;
-			}
-
-			formData.append(`${namespace}blueprintId`, blueprintId);
-			formData.append(`${namespace}redirect`, redirectURL);
-
-			return fetch(submitFormURL, {
-				body: formData,
-				method: 'POST',
-			})
-				.then((response) => response.json())
-				.then((responseContent) => {
-					if (
-						Object.prototype.hasOwnProperty.call(
-							responseContent,
-							'errors'
-						)
-					) {
-						responseContent.errors.forEach((message) =>
-							openErrorToast({message})
-						);
-
-						setIsSubmitting(false);
-					}
-					else {
-						navigate(redirectURL);
-					}
-				})
-				.catch(() => {
-					openErrorToast();
-
-					setIsSubmitting(false);
-				});
-		},
-		[
-			advancedConfig,
-			aggregationConfig,
-			blueprintId,
-			frameworkConfig,
-			namespace,
-			parameterConfig,
-			redirectURL,
-			selectedQueryElements,
-			submitFormURL,
-			sortConfig,
-			facetConfig,
-		]
-	);
-
-	const _handleUpdateQueryElement = useCallback((id, newElementValues) => {
-		setSelectedQueryElements((selectedQueryElements) => {
-			const index = selectedQueryElements.findIndex(
-				(item) => id == item.id
-			);
-
-			const element = {
-				...selectedQueryElements[index],
-				...newElementValues,
-			};
-
-			return [
-				...selectedQueryElements.slice(0, index),
-				element,
-				...selectedQueryElements.slice(index + 1),
-			];
-		});
-	}, []);
 
 	const _renderTabContent = () => {
 		switch (tab) {
 			case 'settings':
 				return (
 					<Settings
-						advancedConfig={advancedConfig}
-						aggregationConfig={aggregationConfig}
-						facetConfig={facetConfig}
-						onAdvancedConfigChange={(val) => setAdvancedConfig(val)}
-						onAggregationConfigChange={(val) =>
-							setAggregationConfig(val)
-						}
-						onFacetConfigChange={(val) => setFacetConfig(val)}
-						onParameterConfigChange={(val) =>
-							setParameterConfig(val)
-						}
-						onSortConfigChange={(val) => setSortConfig(val)}
-						parameterConfig={parameterConfig}
-						sortConfig={sortConfig}
+						advancedConfig={formik.values.advancedConfig}
+						aggregationConfig={formik.values.aggregationConfig}
+						errors={formik.errors}
+						facetConfig={formik.values.facetConfig}
+						parameterConfig={formik.values.parameterConfig}
+						setFieldTouched={formik.setFieldTouched}
+						setFieldValue={formik.setFieldValue}
+						sortConfig={formik.values.sortConfig}
+						touched={formik.touched}
 					/>
 				);
 			default:
@@ -406,22 +532,29 @@ function EditBlueprintForm({
 						>
 							<QueryBuilder
 								entityJSON={entityJSON}
-								frameworkConfig={frameworkConfig}
+								errors={formik.errors.selectedQueryElements}
+								frameworkConfig={formik.values.frameworkConfig}
 								indexFields={indexFields}
-								initialSelectedElements={
-									initialSelectedElementsId
-								}
+								onBlur={formik.handleBlur}
+								onChange={formik.handleChange}
 								onDeleteElement={_handleDeleteElement}
-								onFrameworkConfigChange={
-									_handleFrameworkConfigChange
+								onFrameworkConfigChange={(value) =>
+									formik.setFieldValue('frameworkConfig', {
+										...formik.values.frameworkConfig,
+										...value,
+									})
 								}
 								onToggleSidebar={() => {
 									setShowPreview(false);
 									setShowSidebar(!showSidebar);
 								}}
-								onUpdateElement={_handleUpdateQueryElement}
 								searchableAssetTypes={searchableAssetTypes}
-								selectedElements={selectedQueryElements}
+								selectedElements={
+									formik.values.selectedQueryElements
+								}
+								setFieldTouched={formik.setFieldTouched}
+								setFieldValue={formik.setFieldValue}
+								touched={formik.touched.selectedQueryElements}
 							/>
 						</div>
 					</>
@@ -434,10 +567,22 @@ function EditBlueprintForm({
 			<PageToolbar
 				initialDescription={initialDescription}
 				initialTitle={initialTitle}
-				isSubmitting={isSubmitting}
+				isSubmitting={formik.isSubmitting}
 				onCancel={redirectURL}
 				onChangeTab={(tab) => setTab(tab)}
-				onSubmit={_handleSubmit}
+				onSubmit={(event) => {
+					event.preventDefault();
+
+					formik.handleSubmit();
+
+					if (!formik.isValid) {
+						openErrorToast({
+							message: Liferay.Language.get(
+								'unable-to-save-due-to-invalid-or-missing-configuration-values'
+							),
+						});
+					}
+				}}
 				tab={tab}
 				tabs={TABS}
 			>

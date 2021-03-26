@@ -9,67 +9,36 @@
  * distribution rights of the Software.
  */
 
-import ClayForm from '@clayui/form';
 import getCN from 'classnames';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import CodeMirrorEditor from '../CodeMirrorEditor';
 
 function JSONInput({
-	configKey,
 	disabled,
-	initialValue,
+	value,
 	label = Liferay.Language.get('json'),
-	onChange,
+	name,
+	setFieldValue,
+	setFieldTouched,
 }) {
-	const [value, setValue] = useState(
-		JSON.stringify(initialValue, null, '\t')
-	);
-	const [hasError, setHasError] = useState(false);
+	const [editValue, setEditValue] = useState(value);
 
-	const _handleBlur = () => {
-		try {
-			onChange(configKey, JSON.parse(value));
-		}
-		catch {}
-	};
+	useEffect(() => {
+		setFieldValue(name, editValue);
+	}, [editValue, name, setFieldValue]);
 
-	function _handleChange(value) {
-		setValue(value);
-
-		try {
-			JSON.parse(value);
-
-			setHasError(false);
-		}
-		catch {
-			setHasError(true);
-		}
-	}
+	// Adding useEffect since CodeMirrorEditor has issues with updating the 'name' prop
+	// when called directly inside its onChange
 
 	return (
 		<div
-			className={getCN(
-				'custom-json',
-				{disabled},
-				{'has-error': hasError}
-			)}
-			onBlur={_handleBlur}
+			className={getCN('custom-json', {disabled})}
+			onBlur={() => setFieldTouched(name)}
 		>
 			<label>{label}</label>
 
-			<CodeMirrorEditor onChange={_handleChange} value={value} />
-
-			{hasError && (
-				<ClayForm.FeedbackGroup>
-					<ClayForm.FeedbackItem>
-						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-						{Liferay.Language.get(
-							'unable-to-apply-changes-due-to-invalid-json'
-						)}
-					</ClayForm.FeedbackItem>
-				</ClayForm.FeedbackGroup>
-			)}
+			<CodeMirrorEditor onChange={setEditValue} value={editValue} />
 		</div>
 	);
 }

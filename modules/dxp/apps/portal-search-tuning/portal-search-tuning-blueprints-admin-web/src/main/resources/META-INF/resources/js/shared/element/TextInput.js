@@ -10,38 +10,18 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import React, {useState} from 'react';
+import React from 'react';
 
-import {replaceStr} from '../../utils/utils';
-
-function TextInput({
-	configKey,
-	defaultValue = '',
-	disabled,
-	id,
-	initialValue,
-	label,
-	onChange,
-}) {
-	const [value, setValue] = useState(initialValue || defaultValue);
-
-	const _handleBlur = () => {
-		onChange(configKey, replaceStr(value, '"', ''));
-	};
-
-	const _handleChange = (event) => {
-		setValue(event.target.value);
-	};
-
+function TextInput({disabled, label, name, onBlur, onChange, value}) {
 	return (
 		<ClayInput.Group small>
 			<ClayInput.GroupItem prepend>
 				<ClayInput
 					aria-label={label}
 					disabled={disabled}
-					id={id}
-					onBlur={_handleBlur}
-					onChange={_handleChange}
+					name={name}
+					onBlur={onBlur}
+					onChange={onChange}
 					value={value}
 				/>
 			</ClayInput.GroupItem>

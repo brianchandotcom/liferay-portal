@@ -13,12 +13,12 @@ import {ClaySelect} from '@clayui/form';
 import React from 'react';
 
 function SelectInput({
-	configKey,
 	disabled,
-	id,
 	label,
-	onChange,
+	name,
 	options,
+	setFieldTouched,
+	setFieldValue,
 	value,
 }) {
 	return (
@@ -26,7 +26,7 @@ function SelectInput({
 			aria-label={label}
 			className="form-control-sm"
 			disabled={disabled}
-			id={id}
+			onBlur={() => setFieldTouched(name)}
 			onChange={(event) => {
 				const value =
 					typeof options[0].value == 'boolean' ||
@@ -34,7 +34,7 @@ function SelectInput({
 						? JSON.parse(event.target.value)
 						: event.target.value;
 
-				onChange(configKey, value);
+				setFieldValue(name, value);
 			}}
 			value={value}
 		>

@@ -16,14 +16,14 @@ import ClayIcon from '@clayui/icon';
 import moment from 'moment';
 import React from 'react';
 
-function DateInput({configKey, disabled, onChange, value}) {
+function DateInput({disabled, name, setFieldTouched, setFieldValue, value}) {
 	return (
-		<div className="date-picker-input">
+		<div className="date-picker-input" onBlur={() => setFieldTouched(name)}>
 			<ClayDatePicker
 				dateFormat="MM/dd/yyyy"
 				disabled={disabled}
 				onValueChange={(value) => {
-					onChange(configKey, moment(value).unix());
+					setFieldValue(name, moment(value).unix());
 				}}
 				placeholder="MM/DD/YYYY"
 				readOnly
@@ -42,7 +42,7 @@ function DateInput({configKey, disabled, onChange, value}) {
 						disabled={disabled}
 						displayType="unstyled"
 						monospaced
-						onClick={() => onChange(configKey, '')}
+						onClick={() => setFieldValue(name, '')}
 						small
 					>
 						<ClayIcon symbol="times-circle" />

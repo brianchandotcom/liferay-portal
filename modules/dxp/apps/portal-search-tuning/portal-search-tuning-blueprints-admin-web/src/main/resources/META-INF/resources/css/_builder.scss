@@ -100,6 +100,20 @@
 	.sheet + .sheet {
 		margin-top: 0;
 	}
+
+	.has-error {
+		.codemirror-editor-wrapper {
+			border: 1px solid $errorL1;
+
+			.CodeMirror {
+				background-color: $errorL2;
+			}
+
+			.CodeMirror-gutters {
+				background-color: $errorL2;
+			}
+		}
+	}
 }
 
 @media (min-width: calc(#{$builderMinWidth} + #{$sidebarWidth})) {

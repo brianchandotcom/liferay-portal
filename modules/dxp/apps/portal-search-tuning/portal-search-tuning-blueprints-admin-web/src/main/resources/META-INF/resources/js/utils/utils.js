@@ -228,7 +228,9 @@ export const getDefaultValue = (item) => {
 				? itemValue.filter((item) => item.label && item.value)
 				: [];
 		case INPUT_TYPES.JSON:
-			return typeof itemValue == 'object' ? itemValue : {};
+			return typeof itemValue == 'object'
+				? JSON.stringify(itemValue, null, '\t')
+				: '{}';
 		case INPUT_TYPES.MULTISELECT:
 			return Array.isArray(itemValue)
 				? itemValue.filter((item) => item.label && item.value)
@@ -425,7 +427,13 @@ export const getElementOutput = ({
 						configValue = JSON.stringify(fields);
 					}
 					else if (config.type === INPUT_TYPES.JSON) {
-						configValue = JSON.stringify(initialConfigValue);
+						try {
+							JSON.parse(initialConfigValue);
+							configValue = initialConfigValue;
+						}
+						catch {
+							configValue = '{}';
+						}
 					}
 					else if (config.type === INPUT_TYPES.MULTISELECT) {
 						configValue = JSON.stringify(
@@ -468,5 +476,14 @@ export const getElementOutput = ({
 		return JSON.parse(flattenJSON);
 	}
 
-	return elementTemplateJSON;
+	try {
+		if (isDefined(uiConfigurationValues.elementTemplateJSON)) {
+			return JSON.parse(uiConfigurationValues.elementTemplateJSON);
+		}
+
+		return elementTemplateJSON;
+	}
+	catch {
+		return elementTemplateJSON;
+	}
 };

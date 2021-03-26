@@ -12,55 +12,37 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useRef, useState} from 'react';
+import React from 'react';
 
 import FieldRow from './FieldRow';
 
 function FieldListInput({
-	showBoost,
-	configKey,
-	defaultValue = [],
 	disabled,
 	id,
 	indexFields,
-	initialValue,
-	onChange,
+	name,
+	setFieldTouched,
+	setFieldValue,
+	showBoost,
+	value,
 }) {
-	const idCounter = useRef(0);
-
-	const [value, setValue] = useState(
-		(initialValue || defaultValue).map((item) => ({
-			...item,
-			id: idCounter.current++,
-		}))
-	);
-
 	const _handleBlur = () => {
-		onChange(
-			configKey,
-			value.map((item) => ({
-				boost: item.boost,
-				field: item.field,
-				languageIdPosition: item.languageIdPosition,
-				locale: item.locale,
-			}))
-		); // Removes temporary ID
+		setFieldTouched(name);
 	};
 
 	const _handleChange = (index) => (newValue) => {
-		setValue(
-			value.map((field, i) =>
-				index === i ? {...field, ...newValue} : field
-			)
-		); // Filters through values and replace the modified index with the new value
+		setFieldValue(`${name}[${index}]`, {...value[index], ...newValue});
 	};
 
 	const _handleFieldRowAdd = () => {
-		setValue([...value, {field: '', id: idCounter.current++}]);
+		setFieldValue(name, [...value, {field: ''}]);
 	};
 
 	const _handleFieldRowDelete = (index) => () => {
-		setValue([...value.filter((_, i) => index !== i)]);
+		setFieldValue(
+			name,
+			value.filter((_, i) => index !== i)
+		);
 	};
 
 	return (
@@ -68,14 +50,12 @@ function FieldListInput({
 			{value.map((item, index) => (
 				<FieldRow
 					boost={item.boost}
-					configKey={configKey}
-					defaultValue={defaultValue}
 					disabled={disabled}
 					field={item.field}
 					id={`${id}_${index}`}
 					index={index}
 					indexFields={indexFields}
-					key={item.id}
+					key={index}
 					languageIdPosition={item.languageIdPosition}
 					locale={item.locale}
 					onBlur={_handleBlur}

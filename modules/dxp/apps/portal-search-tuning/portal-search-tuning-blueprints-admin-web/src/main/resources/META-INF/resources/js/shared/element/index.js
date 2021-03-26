@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {ClayToggle} from '@clayui/form';
+import ClayForm, {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
@@ -21,7 +21,7 @@ import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {INPUT_TYPES} from '../../utils/inputTypes';
-import {getDefaultValue, getElementOutput, isEmpty} from '../../utils/utils';
+import {getElementOutput, isEmpty} from '../../utils/utils';
 import CodeMirrorEditor from '../CodeMirrorEditor';
 import PreviewModal from '../PreviewModal';
 import ThemeContext from '../ThemeContext';
@@ -40,12 +40,17 @@ function Element({
 	collapseAll,
 	elementTemplateJSON,
 	entityJSON,
+	error = {},
 	id,
+	index,
 	indexFields = [],
-	initialUIConfigurationValues = {},
+	onBlur = () => {},
+	onChange = () => {},
 	onDeleteElement,
-	onUpdateElement = () => {},
 	prefixedId,
+	setFieldTouched = () => {},
+	setFieldValue = () => {},
+	touched = {},
 	uiConfigurationJSON,
 	uiConfigurationValues,
 }) {
@@ -61,28 +66,19 @@ function Element({
 		return `${elementId}_${configKey}`;
 	};
 
+	const _getInputName = (configKey) => {
+		return `selectedQueryElements[${index}].uiConfigurationValues.${configKey}`;
+	};
+
 	const _handleDelete = () => {
 		onDeleteElement(id);
 	};
 
-	const _handleChange = (key, value) => {
-		onUpdateElement(id, {
-			uiConfigurationValues: {
-				...uiConfigurationValues,
-				[key]: value,
-			},
-		});
-	};
-
 	const _handleToggle = () => {
-		const enabled = !elementTemplateJSON.enabled;
-
-		onUpdateElement(id, {
-			elementTemplateJSON: {
-				...elementTemplateJSON,
-				enabled,
-			},
-		});
+		setFieldValue(
+			`selectedQueryElements[${index}].elementTemplateJSON.enabled`,
+			!elementTemplateJSON.enabled
+		);
 	};
 
 	const _hasDescription =
@@ -96,9 +92,16 @@ function Element({
 			(item) => item.fields && item.fields.length > 0
 		);
 
+	const _hasError = (config) =>
+		touched.uiConfigurationValues &&
+		touched.uiConfigurationValues[config.name] &&
+		error.uiConfigurationValues &&
+		!!error.uiConfigurationValues[config.name];
+
 	const _renderInput = (config) => {
 		const disabled = !elementTemplateJSON.enabled;
 		const inputId = _getInputId(id, config.name);
+		const inputName = _getInputName(config.name);
 		const typeOptions = config.typeOptions || {};
 
 		switch (config.type) {
@@ -107,64 +110,70 @@ function Element({
 					<DateInput
 						configKey={config.name}
 						disabled={disabled}
-						onChange={_handleChange}
+						name={inputName}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
 						value={uiConfigurationValues[config.name]}
 					/>
 				);
 			case INPUT_TYPES.FIELD_MAPPING:
 				return (
 					<FieldInput
-						configKey={config.name}
-						defaultValue={getDefaultValue(config)}
 						disabled={disabled}
 						id={inputId}
 						indexFields={indexFields}
-						initialValue={initialUIConfigurationValues[config.name]}
-						onChange={_handleChange}
+						name={inputName}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
 						showBoost={typeOptions.boost}
+						value={uiConfigurationValues[config.name]}
 					/>
 				);
 			case INPUT_TYPES.FIELD_MAPPING_LIST:
 				return (
 					<FieldListInput
-						configKey={config.name}
-						defaultValue={getDefaultValue(config)}
 						disabled={disabled}
 						id={inputId}
 						indexFields={indexFields}
-						initialValue={initialUIConfigurationValues[config.name]}
-						onChange={_handleChange}
+						name={inputName}
+						onBlur={onBlur}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
 						showBoost={typeOptions.boost}
+						value={uiConfigurationValues[config.name]}
 					/>
 				);
 			case INPUT_TYPES.ITEM_SELECTOR:
 				return (
 					<ItemSelectorInput
-						configKey={config.name}
 						disabled={disabled}
 						entityJSON={entityJSON}
 						itemType={typeOptions.itemType}
 						label={config.label}
-						onChange={_handleChange}
+						name={inputName}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
 						value={uiConfigurationValues[config.name]}
 					/>
 				);
 			case INPUT_TYPES.JSON:
 				return (
 					<JSONInput
-						configKey={config.name}
 						disabled={disabled}
-						initialValue={uiConfigurationValues[config.name]}
 						label={config.label}
-						onChange={_handleChange}
+						name={inputName}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
+						value={uiConfigurationValues[config.name]}
 					/>
 				);
 			case INPUT_TYPES.MULTISELECT:
 				return (
 					<MultiSelectInput
-						configKey={config.name}
 						disabled={disabled}
-						onChange={_handleChange}
+						name={inputName}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
 						value={uiConfigurationValues[config.name]}
 					/>
 				);
@@ -172,16 +181,17 @@ function Element({
 				return (
 					<NumberInput
 						configKey={config.name}
-						defaultValue={getDefaultValue(config)}
 						disabled={disabled}
 						id={inputId}
-						initialValue={initialUIConfigurationValues[config.name]}
 						label={config.label}
 						max={typeOptions.max}
 						min={typeOptions.min}
-						onChange={_handleChange}
+						name={inputName}
+						onBlur={onBlur}
+						onChange={onChange}
 						step={typeOptions.step}
 						unit={typeOptions.unit}
+						value={uiConfigurationValues[config.name]}
 					/>
 				);
 			case INPUT_TYPES.SELECT:
@@ -189,38 +199,39 @@ function Element({
 					<SelectInput
 						configKey={config.name}
 						disabled={disabled}
-						id={inputId}
 						label={config.label}
-						onChange={_handleChange}
+						name={inputName}
 						options={typeOptions.options}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
 						value={uiConfigurationValues[config.name]}
 					/>
 				);
 			case INPUT_TYPES.SLIDER:
 				return (
 					<SliderInput
-						configKey={config.name}
-						defaultValue={getDefaultValue(config)}
 						disabled={disabled}
-						id={inputId}
-						initialValue={initialUIConfigurationValues[config.name]}
 						label={config.label}
 						max={typeOptions.max}
 						min={typeOptions.min}
-						onChange={_handleChange}
+						name={inputName}
+						onBlur={onBlur}
+						onChange={onChange}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
 						step={typeOptions.step}
+						value={uiConfigurationValues[config.name]}
 					/>
 				);
 			default:
 				return (
 					<TextInput
-						configKey={config.name}
-						defaultValue={getDefaultValue(config)}
 						disabled={disabled}
-						id={inputId}
-						initialValue={initialUIConfigurationValues[config.name]}
 						label={config.label}
-						onChange={_handleChange}
+						name={inputName}
+						onBlur={onBlur}
+						onChange={onChange}
+						value={uiConfigurationValues[config.name]}
 					/>
 				);
 		}
@@ -383,12 +394,41 @@ function Element({
 														</ClaySticker>
 													</ClayTooltipProvider>
 												)}
+
+												{config.typeOptions &&
+													config.typeOptions
+														.optional && (
+														<span className="optional-text">
+															{Liferay.Language.get(
+																'optional'
+															)}
+														</span>
+													)}
 											</label>
 										</ClayList.ItemField>
 									)}
 
-									<ClayList.ItemField expand>
+									<ClayList.ItemField
+										className={getCN({
+											'has-error': _hasError(config),
+										})}
+										expand
+									>
 										{_renderInput(config)}
+
+										{_hasError(config) && (
+											<ClayForm.FeedbackGroup>
+												<ClayForm.FeedbackItem>
+													<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+													{
+														error
+															.uiConfigurationValues[
+															config.name
+														]
+													}
+												</ClayForm.FeedbackItem>
+											</ClayForm.FeedbackGroup>
+										)}
 									</ClayList.ItemField>
 								</ClayList.Item>
 							));
@@ -404,12 +444,17 @@ Element.propTypes = {
 	collapseAll: PropTypes.bool,
 	elementTemplateJSON: PropTypes.object,
 	entityJSON: PropTypes.object,
+	error: PropTypes.object,
 	id: PropTypes.number,
+	index: PropTypes.number,
 	indexFields: PropTypes.arrayOf(PropTypes.object),
-	initialUIConfigurationValues: PropTypes.object,
+	onBlur: PropTypes.func,
+	onChange: PropTypes.func,
 	onDeleteElement: PropTypes.func,
-	onUpdateElement: PropTypes.func,
 	prefixedId: PropTypes.string,
+	setFieldTouched: PropTypes.func,
+	setFieldValue: PropTypes.func,
+	touched: PropTypes.object,
 	uiConfigurationJSON: PropTypes.object,
 	uiConfigurationValues: PropTypes.object,
 };

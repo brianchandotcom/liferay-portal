@@ -25,7 +25,8 @@ jest.mock(
 );
 
 const onDeleteElement = jest.fn();
-const onUpdateElement = jest.fn();
+const setFieldTouched = jest.fn();
+const setFieldValue = jest.fn();
 
 function renderElement(props) {
 	return render(
@@ -35,7 +36,8 @@ function renderElement(props) {
 			elementTemplateJSON={SELECTED_ELEMENTS[0].elementTemplateJSON}
 			id={SELECTED_ELEMENTS[0].elementTemplateJSON.id}
 			onDeleteElement={onDeleteElement}
-			onUpdateElement={onUpdateElement}
+			setFieldTouched={setFieldTouched}
+			setFieldValue={setFieldValue}
 			title={SELECTED_ELEMENTS[0].elementTemplateJSON.title}
 			{...props}
 		/>

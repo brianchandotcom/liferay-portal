@@ -15,33 +15,24 @@ import ClayIcon from '@clayui/icon';
 import ClaySlider from '@clayui/slider';
 import React, {useState} from 'react';
 
-import {toNumber} from '../../utils/utils';
-
 function SliderInput({
-	configKey,
-	defaultValue = 0,
 	disabled,
 	id,
-	initialValue,
 	label,
 	max,
 	min,
+	name,
+	onBlur,
 	onChange,
+	setFieldTouched,
+	setFieldValue,
 	step,
+	value,
 }) {
 	const [active, setActive] = useState(false);
-	const [value, setValue] = useState(initialValue || defaultValue);
-
-	const _handleBlur = () => {
-		onChange(configKey, toNumber(value));
-	};
-
-	const _handleInputChange = (event) => {
-		setValue(event.target.value);
-	};
 
 	const _handleSliderChange = (value) => {
-		setValue(value);
+		setFieldValue(name, value);
 	};
 
 	return (
@@ -53,8 +44,11 @@ function SliderInput({
 						disabled={disabled}
 						id={id}
 						insetAfter
-						onBlur={_handleBlur}
-						onChange={_handleInputChange}
+						max={max}
+						min={min}
+						name={name}
+						onBlur={onBlur}
+						onChange={onChange}
 						step={step}
 						type="number"
 						value={value}
@@ -78,7 +72,7 @@ function SliderInput({
 					<ClaySlider
 						max={max}
 						min={min}
-						onBlur={_handleBlur}
+						onBlur={() => setFieldTouched(name)}
 						onValueChange={_handleSliderChange}
 						step={step}
 						value={value}

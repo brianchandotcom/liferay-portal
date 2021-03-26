@@ -57,16 +57,20 @@ const FrameworkListItem = ({
 };
 
 function QueryBuilder({
-	onDeleteElement,
 	entityJSON,
+	errors = [],
 	frameworkConfig,
-	initialSelectedElements = [],
-	onFrameworkConfigChange,
 	indexFields,
+	onBlur,
+	onChange,
+	onDeleteElement,
+	onFrameworkConfigChange,
 	onToggleSidebar,
 	searchableAssetTypes,
 	selectedElements,
-	onUpdateElement,
+	setFieldTouched,
+	setFieldValue,
+	touched = [],
 }) {
 	const {contextPath} = useContext(ThemeContext);
 	const [collapseAll, setCollapseAll] = useState(false);
@@ -99,27 +103,24 @@ function QueryBuilder({
 					</ClayAlert>
 				)}
 
-				{selectedElements.map((element) => {
-					const initialSelectedElement = initialSelectedElements.find(
-						(item) => item.id === element.id
-					);
-
+				{selectedElements.map((element, index) => {
 					return element.uiConfigurationJSON ? (
 						<Element
 							collapseAll={collapseAll}
 							elementTemplateJSON={element.elementTemplateJSON}
 							entityJSON={entityJSON}
+							error={errors[index]}
 							id={element.id}
+							index={index}
 							indexFields={indexFields}
-							initialUIConfigurationValues={
-								initialSelectedElement
-									? initialSelectedElement.uiConfigurationValues
-									: undefined
-							}
 							key={element.id}
+							onBlur={onBlur}
+							onChange={onChange}
 							onDeleteElement={onDeleteElement}
-							onUpdateElement={onUpdateElement}
 							prefixedId={`${ELEMENT_PREFIX.QUERY}-${element.id}`}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							touched={touched[index]}
 							uiConfigurationJSON={element.uiConfigurationJSON}
 							uiConfigurationValues={
 								element.uiConfigurationValues
@@ -129,11 +130,18 @@ function QueryBuilder({
 						<JSONElement
 							collapseAll={collapseAll}
 							elementTemplateJSON={element.elementTemplateJSON}
+							error={errors[index]}
 							id={element.id}
+							index={index}
 							key={element.id}
 							onDeleteElement={onDeleteElement}
-							onUpdateElement={onUpdateElement}
 							prefixedId={`${ELEMENT_PREFIX.QUERY}-${element.id}`}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							touched={touched[index]}
+							uiConfigurationValues={
+								element.uiConfigurationValues
+							}
 						/>
 					);
 				})}
@@ -301,14 +309,19 @@ function QueryBuilder({
 
 QueryBuilder.propTypes = {
 	entityJSON: PropTypes.object,
+	errors: PropTypes.arrayOf(PropTypes.object),
 	frameworkConfig: PropTypes.object,
-	initialSelectedElements: PropTypes.arrayOf(PropTypes.object),
+	indexFields: PropTypes.arrayOf(PropTypes.object),
+	onBlur: PropTypes.func,
+	onChange: PropTypes.func,
 	onDeleteElement: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,
 	onToggleSidebar: PropTypes.func,
-	onUpdateElement: PropTypes.func,
 	searchableAssetTypes: PropTypes.arrayOf(PropTypes.string),
 	selectedElements: PropTypes.arrayOf(PropTypes.object),
+	setFieldTouched: PropTypes.func,
+	setFieldValue: PropTypes.func,
+	touched: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default React.memo(QueryBuilder);

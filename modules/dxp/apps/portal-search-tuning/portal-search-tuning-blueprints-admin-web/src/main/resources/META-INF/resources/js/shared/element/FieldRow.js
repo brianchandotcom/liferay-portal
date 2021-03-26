@@ -60,7 +60,6 @@ function AutocompleteItem({indexField, match = '', onClick}) {
  */
 function FieldRow({
 	boost = 0,
-	defaultValue = [],
 	disabled,
 	field,
 	id,
@@ -89,10 +88,7 @@ function FieldRow({
 	}, [indexFields, field]);
 
 	const _getIndexField = (fieldName) => {
-		return (
-			defaultValue.find((item) => item.field === fieldName) ||
-			indexFields.find((item) => item.name === fieldName)
-		);
+		return indexFields.find((item) => item.name === fieldName);
 	};
 
 	const _handleFieldChange = (event) => {

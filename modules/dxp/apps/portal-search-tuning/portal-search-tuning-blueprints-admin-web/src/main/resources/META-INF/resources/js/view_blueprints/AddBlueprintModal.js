@@ -18,6 +18,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -237,9 +238,9 @@ const AddBlueprintModal = ({
 						/>
 
 						<div
-							className={`form-group ${
-								errorMessage ? 'has-error' : ''
-							}`}
+							className={getCN('form-group', {
+								'has-error': errorMessage,
+							})}
 						>
 							<label
 								className="control-label"

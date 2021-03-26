@@ -16,23 +16,24 @@ import {openSelectionModal} from 'frontend-js-web';
 import React from 'react';
 
 function ItemSelectorInput({
-	configKey,
 	disabled,
 	entityJSON,
 	itemType,
 	label,
-	onChange,
+	name,
+	setFieldTouched,
+	setFieldValue,
 	value,
 }) {
-	const _handleMultipleEntitySelect = (key, itemType) => {
+	const _handleMultipleEntitySelect = (itemType) => {
 		if (entityJSON[itemType].multiple) {
 			openSelectionModal({
 				buttonAddLabel: Liferay.Language.get('select'),
 				multiple: true,
 				onSelect: (selectedItems) => {
 					if (selectedItems) {
-						onChange(
-							key,
+						setFieldValue(
+							name,
 							selectedItems.map((item) => ({
 								label: item.name,
 								value: item.id,
@@ -49,7 +50,7 @@ function ItemSelectorInput({
 			openSelectionModal({
 				buttonAddLabel: Liferay.Language.get('select'),
 				onSelect: (event) => {
-					onChange(key, [
+					setFieldValue(name, [
 						{
 							label: event.entityname,
 							value: event.entityid,
@@ -64,12 +65,12 @@ function ItemSelectorInput({
 	};
 
 	return (
-		<ClayInput.Group small>
+		<ClayInput.Group onBlur={() => setFieldTouched(name)} small>
 			<ClayInput.GroupItem>
 				<ClayInput
 					aria-label={label}
 					disabled={disabled}
-					id={configKey}
+					name={name}
 					readOnly
 					type="text"
 					value={
@@ -87,7 +88,7 @@ function ItemSelectorInput({
 						className="component-action"
 						disabled={disabled}
 						displayType="unstyled"
-						onClick={() => onChange(configKey, [])}
+						onClick={() => setFieldValue(name, [])}
 					>
 						<ClayIcon symbol="times-circle" />
 					</ClayButton>
@@ -101,7 +102,7 @@ function ItemSelectorInput({
 					displayType="secondary"
 					onClick={() => {
 						if (entityJSON) {
-							_handleMultipleEntitySelect(configKey, itemType);
+							_handleMultipleEntitySelect(itemType);
 						}
 					}}
 					small

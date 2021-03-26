@@ -461,8 +461,8 @@ describe('utils', () => {
 					defaultValue: {test: 'abc'},
 					name: 'query',
 					type: 'json',
-				})
-			).toEqual({test: 'abc'});
+				}).replace(/\s/g, '')
+			).toEqual(`{"test":"abc"}`);
 		});
 
 		it('gets default value for incorrect json', () => {
@@ -472,7 +472,7 @@ describe('utils', () => {
 					name: 'query',
 					type: 'json',
 				})
-			).toEqual({});
+			).toEqual('{}');
 		});
 
 		it('gets default value for empty json', () => {
@@ -481,7 +481,7 @@ describe('utils', () => {
 					name: 'query',
 					type: 'json',
 				})
-			).toEqual({});
+			).toEqual('{}');
 		});
 
 		it('gets default value for text', () => {
@@ -912,9 +912,7 @@ describe('utils', () => {
 						],
 					},
 					uiConfigurationValues: {
-						json: {
-							category: 'custom',
-						},
+						json: '{"category": "custom"}',
 					},
 				})
 			).toEqual({
@@ -1002,9 +1000,7 @@ describe('utils', () => {
 							field: 'localized_title',
 							locale: '${context.language_id}',
 						},
-						json: {
-							category: 'custom',
-						},
+						json: '{"category": "custom"}',
 					},
 				})
 			).toEqual({

@@ -11,33 +11,21 @@
 
 import {ClayInput} from '@clayui/form';
 import getCN from 'classnames';
-import React, {useState} from 'react';
-
-import {toNumber} from '../../utils/utils';
+import React from 'react';
 
 function NumberInput({
 	configKey,
-	defaultValue,
 	disabled,
-	id,
-	initialValue,
 	label,
 	max,
 	min,
+	name,
+	onBlur,
 	onChange,
 	step,
 	unit,
+	value,
 }) {
-	const [value, setValue] = useState(initialValue || defaultValue);
-
-	const _handleBlur = () => {
-		onChange(configKey, toNumber(value));
-	};
-
-	const _handleChange = (event) => {
-		setValue(event.target.value);
-	};
-
 	return (
 		<ClayInput.Group small>
 			<ClayInput.GroupItem
@@ -50,11 +38,11 @@ function NumberInput({
 				<ClayInput
 					aria-label={label}
 					disabled={disabled}
-					id={id}
 					max={max}
 					min={min}
-					onBlur={_handleBlur}
-					onChange={_handleChange}
+					name={name}
+					onBlur={onBlur}
+					onChange={onChange}
 					step={step}
 					type="number"
 					value={value}

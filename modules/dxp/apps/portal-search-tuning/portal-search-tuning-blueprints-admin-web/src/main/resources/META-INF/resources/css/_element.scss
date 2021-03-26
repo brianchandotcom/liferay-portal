@@ -3,14 +3,28 @@
 	padding: 0;
 
 	&.disabled {
+		label,
+		.label-item,
 		.list-group-title,
 		.list-group-subtext,
-		label {
+		.optional-text {
 			color: $secondaryL1;
 		}
 
 		.configuration-header-list .sticker {
 			color: $mainLighten52;
+		}
+
+		.has-error {
+			.form-control,
+			select {
+				border-color: $lightBackground;
+				color: $mainLighten52;
+			}
+
+			.form-feedback-item {
+				color: $errorL1;
+			}
 		}
 	}
 
@@ -189,15 +203,25 @@
 	}
 
 	.has-error {
-		.codemirror-editor-wrapper {
-			border: 1px solid $errorL1;
+		input {
+			background-color: $errorL2;
+			border-color: $errorL1;
 
-			.CodeMirror {
-				background-color: $errorL2;
+			&:disabled {
+				border-color: $lightBackground;
 			}
+		}
 
-			.CodeMirror-gutters {
-				background-color: $errorL2;
+		.input-group-inset-item {
+			background-color: $errorL2;
+		}
+
+		.input-group-text {
+			border-color: $errorL1;
+			border-left: 0;
+
+			&.secondary {
+				border-color: $lightBackground;
 			}
 		}
 	}
@@ -244,6 +268,21 @@
 					margin-left: 52px;
 				}
 			}
+		}
+	}
+
+	.optional-text {
+		color: $secondary;
+		font-size: 12px;
+		font-style: italic;
+		padding-left: 4px;
+
+		&:after {
+			content: '\0029';
+		}
+
+		&:before {
+			content: '\0028';
 		}
 	}
 }

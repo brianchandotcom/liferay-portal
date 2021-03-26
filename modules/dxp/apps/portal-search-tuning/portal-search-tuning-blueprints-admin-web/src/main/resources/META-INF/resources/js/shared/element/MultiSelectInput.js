@@ -12,7 +12,13 @@
 import ClayMultiSelect from '@clayui/multi-select';
 import React, {useState} from 'react';
 
-function MultiSelectInput({configKey, disabled, onChange, value}) {
+function MultiSelectInput({
+	disabled,
+	name,
+	setFieldTouched,
+	setFieldValue,
+	value,
+}) {
 	const [inputValue, setInputValue] = useState('');
 
 	return (
@@ -22,16 +28,18 @@ function MultiSelectInput({configKey, disabled, onChange, value}) {
 			items={value}
 			onBlur={() => {
 				if (inputValue) {
-					onChange(configKey, [
+					setFieldValue(name, [
 						...value,
 						{label: inputValue, value: inputValue},
 					]);
 
 					setInputValue('');
 				}
+
+				setFieldTouched(name);
 			}}
 			onChange={setInputValue}
-			onItemsChange={(value) => onChange(configKey, value)}
+			onItemsChange={(value) => setFieldValue(name, value)}
 		/>
 	);
 }

@@ -17,157 +17,142 @@ import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
-import CodeMirrorEditor from './CodeMirrorEditor';
+import JSONInput from '../shared/element/JSONInput';
 import ThemeContext from './ThemeContext';
 
 function JSONElement({
 	collapseAll,
 	elementTemplateJSON,
+	error = {},
 	id,
+	index,
 	onDeleteElement,
-	onUpdateElement,
 	prefixedId,
+	setFieldTouched,
+	setFieldValue,
+	touched = {},
+	uiConfigurationValues = {},
 }) {
 	const {locale} = useContext(ThemeContext);
 
 	const [active, setActive] = useState(false);
 	const [collapse, setCollapse] = useState(collapseAll);
-	const [hasError, setHasError] = useState(false);
 
 	useEffect(() => {
 		setCollapse(collapseAll);
 	}, [collapseAll]);
 
-	function handleChange(value) {
-		try {
-			const parseJSON = JSON.parse(value);
+	const _inputName = () =>
+		`selectedQueryElements[${index}].uiConfigurationValues.elementTemplateJSON`;
 
-			onUpdateElement(id, {
-				elementOutput: parseJSON,
-				elementTemplateJSON: parseJSON,
-			});
-
-			setHasError(false);
-		}
-		catch {
-			setHasError(true);
-		}
-	}
+	const _hasError = () =>
+		touched.uiConfigurationValues &&
+		touched.uiConfigurationValues.elementTemplateJSON &&
+		error.uiConfigurationValues &&
+		!!error.uiConfigurationValues.elementTemplateJSON;
 
 	return (
 		<div className="element sheet" id={prefixedId}>
-			{useMemo(() => {
-				return (
-					<ClayList className="configuration-header-list">
-						<ClayList.Item flex>
-							<ClayList.ItemField>
-								<ClaySticker size="md">
-									<ClayIcon
-										symbol={elementTemplateJSON.icon}
-									/>
-								</ClaySticker>
-							</ClayList.ItemField>
+			<ClayList className="configuration-header-list">
+				<ClayList.Item flex>
+					<ClayList.ItemField>
+						<ClaySticker size="md">
+							<ClayIcon symbol={elementTemplateJSON.icon} />
+						</ClaySticker>
+					</ClayList.ItemField>
 
-							<ClayList.ItemField expand>
-								{elementTemplateJSON.title && (
-									<ClayList.ItemTitle>
-										{elementTemplateJSON.title[locale] ||
-											elementTemplateJSON.title}
-									</ClayList.ItemTitle>
-								)}
+					<ClayList.ItemField expand>
+						{elementTemplateJSON.title && (
+							<ClayList.ItemTitle>
+								{elementTemplateJSON.title[locale] ||
+									elementTemplateJSON.title}
+							</ClayList.ItemTitle>
+						)}
 
-								{elementTemplateJSON.description && (
-									<ClayList.ItemText subtext={true}>
-										{elementTemplateJSON.description[
-											locale
-										] || elementTemplateJSON.description}
-									</ClayList.ItemText>
-								)}
-							</ClayList.ItemField>
+						{elementTemplateJSON.description && (
+							<ClayList.ItemText subtext={true}>
+								{elementTemplateJSON.description[locale] ||
+									elementTemplateJSON.description}
+							</ClayList.ItemText>
+						)}
+					</ClayList.ItemField>
 
-							<ClayDropDown
-								active={active}
-								alignmentPosition={3}
-								onActiveChange={setActive}
-								trigger={
-									<ClayList.ItemField>
-										<ClayButton
-											aria-label={Liferay.Language.get(
-												'dropdown'
-											)}
-											className="component-action"
-											displayType="unstyled"
-										>
-											<ClayIcon symbol="ellipsis-v" />
-										</ClayButton>
-									</ClayList.ItemField>
-								}
-							>
-								<ClayDropDown.ItemList>
-									<ClayDropDown.Item
-										onClick={() => onDeleteElement(id)}
-									>
-										{Liferay.Language.get('remove')}
-									</ClayDropDown.Item>
-								</ClayDropDown.ItemList>
-							</ClayDropDown>
-
+					<ClayDropDown
+						active={active}
+						alignmentPosition={3}
+						onActiveChange={setActive}
+						trigger={
 							<ClayList.ItemField>
 								<ClayButton
-									aria-label={
-										!collapse
-											? Liferay.Language.get('collapse')
-											: Liferay.Language.get('expand')
-									}
+									aria-label={Liferay.Language.get(
+										'dropdown'
+									)}
 									className="component-action"
 									displayType="unstyled"
-									onClick={() => {
-										setCollapse(!collapse);
-									}}
 								>
-									<ClayIcon
-										symbol={
-											!collapse
-												? 'angle-down'
-												: 'angle-right'
-										}
-									/>
+									<ClayIcon symbol="ellipsis-v" />
 								</ClayButton>
 							</ClayList.ItemField>
-						</ClayList.Item>
-					</ClayList>
-				);
-			}, [
-				active,
-				collapse,
-				onDeleteElement,
-				id,
-				elementTemplateJSON,
-				locale,
-			])}
+						}
+					>
+						<ClayDropDown.ItemList>
+							<ClayDropDown.Item
+								onClick={() => onDeleteElement(id)}
+							>
+								{Liferay.Language.get('remove')}
+							</ClayDropDown.Item>
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+
+					<ClayList.ItemField>
+						<ClayButton
+							aria-label={
+								!collapse
+									? Liferay.Language.get('collapse')
+									: Liferay.Language.get('expand')
+							}
+							className="component-action"
+							displayType="unstyled"
+							onClick={() => {
+								setCollapse(!collapse);
+							}}
+						>
+							<ClayIcon
+								symbol={
+									!collapse ? 'angle-down' : 'angle-right'
+								}
+							/>
+						</ClayButton>
+					</ClayList.ItemField>
+				</ClayList.Item>
+			</ClayList>
 
 			{!collapse && (
 				<div
 					className={getCN('json-configuration-editor', {
-						'has-error': hasError,
+						'has-error': _hasError(),
 					})}
 				>
-					<label>{Liferay.Language.get('json')}</label>
-
-					<CodeMirrorEditor
-						onChange={handleChange}
-						value={JSON.stringify(elementTemplateJSON, null, '\t')}
+					<JSONInput
+						name={_inputName(index)}
+						setFieldTouched={setFieldTouched}
+						setFieldValue={setFieldValue}
+						value={
+							uiConfigurationValues.elementTemplateJSON ||
+							JSON.stringify(elementTemplateJSON, null, '\t')
+						}
 					/>
 
-					{hasError && (
+					{_hasError() && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-								{Liferay.Language.get(
-									'unable-to-apply-changes-due-to-invalid-json'
-								)}
+								{
+									error.uiConfigurationValues
+										.elementTemplateJSON
+								}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}
@@ -180,10 +165,15 @@ function JSONElement({
 JSONElement.propTypes = {
 	collapseAll: PropTypes.bool,
 	elementTemplateJSON: PropTypes.object,
+	error: PropTypes.object,
 	id: PropTypes.number,
+	index: PropTypes.number,
 	onDeleteElement: PropTypes.func,
-	onUpdateElement: PropTypes.func,
 	prefixedId: PropTypes.string,
+	setFieldTouched: PropTypes.func,
+	setFieldValue: PropTypes.func,
+	touched: PropTypes.object,
+	uiConfigurationValues: PropTypes.object,
 };
 
 export default React.memo(JSONElement);

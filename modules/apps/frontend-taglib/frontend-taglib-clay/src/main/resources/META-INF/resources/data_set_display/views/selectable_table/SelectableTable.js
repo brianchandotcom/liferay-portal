@@ -30,29 +30,27 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 		updateItems(itemsProp);
 	}, [itemsProp]);
 
-	useEffect(() => {
-		updateItems(items);
-	}, [items]);
-
 	function handleCheckboxChange(itemField, itemId, value) {
 		const updatedItems = items.map((item) => {
 			const currentItemId = item[selectedItemsKey];
 			if (!itemId || currentItemId === itemId) {
 				return {
 					...item,
-					fields: item.fields.map((currentField) => {
-						if (itemField !== currentField.name) {
-							return currentField;
-						}
+					restrictionFields: item.restrictionFields.map(
+						(currentField) => {
+							if (itemField !== currentField.name) {
+								return currentField;
+							}
 
-						return {
-							...currentField,
-							value:
-								typeof value === 'boolean'
-									? value
-									: !currentField.value,
-						};
-					}),
+							return {
+								...currentField,
+								value:
+									typeof value === 'boolean'
+										? value
+										: !currentField.value,
+							};
+						}
+					),
 				};
 			}
 
@@ -66,7 +64,7 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 		return <ClayLoadingIndicator className="mt-7" />;
 	}
 
-	if (!items?.length) {
+	if (!items || items?.length === 0) {
 		return <EmptyResultMessage />;
 	}
 
@@ -82,10 +80,10 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 						>
 							{schema.firstColumnLabel}
 						</ClayTable.Cell>
-						{items[0].fields.map((columnField) => {
+						{items[0].restrictionFields.map((columnField) => {
 							const checkedItems = items.reduce(
 								(checked, item) => {
-									const field = item.fields.find(
+									const field = item.restrictionFields.find(
 										(itemField) =>
 											itemField.name === columnField.name
 									);
@@ -134,7 +132,7 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 								<ClayTable.Cell>
 									{item[schema.firstColumnName]}
 								</ClayTable.Cell>
-								{item.fields.map((field) => {
+								{item.restrictionFields.map((field) => {
 									return (
 										<ClayTable.Cell key={field.name}>
 											<ClayCheckbox

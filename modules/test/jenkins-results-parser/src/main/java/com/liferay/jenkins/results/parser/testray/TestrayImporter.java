@@ -1194,6 +1194,8 @@ public class TestrayImporter {
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				upstreamBranchName, upstreamDirPath, upstreamRepository);
 
+		pluginsGitWorkingDirectory.clean();
+
 		pluginsGitWorkingDirectory.checkoutLocalGitBranch(branchInformation);
 
 		pluginsGitWorkingDirectory.displayLog();
@@ -1237,6 +1239,8 @@ public class TestrayImporter {
 		PortalGitWorkingDirectory portalBaseGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
 				branchInformation.getUpstreamBranchName());
+
+		portalBaseGitWorkingDirectory.clean();
 
 		LocalGitBranch portalBaseLocalGitBranch =
 			portalBaseGitWorkingDirectory.checkoutLocalGitBranch(
@@ -1282,6 +1286,8 @@ public class TestrayImporter {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			_getPortalGitWorkingDirectory();
 
+		portalGitWorkingDirectory.clean();
+
 		portalGitWorkingDirectory.checkoutLocalGitBranch(
 			portalBranchInformationBuild.getPortalBranchInformation());
 
@@ -1318,6 +1324,8 @@ public class TestrayImporter {
 		GitWorkingDirectory qaWebsitesGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				upstreamBranchName, upstreamDirPath, upstreamRepository);
+
+		qaWebsitesGitWorkingDirectory.clean();
 
 		qaWebsitesGitWorkingDirectory.checkoutLocalGitBranch(
 			qaWebsitesBranchInformationBuild.getQAWebsitesBranchInformation());

@@ -102,18 +102,6 @@ public class JSONUtil {
 		return Objects.equals(jsonObject1.toString(), jsonObject2.toString());
 	}
 
-	public static JSONArray getJSONArray(String json) throws JSONException {
-		if (isArray(json)) {
-			return _createJSONArray(json);
-		}
-
-		JSONArray jsonArray = _createJSONArray();
-
-		jsonArray.put(_createJSONObject(json));
-
-		return jsonArray;
-	}
-
 	public static Object getValue(Object object, String... paths) {
 		Object value = null;
 
@@ -162,6 +150,20 @@ public class JSONUtil {
 
 	public static int getValueAsInt(Object object, String... paths) {
 		return GetterUtil.getInteger(getValue(object, paths));
+	}
+
+	public static JSONArray getValueAsJSONArray(String json)
+			throws JSONException {
+
+		if (isArray(json)) {
+			return _createJSONArray(json);
+		}
+
+		JSONArray jsonArray = _createJSONArray();
+
+		jsonArray.put(_createJSONObject(json));
+
+		return jsonArray;
 	}
 
 	public static JSONArray getValueAsJSONArray(

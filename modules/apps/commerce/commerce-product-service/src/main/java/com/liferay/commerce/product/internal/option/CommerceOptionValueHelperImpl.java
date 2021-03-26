@@ -144,11 +144,12 @@ public class CommerceOptionValueHelperImpl
 
 		List<CommerceOptionValue> commerceOptionValues = new ArrayList<>();
 
-		JSONArray commerceOptionValuesJSONArray = JSONUtil.getJSONArray(json);
+		JSONArray commerceOptionValueAsJSONArray = JSONUtil.getValueAsJSONArray(
+			json);
 
-		for (int i = 0; i < commerceOptionValuesJSONArray.length(); i++) {
-			JSONObject jsonObject = commerceOptionValuesJSONArray.getJSONObject(
-				i);
+		for (int i = 0; i < commerceOptionValueAsJSONArray.length(); i++) {
+			JSONObject jsonObject =
+				commerceOptionValueAsJSONArray.getJSONObject(i);
 
 			JSONArray valueJSONArray = JSONUtil.getValueAsJSONArray(
 				"value", jsonObject);

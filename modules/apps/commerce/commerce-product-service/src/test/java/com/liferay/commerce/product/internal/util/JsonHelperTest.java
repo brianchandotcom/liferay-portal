@@ -54,7 +54,7 @@ public class JsonHelperTest {
 		String firstElementValue = null;
 
 		if (JSONUtil.isArray(json)) {
-			JSONArray jsonArray = JSONUtil.getJSONArray(json);
+			JSONArray jsonArray = JSONUtil.getValueAsJSONArray(json);
 
 			if (jsonArray.length() > 0) {
 				firstElementValue = (String)jsonArray.get(0);
@@ -69,7 +69,7 @@ public class JsonHelperTest {
 		firstElementValue = null;
 
 		if (JSONUtil.isArray(json)) {
-			JSONArray jsonArray = JSONUtil.getJSONArray(json);
+			JSONArray jsonArray = JSONUtil.getValueAsJSONArray(json);
 
 			if (jsonArray.length() > 0) {
 				firstElementValue = (String)jsonArray.get(0);

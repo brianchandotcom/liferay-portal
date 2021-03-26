@@ -117,7 +117,7 @@ public class JSONUtilTest {
 
 		String firstElementValue = null;
 
-		if (JSONUtil.isArray(json)) {
+		if (JSONUtil.isJSONArray(json)) {
 			JSONArray jsonArray = JSONUtil.getValueAsJSONArray(json);
 
 			if (jsonArray.length() > 0) {
@@ -132,7 +132,7 @@ public class JSONUtilTest {
 
 		firstElementValue = null;
 
-		if (JSONUtil.isArray(json)) {
+		if (JSONUtil.isJSONArray(json)) {
 			JSONArray jsonArray = JSONUtil.getValueAsJSONArray(json);
 
 			if (jsonArray.length() > 0) {
@@ -198,25 +198,25 @@ public class JSONUtilTest {
 
 	@Test
 	public void testIsArray() {
-		Assert.assertFalse("null is not a JSON array", JSONUtil.isArray(null));
+		Assert.assertFalse("null is not a JSON array", JSONUtil.isJSONArray(null));
 
-		Assert.assertFalse("\"\" is not a JSON array", JSONUtil.isArray(""));
+		Assert.assertFalse("\"\" is not a JSON array", JSONUtil.isJSONArray(""));
 
-		Assert.assertFalse("{} is not a JSON array", JSONUtil.isArray("{}"));
+		Assert.assertFalse("{} is not a JSON array", JSONUtil.isJSONArray("{}"));
 
-		Assert.assertTrue("[] is an empty JSON array", JSONUtil.isArray("[]"));
+		Assert.assertTrue("[] is an empty JSON array", JSONUtil.isJSONArray("[]"));
 
 		Assert.assertFalse(
 			"{\"key\":\"value\"} is not a JSON array",
-			JSONUtil.isArray("{\"key\":\"value\"}"));
+			JSONUtil.isJSONArray("{\"key\":\"value\"}"));
 
 		Assert.assertTrue(
 			"[{\"key\":\"value\"}] is a JSON array",
-			JSONUtil.isArray("[{\"key\":\"value\"}]"));
+			JSONUtil.isJSONArray("[{\"key\":\"value\"}]"));
 
 		Assert.assertTrue(
 			"[\"value1\",\"value2\"] is a JSON array",
-			JSONUtil.isArray("[\"value1\",\"value2\"]"));
+			JSONUtil.isJSONArray("[\"value1\",\"value2\"]"));
 	}
 
 	@Test

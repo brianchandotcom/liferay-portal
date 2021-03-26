@@ -328,7 +328,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		if (JSONUtil.isArray(json)) {
+		if (JSONUtil.isJSONArray(json)) {
 			jsonArray = _jsonFactory.createJSONArray(json);
 		}
 		else {

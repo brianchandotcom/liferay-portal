@@ -155,7 +155,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 				String optionValueKey = parameterValue;
 
-				if (JSONUtil.isArray(parameterValue)) {
+				if (JSONUtil.isJSONArray(parameterValue)) {
 					JSONArray jsonArray = JSONUtil.getValueAsJSONArray(
 						parameterValue);
 
@@ -322,7 +322,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 			String optionValueKey = parameterValue;
 
-			if (JSONUtil.isArray(parameterValue)) {
+			if (JSONUtil.isJSONArray(parameterValue)) {
 				JSONArray jsonArray = JSONUtil.getValueAsJSONArray(
 					parameterValue);
 

@@ -409,7 +409,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		if (JSONUtil.isArray(serializedDDMFormValues)) {
+		if (JSONUtil.isJSONArray(serializedDDMFormValues)) {
 			jsonArray = _jsonFactory.createJSONArray(serializedDDMFormValues);
 		}
 

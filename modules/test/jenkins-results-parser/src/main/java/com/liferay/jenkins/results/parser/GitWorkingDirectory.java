@@ -1763,10 +1763,6 @@ public class GitWorkingDirectory {
 		return false;
 	}
 
-	public boolean isOnlyPackageInfoFilesModified() {
-		return isOnlyMatchingFilesModified(_packageInfoFileNamesMultiPattern);
-	}
-
 	public boolean isOnlyPoshiFilesModified() {
 		return isOnlyMatchingFilesModified(_poshiFileNamesMultiPattern);
 	}
@@ -2661,8 +2657,6 @@ public class GitWorkingDirectory {
 			"(?<message>.*)");
 	private static final Map<String, List<File>> _modifiedFilesMap =
 		new HashMap<>();
-	private static final MultiPattern _packageInfoFileNamesMultiPattern =
-		new MultiPattern("packageinfo");
 	private static final MultiPattern _poshiFileNamesMultiPattern =
 		new MultiPattern(
 			".*\\.function", ".*\\.macro", ".*\\.path", ".*\\.prose",

@@ -488,6 +488,14 @@ const Main = ({
 						setCurrentValue(null);
 
 						onChange(event, '{}');
+
+						const guestUploadInput = document.getElementById(
+							`${name}inputFileGuestUpload`
+						);
+
+						if (guestUploadInput) {
+							guestUploadInput.value = '';
+						}
 					}}
 					onUploadSelectButtonClicked={(event) =>
 						handleUploadSelectButtonClicked(event)

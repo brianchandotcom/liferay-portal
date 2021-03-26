@@ -44,9 +44,9 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 	@Override
 	public String getErrors() {
-		TestClassResult testClassResult = getTestClassResult();
+		List<TestClassResult> testClassResults = _getTestClassResults();
 
-		if (testClassResult == null) {
+		if ((testClassResults == null) || testClassResults.isEmpty()) {
 			Build build = getBuild();
 
 			if (build == null) {
@@ -66,13 +66,13 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			return "Failed prior to running test";
 		}
 
-		if (!testClassResult.isFailing()) {
+		if (!_isTestClassResultsFailing()) {
 			return null;
 		}
 
 		Map<String, String> errorMessages = new HashMap<>();
 
-		for (TestResult testResult : testClassResult.getTestResults()) {
+		for (TestResult testResult : _getTestResults()) {
 			if ((testResult == null) || !testResult.isFailing()) {
 				continue;
 			}
@@ -134,9 +134,9 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			return Status.UNTESTED;
 		}
 
-		TestClassResult testClassResult = getTestClassResult();
+		List<TestClassResult> testClassResults = _getTestClassResults();
 
-		if (testClassResult == null) {
+		if ((testClassResults == null) || testClassResults.isEmpty()) {
 			String result = build.getResult();
 
 			if ((result == null) || result.equals("SUCCESS") ||
@@ -148,15 +148,23 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			return Status.FAILED;
 		}
 
-		if (testClassResult.isFailing()) {
+		if (_isTestClassResultsFailing()) {
 			return Status.FAILED;
 		}
 
 		return Status.PASSED;
 	}
 
-	public TestClassResult getTestClassResult() {
+	private List<TestClassResult> _getTestClassResults() {
+		if (_testClassResults != null) {
+			return _testClassResults;
+		}
+
 		Build build = getBuild();
+
+		if (build == null) {
+			return null;
+		}
 
 		String result = build.getResult();
 
@@ -164,9 +172,42 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			return null;
 		}
 
-		return build.getTestClassResult(getName());
+		_testClassResults = new ArrayList<>();
+
+		for (TestClassResult testClassResult : build.getTestClassResults()) {
+			String testClassName = testClassResult.getClassName();
+
+			if (testClassName.equals(getName()) ||
+				testClassName.startsWith(getName() + "$")) {
+
+				_testClassResults.add(testClassResult);
+			}
+		}
+
+		return _testClassResults;
+	}
+
+	private List<TestResult> _getTestResults() {
+		List<TestResult> testResults = new ArrayList<>();
+
+		for (TestClassResult testClassResult : _getTestClassResults()) {
+			testResults.addAll(testClassResult.getTestResults());
+		}
+
+		return testResults;
+	}
+
+	private boolean _isTestClassResultsFailing() {
+		for (TestClassResult testClassResult : _getTestClassResults()) {
+			if (testClassResult.isFailing()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final TestClassGroup.TestClass _testClass;
+	private List<TestClassResult> _testClassResults;
 
 }

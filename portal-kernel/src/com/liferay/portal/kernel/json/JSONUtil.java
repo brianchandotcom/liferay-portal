@@ -244,7 +244,7 @@ public class JSONUtil {
 		}
 	}
 
-	public static boolean isValid(String json) {
+	public static boolean isJSONObject(String json) {
 		try {
 			_createJSONObject(json);
 
@@ -253,6 +253,14 @@ public class JSONUtil {
 		catch (JSONException jsonException) {
 			return false;
 		}
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.4.x), replaced by {@link #isJSONObject(String)}
+	 */
+	@Deprecated
+	public static boolean isValid(String json) {
+		return isJSONObject(json);
 	}
 
 	public static JSONObject merge(

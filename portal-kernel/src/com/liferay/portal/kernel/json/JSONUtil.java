@@ -91,6 +91,32 @@ public class JSONUtil {
 			JSONUtil::_createJSONArray, JSONArray::put, JSONUtil::concat);
 	}
 
+	public static JSONArray createJSONArrayFromKeyValueMap(
+		Map<String, List<String>> map) {
+
+		JSONArray jsonArray = _createJSONArray();
+
+		for (Map.Entry<String, List<String>> keyValuesEntry : map.entrySet()) {
+			JSONObject arrayEntryJSONObject = _createJSONObject();
+
+			arrayEntryJSONObject.put("key", keyValuesEntry.getKey());
+
+			JSONArray valuesJSONArray = _createJSONArray();
+
+			List<String> values = keyValuesEntry.getValue();
+
+			for (String value : values) {
+				valuesJSONArray.put(value);
+			}
+
+			arrayEntryJSONObject.put("value", valuesJSONArray);
+
+			jsonArray.put(arrayEntryJSONObject);
+		}
+
+		return jsonArray;
+	}
+
 	public static boolean equals(JSONArray jsonArray1, JSONArray jsonArray2) {
 		return Objects.equals(jsonArray1.toString(), jsonArray2.toString());
 	}
@@ -151,8 +177,14 @@ public class JSONUtil {
 		return GetterUtil.getInteger(getValue(object, paths));
 	}
 
+	public static JSONArray getValueAsJSONArray(
+		Object object, String... paths) {
+
+		return (JSONArray)getValue(object, paths);
+	}
+
 	public static JSONArray getValueAsJSONArray(String json)
-			throws JSONException {
+		throws JSONException {
 
 		if (isJSONArray(json)) {
 			return _createJSONArray(json);
@@ -163,12 +195,6 @@ public class JSONUtil {
 		jsonArray.put(_createJSONObject(json));
 
 		return jsonArray;
-	}
-
-	public static JSONArray getValueAsJSONArray(
-		Object object, String... paths) {
-
-		return (JSONArray)getValue(object, paths);
 	}
 
 	public static JSONArray getValueAsJSONArray(
@@ -240,7 +266,7 @@ public class JSONUtil {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.4.x), replaced by {@link #isJSONObject(String)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #isJSONObject(String)}
 	 */
 	@Deprecated
 	public static boolean isValid(String json) {
@@ -353,34 +379,6 @@ public class JSONUtil {
 
 		for (T t : list) {
 			jsonArray.put(unsafeFunction.apply(t));
-		}
-
-		return jsonArray;
-	}
-
-	public static JSONArray createJSONArrayFromKeyValueMap(
-			Map<String, List<String>> map) {
-
-		JSONArray jsonArray = _createJSONArray();
-
-		for (Map.Entry<String, List<String>> keyValuesEntry :
-				map.entrySet()) {
-
-			JSONObject arrayEntryJSONObject = _createJSONObject();
-
-			arrayEntryJSONObject.put("key", keyValuesEntry.getKey());
-
-			JSONArray valuesJSONArray = _createJSONArray();
-
-			List<String> values = keyValuesEntry.getValue();
-
-			for (String value : values) {
-				valuesJSONArray.put(value);
-			}
-
-			arrayEntryJSONObject.put("value", valuesJSONArray);
-
-			jsonArray.put(arrayEntryJSONObject);
 		}
 
 		return jsonArray;

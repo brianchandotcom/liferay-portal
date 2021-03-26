@@ -165,8 +165,7 @@ public class JSONUtilTest {
 
 		Assert.assertEquals("JSONArray length", 0, jsonArray.length());
 
-		jsonObject = _createJSONObject(
-			"{\"array\":[\"commerce\"]}");
+		jsonObject = _createJSONObject("{\"array\":[\"commerce\"]}");
 
 		jsonArray = JSONUtil.getValueAsJSONArray("array", jsonObject);
 
@@ -197,14 +196,18 @@ public class JSONUtilTest {
 	}
 
 	@Test
-	public void testIsArray() {
-		Assert.assertFalse("null is not a JSON array", JSONUtil.isJSONArray(null));
+	public void testIsJSONArray() {
+		Assert.assertFalse(
+			"null is not a JSON array", JSONUtil.isJSONArray(null));
 
-		Assert.assertFalse("\"\" is not a JSON array", JSONUtil.isJSONArray(""));
+		Assert.assertFalse(
+			"\"\" is not a JSON array", JSONUtil.isJSONArray(""));
 
-		Assert.assertFalse("{} is not a JSON array", JSONUtil.isJSONArray("{}"));
+		Assert.assertFalse(
+			"{} is not a JSON array", JSONUtil.isJSONArray("{}"));
 
-		Assert.assertTrue("[] is an empty JSON array", JSONUtil.isJSONArray("[]"));
+		Assert.assertTrue(
+			"[] is an empty JSON array", JSONUtil.isJSONArray("[]"));
 
 		Assert.assertFalse(
 			"{\"key\":\"value\"} is not a JSON array",
@@ -220,15 +223,18 @@ public class JSONUtilTest {
 	}
 
 	@Test
-	public void testisValid() {
+	public void testIsJSONObject() {
 		Assert.assertTrue(
 			"null is an empty JSON string", JSONUtil.isJSONObject(null));
 
-		Assert.assertTrue("\"\" is an empty JSON string", JSONUtil.isJSONObject(""));
+		Assert.assertTrue(
+			"\"\" is an empty JSON string", JSONUtil.isJSONObject(""));
 
-		Assert.assertTrue("{} is an empty JSON string", JSONUtil.isJSONObject("{}"));
+		Assert.assertTrue(
+			"{} is an empty JSON string", JSONUtil.isJSONObject("{}"));
 
-		Assert.assertFalse("[] is an empty JSON string", JSONUtil.isJSONObject("[]"));
+		Assert.assertFalse(
+			"[] is an empty JSON string", JSONUtil.isJSONObject("[]"));
 
 		Assert.assertTrue(
 			"{\"key\":\"value\"} is not an empty JSON string",

@@ -6,3 +6,12 @@ dependencies {
 	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")
 	compileOnly project(":core:petra:petra-string")
 }
+
+// TODO: figure out how/if this kind of thing can be applied globally
+// see: https://liferay.slack.com/archives/C04D8HMEF/p1616767736043200
+
+processResources {
+	exclude "**/*.d.js"
+	exclude "**/*.d.js.map"
+	exclude "**/*.ts"
+}

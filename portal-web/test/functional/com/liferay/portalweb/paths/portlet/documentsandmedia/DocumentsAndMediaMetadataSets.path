@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>METADATA_SETS_NAME</td>
-	<td>//a[contains(.,'${key_metadataSetName}')]</td>
+	<td>//td//a[contains(.,'${key_metadataSetName}')]</td>
 	<td></td>
 </tr>
 <tr>

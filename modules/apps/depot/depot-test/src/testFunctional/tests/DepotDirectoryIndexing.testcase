@@ -253,6 +253,35 @@ definition {
 			dmFolderName = "DM Folder Name");
 	}
 
+	@description = "This test asserts that a document with escape characters stored in a depot can be accessed from FTP mode."
+	@priority = "3"
+	test ViewDocumentWithEscapeCharacters {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		Panel.expandPanel(panel = "Documents and Media");
+
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#ENABLE_DIRECTORY_INDEXING");
+
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "&amp; &lt; &gt; DM Document");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		Depot.viewDocumentInFTP(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "&amp; &lt; &gt; DM Document");
+	}
+
 	@description = "This test asserts that a document without guest permissions in a depot can not be accessed from FTP mode."
 	@priority = "4"
 	test ViewDocumentWithoutPermissions {

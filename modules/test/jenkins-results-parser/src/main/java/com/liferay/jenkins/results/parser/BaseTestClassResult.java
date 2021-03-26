@@ -34,7 +34,15 @@ public abstract class BaseTestClassResult implements TestClassResult {
 
 	@Override
 	public String getClassName() {
-		return _suiteJSONObject.getString("name");
+		List<TestResult> testResults = getTestResults();
+
+		if (testResults.isEmpty()) {
+			return _suiteJSONObject.getString("name");
+		}
+
+		TestResult testResult = testResults.get(0);
+
+		return testResult.getClassName();
 	}
 
 	@Override

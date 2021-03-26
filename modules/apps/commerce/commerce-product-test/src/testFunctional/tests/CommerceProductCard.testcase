@@ -153,6 +153,15 @@ definition {
 		// TODO COMMERCE-5861 AssertProductNameIsTranslated pending implementation
 	}
 
+	@description = "COMMERCE-6318. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"
+	@ignore = "true"
+	@priority = "3"
+	test AssertQuantityCanBeSelectedUpToAMaximumQuantitySet {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6318 AssertQuantityCanBeSelectedUpToAMaximumQuantitySet pending implementation
+	}
+
 	@description = "COMMERCE-6161. As a buyer, I want to be able to select the quantity of a product starting from a minimum quantity, if set"
 	@ignore = "true"
 	@priority = "3"

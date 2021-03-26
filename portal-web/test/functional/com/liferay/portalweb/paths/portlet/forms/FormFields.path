@@ -131,6 +131,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DOCUMENT_LIBRARY-->
+<tr>
+    <td>UPLOAD_FIELD_CLEAR_BUTTON</td>
+    <td>//button[text()='Clear']</td>
+    <td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--HELP TEXT-->
 <tr>
 	<td>HELP_TEXT</td>

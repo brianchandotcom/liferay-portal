@@ -27,9 +27,9 @@ import java.util.List;
 /**
  * @author Kevin Lee
  */
-public class UpgradeExpiredJournalArticle extends UpgradeProcess {
+public class ExpiredJournalArticleUpgradeProcess extends UpgradeProcess {
 
-	public UpgradeExpiredJournalArticle(
+	public ExpiredJournalArticleUpgradeProcess(
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;

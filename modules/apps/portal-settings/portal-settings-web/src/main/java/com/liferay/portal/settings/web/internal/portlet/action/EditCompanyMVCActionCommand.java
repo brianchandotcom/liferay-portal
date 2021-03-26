@@ -357,18 +357,24 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 					groupTypeSettingsUnicodeProperties.getProperty(
 						PropsKeys.LOCALES));
 
+				boolean updateLocales = false;
+
 				for (String removedLanguageId : removedLanguageIds) {
 					if (ArrayUtil.contains(groupLocales, removedLanguageId)) {
 						groupLocales = ArrayUtil.remove(
 							groupLocales, removedLanguageId);
+
+						updateLocales = true;
 					}
 				}
 
-				groupTypeSettingsUnicodeProperties.setProperty(
-					PropsKeys.LOCALES,
-					StringUtil.merge(groupLocales, StringPool.COMMA));
+				if (updateLocales) {
+					groupTypeSettingsUnicodeProperties.setProperty(
+						PropsKeys.LOCALES,
+						StringUtil.merge(groupLocales, StringPool.COMMA));
 
-				_groupLocalService.updateGroup(group);
+					_groupLocalService.updateGroup(group);
+				}
 			}
 		}
 	}

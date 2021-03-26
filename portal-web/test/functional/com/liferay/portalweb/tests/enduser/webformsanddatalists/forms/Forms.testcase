@@ -3191,9 +3191,7 @@ definition {
 			fieldType = "Paragraph");
 
 		var fieldParagraphField = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Paragraph");
-
+		
 		FormFields.editParagraphBody(content = "Paragraph body text.");
 
 		Form.closeSidebar();
@@ -3263,8 +3261,6 @@ definition {
 			fieldType = "Date");
 
 		var fieldDateField = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Date");
 
 		Form.closeSidebar();
 
@@ -3493,9 +3489,9 @@ definition {
 			formPageCurrent = "Page 1",
 			formPageNext = "Page 2");
 
-		//FormFields.viewTextLabel(
-		//	fieldLabel = "Grid Field Survey",
-		//	fieldName = "${fieldGridField}");
+		// FormFields.viewTextLabel( 
+		// 	fieldLabel = "Grid Field Survey", JA TAVA COMENTADO
+		// 	fieldName = "${fieldGridField}");
 
 		FormPortlet.nextPage(
 			formPageCurrent = "Page 2",

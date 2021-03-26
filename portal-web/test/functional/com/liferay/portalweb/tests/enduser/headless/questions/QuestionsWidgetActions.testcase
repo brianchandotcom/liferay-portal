@@ -42,7 +42,7 @@ definition {
 
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "4"
-	test AddQuestionWithALImage {
+	test AddQuestionWithDepotImage {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

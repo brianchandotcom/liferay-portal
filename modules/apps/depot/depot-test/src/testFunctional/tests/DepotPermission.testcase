@@ -405,7 +405,7 @@ definition {
 
 	@description = "This test covers LPS-120011. This ensures that no asset libraries be returned when a user without view permission searches the asset library."
 	@priority = "4"
-	test SearchAssetLibraryWithoutViewPermissions {
+	test SearchDepotWithoutViewPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpRegRoleLoginUserCP(

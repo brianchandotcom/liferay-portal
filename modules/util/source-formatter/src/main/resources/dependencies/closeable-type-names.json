@@ -34,9 +34,6 @@
 			"name": "com.google.gson.stream.JsonReader"
 		},
 		{
-			"name": "com.liferay.adaptive.media.document.library.thumbnails.internal.test.util.PropsValuesReplacer"
-		},
-		{
 			"name": "com.liferay.arquillian.extension.junit.bridge.client.ClientState.Connection"
 		},
 		{
@@ -50,9 +47,6 @@
 		},
 		{
 			"name": "com.liferay.css.builder.CSSBuilder"
-		},
-		{
-			"name": "com.liferay.document.library.opener.onedrive.web.internal.test.util.PropsValuesReplacer"
 		},
 		{
 			"name": "com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter"
@@ -137,6 +131,9 @@
 		},
 		{
 			"name": "com.liferay.sass.compiler.SassCompiler"
+		},
+		{
+			"name": "com.liferay.test.util.portal.util.PropsValuesReplacer"
 		},
 		{
 			"name": "java.io.BufferedInputStream"

@@ -6,4 +6,5 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationCompile project(":test:test-util")
 }

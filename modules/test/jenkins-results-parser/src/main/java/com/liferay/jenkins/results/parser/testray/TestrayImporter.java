@@ -2036,6 +2036,10 @@ public class TestrayImporter {
 			setupProfileDXP = true;
 		}
 
+		if (jobName.contains("fixpack") || jobName.contains("hotfix")) {
+			setupProfileDXP = true;
+		}
+
 		String portalBuildProfile = topLevelBuild.getParameterValue(
 			"TEST_PORTAL_BUILD_PROFILE");
 

@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.document.library.opener.onedrive.web.internal.test.util.PropsValuesReplacer;
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.test.util.portal.util.PropsValuesReplacer;
 
 import org.junit.Assert;
 import org.junit.Before;

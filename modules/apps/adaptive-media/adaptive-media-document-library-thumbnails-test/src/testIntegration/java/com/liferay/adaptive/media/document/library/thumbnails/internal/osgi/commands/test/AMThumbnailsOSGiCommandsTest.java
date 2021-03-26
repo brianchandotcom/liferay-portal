@@ -15,7 +15,6 @@
 package com.liferay.adaptive.media.document.library.thumbnails.internal.osgi.commands.test;
 
 import com.liferay.adaptive.media.AdaptiveMedia;
-import com.liferay.adaptive.media.document.library.thumbnails.internal.test.util.PropsValuesReplacer;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.image.finder.AMImageFinder;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
@@ -50,6 +49,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.test.util.portal.util.PropsValuesReplacer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

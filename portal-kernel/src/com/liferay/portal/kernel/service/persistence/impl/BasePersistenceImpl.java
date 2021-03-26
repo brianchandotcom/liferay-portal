@@ -34,6 +34,7 @@ import com.liferay.petra.sql.dsl.spi.expression.TableStar;
 import com.liferay.petra.sql.dsl.spi.query.Select;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -214,7 +215,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		Object cacheResult = finderCache.getResult(finderPath, arguments);
 
-		if (cacheResult != null) {
+		boolean productionMode = CTCollectionThreadLocal.isProductionMode();
+
+		if ((cacheResult != null) && productionMode) {
 			return (R)cacheResult;
 		}
 
@@ -281,7 +284,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 					defaultASTNodeListener.getEnd());
 			}
 
-			finderCache.putResult(finderPath, arguments, result);
+			if (productionMode) {
+				finderCache.putResult(finderPath, arguments, result);
+			}
 
 			return (R)result;
 		}

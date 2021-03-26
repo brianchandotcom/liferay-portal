@@ -72,6 +72,121 @@ definition {
 		FragmentsEditor.publish();
 	}
 
+	@description = "This is a test for LPS-109138. When type email address in the configuration text field, the field can constraint min and max length."
+	@priority = "4"
+	test ViewValidationInTextFieldWithEmailConstraintRules {
+		task ("Add a fragment with email constraint rules in configuration text field") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "Email Address",
+					"name": "emailAddress",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "test@liferay.com",
+						"validation": {
+						"errorMessage": "Please enter a email address with 14-30 characters",
+						"type": "email",
+						"minLength": 14,
+						"maxLength": 30
+						}
+					}
+				}
+			]
+		}
+	]
+}
+			''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			Pause(locator1 = "3000");
+
+			FragmentsEditor.gotoCodeTab();
+
+			var htmlSnippet = '''
+<div class="fragment_example">
+	<div class="portlet-msg-info">Please enter info in configuration.</div>
+</div>
+			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add the new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+
+			AssertVisible(
+				key_fragmentName = "Fragment Name",
+				key_messageIfo = "Please enter info in configuration.",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+
+		task ("View alert message is shown when type t@liferay.com in Email Address field") {
+			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
+
+			Type(
+				key_text = "Email Address",
+				locator1 = "TextInput#ANY",
+				value1 = "t@liferay.com");
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Please enter a email address with 14-30 characters");
+		}
+
+		task ("View alert message is shown when type giannis.antetokounmpo@liferay.com in Email Address field") {
+			PageEditor.clickManagementBar();
+
+			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
+
+			Type.sendKeys(
+				key_text = "Email Address",
+				locator1 = "TextInput#ANY",
+				value1 = "giannis.antetokounmpo@liferay.com");
+
+			AssertTextEquals(
+				key_text = "Email Address",
+				locator1 = "TextInput#ANY",
+				value1 = "giannis.antetokounmpo@liferay.");
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Please enter a email address with 14-30 characters");
+		}
+
+		task ("View alert message is not shown when type userea@liferay.com in Email Address field") {
+			Type(
+				key_text = "Email Address",
+				locator1 = "TextInput#ANY",
+				value1 = "userea@liferay.com");
+
+			AssertElementNotPresent(locator1 = "Message#WARNING_FEEDBACK");
+		}
+	}
+
 	@description = "This is a test for LPS-109138. When type integer in the configuration text field, the field can constraint min and max value."
 	@priority = "4"
 	test ViewValidationInTextFieldWithNumberConstraintRules {

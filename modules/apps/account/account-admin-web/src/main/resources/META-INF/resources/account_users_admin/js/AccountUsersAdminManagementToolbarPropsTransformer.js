@@ -109,9 +109,6 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			else if (action === 'deleteAccountUsers') {
 				deleteAccountUsers(data);
 			}
-			else if (action === 'selectAccountEntries') {
-				selectAccountEntries(data);
-			}
 		},
 		onCreateButtonClick: (event, {item}) => {
 			const data = item?.data;
@@ -132,6 +129,11 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				title: data?.dialogTitle,
 				url: data?.accountEntrySelectorURL,
 			});
+		},
+		onFilterDropdownItemClick(event, {item}) {
+			if (item?.data?.action === 'selectAccountEntries') {
+				selectAccountEntries(item?.data);
+			}
 		},
 	};
 }

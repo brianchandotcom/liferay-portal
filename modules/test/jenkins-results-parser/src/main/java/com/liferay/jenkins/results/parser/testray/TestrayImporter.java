@@ -1684,7 +1684,7 @@ public class TestrayImporter {
 			if (matcher.find()) {
 				string = string.replace(
 					"$(portal.release.tomcat.name)",
-					matcher.group("releaseFileName"));
+					matcher.group("releaseName"));
 			}
 
 			String portalReleaseBuildVersion = _topLevelBuild.getParameterValue(
@@ -1718,7 +1718,7 @@ public class TestrayImporter {
 			if (matcher.find()) {
 				string = string.replace(
 					"$(portal.fixpack.release.name)",
-					matcher.group("releaseFileName"));
+					matcher.group("releaseName"));
 			}
 		}
 
@@ -1741,7 +1741,7 @@ public class TestrayImporter {
 			if (matcher.find()) {
 				string = string.replace(
 					"$(portal.hotfix.release.name)",
-					matcher.group("releaseFileName"));
+					matcher.group("releaseName"));
 			}
 		}
 
@@ -1960,7 +1960,7 @@ public class TestrayImporter {
 	}
 
 	private static final Pattern _releaseArtifactURLPattern = Pattern.compile(
-		"https?://.+/(?<releaseFileName>[^/]+)");
+		"https?://.+/(?<releaseName>[^/]+)(.7z|.tar.gz|.war|.zip)");
 
 	private Job _job;
 	private final Map<File, TestrayBuild> _testrayBuilds = new HashMap<>();

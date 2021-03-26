@@ -1,0 +1,93 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
+
+	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
+	@ignore = "true"
+	@priority = "3"
+	test CreateNewOrderFromPendingOrdersPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6374 CreateNewOrderFromPendingOrdersPage pending implementation
+
+	}
+
+	@description = "COMMERCE-6380. As a buyer, I want to be able to delete an Order in Pending Order details page"
+	@ignore = "true"
+	@priority = "3"
+	test DeleteOrderFromPendingOrderDetailsPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6380 DeleteOrderFromPendingOrderDetailsPage pending implementation
+	}
+
+	@description = "COMMERCE-6379. As a buyer, I want to be able to edit the order in Pending Order details page and I want to view the changes I made applied to order"
+	@ignore = "true"
+	@priority = "3"
+	test EditOrderFromPendingOrderDetailsPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6379 EditOrderFromPendingOrderDetailsPage pending implementation
+	}
+
+	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"
+	@ignore = "true"
+	@priority = "3"
+	test ReorderFromPlacedOrdersDetailsPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6383 ReorderFromPlacedOrdersDetailsPage pending implementation
+	}
+
+	@description = "COMMERCE-6375. As a buyer, I want to be able to search for one pending order using the search bar"
+	@ignore = "true"
+	@priority = "3"
+	test SearchOrderInPendingOrdersPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6375 SearchOrderInPendingOrdersPage pending implementation
+	}
+
+	@description = "COMMERCE-6381. As a buyer, I want to be able to search for one placed order using the search bar"
+	@ignore = "true"
+	@priority = "3"
+	test SearchOrderInPlacedOrdersPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6381 SearchOrderInPlacedOrdersPage pending implementation
+	}
+
+	@description = "COMMERCE-6382. As a buyer, I want to be able to see the list of shipments for an order item by clicking on 'Shipments'"
+	@ignore = "true"
+	@priority = "3"
+	test ViewListOfShipmentsInPlacedOrdersDetailsPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6382 ViewListOfShipmentsInPlacedOrdersDetailsPage pending implementation
+	}
+
+}

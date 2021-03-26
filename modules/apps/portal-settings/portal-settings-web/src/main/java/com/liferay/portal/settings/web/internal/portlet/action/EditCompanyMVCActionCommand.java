@@ -323,9 +323,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 	private void _updateCompanySitesLocale(
 		long companyId, UnicodeProperties unicodeProperties) {
 
-		List<Group> groups = _groupLocalService.getActiveGroups(
-			companyId, true);
-
 		String newCompanyLanguageIds = unicodeProperties.getProperty(
 			PropsKeys.LOCALES);
 
@@ -338,6 +335,9 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		if (ArrayUtil.isEmpty(removedLanguageIds)) {
 			return;
 		}
+
+		List<Group> groups = _groupLocalService.getActiveGroups(
+			companyId, true);
 
 		for (Group group : groups) {
 			if (group.isSite()) {

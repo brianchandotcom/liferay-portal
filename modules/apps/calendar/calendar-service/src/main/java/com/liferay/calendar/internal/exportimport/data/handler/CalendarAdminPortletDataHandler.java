@@ -139,12 +139,6 @@ public class CalendarAdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (portletDataContext.addPrimaryKey(
-				CalendarPortletDataHandler.class, "deleteData")) {
-
-			return portletPreferences;
-		}
-
 		calendarResourceLocalService.deleteCalendarResources(
 			portletDataContext.getScopeGroupId());
 

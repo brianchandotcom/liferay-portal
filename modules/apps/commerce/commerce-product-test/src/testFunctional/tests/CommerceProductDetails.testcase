@@ -1,0 +1,165 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
+
+	@description = "COMMERCE-6356. As a buyer, I want to be able to select the quantity of a product and add it to cart from Product details"
+	@ignore = "true"
+	@priority = "3"
+	test AddProductToCartFromProductDetails {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6356 AddProductToCartFromProductDetails pending implementation
+
+	}
+
+	@description = "COMMERCE-6354. As a buyer, I want to be able to add a product to wish list from Product Details and if I refresh the page, I want to be able to see that the product is already added to wishlist"
+	@ignore = "true"
+	@priority = "3"
+	test AddProductToWishListFromProductDetails {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6354 AddProductToWishListFromProductDetails pending implementation
+	}
+
+	@description = "COMMERCE-6359. As a buyer, I want to be able to select only the allowed quantities of a product in Product Details, if set"
+	@ignore = "true"
+	@priority = "3"
+	test AssertOnlyAllowedQuantitiesAreSelectableInProductDetails {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6359 AssertOnlyAllowedQuantitiesAreSelectableInProductDetails pending implementation
+	}
+
+	@description = "COMMERCE-6363. As a buyer, I want to be able to select the quantity of a product in Product Details by multiple value, if set"
+	@ignore = "true"
+	@priority = "3"
+	test AssertOnlyMultipleValuesAreSelectableQuantitiesInProductDetails {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6363 AssertOnlyMultipleValuesAreSelectableQuantitiesInProductDetails pending implementation
+	}
+
+	@description = "COMMERCE-6369. As a buyer, I want to be able to add a product to the cart in Product Details regardless of the availability, if back ordererabilty of that product is enabled"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductCanBeAddedToCartFromProductDetailsIfBackOrderIsEnabled {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6369 AssertProductCanBeAddedToCartFromProductDetailsIfBackOrderIsEnabled pending implementation
+	}
+
+	@description = "COMMERCE-6367. As a buyer, I don't want to be able to add a product to the cart in Product Details if the product is not purchasable"
+	@ignore = "true"
+	@priority = "3"
+	test AssertProductCannotBeAddedToCartFromProductDetailsIfProductIsNotPurchasable {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6367 AssertProductCannotBeAddedToCartFromProductDetailsIfProductIsNotPurchasable pending implementation
+	}
+
+	@description = "COMMERCE-6362. As a buyer, I want to be able to select the quantity of a product in Product Details up to a maximum quantity, if set"
+	@ignore = "true"
+	@priority = "3"
+	test AssertQuantityInProductDetailsCanBeSelectedUpToAMaximumQuantitySet {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6362 AssertQuantityInProductDetailsCanBeSelectedUpToAMaximumQuantitySet pending implementation
+	}
+
+	@description = "COMMERCE-6360. As a buyer, I want to be able to select the quantity of a product in Product Details starting from a minimum quantity, if set"
+	@ignore = "true"
+	@priority = "3"
+	test AssertSelectableQuantitiesInProductDetailsStartFromMinimumQuantitySet {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6360 AssertSelectableQuantitiesInProductDetailsStartFromMinimumQuantitySet pending implementation
+	}
+
+	@description = "COMMERCE-6355. As a buyer, I want to be able to remove a product from wish list from Product Details"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveProductFromWishListFromProductDetails {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6355 RemoveProductFromWishListFromProductDetails pending implementation
+	}
+
+	@description = "COMMERCE-6370. As a buyer, I want to be able to select an option value, and add the product to cart in Product Details"
+	@ignore = "true"
+	@priority = "3"
+	test SelectOptionValueAndAddProductToCart {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6370 SelectOptionValueAndAddProductToCart pending implementation
+	}
+
+	@description = "COMMERCE-6371. As a buyer, I want to be able to select an option value(SKU contributor) that changes the price of the product and I want to see product price updating"
+	@ignore = "true"
+	@priority = "3"
+	test SelectOptionValueAndAssertProductPriceIsUpdated {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6371 SelectOptionValueAndAssertProductPriceIsUpdated pending implementation
+	}
+
+	@description = "COMMERCE-6364. As a buyer, I want the first selectable quantity of a product in Product Details to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
+	@ignore = "true"
+	@priority = "3"
+	test ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6364 ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity pending implementation
+	}
+
+	@description = "COMMERCE-6366. As a buyer, I want the first selectable quantity of a product in Product Details to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
+	@ignore = "true"
+	@priority = "3"
+	test ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6366 ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity pending implementation
+	}
+
+	@description = "COMMERCE-6358. As a buyer, I want to see the barred list price and a sale price of a product in Product Details, if a promotion is set"
+	@ignore = "true"
+	@priority = "3"
+	test ViewProductDetailsPriceWithPromotion {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6358 ViewProductDetailsPriceWithPromotion pending implementation
+	}
+
+	@description = "COMMERCE-6353. As a buyer, I want to be able to see product details in Product Details page(Product Availability, Number of Items in Stock, Product Name, Product SKU, Product MPN, Product Description, List Price, Product Specifications, Product Images/Attachments(if set))"
+	@ignore = "true"
+	@priority = "3"
+	test ViewProductDetailsWidget {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6353 ViewProductDetailsWidget pending implementation
+	}
+
+}

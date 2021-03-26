@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.video.internal.configuration.DLVideoFFMPEGVideoConverterConfiguration",
-	service = VideoConverter.class
+	service = {DLVideoFFMPEGVideoConverter.class, VideoConverter.class}
 )
 public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 

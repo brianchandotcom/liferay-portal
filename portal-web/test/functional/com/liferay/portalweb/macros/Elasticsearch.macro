@@ -12,6 +12,17 @@ definition {
 		return "${clientVersion}";
 	}
 
+	macro getServerPort {
+		var remoteEnabled = Elasticsearch.isRemoteMode();
+
+		if ("${remoteEnabled}" == "true") {
+			return "9200";
+		}
+		else {
+			return "9201";
+		}
+	}
+
 	macro getServerVersion {
 		if (!(isSet(port))) {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -37,6 +48,21 @@ definition {
 		echo("Version of the Elasticsearch server on port ${port}: ${serverVersion}");
 
 		return "${serverVersion}";
+	}
+
+	macro isRemoteMode {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config");
+
+		var productionModeEnabled = RegexUtil.replace("${fileContent}", "productionModeEnabled=&quot;(.*)&quot;", "1");
+
+		if ("${productionModeEnabled}" == "true") {
+			return "true";
+		}
+		else {
+			return "false";
+		}
 	}
 
 	macro viewClusterStatus {

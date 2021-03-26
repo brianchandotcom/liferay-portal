@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Test Utilities
+Bundle-SymbolicName: com.liferay.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.test.util.portal.util

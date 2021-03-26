@@ -95,8 +95,22 @@ export const FormBuilder = () => {
 	const sidebarRef = useRef(null);
 
 	useEffect(() => {
-		if (Object.keys(focusedField).length && sidebarRef.current) {
+		const hasFocusedField = Object.keys(focusedField).length > 0;
+		if (!hasFocusedField) {
+			return;
+		}
+
+		if (sidebarRef.current) {
 			sidebarRef.current.current.open();
+		}
+		else {
+
+			// In case of use Data Engine's MultiPanelSidebar
+
+			setSidebarStatus(({currentPanelId}) => ({
+				currentPanelId,
+				sidebarOpen: true,
+			}));
 		}
 	}, [focusedField]);
 

@@ -14,6 +14,7 @@
 
 package com.liferay.asset.internal.upgrade;
 
+import com.liferay.asset.internal.upgrade.v1_0_0.AssetEntryUsageUpgradeProcess;
 import com.liferay.asset.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -34,7 +35,10 @@ public class AssetServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.register("0.0.0", "0.0.1", new DummyUpgradeStep());
+
+		registry.register(
+			"0.0.1", "1.0.0", new AssetEntryUsageUpgradeProcess());
 
 		registry.register(
 			"1.0.0", "1.1.0",

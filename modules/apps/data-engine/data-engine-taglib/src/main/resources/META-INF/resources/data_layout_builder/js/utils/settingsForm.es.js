@@ -80,6 +80,21 @@ export const getFilteredSettingsContext = ({
 							name: generateName(name, updatedField),
 							predefinedValue: '["manual"]',
 							readOnly: true,
+							visible: false,
+						};
+					}
+
+					if (fieldName === 'ddmDataProviderInstanceId') {
+						return {
+							...updatedField,
+							visible: false,
+						};
+					}
+
+					if (fieldName === 'ddmDataProviderInstanceOutput') {
+						return {
+							...updatedField,
+							visible: false,
 						};
 					}
 

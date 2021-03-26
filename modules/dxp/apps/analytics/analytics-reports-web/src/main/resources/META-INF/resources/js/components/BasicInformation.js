@@ -51,29 +51,23 @@ function BasicInformation({author, canonicalURL, publishDate, title}) {
 	return (
 		<div className="sidebar-section">
 			<ClayLayout.ContentRow>
-				<ClayLayout.ContentCol expand>
-					<span
-						className="component-title text-truncate-inline"
-						data-tooltip-align="top"
-						title={title}
-					>
-						<span className="text-truncate">{title}</span>
-					</span>
-				</ClayLayout.ContentCol>
+				<span
+					className="component-title text-truncate-inline"
+					data-tooltip-align="bottom"
+					title={title}
+				>
+					<span className="text-truncate">{title}</span>
+				</span>
 			</ClayLayout.ContentRow>
 
 			<ClayLayout.ContentRow>
-				<ClayLayout.ContentCol expand>
-					<span
-						className="text-truncate-inline"
-						data-tooltip-align="top"
-						title={canonicalURL}
-					>
-						<span className="c-mb-2 c-mt-1 text-secondary text-truncate text-truncate-reverse">
-							{canonicalURL}
-						</span>
-					</span>
-				</ClayLayout.ContentCol>
+				<span
+					className="c-mb-2 c-mt-1 text-truncate text-truncate-reverse"
+					data-tooltip-align="bottom"
+					title={canonicalURL}
+				>
+					<bdi className="text-secondary">{canonicalURL}</bdi>
+				</span>
 			</ClayLayout.ContentRow>
 
 			<ClayLayout.ContentRow>

@@ -68,14 +68,14 @@ export default function BasicInformation({canonicalURLs, defaultLanguageId}) {
 				</ClayLayout.ContentRow>
 				<ClayLayout.ContentRow>
 					<ClayTooltipProvider>
-						<span className="text-secondary text-truncate-inline text-truncate-reverse">
-							<span
-								className="text-truncate"
-								data-tooltip-align="bottom"
-								title={selectedCanonicalURL.canonicalURL}
-							>
+						<span
+							className="text-truncate text-truncate-reverse"
+							data-tooltip-align="bottom"
+							title={selectedCanonicalURL.canonicalURL}
+						>
+							<bdi className="text-secondary">
 								{selectedCanonicalURL.canonicalURL}
-							</span>
+							</bdi>
 						</span>
 					</ClayTooltipProvider>
 				</ClayLayout.ContentRow>

@@ -112,22 +112,25 @@ export const FormsFieldSidebar = ({title}) => {
 			hasFocusedCustomObjectField={() => false}
 			onClick={() => dispatch({type: EVENT_TYPES.SIDEBAR.BLUR})}
 			onDoubleClick={({name: fieldTypeName}) =>
-				dispatch(CORE_EVENT_TYPES.FIELD.ADD, {
-					data: {
-						fieldName: '',
-						parentFieldName: '',
+				dispatch({
+					payload: {
+						data: {
+							fieldName: '',
+							parentFieldName: '',
+						},
+						fieldType: {
+							...fieldTypes.find(({name}) => {
+								return name === fieldTypeName;
+							}),
+							editable: true,
+						},
+						indexes: {
+							columnIndex: 0,
+							pageIndex: activePage,
+							rowIndex: pages[activePage].rows.length,
+						},
 					},
-					fieldType: {
-						...fieldTypes.find(({name}) => {
-							return name === fieldTypeName;
-						}),
-						editable: true,
-					},
-					indexes: {
-						columnIndex: 0,
-						pageIndex: activePage,
-						rowIndex: pages[activePage].rows.length,
-					},
+					type: CORE_EVENT_TYPES.FIELD.ADD,
 				})
 			}
 			title={title}

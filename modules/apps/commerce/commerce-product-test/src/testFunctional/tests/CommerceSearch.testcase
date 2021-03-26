@@ -26,6 +26,97 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-6323. As a buyer, I want to be able to search an entry in Accounts using Global Search and I want the results to be visible in Account Management page"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSearchEntryInAccounts {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6323 GlobalSearchSearchEntryInAccounts pending implementation
+
+	}
+
+	@description = "COMMERCE-6326. As a buyer, I want to be able to search an entry in All Content using Global Search and the results should be visible on Search page"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSearchEntryInAllContent {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6326 GlobalSearchSearchEntryInAllContent pending implementation
+	}
+
+	@description = "COMMERCE-6322. As a buyer, I want to be able to search an entry in Catalog using Global Search and I want the results to be visible in Search Results widget"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSearchEntryInCatalog {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6322 GlobalSearchSearchEntryInCatalog pending implementation
+	}
+
+	@description = "COMMERCE-6325. As a buyer, I want to be able to search an entry in Orders using Global Search and I want the results to be visible in Orders page"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSearchEntryInOrders {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6325 GlobalSearchSearchEntryInOrders pending implementation
+	}
+
+	@description = "COMMERCE-6329. As a buyer, I want to search for products in Catalog by typing different Categories in Global Search and I want to see the products with that categories in the suggestions(single category, multiple categories)"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSearchProductsByCategories {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6329 GlobalSearchSearchProductsByCategories pending implementation
+	}
+
+	@description = "COMMERCE-6327. As a buyer, I want to search for different products by typing their SKUs in the Global Search and I want to see the products with that SKUs in the suggestions(single SKU, multiple SKUs)"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSearchProductsBySKUs {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6327 GlobalSearchSearchProductsBySKUs pending implementation
+	}
+
+	@description = "COMMERCE-6328. As a buyer, I want to search for products by typing different Specification Values in Global Search and I want to see the products with that specification values in the suggestions(single specification, multiple specifications)"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSearchProductsBySpecificationValues {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6328 GlobalSearchSearchProductsBySpecificationValues pending implementation
+	}
+
+	@description = "COMMERCE-6320. As a buyer, I want to be able to search an Accounts entry using Global Search and I want to be able to click on a suggested entry and get redirected to that account page"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSuggestedAccountsEntry {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6320 GlobalSearchSuggestedAccountsEntry pending implementation
+	}
+
+	@description = "COMMERCE-6319. As a buyer, I want to be able to search a Catalog entry using Global Search(Product Name, Product Name with single quotes, Product Name with double quotes) and I want to be able to click on a suggested entry and get redirected to that product Details page"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSuggestedCatalogEntries {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6319 GlobalSearchSuggestedCatalogEntries pending implementation
+	}
+
+	@description = "COMMERCE-6321. As a buyer, I want to be able to search an Orders entry using Global Search and I want to be able to click on a suggested entry and get redirected to that order details page"
+	@ignore = "true"
+	@priority = "3"
+	test GlobalSearchSuggestedOrdersEntries {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6321 GlobalSearchSuggestedOrdersEntries pending implementation
+	}
+
 	@description = "COMMERCE-6148. As a buyer, I want to search a product by its name using the Search Bar widget and I want the results to be visible on the Search Results widget"
 	@ignore = "true"
 	@priority = "3"
@@ -33,7 +124,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6148 SearchBarWidgetSearchProductByName pending implementation
-
 	}
 
 	@description = "COMMERCE-6149.As a buyer, I want to search a product by its name using double quotes in the Search Bar widget and that product should be visible on the Search Results widget"

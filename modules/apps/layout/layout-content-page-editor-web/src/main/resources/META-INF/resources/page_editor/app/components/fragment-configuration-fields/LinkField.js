@@ -39,27 +39,29 @@ import {useGetFieldValue} from '../CollectionItemContext';
 
 const DISPLAY_PAGE_URL_FIELD_ID = 'displayPageURL';
 
-const SOURCE_OPTIONS = {
-	fromContentField: {
-		label: Liferay.Language.get('mapped-url'),
-		value: 'fromContentField',
-	},
+const SOURCE_OPTION_FROM_CONTENT_FIELD = 'fromContentField';
+const SOURCE_OPTION_FROM_ITEM_DISPLAY_PAGE = 'fromItemDisplayPage';
+const SOURCE_OPTION_FROM_LAYOUT = 'fromLayout';
+const SOURCE_OPTION_MANUAL = 'manual';
 
-	fromItemDisplayPage: {
-		label: Liferay.Language.get('display-page'),
-		value: 'fromItemDisplayPage',
-	},
-
-	fromLayout: {
-		label: Liferay.Language.get('page'),
-		value: 'fromLayout',
-	},
-
-	manual: {
+const SOURCE_OPTIONS = [
+	{
 		label: Liferay.Language.get('url'),
-		value: 'manual',
+		value: SOURCE_OPTION_MANUAL,
 	},
-};
+	{
+		label: Liferay.Language.get('page'),
+		value: SOURCE_OPTION_FROM_LAYOUT,
+	},
+	{
+		label: Liferay.Language.get('display-page'),
+		value: SOURCE_OPTION_FROM_ITEM_DISPLAY_PAGE,
+	},
+	{
+		label: Liferay.Language.get('mapped-url'),
+		value: SOURCE_OPTION_FROM_CONTENT_FIELD,
+	},
+];
 
 export const TARGET_OPTIONS = {
 	blank: '_blank',
@@ -77,7 +79,7 @@ export default function LinkField({field, onValueSelect, value}) {
 	const [mappedHrefPreview, setMappedHrefPreview] = useState(null);
 	const languageId = useSelector(selectLanguageId);
 
-	const [source, setSource] = useState(SOURCE_OPTIONS.manual.value);
+	const [source, setSource] = useState(SOURCE_OPTION_MANUAL);
 
 	useEffect(() => {
 		setNextValue(value);
@@ -85,13 +87,13 @@ export default function LinkField({field, onValueSelect, value}) {
 		setOpenNewTab(value.target === '_blank');
 
 		if (isMappedToLayout(value)) {
-			setSource(SOURCE_OPTIONS.fromLayout.value);
+			setSource(SOURCE_OPTION_FROM_LAYOUT);
 		}
 		else if (isMapped(value)) {
-			setSource(SOURCE_OPTIONS.fromContentField.value);
+			setSource(SOURCE_OPTION_FROM_CONTENT_FIELD);
 		}
 		else if (value.href) {
-			setSource(SOURCE_OPTIONS.manual.value);
+			setSource(SOURCE_OPTION_MANUAL);
 		}
 	}, [value]);
 
@@ -143,18 +145,19 @@ export default function LinkField({field, onValueSelect, value}) {
 					onChange={handleSourceChange}
 					options={
 						config.layoutMappingEnabled
-							? Object.values(SOURCE_OPTIONS)
-							: Object.values(SOURCE_OPTIONS).filter(
+							? SOURCE_OPTIONS
+							: SOURCE_OPTIONS.filter(
 									({value}) =>
-										value !== 'fromItemDisplayPage' &&
-										value !== 'fromLayout'
+										value !==
+											SOURCE_OPTION_FROM_ITEM_DISPLAY_PAGE &&
+										value !== SOURCE_OPTION_FROM_LAYOUT
 							  )
 					}
 					value={source}
 				/>
 			</ClayForm.Group>
 
-			{source === SOURCE_OPTIONS.manual.value && (
+			{source === SOURCE_OPTION_MANUAL && (
 				<div className="autofit-row mb-3">
 					<div className="autofit-col autofit-col-expand">
 						<ClayForm.Group small>
@@ -177,7 +180,7 @@ export default function LinkField({field, onValueSelect, value}) {
 				</div>
 			)}
 
-			{source === SOURCE_OPTIONS.fromLayout.value && (
+			{source === SOURCE_OPTION_FROM_LAYOUT && (
 				<LayoutSelector
 					mappedLayout={nextValue?.layout}
 					onLayoutSelect={(layout) => {
@@ -191,7 +194,7 @@ export default function LinkField({field, onValueSelect, value}) {
 				/>
 			)}
 
-			{source === SOURCE_OPTIONS.fromContentField.value && (
+			{source === SOURCE_OPTION_FROM_CONTENT_FIELD && (
 				<>
 					<MappingSelector
 						fieldType={EDITABLE_TYPES.link}
@@ -217,7 +220,7 @@ export default function LinkField({field, onValueSelect, value}) {
 				</>
 			)}
 
-			{source === SOURCE_OPTIONS.fromItemDisplayPage.value && (
+			{source === SOURCE_OPTION_FROM_ITEM_DISPLAY_PAGE && (
 				<ItemSelector
 					label={Liferay.Language.get('item')}
 					onItemSelect={(item) =>

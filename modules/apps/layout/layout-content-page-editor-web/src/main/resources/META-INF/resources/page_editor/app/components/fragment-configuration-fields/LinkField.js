@@ -41,7 +41,7 @@ const DISPLAY_PAGE_URL_FIELD_ID = 'displayPageURL';
 
 const SOURCE_OPTIONS = {
 	fromContentField: {
-		label: Liferay.Language.get('from-content-field'),
+		label: Liferay.Language.get('mapped-url'),
 		value: 'fromContentField',
 	},
 
@@ -56,7 +56,7 @@ const SOURCE_OPTIONS = {
 	},
 
 	manual: {
-		label: Liferay.Language.get('manual'),
+		label: Liferay.Language.get('url'),
 		value: 'manual',
 	},
 };

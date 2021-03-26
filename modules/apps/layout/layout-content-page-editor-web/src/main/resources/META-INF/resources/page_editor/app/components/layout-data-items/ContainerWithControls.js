@@ -17,6 +17,7 @@ import React from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
@@ -58,11 +59,13 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
-				[`container-fluid`]: widthType === 'fixed',
-				[`container-fluid-max-xl`]: widthType === 'fixed',
-				[`ml-${marginLeft}`]: widthType !== 'fixed',
-				[`mr-${marginRight}`]: widthType !== 'fixed',
-				'p-0': widthType === 'fixed',
+				[`container-fluid`]: widthType === CONTAINER_WIDTH_TYPES.fixed,
+				[`container-fluid-max-xl`]:
+					widthType === CONTAINER_WIDTH_TYPES.fixed,
+				[`ml-${marginLeft}`]: widthType !== CONTAINER_WIDTH_TYPES.fixed,
+				[`mr-${marginRight}`]:
+					widthType !== CONTAINER_WIDTH_TYPES.fixed,
+				'p-0': widthType === CONTAINER_WIDTH_TYPES.fixed,
 			})}
 			item={item}
 			itemElement={itemElement}

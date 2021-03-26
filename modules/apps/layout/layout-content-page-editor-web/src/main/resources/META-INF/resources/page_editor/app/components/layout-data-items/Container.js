@@ -18,6 +18,7 @@ import React, {useEffect, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
+import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
 import {config} from '../../config/index';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import {useSelector} from '../../store/index';
@@ -157,8 +158,10 @@ const Container = React.forwardRef(
 					`pt-${paddingTop || 0}`,
 					{
 						[align]: !!align,
-						[`container-fluid`]: widthType === 'fixed',
-						[`container-fluid-max-xl`]: widthType === 'fixed',
+						[`container-fluid`]:
+							widthType === CONTAINER_WIDTH_TYPES.fixed,
+						[`container-fluid-max-xl`]:
+							widthType === CONTAINER_WIDTH_TYPES.fixed,
 						'd-block':
 							contentDisplay === CONTAINER_DISPLAY_OPTIONS.block,
 						'd-flex flex-column':
@@ -172,9 +175,11 @@ const Container = React.forwardRef(
 							backgroundColor && !backgroundColor.startsWith('#'),
 						[justify]: !!justify,
 						[`ml-${marginLeft || 0}`]:
-							widthType !== 'fixed' && !withinTopper,
+							widthType !== CONTAINER_WIDTH_TYPES.fixed &&
+							!withinTopper,
 						[`mr-${marginRight || 0}`]:
-							widthType !== 'fixed' && !withinTopper,
+							widthType !== CONTAINER_WIDTH_TYPES.fixed &&
+							!withinTopper,
 						[textAlign
 							? textAlign.startsWith('text-')
 								? textAlign

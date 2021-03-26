@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {FRAGMENT_CONFIGURATION_FIELDS} from '../../../../../../app/components/fragment-configuration-fields/index';
+import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/containerWidthTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../app/config/index';
@@ -30,7 +31,7 @@ const DISPLAY_SIZES = {
 
 const fieldIsDisabled = (item, field) =>
 	item.type === LAYOUT_DATA_ITEM_TYPES.container &&
-	item.config?.widthType === 'fixed' &&
+	item.config?.widthType === CONTAINER_WIDTH_TYPES.fixed &&
 	(field.name === 'marginRight' || field.name === 'marginLeft');
 
 export const FieldSet = ({

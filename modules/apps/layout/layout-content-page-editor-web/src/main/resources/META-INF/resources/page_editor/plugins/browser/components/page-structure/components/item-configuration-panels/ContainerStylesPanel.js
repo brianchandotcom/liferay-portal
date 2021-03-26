@@ -18,6 +18,7 @@ import React from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {CONTAINER_DISPLAY_OPTIONS} from '../../../../../../app/config/constants/containerDisplayOptions';
+import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/containerWidthTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../app/config/index';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
@@ -94,11 +95,11 @@ const JUSTIFY_OPTIONS = [
 const WIDTH_TYPE_OPTIONS = [
 	{
 		label: Liferay.Language.get('fluid'),
-		value: 'fluid',
+		value: CONTAINER_WIDTH_TYPES.fluid,
 	},
 	{
 		label: Liferay.Language.get('fixed-width'),
-		value: 'fixed',
+		value: CONTAINER_WIDTH_TYPES.fixed,
 	},
 ];
 

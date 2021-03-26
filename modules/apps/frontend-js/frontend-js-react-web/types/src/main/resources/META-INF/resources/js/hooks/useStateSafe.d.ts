@@ -11,10 +11,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-/* eslint-env node */
-
-module.exports = {
-	testMatch: ['<rootDir>/test/**/*.ts'],
-	testPathIgnorePatterns: ['<rootDir>/test/helpers.ts'],
-};
+/**
+ * Wrapper for `useState` that does an `isMounted()` check behind the scenes
+ * before triggering side-effects.
+ */
+export default function useStateSafe<T = unknown>(initialValue: T | (() => T)): readonly [T, (newValue: T | ((previousValue: T) => T)) => void];

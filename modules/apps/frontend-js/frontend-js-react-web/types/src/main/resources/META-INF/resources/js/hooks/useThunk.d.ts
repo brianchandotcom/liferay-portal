@@ -11,10 +11,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-/* eslint-env node */
-
-module.exports = {
-	testMatch: ['<rootDir>/test/**/*.ts'],
-	testPathIgnorePatterns: ['<rootDir>/test/helpers.ts'],
-};
+import React from 'react';
+/**
+ * "Middleware" hook intended to wrap `useReducer` that enables you to dispatch
+ * thunks (ie. functions that dispatch actions) as well as plain actions (ie.
+ * objects).
+ */
+export default function useThunk<R extends React.Reducer<any, any>>([state, dispatch,]: [React.ReducerState<R>, React.Dispatch<React.ReducerAction<R>>]): (React.ReducerState<R> | ((action: any) => any))[];

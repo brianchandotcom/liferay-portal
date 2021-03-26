@@ -15,5 +15,5 @@
 /* eslint-env node */
 
 module.exports = {
-	testMatch: ['**/test/**/*.{js,ts,tsx}'],
+	testMatch: ['<rootDir>/test/**/*.{js,ts,tsx}'],
 };

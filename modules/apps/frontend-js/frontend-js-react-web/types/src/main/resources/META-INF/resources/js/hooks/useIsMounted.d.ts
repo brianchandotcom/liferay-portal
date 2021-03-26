@@ -11,10 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-/* eslint-env node */
-
-module.exports = {
-	testMatch: ['<rootDir>/test/**/*.ts'],
-	testPathIgnorePatterns: ['<rootDir>/test/helpers.ts'],
-};
+/**
+ * Hook for determining whether a component is still mounted.
+ *
+ * Use this to guard side-effects of asynchronous operations (fetches,
+ * promises) that may complete after a component has been unmounted.
+ *
+ * Example:
+ *
+ *      const isMounted = useIsMounted();
+ *      const [value, setHidden] = useHidden(true);
+ *
+ *      setTimeout(() => {
+ *          if (isMounted()) {
+ *              setHidden(true);
+ *          }
+ *      }, 1000);
+ *
+ */
+export default function useIsMounted(): () => boolean;

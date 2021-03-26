@@ -4,6 +4,7 @@
 		"composite": true,
 		"module": "es6",
 		"moduleResolution": "node",
+		"outDir": "./types",
 		"sourceMap": true,
 		"strict": true,
 		"target": "es6",

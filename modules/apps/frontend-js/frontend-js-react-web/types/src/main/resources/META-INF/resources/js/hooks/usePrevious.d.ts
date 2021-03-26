@@ -11,10 +11,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-/* eslint-env node */
-
-module.exports = {
-	testMatch: ['<rootDir>/test/**/*.ts'],
-	testPathIgnorePatterns: ['<rootDir>/test/helpers.ts'],
-};
+/**
+ * Hook for comparing current and previous values (of state, props or any
+ * arbitrary value).
+ *
+ * @see https://reactjs.org/docs/hooks-faq.html#how-to-get-the-previous-props-or-state
+ */
+export default function usePrevious<T = unknown>(value: T): T | undefined;

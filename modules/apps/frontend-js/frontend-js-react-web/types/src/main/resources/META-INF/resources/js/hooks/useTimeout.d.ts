@@ -11,10 +11,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-/* eslint-env node */
-
-module.exports = {
-	testMatch: ['<rootDir>/test/**/*.ts'],
-	testPathIgnorePatterns: ['<rootDir>/test/helpers.ts'],
-};
+/**
+ * Hook for delaying a function call by the specified interval (in
+ * milliseconds).
+ */
+export default function useTimeout(): (fn: () => void, ms: number | undefined) => () => void;

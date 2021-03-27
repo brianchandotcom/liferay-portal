@@ -120,7 +120,7 @@ if (cpAttachmentFileEntry != null) {
 			}
 			ddmForm.unstable_onEvent((event) => {
 				var eventName = event.type;
-				if (eventName === 'fieldEdited') {
+				if (eventName === 'field_change') {
 					fieldValues = FormsHelper.updateFields(
 						fieldValues,
 						event.payload

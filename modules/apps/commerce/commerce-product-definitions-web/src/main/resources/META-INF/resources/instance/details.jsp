@@ -222,7 +222,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	).then((ddmForm) => {
 		ddmForm.unstable_onEvent((e) => {
 			var eventName = e.type;
-			if (eventName === 'fieldEdited') {
+			if (eventName === 'field_change') {
 				var key = e.payload.fieldInstance.fieldName;
 				var updatedItem = {
 					key: e.payload.fieldInstance.fieldName,

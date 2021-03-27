@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -276,9 +277,18 @@ public class OpenAPIParserUtil {
 			return javaDataTypeMap.get(getReferenceName(schema.getReference()));
 		}
 
-		return _openAPIDataTypeMap.get(
+		String type = _openAPIDataTypeMap.get(
 			new AbstractMap.SimpleImmutableEntry<>(
 				schema.getType(), schema.getFormat()));
+
+		if (type == null) {
+			throw new RuntimeException(
+				StringBundler.concat(
+					"Unsupported combination of type/format: ",
+					schema.getType(), "/", schema.getFormat()));
+		}
+
+		return type;
 	}
 
 	public static Map<String, String> getJavaDataTypeMap(

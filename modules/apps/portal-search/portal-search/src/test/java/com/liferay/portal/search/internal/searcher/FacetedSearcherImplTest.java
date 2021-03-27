@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.internal.indexer.PreFilterContributorHelper;
+import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.test.util.DocumentFixture;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
@@ -140,7 +142,19 @@ public class FacetedSearcherImplTest {
 	protected FacetedSearcherImpl createFacetedSearcher() {
 		return new FacetedSearcherImpl(
 			expandoQueryContributor, indexerRegistry, indexSearcherHelper,
-			preFilterContributorHelper, searchableAssetClassNamesProvider);
+			preFilterContributorHelper, searchableAssetClassNamesProvider,
+			createSearchRequestBuilderFactory());
+	}
+
+	protected SearchRequestBuilderFactory createSearchRequestBuilderFactory() {
+		SearchRequestBuilderFactoryImpl searchRequestBuilderFactoryImpl =
+			new SearchRequestBuilderFactoryImpl();
+
+		searchRequestBuilderFactoryImpl.setSearchRequestBuilderFactory(
+			new com.liferay.portal.search.internal.searcher.
+				SearchRequestBuilderFactoryImpl());
+
+		return searchRequestBuilderFactoryImpl;
 	}
 
 	@Mock

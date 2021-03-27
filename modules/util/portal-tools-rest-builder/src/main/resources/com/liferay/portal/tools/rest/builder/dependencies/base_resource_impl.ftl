@@ -388,7 +388,14 @@ public abstract class Base${schemaName}ResourceImpl
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 								${schemaVarName}
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, "id")>
-								${schemaVarName}.getId() != null ? ${schemaVarName}.getId() :
+								<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
+
+								<#if properties?keys?seq_contains('id')>
+									${schemaVarName}.getId() != null ? ${schemaVarName}.getId() :
+								<#elseif properties?keys?seq_contains(schemaVarName + 'Id')>
+									${schemaVarName}.get${schemaName}Id() != null ? ${schemaVarName}.get${schemaName}Id() :
+								</#if>
+
 								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
 									(Integer)
 								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>

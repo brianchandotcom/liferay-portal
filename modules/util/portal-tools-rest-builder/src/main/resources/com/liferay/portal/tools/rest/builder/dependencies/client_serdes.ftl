@@ -258,7 +258,17 @@ public class ${schemaName}SerDes {
 							toStrings((Object[])jsonParserFieldValue)
 						<#elseif allSchemas?keys?seq_contains(propertyType)>
 							${propertyType}SerDes.toDTO((String)jsonParserFieldValue)
+						<#elseif allExternalSchemas?keys?seq_contains(propertyType)>
+							${propertyType}SerDes.toDTO((String)jsonParserFieldValue)
 						<#elseif propertyType?ends_with("[]") && allSchemas?keys?seq_contains(propertyType?remove_ending("[]"))>
+							Stream.of(
+								toStrings((Object[])jsonParserFieldValue)
+							).map(
+								object -> ${propertyType?remove_ending("[]")}SerDes.toDTO((String)object)
+							).toArray(
+								size -> new ${propertyType?remove_ending("[]")}[size]
+							)
+						<#elseif propertyType?ends_with("[]") && allExternalSchemas?keys?seq_contains(propertyType?remove_ending("[]"))>
 							Stream.of(
 								toStrings((Object[])jsonParserFieldValue)
 							).map(

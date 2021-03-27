@@ -18,9 +18,11 @@ import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.FieldConfigBuilder;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.highlight.HighlightBuilder;
+import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.highlight.Highlights;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -28,11 +30,20 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = Highlights.class)
 public class HighlightsImpl implements Highlights {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             HighlightBuilderFactory#builder()}
+	 */
+	@Deprecated
 	@Override
 	public HighlightBuilder builder() {
 		return new HighlightImpl.HighlightBuilderImpl();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public FieldConfig fieldConfig(String field) {
 		return fieldConfigBuilder(
@@ -41,17 +52,25 @@ public class HighlightsImpl implements Highlights {
 		).build();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             FieldConfigBuilderFactory#builder(String)}
+	 */
+	@Deprecated
 	@Override
 	public FieldConfigBuilder fieldConfigBuilder() {
-		return new FieldConfigImpl.FieldConfigBuilderImpl();
+		return new FieldConfigImpl.FieldConfigBuilderImpl(null);
 	}
 
 	@Override
 	public Highlight highlight(FieldConfig fieldConfig) {
-		return builder(
+		return highlightBuilderFactory.builder(
 		).addFieldConfig(
 			fieldConfig
 		).build();
 	}
+
+	@Reference
+	protected HighlightBuilderFactory highlightBuilderFactory;
 
 }

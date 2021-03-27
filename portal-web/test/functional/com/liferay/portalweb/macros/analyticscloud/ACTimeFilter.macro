@@ -1,0 +1,164 @@
+definition {
+
+	@summary = "Asserts that the currently selected Time Filter range matches the specified range \
+	@param cardName optional argument that is supplied when you want to assert the Time Filter within a specific card \
+	@param timeFilterRange the currently set range of the Time Filter, as displayed on the Time Filter dropdown button"
+	macro assertCurrentTimeFilterRange {
+		if (isSet(cardName)) {
+			var key_cardName = "${cardName}";
+
+			AssertTextEquals(
+				locator1 = "ACTimeFilter#CARD_TIME_FILTER_DROPDOWN",
+				value1 = "${timeFilterRange}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN",
+				value1 = "${timeFilterRange}");
+		}
+	}
+
+	@summary = "Clicks the 'More Preset Periods' option in the Time Filter Dropdown"
+	macro clickMorePresetPeriods {
+		var key_dropdownOption = "More Preset Periods";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+	}
+
+	@summary = "Clicks the Time Filter dropdown button. If `cardName` argument is provided, it clicks the TimeFilter within a card specified by name \
+	@param cardName name of the card who's Time Filter you want to click"
+	macro clickTimeFilterButton {
+		if (isSet(cardName)) {
+			var key_cardName = "${cardName}";
+
+			Click(locator1 = "ACTimeFilter#CARD_TIME_FILTER_DROPDOWN");
+		}
+		else {
+			Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN");
+		}
+	}
+
+	@summary = "Filters the card or table by a Custom Date range \
+	@param startDay \
+	@param startMonth Full name of the start month \
+	@param startYear \
+	@param endDay \
+	@param endMonth Full name of the end month \
+	@param endYear"
+	macro setCustomRange {
+		var key_dropdownOption = "Custom Range";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+
+		WaitForElementPresent(locator1 = "ACTimeFilter#DATE_PICKER");
+
+		var key_Day = "${startDay}";
+		var key_Month = "${startMonth}";
+		var key_Year = "${startYear}";
+
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_DROPDOWN_OPTION");
+
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_DROPDOWN_OPTION");
+
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
+
+		var key_Day = "${endDay}";
+		var key_Month = "${endMonth}";
+		var key_Year = "${endYear}";
+
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_DROPDOWN_OPTION");
+
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_DROPDOWN_OPTION");
+
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
+
+		WaitForElementNotPresent(locator1 = "ACTimeFilter#DATE_PICKER");
+
+		ACLoading.waitForLoadingComplete();
+	}
+
+	@summary = "Clicks the 'Last 7 days' option in the Time Filter Dropdown"
+	macro setLast7Days {
+		var key_dropdownOption = "Last 7 days";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+	}
+
+	@summary = "Clicks the 'Last 24 hours' option in the Time Filter Dropdown"
+	macro setLast24Hours {
+		var key_dropdownOption = "Last 24 hours";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+	}
+
+	@summary = "Clicks the 'Last 28 days' option in the Time Filter Dropdown"
+	macro setLast28Days {
+		var key_dropdownOption = "More Preset Periods";
+
+		if (IsElementPresent(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION")) {
+			ACTimeFilter.clickMorePresetPeriods();
+		}
+
+		var key_dropdownOption = "Last 28 days";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+	}
+
+	@summary = "Clicks the 'Last 30 days' option in the Time Filter Dropdown"
+	macro setLast30Days {
+		var key_dropdownOption = "Last 30 days";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+	}
+
+	@summary = "Clicks the 'Last 90 days' option in the Time Filter Dropdown"
+	macro setLast90Days {
+		var key_dropdownOption = "Last 90 days";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+	}
+
+	@summary = "Clicks the 'Last 180 days' option in the Time Filter Dropdown"
+	macro setLast180Days {
+		var key_dropdownOption = "More Preset Periods";
+
+		if (IsElementPresent(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION")) {
+			ACTimeFilter.clickMorePresetPeriods();
+		}
+
+		var key_dropdownOption = "Last 180 days";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+	}
+
+	@summary = "Clicks the 'Last Year' option in the Time Filter Dropdown"
+	macro setLastYear {
+		var key_dropdownOption = "More Preset Periods";
+
+		if (IsElementPresent(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION")) {
+			ACTimeFilter.clickMorePresetPeriods();
+		}
+
+		var key_dropdownOption = "Last Year";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+	}
+
+	@summary = "Clicks the 'Yesterday' option in the Time Filter Dropdown"
+	macro setYesterday {
+		var key_dropdownOption = "More Preset Periods";
+
+		if (IsElementPresent(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION")) {
+			ACTimeFilter.clickMorePresetPeriods();
+		}
+
+		var key_dropdownOption = "Yesterday";
+
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
+	}
+
+}

@@ -1,0 +1,60 @@
+<html>
+<head>
+  <title>ACTimeFilter</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+  <thead>
+  <tr><td rowspan="1" colspan="3">ACTimeFilter</td></tr>
+  </thead>
+  <tbody>
+  <!-- TIME FILTER ELEMENTS  -->
+  <tr>
+    <td>TIME_FILTER_DROPDOWN</td>
+    <td>//div[@class='dropdown dropdown-range-key-root']/button</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>CARD_TIME_FILTER_DROPDOWN</td>
+    <td>(//h5[@class='card-title' and text()='${key_cardName}']/following::div[@class='dropdown dropdown-range-key-root']/button)[1]</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>TIME_FILTER_DROPDOWN_OPTION</td>
+    <td>//div[@class='dropdown-menu dropdown-range-key-menu-root show']//button[text()='${key_dropdownOption}']</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>TIME_FILTER_DROPDOWN_MENU</td>
+    <td>//div[@class='dropdown-menu dropdown-range-key-menu-root show']</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>DATE_PICKER</td>
+    <td>//div[@class='date-picker-root']</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>DATE_PICKER_MONTH_DROPDOWN</td>
+    <td>//select[@class='date-picker-select-root form-control'][1]</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>DATE_PICKER_YEAR_DROPDOWN</td>
+    <td>//select[@class='date-picker-select-root form-control'][2]</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>DATE_PICKER_DROPDOWN_OPTION</td>
+    <td>//TODO</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>DATE_PICKER_DAY</td>
+    <td>//table[@class='calendar-root']//button[@class='button-root btn btn-unstyled day-root' and text()='${key_day}']"</td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

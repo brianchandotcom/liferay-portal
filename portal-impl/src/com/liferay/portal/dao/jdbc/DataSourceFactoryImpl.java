@@ -611,14 +611,14 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			try {
 				JarUtil.downloadAndInstallJar(
 					new URL(url),
-					Paths.get(PropsValues.LIFERAY_LIB_GLOBAL_DIR, name),
+					Paths.get(PropsValues.LIFERAY_LIB_PORTAL_DIR, name),
 					(URLClassLoader)classLoader);
 			}
 			catch (Exception exception) {
 				_log.error(
 					StringBundler.concat(
 						"Unable to download and install ", name, " to ",
-						PropsValues.LIFERAY_LIB_GLOBAL_DIR, " from ", url),
+						PropsValues.LIFERAY_LIB_PORTAL_DIR, " from ", url),
 					exception);
 
 				throw classNotFoundException;

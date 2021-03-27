@@ -538,7 +538,7 @@ definition {
 			addressDescription = "Address of DL office.",
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
-			addressRegion = "Liaoning",
+			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "1005 High-Tech Zone",
 			phoneNumber = "+86 (0)411 88120855");
@@ -554,7 +554,7 @@ definition {
 
 		LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
 
-		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning,116023,Billing and Shipping") {
+		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning Sheng,116023,Billing and Shipping") {
 			LexiconEntry.viewEntryContent(
 				rowAny = "${rowAny}",
 				rowEntry = "Liferay Dalian Software Co., Ltd.");
@@ -573,7 +573,7 @@ definition {
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
-		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning,116023,Shipping") {
+		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning Sheng,116023,Shipping") {
 			LexiconEntry.viewEntryContent(
 				rowAny = "${rowAny}",
 				rowEntry = "Liferay Dalian Software Co., Ltd.");
@@ -592,7 +592,7 @@ definition {
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
-		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning,116023,Billing") {
+		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning Sheng,116023,Billing") {
 			LexiconEntry.viewEntryContent(
 				rowAny = "${rowAny}",
 				rowEntry = "Liferay Dalian Software Co., Ltd.");
@@ -676,7 +676,7 @@ definition {
 			addressDescription = "Address of DL office.",
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
-			addressRegion = "Liaoning",
+			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
@@ -1013,7 +1013,7 @@ definition {
 			addressDescription = "Address of DL office.",
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
-			addressRegion = "Liaoning",
+			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
@@ -1037,7 +1037,7 @@ definition {
 				addressDataType = "${addressDataType}",
 				addressName = "Liferay Dalian Software Co., Ltd.",
 				addressPostalCode = "116023",
-				addressRegion = "Liaoning",
+				addressRegion = "Liaoning Sheng",
 				addressStreet1 = "537 Huangpu Road Taide Building,",
 				addressStreet2 = "High-Tech Zone",
 				addressStreet3 = "1005",
@@ -1151,7 +1151,7 @@ definition {
 			addressDescription = "Address of DL office.",
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
-			addressRegion = "Liaoning",
+			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
@@ -1231,7 +1231,7 @@ definition {
 				addressDataType = "${addressDataType}",
 				addressName = "Liferay Dalian Software Co., Ltd.",
 				addressPostalCode = "116023",
-				addressRegion = "Liaoning",
+				addressRegion = "Liaoning Sheng",
 				addressStreet1 = "537 Huangpu Road Taide Building,",
 				addressStreet2 = "High-Tech Zone",
 				addressStreet3 = "1005",

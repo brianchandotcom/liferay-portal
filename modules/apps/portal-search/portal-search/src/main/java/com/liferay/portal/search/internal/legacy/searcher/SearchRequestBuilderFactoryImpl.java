@@ -31,11 +31,18 @@ public class SearchRequestBuilderFactoryImpl
 	@Override
 	public SearchRequestBuilder builder(SearchContext searchContext) {
 		return new SearchRequestBuilderImpl(
-			searchRequestBuilderFactory, searchContext);
+			_searchRequestBuilderFactory, searchContext);
 	}
 
-	@Reference
-	protected com.liferay.portal.search.searcher.SearchRequestBuilderFactory
-		searchRequestBuilderFactory;
+	@Reference(unbind = "-")
+	public void setSearchRequestBuilderFactory(
+		com.liferay.portal.search.searcher.SearchRequestBuilderFactory
+			searchRequestBuilderFactory) {
+
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+	}
+
+	private com.liferay.portal.search.searcher.SearchRequestBuilderFactory
+		_searchRequestBuilderFactory;
 
 }

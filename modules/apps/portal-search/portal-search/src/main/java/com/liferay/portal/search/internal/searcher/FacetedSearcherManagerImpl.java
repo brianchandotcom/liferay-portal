@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.internal.indexer.PreFilterContributorHelper;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,7 +37,8 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 	public FacetedSearcher createFacetedSearcher() {
 		return new FacetedSearcherImpl(
 			expandoQueryContributor, indexerRegistry, indexSearcherHelper,
-			preFilterContributorHelper, searchableAssetClassNamesProvider);
+			preFilterContributorHelper, searchableAssetClassNamesProvider,
+			searchRequestBuilderFactory);
 	}
 
 	protected Localization getLocalization() {
@@ -67,5 +69,8 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 	@Reference
 	protected SearchableAssetClassNamesProvider
 		searchableAssetClassNamesProvider;
+
+	@Reference
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 }

@@ -34,13 +34,17 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.internal.indexer.PreFilterContributorHelper;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchRequest;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,13 +58,15 @@ public class FacetedSearcherImpl
 		IndexerRegistry indexerRegistry,
 		IndexSearcherHelper indexSearcherHelper,
 		PreFilterContributorHelper preFilterContributorHelper,
-		SearchableAssetClassNamesProvider searchableAssetClassNamesProvider) {
+		SearchableAssetClassNamesProvider searchableAssetClassNamesProvider,
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		_expandoQueryContributor = expandoQueryContributor;
 		_indexerRegistry = indexerRegistry;
 		_indexSearcherHelper = indexSearcherHelper;
 		_preFilterContributorHelper = preFilterContributorHelper;
 		_searchableAssetClassNamesProvider = searchableAssetClassNamesProvider;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
 	@Override
@@ -76,7 +82,9 @@ public class FacetedSearcherImpl
 
 		Map<String, Indexer<?>> entryClassNameIndexerMap =
 			_getEntryClassNameIndexerMap(
-				_getEntryClassNames(searchContext),
+				_getEntryClassNames(
+					_getSearchRequest(searchContext),
+					searchContext.getCompanyId()),
 				searchContext.getSearchEngineId());
 
 		_addSearchKeywords(
@@ -153,9 +161,10 @@ public class FacetedSearcherImpl
 	protected boolean isUseSearchResultPermissionFilter(
 		SearchContext searchContext) {
 
-		String[] entryClassNames = _getEntryClassNames(searchContext);
+		List<String> entryClassNames = _getEntryClassNames(
+			_getSearchRequest(searchContext), searchContext.getCompanyId());
 
-		if (ArrayUtil.isEmpty(entryClassNames)) {
+		if (ListUtil.isEmpty(entryClassNames)) {
 			return super.isFilterSearch();
 		}
 
@@ -239,7 +248,7 @@ public class FacetedSearcherImpl
 	}
 
 	private Map<String, Indexer<?>> _getEntryClassNameIndexerMap(
-		String[] entryClassNames, String searchEngineId) {
+		List<String> entryClassNames, String searchEngineId) {
 
 		Map<String, Indexer<?>> entryClassNameIndexerMap =
 			new LinkedHashMap<>();
@@ -261,15 +270,30 @@ public class FacetedSearcherImpl
 		return entryClassNameIndexerMap;
 	}
 
-	private String[] _getEntryClassNames(SearchContext searchContext) {
-		String[] entryClassNames = searchContext.getEntryClassNames();
+	private List<String> _getEntryClassNames(
+		SearchRequest searchRequest, long companyId) {
 
-		if (!ArrayUtil.isEmpty(entryClassNames)) {
+		List<String> entryClassNames = searchRequest.getEntryClassNames();
+
+		if (!ListUtil.isEmpty(entryClassNames)) {
 			return entryClassNames;
 		}
 
-		return _searchableAssetClassNamesProvider.getClassNames(
-			searchContext.getCompanyId());
+		List<String> modelIndexerClassNames =
+			searchRequest.getModelIndexerClassNames();
+
+		if (!ListUtil.isEmpty(modelIndexerClassNames)) {
+			return modelIndexerClassNames;
+		}
+
+		return ListUtil.fromArray(
+			_searchableAssetClassNamesProvider.getClassNames(companyId));
+	}
+
+	private SearchRequest _getSearchRequest(SearchContext searchContext) {
+		return _searchRequestBuilderFactory.builder(
+			searchContext
+		).build();
 	}
 
 	private void _postProcessFullQuery(
@@ -293,5 +317,6 @@ public class FacetedSearcherImpl
 	private final PreFilterContributorHelper _preFilterContributorHelper;
 	private final SearchableAssetClassNamesProvider
 		_searchableAssetClassNamesProvider;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

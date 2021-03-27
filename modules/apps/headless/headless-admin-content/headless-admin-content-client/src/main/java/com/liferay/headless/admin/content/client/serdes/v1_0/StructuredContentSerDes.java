@@ -14,9 +14,7 @@
 
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
-import com.liferay.headless.admin.content.client.dto.v1_0.AggregateRating;
 import com.liferay.headless.admin.content.client.dto.v1_0.ContentField;
-import com.liferay.headless.admin.content.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.content.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.content.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.admin.content.client.dto.v1_0.RenderedContent;
@@ -32,6 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -818,7 +817,8 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setAggregateRating(
-						(AggregateRating)jsonParserFieldValue);
+						AggregateRatingSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {
@@ -838,7 +838,13 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "contentFields")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setContentFields(
-						(ContentField[])jsonParserFieldValue);
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ContentFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ContentField[size]
+						));
 				}
 			}
 			else if (Objects.equals(
@@ -851,13 +857,20 @@ public class StructuredContentSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
-					structuredContent.setCreator((Creator)jsonParserFieldValue);
+					structuredContent.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setCustomFields(
-						(CustomField[])jsonParserFieldValue);
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -932,13 +945,26 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setRelatedContents(
-						(RelatedContent[])jsonParserFieldValue);
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RelatedContentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new RelatedContent[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "renderedContents")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setRenderedContents(
-						(RenderedContent[])jsonParserFieldValue);
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RenderedContentSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new RenderedContent[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {
@@ -958,7 +984,14 @@ public class StructuredContentSerDes {
 
 				if (jsonParserFieldValue != null) {
 					structuredContent.setTaxonomyCategoryBriefs(
-						(TaxonomyCategoryBrief[])jsonParserFieldValue);
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> TaxonomyCategoryBriefSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new TaxonomyCategoryBrief[size]
+						));
 				}
 			}
 			else if (Objects.equals(

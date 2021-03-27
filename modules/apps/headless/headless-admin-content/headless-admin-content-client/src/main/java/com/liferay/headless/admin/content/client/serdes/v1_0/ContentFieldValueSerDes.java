@@ -14,10 +14,7 @@
 
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
-import com.liferay.headless.admin.content.client.dto.v1_0.ContentDocument;
 import com.liferay.headless.admin.content.client.dto.v1_0.ContentFieldValue;
-import com.liferay.headless.admin.content.client.dto.v1_0.Geo;
-import com.liferay.headless.admin.content.client.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -221,18 +218,21 @@ public class ContentFieldValueSerDes {
 			else if (Objects.equals(jsonParserFieldName, "document")) {
 				if (jsonParserFieldValue != null) {
 					contentFieldValue.setDocument(
-						(ContentDocument)jsonParserFieldValue);
+						ContentDocumentSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "geo")) {
 				if (jsonParserFieldValue != null) {
-					contentFieldValue.setGeo((Geo)jsonParserFieldValue);
+					contentFieldValue.setGeo(
+						GeoSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "image")) {
 				if (jsonParserFieldValue != null) {
 					contentFieldValue.setImage(
-						(ContentDocument)jsonParserFieldValue);
+						ContentDocumentSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "link")) {
@@ -245,7 +245,8 @@ public class ContentFieldValueSerDes {
 
 				if (jsonParserFieldValue != null) {
 					contentFieldValue.setStructuredContentLink(
-						(StructuredContentLink)jsonParserFieldValue);
+						StructuredContentLinkSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

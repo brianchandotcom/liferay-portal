@@ -15,7 +15,6 @@
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.CustomValue;
-import com.liferay.headless.admin.content.client.dto.v1_0.Geo;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -165,7 +164,8 @@ public class CustomValueSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "geo")) {
 				if (jsonParserFieldValue != null) {
-					customValue.setGeo((Geo)jsonParserFieldValue);
+					customValue.setGeo(
+						GeoSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 		}

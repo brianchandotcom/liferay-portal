@@ -14,10 +14,8 @@
 
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
-import com.liferay.headless.admin.content.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.content.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.content.client.dto.v1_0.DisplayPageTemplate;
-import com.liferay.headless.admin.content.client.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -28,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -427,13 +426,19 @@ public class DisplayPageTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					displayPageTemplate.setCreator(
-						(Creator)jsonParserFieldValue);
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					displayPageTemplate.setCustomFields(
-						(CustomField[])jsonParserFieldValue);
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -474,7 +479,8 @@ public class DisplayPageTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "pageDefinition")) {
 				if (jsonParserFieldValue != null) {
 					displayPageTemplate.setPageDefinition(
-						(PageDefinition)jsonParserFieldValue);
+						PageDefinitionSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

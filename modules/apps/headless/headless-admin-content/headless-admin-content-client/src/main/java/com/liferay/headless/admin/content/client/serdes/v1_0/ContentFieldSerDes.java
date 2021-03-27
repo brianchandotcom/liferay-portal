@@ -15,7 +15,6 @@
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.ContentField;
-import com.liferay.headless.admin.content.client.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -23,6 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -287,7 +287,8 @@ public class ContentFieldSerDes {
 			if (Objects.equals(jsonParserFieldName, "contentFieldValue")) {
 				if (jsonParserFieldValue != null) {
 					contentField.setContentFieldValue(
-						(ContentFieldValue)jsonParserFieldValue);
+						ContentFieldValueSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -331,7 +332,13 @@ public class ContentFieldSerDes {
 
 				if (jsonParserFieldValue != null) {
 					contentField.setNestedContentFields(
-						(ContentField[])jsonParserFieldValue);
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ContentFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ContentField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "repeatable")) {

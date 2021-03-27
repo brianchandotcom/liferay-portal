@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -173,7 +174,13 @@ public class PageElementSerDes {
 			else if (Objects.equals(jsonParserFieldName, "pageElements")) {
 				if (jsonParserFieldValue != null) {
 					pageElement.setPageElements(
-						(PageElement[])jsonParserFieldValue);
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> PageElementSerDes.toDTO((String)object)
+						).toArray(
+							size -> new PageElement[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

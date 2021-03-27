@@ -15,8 +15,6 @@
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.PageDefinition;
-import com.liferay.headless.admin.content.client.dto.v1_0.PageElement;
-import com.liferay.headless.admin.content.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -135,12 +133,13 @@ public class PageDefinitionSerDes {
 			if (Objects.equals(jsonParserFieldName, "pageElement")) {
 				if (jsonParserFieldValue != null) {
 					pageDefinition.setPageElement(
-						(PageElement)jsonParserFieldValue);
+						PageElementSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "settings")) {
 				if (jsonParserFieldValue != null) {
-					pageDefinition.setSettings((Settings)jsonParserFieldValue);
+					pageDefinition.setSettings(
+						SettingsSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 		}

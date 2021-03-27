@@ -14,7 +14,6 @@
 
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
-import com.liferay.headless.admin.content.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.admin.content.client.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
@@ -190,7 +189,8 @@ public class StructuredContentLinkSerDes {
 
 				if (jsonParserFieldValue != null) {
 					structuredContentLink.setEmbeddedStructuredContent(
-						(StructuredContent)jsonParserFieldValue);
+						StructuredContentSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

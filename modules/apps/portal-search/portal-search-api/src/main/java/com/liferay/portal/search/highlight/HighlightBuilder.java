@@ -29,7 +29,17 @@ public interface HighlightBuilder {
 
 	public HighlightBuilder addFieldConfig(FieldConfig fieldConfig);
 
+	public HighlightBuilder boundaryChars(char... boundaryChars);
+
+	public HighlightBuilder boundaryMaxScan(Integer boundaryMaxScan);
+
+	public HighlightBuilder boundaryScannerLocale(String boundaryScannerLocale);
+
+	public HighlightBuilder boundaryScannerType(String boundaryScannerType);
+
 	public Highlight build();
+
+	public HighlightBuilder encoder(String encoder);
 
 	public HighlightBuilder fieldConfigs(Collection<FieldConfig> fieldConfigs);
 
@@ -45,12 +55,23 @@ public interface HighlightBuilder {
 
 	public HighlightBuilder highlightQuery(Query highlightQuery);
 
+	public HighlightBuilder noMatchSize(Integer noMatchSize);
+
 	public HighlightBuilder numOfFragments(Integer numOfFragments);
+
+	public HighlightBuilder order(String order);
+
+	public HighlightBuilder phraseLimit(Integer phraseLimit);
 
 	public HighlightBuilder postTags(String... postTags);
 
 	public HighlightBuilder preTags(String... preTags);
 
 	public HighlightBuilder requireFieldMatch(Boolean requireFieldMatch);
+
+	public HighlightBuilder tagsSchema(String tagsSchema);
+
+	public HighlightBuilder useExplicitFieldOrder(
+		Boolean useExplicitFieldOrder);
 
 }

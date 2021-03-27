@@ -17,31 +17,11 @@ package com.liferay.portal.search.highlight;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Wade Cao
+ * @author Bryan Engler
  */
 @ProviderType
-public interface Highlights {
+public interface HighlightBuilderFactory {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             HighlightBuilderFactory#builder()}
-	 */
-	@Deprecated
 	public HighlightBuilder builder();
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public FieldConfig fieldConfig(String field);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             FieldConfigBuilderFactory#builder(String)}
-	 */
-	@Deprecated
-	public FieldConfigBuilder fieldConfigBuilder();
-
-	public Highlight highlight(FieldConfig fieldConfig);
 
 }

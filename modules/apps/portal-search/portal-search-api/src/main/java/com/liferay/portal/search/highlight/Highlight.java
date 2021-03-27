@@ -27,6 +27,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Highlight {
 
+	public char[] getBoundaryChars();
+
+	public Integer getBoundaryMaxScan();
+
+	public String getBoundaryScannerLocale();
+
+	public String getBoundaryScannerType();
+
+	public String getEncoder();
+
 	public List<FieldConfig> getFieldConfigs();
 
 	public Boolean getForceSource();
@@ -41,12 +51,22 @@ public interface Highlight {
 
 	public Query getHighlightQuery();
 
+	public Integer getNoMatchSize();
+
 	public Integer getNumOfFragments();
+
+	public String getOrder();
+
+	public Integer getPhraseLimit();
 
 	public String[] getPostTags();
 
 	public String[] getPreTags();
 
 	public Boolean getRequireFieldMatch();
+
+	public String getTagsSchema();
+
+	public Boolean getUseExplicitFieldOrder();
 
 }

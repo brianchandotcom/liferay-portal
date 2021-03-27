@@ -35,12 +35,34 @@ public class HighlightTranslator {
 
 		HighlightBuilder highlightBuilder = new HighlightBuilder();
 
+		if (ArrayUtil.isNotEmpty(highlight.getBoundaryChars())) {
+			highlightBuilder.boundaryChars(highlight.getBoundaryChars());
+		}
+
+		if (highlight.getBoundaryMaxScan() != null) {
+			highlightBuilder.boundaryMaxScan(highlight.getBoundaryMaxScan());
+		}
+
+		if (highlight.getBoundaryScannerLocale() != null) {
+			highlightBuilder.boundaryScannerLocale(
+				highlight.getBoundaryScannerLocale());
+		}
+
+		if (highlight.getBoundaryScannerType() != null) {
+			highlightBuilder.boundaryScannerType(
+				highlight.getBoundaryScannerType());
+		}
+
+		if (highlight.getEncoder() != null) {
+			highlightBuilder.encoder(highlight.getEncoder());
+		}
+
 		List<FieldConfig> fieldConfigs = highlight.getFieldConfigs();
 
 		Stream<FieldConfig> stream = fieldConfigs.stream();
 
 		stream.map(
-			this::translate
+			fieldConfig -> _translate(fieldConfig, queryTranslator)
 		).forEach(
 			highlightBuilder::field
 		);
@@ -74,8 +96,20 @@ public class HighlightTranslator {
 			highlightBuilder.highlighterType(highlight.getHighlighterType());
 		}
 
+		if (highlight.getNoMatchSize() != null) {
+			highlightBuilder.noMatchSize(highlight.getNoMatchSize());
+		}
+
 		if (highlight.getNumOfFragments() != null) {
 			highlightBuilder.numOfFragments(highlight.getNumOfFragments());
+		}
+
+		if (highlight.getOrder() != null) {
+			highlightBuilder.order(highlight.getOrder());
+		}
+
+		if (highlight.getPhraseLimit() != null) {
+			highlightBuilder.phraseLimit(highlight.getPhraseLimit());
 		}
 
 		if (ArrayUtil.isNotEmpty(highlight.getPreTags())) {
@@ -91,12 +125,48 @@ public class HighlightTranslator {
 				highlight.getRequireFieldMatch());
 		}
 
+		if (highlight.getTagsSchema() != null) {
+			highlightBuilder.tagsSchema(highlight.getTagsSchema());
+		}
+
+		if (highlight.getUseExplicitFieldOrder() != null) {
+			highlightBuilder.useExplicitFieldOrder(
+				highlight.getUseExplicitFieldOrder());
+		}
+
 		return highlightBuilder;
 	}
 
-	protected HighlightBuilder.Field translate(FieldConfig fieldConfig) {
+	private HighlightBuilder.Field _translate(
+		FieldConfig fieldConfig,
+		QueryTranslator<QueryBuilder> queryTranslator) {
+
 		HighlightBuilder.Field field = new HighlightBuilder.Field(
-			fieldConfig.getField());
+			fieldConfig.getFieldName());
+
+		if (ArrayUtil.isNotEmpty(fieldConfig.getBoundaryChars())) {
+			field.boundaryChars(fieldConfig.getBoundaryChars());
+		}
+
+		if (fieldConfig.getBoundaryMaxScan() != null) {
+			field.boundaryMaxScan(fieldConfig.getBoundaryMaxScan());
+		}
+
+		if (fieldConfig.getBoundaryScannerLocale() != null) {
+			field.boundaryScannerLocale(fieldConfig.getBoundaryScannerLocale());
+		}
+
+		if (fieldConfig.getBoundaryScannerType() != null) {
+			field.boundaryScannerType(fieldConfig.getBoundaryScannerType());
+		}
+
+		if (fieldConfig.getForceSource() != null) {
+			field.forceSource(fieldConfig.getForceSource());
+		}
+
+		if (fieldConfig.getFragmenter() != null) {
+			field.fragmenter(fieldConfig.getFragmenter());
+		}
 
 		if (fieldConfig.getFragmentOffset() != null) {
 			field.fragmentOffset(fieldConfig.getFragmentOffset());
@@ -106,8 +176,49 @@ public class HighlightTranslator {
 			field.fragmentSize(fieldConfig.getFragmentSize());
 		}
 
+		if (fieldConfig.getHighlighterType() != null) {
+			field.highlighterType(fieldConfig.getHighlighterType());
+		}
+
+		if (fieldConfig.getHighlightFilter() != null) {
+			field.highlightFilter(fieldConfig.getHighlightFilter());
+		}
+
+		if (fieldConfig.getHighlightQuery() != null) {
+			field.highlightQuery(
+				queryTranslator.translate(fieldConfig.getHighlightQuery()));
+		}
+
+		if (ArrayUtil.isNotEmpty(fieldConfig.getMatchedFields())) {
+			field.matchedFields(fieldConfig.getMatchedFields());
+		}
+
+		if (fieldConfig.getNoMatchSize() != null) {
+			field.noMatchSize(fieldConfig.getNoMatchSize());
+		}
+
 		if (fieldConfig.getNumFragments() != null) {
 			field.numOfFragments(fieldConfig.getNumFragments());
+		}
+
+		if (fieldConfig.getOrder() != null) {
+			field.order(fieldConfig.getOrder());
+		}
+
+		if (fieldConfig.getPhraseLimit() != null) {
+			field.phraseLimit(fieldConfig.getPhraseLimit());
+		}
+
+		if (ArrayUtil.isNotEmpty(fieldConfig.getPostTags())) {
+			field.postTags(fieldConfig.getPostTags());
+		}
+
+		if (ArrayUtil.isNotEmpty(fieldConfig.getPreTags())) {
+			field.preTags(fieldConfig.getPreTags());
+		}
+
+		if (fieldConfig.getRequireFieldMatch() != null) {
+			field.requireFieldMatch(fieldConfig.getRequireFieldMatch());
 		}
 
 		return field;

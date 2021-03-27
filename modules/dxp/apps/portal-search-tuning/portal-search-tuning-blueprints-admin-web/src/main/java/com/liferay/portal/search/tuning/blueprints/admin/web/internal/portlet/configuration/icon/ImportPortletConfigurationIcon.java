@@ -58,7 +58,7 @@ public class ImportPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "import-blueprint");
+		return LanguageUtil.get(resourceBundle, "import");
 	}
 
 	@Override

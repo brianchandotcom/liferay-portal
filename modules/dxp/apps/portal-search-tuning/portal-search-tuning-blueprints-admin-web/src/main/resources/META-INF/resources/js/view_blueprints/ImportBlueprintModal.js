@@ -85,7 +85,9 @@ const ImportBlueprintModal = ({formSubmitURL}) => {
 				)}
 
 				<p className="text-secondary">
-					{Liferay.Language.get('select-a-json-file-to-import')}
+					{Liferay.Language.get(
+						'select-a-blueprint-or-element-json-file-to-import'
+					)}
 				</p>
 
 				<div className="form-group">

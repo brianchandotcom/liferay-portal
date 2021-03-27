@@ -1699,7 +1699,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
 
 								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
-								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.global.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
 								<copy-artifact-to-local-cache artifact.file="${project.dir}/portal-test/portal-test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
 								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
 								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
@@ -2931,7 +2931,7 @@ log.sanitizer.enabled=false</echo>
 							<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
 
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
-							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.global.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.arquillian.extension.junit.bridge.connector.jar" artifact.name="com.liferay.arquillian.extension.junit.bridge.connector" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.portal.test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />

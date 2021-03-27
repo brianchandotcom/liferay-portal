@@ -118,11 +118,13 @@ public class RESTBuilder {
 		catch (ParameterException parameterException) {
 			_printHelp(jCommander);
 
-			throw new RuntimeException(parameterException.getMessage());
+			throw new RuntimeException(
+				parameterException.getMessage(), parameterException);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(
-				"Error generating REST API\n" + exception.getMessage());
+				"Error generating REST API\n" + exception.getMessage(),
+				exception);
 		}
 	}
 
@@ -361,8 +363,10 @@ public class RESTBuilder {
 			_configYAML.getApiPackagePath());
 		Optional<String> clientVersionOptional = _getClientVersionOptional();
 
+		int licenseIndex = yamlString.indexOf("    license:");
+
 		if ((clientMavenGroupId == null) ||
-			!clientVersionOptional.isPresent()) {
+			!clientVersionOptional.isPresent() || (licenseIndex == -1)) {
 
 			return yamlString;
 		}
@@ -407,7 +411,7 @@ public class RESTBuilder {
 			yamlString.substring(
 				yamlString.indexOf(
 					"    description:", yamlString.indexOf("info:")),
-				yamlString.indexOf("    license:")),
+				licenseIndex),
 			descriptionBlock);
 	}
 

@@ -2980,6 +2980,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							finderPathColumnBitmask |= ${entity.variableName}ModelImpl.getColumnBitmask(columnName);
 						}
 
+						if (finderPath.isBaseModelResult() && (FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION == finderPath.getCacheName())) {
+							finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+						}
+
 						_finderPathColumnBitmasksCache.put(finderPath, finderPathColumnBitmask);
 					}
 
@@ -2987,10 +2991,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						return _getValue(${entity.variableName}ModelImpl, columnNames, original);
 					}
 				<#else>
-					Object[] values = _getValue(${entity.variableName}ModelImpl, columnNames, original);
-
-					if (!checkColumn || !Arrays.equals(values, _getValue(${entity.variableName}ModelImpl, columnNames, !original))) {
-						return values;
+					if (!checkColumn || _hasModifiedColumns(${entity.variableName}ModelImpl, columnNames) || _hasModifiedColumns(${entity.variableName}ModelImpl, _ORDER_BY_COLUMNS)) {
+						return _getValue(${entity.variableName}ModelImpl, columnNames, original);
 					}
 				</#if>
 
@@ -3009,7 +3011,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 			</#if>
 
-			private Object[] _getValue(${entity.name}ModelImpl ${entity.variableName}ModelImpl, String[] columnNames, boolean original) {
+			private static Object[] _getValue(${entity.name}ModelImpl ${entity.variableName}ModelImpl, String[] columnNames, boolean original) {
 				Object[] arguments = new Object[columnNames.length];
 
 				for (int i = 0; i < arguments.length; i ++) {
@@ -3026,7 +3028,57 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				return arguments;
 			}
 
-			private static Map<FinderPath, Long> _finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+			<#if !columnBitmaskEnabled>
+				private static boolean _hasModifiedColumns(${entity.name}ModelImpl ${entity.variableName}ModelImpl, String[] columnNames) {
+					if (columnNames.length == 0) {
+						return false;
+					}
+
+					for (String columnName : columnNames) {
+						if (!Objects.equals(${entity.variableName}ModelImpl.getColumnOriginalValue(columnName), ${entity.variableName}ModelImpl.getColumnValue(columnName))) {
+							return true;
+						}
+					}
+
+					return false;
+				}
+			</#if>
+
+			<#if columnBitmaskEnabled>
+				private static final Map<FinderPath, Long> _finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+				private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+				static {
+					long orderByColumnsBitmask = 0;
+
+					<#if entity.entityOrder??>
+						<#list entity.entityOrder.entityColumns as entityColumn>
+							<#if !entity.PKEntityColumns?seq_contains(entityColumn)>
+								orderByColumnsBitmask |= ${entity.name}ModelImpl.getColumnBitmask("${entityColumn.DBName}");
+							</#if>
+						</#list>
+					</#if>
+
+					_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+				}
+			<#else>
+				private static final String[] _ORDER_BY_COLUMNS;
+
+				static {
+					List<String> orderByColumns = new ArrayList<String>();
+
+					<#if entity.entityOrder??>
+						<#list entity.entityOrder.entityColumns as entityColumn>
+							<#if !entity.PKEntityColumns?seq_contains(entityColumn)>
+								orderByColumns.add("${entityColumn.DBName}");
+							</#if>
+						</#list>
+					</#if>
+
+					_ORDER_BY_COLUMNS = orderByColumns.toArray(new String[0]);
+				}
+			</#if>
 
 		}
 	</#if>

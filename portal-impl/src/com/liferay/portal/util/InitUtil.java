@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -61,6 +62,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.sun.syndication.io.XmlReader;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.zip.ZipFile;
@@ -120,12 +122,27 @@ public class InitUtil {
 
 		Thread currentThread = Thread.currentThread();
 
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
 		try {
-			PortalClassLoaderUtil.setClassLoader(
-				currentThread.getContextClassLoader());
+			PortalClassLoaderUtil.setClassLoader(classLoader);
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
+		}
+
+		if (ServerDetector.isTomcat()) {
+			try {
+				Class<?> clazz = Class.forName(_PORTAL_CLASS_LOADER_FACTORY);
+
+				Method method = clazz.getMethod(
+					"setClassLoader", ClassLoader.class);
+
+				method.invoke(null, PortalClassLoaderUtil.getClassLoader());
+			}
+			catch (Exception exception) {
+				exception.printStackTrace();
+			}
 		}
 
 		// Properties
@@ -345,6 +362,9 @@ public class InitUtil {
 			throw new RuntimeException(exception);
 		}
 	}
+
+	private static final String _PORTAL_CLASS_LOADER_FACTORY =
+		"com.liferay.support.tomcat.loader.PortalClassLoaderFactory";
 
 	private static final boolean _PRINT_TIME = false;
 

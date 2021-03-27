@@ -14,11 +14,6 @@
 
 package com.liferay.support.tomcat.startup;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringComparator;
-
 import java.io.File;
 
 import java.util.Arrays;
@@ -68,20 +63,9 @@ public class PortalHostConfig extends HostConfig {
 	}
 
 	protected String[] sortFiles(String[] files) {
-		Arrays.sort(files, new StringComparator(true, true));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Sort " + files.length + " files");
-
-			for (int i = 0; i < files.length; i++) {
-				_log.debug(StringBundler.concat("File ", i, " ", files[i]));
-			}
-		}
+		Arrays.sort(files);
 
 		return files;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortalHostConfig.class);
 
 }

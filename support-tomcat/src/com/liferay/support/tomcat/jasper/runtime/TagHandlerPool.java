@@ -14,8 +14,6 @@
 
 package com.liferay.support.tomcat.jasper.runtime;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -79,8 +77,14 @@ public class TagHandlerPool extends org.apache.jasper.runtime.TagHandlerPool {
 
 	@Override
 	protected void init(ServletConfig config) {
-		_maxSize = GetterUtil.getInteger(
-			getOption(config, OPTION_MAXSIZE, null), Constants.MAX_POOL_SIZE);
+		String optionMaxSize = getOption(config, OPTION_MAXSIZE, null);
+
+		if ((optionMaxSize == null) || optionMaxSize.isEmpty()) {
+			_maxSize = Constants.MAX_POOL_SIZE;
+		}
+		else {
+			_maxSize = Integer.parseInt(optionMaxSize);
+		}
 	}
 
 	private final AtomicInteger _counter = new AtomicInteger();

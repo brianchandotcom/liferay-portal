@@ -106,11 +106,10 @@ public class DisplayPageTemplateResourceImpl
 				_layoutPageTemplateEntryLocalService.dynamicQuery(
 					dynamicQuery, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				(LayoutPageTemplateEntry layoutPageTemplateEntry) ->
-					_toDisplayPageTemplate(layoutPageTemplateEntry)),
+				this::_toDisplayPageTemplate),
 			pagination,
 			_layoutPageTemplateEntryLocalService.dynamicQueryCount(
-				dynamicQuery));
+				_getDynamicQuery(siteId)));
 	}
 
 	private DynamicQuery _getDynamicQuery(long groupId) {

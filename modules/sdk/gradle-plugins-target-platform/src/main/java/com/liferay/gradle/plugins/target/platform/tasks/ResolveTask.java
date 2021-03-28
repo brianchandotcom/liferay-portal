@@ -112,9 +112,33 @@ public class ResolveTask extends DefaultTask {
 		File bndrunFile = getBndrunFile();
 		File temporaryDir = getTemporaryDir();
 
-		try (Bndrun bndrun = Bndrun.createBndrun(null, bndrunFile)) {
-			Workspace workspace = bndrun.getWorkspace();
+		Properties gradleProperties = new PropertiesWrapper();
 
+		gradleProperties.put("project", project);
+
+		File distroFile = getDistroFile();
+
+		String distroReference =
+			distroFile.getAbsolutePath() + ";version=file";
+
+		gradleProperties.put("targetPlatformDistro", distroReference);
+
+		gradleProperties.put("task", this);
+
+		final Processor processor = new ProcessorWrapper(gradleProperties);
+
+		Workspace workspace = Workspace.createStandaloneWorkspace(
+			processor, bndrunFile.toURI());
+
+		try (Bndrun bndrun = new Bndrun(workspace, bndrunFile) {
+			public String getUnexpandedProperty(String key) {
+				String raw = super.getUnexpandedProperty(key);
+				if (raw == null) {
+					raw = processor.getUnexpandedProperty(key);
+				}
+				return raw;
+			}
+		}) {
 			bndrun.setBase(temporaryDir);
 
 			workspace.setOffline(isOffline());
@@ -152,25 +176,6 @@ public class ResolveTask extends DefaultTask {
 			}
 
 			try {
-				Properties gradleProperties = new PropertiesWrapper();
-
-				gradleProperties.put("project", project);
-
-				File distroFile = getDistroFile();
-
-				String distroReference =
-					distroFile.getAbsolutePath() + ";version=file";
-
-				gradleProperties.put("targetPlatformDistro", distroReference);
-
-				gradleProperties.put("task", this);
-
-				Processor processor = new ProcessorWrapper(gradleProperties);
-
-				processor.setParent(bndrun.getParent());
-
-				bndrun.setParent(processor);
-
 				logger.info(
 					"Resolving bundles required for {}",
 					bndrun.getPropertiesFile());

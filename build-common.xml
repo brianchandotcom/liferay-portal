@@ -1753,50 +1753,14 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 		<attribute default="true" name="setupbinariescache" />
 
 		<sequential>
-			<gradle-execute forcedcacheenabled="true" outputproperty="sdk.zip.file" setupbinariescache="@{setupbinariescache}" task="printDependencyPath">
-				<arg value="--build-file=${project.dir}/modules/util.gradle" />
-				<arg value="--quiet" />
-				<arg value="-Dorg.gradle.internal.launcher.welcomeMessageEnabled=false" />
-				<arg value="-PdependencyNotation=com.liferay.portal:com.liferay.portal.plugins.sdk:${build.sdk.version}" />
-			</gradle-execute>
+			<delete dir="${project.dir}/tools/sdk" />
 
-			<propertyregex
-				input="${sdk.zip.file}"
-				override="true"
-				property="sdk.zip.file"
-				regexp="(.*$)"
-				select="\1"
+			<unzip
+				dest="${project.dir}/tools"
+				src="${project.dir}/tools/sdk.zip"
 			/>
 
-			<dirname file="${sdk.zip.file}" property="sdk.zip.dir" />
-
-			<if>
-				<not>
-					<uptodate>
-						<mapper
-							to="${sdk.dir}"
-							type="merge"
-						/>
-						<srcfiles dir="${sdk.zip.dir}" includes="com.liferay.portal.plugins.sdk-${build.sdk.version}.zip" />
-					</uptodate>
-				</not>
-				<then>
-					<delete dir="${sdk.dir}" />
-
-					<unzip
-						dest="${project.dir}/tools"
-						src="${sdk.zip.dir}/com.liferay.portal.plugins.sdk-${build.sdk.version}.zip"
-					>
-						<mapper
-							from="com.liferay.portal.plugins.sdk-${build.sdk.version}/*"
-							to="sdk/*"
-							type="glob"
-						/>
-					</unzip>
-
-					<update-sdk-properties />
-				</then>
-			</if>
+			<update-sdk-properties />
 
 			<antcall inheritAll="false" target="update-gradle-properties" />
 

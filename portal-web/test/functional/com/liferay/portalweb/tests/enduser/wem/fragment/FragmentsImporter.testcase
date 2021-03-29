@@ -294,7 +294,7 @@ definition {
 
 		PageEditorComposition.saveAsFragment(
 			fragmentName = "New Fragment Name",
-			saveMappingConfiguration = "true");
+			saveMappingConfigurationAndLink = "true");
 
 		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 

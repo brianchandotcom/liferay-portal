@@ -13,9 +13,9 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		if ("${saveMappingConfiguration}" == "true") {
+		if ("${saveMappingConfigurationAndLink}" == "true") {
 			Check.checkNotVisible(
-				checkboxName = "Save Mapping Configuration",
+				checkboxName = "Save Mapping Configuration and Link",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 

@@ -88,8 +88,8 @@ type Payload = {[key: string]: StructuredClonable};
 
 type PromiseMap<T = unknown> = {
 	[key: string]: {
-		reject: (reason?: any) => void;
-		resolve: (value?: T) => void;
+		reject: (reason: any) => void;
+		resolve: (value: T | PromiseLike<T>) => void;
 	};
 };
 

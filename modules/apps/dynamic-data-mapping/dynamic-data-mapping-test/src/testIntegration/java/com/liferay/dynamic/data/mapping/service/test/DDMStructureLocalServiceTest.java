@@ -73,6 +73,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -500,6 +501,8 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(structures.toString(), 1, structures.size());
 	}
 
+	@Ignore
+	@Override
 	@Test
 	public void testSearchByKeywords1() throws Exception {
 		DDMStructure structure = addStructure(_classNameId, "Events");

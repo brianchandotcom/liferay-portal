@@ -67,6 +67,12 @@ definition {
 				value1 = "${phoneNumber}");
 		}
 
+		if (isSet(customFieldText)) {
+			Type(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "${customFieldText}");
+		}
+
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
@@ -336,6 +342,12 @@ definition {
 			Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
 		}
 
+		if (isSet(customFieldText)) {
+			Type(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "${customFieldText}");
+		}
+
 		Button.clickSave();
 
 		AssertTextEquals(
@@ -603,6 +615,12 @@ definition {
 
 		if (isSet(parentAccount)) {
 			LexiconEntry.viewEntryName(rowEntry = "${parentAccount}");
+		}
+
+		if (isSet(customFieldText)) {
+			AssertTextEquals(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "${customFieldText}");
 		}
 	}
 

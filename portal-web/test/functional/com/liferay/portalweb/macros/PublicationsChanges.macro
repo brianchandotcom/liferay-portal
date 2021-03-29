@@ -57,6 +57,10 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		if ("${showAllItems}" == "true") {
+			Check.checkToggleSwitch(locator1 = "PublicationsSettings#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
+		}
+
 		var key_publicationsCategory = "${publicationsCategory}";
 		var key_publicationsDescription = "${publicationsDescription}";
 		var key_publicationsTitle = "${publicationsTitle}";

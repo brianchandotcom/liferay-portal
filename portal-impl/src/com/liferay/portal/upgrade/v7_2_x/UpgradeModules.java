@@ -31,6 +31,7 @@ public class UpgradeModules
 	}
 
 	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
+		"com.liferay.asset.service",
 		"com.liferay.document.library.repository.cmis.impl"
 	};
 

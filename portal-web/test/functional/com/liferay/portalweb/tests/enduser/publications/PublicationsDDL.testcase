@@ -35,6 +35,122 @@ definition {
 	}
 
 	@priority = "4"
+	test ConflictingPublicationsNeedManualResolution {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "Data Definition",
+			ddlListName = "List Name");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		Publications.createNewPublication(publicationsName = "Publication 1 Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.editCP(
+			ddlListName = "List Name",
+			ddlRecordFieldData = "Record Text");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text 1 Edited",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		Publications.createNewPublication(publicationsName = "Publication 2 Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.editCP(
+			ddlListName = "List Name",
+			ddlRecordFieldData = "Record Text");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text 2 Edited",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		Publications.gotoPublish(publicationsName = "Publication 2 Name");
+
+		Publications.publishPublication(publicationsName = "Publication 2 Name");
+
+		Publications.selectPublication(publicationsName = "Publication 1 Name");
+
+		Publications.gotoPublish(publicationsName = "Publication 1 Name");
+
+		Publications.discardPublications(
+			conflictingPublications = "true",
+			entryTitle = "Dynamic Data Lists Record",
+			publicationsCategory = "Dynamic Data Lists Record",
+			publicationsTitle = "Dynamic Data Lists Record");
+
+		Publications.gotoPublish(publicationsName = "Publication 1 Name");
+
+		Publications.publishPublication(publicationsName = "Publication 1 Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLNavigator.gotoListRecords(ddlListName = "List Name");
+
+		DDLRecord.viewFieldCP(
+			ddlRecordFieldData = "Record Text 2 Edited",
+			field = "Text",
+			fieldFieldLabel = "Text");
+	}
+
+	@priority = "4"
 	test PublishPublicationWithDeletedListAndRecord {
 		Navigator.openURL();
 

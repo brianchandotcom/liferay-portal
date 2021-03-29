@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.Highlight;
-import com.liferay.portal.search.highlight.Highlights;
+import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -81,10 +82,9 @@ public class SearchRequestBuilderHighlightTest {
 			"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
 			"alpha beta gamma delta epsilon zeta eta theta iota alpha");
 
-		Highlight highlight = _highlights.builder(
+		Highlight highlight = _highlightBuilderFactory.builder(
 		).addFieldConfig(
-			_highlights.fieldConfigBuilder(
-			).field(
+			_fieldConfigBuilderFactory.builder(
 				"title_en_US"
 			).build()
 		).fragmentSize(
@@ -180,11 +180,14 @@ public class SearchRequestBuilderHighlightTest {
 		return Objects.equals(_searchEngine.getVendor(), "Elasticsearch");
 	}
 
+	@Inject
+	private FieldConfigBuilderFactory _fieldConfigBuilderFactory;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
-	private Highlights _highlights;
+	private HighlightBuilderFactory _highlightBuilderFactory;
 
 	@Inject(filter = "search.engine.id=SYSTEM_ENGINE")
 	private SearchEngine _searchEngine;

@@ -163,10 +163,18 @@ public class CommercePaymentServlet extends HttpServlet {
 					COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_STANDARD ==
 						commercePaymentMethodType) {
 
-				_commercePaymentEngine.completePayment(
-					_commerceOrderId,
-					commercePaymentResult.getAuthTransactionId(),
-					httpServletRequest);
+				if (commerceOrder.isSubscriptionOrder()) {
+					_commerceSubscriptionEngine.completeRecurringPayment(
+						_commerceOrderId,
+						commercePaymentResult.getAuthTransactionId(),
+						httpServletRequest);
+				}
+				else {
+					_commercePaymentEngine.completePayment(
+						_commerceOrderId,
+						commercePaymentResult.getAuthTransactionId(),
+						httpServletRequest);
+				}
 
 				httpServletResponse.sendRedirect(_nextUrl);
 			}

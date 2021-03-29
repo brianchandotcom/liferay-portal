@@ -264,11 +264,14 @@ public class CommerceOrderDefinitionTermContributor
 			"<table style=\"border: 1px solid black;\">");
 
 		orderItemsTableSB.append("<tr><th style=\"border: 1px solid black;\">");
-		orderItemsTableSB.append("Product Name</th>");
+		orderItemsTableSB.append(LanguageUtil.get(locale, "product-name"));
+		orderItemsTableSB.append("</th>");
 		orderItemsTableSB.append("<th style=\"border: 1px solid black;\">");
-		orderItemsTableSB.append("SKU</th>");
+		orderItemsTableSB.append(LanguageUtil.get(locale, "sku"));
+		orderItemsTableSB.append("</th>");
 		orderItemsTableSB.append("<th style=\"border: 1px solid black;\">");
-		orderItemsTableSB.append("Quantity</th></tr>");
+		orderItemsTableSB.append(LanguageUtil.get(locale, "quantity"));
+		orderItemsTableSB.append("</th></tr>");
 
 		// And add the order items
 
@@ -284,6 +287,8 @@ public class CommerceOrderDefinitionTermContributor
 			orderItemsTableSB.append(commerceOrderItem.getQuantity());
 			orderItemsTableSB.append("</td></tr>");
 		}
+
+		orderItemsTableSB.append("</table>");
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

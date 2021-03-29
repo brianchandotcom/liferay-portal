@@ -214,12 +214,43 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5807. EditSkuAndDelete"
-	@ignore = "true"
 	@priority = "3"
 	test EditSkuAndDelete {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5807 EditSkuAndDelete
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.searchEntry(entryName = "MIN93017");
+
+		CommerceNavigator.gotoEntry(entryName = "MIN93017");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#SKU_FIELD",
+			value1 = "MIN930178");
+
+		Button.clickPublish();
+
+		AssertVisible(locator1 = "Message#SUCCESS");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		CommerceNavigator.searchEntry(entryName = "MIN930178");
+
+		if (IsElementPresent(locator1 = "//a[contains(text(),'MIN930178')]")) {
+			CommerceEntry.deleteCommerceEntry();
+
+			AssertVisible(locator1 = "Message#SUCCESS");
+		}
 	}
 
 	test ProductPublishing {

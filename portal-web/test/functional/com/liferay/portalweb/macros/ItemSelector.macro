@@ -488,7 +488,12 @@ definition {
 			LexiconCard.clickCard(card = "${folderName}");
 		}
 
-		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+		if (isSet(noViewPermission)) {
+			AssertElementNotPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+		}
+		else {
+			Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+		}
 	}
 
 	macro uploadFile {

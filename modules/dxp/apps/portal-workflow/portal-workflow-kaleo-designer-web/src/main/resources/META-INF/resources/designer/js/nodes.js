@@ -243,14 +243,6 @@ AUI.add(
 							formatter: PropertyListFormatter.names,
 							name: strings.notifications,
 						},
-						{
-							attributeName: 'taskTimers',
-							editor: new KaleoDesignerEditors.TaskTimersEditor({
-								builder,
-							}),
-							formatter: PropertyListFormatter.names,
-							name: strings.timers,
-						},
 					]);
 
 					var typeModel = availablePropertyModels[type];
@@ -740,6 +732,71 @@ AUI.add(
 				SERIALIZABLE_ATTRS: DiagramNodeState.prototype.SERIALIZABLE_ATTRS.concat(
 					['assignments']
 				),
+
+				getPropertyModel() {
+					var instance = this;
+
+					var builder = instance.get('builder');
+
+					var availablePropertyModels = builder.get(
+						'availablePropertyModels'
+					);
+
+					var strings = instance.getStrings();
+					var type = instance.get('type');
+
+					var model = AArray([
+						{
+							attributeName: 'actions',
+							editor: new KaleoDesignerEditors.ActionsEditor({
+								builder,
+							}),
+							formatter: PropertyListFormatter.names,
+							name: strings.actions,
+						},
+						{
+							attributeName: 'notifications',
+							editor: new KaleoDesignerEditors.NotificationsEditor(
+								{
+									builder,
+								}
+							),
+							formatter: PropertyListFormatter.names,
+							name: strings.notifications,
+						},
+						{
+							attributeName: 'taskTimers',
+							editor: new KaleoDesignerEditors.TaskTimersEditor({
+								builder,
+							}),
+							formatter: PropertyListFormatter.names,
+							name: strings.timers,
+						},
+					]);
+
+					var typeModel = availablePropertyModels[type];
+
+					var parentModel = DiagramNodeState.superclass.getPropertyModel.apply(
+						this,
+						arguments
+					);
+
+					var returnValue;
+
+					if (typeModel) {
+						returnValue = typeModel.call(
+							this,
+							model,
+							parentModel,
+							arguments
+						);
+					}
+					else {
+						returnValue = model.concat(parentModel);
+					}
+
+					return returnValue;
+				},
 
 				hotPoints: A.DiagramNode.SQUARE_POINTS,
 

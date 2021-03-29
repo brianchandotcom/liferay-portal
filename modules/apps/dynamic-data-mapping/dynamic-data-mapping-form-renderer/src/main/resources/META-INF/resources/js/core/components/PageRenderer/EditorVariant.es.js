@@ -167,7 +167,7 @@ export const Column = ({
 						ref={(node) => {
 							if (
 								allowNestedFields &&
-								!rootParentField.ddmStructureId
+								!parentField.ddmStructureId
 							) {
 								drag(drop(node));
 							}

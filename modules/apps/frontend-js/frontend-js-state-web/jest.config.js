@@ -15,6 +15,5 @@
 /* eslint-env node */
 
 module.exports = {
-	testMatch: ['<rootDir>/test/**/*.ts'],
 	testPathIgnorePatterns: ['<rootDir>/test/helpers.ts'],
 };

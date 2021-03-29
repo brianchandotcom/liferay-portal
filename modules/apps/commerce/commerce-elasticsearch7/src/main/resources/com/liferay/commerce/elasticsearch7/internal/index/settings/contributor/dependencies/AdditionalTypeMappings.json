@@ -11,6 +11,16 @@
 			}
 		},
 		{
+			"template_commerce_attribute_ids": {
+				"mapping": {
+					"store": true,
+					"type": "keyword"
+				},
+				"match": "*_VALUES_IDS",
+				"match_mapping_type": "string"
+			}
+		},
+		{
 			"template_commerce_attribute_id": {
 				"mapping": {
 					"store": true,

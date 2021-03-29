@@ -14,9 +14,15 @@
 
 package com.liferay.change.tracking.service.http;
 
+import com.liferay.change.tracking.service.CTPreferencesServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.change.tracking.service.CTPreferencesServiceUtil</code> service
+ * <code>CTPreferencesServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,28 @@ package com.liferay.change.tracking.service.http;
  */
 @Deprecated
 public class CTPreferencesServiceSoap {
+
+	public static com.liferay.change.tracking.model.CTPreferencesSoap
+			checkoutCTCollection(
+				long companyId, long ctCollectionId, long userId)
+		throws RemoteException {
+
+		try {
+			com.liferay.change.tracking.model.CTPreferences returnValue =
+				CTPreferencesServiceUtil.checkoutCTCollection(
+					companyId, ctCollectionId, userId);
+
+			return com.liferay.change.tracking.model.CTPreferencesSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CTPreferencesServiceSoap.class);
+
 }

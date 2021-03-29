@@ -14,6 +14,9 @@
 
 package com.liferay.change.tracking.service;
 
+import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * Provides the remote service utility for CTPreferences. This utility wraps
  * <code>com.liferay.change.tracking.service.impl.CTPreferencesServiceImpl</code> and is an
@@ -33,13 +36,20 @@ public class CTPreferencesServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTPreferencesServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static CTPreferences checkoutCTCollection(
+			long companyId, long ctCollectionId, long userId)
+		throws PortalException {
+
+		return getService().checkoutCTCollection(
+			companyId, ctCollectionId, userId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

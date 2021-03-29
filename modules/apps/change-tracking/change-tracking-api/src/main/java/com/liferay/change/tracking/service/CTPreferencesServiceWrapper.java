@@ -32,6 +32,15 @@ public class CTPreferencesServiceWrapper
 		_ctPreferencesService = ctPreferencesService;
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTPreferences checkoutCTCollection(
+			long companyId, long ctCollectionId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctPreferencesService.checkoutCTCollection(
+			companyId, ctCollectionId, userId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

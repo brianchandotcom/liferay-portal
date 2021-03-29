@@ -24,7 +24,14 @@ import com.xuggle.xuggler.IStream;
 import com.xuggle.xuggler.IStreamCoder;
 import com.xuggle.xuggler.IVideoPicture;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
 import java.io.File;
+import java.io.FileOutputStream;
+
+import javax.imageio.ImageIO;
 
 /**
  * @author Juan González
@@ -79,6 +86,8 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 
 		IStreamCoder[] inputIStreamCoders = new IStreamCoder[inputStreamsCount];
 
+		boolean hasCodecTypeVideo = false;
+
 		for (int i = 0; i < inputStreamsCount; i++) {
 			IStream inputIStream = _inputIContainer.getStream(i);
 
@@ -89,6 +98,8 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 			if (inputIStreamCoder.getCodecType() ==
 					ICodec.Type.CODEC_TYPE_VIDEO) {
 
+				hasCodecTypeVideo = true;
+
 				inputIVideoPictures[i] = IVideoPicture.make(
 					inputIStreamCoder.getPixelType(),
 					inputIStreamCoder.getWidth(),
@@ -98,34 +109,51 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 			openStreamCoder(inputIStreamCoder);
 		}
 
-		boolean thumbnailGenerated = false;
+		if (hasCodecTypeVideo) {
+			boolean thumbnailGenerated = false;
 
-		try {
-			if (seekTimeStamp != -1) {
+			try {
+				if (seekTimeStamp != -1) {
+					rewind();
+
+					seek(seekTimeStamp);
+				}
+
+				thumbnailGenerated = generateThumbnail(
+					inputIStreamCoders, inputIVideoPictures);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+
+			if (!thumbnailGenerated) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to create thumbnail from specified frame. Will " +
+							"generate thumbnail from the beginning.");
+				}
+
 				rewind();
 
-				seek(seekTimeStamp);
-			}
-
-			thumbnailGenerated = generateThumbnail(
-				inputIStreamCoders, inputIVideoPictures);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				generateThumbnail(inputIStreamCoders, inputIVideoPictures);
 			}
 		}
+		else {
+			BufferedImage bufferedImage = new BufferedImage(
+				_width, _height, BufferedImage.TYPE_INT_RGB);
 
-		if (!thumbnailGenerated) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to create thumbnail from specified frame. Will " +
-						"generate thumbnail from the beginning.");
-			}
+			Graphics2D graphics = bufferedImage.createGraphics();
 
-			rewind();
+			graphics.setColor(Color.black);
+			graphics.fillRect(
+				0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
 
-			generateThumbnail(inputIStreamCoders, inputIVideoPictures);
+			_outputFile.createNewFile();
+
+			ImageIO.write(
+				bufferedImage, _extension, new FileOutputStream(_outputFile));
 		}
 
 		cleanUp(inputIVideoPictures, null);

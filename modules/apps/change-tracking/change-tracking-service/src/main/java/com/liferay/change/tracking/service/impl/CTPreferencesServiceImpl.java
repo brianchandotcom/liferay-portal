@@ -14,23 +14,22 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.base.CTPreferencesServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * The implementation of the ct preferences remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.change.tracking.service.CTPreferencesService</code> interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see CTPreferencesServiceBaseImpl
+ * @author @author Preston Crary
  */
 @Component(
 	property = {
@@ -41,10 +40,54 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.change.tracking.service.CTPreferencesServiceUtil</code> to access the ct preferences remote service.
-	 */
+	@Override
+	public CTPreferences checkoutCTCollection(
+			long companyId, long ctCollectionId, long userId)
+		throws PortalException {
+
+		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			CTCollection ctCollection =
+				_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
+
+			if ((ctCollection == null) ||
+				(ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
+
+				return null;
+			}
+
+			_ctCollectionModelResourcePermission.check(
+				getPermissionChecker(), ctCollection, ActionKeys.UPDATE);
+		}
+
+		CTPreferences ctPreferences =
+			ctPreferencesLocalService.getCTPreferences(companyId, userId);
+
+		long currentCtCollectionId = ctPreferences.getCtCollectionId();
+
+		if (currentCtCollectionId != ctCollectionId) {
+			ctPreferences.setCtCollectionId(ctCollectionId);
+
+			if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+				ctPreferences.setPreviousCtCollectionId(currentCtCollectionId);
+			}
+			else {
+				ctPreferences.setPreviousCtCollectionId(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION);
+			}
+
+			ctPreferences = ctPreferencesPersistence.update(ctPreferences);
+		}
+
+		return ctPreferences;
+	}
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
+	)
+	private ModelResourcePermission<CTCollection>
+		_ctCollectionModelResourcePermission;
 
 }

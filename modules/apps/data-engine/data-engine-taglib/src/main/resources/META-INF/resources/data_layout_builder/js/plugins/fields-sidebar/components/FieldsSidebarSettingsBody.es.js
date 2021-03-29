@@ -148,10 +148,7 @@ export default function ({
 							break;
 						case CORE_EVENT_TYPES.FIELD.EVALUATE:
 							dispatchEvent(type, {
-								settingsContext: {
-									...settingsContext,
-									pages: payload,
-								},
+								settingsContextPages: payload,
 							});
 							break;
 						default:

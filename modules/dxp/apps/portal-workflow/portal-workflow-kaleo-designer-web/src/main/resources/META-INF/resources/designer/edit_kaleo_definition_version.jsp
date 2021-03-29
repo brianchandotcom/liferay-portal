@@ -349,8 +349,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									window['<portlet:namespace />publishKaleoDefinitionVersion'] = function () {
 										<portlet:namespace />updateContent();
 
-										<portlet:namespace />updateTitle();
-
 										<portlet:namespace />updateAction(
 											'<portlet:actionURL name="/kaleo_designer/publish_kaleo_definition_version" />'
 										);
@@ -360,8 +358,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 									window['<portlet:namespace />saveKaleoDefinitionVersion'] = function () {
 										<portlet:namespace />updateContent();
-
-										<portlet:namespace />updateTitle();
 
 										<portlet:namespace />updateAction(
 											'<portlet:actionURL name="/kaleo_designer/save_kaleo_definition_version" />'
@@ -386,18 +382,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										}
 										else {
 											content.value = <portlet:namespace />kaleoDesigner.getContent();
-										}
-									};
-
-									window['<portlet:namespace />updateTitle'] = function () {
-										var titleComponent = Liferay.component('<portlet:namespace />title');
-
-										var titlePlaceholderInput = titleComponent.get('inputPlaceholder');
-
-										if (!titlePlaceholderInput.val()) {
-											titlePlaceholderInput.val(
-												'<liferay-ui:message key="untitled-workflow" />'
-											);
 										}
 									};
 

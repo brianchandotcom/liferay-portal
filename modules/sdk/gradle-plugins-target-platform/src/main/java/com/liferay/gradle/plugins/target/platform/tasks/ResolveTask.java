@@ -130,6 +130,8 @@ public class ResolveTask extends DefaultTask {
 			processor, bndrunFile.toURI());
 
 		try (Bndrun bndrun = new Bndrun(workspace, bndrunFile) {
+
+				@Override
 				public String getUnexpandedProperty(String key) {
 					String raw = super.getUnexpandedProperty(key);
 
@@ -304,6 +306,7 @@ public class ResolveTask extends DefaultTask {
 			_internalProperties = internalProperties;
 		}
 
+		@Override
 		public Properties getProperties() {
 			return _internalProperties;
 		}

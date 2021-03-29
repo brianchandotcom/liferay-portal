@@ -16,11 +16,13 @@ package com.liferay.change.tracking.model.impl;
 
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTPreferencesModel;
+import com.liferay.change.tracking.model.CTPreferencesSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -37,9 +39,11 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -55,6 +59,7 @@ import java.util.function.Function;
  * @see CTPreferencesImpl
  * @generated
  */
+@JSON(strict = true)
 public class CTPreferencesModelImpl
 	extends BaseModelImpl<CTPreferences> implements CTPreferencesModel {
 
@@ -146,6 +151,55 @@ public class CTPreferencesModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static CTPreferences toModel(CTPreferencesSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CTPreferences model = new CTPreferencesImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtPreferencesId(soapModel.getCtPreferencesId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
+		model.setPreviousCtCollectionId(soapModel.getPreviousCtCollectionId());
+		model.setConfirmationEnabled(soapModel.isConfirmationEnabled());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static List<CTPreferences> toModels(CTPreferencesSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CTPreferences> models = new ArrayList<CTPreferences>(
+			soapModels.length);
+
+		for (CTPreferencesSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public CTPreferencesModelImpl() {
@@ -314,6 +368,7 @@ public class CTPreferencesModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -328,6 +383,7 @@ public class CTPreferencesModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getCtPreferencesId() {
 		return _ctPreferencesId;
@@ -342,6 +398,7 @@ public class CTPreferencesModelImpl
 		_ctPreferencesId = ctPreferencesId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -366,6 +423,7 @@ public class CTPreferencesModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -405,6 +463,7 @@ public class CTPreferencesModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
+	@JSON
 	@Override
 	public long getCtCollectionId() {
 		return _ctCollectionId;
@@ -429,6 +488,7 @@ public class CTPreferencesModelImpl
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 	}
 
+	@JSON
 	@Override
 	public long getPreviousCtCollectionId() {
 		return _previousCtCollectionId;
@@ -453,11 +513,13 @@ public class CTPreferencesModelImpl
 			this.<Long>getColumnOriginalValue("previousCtCollectionId"));
 	}
 
+	@JSON
 	@Override
 	public boolean getConfirmationEnabled() {
 		return _confirmationEnabled;
 	}
 
+	@JSON
 	@Override
 	public boolean isConfirmationEnabled() {
 		return _confirmationEnabled;

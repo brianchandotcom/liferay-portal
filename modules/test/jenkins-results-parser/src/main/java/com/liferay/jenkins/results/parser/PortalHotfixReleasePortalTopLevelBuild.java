@@ -130,7 +130,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
 
-		if (portalFixpackRelease == null) {
+		if (portalFixpackRelease != null) {
 			_portalRelease = portalFixpackRelease.getPortalRelease();
 
 			return _portalRelease;

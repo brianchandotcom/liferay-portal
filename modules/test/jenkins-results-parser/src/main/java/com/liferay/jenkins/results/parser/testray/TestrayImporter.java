@@ -2036,7 +2036,9 @@ public class TestrayImporter {
 			setupProfileDXP = true;
 		}
 
-		if (jobName.contains("fixpack") || jobName.contains("hotfix")) {
+		if (!branchName.startsWith("ee-") &&
+			(jobName.contains("fixpack") || jobName.contains("hotfix"))) {
+
 			setupProfileDXP = true;
 		}
 

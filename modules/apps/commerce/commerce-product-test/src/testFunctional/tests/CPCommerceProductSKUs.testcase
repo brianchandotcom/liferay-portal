@@ -37,6 +37,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-6021. AddASKU"
+	@priority = "3"
+	test AddASKU {
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#SKU_FIELD",
+			value1 = "BLACKSKU");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Purchasable",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		CommerceSKUs.addPriceToSKU(price = "10.0");
+
+		Button.clickPublish();
+
+		AssertVisible(locator1 = "Message#SUCCESS");
+	}
+
 	@description = "This is a test for COMMERCE-6024. AddASKUWithSubscriptions"
 	@ignore = "true"
 	@priority = "3"

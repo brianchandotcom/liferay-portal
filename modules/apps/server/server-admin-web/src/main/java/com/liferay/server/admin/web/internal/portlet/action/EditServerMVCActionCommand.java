@@ -377,9 +377,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 					Layout layout = _layoutLocalService.getLayout(
 						pref.getPlid());
 
-					if (layout.isTypeControlPanel() ||
-						Objects.equals("content", layout.getType())) {
-
+					if (layout.isTypeContent() || layout.isTypeControlPanel()) {
 						return;
 					}
 

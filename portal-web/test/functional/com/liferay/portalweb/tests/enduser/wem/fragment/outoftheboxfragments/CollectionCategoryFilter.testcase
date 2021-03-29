@@ -217,9 +217,9 @@ definition {
 		}
 
 		task ("Assert the order of elements inside of Container") {
-			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')][not(contains(@class,'fluid'))]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
 
-			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')][not(contains(@class,'fluid'))]/div)[2]//ul[contains(@class,'list-inline')]");
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[2]//ul[contains(@class,'list-inline')]");
 		}
 
 		task ("Assert Contains All Categories works in preview mode") {
@@ -290,9 +290,9 @@ definition {
 		}
 
 		task ("Assert the order of elements inside of Container") {
-			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')][not(contains(@class,'fluid'))]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
 
-			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')][not(contains(@class,'fluid'))]/div)[2]//ul[contains(@class,'list-inline')]");
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[2]//ul[contains(@class,'list-inline')]");
 		}
 
 		task ("Assert Contains All Categories works in view mode") {

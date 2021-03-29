@@ -111,17 +111,17 @@ describe('EditableLinkPanel', () => {
 	});
 
 	it('renders manual selection panel', () => {
-		const {getByText, queryByText} = renderLinkPanel();
+		const {getByLabelText, getByText, queryByText} = renderLinkPanel();
 
 		expect(getByText('link')).toBeInTheDocument();
-		expect(getByText('url')).toBeInTheDocument();
+		expect(getByLabelText('url')).toBeInTheDocument();
 		expect(getByText('open-in-a-new-tab')).toBeInTheDocument();
 
 		expect(queryByText('content')).not.toBeInTheDocument();
 	});
 
 	it('shows mapping panel when changing link source', async () => {
-		const {getByLabelText, queryByText} = renderLinkPanel();
+		const {getByLabelText, queryByLabelText} = renderLinkPanel();
 
 		const sourceTypeInput = getByLabelText('link');
 
@@ -133,7 +133,7 @@ describe('EditableLinkPanel', () => {
 
 		expect(getByLabelText('content')).toBeInTheDocument();
 
-		expect(queryByText('url')).not.toBeInTheDocument();
+		expect(queryByLabelText('url')).not.toBeInTheDocument();
 	});
 
 	it('shows the url and target values when previously saved', () => {

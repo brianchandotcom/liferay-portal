@@ -1,12 +1,5 @@
 definition {
 
-	@summary = "gotoEditableFieldLink must be called first"
-	macro _gotoFromContentField {
-		Select(
-			locator1 = "PageEditorEditableLink#LINK_TYPE",
-			value1 = "From Content Field");
-	}
-
 	macro _selectContent {
 		var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Content']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
 

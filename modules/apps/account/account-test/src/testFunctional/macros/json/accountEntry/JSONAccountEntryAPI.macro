@@ -1,0 +1,28 @@
+definition {
+
+	macro _addAccountEntry {
+		Variables.assertDefined(parameterList = "${accountEntryName},${accountEntryType},${accountEntryStatus}");
+
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${creatorEmailAddress}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/account.accountentry/add-account-entry \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d userId=${userId} \
+				-d parentAccountEntryId=0 \
+				-d name=${accountEntryName} \
+				-d description=${accountEntryDescription} \
+				-d domains= \
+				-d email= \
+				-d logoBytes= \
+				-d taxIdNumber= \
+				-d type=${accountEntryType} \
+				-d status=${accountEntryStatus}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

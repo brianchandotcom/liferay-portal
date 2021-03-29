@@ -1,0 +1,31 @@
+definition {
+
+	macro setStatus {
+		if (!(isSet(accountEntryStatus))) {
+			var accountEntryStatus = "Active";
+		}
+
+		if ("${accountEntryStatus}" == "Active") {
+			var status = "0";
+		}
+		else if ("${accountEntryStatus}" == "Inactive") {
+			var status = "5";
+		}
+		else {
+			fail("'accountEntryStatus' is either invalid or not yet set.");
+		}
+
+		return "${status}";
+	}
+
+	macro setType {
+		if (!(isSet(accountEntryType))) {
+			var accountEntryType = "Business";
+		}
+
+		var type = StringUtil.lowerCase("${accountEntryType}");
+
+		return "${type}";
+	}
+
+}

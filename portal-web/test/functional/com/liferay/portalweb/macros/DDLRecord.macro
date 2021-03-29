@@ -272,6 +272,12 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${document}");
 
+			Pause(locator1 = "3000");
+
+			AssertElementPresent.pauseAssertVisible(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
+
 			AssertClick(
 				locator1 = "ItemSelector#ADD_BUTTON",
 				value1 = "Add");

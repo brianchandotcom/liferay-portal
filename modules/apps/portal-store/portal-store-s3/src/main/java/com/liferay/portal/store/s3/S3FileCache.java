@@ -14,6 +14,7 @@
 
 package com.liferay.portal.store.s3;
 
+import com.liferay.petra.io.unsync.UnsyncFilterInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -94,7 +96,7 @@ public class S3FileCache {
 
 	public InputStream getCacheFileInputStream(
 			String fileName, Supplier<InputStream> inputStreamSupplier,
-			Date lastModifiedDate)
+			Closeable closeable, Date lastModifiedDate)
 		throws IOException {
 
 		StringBundler sb = new StringBundler(4);
@@ -114,17 +116,28 @@ public class S3FileCache {
 		if (cacheFile.exists() &&
 			(cacheFile.lastModified() >= lastModifiedDate.getTime())) {
 
+			closeable.close();
+
 			return new FileInputStream(cacheFile);
 		}
 
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			InputStream inputStream = inputStreamSupplier.get();
+			InputStream s3InputStream = inputStreamSupplier.get();
 
-			if (inputStream == null) {
+			if (s3InputStream == null) {
 				throw new IOException("S3 object input stream is null");
 			}
 
-			return inputStream;
+			return new UnsyncFilterInputStream(s3InputStream) {
+
+				@Override
+				public void close() throws IOException {
+					super.close();
+
+					closeable.close();
+				}
+
+			};
 		}
 
 		try (InputStream inputStream = inputStreamSupplier.get()) {
@@ -137,6 +150,9 @@ public class S3FileCache {
 			try (OutputStream outputStream = new FileOutputStream(cacheFile)) {
 				StreamUtil.transfer(inputStream, outputStream);
 			}
+		}
+		finally {
+			closeable.close();
 		}
 
 		return new FileInputStream(cacheFile);

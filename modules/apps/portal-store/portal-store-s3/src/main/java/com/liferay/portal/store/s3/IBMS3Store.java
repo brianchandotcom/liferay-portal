@@ -160,13 +160,14 @@ public class IBMS3Store implements Store {
 
 		_s3FileCache.cleanUpCacheFiles();
 
-		try (S3Object s3Object = getS3Object(
-				companyId, repositoryId, fileName, versionLabel)) {
+		try {
+			S3Object s3Object = getS3Object(
+				companyId, repositoryId, fileName, versionLabel);
 
 			ObjectMetadata objectMetadata = s3Object.getObjectMetadata();
 
 			return _s3FileCache.getCacheFileInputStream(
-				fileName, s3Object::getObjectContent,
+				fileName, s3Object::getObjectContent, s3Object,
 				objectMetadata.getLastModified());
 		}
 		catch (IOException ioException) {

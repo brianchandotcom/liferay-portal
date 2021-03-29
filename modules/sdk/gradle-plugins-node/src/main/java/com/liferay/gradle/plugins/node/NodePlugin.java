@@ -787,6 +787,9 @@ public class NodePlugin implements Plugin<Project> {
 
 					@SuppressWarnings("unused")
 					public void doCall(CopySpec copySpec) {
+						copySpec.exclude("**/*.d.js");
+						copySpec.exclude("**/*.d.js.map");
+						copySpec.exclude("**/*.ts");
 						copySpec.into("META-INF/resources");
 					}
 

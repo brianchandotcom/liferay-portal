@@ -15,8 +15,8 @@
 import React from 'react';
 
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import ItemConfiguration from './ItemConfiguration';
-import StructureTree from './StructureTree';
+import ItemConfiguration from '../../browser/components/page-structure/components/ItemConfiguration';
+import StructureTree from '../../browser/components/page-structure/components/StructureTree';
 
 export default function PageStructureSidebar() {
 	return (

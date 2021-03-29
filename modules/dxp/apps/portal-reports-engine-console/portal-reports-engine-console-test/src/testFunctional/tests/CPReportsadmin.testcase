@@ -532,6 +532,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-43525."
+	@ignore = "true"
 	@priority = "3"
 	test TestDatabaseConnection {
 		property database.types = "mysql";

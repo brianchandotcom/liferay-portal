@@ -12,7 +12,7 @@
 				"../frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
 			]
 		},
-		"sourceMap": true,
+		"sourceMap": false,
 		"strict": true,
 		"target": "es6",
 		"typeRoots": [

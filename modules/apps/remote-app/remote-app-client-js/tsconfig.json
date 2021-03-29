@@ -1,9 +1,11 @@
 {
 	"compilerOptions": {
+		"baseUrl": ".",
+		"composite": true,
 		"module": "es6",
 		"moduleResolution": "node",
 		"outDir": "./build/node/packageRunBuild/dist/",
-		"sourceMap": true,
+		"sourceMap": false,
 		"strict": true,
 		"target": "es5",
 		"typeRoots": [

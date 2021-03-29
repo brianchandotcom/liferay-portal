@@ -1,17 +1,17 @@
 {
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
 		"composite": true,
 		"module": "es6",
 		"moduleResolution": "node",
 		"outDir": "./types",
-		"sourceMap": true,
+		"sourceMap": false,
 		"strict": true,
 		"target": "es6",
 		"typeRoots": [
 			"../../../node_modules/@types",
-			"./node_modules/@types",
-			"./src/main/resources/META-INF/resources/js/types"
+			"./node_modules/@types"
 		]
 	},
 	"include": [

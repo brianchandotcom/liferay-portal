@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -24,7 +24,9 @@ import PageDesignOptionsSidebar from '../../../../../../src/main/resources/META-
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/LayoutService',
-	() => ({changeStyleBookEntry: jest.fn(() => Promise.resolve())})
+	() => ({
+		changeStyleBookEntry: jest.fn(() => Promise.resolve({tokenValues: {}})),
+	})
 );
 
 jest.mock(
@@ -62,7 +64,7 @@ const renderComponent = ({
 } = {}) => {
 	return render(
 		<StoreAPIContextProvider
-			dispatch={() => Promise.resolve({})}
+			dispatch={() => Promise.resolve({styleBook: {}})}
 			getState={() => ({
 				masterLayout: {
 					masterLayoutPlid: '0',
@@ -88,11 +90,13 @@ describe('PageDesignOptionsSidebar', () => {
 		expect(getByText('page-design-options')).toBeInTheDocument();
 	});
 
-	it('calls changeMasterLayout when a master layout is selected', () => {
+	it('calls changeMasterLayout when a master layout is selected', async () => {
 		const {getByLabelText} = renderComponent();
 		const button = getByLabelText('Pablo Master Layout');
 
-		userEvent.click(button);
+		await act(async () => {
+			userEvent.click(button);
+		});
 
 		expect(changeMasterLayout).toBeCalledWith(
 			expect.objectContaining({masterLayoutPlid: '15'})

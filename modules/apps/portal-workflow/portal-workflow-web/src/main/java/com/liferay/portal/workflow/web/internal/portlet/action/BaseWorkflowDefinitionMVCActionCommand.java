@@ -96,27 +96,6 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 		}
 	}
 
-	protected void addDefaultTitle(
-		ActionRequest actionRequest, Map<Locale, String> titleMap) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String title = titleMap.get(themeDisplay.getLocale());
-
-		if (titleMap.isEmpty() || Validator.isNull(title)) {
-			title = ParamUtil.getString(
-				actionRequest, "defaultDuplicationTitle");
-
-			if (Validator.isNull(title)) {
-				title = LanguageUtil.get(
-					getResourceBundle(actionRequest), "untitled-workflow");
-			}
-
-			titleMap.put(themeDisplay.getLocale(), title);
-		}
-	}
-
 	@Override
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
@@ -159,10 +138,8 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 		ActionRequest actionRequest, Map<Locale, String> titleMap) {
 
 		if (titleMap == null) {
-			return null;
+			return StringPool.BLANK;
 		}
-
-		addDefaultTitle(actionRequest, titleMap);
 
 		String value = StringPool.BLANK;
 

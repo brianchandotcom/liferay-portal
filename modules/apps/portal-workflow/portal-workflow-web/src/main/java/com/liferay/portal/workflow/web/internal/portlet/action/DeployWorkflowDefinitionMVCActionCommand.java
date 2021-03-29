@@ -35,7 +35,6 @@ import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -142,12 +141,7 @@ public class DeployWorkflowDefinitionMVCActionCommand
 
 		String title = titleMap.get(LocaleUtil.getDefault());
 
-		String defaultTitle = LanguageUtil.get(
-			getResourceBundle(actionRequest), "untitled-workflow");
-
-		if (titleMap.isEmpty() || Validator.isNull(title) ||
-			Objects.equals(title, defaultTitle)) {
-
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
 			throw new WorkflowDefinitionTitleException();
 		}
 	}

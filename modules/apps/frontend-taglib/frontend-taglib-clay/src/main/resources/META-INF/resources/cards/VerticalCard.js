@@ -15,8 +15,9 @@
 import {ClayCardWithInfo} from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
+import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
 import getDataAttributes from '../get_data_attributes';
 
 export default function VerticalCard({
@@ -84,6 +85,27 @@ export default function VerticalCard({
 		stickerShape,
 		stickerStyle,
 	]);
+
+	const handleToggleAllItems = useCallback(
+		({checked}) => {
+			setSelected(checked);
+		},
+		[setSelected]
+	);
+
+	useEffect(() => {
+		Liferay.on(
+			EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS,
+			handleToggleAllItems
+		);
+
+		return () => {
+			Liferay.detach(
+				EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS,
+				handleToggleAllItems
+			);
+		};
+	}, [handleToggleAllItems]);
 
 	return (
 		<ClayCardWithInfo

@@ -13,8 +13,9 @@
  */
 
 import {ClayCardWithUser} from '@clayui/card';
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
+import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
 import getDataAttributes from '../get_data_attributes';
 
 export default function UserCard({
@@ -33,6 +34,27 @@ export default function UserCard({
 	...otherProps
 }) {
 	const [selected, setSelected] = useState(initialSelected);
+
+	const handleToggleAllItems = useCallback(
+		({checked}) => {
+			setSelected(checked);
+		},
+		[setSelected]
+	);
+
+	useEffect(() => {
+		Liferay.on(
+			EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS,
+			handleToggleAllItems
+		);
+
+		return () => {
+			Liferay.detach(
+				EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS,
+				handleToggleAllItems
+			);
+		};
+	}, [handleToggleAllItems]);
 
 	return (
 		<ClayCardWithUser

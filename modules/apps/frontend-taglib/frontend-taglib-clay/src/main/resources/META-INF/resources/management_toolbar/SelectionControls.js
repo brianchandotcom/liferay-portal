@@ -16,6 +16,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
 import LinkOrButton from './LinkOrButton';
 
 const SelectionControls = ({
@@ -150,6 +151,13 @@ const SelectionControls = ({
 
 						searchContainerRef.current?.select?.toggleAllRows(
 							checked
+						);
+
+						Liferay.fire(
+							EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS,
+							{
+								checked,
+							}
 						);
 					}}
 				/>

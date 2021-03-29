@@ -168,8 +168,9 @@ export const ContainerStylesPanel = ({item}) => {
 					)}
 
 					{flexOptionsVisible && (
-						<>
+						<div className="d-flex justify-content-between">
 							<SelectField
+								className="page-editor__sidebar__fieldset__field-small"
 								field={{
 									label: Liferay.Language.get('align-items'),
 									name: 'align',
@@ -196,6 +197,7 @@ export const ContainerStylesPanel = ({item}) => {
 							/>
 
 							<SelectField
+								className="page-editor__sidebar__fieldset__field-small"
 								field={{
 									label: Liferay.Language.get(
 										'justify-content'
@@ -224,7 +226,7 @@ export const ContainerStylesPanel = ({item}) => {
 									item.config.justify || JUSTIFY_CONTENT_START
 								}
 							/>
-						</>
+						</div>
 					)}
 
 					<SelectField

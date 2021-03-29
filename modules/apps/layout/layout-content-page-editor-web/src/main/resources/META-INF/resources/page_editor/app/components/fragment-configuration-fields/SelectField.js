@@ -20,7 +20,13 @@ import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleB
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useId} from '../../utils/useId';
 
-export const SelectField = ({disabled, field, onValueSelect, value}) => {
+export const SelectField = ({
+	className,
+	disabled,
+	field,
+	onValueSelect,
+	value,
+}) => {
 	const inputId = useId();
 	const {tokenValues} = useStyleBook();
 
@@ -52,7 +58,7 @@ export const SelectField = ({disabled, field, onValueSelect, value}) => {
 	}, [value]);
 
 	return (
-		<ClayForm.Group small>
+		<ClayForm.Group className={className} small>
 			<label htmlFor={inputId}>{field.label}</label>
 
 			<ClaySelectWithOption
@@ -78,6 +84,7 @@ export const SelectField = ({disabled, field, onValueSelect, value}) => {
 };
 
 SelectField.propTypes = {
+	className: PropTypes.string,
 	disabled: PropTypes.bool,
 
 	field: PropTypes.shape({

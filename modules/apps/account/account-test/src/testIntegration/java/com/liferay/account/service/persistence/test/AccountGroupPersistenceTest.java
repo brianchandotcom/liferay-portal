@@ -144,6 +144,8 @@ public class AccountGroupPersistenceTest {
 
 		newAccountGroup.setName(RandomTestUtil.randomString());
 
+		newAccountGroup.setType(RandomTestUtil.randomString());
+
 		_accountGroups.add(_persistence.update(newAccountGroup));
 
 		AccountGroup existingAccountGroup = _persistence.findByPrimaryKey(
@@ -179,6 +181,21 @@ public class AccountGroupPersistenceTest {
 			newAccountGroup.getDescription());
 		Assert.assertEquals(
 			existingAccountGroup.getName(), newAccountGroup.getName());
+		Assert.assertEquals(
+			existingAccountGroup.getType(), newAccountGroup.getType());
+	}
+
+	@Test
+	public void testCountByAccountGroupIds() throws Exception {
+		_persistence.countByAccountGroupIds(RandomTestUtil.nextLong());
+
+		_persistence.countByAccountGroupIds(0L);
+	}
+
+	@Test
+	public void testCountByAccountGroupIdsArrayable() throws Exception {
+		_persistence.countByAccountGroupIds(
+			new long[] {RandomTestUtil.nextLong(), 0L});
 	}
 
 	@Test
@@ -194,6 +211,15 @@ public class AccountGroupPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_D(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByC_T() throws Exception {
+		_persistence.countByC_T(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_T(0L, "null");
+
+		_persistence.countByC_T(0L, (String)null);
 	}
 
 	@Test
@@ -233,7 +259,8 @@ public class AccountGroupPersistenceTest {
 			"AccountGroup", "mvccVersion", true, "externalReferenceCode", true,
 			"accountGroupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"defaultAccountGroup", true, "description", true, "name", true);
+			"defaultAccountGroup", true, "description", true, "name", true,
+			"type", true);
 	}
 
 	@Test
@@ -536,6 +563,8 @@ public class AccountGroupPersistenceTest {
 		accountGroup.setDescription(RandomTestUtil.randomString());
 
 		accountGroup.setName(RandomTestUtil.randomString());
+
+		accountGroup.setType(RandomTestUtil.randomString());
 
 		_accountGroups.add(_persistence.update(accountGroup));
 

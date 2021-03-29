@@ -59,6 +59,7 @@
 		<field name="defaultAccountGroup" type="boolean" />
 		<field name="description" type="String" />
 		<field name="name" type="String" />
+		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.account.model.AccountGroupRel">
 		<field name="mvccVersion" type="long" />

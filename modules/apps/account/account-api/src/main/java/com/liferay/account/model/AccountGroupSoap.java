@@ -44,6 +44,7 @@ public class AccountGroupSoap implements Serializable {
 		soapModel.setDefaultAccountGroup(model.isDefaultAccountGroup());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setName(model.getName());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -189,6 +190,14 @@ public class AccountGroupSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
 	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _accountGroupId;
@@ -200,5 +209,6 @@ public class AccountGroupSoap implements Serializable {
 	private boolean _defaultAccountGroup;
 	private String _description;
 	private String _name;
+	private String _type;
 
 }

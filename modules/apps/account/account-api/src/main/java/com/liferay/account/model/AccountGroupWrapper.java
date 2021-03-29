@@ -53,6 +53,7 @@ public class AccountGroupWrapper
 		attributes.put("defaultAccountGroup", isDefaultAccountGroup());
 		attributes.put("description", getDescription());
 		attributes.put("name", getName());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -125,6 +126,12 @@ public class AccountGroupWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -226,6 +233,16 @@ public class AccountGroupWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the type of this account group.
+	 *
+	 * @return the type of this account group
+	 */
+	@Override
+	public String getType() {
+		return model.getType();
 	}
 
 	/**
@@ -371,6 +388,16 @@ public class AccountGroupWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the type of this account group.
+	 *
+	 * @param type the type of this account group
+	 */
+	@Override
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	/**

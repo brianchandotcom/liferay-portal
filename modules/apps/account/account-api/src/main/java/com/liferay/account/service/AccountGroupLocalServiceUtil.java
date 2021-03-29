@@ -66,6 +66,12 @@ public class AccountGroupLocalServiceUtil {
 		return getService().addAccountGroup(userId, description, name);
 	}
 
+	public static AccountGroup checkGuestAccountGroup(long companyId)
+		throws PortalException {
+
+		return getService().checkGuestAccountGroup(companyId);
+	}
+
 	/**
 	 * Creates a new account group with the primary key. Does not add the account group to the database.
 	 *
@@ -289,6 +295,12 @@ public class AccountGroupLocalServiceUtil {
 			companyId, start, end, orderByComparator);
 	}
 
+	public static List<AccountGroup> getAccountGroupsByAccountGroupIds(
+		long[] accountGroupIds) {
+
+		return getService().getAccountGroupsByAccountGroupIds(accountGroupIds);
+	}
+
 	/**
 	 * Returns the number of account groups.
 	 *
@@ -296,6 +308,10 @@ public class AccountGroupLocalServiceUtil {
 	 */
 	public static int getAccountGroupsCount() {
 		return getService().getAccountGroupsCount();
+	}
+
+	public static int getAccountGroupsCount(long companyId) {
+		return getService().getAccountGroupsCount(companyId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

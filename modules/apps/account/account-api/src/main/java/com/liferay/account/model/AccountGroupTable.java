@@ -58,6 +58,8 @@ public class AccountGroupTable extends BaseTable<AccountGroupTable> {
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AccountGroupTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AccountGroupTable, String> type = createColumn(
+		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private AccountGroupTable() {
 		super("AccountGroup", AccountGroupTable::new);

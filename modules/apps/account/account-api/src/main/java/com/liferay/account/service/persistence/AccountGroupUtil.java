@@ -124,6 +124,253 @@ public class AccountGroupUtil {
 	}
 
 	/**
+	 * Returns all the account groups where accountGroupId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupIds(
+		long accountGroupId) {
+
+		return getPersistence().findByAccountGroupIds(accountGroupId);
+	}
+
+	/**
+	 * Returns a range of all the account groups where accountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupIds(
+		long accountGroupId, int start, int end) {
+
+		return getPersistence().findByAccountGroupIds(
+			accountGroupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where accountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupIds(
+		long accountGroupId, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByAccountGroupIds(
+			accountGroupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where accountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupIds(
+		long accountGroupId, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByAccountGroupIds(
+			accountGroupId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first account group in the ordered set where accountGroupId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account group
+	 * @throws NoSuchGroupException if a matching account group could not be found
+	 */
+	public static AccountGroup findByAccountGroupIds_First(
+			long accountGroupId,
+			OrderByComparator<AccountGroup> orderByComparator)
+		throws com.liferay.account.exception.NoSuchGroupException {
+
+		return getPersistence().findByAccountGroupIds_First(
+			accountGroupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first account group in the ordered set where accountGroupId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account group, or <code>null</code> if a matching account group could not be found
+	 */
+	public static AccountGroup fetchByAccountGroupIds_First(
+		long accountGroupId,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().fetchByAccountGroupIds_First(
+			accountGroupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last account group in the ordered set where accountGroupId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account group
+	 * @throws NoSuchGroupException if a matching account group could not be found
+	 */
+	public static AccountGroup findByAccountGroupIds_Last(
+			long accountGroupId,
+			OrderByComparator<AccountGroup> orderByComparator)
+		throws com.liferay.account.exception.NoSuchGroupException {
+
+		return getPersistence().findByAccountGroupIds_Last(
+			accountGroupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last account group in the ordered set where accountGroupId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
+	 */
+	public static AccountGroup fetchByAccountGroupIds_Last(
+		long accountGroupId,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().fetchByAccountGroupIds_Last(
+			accountGroupId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account groups where accountGroupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupIds the account group IDs
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupIds(
+		long[] accountGroupIds) {
+
+		return getPersistence().findByAccountGroupIds(accountGroupIds);
+	}
+
+	/**
+	 * Returns a range of all the account groups where accountGroupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupIds the account group IDs
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupIds(
+		long[] accountGroupIds, int start, int end) {
+
+		return getPersistence().findByAccountGroupIds(
+			accountGroupIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where accountGroupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupIds the account group IDs
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupIds(
+		long[] accountGroupIds, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByAccountGroupIds(
+			accountGroupIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where accountGroupId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupIds(
+		long[] accountGroupIds, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByAccountGroupIds(
+			accountGroupIds, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the account groups where accountGroupId = &#63; from the database.
+	 *
+	 * @param accountGroupId the account group ID
+	 */
+	public static void removeByAccountGroupIds(long accountGroupId) {
+		getPersistence().removeByAccountGroupIds(accountGroupId);
+	}
+
+	/**
+	 * Returns the number of account groups where accountGroupId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @return the number of matching account groups
+	 */
+	public static int countByAccountGroupIds(long accountGroupId) {
+		return getPersistence().countByAccountGroupIds(accountGroupId);
+	}
+
+	/**
+	 * Returns the number of account groups where accountGroupId = any &#63;.
+	 *
+	 * @param accountGroupIds the account group IDs
+	 * @return the number of matching account groups
+	 */
+	public static int countByAccountGroupIds(long[] accountGroupIds) {
+		return getPersistence().countByAccountGroupIds(accountGroupIds);
+	}
+
+	/**
 	 * Returns all the account groups where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -480,6 +727,190 @@ public class AccountGroupUtil {
 	 */
 	public static int countByC_D(long companyId, boolean defaultAccountGroup) {
 		return getPersistence().countByC_D(companyId, defaultAccountGroup);
+	}
+
+	/**
+	 * Returns all the account groups where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByC_T(long companyId, String type) {
+		return getPersistence().findByC_T(companyId, type);
+	}
+
+	/**
+	 * Returns a range of all the account groups where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByC_T(
+		long companyId, String type, int start, int end) {
+
+		return getPersistence().findByC_T(companyId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByC_T(
+		long companyId, String type, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByC_T(
+			companyId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByC_T(
+		long companyId, String type, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_T(
+			companyId, type, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first account group in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account group
+	 * @throws NoSuchGroupException if a matching account group could not be found
+	 */
+	public static AccountGroup findByC_T_First(
+			long companyId, String type,
+			OrderByComparator<AccountGroup> orderByComparator)
+		throws com.liferay.account.exception.NoSuchGroupException {
+
+		return getPersistence().findByC_T_First(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the first account group in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account group, or <code>null</code> if a matching account group could not be found
+	 */
+	public static AccountGroup fetchByC_T_First(
+		long companyId, String type,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().fetchByC_T_First(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last account group in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account group
+	 * @throws NoSuchGroupException if a matching account group could not be found
+	 */
+	public static AccountGroup findByC_T_Last(
+			long companyId, String type,
+			OrderByComparator<AccountGroup> orderByComparator)
+		throws com.liferay.account.exception.NoSuchGroupException {
+
+		return getPersistence().findByC_T_Last(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last account group in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
+	 */
+	public static AccountGroup fetchByC_T_Last(
+		long companyId, String type,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().fetchByC_T_Last(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the account groups before and after the current account group in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param accountGroupId the primary key of the current account group
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next account group
+	 * @throws NoSuchGroupException if a account group with the primary key could not be found
+	 */
+	public static AccountGroup[] findByC_T_PrevAndNext(
+			long accountGroupId, long companyId, String type,
+			OrderByComparator<AccountGroup> orderByComparator)
+		throws com.liferay.account.exception.NoSuchGroupException {
+
+		return getPersistence().findByC_T_PrevAndNext(
+			accountGroupId, companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Removes all the account groups where companyId = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 */
+	public static void removeByC_T(long companyId, String type) {
+		getPersistence().removeByC_T(companyId, type);
+	}
+
+	/**
+	 * Returns the number of account groups where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the number of matching account groups
+	 */
+	public static int countByC_T(long companyId, String type) {
+		return getPersistence().countByC_T(companyId, type);
 	}
 
 	/**

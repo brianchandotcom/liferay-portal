@@ -252,4 +252,19 @@ public interface AccountGroupModel
 	 */
 	public void setName(String name);
 
+	/**
+	 * Returns the type of this account group.
+	 *
+	 * @return the type of this account group
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this account group.
+	 *
+	 * @param type the type of this account group
+	 */
+	public void setType(String type);
+
 }

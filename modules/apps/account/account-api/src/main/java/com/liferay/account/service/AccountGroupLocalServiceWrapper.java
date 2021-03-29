@@ -59,6 +59,14 @@ public class AccountGroupLocalServiceWrapper
 			userId, description, name);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountGroup checkGuestAccountGroup(
+			long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupLocalService.checkGuestAccountGroup(companyId);
+	}
+
 	/**
 	 * Creates a new account group with the primary key. Does not add the account group to the database.
 	 *
@@ -324,6 +332,14 @@ public class AccountGroupLocalServiceWrapper
 			companyId, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.account.model.AccountGroup>
+		getAccountGroupsByAccountGroupIds(long[] accountGroupIds) {
+
+		return _accountGroupLocalService.getAccountGroupsByAccountGroupIds(
+			accountGroupIds);
+	}
+
 	/**
 	 * Returns the number of account groups.
 	 *
@@ -332,6 +348,11 @@ public class AccountGroupLocalServiceWrapper
 	@Override
 	public int getAccountGroupsCount() {
 		return _accountGroupLocalService.getAccountGroupsCount();
+	}
+
+	@Override
+	public int getAccountGroupsCount(long companyId) {
+		return _accountGroupLocalService.getAccountGroupsCount(companyId);
 	}
 
 	@Override

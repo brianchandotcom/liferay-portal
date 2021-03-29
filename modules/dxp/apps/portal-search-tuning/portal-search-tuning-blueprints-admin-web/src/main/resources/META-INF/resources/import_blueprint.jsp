@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.IMPORT_BLUEPRINT %>" var="importBlueprintURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="redirect" value='<%= ParamUtil.getString(request, "redirect") %>' />
 </portlet:actionURL>
 
 <react:component

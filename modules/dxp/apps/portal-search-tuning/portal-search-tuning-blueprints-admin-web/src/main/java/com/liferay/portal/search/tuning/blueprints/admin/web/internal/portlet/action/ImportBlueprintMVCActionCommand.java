@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.handler.BlueprintExceptionRequestHandler;
@@ -123,7 +125,7 @@ public class ImportBlueprintMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private PortletURL _getSuccessRedirectURL(ActionResponse actionResponse)
+	private String _getSuccessRedirectURL(ActionResponse actionResponse)
 		throws WindowStateException {
 
 		LiferayActionResponse liferayActionResponse =
@@ -134,7 +136,7 @@ public class ImportBlueprintMVCActionCommand extends BaseMVCActionCommand {
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	private void _import(
@@ -147,11 +149,15 @@ public class ImportBlueprintMVCActionCommand extends BaseMVCActionCommand {
 
 			_blueprintImporter.importBlueprint(actionRequest, inputStream);
 
-			PortletURL successURL = _getSuccessRedirectURL(actionResponse);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNull(redirect)) {
+				redirect = _getSuccessRedirectURL(actionResponse);
+			}
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
-				JSONUtil.put("redirectURL", successURL.toString()));
+				JSONUtil.put("redirectURL", redirect));
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);

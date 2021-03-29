@@ -75,6 +75,12 @@ public class ImportPortletConfigurationIcon
 				BlueprintsAdminMVCCommandNames.IMPORT_BLUEPRINT);
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("Liferay.Util.openModal({height: '320px',");

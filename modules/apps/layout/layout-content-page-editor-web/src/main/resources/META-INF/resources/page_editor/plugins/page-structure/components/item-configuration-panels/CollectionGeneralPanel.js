@@ -117,14 +117,18 @@ export const CollectionGeneralPanel = ({item}) => {
 				collectionTitle={(item.config.collection || {}).title || ''}
 				itemSelectorURL={config.collectionSelectorURL}
 				label={Liferay.Language.get('collection')}
-				onCollectionSelect={(collection) =>
+				onCollectionSelect={(collection = {}) => {
+					const nextCollection =
+						Object.keys(collection).length !== 0
+							? collection
+							: null;
 					handleConfigurationChanged({
-						collection,
+						collection: nextCollection,
 						listItemStyle: null,
 						listStyle: LIST_STYLE_GRID,
 						templateKey: null,
-					})
-				}
+					});
+				}}
 			/>
 			{item.config.collection && (
 				<>

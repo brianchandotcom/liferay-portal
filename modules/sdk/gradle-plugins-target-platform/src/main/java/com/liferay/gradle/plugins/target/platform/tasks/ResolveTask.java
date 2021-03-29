@@ -118,8 +118,7 @@ public class ResolveTask extends DefaultTask {
 
 		File distroFile = getDistroFile();
 
-		String distroReference =
-			distroFile.getAbsolutePath() + ";version=file";
+		String distroReference = distroFile.getAbsolutePath() + ";version=file";
 
 		gradleProperties.put("targetPlatformDistro", distroReference);
 
@@ -131,14 +130,18 @@ public class ResolveTask extends DefaultTask {
 			processor, bndrunFile.toURI());
 
 		try (Bndrun bndrun = new Bndrun(workspace, bndrunFile) {
-			public String getUnexpandedProperty(String key) {
-				String raw = super.getUnexpandedProperty(key);
-				if (raw == null) {
-					raw = processor.getUnexpandedProperty(key);
+				public String getUnexpandedProperty(String key) {
+					String raw = super.getUnexpandedProperty(key);
+
+					if (raw == null) {
+						raw = processor.getUnexpandedProperty(key);
+					}
+
+					return raw;
 				}
-				return raw;
-			}
-		}) {
+
+			}) {
+
 			bndrun.setBase(temporaryDir);
 
 			workspace.setOffline(isOffline());

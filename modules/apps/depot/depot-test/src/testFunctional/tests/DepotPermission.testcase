@@ -544,6 +544,129 @@ definition {
 			siteNameScope = "Test Depot Name");
 	}
 
+	@description = "This ensures that a document from depot cannot be viewed through Blogs on a connected site when a user without view permission."
+	@priority = "5"
+	test ValidateDocumentPermissioning {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Depot Regrole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Depot Regrole Name");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		for (var resourceActionIndex : list "ADD_DEPOT_ENTRY,PERMISSIONS") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.depot",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Depot Regrole Name");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		for (var resourceActionIndex : list "ADD_ENTRY,PERMISSIONS,SUBSCRIBE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.blogs",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,PERMISSIONS,UPDATE,UPDATE_DISCUSSION,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.blogs.model.BlogsEntry",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_2.jpg");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest,User");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.selectRepositoryImage(
+			depotName = "Test Depot Name",
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media",
+			noViewPermission = "true");
+	}
+
 	@description = "This test covers LPS-119994. It ensures that the user with access application permission can view the depot dashboard."
 	@priority = "4"
 	test ViewDashBoardWithAccessApplicationPermissions {

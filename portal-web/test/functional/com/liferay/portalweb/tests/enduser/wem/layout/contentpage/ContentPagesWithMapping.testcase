@@ -540,7 +540,7 @@ definition {
 			PageEditor.editLayoutContainer(
 				entryTitle = "Web Content Title",
 				field = "Display Page URL",
-				link = "From Content Field",
+				link = "Mapped URL",
 				navItem = "Web Content",
 				panel = "General");
 

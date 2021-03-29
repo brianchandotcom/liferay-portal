@@ -2006,7 +2006,7 @@ definition {
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",
 				value1 = "General");
 
-			if ("${link}" == "From Content Field") {
+			if ("${link}" == "Mapped URL") {
 				Select(
 					key_fieldLabel = "Link",
 					locator1 = "Select#GENERIC_SELECT_FIELD",

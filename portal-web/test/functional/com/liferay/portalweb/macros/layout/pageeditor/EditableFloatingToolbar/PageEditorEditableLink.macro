@@ -91,7 +91,10 @@ definition {
 	}
 
 	macro mapURLToAsset {
-		PageEditorEditableLink._gotoFromContentField();
+		Select(
+			key_fieldLabel = "Link",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Mapped URL");
 
 		if (isSet(entryTitle)) {
 			PageEditorEditableLink._selectContent(

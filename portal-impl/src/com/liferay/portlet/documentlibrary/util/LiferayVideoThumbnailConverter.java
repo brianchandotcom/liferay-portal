@@ -131,8 +131,8 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 			if (!thumbnailGenerated) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to create thumbnail from specified frame. Will " +
-							"generate thumbnail from the beginning.");
+						"Unable to create thumbnail from specified frame. " +
+							"Will generate thumbnail from the beginning.");
 				}
 
 				rewind();

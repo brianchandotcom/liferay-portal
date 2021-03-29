@@ -1174,7 +1174,7 @@ definition {
 			addressDescription = "Address of Japan office.",
 			addressName = "Liferay Japan K. K.",
 			addressPostalCode = "150-0021",
-			addressRegion = "東京都",
+			addressRegion = "Tokyo",
 			addressStreet1 = "1F Faveur Ebisu,",
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			addressType = "Shipping",
@@ -1197,7 +1197,7 @@ definition {
 			addressDataType = "shipping",
 			addressName = "Liferay Japan K. K.",
 			addressPostalCode = "150-0021",
-			addressRegion = "東京都",
+			addressRegion = "Tokyo",
 			addressStreet1 = "1F Faveur Ebisu,",
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			phoneNumber = "+81 3-5456-5796");

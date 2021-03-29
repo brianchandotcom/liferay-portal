@@ -153,7 +153,7 @@
 			<finder-column name="ctCollectionId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CTPreferences" remote-service="false" trash-enabled="false" uuid="false">
+	<entity local-service="true" name="CTPreferences" remote-service="true" trash-enabled="false" uuid="false">
 
 		<!-- PK fields -->
 

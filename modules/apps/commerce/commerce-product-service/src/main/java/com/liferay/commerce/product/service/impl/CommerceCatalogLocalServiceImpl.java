@@ -177,10 +177,10 @@ public class CommerceCatalogLocalServiceImpl
 	@Override
 	public void deleteCommerceCatalogs(long companyId) throws PortalException {
 		List<CommerceCatalog> commerceCatalogs =
-			commerceCatalogPersistence.findByCompanyId(companyId);
+			commerceCatalogPersistence.findByC_S(companyId, false);
 
 		for (CommerceCatalog commerceCatalog : commerceCatalogs) {
-			commerceCatalogPersistence.remove(commerceCatalog);
+			commerceCatalogLocalService.deleteCommerceCatalog(commerceCatalog);
 		}
 	}
 

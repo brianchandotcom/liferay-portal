@@ -21,7 +21,7 @@ import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../src/main
 import {VIEWPORT_SIZES} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
-import {FragmentStylesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/FragmentStylesPanel';
+import {FragmentStylesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/FragmentStylesPanel';
 
 const FRAGMENT_ENTRY_LINK_ID = '1';
 

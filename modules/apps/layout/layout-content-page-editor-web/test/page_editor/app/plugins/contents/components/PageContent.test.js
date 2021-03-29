@@ -18,7 +18,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 
 import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
-import PageContent from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/contents/components/PageContent';
+import PageContent from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/contents/components/PageContent';
 
 const renderPageContent = (props) =>
 	render(

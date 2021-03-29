@@ -800,7 +800,6 @@ definition {
 
 	@priority = "4"
 	test AddWithRelatedAssetViaAssetPublisher {
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

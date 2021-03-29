@@ -261,7 +261,6 @@ definition {
 	@description = "This is a use case for LPS-65270."
 	@priority = "5"
 	test ViewEntryWithConditionalVisibilityFromSelectAndRadio {
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

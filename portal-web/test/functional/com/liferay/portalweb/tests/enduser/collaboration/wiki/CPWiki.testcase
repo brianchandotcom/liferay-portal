@@ -446,15 +446,9 @@ definition {
 			assetType = "Wiki Page",
 			deleteUser = "Test Test");
 
-		LexiconTable.clickEllipsisItem(
-			item = "Restore",
-			tableEntry = "Wiki Page 1 Original");
-
-		RecycleBinWarning.selectRename();
-
-		RecycleBinWarning.renameEntry(renamedTrashEntryTitle = "Wiki Page 1 Restored");
-
-		Button.clickSave();
+		RecycleBin.restoreRenameCP(
+			assetName = "Wiki Page 1 Original",
+			newName = "Wiki Page 1 Restored");
 
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 

@@ -84,7 +84,7 @@ definition {
 
 		CommerceProductImages.addProductImages(
 			imageTitles = "Black,Blue,White",
-			optionValuesList = "Black,Blue,White");
+			optionValues = "Black,Blue,White");
 
 		echo("Asserting all the attributes are correctly shown in Front Store...");
 

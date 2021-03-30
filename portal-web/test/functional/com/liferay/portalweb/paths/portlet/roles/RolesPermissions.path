@@ -219,6 +219,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_REMOVE_SITE_SCOPE</td>
+	<td>//span[contains(@id,'AssetListEntryDELETE')]/span[contains(.,'${key_removeSiteScope}')]/span//button[*[name()='svg'][contains(@class,'times-small')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_SITE_SCOPE</td>
 	<td>//span[contains(@id,'AssetListEntryDELETE')]/span[contains(.,'${key_siteNameScope}')]/span</td>
 	<td></td>
@@ -353,6 +358,11 @@
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHANGE_LINK</td>
 	<td>//span[contains(@id,'PortletVIEW')]/button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_REMOVE_SITE_SCOPE</td>
+	<td>//span[contains(@id,'groupHTMLcom_liferay_journal_web_portlet_JournalPortletVIEW')]/span[contains(.,'${key_removeSiteScope}')]/span//button[*[name()='svg'][contains(@class,'times-small')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -531,6 +541,11 @@
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHANGE_LINK</td>
 	<td>//span[contains(@id,'document.libraryADD_DOCUMENT')]/button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_REMOVE_SITE_SCOPE</td>
+	<td>//span[contains(@id,'document.libraryADD_DOCUMENT')]/span[contains(.,'${key_removeSiteScope}')]/span//button[*[name()='svg'][contains(@class,'times-small')]]</td>
 	<td></td>
 </tr>
 <tr>

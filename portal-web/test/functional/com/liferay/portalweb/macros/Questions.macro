@@ -744,6 +744,10 @@ definition {
 				key_text = "${text}",
 				locator1 = "Button#ANY");
 		}
+
+		if (isSet(lockedStatus)) {
+			AssertElementPresent(locator1 = "Questions#QUESTIONS_LOCKED_ANSWER_TEXT");
+		}
 	}
 
 	macro viewMyActivityDefault {

@@ -59,7 +59,8 @@ public class OrganizationEntityModel implements EntityModel {
 			new StringEntityField(
 				"nameTreePath",
 				locale -> Field.getSortableFieldName("nameTreePath_String")),
-			new StringEntityField("region", locale -> "region"),
+			new StringEntityField(
+				"region", locale -> Field.getSortableFieldName("region")),
 			new StringEntityField("type", locale -> Field.TYPE));
 	}
 

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
@@ -107,6 +108,27 @@ public class DLVideoFFMPEGVideoConverterTest {
 	}
 
 	@Test
+	public void testGeneratesVideoPreviewForOGVIfEnabled() throws Exception {
+		_withDLVideoFFMPEGVideoConverterEnabled(
+			() -> {
+				FileEntry fileEntry = _createVideoFileEntry("video.ogv");
+
+				Assert.assertTrue(
+					VideoProcessorUtil.hasVideo(fileEntry.getFileVersion()));
+
+				long mp4PreviewFileSize = VideoProcessorUtil.getPreviewFileSize(
+					fileEntry.getFileVersion(), "mp4");
+
+				Assert.assertTrue(mp4PreviewFileSize > 0);
+
+				long ogvPreviewFileSize = VideoProcessorUtil.getPreviewFileSize(
+					fileEntry.getFileVersion(), "ogv");
+
+				Assert.assertTrue(ogvPreviewFileSize > 0);
+			});
+	}
+
+	@Test
 	public void testGeneratesVideoPreviewIfEnabled() throws Exception {
 		_withDLVideoFFMPEGVideoConverterEnabled(
 			() -> {
@@ -130,9 +152,9 @@ public class DLVideoFFMPEGVideoConverterTest {
 	private FileEntry _createVideoFileEntry(String fileName) throws Exception {
 		return DLAppServiceUtil.addFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			fileName, "video/mp4", "video", StringUtil.randomString(),
-			StringUtil.randomString(), FileUtil.getBytes(getClass(), fileName),
-			_serviceContext);
+			fileName, MimeTypesUtil.getContentType(fileName), "video",
+			StringUtil.randomString(), StringUtil.randomString(),
+			FileUtil.getBytes(getClass(), fileName), _serviceContext);
 	}
 
 	private void _withDLVideoFFMPEGVideoConverterEnabled(

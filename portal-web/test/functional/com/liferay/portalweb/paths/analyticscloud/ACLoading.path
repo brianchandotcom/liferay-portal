@@ -1,0 +1,21 @@
+<html>
+<head>
+  <title>ACLoading</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+  <thead>
+  <tr><td rowspan="1" colspan="3">ACLoading</td></tr>
+  </thead>
+  <tbody>
+  <!-- RESOURCE LOADING ELEMENTS -->
+  <tr>
+    <td>LOADING_ICON</td>
+    <td>//*[not(@class='total-members-count')]/div[not(@aria-hidden)]/span[contains(@class,'loading-animation')]</td>
+    <td></td>
+  </tr>
+
+  </tbody>
+</table>
+</body>
+</html>

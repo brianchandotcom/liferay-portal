@@ -544,9 +544,9 @@ definition {
 			siteNameScope = "Test Depot Name");
 	}
 
-	@description = "This ensures that a document from depot cannot be viewed through Blogs on a connected site when a user without view permission."
+	@description = "This ensures that a document from depot cannot be accessed through Blogs on a connected site when a user doesn't have permissions."
 	@priority = "5"
-	test ValidateDocumentPermissioning {
+	test ValidateDocumentCannotBeSelectedWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(

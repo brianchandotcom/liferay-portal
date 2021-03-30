@@ -233,7 +233,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewAppCP(
-			appName = "Message Boards}",
+			appName = "Message Boards",
 			appStatus = "Active");
 	}
 

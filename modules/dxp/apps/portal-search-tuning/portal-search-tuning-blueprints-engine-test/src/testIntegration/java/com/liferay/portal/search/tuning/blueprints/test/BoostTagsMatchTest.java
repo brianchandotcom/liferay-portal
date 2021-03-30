@@ -20,18 +20,16 @@ import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,7 +38,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Wade Cao
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class BoostTagsMatchTest extends BaseBlueprintsTestCase {
 
@@ -51,59 +48,43 @@ public class BoostTagsMatchTest extends BaseBlueprintsTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_prefixRandomString = "cola" + RandomTestUtil.randomInt();
+	@Test
+	public void testKeywoardMatchWithAssetTagName() throws Exception {
+		String prefixRandomString = "cola" + RandomTestUtil.randomInt();
 
 		serviceContext.setAssetTagNames(new String[0]);
 
-		addJournalArticle("coca " + _prefixRandomString, _prefixRandomString);
+		addJournalArticle("coca " + prefixRandomString, prefixRandomString);
 
 		AssetTag assetTag = AssetTestUtil.addTag(
-			group.getGroupId(), _prefixRandomString);
+			group.getGroupId(), prefixRandomString);
 
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
-		addJournalArticle("pepsi " + _prefixRandomString, "");
-	}
+		addJournalArticle("pepsi " + prefixRandomString, "");
 
-	@Test
-	public void testKeywoardMatchToAssetTagName() throws Exception {
-		Blueprint blueprint = addCompanyBlueprint(
-			Collections.singletonMap(
-				LocaleUtil.US, getClass().getName() + "Blueprint"),
-			Collections.singletonMap(LocaleUtil.US, ""),
-			getConfigurationString(_getQueryElementJSONObject(100)),
-			_getSelectedElementString(100), 1);
-
-		assertSearch(
-			blueprint, null,
-			StringBundler.concat(
-				"[pepsi ", _prefixRandomString, ", coca ", _prefixRandomString,
-				"]"),
-			_prefixRandomString, null);
-	}
-
-	@Test
-	public void testKeywoardMatchWithoutAssetTagName() throws Exception {
 		Blueprint blueprint = addCompanyBlueprint(
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""),
 			getConfigurationString((JSONObject[])null), "", 1);
 
+		TimeUnit.SECONDS.sleep(5);
+
 		assertSearch(
 			blueprint, null,
 			StringBundler.concat(
-				"[coca ", _prefixRandomString, ", pepsi ", _prefixRandomString,
+				"[coca ", prefixRandomString, ", pepsi ", prefixRandomString,
 				"]"),
-			_prefixRandomString, null);
-	}
+			prefixRandomString, null);
 
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
+		assertSearch(
+			blueprint, getConfigurationString(_getQueryElementJSONObject(100)),
+			StringBundler.concat(
+				"[pepsi ", prefixRandomString, ", coca ", prefixRandomString,
+				"]"),
+			prefixRandomString, _getSelectedElementString(100));
+	}
 
 	private JSONObject _getQueryElementJSONObject(int boost) {
 		return JSONUtil.put(
@@ -208,7 +189,5 @@ public class BoostTagsMatchTest extends BaseBlueprintsTestCase {
 				))
 		).toString();
 	}
-
-	private String _prefixRandomString;
 
 }

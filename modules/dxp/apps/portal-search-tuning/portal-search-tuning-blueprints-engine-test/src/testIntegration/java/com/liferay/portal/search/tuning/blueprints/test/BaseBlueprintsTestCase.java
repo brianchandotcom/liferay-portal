@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.test.util.DocumentsAssert;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilder;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilderFactory;
@@ -58,6 +59,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.junit.Before;
+import org.junit.Rule;
 
 /**
  * @author Wade Cao
@@ -77,6 +79,9 @@ public abstract class BaseBlueprintsTestCase {
 		user = TestPropsValues.getUser();
 	}
 
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
+
 	protected Blueprint addCompanyBlueprint(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String configuration, String selectedElements, int type)
@@ -95,6 +100,22 @@ public abstract class BaseBlueprintsTestCase {
 		return blueprintService.addGroupBlueprint(
 			titleMap, descriptionMap, configuration, selectedElements, type,
 			serviceContext);
+	}
+
+	protected JournalArticle addJournalArticle(
+			long groupId, long folderId, String title, String content)
+		throws Exception {
+
+		return JournalTestUtil.addArticle(
+			groupId, folderId, PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, title
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.US, content
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, serviceContext);
 	}
 
 	protected JournalArticle addJournalArticle(long groupId, String title)

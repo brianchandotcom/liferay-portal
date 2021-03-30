@@ -1063,8 +1063,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-109555. The error message should be shown when restore a document from recycle bin when it has the same name as existing document."
-	@priority = "2"
+	@description = "This is a test for LPS-109555 and LPS-33785. The error message should be shown when restore a document from recycle bin when it has the same name as existing document. Keep both document entries and rename the document entry from the Recycle Bin."
+	@priority = "4"
 	test ViewErrorMessageWhenRestoreDocumentHasTheSameNameWithExistingOne {
 		task ("Add a document entry named DM Document Title") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1088,7 +1088,7 @@ definition {
 				sourceFileName = "Document_1.txt");
 		}
 
-		task ("View error message when restore the document from recycle bin") {
+		task ("Keep both entries and rename the entry from the Recycle Bin") {
 			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 			RecycleBin.viewCP(
@@ -1096,11 +1096,17 @@ definition {
 				assetType = "Document",
 				deleteUser = "Test Test");
 
-			RecycleBin.clickEllipsisItem(
+			RecycleBin.restoreRenameCP(
 				assetName = "DM Document Title",
-				item = "Restore");
+				newName = "Previous Document Title");
+		}
 
-			Alert.viewErrorMessage(errorMessage = "Error:An entry with name DM Document Title already exists.");
+		task ("View documents in Documents admin") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			for (var assetName : list "DM Document Title,Previous Document Title") {
+				DMDocument.viewCardTitle(dmDocumentTitle = "${assetName}");
+			}
 		}
 	}
 

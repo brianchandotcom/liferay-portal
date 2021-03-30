@@ -23,15 +23,12 @@
 }
 
 .info-bar-container .management-bar-header-right {
-	display: flex;
-	justify-content: flex-end;
+	float: right;
+	margin-right: 0;
+	position: relative;
 
-	a {
-		align-items: center;
-		display: flex;
-		height: 32px;
-		justify-content: center;
-		width: 32px;
+	> a {
+		padding: 0;
 	}
 }
 

@@ -557,7 +557,9 @@ public class OrderResourceImpl
 			_serviceContextHelper.getServiceContext(
 				commerceOrder.getGroupId()));
 
-		if (commerceOrder.getOrderStatus() != order.getOrderStatus()) {
+		if (Validator.isNotNull(order.getOrderStatus()) &&
+			(commerceOrder.getOrderStatus() != order.getOrderStatus())) {
+
 			commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 				commerceOrder, order.getOrderStatus(), contextUser.getUserId());
 		}

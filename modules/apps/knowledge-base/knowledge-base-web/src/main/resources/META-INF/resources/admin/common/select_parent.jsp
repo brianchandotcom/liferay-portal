@@ -287,10 +287,3 @@ kbObjectSearchContainer.setResults(results);
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />fm',
-		'<%= HtmlUtil.escape(eventName) %>'
-	);
-</script>

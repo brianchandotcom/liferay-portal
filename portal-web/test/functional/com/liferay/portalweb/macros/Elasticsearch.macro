@@ -42,12 +42,21 @@ definition {
 	macro isRemoteMode {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config");
+		var fileLocation = "${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
 
-		var productionModeEnabled = RegexUtil.replace("${fileContent}", "productionModeEnabled=&quot;(.*)&quot;", "1");
+		var fileExists = FileUtil.exists("${fileLocation}");
 
-		if ("${productionModeEnabled}" == "true") {
-			return "true";
+		if ("${fileExists}" == "true") {
+			var fileContent = FileUtil.read("${fileLocation}");
+
+			var productionModeEnabled = RegexUtil.replace("${fileContent}", "productionModeEnabled=&quot;(.*)&quot;", "1");
+
+			if ("${productionModeEnabled}" == "true") {
+				return "true";
+			}
+			else {
+				return "false";
+			}
 		}
 		else {
 			return "false";

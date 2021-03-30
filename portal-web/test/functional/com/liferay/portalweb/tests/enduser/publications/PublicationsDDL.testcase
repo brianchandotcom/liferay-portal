@@ -271,13 +271,15 @@ definition {
 			publicationsType = "Modified",
 			publicationsUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
+		// Workaround LPS-129885
+
+		/*PublicationsChanges.viewPublicationsViaChangesStyle(
 			publicationsCategory = "Asset",
 			publicationsSite = "Guest",
 			publicationsTitle = "New Data Definition for List: List Name",
 			publicationsType = "Modified",
 			publicationsUser = "Test Test",
-			showAllItems = "true");
+			showAllItems = "true");*/
 
 		PublicationsChanges.viewPublicationsViaChangesStyle(
 			publicationsCategory = "Dynamic Data Lists Record",

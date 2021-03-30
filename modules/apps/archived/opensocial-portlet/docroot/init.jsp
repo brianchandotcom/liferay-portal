@@ -41,7 +41,6 @@ page import="com.liferay.opensocial.shindig.util.ShindigUtil" %><%@
 page import="com.liferay.opensocial.util.ActionKeys" %><%@
 page import="com.liferay.opensocial.util.PortletPropsValues" %><%@
 page import="com.liferay.opensocial.util.WebKeys" %><%@
-page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@

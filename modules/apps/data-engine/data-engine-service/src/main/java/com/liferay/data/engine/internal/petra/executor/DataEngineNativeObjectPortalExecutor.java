@@ -329,10 +329,8 @@ public class DataEngineNativeObjectPortalExecutor {
 			throws Exception {
 
 			_companyLocalService.forEachCompanyId(
-				companyId ->
-					createDataEngineNativeObject(
-						companyId, dataEngineNativeObject)
-			);
+				companyId -> createDataEngineNativeObject(
+					companyId, dataEngineNativeObject));
 		}
 
 		private String _getFieldType(String customType, int sqlType) {

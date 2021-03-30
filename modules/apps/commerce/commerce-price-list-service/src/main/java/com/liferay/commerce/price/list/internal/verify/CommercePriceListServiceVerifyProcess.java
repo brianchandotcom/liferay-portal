@@ -17,7 +17,6 @@ package com.liferay.commerce.price.list.internal.verify;
 import com.liferay.commerce.price.list.internal.helper.CommerceBasePriceListHelper;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyProcess;
@@ -54,8 +53,7 @@ public class CommercePriceListServiceVerifyProcess extends VerifyProcess {
 						_commerceBasePriceListHelper.
 							addCatalogBaseCommercePriceList(commerceCatalog);
 					}
-				}
-			);
+				});
 		}
 	}
 

@@ -328,8 +328,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		companyLocalService.forEachCompanyId(
 			companyId -> {
-				_deployRemotePortlet(
-					portlet, categoryNames, companyId);
+				_deployRemotePortlet(portlet, categoryNames, companyId);
 
 				portletPersistence.flush();
 			});

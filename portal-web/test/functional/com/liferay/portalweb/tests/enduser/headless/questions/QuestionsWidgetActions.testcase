@@ -1434,6 +1434,71 @@ definition {
 			value1 = "Title AddQuestion");
 	}
 
+	@description = "Validate if the user can view the question after changed the subtopic via the breadcrumb."
+	@priority = "3"
+	test ViewQuestionAfterChangedSubTopic {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category1",
+			userEmailAddress = "test@liferay.com");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category1");
+
+		var messageBoardsCategoryURL = selenium.getLocation();
+		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Subcategory Description",
+			categoryName = "Questions Test Category2",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category1");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category2");
+
+		var messageBoardsCategoryURL = selenium.getLocation();
+		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Subcategory Description",
+			categoryName = "Questions Test Category3",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "Question Body 2",
+			categoryName = "Questions Test Category1",
+			subCategoryName = "Questions Test Category2",
+			titleField = "Question 2");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category1");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category1",
+			subTopicName = "Questions Test Category2");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category2",
+			subTopicName = "Questions Test Category3");
+
+		Questions.changeTopic(
+			gotoParentTopic = "Questions Test Category2",
+			multipleSubTopics = "true");
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_BREADCRUMB_ELLIPSIS");
+
+		AssertElementPresent(
+			key_questionTitle = "Question 2",
+			locator1 = "Questions#QUESTIONS_TITLE");
+	}
+
 	@description = "Validate if the user can view a question via an edited topic."
 	@priority = "5"
 	test ViewQuestionAfterEditingTopic {

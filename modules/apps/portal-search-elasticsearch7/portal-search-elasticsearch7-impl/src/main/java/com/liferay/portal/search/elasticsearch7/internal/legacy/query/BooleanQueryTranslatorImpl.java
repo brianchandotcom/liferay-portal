@@ -62,7 +62,9 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 
 		BoolQueryBuilder wrapperBoolQueryBuilder = QueryBuilders.boolQuery();
 
-		wrapperBoolQueryBuilder.must(boolQueryBuilder);
+		if (booleanQuery.hasClauses()) {
+			wrapperBoolQueryBuilder.must(boolQueryBuilder);
+		}
 
 		QueryBuilder filterQueryBuilder = filterTranslator.translate(
 			booleanFilter, null);

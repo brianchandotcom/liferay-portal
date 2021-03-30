@@ -44,18 +44,18 @@ public class CommercePriceListServiceVerifyProcess extends VerifyProcess {
 
 	protected void verifyBasePriceLists() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Company> companies = _companyLocalService.getCompanies();
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					List<CommerceCatalog> commerceCatalogs =
+						_commerceCatalogLocalService.getCommerceCatalogs(
+							companyId, true);
 
-			for (Company company : companies) {
-				List<CommerceCatalog> commerceCatalogs =
-					_commerceCatalogLocalService.getCommerceCatalogs(
-						company.getCompanyId(), true);
-
-				for (CommerceCatalog commerceCatalog : commerceCatalogs) {
-					_commerceBasePriceListHelper.
-						addCatalogBaseCommercePriceList(commerceCatalog);
+					for (CommerceCatalog commerceCatalog : commerceCatalogs) {
+						_commerceBasePriceListHelper.
+							addCatalogBaseCommercePriceList(commerceCatalog);
+					}
 				}
-			}
+			);
 		}
 	}
 

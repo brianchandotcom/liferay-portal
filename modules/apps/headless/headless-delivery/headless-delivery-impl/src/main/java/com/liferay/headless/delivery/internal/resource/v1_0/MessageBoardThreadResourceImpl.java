@@ -45,6 +45,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -53,6 +54,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -610,37 +614,51 @@ public class MessageBoardThreadResourceImpl
 		MBMessage mbMessage = _mbMessageLocalService.getMessage(
 			mbThread.getRootMessageId());
 
+		long threadId = mbMessage.getThreadId();
+
+		ModelResourcePermission<MBMessage> modelResourcePermission =
+			new MessageBoardThreadModelResourcePermission(
+				mbMessage, MBMessage.class.getName());
+
 		return _messageBoardThreadDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
 					"delete",
-					addAction("DELETE", mbMessage, "deleteMessageBoardThread")
+					addAction(
+						"DELETE", threadId, "deleteMessageBoardThread",
+						modelResourcePermission)
 				).put(
-					"get", addAction("VIEW", mbMessage, "getMessageBoardThread")
+					"get",
+					addAction(
+						"VIEW", threadId, "getMessageBoardThread",
+						modelResourcePermission)
 				).put(
 					"replace",
-					addAction("UPDATE", mbMessage, "putMessageBoardThread")
+					addAction(
+						"UPDATE", threadId, "putMessageBoardThread",
+						modelResourcePermission)
 				).put(
 					"reply-to-thread",
 					ActionUtil.addAction(
 						"REPLY_TO_MESSAGE",
-						MessageBoardMessageResourceImpl.class,
-						mbMessage.getMessageId(),
+						MessageBoardMessageResourceImpl.class, threadId,
 						"postMessageBoardThreadMessageBoardMessage",
-						contextScopeChecker, mbMessage.getUserId(),
-						"com.liferay.message.boards", mbMessage.getGroupId(),
+						contextScopeChecker,
+						new MessageBoardThreadModelResourcePermission(
+							mbMessage, "com.liferay.message.boards"),
 						contextUriInfo)
 				).put(
 					"subscribe",
 					addAction(
-						"SUBSCRIBE", mbMessage,
-						"putMessageBoardThreadSubscribe")
+						"SUBSCRIBE", threadId, "putMessageBoardThreadSubscribe",
+						modelResourcePermission)
 				).put(
 					"unsubscribe",
 					addAction(
-						"SUBSCRIBE", mbMessage,
-						"putMessageBoardThreadUnsubscribe")
+						"SUBSCRIBE", threadId,
+						"putMessageBoardThreadUnsubscribe",
+						modelResourcePermission)
 				).build(),
 				_dtoConverterRegistry, mbThread.getThreadId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
@@ -751,5 +769,62 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private ViewCountManager _viewCountManager;
+
+	private class MessageBoardThreadModelResourcePermission
+		implements ModelResourcePermission<MBMessage> {
+
+		public MessageBoardThreadModelResourcePermission(
+			MBMessage mbMessage, String name) {
+
+			_mbMessage = mbMessage;
+			_name = name;
+		}
+
+		@Override
+		public void check(
+			PermissionChecker permissionChecker, long primaryKey,
+			String actionId) {
+		}
+
+		@Override
+		public void check(
+				PermissionChecker permissionChecker, MBMessage model,
+				String actionId)
+			throws PortalException {
+		}
+
+		@Override
+		public boolean contains(
+			PermissionChecker permissionChecker, long primaryKey,
+			String actionId) {
+
+			return permissionChecker.hasPermission(
+				_mbMessage.getGroupId(), _name, _mbMessage.getRootMessageId(),
+				actionId);
+		}
+
+		@Override
+		public boolean contains(
+				PermissionChecker permissionChecker, MBMessage model,
+				String actionId)
+			throws PortalException {
+
+			return false;
+		}
+
+		@Override
+		public String getModelName() {
+			return null;
+		}
+
+		@Override
+		public PortletResourcePermission getPortletResourcePermission() {
+			return null;
+		}
+
+		private final MBMessage _mbMessage;
+		private final String _name;
+
+	}
 
 }

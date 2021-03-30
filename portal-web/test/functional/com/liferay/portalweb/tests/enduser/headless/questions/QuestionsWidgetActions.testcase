@@ -857,6 +857,10 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
+		AssertElementPresent(
+			key_questionTitle = "Question1",
+			locator1 = "Questions#QUESTIONS_LIST_LOCKED_ICON");
+
 		Questions.gotoDetails(
 			questionTabField = "Questions",
 			questionTitle = "Question1");
@@ -865,7 +869,9 @@ definition {
 			key_answerBodyContent = "This is my answer",
 			locator1 = "Questions#ANSWER_BODY");
 
-		Questions.viewLockedQuestion(questionTitle = "Question1");
+		Questions.viewLockedQuestion(
+			lockedStatus = "true",
+			questionTitle = "Question1");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
@@ -878,6 +884,10 @@ definition {
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		AssertElementNotPresent(
+			key_questionTitle = "Question1",
+			locator1 = "Questions#QUESTIONS_LIST_LOCKED_ICON");
 
 		Questions.gotoDetails(
 			questionTabField = "Questions",

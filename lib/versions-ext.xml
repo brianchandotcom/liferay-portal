@@ -42,7 +42,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/ant-apache-bsf.jar</file-name>
-				<version>1.8.2</version>
+				<version>1.10.9</version>
 				<project-name>Ant</project-name>
 				<project-url>http://ant.apache.org</project-url>
 				<licenses>

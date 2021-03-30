@@ -25,9 +25,6 @@ import React from 'react';
 import {EVENT_TYPES} from '../../../eventTypes.es';
 import ElementSetList from './ElementSetList.es';
 
-const sortFieldTypes = (fieldTypes) =>
-	fieldTypes.sort(({displayOrder: a}, {displayOrder: b}) => a - b);
-
 export const FormsFieldSidebar = ({title}) => {
 	const {
 		dataProviderInstanceParameterSettingsURL,
@@ -104,8 +101,8 @@ export const FormsFieldSidebar = ({title}) => {
 			dispatchEvent={(type, payload) => dispatch({payload, type})}
 			displaySettings={Object.keys(focusedField).length > 0}
 			editingLanguageId={editingLanguageId}
-			fieldTypes={sortFieldTypes(
-				fieldTypes.filter(({group}) => group === 'basic')
+			fieldTypes={fieldTypes.sort(
+				({displayOrder: a}, {displayOrder: b}) => a - b
 			)}
 			focusedCustomObjectField={{}}
 			focusedField={focusedField}

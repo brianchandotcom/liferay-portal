@@ -17,6 +17,7 @@ import React, {useContext, useReducer, useRef} from 'react';
 
 import {createReducer} from '../reducers/createReducer.es';
 import {useConfig} from './useConfig.es';
+import {useDataView} from './useDataView.es';
 
 const FormDispatchContext = React.createContext(() => {});
 
@@ -163,6 +164,6 @@ export const useForm = () => {
 	return useContext(FormDispatchContext);
 };
 
-export const useFormState = () => {
-	return useContext(FormStateContext);
+export const useFormState = ({schema} = {}) => {
+	return useDataView(useContext(FormStateContext), schema);
 };

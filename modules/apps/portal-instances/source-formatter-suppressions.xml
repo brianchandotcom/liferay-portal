@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="CompanyIterationCheck" files="portal-instances-service/src/main/java/com/liferay/portal/instances/service/impl/PortalInstancesLocalServiceImpl\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-instances-service/service\.xml" />
 	</source-check>

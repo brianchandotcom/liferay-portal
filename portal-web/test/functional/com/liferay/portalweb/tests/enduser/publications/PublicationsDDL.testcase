@@ -35,6 +35,134 @@ definition {
 	}
 
 	@priority = "4"
+	test PublishPublicationWithDeletedListAndRecord {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "Data Definition",
+			ddlListName = "List Name");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Text Field",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		Publications.createNewPublication(publicationsName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.deleteCP(
+			ddlListName = "List Name",
+			ddlRecordFieldData = "Text Field");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.deleteCP(ddlListName = "List Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.deleteCP(ddlDataDefinitionName = "Data Definition");
+
+		Publications.gotoReviewPublications(publicationsName = "Publication Name");
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Dynamic Data Mapping Structure",
+			publicationsSite = "Guest",
+			publicationsTitle = "Data Definition",
+			publicationsType = "Deleted",
+			publicationsUser = "Test Test");
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Asset",
+			publicationsSite = "Guest",
+			publicationsTitle = "New Data Definition for List: List Name",
+			publicationsType = "Deleted",
+			publicationsUser = "Test Test",
+			showAllItems = "true");
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Dynamic Data Lists Record",
+			publicationsSite = "Guest",
+			publicationsTitle = "Dynamic Data Lists Record",
+			publicationsType = "Deleted",
+			publicationsUser = "Test Test",
+			showAllItems = "true");
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Dynamic Data Mapping Structure",
+			publicationsSite = "Guest",
+			publicationsTitle = "Data Definition",
+			publicationsType = "Deleted",
+			publicationsUser = "Test Test",
+			showAllItems = "true");
+
+		PublicationsChanges.viewPublicationsViaContextStyle(
+			publicationsCategory = "Dynamic Data Lists Record",
+			publicationsDescription = "Test Test deleted a Dynamic Data Lists Record in Guest",
+			publicationsTitle = "Dynamic Data Lists Record",
+			showAllItems = "true");
+
+		Publications.gotoPublish(publicationsName = "Publication Name");
+
+		Publications.publishPublication(publicationsName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		LexiconEntry.viewNoEntry(rowEntry = "List Name");
+	}
+
+	@priority = "4"
 	test PublishPublicationWithNewListAndRecord {
 		Publications.createNewPublication(publicationsName = "Publication Name");
 

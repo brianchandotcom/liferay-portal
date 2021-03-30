@@ -163,6 +163,11 @@
 	<td>//h1[contains(.,'${key_questionTitle}')]//*[name()='svg'][contains(@class,'lexicon-icon-lock')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>QUESTIONS_LOCKED_ANSWER_TEXT</td>
+	<td>//div[contains(@class,'question-locked-text') and contains(.,'This question is closed. New answers and comments are disabled.')]</td>
+	<td></td>
+</tr>
 <tr>	
 	<td>QUESTIONS_RESPONSE_DATE_LABEL</td>	
 	<td>//span[contains(@class,'text-secondary') and contains(.,'${key_label}')]</td>	
@@ -206,6 +211,11 @@
 <tr>
 	<td>QUESTIONS_LIST_VOTED_COUNT</td>
 	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-caret-${key_text}')]]//span[contains(.,'${key_count}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_LIST_LOCKED_ICON</td>
+	<td>//h2[contains(.,'${key_questionTitle}')]//*[name()='svg'][contains(@class,'lexicon-icon-lock')]</td>
 	<td></td>
 </tr>
 <tr>

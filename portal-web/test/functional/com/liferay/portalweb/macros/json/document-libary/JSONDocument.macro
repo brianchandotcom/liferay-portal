@@ -50,9 +50,19 @@ definition {
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = "${folderName}");
 
+			if (isSet(parentFolderName)) {
+				var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
+					name = "${parentFolderName}",
+					groupName = "${groupName}");
+			}
+			else {
+				var parentFolderId = "0";
+			}
+
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 				name = "${folderName}",
-				groupName = "${groupName}");
+				groupName = "${groupName}",
+				parentFolderId = "${parentFolderId}");
 		}
 		else {
 			var folderId = "0";
@@ -108,7 +118,12 @@ definition {
 
 		var repositoryId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
 
-		if (!(isSet(parentFolderId))) {
+		if (isSet(parentFolderName)) {
+			var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
+				name = "${parentFolderName}",
+				groupName = "${groupName}");
+		}
+		else {
 			var parentFolderId = "0";
 		}
 

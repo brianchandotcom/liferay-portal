@@ -14,6 +14,8 @@
 
 export const TARGET_POSITION = {
 	BOTTOM: 'bottom',
+	LEFT: 'left',
 	MIDDLE: 'middle',
+	RIGHT: 'right',
 	TOP: 'top',
 };

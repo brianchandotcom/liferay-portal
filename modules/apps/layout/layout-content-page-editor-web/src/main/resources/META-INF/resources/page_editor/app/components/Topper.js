@@ -166,8 +166,12 @@ function TopperContent({
 				active: isActive,
 				'drag-over-bottom':
 					isOverTarget && targetPosition === TARGET_POSITION.BOTTOM,
+				'drag-over-left':
+					isOverTarget && targetPosition === TARGET_POSITION.LEFT,
 				'drag-over-middle':
 					isOverTarget && targetPosition === TARGET_POSITION.MIDDLE,
+				'drag-over-right':
+					isOverTarget && targetPosition === TARGET_POSITION.RIGHT,
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITION.TOP,
 				dragged: isDraggingSource,

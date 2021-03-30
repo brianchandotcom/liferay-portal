@@ -90,6 +90,19 @@
 		border-bottom: 4px solid $primary-l1;
 	}
 
+	// For left and right, we use box-shadow instead of border because border is
+	// automatically inverted in rtl, and we don't want that behavior here
+
+	&.drag-over-left:after {
+		box-shadow: inset 4px 0 0 0 $primary-l1;
+		transition: none;
+	}
+
+	&.drag-over-right:after {
+		box-shadow: inset -4px 0 0 0 $primary-l1;
+		transition: none;
+	}
+
 	&.drag-over-top:after {
 		border-top: 4px solid $primary-l1;
 	}

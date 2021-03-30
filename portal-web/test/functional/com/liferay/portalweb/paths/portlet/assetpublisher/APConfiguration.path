@@ -273,12 +273,12 @@
 <!--COLLECTION_PROVIDER-->
 <tr>
 	<td>SELECT_COLLECTION_PROVIDER_FIELD</td>
-	<td>//select[contains(@id,'infoListProviderClassName')]</td>
+	<td>//select[contains(@id,'infoListProviderKey')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_COLLECTION_PROVIDER_FIELD_VALUE</td>
-	<td>//select[contains(@id,'infoListProviderClassName')]/option[normalize-space(text())='${key_value}']</td>
+	<td>//select[contains(@id,'infoListProviderKey')]/option[normalize-space(text())='${key_value}']</td>
 	<td></td>
 </tr>
 </tbody>

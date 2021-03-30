@@ -75,30 +75,35 @@ export const getFilteredSettingsContext = ({
 					}
 
 					if (fieldName === 'dataSourceType') {
-						return {
+						const field = {
 							...updatedField,
 							name: generateName(name, updatedField),
 							predefinedValue: '["manual"]',
-							readOnly: true,
-							visibilityExpression: 'FALSE',
-							visible: false,
 						};
+
+						if (!name.includes('form_web')) {
+							field.readOnly = true;
+							field.visibilityExpression = 'FALSE';
+							field.visible = false;
+						}
+
+						return field;
 					}
 
-					if (fieldName === 'ddmDataProviderInstanceId') {
-						return {
+					if (
+						fieldName === 'ddmDataProviderInstanceId' ||
+						fieldName === 'ddmDataProviderInstanceOutput'
+					) {
+						const field = {
 							...updatedField,
-							visibilityExpression: 'FALSE',
-							visible: false,
 						};
-					}
 
-					if (fieldName === 'ddmDataProviderInstanceOutput') {
-						return {
-							...updatedField,
-							visibilityExpression: 'FALSE',
-							visible: false,
-						};
+						if (!name.includes('form_web')) {
+							field.visibilityExpression = 'FALSE';
+							field.visible = false;
+						}
+
+						return field;
 					}
 
 					if (fieldName === 'localizable') {

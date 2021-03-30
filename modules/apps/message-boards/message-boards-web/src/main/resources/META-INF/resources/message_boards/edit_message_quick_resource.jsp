@@ -198,7 +198,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				}
 				%>
 
-				<aui:button name='<%= "replyButton" + parentMessageId %>' type="submit" value="<%= publishButtonLabel %>" />
+				<aui:button name='<%= "quickReplyButton" + parentMessageId %>' type="submit" value="<%= publishButtonLabel %>" />
 
 				<%
 				String taglibCancelReply = "javascript:" + liferayPortletResponse.getNamespace() + "hideReplyMessage('" + parentMessageId + "');";
@@ -248,7 +248,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		'<portlet:namespace />replyMessageOnChange' + <%= parentMessageId %>
 	] = function (html) {
 		Liferay.Util.toggleDisabled(
-			'#<portlet:namespace />replyButton<%= parentMessageId %>',
+			'#<portlet:namespace />quickReplyButton<%= parentMessageId %>',
 			html === ''
 		);
 	};

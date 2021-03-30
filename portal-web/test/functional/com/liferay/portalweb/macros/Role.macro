@@ -107,6 +107,7 @@ definition {
 			permissionNavigationKey = "${permissionNavigationKey}",
 			permissionNavigationValue = "${permissionNavigationValue}",
 			remove = "${remove}",
+			removeSiteScope = "${removeSiteScope}",
 			roleTitle = "${roleTitle}",
 			roleTitleEdit = "${roleTitleEdit}",
 			roleType = "${roleType}",
@@ -404,6 +405,12 @@ definition {
 				AssertTextEquals.assertPartialText(
 					locator1 = "RolesPermissions#${permissionDefinitionKeySiteScope}",
 					value1 = "${siteNameScope}");
+			}
+			else if (isSet(removeSiteScope)) {
+				var key_removeSiteScope = "${removeSiteScope}";
+				var permissionDefinitionKeyRemoveSiteScope = StringUtil.replace("${permissionDefinitionKey}", "CHECKBOX", "REMOVE_SITE_SCOPE");
+
+				Click(locator1 = "RolesPermissions#${permissionDefinitionKeyRemoveSiteScope}");
 			}
 		}
 

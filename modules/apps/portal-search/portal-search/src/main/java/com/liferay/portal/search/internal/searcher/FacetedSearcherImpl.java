@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -139,8 +138,7 @@ public class FacetedSearcherImpl
 			booleanFilter.addRequiredTerm(
 				Field.COMPANY_ID, searchContext.getCompanyId());
 
-			Query query = _getFinalQuery(
-				createFullQuery(booleanFilter, searchContext));
+			Query query = createFullQuery(booleanFilter, searchContext);
 
 			query.setQueryConfig(searchContext.getQueryConfig());
 
@@ -272,19 +270,6 @@ public class FacetedSearcherImpl
 
 		return _searchableAssetClassNamesProvider.getClassNames(
 			searchContext.getCompanyId());
-	}
-
-	private Query _getFinalQuery(Query query) {
-		if (query.hasChildren()) {
-			return query;
-		}
-
-		MatchAllQuery matchAllQuery = new MatchAllQuery();
-
-		matchAllQuery.setPostFilter(query.getPostFilter());
-		matchAllQuery.setPreBooleanFilter(query.getPreBooleanFilter());
-
-		return matchAllQuery;
 	}
 
 	private void _postProcessFullQuery(

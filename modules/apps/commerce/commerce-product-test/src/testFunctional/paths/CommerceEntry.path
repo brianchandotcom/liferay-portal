@@ -670,6 +670,21 @@
 	<td>//div[contains(@class,'table-list-title')]//a[contains(text(),'${key_name}')]//..//../following-sibling::div[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRODUCT_CARD_NAME_AND_PRICE</td>
+	<td>//p[@title='${card_name}']//following-sibling::p[@class='card-text']//span[@class='price-value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_PRODUCT_IMAGE</td>
+	<td>//div[contains(@style,'default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_CARD_DEFAULT_IMAGE</td>
+	<td>//img[@class='aspect-ratio-item-center-middle aspect-ratio-item-fluid aspect-ratio-item-vertical-fluid']//..//..//..//..//..//..//h2[contains(text(),'${key_productName}')]</td>
+	<td></td>
+</tr>
 <!--OPTION-->
 <tr>
 	<td>DELETE_OPTION_BUTTON</td>

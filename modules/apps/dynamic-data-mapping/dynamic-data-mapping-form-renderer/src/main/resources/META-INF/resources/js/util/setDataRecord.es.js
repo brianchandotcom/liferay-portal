@@ -16,12 +16,15 @@ import extractDataRecordValueKey from '../util/extractDataRecordValueKey.es';
 
 export default (
 	{
+		locale,
 		localizable,
-		localizedValue = {},
+		localizedValue = {
+			[locale]: '',
+		},
 		localizedValueEdited,
 		name,
 		transient,
-		value,
+		value = '',
 		visible,
 	},
 	dataRecordValues,

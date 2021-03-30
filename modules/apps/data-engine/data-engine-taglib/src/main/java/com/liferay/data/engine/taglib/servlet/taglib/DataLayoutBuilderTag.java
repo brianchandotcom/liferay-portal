@@ -176,6 +176,18 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		return getModuleServletContext();
 	}
 
+	private String _getPluginEntryPoint() {
+		if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
+			return DataLayoutTaglibUtil.resolveModule(
+				"data-engine-taglib/data_layout_builder/new-js/plugins" +
+					"/fields-sidebar/index");
+		}
+
+		return DataLayoutTaglibUtil.resolveModule(
+			"data-engine-taglib/data_layout_builder/js/plugins/fields-sidebar" +
+				"/index.es");
+	}
+
 	private Map<String, Object> _getSidebarPanels() {
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -192,10 +204,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				).put(
 					"label", LanguageUtil.get(resourceBundle, "builder")
 				).put(
-					"pluginEntryPoint",
-					DataLayoutTaglibUtil.resolveModule(
-						"data-engine-taglib/data_layout_builder/js/plugins" +
-							"/fields-sidebar/index.es")
+					"pluginEntryPoint", _getPluginEntryPoint()
 				).put(
 					"sidebarPanelId", "fields"
 				).build()

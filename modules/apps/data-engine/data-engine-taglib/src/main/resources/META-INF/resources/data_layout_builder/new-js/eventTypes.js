@@ -12,19 +12,10 @@
  * details.
  */
 
-import {INITIAL_CONFIG_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
-
-const INITIAL_CONFIG = {
-	...INITIAL_CONFIG_STATE,
-	allowFieldSets: false,
-	allowNestedFields: true,
-	allowRules: false,
-	disabledProperties: [],
-	disabledTabs: [],
-	multiPage: true,
-	ruleSettings: {},
-	unimplementedProperties: [],
-	visibleProperties: [],
+const SIDEBAR = {
+	FIELD: {BLUR: 'sidebar_field_blur'},
 };
 
-export default INITIAL_CONFIG;
+export const EVENT_TYPES = {
+	SIDEBAR,
+};

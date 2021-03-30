@@ -98,9 +98,9 @@ export const dropCustomObjectField = ({
 };
 
 export const dropLayoutBuilderField = ({
-	dataLayoutBuilder,
 	fieldName,
 	fieldTypeName,
+	fieldTypes,
 	indexes,
 	parentFieldName,
 }) => {
@@ -110,7 +110,7 @@ export const dropLayoutBuilderField = ({
 			parentFieldName,
 		},
 		fieldType: {
-			...dataLayoutBuilder.props.fieldTypes.find(({name}) => {
+			...fieldTypes.find(({name}) => {
 				return name === fieldTypeName;
 			}),
 			editable: true,

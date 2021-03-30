@@ -12,19 +12,4 @@
  * details.
  */
 
-import {INITIAL_CONFIG_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
-
-const INITIAL_CONFIG = {
-	...INITIAL_CONFIG_STATE,
-	allowFieldSets: false,
-	allowNestedFields: true,
-	allowRules: false,
-	disabledProperties: [],
-	disabledTabs: [],
-	multiPage: true,
-	ruleSettings: {},
-	unimplementedProperties: [],
-	visibleProperties: [],
-};
-
-export default INITIAL_CONFIG;
+export {default as sidebarReducer} from './sidebarReducer';

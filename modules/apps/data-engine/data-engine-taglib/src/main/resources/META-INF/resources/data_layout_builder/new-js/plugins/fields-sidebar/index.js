@@ -12,19 +12,27 @@
  * details.
  */
 
-import {INITIAL_CONFIG_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
+import React from 'react';
 
-const INITIAL_CONFIG = {
-	...INITIAL_CONFIG_STATE,
-	allowFieldSets: false,
-	allowNestedFields: true,
-	allowRules: false,
-	disabledProperties: [],
-	disabledTabs: [],
-	multiPage: true,
-	ruleSettings: {},
-	unimplementedProperties: [],
-	visibleProperties: [],
-};
+import {Component} from '../../../js/plugins/PluginContext.es';
+import {DataEngineFieldsSidebar} from './components/FieldsSidebar';
 
-export default INITIAL_CONFIG;
+/**
+ * Entry-point for "FieldsSidebar" (sidebar panel) functionality.
+ */
+export default class FieldsSidebarPluginEntryPoint {
+	constructor({app, panel}) {
+		this.Component = Component(app);
+		this.title = panel.label;
+	}
+
+	renderSidebar() {
+		const {Component} = this;
+
+		return (
+			<Component>
+				<DataEngineFieldsSidebar title={this.title} />
+			</Component>
+		);
+	}
+}

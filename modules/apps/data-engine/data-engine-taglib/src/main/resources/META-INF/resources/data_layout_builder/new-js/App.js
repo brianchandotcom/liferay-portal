@@ -32,6 +32,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import DataEngineFormBuilder from './DataEngineFormBuilder';
 import INITIAL_CONFIG from './config/initialConfig';
 import INITIAL_STATE from './config/initialState';
+import sidebarReducer from './reducers/sidebarReducer';
 
 const App = (props) => {
 	const {config, state} = parseProps(props);
@@ -48,6 +49,7 @@ const App = (props) => {
 							languageReducer,
 							pageReducer,
 							pagesStructureReducer,
+							sidebarReducer,
 						]}
 						value={state}
 					>

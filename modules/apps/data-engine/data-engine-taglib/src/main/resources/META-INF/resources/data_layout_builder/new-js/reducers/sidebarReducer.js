@@ -12,19 +12,15 @@
  * details.
  */
 
-import {INITIAL_CONFIG_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
+import {EVENT_TYPES} from '../eventTypes';
 
-const INITIAL_CONFIG = {
-	...INITIAL_CONFIG_STATE,
-	allowFieldSets: false,
-	allowNestedFields: true,
-	allowRules: false,
-	disabledProperties: [],
-	disabledTabs: [],
-	multiPage: true,
-	ruleSettings: {},
-	unimplementedProperties: [],
-	visibleProperties: [],
+export default (state, action) => {
+	switch (action.type) {
+		case EVENT_TYPES.SIDEBAR.FIELD.BLUR:
+			return {
+				focusedField: {},
+			};
+		default:
+			return state;
+	}
 };
-
-export default INITIAL_CONFIG;

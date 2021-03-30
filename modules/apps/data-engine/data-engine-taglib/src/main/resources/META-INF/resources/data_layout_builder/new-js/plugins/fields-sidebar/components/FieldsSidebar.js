@@ -14,38 +14,43 @@
 
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
-import {MAPPED_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer';
-import React, {useContext, useState} from 'react';
+import {
+	EVENT_TYPES as CORE_EVENT_TYPES,
+	useConfig,
+	useForm,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
+import React, {useState} from 'react';
 
-import AppContext from '../../../AppContext.es';
 import {
 	EDIT_CUSTOM_OBJECT_FIELD,
 	UPDATE_DATA_DEFINITION_AVAILABLE_LANGUAGE,
 	dropLayoutBuilderField,
-} from '../../../actions.es';
-import Sidebar from '../../../components/sidebar/Sidebar.es';
-import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
-import FieldsSidebarBody from './FieldsSidebarBody.es';
-import FieldsSidebarSettingsBody from './FieldsSidebarSettingsBody.es';
-import FieldsSidebarSettingsHeader from './FieldsSidebarSettingsHeader.es';
+} from '../../../../js/actions.es';
+import Sidebar from '../../../../js/components/sidebar/Sidebar.es';
+import {EVENT_TYPES} from '../../../eventTypes';
+import FieldsSidebarBody from './FieldsSidebarBody';
+import FieldsSidebarSettingsBody from './FieldsSidebarSettingsBody';
+import FieldsSidebarSettingsHeader from './FieldsSidebarSettingsHeader';
 
 const sortFieldTypes = (fieldTypes) =>
 	fieldTypes.sort(({displayOrder: a}, {displayOrder: b}) => a - b);
 
 export const DataEngineFieldsSidebar = ({title}) => {
-	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const [
-		{
-			config,
-			customFields,
-			dataDefinition,
-			dataLayout,
-			editingLanguageId,
-			focusedCustomObjectField,
-			focusedField,
-		},
-		dispatch,
-	] = useContext(AppContext);
+	const {
+		activePage,
+		config,
+		customFields,
+		dataDefinition,
+		dataLayout,
+		defaultLanguageId,
+		editingLanguageId,
+		focusedCustomObjectField,
+		focusedField,
+		pages,
+	} = useFormState();
+	const {fieldTypes} = useConfig();
+	const dispatch = useForm();
 
 	const hasFocusedCustomObjectField = (focusedCustomObjectField) => {
 		return !!focusedCustomObjectField.settingsContext;
@@ -57,10 +62,8 @@ export const DataEngineFieldsSidebar = ({title}) => {
 		hasFocusedCustomObjectField(focusedCustomObjectField) ||
 		hasFocusedField;
 
-	const fieldTypes = sortFieldTypes(
-		dataLayoutBuilder.props.fieldTypes.filter(
-			({group}) => group === 'basic'
-		)
+	const sortedFieldTypes = sortFieldTypes(
+		fieldTypes.filter(({group}) => group === 'basic')
 	);
 
 	return (
@@ -68,7 +71,7 @@ export const DataEngineFieldsSidebar = ({title}) => {
 			config={config}
 			customFields={customFields}
 			dataLayout={dataLayout}
-			defaultLanguageId={dataLayoutBuilder.props.defaultLanguageId}
+			defaultLanguageId={defaultLanguageId}
 			dispatchEvent={(type, payload) => {
 				if (type === 'field_change') {
 					const {editingLanguageId} = payload;
@@ -92,42 +95,37 @@ export const DataEngineFieldsSidebar = ({title}) => {
 				}
 
 				if (!hasFocusedCustomObjectField(focusedCustomObjectField)) {
-					dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
-						MAPPED_EVENT_TYPES[type] ?? type,
-						payload
-					);
+					dispatch({
+						payload,
+						type,
+					});
 				}
 			}}
 			displaySettings={displaySettings}
 			editingLanguageId={editingLanguageId}
-			fieldTypes={fieldTypes}
+			fieldTypes={sortedFieldTypes}
 			focusedCustomObjectField={focusedCustomObjectField}
 			focusedField={focusedField}
 			hasFocusedCustomObjectField={hasFocusedCustomObjectField}
 			onClick={() => {
-				dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
-					'sidebarFieldBlurred'
-				);
+				dispatch({
+					type: EVENT_TYPES.SIDEBAR.FIELD.BLUR,
+				});
 			}}
 			onDoubleClick={({name}) => {
-				const {
-					activePage,
-					pages,
-				} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.state;
-
-				dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
-					'fieldAdded',
-					dropLayoutBuilderField({
+				dispatch({
+					payload: dropLayoutBuilderField({
 						addedToPlaceholder: true,
 						fieldTypeName: name,
-						fieldTypes: dataLayoutBuilder.props.fieldTypes,
+						fieldTypes,
 						indexes: {
 							columnIndex: 0,
 							pageIndex: activePage,
 							rowIndex: pages[activePage].rows.length,
 						},
-					})
-				);
+					}),
+					type: CORE_EVENT_TYPES.FIELD.ADD,
+				});
 			}}
 			title={title}
 		/>

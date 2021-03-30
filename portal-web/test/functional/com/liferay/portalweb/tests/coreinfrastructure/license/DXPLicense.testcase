@@ -1,6 +1,7 @@
 @component-name = "core-infrastructure"
 definition {
 
+	property license.required = "true";
 	property portal.release = "true";
 	property portal.upstream = "false";
 	property test.run.environment = "EE";
@@ -17,9 +18,6 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-		}
-		else {
-			User.logoutPG();
 		}
 	}
 

@@ -15,8 +15,8 @@
 package com.liferay.layout.reports.web.internal.portlet;
 
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsWebKeys;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration",
+	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -82,9 +82,9 @@ public class LayoutReportsPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutReportsPageSpeedConfiguration =
+		_layoutReportsGooglePageSpeedConfiguration =
 			ConfigurableUtil.createConfigurable(
-				LayoutReportsPageSpeedConfiguration.class, properties);
+				LayoutReportsGooglePageSpeedConfiguration.class, properties);
 	}
 
 	@Override
@@ -131,52 +131,53 @@ public class LayoutReportsPortlet extends MVCPortlet {
 	private String _getApiKey(Group group) throws ConfigurationException {
 		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 
-		String pageSpeedApikey = unicodeProperties.getProperty(
-			"pageSpeedApiKey");
+		String googlePageSpeedApikey = unicodeProperties.getProperty(
+			"googlePageSpeedApiKey");
 
-		if (Validator.isNotNull(pageSpeedApikey)) {
-			return pageSpeedApikey;
+		if (Validator.isNotNull(googlePageSpeedApikey)) {
+			return googlePageSpeedApikey;
 		}
 
 		return _getApiKey(group.getCompanyId());
 	}
 
 	private String _getApiKey(long companyId) throws ConfigurationException {
-		LayoutReportsPageSpeedCompanyConfiguration
-			layoutReportsPageSpeedCompanyConfiguration =
+		LayoutReportsGooglePageSpeedCompanyConfiguration
+			layoutReportsGooglePageSpeedCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					LayoutReportsPageSpeedCompanyConfiguration.class,
+					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
 					companyId);
 
-		String apiKey = layoutReportsPageSpeedCompanyConfiguration.apiKey();
+		String apiKey =
+			layoutReportsGooglePageSpeedCompanyConfiguration.apiKey();
 
 		if (Validator.isNotNull(apiKey)) {
 			return apiKey;
 		}
 
-		return _layoutReportsPageSpeedConfiguration.apiKey();
+		return _layoutReportsGooglePageSpeedConfiguration.apiKey();
 	}
 
 	private boolean _isEnabled(Group group) throws ConfigurationException {
 		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 
 		return GetterUtil.getBoolean(
-			unicodeProperties.getProperty("pageSpeedEnabled"),
+			unicodeProperties.getProperty("googlePageSpeedEnabled"),
 			_isEnabled(group.getCompanyId()));
 	}
 
 	private boolean _isEnabled(long companyId) throws ConfigurationException {
-		if (!_layoutReportsPageSpeedConfiguration.enabled()) {
+		if (!_layoutReportsGooglePageSpeedConfiguration.enabled()) {
 			return false;
 		}
 
-		LayoutReportsPageSpeedCompanyConfiguration
-			layoutReportsPageSpeedCompanyConfiguration =
+		LayoutReportsGooglePageSpeedCompanyConfiguration
+			layoutReportsGooglePageSpeedCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					LayoutReportsPageSpeedCompanyConfiguration.class,
+					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
 					companyId);
 
-		if (!layoutReportsPageSpeedCompanyConfiguration.enabled()) {
+		if (!layoutReportsGooglePageSpeedCompanyConfiguration.enabled()) {
 			return false;
 		}
 
@@ -201,8 +202,8 @@ public class LayoutReportsPortlet extends MVCPortlet {
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	private volatile LayoutReportsPageSpeedConfiguration
-		_layoutReportsPageSpeedConfiguration;
+	private volatile LayoutReportsGooglePageSpeedConfiguration
+		_layoutReportsGooglePageSpeedConfiguration;
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

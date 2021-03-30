@@ -21,15 +21,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Sarai Díaz
  */
-@ExtendedObjectClassDefinition(
-	category = "pages", scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
+@ExtendedObjectClassDefinition(category = "pages")
 @Meta.OCD(
-	id = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration",
+	id = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
 	localization = "content/Language",
-	name = "layout-reports-page-speed-configuration-name"
+	name = "layout-reports-google-page-speed-configuration-name"
 )
-public interface LayoutReportsPageSpeedCompanyConfiguration {
+public interface LayoutReportsGooglePageSpeedConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enabled();

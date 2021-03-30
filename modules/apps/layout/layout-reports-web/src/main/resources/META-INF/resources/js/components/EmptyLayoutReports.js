@@ -18,7 +18,7 @@ import React from 'react';
 
 export default function EmptyLayoutReports({
 	assetsPath,
-	configurePageSpeedURL,
+	configureGooglePageSpeedURL,
 }) {
 	const defaultIllustration = `${assetsPath}/issues-default.svg`;
 
@@ -41,19 +41,19 @@ export default function EmptyLayoutReports({
 				</span>
 			</div>
 
-			{configurePageSpeedURL ? (
+			{configureGooglePageSpeedURL ? (
 				<>
 					<div className="c-mb-3 text-secondary">
 						{Liferay.Language.get(
-							'connect-to-pagespeed-to-run-a-page-audit'
+							'connect-to-google-pagespeed-to-run-a-page-audit'
 						)}
 					</div>
 
 					<ClayLink
 						className="btn btn-secondary"
-						href={configurePageSpeedURL}
+						href={configureGooglePageSpeedURL}
 					>
-						{Liferay.Language.get('connect-to-pagespeed')}
+						{Liferay.Language.get('connect-to-google-pagespeed')}
 					</ClayLink>
 				</>
 			) : (

@@ -23,9 +23,9 @@ import javax.portlet.PortletRequest;
 /**
  * @author Cristina González
  */
-public class LayoutReportsPageSpeedDisplayContext {
+public class LayoutReportsGooglePageSpeedDisplayContext {
 
-	public LayoutReportsPageSpeedDisplayContext(
+	public LayoutReportsGooglePageSpeedDisplayContext(
 		String apiKey, boolean enable, PortletRequest portletRequest) {
 
 		_apiKey = apiKey;
@@ -38,12 +38,14 @@ public class LayoutReportsPageSpeedDisplayContext {
 
 	public String getApiKey() {
 		return PropertiesParamUtil.getString(
-			_unicodeProperties, _portletRequest, "pageSpeedApiKey", _apiKey);
+			_unicodeProperties, _portletRequest, "googlePageSpeedApiKey",
+			_apiKey);
 	}
 
 	public boolean isEnabled() {
 		return PropertiesParamUtil.getBoolean(
-			_unicodeProperties, _portletRequest, "pageSpeedEnabled", _enable);
+			_unicodeProperties, _portletRequest, "googlePageSpeedEnabled",
+			_enable);
 	}
 
 	private UnicodeProperties _getUnicodeProperties(

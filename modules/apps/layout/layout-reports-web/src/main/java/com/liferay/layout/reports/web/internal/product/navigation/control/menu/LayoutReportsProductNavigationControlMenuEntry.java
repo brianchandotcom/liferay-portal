@@ -14,8 +14,8 @@
 
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -86,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sarai Díaz
  */
 @Component(
-	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration",
+	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
@@ -233,9 +233,9 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutReportsPageSpeedConfiguration =
+		_layoutReportsGooglePageSpeedConfiguration =
 			ConfigurableUtil.createConfigurable(
-				LayoutReportsPageSpeedConfiguration.class, properties);
+				LayoutReportsGooglePageSpeedConfiguration.class, properties);
 
 		_portletNamespace = _portal.getPortletNamespace(
 			LayoutReportsPortletKeys.LAYOUT_REPORTS);
@@ -290,22 +290,22 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	}
 
 	private boolean _isEnabled(Group group) throws ConfigurationException {
-		if (!_layoutReportsPageSpeedConfiguration.enabled()) {
+		if (!_layoutReportsGooglePageSpeedConfiguration.enabled()) {
 			return false;
 		}
 
-		LayoutReportsPageSpeedCompanyConfiguration
-			layoutReportsPageSpeedCompanyConfiguration =
+		LayoutReportsGooglePageSpeedCompanyConfiguration
+			layoutReportsGooglePageSpeedCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					LayoutReportsPageSpeedCompanyConfiguration.class,
+					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
 					group.getCompanyId());
 
-		if (!layoutReportsPageSpeedCompanyConfiguration.enabled()) {
+		if (!layoutReportsGooglePageSpeedCompanyConfiguration.enabled()) {
 			return false;
 		}
 
 		return GetterUtil.get(
-			group.getTypeSettingsProperty("pageSpeedEnabled"), true);
+			group.getTypeSettingsProperty("googlePageSpeedEnabled"), true);
 	}
 
 	private boolean _isPanelStateOpen(HttpServletRequest httpServletRequest) {
@@ -426,8 +426,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	private volatile LayoutReportsPageSpeedConfiguration
-		_layoutReportsPageSpeedConfiguration;
+	private volatile LayoutReportsGooglePageSpeedConfiguration
+		_layoutReportsGooglePageSpeedConfiguration;
 
 	@Reference
 	private Portal _portal;

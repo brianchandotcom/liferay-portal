@@ -14,7 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.settings.definition;
 
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Cristina Gonzañe
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class LayoutReportsPageSpeedCompanyConfigurationBeanDeclaration
+public class LayoutReportsGooglePageSpeedCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return LayoutReportsPageSpeedCompanyConfiguration.class;
+		return LayoutReportsGooglePageSpeedCompanyConfiguration.class;
 	}
 
 }

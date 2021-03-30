@@ -17,9 +17,9 @@ package com.liferay.layout.reports.web.internal.frontend.taglib.form.navigator;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
-import com.liferay.layout.reports.web.internal.display.context.LayoutReportsPageSpeedDisplayContext;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
+import com.liferay.layout.reports.web.internal.display.context.LayoutReportsGooglePageSpeedDisplayContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -56,11 +56,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration",
+	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
 	property = "form.navigator.entry.order:Integer=20",
 	service = FormNavigatorEntry.class
 )
-public class LayoutReportsPageSpeedSiteFormNavigatorEntry
+public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<Group> {
 
 	@Override
@@ -75,12 +75,13 @@ public class LayoutReportsPageSpeedSiteFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "page-speed";
+		return "google-page-speed";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(_getResourceBundle(locale), "page-speed");
+		return LanguageUtil.get(
+			_getResourceBundle(locale), "google-page-speed");
 	}
 
 	@Override
@@ -96,8 +97,8 @@ public class LayoutReportsPageSpeedSiteFormNavigatorEntry
 		long companyId = _portal.getCompanyId(portletRequest);
 
 		httpServletRequest.setAttribute(
-			LayoutReportsPageSpeedDisplayContext.class.getName(),
-			new LayoutReportsPageSpeedDisplayContext(
+			LayoutReportsGooglePageSpeedDisplayContext.class.getName(),
+			new LayoutReportsGooglePageSpeedDisplayContext(
 				_getApiKey(companyId), _isEnabled(companyId), portletRequest));
 
 		super.include(httpServletRequest, httpServletResponse);
@@ -128,31 +129,33 @@ public class LayoutReportsPageSpeedSiteFormNavigatorEntry
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutReportsPageSpeedConfiguration =
+		_layoutReportsGooglePageSpeedConfiguration =
 			ConfigurableUtil.createConfigurable(
-				LayoutReportsPageSpeedConfiguration.class, properties);
+				LayoutReportsGooglePageSpeedConfiguration.class, properties);
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/site/page_speed_settings.jsp";
+		return "/site/google_page_speed_settings.jsp";
 	}
 
 	private String _getApiKey(long companyId) {
 		try {
-			LayoutReportsPageSpeedCompanyConfiguration
-				layoutReportsPageSpeedCompanyConfiguration =
+			LayoutReportsGooglePageSpeedCompanyConfiguration
+				layoutReportsGooglePageSpeedCompanyConfiguration =
 					_configurationProvider.getCompanyConfiguration(
-						LayoutReportsPageSpeedCompanyConfiguration.class,
+						LayoutReportsGooglePageSpeedCompanyConfiguration.class,
 						companyId);
 
 			if (Validator.isNotNull(
-					layoutReportsPageSpeedCompanyConfiguration.apiKey())) {
+					layoutReportsGooglePageSpeedCompanyConfiguration.
+						apiKey())) {
 
-				return layoutReportsPageSpeedCompanyConfiguration.apiKey();
+				return layoutReportsGooglePageSpeedCompanyConfiguration.
+					apiKey();
 			}
 
-			return _layoutReportsPageSpeedConfiguration.apiKey();
+			return _layoutReportsGooglePageSpeedConfiguration.apiKey();
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException, configurationException);
@@ -167,18 +170,18 @@ public class LayoutReportsPageSpeedSiteFormNavigatorEntry
 	}
 
 	private boolean _isEnabled(long companyId) {
-		if (!_layoutReportsPageSpeedConfiguration.enabled()) {
+		if (!_layoutReportsGooglePageSpeedConfiguration.enabled()) {
 			return false;
 		}
 
 		try {
-			LayoutReportsPageSpeedCompanyConfiguration
-				layoutReportsPageSpeedCompanyConfiguration =
+			LayoutReportsGooglePageSpeedCompanyConfiguration
+				layoutReportsGooglePageSpeedCompanyConfiguration =
 					_configurationProvider.getCompanyConfiguration(
-						LayoutReportsPageSpeedCompanyConfiguration.class,
+						LayoutReportsGooglePageSpeedCompanyConfiguration.class,
 						companyId);
 
-			if (!layoutReportsPageSpeedCompanyConfiguration.enabled()) {
+			if (!layoutReportsGooglePageSpeedCompanyConfiguration.enabled()) {
 				return false;
 			}
 
@@ -192,7 +195,7 @@ public class LayoutReportsPageSpeedSiteFormNavigatorEntry
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutReportsPageSpeedSiteFormNavigatorEntry.class);
+		LayoutReportsGooglePageSpeedSiteFormNavigatorEntry.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
@@ -200,8 +203,8 @@ public class LayoutReportsPageSpeedSiteFormNavigatorEntry
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private LayoutReportsPageSpeedConfiguration
-		_layoutReportsPageSpeedConfiguration;
+	private LayoutReportsGooglePageSpeedConfiguration
+		_layoutReportsGooglePageSpeedConfiguration;
 
 	@Reference
 	private Portal _portal;

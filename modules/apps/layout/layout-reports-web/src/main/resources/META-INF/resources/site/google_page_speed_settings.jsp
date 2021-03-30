@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutReportsPageSpeedDisplayContext layoutReportsPageSpeedDisplayContext = (LayoutReportsPageSpeedDisplayContext)request.getAttribute(LayoutReportsPageSpeedDisplayContext.class.getName());
+LayoutReportsGooglePageSpeedDisplayContext layoutReportsGooglePageSpeedDisplayContext = (LayoutReportsGooglePageSpeedDisplayContext)request.getAttribute(LayoutReportsGooglePageSpeedDisplayContext.class.getName());
 %>
 
 <div class="form-group" id="<portlet:namespace />idOptions">
-	<aui:input id="pageSpeedEnabled" label="enable" name="TypeSettingsProperties--pageSpeedEnabled--" type="checkbox" value="<%= layoutReportsPageSpeedDisplayContext.isEnabled() %>" />
+	<aui:input id="googlePageSpeedEnabled" label="enable" name="TypeSettingsProperties--googlePageSpeedEnabled--" type="checkbox" value="<%= layoutReportsGooglePageSpeedDisplayContext.isEnabled() %>" />
 </div>

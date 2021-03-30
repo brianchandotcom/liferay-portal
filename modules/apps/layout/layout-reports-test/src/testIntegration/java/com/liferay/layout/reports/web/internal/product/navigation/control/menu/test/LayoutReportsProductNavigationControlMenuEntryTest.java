@@ -73,7 +73,8 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsPageSpeedConfiguration",
+						"LayoutReportsConfigurationGooglePageSpeed" +
+							"Configuration",
 					new HashMapDictionary<String, Object>() {
 						{
 							put("apiKey", RandomTestUtil.randomString());
@@ -96,7 +97,7 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsPageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedConfiguration",
 					new HashMapDictionary<String, Object>() {
 						{
 							put("apiKey", RandomTestUtil.randomString());
@@ -115,7 +116,7 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsPageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedConfiguration",
 					new HashMapDictionary<String, Object>() {
 						{
 							put("enabled", false);

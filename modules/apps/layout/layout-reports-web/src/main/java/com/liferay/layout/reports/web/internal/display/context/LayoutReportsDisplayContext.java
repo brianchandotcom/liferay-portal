@@ -19,8 +19,8 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedCompanyConfiguration;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
@@ -96,8 +96,8 @@ public class LayoutReportsDisplayContext {
 			).put(
 				"canonicalURLs", _getCanonicalURLs(layout)
 			).put(
-				"configurePageSpeedURL",
-				_getConfigurePageSpeedURL(_renderRequest)
+				"configureGooglePageSpeedURL",
+				_getConfigureGooglePageSpeedURL(_renderRequest)
 			).put(
 				"defaultLanguageId",
 				LocaleUtil.toW3cLanguageId(_getDefaultLocale(layout))
@@ -199,7 +199,9 @@ public class LayoutReportsDisplayContext {
 		}
 	}
 
-	private String _getConfigurePageSpeedURL(PortletRequest portletRequest) {
+	private String _getConfigureGooglePageSpeedURL(
+		PortletRequest portletRequest) {
+
 		if (_isOmniAdmin()) {
 			PortletURL portletURL = _portal.getControlPanelPortletURL(
 				portletRequest, ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
@@ -214,9 +216,10 @@ public class LayoutReportsDisplayContext {
 					_portal.getHttpServletRequest(portletRequest)));
 			portletURL.setParameter(
 				"factoryPid",
-				LayoutReportsPageSpeedConfiguration.class.getName());
+				LayoutReportsGooglePageSpeedConfiguration.class.getName());
 			portletURL.setParameter(
-				"pid", LayoutReportsPageSpeedConfiguration.class.getName());
+				"pid",
+				LayoutReportsGooglePageSpeedConfiguration.class.getName());
 
 			return portletURL.toString();
 		}
@@ -234,10 +237,12 @@ public class LayoutReportsDisplayContext {
 					_portal.getHttpServletRequest(portletRequest)));
 			portletURL.setParameter(
 				"factoryPid",
-				LayoutReportsPageSpeedCompanyConfiguration.class.getName());
+				LayoutReportsGooglePageSpeedCompanyConfiguration.class.
+					getName());
 			portletURL.setParameter(
 				"pid",
-				LayoutReportsPageSpeedCompanyConfiguration.class.getName());
+				LayoutReportsGooglePageSpeedCompanyConfiguration.class.
+					getName());
 
 			return portletURL.toString();
 		}

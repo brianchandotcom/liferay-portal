@@ -51,7 +51,7 @@ describe('EmptyLayoutReports', () => {
 		const {getByText} = render(
 			<EmptyLayoutReports
 				assetsPath={testProps.assetsPath}
-				configurePageSpeedURL="validURL"
+				configureGooglePageSpeedURL="validURL"
 			/>
 		);
 
@@ -61,8 +61,8 @@ describe('EmptyLayoutReports', () => {
 			)
 		).toBeInTheDocument();
 		expect(
-			getByText('connect-to-pagespeed-to-run-a-page-audit')
+			getByText('connect-to-google-pagespeed-to-run-a-page-audit')
 		).toBeInTheDocument();
-		expect(getByText('connect-to-pagespeed')).toBeInTheDocument();
+		expect(getByText('connect-to-google-pagespeed')).toBeInTheDocument();
 	});
 });

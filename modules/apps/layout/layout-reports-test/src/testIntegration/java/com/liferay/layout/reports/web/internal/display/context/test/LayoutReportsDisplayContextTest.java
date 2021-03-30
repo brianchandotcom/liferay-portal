@@ -103,7 +103,7 @@ public class LayoutReportsDisplayContextTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsPageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedConfiguration",
 					new HashMapDictionary<String, Object>() {
 						{
 							put("apiKey", RandomTestUtil.randomString());
@@ -152,11 +152,11 @@ public class LayoutReportsDisplayContextTest {
 			Assert.assertEquals(
 				layout.getName(LocaleUtil.BRAZIL), canonicalURL1.get("title"));
 
-			String configurePageSpeedURL = (String)context.get(
-				"configurePageSpeedURL");
+			String configureGooglePageSpeedURL = (String)context.get(
+				"configureGooglePageSpeedURL");
 
 			Assert.assertTrue(
-				configurePageSpeedURL.contains("configuration_admin"));
+				configureGooglePageSpeedURL.contains("configuration_admin"));
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
@@ -179,7 +179,7 @@ public class LayoutReportsDisplayContextTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsPageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedConfiguration",
 					new HashMapDictionary<String, Object>() {
 						{
 							put("apiKey", StringPool.BLANK);
@@ -191,9 +191,9 @@ public class LayoutReportsDisplayContextTest {
 				_group.getTypeSettingsProperties();
 
 			unicodeProperties.setProperty(
-				"pageSpeedApiKey", RandomTestUtil.randomString());
+				"googlePageSpeedApiKey", RandomTestUtil.randomString());
 			unicodeProperties.setProperty(
-				"pageSpeedEnabled", Boolean.TRUE.toString());
+				"googlePageSpeedEnabled", Boolean.TRUE.toString());
 
 			_groupLocalService.updateGroup(_group);
 
@@ -236,7 +236,7 @@ public class LayoutReportsDisplayContextTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsPageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedConfiguration",
 					new HashMapDictionary<String, Object>() {
 						{
 							put("apiKey", RandomTestUtil.randomString());
@@ -302,11 +302,11 @@ public class LayoutReportsDisplayContextTest {
 			Assert.assertEquals(
 				"defaultMappedTitle", canonicalURL2.get("title"));
 
-			String configurePageSpeedURL = (String)context.get(
-				"configurePageSpeedURL");
+			String configureGooglePageSpeedURL = (String)context.get(
+				"configureGooglePageSpeedURL");
 
 			Assert.assertTrue(
-				configurePageSpeedURL.contains("configuration_admin"));
+				configureGooglePageSpeedURL.contains("configuration_admin"));
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
@@ -331,7 +331,7 @@ public class LayoutReportsDisplayContextTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsPageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedConfiguration",
 					new HashMapDictionary<String, Object>() {
 						{
 							put("apiKey", StringPool.BLANK);

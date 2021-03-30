@@ -27,6 +27,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.layout.reports.web.internal.constants.LayoutReportsWebKeys" %><%@
 page import="com.liferay.layout.reports.web.internal.display.context.LayoutReportsDisplayContext" %><%@
-page import="com.liferay.layout.reports.web.internal.display.context.LayoutReportsPageSpeedDisplayContext" %>
+page import="com.liferay.layout.reports.web.internal.display.context.LayoutReportsGooglePageSpeedDisplayContext" %>
 
 <%@ include file="/init-ext.jsp" %>

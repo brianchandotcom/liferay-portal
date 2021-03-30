@@ -1031,6 +1031,8 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Organizations");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
 			value1 = "${orgName}");

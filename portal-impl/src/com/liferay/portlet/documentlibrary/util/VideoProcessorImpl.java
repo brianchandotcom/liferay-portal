@@ -299,7 +299,7 @@ public class VideoProcessorImpl
 		}
 	}
 
-	private void _generateThumbnailXuggler(FileVersion fileVersion, File file) {
+	private void _generateThumbnail(FileVersion fileVersion, File file) {
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -394,7 +394,7 @@ public class VideoProcessorImpl
 				}
 
 				try {
-					_generateVideoXuggler(
+					_generateVideo(
 						destinationFileVersion, videoTempFile,
 						previewTempFiles);
 				}
@@ -408,7 +408,7 @@ public class VideoProcessorImpl
 
 			if (!hasThumbnails(destinationFileVersion)) {
 				try {
-					_generateThumbnailXuggler(
+					_generateThumbnail(
 						destinationFileVersion, videoTempFile);
 				}
 				catch (Exception exception) {
@@ -434,7 +434,7 @@ public class VideoProcessorImpl
 		}
 	}
 
-	private void _generateVideoXuggler(
+	private void _generateVideo(
 			FileVersion fileVersion, File sourceFile, File destinationFile,
 			String containerType)
 		throws Exception {
@@ -485,12 +485,12 @@ public class VideoProcessorImpl
 		}
 	}
 
-	private void _generateVideoXuggler(
+	private void _generateVideo(
 		FileVersion fileVersion, File sourceFile, File[] destinationFiles) {
 
 		try {
 			for (int i = 0; i < destinationFiles.length; i++) {
-				_generateVideoXuggler(
+				_generateVideo(
 					fileVersion, sourceFile, destinationFiles[i],
 					_PREVIEW_TYPES[i]);
 			}

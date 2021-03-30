@@ -33,6 +33,7 @@ import com.liferay.petra.executor.PortalExecutorConfig;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -85,8 +87,15 @@ public class DataEngineNativeObjectPortalExecutor {
 		Long companyId, DataEngineNativeObject dataEngineNativeObject) {
 
 		_execute(
-			() -> _dataEngineNativeObjectObserver.createDataEngineNativeObject(
-				companyId, dataEngineNativeObject));
+			() -> {
+				try (SafeClosable safeClosable =
+						CompanyThreadLocal.setWithSafeClosable(companyId)) {
+
+					_dataEngineNativeObjectObserver.
+						createDataEngineNativeObject(
+							companyId, dataEngineNativeObject);
+				}
+			});
 	}
 
 	@Activate
@@ -319,9 +328,11 @@ public class DataEngineNativeObjectPortalExecutor {
 				DataEngineNativeObject dataEngineNativeObject)
 			throws Exception {
 
-			for (Long companyId : _portal.getCompanyIds()) {
-				createDataEngineNativeObject(companyId, dataEngineNativeObject);
-			}
+			_companyLocalService.forEachCompanyId(
+				companyId ->
+					createDataEngineNativeObject(
+						companyId, dataEngineNativeObject)
+			);
 		}
 
 		private String _getFieldType(String customType, int sqlType) {

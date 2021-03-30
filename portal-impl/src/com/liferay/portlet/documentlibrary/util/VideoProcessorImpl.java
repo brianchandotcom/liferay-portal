@@ -352,89 +352,6 @@ public class VideoProcessorImpl
 	}
 
 	private void _generateVideo(
-			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
-		throws Exception {
-
-		if (!_videoConverter.isEnabled() || _hasVideo(destinationFileVersion)) {
-			return;
-		}
-
-		File[] previewTempFiles = new File[_PREVIEW_TYPES.length];
-
-		File videoTempFile = null;
-
-		try {
-			if (sourceFileVersion != null) {
-				copy(sourceFileVersion, destinationFileVersion);
-
-				return;
-			}
-
-			if (!hasPreviews(destinationFileVersion) ||
-				!hasThumbnails(destinationFileVersion)) {
-
-				try (InputStream inputStream =
-						destinationFileVersion.getContentStream(false)) {
-
-					videoTempFile = FileUtil.createTempFile(
-						destinationFileVersion.getExtension());
-
-					FileUtil.write(videoTempFile, inputStream);
-				}
-			}
-
-			if (!hasPreviews(destinationFileVersion)) {
-				String tempFileId = DLUtil.getTempFileId(
-					destinationFileVersion.getFileEntryId(),
-					destinationFileVersion.getVersion());
-
-				for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
-					previewTempFiles[i] = getPreviewTempFile(
-						tempFileId, _PREVIEW_TYPES[i]);
-				}
-
-				try {
-					_generateVideo(
-						destinationFileVersion, videoTempFile,
-						previewTempFiles);
-				}
-				catch (Exception exception) {
-					_fileVersionPreviewEventListener.onFailure(
-						destinationFileVersion);
-
-					_log.error(exception, exception);
-				}
-			}
-
-			if (!hasThumbnails(destinationFileVersion)) {
-				try {
-					_generateThumbnail(
-						destinationFileVersion, videoTempFile);
-				}
-				catch (Exception exception) {
-					_log.error(exception, exception);
-				}
-			}
-		}
-		catch (NoSuchFileEntryException noSuchFileEntryException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
-			}
-
-			_fileVersionPreviewEventListener.onFailure(destinationFileVersion);
-		}
-		finally {
-			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
-
-			for (File previewTempFile : previewTempFiles) {
-				FileUtil.delete(previewTempFile);
-			}
-
-			FileUtil.delete(videoTempFile);
-		}
-	}
-
-	private void _generateVideo(
 			FileVersion fileVersion, File sourceFile, File destinationFile,
 			String containerType)
 		throws Exception {
@@ -511,6 +428,88 @@ public class VideoProcessorImpl
 			_log.error(exception, exception);
 
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
+		}
+	}
+
+	private void _generateVideo(
+			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
+		throws Exception {
+
+		if (!_videoConverter.isEnabled() || _hasVideo(destinationFileVersion)) {
+			return;
+		}
+
+		File[] previewTempFiles = new File[_PREVIEW_TYPES.length];
+
+		File videoTempFile = null;
+
+		try {
+			if (sourceFileVersion != null) {
+				copy(sourceFileVersion, destinationFileVersion);
+
+				return;
+			}
+
+			if (!hasPreviews(destinationFileVersion) ||
+				!hasThumbnails(destinationFileVersion)) {
+
+				try (InputStream inputStream =
+						destinationFileVersion.getContentStream(false)) {
+
+					videoTempFile = FileUtil.createTempFile(
+						destinationFileVersion.getExtension());
+
+					FileUtil.write(videoTempFile, inputStream);
+				}
+			}
+
+			if (!hasPreviews(destinationFileVersion)) {
+				String tempFileId = DLUtil.getTempFileId(
+					destinationFileVersion.getFileEntryId(),
+					destinationFileVersion.getVersion());
+
+				for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
+					previewTempFiles[i] = getPreviewTempFile(
+						tempFileId, _PREVIEW_TYPES[i]);
+				}
+
+				try {
+					_generateVideo(
+						destinationFileVersion, videoTempFile,
+						previewTempFiles);
+				}
+				catch (Exception exception) {
+					_fileVersionPreviewEventListener.onFailure(
+						destinationFileVersion);
+
+					_log.error(exception, exception);
+				}
+			}
+
+			if (!hasThumbnails(destinationFileVersion)) {
+				try {
+					_generateThumbnail(destinationFileVersion, videoTempFile);
+				}
+				catch (Exception exception) {
+					_log.error(exception, exception);
+				}
+			}
+		}
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+			}
+
+			_fileVersionPreviewEventListener.onFailure(destinationFileVersion);
+		}
+		finally {
+			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
+
+			for (File previewTempFile : previewTempFiles) {
+				FileUtil.delete(previewTempFile);
+			}
+
+			FileUtil.delete(videoTempFile);
 		}
 	}
 

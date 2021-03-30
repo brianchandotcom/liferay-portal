@@ -1257,14 +1257,33 @@ public class JenkinsResultsParserUtil {
 				_currentTimeMillisDelta = 0L;
 			}
 			else {
-				long remoteCurrentTimeSeconds = getRemoteCurrentTimeSeconds(
-					getJenkinsMasterName(getHostName(null)));
+				Long remoteCurrentTimeSeconds = null;
 
-				long remoteCurrentTimeMillis = remoteCurrentTimeSeconds * 1000;
+				int retry = 0;
 
-				_currentTimeMillisDelta =
-					System.currentTimeMillis() - remoteCurrentTimeMillis;
+				while ((remoteCurrentTimeSeconds == null) && (retry < 3)) {
+					retry++;
+
+					remoteCurrentTimeSeconds = getRemoteCurrentTimeSeconds(
+						getJenkinsMasterName(getHostName(null)));
+
+					if ((remoteCurrentTimeSeconds == null) && (retry < 3)) {
+						sleep(1000);
+					}
+				}
+
+				if (remoteCurrentTimeSeconds != null) {
+					long remoteCurrentTimeMillis =
+						remoteCurrentTimeSeconds * 1000;
+
+					_currentTimeMillisDelta =
+						System.currentTimeMillis() - remoteCurrentTimeMillis;
+				}
 			}
+		}
+
+		if (_currentTimeMillisDelta == null) {
+			return System.currentTimeMillis();
 		}
 
 		return System.currentTimeMillis() - _currentTimeMillisDelta;

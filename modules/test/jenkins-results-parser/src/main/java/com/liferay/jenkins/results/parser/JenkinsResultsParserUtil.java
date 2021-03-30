@@ -1252,33 +1252,31 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static long getCurrentTimeMillis() {
+		if (!isCINode()) {
+			return System.currentTimeMillis();
+		}
+
 		if (_currentTimeMillisDelta == null) {
-			if (!isCINode()) {
-				_currentTimeMillisDelta = 0L;
+			Long remoteCurrentTimeSeconds = null;
+
+			int retry = 0;
+
+			while ((remoteCurrentTimeSeconds == null) && (retry < 3)) {
+				retry++;
+
+				remoteCurrentTimeSeconds = getRemoteCurrentTimeSeconds(
+					getJenkinsMasterName(getHostName(null)));
+
+				if ((remoteCurrentTimeSeconds == null) && (retry < 3)) {
+					sleep(1000);
+				}
 			}
-			else {
-				Long remoteCurrentTimeSeconds = null;
 
-				int retry = 0;
+			if (remoteCurrentTimeSeconds != null) {
+				long remoteCurrentTimeMillis = remoteCurrentTimeSeconds * 1000;
 
-				while ((remoteCurrentTimeSeconds == null) && (retry < 3)) {
-					retry++;
-
-					remoteCurrentTimeSeconds = getRemoteCurrentTimeSeconds(
-						getJenkinsMasterName(getHostName(null)));
-
-					if ((remoteCurrentTimeSeconds == null) && (retry < 3)) {
-						sleep(1000);
-					}
-				}
-
-				if (remoteCurrentTimeSeconds != null) {
-					long remoteCurrentTimeMillis =
-						remoteCurrentTimeSeconds * 1000;
-
-					_currentTimeMillisDelta =
-						System.currentTimeMillis() - remoteCurrentTimeMillis;
-				}
+				_currentTimeMillisDelta =
+					System.currentTimeMillis() - remoteCurrentTimeMillis;
 			}
 		}
 

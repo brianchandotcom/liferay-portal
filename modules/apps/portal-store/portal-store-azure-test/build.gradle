@@ -1,0 +1,49 @@
+plugins {
+	id "net.saliman.properties" version "1.5.1"
+}
+
+dependencies {
+	// use same version of Azure SDK as in portal-store-azure -> azureLibs
+	testCompile platform("com.azure:azure-sdk-bom:1.0.2")
+	testCompile group: "com.azure", name: "azure-storage-blob"
+	testCompile group: "com.azure", name: "azure-storage-blob-batch"
+	testCompile group: "com.azure", name: "azure-identity"
+
+	testCompile project(":apps:portal-store:portal-store-azure")
+	testCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+
+	testCompile group: "commons-io", name: "commons-io", version: "2.6"
+	testCompile group: "commons-lang", name: "commons-lang", version: "2.6"
+	testCompile group: 'log4j', name: 'log4j', version: "1.2.17"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	testCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+
+//	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
+//	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
+//	testIntegrationCompile project(":apps:portal-store:portal-store-test-util")
+//	testIntegrationCompile project(":core:petra:petra-string")
+//	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}
+
+test {
+	// read logging config from this path; seems like the only way to make logging
+	// via 'com.liferay.portal.kernel.log.Log' to work
+	systemProperty 'java.util.logging.config.file', file('src/test/resources/logging.properties')
+
+	debugOptions {
+		port = 15005
+		server = true
+		suspend = true
+	}
+
+	// forward selected props from gradle.properties
+	environment project.properties.findAll { it.key.toString().startsWith("tests.") }
+
+	// fail the build right away if required properties are missing, since tests
+	// cannot be executed without them
+	requiredProperty "tests.AzureBlobStorageStore.connectionString"
+	requiredProperty "tests.storage-admin.connectionString"
+}

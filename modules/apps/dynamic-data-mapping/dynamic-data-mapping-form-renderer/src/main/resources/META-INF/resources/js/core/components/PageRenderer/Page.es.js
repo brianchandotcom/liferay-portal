@@ -22,8 +22,8 @@ import * as SuccessPage from '../../../custom/form/renderer/SuccessVariant.es';
 import * as Wizard from '../../../custom/form/renderer/WizardVariant.es';
 import {PagesVisitor} from '../../../util/visitors.es';
 import {PageProvider} from '../../hooks/usePage.es';
+import {mergeVariants} from '../../utils/merge-variants.es';
 import * as DefaultVariant from './DefaultVariant.es';
-import * as EditorVariant from './EditorVariant.es';
 import {Layout} from './Layout.es';
 import * as Tabbed from './TabbedVariant.es';
 import {VariantsProvider} from './VariantsContext.es';
@@ -159,17 +159,16 @@ const Page = ({
 	const empty = isEmptyPage(defaultPage);
 	const page = normalizePage(defaultPage, editingLanguageId);
 
-	const variant = getVariant({page, pages, paginationMode});
-	const variantComponents = LAYOUT_COMPONENTS_TYPES[variant] || {};
+	const variantName = getVariant({page, pages, paginationMode});
+	const variantComponents = LAYOUT_COMPONENTS_TYPES[variantName] || {};
 
-	const variantEditable = editable ? EditorVariant : {};
-
-	const Components = {
-		...DefaultVariant,
-		...variantEditable,
-		...variantComponents,
-		...overrides,
+	const variants = {
+		defaults: DefaultVariant,
+		overrides,
+		variant: variantComponents,
 	};
+
+	const Components = mergeVariants(editable, variants);
 
 	let hasFieldRequired = false;
 
@@ -187,7 +186,7 @@ const Page = ({
 		DDM_FORM_PORTLET_NAMESPACE === portletNamespace;
 
 	return (
-		<VariantsProvider components={Components}>
+		<VariantsProvider components={variants}>
 			<Components.Container
 				activePage={activePage}
 				editable={editable}
@@ -204,7 +203,7 @@ const Page = ({
 					empty={empty}
 					forceAriaUpdate={forceAriaUpdate}
 					header={
-						variant === LAYOUT_TYPES.SINGLE_PAGE ? null : (
+						variantName === LAYOUT_TYPES.SINGLE_PAGE ? null : (
 							<Components.PageHeader {...page} />
 						)
 					}

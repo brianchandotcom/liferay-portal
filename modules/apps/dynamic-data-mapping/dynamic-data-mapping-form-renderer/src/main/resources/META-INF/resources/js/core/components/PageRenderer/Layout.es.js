@@ -22,6 +22,7 @@ import {usePage} from '../../hooks/usePage.es';
 import fieldBlur from '../../thunks/fieldBlur.es';
 import fieldChange from '../../thunks/fieldChange.es';
 import fieldFocus from '../../thunks/fieldFocus.es';
+import {mergeVariants} from '../../utils/merge-variants.es';
 import {Field} from '../Field/Field.es';
 import {VariantsContext} from './VariantsContext.es';
 
@@ -33,9 +34,9 @@ export const Layout = ({components, editable, rows}) => {
 	const createFieldChange = useEvaluate(fieldChange);
 	const dispatch = useForm();
 
-	const defaultComponents = useContext(VariantsContext);
+	const variants = useContext(VariantsContext);
 
-	const Components = components ?? defaultComponents;
+	const Components = components ?? mergeVariants(editable, variants);
 
 	return (
 		<Components.Rows

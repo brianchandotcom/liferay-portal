@@ -469,79 +469,118 @@ definition {
 			searchTerm = "Depot");
 	}
 
-	@description = "This ensures that able to select specific asset libraries scope from Collections permissions."
+	@description = "This ensures that able to select and deselect specific asset libraries scope from Collections permissions."
 	@priority = "5"
-	test SelectDepotFromCollectionsPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Permissions.setUpRegRoleLoginUserCP(
-			roleTitle = "Depot Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+	test SelectAndDeselectScopeFromCollectionsPermissions {
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.definePermissionCP(
+		Role.definePermissionCmdCP(
 			assetLibrariesScope = "true",
 			permissionDefinitionKey = "SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHECKBOX",
 			permissionDefinitionValue = "Delete",
 			roleTitle = "Depot Regrole Name",
 			siteNameScope = "Test Depot Name");
-	}
 
-	@description = "This ensures that able to select specific asset libraries scope from DM permissions."
-	@priority = "5"
-	test SelectDepotFromDMPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Permissions.setUpRegRoleLoginUserCP(
-			roleTitle = "Depot Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "Delete",
+			permissionNavigationValue = "Collections > Asset List Entry",
+			siteNameScope = "Test Depot Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.definePermissionCP(
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHECKBOX",
+			removeSiteScope = "Test Depot Name",
+			roleTitle = "Depot Regrole Name");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "Delete",
+			permissionNavigationValue = "Collections > Asset List Entry",
+			siteNameScope = "All Sites and Asset Libraries");
+	}
+
+	@description = "This ensures that able to select and deselect specific asset libraries scope from DM permissions."
+	@priority = "5"
+	test SelectAndDeselectScopeFromDMPermissions {
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCmdCP(
 			assetLibrariesScope = "true",
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX",
 			permissionDefinitionValue = "Add Document",
 			roleTitle = "Depot Regrole Name",
 			siteNameScope = "Test Depot Name");
-	}
 
-	@description = "This ensures that able to select specific asset libraries scope from WC permissions."
-	@priority = "5"
-	test SelectDepotFromWCPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Permissions.setUpRegRoleLoginUserCP(
-			roleTitle = "Depot Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "Add Document",
+			permissionNavigationValue = "Documents and Media > Documents",
+			siteNameScope = "Test Depot Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.definePermissionCP(
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX",
+			removeSiteScope = "Test Depot Name",
+			roleTitle = "Depot Regrole Name");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "Add Document",
+			permissionNavigationValue = "Documents and Media > Documents",
+			siteNameScope = "All Sites and Asset Libraries");
+	}
+
+	@description = "This ensures that able to select and deselect specific asset libraries scope from WC permissions."
+	@priority = "5"
+	test SelectAndDeselectScopeFromWCPermissions {
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCmdCP(
 			assetLibrariesScope = "true",
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "Depot Regrole Name",
 			siteNameScope = "Test Depot Name");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Web Content",
+			siteNameScope = "Test Depot Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
+			removeSiteScope = "Test Depot Name",
+			roleTitle = "Depot Regrole Name");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Web Content",
+			siteNameScope = "All Sites and Asset Libraries");
 	}
 
 	@description = "This test covers LPS-119994. It ensures that the user with access application permission can view the depot dashboard."

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
@@ -65,7 +66,8 @@ public class CountrySegmentsFieldCustomizer
 
 		return stream.map(
 			country -> new Field.Option(
-				country.getName(locale), String.valueOf(country.getName()))
+				country.getName(locale),
+				StringUtil.toLowerCase(String.valueOf(country.getName())))
 		).collect(
 			Collectors.toList()
 		);

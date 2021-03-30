@@ -378,7 +378,7 @@ public class ContainerStyledLayoutStructureItem
 	).build();
 
 	private String _align = "";
-	private String _contentDisplay = "block";
+	private String _contentDisplay = "";
 	private String _justify = "";
 	private JSONObject _linkJSONObject;
 	private String _widthType = "fluid";

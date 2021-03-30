@@ -162,8 +162,6 @@ const Container = React.forwardRef(
 							widthType === CONTAINER_WIDTH_TYPES.fixed,
 						[`container-fluid-max-xl`]:
 							widthType === CONTAINER_WIDTH_TYPES.fixed,
-						'd-block':
-							contentDisplay === CONTAINER_DISPLAY_OPTIONS.block,
 						'd-flex flex-column':
 							contentDisplay ===
 							CONTAINER_DISPLAY_OPTIONS.flexColumn,

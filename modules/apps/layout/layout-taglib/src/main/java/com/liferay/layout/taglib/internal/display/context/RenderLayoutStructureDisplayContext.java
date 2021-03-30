@@ -406,7 +406,7 @@ public class RenderLayoutStructureDisplayContext {
 			StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
-		StringBundler cssClassSB = new StringBundler(34);
+		StringBundler cssClassSB = new StringBundler(33);
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getAlign())) {
 			cssClassSB.append(" ");
@@ -427,12 +427,6 @@ public class RenderLayoutStructureDisplayContext {
 			cssClassSB.append(" border-");
 			cssClassSB.append(
 				styledLayoutStructureItem.getBorderColorCssClass());
-		}
-
-		if (Objects.equals(
-				styledLayoutStructureItem.getContentDisplay(), "block")) {
-
-			cssClassSB.append(" d-block");
 		}
 
 		if (Objects.equals(

@@ -151,7 +151,7 @@ export const ContainerStylesPanel = ({item}) => {
 										? {
 												align: '',
 												justify: '',
-												[name]: value,
+												[name]: '',
 										  }
 										: {[name]: value};
 

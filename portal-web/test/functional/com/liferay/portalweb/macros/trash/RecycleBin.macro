@@ -177,6 +177,24 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro restoreRenameCP {
+		RecycleBin.clickEllipsisItem(
+			assetName = "${assetName}",
+			item = "Restore");
+
+		Alert.viewErrorMessage(errorMessage = "Error:An entry with name ${assetName} already exists.");
+
+		Check(locator1 = "RecycleBin#RECYCLE_BIN_WARNING_RENAME_RADIO");
+
+		if (isSet(newName)) {
+			Type(
+				locator1 = "TextInput#NEW_NAME",
+				value1 = "${newName}");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro undoMoveToRecycleBin {
 		AssertClick(
 			locator1 = "Button#UNDO",

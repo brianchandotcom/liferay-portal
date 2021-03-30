@@ -26,7 +26,6 @@ import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {hasFieldSet} from '../../../util/fields.es';
-import {PagesVisitor} from '../../../util/visitors.es';
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
 import {Actions, ActionsControls, useActions} from '../Actions.es';
 import {ParentFieldContext} from '../Field/ParentFieldContext.es';
@@ -113,54 +112,6 @@ export const Column = ({
 			? parentField.root
 			: firstField;
 
-	const getSingleFieldVisitor = (field) => {
-		return new PagesVisitor([
-			{
-				rows: [
-					{
-						columns: [
-							{
-								fields: [field],
-							},
-						],
-					},
-				],
-			},
-		]);
-	};
-
-	const getFieldSets = () => {
-		const visitor = getSingleFieldVisitor(rootParentField);
-
-		let fieldSets = [];
-
-		visitor.mapFields(
-			(field) => {
-				if (hasFieldSet(field)) {
-					fieldSets = [...fieldSets, field];
-				}
-			},
-			true,
-			true
-		);
-
-		return fieldSets;
-	};
-
-	const belongsToFieldSet = (field) => {
-		if (!field.fieldName) {
-			return false;
-		}
-
-		const fieldSets = getFieldSets();
-
-		return !!fieldSets.find((fieldSet) => {
-			const visitor = getSingleFieldVisitor(fieldSet);
-
-			return visitor.containsField(field.fieldName);
-		});
-	};
-
 	return (
 		<ActionsControls
 			actionsRef={actionsRef}
@@ -214,16 +165,14 @@ export const Column = ({
 							'py-0': isFieldSetOrGroup,
 						})}
 						ref={(node) => {
-							if (!belongsToFieldSet(parentField)) {
-								if (
-									allowNestedFields &&
-									!rootParentField.ddmStructureId
-								) {
-									drag(drop(node));
-								}
-								else if (!hasFieldSet(parentField)) {
-									drag(node);
-								}
+							if (
+								allowNestedFields &&
+								!rootParentField.ddmStructureId
+							) {
+								drag(drop(node));
+							}
+							else if (!hasFieldSet(parentField)) {
+								drag(node);
 							}
 							resizeRef.current = node;
 						}}

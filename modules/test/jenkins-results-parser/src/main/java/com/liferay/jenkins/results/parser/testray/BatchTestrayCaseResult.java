@@ -85,6 +85,16 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 			return null;
 		}
 
+		String result = build.getResult();
+
+		if (result == null) {
+			return "Failed to finish build on CI";
+		}
+
+		if (result.equals("ABORTED")) {
+			return "Aborted prior to running test";
+		}
+
 		String errorMessage = build.getFailureMessage();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {

@@ -59,6 +59,10 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 				return "Failed to finish build on CI";
 			}
 
+			if (result.equals("ABORTED")) {
+				return "Aborted prior to running test";
+			}
+
 			if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
 				return "Failed to run test on CI";
 			}

@@ -29,6 +29,9 @@ import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
@@ -71,11 +74,17 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.FutureTask;
@@ -149,6 +158,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		closeDataSource("liferayDataSource");
 
 		super.contextDestroyed(servletContextEvent);
+
+		_cleanupJDBCDrivers();
 
 		try {
 			ModuleFrameworkUtilAdapter.stopRuntime();
@@ -456,6 +467,54 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 			dynamic.setAsyncSupported(true);
 			dynamic.setLoadOnStartup(1);
+		}
+	}
+
+	private void _cleanupJDBCDrivers() {
+		Enumeration<Driver> enumeration = DriverManager.getDrivers();
+
+		while (enumeration.hasMoreElements()) {
+			Driver driver = enumeration.nextElement();
+
+			Class<?> driverClass = driver.getClass();
+
+			if (PortalClassLoaderUtil.isPortalClassLoader(
+					driverClass.getClassLoader())) {
+
+				try {
+					DriverManager.deregisterDriver(driver);
+				}
+				catch (SQLException sqlException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to deregister driver " + driver,
+							sqlException);
+					}
+				}
+			}
+		}
+
+		DB db = DBManagerUtil.getDB();
+
+		DBType dbType = db.getDBType();
+
+		if (dbType == DBType.MYSQL) {
+			try {
+				Class<?> clazz = Class.forName(
+					"com.mysql.cj.jdbc.AbandonedConnectionCleanupThread");
+
+				Method method = clazz.getMethod("checkedShutdown");
+
+				method.invoke(null);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to shutdown mysql " +
+							"AbandonedConnectionCleanupThread",
+						exception);
+				}
+			}
 		}
 	}
 

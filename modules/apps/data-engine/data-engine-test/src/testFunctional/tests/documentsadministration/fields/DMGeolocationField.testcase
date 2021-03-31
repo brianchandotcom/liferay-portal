@@ -34,7 +34,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98071. Verify if geolocation field can be be duplicated"
+	@description = "Verify if geolocation field can be be duplicated."
 	@priority = "4"
 	test DuplicateGeolocation {
 		property portal.acceptance = "false";
@@ -50,7 +50,7 @@ definition {
 			fieldName = "Geolocation");
 	}
 
-	@description = "This is a test for LPS-98071. Edit the label and help text of Separator Field"
+	@description = "Edit the label and help text of Separator Field"
 	@priority = "5"
 	test EditLabelAndHelpTextOfGeolocation {
 		property portal.acceptance = "false";
@@ -73,7 +73,7 @@ definition {
 			fieldName = "Geolocation");
 	}
 
-	@description = "This is a test for LPS-98071. Edit Field Reference with valid and invalid characters"
+	@description = "Edit Field Reference with valid and invalid characters."
 	@priority = "4"
 	test EditReferenceOfGeolocationWithValidAndInvalidCharacters {
 		property portal.acceptance = "false";
@@ -107,7 +107,7 @@ definition {
 			fieldReference = "GeolocationReferenceValidCharacters");
 	}
 
-	@description = "This is a test for LPS-98071. Verify if geolocation field can repeat field (clicking on +) when it is set as repeatable"
+	@description = "Verify if geolocation field can repeat field (clicking on +) when it is set as repeatable."
 	@priority = "4"
 	test RepeatableGeolocationOnRenderer {
 		property portal.acceptance = "false";
@@ -135,7 +135,7 @@ definition {
 			index = "2");
 	}
 
-	@description = "This is a test for LPS-98071. Verify if user has the ability to set Searchable Option"
+	@description = "Verify if user has the ability to set Searchable Option"
 	@priority = "5"
 	test SetSearchableOfGeolocation {
 		property portal.acceptance = "false";
@@ -177,7 +177,7 @@ definition {
 			searchableType = "Text");
 	}
 
-	@description = "This is a test for LPS-98071. Verify if a user can show/hide label"
+	@description = "Verify if a user can show/hide label."
 	@priority = "4"
 	test ShowAndHideGeolocationLabel {
 		property portal.acceptance = "false";
@@ -203,7 +203,7 @@ definition {
 		AssertElementNotPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-98071. Verify if duplicated geolocation field is correctly loaded"
+	@description = "Verify if duplicated geolocation field is correctly loaded."
 	@priority = "4"
 	test VerifyDuplicatedGeolocationOnRenderer {
 		property portal.acceptance = "false";
@@ -221,7 +221,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-98071. Verify if user has the ability to set as Required or not"
+	@description = "Verify if user has the ability to set as Required or not."
 	@priority = "4"
 	test VerifyRequiredPropertyOfGeolocationOnRenderer {
 		property portal.acceptance = "false";

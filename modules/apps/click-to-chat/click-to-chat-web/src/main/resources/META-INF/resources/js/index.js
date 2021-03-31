@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import React from 'react';
 
-<react:component
-	module="js/index"
-/>
+import ClickToChatConfiguration from './pages/ClickToChat/Configuration';
+
+export default function ClickToChatRoot(props) {
+	return (
+		<div className="click-to-chat-web-root">
+			<ClickToChatConfiguration {...props} />
+		</div>
+	);
+}

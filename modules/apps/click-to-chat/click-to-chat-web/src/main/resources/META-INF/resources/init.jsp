@@ -15,7 +15,8 @@
 --%>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
 <%@ page import="com.liferay.click.to.chat.web.internal.configuration.GroupProviderTokenStrategy" %><%@
 page import="com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys" %><%@

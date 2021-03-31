@@ -1,0 +1,90 @@
+@component-name = "data-engine"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Data Engine";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This test ensures that is possible to translate fields with Localizable set as true."
+	@priority = "5"
+	test TranslateLocalizable {
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addCP(webContentTitle = "Web Content Title");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "03/30/2021",
+			webContentNumeric = "123",
+			webContentText = "This is a text field");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addCP(webContentTitle = "Título do conteudo da Web");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "30/03/2021",
+			webContentNumeric = "456",
+			webContentText = "Este é um campo de texto");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentDate = "03/30/2021",
+			webContentNumeric = "123",
+			webContentText = "This is a text field");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentDate = "30/03/2021",
+			webContentNumeric = "456",
+			webContentText = "Este é um campo de texto");
+	}
+
+}

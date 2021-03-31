@@ -327,7 +327,7 @@ definition {
 			pageName = "Blogs Test Page",
 			portletName = "Blogs");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -345,7 +345,7 @@ definition {
 
 		Staging.publishToLive();
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -363,7 +363,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -391,7 +391,7 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -415,7 +415,7 @@ definition {
 
 		Staging.publishToLive();
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

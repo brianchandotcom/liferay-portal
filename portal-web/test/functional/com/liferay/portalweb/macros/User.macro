@@ -1034,7 +1034,7 @@ definition {
 				password = "test",
 				userEmailAddress = "${userEmailAddress}");
 
-			User.logoutUserPG();
+			User.logoutPG();
 
 			User.loginPG(
 				authenticationMethod = "${authenticationMethod}",
@@ -1066,7 +1066,7 @@ definition {
 				password = "test1",
 				userEmailAddress = "${userEmailAddress}");
 
-			User.logoutUserPG();
+			User.logoutPG();
 
 			User.loginPG(
 				authenticationMethod = "${authenticationMethod}",

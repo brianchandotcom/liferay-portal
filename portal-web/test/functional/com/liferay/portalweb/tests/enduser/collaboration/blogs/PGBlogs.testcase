@@ -1361,7 +1361,7 @@ definition {
 
 		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginPG(
 			password = "test",

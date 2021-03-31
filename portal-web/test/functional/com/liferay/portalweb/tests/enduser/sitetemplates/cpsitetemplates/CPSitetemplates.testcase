@@ -527,7 +527,7 @@ definition {
 			groupName = "Site Template Site Name",
 			userEmailAddress = "userea@liferay.com");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginUserPG(userEmailAddress = "userea@liferay.com");
 
@@ -537,7 +537,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginUserPG();
 	}

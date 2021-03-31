@@ -434,7 +434,7 @@ definition {
 
 		DMDocument.checkoutPG(dmDocumentTitle = "Untitled");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginUserPG(
 			password = "test",
@@ -502,7 +502,7 @@ definition {
 
 		DMDocument.checkoutPG(dmDocumentTitle = "Untitled");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginUserPG(
 			password = "test",

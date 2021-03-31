@@ -492,7 +492,7 @@ definition {
 
 		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginUserPG(
 			password = "test",

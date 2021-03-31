@@ -150,7 +150,7 @@ definition {
 			key_entryTitle = "Blogs Entry Title",
 			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginPG(
 			password = "test",
@@ -246,7 +246,7 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "Assign Roles");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginPG(
 			password = "test",
@@ -272,7 +272,7 @@ definition {
 
 		ApplicationsMenuHelper.assertNoApplicationsMenu();
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginPG(
 			password = "test",
@@ -542,7 +542,7 @@ definition {
 			key_userGroupName = "UG UserGroup Name",
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME_LINK");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginPG(
 			password = "test",

@@ -1250,7 +1250,7 @@ definition {
 			orgName = "Organization Name",
 			userFirstName = "userfn2");
 
-		User.logoutUserPG();
+		User.logoutPG();
 
 		User.loginPG(
 			password = "test",

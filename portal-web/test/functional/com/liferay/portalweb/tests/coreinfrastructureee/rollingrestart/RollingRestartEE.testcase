@@ -875,7 +875,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "8080");
 
-		User.logoutPG(nodePort = "8080");
+		User.logoutPG();
 
 		User.loginPG(
 			nodePort = "9080",
@@ -884,7 +884,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		User.logoutPG(nodePort = "9080");
+		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.loginPG(
 			nodePort = "10080",
@@ -893,7 +893,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "10080");
 
-		User.logoutPG(nodePort = "10080");
+		User.logoutPG(specificURL = "http://localhost:10080");
 
 		// Take down cluster2, update portal-ext.properties
 
@@ -930,7 +930,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
 
-		User.logoutPG(nodePort = "9080");
+		User.logoutPG(specificURL = "http://localhost:9080");
 
 		for (var nodePort : list "8080,10080") {
 			User.loginPG(
@@ -946,7 +946,7 @@ definition {
 
 			WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
 
-			User.logoutPG(nodePort = "${nodePort}");
+			User.logoutPG(specificURL = "http://localhost:${nodePort}");
 		}
 
 		// Take down cluster1, update portal-ext.properties
@@ -988,7 +988,7 @@ definition {
 
 		Portlet.addPG(portletName = "Documents and Media");
 
-		User.logoutPG(nodePort = "8080");
+		User.logoutPG();
 
 		User.loginPG(
 			authenticationMethod = "By Screen Name",
@@ -1004,7 +1004,7 @@ definition {
 
 		Portlet.viewPG(portletName = "Documents and Media");
 
-		User.logoutPG(nodePort = "9080");
+		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.loginPG(
 			nodePort = "10080",
@@ -1019,7 +1019,7 @@ definition {
 
 		Portlet.viewPG(portletName = "Documents and Media");
 
-		User.logoutPG(nodePort = "10080");
+		User.logoutPG(specificURL = "http://localhost:10080");
 
 		// Take down cluster3, update portal-ext.properties
 
@@ -1053,7 +1053,7 @@ definition {
 
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
 
-		User.logoutPG(nodePort = "10080");
+		User.logoutPG(specificURL = "http://localhost:10080");
 
 		for (var nodePort : list "8080,9080") {
 			User.loginPG(
@@ -1070,7 +1070,7 @@ definition {
 
 			DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
 
-			User.logoutPG(nodePort = "${nodePort}");
+			User.logoutPG(specificURL = "http://localhost:${nodePort}");
 		}
 	}
 

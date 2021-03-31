@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Click to Chat Web
 Bundle-SymbolicName: com.liferay.click.to.chat.web
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.click.to.chat.lang)";\
+		resource.bundle.base.name="content.Language"
 Web-ContextPath: /click-to-chat-web

@@ -122,8 +122,10 @@ public class SourceFormatter {
 			sourceFormatterArgs.setBaseDirName(baseDirName);
 
 			List<String> checkCategoryNames = ListUtil.fromString(
-				ArgumentsUtil.getString(
-					arguments, "source.check.category.names", null),
+				StringUtil.replace(
+					ArgumentsUtil.getString(
+						arguments, "source.check.category.names", null),
+					CharPool.UNDERLINE, CharPool.SPACE),
 				StringPool.COMMA);
 
 			sourceFormatterArgs.setCheckCategoryNames(checkCategoryNames);

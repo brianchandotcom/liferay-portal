@@ -130,6 +130,15 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
+		List<KaleoTimer> kaleoTimers = kaleoTimerLocalService.getKaleoTimers(
+			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId());
+
+		kaleoTimerInstanceTokenLocalService.addKaleoTimerInstanceTokens(
+			executionContext.getKaleoInstanceToken(),
+			executionContext.getKaleoTaskInstanceToken(), kaleoTimers,
+			executionContext.getWorkflowContext(),
+			executionContext.getServiceContext());
+
 		_kaleoLogLocalService.addTaskAssignmentKaleoLogs(
 			null, kaleoTaskInstanceToken, "assigned-initial-task",
 			workflowContext, serviceContext);

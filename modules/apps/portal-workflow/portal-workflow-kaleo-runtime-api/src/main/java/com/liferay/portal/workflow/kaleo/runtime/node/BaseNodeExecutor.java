@@ -58,15 +58,6 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
-		List<KaleoTimer> kaleoTimers = kaleoTimerLocalService.getKaleoTimers(
-			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId());
-
-		kaleoTimerInstanceTokenLocalService.addKaleoTimerInstanceTokens(
-			executionContext.getKaleoInstanceToken(),
-			executionContext.getKaleoTaskInstanceToken(), kaleoTimers,
-			executionContext.getWorkflowContext(),
-			executionContext.getServiceContext());
-
 		return performExecute;
 	}
 

@@ -26,9 +26,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@description = "This test ensures translations persists for a repeatable duplicated field group."
 	@priority = "5"
-	test CheckDuplicatedRepeatableStructureOnWebContent {		
+	test CheckDuplicatedRepeatableStructureOnWebContent {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -115,7 +115,7 @@ definition {
 			locator1 = "FormFields#FIELD_REMOVE");
 	}
 
-	@description = "This is a test for LPS-123537. Verify if a pop-up with the flag, label, and translation status is shown up when the user clicks on the language flag"
+	@description = "This test ensures that the language selector is succesfully displayed and functional on the Web Content."
 	@priority = "4"
 	test CheckLanguageSelector {
 		NavItem.gotoStructures();
@@ -152,7 +152,7 @@ definition {
 			value1 = "Default");
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@description = "This test ensures structures translations are displayed on a Web Content."
 	@priority = "5"
 	test CheckStructureTranslationsOnWebContent {
 		NavItem.gotoStructures();
@@ -205,61 +205,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@priority = "4"
-	test DefaultTitleAndValuesDisplayedForAnotherLocaleAndForNonTranslatedWebContent {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		WebContentStructures.saveCP();
-
-		Navigator.gotoNavItem(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		WebContent.addWithStructureCP(
-			webContentNumeric = "8",
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		WebContent.addWithStructureCP(
-			webContentNumeric = "123",
-			webContentText = "Este é um campo de texto",
-			webContentTitle = "Título do conteúdo da web");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Web Content Title");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Web Content Title");
-
-		WebContent.viewWithStructureCP(
-			predefinedValue = "true",
-			webContentNumeric = "8",
-			webContentText = "This is a Text field");
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@description = "This test ensures that the default values persists after translating the Web Content for another locale."
 	@priority = "4"
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
 		NavItem.gotoStructures();
@@ -320,7 +266,61 @@ definition {
 			webContentText = "Este é um campo de texto");
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@description = "This test ensures that the default language values are carried to a new locale before translating it."
+	@priority = "4"
+	test DefaultValuesAreCarriedToNewLocale {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		Navigator.gotoNavItem(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "8",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "123",
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Título do conteúdo da web");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentNumeric = "8",
+			webContentText = "This is a Text field");
+	}
+
+	@description = "This test ensures translations persists for N languages and N field groups levels."
 	@priority = "5"
 	test TranslateWebContentFromStructureWithNLevelNestedFieldsAndToNLanguages {
 		NavItem.gotoStructures();
@@ -546,7 +546,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@description = "This test ensures that the translations persists for all fields nested."
 	@priority = "5"
 	test TranslateWebContentWithAllFieldsNested {
 		NavItem.gotoStructures();
@@ -601,7 +601,7 @@ definition {
 			webContentTitleTranslated = "Título do Web Content");
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@description = "This test ensures Web Content translations do not modify previously translated content."
 	@priority = "5"
 	test TranslationDoesNotChangeAnother {
 		NavItem.gotoStructures();
@@ -672,102 +672,7 @@ definition {
 			webContentText = "frFR Text");
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@priority = "5"
-	test TranslationPersistsAfterEditingAnother {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		WebContentStructures.addLocalization(
-			locale = "pt-BR",
-			localization1Name = "Nome da Estrutura WC");
-
-		DataEngine.editFieldsGroupLabel(
-			fieldsGroupLabel = "Fields Group",
-			fieldsGroupLabelEdit = "Grupo de Campos");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Texto");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Numeric",
-			fieldFieldLabelEdit = "Numerico");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		WebContent.addWithStructureCP(
-			webContentNumeric = "123",
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		WebContent.addWithStructureCP(
-			webContentNumeric = "9",
-			webContentNumericFieldLabel = "Numerico",
-			webContentText = "Este é um campo de texto",
-			webContentTextFieldLabel = "Texto",
-			webContentTitle = "Título do conteúdo da web");
-
-		PortletEntry.publish();
-
-		WebContent.viewWithStructureCP(
-			webContentNumeric = "123",
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Text,Numeric") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Título do conteúdo da web");
-
-		WebContent.viewWithStructureCP(
-			predefinedValue = "true",
-			webContentNumeric = "9",
-			webContentNumericFieldLabel = "Numerico",
-			webContentText = "Este é um campo de texto",
-			webContentTextFieldLabel = "Texto");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Grupo de Campos",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Texto,Numerico") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Grupo de Campos",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@description = "This test ensures Web Content translations persists."
 	@priority = "5"
 	test TranslationsRemainsUponSavingWebContent {
 		property portal.acceptance = "true";
@@ -854,7 +759,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@description = "This test ensures that the first language displayed to the user is the default language."
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
 		NavItem.gotoStructures();

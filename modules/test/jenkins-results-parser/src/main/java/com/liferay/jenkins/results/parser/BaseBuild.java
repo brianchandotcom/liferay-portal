@@ -3913,6 +3913,8 @@ public abstract class BaseBuild implements Build {
 			testReportJSONObject = getTestReportJSONObject(true);
 		}
 		catch (RuntimeException runtimeException) {
+			_testClassResults = new ConcurrentHashMap<>();
+
 			return;
 		}
 

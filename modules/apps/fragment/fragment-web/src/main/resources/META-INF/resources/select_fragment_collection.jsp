@@ -46,10 +46,3 @@ SelectFragmentCollectionDisplayContext selectFragmentCollectionDisplayContext = 
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectFragmentCollectionFm',
-		'<%= HtmlUtil.escapeJS(selectFragmentCollectionDisplayContext.getEventName()) %>'
-	);
-</aui:script>

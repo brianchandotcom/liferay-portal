@@ -38,6 +38,12 @@ public class PortalReleasePortalTopLevelBuild extends PortalTopLevelBuild {
 
 	@Override
 	public String getBranchName() {
+		String portalBranchName = getParameterValue("TEST_PORTAL_BRANCH_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName)) {
+			return portalBranchName;
+		}
+
 		PortalRelease portalRelease = getPortalRelease();
 
 		String portalVersion = portalRelease.getPortalVersion();

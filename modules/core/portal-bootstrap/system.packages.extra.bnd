@@ -170,8 +170,6 @@ Export-Package:\
 	\
 	jodd.exception.*;version='3.6.4',\
 	\
-	jodd.http.*;version='3.6.4',\
-	\
 	jodd.io.*;version='3.6.4',\
 	\
 	jodd.util.*;version='3.6.4',\
@@ -345,7 +343,6 @@ Provide-Capability:\
 	@../../../lib/portal/jdom.jar!/org/**,\
 	@../../../lib/portal/jodd-bean.jar,\
 	@../../../lib/portal/jodd-core.jar,\
-	@../../../lib/portal/jodd-http.jar,\
 	@../../../lib/portal/jodd-json.jar,\
 	@../../../lib/portal/jodd-proxetta.jar,\
 	@../../../lib/portal/json-java.jar,\

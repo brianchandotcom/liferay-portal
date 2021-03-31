@@ -40,7 +40,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="ctCollectionId" type="long" />
 		<field name="ctEntryId" type="long" />
-		<field name="value" type="String" />
+		<field name="value" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.change.tracking.model.CTEntry">
 		<field name="mvccVersion" type="long" />

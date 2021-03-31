@@ -348,7 +348,6 @@ Provide-Capability:\
 	@../../../lib/portal/jodd-http.jar,\
 	@../../../lib/portal/jodd-json.jar,\
 	@../../../lib/portal/jodd-proxetta.jar,\
-	@../../../lib/portal/jodd-servlet.jar,\
 	@../../../lib/portal/json-java.jar,\
 	@../../../lib/portal/liferay-icu4j.jar,\
 	@../../../lib/portal/log4j-1.2-api.jar,\

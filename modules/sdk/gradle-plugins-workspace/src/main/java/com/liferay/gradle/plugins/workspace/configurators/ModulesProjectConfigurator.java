@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGener
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
@@ -130,6 +131,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			}
 
 			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
+			GradleUtil.applyPlugin(project, RESTBuilderPlugin.class);
 			GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
 			GradleUtil.applyPlugin(project, SoyPlugin.class);
 			GradleUtil.applyPlugin(project, SoyTranslationPlugin.class);

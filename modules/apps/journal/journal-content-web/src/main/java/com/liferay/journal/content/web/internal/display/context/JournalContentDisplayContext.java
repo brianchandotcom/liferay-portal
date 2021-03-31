@@ -625,10 +625,6 @@ public class JournalContentDisplayContext {
 			}
 		}
 
-		_portletRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, getArticle());
-		_portletRequest.setAttribute(
-			WebKeys.JOURNAL_ARTICLE_DISPLAY, getArticleDisplay());
-
 		return _contentMetadataAssetAddonEntries;
 	}
 
@@ -677,10 +673,6 @@ public class JournalContentDisplayContext {
 				_userToolAssetAddonEntries.add(userToolAssetAddonEntry);
 			}
 		}
-
-		_portletRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, getArticle());
-		_portletRequest.setAttribute(
-			WebKeys.JOURNAL_ARTICLE_DISPLAY, getArticleDisplay());
 
 		return _userToolAssetAddonEntries;
 	}

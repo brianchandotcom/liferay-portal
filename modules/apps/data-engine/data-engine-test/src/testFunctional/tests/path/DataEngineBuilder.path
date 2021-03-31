@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELDS_GROUP_INDEX</td>
-	<td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])[${key_FieldGroupIndex}]</td>
+	<td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])[${key_FieldGroupIndex}] | //div[contains(@class, 'fieldset')]//label[text()='Fields Group'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,11 +102,6 @@
 <tr>
 	<td>WEB_CONTENT_NUMERIC_FIELD</td>
 	<td>//input[(@class='form-control')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_FIELDS_GROUP_INDEX</td>
-	<td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])[${index}]</td>
 	<td></td>
 </tr>
 </tbody>

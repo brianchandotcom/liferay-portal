@@ -83,10 +83,12 @@ definition {
 
 		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
-		AssertElementPresent(locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR", key_FieldGroupLabel = "Fields Group");
+		AssertElementPresent(
+			key_FieldGroupLabel = "Fields Group",
+			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR");
 
 		FormFields.assertFieldsVisibleInFieldGroup(
-			fieldGroupLabel= "Fields Group",
+			fieldGroupLabel = "Fields Group",
 			fieldGroupLabelList = "Text,Numeric");
 	}
 
@@ -176,7 +178,9 @@ definition {
 
 		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
-		AssertElementNotPresent(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_INDEX", key_FieldGroupIndex = "2");
+		AssertElementNotPresent(
+			key_FieldGroupIndex = "2",
+			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_INDEX");
 	}
 
 	@description = "This test ensures it's possible to duplicate a field group."
@@ -228,7 +232,9 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL", fieldGroupLabel = "Copy of Fields Group");
+		Click(
+			fieldGroupLabel = "Copy of Fields Group",
+			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL");
 
 		AssertTextEquals(
 			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
@@ -254,8 +260,8 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "DM Document Type Name");
 
 		AssertElementPresent(
-			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR",
-			key_FieldGroupLabel = "Fields Group Edit");
+			key_FieldGroupLabel = "Fields Group Edit",
+			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR");
 	}
 
 	@description = "This test ensures it's possible to edit a field's property for a field inside a field group."
@@ -281,7 +287,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
 
 		AssertElementPresent(
-			key_fieldsGroupLabel= "Copy of Fields Group",
+			key_fieldsGroupLabel = "Copy of Fields Group",
 			locator1 = "DDMEditStructure#FORM_FIELDS_GROUP_CONTAINER");
 
 		for (var fieldName : list "Text,Numeric") {
@@ -316,7 +322,7 @@ definition {
 		AssertVisible(
 			key_fieldFieldLabel = "Fields Group",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		
+
 		for (var label : list "Text,Numeric") {
 			AssertElementNotPresent(
 				key_fieldFieldLabel = "${label}",
@@ -361,7 +367,6 @@ definition {
 	@description = "This test validates that a collapsible field group can be collapsed when uploading a Document and Media."
 	@priority = "4"
 	test SetFieldGroupAsCollapsibleAndExecuteOnUpload {
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
@@ -422,4 +427,5 @@ definition {
 			fieldName = "FieldsGroup",
 			totalPortletCount = "2");
 	}
+
 }

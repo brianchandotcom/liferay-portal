@@ -32,6 +32,15 @@ public class CTCommentLocalServiceWrapper
 		_ctCommentLocalService = ctCommentLocalService;
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTComment addComment(
+			long ctCollectionId, long ctEntryId, long userId, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCommentLocalService.addComment(
+			ctCollectionId, ctEntryId, userId, value);
+	}
+
 	/**
 	 * Adds the ct comment to the database. Also notifies the appropriate model listeners.
 	 *
@@ -71,6 +80,13 @@ public class CTCommentLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCommentLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTComment deleteComment(
+		long ctCommentId) {
+
+		return _ctCommentLocalService.deleteComment(ctCommentId);
 	}
 
 	/**
@@ -229,6 +245,14 @@ public class CTCommentLocalServiceWrapper
 		return _ctCommentLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.Map
+		<Long, java.util.List<com.liferay.change.tracking.model.CTComment>>
+			getCollectionComments(long ctCollectionId) {
+
+		return _ctCommentLocalService.getCollectionComments(ctCollectionId);
+	}
+
 	/**
 	 * Returns the ct comment with the primary key.
 	 *
@@ -273,6 +297,13 @@ public class CTCommentLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTComment>
+		getEntryComments(long ctEntryId) {
+
+		return _ctCommentLocalService.getEntryComments(ctEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -298,6 +329,14 @@ public class CTCommentLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCommentLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTComment updateComment(
+			long ctCommentId, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCommentLocalService.updateComment(ctCommentId, value);
 	}
 
 	/**

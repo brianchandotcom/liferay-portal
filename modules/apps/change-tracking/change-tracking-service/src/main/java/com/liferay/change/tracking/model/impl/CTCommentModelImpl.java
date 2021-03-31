@@ -72,7 +72,7 @@ public class CTCommentModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"ctCollectionId", Types.BIGINT}, {"ctEntryId", Types.BIGINT},
-		{"value", Types.VARCHAR}
+		{"value", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -87,11 +87,11 @@ public class CTCommentModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("value", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTComment (mvccVersion LONG default 0 not null,ctCommentId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,ctCollectionId LONG,ctEntryId LONG,value VARCHAR(75) null)";
+		"create table CTComment (mvccVersion LONG default 0 not null,ctCommentId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,ctCollectionId LONG,ctEntryId LONG,value TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTComment";
 

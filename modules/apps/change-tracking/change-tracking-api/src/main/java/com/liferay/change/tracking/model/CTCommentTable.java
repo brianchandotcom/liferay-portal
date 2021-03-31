@@ -17,6 +17,7 @@ package com.liferay.change.tracking.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -48,8 +49,8 @@ public class CTCommentTable extends BaseTable<CTCommentTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CTCommentTable, Long> ctEntryId = createColumn(
 		"ctEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CTCommentTable, String> value = createColumn(
-		"value", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CTCommentTable, Clob> value = createColumn(
+		"value", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private CTCommentTable() {
 		super("CTComment", CTCommentTable::new);

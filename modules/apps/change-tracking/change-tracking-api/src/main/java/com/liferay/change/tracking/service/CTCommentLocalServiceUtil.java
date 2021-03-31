@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CTComment. This utility wraps
@@ -44,6 +45,13 @@ public class CTCommentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTCommentLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static CTComment addComment(
+			long ctCollectionId, long ctEntryId, long userId, String value)
+		throws PortalException {
+
+		return getService().addComment(
+			ctCollectionId, ctEntryId, userId, value);
+	}
 
 	/**
 	 * Adds the ct comment to the database. Also notifies the appropriate model listeners.
@@ -77,6 +85,10 @@ public class CTCommentLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static CTComment deleteComment(long ctCommentId) {
+		return getService().deleteComment(ctCommentId);
 	}
 
 	/**
@@ -211,6 +223,12 @@ public class CTCommentLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static Map<Long, List<CTComment>> getCollectionComments(
+		long ctCollectionId) {
+
+		return getService().getCollectionComments(ctCollectionId);
+	}
+
 	/**
 	 * Returns the ct comment with the primary key.
 	 *
@@ -248,6 +266,10 @@ public class CTCommentLocalServiceUtil {
 		return getService().getCTCommentsCount();
 	}
 
+	public static List<CTComment> getEntryComments(long ctEntryId) {
+		return getService().getEntryComments(ctEntryId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -271,6 +293,12 @@ public class CTCommentLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static CTComment updateComment(long ctCommentId, String value)
+		throws PortalException {
+
+		return getService().updateComment(ctCommentId, value);
 	}
 
 	/**

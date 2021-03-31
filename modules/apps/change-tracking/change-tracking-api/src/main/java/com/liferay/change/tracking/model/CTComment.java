@@ -56,4 +56,6 @@ public interface CTComment extends CTCommentModel, PersistedModel {
 
 		};
 
+	public boolean isEdited();
+
 }

@@ -140,7 +140,9 @@ public class CTCommentCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		ctCommentId = objectInput.readLong();
@@ -154,7 +156,7 @@ public class CTCommentCacheModel
 		ctCollectionId = objectInput.readLong();
 
 		ctEntryId = objectInput.readLong();
-		value = objectInput.readUTF();
+		value = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -174,10 +176,10 @@ public class CTCommentCacheModel
 		objectOutput.writeLong(ctEntryId);
 
 		if (value == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(value);
+			objectOutput.writeObject(value);
 		}
 	}
 

@@ -223,6 +223,11 @@ public class CTCommentWrapper
 	}
 
 	@Override
+	public boolean isEdited() {
+		return model.isEdited();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

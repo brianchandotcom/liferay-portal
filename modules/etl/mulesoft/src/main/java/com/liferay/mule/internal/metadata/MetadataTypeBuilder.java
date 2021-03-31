@@ -239,6 +239,9 @@ public class MetadataTypeBuilder {
 		else if (oasFormat == OASFormat.INT64) {
 			baseTypeBuilder.numberType();
 		}
+		else if (oasFormat == OASFormat.OBJECT) {
+			baseTypeBuilder.objectType();
+		}
 		else if (oasFormat == OASFormat.STRING) {
 			baseTypeBuilder.stringType();
 		}

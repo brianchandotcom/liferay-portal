@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This test ensures that the locale selector is displayed and functional on the fieldset modal."
 	@priority = "5"
 	test CheckLanguageSelector {
 		var structureTitle = "Test Structure";
@@ -61,7 +61,7 @@ definition {
 			value1 = "Default");
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This test ensures default title is carried to a new locale on the fieldsets modal."
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -103,7 +103,7 @@ definition {
 			value1 = "WC Structure Name");
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This test ensures the default title persists after translating to another locale."
 	@priority = "4"
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
 		WebContentStructures.addCP();
@@ -162,7 +162,7 @@ definition {
 			localeList = "en-US,pt-BR");
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This test ensures its possible to translate the Fieldset to N languages."
 	@priority = "5"
 	test TranslateFieldsetToNLanguages {
 		var fieldsetNameEN = "Fieldset Name";
@@ -279,7 +279,7 @@ definition {
 			localeList = "pt-BR,de-DE,es-ES");
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This test ensures that translations on a fieldset with nested fields persists."
 	@priority = "5"
 	test TranslateFieldsetWithNestedNTranslations {
 
@@ -460,7 +460,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This test ensures that translations on a fieldset with n-level field groups persists."
 	@priority = "5"
 	test TranslateFieldsetWithNNestedNTranslation {
 		var fieldsetName = "Fieldset EN";
@@ -790,7 +790,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This test ensures translations on a structure with a fieldset on a fieldgroup persists."
 	@priority = "5"
 	test TranslateStructureWithFieldsetAndNested {
 		property portal.acceptance = "true";
@@ -1126,7 +1126,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This test ensures that the default language is the first show on the fieldset modal."
 	@priority = "5"
 	test VerifyDefaultLanguageIsFirstShown {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1163,7 +1163,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This test ensures it's not possible to edit a fieldset inside a field group on a structure."
 	@priority = "4"
 	test VerifyNestedFieldsetEditionOnStructure {
 		WebContentStructures.addCP(structureName = "WC Structure Name");

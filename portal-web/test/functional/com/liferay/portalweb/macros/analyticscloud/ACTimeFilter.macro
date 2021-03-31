@@ -57,10 +57,10 @@ definition {
 		var key_Year = "${startYear}";
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_DROPDOWN_OPTION");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN_OPTION");
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN");
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_DROPDOWN_OPTION");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN_OPTION");
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 
@@ -69,10 +69,10 @@ definition {
 		var key_Year = "${endYear}";
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_DROPDOWN_OPTION");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN_OPTION");
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN");
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_DROPDOWN_OPTION");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN_OPTION");
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 

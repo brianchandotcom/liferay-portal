@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -22,8 +23,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.UnsupportedEncodingException;
-
-import java.security.SecureRandom;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,9 +81,9 @@ public class BCryptPasswordEncryptor
 		public static String generateSalt(int logRounds) {
 			byte[] bytes = new byte[_BCRYPT_SALT_LEN];
 
-			SecureRandom secureRandom = new SecureRandom();
-
-			secureRandom.nextBytes(bytes);
+			for (int i = 0; i < _BCRYPT_SALT_LEN; i++) {
+				bytes[i] = SecureRandomUtil.nextByte();
+			}
 
 			StringBundler sb = new StringBundler(5);
 

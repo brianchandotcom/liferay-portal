@@ -34,7 +34,7 @@ create table CTComment (
 	modifiedDate DATE null,
 	ctCollectionId LONG,
 	ctEntryId LONG,
-	value VARCHAR(75) null
+	value TEXT null
 );
 
 create table CTEntry (

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -61,6 +62,9 @@ public interface CTCommentLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTCommentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ct comment local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CTCommentLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public CTComment addComment(
+			long ctCollectionId, long ctEntryId, long userId, String value)
+		throws PortalException;
 
 	/**
 	 * Adds the ct comment to the database. Also notifies the appropriate model listeners.
@@ -89,6 +93,8 @@ public interface CTCommentLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public CTComment deleteComment(long ctCommentId);
 
 	/**
 	 * Deletes the ct comment from the database. Also notifies the appropriate model listeners.
@@ -199,6 +205,10 @@ public interface CTCommentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, List<CTComment>> getCollectionComments(
+		long ctCollectionId);
+
 	/**
 	 * Returns the ct comment with the primary key.
 	 *
@@ -232,6 +242,9 @@ public interface CTCommentLocalService
 	public int getCTCommentsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTComment> getEntryComments(long ctEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -247,6 +260,9 @@ public interface CTCommentLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public CTComment updateComment(long ctCommentId, String value)
 		throws PortalException;
 
 	/**

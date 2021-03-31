@@ -207,7 +207,7 @@ public class CTCommentPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CTComment", "mvccVersion", true, "ctCommentId", true, "companyId",
 			true, "userId", true, "createDate", true, "modifiedDate", true,
-			"ctCollectionId", true, "ctEntryId", true, "value", true);
+			"ctCollectionId", true, "ctEntryId", true);
 	}
 
 	@Test

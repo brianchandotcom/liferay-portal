@@ -808,11 +808,13 @@ public class SourceFormatter {
 			violationsJSONArray.put(violationJSONObject);
 		}
 
-		checkJSONObject.put("violations", violationsJSONArray);
+		if (checkJSONObject != null) {
+			checkJSONObject.put("violations", violationsJSONArray);
 
-		checksJSONArray.put(checkJSONObject);
+			checksJSONArray.put(checkJSONObject);
 
-		jsonObject.put("checks", checksJSONArray);
+			jsonObject.put("checks", checksJSONArray);
+		}
 
 		return JSONUtil.toString(jsonObject);
 	}

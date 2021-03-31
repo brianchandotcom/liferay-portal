@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.style.book.internal.upgrade.v1_1_0.StyleBookEntryUpgradeProcess;
+import com.liferay.style.book.internal.upgrade.v1_3_0.StyleBookEntryVersionUpgradeProcess;
+import com.liferay.style.book.internal.upgrade.v1_3_0.util.UpgradeMVCCVersion;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,6 +40,13 @@ public class StyleBookServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.1.0", "1.2.0", new UpgradeCTModel("StyleBookEntry"));
+
+		registry.register(
+			"1.2.0", "1.3.0", new UpgradeMVCCVersion(),
+			new StyleBookEntryVersionUpgradeProcess());
+
+		registry.register(
+			"1.3.0", "1.4.0", new UpgradeCTModel("StyleBookEntryVersion"));
 	}
 
 }

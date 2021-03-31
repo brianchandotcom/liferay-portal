@@ -14,23 +14,22 @@
 
 package com.liferay.change.tracking.model.impl;
 
+import java.util.Date;
+
 /**
- * The extended model implementation for the CTComment service. Represents a row in the &quot;CTComment&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.change.tracking.model.CTComment</code> interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Preston Crary
  */
 public class CTCommentImpl extends CTCommentBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a ct comment model instance should use the {@link com.liferay.change.tracking.model.CTComment} interface instead.
-	 */
-	public CTCommentImpl() {
+	@Override
+	public boolean isEdited() {
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate.after(getCreateDate())) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

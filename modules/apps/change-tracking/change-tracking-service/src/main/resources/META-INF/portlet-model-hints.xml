@@ -31,6 +31,17 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusDate" type="Date" />
 	</model>
+	<model name="com.liferay.change.tracking.model.CTComment">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCommentId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="ctCollectionId" type="long" />
+		<field name="ctEntryId" type="long" />
+		<field name="value" type="String" />
+	</model>
 	<model name="com.liferay.change.tracking.model.CTEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="ctEntryId" type="long" />

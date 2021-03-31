@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice.action;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -48,8 +49,6 @@ import jodd.json.BeanSerializer;
 import jodd.json.JsonContext;
 import jodd.json.JsonSerializer;
 
-import jodd.servlet.ServletUtil;
-
 /**
  * @author Igor Spasic
  * @author Eduardo Lundgren
@@ -63,7 +62,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		if (command == null) {
 			try {
-				command = ServletUtil.readRequestBody(httpServletRequest);
+				command = StreamUtil.toString(
+					httpServletRequest.getInputStream());
 			}
 			catch (IOException ioException) {
 				throw new IllegalArgumentException(ioException);

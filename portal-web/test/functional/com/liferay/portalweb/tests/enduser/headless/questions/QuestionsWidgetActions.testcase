@@ -1235,6 +1235,33 @@ definition {
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 	}
 
+	@description = "Validate if the user can view the statistics."
+	@priority = "3"
+	test ViewCreatorStatistics {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "Content Question Text",
+			categoryName = "Questions Test Category",
+			titleField = "Question Title");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question Title");
+
+		Questions.viewStatistics(
+			headerName = "Youngling",
+			itemNameList = "Posts,Join Date,Last Post Date",
+			userName = "Test Test");
+	}
+
 	@description = "Validate if the user can view the my activity default after delete all the responses."
 	@priority = "4"
 	test ViewMyActivityDeletions {

@@ -47,6 +47,83 @@ definition {
 
 	}
 
+	@description = "This is a test for COMMERCE-6022. EditASKU"
+	@priority = "3"
+	test EditASKU {
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#SKU_FIELD",
+			value1 = "BLACKSKU");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Purchasable",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		CommerceSKUs.addPriceToSKU(price = "10.0");
+
+		Button.clickPublish();
+
+		AssertVisible(locator1 = "Message#SUCCESS");
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		CommerceNavigator.gotoEntry(entryName = "BLACKSKU");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#SKU_FIELD",
+			value1 = "REDSKU");
+
+		CommerceSKUs.addPriceToSKU(price = "20.0");
+
+		Button.clickPublish();
+
+		AssertVisible(locator1 = "Message#SUCCESS");
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		CommerceNavigator.gotoEntry(entryName = "REDSKU");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertElementPresent(
+			locator1 = "CommerceEntry#SKU_FIELD",
+			value1 = "REDSKU");
+
+		AssertElementPresent(
+			locator1 = "CommerceEntry#PRICE_FIELD",
+			value1 = "20.0");
+
+		Button.clickPublish();
+
+		AssertVisible(locator1 = "Message#SUCCESS");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	@description = "This is a test for COMMERCE-6023. RemoveASKU"
 	@ignore = "true"
 	@priority = "3"

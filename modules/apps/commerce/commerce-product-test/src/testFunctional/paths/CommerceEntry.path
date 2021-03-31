@@ -545,6 +545,11 @@
 	<td>//div[contains(@class,'commerce-health-status-check-row-icon-check${key_value}')][not(contains(@class,'hide'))]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MODAL_BUTTON_CLOSE</td>
+	<td>//div[contains(@class,'side-panel-iframe-header')]//button[contains(@class,'side-panel-iframe-close')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -69,59 +69,6 @@ public class BCryptPasswordEncryptor
 
 	private static class BCrypt {
 
-		// BCrypt parameters
-
-		/**
-		 * Check that a plaintext password matches a previously hashed
-		 * one.
-		 *
-		 * @param plaintext the plaintext password to verify
-		 * @param hashed the previously-hashed password
-		 * @return true if the passwords match, false otherwise
-		 */
-		public static boolean checkpw(String plaintext, String hashed) {
-			byte[] hashed_bytes;
-			byte[] try_bytes;
-
-			try {
-				String try_pw = hashpw(plaintext, hashed);
-				hashed_bytes = hashed.getBytes("UTF-8");
-				try_bytes = try_pw.getBytes("UTF-8");
-			}
-			catch (UnsupportedEncodingException uee) {
-				return false;
-			}
-
-			if (hashed_bytes.length != try_bytes.length) {
-				return false;
-			}
-
-			byte ret = 0;
-
-			for (int i = 0; i < try_bytes.length; i++) {
-				ret |= hashed_bytes[i] ^ try_bytes[i];
-			}
-
-			if (ret == 0) {
-				return true;
-			}
-
-			return false;
-		}
-
-		/**
-		 * Generate a salt for use with the BCrypt.hashpw() method,
-		 * selecting a reasonable default for the number of hashing
-		 * rounds to apply.
-		 *
-		 * @return an encoded salt value
-		 */
-		public static String gensalt() {
-			return gensalt(GENSALT_DEFAULT_LOG2_ROUNDS);
-		}
-
-		// Blowfish parameters
-
 		/**
 		 * Generate a salt for use with the BCrypt.hashpw() method.
 		 *
@@ -133,8 +80,6 @@ public class BCryptPasswordEncryptor
 		public static String gensalt(int log_rounds) {
 			return gensalt(log_rounds, new SecureRandom());
 		}
-
-		// Initial contents of key schedule
 
 		/**
 		 * Generate a salt for use with the BCrypt.hashpw() method.
@@ -260,10 +205,6 @@ public class BCryptPasswordEncryptor
 			return rs.toString();
 		}
 
-		// bcrypt IV: "OrpheanBeholderScryDoubt". The C implementation calls
-		// this "ciphertext", but it is really plaintext or an IV. We keep
-		// the name to make code comparison easier.
-
 		/**
 		 * Perform the central password hashing step in the
 		 * bcrypt scheme.
@@ -318,8 +259,6 @@ public class BCryptPasswordEncryptor
 			return ret;
 		}
 
-		// Table for Base64 encoding
-
 		/**
 		 * Look up the 3 bits base64-encoded by the specified character,
 		 * range-checking againt conversion table
@@ -334,8 +273,6 @@ public class BCryptPasswordEncryptor
 
 			return index_64[(int)x];
 		}
-
-		// Table for Base64 decoding
 
 		/**
 		 * Decode a string encoded using bcrypt's base64 scheme to a
@@ -405,8 +342,6 @@ public class BCryptPasswordEncryptor
 
 			return ret;
 		}
-
-		// Expanded Blowfish key
 
 		/**
 		 * Encode a byte array using bcrypt's slightly-modified base64
@@ -593,8 +528,6 @@ public class BCryptPasswordEncryptor
 		private static final int BCRYPT_SALT_LEN = 16;
 
 		private static final int BLOWFISH_NUM_ROUNDS = 16;
-
-		private static final int GENSALT_DEFAULT_LOG2_ROUNDS = 10;
 
 		private static final char[] base64_code = {
 			'.', '/', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',

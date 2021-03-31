@@ -132,6 +132,25 @@ definition {
 		return "${blueprintsID}";
 	}
 
+	macro searchBlueprintsPreview {
+		Type(
+			locator1 = "SearchTuning#BLUEPRINTS_PREVIEW_SEARCH_BAR",
+			value1 = "${searchTerm}");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "Icon#BASIC_SEARCH");
+		}
+		else {
+			KeyPress(
+				locator1 = "SearchTuning#BLUEPRINTS_PREVIEW_SEARCH_BAR",
+				value1 = "\RETURN");
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
 	macro searchReactiveSearchWidget {
 		AssertElementPresent(locator1 = "SearchTuning#BLUEPRINTS_SEARCH_BAR");
 

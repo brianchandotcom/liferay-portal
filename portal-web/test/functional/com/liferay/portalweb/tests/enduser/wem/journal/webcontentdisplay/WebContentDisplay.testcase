@@ -244,6 +244,7 @@ definition {
 			locator1 = "ControlMenuAddPanel#ASSET_ENTRY");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddVideoViaWebContent {
 		property dummy.socket.proxy.disabled = "true";

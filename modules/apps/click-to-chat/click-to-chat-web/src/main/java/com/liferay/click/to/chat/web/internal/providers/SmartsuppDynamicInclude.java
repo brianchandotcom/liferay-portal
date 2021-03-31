@@ -52,6 +52,6 @@ public class SmartsuppDynamicInclude extends ProviderDynamicInclude {
 	}
 
 	private static final String _MAIN_TEMPLATE_CLASSPATH_PATH =
-		"/template/smartsupp-template.js";
+		"/template/smartsupp-template.html";
 
 }

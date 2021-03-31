@@ -53,6 +53,6 @@ public class CrispDynamicInclude extends ProviderDynamicInclude {
 	}
 
 	private static final String _MAIN_TEMPLATE_CLASSPATH_PATH =
-		"/template/crisp-template.js";
+		"/template/crisp-template.html";
 
 }

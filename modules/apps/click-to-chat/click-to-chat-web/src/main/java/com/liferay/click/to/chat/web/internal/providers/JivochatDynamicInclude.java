@@ -53,6 +53,6 @@ public class JivochatDynamicInclude extends ProviderDynamicInclude {
 	}
 
 	private static final String _MAIN_TEMPLATE_CLASSPATH_PATH =
-		"/template/jivochat-template.js";
+		"/template/jivochat-template.html";
 
 }

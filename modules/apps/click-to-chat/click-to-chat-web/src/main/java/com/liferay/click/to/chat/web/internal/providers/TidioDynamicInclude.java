@@ -52,6 +52,6 @@ public class TidioDynamicInclude extends ProviderDynamicInclude {
 	}
 
 	private static final String _MAIN_TEMPLATE_CLASSPATH_PATH =
-		"/template/tidio-template.js";
+		"/template/tidio-template.html";
 
 }

@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -322,13 +323,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_sourceFormatterMessagesMap.remove(fileName);
 
-		_checkUTF8(file, fileName);
+		String newContent = content;
 
-		String newContent = StringUtil.replace(
-			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+		if (ListUtil.isEmpty(_sourceFormatterArgs.getCheckNames())) {
+			_checkUTF8(file, fileName);
 
-		if (!content.equals(newContent)) {
-			modifiedMessages.add(file.toString() + " (ReturnCharacter)");
+			newContent = StringUtil.replace(
+				newContent, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+
+			if (!content.equals(newContent)) {
+				modifiedMessages.add(file.toString() + " (ReturnCharacter)");
+			}
 		}
 
 		newContent = parse(file, fileName, newContent, modifiedMessages);

@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "This test ensures that user can edit the label and help text of the color field."
-	@priority = "4"
+	@priority = "5"
 	test EditHelpTextAndLabelOfColorField {
 		property portal.acceptance = "false";
 

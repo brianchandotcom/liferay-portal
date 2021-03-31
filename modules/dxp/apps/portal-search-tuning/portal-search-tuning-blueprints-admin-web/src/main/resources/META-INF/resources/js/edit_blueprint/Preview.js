@@ -18,9 +18,10 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import SearchInput from '../shared/SearchInput';
+import useDidUpdateEffect from '../utils/useDidUpdateEffect';
 import {sub} from './../utils/utils';
 import ErrorListItem from './ErrorListItem';
 import ResultListItem from './ResultListItem';
@@ -38,14 +39,12 @@ function Preview({
 	const [activeDelta, setActiveDelta] = useState(10);
 
 	const _handleFetch = () => {
-		if (value) {
-			onFetchResults(value, activeDelta, activePage);
-		}
+		onFetchResults(value, activeDelta, activePage);
 	};
 
-	useEffect(() => {
+	useDidUpdateEffect(() => {
 		_handleFetch();
-	}, [activeDelta, activePage]); //eslint-disable-line
+	}, [activeDelta, activePage]);
 
 	const _renderErrors = () => (
 		<ClayList className="preview-error-list">

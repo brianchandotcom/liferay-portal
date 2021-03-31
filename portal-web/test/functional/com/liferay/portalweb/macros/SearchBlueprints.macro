@@ -26,12 +26,12 @@ definition {
 		AssertElementPresent(locator1 = "//div[contains(@class,'sidebar-header')]//span[contains(.,'Add Query Elements')]");
 
 		Type.sendKeysApplicationSearch(
-			locator1 = "SearchTuning#BLUEPRINTS_SEARCH_SIDE_BAR",
+			locator1 = "SearchTuning#BLUEPRINTS_FRAGMENT_QUERY_SEARCH_BAR",
 			value1 = "${fragment}");
 
 		MouseOver(
 			key_fragmentName = "${fragment}",
-			locator1 = "SearchTuning#BLUEPRINTS_SELECT_FRAGMENT_NAME");
+			locator1 = "SearchTuning#BLUEPRINTS_QUERY_FRAGMENT_NAME");
 
 		Click.clickNoMouseOverNoWaitForVisible(
 			key_fragmentName = "${fragment}",
@@ -48,7 +48,7 @@ definition {
 		if (isSet(numberBoost)) {
 			Type(
 				key_fieldLabel = "Boost",
-				locator1 = "SearchTuning#BLUEPRINTS_QUERY_NUMBER_FIELD",
+				locator1 = "SearchTuning#BLUEPRINTS_QUERY_BUILDER_NUMBER_FIELD",
 				value1 = "${numberBoost}");
 		}
 
@@ -93,7 +93,7 @@ definition {
 		return "${blueprintsID}";
 	}
 
-	macro searchBlueprintsSearchWidget {
+	macro searchReactiveSearchWidget {
 		AssertElementPresent(locator1 = "SearchTuning#BLUEPRINTS_SEARCH_BAR");
 
 		Type(

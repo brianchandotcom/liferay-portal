@@ -60,7 +60,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
 
-		SearchBlueprints.searchBlueprintsSearchWidget(searchTerm = "liferay");
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "liferay");
 
 		SearchBlueprints.viewBlueprintsSearchResultsSpecificOrder(resultsList = "Liferay Blogs Entry,Liferay Web Content");
 
@@ -73,7 +73,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
 
-		SearchBlueprints.searchBlueprintsSearchWidget(searchTerm = "liferay");
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "liferay");
 
 		SearchBlueprints.viewBlueprintsSearchResultsSpecificOrder(resultsList = "Liferay Web Content,Liferay Blogs Entry");
 	}

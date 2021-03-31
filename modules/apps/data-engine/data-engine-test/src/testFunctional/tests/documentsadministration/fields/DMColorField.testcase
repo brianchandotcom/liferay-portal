@@ -185,16 +185,6 @@ definition {
 			value1 = "This field is required.");
 	}
 
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "5"
-	test SetColorWithHex {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 SetColorWithHex pending implementation
-
-	}
-
 	@description = "This test ensures user can set a color on the color field."
 	@priority = "5"
 	test SetColorWithPicker {

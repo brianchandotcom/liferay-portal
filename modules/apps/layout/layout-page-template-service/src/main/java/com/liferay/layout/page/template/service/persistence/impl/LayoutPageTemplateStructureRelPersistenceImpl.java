@@ -3761,7 +3761,7 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("layoutPageTemplateStructureId");
 		ctStrictColumnNames.add("segmentsExperienceId");
-		ctStrictColumnNames.add("data_");
+		ctMergeColumnNames.add("data_");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

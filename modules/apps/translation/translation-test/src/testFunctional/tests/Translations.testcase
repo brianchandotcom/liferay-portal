@@ -831,6 +831,71 @@ definition {
 			webContentTitle = "WC WebContent Título");
 	}
 
+	@description = "This ensures that the user can not translate a web content to a not available language."
+	@priority = "4"
+	test TranslateWCToNotAvailableLanguage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Regrole Name");
+
+		for (var resourceNameIndex : list "com_liferay_journal_web_portlet_JournalPortlet,com.liferay.journal,com.liferay.journal.model.JournalArticle") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "${resourceNameIndex}",
+				roleTitle = "Regrole Name");
+		}
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_translation_web_internal_portlet_TranslationPortlet",
+				roleTitle = "Regrole Name");
+		}
+
+		for (var resourceNameIndex : list "com.liferay.translation.zh_CN") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "TRANSLATE",
+				resourceName = "${resourceNameIndex}",
+				roleTitle = "Regrole Name");
+		}
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "English (United States),Spanish (Spain),Arabic (Saudi Arabia),Catalan (Spain),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Swedish (Sweden)",
+			defaultSiteLanguage = "English (United States)");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Alert.viewInfoMessageSpecific(infoMessage = "You do not have permissions to translate to any of the available languages.");
+	}
+
 	@description = "This ensures that the user can not translate a web content without any languages permissions."
 	@priority = "4"
 	test TranslateWCWithoutLanguagesPermissions {

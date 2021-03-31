@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
+	@description = "This test ensures default Web Content title is displayed on Web content list for a web content created from a structure with a fieldset."
 	@priority = "5"
 	test CheckDefaultWebContentTitleOnWebContentList {
 		NavItem.gotoStructures();
@@ -81,7 +81,7 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC Title");
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@description = "This test ensures locale selector is displayed and is functional on the fieldsets modal."
 	@ignore = "true"
 	@priority = "4"
 	test CheckLanguageSelectorAndFieldsetSummaryLocalization {
@@ -158,7 +158,7 @@ definition {
 			value1 = "Este é um texto");
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@description = "This test validates the fieldset translations are displayed on the Web Content."
 	@priority = "5"
 	test CheckStructureTranslationOnWebContent {
 		NavItem.gotoStructures();
@@ -222,7 +222,7 @@ definition {
 			value1 = "Text Help Text pt-BR");
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
+	@description = "This test ensures fieldset default values are displayed upon locale change on the Web Content."
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		NavItem.gotoStructures();
@@ -266,7 +266,7 @@ definition {
 			value1 = "WC Title");
 	}
 
-	@description = "This is a test for LPS-126217. Check when user translates the title, the default language title persists"
+	@description = "This test checks when user translates the title, the default language title persists"
 	@priority = "4"
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -312,7 +312,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@description = "This test ensures the default fieldset title persists upon translating it on a Web Content."
 	@priority = "4"
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
 		NavItem.gotoStructures();
@@ -360,7 +360,7 @@ definition {
 			value1 = "WC Titulo");
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@description = "This test ensures is possible to translate a web content from a structure with a fieldset with a field group."
 	@priority = "5"
 	test TranslateWebContentFromStructureWithFieldsetWithFieldGroup {
 		NavItem.gotoStructures();
@@ -498,7 +498,7 @@ definition {
 			value1 = "Texto de ajuda do campo Texto Rico");
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
+	@description = "This test ensures translation of a web content from a structure with a fieldset persists after translating for another locale."
 	@priority = "5"
 	test TranslationPersistsAfterEditingAnother {
 		NavItem.gotoStructures();
@@ -578,4 +578,5 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "This is a text in ES");
 	}
+
 }

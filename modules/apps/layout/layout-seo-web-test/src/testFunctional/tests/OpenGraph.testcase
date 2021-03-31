@@ -56,9 +56,7 @@ definition {
 
 		var siteID = Site.getSiteId();
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
-
-		User.viewLoggedOutPG();
+		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -306,9 +304,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
-
-		User.viewLoggedOutPG();
+		User.logoutPG();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
 

@@ -41,7 +41,17 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_FRAGMENT_QUERY_SEARCH_BAR</td>
-	<td>//div[contains(@class,'Blueprints')]//div[contains(@class,'sidebar')][2]//input[contains(@placeholder,'Search')]</td>
+	<td>//div[contains(@class,'open')]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SCORE_EXPLANATION</td>
+	<td>xpath=(//span[contains(@class,'cm-variable') and text()='${key_searchExplanation}'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SEARCH_BAR</td>
+	<td>//div[contains(@class,'preview')]//input[contains(@placeholder,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

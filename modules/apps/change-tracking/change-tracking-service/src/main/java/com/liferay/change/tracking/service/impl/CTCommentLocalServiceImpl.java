@@ -14,23 +14,21 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTComment;
 import com.liferay.change.tracking.service.base.CTCommentLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the ct comment local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.change.tracking.service.CTCommentLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see CTCommentLocalServiceBaseImpl
+ * @author Preston Crary
  */
 @Component(
 	property = "model.class.name=com.liferay.change.tracking.model.CTComment",
@@ -38,10 +36,71 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CTCommentLocalServiceImpl extends CTCommentLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.change.tracking.service.CTCommentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTCommentLocalServiceUtil</code>.
-	 */
+	@Override
+	public CTComment addComment(
+			long ctCollectionId, long ctEntryId, long userId, String value)
+		throws PortalException {
+
+		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+			ctCollectionId);
+
+		CTComment ctComment = ctCommentPersistence.create(
+			counterLocalService.increment(CTComment.class.getName()));
+
+		ctComment.setCompanyId(ctCollection.getCompanyId());
+		ctComment.setUserId(userId);
+		ctComment.setCtCollectionId(ctCollectionId);
+		ctComment.setCtEntryId(ctEntryId);
+		ctComment.setValue(value);
+
+		return ctCommentPersistence.update(ctComment);
+	}
+
+	@Override
+	public CTComment deleteComment(long ctCommentId) {
+		CTComment ctComment = ctCommentPersistence.fetchByPrimaryKey(
+			ctCommentId);
+
+		if (ctComment != null) {
+			ctComment = ctCommentPersistence.remove(ctComment);
+		}
+
+		return ctComment;
+	}
+
+	@Override
+	public Map<Long, List<CTComment>> getCollectionComments(
+		long ctCollectionId) {
+
+		Map<Long, List<CTComment>> collectionCommentsMap = new HashMap<>();
+
+		for (CTComment ctComment :
+				ctCommentPersistence.findByCTCollectionId(ctCollectionId)) {
+
+			List<CTComment> ctComments = collectionCommentsMap.computeIfAbsent(
+				ctComment.getCtEntryId(), key -> new ArrayList<>());
+
+			ctComments.add(ctComment);
+		}
+
+		return collectionCommentsMap;
+	}
+
+	@Override
+	public List<CTComment> getEntryComments(long ctEntryId) {
+		return ctCommentPersistence.findByCTEntryId(ctEntryId);
+	}
+
+	@Override
+	public CTComment updateComment(long ctCommentId, String value)
+		throws PortalException {
+
+		CTComment ctComment = ctCommentPersistence.findByPrimaryKey(
+			ctCommentId);
+
+		ctComment.setValue(value);
+
+		return ctCommentPersistence.update(ctComment);
+	}
 
 }

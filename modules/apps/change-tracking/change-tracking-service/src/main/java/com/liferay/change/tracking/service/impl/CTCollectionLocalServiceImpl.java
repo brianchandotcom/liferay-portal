@@ -399,6 +399,9 @@ public class CTCollectionLocalServiceImpl
 		_ctAutoResolutionInfoPersistence.removeByCTCollectionId(
 			ctCollection.getCtCollectionId());
 
+		ctCommentPersistence.removeByCTCollectionId(
+			ctCollection.getCtCollectionId());
+
 		for (CTEntry ctEntry : ctEntries) {
 			ctEntryPersistence.remove(ctEntry);
 		}

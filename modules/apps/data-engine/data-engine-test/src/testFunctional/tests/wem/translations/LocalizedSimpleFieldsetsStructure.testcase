@@ -247,42 +247,9 @@ definition {
 			siteURLKey = "test-site-name");
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@priority = "5"
-	test TranslateFieldsetToNLanguages {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
-		DataEngine.createNewFieldset(
-			fieldNameList = "Text,Numeric",
-			fieldsetName = "Fieldset Name",
-			localeList = "pt-BR,de-DE,es-ES");
-
-		DataEngine.addFieldsets(fieldsetName = "Fieldset Name");
-
-		AssertVisible(
-			key_fieldsetLabel = "Fieldset Name",
-			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
-
-		for (var fieldLabel : list "Text,Numeric") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldLabel}",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		}
-
-		DataEngine.viewFieldsetTranslation(
-			fieldNameList = "Text,Numeric",
-			fieldsetName = "Fieldset Name",
-			localeList = "pt-BR,de-DE,es-ES");
-	}
-
 	@description = "This test ensures that translations on a fieldset with nested fields persists."
 	@priority = "5"
 	test TranslateFieldsetWithNestedNTranslations {
-
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.gotoCreateNewFieldset();
@@ -1225,4 +1192,5 @@ definition {
 			key_fieldFieldLabel = "Text pt-BR",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
+
 }

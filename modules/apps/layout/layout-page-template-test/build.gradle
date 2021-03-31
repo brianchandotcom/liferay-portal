@@ -1,4 +1,6 @@
 dependencies {
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.4"
 	testIntegrationCompile group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

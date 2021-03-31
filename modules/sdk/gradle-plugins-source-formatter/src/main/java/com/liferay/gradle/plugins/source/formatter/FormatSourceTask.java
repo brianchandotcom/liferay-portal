@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.source.formatter;
 
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 
@@ -246,18 +245,16 @@ public class FormatSourceTask extends JavaExec {
 		FileCollection fileCollection = getFiles();
 
 		if (fileCollection.isEmpty()) {
-			args.add(
-				"source.base.dir=" +
-					_relativizeDir(getBaseDir(), getWorkingDir()));
+			args.add("source.base.dir=" + _normalize(getBaseDir()));
 		}
 		else {
-			args.add("source.files=" + _merge(fileCollection, getWorkingDir()));
+			args.add("source.files=" + _merge(fileCollection));
 		}
 
 		return args;
 	}
 
-	private String _merge(Iterable<File> files, File startFile) {
+	private String _merge(Iterable<File> files) {
 		StringBuilder sb = new StringBuilder();
 
 		int i = 0;
@@ -267,7 +264,7 @@ public class FormatSourceTask extends JavaExec {
 				sb.append(',');
 			}
 
-			sb.append(FileUtil.relativize(file, startFile));
+			sb.append(_normalize(file));
 
 			i++;
 		}
@@ -275,20 +272,18 @@ public class FormatSourceTask extends JavaExec {
 		return sb.toString();
 	}
 
-	private String _relativizeDir(File dir, File startDir) {
-		String relativePath = FileUtil.relativize(dir, startDir);
+	private String _normalize(File file) {
+		String pathString = String.valueOf(file.toPath());
 
-		if (!relativePath.isEmpty()) {
-			if (File.separatorChar != '/') {
-				relativePath = relativePath.replace(File.separatorChar, '/');
-			}
-
-			if (relativePath.charAt(relativePath.length() - 1) != '/') {
-				relativePath += '/';
-			}
+		if (File.separatorChar != '/') {
+			pathString = pathString.replace(File.separatorChar, '/');
 		}
 
-		return relativePath;
+		if (pathString.charAt(pathString.length() - 1) != '/') {
+			pathString += '/';
+		}
+
+		return pathString;
 	}
 
 	private final SourceFormatterArgs _sourceFormatterArgs =

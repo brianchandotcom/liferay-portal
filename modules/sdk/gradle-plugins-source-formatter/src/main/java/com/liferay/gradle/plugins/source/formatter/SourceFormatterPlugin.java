@@ -118,6 +118,13 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 		formatSourceTask.setClasspath(classpath);
 
+		String sourceBaseDir = GradleUtil.getTaskPrefixedProperty(
+			formatSourceTask, "source.base.dir");
+
+		if (Validator.isNotNull(sourceBaseDir)) {
+			formatSourceTask.setBaseDirName(sourceBaseDir);
+		}
+
 		String fileExtensions = GradleUtil.getTaskPrefixedProperty(
 			formatSourceTask, "file.extensions");
 

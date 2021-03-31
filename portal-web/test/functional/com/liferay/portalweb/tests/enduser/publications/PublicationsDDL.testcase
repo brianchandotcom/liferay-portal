@@ -538,6 +538,108 @@ definition {
 			fieldFieldLabel = "Text");
 	}
 
+	@priority = "3"
+	test PublishPublicationWithFormTemplate {
+		Publications.createNewPublication(publicationsName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+
+		Portlet.addPG(portletName = "Dynamic Data Lists Display");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+
+		DDLList.selectViaDDLDisplayPG(ddlListName = "List Name");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+
+		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Text Field",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+
+		DDLTemplate.addFormTemplateViaDDLDisplayPG(ddlFormTemplateName = "Form Template Name");
+
+		DynamicDataMapping.addFieldFormTemplateSpecific(field = "Separator");
+
+		DDLTemplate.saveFormTemplateViaDDLDisplayPG();
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+
+		DDLList.selectViaDDLDisplayPG(ddlListName = "List Name");
+
+		DDLTemplate.selectFormTemplateViaDDLDisplayPG(ddlFormTemplateName = "Form Template Name");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+
+		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
+
+		DDLRecord.viewFieldFormTemplateSpecific(field = "Separator");
+
+		Publications.gotoReviewPublications();
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Dynamic Data Mapping Template",
+			publicationsSite = "Guest",
+			publicationsTitle = "Form Template Name",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
+
+		Publications.gotoPublish(publicationsName = "Publication Name");
+
+		Publications.publishPublication(publicationsName = "Publication Name");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+
+		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
+
+		DDLRecord.viewFieldFormTemplateSpecific(field = "Separator");
+	}
+
 	@priority = "4"
 	test PublishPublicationWithNewListAndRecord {
 		Publications.createNewPublication(publicationsName = "Publication Name");

@@ -229,6 +229,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put(Field.USER_ID, String.valueOf(fileEntry.getUserId()));
 		map.put(
 			Field.USER_NAME, StringUtil.toLowerCase(fileEntry.getUserName()));
+		map.put("fileName", fileEntry.getFileName());
 
 		map.put("classTypeId", "0");
 		map.put("content_ja_JP", getContents(fileEntry));

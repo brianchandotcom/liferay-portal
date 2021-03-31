@@ -29,16 +29,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test CheckFieldsetLocalizationWithDifferentInstanceLanguage {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123538 CheckFieldsetLocalizationWithDifferentInstanceLanguage pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "5"
 	test CheckLanguageSelector {
 		var structureTitle = "Test Structure";
@@ -170,14 +160,6 @@ definition {
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset",
 			localeList = "en-US,pt-BR");
-	}
-
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@priority = "5"
-	test EditFieldset {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123538 EditFieldset pending implementation
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
@@ -1243,5 +1225,4 @@ definition {
 			key_fieldFieldLabel = "Text pt-BR",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
-
 }

@@ -31,13 +31,14 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -52,8 +53,10 @@ import java.util.Objects;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,6 +75,16 @@ public class CommerceOptionValueHelperTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws PortalException {
+		CompanyLocalServiceUtil.deleteCompany(_company);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -286,6 +299,8 @@ public class CommerceOptionValueHelperTest {
 			"{\"key\":\"%s\", \"value\":[\"%s\"]}", optionKey, optionValueKey);
 	}
 
+	private static Company _company;
+
 	private CommerceCatalog _commerceCatalog;
 
 	@Inject
@@ -293,9 +308,6 @@ public class CommerceOptionValueHelperTest {
 
 	@Inject
 	private CommerceOptionValueHelper _commerceOptionValueHelper;
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;

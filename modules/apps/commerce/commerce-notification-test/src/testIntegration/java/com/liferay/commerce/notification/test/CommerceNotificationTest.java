@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -60,8 +61,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -81,12 +84,20 @@ public class CommerceNotificationTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
 		_user = UserTestUtil.addUser(_company);
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws PortalException {
+		CompanyLocalServiceUtil.deleteCompany(_company);
+	}
+
+	@Before
+	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _user.getUserId(), 0);
 
@@ -393,6 +404,9 @@ public class CommerceNotificationTest {
 		return userGroup.getName();
 	}
 
+	private static Company _company;
+	private static User _user;
+
 	@DeleteAfterTestRun
 	private User _accountAdmin;
 
@@ -418,9 +432,6 @@ public class CommerceNotificationTest {
 	@DeleteAfterTestRun
 	private CommerceOrder _commerceOrder;
 
-	@DeleteAfterTestRun
-	private Company _company;
-
 	private boolean _createdAdminRole;
 	private boolean _createdOrderManagerRole;
 	private Group _group;
@@ -431,7 +442,6 @@ public class CommerceNotificationTest {
 	private RoleLocalService _roleLocalService;
 
 	private ServiceContext _serviceContext;
-	private User _user;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

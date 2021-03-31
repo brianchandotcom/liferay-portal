@@ -950,6 +950,11 @@ definition {
 				titleField = "Question${num}");
 		}
 
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "Quesions Body 5",
+			categoryName = "Questions Test Category",
+			titleField = "Questions Title 5");
+
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
@@ -957,7 +962,15 @@ definition {
 		Pause(locator = "3000");
 
 		Questions.search(
-			resultsInfo = '''4 Results for "test"''',
+			resultsInfo = '''1 Results for "questions title 5"''',
+			searchKey = "Questions Title 5");
+
+		Questions.viewSearchResults(questionsList = "Questions Title 5");
+
+		Questions.viewNoSearchResults(questionsList = "Question1,Question2,Question3,Question4");
+
+		Questions.search(
+			resultsInfo = '''5 Results for "test"''',
 			searchKey = "Test");
 
 		Questions.viewSearchResults(questionsList = "Question1,Question2,Question3,Question4");
@@ -984,7 +997,7 @@ definition {
 
 		Questions.viewSearchResults(questionsList = "Question1");
 
-		Questions.viewNoSearchResults(questionsList = "Question2,Question3,Question4");
+		Questions.viewNoSearchResults(questionsList = "Question2,Question3,Question4,Questions Title 5");
 
 		Questions.search(
 			noQuestionsResults = "true",
@@ -997,6 +1010,10 @@ definition {
 				key_questionTitle = "Question${num}",
 				locator1 = "Questions#QUESTIONS_TITLE");
 		}
+
+		AssertVisible(
+			key_questionTitle = "Questions Title 5",
+			locator1 = "Questions#QUESTIONS_TITLE");
 	}
 
 	@description = "Validate if the user can subscribe and unsubscribe from the question."

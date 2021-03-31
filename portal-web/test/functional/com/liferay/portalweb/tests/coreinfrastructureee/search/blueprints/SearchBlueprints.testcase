@@ -1,0 +1,83 @@
+definition {
+
+	property portal.release = "true";
+	property portal.suite.search.engine = "elasticsearch7";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Search";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			WebContent.tearDownCP();
+
+			DMDocument.tearDownCP();
+
+			Tag.tearDownCP(site = "Guest");
+
+			Page.tearDownCP();
+		}
+	}
+
+	test CreateBoostAssetType {
+		SearchBlueprints.addBlueprint(name = "My Blueprint");
+
+		var blueprintsID = SearchBlueprints.findBlueprintID(name = "My Blueprint");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Reactive Widget");
+
+		PageEditor.addWidget(portletName = "Blueprints Search");
+
+		//SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "${blueprintsID}");
+
+		SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "101");
+
+		PageEditor.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "Liferay",
+			groupName = "Guest",
+			title = "Liferay Web Content");
+
+		JSONBlog.addEntry(
+			entryContent = "Liferay Liferay",
+			entryTitle = "Liferay Blogs Entry");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchBlueprintsSearchWidget(searchTerm = "liferay");
+
+		SearchBlueprints.viewBlueprintsSearchResultsSpecificOrder(resultsList = "Liferay Blogs Entry,Liferay Web Content");
+
+		SearchBlueprints.editBlueprint(name = "My Blueprint");
+
+		SearchBlueprints.addQueryElements(
+			assetType = "Web Content Article",
+			fragment = "Boost Asset Type",
+			numberBoost = "1000");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchBlueprintsSearchWidget(searchTerm = "liferay");
+
+		SearchBlueprints.viewBlueprintsSearchResultsSpecificOrder(resultsList = "Liferay Web Content,Liferay Blogs Entry");
+	}
+
+}

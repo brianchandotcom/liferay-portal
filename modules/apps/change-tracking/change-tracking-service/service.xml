@@ -82,10 +82,49 @@
 
 		<!-- References -->
 
+		<reference entity="CTComment" package-path="com.liferay.change.tracking" />
 		<reference entity="CTEntry" package-path="com.liferay.change.tracking" />
 		<reference entity="CTMessage" package-path="com.liferay.change.tracking" />
 		<reference entity="CTPreferences" package-path="com.liferay.change.tracking" />
 		<reference entity="CTProcess" package-path="com.liferay.change.tracking" />
+	</entity>
+	<entity local-service="true" name="CTComment" remote-service="false" trash-enabled="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="ctCommentId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="ctCollectionId" type="long" />
+		<column name="ctEntryId" type="long" />
+		<column name="value" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="ctCommentId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CTCollectionId" return-type="Collection">
+			<finder-column name="ctCollectionId" />
+		</finder>
+		<finder name="CTEntryId" return-type="Collection">
+			<finder-column name="ctEntryId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="CTCollection" package-path="com.liferay.change.tracking" />
 	</entity>
 	<entity local-service="true" name="CTEntry" remote-service="false" trash-enabled="false" uuid="false">
 

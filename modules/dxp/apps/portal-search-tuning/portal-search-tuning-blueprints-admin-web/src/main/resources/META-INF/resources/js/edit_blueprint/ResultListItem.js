@@ -46,7 +46,12 @@ function ResultListItem({item}) {
 			<ClayList.ItemField>
 				<PreviewModal
 					body={
-						<CodeMirrorEditor readOnly value={item.explanation} />
+						<div className="json-modal">
+							<CodeMirrorEditor
+								readOnly
+								value={item.explanation}
+							/>
+						</div>
 					}
 					size="lg"
 					title={Liferay.Language.get('score-explanation')}

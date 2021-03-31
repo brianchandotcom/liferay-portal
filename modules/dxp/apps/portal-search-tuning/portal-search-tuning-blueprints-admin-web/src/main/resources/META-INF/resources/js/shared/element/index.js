@@ -289,7 +289,7 @@ function Element({
 						<ClayDropDown.ItemList>
 							<PreviewModal
 								body={
-									<div className="configuration-json-modal">
+									<div className="json-modal">
 										<CodeMirrorEditor
 											readOnly
 											value={JSON.stringify(

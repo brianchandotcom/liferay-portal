@@ -43,9 +43,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Blueprints Search");
 
-		//SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "${blueprintsID}");
-
-		SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "101");
+		SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "${blueprintsID}");
 
 		PageEditor.clickPublish();
 

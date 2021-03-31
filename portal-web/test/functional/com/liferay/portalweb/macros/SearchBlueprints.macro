@@ -86,9 +86,9 @@ definition {
 	}
 
 	macro findBlueprintID {
-		var blueprintsID = selenium.getAttribute("//a[contains(.,'${name}')]//../..//span[contains(@class,'id-text')][1]')]@textContent");
+		var blueprintsID = selenium.getAttribute("//h4[contains(.,'${name}')]/following-sibling::h5[2]/span[contains(@class,'id-text')]@textContent");
 
-		echo("## Blueprint ID: ${blueprintsID}");
+		var blueprintsID = StringUtil.extractDigits("${blueprintsID}");
 
 		return "${blueprintsID}";
 	}

@@ -1,0 +1,21 @@
+{
+	"dependencies": {
+		"@clayui/button": "3.6.0",
+		"@clayui/form": "3.14.4",
+		"@clayui/layout": "3.3.0",
+		"@clayui/loading-indicator": "3.2.0",
+		"react": "16.12.0"
+	},
+	"description": "",
+	"main": "js/index.js",
+	"name": "click-to-chat-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"test": "env TZ=utc liferay-npm-scripts test",
+		"test:watch": "env TZ=utc liferay-npm-scripts test --watch"
+	},
+	"version": "1.0.0"
+}

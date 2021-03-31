@@ -290,7 +290,7 @@
 
 		<column name="layoutPageTemplateStructureId" type="long" />
 		<column name="segmentsExperienceId" type="long" />
-		<column name="data" type="String" />
+		<column change-tracking-resolution-type="merge" name="data" type="String" />
 
 		<!-- Finder methods -->
 

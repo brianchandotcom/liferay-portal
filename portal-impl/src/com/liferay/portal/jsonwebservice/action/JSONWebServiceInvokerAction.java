@@ -31,6 +31,7 @@ import java.io.IOException;
 
 import java.lang.reflect.Array;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -48,8 +49,6 @@ import jodd.json.JsonContext;
 import jodd.json.JsonSerializer;
 
 import jodd.servlet.ServletUtil;
-
-import jodd.util.NameValue;
 
 /**
  * @author Igor Spasic
@@ -525,10 +524,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 					statement.setFlags(flags);
 				}
 
-				Flag flag = new Flag();
-
-				flag.setName(key.substring(1));
-				flag.setValue(value);
+				Flag flag = new Flag(key.substring(1), value);
 
 				flags.add(flag);
 			}
@@ -635,7 +631,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 					Object propertyValue = BeanUtil.getDeclaredProperty(
 						object, value.substring(name.length()));
 
-					parameterMap.put(flag.getName(), propertyValue);
+					parameterMap.put(flag.getKey(), propertyValue);
 				}
 				else if (statement.isPushed() && value.startsWith(pushedName)) {
 					Map<String, Object> parameterMap =
@@ -645,7 +641,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 						statement._pushTarget,
 						value.substring(pushedName.length()));
 
-					parameterMap.put(flag.getName(), propertyValue);
+					parameterMap.put(flag.getKey(), propertyValue);
 				}
 			}
 		}
@@ -658,7 +654,12 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	private List<String> _includes;
 	private final List<Statement> _statements = new ArrayList<>();
 
-	private static class Flag extends NameValue<String, String> {
+	private static class Flag extends AbstractMap.SimpleEntry<String, String> {
+
+		private Flag(String key, String value) {
+			super(key, value);
+		}
+
 	}
 
 	private static class Statement {

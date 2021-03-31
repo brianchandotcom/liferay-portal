@@ -58,7 +58,6 @@ import jodd.bean.BeanUtil;
 import jodd.typeconverter.TypeConversionException;
 import jodd.typeconverter.TypeConverterManager;
 
-import jodd.util.NameValue;
 import jodd.util.ReflectUtil;
 
 /**
@@ -471,17 +470,17 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return;
 		}
 
-		List<NameValue<String, Object>> innerParameters =
+		List<Map.Entry<String, Object>> innerParameters =
 			_jsonWebServiceActionParameters.getInnerParameters(parameterName);
 
 		if (innerParameters == null) {
 			return;
 		}
 
-		for (NameValue<String, Object> innerParameter : innerParameters) {
+		for (Map.Entry<String, Object> innerParameter : innerParameters) {
 			try {
 				BeanUtil.setProperty(
-					parameterValue, innerParameter.getName(),
+					parameterValue, innerParameter.getKey(),
 					innerParameter.getValue());
 			}
 			catch (Exception exception) {
@@ -489,7 +488,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					_log.debug(
 						StringBundler.concat(
 							"Unable to set inner parameter ", parameterName,
-							".", innerParameter.getName()),
+							".", innerParameter.getKey()),
 						exception);
 				}
 			}

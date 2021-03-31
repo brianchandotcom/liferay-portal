@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This test ensures its possible to delete the Color Field on a Document Type."
 	@priority = "5"
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
@@ -58,7 +58,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 	}
 
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This test ensures its possible to duplicate the Color Field on a Document Type."
 	@priority = "4"
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
@@ -80,7 +80,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This test validates field reference input with and without invalid characters."
 	@ignore = "true"
 	@priority = "3"
 	test EditColorFieldNameWithInvalidAndValidCharacters {
@@ -131,7 +131,7 @@ definition {
 			value1 = "Color_Test");
 	}
 
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This test ensures that user can edit the label and help text of the color field."
 	@priority = "4"
 	test EditHelpTextAndLabelOfColorField {
 		property portal.acceptance = "false";
@@ -162,7 +162,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This test ensures is possible to set color field as required."
 	@priority = "4"
 	test SetColorFieldAsRequired {
 		property portal.acceptance = "false";
@@ -195,7 +195,7 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This test ensures user can set a color on the color field."
 	@priority = "5"
 	test SetColorWithPicker {
 		property portal.acceptance = "false";
@@ -226,7 +226,7 @@ definition {
 			value1 = "ff0000");
 	}
 
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This test validates the set of searchable property on the color field."
 	@priority = "4"
 	test SetSearchablePropertyOfColorField {
 		property portal.acceptance = "false";

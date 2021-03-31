@@ -50,6 +50,8 @@ public class DLFileEntryKeywordQueryContributor
 				booleanQuery, searchContext, Field.TITLE, false);
 			queryHelper.addSearchTerm(
 				booleanQuery, searchContext, Field.USER_NAME, false);
+			queryHelper.addSearchTerm(
+				booleanQuery, searchContext, "fileName", true);
 		}
 
 		queryHelper.addSearchTerm(

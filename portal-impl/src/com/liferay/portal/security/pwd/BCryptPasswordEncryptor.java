@@ -78,23 +78,12 @@ public class BCryptPasswordEncryptor
 		 * @return an encoded salt value
 		 */
 		public static String gensalt(int log_rounds) {
-			return gensalt(log_rounds, new SecureRandom());
-		}
-
-		/**
-		 * Generate a salt for use with the BCrypt.hashpw() method.
-		 *
-		 * @param log_rounds the log2 of the number of rounds of
-		 * hashing to apply - the work factor therefore increases as
-		 * 2**log_rounds.
-		 * @param random an instance of SecureRandom to use
-		 * @return an encoded salt value
-		 */
-		public static String gensalt(int log_rounds, SecureRandom random) {
 			StringBuffer rs = new StringBuffer();
 			byte[] rnd = new byte[BCRYPT_SALT_LEN];
 
-			random.nextBytes(rnd);
+			SecureRandom secureRandom = new SecureRandom();
+
+			secureRandom.nextBytes(rnd);
 
 			rs.append("$2a$");
 

@@ -263,6 +263,15 @@ public class MetadataTypeBuilderTest {
 	}
 
 	@Test
+	public void testBuildMetadataType_ObjectField() throws Exception {
+		MetadataType fieldMetadataType = getFieldMetadataType(
+			getEntityMetadataType("/entities/{id}", OASConstants.OPERATION_GET),
+			"objectField");
+
+		Assert.assertTrue(fieldMetadataType instanceof ObjectType);
+	}
+
+	@Test
 	public void testBuildMetadataType_PageEntity() throws Exception {
 		MetadataType pageEntityMetadataType = getEntityMetadataType(
 			"/entities", OASConstants.OPERATION_GET);

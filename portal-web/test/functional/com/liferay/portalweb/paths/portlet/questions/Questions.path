@@ -269,6 +269,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_STATISTICS_HEADER</td>
+	<td>//h4[contains(@class,'text-secondary') and contains(.,'${key_headerName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_STATISTICS_ITEM</td>
+	<td>//div[contains(@class,'text-secondary')]/p[contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_STATISTICS_USER_NAME</td>
+	<td>//a[contains(@class,'questions-user')]//div/p[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_VOTED_COUNT</td>
 	<td>//div[contains(@class,'question-row') and contains(.,'${key_questionTitle}')]//ul/li[1]</td>
 	<td></td>

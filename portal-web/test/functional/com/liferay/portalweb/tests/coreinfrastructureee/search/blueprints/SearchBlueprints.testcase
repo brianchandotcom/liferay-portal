@@ -32,6 +32,29 @@ definition {
 		}
 	}
 
+	test AssertSearchResultsScore {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Apple");
+
+		SearchBlueprints.addBlueprint(name = "Score Explanation Blueprint");
+
+		Click(locator1 = "Button#PREVIEW");
+
+		SearchBlueprints.searchBlueprintsPreview(searchTerm = "Apple");
+
+		Click(locator1 = "//button[contains(@class,'score')]");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Score Explanation");
+
+		AssertVisible(
+			key_searchExplanation = "PerFieldSimilarity",
+			locator1 = "SearchTuning#BLUEPRINTS_PREVIEW_SCORE_EXPLANATION");
+	}
+
 	test CreateBoostAssetType {
 		SearchBlueprints.addBlueprint(name = "My Blueprint");
 

@@ -59,7 +59,7 @@ const ClickToChatConfiguration = () => {
 		let canSave = true;
 		const {enable, provider, strategy, token} = form;
 		const formDisabled =
-			!enable || strategy.includes(['choose_an_option', 'provide']);
+			!enable || ['choose_an_option', 'provide'].includes(strategy);
 
 		if (enable) {
 			if (

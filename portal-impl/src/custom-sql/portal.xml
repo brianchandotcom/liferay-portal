@@ -1929,7 +1929,7 @@
 			UPDATE
 				ResourcePermission
 			SET
-				actionIds = actionIds + ? - BITAND(CAST_LONG(ResourcePermission.actionIds), ?)
+				actionIds = actionIds + CAST_LONG(?) - BITAND(CAST_LONG(ResourcePermission.actionIds), CAST_LONG(?))
 			WHERE
 				(ResourcePermission.name = ?) AND
 				(ResourcePermission.scope = ?) AND

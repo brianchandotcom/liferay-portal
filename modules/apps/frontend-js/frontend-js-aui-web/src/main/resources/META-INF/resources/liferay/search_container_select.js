@@ -208,7 +208,7 @@ AUI.add(
 				_isActionUrl(url) {
 					var uri = new A.Url(url);
 
-					return uri.getParameter('p_p_lifecycle') === 1;
+					return Number(uri.getParameter('p_p_lifecycle')) === 1;
 				},
 
 				_notifyRowToggle() {

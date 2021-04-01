@@ -16,14 +16,11 @@ package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
-import com.liferay.portal.kernel.util.JavaDetector;
 
 import jodd.json.JoddJson;
 import jodd.json.JsonContext;
 import jodd.json.JsonSerializer;
 import jodd.json.TypeJsonSerializer;
-
-import jodd.util.SystemUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,10 +31,6 @@ import org.json.JSONObject;
 public class JSONSerializerImpl implements JSONSerializer {
 
 	public JSONSerializerImpl() {
-		if (JavaDetector.isIBM()) {
-			SystemUtil.disableUnsafeUsage();
-		}
-
 		_jsonSerializer = new JsonSerializer();
 	}
 

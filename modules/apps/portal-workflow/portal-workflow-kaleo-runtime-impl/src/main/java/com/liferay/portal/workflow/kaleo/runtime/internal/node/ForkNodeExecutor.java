@@ -89,6 +89,13 @@ public class ForkNodeExecutor extends BaseNodeExecutor {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 * @param currentKaleoNode
+	 * @param kaleoTimer
+	 * @param executionContext
+	 */
+	@Deprecated
 	@Override
 	protected void doExecuteTimer(
 		KaleoNode currentKaleoNode, KaleoTimer kaleoTimer,

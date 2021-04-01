@@ -863,4 +863,35 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Depot DM Document Title");
 	}
 
+	@description = "This ensures that the unsupported application can not select a depot as the scope of the permission."
+	@priority = "5"
+	test ViewScopeFromUnsupportedApplicationPermissions {
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+
+		Role.openRolesAdmin();
+
+		RoleNavigator.gotoDefineRolePermissions(
+			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
+			portlet = "Blogs",
+			roleTitle = "Depot Regrole Name");
+
+		AssertClick(
+			locator1 = "RolesPermissions#SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_VIEW_CHANGE_LINK",
+			value1 = "Change");
+
+		SelectFrame(locator1 = "RolesPermissionsSelectSite#SELECT_SITE_IFRAME");
+
+		AssertVisible(
+			locator1 = "NavBar#RECENT",
+			value1 = "Recent");
+
+		AssertVisible(
+			locator1 = "NavBar#MY_SITES",
+			value1 = "My Sites");
+
+		AssertElementNotPresent(
+			locator1 = "NavBar#ASSET_LIBRARIES",
+			value1 = "Asset Libraries");
+	}
+
 }

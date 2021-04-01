@@ -2161,7 +2161,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jodd-json.jar</file-name>
-				<version>3.6.8</version>
+				<version>6.0.3</version>
 				<project-name>Jodd JSON</project-name>
 				<project-url>http://jodd.org</project-url>
 				<licenses>

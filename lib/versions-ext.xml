@@ -2197,7 +2197,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jodd-proxetta.jar</file-name>
-				<version>3.6.4</version>
+				<version>6.0.0</version>
 				<project-name>Jodd Proxetta</project-name>
 				<project-url>http://jodd.org</project-url>
 				<licenses>

@@ -14,11 +14,10 @@
 
 export const PROVIDERS_HELP_TEXT = {
 	chatwoot: {
-		url: 'https://www.google.com/search?channel=fs&client=chatwoot',
+		url: '',
 	},
 	jivochat: {
-		url:
-			'https://www.google.com/search?channel=fs&client=ubuntu&q=jivochat+id',
+		url: '',
 	},
 };
 

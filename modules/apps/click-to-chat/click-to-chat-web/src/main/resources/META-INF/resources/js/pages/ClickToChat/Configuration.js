@@ -138,15 +138,13 @@ const ClickToChatConfiguration = () => {
 			</ClayForm.Group>
 
 			<ClayForm.Group>
-				<label>
-					{Liferay.Language.get('provider-default-account-token')}
-				</label>
+				<label>{Liferay.Language.get('provider-account-token')}</label>
 				<ClayInput
 					disabled={formDisabled}
 					name="token"
 					onChange={setFormValue}
 					placeholder={Liferay.Language.get(
-						'provider-default-account-token-description'
+						'provider-account-token-description'
 					)}
 					value={form.token}
 				/>

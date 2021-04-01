@@ -18,7 +18,6 @@ import {FormFieldSettings, Pages} from 'dynamic-data-mapping-form-renderer';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
-import DataLayoutBuilderContext from '../../../../js/data-layout-builder/DataLayoutBuilderContext.es';
 import {getFilteredSettingsContext} from '../../../../js/utils/settingsForm.es';
 
 function getSettingsContext(
@@ -44,11 +43,7 @@ function getSettingsContext(
  *     required: (props) => <NewRequiredComponent {...props} />
  * }
  */
-const getColumn = ({customFields = {}, ...otherProps}) => ({
-	children,
-	column,
-	index,
-}) => {
+const getColumn = ({customFields = {}}) => ({children, column, index}) => {
 	if (column.fields.length === 0) {
 		return null;
 	}
@@ -61,12 +56,7 @@ const getColumn = ({customFields = {}, ...otherProps}) => ({
 
 				if (CustomField) {
 					return (
-						<CustomField
-							{...otherProps}
-							field={field}
-							index={index}
-							key={index}
-						>
+						<CustomField field={field} index={index} key={index}>
 							{children}
 						</CustomField>
 					);
@@ -90,13 +80,9 @@ export default function FieldsSidebarSettingsBody({
 	hasFocusedCustomObjectField,
 }) {
 	const [activePage, setActivePage] = useState(0);
-	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext) ?? [];
 	const spritemap = useContext(ClayIconSpriteContext);
 
-	const Column = useMemo(() => getColumn({customFields, dataLayoutBuilder}), [
-		customFields,
-		dataLayoutBuilder,
-	]);
+	const Column = useMemo(() => getColumn({customFields}), [customFields]);
 
 	const settingsContext = getSettingsContext(
 		hasFocusedCustomObjectField,

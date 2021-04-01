@@ -66,7 +66,7 @@
 					"objectField": {
 						"type": "object"
 					},
-					"parentEntity": {
+					"parentEntityField": {
 						"$ref": "#/components/schemas/Entity"
 					},
 					"stringField": {

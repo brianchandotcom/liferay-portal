@@ -240,12 +240,12 @@ public class MetadataTypeBuilderTest {
 	}
 
 	@Test
-	public void testBuildMetadataType_NestedArrayField() throws Exception {
-		MetadataType entityMetadataType = getEntityMetadataType(
-			"/entities/{id}", OASConstants.OPERATION_GET);
+	public void testBuildMetadataType_NestedEntityArrayField()
+		throws Exception {
 
 		MetadataType nestedEntityArrayMetadataType = getFieldMetadataType(
-			entityMetadataType, "nestedEntityArrayField");
+			getEntityMetadataType("/entities/{id}", OASConstants.OPERATION_GET),
+			"nestedEntityArrayField");
 
 		Assert.assertTrue(nestedEntityArrayMetadataType instanceof ArrayType);
 
@@ -263,11 +263,9 @@ public class MetadataTypeBuilderTest {
 
 	@Test
 	public void testBuildMetadataType_NestedEntityField() throws Exception {
-		MetadataType entityMetadataType = getEntityMetadataType(
-			"/entities/{id}", OASConstants.OPERATION_GET);
-
 		MetadataType nestedEntityMetadataType = getFieldMetadataType(
-			entityMetadataType, "nestedEntityField");
+			getEntityMetadataType("/entities/{id}", OASConstants.OPERATION_GET),
+			"nestedEntityField");
 
 		Assert.assertTrue(nestedEntityMetadataType instanceof ObjectType);
 
@@ -324,10 +322,10 @@ public class MetadataTypeBuilderTest {
 	}
 
 	@Test
-	public void testBuildMetadataType_ParentEntity() throws Exception {
+	public void testBuildMetadataType_ParentEntityField() throws Exception {
 		MetadataType fieldMetadataType = getFieldMetadataType(
 			getEntityMetadataType("/entities/{id}", OASConstants.OPERATION_GET),
-			"parentEntity");
+			"parentEntityField");
 
 		Assert.assertTrue(fieldMetadataType instanceof ObjectType);
 	}

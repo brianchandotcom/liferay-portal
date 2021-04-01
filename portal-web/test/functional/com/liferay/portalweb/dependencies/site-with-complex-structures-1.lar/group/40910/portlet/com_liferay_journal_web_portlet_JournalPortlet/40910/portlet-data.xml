@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<JournalPortletDataHandler self-path="/group/40910/portlet/com_liferay_journal_web_portlet_JournalPortlet/40910/portlet-data.xml" group-id="40910">
+	<DDMStructure>
+		<staged-model group-id="40910" uuid="892ccd16-b673-87a1-e490-7ac7aed16e2e" ddm-form-path="/group/40910/com.liferay.dynamic.data.mapping.model.DDMStructure/40953/ddm-form.json" ddm-data-provider-instance-ids="" ddm-form-layout-path="/group/40910/com.liferay.dynamic.data.mapping.model.DDMStructure/40953/ddm-form-layout.json" path="/group/40910/com.liferay.dynamic.data.mapping.model.DDMStructure/40953.xml" attached-class-name="com.liferay.journal.model.JournalArticle" user-uuid="8ea46c10-7bf5-a545-c908-1c8c0cd858ae" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.data.engine.model.DEDataDefinitionFieldLink" class-pk="41608" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" type="dependency" uuid="f1af9e5d-1b3f-d3c4-9e98-9bcabdc1489a" company-id="20097" missing="false"/>
+				<reference class-name="com.liferay.data.engine.model.DEDataDefinitionFieldLink" class-pk="41609" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" type="dependency" uuid="e07346e6-c5c2-2d3a-68ae-2d9426c6c4f9" company-id="20097" missing="false"/>
+				<reference class-name="com.liferay.data.engine.model.DEDataDefinitionFieldLink" class-pk="41610" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" type="dependency" uuid="ae899d0b-c4d3-3f69-1a6c-3e2ff9562140" company-id="20097" missing="false"/>
+				<reference class-name="com.liferay.data.engine.model.DEDataDefinitionFieldLink" class-pk="41611" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" type="dependency" uuid="57bbb518-7eb4-86a4-ea68-13b2b8d91212" company-id="20097" missing="false"/>
+				<reference class-name="com.liferay.data.engine.model.DEDataDefinitionFieldLink" class-pk="41612" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" type="dependency" uuid="212c1a39-0cc2-ce27-9f94-7dfc48f43182" company-id="20097" missing="false"/>
+				<reference class-name="com.liferay.data.engine.model.DEDataDefinitionFieldLink" class-pk="41613" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" type="dependency" uuid="93f09ab3-82fd-e31e-22be-fc6571a8d1f8" company-id="20097" missing="false"/>
+				<reference class-name="com.liferay.data.engine.model.DEDataDefinitionFieldLink" class-pk="41614" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" type="dependency" uuid="c3cbb333-d5c7-3d85-ff8d-9843b4fabaed" company-id="20097" missing="false"/>
+				<reference class-name="com.liferay.data.engine.model.DEDataDefinitionFieldLink" class-pk="41615" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" type="dependency" uuid="ab1b3ae8-bb09-d086-d790-080554720f5e" company-id="20097" missing="false"/>
+			</references>
+		</staged-model>
+	</DDMStructure>
+	<DEDataDefinitionFieldLink>
+		<staged-model uuid="f1af9e5d-1b3f-d3c4-9e98-9bcabdc1489a" link-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" path="/company/20097/com.liferay.data.engine.model.DEDataDefinitionFieldLink/41608.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" asset-entry-priority="0.0"/>
+		<staged-model uuid="e07346e6-c5c2-2d3a-68ae-2d9426c6c4f9" link-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" path="/company/20097/com.liferay.data.engine.model.DEDataDefinitionFieldLink/41609.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" asset-entry-priority="0.0"/>
+		<staged-model uuid="ae899d0b-c4d3-3f69-1a6c-3e2ff9562140" link-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" path="/company/20097/com.liferay.data.engine.model.DEDataDefinitionFieldLink/41610.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" asset-entry-priority="0.0"/>
+		<staged-model uuid="57bbb518-7eb4-86a4-ea68-13b2b8d91212" link-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" path="/company/20097/com.liferay.data.engine.model.DEDataDefinitionFieldLink/41611.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" asset-entry-priority="0.0"/>
+		<staged-model uuid="212c1a39-0cc2-ce27-9f94-7dfc48f43182" link-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" path="/company/20097/com.liferay.data.engine.model.DEDataDefinitionFieldLink/41612.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" asset-entry-priority="0.0"/>
+		<staged-model uuid="93f09ab3-82fd-e31e-22be-fc6571a8d1f8" link-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" path="/company/20097/com.liferay.data.engine.model.DEDataDefinitionFieldLink/41613.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" asset-entry-priority="0.0"/>
+		<staged-model uuid="c3cbb333-d5c7-3d85-ff8d-9843b4fabaed" link-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" path="/company/20097/com.liferay.data.engine.model.DEDataDefinitionFieldLink/41614.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" asset-entry-priority="0.0"/>
+		<staged-model uuid="ab1b3ae8-bb09-d086-d790-080554720f5e" link-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" path="/company/20097/com.liferay.data.engine.model.DEDataDefinitionFieldLink/41615.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" asset-entry-priority="0.0"/>
+	</DEDataDefinitionFieldLink>
+	<DDMTemplate>
+		<staged-model group-id="40910" uuid="0c2663fc-f17f-1054-c20d-8d4def672ef7" resource-class-name="com.liferay.journal.model.JournalArticle" path="/group/40910/com.liferay.dynamic.data.mapping.model.DDMTemplate/40956.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" user-uuid="8ea46c10-7bf5-a545-c908-1c8c0cd858ae" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="40953" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="40910" group-key="Test Site Name" live-group-id="40910" type="strong" uuid="892ccd16-b673-87a1-e490-7ac7aed16e2e" company-id="20097" preloaded="false" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="38319" missing="false"/>
+			</references>
+		</staged-model>
+	</DDMTemplate>
+	<JournalArticle>
+		<staged-model group-id="40910" uuid="bab3b3b5-2941-a465-95b0-8954588c0632" article-resource-uuid="116f87ba-b5e5-edbb-d1d9-dfb221ddc99b" path="/group/40910/com.liferay.journal.model.JournalArticle/40978.xml" attached-class-name="" user-uuid="8ea46c10-7bf5-a545-c908-1c8c0cd858ae" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="40953" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="40910" group-key="Test Site Name" live-group-id="40910" type="strong" uuid="892ccd16-b673-87a1-e490-7ac7aed16e2e" company-id="20097" preloaded="false" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="38319" missing="false"/>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMTemplate" class-pk="40956" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" group-id="40910" group-key="Test Site Name" live-group-id="40910" type="strong" uuid="0c2663fc-f17f-1054-c20d-8d4def672ef7" company-id="20097" preloaded="false" referenced-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" template-key="38324" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="40946" group-id="40910" group-key="Test Site Name" live-group-id="40910" type="dependency" uuid="d913f60f-a59d-7310-48a0-0c0bb13910a0" company-id="20097" missing="false"/>
+				<reference class-name="com.liferay.friendly.url.model.FriendlyURLEntry" class-pk="40987" attached-class-name="com.liferay.journal.model.JournalArticle" type="dependency" uuid="48c7b2f0-d25b-01ba-31a6-2dc5b141a667" company-id="20097" missing="false"/>
+			</references>
+		</staged-model>
+	</JournalArticle>
+	<DLFileEntry>
+		<staged-model group-id="40910" uuid="d913f60f-a59d-7310-48a0-0c0bb13910a0" fileVersionUuid="638420f0-6840-0583-18f4-40f34a589d3b" version="1.0" bin-path="/group/40910/com.liferay.document.library.kernel.model.DLFileEntry/40946/1.0" path="/group/40910/com.liferay.document.library.kernel.model.DLFileEntry/40946.xml" user-uuid="8ea46c10-7bf5-a545-c908-1c8c0cd858ae" asset-entry-priority="0.0"/>
+	</DLFileEntry>
+	<FriendlyURLEntry>
+		<staged-model uuid="48c7b2f0-d25b-01ba-31a6-2dc5b141a667" resource-class-name="com.liferay.journal.model.JournalArticle" mainEntry="true" path="/company/20097/com.liferay.friendly.url.model.FriendlyURLEntry/40987.xml" attached-class-name="com.liferay.journal.model.JournalArticle" asset-entry-priority="0.0"/>
+	</FriendlyURLEntry>
+</JournalPortletDataHandler>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<DLAdminPortletDataHandler self-path="/group/40910/portlet/com_liferay_document_library_web_portlet_DLAdminPortlet/40910/portlet-data.xml" group-id="40910">
+	<DLFileEntry>
+		<staged-model group-id="40910" uuid="d913f60f-a59d-7310-48a0-0c0bb13910a0" fileVersionUuid="638420f0-6840-0583-18f4-40f34a589d3b" version="1.0" bin-path="/group/40910/com.liferay.document.library.kernel.model.DLFileEntry/40946/1.0" path="/group/40910/com.liferay.document.library.kernel.model.DLFileEntry/40946.xml" user-uuid="8ea46c10-7bf5-a545-c908-1c8c0cd858ae" asset-entry-priority="0.0"/>
+	</DLFileEntry>
+</DLAdminPortletDataHandler>

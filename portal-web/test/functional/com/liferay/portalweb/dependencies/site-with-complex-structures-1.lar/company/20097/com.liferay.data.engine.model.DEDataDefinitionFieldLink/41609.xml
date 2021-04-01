@@ -1,0 +1,18 @@
+<DEDataDefinitionFieldLink>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>e07346e6-c5c2-2d3a-68ae-2d9426c6c4f9</__uuid>
+  <__deDataDefinitionFieldLinkId>41609</__deDataDefinitionFieldLinkId>
+  <__groupId>40910</__groupId>
+  <__companyId>20097</__companyId>
+  <__createDate class="sql-timestamp">2021-04-01 05:28:54.671</__createDate>
+  <__modifiedDate class="sql-timestamp">2021-04-01 05:28:54.671</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>36011</__classNameId>
+  <__classPK>40955</__classPK>
+  <__ddmStructureId>40953</__ddmStructureId>
+  <__fieldName>PaginaOrigem</__fieldName>
+  <__columnBitmask>0</__columnBitmask>
+</DEDataDefinitionFieldLink>

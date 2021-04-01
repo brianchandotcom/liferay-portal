@@ -521,25 +521,16 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	protected void setFieldAsInvalid(
-		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey,
+		String errorMessage) {
 
 		UpdateFieldPropertyRequest.Builder builder =
 			UpdateFieldPropertyRequest.Builder.newBuilder(
-				ddmFormEvaluatorFieldContextKey.getName(), "valid", false);
-
-		ddmFormEvaluatorExpressionObserver.updateFieldProperty(builder.build());
-	}
-
-	protected void setRequiredErrorMessage(
-		DDMFormEvaluatorFieldContextKey fieldContextKey) {
-
-		UpdateFieldPropertyRequest.Builder builder =
-			UpdateFieldPropertyRequest.Builder.newBuilder(
-				fieldContextKey.getName(), "errorMessage",
-				LanguageUtil.get(_resourceBundle, "this-field-is-required"));
+				ddmFormEvaluatorFieldContextKey.getName(), "errorMessage",
+				errorMessage);
 
 		builder.withInstanceId(
-			fieldContextKey.getInstanceId()
+			ddmFormEvaluatorFieldContextKey.getInstanceId()
 		).withParameter(
 			"valid", false
 		);
@@ -575,6 +566,13 @@ public class DDMFormEvaluatorHelper {
 
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey =
 			entry.getKey();
+
+		if (isConfirmationValueInvalid(ddmFormEvaluatorFieldContextKey) &&
+			isFieldWithConfirmationFieldAndVisible(
+				ddmFormEvaluatorFieldContextKey)) {
+
+			return;
+		}
 
 		if (isFieldEmpty(ddmFormEvaluatorFieldContextKey)) {
 			return;
@@ -716,7 +714,9 @@ public class DDMFormEvaluatorHelper {
 		).filter(
 			this::isFieldEmpty
 		).forEach(
-			this::setRequiredErrorMessage
+			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
+				ddmFormEvaluatorFieldContextKey,
+				LanguageUtil.get(_resourceBundle, "this-field-is-required"))
 		);
 	}
 
@@ -733,7 +733,8 @@ public class DDMFormEvaluatorHelper {
 		).filter(
 			this::isConfirmationValueInvalid
 		).forEach(
-			this::setFieldAsInvalid
+			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
+				ddmFormEvaluatorFieldContextKey, StringPool.BLANK)
 		);
 	}
 

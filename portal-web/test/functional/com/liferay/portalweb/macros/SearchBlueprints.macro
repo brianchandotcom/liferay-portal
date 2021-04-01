@@ -22,6 +22,31 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addElements {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Search Experiences");
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "${name}");
+
+		Button.click(button = "Create");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "SearchTuning#BLUEPRINTS_ELEMENT_TEMPLATE_JSON",
+			value1 = "${elementTemplateJSON}");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "SearchTuning#BLUEPRINTS_ELEMENT_UI_CONFIGURATION_JSON",
+			value1 = "${uiConfigurationJSON}");
+
+		PortletEntry.save();
+	}
+
 	macro addQueryElements {
 		AssertElementPresent(locator1 = "//div[contains(@class,'sidebar-header')]//span[contains(.,'Add Query Elements')]");
 

@@ -504,30 +504,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.data.engine.rest.api.jar!jodd-bean.jar</file-name>
-				<version>3.6.4</version>
-				<project-name>Jodd BeanUtil</project-name>
-				<project-url>http://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The New BSD License</license-name>
-						<license-url>http://jodd.org/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.data.engine.rest.api.jar!jodd-core.jar</file-name>
-				<version>3.6.4</version>
-				<project-name>Jodd Core</project-name>
-				<project-url>http://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The New BSD License</license-name>
-						<license-url>http://jodd.org/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!accessors-smart.jar</file-name>
 				<version>1.1</version>
 				<project-name>ASM based accessors helper used by json-smart</project-name>
@@ -1232,6 +1208,18 @@
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!jodd-http.jar</file-name>
 				<version>3.8.6</version>
 				<project-name>Jodd HTTP client</project-name>
+				<project-url>http://jodd.org</project-url>
+				<licenses>
+					<license>
+						<license-name>The BSD 2-Clause License</license-name>
+						<license-url>http://jodd.org/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!jodd-upload.jar</file-name>
+				<version>3.8.6</version>
+				<project-name>Jodd Upload</project-name>
 				<project-url>http://jodd.org</project-url>
 				<licenses>
 					<license>
@@ -7159,18 +7147,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jodd-http.jar</file-name>
-				<version>3.6.4</version>
-				<project-name>Jodd HTTP Client</project-name>
-				<project-url>http://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jodd-json.jar</file-name>
 				<version>3.6.8</version>
 				<project-name>Jodd JSON</project-name>
@@ -7186,30 +7162,6 @@
 				<file-name>lib/portal/jodd-proxetta.jar</file-name>
 				<version>3.6.4</version>
 				<project-name>Jodd Proxetta</project-name>
-				<project-url>http://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jodd-servlet.jar</file-name>
-				<version>3.6.4</version>
-				<project-name>Jodd Servlet</project-name>
-				<project-url>http://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jodd-upload.jar</file-name>
-				<version>3.6.4</version>
-				<project-name>Jodd Upload</project-name>
 				<project-url>http://jodd.org</project-url>
 				<licenses>
 					<license>

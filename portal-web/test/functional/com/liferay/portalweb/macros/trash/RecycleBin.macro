@@ -39,9 +39,14 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "The Recycle Bin is empty.");
+		if ("${multipleAssets}" == "true") {
+			AssertNotVisible(locator1 = "Message#EMPTY_INFO");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "The Recycle Bin is empty.");
+		}
 
 		LexiconTable.viewTableEntryNotPresent(tableEntry = "${assetName}");
 	}
@@ -125,6 +130,28 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#RECYCLE_BIN_RESTORE_SUCCESS",
 			value1 = "The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}.");
+	}
+
+	macro restoreContentWithoutOriginalFolder {
+		LexiconTable.viewTableEntryTitle(tableEntry = "${assetName}");
+
+		RecycleBin.clickEllipsisItem(
+			assetName = "${assetName}",
+			item = "Restore");
+
+		SelectFrame(locator1 = "RecycleBin#RECYCLE_BIN_FOLDER_WARNING_IFRAME");
+
+		AssertTextEquals(
+			locator1 = "Message#USER_BLOCKED",
+			value1 = "The original Folder does not exist anymore. Choose a different Folder to restore ${assetName}.");
+
+		AssertClick(
+			locator1 = "Button#CHOOSE_THIS_FOLDER",
+			value1 = "Choose This Folder");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#RECYCLE_BIN_RESTORE_SUCCESS",
+			value1 = "The ${assetType} ${assetName} was restored to ${assetRestoreLocation}.");
 	}
 
 	macro restoreCP {

@@ -139,6 +139,44 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
+	macro viewBlueprintsSearchResultNotPresent {
+		AssertElementNotPresent(
+			key_searchAssetTitle = "${searchAssetTitle}",
+			key_searchAssetType = "${searchAssetType}",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC");
+	}
+
+	macro viewBlueprintsSearchResults {
+		var key_searchAssetTitle = "${searchAssetTitle}";
+		var key_searchAssetType = "${searchAssetType}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE_SPECIFIC",
+			value1 = "${searchAssetTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TYPE_SPECIFIC",
+			value1 = "${searchAssetType}");
+
+		if (isSet(entryDate)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TYPE_SPECIFIC_DATE",
+				value1 = "${entryDate}");
+		}
+
+		if (isSet(searchAssetSummary)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC",
+				value1 = "${searchAssetSummary}");
+		}
+
+		if (isSet(searchTerm)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchTuning#BLUEPRINTS_RESULTS_PORTLET_SEARCH_QUERY",
+				value1 = "${searchTerm}");
+		}
+	}
+
 	macro viewBlueprintsSearchResultsSpecificOrder {
 		var resultOrder = "0";
 

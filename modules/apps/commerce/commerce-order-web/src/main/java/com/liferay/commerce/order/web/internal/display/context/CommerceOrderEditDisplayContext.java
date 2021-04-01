@@ -515,6 +515,11 @@ public class CommerceOrderEditDisplayContext {
 				}
 			}
 
+			if (Validator.isNull(label)) {
+				label = commerceOrderStatus.getLabel(
+					_commerceOrderRequestHelper.getLocale());
+			}
+
 			String buttonCssClass = "btn-primary";
 
 			if (commerceOrderStatus.getPriority() ==

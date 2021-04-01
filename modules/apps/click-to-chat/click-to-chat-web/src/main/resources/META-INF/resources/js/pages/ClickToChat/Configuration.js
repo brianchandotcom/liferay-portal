@@ -26,7 +26,6 @@ import {
 	STRATEGIES,
 	STRATEGY_HELP_TEXT,
 } from '../../utils/constants';
-import {sub} from '../../utils/lang';
 
 const defaultState = {
 	enable: false,
@@ -73,11 +72,22 @@ const ClickToChatConfiguration = () => {
 		return {canSave, formDisabled};
 	}, [form]);
 
+	const getProviderDocument = () => {
+		const provider = PROVIDERS_HELP_TEXT[form.provider] || {};
+
+		return (
+			provider[Liferay.ThemeDisplay.getLanguageId()] ||
+			provider[Liferay.ThemeDisplay.getDefaultLanguageId()]
+		);
+	};
+
 	const onSubmit = (event) => {
 		event.preventDefault();
 	};
 
 	const {canSave, formDisabled} = getFormStatus();
+
+	const providerDocument = getProviderDocument();
 
 	return (
 		<ClayForm onSubmit={onSubmit}>
@@ -114,23 +124,11 @@ const ClickToChatConfiguration = () => {
 					options={PROVIDERS}
 					value={form.provider}
 				/>
-				{PROVIDERS_HELP_TEXT[form.provider] && (
+				{providerDocument && (
 					<ClayForm.FeedbackGroup className="mt-4">
 						<ClayForm.FeedbackItem>
-							<a
-								href={PROVIDERS_HELP_TEXT[form.provider].url}
-								target="__blank"
-							>
-								{sub(
-									Liferay.Language.get(
-										'how-do-i-get-my-id-for-x'
-									),
-									[
-										PROVIDERS.find(
-											({value}) => value === form.provider
-										).label,
-									]
-								)}
+							<a href={providerDocument?.url} target="__blank">
+								{providerDocument?.message}
 							</a>
 						</ClayForm.FeedbackItem>
 					</ClayForm.FeedbackGroup>

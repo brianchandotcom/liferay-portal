@@ -14,10 +14,24 @@
 
 export const PROVIDERS_HELP_TEXT = {
 	chatwoot: {
-		url: '',
+		en_US: {
+			message: 'How do I get ID for Chatwoot',
+			url: 'https://liferay.com',
+		},
+		pt_BR: {
+			message: 'Como conseguir meu ID para Chatwoot',
+			url: 'https://liferay.com',
+		},
 	},
 	jivochat: {
-		url: '',
+		en_US: {
+			message: 'How do I get ID for Chatwoot',
+			url: 'https://liferay.com',
+		},
+		pt_BR: {
+			message: 'Como conseguir meu ID para JivoChat',
+			url: 'https://liferay.com',
+		},
 	},
 };
 

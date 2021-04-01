@@ -78,4 +78,149 @@ definition {
 		SearchBlueprints.viewBlueprintsSearchResultsSpecificOrder(resultsList = "Liferay Web Content,Liferay Blogs Entry");
 	}
 
+	@priority = "4"
+	test HideWebContentWithCustomElement {
+		SearchBlueprints.addBlueprint(name = "Hide Test and Experimental Content");
+
+		var blueprintsID = SearchBlueprints.findBlueprintID(name = "Hide Test and Experimental Content");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Reactive Widget");
+
+		PageEditor.addWidget(portletName = "Blueprints Search");
+
+		SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "${blueprintsID}");
+
+		PageEditor.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "Content");
+
+		JSONWebcontent.addWebContent(
+			assetTagNames = "test",
+			content = "",
+			groupName = "Guest",
+			title = "Test Content");
+
+		JSONWebcontent.addWebContent(
+			assetTagNames = "experimental",
+			content = "",
+			groupName = "Guest",
+			title = "Experimental Content");
+
+		JSONBlog.addEntry(
+			entryContent = "Liferay Liferay",
+			entryTitle = "Liferay Blogs Entry");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "Content");
+
+		for (var searchAssetTitle : list "Content,Test Content,Experimental Content") {
+			SearchBlueprints.viewBlueprintsSearchResults(
+				searchAssetTitle = "${searchAssetTitle}",
+				searchAssetType = "Web Content Article");
+		}
+
+		var elementTemplateJSON = '''
+{
+	"category": "hide",
+	"clauses": [
+		{
+			"context": "query",
+			"occur": "filter",
+			"query": {
+				"query": {
+					"bool": {
+						"must_not": [
+							{
+								"term": {
+									"assetTagNames.raw": {
+										"value": "${configuration.tag1}"
+									}
+								}
+							},
+							{
+								"term": {
+									"assetTagNames.raw": {
+										"value": "${configuration.tag2}"
+									}
+								}
+							}
+						]
+					}
+				}
+			},
+			"type": "wrapper"
+		}
+	],
+	"conditions": [],
+	"description": {
+		"en_US": "Hide contents tagged with"
+	},
+	"enabled": true,
+	"icon": "hidden",
+	"title": {
+		"en_US": "Hide Multiple Tagged Contents"
+	}
+}
+			''';
+
+		var uiConfigurationJSON = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "",
+					"name": "tag1",
+					"label": "Tag 1",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
+					"name": "tag2",
+					"label": "Tag 2",
+					"type": "text"
+				}
+			]
+		}
+	]
+}
+			''';
+
+		SearchBlueprints.addElements(
+			elementTemplateJSON = "${elementTemplateJSON}",
+			name = "Hide Multiple Tagged Contents",
+			uiConfigurationJSON = "${uiConfigurationJSON}");
+
+		SearchBlueprints.editBlueprint(name = "Hide Test and Experimental Content");
+
+		SearchBlueprints.addQueryElements(
+			fragment = "Hide Multiple Tagged Contents",
+			tag1 = "test",
+			tag2 = "experimental");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "Content");
+
+		SearchBlueprints.viewBlueprintsSearchResults(
+			searchAssetTitle = "Content",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Test Content",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Experimental Content",
+			searchAssetType = "Web Content Article");
+	}
+
 }

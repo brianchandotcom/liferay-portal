@@ -88,10 +88,3 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectSegmentsEntryFm',
-		'<%= HtmlUtil.escapeJS(selectSegmentsEntryDisplayContext.getEventName()) %>'
-	);
-</aui:script>

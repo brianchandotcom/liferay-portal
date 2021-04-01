@@ -14,9 +14,15 @@
 
 package com.liferay.portal.dao.orm.custom.sql;
 
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.function.BiFunction;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
@@ -24,6 +30,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  * @author Raymond Augé
  * @see    com.liferay.util.dao.orm.CustomSQL
  */
+@ProviderType
 public interface CustomSQL {
 
 	public String appendCriteria(String sql, String criteria);
@@ -36,6 +43,11 @@ public interface CustomSQL {
 	public String get(
 		Class<?> clazz, String id, QueryDefinition<?> queryDefinition,
 		String tableName);
+
+	public Predicate getKeywordsPredicate(
+		Expression<String> expression,
+		BiFunction<Expression<String>, String, Predicate> operatorBiFunction,
+		String[] values);
 
 	public String[] keywords(String keywords);
 

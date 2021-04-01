@@ -14,6 +14,8 @@
 
 package com.liferay.portal.dao.orm.custom.sql.internal;
 
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -53,6 +55,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -211,6 +214,37 @@ public class CustomSQLImpl implements CustomSQL {
 		}
 
 		return sql;
+	}
+
+	@Override
+	public Predicate getKeywordsPredicate(
+		Expression<String> expression,
+		BiFunction<Expression<String>, String, Predicate> operatorBiFunction,
+		String[] values) {
+
+		if ((values == null) || (values.length == 0)) {
+			return null;
+		}
+
+		Predicate keywordsPredicate = null;
+
+		for (String keyword : values) {
+			if (keyword == null) {
+				continue;
+			}
+
+			Predicate keywordPredicate = operatorBiFunction.apply(
+				expression, keyword);
+
+			if (keywordsPredicate == null) {
+				keywordsPredicate = keywordPredicate;
+			}
+			else {
+				keywordsPredicate = keywordsPredicate.or(keywordPredicate);
+			}
+		}
+
+		return keywordsPredicate;
 	}
 
 	/**

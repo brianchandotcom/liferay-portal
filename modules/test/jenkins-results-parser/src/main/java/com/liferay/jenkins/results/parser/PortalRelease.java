@@ -22,19 +22,21 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalRelease {
 
 	public PortalRelease(String portalVersion) {
-		_portalVersion = portalVersion;
-
 		String bundlesBaseURLContent = null;
 		String bundlesBaseURLString = null;
 
 		for (String baseURLString : _BASE_URL_STRINGS) {
-			bundlesBaseURLString = baseURLString + "/" + _portalVersion;
+			bundlesBaseURLString = baseURLString + "/" + portalVersion;
 
 			try {
 				bundlesBaseURLContent = JenkinsResultsParserUtil.toString(
@@ -44,7 +46,54 @@ public class PortalRelease {
 			}
 			catch (IOException ioException) {
 			}
+
+			try {
+				String xml = JenkinsResultsParserUtil.toString(
+					baseURLString + "/");
+
+				xml = xml.substring(xml.indexOf("<html>"));
+
+				xml = xml.replaceAll("&nbsp;", "");
+				xml = xml.replaceAll("<img[^>]+>", "");
+				xml = xml.replaceAll("<hr>", "");
+
+				Document document = Dom4JUtil.parse(xml);
+
+				for (Node node : Dom4JUtil.getNodesByXPath(document, "//a")) {
+					String text = node.getText();
+
+					text = text.trim();
+					text = text.replace("/", "");
+
+					if (!text.startsWith(portalVersion + "-")) {
+						continue;
+					}
+
+					bundlesBaseURLString = baseURLString + "/" + text;
+
+					try {
+						bundlesBaseURLContent =
+							JenkinsResultsParserUtil.toString(
+								bundlesBaseURLString + "/", true, 0, 5, 0);
+
+						portalVersion = text;
+
+						break;
+					}
+					catch (IOException ioException) {
+					}
+				}
+
+				if (bundlesBaseURLContent != null) {
+					break;
+				}
+			}
+			catch (DocumentException | IOException exception) {
+				throw new RuntimeException(exception);
+			}
 		}
+
+		_portalVersion = portalVersion;
 
 		if ((bundlesBaseURLString == null) || (bundlesBaseURLContent == null)) {
 			throw new RuntimeException(

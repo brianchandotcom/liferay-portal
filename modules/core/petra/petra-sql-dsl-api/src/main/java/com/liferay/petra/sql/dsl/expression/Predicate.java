@@ -19,6 +19,34 @@ package com.liferay.petra.sql.dsl.expression;
  */
 public interface Predicate extends Expression<Boolean> {
 
+	public static Predicate and(
+		Predicate leftPredicate, Predicate rightPredicate) {
+
+		if (leftPredicate == null) {
+			return rightPredicate;
+		}
+
+		return leftPredicate.and(rightPredicate);
+	}
+
+	public static Predicate or(
+		Predicate leftPredicate, Predicate rightPredicate) {
+
+		if (leftPredicate == null) {
+			return rightPredicate;
+		}
+
+		return leftPredicate.or(rightPredicate);
+	}
+
+	public static Predicate withParentheses(Predicate predicate) {
+		if (predicate == null) {
+			return null;
+		}
+
+		return predicate.withParentheses();
+	}
+
 	public Predicate and(Expression<Boolean> expression);
 
 	public Predicate or(Expression<Boolean> expression);

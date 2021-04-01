@@ -523,6 +523,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHANGE_LINK</td>
+	<td>//span[contains(@id,'ACCESS_IN_CONTROL_PANEL')]/button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_REMOVE_SITE_SCOPE</td>
+	<td>//span[contains(@id,'ACCESS_IN_CONTROL_PANEL')]/span[contains(.,'${key_removeSiteScope}')]/span//button[*[name()='svg'][contains(@class,'times-small')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_SITE_SCOPE</td>
+	<td>//span[contains(@id,'ACCESS_IN_CONTROL_PANEL')]/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_VIEW_CHECKBOX</td>
 	<td>//input[contains(@value,'VIEW')]</td>
 	<td></td>

@@ -30,6 +30,64 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that it's not possible to translate fields with Localizable set as false."
+	@priority = "5"
+	test LocalizableSetToFalse {
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Text");
+
+		DataEngine.editFieldLocalizable(fieldFieldLabel = "Text");
+
+		DataEngine.editFieldLocalizable(fieldFieldLabel = "Date");
+
+		DataEngine.editFieldLocalizable(fieldFieldLabel = "Numeric");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addCP(webContentTitle = "Web Content Title");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "03/30/2021",
+			webContentNumeric = "123",
+			webContentText = "This is a text field");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addCP(webContentTitle = "Título do conteudo da Web");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.checkNonLocalizableFields(
+			fieldContent = "123",
+			fieldFieldName = "Numeric");
+
+		DataEngine.checkNonLocalizableFields(
+			fieldContent = "This is a text field",
+			fieldFieldName = "Text");
+
+		DataEngine.checkNonLocalizableFields(
+			fieldContent = "30/03/2021",
+			fieldFieldName = "Date");
+	}
+
 	@description = "This test ensures that is possible to translate fields with Localizable set as true."
 	@priority = "5"
 	test TranslateLocalizable {

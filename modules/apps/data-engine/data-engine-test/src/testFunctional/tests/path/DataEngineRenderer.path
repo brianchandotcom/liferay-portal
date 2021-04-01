@@ -13,6 +13,11 @@
 	<td>xpath=(//div[contains(@class,'ddm-field')]//label[normalize-space(text())='${key_fieldName}'])[${key_index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ALL_DISABLED_FIELDS</td>
+	<td>xpath=(//div[contains(@data-field-name, '${key_fieldName}')]//input[@disabled=''])</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

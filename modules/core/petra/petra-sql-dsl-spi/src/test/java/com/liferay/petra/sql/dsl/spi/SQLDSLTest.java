@@ -121,6 +121,7 @@ public class SQLDSLTest {
 					assertClasses.add(NullExpression.class);
 					assertClasses.add(Operand.class);
 					assertClasses.add(OrderBy.class);
+					assertClasses.add(Predicate.class);
 					assertClasses.add(QueryExpression.class);
 					assertClasses.add(QueryTable.class);
 					assertClasses.add(Scalar.class);
@@ -862,6 +863,30 @@ public class SQLDSLTest {
 			"select MainExample.name columnAlias from MainExample order by " +
 				"columnAlias asc",
 			dslQuery.toString());
+	}
+
+	@Test
+	public void testPredicate() {
+		Predicate predicate = MainExampleTable.INSTANCE.name.eq("test");
+
+		Assert.assertNull(Predicate.and(null, null));
+		Assert.assertSame(predicate, Predicate.and(predicate, null));
+		Assert.assertSame(predicate, Predicate.and(null, predicate));
+		Assert.assertEquals(
+			String.valueOf(predicate.and(predicate)),
+			String.valueOf(Predicate.and(predicate, predicate)));
+
+		Assert.assertNull(Predicate.or(null, null));
+		Assert.assertSame(predicate, Predicate.or(predicate, null));
+		Assert.assertSame(predicate, Predicate.or(null, predicate));
+		Assert.assertEquals(
+			String.valueOf(predicate.or(predicate)),
+			String.valueOf(Predicate.or(predicate, predicate)));
+
+		Assert.assertNull(Predicate.withParentheses(null));
+		Assert.assertEquals(
+			String.valueOf(predicate.withParentheses()),
+			String.valueOf(Predicate.withParentheses(predicate)));
 	}
 
 	@Test

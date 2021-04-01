@@ -19,6 +19,7 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import vanillaTextMask from 'vanilla-text-mask';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import withConfirmationField from '../util/withConfirmationField.es';
 
 const ONE_DIGIT_NEGATIVE_NUMBER_LENGTH = 2;
 
@@ -253,4 +254,4 @@ const Main = ({
 Main.displayName = 'Numeric';
 
 export {Main};
-export default Main;
+export default withConfirmationField(Main);

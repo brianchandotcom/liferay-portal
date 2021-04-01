@@ -21,6 +21,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
+import withConfirmationField from '../util/withConfirmationField.es';
 
 const Text = ({
 	defaultLanguageId,
@@ -383,4 +384,4 @@ const Main = ({
 
 Main.displayName = 'Text';
 
-export default Main;
+export default withConfirmationField(Main);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.click.to.chat.web.internal.providers;
+package com.liferay.click.to.chat.web.internal.provider.dynamic.include;
 
 import com.liferay.portal.kernel.model.User;
 
@@ -26,7 +26,7 @@ public abstract class ProviderDynamicInclude {
 		this.user = user;
 	}
 
-	public abstract String getContentToInclude();
+	public abstract String getContent();
 
 	protected final String providerAccountToken;
 	protected final User user;

@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.click.to.chat.web.internal.providers;
+package com.liferay.click.to.chat.web.internal.provider.dynamic.include;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
@@ -33,11 +35,7 @@ public class CrispDynamicInclude extends ProviderDynamicInclude {
 	}
 
 	@Override
-	public String getContentToInclude() {
-		return _getChatScript();
-	}
-
-	private String _getChatScript() {
+	public String getContent() {
 		try {
 			String script = IOUtils.toString(
 				getClass().getResourceAsStream(_MAIN_TEMPLATE_CLASSPATH_PATH),
@@ -48,11 +46,18 @@ public class CrispDynamicInclude extends ProviderDynamicInclude {
 				user.getEmailAddress(), user.getScreenName());
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException, ioException);
+			}
+
 			return "<!-- Invalid script -->";
 		}
 	}
 
 	private static final String _MAIN_TEMPLATE_CLASSPATH_PATH =
 		"/template/crisp-template.html";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CrispDynamicInclude.class);
 
 }

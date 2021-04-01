@@ -19,14 +19,14 @@ import java.util.Objects;
 /**
  * @author José Abelenda
  */
-public enum GroupProviderTokenStrategy {
+public enum ClickToChatProviderSiteStrategy {
 
 	ALWAYS_INHERIT("ALWAYS_INHERIT"), PROVIDE("PROVIDE"),
 	PROVIDE_OR_INHERIT("PROVIDE_OR_INHERIT");
 
-	public static GroupProviderTokenStrategy parse(String value) {
-		for (GroupProviderTokenStrategy strategy :
-				GroupProviderTokenStrategy.values()) {
+	public static ClickToChatProviderSiteStrategy parse(String value) {
+		for (ClickToChatProviderSiteStrategy strategy :
+				ClickToChatProviderSiteStrategy.values()) {
 
 			if (Objects.equals(strategy.getValue(), value)) {
 				return strategy;
@@ -45,7 +45,7 @@ public enum GroupProviderTokenStrategy {
 		return _value;
 	}
 
-	private GroupProviderTokenStrategy(String value) {
+	private ClickToChatProviderSiteStrategy(String value) {
 		_value = value;
 	}
 

@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.click.to.chat.web.internal.providers;
+package com.liferay.click.to.chat.web.internal.provider.dynamic.include;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
@@ -26,18 +28,13 @@ import org.apache.commons.io.IOUtils;
 /**
  * @author José Abelenda
  */
-public class JivochatDynamicInclude extends ProviderDynamicInclude {
+public class TidioDynamicInclude extends ProviderDynamicInclude {
 
-	public JivochatDynamicInclude(String providerAccountToken, User user) {
+	public TidioDynamicInclude(String providerAccountToken, User user) {
 		super(providerAccountToken, user);
 	}
 
-	@Override
-	public String getContentToInclude() {
-		return _getChatScript();
-	}
-
-	private String _getChatScript() {
+	public String getContent() {
 		try {
 			String script = IOUtils.toString(
 				getClass().getResourceAsStream(_MAIN_TEMPLATE_CLASSPATH_PATH),
@@ -45,14 +42,21 @@ public class JivochatDynamicInclude extends ProviderDynamicInclude {
 
 			return String.format(
 				script, HtmlUtil.escapeJS(providerAccountToken),
-				user.getScreenName(), user.getEmailAddress());
+				user.getUserId(), user.getEmailAddress(), user.getScreenName());
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException, ioException);
+			}
+
 			return "<!-- Invalid script -->";
 		}
 	}
 
 	private static final String _MAIN_TEMPLATE_CLASSPATH_PATH =
-		"/template/jivochat-template.html";
+		"/template/tidio-template.html";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TidioDynamicInclude.class);
 
 }

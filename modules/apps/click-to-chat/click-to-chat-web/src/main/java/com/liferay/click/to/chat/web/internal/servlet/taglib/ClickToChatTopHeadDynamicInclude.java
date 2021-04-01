@@ -18,11 +18,11 @@ import aQute.bnd.component.annotations.Activate;
 import aQute.bnd.component.annotations.Modified;
 
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
-import com.liferay.click.to.chat.web.internal.configuration.GroupProviderTokenStrategy;
+import com.liferay.click.to.chat.web.internal.configuration.ClickToChatProviderSiteStrategy;
 import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
-import com.liferay.click.to.chat.web.internal.providers.ProviderDynamicInclude;
-import com.liferay.click.to.chat.web.internal.providers.ProviderDynamicIncludeFactory;
-import com.liferay.click.to.chat.web.internal.providers.ProviderOptions;
+import com.liferay.click.to.chat.web.internal.provider.ProviderOptions;
+import com.liferay.click.to.chat.web.internal.provider.dynamic.include.ProviderDynamicInclude;
+import com.liferay.click.to.chat.web.internal.provider.dynamic.include.ProviderDynamicIncludeFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -48,8 +48,8 @@ import org.osgi.service.component.annotations.Component;
  * @author José Abelenda
  */
 @Component(
-	configurationPid = ClickToChatConfiguration.ID, immediate = true,
-	service = DynamicInclude.class
+	configurationPid = "com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration",
+	immediate = true, service = DynamicInclude.class
 )
 public class ClickToChatTopHeadDynamicInclude implements DynamicInclude {
 
@@ -94,15 +94,17 @@ public class ClickToChatTopHeadDynamicInclude implements DynamicInclude {
 	}
 
 	private String _determineProviderTokenForSite() {
-		GroupProviderTokenStrategy strategy =
-			_clickToChatConfiguration.groupProviderTokenStrategy();
+		ClickToChatProviderSiteStrategy strategy =
+			_clickToChatConfiguration.groupProviderSiteStrategy();
 
 		if (strategy != null) {
-			if (strategy.equals(GroupProviderTokenStrategy.ALWAYS_INHERIT)) {
+			if (strategy.equals(
+					ClickToChatProviderSiteStrategy.ALWAYS_INHERIT)) {
+
 				return _clickToChatConfiguration.defaultAccountToken();
 			}
 			else if (strategy.equals(
-						GroupProviderTokenStrategy.PROVIDE_OR_INHERIT)) {
+						ClickToChatProviderSiteStrategy.PROVIDE_OR_INHERIT)) {
 
 				String groupProviderToken = GetterUtil.getString(
 					_typeSettingsUnicodeProperties.getProperty(
@@ -115,7 +117,7 @@ public class ClickToChatTopHeadDynamicInclude implements DynamicInclude {
 
 				return _clickToChatConfiguration.defaultAccountToken();
 			}
-			else if (strategy.equals(GroupProviderTokenStrategy.PROVIDE)) {
+			else if (strategy.equals(ClickToChatProviderSiteStrategy.PROVIDE)) {
 				return GetterUtil.getString(
 					_typeSettingsUnicodeProperties.getProperty(
 						ClickToChatWebKeys.
@@ -164,7 +166,7 @@ public class ClickToChatTopHeadDynamicInclude implements DynamicInclude {
 					provider, providerAccountToken, themeDisplay.getUser());
 
 			if (providerDynamicInclude != null) {
-				return providerDynamicInclude.getContentToInclude();
+				return providerDynamicInclude.getContent();
 			}
 
 			return "<!-- Provider not setted in Click to Chat -->";

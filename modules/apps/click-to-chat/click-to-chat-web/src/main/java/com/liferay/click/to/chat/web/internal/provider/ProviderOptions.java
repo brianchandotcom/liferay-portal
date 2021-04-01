@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.click.to.chat.web.internal.providers;
+package com.liferay.click.to.chat.web.internal.provider;
 
 import java.util.Objects;
 

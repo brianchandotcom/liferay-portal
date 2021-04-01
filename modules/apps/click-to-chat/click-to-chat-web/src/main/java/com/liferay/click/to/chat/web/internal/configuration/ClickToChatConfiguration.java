@@ -16,7 +16,7 @@ package com.liferay.click.to.chat.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.click.to.chat.web.internal.providers.ProviderOptions;
+import com.liferay.click.to.chat.web.internal.provider.ProviderOptions;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -27,14 +27,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = ClickToChatConfiguration.ID, localization = "content/Language",
-	name = "click-to-chat-configuration"
+	id = "com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration",
+	localization = "content/Language", name = "click-to-chat-configuration"
 )
 public interface ClickToChatConfiguration {
-
-	public String ID =
-		"com.liferay.click.to.chat.web.internal.configuration." +
-			"ClickToChatConfiguration";
 
 	@Meta.AD(name = "enable-click-to-chat")
 	public boolean enabled();
@@ -65,6 +61,6 @@ public interface ClickToChatConfiguration {
 		},
 		required = false
 	)
-	public GroupProviderTokenStrategy groupProviderTokenStrategy();
+	public ClickToChatProviderSiteStrategy groupProviderSiteStrategy();
 
 }

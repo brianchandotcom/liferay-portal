@@ -15,7 +15,7 @@
 package com.liferay.click.to.chat.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
-import com.liferay.click.to.chat.web.internal.configuration.GroupProviderTokenStrategy;
+import com.liferay.click.to.chat.web.internal.configuration.ClickToChatProviderSiteStrategy;
 import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
@@ -46,8 +46,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = ClickToChatConfiguration.ID, immediate = true,
-	property = "form.navigator.entry.order:Integer=30",
+	configurationPid = "com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration",
+	immediate = true, property = "form.navigator.entry.order:Integer=30",
 	service = FormNavigatorEntry.class
 )
 public class ClickToChatFormNavigatorEntry
@@ -102,31 +102,31 @@ public class ClickToChatFormNavigatorEntry
 			ClickToChatWebKeys.CLICK_TO_CHAT_SYSTEM_SETTINGS_ENABLED,
 			systemSettingsEnabled);
 
-		boolean clickToChatEnabled = GetterUtil.getBoolean(
+		boolean groupEnabled = GetterUtil.getBoolean(
 			typeSettingsUnicodeProperties.getProperty(
 				ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_ENABLED));
 
 		httpServletRequest.setAttribute(
-			ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_ENABLED, clickToChatEnabled);
+			ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_ENABLED, groupEnabled);
 
-		boolean clickToChatSignedInUsersOnly = GetterUtil.getBoolean(
+		boolean groupSignedInUsersOnly = GetterUtil.getBoolean(
 			typeSettingsUnicodeProperties.getProperty(
 				ClickToChatWebKeys.CLICK_TO_CHAT_SIGNED_IN_USERS_ONLY));
 
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_SIGNED_IN_USERS_ONLY,
-			clickToChatSignedInUsersOnly);
+			groupSignedInUsersOnly);
 
-		String clickToChatProviderAccountToken = GetterUtil.getString(
+		String providerAccountToken = GetterUtil.getString(
 			typeSettingsUnicodeProperties.getProperty(
 				ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_PROVIDER_ACCOUNT_TOKEN));
 
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_GROUP_PROVIDER_ACCOUNT_TOKEN,
-			clickToChatProviderAccountToken);
+			providerAccountToken);
 
-		GroupProviderTokenStrategy strategy =
-			_clickToChatConfiguration.groupProviderTokenStrategy();
+		ClickToChatProviderSiteStrategy strategy =
+			_clickToChatConfiguration.groupProviderSiteStrategy();
 
 		if (strategy != null) {
 			httpServletRequest.setAttribute(
@@ -158,6 +158,6 @@ public class ClickToChatFormNavigatorEntry
 		return "/sites_admin/click_to_chat.jsp";
 	}
 
-	private ClickToChatConfiguration _clickToChatConfiguration;
+	private volatile ClickToChatConfiguration _clickToChatConfiguration;
 
 }

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.click.to.chat.web.internal.configuration;
+package com.liferay.click.to.chat.web.internal.portal.settings.configuration.admin.display;
 
+import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
@@ -23,8 +24,11 @@ import javax.servlet.ServletContext;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * @author José Abelenda
+ */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class NewClickToChatConfiguration
+public class ClickToChatClickToChatPortalSettingsConfigurationScreenContributor
 	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
@@ -49,7 +53,7 @@ public class NewClickToChatConfiguration
 
 	@Override
 	public String getSaveMVCActionCommandName() {
-		return "click_to_chat/click_to_chat_form";
+		return "/click_to_chat/click_to_chat_form";
 	}
 
 	@Override

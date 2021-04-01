@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.click.to.chat.web.internal.providers;
+package com.liferay.click.to.chat.web.internal.provider.dynamic.include;
 
+import com.liferay.click.to.chat.web.internal.provider.ProviderOptions;
 import com.liferay.portal.kernel.model.User;
 
 /**
@@ -28,11 +29,11 @@ public class ProviderDynamicIncludeFactory {
 			if (provider.equals(ProviderOptions.CHATWOOT)) {
 				return new ChatwootDynamicInclude(providerAccountToken, user);
 			}
-			else if (provider.equals(ProviderOptions.JIVOCHAT)) {
-				return new JivochatDynamicInclude(providerAccountToken, user);
-			}
 			else if (provider.equals(ProviderOptions.CRISP)) {
 				return new CrispDynamicInclude(providerAccountToken, user);
+			}
+			else if (provider.equals(ProviderOptions.JIVOCHAT)) {
+				return new JivochatDynamicInclude(providerAccountToken, user);
 			}
 			else if (provider.equals(ProviderOptions.SMARTSUPP)) {
 				return new SmartsuppDynamicInclude(providerAccountToken, user);

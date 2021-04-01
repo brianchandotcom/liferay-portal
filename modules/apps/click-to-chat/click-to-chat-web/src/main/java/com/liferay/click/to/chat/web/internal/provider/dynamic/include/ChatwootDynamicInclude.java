@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.click.to.chat.web.internal.providers;
+package com.liferay.click.to.chat.web.internal.provider.dynamic.include;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
@@ -26,17 +28,14 @@ import org.apache.commons.io.IOUtils;
 /**
  * @author José Abelenda
  */
-public class SmartsuppDynamicInclude extends ProviderDynamicInclude {
+public class ChatwootDynamicInclude extends ProviderDynamicInclude {
 
-	public SmartsuppDynamicInclude(String providerAccountToken, User user) {
+	public ChatwootDynamicInclude(String providerAccountToken, User user) {
 		super(providerAccountToken, user);
 	}
 
-	public String getContentToInclude() {
-		return _getChatScript();
-	}
-
-	private String _getChatScript() {
+	@Override
+	public String getContent() {
 		try {
 			String script = IOUtils.toString(
 				getClass().getResourceAsStream(_MAIN_TEMPLATE_CLASSPATH_PATH),
@@ -44,14 +43,22 @@ public class SmartsuppDynamicInclude extends ProviderDynamicInclude {
 
 			return String.format(
 				script, HtmlUtil.escapeJS(providerAccountToken),
-				user.getScreenName(), user.getEmailAddress());
+				HtmlUtil.escapeJS("" + user.getUserId()),
+				user.getEmailAddress(), user.getScreenName());
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException, ioException);
+			}
+
 			return "<!-- Invalid script -->";
 		}
 	}
 
 	private static final String _MAIN_TEMPLATE_CLASSPATH_PATH =
-		"/template/smartsupp-template.html";
+		"/template/chatwoot-template.html";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ChatwootDynamicInclude.class);
 
 }

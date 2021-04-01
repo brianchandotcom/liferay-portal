@@ -110,6 +110,8 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		ddmFormRenderingContext.setDDMFormValues(formValues);
 		ddmFormRenderingContext.setLocale(formValues.getDefaultLocale());
 
+		DDMForm ddmForm = structureVersion.getDDMForm();
+
 		DDMFormInstanceVersion latestApprovedFormInstanceVersion =
 			_ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
 				formInstance.getFormInstanceId(),
@@ -119,11 +121,19 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 			latestApprovedFormInstanceVersion.getStructureVersion();
 
 		updateDDMFormFields(
-			structureVersion.getDDMForm(),
-			latestApprovedStructureVersion.getDDMForm());
+			ddmForm, latestApprovedStructureVersion.getDDMForm());
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			if (readOnly) {
+				ddmFormField.setProperty("requireConfirmation", false);
+			}
+		}
 
 		return _ddmFormRenderer.getDDMFormTemplateContext(
-			structureVersion.getDDMForm(), structureVersion.getDDMFormLayout(),
+			ddmForm, structureVersion.getDDMFormLayout(),
 			ddmFormRenderingContext);
 	}
 

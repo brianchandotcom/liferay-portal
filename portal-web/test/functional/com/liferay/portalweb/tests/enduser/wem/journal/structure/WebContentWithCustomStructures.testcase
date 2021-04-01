@@ -341,16 +341,21 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
-			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,DescricaoOpPar") {
-				DDLRecord.addRepeatableField(fieldName = "${fieldName}");
+			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,CompanhiaOperadora,DescricaoOpPar,Destino") {
+				DataEngine.addRepeatableField(fieldName = "${fieldName}");
 			}
 
-			Click(locator1 = "//label[contains(.,'Companhia Operadora')]/../../a[contains(@class,'ddm-repeatable-add-button')]");
+			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,CompanhiaOperadora,DescricaoOpPar,Destino") {
+				DataEngine.assertFieldRepeated(
+					fieldName = "${fieldName}",
+					index = "1");
 
-			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,CompanhiaOperadora,DescricaoOpPar") {
-				WebContent.viewRepeatedField(fieldName = "${fieldName}");
+				DataEngine.assertFieldRepeated(
+					fieldName = "${fieldName}",
+					index = "2");
 			}
 		}
+
 		task ("Duplicate fields and then remove duplicates") {
 			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,DescricaoOpPar") {
 				DDLRecord.deleteRepeatableField(

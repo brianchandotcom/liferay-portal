@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>FIELD_DUPLICATE</td>
-	<td>//label[contains(.,'${key_fieldName}')]/..//button[@*='Duplicate']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]/..//button[@*='Duplicate']</td>
 	<td></td>
 </tr>
 <tr>

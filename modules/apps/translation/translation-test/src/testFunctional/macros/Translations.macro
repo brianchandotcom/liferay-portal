@@ -199,7 +199,7 @@ definition {
 	macro translateFile {
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "update-translation-file -Dtranslation.content.target.original=<![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<![CDATA[${contentTranslateion}]]></target> -Dtranslation.description.target.original=<![CDATA[${webContentDescription}]]></target> -Dtranslation.description.target=<![CDATA[${descriptionTranslateion}]]></target> -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
+			value1 = "update-translation-file -Dtranslation.content.target.original=<![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<![CDATA[${contentTranslateion}]]></target> -Dtranslation.description.target.original=<![CDATA[${webContentDescription}]]></target> -Dtranslation.description.target=<![CDATA[${descriptionTranslateion}]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 	}
 
 	macro viewBaseFields {

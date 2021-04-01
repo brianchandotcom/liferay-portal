@@ -1237,6 +1237,50 @@ definition {
 		DMDocument.viewSearchResultsCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This test covers LPS-101908. It makes sure that all elements selected on different pages can be checked out and checked in."
+	@priority = "3"
+	test SelectAllAndCheckIn {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Commerce_Black.jpg");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Checkout");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var dmDocumentFileList : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black") {
+			AssertElementPresent(
+				key_dmDocumentTitle = "${dmDocumentFileList}",
+				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
+		}
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		DMDocument.checkinManagementBar(allFiles = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var dmDocumentFileList : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black") {
+			AssertElementNotPresent(
+				key_dmDocumentTitle = "${dmDocumentFileList}",
+				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
+		}
+	}
+
 	@description = "This test covers LPS-91598. It makes sure that all files are deleted when user selects all."
 	@priority = "4"
 	test SelectAllAndDelete {

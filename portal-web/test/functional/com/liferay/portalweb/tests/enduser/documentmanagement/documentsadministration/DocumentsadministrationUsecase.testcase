@@ -953,7 +953,7 @@ definition {
 		DMPortlet.configureDisplaySettingsPG(currentDisplayStyleViews = "");
 	}
 
-	@description = "This case covers LPS-97708. It ensures that a document can be restored from the Recycle Bin even if its original folder is no longer exists."
+	@description = "This case covers LPS-97708. It ensures that a document can be restored from the Recycle Bin even if its original folder no longer exists."
 	@priority = "3"
 	test RestoreDocumentWithoutOriginalFolder {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

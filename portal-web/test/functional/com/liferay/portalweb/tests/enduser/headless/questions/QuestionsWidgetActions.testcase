@@ -270,7 +270,7 @@ definition {
 			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
 	}
 
-	@description = "Validate if the user can add subtopic via the widget."
+	@description = "Validate if the user can add a subtopic using the widget."
 	@priority = "4"
 	test AddSubTopicsViaWidget {
 		JSONMBMessage.addCategory(
@@ -1434,9 +1434,9 @@ definition {
 			value1 = "Title AddQuestion");
 	}
 
-	@description = "Validate if the user can view the question after changed the subtopic via the breadcrumb."
+	@description = "Validate if the user can view the question after changing the subtopic using the breadcrumb filter."
 	@priority = "3"
-	test ViewQuestionAfterChangedSubTopic {
+	test ViewQuestionAfterChangingSubTopic {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Questions Test Category1",

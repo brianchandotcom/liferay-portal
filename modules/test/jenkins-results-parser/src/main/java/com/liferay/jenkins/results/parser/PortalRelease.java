@@ -179,6 +179,19 @@ public class PortalRelease {
 		return _getURL(_sqlFileNamePattern);
 	}
 
+	public URL getTomcatLocalURL() {
+		String tomcatLocalURLString = String.valueOf(getTomcatURL());
+
+		try {
+			return new URL(
+				tomcatLocalURLString.replace(
+					"https://release.liferay.com/1", "http://release-1/1"));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
 	public URL getTomcatURL() {
 		return _getURL(_tomcatFileNamePattern);
 	}

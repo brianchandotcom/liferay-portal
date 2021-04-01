@@ -1988,7 +1988,7 @@ public class TestrayImporter {
 			"liferay.portal.bundle", portalRelease.getPortalVersion());
 		parameters.put(
 			"test.build.bundle.zip.url",
-			String.valueOf(portalRelease.getTomcatURL()));
+			String.valueOf(portalRelease.getTomcatLocalURL()));
 
 		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
 		PortalHotfixRelease portalHotfixRelease = getPortalHotfixRelease();

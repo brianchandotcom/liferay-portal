@@ -99,7 +99,9 @@ definition {
 			fieldName = "RichText",
 			index = "2");
 
-		Click(locator1 = "DDMField#REMOVE_REPEATED_FIELD");
+		Click(
+			key_fieldName = "RichText",
+			locator1 = "DDMField#REMOVE_REPEATED_FIELD");
 
 		PortletEntry.publish();
 

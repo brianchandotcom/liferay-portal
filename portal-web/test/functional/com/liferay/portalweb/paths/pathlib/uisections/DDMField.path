@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>REMOVE_REPEATED_FIELD</td>
-	<td>//button[@class= 'ddm-form-field-repeatable-delete-button p-0 btn btn-sm btn-primary']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]/..//button[@*='Remove']</td>
 	<td></td>
 </tr>
 </tbody>

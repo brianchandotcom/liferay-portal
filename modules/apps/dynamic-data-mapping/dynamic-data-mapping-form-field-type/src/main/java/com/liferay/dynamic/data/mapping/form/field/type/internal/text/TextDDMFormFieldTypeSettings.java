@@ -214,7 +214,8 @@ public interface TextDDMFormFieldTypeSettings
 	public LocalizedValue placeholder();
 
 	@DDMFormField(
-		label = "%require-confirmation", properties = "showAsSwitcher=true"
+		label = "%require-confirmation", properties = "showAsSwitcher=true",
+		visibilityExpression = "FALSE"
 	)
 	public boolean requireConfirmation();
 

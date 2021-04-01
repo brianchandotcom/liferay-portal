@@ -140,7 +140,8 @@ public interface NumericDDMFormFieldTypeSettings
 	public LocalizedValue predefinedValue();
 
 	@DDMFormField(
-		label = "%require-confirmation", properties = "showAsSwitcher=true"
+		label = "%require-confirmation", properties = "showAsSwitcher=true",
+		visibilityExpression = "FALSE"
 	)
 	public boolean requireConfirmation();
 

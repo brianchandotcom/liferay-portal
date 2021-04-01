@@ -544,6 +544,15 @@ public class TestrayImporter {
 					break;
 				}
 			}
+
+			String jobName = job.getJobName();
+
+			if ((testrayProductVersion == null) &&
+				jobName.equals("test-qa-websites-functional-daily")) {
+
+				testrayProductVersion =
+					testrayProject.createTestrayProductVersion("1.x");
+			}
 		}
 		finally {
 			if (testrayProductVersion != null) {

@@ -58,6 +58,8 @@ definition {
 	test CreateBoostAssetType {
 		SearchBlueprints.addBlueprint(name = "My Blueprint");
 
+		PortletEntry.save();
+
 		var blueprintsID = SearchBlueprints.findBlueprintID(name = "My Blueprint");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
@@ -104,6 +106,8 @@ definition {
 	@priority = "4"
 	test HideWebContentWithCustomElement {
 		SearchBlueprints.addBlueprint(name = "Hide Test and Experimental Content");
+
+		PortletEntry.save();
 
 		var blueprintsID = SearchBlueprints.findBlueprintID(name = "Hide Test and Experimental Content");
 

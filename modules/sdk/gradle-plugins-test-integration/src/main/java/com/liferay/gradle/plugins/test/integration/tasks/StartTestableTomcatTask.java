@@ -75,9 +75,7 @@ public class StartTestableTomcatTask extends StartAppServerTask {
 
 				@Override
 				public Boolean call() throws Exception {
-					String output = outputStream.toString();
-
-					if (output.contains("Server startup in")) {
+					if (isReachable()) {
 						return true;
 					}
 

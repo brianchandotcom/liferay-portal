@@ -43,8 +43,9 @@ import javax.portlet.PortletURL;
 import jodd.introspector.CachingIntrospector;
 import jodd.introspector.ClassIntrospector;
 
-import jodd.json.JoddJson;
+import jodd.json.JsonSerializer;
 import jodd.json.TypeJsonSerializerMap;
+import jodd.json.meta.JsonAnnotationManager;
 
 /**
  * @author Igor Spasic
@@ -70,17 +71,21 @@ public class JSONInit {
 		ClassIntrospector.Implementation.set(
 			new CachingIntrospector(true, true, true, new String[] {"_"}));
 
-		JoddJson.jsonAnnotation = JSON.class;
+		JsonAnnotationManager jsonAnnotationManager =
+			JsonAnnotationManager.get();
 
-		JoddJson.excludedTypes = new Class<?>[] {
+		jsonAnnotationManager.setJsonAnnotation(JSON.class);
+
+		JsonSerializer.Defaults.excludedTypes = new Class<?>[] {
 			ExpandoBridge.class, InputStream.class, LiferayPortletRequest.class,
 			LiferayPortletResponse.class, OutputStream.class,
 			PortletDisplayModel.class, PortletURL.class
 		};
 
-		JoddJson.excludedTypeNames = new String[] {"javax.*"};
+		JsonSerializer.Defaults.excludedTypeNames = new String[] {"javax.*"};
 
-		TypeJsonSerializerMap typeSerializerMap = JoddJson.defaultSerializers;
+		TypeJsonSerializerMap typeJsonSerializerMap =
+			TypeJsonSerializerMap.get();
 
 		Class<?>[][] classesArray = new Class<?>[][] {
 			new Class<?>[] {Company.class, CompanyJSONTransformer.class},
@@ -97,7 +102,7 @@ public class JSONInit {
 		};
 
 		for (Class<?>[] classes : classesArray) {
-			typeSerializerMap.register(
+			typeJsonSerializerMap.register(
 				classes[0],
 				new JoddJsonTransformer(
 					(JSONTransformer)classes[1].newInstance()));

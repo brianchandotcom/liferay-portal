@@ -29,8 +29,10 @@ public class JoddJsonTransformer implements TypeJsonSerializer<Object> {
 	}
 
 	@Override
-	public void serialize(JsonContext jsonContext, Object object) {
+	public boolean serialize(JsonContext jsonContext, Object object) {
 		_jsonTransformer.transform(new JoddJSONContext(jsonContext), object);
+
+		return true;
 	}
 
 	private final JSONTransformer _jsonTransformer;

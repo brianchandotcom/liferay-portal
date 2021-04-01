@@ -311,23 +311,27 @@ definition {
 				templateName = "WC Template Name",
 				webContentTitle = "Web Content Complex Title 2");
 
-			AssertClick(
-				key_fieldFieldLabel = "ImagemAba01",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
-
-			ItemSelector.uploadFile(
+			WebContent.addWithStructureCP(
 				navTab = "Web Content Images",
-				uploadFileName = "Document_3.png");
+				webContentImage = "Document_3.png",
+				webContentImageFieldLabel = "Imagem Aba 01");
 
 			AssertClick(
 				key_fieldFieldLabel = "Logo",
 				locator1 = "WCEditWebContent#SELECT_BUTTON",
 				value1 = "Select");
 
+			IFrame.selectModalFrame();
+
+			LexiconCard.viewCardPresent(card = "Document_1.jpeg");
+
 			LexiconCard.viewCardNotPresent(card = "Document_3.png");
 
 			IFrame.closeFrame();
+
+			// This step is a workarond for LPS-125763
+
+			Click(locator1 = "Modal#CLOSE_BUTTON");
 
 			PortletEntry.publish();
 		}

@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, property = "node.type=TASK", service = NodeExecutor.class
 )
-public class TaskNodeExecutor extends BaseNodeExecutor {
+public class TaskNodeExecutorImpl extends BaseNodeExecutor {
 
 	protected Date calculateDueDate(KaleoTask kaleoTask)
 		throws KaleoDefinitionValidationException {

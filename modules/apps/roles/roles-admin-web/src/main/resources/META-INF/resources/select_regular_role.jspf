@@ -84,10 +84,3 @@ SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayCo
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectRegularRoleFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
-</aui:script>

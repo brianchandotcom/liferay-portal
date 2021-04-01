@@ -725,6 +725,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_VIEW_CHANGE_LINK</td>
+	<td>//span[contains(@id,'BlogsEntryVIEW')]/button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

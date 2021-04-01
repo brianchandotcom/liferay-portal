@@ -77,6 +77,20 @@ definition {
 				value1 = "${numberBoost}");
 		}
 
+		if (isSet(tag1)) {
+			Type(
+				key_fieldLabel = "Tag 1",
+				locator1 = "SearchTuning#BLUEPRINTS_QUERY_TEXT_FIELD",
+				value1 = "${tag1}");
+		}
+
+		if (isSet(tag2)) {
+			Type(
+				key_fieldLabel = "Tag 2",
+				locator1 = "SearchTuning#BLUEPRINTS_QUERY_TEXT_FIELD",
+				value1 = "${tag2}");
+		}
+
 		PortletEntry.save();
 	}
 

@@ -13756,6 +13756,17 @@ url=${short.hostname}:8080</echo>
 			token="${translation.description.target.original}"
 			value="${translation.description.target}"
 		/>
+
+		<if>
+			<equals arg1="${translation.file.encoding}" arg2="utf8" />
+			<then>
+				<copy
+					file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+					outputencoding="UTF-8"
+					tofile="${selenium.output.dir.name}/${translation.file.name}_utf8.${translation.file.type}"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="upgrade-legacy-database">

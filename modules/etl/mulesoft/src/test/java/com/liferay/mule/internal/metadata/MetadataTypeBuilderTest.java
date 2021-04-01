@@ -185,6 +185,34 @@ public class MetadataTypeBuilderTest {
 	}
 
 	@Test
+	public void testBuildMetadataType_EntityArrayField() throws Exception {
+		MetadataType entityArrayMetadataType = getFieldMetadataType(
+			getEntityMetadataType("/entities/{id}", OASConstants.OPERATION_GET),
+			"entityArrayField");
+
+		Assert.assertTrue(entityArrayMetadataType instanceof ArrayType);
+
+		DefaultArrayType entityArrayType =
+			(DefaultArrayType)entityArrayMetadataType;
+
+		MetadataType entityMetadataType = entityArrayType.getType();
+
+		Assert.assertTrue(entityMetadataType instanceof ObjectType);
+
+		DefaultObjectType entityObjectType =
+			(DefaultObjectType)entityMetadataType;
+
+		Collection<ObjectFieldType> fields = entityObjectType.getFields();
+
+		Assert.assertEquals(fields.toString(), 1, fields.size());
+
+		Optional<ObjectFieldType> entityObjectFieldTypeOptional =
+			entityObjectType.getFieldByName("Entity");
+
+		Assert.assertTrue(entityObjectFieldTypeOptional.isPresent());
+	}
+
+	@Test
 	public void testBuildMetadataType_FloatField() throws Exception {
 		MetadataType fieldMetadataType = getFieldMetadataType(
 			getEntityMetadataType("/entities/{id}", OASConstants.OPERATION_GET),

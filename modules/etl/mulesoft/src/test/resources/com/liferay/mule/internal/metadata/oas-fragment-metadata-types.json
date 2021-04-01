@@ -36,6 +36,12 @@
 						"format": "double",
 						"type": "number"
 					},
+					"entityArrayField": {
+						"items": {
+							"$ref": "#/components/schemas/Entity"
+						},
+						"type": "array"
+					},
 					"floatField": {
 						"format": "float",
 						"type": "number"

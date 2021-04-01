@@ -128,7 +128,7 @@ public abstract class BaseAppServerTask extends DefaultTask {
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)url.openConnection();
 
-			httpURLConnection.setRequestMethod("GET");
+			httpURLConnection.setRequestMethod("HEAD");
 
 			int responseCode = httpURLConnection.getResponseCode();
 

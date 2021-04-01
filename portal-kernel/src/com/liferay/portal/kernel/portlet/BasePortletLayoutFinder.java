@@ -28,10 +28,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -144,6 +146,23 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			if (portletId.equals(curRootPortletId)) {
 				return curPortletId;
 			}
+		}
+
+		Layout layout = layoutTypePortlet.getLayout();
+
+		long plid = layout.getPlid();
+
+		List<com.liferay.portal.kernel.model.PortletPreferences>
+			layoutPreferences =
+				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
+
+		if (!layoutPreferences.isEmpty()) {
+			com.liferay.portal.kernel.model.PortletPreferences preferences =
+				layoutPreferences.get(0);
+
+			return PortletIdCodec.decodePortletName(
+				preferences.getPortletId());
 		}
 
 		return null;

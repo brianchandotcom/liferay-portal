@@ -63,6 +63,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -145,6 +146,8 @@ public class DDMFormEvaluatorHelper {
 		);
 
 		verifyFieldsMarkedAsRequired();
+
+		verifyFieldsWithConfirmationField();
 
 		validateFields();
 
@@ -371,6 +374,28 @@ public class DDMFormEvaluatorHelper {
 		return ddmFormField.getDDMFormFieldValidation();
 	}
 
+	protected DDMFormFieldValue getDDMFormFieldValue(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		DDMFormFieldValue ddmFormFieldValue =
+			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldValue(
+				ddmFormEvaluatorFieldContextKey);
+
+		if (ddmFormFieldValue == null) {
+			return null;
+		}
+
+		Object value =
+			ddmFormEvaluatorDDMExpressionFieldAccessor.getFieldPropertyChanged(
+				ddmFormEvaluatorFieldContextKey, "value");
+
+		if (value != null) {
+			updateDDMFormFieldValue(ddmFormFieldValue, value);
+		}
+
+		return ddmFormFieldValue;
+	}
+
 	protected DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
 		String type) {
 
@@ -399,27 +424,47 @@ public class DDMFormEvaluatorHelper {
 		return disabledPagesIndexes;
 	}
 
-	protected boolean isFieldEmpty(
-		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
+	protected boolean isConfirmationValueInvalid(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
-		DDMFormFieldValue ddmFormFieldValue =
-			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldValue(
-				ddmFormFieldContextKey);
+		DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
+			ddmFormEvaluatorFieldContextKey);
+
+		if (ddmFormFieldValue == null) {
+			return false;
+		}
+
+		String confirmationValue = Objects.toString(
+			ddmFormFieldValue.getConfirmationValue(), StringPool.BLANK);
+
+		String valueString = StringPool.BLANK;
+
+		Value value = ddmFormFieldValue.getValue();
+
+		if (value != null) {
+			valueString = value.getString(
+				_ddmFormEvaluatorEvaluateRequest.getLocale());
+		}
+
+		if (Objects.equals(confirmationValue, valueString)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	protected boolean isFieldEmpty(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
+			ddmFormEvaluatorFieldContextKey);
 
 		if (ddmFormFieldValue == null) {
 			return true;
 		}
 
-		Object value =
-			ddmFormEvaluatorDDMExpressionFieldAccessor.getFieldPropertyChanged(
-				ddmFormFieldContextKey, "value");
-
-		if (value != null) {
-			updateDDMFormFieldValue(ddmFormFieldValue, value);
-		}
-
 		DDMFormField ddmFormField = _ddmFormFieldsMap.get(
-			ddmFormFieldContextKey.getName());
+			ddmFormEvaluatorFieldContextKey.getName());
 
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			getDDMFormFieldValueAccessor(ddmFormField.getType());
@@ -459,6 +504,30 @@ public class DDMFormEvaluatorHelper {
 		}
 
 		return GetterUtil.get(ddmFormFieldPropertyChanges.get("visible"), true);
+	}
+
+	protected boolean isFieldWithConfirmationFieldAndVisible(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		if (!getBooleanPropertyValue(
+				ddmFormEvaluatorFieldContextKey, "requireConfirmation",
+				false)) {
+
+			return false;
+		}
+
+		return getBooleanPropertyValue(
+			ddmFormEvaluatorFieldContextKey, "visible", true);
+	}
+
+	protected void setFieldAsInvalid(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		UpdateFieldPropertyRequest.Builder builder =
+			UpdateFieldPropertyRequest.Builder.newBuilder(
+				ddmFormEvaluatorFieldContextKey.getName(), "valid", false);
+
+		ddmFormEvaluatorExpressionObserver.updateFieldProperty(builder.build());
 	}
 
 	protected void setRequiredErrorMessage(
@@ -648,6 +717,23 @@ public class DDMFormEvaluatorHelper {
 			this::isFieldEmpty
 		).forEach(
 			this::setRequiredErrorMessage
+		);
+	}
+
+	protected void verifyFieldsWithConfirmationField() {
+		Set<Map.Entry<String, DDMFormField>> entrySet =
+			_ddmFormFieldsMap.entrySet();
+
+		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
+
+		stream.flatMap(
+			entry -> _getDDMFormEvaluatorFieldContextKey(entry.getKey())
+		).filter(
+			this::isFieldWithConfirmationFieldAndVisible
+		).filter(
+			this::isConfirmationValueInvalid
+		).forEach(
+			this::setFieldAsInvalid
 		);
 	}
 

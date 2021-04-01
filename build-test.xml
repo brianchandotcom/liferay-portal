@@ -2111,6 +2111,23 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 								<if>
 									<equals arg1="${database.type}" arg2="mysql" />
 									<then>
+										<copy
+											file="${app.server.lib.portal.dir}/${jdbc.mysql.driver}"
+											tofile="${app.server.lib.global.dir}/${jdbc.mysql.driver}"
+										/>
+
+										<replace
+											file="${app.server.lib.global.dir}/module.xml"
+										>
+											<replacetoken><![CDATA[<resource-root path="portlet.jar" />]]></replacetoken>
+											<replacevalue>
+												<![CDATA[
+													<resource-root path="portlet.jar" />
+													<resource-root path="mysql.jar" />
+												]]>
+											</replacevalue>
+										</replace>
+
 										<replace
 											file="${app.server.dir}/standalone/configuration/standalone.xml"
 										>
@@ -2133,6 +2150,23 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 									<elseif>
 										<equals arg1="${database.type}" arg2="mariadb" />
 										<then>
+											<copy
+												file="${app.server.lib.portal.dir}/${jdbc.mariadb.driver}"
+												tofile="${app.server.lib.global.dir}/${jdbc.mariadb.driver}"
+											/>
+
+											<replace
+												file="${app.server.lib.global.dir}/module.xml"
+											>
+												<replacetoken><![CDATA[<resource-root path="portlet.jar" />]]></replacetoken>
+												<replacevalue>
+													<![CDATA[
+														<resource-root path="portlet.jar" />
+														<resource-root path="mariadb.jar" />
+													]]>
+												</replacevalue>
+											</replace>
+
 											<replace
 												file="${app.server.dir}/standalone/configuration/standalone.xml"
 											>
@@ -2184,6 +2218,11 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 						<equals arg1="${database.type}" arg2="mysql" />
 					</and>
 					<then>
+						<copy
+							file="${app.server.lib.portal.dir}/${jdbc.mysql.driver}"
+							tofile="${app.server.lib.global.dir}/${jdbc.mysql.driver}"
+						/>
+
 						<echo file="${app.server.weblogic.instance.dir}/config/jdbc/Liferay_Data_Source-jdbc.xml">
 							<![CDATA[
 								<?xml version='1.0' encoding='UTF-8'?>
@@ -2238,6 +2277,11 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 						<equals arg1="${database.type}" arg2="mysql" />
 					</and>
 					<then>
+						<copy
+							file="${app.server.lib.portal.dir}/${jdbc.mysql.driver}"
+							tofile="${app.server.lib.global.dir}/${jdbc.mysql.driver}"
+						/>
+
 						<replace
 							file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/resources.xml"
 						>

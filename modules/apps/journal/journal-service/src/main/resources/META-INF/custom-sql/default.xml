@@ -77,47 +77,6 @@
 				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_S_T_D_R">
-		<![CDATA[
-			SELECT
-				COUNT(JournalArticle.articleId) AS COUNT_VALUE
-			FROM
-				JournalArticle
-			LEFT JOIN
-				JournalArticle tempJournalArticle ON
-					[$STATUS_JOIN$] AND
-					(JournalArticle.groupId = tempJournalArticle.groupId) AND
-					(JournalArticle.articleId = tempJournalArticle.articleId) AND
-					(JournalArticle.version < tempJournalArticle.version)
-			LEFT JOIN
-				JournalArticleLocalization ON
-					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
-					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
-			LEFT JOIN
-				JournalArticleLocalization tempJournalArticleLocalization ON
-					(JournalArticleLocalization.articlePK = tempJournalArticleLocalization.articlePK) AND
-					(JournalArticleLocalization.articleLocalizationId < tempJournalArticleLocalization.articleLocalizationId)
-			WHERE
-				(JournalArticle.companyId = ?) AND
-				(JournalArticle.groupId = ?) AND
-				([$FOLDER_ID$]) AND
-				(JournalArticle.classNameId = ?) AND
-				([$STATUS$]) AND
-				([$STRUCTURE_TEMPLATE$]) AND
-				(tempJournalArticle.id_ IS NULL) AND
-				(tempJournalArticleLocalization.articleLocalizationId IS NULL) AND
-				(
-					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
-					(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])
-				)
-		]]>
-	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT
@@ -414,49 +373,6 @@
 				([$FOLDER_ID$]) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$STATUS$]) AND
 				(tempJournalArticle.id_ IS NULL)
-			ORDER BY
-				JournalArticle.id_ ASC
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_S_T_D_R">
-		<![CDATA[
-			SELECT
-				JournalArticle.*
-			FROM
-				JournalArticle
-			LEFT JOIN
-				JournalArticle tempJournalArticle ON
-					[$STATUS_JOIN$] AND
-					(JournalArticle.groupId = tempJournalArticle.groupId) AND
-					(JournalArticle.articleId = tempJournalArticle.articleId) AND
-					(JournalArticle.version < tempJournalArticle.version)
-			LEFT JOIN
-				JournalArticleLocalization ON
-					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
-					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
-			LEFT JOIN
-				JournalArticleLocalization tempJournalArticleLocalization ON
-					(JournalArticleLocalization.articlePK = tempJournalArticleLocalization.articlePK) AND
-					(JournalArticleLocalization.articleLocalizationId < tempJournalArticleLocalization.articleLocalizationId)
-			WHERE
-				(JournalArticle.companyId = ?) AND
-				(JournalArticle.groupId = ?) AND
-				([$FOLDER_ID$]) AND
-				(JournalArticle.classNameId = ?) AND
-				([$STATUS$]) AND
-				([$STRUCTURE_TEMPLATE$]) AND
-				(tempJournalArticle.id_ IS NULL) AND
-				(tempJournalArticleLocalization.articleLocalizationId IS NULL) AND
-				(
-					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
-					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])
-				)
 			ORDER BY
 				JournalArticle.id_ ASC
 		]]>

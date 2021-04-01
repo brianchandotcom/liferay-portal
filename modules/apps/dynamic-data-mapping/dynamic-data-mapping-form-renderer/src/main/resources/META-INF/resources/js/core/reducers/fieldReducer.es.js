@@ -39,12 +39,14 @@ export const createRepeatedField = (sourceField, repeatedIndex) => {
 
 	return {
 		...sourceField,
+		confirmationValue: '',
 		instanceId,
 		localizedValue,
 		name: generateName(sourceField.name, {instanceId, repeatedIndex}),
 		nestedFields: (sourceField.nestedFields || []).map((nestedField) =>
 			createRepeatedField(nestedField)
 		),
+		valid: true,
 		value: sourceField.predefinedValue,
 	};
 };

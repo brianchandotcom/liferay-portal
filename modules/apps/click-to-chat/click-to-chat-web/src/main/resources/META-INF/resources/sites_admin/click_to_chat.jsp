@@ -22,4 +22,7 @@ boolean clickToChatEnabled = GetterUtil.getBoolean(request.getAttribute(ClickToC
 
 <aui:input checked="<%= clickToChatEnabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "enable-click-to-chat") %>' labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--clickToChatEnabled--" type="toggle-switch" value="<%= clickToChatEnabled %>" />
 
-<liferay-learn:message key="chatwoot-token" resource="com.liferay.click.to.chat.web" />
+<liferay-learn:message
+	key="chatwoot-token"
+	resource="com.liferay.click.to.chat.web"
+/>

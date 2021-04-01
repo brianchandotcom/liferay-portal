@@ -179,6 +179,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEPOT_TABLE_SPECIFIC_NAME</td>
+	<td>//tr[${key_position}][contains(.,'${key_depotName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

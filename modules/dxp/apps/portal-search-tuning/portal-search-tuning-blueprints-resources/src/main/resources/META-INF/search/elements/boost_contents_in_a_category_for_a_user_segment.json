@@ -1,0 +1,78 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "conditional",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"query": {
+								"term": {
+									"assetCategoryIds": {
+										"boost": "${configuration.boost}",
+										"value": "${configuration.asset_category_id}"
+									}
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+					{
+						"configuration": {
+							"evaluation_type": "contains",
+							"parameter_name": "${user.user_segment_entry_ids}",
+							"value": [
+								"${configuration.user_segment_id}"
+							]
+						}
+					}
+				],
+				"description": {
+					"en_US": "Boost contents in a category for users belonging to a user segment"
+				},
+				"enabled": true,
+				"icon": "thumbs-up",
+				"title": {
+					"en_US": "Boost Contents in a Category for a User Segment"
+				}
+			},
+			"uiConfigurationJSON": {
+				"fieldSets": [
+					{
+						"fields": [
+							{
+								"helpText": "Add asset category ID",
+								"label": "Asset Category",
+								"name": "asset_category_id",
+								"type": "number"
+							},
+							{
+								"helpText": "Add user segment ID",
+								"label": "User Segment",
+								"name": "user_segment_id",
+								"type": "number"
+							},
+							{
+								"defaultValue": 20,
+								"label": "Boost",
+								"name": "boost",
+								"type": "slider"
+							}
+						]
+					}
+				]
+			}
+		},
+		"description": {
+			"en_US": "Boost contents in a category for users belonging to a user segment"
+		},
+		"title": {
+			"en_US": "Boost Contents in a Category for a User Segment"
+		}
+	},
+	"type": 13
+}

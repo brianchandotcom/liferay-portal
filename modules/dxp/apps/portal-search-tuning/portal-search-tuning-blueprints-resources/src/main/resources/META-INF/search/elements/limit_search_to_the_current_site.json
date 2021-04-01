@@ -1,0 +1,42 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "filter",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"query": {
+								"term": {
+									"scopeGroupId": "${context.scope_group_id}"
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Limit search to the current site"
+				},
+				"enabled": true,
+				"icon": "filter",
+				"title": {
+					"en_US": "Limit Search to the Current Site"
+				}
+			},
+			"uiConfigurationJSON": {
+			}
+		},
+		"description": {
+			"en_US": "Limit search to the current site"
+		},
+		"title": {
+			"en_US": "Limit Search to the Current Site"
+		}
+	},
+	"type": 13
+}

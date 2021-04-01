@@ -1,0 +1,66 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "hide",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"query": {
+								"bool": {
+									"must_not": [
+										{
+											"term": {
+												"${configuration.field}": {
+													"value": "${configuration.value}"
+												}
+											}
+										}
+									]
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Hide results by an exact term match"
+				},
+				"enabled": true,
+				"icon": "hidden",
+				"title": {
+					"en_US": "Hide by an Exact Term Match"
+				}
+			},
+			"uiConfigurationJSON": {
+				"fieldSets": [
+					{
+						"fields": [
+							{
+								"label": "Field",
+								"name": "field",
+								"type": "fieldMapping"
+							},
+							{
+								"label": "Value",
+								"name": "value",
+								"type": "text"
+							}
+						]
+					}
+				]
+			}
+		},
+		"description": {
+			"en_US": "Hide results by an exact term match"
+		},
+		"title": {
+			"en_US": "Hide by an Exact Term Match"
+		}
+	},
+	"type": 13
+}

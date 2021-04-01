@@ -98,8 +98,6 @@ public class BlueprintImporterImpl implements BlueprintImporter {
 		}
 		else if (type == BlueprintTypes.QUERY_ELEMENT) {
 			_addElement(payloadJSONObject, type, serviceContext, privileged);
-
-			_log.error("Not implemented");
 		}
 	}
 
@@ -133,12 +131,15 @@ public class BlueprintImporterImpl implements BlueprintImporter {
 
 		Map<Locale, String> titleMap = _getTitleMap(payloadJSONObject);
 
+		Map<Locale, String> descriptionMap = _getDescriptionMap(
+				payloadJSONObject);
+
 		String configuration = payloadJSONObject.getJSONObject(
 			"configuration"
 		).toJSONString();
 
 		_save(
-			titleMap, null, configuration, null, blueprintType, serviceContext,
+			titleMap, descriptionMap, configuration, null, blueprintType, serviceContext,
 			privileged);
 	}
 
@@ -220,7 +221,7 @@ public class BlueprintImporterImpl implements BlueprintImporter {
 			_blueprintLocalService.addBlueprint(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				titleMap, descriptionMap, configuration, selectedElements,
-				BlueprintTypes.BLUEPRINT, serviceContext);
+					type, serviceContext);
 		}
 		else {
 			_blueprintService.addCompanyBlueprint(

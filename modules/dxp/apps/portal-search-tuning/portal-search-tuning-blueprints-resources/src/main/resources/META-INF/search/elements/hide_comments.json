@@ -1,0 +1,65 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "hide",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"query": {
+								"bool": {
+									"should": [
+										{
+											"bool": {
+												"must_not": [
+													{
+														"exists": {
+															"field": "discussion"
+														}
+													}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"term": {
+															"discussion": false
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Do not search for comments"
+				},
+				"enabled": true,
+				"icon": "hidden",
+				"title": {
+					"en_US": "Hide Comments"
+				}
+			},
+			"uiConfigurationJSON": {
+			}
+		},
+		"description": {
+			"en_US": "Do not search for comments"
+		},
+		"title": {
+			"en_US": "Hide Comments"
+		}
+	},
+	"type": 13
+}

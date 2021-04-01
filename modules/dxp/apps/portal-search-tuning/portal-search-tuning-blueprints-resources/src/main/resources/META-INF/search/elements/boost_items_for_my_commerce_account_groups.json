@@ -1,0 +1,55 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "commerce",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"query": {
+								"terms": {
+									"boost": "${configuration.boost}",
+									"commerceAccountGroupIds": "${commerce.commerce_account_group_ids}"
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Boost Commerce items for my account groups. Applies only to products using Account Group Filtering."
+				},
+				"enabled": true,
+				"icon": "thumbs-up",
+				"title": {
+					"en_US": "Boost Items for My Commerce Account Groups"
+				}
+			},
+			"uiConfigurationJSON": {
+				"fieldSets": [
+					{
+						"fields": [
+							{
+								"defaultValue": 10,
+								"label": "Boost",
+								"name": "boost",
+								"type": "slider"
+							}
+						]
+					}
+				]
+			}
+		},
+		"description": {
+			"en_US": "Boost Commerce items for my account groups. Applies only to products using Account Group Filtering."
+		},
+		"title": {
+			"en_US": "Boost Items for My Commerce Account Groups"
+		}
+	},
+	"type": 13
+}

@@ -43,6 +43,8 @@ public class ImportHelper {
 		throws PortalException {
 
 		_importBlueprints(companyId, groupId, userId, _listBlueprints());
+
+		_importBlueprints(companyId, groupId, userId, _listElements());
 	}
 
 	private Bundle _getBundle() {
@@ -92,8 +94,16 @@ public class ImportHelper {
 		return bundle.findEntries(_BLUEPRINTS_PATH, "*.json", false);
 	}
 
+	private Enumeration<URL> _listElements() {
+		Bundle bundle = _getBundle();
+
+		return bundle.findEntries(_ELEMENTS_PATH, "*.json", false);
+	}
+
 	private static final String _BLUEPRINTS_PATH =
 		"/META-INF/search/blueprints";
+
+	private static final String _ELEMENTS_PATH = "/META-INF/search/elements";
 
 	private static final Log _log = LogFactoryUtil.getLog(ImportHelper.class);
 

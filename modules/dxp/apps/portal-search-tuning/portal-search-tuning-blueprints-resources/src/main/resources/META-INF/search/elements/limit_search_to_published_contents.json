@@ -1,0 +1,42 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "filter",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"query": {
+								"term": {
+									"status": 0
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Limit search to contents that have been published"
+				},
+				"enabled": true,
+				"icon": "filter",
+				"title": {
+					"en_US": "Limit Search to Published Contents"
+				}
+			},
+			"uiConfigurationJSON": {
+			}
+		},
+		"description": {
+			"en_US": "Limit search to contents that have been published"
+		},
+		"title": {
+			"en_US": "Limit Search to Published Contents"
+		}
+	},
+	"type": 13
+}

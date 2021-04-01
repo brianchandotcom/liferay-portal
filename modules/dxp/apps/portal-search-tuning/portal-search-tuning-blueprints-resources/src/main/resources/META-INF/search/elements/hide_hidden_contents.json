@@ -1,0 +1,65 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "hide",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"query": {
+								"bool": {
+									"should": [
+										{
+											"bool": {
+												"must_not": [
+													{
+														"exists": {
+															"field": "hidden"
+														}
+													}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"term": {
+															"hidden": false
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Hide assets which are marked not searchable"
+				},
+				"enabled": true,
+				"icon": "hidden",
+				"title": {
+					"en_US": "Hide Hidden Contents"
+				}
+			},
+			"uiConfigurationJSON": {
+			}
+		},
+		"description": {
+			"en_US": "Hide assets which are marked not searchable"
+		},
+		"title": {
+			"en_US": "Hide Hidden Contents"
+		}
+	},
+	"type": 13
+}

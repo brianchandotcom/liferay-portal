@@ -1,0 +1,62 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "hide",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"query": {
+								"bool": {
+									"must_not": [
+										{
+											"term": {
+												"assetCategoryIds": {
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									]
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Hide contents in a category"
+				},
+				"enabled": true,
+				"icon": "hidden",
+				"title": {
+					"en_US": "Hide Contents in a Category"
+				}
+			},
+			"uiConfigurationJSON": {
+				"fieldSets": [
+					{
+						"fields": [
+							{
+								"helpText": "Add asset category ID",
+								"label": "Asset Category",
+								"name": "asset_category_id",
+								"type": "number"
+							}
+						]
+					}
+				]
+			}
+		},
+		"description": {
+			"en_US": "Hide contents in a category"
+		},
+		"title": {
+			"en_US": "Hide Contents in a Category"
+		}
+	},
+	"type": 13
+}

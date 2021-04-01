@@ -1,0 +1,72 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "filter",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"query": {
+								"bool": {
+									"should": [
+										{
+											"bool": {
+												"must_not": [
+													{
+														"exists": {
+															"field": "stagingGroup"
+														}
+													}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"term": {
+															"stagingGroup": false
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+					{
+						"configuration": {
+							"evaluation_type": "eq",
+							"parameter_name": "${context.is_staging_group}",
+							"value": false
+						}
+					}
+				],
+				"description": {
+					"en_US": "Show only published contents on live sites, published and staged contents on staging sites"
+				},
+				"enabled": true,
+				"icon": "filter",
+				"title": {
+					"en_US": "Staging Aware"
+				}
+			},
+			"uiConfigurationJSON": {
+			}
+		},
+		"description": {
+			"en_US": "Show only published contents on live sites, published and staged contents on staging sites"
+		},
+		"title": {
+			"en_US": "Staging Aware"
+		}
+	},
+	"type": 13
+}

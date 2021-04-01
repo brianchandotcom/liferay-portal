@@ -1,0 +1,70 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "conditional",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"query": {
+								"term": {
+									"assetCategoryIds": {
+										"boost": "${configuration.boost}",
+										"value": "${configuration.asset_category_id}"
+									}
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+					{
+						"configuration": {
+							"evaluation_type": "eq",
+							"parameter_name": "${user.user_is_signed_in}",
+							"value": false
+						}
+					}
+				],
+				"description": {
+					"en_US": "Boost Contents in a category, if user is not logged in"
+				},
+				"enabled": true,
+				"icon": "thumbs-up",
+				"title": {
+					"en_US": "Boost Contents in a Category for Guest Users"
+				}
+			},
+			"uiConfigurationJSON": {
+				"fieldSets": [
+					{
+						"fields": [
+							{
+								"helpText": "Add asset category ID",
+								"label": "Asset Category",
+								"name": "asset_category_id",
+								"type": "number"
+							},
+							{
+								"defaultValue": 20,
+								"label": "Boost",
+								"name": "boost",
+								"type": "slider"
+							}
+						]
+					}
+				]
+			}
+		},
+		"description": {
+			"en_US": "Boost Contents in a category, if user is not logged in"
+		},
+		"title": {
+			"en_US": "Boost Contents in a Category for Guest Users"
+		}
+	},
+	"type": 13
+}

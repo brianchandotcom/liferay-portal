@@ -1,0 +1,76 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "filter",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"query": {
+								"bool": {
+									"should": [
+										{
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"entryClasslabel": {
+																"value": "com.liferay.journal.model.JournalArticle"
+															}
+														}
+													}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"term": {
+															"entryClasslabel": {
+																"value": "com.liferay.journal.model.JournalArticle"
+															}
+														}
+													},
+													{
+														"term": {
+															"head": {
+																"value": true
+															}
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Show only the latest HEAD version of Web Content articles"
+				},
+				"enabled": true,
+				"icon": "filter",
+				"title": {
+					"en_US": "Limit Search to HEAD Version"
+				}
+			},
+			"uiConfigurationJSON": {
+			}
+		},
+		"description": {
+			"en_US": "Show only the latest HEAD version of Web Content articles"
+		},
+		"title": {
+			"en_US": "Limit Search to HEAD Version"
+		}
+	},
+	"type": 13
+}

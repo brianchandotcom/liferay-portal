@@ -1,0 +1,112 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "boost",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"query": {
+								"multi_match": {
+									"boost": "${configuration.boost}",
+									"fields": "${configuration.fields}",
+									"operator": "and",
+									"query": "${keywords}",
+									"type": "${configuration.type}"
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Boost contents matching all the words in the search phrase"
+				},
+				"enabled": true,
+				"icon": "thumbs-up",
+				"title": {
+					"en_US": "Boost All Keywords Match"
+				}
+			},
+			"uiConfigurationJSON": {
+				"fieldSets": [
+					{
+						"fields": [
+							{
+								"defaultValue": [
+									{
+										"boost": 2,
+										"field": "localized_title",
+										"locale": "${context.language_id}"
+									},
+									{
+										"boost": 1,
+										"field": "content",
+										"locale": "${context.language_id}"
+									}
+								],
+								"label": "Field",
+								"name": "fields",
+								"type": "fieldMappingList",
+								"typeOptions": {
+									"boost": true
+								}
+							},
+							{
+								"defaultValue": "best_fields",
+								"label": "Match Type",
+								"name": "type",
+								"type": "select",
+								"typeOptions": {
+									"options": [
+										{
+											"label": "Best Fields",
+											"value": "best_fields"
+										},
+										{
+											"label": "Most Fields",
+											"value": "most_fields"
+										},
+										{
+											"label": "Cross Fields",
+											"value": "cross_fields"
+										},
+										{
+											"label": "Phrase",
+											"value": "phrase"
+										},
+										{
+											"label": "Phrase Prefix",
+											"value": "phrase_prefix"
+										},
+										{
+											"label": "Boolean Prefix",
+											"value": "bool_prefix"
+										}
+									]
+								}
+							},
+							{
+								"defaultValue": 10,
+								"label": "Boost",
+								"name": "boost",
+								"type": "slider"
+							}
+						]
+					}
+				]
+			}
+		},
+		"description": {
+			"en_US": "Boost contents matching all the words in the search phrase"
+		},
+		"title": {
+			"en_US": "Boost All Keywords Match"
+		}
+	},
+	"type": 13
+}

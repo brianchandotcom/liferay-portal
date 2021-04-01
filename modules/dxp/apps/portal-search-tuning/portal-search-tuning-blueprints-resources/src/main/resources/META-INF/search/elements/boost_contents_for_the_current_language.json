@@ -1,0 +1,71 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "boost",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"terms": {
+												"entryClasslabel": [
+													"com.liferay.portal.kernel.model.Layout",
+													"com.liferay.journal.model.JournalArticle"
+												]
+											}
+										},
+										{
+											"term": {
+												"defaultLanguageId": {
+													"boost": "${configuration.boost}",
+													"value": "${context.language_id}"
+												}
+											}
+										}
+									]
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Boost contents having the current session language as the default language"
+				},
+				"enabled": true,
+				"icon": "thumbs-up",
+				"title": {
+					"en_US": "Boost Contents for the Current Language"
+				}
+			},
+			"uiConfigurationJSON": {
+				"fieldSets": [
+					{
+						"fields": [
+							{
+								"defaultValue": 20,
+								"label": "Boost",
+								"name": "boost",
+								"type": "slider"
+							}
+						]
+					}
+				]
+			}
+		},
+		"description": {
+			"en_US": "Boost contents having the current session language as the default language"
+		},
+		"title": {
+			"en_US": "Boost Contents for the Current Language"
+		}
+	},
+	"type": 13
+}

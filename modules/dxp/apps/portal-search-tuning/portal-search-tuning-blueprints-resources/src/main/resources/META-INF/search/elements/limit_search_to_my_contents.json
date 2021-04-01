@@ -1,0 +1,42 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "filter",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"query": {
+								"term": {
+									"userId": "${user.user_id}"
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Limit search to contents user is owner of"
+				},
+				"enabled": true,
+				"icon": "filter",
+				"title": {
+					"en_US": "Limit Search to My Contents"
+				}
+			},
+			"uiConfigurationJSON": {
+			}
+		},
+		"description": {
+			"en_US": "Limit search to contents user is owner of"
+		},
+		"title": {
+			"en_US": "Limit Search to My Contents"
+		}
+	},
+	"type": 13
+}

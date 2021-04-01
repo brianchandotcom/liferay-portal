@@ -1,0 +1,60 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "boost",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "should",
+						"query": {
+							"query": {
+								"terms": {
+									"assetTagNames.raw": "${configuration.asset_tags}",
+									"boost": "${configuration.boost}"
+								}
+							}
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Boost contents having at least one of the given tags"
+				},
+				"enabled": true,
+				"icon": "thumbs-up",
+				"title": {
+					"en_US": "Boost Tagged Contents"
+				}
+			},
+			"uiConfigurationJSON": {
+				"fieldSets": [
+					{
+						"fields": [
+							{
+								"label": "Asset Tags",
+								"name": "asset_tags",
+								"type": "multiselect"
+							},
+							{
+								"defaultValue": 5,
+								"label": "Boost",
+								"name": "boost",
+								"type": "slider"
+							}
+						]
+					}
+				]
+			}
+		},
+		"description": {
+			"en_US": "Boost contents having at least one of the given tags"
+		},
+		"title": {
+			"en_US": "Boost Tagged Contents"
+		}
+	},
+	"type": 13
+}

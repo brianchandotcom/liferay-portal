@@ -1,0 +1,76 @@
+{
+	"payload": {
+		"configuration": {
+			"elementTemplateJSON": {
+				"category": "custom",
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "${configuration.occur}",
+						"query": {
+							"query": "${configuration.query}"
+						},
+						"type": "wrapper"
+					}
+				],
+				"conditions": [
+				],
+				"description": {
+					"en_US": "Paste any Elasticsearch query body in the element as is"
+				},
+				"enabled": true,
+				"icon": "custom-field",
+				"title": {
+					"en_US": "Paste any Elasticsearch query"
+				}
+			},
+			"uiConfigurationJSON": {
+				"fieldSets": [
+					{
+						"fields": [
+							{
+								"defaultValue": "must",
+								"label": "Occur",
+								"name": "occur",
+								"type": "select",
+								"typeOptions": {
+									"options": [
+										{
+											"label": "MUST",
+											"value": "must"
+										},
+										{
+											"label": "SHOULD",
+											"value": "should"
+										},
+										{
+											"label": "MUST NOT",
+											"value": "must_not"
+										},
+										{
+											"label": "FILTER",
+											"value": "filter"
+										}
+									]
+								}
+							},
+							{
+								"defaultValue": {
+								},
+								"name": "query",
+								"type": "json"
+							}
+						]
+					}
+				]
+			}
+		},
+		"description": {
+			"en_US": "Paste any Elasticsearch query body in the element as is"
+		},
+		"title": {
+			"en_US": "Paste any Elasticsearch query"
+		}
+	},
+	"type": 13
+}

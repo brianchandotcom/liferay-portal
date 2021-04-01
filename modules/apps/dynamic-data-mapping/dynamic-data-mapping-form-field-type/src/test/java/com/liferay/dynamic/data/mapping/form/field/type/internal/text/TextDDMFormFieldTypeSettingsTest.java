@@ -185,10 +185,14 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule1.getActions();
 
-		Assert.assertEquals(actions.toString(), 2, actions.size());
+		Assert.assertEquals(actions.toString(), 4, actions.size());
 		Assert.assertEquals("setValue('autocomplete', FALSE)", actions.get(0));
 		Assert.assertEquals(
-			"setVisible('autocomplete', FALSE)", actions.get(1));
+			"setValue('requireConfirmation', FALSE)", actions.get(1));
+		Assert.assertEquals(
+			"setVisible('autocomplete', FALSE)", actions.get(2));
+		Assert.assertEquals(
+			"setVisible('requireConfirmation', FALSE)", actions.get(3));
 
 		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
 
@@ -196,7 +200,7 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule2.getActions();
 
-		Assert.assertEquals(actions.toString(), 8, actions.size());
+		Assert.assertEquals(actions.toString(), 11, actions.size());
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
@@ -218,6 +222,16 @@ public class TextDDMFormFieldTypeSettingsTest
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
+				"setVisible('confirmationErrorMessage', getValue(" +
+					"'requireConfirmation'))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
+				"setVisible('confirmationLabel', getValue(" +
+					"'requireConfirmation'))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
 				"setVisible('dataSourceType', getValue('autocomplete'))"));
 		Assert.assertTrue(
 			actions.toString(),
@@ -231,6 +245,10 @@ public class TextDDMFormFieldTypeSettingsTest
 				"setVisible('ddmDataProviderInstanceOutput', equals(getValue(" +
 					"'dataSourceType'), \"data-provider\") and getValue(" +
 						"'autocomplete'))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
+				"setVisible('direction', getValue('requireConfirmation'))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(

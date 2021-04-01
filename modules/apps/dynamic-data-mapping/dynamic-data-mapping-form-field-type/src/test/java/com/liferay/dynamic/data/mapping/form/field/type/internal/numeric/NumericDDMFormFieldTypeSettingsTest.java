@@ -113,15 +113,12 @@ public class NumericDDMFormFieldTypeSettingsTest
 
 		List<String> actions = ddmFormRule0.getActions();
 
-		Assert.assertEquals(actions.toString(), 4, actions.size());
+		Assert.assertEquals(actions.toString(), 7, actions.size());
 
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
 				"setDataType('predefinedValue', getValue('dataType'))"));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains("setVisible('tooltip', false)"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
@@ -130,6 +127,23 @@ public class NumericDDMFormFieldTypeSettingsTest
 			actions.toString(),
 			actions.contains(
 				"setValidationFieldName('validation', getValue('name'))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
+				"setVisible('confirmationErrorMessage', getValue(" +
+					"'requireConfirmation'))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
+				"setVisible('confirmationLabel', getValue(" +
+					"'requireConfirmation'))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
+				"setVisible('direction', getValue('requireConfirmation'))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains("setVisible('tooltip', false)"));
 	}
 
 	@Override

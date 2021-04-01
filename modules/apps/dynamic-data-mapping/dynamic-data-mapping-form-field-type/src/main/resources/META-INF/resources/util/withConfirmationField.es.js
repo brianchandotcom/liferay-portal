@@ -27,9 +27,11 @@ export default (Component) => {
 		const {
 			confirmationErrorMessage,
 			confirmationLabel,
+			confirmationValue,
 			direction,
 			label,
 			name,
+			onChange,
 		} = otherProps;
 
 		const className = getClassNameBasedOnDirection(direction);
@@ -49,12 +51,19 @@ export default (Component) => {
 						localizedValue={{}}
 						name={`${name}confirmationField`}
 						onBlur={() => {}}
-						onChange={() => {}}
+						onChange={(event) => {
+							onChange(
+								event,
+								event.target.value,
+								'confirmationValue'
+							);
+						}}
 						onFocus={() => {}}
 						placeholder=""
 						predefinedValue=""
 						repeatable={false}
 						tip=""
+						value={confirmationValue}
 					/>
 				</div>
 			</div>

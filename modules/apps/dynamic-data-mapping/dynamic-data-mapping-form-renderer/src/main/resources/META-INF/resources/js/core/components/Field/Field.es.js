@@ -94,7 +94,7 @@ const useLazy = () => {
 };
 
 class FieldEventStruct {
-	constructor(event, field, value = null) {
+	constructor(event, field, value = null, key) {
 		this.fieldInstance = {
 			...field,
 
@@ -104,6 +104,7 @@ class FieldEventStruct {
 			isDisposed: () => false,
 		};
 
+		this.key = key;
 		this.originalEvent = event;
 		this.value = value !== null ? value : event?.target?.value;
 	}
@@ -116,7 +117,7 @@ class FieldEventStruct {
  * structure, they must only provide a native event or value in
  * the case of an onChange
  */
-const mountStruct = (event, field, value) => {
+const mountStruct = (event, field, value, key) => {
 
 	// A field event struct may have been declared before, for cases of nested
 	// fields with the FieldSet field.
@@ -125,7 +126,7 @@ const mountStruct = (event, field, value) => {
 		return event;
 	}
 
-	return new FieldEventStruct(event, field, value);
+	return new FieldEventStruct(event, field, value, key);
 };
 
 const FieldLazy = ({
@@ -152,8 +153,8 @@ const FieldLazy = ({
 				focusDurationRef.current.end = new Date();
 				onBlur(mountStruct(event, field), focusDurationRef.current);
 			}}
-			onChange={(event, value) =>
-				onChange(mountStruct(event, field, value))
+			onChange={(event, value, key) =>
+				onChange(mountStruct(event, field, value, key))
 			}
 			onFocus={(event) => {
 				focusDurationRef.current.start = new Date();

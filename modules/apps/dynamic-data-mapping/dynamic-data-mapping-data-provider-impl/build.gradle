@@ -9,6 +9,7 @@ dependencies {
 	compileInclude group: "org.hdrhistogram", name: "HdrHistogram", version: "2.1.9"
 	compileInclude group: "org.jodd", name: "jodd-core", version: "3.8.6"
 	compileInclude group: "org.jodd", name: "jodd-http", version: "3.8.6"
+	compileInclude group: "org.jodd", name: "jodd-upload", version: "3.8.6"
 	compileInclude group: "org.ow2.asm", name: "asm", version: "5.0.3"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

@@ -542,6 +542,58 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
+		ClickNoError(
+			key_productName = "Simple T-Shirt",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME"
+		);
+
+		AssertElementPresent(
+			key_productName = "Simple T-Shirt",
+			locator1 = "CommerceEntry#PRODUCT_CARD_DEFAULT_IMAGE");
+	}
+
+	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"
+	@priority = "3"
+	test AssertProductCardShowsCustomImageIfSet {
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Blue T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+		CommerceProductImages.addProductImages(
+			imageTitles = "Blue",
+			validationImage = "true");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+		
+		AssertElementPresent(
+			key_itemImage = "Commerce_Blue",
+			key_itemName = "Blue T-Shirt",
+			locator1 = "CommerceEntry#PRODUCT_CARD_CUSTOM_IMAGE");
+	}
+
+	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"
+    @priority = "3"
+    test AssertProductIsAvailable {
+        property portal.acceptance = "false";
+        CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+        ApplicationsMenu.gotoSite(site = "Minium");
+        CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+        AssertTextEquals(
+            key_productName = "abs-sensor",
+            locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL",
+            value1 = "Available");
+
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
@@ -592,16 +644,23 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Media");
 
-		CommerceProductImages.addProductImages(
-			imageTitles = "Blue",
-			validationImage = "true");
+        CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+        ApplicationsMenu.gotoSite(site = "Minium");
 
-		AssertElementPresent(
-			key_itemImage = "Commerce_Blue",
-			key_itemName = "Blue T-Shirt",
-			locator1 = "CommerceEntry#PRODUCT_CARD_CUSTOM_IMAGE");
+        CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+		
+        AssertTextEquals(
+            key_productName = "catalytic-converters",
+            locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL",
+            value1 = "Unavailable");
+    }
+
+	@description = "COMMERCE-5871. As a buyer, I want to view the availability of the product, if set and configured admin-side(product unavailable)"
+    @priority = "3"
+    test AssertProductIsUnavailable {
+        property portal.acceptance = "false";
+		
 	}
 
 	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"
@@ -611,16 +670,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5872 AssertProductIsAvailable pending implementation
-
-	}
-
-	@description = "COMMERCE-5871. As a buyer, I want to view the availability of the product, if set and configured admin-side(product unavailable)"
-	@ignore = "true"
-	@priority = "3"
-	test AssertProductIsUnavailable {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-5871 AssertProductIsUnavailable pending implementation
 
 	}
 

@@ -230,6 +230,10 @@
 	<td>//p[@title='${key_productName}']//..//..//..//span[contains(text(),'Available')]</td>
 	<td></td>
 </tr>
+	<td>PRODUCT_CARD_AVAILABILITY_LABEL</td>
+    <td>//a[contains(@href,'${key_productName}')]//span[contains(@class,'m-0')]</td>
+    <td></td>
+</tr>
 <tr>
 	<td>ROLES_BUTTON</td>
 	<td>//button[contains(.,'Roles')]</td>

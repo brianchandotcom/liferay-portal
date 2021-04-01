@@ -706,6 +706,113 @@ definition {
 			noViewPermission = "true");
 	}
 
+	@description = "This ensures that the permissions scope can be applied correctly for the depot."
+	@priority = "5"
+	test ValidatePermissionsScope {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name2");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Depot Regrole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Depot Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+			roleTitle = "Depot Regrole Name");
+
+		for (var resourceAction : list "VIEW,VIEW_SITE_ADMINISTRATION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionCmdCP(
+			assetLibrariesScope = "true",
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
+			permissionDefinitionValue = "Access in Site and Asset Library Administration",
+			roleTitle = "Depot Regrole Name",
+			siteNameScope = "Test Depot Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name");
+
+		AssertTextEquals(
+			key_card = "Documents and Media",
+			locator1 = "Card#CARD_TITLE",
+			value1 = "Documents and Media");
+
+		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name2");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Info:You do not have access to any applications in this asset library.");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
+			removeSiteScope = "Test Depot Name",
+			roleTitle = "Depot Regrole Name");
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionCmdCP(
+			assetLibrariesScope = "true",
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
+			permissionDefinitionValue = "Access in Site and Asset Library Administration",
+			roleTitle = "Depot Regrole Name",
+			siteNameScope = "Test Depot Name2");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Info:You do not have access to any applications in this asset library.");
+
+		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name2");
+
+		AssertTextEquals(
+			key_card = "Documents and Media",
+			locator1 = "Card#CARD_TITLE",
+			value1 = "Documents and Media");
+	}
+
 	@description = "This test covers LPS-119994. It ensures that the user with access application permission can view the depot dashboard."
 	@priority = "4"
 	test ViewDashBoardWithAccessApplicationPermissions {

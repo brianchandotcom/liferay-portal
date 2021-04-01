@@ -481,6 +481,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "Contenidoweb",
 			descriptionTranslateion = "Descripcion",
+			encoding = "false",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
 			translationZipFileName = "WebContentTitle-en_US.zip",
@@ -524,6 +525,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "Contenidoweb",
 			descriptionTranslateion = "Descripcion",
+			encoding = "false",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
 			translationZipFileName = "WebContentTitle-en_US.zip",
@@ -543,6 +545,48 @@ definition {
 			webContentContent = "Contenidoweb",
 			webContentDescription = "Descripcion",
 			webContentTitle = "Titulodelcontenidoweb");
+	}
+
+	@description = "This ensures that a translated file(.xlf) after re-encoding it to UTF-8 can be imported."
+	@priority = "4"
+	test ImportWebContentWithUTF8 {
+		JSONWebcontent.addWebContent(
+			content = "WebContent",
+			description = "Description",
+			groupName = "Guest",
+			title = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan)");
+
+		Translations.translateFile(
+			contentTranslateion = "Webコンテンツ",
+			descriptionTranslateion = "説明",
+			encoding = "utf8",
+			titleTranslation = "Webコンテンツのタイトル",
+			translationFileName = "WebContentTitle-en_US-ja_JP",
+			translationZipFileName = "WebContentTitle-en_US.zip",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle-en_US-ja_JP_utf8.xlf",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		PortletEntry.changeLocale(locale = "ja-JP");
+
+		WebContent.viewCP(
+			webContentContent = "Webコンテンツ",
+			webContentDescription = "説明",
+			webContentTitle = "Webコンテンツのタイトル");
 	}
 
 	@description = "This ensures that a translated file(.xliff) with an available language can be imported."
@@ -567,6 +611,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "Internetinhalt",
 			descriptionTranslateion = "Beschreibung",
+			encoding = "false",
 			titleTranslation = "TiteldesWebinhalts",
 			translationFileName = "WebContentTitle-en_US-de_DE",
 			translationFileRename = "true",

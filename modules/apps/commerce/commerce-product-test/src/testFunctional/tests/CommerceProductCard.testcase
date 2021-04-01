@@ -1037,7 +1037,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5867. As a buyer, I want to be able to remove a product from my wish list, by clicking on an Add To Wish List button, if already active"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveProductFromWishList {
 		property portal.acceptance = "false";
@@ -1256,7 +1255,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5865. As a buyer, I want to view starting price on product card when product has different SKUs with different prices"
-	@ignore = "true"
 	@priority = "3"
 	test ViewProductCardStartingPrice {
 		property portal.acceptance = "false";

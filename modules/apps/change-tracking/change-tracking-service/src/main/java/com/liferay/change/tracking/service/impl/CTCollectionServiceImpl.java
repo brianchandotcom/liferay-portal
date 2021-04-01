@@ -30,6 +30,7 @@ import com.liferay.change.tracking.service.base.CTCollectionServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
@@ -442,42 +443,24 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 					ArrayUtil.toArray(statuses)));
 		}
 
-		Predicate keywordsPredicate = null;
-
-		for (String keyword :
-				_customSQL.keywords(keywords, true, WildcardMode.SURROUND)) {
-
-			if (keyword == null) {
-				continue;
-			}
-
-			Predicate keywordPredicate = DSLFunctionFactoryUtil.lower(
-				CTCollectionTable.INSTANCE.name
-			).like(
-				keyword
-			).or(
-				DSLFunctionFactoryUtil.lower(
-					CTCollectionTable.INSTANCE.description
-				).like(
-					keyword
-				)
-			);
-
-			if (keywordsPredicate == null) {
-				keywordsPredicate = keywordPredicate;
-			}
-			else {
-				keywordsPredicate = keywordsPredicate.or(keywordPredicate);
-			}
-		}
-
-		if (keywordsPredicate != null) {
-			predicate = predicate.and(keywordsPredicate.withParentheses());
-		}
+		String[] keywordsArray = _customSQL.keywords(
+			keywords, true, WildcardMode.SURROUND);
 
 		return predicate.and(
+			Predicate.withParentheses(
+				Predicate.or(
+					_customSQL.getKeywordsPredicate(
+						DSLFunctionFactoryUtil.lower(
+							CTCollectionTable.INSTANCE.name),
+						Expression::like, keywordsArray),
+					_customSQL.getKeywordsPredicate(
+						DSLFunctionFactoryUtil.lower(
+							CTCollectionTable.INSTANCE.description),
+						Expression::like, keywordsArray)))
+		).and(
 			_inlineSQLHelper.getPermissionWherePredicate(
-				CTCollection.class, CTCollectionTable.INSTANCE.ctCollectionId));
+				CTCollection.class, CTCollectionTable.INSTANCE.ctCollectionId)
+		);
 	}
 
 	@Reference

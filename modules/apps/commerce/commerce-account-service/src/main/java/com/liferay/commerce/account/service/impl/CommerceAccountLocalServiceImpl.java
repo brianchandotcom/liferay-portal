@@ -29,6 +29,7 @@ import com.liferay.commerce.account.service.base.CommerceAccountLocalServiceBase
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
@@ -859,30 +860,13 @@ public class CommerceAccountLocalServiceImpl
 				}
 
 				if (Validator.isNotNull(keywords)) {
-					String[] terms = _customSQL.keywords(keywords, true);
-
-					Predicate keywordsPredicate = null;
-
-					for (String term : terms) {
-						Predicate termPredicate = DSLFunctionFactoryUtil.lower(
-							AccountEntryTable.INSTANCE.name
-						).like(
-							term
-						);
-
-						if (keywordsPredicate == null) {
-							keywordsPredicate = termPredicate;
-						}
-						else {
-							keywordsPredicate = keywordsPredicate.or(
-								termPredicate);
-						}
-					}
-
-					if (keywordsPredicate != null) {
-						predicate = predicate.and(
-							keywordsPredicate.withParentheses());
-					}
+					predicate = predicate.and(
+						Predicate.withParentheses(
+							_customSQL.getKeywordsPredicate(
+								DSLFunctionFactoryUtil.lower(
+									AccountEntryTable.INSTANCE.name),
+								Expression::like,
+								_customSQL.keywords(keywords, true))));
 				}
 
 				if (types != null) {

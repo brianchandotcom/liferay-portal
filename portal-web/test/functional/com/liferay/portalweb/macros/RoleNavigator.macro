@@ -10,6 +10,37 @@ definition {
 		Navigator.gotoNavItem(navItem = "${assigneeType}");
 	}
 
+	macro gotoDefineRolePermissions {
+		if (contains("Asset Library,Organization,Site", "${roleType}")) {
+			Navigator.gotoNavItem(navItem = "${roleType} Roles");
+		}
+		else {
+			Navigator.gotoNavItem(navItem = "Regular Roles");
+		}
+
+		Search.searchCP(searchTerm = "${roleTitle}");
+
+		AssertClick(
+			key_itemName = "${roleTitle}",
+			locator1 = "ListGroupItem#ITEM_NAME_LINK",
+			value1 = "${roleTitle}");
+
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		Type(
+			locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+			value1 = "${portlet}");
+
+		AssertClick(
+			locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}",
+			value1 = "${portlet}");
+
+		AssertTextEquals(
+			locator1 = "RolesPermissions#PERMISSION_HEADER",
+			permissionNavigationValue = "${portlet}",
+			value1 = "${portlet}");
+	}
+
 	macro gotoRoleType {
 		Navigator.gotoNavItem(navItem = "${roleType} Roles");
 	}

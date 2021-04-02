@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -315,68 +314,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			industry, type, size, languageId, timeZoneId, addresses,
 			emailAddresses, phones, websites, unicodeProperties);
 
-		_updateCompanySitesLocale(companyId, unicodeProperties);
-
 		_portal.resetCDNHosts();
-	}
-
-	private void _updateCompanySitesLocale(
-		long companyId, UnicodeProperties unicodeProperties) {
-
-		String newCompanyLanguageIds = unicodeProperties.getProperty(
-			PropsKeys.LOCALES);
-
-		String[] removedLanguageIds = ArrayUtil.filter(
-			LocaleUtil.toLanguageIds(
-				LanguageUtil.getCompanyAvailableLocales(companyId)),
-			languageId -> !StringUtil.contains(
-				newCompanyLanguageIds, languageId, StringPool.COMMA));
-
-		if (ArrayUtil.isEmpty(removedLanguageIds)) {
-			return;
-		}
-
-		List<Group> groups = _groupLocalService.getActiveGroups(
-			companyId, true);
-
-		for (Group group : groups) {
-			if (group.isSite()) {
-				UnicodeProperties groupTypeSettingsUnicodeProperties =
-					group.getTypeSettingsProperties();
-
-				boolean inheritLocales = GetterUtil.getBoolean(
-					groupTypeSettingsUnicodeProperties.getProperty(
-						"inheritLocales"),
-					true);
-
-				if (inheritLocales) {
-					continue;
-				}
-
-				String[] groupLocales = GetterUtil.getStringValues(
-					groupTypeSettingsUnicodeProperties.getProperty(
-						PropsKeys.LOCALES));
-
-				boolean updateLocales = false;
-
-				for (String removedLanguageId : removedLanguageIds) {
-					if (ArrayUtil.contains(groupLocales, removedLanguageId)) {
-						groupLocales = ArrayUtil.remove(
-							groupLocales, removedLanguageId);
-
-						updateLocales = true;
-					}
-				}
-
-				if (updateLocales) {
-					groupTypeSettingsUnicodeProperties.setProperty(
-						PropsKeys.LOCALES,
-						StringUtil.merge(groupLocales, StringPool.COMMA));
-
-					_groupLocalService.updateGroup(group);
-				}
-			}
-		}
 	}
 
 	private void _validateAvailableLanguages(ActionRequest actionRequest)

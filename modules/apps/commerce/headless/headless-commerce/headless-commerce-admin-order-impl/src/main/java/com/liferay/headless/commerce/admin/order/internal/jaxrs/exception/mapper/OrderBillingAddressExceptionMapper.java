@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
+import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -31,17 +31,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order.CommerceOrderShippingAddressException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order.OrderBillingAddressException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CommerceOrderShippingAddressExceptionMapper
-	extends BaseExceptionMapper<CommerceOrderShippingAddressException> {
+public class OrderBillingAddressExceptionMapper
+	extends BaseExceptionMapper<CommerceOrderBillingAddressException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid order shipping address";
+		return "Invalid order billing address";
 	}
 
 	@Override

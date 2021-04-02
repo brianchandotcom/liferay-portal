@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -31,17 +31,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order.CommerceOrderShippingMethodException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order.OrderStatusException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CommerceOrderShippingMethodExceptionMapper
-	extends BaseExceptionMapper<CommerceOrderShippingMethodException> {
+public class OrderStatusExceptionMapper
+	extends BaseExceptionMapper<CommerceOrderStatusException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid order shipping method";
+		return "Invalid order status";
 	}
 
 	@Override

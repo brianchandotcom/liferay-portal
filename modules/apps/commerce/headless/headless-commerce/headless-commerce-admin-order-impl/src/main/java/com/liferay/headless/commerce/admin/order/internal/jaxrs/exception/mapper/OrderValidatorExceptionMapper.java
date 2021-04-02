@@ -39,12 +39,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order.CommerceOrderValidatorException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order.OrderValidatorException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CommerceOrderValidatorExceptionMapper
+public class OrderValidatorExceptionMapper
 	extends BaseExceptionMapper<CommerceOrderValidatorException> {
 
 	@Override
@@ -112,6 +112,6 @@ public class CommerceOrderValidatorExceptionMapper
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderValidatorExceptionMapper.class);
+		OrderValidatorExceptionMapper.class);
 
 }

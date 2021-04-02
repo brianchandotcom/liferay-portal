@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.inventory.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseItemException;
+import com.liferay.commerce.inventory.exception.CommerceInventoryInvalidDateException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -31,18 +31,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory.DuplicateCommerceInventoryWarehouseItemException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory.InventoryInvalidDateException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class DuplicateCommerceInventoryWarehouseItemExceptionMapper
-	extends BaseExceptionMapper
-		<DuplicateCommerceInventoryWarehouseItemException> {
+public class InventoryInvalidDateExceptionMapper
+	extends BaseExceptionMapper<CommerceInventoryInvalidDateException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Duplicated warehouse item";
+		return "Unable to find warehouse items";
 	}
 
 	@Override

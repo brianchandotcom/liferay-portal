@@ -178,7 +178,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5808. EditAProduct"
-	@ignore = "true"
 	@priority = "3"
 	test EditAProduct {
 		property portal.acceptance = "false";

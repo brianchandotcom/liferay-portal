@@ -16,14 +16,412 @@ import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
-import {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
+import ClayForm, {
+	ClayInput,
+	ClayRadio,
+	ClayRadioGroup,
+	ClayToggle,
+} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
-import React from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
+
+const CTEditComment = ({handleCancel, handleSave, initialValue}) => {
+	const [value, setValue] = useState(initialValue);
+
+	return (
+		<div className="autofit-col autofit-col-expand">
+			<ClayForm.Group>
+				<ClayInput
+					aria-label={Liferay.Language.get('comment')}
+					component="textarea"
+					onChange={(event) => setValue(event.target.value)}
+					placeholder={Liferay.Language.get('type-your-comment-here')}
+					type="text"
+					value={value}
+				/>
+			</ClayForm.Group>
+			<ClayForm.Group>
+				<div className="btn-group">
+					<div className="btn-group-item">
+						<button
+							className={`btn btn-primary${
+								value ? '' : ' disabled'
+							}`}
+							onClick={() => handleSave(value)}
+							type="button"
+						>
+							{Liferay.Language.get('save')}
+						</button>
+					</div>
+					<div className="btn-group-item">
+						<button
+							className="btn btn-secondary"
+							onClick={() => handleCancel()}
+							type="button"
+						>
+							{Liferay.Language.get('cancel')}
+						</button>
+					</div>
+				</div>
+			</ClayForm.Group>
+		</div>
+	);
+};
+
+const CTComments = ({
+	currentUser,
+	deleteCommentURL,
+	getCommentsURL,
+	spritemap,
+	updateCommentURL,
+}) => {
+	const [editing, setEditing] = useState(0);
+	const [loading, setLoading] = useState(false);
+	const [fetchData, setFetchData] = useState(false);
+	const [initialized, setInitialized] = useState(false);
+	const [value, setValue] = useState('');
+
+	useEffect(() => {
+		if (initialized) {
+			return;
+		}
+
+		setInitialized(true);
+		setLoading(true);
+
+		fetch(getCommentsURL)
+			.then((response) => response.json())
+			.then((json) => {
+				if (!json.comments) {
+					setFetchData({
+						errorMessage: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+					});
+					setLoading(false);
+
+					return;
+				}
+
+				setFetchData(json);
+
+				setLoading(false);
+			})
+			.catch(() => {
+				setFetchData({
+					errorMessage: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+				});
+
+				setLoading(false);
+			});
+	}, [getCommentsURL, initialized]);
+
+	const getUserName = (userId) => {
+		return fetchData.userInfo[userId.toString()].userName;
+	};
+
+	const handleDelete = (commentId) => {
+		if (
+			!confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			return;
+		}
+
+		AUI().use('liferay-portlet-url', () => {
+			const portletURL = Liferay.PortletURL.createURL(deleteCommentURL);
+
+			portletURL.setParameter('commentId', commentId.toString());
+
+			fetch(portletURL.toString())
+				.then((response) => response.json())
+				.then((json) => {
+					if (!json.comments) {
+						setFetchData({
+							errorMessage: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						});
+
+						return;
+					}
+
+					setFetchData(json);
+				})
+				.catch(() => {
+					setFetchData({
+						errorMessage: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+					});
+				});
+		});
+	};
+
+	const handleReply = () => {
+		AUI().use('liferay-portlet-url', () => {
+			setLoading(true);
+
+			const portletURL = Liferay.PortletURL.createURL(updateCommentURL);
+
+			portletURL.setParameter('value', value);
+
+			fetch(portletURL.toString())
+				.then((response) => response.json())
+				.then((json) => {
+					setEditing(0);
+
+					if (!json.comments) {
+						setFetchData({
+							errorMessage: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						});
+						setLoading(false);
+
+						return;
+					}
+
+					setFetchData(json);
+					setLoading(false);
+					setValue('');
+				})
+				.catch(() => {
+					setEditing(0);
+					setFetchData({
+						errorMessage: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+					});
+					setLoading(false);
+				});
+		});
+	};
+
+	const handleUpdate = (commentId, newValue) => {
+		AUI().use('liferay-portlet-url', () => {
+			const portletURL = Liferay.PortletURL.createURL(updateCommentURL);
+
+			portletURL.setParameter('commentId', commentId);
+			portletURL.setParameter('value', newValue);
+
+			fetch(portletURL.toString())
+				.then((response) => response.json())
+				.then((json) => {
+					setEditing(0);
+
+					if (!json.comments) {
+						setFetchData({
+							errorMessage: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						});
+
+						return;
+					}
+
+					setFetchData(json);
+				})
+				.catch(() => {
+					setEditing(0);
+					setFetchData({
+						errorMessage: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+					});
+				});
+		});
+	};
+
+	const renderUserPortrait = (userId) => {
+		return (
+			<div
+				dangerouslySetInnerHTML={{
+					__html:
+						fetchData.userInfo[userId.toString()].userPortraitHTML,
+				}}
+				data-tooltip-align="top"
+				title={getUserName(userId)}
+			/>
+		);
+	};
+
+	const renderComments = () => {
+		if (!fetchData) {
+			return <span aria-hidden="true" className="loading-animation" />;
+		}
+		else if (!fetchData.comments || fetchData.comments.length === 0) {
+			return '';
+		}
+
+		const items = [];
+
+		for (let i = 0; i < fetchData.comments.length; i++) {
+			const comment = fetchData.comments[i];
+
+			let title = getUserName(comment.userId);
+
+			if (currentUser.userId.toString() === comment.userId.toString()) {
+				title = title + ' (' + Liferay.Language.get('you') + ')';
+			}
+
+			const dropdownItems = [
+				{
+					label: Liferay.Language.get('edit'),
+					onClick: () => setEditing(comment.commentId),
+					symbolLeft: 'pencil',
+				},
+				{
+					label: Liferay.Language.get('delete'),
+					onClick: () => handleDelete(comment.commentId),
+					symbolLeft: 'times-circle',
+				},
+			];
+
+			let commentBody = <pre>{comment.value}</pre>;
+
+			if (editing === comment.commentId) {
+				commentBody = (
+					<CTEditComment
+						handleCancel={() => setEditing(0)}
+						handleSave={(saveValue) =>
+							handleUpdate(comment.commentId, saveValue)
+						}
+						initialValue={comment.value}
+					/>
+				);
+			}
+
+			items.push(
+				<div
+					className={`autofit-padded-no-gutters-x autofit-row${
+						!loading &&
+						fetchData.updatedCommentId &&
+						fetchData.updatedCommentId.toString() ===
+							comment.commentId.toString()
+							? ' publications-fade-in'
+							: ''
+					}`}
+				>
+					<div className="autofit-col">
+						{renderUserPortrait(comment.userId)}
+					</div>
+					<div className="autofit-col autofit-col-expand">
+						<div className="autofit-row">
+							<div className="autofit-col autofit-col-expand">
+								<h5 className="component-title">{title}</h5>
+								<div className="text-secondary">
+									{comment.timeDescription}
+								</div>
+							</div>
+							{editing !== comment.commentId && (
+								<div className="autofit-col">
+									<ClayDropDownWithItems
+										alignmentPosition={Align.BottomLeft}
+										items={dropdownItems}
+										spritemap={spritemap}
+										trigger={
+											<ClayButtonWithIcon
+												displayType="unstyled"
+												small
+												spritemap={spritemap}
+												symbol="ellipsis-v"
+											/>
+										}
+									/>
+								</div>
+							)}
+						</div>
+						<div className="autofit-row">{commentBody}</div>
+					</div>
+				</div>
+			);
+		}
+
+		return <>{items}</>;
+	};
+
+	return (
+		<div className="container-fluid container-fluid-max-xl">
+			<div className="card publications-comments">
+				<div className="card-body">
+					<div className="autofit-float autofit-padded-no-gutters-x autofit-row">
+						<div className="autofit-col autofit-col-expand">
+							<h4 className="component-title">
+								{Liferay.Language.get('comments')}
+							</h4>
+						</div>
+					</div>
+					<div className="autofit-padded-no-gutters-x autofit-row">
+						<div className="autofit-col">
+							<div
+								dangerouslySetInnerHTML={{
+									__html: currentUser.userPortraitHTML,
+								}}
+								data-tooltip-align="top"
+								title={currentUser.userName}
+							/>
+						</div>
+						<div
+							className={`autofit-col autofit-col-expand${
+								fetchData && loading
+									? ' publications-loading'
+									: ''
+							}`}
+						>
+							<ClayForm.Group>
+								<ClayInput
+									aria-label={Liferay.Language.get('comment')}
+									component="textarea"
+									onChange={(event) =>
+										setValue(event.target.value)
+									}
+									placeholder={Liferay.Language.get(
+										'type-your-comment-here'
+									)}
+									type="text"
+									value={value}
+								/>
+							</ClayForm.Group>
+							<ClayForm.Group>
+								<button
+									className={`btn btn-primary${
+										loading || value ? '' : ' disabled'
+									}`}
+									onClick={() => handleReply()}
+									type="button"
+								>
+									{Liferay.Language.get('reply')}
+								</button>
+							</ClayForm.Group>
+						</div>
+					</div>
+					{fetchData && fetchData.errorMessage && (
+						<div className="autofit-padded-no-gutters-x autofit-row">
+							<ClayAlert
+								displayType="danger"
+								spritemap={spritemap}
+								title={Liferay.Language.get('error')}
+							>
+								{fetchData.errorMessage}
+							</ClayAlert>
+						</div>
+					)}
+					{renderComments()}
+				</div>
+			</div>
+		</div>
+	);
+};
 
 class ChangeTrackingChangesView extends React.Component {
 	constructor(props) {
@@ -34,9 +432,12 @@ class ChangeTrackingChangesView extends React.Component {
 			changes,
 			contextView,
 			ctCollectionId,
+			currentUser,
 			dataURL,
+			deleteCTCommentURL,
 			discardURL,
 			expired,
+			getCTCommentsURL,
 			models,
 			namespace,
 			pathParam,
@@ -45,6 +446,7 @@ class ChangeTrackingChangesView extends React.Component {
 			siteNames,
 			spritemap,
 			typeNames,
+			updateCTCommentURL,
 			userInfo,
 		} = props;
 
@@ -70,13 +472,17 @@ class ChangeTrackingChangesView extends React.Component {
 		this.changes = changes;
 		this.contextView = contextView;
 		this.ctCollectionId = ctCollectionId;
+		this.currentUser = currentUser;
 		this.dataURL = dataURL;
 		this.discardURL = discardURL;
+		this.deleteCTCommentURL = deleteCTCommentURL;
 		this.expired = expired;
+		this.getCTCommentsURL = getCTCommentsURL;
 		this.namespace = namespace;
 		this.models = models;
 		this.rootDisplayClasses = rootDisplayClasses;
 		this.spritemap = spritemap;
+		this.updateCTCommentURL = updateCTCommentURL;
 		this.userInfo = userInfo;
 
 		this.renderCache = {};
@@ -1872,7 +2278,7 @@ class ChangeTrackingChangesView extends React.Component {
 			);
 		}
 		else if (this.changes.length === 0) {
-			return (
+			content = (
 				<div className="container-fluid container-fluid-max-xl">
 					<div className="sheet taglib-empty-result-message">
 						<div className="taglib-empty-result-message-header" />
@@ -1926,6 +2332,13 @@ class ChangeTrackingChangesView extends React.Component {
 			<>
 				{this._renderManagementToolbar()}
 				{content}
+				<CTComments
+					currentUser={this.currentUser}
+					deleteCommentURL={this.deleteCTCommentURL}
+					getCommentsURL={this.getCTCommentsURL}
+					spritemap={this.spritemap}
+					updateCommentURL={this.updateCTCommentURL}
+				/>
 			</>
 		);
 	}

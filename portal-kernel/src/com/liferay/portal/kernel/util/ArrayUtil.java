@@ -2081,7 +2081,14 @@ public class ArrayUtil {
 		for (int i = 0; i < array.length; i++) {
 			Object bean = array[i];
 
-			Object value = BeanPropertiesUtil.getObject(bean, param);
+			Object value = null;
+
+			if (Validator.isNull(param)) {
+				value = String.valueOf(bean);
+			}
+			else {
+				value = BeanPropertiesUtil.getObject(bean, param);
+			}
 
 			if (value != null) {
 				if (locale != null) {

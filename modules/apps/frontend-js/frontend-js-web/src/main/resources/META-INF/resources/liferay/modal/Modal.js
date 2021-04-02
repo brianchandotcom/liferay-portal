@@ -334,7 +334,6 @@ const openSelectionModal = ({
 	multiple = false,
 	onClose,
 	onSelect,
-	searchContainerId,
 	selectEventName,
 	selectedData,
 	size,
@@ -342,13 +341,55 @@ const openSelectionModal = ({
 	url,
 	zIndex,
 }) => {
+	const eventHandlers = [];
+	let iframeWindowObj;
+	let processCloseFn;
 	let selectedItem;
 
-	const eventHandlers = [];
-	const select = ({processClose}) => {
-		onSelect(selectedItem);
+	const select = () => {
+		if (multiple && !selectedItem) {
+			const searchContainer = iframeWindowObj.document.querySelector(
+				'.searchcontainer'
+			);
 
-		processClose();
+			if (searchContainer) {
+				iframeWindowObj.Liferay.componentReady(searchContainer.id).then(
+					(searchContainer) => {
+						const allSelectedElements = searchContainer.select.getAllSelectedElements();
+
+						const allSelectedNodes = allSelectedElements.getDOMNodes();
+
+						onSelect(
+							allSelectedNodes.map((node) => {
+								let item = {};
+
+								if (node.value) {
+									item.value = node.value;
+								}
+
+								const row = node.closest('tr, li');
+
+								if (
+									row &&
+									Object.keys(row.dataset).length > 0
+								) {
+									item = {...item, ...row.dataset};
+								}
+
+								return item;
+							})
+						);
+
+						processCloseFn();
+					}
+				);
+			}
+		}
+		else {
+			onSelect(selectedItem);
+
+			processCloseFn();
+		}
 	};
 
 	openModal({
@@ -379,19 +420,24 @@ const openSelectionModal = ({
 			}
 		},
 		onOpen: ({iframeWindow, processClose}) => {
-			const container = iframeWindow.document.body;
+			iframeWindowObj = iframeWindow;
+			processCloseFn = processClose;
+
+			const iframeBody = iframeWindow.document.body;
 
 			const selectEventHandler = Liferay.on(selectEventName, (event) => {
 				selectedItem = event.data || event;
 
 				if (!multiple) {
-					select({processClose});
+					select();
 				}
 			});
 
 			eventHandlers.push(selectEventHandler);
 
-			const itemElements = container.querySelectorAll('.selector-button');
+			const itemElements = iframeBody.querySelectorAll(
+				'.selector-button'
+			);
 
 			if (selectedData) {
 				const selectedDataSet = new Set(selectedData);
@@ -408,7 +454,7 @@ const openSelectionModal = ({
 			}
 
 			if (!customSelectEvent) {
-				container.addEventListener('click', (event) => {
+				iframeBody.addEventListener('click', (event) => {
 					const delegateTarget =
 						event.target &&
 						event.target.closest('.selector-button');
@@ -417,25 +463,6 @@ const openSelectionModal = ({
 						Liferay.fire(selectEventName, delegateTarget.dataset);
 					}
 				});
-			}
-
-			if (searchContainerId && multiple) {
-				iframeWindow.Liferay.componentReady(searchContainerId).then(
-					(searchContainer) => {
-						searchContainer.on('rowToggled', (event) => {
-							const allSelectedElements =
-								event.elements.allSelectedElements;
-
-							if (!allSelectedElements.isEmpty()) {
-								selectedItem = {
-									value: allSelectedElements
-										.get('value')
-										.join(','),
-								};
-							}
-						});
-					}
-				);
 			}
 		},
 		size,

@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPDefinitionMetaDescriptionException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DefinitionMetaDescriptionException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPDefinitionMetaDescriptionExceptionMapper
+public class DefinitionMetaDescriptionExceptionMapper
 	extends BaseExceptionMapper<CPDefinitionMetaDescriptionException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid product meta description.";
+		return "Invalid product meta description";
 	}
 
 	@Override

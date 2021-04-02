@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
+import com.liferay.commerce.product.exception.NoSuchCProductException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -31,13 +31,13 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Catalog.NoSuchCPDefinitionException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Catalog.NoSuchProductException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class NoSuchCPDefinitionExceptionMapper
-	extends BaseExceptionMapper<NoSuchCPDefinitionException> {
+public class NoSuchProductExceptionMapper
+	extends BaseExceptionMapper<NoSuchCProductException> {
 
 	@Override
 	public String getErrorDescription() {

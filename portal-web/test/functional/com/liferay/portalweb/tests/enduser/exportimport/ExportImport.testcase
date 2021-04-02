@@ -279,6 +279,8 @@ definition {
 	@description = "This is a use case for LPS-95589."
 	@priority = "4"
 	test ExportDMWithDeletedDocumentLink {
+		property test.name.skip.portal.instance = "ExportImport#ExportDMWithDeletedDocumentLink";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");

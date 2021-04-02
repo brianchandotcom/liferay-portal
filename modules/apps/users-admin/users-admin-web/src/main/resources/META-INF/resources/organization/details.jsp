@@ -110,7 +110,7 @@ if (organization != null) {
 				<label class="control-label"></label>
 
 				<liferay-ui:logo-selector
-					currentLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=" + logoId + "&t=" + WebServerServletTokenUtil.getToken(logoId) %>'
+					currentLogoURL="<%= organization.getLogoURL() %>"
 					defaultLogo="<%= logoId == 0 %>"
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
 					logoDisplaySelector=".organization-logo"

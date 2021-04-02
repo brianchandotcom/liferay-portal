@@ -384,7 +384,9 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			DynamicDataMapping.editFieldIndexable(fieldFieldLabel = "PaginaOrigem");
+			DataEngine.editFieldSearchable(
+				fieldFieldLabel = "PaginaOrigem",
+				searchableType = "Disable");
 
 			WebContentStructures.saveCP();
 

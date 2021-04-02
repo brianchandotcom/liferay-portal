@@ -314,6 +314,13 @@ public class OrganizationWrapper
 		return model.getLogoId();
 	}
 
+	@Override
+	public String getLogoURL()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getLogoURL();
+	}
+
 	/**
 	 * Returns the modified date of this organization.
 	 *

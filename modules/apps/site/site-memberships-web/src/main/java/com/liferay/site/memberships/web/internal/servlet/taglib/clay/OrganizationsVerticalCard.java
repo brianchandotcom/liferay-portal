@@ -17,16 +17,12 @@ package com.liferay.site.memberships.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.site.memberships.web.internal.servlet.taglib.util.OrganizationActionDropdownItemsProvider;
 
 import java.util.List;
@@ -83,20 +79,7 @@ public class OrganizationsVerticalCard
 
 	@Override
 	public String getImageSrc() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(themeDisplay.getPathImage());
-		sb.append("/organization_logo?img_id=");
-		sb.append(_organization.getLogoId());
-		sb.append("&t=");
-		sb.append(
-			WebServerServletTokenUtil.getToken(_organization.getLogoId()));
-
-		return sb.toString();
+		return _organization.getLogoURL();
 	}
 
 	@Override

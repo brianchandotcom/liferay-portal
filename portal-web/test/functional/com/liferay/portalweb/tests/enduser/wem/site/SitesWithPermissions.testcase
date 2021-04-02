@@ -29,6 +29,7 @@ definition {
 	@description = "This is for LPS-121422. The elements are still shown in edit mode after executing reset changes."
 	@priority = "3"
 	test SitesTemplatePermissionPersistence {
+		property osgi.app.includes = "polls";
 		property testray.component.names = "Permissions,Site Administration";
 
 		task ("Add a new site template") {

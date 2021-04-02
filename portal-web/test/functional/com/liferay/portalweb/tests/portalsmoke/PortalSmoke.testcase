@@ -1,6 +1,7 @@
 @component-name = "portal-smoke"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.smoke = "true";
 	property portal.upstream = "true";
@@ -35,6 +36,7 @@ definition {
 		property database.bare.enabled = "true";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
+		property portal.acceptance = "false";
 		property testray.component.names = "Training";
 
 		Smoke.viewWelcomeContentPage();
@@ -55,7 +57,6 @@ definition {
 		property custom.properties = "include-and-override=portal-developer.properties";
 		property osgi.module.configuration.file.names = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration";
 		property osgi.module.configurations = "cacheEnabled=&quot;false&quot;";
-		property portal.acceptance = "true";
 		property portal.smoke = "false";
 
 		Smoke.viewWelcomeContentPage();

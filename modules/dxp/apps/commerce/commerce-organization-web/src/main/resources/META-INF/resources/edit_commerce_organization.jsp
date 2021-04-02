@@ -43,14 +43,12 @@ Organization organization = commerceOrganizationDisplayContext.getOrganization()
 					<c:if test="<%= organization != null %>">
 
 						<%
-						long logoId = organization.getLogoId();
-
 						UserFileUploadsConfiguration userFileUploadsConfiguration = commerceOrganizationDisplayContext.getUserFileUploadsConfiguration();
 						%>
 
 						<liferay-ui:logo-selector
-							currentLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=" + logoId + "&t=" + WebServerServletTokenUtil.getToken(logoId) %>'
-							defaultLogo="<%= logoId == 0 %>"
+							currentLogoURL="<%= organization.getLogoURL() %>"
+							defaultLogo="<%= organization.getLogoId() == 0 %>"
 							defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
 							logoDisplaySelector=".organization-logo"
 							maxFileSize="<%= userFileUploadsConfiguration.imageMaxSize() %>"

@@ -16,7 +16,6 @@ package com.liferay.commerce.organization.web.internal.display.context;
 
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.web.internal.display.context.util.CommerceOrganizationRequestHelper;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -29,11 +28,9 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 
 import javax.portlet.PortletURL;
@@ -78,18 +75,7 @@ public class CommerceOrganizationDisplayContext {
 	}
 
 	public String getLogo(Organization organization) {
-		ThemeDisplay themeDisplay =
-			_commerceOrganizationRequestHelper.getThemeDisplay();
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(themeDisplay.getPathImage());
-		sb.append("/organization_logo?img_id=");
-		sb.append(organization.getLogoId());
-		sb.append("&t=");
-		sb.append(WebServerServletTokenUtil.getToken(organization.getLogoId()));
-
-		return sb.toString();
+		return organization.getLogoURL();
 	}
 
 	public Organization getOrganization() throws PortalException {

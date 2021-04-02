@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.exception.CommerceAddressCityException;
+import com.liferay.commerce.account.exception.CommerceAccountNameException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -31,17 +31,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Account)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Account.CommerceAddressCityException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Account.AccountNameException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CommerceAddressCityExceptionMapper
-	extends BaseExceptionMapper<CommerceAddressCityException> {
+public class AccountNameExceptionMapper
+	extends BaseExceptionMapper<CommerceAccountNameException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid address city";
+		return "Invalid account name";
 	}
 
 	@Override

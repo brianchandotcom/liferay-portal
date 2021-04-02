@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.account.exception.CommerceAccountNameException;
+import com.liferay.commerce.exception.CommerceAddressNameException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -31,17 +31,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Account)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Account.CommerceAccountNameException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Account.AccountAddressNameException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CommerceAccountNameExceptionMapper
-	extends BaseExceptionMapper<CommerceAccountNameException> {
+public class AccountAddressNameExceptionMapper
+	extends BaseExceptionMapper<CommerceAddressNameException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid account name";
+		return "Invalid address name";
 	}
 
 	@Override

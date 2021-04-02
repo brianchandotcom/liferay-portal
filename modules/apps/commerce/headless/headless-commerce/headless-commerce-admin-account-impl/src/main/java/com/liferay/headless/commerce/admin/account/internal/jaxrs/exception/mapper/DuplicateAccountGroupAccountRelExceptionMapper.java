@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.exception.CommerceAddressCountryException;
+import com.liferay.commerce.account.exception.DuplicateCommerceAccountGroupCommerceAccountRelException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -24,29 +24,30 @@ import javax.ws.rs.ext.Provider;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Sbarra
  */
 @Component(
 	enabled = false,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Account)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Account.CommerceAddressCountryException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Account.DuplicateAccountGroupAccountRelException.java"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CommerceAddressCountryExceptionMapper
-	extends BaseExceptionMapper<CommerceAddressCountryException> {
+public class DuplicateAccountGroupAccountRelExceptionMapper
+	extends BaseExceptionMapper
+		<DuplicateCommerceAccountGroupCommerceAccountRelException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid address country";
+		return "Duplicate account group - account relation";
 	}
 
 	@Override
 	public Response.Status getStatus() {
-		return Response.Status.BAD_REQUEST;
+		return Response.Status.CONFLICT;
 	}
 
 }

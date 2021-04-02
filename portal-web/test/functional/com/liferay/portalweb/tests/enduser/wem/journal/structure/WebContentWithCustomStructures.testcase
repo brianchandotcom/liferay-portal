@@ -474,21 +474,19 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			DoubleClick(
-				key_fieldFieldLabel = "Companhia Operadora",
-				locator1 = "DDMEditStructure#FORM_FIELD");
-
-			MouseOver(
-				key_fieldFieldLabel = "Companhia Operadora",
-				locator1 = "DDMEditStructure#FORM_FIELD");
-
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
-				Click.clickNoWaitForVisible(
-					locator1 = "//div/label[contains(.,'Companhia Operadora')]/../../div/div/button[*[name()='svg'][contains(@class,'plus')]]",
-					siteURLKey = "test-site-name");
+				Click(
+					key_fieldFieldLabel = "Companhia Operadora",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+				MouseOver(locator1 = "//div[contains(@data-field-name,'CompanhiaOperadoraFieldSet')]//div[contains(@class,'placeholder')]");
+
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Duplicate");
 			}
 
 			WebContentStructures.saveCP();
+
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 
 		task ("Move nested field to non-nested") {

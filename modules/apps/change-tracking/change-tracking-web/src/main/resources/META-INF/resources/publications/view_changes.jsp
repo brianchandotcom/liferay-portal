@@ -252,19 +252,8 @@ portletDisplay.setShowBackIcon(true);
 </nav>
 
 <div class="publications-view-changes-wrapper">
-	<c:choose>
-		<c:when test="<%= viewChangesDisplayContext.hasChanges() %>">
-			<react:component
-				module="publications/js/ChangeTrackingChangesView"
-				props="<%= viewChangesDisplayContext.getReactData() %>"
-			/>
-		</c:when>
-		<c:otherwise>
-			<clay:container-fluid>
-				<liferay-ui:empty-result-message
-					message="no-changes-were-found"
-				/>
-			</clay:container-fluid>
-		</c:otherwise>
-	</c:choose>
+	<react:component
+		module="publications/js/ChangeTrackingChangesView"
+		props="<%= viewChangesDisplayContext.getReactData() %>"
+	/>
 </div>

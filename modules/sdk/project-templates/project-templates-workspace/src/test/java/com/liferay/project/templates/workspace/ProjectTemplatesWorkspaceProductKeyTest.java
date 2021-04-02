@@ -91,10 +91,15 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 				workspaceProjectDir, "gradle.properties",
 				"liferay.workspace.product=portal-7.2");
 		}
-		else {
+		else if (_liferayVersion.startsWith("7.3")) {
 			testContains(
 				workspaceProjectDir, "gradle.properties",
 				"liferay.workspace.product=portal-7.3");
+		}
+		else {
+				testContains(
+					workspaceProjectDir, "gradle.properties",
+					"liferay.workspace.product=portal-7.4");
 		}
 
 		if (isBuildProjects()) {

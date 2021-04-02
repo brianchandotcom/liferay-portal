@@ -117,7 +117,7 @@ public class ProjectTemplatesServiceBuilderTest
 			gradleProjectDir, "foo-bar-service/service.xml",
 			"liferay-service-builder_7_3_0.dtd");
 	}
-	
+
 	@Test
 	public void testBuildTemplateContentDTDVersionServiceBuilder74()
 		throws Exception {
@@ -241,7 +241,7 @@ public class ProjectTemplatesServiceBuilderTest
 			mavenExecutor);
 
 		writeGradlePropertiesInWorkspace(
-			gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga6");
+			gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga7");
 
 		File modulesDir = new File(gradleWorkspaceDir, "modules");
 

@@ -145,7 +145,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 		}
 		else if (_liferayVersion.startsWith("7.3")) {
 			writeGradlePropertiesInWorkspace(
-				gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga6");
+				gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga7");
 		}
 
 		File gradleWorkspaceModulesDir = new File(

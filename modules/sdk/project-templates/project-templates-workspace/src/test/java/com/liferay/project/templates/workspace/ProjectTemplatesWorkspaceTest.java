@@ -432,7 +432,7 @@ public class ProjectTemplatesWorkspaceTest
 			mavenExecutor);
 
 		writeGradlePropertiesInWorkspace(
-			nativeSassWorkspaceDir, "liferay.workspace.product=portal-7.3-ga6");
+			nativeSassWorkspaceDir, "liferay.workspace.product=portal-7.3-ga7");
 
 		File nativeSassModulesDir = new File(nativeSassWorkspaceDir, "modules");
 
@@ -452,7 +452,7 @@ public class ProjectTemplatesWorkspaceTest
 			temporaryFolder, WorkspaceUtil.WORKSPACE, "rubySassWorkspace");
 
 		writeGradlePropertiesInWorkspace(
-			rubySassWorkspaceDir, "liferay.workspace.product=portal-7.3-ga6");
+			rubySassWorkspaceDir, "liferay.workspace.product=portal-7.3-ga7");
 
 		writeGradlePropertiesInWorkspace(
 			rubySassWorkspaceDir, "sass.compiler.class.name=ruby");

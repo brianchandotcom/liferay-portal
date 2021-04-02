@@ -685,6 +685,10 @@ public interface BaseProjectTemplatesTestCase {
 			}
 			else if (liferayVersion.startsWith("7.3")) {
 				writeGradlePropertiesInWorkspace(
+					workspaceDir, "liferay.workspace.product=portal-7.3-ga7");
+			}
+			else if (liferayVersion.startsWith("7.4")) {
+				writeGradlePropertiesInWorkspace(
 					workspaceDir, "liferay.workspace.product=portal-7.3-ga6");
 			}
 		}

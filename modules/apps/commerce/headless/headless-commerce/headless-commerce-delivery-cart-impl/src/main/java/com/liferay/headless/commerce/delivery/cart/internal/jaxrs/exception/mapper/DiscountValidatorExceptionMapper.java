@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.delivery.cart.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
+import com.liferay.commerce.discount.exception.CommerceDiscountValidatorException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -31,17 +31,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Cart)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Cart.CommerceOrderPaymentMethodException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Cart.DiscountValidatorException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CommerceOrderPaymentMethodExceptionMapper
-	extends BaseExceptionMapper<CommerceOrderPaymentMethodException> {
+public class DiscountValidatorExceptionMapper
+	extends BaseExceptionMapper<CommerceDiscountValidatorException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid order payment method";
+		return "Invalid discount";
 	}
 
 	@Override

@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.delivery.cart.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
+import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -31,17 +31,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Cart)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Cart.CommerceDiscountCouponCodeException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Cart.OrderShippingAddressException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CommerceDiscountCouponCodeExceptionMapper
-	extends BaseExceptionMapper<CommerceDiscountCouponCodeException> {
+public class OrderShippingAddressExceptionMapper
+	extends BaseExceptionMapper<CommerceOrderShippingAddressException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Coupon code does not exist";
+		return "Invalid order shipping address";
 	}
 
 	@Override

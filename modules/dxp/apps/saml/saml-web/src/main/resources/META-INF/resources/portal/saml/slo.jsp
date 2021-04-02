@@ -217,9 +217,10 @@ String sloLogoutRenderCommand = PortalUtil.getRelativeHomeURL(request) + SamlCom
 			var instance = this;
 
 			A.io.request(
-				'<%= sloLogoutRenderCommand %>&cmd=status',
+				'<%= PortalUtil.getRelativeHomeURL(request) + SamlCommandQueryConstants.SEND_SAML_SLO_REQUEST_INFOS %>&cmd=status',
 				{
 					dataType: 'JSON',
+					method: 'POST',
 					on: {
 						success: function(event) {
 							var logoutPending = false;

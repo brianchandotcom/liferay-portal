@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPSpecificationOptionTitleException;
+import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPSpecificationOptionTitleException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DefinitionExpirationDateException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPSpecificationOptionTitleExceptionMapper
-	extends BaseExceptionMapper<CPSpecificationOptionTitleException> {
+public class DefinitionExpirationDateExceptionMapper
+	extends BaseExceptionMapper<CPDefinitionExpirationDateException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid specification option title";
+		return "Invalid commerce product expiration date";
 	}
 
 	@Override

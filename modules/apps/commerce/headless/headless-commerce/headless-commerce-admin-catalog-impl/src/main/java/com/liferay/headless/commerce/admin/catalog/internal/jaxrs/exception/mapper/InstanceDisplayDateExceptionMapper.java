@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPInstanceDisplayDateException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.InstanceDisplayDateException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPInstanceDisplayDateExceptionMapper
+public class InstanceDisplayDateExceptionMapper
 	extends BaseExceptionMapper<CPInstanceDisplayDateException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid commerce SKU display date.";
+		return "Invalid commerce SKU display date";
 	}
 
 	@Override

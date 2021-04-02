@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
+import com.liferay.commerce.product.exception.DuplicateCPSpecificationOptionKeyException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPInstanceExpirationDateException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DuplicateSpecificationOptionKeyException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPInstanceExpirationDateExceptionMapper
-	extends BaseExceptionMapper<CPInstanceExpirationDateException> {
+public class DuplicateSpecificationOptionKeyExceptionMapper
+	extends BaseExceptionMapper<DuplicateCPSpecificationOptionKeyException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid commerce SKU expiration date.";
+		return "Specification option key must not be duplicated";
 	}
 
 	@Override

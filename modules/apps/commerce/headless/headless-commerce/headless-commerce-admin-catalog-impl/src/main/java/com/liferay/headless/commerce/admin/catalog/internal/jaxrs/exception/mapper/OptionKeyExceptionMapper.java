@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPInstanceSkuException;
+import com.liferay.commerce.product.exception.CPOptionKeyException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,22 +32,22 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPInstanceSkuException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.OptionKeyException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPInstanceSkuExceptionMapper
-	extends BaseExceptionMapper<CPInstanceSkuException> {
+public class OptionKeyExceptionMapper
+	extends BaseExceptionMapper<CPOptionKeyException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid SKU for the product.";
+		return "Duplicate product option key";
 	}
 
 	@Override
 	public Response.Status getStatus() {
-		return Response.Status.BAD_REQUEST;
+		return Response.Status.CONFLICT;
 	}
 
 }

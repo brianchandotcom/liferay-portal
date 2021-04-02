@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
+import com.liferay.commerce.product.exception.CPInstanceJsonException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPDefinitionIgnoreSKUCombinationsException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.InstanceJsonException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPDefinitionIgnoreSKUCombinationsExceptionMapper
-	extends BaseExceptionMapper<CPDefinitionIgnoreSKUCombinationsException> {
+public class InstanceJsonExceptionMapper
+	extends BaseExceptionMapper<CPInstanceJsonException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid SKU combinations.";
+		return "Invalid options for the SKU";
 	}
 
 	@Override

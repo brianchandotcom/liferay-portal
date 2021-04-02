@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.pricing.exception.DuplicateCommercePricingClassCPDefinitionRelException;
+import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -24,7 +24,7 @@ import javax.ws.rs.ext.Provider;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Riccardo Alberti
+ * @author Alessio Antonio Rendina
  * @author Zoltán Takács
  */
 @Component(
@@ -32,18 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DuplicateCommercePricingClassCPDefinitionRelException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.AttachmentFileEntryExpirationDateException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class DuplicateCPDefinitionProductGroupExceptionMapper
-	extends BaseExceptionMapper
-		<DuplicateCommercePricingClassCPDefinitionRelException> {
+public class AttachmentFileEntryExpirationDateExceptionMapper
+	extends BaseExceptionMapper<CPAttachmentFileEntryExpirationDateException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "A product can occur only one time in a product group";
+		return "Invalid commerce SKU expiration date";
 	}
 
 	@Override

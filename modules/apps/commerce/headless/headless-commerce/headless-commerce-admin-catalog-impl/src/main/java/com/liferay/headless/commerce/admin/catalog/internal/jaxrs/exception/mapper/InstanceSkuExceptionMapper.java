@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
+import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPAttachmentFileEntryExpirationDateException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.InstanceSkuException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPAttachmentFileEntryExpirationDateExceptionMapper
-	extends BaseExceptionMapper<CPAttachmentFileEntryExpirationDateException> {
+public class InstanceSkuExceptionMapper
+	extends BaseExceptionMapper<CPInstanceSkuException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid commerce SKU expiration date.";
+		return "Invalid SKU for the product";
 	}
 
 	@Override

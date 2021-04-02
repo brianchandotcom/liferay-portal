@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
+import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPDefinitionProductTypeNameException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DefinitionMetaKeywordsException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPDefinitionProductTypeNameExceptionMapper
-	extends BaseExceptionMapper<CPDefinitionProductTypeNameException> {
+public class DefinitionMetaKeywordsExceptionMapper
+	extends BaseExceptionMapper<CPDefinitionMetaKeywordsException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Unable to find product type.";
+		return "Invalid product meta keywords.";
 	}
 
 	@Override

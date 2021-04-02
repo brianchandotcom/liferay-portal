@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPAttachmentFileEntryNameException;
+import com.liferay.commerce.product.exception.CPOptionCategoryKeyException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPAttachmentFileEntryNameException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.OptionCategoryKeyException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPAttachmentFileEntryNameExceptionMapper
-	extends BaseExceptionMapper<CPAttachmentFileEntryNameException> {
+public class OptionCategoryKeyExceptionMapper
+	extends BaseExceptionMapper<CPOptionCategoryKeyException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid attachment name";
+		return "Invalid option category key";
 	}
 
 	@Override

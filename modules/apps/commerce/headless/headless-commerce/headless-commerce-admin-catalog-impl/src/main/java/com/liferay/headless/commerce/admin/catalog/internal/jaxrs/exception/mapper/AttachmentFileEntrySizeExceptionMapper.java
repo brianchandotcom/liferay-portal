@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.DuplicateCPSpecificationOptionKeyException;
+import com.liferay.commerce.product.exception.CPAttachmentFileEntrySizeException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.DuplicateCPSpecificationOptionKeyException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.AttachmentFileEntrySizeException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class DuplicateCPSpecificationOptionKeyExceptionMapper
-	extends BaseExceptionMapper<DuplicateCPSpecificationOptionKeyException> {
+public class AttachmentFileEntrySizeExceptionMapper
+	extends BaseExceptionMapper<CPAttachmentFileEntrySizeException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Specification option key must not be duplicated";
+		return "Invalid attachment size";
 	}
 
 	@Override

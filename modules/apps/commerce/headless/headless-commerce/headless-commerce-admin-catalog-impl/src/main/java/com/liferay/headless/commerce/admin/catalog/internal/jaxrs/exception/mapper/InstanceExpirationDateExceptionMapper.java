@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.CPSpecificationOptionKeyException;
+import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPSpecificationOptionKeyException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.InstanceExpirationDateException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CPSpecificationOptionKeyExceptionMapper
-	extends BaseExceptionMapper<CPSpecificationOptionKeyException> {
+public class InstanceExpirationDateExceptionMapper
+	extends BaseExceptionMapper<CPInstanceExpirationDateException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid specification option key";
+		return "Invalid commerce SKU expiration date";
 	}
 
 	@Override

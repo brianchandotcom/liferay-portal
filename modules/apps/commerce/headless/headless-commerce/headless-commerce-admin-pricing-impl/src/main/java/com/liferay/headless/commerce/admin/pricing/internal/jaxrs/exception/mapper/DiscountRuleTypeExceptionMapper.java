@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.price.list.exception.CommercePriceListDisplayDateException;
+import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.CommercePriceListDisplayDateException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.DiscountRuleTypeException"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class CommercePriceListDisplayDateExceptionMapper
-	extends BaseExceptionMapper<CommercePriceListDisplayDateException> {
+public class DiscountRuleTypeExceptionMapper
+	extends BaseExceptionMapper<CommerceDiscountRuleTypeException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Invalid commerce price list display date.";
+		return "Invalid discount rule type";
 	}
 
 	@Override

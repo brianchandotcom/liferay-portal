@@ -425,16 +425,6 @@ const openSelectionModal = ({
 
 			const iframeBody = iframeWindow.document.body;
 
-			const selectEventHandler = Liferay.on(selectEventName, (event) => {
-				selectedItem = event.data || event;
-
-				if (!multiple) {
-					select();
-				}
-			});
-
-			eventHandlers.push(selectEventHandler);
-
 			const itemElements = iframeBody.querySelectorAll(
 				'.selector-button'
 			);
@@ -453,16 +443,34 @@ const openSelectionModal = ({
 				});
 			}
 
-			if (!customSelectEvent) {
-				iframeBody.addEventListener('click', (event) => {
-					const delegateTarget =
-						event.target &&
-						event.target.closest('.selector-button');
+			if (selectEventName) {
+				const selectEventHandler = Liferay.on(
+					selectEventName,
+					(event) => {
+						selectedItem = event.data || event;
 
-					if (delegateTarget) {
-						Liferay.fire(selectEventName, delegateTarget.dataset);
+						if (!multiple) {
+							select();
+						}
 					}
-				});
+				);
+
+				eventHandlers.push(selectEventHandler);
+
+				if (!customSelectEvent) {
+					iframeBody.addEventListener('click', (event) => {
+						const delegateTarget = event.target?.closest(
+							'.selector-button'
+						);
+
+						if (delegateTarget) {
+							Liferay.fire(
+								selectEventName,
+								delegateTarget.dataset
+							);
+						}
+					});
+				}
 			}
 		},
 		size,

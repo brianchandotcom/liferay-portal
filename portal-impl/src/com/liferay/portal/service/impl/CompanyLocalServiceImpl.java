@@ -1044,7 +1044,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					validateLanguageIds(newLanguageIds);
 
 					_updateGroupLanguageIds(
-							companyId, newLanguageIds, oldLanguageIds);
+						companyId, newLanguageIds, oldLanguageIds);
 
 					LanguageUtil.resetAvailableLocales(companyId);
 
@@ -2080,44 +2080,44 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	private void _updateGroupLanguageIds(
-			long companyId, String newLanguageIds, String oldLanguageIds) {
+		long companyId, String newLanguageIds, String oldLanguageIds) {
 
 		List<String> removedLanguageIds = ListUtil.remove(
-				ListUtil.fromArray(StringUtil.split(oldLanguageIds)),
-				ListUtil.fromArray(StringUtil.split(newLanguageIds))
-		);
+			ListUtil.fromArray(StringUtil.split(oldLanguageIds)),
+			ListUtil.fromArray(StringUtil.split(newLanguageIds)));
 
 		if (ListUtil.isEmpty(removedLanguageIds)) {
 			return;
 		}
 
-		List<Group> groups = groupLocalService.getActiveGroups(
-				companyId, true);
+		List<Group> groups = groupLocalService.getActiveGroups(companyId, true);
 
 		for (Group group : groups) {
 			if (group.isSite()) {
 				UnicodeProperties groupTypeSettingsUnicodeProperties =
-						group.getTypeSettingsProperties();
+					group.getTypeSettingsProperties();
 
 				boolean inheritLocales = GetterUtil.getBoolean(
-						groupTypeSettingsUnicodeProperties.getProperty(
-								"inheritLocales"),
-						true);
+					groupTypeSettingsUnicodeProperties.getProperty(
+						"inheritLocales"),
+					true);
 
 				if (inheritLocales) {
 					continue;
 				}
 
-				String[] groupLocales = GetterUtil.getStringValues(
-						groupTypeSettingsUnicodeProperties.getProperty(
-								PropsKeys.LOCALES));
+				String[] groupLanguageIds = StringUtil.split(
+					groupTypeSettingsUnicodeProperties.getProperty(
+						PropsKeys.LOCALES));
 
 				boolean updateLocales = false;
 
 				for (String removedLanguageId : removedLanguageIds) {
-					if (ArrayUtil.contains(groupLocales, removedLanguageId)) {
-						groupLocales = ArrayUtil.remove(
-								groupLocales, removedLanguageId);
+					if (ArrayUtil.contains(
+							groupLanguageIds, removedLanguageId)) {
+
+						groupLanguageIds = ArrayUtil.remove(
+							groupLanguageIds, removedLanguageId);
 
 						updateLocales = true;
 					}
@@ -2125,8 +2125,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 				if (updateLocales) {
 					groupTypeSettingsUnicodeProperties.setProperty(
-							PropsKeys.LOCALES,
-							StringUtil.merge(groupLocales, StringPool.COMMA));
+						PropsKeys.LOCALES,
+						StringUtil.merge(groupLanguageIds, StringPool.COMMA));
 
 					groupLocalService.updateGroup(group);
 				}

@@ -876,9 +876,9 @@ definition {
 			webContentTitle = "WC WebContent Título");
 	}
 
-	@description = "This ensures that the user can not translate a web content to a not available language."
+	@description = "This ensures that the user can not translate a web content to an unavailable language."
 	@priority = "4"
-	test TranslateWCToNotAvailableLanguage {
+	test TranslateWCToUnavailableLanguage {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONWebcontent.addWebContent(

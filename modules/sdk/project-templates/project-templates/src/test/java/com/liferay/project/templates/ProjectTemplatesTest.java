@@ -96,9 +96,9 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testBuildTemplateLiferayVersionInvalid74() throws Exception {
+	public void testBuildTemplateLiferayVersionInvalid75() throws Exception {
 		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferay-version", "7.4");
+			"mvc-portlet", "test", "--liferay-version", "7.5");
 	}
 
 	@Test

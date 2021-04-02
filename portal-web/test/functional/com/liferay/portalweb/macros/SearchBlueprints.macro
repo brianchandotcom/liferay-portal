@@ -18,6 +18,8 @@ definition {
 		}
 
 		Button.click(button = "Create");
+
+		PortletEntry.save();
 	}
 
 	macro addElements {

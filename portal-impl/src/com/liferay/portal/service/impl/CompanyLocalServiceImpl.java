@@ -2125,6 +2125,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				}
 
 				if (updateLocales) {
+					LanguageUtil.resetAvailableGroupLocales(group.getGroupId());
+
 					groupTypeSettingsUnicodeProperties.setProperty(
 						PropsKeys.LOCALES,
 						StringUtil.merge(groupLanguageIds, StringPool.COMMA));

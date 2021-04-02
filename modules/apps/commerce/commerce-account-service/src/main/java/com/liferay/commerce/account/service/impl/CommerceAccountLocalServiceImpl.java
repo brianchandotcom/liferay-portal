@@ -29,7 +29,6 @@ import com.liferay.commerce.account.service.base.CommerceAccountLocalServiceBase
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
@@ -865,7 +864,6 @@ public class CommerceAccountLocalServiceImpl
 							_customSQL.getKeywordsPredicate(
 								DSLFunctionFactoryUtil.lower(
 									AccountEntryTable.INSTANCE.name),
-								Expression::like,
 								_customSQL.keywords(keywords, true))));
 				}
 

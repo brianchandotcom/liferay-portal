@@ -30,7 +30,6 @@ import com.liferay.change.tracking.service.base.CTCollectionServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
@@ -452,11 +451,11 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 					_customSQL.getKeywordsPredicate(
 						DSLFunctionFactoryUtil.lower(
 							CTCollectionTable.INSTANCE.name),
-						Expression::like, keywordsArray),
+						keywordsArray),
 					_customSQL.getKeywordsPredicate(
 						DSLFunctionFactoryUtil.lower(
 							CTCollectionTable.INSTANCE.description),
-						Expression::like, keywordsArray)))
+						keywordsArray)))
 		).and(
 			_inlineSQLHelper.getPermissionWherePredicate(
 				CTCollection.class, CTCollectionTable.INSTANCE.ctCollectionId)

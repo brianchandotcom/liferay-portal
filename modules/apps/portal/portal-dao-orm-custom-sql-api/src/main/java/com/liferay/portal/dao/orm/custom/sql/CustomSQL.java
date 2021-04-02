@@ -49,6 +49,9 @@ public interface CustomSQL {
 		BiFunction<Expression<String>, String, Predicate> operatorBiFunction,
 		String[] values);
 
+	public Predicate getKeywordsPredicate(
+		Expression<String> expression, String[] values);
+
 	public String[] keywords(String keywords);
 
 	public String[] keywords(String keywords, boolean lowerCase);

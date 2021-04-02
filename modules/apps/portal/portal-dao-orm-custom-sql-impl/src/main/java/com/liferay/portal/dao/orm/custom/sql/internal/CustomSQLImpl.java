@@ -247,6 +247,13 @@ public class CustomSQLImpl implements CustomSQL {
 		return keywordsPredicate;
 	}
 
+	@Override
+	public Predicate getKeywordsPredicate(
+		Expression<String> expression, String[] values) {
+
+		return getKeywordsPredicate(expression, Expression::like, values);
+	}
+
 	/**
 	 * Returns <code>true</code> if Hibernate is connecting to a DB2 database.
 	 *

@@ -27,7 +27,6 @@ import com.liferay.account.model.impl.AccountEntryImpl;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
@@ -729,7 +728,6 @@ public class AccountEntryLocalServiceImpl
 							_customSQL.getKeywordsPredicate(
 								DSLFunctionFactoryUtil.lower(
 									AccountEntryTable.INSTANCE.name),
-								Expression::like,
 								_customSQL.keywords(keywords, true))));
 				}
 

@@ -64,6 +64,7 @@ import java.util.Objects;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -203,6 +204,7 @@ public class SearchRequestBuilderTest {
 			"[alpha delta, omega delta]", "userName", searchRequestBuilder);
 	}
 
+	@Ignore
 	@Test
 	public void testAddRescore() throws Exception {
 		_addUser("alpha", "delta", "AlphaDelta");

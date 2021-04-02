@@ -141,6 +141,90 @@ definition {
 		CalendarEvent.viewAvailableCalendars(availableCalendarList = "Test Test");
 	}
 
+	@description = "This is a use case for LPS-74684."
+	@priority = "5"
+	test InviteUserViaUnpublishedEventAndViewNoResponse {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			calendarName = "Site Name",
+			eventTitle = "Invite User Event",
+			eventType = "Regular",
+			optionSet = "true",
+			optionSetValue = "inviteResource",
+			pageName = "Staging Test Page",
+			pageStaging = "true",
+			siteName = "Site Name",
+			siteURL = "true",
+			specificOptionSetValue = "Test Test",
+			user = "Test Test",
+			workflow = "true");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Invite User Event",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Invite User Event",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "Invite User Event");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		CalendarEvent.viewSiteRSVPWithApprovedWorkflow(
+			eventTitle = "Invite User Event",
+			rsvp = "Yes",
+			userCalendarName = "Test Test");
+
+		CalendarEvent.viewInvitedUserRSVPWithApprovedWorkflow(
+			eventTitle = "Invite User Event",
+			siteCalendarName = "Site Name",
+			siteName = "Site Name",
+			userCalendarName = "Test Test");
+	}
+
 	@priority = "5"
 	test SchedulePublishToLiveWithEventAndResource {
 		property testray.component.names = "Training";

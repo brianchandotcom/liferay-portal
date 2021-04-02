@@ -111,7 +111,7 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		if (isSet(addMention)) {
-			Type(
+			Type.sendKeys(
 				locator1 = "CKEditor#BODY",
 				value1 = "${entryCommentEdit} @${mentionsUserScreenName}");
 

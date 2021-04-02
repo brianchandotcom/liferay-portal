@@ -47,7 +47,9 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 	@Parameterized.Parameters(name = "Testcase-{index}: testing {0}")
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
-			new Object[][] {{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.6"}, {"7.4.0"}});
+			new Object[][] {
+				{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.6"}, {"7.4.0"}
+			});
 	}
 
 	@BeforeClass
@@ -93,7 +95,6 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api");
 
 		if (!_liferayVersion.startsWith("7.0")) {
-
 			testContains(
 				gradleProjectDir, "build.gradle",
 				"compileOnly group: \"org.osgi\", name: " +

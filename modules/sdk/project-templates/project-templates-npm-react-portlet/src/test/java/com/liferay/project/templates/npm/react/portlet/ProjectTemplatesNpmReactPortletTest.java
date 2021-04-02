@@ -50,7 +50,8 @@ public class ProjectTemplatesNpmReactPortletTest
 		return Arrays.asList(
 			new Object[][] {
 				{"foo", "foo", "Foo", "7.0.6"}, {"foo", "foo", "Foo", "7.1.3"},
-				{"foo", "foo", "Foo", "7.2.1"}, {"foo", "foo", "Foo", "7.3.6"}, {"foo", "foo", "Foo", "7.4.0"},
+				{"foo", "foo", "Foo", "7.2.1"}, {"foo", "foo", "Foo", "7.3.6"},
+				{"foo", "foo", "Foo", "7.4.0"},
 				{"foo-bar", "foo.bar", "FooBar", "7.0.6"},
 				{"foo-bar", "foo.bar", "FooBar", "7.1.3"},
 				{"foo-bar", "foo.bar", "FooBar", "7.2.1"},

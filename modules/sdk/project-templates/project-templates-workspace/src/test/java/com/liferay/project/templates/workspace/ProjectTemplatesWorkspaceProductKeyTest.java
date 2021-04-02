@@ -48,7 +48,9 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 	@Parameterized.Parameters(name = "Testcase-{index}: testing {0}")
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
-			new Object[][] {{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.6"}, {"7.4.0"}});
+			new Object[][] {
+				{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.6"}, {"7.4.0"}
+			});
 	}
 
 	@BeforeClass
@@ -97,9 +99,9 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 				"liferay.workspace.product=portal-7.3");
 		}
 		else {
-				testContains(
-					workspaceProjectDir, "gradle.properties",
-					"liferay.workspace.product=portal-7.4");
+			testContains(
+				workspaceProjectDir, "gradle.properties",
+				"liferay.workspace.product=portal-7.4");
 		}
 
 		if (isBuildProjects()) {

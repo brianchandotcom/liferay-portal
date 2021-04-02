@@ -62,7 +62,7 @@ function AccountsListView({
 						if (!items || !items.length) {
 							return (
 								<EmptyListView
-									caption="no-accounts-were-found"
+									caption={Liferay.Language.get("no-accounts-were-found")}
 									loading={loading}
 								/>
 							);

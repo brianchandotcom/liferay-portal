@@ -40,6 +40,10 @@ definition {
 
 		SearchBlueprints.addBlueprint(name = "Score Explanation Blueprint");
 
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Score Explanation Blueprint");
+
 		Click(locator1 = "Button#PREVIEW");
 
 		SearchBlueprints.searchBlueprintsPreview(searchTerm = "Apple");

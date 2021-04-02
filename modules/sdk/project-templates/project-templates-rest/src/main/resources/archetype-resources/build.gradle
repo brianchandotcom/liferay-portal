@@ -1,7 +1,7 @@
 dependencies {
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
-#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+#if (!${liferayVersion.startsWith("7.0")})
 	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs"
 #end
 }

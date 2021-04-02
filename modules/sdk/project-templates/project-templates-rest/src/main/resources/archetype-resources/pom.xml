@@ -26,7 +26,9 @@
 #elseif (${liferayVersion.startsWith("7.2")})
 				<liferay.bom.version>7.2.1-1</liferay.bom.version>
 #elseif (${liferayVersion.startsWith("7.3")})
-				<liferay.bom.version>7.3.5</liferay.bom.version>
+				<liferay.bom.version>7.3.6</liferay.bom.version>
+#elseif (${liferayVersion.startsWith("7.4")})
+				<liferay.bom.version>7.4.0</liferay.bom.version>
 #end
 			</properties>
 			<dependencyManagement>
@@ -80,7 +82,7 @@
 			<artifactId>org.osgi.service.component.annotations</artifactId>
 			<scope>provided</scope>
 		</dependency>
-#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+#if (!${liferayVersion.startsWith("7.0")})
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.service.jaxrs</artifactId>

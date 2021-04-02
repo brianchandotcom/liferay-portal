@@ -96,19 +96,19 @@ is contained inside the Liferay bundle. Both the TestIntegrationPlugin and
 LiferayExtPlugin rely on this version to match the bundled Tomcat version. If
 your configured bundle url points to a bundle with a different Tomcat version,
 set the property below to match that Tomcat version. If you did not set
-`liferay.workspace.product`, the default value is `9.0.36`.
+`liferay.workspace.product`, the default value is `9.0.40`.
 
 $h4 liferay.workspace.bundle.url
 Set this property to override the default setting provided by
 `liferay.workspace.product`. Set the URL pointing to the bundle Zip to
 download. If you did not set `liferay.workspace.product`, the default value is
-`https://releases-cdn.liferay.com/portal/7.3.5-ga6/liferay-ce-portal-tomcat-7.3.5-ga6-20200924034643403.tar.gz`.
+`https://releases-cdn.liferay.com/portal/7.3.6-ga7/liferay-ce-portal-tomcat-7.3.6-ga7-20210301155526191.tar.gz`.
 
 $h4 liferay.workspace.docker.image.liferay
 Set this property to override the default setting provided by
 `liferay.workspace.product`. Set the Liferay Portal Docker image to create
 your container from. If you did not set `liferay.workspace.product`, the
-default value is `liferay/portal:7.3.5-ga6`.
+default value is `liferay/portal:7.4.0-ga1`.
 
 $h4 liferay.workspace.target.platform.version
 Set this property to override the default setting provided by
@@ -121,7 +121,7 @@ See GETTING_STARTED#Overwrite-specific-dependency-in-one-project for overrides.
 For a list of all available target platform versions, see
 https://bit.ly/2IkAwwW for Liferay Portal and https://bit.ly/2GIyfZF for
 Liferay DXP. If you did not set `liferay.workspace.product`, the default value
-is `7.3.5`.
+is `7.4.0`.
 
 $h4 liferay.workspace.bundle.cache.dir
 Set the directory where the downloaded bundle Zip files are stored. The default

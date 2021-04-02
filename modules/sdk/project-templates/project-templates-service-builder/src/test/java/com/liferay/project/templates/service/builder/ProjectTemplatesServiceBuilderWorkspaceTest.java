@@ -55,7 +55,8 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				{"spring", "guestbook", "com.liferay.docs.guestbook", "7.0.6"},
 				{"spring", "guestbook", "com.liferay.docs.guestbook", "7.1.3"},
 				{"ds", "guestbook", "com.liferay.docs.guestbook", "7.2.1"},
-				{"ds", "guestbook", "com.liferay.docs.guestbook", "7.3.5"},
+				{"ds", "guestbook", "com.liferay.docs.guestbook", "7.3.6"},
+				{"ds", "guestbook", "com.liferay.docs.guestbook", "7.4.0"},
 				{
 					"spring", "backend-integration",
 					"com.liferay.docs.guestbook", "7.0.6"
@@ -70,7 +71,11 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{
 					"ds", "backend-integration", "com.liferay.docs.guestbook",
-					"7.3.5"
+					"7.3.6"
+				},
+				{
+					"ds", "backend-integration", "com.liferay.docs.guestbook",
+					"7.4.0"
 				},
 				{
 					"spring", "backend-integration",
@@ -78,12 +83,17 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{
 					"spring", "backend-integration",
-					"com.liferay.docs.guestbook", "7.3.5"
+					"com.liferay.docs.guestbook", "7.3.6"
+				},
+				{
+					"spring", "backend-integration",
+					"com.liferay.docs.guestbook", "7.4.0"
 				},
 				{"spring", "sample", "com.test.sample", "7.0.6"},
 				{"spring", "sample", "com.test.sample", "7.1.3"},
 				{"ds", "sample", "com.test.sample", "7.2.1"},
-				{"ds", "sample", "com.test.sample", "7.3.5"}
+				{"ds", "sample", "com.test.sample", "7.3.6"},
+				{"ds", "sample", "com.test.sample", "7.4.0"}
 			});
 	}
 

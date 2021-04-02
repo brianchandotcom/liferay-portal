@@ -117,6 +117,18 @@ public class ProjectTemplatesServiceBuilderTest
 			gradleProjectDir, "foo-bar-service/service.xml",
 			"liferay-service-builder_7_3_0.dtd");
 	}
+	
+	@Test
+	public void testBuildTemplateContentDTDVersionServiceBuilder74()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", "foo-bar", "--liferay-version", "7.4.0");
+
+		testContains(
+			gradleProjectDir, "foo-bar-service/service.xml",
+			"liferay-service-builder_7_4_0.dtd");
+	}
 
 	@Test
 	public void testBuildTemplateServiceBuilderCheckExports() throws Exception {

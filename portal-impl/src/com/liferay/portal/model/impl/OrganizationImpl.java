@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -28,11 +29,17 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,6 +196,25 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 		Group group = getGroup();
 
 		return group.getGroupId();
+	}
+
+	@Override
+	public String getLogoURL() throws PortalException {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(PortalUtil.getPathImage());
+		sb.append("/organization_logo?img_id=");
+		sb.append(getLogoId());
+
+		if (_userFileUploadsSettings.isImageCheckToken()) {
+			sb.append("&img_id_token=");
+			sb.append(URLCodec.encodeURL(DigesterUtil.digest(getUuid())));
+		}
+
+		sb.append("&t=");
+		sb.append(WebServerServletTokenUtil.getToken(getLogoId()));
+
+		return sb.toString();
 	}
 
 	@Override
@@ -353,5 +379,10 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationImpl.class);
+
+	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			UserFileUploadsSettings.class, OrganizationImpl.class,
+			"_userFileUploadsSettings", false);
 
 }

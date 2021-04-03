@@ -29,11 +29,9 @@ export const ACTIONS = {
 					return;
 				}
 
-				const fragmentCollectionsForm = document.getElementById(
-					`${portletNamespace}fragmentCollectionsFm`
-				);
+				const form = document.getElementById(`${portletNamespace}fm`);
 
-				if (!fragmentCollectionsForm) {
+				if (!form) {
 					return;
 				}
 
@@ -49,13 +47,10 @@ export const ACTIONS = {
 					input.name = `${portletNamespace}rowIds`;
 					input.value = selectedItems.map((item) => item.value);
 
-					fragmentCollectionsForm.appendChild(input);
+					form.appendChild(input);
 				}
 
-				submitForm(
-					fragmentCollectionsForm,
-					deleteFragmentCollectionURL
-				);
+				submitForm(form, deleteFragmentCollectionURL);
 			},
 			null,
 			portletNamespace
@@ -78,11 +73,9 @@ export const ACTIONS = {
 					return;
 				}
 
-				const fragmentCollectionsForm = document.getElementById(
-					`${portletNamespace}fragmentCollectionsFm`
-				);
+				const form = document.getElementById(`${portletNamespace}fm`);
 
-				if (!fragmentCollectionsForm) {
+				if (!form) {
 					return;
 				}
 
@@ -91,12 +84,9 @@ export const ACTIONS = {
 				input.name = `${portletNamespace}rowIds`;
 				input.value = selectedItems.map((item) => item.value);
 
-				fragmentCollectionsForm.appendChild(input);
+				form.appendChild(input);
 
-				submitForm(
-					fragmentCollectionsForm,
-					exportFragmentCollectionsURL
-				);
+				submitForm(form, exportFragmentCollectionsURL);
 
 				processed = true;
 			},

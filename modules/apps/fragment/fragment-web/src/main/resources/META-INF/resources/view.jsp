@@ -323,5 +323,5 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 	</clay:row>
 </clay:container-fluid>
 
-<aui:form cssClass="hide" name="fragmentCollectionsFm">
+<aui:form cssClass="hide" name="fm">
 </aui:form>

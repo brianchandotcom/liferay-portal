@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.settings.SettingsLocatorHelperUtil;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -1036,6 +1037,27 @@ public class PortletPreferencesLocalServiceImpl
 	private PortletPreferences _updatePreferences(
 		long ownerId, int ownerType, long plid, String portletId,
 		Map<String, Preference> preferenceMap) {
+
+		if (CopyLayoutThreadLocal.isCopyLayout()) {
+			Layout layout = layoutPersistence.fetchByPrimaryKey(plid);
+
+			if ((layout != null) &&
+				LayoutStagingUtil.isBranchingLayout(layout)) {
+
+				LayoutStagingHandler layoutStagingHandler =
+					new LayoutStagingHandler(layout);
+
+				LayoutRevision layoutRevision =
+					layoutStagingHandler.getLayoutRevision();
+
+				if (layoutRevision != null) {
+					_updatePreferences(
+						ownerId, ownerType,
+						layoutRevision.getLayoutRevisionId(), portletId,
+						preferenceMap);
+				}
+			}
+		}
 
 		plid = _swapPlidForUpdatePreferences(plid);
 

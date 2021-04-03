@@ -91,11 +91,35 @@ public class PortletPreferencesLocalServiceImpl
 		portletPreferences.setPortletId(portletId);
 
 		if (Validator.isNull(defaultPreferences)) {
-			if (portlet == null) {
-				defaultPreferences = PortletConstants.DEFAULT_PREFERENCES;
+			LayoutRevision layoutRevision =
+				layoutRevisionLocalService.fetchLayoutRevision(plid);
+
+			if (layoutRevision != null) {
+				PortletPreferences layoutPortletPreferences =
+					portletPreferencesPersistence.fetchByO_O_P_P(
+						ownerId, ownerType, layoutRevision.getPlid(),
+						portletId);
+
+				if (layoutPortletPreferences != null) {
+					javax.portlet.PortletPreferences jxPortletPreferences =
+						portletPreferenceValueLocalService.getPreferences(
+							layoutPortletPreferences);
+
+					if (jxPortletPreferences != null) {
+						defaultPreferences =
+							PortletPreferencesFactoryUtil.toXML(
+								jxPortletPreferences);
+					}
+				}
 			}
-			else {
-				defaultPreferences = portlet.getDefaultPreferences();
+
+			if (Validator.isNull(defaultPreferences)) {
+				if (portlet == null) {
+					defaultPreferences = PortletConstants.DEFAULT_PREFERENCES;
+				}
+				else {
+					defaultPreferences = portlet.getDefaultPreferences();
+				}
 			}
 		}
 

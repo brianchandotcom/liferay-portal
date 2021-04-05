@@ -802,9 +802,10 @@ public class JournalArticleActionDropdownItemsProvider {
 			_themeDisplay.getPermissionChecker();
 		long scopeGroupId = _themeDisplay.getScopeGroupId();
 
-		for (String languageId : _article.getAvailableLanguageIds()) {
+		for (Locale locale : LanguageUtil.getAvailableLocales(scopeGroupId)) {
 			if (_translationPermission.contains(
-					permissionChecker, scopeGroupId, languageId,
+					permissionChecker, scopeGroupId,
+					LanguageUtil.getLanguageId(locale),
 					TranslationActionKeys.TRANSLATE)) {
 
 				return true;

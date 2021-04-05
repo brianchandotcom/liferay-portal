@@ -214,7 +214,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "Nome da Estrutura WC");
+			value1 = "Título da Estrutura WC");
 	}
 
 	@description = "This test ensures that the translation of a field labels are carried when duplicating the field."

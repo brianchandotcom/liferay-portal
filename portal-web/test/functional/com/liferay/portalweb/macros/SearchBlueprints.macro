@@ -181,6 +181,29 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
+	macro tearDownCP {
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Search Experiences");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
+
+			Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete Selected Blueprints?");
+
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
+		}
+	}
+
 	macro viewBlueprintsSearchResultNotPresent {
 		AssertElementNotPresent(
 			key_searchAssetTitle = "${searchAssetTitle}",

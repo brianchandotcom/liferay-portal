@@ -24,9 +24,7 @@ definition {
 
 			WebContent.tearDownCP();
 
-			DMDocument.tearDownCP();
-
-			Tag.tearDownCP(site = "Guest");
+			SearchBlueprints.tearDownCP();
 
 			Page.tearDownCP();
 		}

@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	description = "portal-cors-configuration-description", factory = true,
 	id = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration",
-	localization = "content/Language", name = "portal-cors-configuration"
+	localization = "content/Language", name = "portal-cors-configuration-name"
 )
 public interface PortalCORSConfiguration {
 

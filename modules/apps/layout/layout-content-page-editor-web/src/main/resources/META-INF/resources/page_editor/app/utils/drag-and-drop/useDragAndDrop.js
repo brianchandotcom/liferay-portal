@@ -329,7 +329,10 @@ function getSiblingPosition(state, parentItem) {
 		state.dropTargetItem.itemId
 	);
 
-	if (state.targetPositionWithoutMiddle === TARGET_POSITION.BOTTOM) {
+	if (
+		state.targetPositionWithoutMiddle === TARGET_POSITION.BOTTOM ||
+		state.targetPositionWithoutMiddle === TARGET_POSITION.RIGHT
+	) {
 		return siblingPosition + 1;
 	}
 	else if (

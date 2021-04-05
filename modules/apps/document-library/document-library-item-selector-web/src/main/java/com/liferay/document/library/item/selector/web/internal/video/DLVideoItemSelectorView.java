@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
 import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
+import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -26,7 +27,6 @@ import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnT
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
@@ -56,7 +56,7 @@ public class DLVideoItemSelectorView
 	public String[] getMimeTypes() {
 		String[] mimeTypes = {DLContentTypes.VIDEO_EXTERNAL_SHORTCUT};
 
-		if (XugglerUtil.isEnabled()) {
+		if (VideoProcessorUtil.isAvailable()) {
 			mimeTypes = ArrayUtil.append(
 				mimeTypes, PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);
 		}
@@ -74,7 +74,7 @@ public class DLVideoItemSelectorView
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext) {
 
 		dlItemSelectorViewDisplayContext.setShowDragAndDropZone(
-			XugglerUtil.isEnabled());
+			VideoProcessorUtil.isAvailable());
 	}
 
 	private static final List<ItemSelectorReturnType>

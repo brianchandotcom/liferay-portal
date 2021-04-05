@@ -29,19 +29,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class ServletContextUtil {
 
-	public static final FormNavigatorCategoryProvider
+	public static FormNavigatorCategoryProvider
 		getFormNavigatorCategoryProvider() {
 
 		return _formNavigatorCategoryProvider;
 	}
 
-	public static final FormNavigatorEntryProvider
-		getFormNavigatorEntryProvider() {
-
+	public static FormNavigatorEntryProvider getFormNavigatorEntryProvider() {
 		return _formNavigatorEntryProvider;
 	}
 
-	public static final ScreenNavigationRegistry getScreenNavigationRegistry() {
+	public static ScreenNavigationRegistry getScreenNavigationRegistry() {
 		return _screenNavigationRegistry;
 	}
 

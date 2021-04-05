@@ -27,13 +27,13 @@ import com.liferay.portal.kernel.util.Validator;
 @Deprecated
 public class ModelValidatorUtil {
 
-	public static final <T> ModelValidator<T> compose(
+	public static <T> ModelValidator<T> compose(
 		ModelValidator<T>... modelValidators) {
 
 		return new CompositeModelValidator<>(modelValidators);
 	}
 
-	public static final ModelValidator<FileContentReference>
+	public static ModelValidator<FileContentReference>
 		getDefaultDLFileEntryModelValidator() {
 
 		return compose(
@@ -42,19 +42,19 @@ public class ModelValidatorUtil {
 			getDefaultFileSizeModelValidator());
 	}
 
-	public static final ModelValidator<FileContentReference>
+	public static ModelValidator<FileContentReference>
 		getDefaultFileExtensionModelValidator() {
 
 		return _defaultFileExtensionModelValidator;
 	}
 
-	public static final ModelValidator<FileContentReference>
+	public static ModelValidator<FileContentReference>
 		getDefaultFileNameModelValidator() {
 
 		return _defaultFileNameModelValidator;
 	}
 
-	public static final ModelValidator<FileContentReference>
+	public static ModelValidator<FileContentReference>
 		getDefaultFileSizeModelValidator() {
 
 		return _defaultFileSizeModelValidator;

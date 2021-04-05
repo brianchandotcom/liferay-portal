@@ -45,61 +45,59 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ServletContextUtil {
 
-	public static final CommerceWorkflowedModelHelper getCommerceOrderHelper() {
+	public static CommerceWorkflowedModelHelper getCommerceOrderHelper() {
 		return _servletContextUtil._getCommerceOrderHelper();
 	}
 
-	public static final ModelResourcePermission<CommerceOrder>
+	public static ModelResourcePermission<CommerceOrder>
 		getCommerceOrderModelResourcePermission() {
 
 		return _servletContextUtil._getCommerceOrderModelResourcePermission();
 	}
 
-	public static final CommerceOrderStatusRegistry
-		getCommerceOrderStatusRegistry() {
-
+	public static CommerceOrderStatusRegistry getCommerceOrderStatusRegistry() {
 		return _servletContextUtil._getCommerceOrderStatusRegistry();
 	}
 
-	public static final CommerceOrderValidatorRegistry
+	public static CommerceOrderValidatorRegistry
 		getCommerceOrderValidatorRegistry() {
 
 		return _servletContextUtil._getCommerceOrderValidatorRegistry();
 	}
 
-	public static final CommerceProductPriceCalculation
+	public static CommerceProductPriceCalculation
 		getCommercePriceCalculation() {
 
 		return _servletContextUtil._getCommercePriceCalculation();
 	}
 
-	public static final CommercePriceFormatter getCommercePriceFormatter() {
+	public static CommercePriceFormatter getCommercePriceFormatter() {
 		return _servletContextUtil._getCommercePriceFormatter();
 	}
 
-	public static final CommercePriceListLocalService
+	public static CommercePriceListLocalService
 		getCommercePriceListLocalService() {
 
 		return _servletContextUtil._getCommercePriceListLocalService();
 	}
 
-	public static final ConfigurationProvider getConfigurationProvider() {
+	public static ConfigurationProvider getConfigurationProvider() {
 		return _servletContextUtil._getConfigurationProvider();
 	}
 
-	public static final CPDefinitionHelper getCPDefinitionHelper() {
+	public static CPDefinitionHelper getCPDefinitionHelper() {
 		return _servletContextUtil._getCPDefinitionHelper();
 	}
 
-	public static final CPInstanceHelper getCPInstanceHelper() {
+	public static CPInstanceHelper getCPInstanceHelper() {
 		return _servletContextUtil._getCPInstanceHelper();
 	}
 
-	public static final PanelAppRegistry getPanelAppRegistry() {
+	public static PanelAppRegistry getPanelAppRegistry() {
 		return _servletContextUtil._getPanelAppRegistry();
 	}
 
-	public static final PanelCategoryRegistry getPanelCategoryRegistry() {
+	public static PanelCategoryRegistry getPanelCategoryRegistry() {
 		return _servletContextUtil._getPanelCategoryRegistry();
 	}
 

@@ -49,7 +49,7 @@ public class ServletContextUtil {
 		return _servletContext.getContextPath();
 	}
 
-	public static final FragmentCollectionContributorTracker
+	public static FragmentCollectionContributorTracker
 		getFragmentCollectionContributorTracker() {
 
 		return _fragmentCollectionContributorTracker;
@@ -61,7 +61,7 @@ public class ServletContextUtil {
 		return _fragmentEntryProcessorHelper;
 	}
 
-	public static final FragmentRendererTracker getFragmentRendererTracker() {
+	public static FragmentRendererTracker getFragmentRendererTracker() {
 		return _fragmentRendererTracker;
 	}
 
@@ -71,39 +71,37 @@ public class ServletContextUtil {
 		return _frontendTokenDefinitionRegistry;
 	}
 
-	public static final InfoItemServiceTracker getInfoItemServiceTracker() {
+	public static InfoItemServiceTracker getInfoItemServiceTracker() {
 		return _infoItemServiceTracker;
 	}
 
-	public static final InfoListRendererTracker getInfoListRendererTracker() {
+	public static InfoListRendererTracker getInfoListRendererTracker() {
 		return _infoListRendererTracker;
 	}
 
-	public static final LayoutAdaptiveMediaProcessor
+	public static LayoutAdaptiveMediaProcessor
 		getLayoutAdaptiveMediaProcessor() {
 
 		return _layoutAdaptiveMediaProcessor;
 	}
 
-	public static final Map<String, LayoutClassedModelUsageRecorder>
+	public static Map<String, LayoutClassedModelUsageRecorder>
 		getLayoutClassedModelUsageRecorders() {
 
 		return _layoutClassedModelUsageRecorders;
 	}
 
-	public static final LayoutDisplayPageProviderTracker
+	public static LayoutDisplayPageProviderTracker
 		getLayoutDisplayPageProviderTracker() {
 
 		return _layoutDisplayPageProviderTracker;
 	}
 
-	public static final LayoutListRetrieverTracker
-		getLayoutListRetrieverTracker() {
-
+	public static LayoutListRetrieverTracker getLayoutListRetrieverTracker() {
 		return _layoutListRetrieverTracker;
 	}
 
-	public static final ListObjectReferenceFactoryTracker
+	public static ListObjectReferenceFactoryTracker
 		getListObjectReferenceFactoryTracker() {
 
 		return _listObjectReferenceFactoryTracker;

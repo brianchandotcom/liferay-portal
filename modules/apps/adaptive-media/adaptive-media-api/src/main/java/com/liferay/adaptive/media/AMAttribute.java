@@ -49,9 +49,7 @@ public final class AMAttribute<T, V> {
 	 *
 	 * @return the configuration UUID
 	 */
-	public static final <S> AMAttribute<S, String>
-		getConfigurationUuidAMAttribute() {
-
+	public static <S> AMAttribute<S, String> getConfigurationUuidAMAttribute() {
 		return (AMAttribute<S, String>)_AM_ATTRIBUTE_CONFIGURATION_UUID;
 	}
 
@@ -61,7 +59,7 @@ public final class AMAttribute<T, V> {
 	 *
 	 * @return the content length attribute
 	 */
-	public static final <S> AMAttribute<S, Long> getContentLengthAMAttribute() {
+	public static <S> AMAttribute<S, Long> getContentLengthAMAttribute() {
 		return (AMAttribute<S, Long>)_AM_ATTRIBUTE_CONTENT_LENGTH;
 	}
 
@@ -71,7 +69,7 @@ public final class AMAttribute<T, V> {
 	 *
 	 * @return the content type attribute
 	 */
-	public static final <S> AMAttribute<S, String> getContentTypeAMAttribute() {
+	public static <S> AMAttribute<S, String> getContentTypeAMAttribute() {
 		return (AMAttribute<S, String>)_AM_ATTRIBUTE_CONTENT_TYPE;
 	}
 
@@ -81,7 +79,7 @@ public final class AMAttribute<T, V> {
 	 *
 	 * @return the file name attribute
 	 */
-	public static final <S> AMAttribute<S, String> getFileNameAMAttribute() {
+	public static <S> AMAttribute<S, String> getFileNameAMAttribute() {
 		return (AMAttribute<S, String>)_AM_ATTRIBUTE_FILE_NAME;
 	}
 

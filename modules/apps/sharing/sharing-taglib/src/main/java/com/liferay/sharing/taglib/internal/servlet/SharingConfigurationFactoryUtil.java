@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class SharingConfigurationFactoryUtil {
 
-	public static final SharingConfigurationFactory
-		getSharingConfigurationFactory() {
-
+	public static SharingConfigurationFactory getSharingConfigurationFactory() {
 		return _sharingConfigurationFactory;
 	}
 

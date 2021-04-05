@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class ItemSelectorUtil {
 
-	public static final ItemSelector getItemSelector() {
+	public static ItemSelector getItemSelector() {
 		return _itemSelectorUtil._getItemSelector();
 	}
 

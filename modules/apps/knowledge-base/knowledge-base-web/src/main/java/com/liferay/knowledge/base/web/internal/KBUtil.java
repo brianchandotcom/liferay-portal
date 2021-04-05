@@ -281,7 +281,7 @@ public class KBUtil {
 		return null;
 	}
 
-	public static final int getNextStatus(int status) {
+	public static int getNextStatus(int status) {
 		if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
 			return KBCommentConstants.STATUS_COMPLETED;
 		}
@@ -306,7 +306,7 @@ public class KBUtil {
 		return jsonObject.getString(contentRootPrefix, StringPool.BLANK);
 	}
 
-	public static final int getPreviousStatus(int status) {
+	public static int getPreviousStatus(int status) {
 		if (status == KBCommentConstants.STATUS_COMPLETED) {
 			return KBCommentConstants.STATUS_IN_PROGRESS;
 		}
@@ -334,7 +334,7 @@ public class KBUtil {
 			resourceClassNameId, resourcePrimKey);
 	}
 
-	public static final String getStatusLabel(int status) {
+	public static String getStatusLabel(int status) {
 		if (status == KBCommentConstants.STATUS_COMPLETED) {
 			return "resolved";
 		}
@@ -350,7 +350,7 @@ public class KBUtil {
 		}
 	}
 
-	public static final String getStatusTransitionLabel(int status) {
+	public static String getStatusTransitionLabel(int status) {
 		if (status == KBCommentConstants.STATUS_COMPLETED) {
 			return "resolve";
 		}

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class SharingJavaScriptFactoryUtil {
 
-	public static final SharingJavaScriptFactory getSharingJavaScriptFactory() {
+	public static SharingJavaScriptFactory getSharingJavaScriptFactory() {
 		return _sharingJavaScriptFactory;
 	}
 

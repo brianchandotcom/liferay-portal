@@ -23,7 +23,7 @@ import java.io.InputStream;
  */
 public class FileContentReference {
 
-	public static final FileContentReference fromBytes(
+	public static FileContentReference fromBytes(
 		long fileEntryId, String sourceFileName, String extension,
 		String mimeType, byte[] bytes) {
 
@@ -32,7 +32,7 @@ public class FileContentReference {
 			new ByteArrayInputStream(bytes), bytes.length);
 	}
 
-	public static final FileContentReference fromBytes(
+	public static FileContentReference fromBytes(
 		String sourceFileName, String extension, String mimeType,
 		byte[] bytes) {
 
@@ -41,7 +41,7 @@ public class FileContentReference {
 			new ByteArrayInputStream(bytes), bytes.length);
 	}
 
-	public static final FileContentReference fromFile(
+	public static FileContentReference fromFile(
 		long fileEntryId, String sourceFileName, String extension,
 		String mimeType, File file) {
 
@@ -49,13 +49,13 @@ public class FileContentReference {
 			fileEntryId, sourceFileName, extension, mimeType, file, null, 0);
 	}
 
-	public static final FileContentReference fromFile(
+	public static FileContentReference fromFile(
 		String sourceFileName, String extension, String mimeType, File file) {
 
 		return fromFile(0, sourceFileName, extension, mimeType, file);
 	}
 
-	public static final FileContentReference fromInputStream(
+	public static FileContentReference fromInputStream(
 		long fileEntryId, String sourceFileName, String extension,
 		String mimeType, InputStream inputStream, long size) {
 
@@ -64,7 +64,7 @@ public class FileContentReference {
 			size);
 	}
 
-	public static final FileContentReference fromInputStream(
+	public static FileContentReference fromInputStream(
 		String sourceFileName, String extension, String mimeType,
 		InputStream inputStream, long size) {
 

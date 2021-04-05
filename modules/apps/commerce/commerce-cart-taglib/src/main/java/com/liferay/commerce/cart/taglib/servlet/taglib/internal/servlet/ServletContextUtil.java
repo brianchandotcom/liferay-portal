@@ -32,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ServletContextUtil {
 
-	public static final CommerceOrderItemService getCommerceOrderItemService() {
+	public static CommerceOrderItemService getCommerceOrderItemService() {
 		return _servletContextUtil._getCommerceOrderItemService();
 	}
 
-	public static final NPMResolver getNPMResolver() {
+	public static NPMResolver getNPMResolver() {
 		return _servletContextUtil._getNPMResolver();
 	}
 

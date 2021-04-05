@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  */
 public class RepositoryClassDefinitionUtil {
 
-	public static final String getRepositoryClassDefinitionId(
+	public static String getRepositoryClassDefinitionId(
 		RepositoryClassDefinition repositoryClassDefinition) {
 
 		Matcher matcher = _pattern.matcher(

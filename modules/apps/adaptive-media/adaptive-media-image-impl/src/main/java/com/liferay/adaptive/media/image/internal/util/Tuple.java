@@ -19,7 +19,7 @@ package com.liferay.adaptive.media.image.internal.util;
  */
 public class Tuple<S, T> {
 
-	public static final <U, V> Tuple<U, V> of(U first, V second) {
+	public static <U, V> Tuple<U, V> of(U first, V second) {
 		return new Tuple<>(first, second);
 	}
 

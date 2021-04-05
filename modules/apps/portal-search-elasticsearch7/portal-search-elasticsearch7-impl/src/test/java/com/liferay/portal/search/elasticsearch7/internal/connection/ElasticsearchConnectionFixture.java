@@ -185,7 +185,7 @@ public class ElasticsearchConnectionFixture
 			return this;
 		}
 
-		protected static final Map<String, Object>
+		protected static Map<String, Object>
 			createElasticsearchConfigurationProperties(
 				Map<String, Object> elasticsearchConfigurationProperties,
 				String clusterName) {

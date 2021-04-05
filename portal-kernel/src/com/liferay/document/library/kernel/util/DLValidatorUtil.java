@@ -42,7 +42,7 @@ public class DLValidatorUtil {
 		return _dlValidator.isValidName(name);
 	}
 
-	public static final void validateDirectoryName(String directoryName)
+	public static void validateDirectoryName(String directoryName)
 		throws FolderNameException {
 
 		_dlValidator.validateDirectoryName(directoryName);

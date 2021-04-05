@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class LayoutDisplayPageProviderTrackerUtil {
 
-	public static final LayoutDisplayPageProviderTracker
+	public static LayoutDisplayPageProviderTracker
 		getLayoutDisplayPageProviderTracker() {
 
 		return _layoutDisplayPageProviderTracker;

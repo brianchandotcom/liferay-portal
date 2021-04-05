@@ -71,7 +71,7 @@ public class UnitConverterUtil {
 		return new UnitConverter(type, fromId, toId, fromValue, toValue);
 	}
 
-	private static final double _fromTemperature(int toId, double fromValue) {
+	private static double _fromTemperature(int toId, double fromValue) {
 		if (toId == 0) {
 
 			// Kelvin
@@ -106,7 +106,7 @@ public class UnitConverterUtil {
 		return 0;
 	}
 
-	private static final double _toTemperature(int fromId, double fromValue) {
+	private static double _toTemperature(int fromId, double fromValue) {
 		if (fromId == 0) {
 
 			// Kelvin

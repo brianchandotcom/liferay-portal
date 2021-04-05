@@ -92,9 +92,7 @@ public class SQLServerLimitStringUtil {
 		return innerSelectFrom;
 	}
 
-	private static final String[] _splitOrderBy(
-		String selectFrom, String orderBy) {
-
+	private static String[] _splitOrderBy(String selectFrom, String orderBy) {
 		StringBundler innerOrderBySB = new StringBundler();
 		StringBundler outerOrderBySB = new StringBundler();
 

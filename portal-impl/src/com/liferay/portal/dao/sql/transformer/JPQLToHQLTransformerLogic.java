@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  */
 public class JPQLToHQLTransformerLogic {
 
-	public static final Function<String, String> getCountFunction() {
+	public static Function<String, String> getCountFunction() {
 		return (String sql) -> {
 			Matcher matcher = _jpqlCountPattern.matcher(sql);
 

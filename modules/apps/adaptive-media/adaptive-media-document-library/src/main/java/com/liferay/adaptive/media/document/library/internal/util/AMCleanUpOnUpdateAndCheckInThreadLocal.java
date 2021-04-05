@@ -22,7 +22,7 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
  */
 public class AMCleanUpOnUpdateAndCheckInThreadLocal {
 
-	public static final <T, E extends Throwable> T enable(
+	public static <T, E extends Throwable> T enable(
 			UnsafeSupplier<T, E> unsafeSupplier)
 		throws E {
 
@@ -38,7 +38,7 @@ public class AMCleanUpOnUpdateAndCheckInThreadLocal {
 		}
 	}
 
-	public static final boolean isEnabled() {
+	public static boolean isEnabled() {
 		return _cleanUpOnUpdateAndCheckIn.get();
 	}
 

@@ -125,7 +125,7 @@ public class FieldConstants {
 		return serializable;
 	}
 
-	public static final Serializable getSerializable(
+	public static Serializable getSerializable(
 		String type, List<Serializable> values) {
 
 		if (Validator.isNull(type)) {
@@ -168,9 +168,7 @@ public class FieldConstants {
 		return values.toArray(new String[0]);
 	}
 
-	public static final Serializable getSerializable(
-		String type, String value) {
-
+	public static Serializable getSerializable(String type, String value) {
 		if (Validator.isNull(type)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Invalid type " + type);
@@ -215,7 +213,7 @@ public class FieldConstants {
 		return value;
 	}
 
-	public static final boolean isNumericType(String type) {
+	public static boolean isNumericType(String type) {
 		if (type.equals(DOUBLE) || type.equals(FLOAT) || type.equals(INTEGER) ||
 			type.equals(LONG) || type.equals(NUMBER) || type.equals(SHORT)) {
 

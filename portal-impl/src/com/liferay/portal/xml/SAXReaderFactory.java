@@ -28,7 +28,7 @@ import org.xml.sax.XMLReader;
  */
 public class SAXReaderFactory {
 
-	public static final SAXReader getSAXReader(
+	public static SAXReader getSAXReader(
 		XMLReader xmlReader, boolean validate, boolean secure) {
 
 		SAXReader saxReader = null;
@@ -68,7 +68,7 @@ public class SAXReaderFactory {
 		return saxReader;
 	}
 
-	public static final SAXReader getSAXReader(
+	public static SAXReader getSAXReader(
 		XMLReader xmlReader, XMLSchema xmlSchema, boolean validate,
 		boolean secure) {
 

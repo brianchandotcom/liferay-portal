@@ -34,7 +34,7 @@ import javax.servlet.http.HttpSession;
  */
 public final class SharepointRepositoryRequestState implements Serializable {
 
-	public static final SharepointRepositoryRequestState get(
+	public static SharepointRepositoryRequestState get(
 		HttpServletRequest httpServletRequest) {
 
 		HttpSession session = httpServletRequest.getSession();
@@ -43,7 +43,7 @@ public final class SharepointRepositoryRequestState implements Serializable {
 			SharepointRepositoryRequestState.class.getName());
 	}
 
-	public static final void save(
+	public static void save(
 		HttpServletRequest httpServletRequest, String state) {
 
 		HttpSession session = httpServletRequest.getSession();

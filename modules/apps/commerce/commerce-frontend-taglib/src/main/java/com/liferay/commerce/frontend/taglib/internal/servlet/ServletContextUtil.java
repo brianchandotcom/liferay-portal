@@ -44,9 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ServletContextUtil {
 
-	public static final CommerceChannelLocalService
-		getCommerceChannelLocalService() {
-
+	public static CommerceChannelLocalService getCommerceChannelLocalService() {
 		return _servletContextUtil._getCommerceChannelLocalService();
 	}
 
@@ -54,7 +52,7 @@ public class ServletContextUtil {
 		return _servletContextUtil._getCommerceInventoryEngine();
 	}
 
-	public static final CommerceOrderHttpHelper getCommerceOrderHttpHelper() {
+	public static CommerceOrderHttpHelper getCommerceOrderHttpHelper() {
 		return _servletContextUtil._getCommerceOrderHttpHelper();
 	}
 
@@ -64,43 +62,41 @@ public class ServletContextUtil {
 		return _servletContextUtil._getCommerceOrderItemLocalService();
 	}
 
-	public static final CommerceProductPriceCalculation
+	public static CommerceProductPriceCalculation
 		getCommerceProductPriceCalculation() {
 
 		return _servletContextUtil._getCommerceProductPriceCalculation();
 	}
 
-	public static final ConfigurationProvider getConfigurationProvider() {
+	public static ConfigurationProvider getConfigurationProvider() {
 		return _servletContextUtil._getConfigurationProvider();
 	}
 
-	public static final CPCompareHelper getCPCompareHelper() {
+	public static CPCompareHelper getCPCompareHelper() {
 		return _servletContextUtil._getCPCompareHelper();
 	}
 
-	public static final CPContentHelper getCPContentHelper() {
+	public static CPContentHelper getCPContentHelper() {
 		return _servletContextUtil._getCPContentHelper();
 	}
 
-	public static final CPDefinitionHelper getCPDefinitionHelper() {
+	public static CPDefinitionHelper getCPDefinitionHelper() {
 		return _servletContextUtil._getCPDefinitionHelper();
 	}
 
-	public static final CPInstanceHelper getCPInstanceHelper() {
+	public static CPInstanceHelper getCPInstanceHelper() {
 		return _servletContextUtil._getCPInstanceHelper();
 	}
 
-	public static final CPSubscriptionTypeRegistry
-		getCPSubscriptionTypeRegistry() {
-
+	public static CPSubscriptionTypeRegistry getCPSubscriptionTypeRegistry() {
 		return _servletContextUtil._getCPSubscriptionTypeRegistry();
 	}
 
-	public static final NPMResolver getNPMResolver() {
+	public static NPMResolver getNPMResolver() {
 		return _servletContextUtil._getNPMResolver();
 	}
 
-	public static final ProductHelper getProductHelper() {
+	public static ProductHelper getProductHelper() {
 		return _servletContextUtil._getProductHelper();
 	}
 

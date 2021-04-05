@@ -26,14 +26,12 @@ import java.util.function.Function;
  */
 public class HQLToJPQLTransformerLogic {
 
-	public static final Function<String, String>
-		getCompositeIdMarkerFunction() {
-
+	public static Function<String, String> getCompositeIdMarkerFunction() {
 		return (String sql) -> StringUtil.replace(
 			sql, _HQL_COMPOSITE_ID_MARKER, _JPQL_DOT_SEPARTOR);
 	}
 
-	public static final Function<String, String> getNotEqualsFunction() {
+	public static Function<String, String> getNotEqualsFunction() {
 		return (String sql) -> StringUtil.replace(
 			sql, _HQL_NOT_EQUALS, _JPQL_NOT_EQUALS);
 	}

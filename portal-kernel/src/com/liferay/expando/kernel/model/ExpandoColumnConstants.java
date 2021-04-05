@@ -190,7 +190,7 @@ public class ExpandoColumnConstants {
 
 	public static final String UNKNOWN_LABEL = "Unknown";
 
-	public static final String getDataType(int type) {
+	public static String getDataType(int type) {
 		if ((type == DOUBLE) || (type == DOUBLE_ARRAY) || (type == FLOAT) ||
 			(type == FLOAT_ARRAY)) {
 
@@ -211,7 +211,7 @@ public class ExpandoColumnConstants {
 		return StringPool.BLANK;
 	}
 
-	public static final String getDefaultDisplayTypeProperty(
+	public static String getDefaultDisplayTypeProperty(
 		int type, UnicodeProperties unicodeProperties) {
 
 		if (type == BOOLEAN) {
@@ -245,7 +245,7 @@ public class ExpandoColumnConstants {
 		return StringPool.BLANK;
 	}
 
-	public static final String getPrecisionType(int type) {
+	public static String getPrecisionType(int type) {
 		if ((type == DOUBLE) || (type == DOUBLE_ARRAY) || (type == LONG) ||
 			(type == LONG_ARRAY)) {
 
@@ -263,7 +263,7 @@ public class ExpandoColumnConstants {
 		return StringPool.BLANK;
 	}
 
-	public static final Serializable getSerializable(int type, String value) {
+	public static Serializable getSerializable(int type, String value) {
 		if (type == BOOLEAN) {
 			return GetterUtil.getBoolean(value);
 		}
@@ -333,7 +333,7 @@ public class ExpandoColumnConstants {
 		return value;
 	}
 
-	public static final String getTypeLabel(int type) {
+	public static String getTypeLabel(int type) {
 		if (type == BOOLEAN) {
 			return BOOLEAN_LABEL;
 		}

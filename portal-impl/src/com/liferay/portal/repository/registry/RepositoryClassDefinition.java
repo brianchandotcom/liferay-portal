@@ -48,7 +48,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RepositoryClassDefinition
 	implements RepositoryFactory, RepositoryFactoryRegistry {
 
-	public static final RepositoryClassDefinition fromRepositoryDefiner(
+	public static RepositoryClassDefinition fromRepositoryDefiner(
 		RepositoryDefiner repositoryDefiner) {
 
 		DefaultRepositoryEventRegistry defaultRepositoryEventRegistry =

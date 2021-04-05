@@ -36,8 +36,8 @@ public class ServletContextUtil {
 		return _servletContext;
 	}
 
-	public static final SiteNavigationMenuItemType
-		getSiteNavigationMenuItemType(String type) {
+	public static SiteNavigationMenuItemType getSiteNavigationMenuItemType(
+		String type) {
 
 		return _siteNavigationMenuItemTypeRegistry.
 			getSiteNavigationMenuItemType(type);

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class SharingPermissionUtil {
 
-	public static final SharingPermission getSharingPermission() {
+	public static SharingPermission getSharingPermission() {
 		return _sharingPermission;
 	}
 

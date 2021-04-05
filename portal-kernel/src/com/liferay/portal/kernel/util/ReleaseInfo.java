@@ -76,29 +76,29 @@ public class ReleaseInfo {
 
 	public static final int RELEASE_7_4_10_BUILD_NUMBER = 7410;
 
-	public static final Date getBuildDate() {
+	public static Date getBuildDate() {
 		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
 
 		return GetterUtil.getDate(_DATE, df);
 	}
 
-	public static final int getBuildNumber() {
+	public static int getBuildNumber() {
 		return _BUILD_NUMBER;
 	}
 
-	public static final String getCodeName() {
+	public static String getCodeName() {
 		return _CODE_NAME;
 	}
 
-	public static final String getName() {
+	public static String getName() {
 		return _NAME;
 	}
 
-	public static final int getParentBuildNumber() {
+	public static int getParentBuildNumber() {
 		return _PARENT_BUILD_NUMBER;
 	}
 
-	public static final String getReleaseInfo() {
+	public static String getReleaseInfo() {
 		if (_releaseInfo == null) {
 			_releaseInfo = StringBundler.concat(
 				_RELEASE_INFO_PREFIX, _NAME, " ", _VERSION_DISPLAY_NAME, " (",
@@ -109,7 +109,7 @@ public class ReleaseInfo {
 		return _releaseInfo;
 	}
 
-	public static final String getServerInfo() {
+	public static String getServerInfo() {
 		if (_serverInfo == null) {
 			_serverInfo = _NAME + " / " + _VERSION;
 		}
@@ -121,7 +121,7 @@ public class ReleaseInfo {
 		return _VENDOR;
 	}
 
-	public static final String getVersion() {
+	public static String getVersion() {
 		return _VERSION;
 	}
 

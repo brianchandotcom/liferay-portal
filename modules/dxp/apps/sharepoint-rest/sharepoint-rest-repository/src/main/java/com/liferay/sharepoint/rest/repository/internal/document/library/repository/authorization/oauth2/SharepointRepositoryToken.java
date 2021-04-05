@@ -33,7 +33,7 @@ import java.util.Date;
  */
 public class SharepointRepositoryToken implements Token {
 
-	public static final Token newInstance(
+	public static Token newInstance(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 
 		if (sharepointOAuth2TokenEntry == null) {
@@ -46,13 +46,13 @@ public class SharepointRepositoryToken implements Token {
 			sharepointOAuth2TokenEntry.getExpirationDate());
 	}
 
-	public static final Token newInstance(String json)
+	public static Token newInstance(String json)
 		throws JSONException, OAuth2AuthorizationException {
 
 		return newInstance(json, null);
 	}
 
-	public static final Token newInstance(String json, Token token)
+	public static Token newInstance(String json, Token token)
 		throws JSONException, OAuth2AuthorizationException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);

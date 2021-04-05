@@ -25,7 +25,7 @@ import java.util.function.Function;
  */
 public class OAuth2AuthorizationException extends AuthorizationException {
 
-	public static final OAuth2AuthorizationException getErrorException(
+	public static OAuth2AuthorizationException getErrorException(
 		String error, String description) {
 
 		Function<String, OAuth2AuthorizationException> function =

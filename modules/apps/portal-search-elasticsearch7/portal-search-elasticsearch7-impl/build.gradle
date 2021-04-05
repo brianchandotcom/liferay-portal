@@ -102,6 +102,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testCompile project(":apps:portal-search:portal-search")
 	testCompile project(":apps:portal-search:portal-search-test-util")
 	testCompile project(":core:osgi-service-tracker-collections")

@@ -48,11 +48,11 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		AssertElementPresent(
-			key_fieldsetLabel = "${key_fieldName}",
+			key_fieldLabel = "${key_fieldName}",
 			locator1 = "FormFields#LABEL");
 
 		AssertElementPresent(
-			key_fieldsetLabel = "Copy of ${key_fieldName}",
+			key_fieldLabel = "Copy of ${key_fieldName}",
 			locator1 = "FormFields#LABEL");
 	}
 

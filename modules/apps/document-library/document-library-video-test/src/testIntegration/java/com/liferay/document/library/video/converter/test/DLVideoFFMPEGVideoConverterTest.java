@@ -149,6 +149,46 @@ public class DLVideoFFMPEGVideoConverterTest {
 			});
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "ffmpeg", expectedType = ExpectedType.CONTAINS
+			),
+			@ExpectedLog(
+				expectedLog = "java.io.FileNotFoundException",
+				expectedType = ExpectedType.CONTAINS
+			),
+			@ExpectedLog(
+				expectedLog = "Unable to process",
+				expectedType = ExpectedType.CONTAINS
+			)
+		},
+		level = "ERROR", loggerClass = VideoProcessorImpl.class
+	)
+	@Test
+	public void testGeneratesVideoPreviewIfTheVideoHasOnlyAudio()
+		throws Exception {
+
+		_withDLVideoFFMPEGVideoConverterEnabled(
+			() -> {
+				FileEntry fileEntry = _createVideoFileEntry(
+					"video-only-audio.mp4");
+
+				Assert.assertTrue(
+					VideoProcessorUtil.hasVideo(fileEntry.getFileVersion()));
+
+				long mp4PreviewFileSize = VideoProcessorUtil.getPreviewFileSize(
+					fileEntry.getFileVersion(), "mp4");
+
+				Assert.assertTrue(mp4PreviewFileSize > 0);
+
+				long ogvPreviewFileSize = VideoProcessorUtil.getPreviewFileSize(
+					fileEntry.getFileVersion(), "ogv");
+
+				Assert.assertTrue(ogvPreviewFileSize > 0);
+			});
+	}
+
 	private FileEntry _createVideoFileEntry(String fileName) throws Exception {
 		return DLAppServiceUtil.addFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,

@@ -32,6 +32,26 @@ definition {
 		}
 	}
 
+	test AssertAddCopyAndDeleteSearchBlueprint {
+		for (var title : list "Blueprint 1,Blueprint 2") {
+			SearchBlueprints.addBlueprint(name = "${title}");
+		}
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Copy",
+			rowEntry = "Blueprint 2");
+
+		AssertElementPresent(
+			key_searchAssetTitle = "Blueprint 2 (Copy)",
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
+
+		SearchBlueprints.deleteBlueprint(name = "Blueprint 1");
+
+		AssertElementNotPresent(
+			key_searchAssetTitle = "Blueprint 1",
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
+	}
+
 	test AssertSearchResultsScore {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

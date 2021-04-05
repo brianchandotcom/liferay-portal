@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.MembershipRequestService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -259,15 +258,12 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		List<UserGroupRole> userGroupRoles =
 			_userGroupRoleLocalService.getUserGroupRoles(
 				user.getUserId(), group.getGroupId());
 
 		userGroupRoles = UsersAdminUtil.filterUserGroupRoles(
-			permissionChecker, userGroupRoles);
+			themeDisplay.getPermissionChecker(), userGroupRoles);
 
 		List<Long> curRoleIds = ListUtil.toList(
 			userGroupRoles, UsersAdmin.USER_GROUP_ROLE_ID_ACCESSOR);

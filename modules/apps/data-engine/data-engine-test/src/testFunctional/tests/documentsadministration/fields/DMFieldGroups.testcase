@@ -300,8 +300,6 @@ definition {
 	@description = "This test validates that upon removing all fields of a field group, the field group is deleted."
 	@priority = "4"
 	test EmptyAFieldGroup {
-		property portal.upstream = "quarantine";
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
@@ -315,11 +313,15 @@ definition {
 
 		DataEngine.delete(fieldFieldLabel = "Numeric");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Date",
+			fieldName = "Date");
+
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		AssertVisible(
+		AssertElementNotPresent(
 			key_fieldFieldLabel = "Fields Group",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 

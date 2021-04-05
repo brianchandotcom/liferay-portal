@@ -131,7 +131,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${key_structureName}e");
+		WebContentNavigator.gotoEditStructure(structureName = "${key_structureName}");
 
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${key_fieldName}",

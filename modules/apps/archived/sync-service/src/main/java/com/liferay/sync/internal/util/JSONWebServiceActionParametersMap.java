@@ -133,7 +133,8 @@ public class JSONWebServiceActionParametersMap extends HashMap<String, Object> {
 				_innerParameters.put(baseName, values);
 			}
 
-			values.add(new AbstractMap.SimpleEntry<>(innerName, value));
+			values.add(
+				new AbstractMap.SimpleImmutableEntry<>(innerName, value));
 
 			return value;
 		}

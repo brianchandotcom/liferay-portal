@@ -317,15 +317,23 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
 		DataEngine.delete(fieldFieldLabel = "Text");
 
 		DataEngine.delete(fieldFieldLabel = "Numeric");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Date",
+			fieldName = "Date");
 
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertVisible(
+		AssertElementNotPresent(
 			key_fieldFieldLabel = "Fields Group",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 

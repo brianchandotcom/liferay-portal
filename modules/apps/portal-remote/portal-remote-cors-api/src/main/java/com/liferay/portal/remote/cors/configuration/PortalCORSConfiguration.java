@@ -37,9 +37,8 @@ public interface PortalCORSConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		description = "portal-cors-configuration-name-description",
-		id = "configuration.name", name = "portal-cors-configuration-name",
-		required = false
+		description = "portal-cors-name-description", id = "configuration.name",
+		name = "portal-cors-name", required = false
 	)
 	public String name();
 

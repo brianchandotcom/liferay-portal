@@ -246,23 +246,21 @@ definition {
 
 	@priority = "4"
 	test AddVideoViaWebContent {
-		property custom.properties = "xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
 		property environment.acceptance = "true";
 		property test.name.skip.portal.instance = "WebContentDisplay#AddVideoViaWebContent";
 		property testray.component.names = "Web Content Administration";
 
-		ServerAdministration.openServerAdmin();
+		SystemSettings.openSystemSettingsAdmin();
 
-		ServerAdministration.configureExternalServices(installXuggler = "true");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "FFMPEG Video Converter",
+			configurationScope = "System Scope");
 
-		Portlet.shutdownServer();
+		FormFields.enableCheckbox(fieldName = "enabled");
 
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
+		SystemSettings.saveConfiguration();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

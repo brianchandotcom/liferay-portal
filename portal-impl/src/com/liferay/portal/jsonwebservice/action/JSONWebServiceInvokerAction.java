@@ -516,7 +516,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			if (key.startsWith(StringPool.AT)) {
 				String value = (String)entry.getValue();
 
-				List<Flag> flags = statement.getFlags();
+				List<Map.Entry<String, String>> flags = statement.getFlags();
 
 				if (flags == null) {
 					flags = new ArrayList<>();
@@ -524,7 +524,9 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 					statement.setFlags(flags);
 				}
 
-				Flag flag = new Flag(key.substring(1), value);
+				Map.Entry<String, String> flag =
+					new AbstractMap.SimpleImmutableEntry<>(
+						key.substring(1), value);
 
 				flags.add(flag);
 			}
@@ -609,13 +611,13 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				continue;
 			}
 
-			List<Flag> flags = statement.getFlags();
+			List<Map.Entry<String, String>> flags = statement.getFlags();
 
 			if (flags == null) {
 				continue;
 			}
 
-			for (Flag flag : flags) {
+			for (Map.Entry<String, String> flag : flags) {
 				String value = flag.getValue();
 
 				if (value == null) {
@@ -654,17 +656,9 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	private List<String> _includes;
 	private final List<Statement> _statements = new ArrayList<>();
 
-	private static class Flag extends AbstractMap.SimpleEntry<String, String> {
-
-		private Flag(String key, String value) {
-			super(key, value);
-		}
-
-	}
-
 	private static class Statement {
 
-		public List<Flag> getFlags() {
+		public List<Map.Entry<String, String>> getFlags() {
 			return _flags;
 		}
 
@@ -767,7 +761,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			_executed = executed;
 		}
 
-		public void setFlags(List<Flag> flags) {
+		public void setFlags(List<Map.Entry<String, String>> flags) {
 			_flags = flags;
 		}
 
@@ -803,7 +797,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		private boolean _executed;
-		private List<Flag> _flags;
+		private List<Map.Entry<String, String>> _flags;
 		private boolean _inner;
 		private String _method;
 		private String _name;

@@ -44,6 +44,15 @@ public class JavaStaticMethodCheck extends BaseJavaTermCheck {
 			return content;
 		}
 
+		if (javaTerm.isStatic() && javaTerm.isFinal()) {
+			int x = content.indexOf("\t" + javaTerm.getAccessModifier());
+
+			if (x != -1) {
+				return StringUtil.replaceFirst(
+					content, "final", StringPool.BLANK, x);
+			}
+		}
+
 		String methodName = javaTerm.getName();
 
 		Pattern pattern = Pattern.compile(

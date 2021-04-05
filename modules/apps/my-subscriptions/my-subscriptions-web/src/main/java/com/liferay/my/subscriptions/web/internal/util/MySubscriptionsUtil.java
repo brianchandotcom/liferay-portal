@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
@@ -69,7 +70,7 @@ public class MySubscriptionsUtil {
 		String className, long classPK) {
 
 		try {
-			return doGetAssetRenderer(className, classPK);
+			return doGetAssetRenderer(_getClassName(className), classPK);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -275,6 +276,21 @@ public class MySubscriptionsUtil {
 				className);
 
 		return assetRendererFactory.getAssetRenderer(classPK);
+	}
+
+	private static String _getClassName(String className) {
+		List<String> classNames = StringUtil.split(
+			className, CharPool.UNDERLINE);
+
+		if (classNames.size() == 2) {
+			String firstClassName = classNames.get(0);
+
+			if (firstClassName.equals(MBDiscussion.class.getName())) {
+				return classNames.get(1);
+			}
+		}
+
+		return className;
 	}
 
 	private static final String _CLASS_NAME_BLOGS_ENTRY =

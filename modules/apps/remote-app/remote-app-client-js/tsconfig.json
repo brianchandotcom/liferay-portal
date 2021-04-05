@@ -1,21 +1,36 @@
 {
+	"@generated": "abe9898d8a0d3e395d3fbc9373bd36ae6a1c7a90",
+	"@overrides": {
+		"compilerOptions": {
+			"outDir": "./build/node/packageRunBuild/dist/",
+			"target": "es5"
+		}
+	},
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
+	"@see": "https://git.io/JY2EA",
 	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
 		"composite": true,
+		"jsx": "react",
 		"module": "es6",
 		"moduleResolution": "node",
 		"outDir": "./build/node/packageRunBuild/dist/",
+		"paths": {
+		},
 		"sourceMap": false,
 		"strict": true,
 		"target": "es5",
+		"tsBuildInfoFile": "tmp/tsconfig.tsbuildinfo",
 		"typeRoots": [
 			"../../../node_modules/@types",
-			"./node_modules/@types",
-			"./src/main/resources/META-INF/resources/js/types"
+			"./node_modules/@types"
 		]
 	},
 	"include": [
 		"src/**/*",
-		"tests/**/*"
+		"test/**/*"
+	],
+	"references": [
 	]
 }

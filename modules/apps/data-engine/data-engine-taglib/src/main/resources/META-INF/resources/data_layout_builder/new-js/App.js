@@ -29,7 +29,7 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import DataEngineFormBuilder from './DataEngineFormBuilder';
+import {FormBuilder} from './FormBuilder';
 import INITIAL_CONFIG from './config/initialConfig';
 import INITIAL_STATE from './config/initialState';
 import sidebarReducer from './reducers/sidebarReducer';
@@ -53,7 +53,7 @@ const App = (props) => {
 						]}
 						value={state}
 					>
-						<DataEngineFormBuilder />
+						<FormBuilder />
 					</FormProvider>
 				</ConfigProvider>
 			</ClayModalProvider>

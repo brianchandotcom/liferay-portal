@@ -33,7 +33,7 @@ const SIDEBAR_INITIAL_STATE = {
 	sidebarPanelId: 'fields',
 };
 
-const DataEngineFormBuilder = () => {
+export const FormBuilder = () => {
 	const dispatch = useForm();
 	const [{onClose}, modalDispatch] = useContext(ModalContext);
 	const {rules, sidebarPanels: initialSidebarPanels} = useFormState();
@@ -118,5 +118,3 @@ const DataEngineFormBuilder = () => {
 		</div>
 	);
 };
-
-export default DataEngineFormBuilder;

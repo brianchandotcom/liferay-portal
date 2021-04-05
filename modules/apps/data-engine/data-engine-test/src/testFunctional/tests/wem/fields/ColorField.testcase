@@ -16,7 +16,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color",
@@ -43,9 +43,9 @@ definition {
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Color Test",
@@ -63,13 +63,13 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.delete(fieldFieldLabel = "Color");
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		AssertElementNotPresent(
 			key_fieldFieldLabel = "Color",
@@ -83,13 +83,13 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.duplicate(fieldFieldLabel = "Color");
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Color",
@@ -112,7 +112,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.viewFieldReference(
 			fieldFieldLabel = "Color",
@@ -126,7 +126,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.viewFieldReference(
 			fieldFieldLabel = "Color",
@@ -141,7 +141,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Color",
@@ -153,7 +153,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Edited Color",
@@ -172,7 +172,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
@@ -195,7 +195,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Color",
@@ -207,7 +207,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Color",

@@ -130,7 +130,6 @@ const mountStruct = (event, field, value, key) => {
 };
 
 const FieldLazy = ({
-	editable,
 	field,
 	fieldTypes,
 	onBlur,
@@ -138,6 +137,8 @@ const FieldLazy = ({
 	onFocus,
 	...otherProps
 }) => {
+	const {editable} = usePage();
+
 	const focusDurationRef = useRef({end: null, start: null});
 
 	const {configuration = {}, javaScriptModule} = getModule(

@@ -157,6 +157,11 @@ public class VideoProcessorImpl
 	}
 
 	@Override
+	public boolean isAvailable() {
+		return _videoConverter.isEnabled();
+	}
+
+	@Override
 	public boolean isSupported(String mimeType) {
 		if (_videoMimeTypes.contains(mimeType) && _videoConverter.isEnabled()) {
 			return true;

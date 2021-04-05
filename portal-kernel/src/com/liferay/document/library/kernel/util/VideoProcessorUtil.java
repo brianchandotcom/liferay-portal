@@ -113,6 +113,12 @@ public class VideoProcessorUtil {
 		return videoProcessor.hasVideo(fileVersion);
 	}
 
+	public static boolean isAvailable() {
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		return videoProcessor.isAvailable();
+	}
+
 	public static boolean isSupported(String mimeType) {
 		VideoProcessor videoProcessor = getVideoProcessor();
 

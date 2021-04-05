@@ -60,6 +60,10 @@ public interface VideoProcessor {
 			FileEntry importedFileEntry, Element fileEntryElement)
 		throws Exception;
 
+	public default boolean isAvailable() {
+		return true;
+	}
+
 	public boolean isSupported(String mimeType);
 
 	public boolean isVideoSupported(FileVersion fileVersion);

@@ -169,9 +169,7 @@ public class TestrayRun {
 				return JenkinsResultsParserUtil.getProperty(
 					properties, matchingPropertyName);
 			}
-		}
 
-		for (Properties properties : _propertiesList) {
 			String factorValue = JenkinsResultsParserUtil.getProperty(
 				properties,
 				JenkinsResultsParserUtil.combine(

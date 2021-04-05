@@ -27,25 +27,6 @@ definition {
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
 	@ignore = "true"
 	@priority = "4"
-	test AddFieldsetOnOtherFieldsetAlreadyOnBuilder {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 AddFieldsetOnOtherFieldsetAlreadyOnBuilder pending implementation
-
-	}
-
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test EditFieldsetPropertiesFromSideBar {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 EditFieldsetPropertiesFromSideBar pending implementation
-	}
-
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
 	test FieldsetSetAsCollapsible {
 		property portal.upstream = "quarantine";
 

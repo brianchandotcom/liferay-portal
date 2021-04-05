@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "google-merchant")
 @Meta.OCD(
 	id = "com.liferay.commerce.google.merchant.internal.sftp.SftpConfiguration",
-	name = "sftp-upload-configuration"
+	name = "sftp-upload-configuration-name"
 )
 public interface SftpConfiguration {
 

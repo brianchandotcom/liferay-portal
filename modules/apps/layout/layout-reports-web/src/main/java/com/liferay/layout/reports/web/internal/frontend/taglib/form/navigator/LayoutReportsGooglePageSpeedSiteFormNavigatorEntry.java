@@ -17,14 +17,14 @@ package com.liferay.layout.reports.web.internal.frontend.taglib.form.navigator;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.display.context.LayoutReportsGooglePageSpeedDisplayContext;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -95,10 +94,25 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 
 		long companyId = _portal.getCompanyId(portletRequest);
 
-		httpServletRequest.setAttribute(
-			LayoutReportsGooglePageSpeedDisplayContext.class.getName(),
-			new LayoutReportsGooglePageSpeedDisplayContext(
-				_getApiKey(companyId), _isEnabled(companyId), portletRequest));
+		Company company = _companyLocalService.fetchCompany(companyId);
+
+		if (company == null) {
+			throw new IOException("Invalid company id" + companyId);
+		}
+
+		try {
+			httpServletRequest.setAttribute(
+				LayoutReportsGooglePageSpeedDisplayContext.class.getName(),
+				new LayoutReportsGooglePageSpeedDisplayContext(
+					_layoutReportsGooglePageSpeedConfigurationProvider.
+						getApiKey(company),
+					_layoutReportsGooglePageSpeedConfigurationProvider.
+						isEnabled(company),
+					portletRequest));
+		}
+		catch (ConfigurationException configurationException) {
+			throw new IOException(configurationException);
+		}
 
 		super.include(httpServletRequest, httpServletResponse);
 	}
@@ -109,11 +123,27 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 			return false;
 		}
 
-		if (!_isEnabled(group.getCompanyId())) {
+		Company company = _companyLocalService.fetchCompany(
+			group.getCompanyId());
+
+		if (company == null) {
 			return false;
 		}
 
-		return true;
+		try {
+			if (!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
+					company)) {
+
+				return false;
+			}
+
+			return true;
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException, configurationException);
+
+			return false;
+		}
 	}
 
 	@Override
@@ -128,9 +158,12 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutReportsGooglePageSpeedConfiguration =
-			ConfigurableUtil.createConfigurable(
-				LayoutReportsGooglePageSpeedConfiguration.class, properties);
+		_layoutReportsGooglePageSpeedConfigurationProvider =
+			new LayoutReportsGooglePageSpeedConfigurationProvider(
+				_configurationProvider,
+				ConfigurableUtil.createConfigurable(
+					LayoutReportsGooglePageSpeedConfiguration.class,
+					properties));
 	}
 
 	@Override
@@ -138,59 +171,9 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 		return "/site/google_pagespeed_settings.jsp";
 	}
 
-	private String _getApiKey(long companyId) {
-		try {
-			LayoutReportsGooglePageSpeedCompanyConfiguration
-				layoutReportsGooglePageSpeedCompanyConfiguration =
-					_configurationProvider.getCompanyConfiguration(
-						LayoutReportsGooglePageSpeedCompanyConfiguration.class,
-						companyId);
-
-			if (Validator.isNotNull(
-					layoutReportsGooglePageSpeedCompanyConfiguration.
-						apiKey())) {
-
-				return layoutReportsGooglePageSpeedCompanyConfiguration.
-					apiKey();
-			}
-
-			return _layoutReportsGooglePageSpeedConfiguration.apiKey();
-		}
-		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
-
-			return StringPool.BLANK;
-		}
-	}
-
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
-	}
-
-	private boolean _isEnabled(long companyId) {
-		if (!_layoutReportsGooglePageSpeedConfiguration.enabled()) {
-			return false;
-		}
-
-		try {
-			LayoutReportsGooglePageSpeedCompanyConfiguration
-				layoutReportsGooglePageSpeedCompanyConfiguration =
-					_configurationProvider.getCompanyConfiguration(
-						LayoutReportsGooglePageSpeedCompanyConfiguration.class,
-						companyId);
-
-			if (!layoutReportsGooglePageSpeedCompanyConfiguration.enabled()) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
-
-			return false;
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -202,8 +185,8 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private LayoutReportsGooglePageSpeedConfiguration
-		_layoutReportsGooglePageSpeedConfiguration;
+	private LayoutReportsGooglePageSpeedConfigurationProvider
+		_layoutReportsGooglePageSpeedConfigurationProvider;
 
 	@Reference
 	private Portal _portal;

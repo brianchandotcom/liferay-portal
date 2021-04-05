@@ -15,8 +15,8 @@
 package com.liferay.layout.reports.web.internal.portlet;
 
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsWebKeys;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
@@ -26,18 +26,14 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -82,9 +78,12 @@ public class LayoutReportsPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutReportsGooglePageSpeedConfiguration =
-			ConfigurableUtil.createConfigurable(
-				LayoutReportsGooglePageSpeedConfiguration.class, properties);
+		_layoutReportsGooglePageSpeedConfigurationProvider =
+			new LayoutReportsGooglePageSpeedConfigurationProvider(
+				_configurationProvider,
+				ConfigurableUtil.createConfigurable(
+					LayoutReportsGooglePageSpeedConfiguration.class,
+					properties));
 	}
 
 	@Override
@@ -109,7 +108,9 @@ public class LayoutReportsPortlet extends MVCPortlet {
 			Group group = _groupLocalService.getGroup(
 				_portal.getScopeGroupId(httpServletRequest));
 
-			if (!_isEnabled(group)) {
+			if (!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
+					group)) {
+
 				return;
 			}
 
@@ -118,7 +119,9 @@ public class LayoutReportsPortlet extends MVCPortlet {
 				new LayoutReportsDisplayContext(
 					_groupLocalService, _infoItemServiceTracker,
 					_layoutLocalService,
-					new LayoutReportsDataProvider(_getApiKey(group)),
+					new LayoutReportsDataProvider(
+						_layoutReportsGooglePageSpeedConfigurationProvider.
+							getApiKey(group)),
 					_layoutSEOLinkManager, _language, _portal, renderRequest));
 
 			super.doDispatch(renderRequest, renderResponse);
@@ -126,62 +129,6 @@ public class LayoutReportsPortlet extends MVCPortlet {
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
 		}
-	}
-
-	private String _getApiKey(Group group) throws ConfigurationException {
-		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
-
-		String googlePageSpeedApikey = unicodeProperties.getProperty(
-			"googlePageSpeedApiKey");
-
-		if (Validator.isNotNull(googlePageSpeedApikey)) {
-			return googlePageSpeedApikey;
-		}
-
-		return _getApiKey(group.getCompanyId());
-	}
-
-	private String _getApiKey(long companyId) throws ConfigurationException {
-		LayoutReportsGooglePageSpeedCompanyConfiguration
-			layoutReportsGooglePageSpeedCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
-					companyId);
-
-		String apiKey =
-			layoutReportsGooglePageSpeedCompanyConfiguration.apiKey();
-
-		if (Validator.isNotNull(apiKey)) {
-			return apiKey;
-		}
-
-		return _layoutReportsGooglePageSpeedConfiguration.apiKey();
-	}
-
-	private boolean _isEnabled(Group group) throws ConfigurationException {
-		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
-
-		return GetterUtil.getBoolean(
-			unicodeProperties.getProperty("googlePageSpeedEnabled"),
-			_isEnabled(group.getCompanyId()));
-	}
-
-	private boolean _isEnabled(long companyId) throws ConfigurationException {
-		if (!_layoutReportsGooglePageSpeedConfiguration.enabled()) {
-			return false;
-		}
-
-		LayoutReportsGooglePageSpeedCompanyConfiguration
-			layoutReportsGooglePageSpeedCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
-					companyId);
-
-		if (!layoutReportsGooglePageSpeedCompanyConfiguration.enabled()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Reference
@@ -202,8 +149,8 @@ public class LayoutReportsPortlet extends MVCPortlet {
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	private volatile LayoutReportsGooglePageSpeedConfiguration
-		_layoutReportsGooglePageSpeedConfiguration;
+	private LayoutReportsGooglePageSpeedConfigurationProvider
+		_layoutReportsGooglePageSpeedConfigurationProvider;
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

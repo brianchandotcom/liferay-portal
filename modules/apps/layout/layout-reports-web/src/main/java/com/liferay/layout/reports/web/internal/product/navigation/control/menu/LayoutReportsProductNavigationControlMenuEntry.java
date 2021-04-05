@@ -14,8 +14,8 @@
 
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -201,7 +199,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (!_isEnabled(
+		if (!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
 				_groupLocalService.getGroup(
 					_portal.getScopeGroupId(httpServletRequest)))) {
 
@@ -233,9 +231,12 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutReportsGooglePageSpeedConfiguration =
-			ConfigurableUtil.createConfigurable(
-				LayoutReportsGooglePageSpeedConfiguration.class, properties);
+		_layoutReportsGooglePageSpeedConfigurationProvider =
+			new LayoutReportsGooglePageSpeedConfigurationProvider(
+				_configurationProvider,
+				ConfigurableUtil.createConfigurable(
+					LayoutReportsGooglePageSpeedConfiguration.class,
+					properties));
 
 		_portletNamespace = _portal.getPortletNamespace(
 			LayoutReportsPortletKeys.LAYOUT_REPORTS);
@@ -287,25 +288,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		}
 
 		return false;
-	}
-
-	private boolean _isEnabled(Group group) throws ConfigurationException {
-		if (!_layoutReportsGooglePageSpeedConfiguration.enabled()) {
-			return false;
-		}
-
-		LayoutReportsGooglePageSpeedCompanyConfiguration
-			layoutReportsGooglePageSpeedCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
-					group.getCompanyId());
-
-		if (!layoutReportsGooglePageSpeedCompanyConfiguration.enabled()) {
-			return false;
-		}
-
-		return GetterUtil.get(
-			group.getTypeSettingsProperty("googlePageSpeedEnabled"), true);
 	}
 
 	private boolean _isPanelStateOpen(HttpServletRequest httpServletRequest) {
@@ -426,8 +408,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	private volatile LayoutReportsGooglePageSpeedConfiguration
-		_layoutReportsGooglePageSpeedConfiguration;
+	private volatile LayoutReportsGooglePageSpeedConfigurationProvider
+		_layoutReportsGooglePageSpeedConfigurationProvider;
 
 	@Reference
 	private Portal _portal;

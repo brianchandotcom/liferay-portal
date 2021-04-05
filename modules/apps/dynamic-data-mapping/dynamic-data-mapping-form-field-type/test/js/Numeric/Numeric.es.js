@@ -297,4 +297,50 @@ describe('Field Numeric', () => {
 
 		expect(container.querySelector('input').value).toBe('23');
 	});
+
+	describe('Confirmation Field', () => {
+		it('renders the confirmation field with the same data type as the original field', () => {
+			render(
+				<NumericWithProvider
+					{...defaultNumericConfig}
+					confirmationValue="22.82"
+					dataType="double"
+					onChange={jest.fn()}
+					requireConfirmation={true}
+				/>
+			);
+
+			act(() => {
+				jest.runAllTimers();
+			});
+
+			const confirmationField = document.getElementById(
+				'numericFieldconfirmationField'
+			);
+
+			expect(confirmationField.value).toBe('22.82');
+		});
+
+		it('rounds the confirmation value if the data type is Integer', () => {
+			render(
+				<NumericWithProvider
+					{...defaultNumericConfig}
+					confirmationValue="22.82"
+					dataType="integer"
+					onChange={jest.fn()}
+					requireConfirmation={true}
+				/>
+			);
+
+			act(() => {
+				jest.runAllTimers();
+			});
+
+			const confirmationField = document.getElementById(
+				'numericFieldconfirmationField'
+			);
+
+			expect(confirmationField.value).toBe('23');
+		});
+	});
 });

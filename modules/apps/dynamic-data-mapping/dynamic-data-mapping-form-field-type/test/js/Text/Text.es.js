@@ -12,6 +12,7 @@
  * details.
  */
 
+import '@testing-library/jest-dom/extend-expect';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {PageProvider} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
@@ -287,5 +288,53 @@ describe('Field Text', () => {
 		});
 
 		expect(input.value).toEqual('FieldReference');
+	});
+
+	describe('Confirmation Field', () => {
+		it('does not show the confirmation field', () => {
+			render(<TextWithProvider {...defaultTextConfig} />);
+
+			const confirmationField = document.getElementById(
+				'textFieldconfirmationField'
+			);
+
+			expect(confirmationField).toBeNull();
+		});
+
+		it('shows the confirmation field if the requireConfirmation property is enabled', () => {
+			const {container} = render(
+				<TextWithProvider
+					{...defaultTextConfig}
+					direction="horizontal"
+					requireConfirmation={true}
+				/>
+			);
+
+			const confirmationField = document.getElementById(
+				'textFieldconfirmationField'
+			);
+
+			expect(confirmationField).not.toBeNull();
+
+			expect(container.firstChild).toHaveClass('row');
+
+			expect(
+				container.firstChild.querySelector('.col-md-6')
+			).not.toBeNull();
+		});
+
+		it('shows the confirmation field in vertical mode', () => {
+			const {container} = render(
+				<TextWithProvider
+					{...defaultTextConfig}
+					direction="vertical"
+					requireConfirmation={true}
+				/>
+			);
+
+			expect(
+				container.firstChild.querySelector('.col-md-12')
+			).not.toBeNull();
+		});
 	});
 });

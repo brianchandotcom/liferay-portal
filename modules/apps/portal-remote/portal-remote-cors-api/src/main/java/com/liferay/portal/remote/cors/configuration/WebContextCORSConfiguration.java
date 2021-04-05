@@ -29,7 +29,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	description = "web-context-cors-configuration-description", factory = true,
 	id = "com.liferay.portal.remote.cors.configuration.WebContextCORSConfiguration",
-	localization = "content/Language", name = "web-context-cors-configuration"
+	localization = "content/Language",
+	name = "web-context-cors-configuration-name"
 )
 public interface WebContextCORSConfiguration {
 

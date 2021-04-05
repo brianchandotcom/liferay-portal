@@ -16,24 +16,10 @@ import {INITIAL_STATE as CORE_INITIAL_STATE} from 'dynamic-data-mapping-form-ren
 
 const INITIAL_STATE = {
 	...CORE_INITIAL_STATE,
-	appProps: {},
-	dataDefinition: {
-		availableLanguageIds: [],
-		dataDefinitionFields: [],
-		defaultLanguageId: themeDisplay.getDefaultLanguageId(),
-		name: {},
-	},
 	dataDefinitionId: 0,
-	dataLayout: {
-		dataLayoutFields: {},
-		dataLayoutPages: [],
-		dataRules: [],
-		name: {},
-		paginationMode: 'wizard',
-	},
 	dataLayoutId: 0,
 	editingDataDefinitionId: 0,
-	focusedCustomObjectField: {},
+	name: {},
 };
 
 export default INITIAL_STATE;

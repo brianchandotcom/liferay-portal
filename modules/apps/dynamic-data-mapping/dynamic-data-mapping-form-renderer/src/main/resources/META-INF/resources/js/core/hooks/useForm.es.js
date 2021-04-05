@@ -47,14 +47,7 @@ FormStateContext.displayName = 'FormStateContext';
  *  </FormBuilder>
  * </LayoutProvider>
  */
-export const FormNoopProvider = ({
-	children,
-	initialState,
-	onAction,
-	...otherProps
-}) => {
-	const {value = initialState} = otherProps;
-
+export const FormNoopProvider = ({children, initialState, onAction, value}) => {
 	const [, dispatch] = useThunk([{}, onAction]);
 
 	return (
@@ -132,11 +125,9 @@ export const FormProvider = ({
 	initialState = {},
 	onAction,
 	reducers,
-	...otherProps
+	value,
 }) => {
 	const config = useConfig();
-
-	const {value = initialState} = otherProps;
 
 	const [state, dispatch] = useThunk(
 		usePropagateAction(

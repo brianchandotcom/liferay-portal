@@ -12,25 +12,18 @@
  * details.
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {FormFieldSettings, Pages} from 'dynamic-data-mapping-form-renderer';
+import {
+	FormFieldSettings,
+	Pages,
+	useConfig,
+	useForm,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {getFilteredSettingsContext} from '../../../../js/utils/settingsForm.es';
-
-function getSettingsContext(
-	hasFocusedCustomObjectField,
-	focusedCustomObjectField,
-	focusedField
-) {
-	if (hasFocusedCustomObjectField(focusedCustomObjectField)) {
-		return focusedCustomObjectField.settingsContext;
-	}
-
-	return focusedField.settingsContext;
-}
 
 /**
  * This component will override the Column from Form Renderer and will
@@ -68,27 +61,21 @@ const getColumn = ({customFields = {}}) => ({children, column, index}) => {
 	);
 };
 
-export default function FieldsSidebarSettingsBody({
-	config,
-	customFields,
-	dataRules,
-	defaultLanguageId,
-	dispatchEvent,
-	editingLanguageId,
-	focusedCustomObjectField,
-	focusedField,
-	hasFocusedCustomObjectField,
-}) {
+export default function FieldsSidebarSettingsBody() {
 	const [activePage, setActivePage] = useState(0);
-	const spritemap = useContext(ClayIconSpriteContext);
+	const {
+		customFields,
+		defaultLanguageId,
+		editingLanguageId,
+		focusedField,
+		rules,
+	} = useFormState();
+	const config = useConfig();
+	const dispatch = useForm();
 
 	const Column = useMemo(() => getColumn({customFields}), [customFields]);
 
-	const settingsContext = getSettingsContext(
-		hasFocusedCustomObjectField,
-		focusedCustomObjectField,
-		focusedField
-	);
+	const {settingsContext} = focusedField;
 
 	const filteredSettingsContext = useMemo(
 		() =>
@@ -112,7 +99,7 @@ export default function FieldsSidebarSettingsBody({
 			<FormFieldSettings
 				{...filteredSettingsContext}
 				activePage={activePage}
-				builderRules={dataRules}
+				builderRules={rules}
 				defaultLanguageId={defaultLanguageId}
 				displayable={true}
 				editable={false}
@@ -123,24 +110,30 @@ export default function FieldsSidebarSettingsBody({
 							setActivePage(payload.activePage);
 							break;
 						case CORE_EVENT_TYPES.FIELD.BLUR:
-						case CORE_EVENT_TYPES.FIELD.CHANGE:
-							dispatchEvent(type, {
-								editingLanguageId:
-									settingsContext.editingLanguageId,
-								propertyName: payload.fieldInstance.fieldName,
-								propertyValue: payload.value,
+						case CORE_EVENT_TYPES.FIELD.CHANGE: {
+							dispatch({
+								payload: {
+									editingLanguageId:
+										settingsContext.editingLanguageId,
+									propertyName:
+										payload.fieldInstance.fieldName,
+									propertyValue: payload.value,
+								},
+								type,
 							});
+
 							break;
+						}
 						case CORE_EVENT_TYPES.FIELD.EVALUATE:
-							dispatchEvent(type, {
-								settingsContextPages: payload,
+							dispatch({
+								payload: {settingsContextPages: payload},
+								type,
 							});
 							break;
 						default:
 							break;
 					}
 				}}
-				spritemap={spritemap}
 			>
 				<Pages editable={false} overrides={{Column}} />
 			</FormFieldSettings>

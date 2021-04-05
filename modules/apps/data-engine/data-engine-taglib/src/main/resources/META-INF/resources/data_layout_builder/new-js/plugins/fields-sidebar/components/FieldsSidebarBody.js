@@ -12,30 +12,20 @@
  * details.
  */
 
+import {useConfig} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
 import FieldSets from '../../../../js/components/field-sets/FieldSets.es';
-import FieldTypeList from '../../../../js/components/field-types/FieldTypeList.es';
 import Sidebar from '../../../../js/components/sidebar/Sidebar.es';
+import FieldTypeList from '../../../components/field-types/FieldTypeList.es';
 
-export default function FieldsSidebarBody({
-	allowFieldSets,
-	fieldTypes,
-	keywords,
-	onDoubleClick,
-	setKeywords,
-	tabs = [],
-}) {
+export default function FieldsSidebarBody({keywords, setKeywords}) {
+	const {allowFieldSets, tabs = []} = useConfig();
+
 	const sidebarTabs = [
 		{
 			label: Liferay.Language.get('fields'),
-			render: () => (
-				<FieldTypeList
-					fieldTypes={fieldTypes}
-					keywords={keywords}
-					onDoubleClick={onDoubleClick}
-				/>
-			),
+			render: () => <FieldTypeList keywords={keywords} />,
 		},
 	];
 

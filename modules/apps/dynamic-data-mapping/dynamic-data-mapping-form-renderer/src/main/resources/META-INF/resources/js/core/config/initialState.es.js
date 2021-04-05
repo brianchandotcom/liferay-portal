@@ -12,11 +12,34 @@
  * details.
  */
 
+export const INITIAL_PAGES = [
+	{
+		description: '',
+		localizedDescription: {
+			[themeDisplay.getLanguageId()]: '',
+		},
+		localizedTitle: {
+			[themeDisplay.getLanguageId()]: '',
+		},
+		rows: [
+			{
+				columns: [
+					{
+						fields: [],
+						size: 12,
+					},
+				],
+			},
+		],
+		title: '',
+	},
+];
+
 export const INITIAL_STATE = {
 	activePage: 0,
 	defaultLanguageId: themeDisplay.getLanguageId(),
 	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	focusedField: {},
-	pages: [],
+	pages: INITIAL_PAGES,
 	rules: [],
 };

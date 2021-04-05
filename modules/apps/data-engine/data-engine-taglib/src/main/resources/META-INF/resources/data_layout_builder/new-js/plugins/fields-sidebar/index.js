@@ -15,7 +15,7 @@
 import React from 'react';
 
 import {Component} from '../../../js/plugins/PluginContext.es';
-import {DataEngineFieldsSidebar} from './components/FieldsSidebar';
+import {FieldsSidebar} from './components/FieldsSidebar';
 
 /**
  * Entry-point for "FieldsSidebar" (sidebar panel) functionality.
@@ -31,7 +31,7 @@ export default class FieldsSidebarPluginEntryPoint {
 
 		return (
 			<Component>
-				<DataEngineFieldsSidebar title={this.title} />
+				<FieldsSidebar title={this.title} />
 			</Component>
 		);
 	}

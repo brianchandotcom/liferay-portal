@@ -15,31 +15,25 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {
+	useConfig,
+	useForm,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
-export default function FieldsSidebarSettingsHeader({
-	fieldTypes,
-	focusedCustomObjectField,
-	focusedField,
-	onClick,
-}) {
-	let {settingsContext} = focusedField;
+import {EVENT_TYPES} from '../../../eventTypes';
 
-	if (focusedCustomObjectField.settingsContext) {
-		settingsContext = focusedCustomObjectField.settingsContext;
-	}
+export default function FieldsSidebarSettingsHeader() {
+	const dispatch = useForm();
 
-	const visitor = new PagesVisitor(settingsContext.pages);
-	const typeField = visitor.findField((field) => field.fieldName === 'type');
+	const {fieldTypes} = useConfig();
 
-	const fieldType = fieldTypes.find(({name}) => {
-		return name === typeField.value;
-	});
+	const {focusedField} = useFormState();
 
-	if (!fieldType) {
-		return null;
-	}
+	const {icon, label} = fieldTypes.find(
+		({name}) => name === focusedField.type
+	);
 
 	return (
 		<div className="d-flex">
@@ -47,7 +41,11 @@ export default function FieldsSidebarSettingsHeader({
 				className="mr-2"
 				displayType="secondary"
 				monospaced={false}
-				onClick={onClick}
+				onClick={() => {
+					dispatch({
+						type: EVENT_TYPES.SIDEBAR.FIELD.BLUR,
+					});
+				}}
 				symbol="angle-left"
 			/>
 
@@ -60,12 +58,9 @@ export default function FieldsSidebarSettingsHeader({
 						disabled={true}
 						displayType="secondary"
 					>
-						<ClayIcon
-							className="mr-2 mt-1"
-							symbol={fieldType.icon}
-						/>
+						<ClayIcon className="mr-2 mt-1" symbol={icon} />
 
-						{fieldType.label}
+						{label}
 
 						<span className="d-inline-flex ml-auto navbar-breakpoint-down-d-none pt-2">
 							<ClayIcon

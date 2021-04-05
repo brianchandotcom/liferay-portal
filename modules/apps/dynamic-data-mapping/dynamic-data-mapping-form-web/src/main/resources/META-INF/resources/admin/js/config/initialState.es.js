@@ -14,7 +14,10 @@
 
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {PagesVisitor, getUid} from 'dynamic-data-mapping-form-renderer';
-import {INITIAL_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
+import {
+	INITIAL_PAGES,
+	INITIAL_STATE,
+} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
 
 export const BUILDER_INITIAL_STATE = {
 	...INITIAL_STATE,
@@ -42,29 +45,6 @@ export const BUILDER_INITIAL_STATE = {
 	paginationMode: 'multi_pages',
 	rules: [],
 };
-
-const INITIAL_PAGES = [
-	{
-		description: '',
-		localizedDescription: {
-			[themeDisplay.getLanguageId()]: '',
-		},
-		localizedTitle: {
-			[themeDisplay.getLanguageId()]: '',
-		},
-		rows: [
-			{
-				columns: [
-					{
-						fields: [],
-						size: 12,
-					},
-				],
-			},
-		],
-		title: '',
-	},
-];
 
 /**
  * NormalizePages deals with manipulations of the Field to change behaviors or

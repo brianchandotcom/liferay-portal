@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -166,6 +167,30 @@ public class DDMFormTemplateContextProcessorTest extends PowerMockito {
 	}
 
 	@Test
+	public void testGetDDMFormFieldValue() {
+		String instanceId = RandomTestUtil.randomString();
+
+		DDMFormFieldValue ddmFormFieldValue =
+			_ddmFormTemplateContextProcessor.getDDMFormFieldValue(
+				JSONUtil.put(
+					"confirmationValue", "Confirmation Value"
+				).put(
+					"fieldName", "Text12345678"
+				).put(
+					"fieldReference", "TextFieldReference"
+				).put(
+					"instanceId", instanceId
+				));
+
+		Assert.assertEquals(
+			"Confirmation Value", ddmFormFieldValue.getConfirmationValue());
+		Assert.assertEquals(
+			"TextFieldReference", ddmFormFieldValue.getFieldReference());
+		Assert.assertEquals(instanceId, ddmFormFieldValue.getInstanceId());
+		Assert.assertEquals("Text12345678", ddmFormFieldValue.getName());
+	}
+
+	@Test
 	public void testGetDDMFormMultipleSelectionField() {
 		DDMFormField ddmFormField =
 			_ddmFormTemplateContextProcessor.getDDMFormField(
@@ -239,6 +264,11 @@ public class DDMFormTemplateContextProcessorTest extends PowerMockito {
 		DDMFormField ddmFormField =
 			_ddmFormTemplateContextProcessor.getDDMFormField(
 				JSONUtil.put(
+					"confirmationErrorMessage",
+					"The information does not match."
+				).put(
+					"confirmationLabel", "Confirm Field"
+				).put(
 					"dataType", "string"
 				).put(
 					"fieldName", "Text12345678"
@@ -307,6 +337,12 @@ public class DDMFormTemplateContextProcessorTest extends PowerMockito {
 		Assert.assertEquals(
 			_getLocalizedValue("Text Field"), ddmFormField.getLabel());
 		Assert.assertEquals("Text12345678", ddmFormField.getName());
+		Assert.assertEquals(
+			_getLocalizedValue("The information does not match."),
+			ddmFormField.getProperty("confirmationErrorMessage"));
+		Assert.assertEquals(
+			_getLocalizedValue("Confirm Field"),
+			ddmFormField.getProperty("confirmationLabel"));
 		Assert.assertEquals(
 			_getLocalizedValue("Placeholder"),
 			ddmFormField.getProperty("placeholder"));

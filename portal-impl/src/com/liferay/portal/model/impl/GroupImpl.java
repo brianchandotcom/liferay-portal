@@ -112,12 +112,9 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public List<Group> getAncestors() {
-		Group group = null;
+		Group group = getLiveGroup();
 
-		if (isStagingGroup()) {
-			group = getLiveGroup();
-		}
-		else {
+		if (group == null) {
 			group = this;
 		}
 
@@ -777,12 +774,9 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean hasAncestor(long groupId) {
-		Group group = null;
+		Group group = getLiveGroup();
 
-		if (isStagingGroup()) {
-			group = getLiveGroup();
-		}
-		else {
+		if (group == null) {
 			group = this;
 		}
 

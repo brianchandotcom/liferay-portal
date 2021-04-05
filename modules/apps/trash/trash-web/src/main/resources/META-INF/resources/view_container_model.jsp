@@ -120,10 +120,3 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectContainerFm',
-		'<%= HtmlUtil.escapeJS(trashContainerModelDisplayContext.getEventName()) %>'
-	);
-</aui:script>

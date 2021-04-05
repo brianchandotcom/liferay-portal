@@ -252,9 +252,7 @@ public class JavaClassParser {
 		}
 	}
 
-	private static String _getConstructorOrMethodName(String line, int pos) {
-		line = line.substring(0, pos);
-
+	private static String _getConstructorOrMethodName(String line) {
 		int x = line.lastIndexOf(CharPool.SPACE);
 
 		return line.substring(x + 1);
@@ -272,9 +270,15 @@ public class JavaClassParser {
 
 		String startLine = StringUtil.trim(matcher.group());
 
+		int x = startLine.indexOf(CharPool.OPEN_PARENTHESIS);
+
+		if (x != -1) {
+			startLine = startLine.substring(0, x);
+		}
+
 		startLine = StringUtil.replace(
-			startLine, new String[] {"\t", "(\n", "\n", " synchronized "},
-			new String[] {"", "(", " ", " "});
+			startLine, new String[] {"\t", "\n", " synchronized "},
+			new String[] {"", " ", " "});
 
 		javaTermContent = metadata + javaTermContent;
 
@@ -300,8 +304,7 @@ public class JavaClassParser {
 			startLine, " interface ");
 		boolean isStatic = SourceUtil.containsUnquoted(startLine, " static ");
 
-		int x = startLine.indexOf(CharPool.EQUAL);
-		int y = startLine.indexOf(CharPool.OPEN_PARENTHESIS);
+		int y = startLine.indexOf(CharPool.EQUAL);
 
 		if (SourceUtil.containsUnquoted(startLine, " @interface ") ||
 			SourceUtil.containsUnquoted(startLine, " class ") ||
@@ -314,27 +317,26 @@ public class JavaClassParser {
 				isInterface, false);
 		}
 
-		if (((x > 0) && ((y == -1) || (y > x))) ||
-			(startLine.endsWith(StringPool.SEMICOLON) && (y == -1))) {
+		if (((y > 0) && ((x == -1) || (x > y))) ||
+			(startLine.endsWith(StringPool.SEMICOLON) && (x == -1))) {
 
 			return new JavaVariable(
 				_getVariableName(startLine), javaTermContent, accessModifier,
 				lineNumber, isAbstract, isFinal, isStatic);
 		}
 
-		if (y == -1) {
+		if (x == -1) {
 			return null;
 		}
 
-		int spaceCount = StringUtil.count(
-			startLine.substring(0, y), CharPool.SPACE);
+		int spaceCount = StringUtil.count(startLine, CharPool.SPACE);
 
 		if (isStatic || (spaceCount > 1) ||
 			(accessModifier.equals(JavaTerm.ACCESS_MODIFIER_DEFAULT) &&
 			 (spaceCount > 0))) {
 
 			return new JavaMethod(
-				_getConstructorOrMethodName(startLine, y), javaTermContent,
+				_getConstructorOrMethodName(startLine), javaTermContent,
 				accessModifier, lineNumber, isAbstract, isFinal, isStatic);
 		}
 
@@ -343,7 +345,7 @@ public class JavaClassParser {
 			 (spaceCount == 0))) {
 
 			return new JavaConstructor(
-				_getConstructorOrMethodName(startLine, y), javaTermContent,
+				_getConstructorOrMethodName(startLine), javaTermContent,
 				accessModifier, lineNumber, isAbstract, isFinal, isStatic);
 		}
 

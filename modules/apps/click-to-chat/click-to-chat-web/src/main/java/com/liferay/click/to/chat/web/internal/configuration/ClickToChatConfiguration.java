@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author José Abelenda
  */
 @ExtendedObjectClassDefinition(
-	category = "click-to-chat-configuration",
+	category = "click-to-chat",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

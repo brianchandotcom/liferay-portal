@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration",
-	localization = "content/Language", name = "click-to-chat-configuration"
+	localization = "content/Language", name = "click-to-chat-configuration-name"
 )
 public interface ClickToChatConfiguration {
 

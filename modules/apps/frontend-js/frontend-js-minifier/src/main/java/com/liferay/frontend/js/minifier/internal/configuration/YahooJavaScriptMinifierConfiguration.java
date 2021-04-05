@@ -21,7 +21,8 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	id = "com.frontend.js.minifier.configuration.YahooJavaScriptMinifierConfiguration",
-	localization = "content/Language", name = "yahoo-js-minifier-configuration"
+	localization = "content/Language",
+	name = "yahoo-js-minifier-configuration-name"
 )
 public interface YahooJavaScriptMinifierConfiguration {
 

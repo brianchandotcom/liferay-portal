@@ -113,6 +113,15 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro deleteBlueprint {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Search Experiences");
+
+		LexiconEntry.delete(rowEntry = "${name}");
+	}
+
 	macro editBlueprint {
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",

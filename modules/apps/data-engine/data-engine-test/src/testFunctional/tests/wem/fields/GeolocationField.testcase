@@ -41,10 +41,6 @@ definition {
 	test DuplicateGeolocation {
 		var key_fieldName = "Geolocation";
 
-		DataEngine.addField(
-			fieldFieldLabel = "${key_fieldName}",
-			fieldName = "${key_fieldName}");
-
 		DataEngine.duplicate(fieldFieldLabel = "${key_fieldName}");
 
 		WebContentStructures.saveCP();
@@ -152,10 +148,6 @@ definition {
 	test ShowAndHideGeolocationLabel {
 		var key_fieldName = "Geolocation";
 
-		DataEngine.addField(
-			fieldFieldLabel = "${key_fieldName}",
-			fieldName = "${key_fieldName}");
-
 		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "${key_fieldName}",
 			showLabel = "true");
@@ -212,10 +204,6 @@ definition {
 	@priority = "5"
 	test VerifyRequiredPropertyOfGeolocation {
 		var key_fieldName = "Geolocation";
-
-		DataEngine.addField(
-			fieldFieldLabel = "${key_fieldName}",
-			fieldName = "${key_fieldName}");
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "${key_fieldName}");
 

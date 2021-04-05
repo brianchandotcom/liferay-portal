@@ -19,6 +19,8 @@ import com.liferay.document.library.video.internal.configuration.DLVideoFFMPEGVi
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -26,6 +28,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.awt.image.BufferedImage;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -68,13 +73,37 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 	public InputStream generateVideoThumbnail(File file, String format)
 		throws Exception {
 
-		return _runFFMPEGCommand(
-			String.format(
-				"ffmpeg -y -i %s -vf thumbnail,scale=w=min(%s\\,iw):h=-1 " +
-					"-frames:v 1",
-				file.getAbsolutePath(),
-				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
-			format);
+		try {
+			return _runFFMPEGCommand(
+				String.format(
+					"ffmpeg -y -i %s -vf thumbnail,scale=w=min(%s\\,iw):h=-1 " +
+						"-frames:v 1",
+					file.getAbsolutePath(),
+					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
+				format);
+		}
+		catch (Exception exception) {
+			String message = exception.getMessage();
+
+			if (message.contains(
+					"Output file #0 does not contain any stream")) {
+
+				BufferedImage bufferedImage = new BufferedImage(
+					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH,
+					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
+					BufferedImage.TYPE_INT_RGB);
+
+				try (UnsyncByteArrayOutputStream baos =
+						new UnsyncByteArrayOutputStream()) {
+
+					ImageToolUtil.write(bufferedImage, format, baos);
+
+					return new ByteArrayInputStream(baos.toByteArray());
+				}
+			}
+
+			throw exception;
+		}
 	}
 
 	@Override

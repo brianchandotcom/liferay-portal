@@ -103,21 +103,9 @@ definition {
 	@description = "This test validates the input of valid and invalid characters on Field Reference."
 	@priority = "4"
 	test EditColorFieldNameWithValidAndInvalidCharacters {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldReference(
-			assertFieldReference = "Color_Test",
-			fieldFieldLabel = "Color",
-			fieldReference = "Color_Test");
-
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Color",
-			fieldName = "Color",
-			fieldReference = "Color_Test");
 
 		DataEngine.editFieldReference(
 			assertFieldReference = "ColorTest1",
@@ -128,10 +116,10 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
-		DataEngine.viewFieldReference(
+		DataEngine.editFieldReference(
+			assertFieldReference = "Color_Test",
 			fieldFieldLabel = "Color",
-			fieldName = "Color",
-			fieldReference = "ColorTest1");
+			fieldReference = "Color_Test");
 	}
 
 	@description = "This test ensures that a user can add a Color field on a form using drag and drop, edit it's label and help text."

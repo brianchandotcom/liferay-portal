@@ -15,6 +15,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//p[contains(.,'${key_searchAssetSummary}')]</td>
 	<td></td>

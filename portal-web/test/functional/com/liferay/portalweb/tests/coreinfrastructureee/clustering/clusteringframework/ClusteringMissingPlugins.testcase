@@ -34,14 +34,6 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		Clustering.enableDebugging(
-			categoryName = "com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache",
-			nodePort = "8080");
-
-		Clustering.enableDebugging(
-			categoryName = "com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache",
-			nodePort = "9080");
-
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
 			nodePort = "8080");

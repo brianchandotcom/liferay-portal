@@ -424,17 +424,33 @@ definition {
 	}
 
 	macro selectPublication {
-		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+		if ("${gotoManagePublications}" == "true") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Publications",
+				panel = "Applications",
+				portlet = "Publications");
 
-		MenuItem.click(menuItem = "Select a Publication");
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		SelectFrameTop(value1 = "relative=top");
+			Click(
+				key_publicationsName = "${publicationsName}",
+				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
-		var key_publicationsName = "${publicationsName}";
+			MenuItem.click(menuItem = "Work on Publication");
+		}
+		else {
+			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
-		Click(
-			locator1 = "Publications#SELECT_PUBLICATION_NAME",
-			value1 = "${publicationsName}");
+			MenuItem.click(menuItem = "Select a Publication");
+
+			SelectFrameTop(value1 = "relative=top");
+
+			var key_publicationsName = "${publicationsName}";
+
+			Click(
+				locator1 = "Publications#SELECT_PUBLICATION_NAME",
+				value1 = "${publicationsName}");
+		}
 
 		AssertTextPresent(
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",

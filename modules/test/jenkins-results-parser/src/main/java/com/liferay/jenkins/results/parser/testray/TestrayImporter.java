@@ -105,6 +105,19 @@ public class TestrayImporter {
 			_getJenkinsBuildDescriptionElement(
 				"Jenkins Suite", topLevelBuild.getTestSuiteName()));
 
+		PullRequest pullRequest = getPullRequest();
+
+		if (pullRequest != null) {
+			Dom4JUtil.addToElement(
+				rootElement,
+				_getJenkinsBuildDescriptionElement(
+					"Pull Request",
+					JenkinsResultsParserUtil.combine(
+						pullRequest.getReceiverUsername(), "#",
+						pullRequest.getNumber()),
+					pullRequest.getHtmlURL()));
+		}
+
 		Map<Integer, TestrayBuild> testrayBuildMap = new HashMap<>();
 
 		for (TestrayBuild testrayBuild : _testrayBuilds.values()) {
@@ -123,15 +136,39 @@ public class TestrayImporter {
 					testrayBuildTitle, " (", String.valueOf(i), ")");
 			}
 
+			String testrayRoutineTitle = "Testray Routine";
+
+			if (i > 0) {
+				testrayRoutineTitle = JenkinsResultsParserUtil.combine(
+					testrayRoutineTitle, " (", String.valueOf(i), ")");
+			}
+
 			TestrayBuild testrayBuild = testrayBuildEntry.getValue();
+
+			TestrayRoutine testrayRoutine = testrayBuild.getTestrayRoutine();
 
 			Dom4JUtil.addToElement(
 				rootElement,
+				_getJenkinsBuildDescriptionElement(
+					testrayRoutineTitle, testrayRoutine.getName(),
+					String.valueOf(testrayRoutine.getURL())),
 				_getJenkinsBuildDescriptionElement(
 					testrayBuildTitle, testrayBuild.getName(),
 					String.valueOf(testrayBuild.getURL())));
 
 			i++;
+		}
+
+		String currentJobName = System.getenv("JOB_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(currentJobName)) {
+			Dom4JUtil.addToElement(
+				rootElement,
+				_getJenkinsBuildDescriptionElement(
+					"Testray Importer",
+					JenkinsResultsParserUtil.combine(
+						currentJobName, "#", System.getenv("BUILD_NUMBER")),
+					System.getenv("BUILD_URL")));
 		}
 
 		try {
@@ -1098,6 +1135,8 @@ public class TestrayImporter {
 
 			testrayServer.importCaseResults(jenkinsMaster);
 		}
+
+		_sendPullRequestNotification();
 	}
 
 	public void setup() {
@@ -1974,6 +2013,16 @@ public class TestrayImporter {
 		}
 
 		return string;
+	}
+
+	private void _sendPullRequestNotification() {
+		PullRequest pullRequest = getPullRequest();
+
+		if (pullRequest == null) {
+			return;
+		}
+
+		pullRequest.addComment(getJenkinsBuildDescription());
 	}
 
 	private void _setupPortalBundle() {

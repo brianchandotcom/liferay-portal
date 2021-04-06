@@ -658,11 +658,9 @@ definition {
 	}
 
 	macro assertNonLocalizableField {
-		key_fieldName = "${fieldFieldName}";
-
-		AssertTextEquals(
-			locator1 = "DataEngineRenderer#WEB_CONTENT_DISABLED_FIELD",
-			value1 = "${fieldContent}");
+		AssertElementPresent(
+			key_fieldName = "${fieldFieldName}",
+			locator1 = "DataEngineRenderer#WEB_CONTENT_DISABLED_FIELD");
 	}
 
 	macro configureFieldsetsShowOrHideLabel {

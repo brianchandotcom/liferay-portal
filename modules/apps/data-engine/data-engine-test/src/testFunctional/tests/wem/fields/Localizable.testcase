@@ -75,17 +75,11 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		DataEngine.assertNonLocalizableField(
-			fieldContent = "123",
-			fieldFieldName = "Numeric");
+		DataEngine.assertNonLocalizableField(fieldFieldName = "Numeric");
 
-		DataEngine.assertNonLocalizableField(
-			fieldContent = "This is a text field",
-			fieldFieldName = "Text");
+		DataEngine.assertNonLocalizableField(fieldFieldName = "Text");
 
-		DataEngine.assertNonLocalizableField(
-			fieldContent = "30/03/2021",
-			fieldFieldName = "Date");
+		DataEngine.assertNonLocalizableField(fieldFieldName = "Date");
 	}
 
 	@description = "This test ensures that is possible to translate fields with Localizable set as true."

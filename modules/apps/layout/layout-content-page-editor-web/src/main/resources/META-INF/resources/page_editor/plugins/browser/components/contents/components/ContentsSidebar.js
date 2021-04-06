@@ -12,24 +12,87 @@
  * details.
  */
 
-import React from 'react';
+import React, {useMemo} from 'react';
 
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {useSelector} from '../../../../../app/store/index';
 import SidebarPanelContent from '../../../../../common/components/SidebarPanelContent';
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
 
+const getEditableValues = (fragmentEntryLinks) =>
+	Object.values(fragmentEntryLinks)
+		.filter(
+			(fragmentEntryLink) =>
+				!fragmentEntryLink.masterLayout &&
+				fragmentEntryLink.editableValues
+		)
+		.map((fragmentEntryLink) => {
+			const editableValues = Object.entries(
+				fragmentEntryLink.editableValues[
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+				]
+			);
+
+			return editableValues.map(([key, value]) => ({
+				...value,
+				editableId: `${fragmentEntryLink.fragmentEntryLinkId}-${key}`,
+			}));
+		})
+		.reduce(
+			(editableValuesA, editableValuesB) => [
+				...editableValuesA,
+				...editableValuesB,
+			],
+			[]
+		);
+
+const normalizeEditableValues = (editable) => {
+	return {
+		...editable,
+		icon: 'align-left',
+		title: editable.title || editable.defaultValue,
+	};
+};
+
 export default function ContentsSidebar() {
+	const contents = [];
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const pageContents = useSelector((state) => state.pageContents);
 	let view = <NoPageContents />;
 
+	const inlineTextContents = useMemo(
+		() =>
+			getEditableValues(fragmentEntryLinks).map(normalizeEditableValues),
+		[fragmentEntryLinks]
+	);
+
 	if (pageContents.length) {
-		view = <PageContents pageContents={pageContents} />;
+		contents.push({
+			items: pageContents,
+			label: Liferay.Language.get('documents'),
+		});
+	}
+
+	if (inlineTextContents.length) {
+		contents.push({
+			items: inlineTextContents,
+			label: Liferay.Language.get('inline-text'),
+		});
+	}
+
+	if (contents.length) {
+		view = <PageContents pageContents={contents} />;
 	}
 
 	return (
 		<>
-			<SidebarPanelContent padded={false}>{view}</SidebarPanelContent>
+			<SidebarPanelContent
+				className="page-editor__page-contents"
+				padded={false}
+			>
+				{view}
+			</SidebarPanelContent>
 		</>
 	);
 }

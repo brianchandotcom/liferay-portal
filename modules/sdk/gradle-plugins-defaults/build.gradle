@@ -5,16 +5,9 @@ apply plugin: "org.ysb33r.gradletest"
 task copyGradleTestDependencies(type: Copy)
 
 String gradleVersion = "6.6.1"
-String pluginsSDKVersion = project.properties["plugins.sdk.version"]
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion
-}
-
-configurations {
-	pluginsSDK {
-		transitive = false
-	}
 }
 
 copyGradleTestDependencies {
@@ -42,8 +35,6 @@ dependencies {
 	compile group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.4.1"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
-
-	pluginsSDK group: "com.liferay.portal", name: "com.liferay.portal.plugins.sdk", version: pluginsSDKVersion
 }
 
 gradleTest {
@@ -51,22 +42,6 @@ gradleTest {
 	dependsOn jar
 
 	versions "5.6.4", gradleVersion
-}
-
-processResources {
-	String destinationDirName = "com/liferay/gradle/plugins/defaults/dependencies"
-	String zipDirName = "com.liferay.portal.plugins.sdk-${pluginsSDKVersion}/dependencies/net.sourceforge.pmd/rulesets/java"
-
-	into(destinationDirName) {
-		eachFile new ReplaceLeadingPathAction("${destinationDirName}/${zipDirName}": destinationDirName)
-
-		from {
-			zipTree(configurations.pluginsSDK.singleFile)
-		}
-
-		include "${zipDirName}/standard-rules.xml"
-		includeEmptyDirs = false
-	}
 }
 
 updateFileVersions {

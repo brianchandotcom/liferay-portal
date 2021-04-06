@@ -4906,9 +4906,7 @@ log.sanitizer.enabled=false</echo>
 								substring="gradleTest"
 							/>
 							<then>
-								<gradle-execute dir="@{gradle.plugin.dir}" task="gradleTest">
-									<arg value="-Pplugins.sdk.version=${build.sdk.version}" />
-								</gradle-execute>
+								<gradle-execute dir="@{gradle.plugin.dir}" task="gradleTest" />
 							</then>
 						</if>
 					</sequential>

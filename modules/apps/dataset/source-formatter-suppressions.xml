@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/ClayDataSetDataJSONFactory\.java" />
+		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/data/FilterFactory\.java" />
+		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/provider/ClayDataSetDataProvider\.java" />
+	</source-check>
+</suppressions>

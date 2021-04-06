@@ -462,46 +462,6 @@ definition {
 			value1 = "Author:Test Test");
 	}
 
-	@description = "When the user unchecks all of the checkboxes of the content audit graph, all bars in the graph disappear and a message is shown: No Stage Categories selected. Select any stage category from the checkboxes in the legend above."
-	@priority = "5"
-	test AuditGraphUncheckCheckbox {
-		property portal.acceptance = "true";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 1",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
-
-		WebContent.selectCategory(
-			categoryName = "Stage 1",
-			userSegmentDetailTitle = "${userSegmentDetailTitle}",
-			vocabularyName = "Stage");
-
-		PortletEntry.publish();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		ContentDashboard.uncheckCheckbox(auditGraphCheckboxName = "Stage 1");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
-			value1 = "There are no categories selected");
-	}
-
 	@description = "When an asset has S1 and S2 (Stage) assigned categories, but no "Audience" (Vocab2) categories, it will be represented in two different bars in the No Audience Category"
 	@priority = "5"
 	test AuditGraphTwoBarsForNoSpecifiedCategory {
@@ -566,7 +526,6 @@ definition {
 
 		Pause(locator1 = "3000");
 
-
 		AssertElementPresent(
 			fillColor = "4B9FFF",
 			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
@@ -584,6 +543,46 @@ definition {
 		AssertElementPresent(
 			fillColor = "FFB46E",
 			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+	}
+
+	@description = "When the user unchecks all of the checkboxes of the content audit graph, all bars in the graph disappear and a message is shown: No Stage Categories selected. Select any stage category from the checkboxes in the legend above."
+	@priority = "5"
+	test AuditGraphUncheckCheckbox {
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Audience 1",
+			vocabularyName = "Audience",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+
+		WebContent.selectCategory(
+			categoryName = "Stage 1",
+			userSegmentDetailTitle = "${userSegmentDetailTitle}",
+			vocabularyName = "Stage");
+
+		PortletEntry.publish();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.uncheckCheckbox(auditGraphCheckboxName = "Stage 1");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
+			value1 = "There are no categories selected");
 	}
 
 }

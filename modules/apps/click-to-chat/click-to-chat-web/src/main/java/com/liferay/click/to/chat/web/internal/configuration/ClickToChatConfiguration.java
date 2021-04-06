@@ -33,5 +33,29 @@ public interface ClickToChatConfiguration {
 
 	@Meta.AD(deflt = "false", name = "enable-click-to-chat", required = false)
 	public boolean enable();
-
+	
+	@Meta.AD(deflt = "", name = "account-token", required = false)
+	public String accountToken();
+	
+	@Meta.AD(
+		name = "provider",
+		optionLabels = {
+			"CHATWOOT", "CRISP", "JIVOCHAT", "LIVEPERSON", "SMARTSUPP", "TIDIO"
+		},
+		required = false
+	)
+	public ProviderOptions provider();
+	
+	@Meta.AD(
+		deflt = "PROVIDE_OR_INHERIT",
+		description = "strategy-description",
+		name = "strategy",
+		optionLabels = {
+			"group-provider-site-strategy.ALWAYS_INHERIT",
+			"group-provider-site-strategy.PROVIDE",
+			"group-provider-site-strategy.PROVIDE_OR_INHERIT"
+		},
+		required = false
+	)
+	public ClickToChatProviderSiteStrategy groupProviderSiteStrategy();
 }

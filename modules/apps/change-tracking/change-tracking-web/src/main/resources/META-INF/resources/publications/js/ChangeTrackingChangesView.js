@@ -81,10 +81,12 @@ const CTComments = ({
 	spritemap,
 	updateCommentURL,
 }) => {
+	const [delta, setDelta] = useState(20);
 	const [editing, setEditing] = useState(0);
-	const [loading, setLoading] = useState(false);
-	const [fetchData, setFetchData] = useState(false);
+	const [fetchData, setFetchData] = useState(null);
 	const [initialized, setInitialized] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [page, setPage] = useState(1);
 	const [value, setValue] = useState('');
 
 	useEffect(() => {
@@ -110,7 +112,6 @@ const CTComments = ({
 				}
 
 				setFetchData(json);
-
 				setLoading(false);
 			})
 			.catch(() => {
@@ -123,6 +124,22 @@ const CTComments = ({
 				setLoading(false);
 			});
 	}, [getCommentsURL, initialized]);
+
+	const clone = (json) => {
+		const clonedJSON = {};
+
+		if (typeof json !== 'object') {
+			return null;
+		}
+
+		const keys = Object.keys(json);
+
+		for (let i = 0; i < keys.length; i++) {
+			clonedJSON[keys[i]] = json[keys[i]];
+		}
+
+		return clonedJSON;
+	};
 
 	const getUserName = (userId) => {
 		return fetchData.userInfo[userId.toString()].userName;
@@ -165,6 +182,33 @@ const CTComments = ({
 					});
 				});
 		});
+	};
+
+	const handleDeltaChange = (newDelta) => {
+		setDelta(newDelta);
+		setEditing(0);
+		setPage(1);
+
+		if (fetchData.updatedCommentId) {
+			const newFetchData = clone(fetchData);
+
+			newFetchData.updatedCommentId = 0;
+
+			setFetchData(newFetchData);
+		}
+	};
+
+	const handlePageChange = (newPage) => {
+		setEditing(0);
+		setPage(newPage);
+
+		if (fetchData.updatedCommentId) {
+			const newFetchData = clone(fetchData);
+
+			newFetchData.updatedCommentId = 0;
+
+			setFetchData(newFetchData);
+		}
 	};
 
 	const handleReply = () => {
@@ -265,8 +309,29 @@ const CTComments = ({
 
 		const items = [];
 
-		for (let i = 0; i < fetchData.comments.length; i++) {
-			const comment = fetchData.comments[i];
+		let filteredComments = fetchData.comments.slice(0);
+
+		filteredComments.sort((a, b) => {
+			if (a.createTime < b.createTime) {
+				return 1;
+			}
+
+			if (a.createTime > b.createTime) {
+				return -1;
+			}
+
+			return 0;
+		});
+
+		if (filteredComments.length > 5) {
+			filteredComments = filteredComments.slice(
+				delta * (page - 1),
+				delta * page
+			);
+		}
+
+		for (let i = 0; i < filteredComments.length; i++) {
+			const comment = filteredComments[i];
 
 			let title = getUserName(comment.userId);
 
@@ -319,7 +384,11 @@ const CTComments = ({
 						<div className="autofit-row">
 							<div className="autofit-col autofit-col-expand">
 								<h5 className="component-title">{title}</h5>
-								<div className="text-secondary">
+								<div
+									className="text-secondary"
+									data-tooltip-align="top"
+									title={comment.createDate}
+								>
 									{comment.timeDescription}
 								</div>
 							</div>
@@ -348,6 +417,30 @@ const CTComments = ({
 		}
 
 		return <>{items}</>;
+	};
+
+	const renderPagination = () => {
+		if (
+			!fetchData ||
+			!fetchData.comments ||
+			fetchData.comments.length <= 5
+		) {
+			return '';
+		}
+
+		return (
+			<ClayPaginationBarWithBasicItems
+				activeDelta={delta}
+				activePage={page}
+				deltas={[4, 8, 20, 40, 60].map((size) => ({
+					label: size,
+				}))}
+				ellipsisBuffer={3}
+				onDeltaChange={(delta) => handleDeltaChange(delta)}
+				onPageChange={(page) => handlePageChange(page)}
+				totalItems={fetchData.comments.length}
+			/>
+		);
 	};
 
 	return (
@@ -417,6 +510,7 @@ const CTComments = ({
 						</div>
 					)}
 					{renderComments()}
+					{renderPagination()}
 				</div>
 			</div>
 		</div>

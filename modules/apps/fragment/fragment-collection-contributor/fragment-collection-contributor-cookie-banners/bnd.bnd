@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Fragment Collection Contributor Cookie Banners
+Bundle-SymbolicName: com.liferay.fragment.collection.contributor.cookie.banners
+Bundle-Version: 1.0.0
+Web-ContextPath: /fragment-collection-contributor-cookie-banners
+-dsannotations-options: inherit

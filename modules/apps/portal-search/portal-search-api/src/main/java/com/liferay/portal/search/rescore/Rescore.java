@@ -26,6 +26,18 @@ public interface Rescore {
 
 	public Query getQuery();
 
+	public Float getQueryWeight();
+
+	public Float getRescoreQueryWeight();
+
+	public ScoreMode getScoreMode();
+
 	public Integer getWindowSize();
+
+	public enum ScoreMode {
+
+		AVG, MAX, MIN, MULTIPLY, TOTAL
+
+	}
 
 }

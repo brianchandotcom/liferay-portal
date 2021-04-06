@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeService;
 import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.service.MembershipRequestLocalService;
 import com.liferay.portal.kernel.service.MembershipRequestService;
@@ -44,7 +42,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -59,10 +56,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.ratings.kernel.RatingsType;
-import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
-import com.liferay.site.initializer.SiteInitializer;
-import com.liferay.site.initializer.SiteInitializerRegistry;
-import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -465,88 +458,62 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 		liveGroup = _groupService.updateGroup(
 			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
 
-		String creationType = ParamUtil.getString(
-			actionRequest, "creationType");
+		long privateLayoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "privateLayoutSetPrototypeId");
+		long publicLayoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "publicLayoutSetPrototypeId");
 
-		if (Validator.isNull(creationType) ||
-			creationType.equals(
-				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
+		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "privateLayoutSetPrototypeLinkEnabled",
+			privateLayoutSet.isLayoutSetPrototypeLinkEnabled());
+		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "publicLayoutSetPrototypeLinkEnabled",
+			publicLayoutSet.isLayoutSetPrototypeLinkEnabled());
 
-			long privateLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "privateLayoutSetPrototypeId");
-			long publicLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "publicLayoutSetPrototypeId");
+		if ((privateLayoutSetPrototypeId == 0) &&
+			(publicLayoutSetPrototypeId == 0) &&
+			!privateLayoutSetPrototypeLinkEnabled &&
+			!publicLayoutSetPrototypeLinkEnabled) {
 
-			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "privateLayoutSetPrototypeLinkEnabled",
-				privateLayoutSet.isLayoutSetPrototypeLinkEnabled());
-			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "publicLayoutSetPrototypeLinkEnabled",
-				publicLayoutSet.isLayoutSetPrototypeLinkEnabled());
+			long layoutSetPrototypeId = ParamUtil.getLong(
+				actionRequest, "layoutSetPrototypeId");
+			int layoutSetVisibility = ParamUtil.getInteger(
+				actionRequest, "layoutSetVisibility");
+			boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				actionRequest, "layoutSetPrototypeLinkEnabled",
+				layoutSetPrototypeId > 0);
+			boolean layoutSetVisibilityPrivate = ParamUtil.getBoolean(
+				actionRequest, "layoutSetVisibilityPrivate");
 
-			if ((privateLayoutSetPrototypeId == 0) &&
-				(publicLayoutSetPrototypeId == 0) &&
-				!privateLayoutSetPrototypeLinkEnabled &&
-				!publicLayoutSetPrototypeLinkEnabled) {
+			if ((layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) ||
+				layoutSetVisibilityPrivate) {
 
-				long layoutSetPrototypeId = ParamUtil.getLong(
-					actionRequest, "layoutSetPrototypeId");
-				int layoutSetVisibility = ParamUtil.getInteger(
-					actionRequest, "layoutSetVisibility");
-				boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-					actionRequest, "layoutSetPrototypeLinkEnabled",
-					layoutSetPrototypeId > 0);
-				boolean layoutSetVisibilityPrivate = ParamUtil.getBoolean(
-					actionRequest, "layoutSetVisibilityPrivate");
+				privateLayoutSetPrototypeId = layoutSetPrototypeId;
 
-				if ((layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) ||
-					layoutSetVisibilityPrivate) {
-
-					privateLayoutSetPrototypeId = layoutSetPrototypeId;
-
-					privateLayoutSetPrototypeLinkEnabled =
-						layoutSetPrototypeLinkEnabled;
-				}
-				else {
-					publicLayoutSetPrototypeId = layoutSetPrototypeId;
-
-					publicLayoutSetPrototypeLinkEnabled =
-						layoutSetPrototypeLinkEnabled;
-				}
-			}
-
-			if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
-				SitesUtil.updateLayoutSetPrototypesLinks(
-					liveGroup, publicLayoutSetPrototypeId,
-					privateLayoutSetPrototypeId,
-					publicLayoutSetPrototypeLinkEnabled,
-					privateLayoutSetPrototypeLinkEnabled);
+				privateLayoutSetPrototypeLinkEnabled =
+					layoutSetPrototypeLinkEnabled;
 			}
 			else {
-				SitesUtil.updateLayoutSetPrototypesLinks(
-					liveGroup.getStagingGroup(), publicLayoutSetPrototypeId,
-					privateLayoutSetPrototypeId,
-					publicLayoutSetPrototypeLinkEnabled,
-					privateLayoutSetPrototypeLinkEnabled);
+				publicLayoutSetPrototypeId = layoutSetPrototypeId;
+
+				publicLayoutSetPrototypeLinkEnabled =
+					layoutSetPrototypeLinkEnabled;
 			}
 		}
-		else if (creationType.equals(
-					SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
 
-			String siteInitializerKey = ParamUtil.getString(
-				actionRequest, "siteInitializerKey");
-
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(siteInitializerKey);
-
-			if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
-				siteInitializer.initialize(liveGroup.getGroupId());
-			}
-			else {
-				Group stagingGroup = liveGroup.getStagingGroup();
-
-				siteInitializer.initialize(stagingGroup.getGroupId());
-			}
+		if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
+			SitesUtil.updateLayoutSetPrototypesLinks(
+				liveGroup, publicLayoutSetPrototypeId,
+				privateLayoutSetPrototypeId,
+				publicLayoutSetPrototypeLinkEnabled,
+				privateLayoutSetPrototypeLinkEnabled);
+		}
+		else {
+			SitesUtil.updateLayoutSetPrototypesLinks(
+				liveGroup.getStagingGroup(), publicLayoutSetPrototypeId,
+				privateLayoutSetPrototypeId,
+				publicLayoutSetPrototypeLinkEnabled,
+				privateLayoutSetPrototypeLinkEnabled);
 		}
 
 		themeDisplay.setSiteGroupId(liveGroup.getGroupId());
@@ -573,22 +540,10 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private GroupSearchProvider _groupSearchProvider;
-
-	@Reference
 	private GroupService _groupService;
 
 	@Reference
-	private Http _http;
-
-	@Reference
 	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
-
-	@Reference
-	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Reference
-	private LayoutSetPrototypeService _layoutSetPrototypeService;
 
 	@Reference
 	private LayoutSetService _layoutSetService;
@@ -601,9 +556,6 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SiteInitializerRegistry _siteInitializerRegistry;
 
 	private class GroupCallable implements Callable<Group> {
 

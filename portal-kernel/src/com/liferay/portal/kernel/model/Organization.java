@@ -93,8 +93,7 @@ public interface Organization
 
 	public long getGroupId();
 
-	public String getLogoURL()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public String getLogoURL();
 
 	public Organization getParentOrganization()
 		throws com.liferay.portal.kernel.exception.PortalException;

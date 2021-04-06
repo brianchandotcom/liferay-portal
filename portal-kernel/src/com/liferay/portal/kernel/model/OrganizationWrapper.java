@@ -315,9 +315,7 @@ public class OrganizationWrapper
 	}
 
 	@Override
-	public String getLogoURL()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public String getLogoURL() {
 		return model.getLogoURL();
 	}
 

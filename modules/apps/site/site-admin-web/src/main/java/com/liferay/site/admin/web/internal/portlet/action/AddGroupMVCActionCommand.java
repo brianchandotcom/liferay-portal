@@ -14,6 +14,7 @@
 
 package com.liferay.site.admin.web.internal.portlet.action;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
@@ -111,7 +112,8 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 				MultiSessionMessages.add(
 					actionRequest,
-					SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed");
+					ConfigurationAdminPortletKeys.SITE_SETTINGS +
+						"requestProcessed");
 			}
 
 			PortletURL siteAdministrationURL = _getSiteAdministrationURL(
@@ -158,7 +160,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
 		if (liveGroupId <= 0) {
-			portletId = SiteAdminPortletKeys.SITE_SETTINGS;
+			portletId = ConfigurationAdminPortletKeys.SITE_SETTINGS;
 		}
 
 		return _portal.getControlPanelPortletURL(

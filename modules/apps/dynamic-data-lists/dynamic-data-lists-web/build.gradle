@@ -9,6 +9,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:asset:asset-taglib")
+	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")

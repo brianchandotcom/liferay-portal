@@ -12,16 +12,14 @@
  *
  */
 
-package com.liferay.saml.web.internal.struts;
+package com.liferay.saml.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlPortletKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
-
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,20 +29,32 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
+ * @author Arthur Chan
  */
 @Component(
-	immediate = true, property = "path=/portal/saml/auth_redirect",
-	service = StrutsAction.class
+	immediate = true,
+	property = {
+		"auth.token.ignore.mvc.action=true",
+		"javax.portlet.name=" + SamlPortletKeys.SAML,
+		"mvc.command.name=/saml/auth_redirect"
+	},
+	service = MVCActionCommand.class
 )
-public class AuthRedirectAction extends BaseSamlStrutsAction {
+public class AuthRedirectMVCActionCommand extends BaseSamlMVCActionCommand {
 
 	@Override
 	public boolean isEnabled() {
-		if (samlProviderConfigurationHelper.isRoleSp()) {
-			return super.isEnabled();
+		if (super.isEnabled()) {
+			return samlProviderConfigurationHelper.isRoleSp();
 		}
 
 		return false;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	public void setPortal(Portal portal) {
+		super.setPortal(portal);
 	}
 
 	@Override
@@ -57,30 +67,20 @@ public class AuthRedirectAction extends BaseSamlStrutsAction {
 	}
 
 	@Override
-	protected String doExecute(
+	protected void doProcessAction(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
-		redirect = _portal.escapeRedirect(redirect);
+		redirect = portal.escapeRedirect(redirect);
 
 		if (Validator.isNull(redirect)) {
-			redirect = _portal.getHomeURL(httpServletRequest);
+			redirect = portal.getHomeURL(httpServletRequest);
 		}
 
-		try {
-			httpServletResponse.sendRedirect(redirect);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
-
-		return null;
+		httpServletResponse.sendRedirect(redirect);
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -16,9 +16,12 @@ package com.liferay.dataset.content.renderer;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface DatasetContentRendererContextContributorRegistry {
 
 	public List<DatasetContentRendererContextContributor>

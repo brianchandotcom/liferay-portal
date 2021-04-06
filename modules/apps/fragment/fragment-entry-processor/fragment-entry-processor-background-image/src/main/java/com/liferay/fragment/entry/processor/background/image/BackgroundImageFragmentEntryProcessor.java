@@ -20,6 +20,7 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -90,7 +91,7 @@ public class BackgroundImageFragmentEntryProcessor
 
 		Document document = _getDocument(html);
 
-		Map<Long, Map<String, Object>> infoDisplaysFieldValues =
+		Map<Long, InfoItemFieldValues> infoDisplaysFieldValues =
 			new HashMap<>();
 
 		for (Element element :
@@ -247,7 +248,7 @@ public class BackgroundImageFragmentEntryProcessor
 
 	private Object _getFieldValue(
 			JSONObject editableValueJSONObject,
-			Map<Long, Map<String, Object>> infoDisplaysFieldValues,
+			Map<Long, InfoItemFieldValues> infoDisplaysFieldValues,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
@@ -268,7 +269,7 @@ public class BackgroundImageFragmentEntryProcessor
 		else if (_fragmentEntryProcessorHelper.isMapped(
 					editableValueJSONObject)) {
 
-			return _fragmentEntryProcessorHelper.getMappedValue(
+			return _fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
 				editableValueJSONObject, infoDisplaysFieldValues,
 				fragmentEntryProcessorContext);
 		}

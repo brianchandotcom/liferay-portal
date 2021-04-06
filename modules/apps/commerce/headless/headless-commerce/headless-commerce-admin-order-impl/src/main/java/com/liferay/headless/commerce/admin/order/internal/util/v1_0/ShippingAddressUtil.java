@@ -107,20 +107,20 @@ public class ShippingAddressUtil {
 			ShippingAddress shippingAddress)
 		throws Exception {
 
-		if (Validator.isNull(shippingAddress.getRegionISOCode()) &&
-			(commerceAddress != null)) {
+		if (Validator.isNotNull(shippingAddress.getRegionISOCode()) &&
+			(country != null)) {
 
+			Region region = RegionLocalServiceUtil.getRegion(
+				country.getCountryId(), shippingAddress.getRegionISOCode());
+
+			return region.getRegionId();
+		}
+
+		if (commerceAddress != null) {
 			return commerceAddress.getRegionId();
 		}
 
-		if (country == null) {
-			return 0;
-		}
-
-		Region region = RegionLocalServiceUtil.getRegion(
-			country.getCountryId(), shippingAddress.getRegionISOCode());
-
-		return region.getRegionId();
+		return 0;
 	}
 
 	private static String _getStreet2(CommerceAddress commerceAddress) {

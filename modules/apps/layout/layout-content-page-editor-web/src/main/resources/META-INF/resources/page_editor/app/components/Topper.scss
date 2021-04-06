@@ -196,7 +196,6 @@
 	&__drag-icon {
 		cursor: grab;
 		height: 16px;
-		top: 1px;
 		width: 16px;
 	}
 
@@ -204,6 +203,7 @@
 		fill: $color;
 		padding: 0;
 		position: relative;
+		top: 1px;
 	}
 
 	&__item {
@@ -215,7 +215,7 @@
 		font-family: $font-family-base;
 		font-weight: 600;
 		margin-right: 8px;
-		min-width: 44px;
+		min-width: 1ch;
 		overflow: hidden;
 		text-align: left;
 		text-overflow: ellipsis;

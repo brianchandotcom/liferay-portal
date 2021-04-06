@@ -88,8 +88,15 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField4);
 
+		DDMFormField ddmFormField5 = DDMFormTestUtil.createTextDDMFormField(
+			"Field5", false, false, false);
+
+		ddmFormField5.setProperty("requireConfirmation", true);
+
+		ddmForm.addDDMFormField(ddmFormField5);
+
 		Set<String> expectedEvaluableFieldNames = SetUtil.fromArray(
-			new String[] {"Field0", "Field2", "Field4"});
+			new String[] {"Field0", "Field2", "Field4", "Field5"});
 
 		Set<String> actualEvaluableFieldNames =
 			_ddmFormTemplateContextFactoryHelper.getEvaluableDDMFormFieldNames(

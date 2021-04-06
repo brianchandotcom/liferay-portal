@@ -75,15 +75,15 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		DataEngine.checkNonLocalizableFields(
+		DataEngine.assertNonLocalizableField(
 			fieldContent = "123",
 			fieldFieldName = "Numeric");
 
-		DataEngine.checkNonLocalizableFields(
+		DataEngine.assertNonLocalizableField(
 			fieldContent = "This is a text field",
 			fieldFieldName = "Text");
 
-		DataEngine.checkNonLocalizableFields(
+		DataEngine.assertNonLocalizableField(
 			fieldContent = "30/03/2021",
 			fieldFieldName = "Date");
 	}

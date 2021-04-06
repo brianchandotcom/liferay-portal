@@ -657,7 +657,7 @@ definition {
 			locator1 = "WCEditWebContent#REPEATED_FIELD");
 	}
 
-	macro checkNonLocalizableFields {
+	macro assertNonLocalizableField {
 		key_fieldName = "${fieldFieldName}";
 
 		AssertTextEquals(

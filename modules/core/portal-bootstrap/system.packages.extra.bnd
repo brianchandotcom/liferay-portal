@@ -166,13 +166,17 @@ Export-Package:\
 	javax.xml.ws.wsaddressing;version='2.4.0',\
 	javax.xml.xpath.*;version='1.4',\
 	\
-	jodd.bean.*;version='3.6.4',\
+	jodd.bean.*;version='6.0.1',\
 	\
-	jodd.exception.*;version='3.6.4',\
+	jodd.exception.*;version='6.0.1',\
 	\
-	jodd.io.*;version='3.6.4',\
+	jodd.io.*;version='6.0.1',\
 	\
-	jodd.util.*;version='3.6.4',\
+	jodd.net.*;version='6.0.1',\
+	\
+	jodd.time.*;version='6.0.1',\
+	\
+	jodd.util.*;version='6.0.1',\
 	\
 	org.apache.bcel.*;version='2.7.1',\
 	org.apache.commons.beanutils;version='1.9.4',\
@@ -338,10 +342,9 @@ Provide-Capability:\
 	@../../../lib/portal/jaxen.jar,\
 	@../../../lib/portal/jaxrpc.jar,\
 	@../../../lib/portal/jdom.jar!/org/**,\
-	@../../../lib/portal/jodd-bean.jar,\
-	@../../../lib/portal/jodd-core.jar,\
 	@../../../lib/portal/jodd-json.jar,\
 	@../../../lib/portal/jodd-proxetta.jar,\
+	@../../../lib/portal/jodd-util.jar,\
 	@../../../lib/portal/json-java.jar,\
 	@../../../lib/portal/liferay-icu4j.jar,\
 	@../../../lib/portal/log4j-1.2-api.jar,\

@@ -3,7 +3,7 @@ dependencies {
 	compileOnly project(":apps:portal-crypto-hash:portal-crypto-hash-api")
 	compileOnly project(":apps:portal-crypto-hash:portal-crypto-hash-spi")
 
-	testCompile group: "org.jodd", name: "jodd-core", version: "5.0.13"
+	testCompile group: "com.liferay", name: "jodd.util", version: "6.0.1.LIFERAY-PATCHED-1"
 	testCompile project(":apps:portal-crypto-hash:portal-crypto-hash-provider:portal-crypto-hash-provider-bcrypt")
 	testCompile project(":apps:portal-crypto-hash:portal-crypto-hash-provider:portal-crypto-hash-provider-message-digest")
 }

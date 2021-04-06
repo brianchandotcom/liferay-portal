@@ -183,10 +183,9 @@
 /portal/jmatio.jar
 /portal/jna.jar
 /portal/jodconverter.jar
-/portal/jodd-bean.jar
-/portal/jodd-core.jar
 /portal/jodd-json.jar
 /portal/jodd-proxetta.jar
+/portal/jodd-util.jar
 /portal/json-java.jar
 /portal/jrcs-diff.jar
 /portal/jsr107cache.jar

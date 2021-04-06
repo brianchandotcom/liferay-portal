@@ -35,6 +35,7 @@
 					editorName="<%= editorName %>"
 					name="<%= inputEditorName %>"
 					onChangeMethod='<%= randomNamespace + "onChangeEditor" %>'
+					onInitMethod='<%= randomNamespace + "onInitEditor" %>'
 					placeholder="<%= placeholder %>"
 					toolbarSet="<%= toolbarSet %>"
 				/>
@@ -46,6 +47,14 @@
 						var editor = window['<%= namespace + HtmlUtil.escapeJS(inputEditorName) %>'];
 
 						inputLocalized.updateInputLanguage(editor.getHTML());
+					}
+
+					function <%= namespace + randomNamespace %>onInitEditor() {
+						var inputLocalized = Liferay.component('<%= namespace + HtmlUtil.escapeJS(fieldName) %>');
+
+						var editor = window['<%= namespace + HtmlUtil.escapeJS(inputEditorName) %>'];
+
+						inputLocalized.updateInputPlaceholder(editor);
 					}
 				</aui:script>
 			</c:when>

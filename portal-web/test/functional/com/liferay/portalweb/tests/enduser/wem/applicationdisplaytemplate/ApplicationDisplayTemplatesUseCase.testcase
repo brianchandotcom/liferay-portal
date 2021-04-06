@@ -325,6 +325,59 @@ definition {
 			vocabularyNameList = "Topic,Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3");
 	}
 
+	@description = "This is a use case for LPS-71944."
+	@priority = "5"
+	test ADTChangeTemplatePortletPreferencesMethodContracts {
+		property testray.component.names = "Asset Publisher,Content and Application Templates";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "global");
+
+		ProductMenu.gotoPortlet(
+			category = "Design",
+			portlet = "Widget Templates");
+
+		ApplicationDisplayTemplates.searchGlobalADT(templateName = "Rich Summary");
+
+		ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
+			item = "Edit",
+			widgetTemplateName = "Rich Summary");
+
+		var script = '''
+<@liferay_portlet["runtime"]
+	defaultPreferences="${freeMarkerPortletPreferences}"
+	instanceId="whateverV1"
+	portletProviderAction=portletProviderAction.VIEW
+	portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"/>
+				''';
+
+		ApplicationDisplayTemplates.editADTScript(adtScript = "${script}");
+
+		Navigator.gotoSitePage(
+			pageName = "ADT Test Page",
+			siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Configuration");
+
+		AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Rich Summary");
+
+		AssertElementPresent(
+			key_portletName = "Breadcrumb",
+			locator1 = "Portlet#TITLE");
+
+		AssertConsoleTextNotPresent(value1 = "UnexpectedCharException");
+	}
+
 	@priority = "3"
 	test ADTSiteMap {
 		property testray.component.names = "Content and Application Templates,Sitemap";

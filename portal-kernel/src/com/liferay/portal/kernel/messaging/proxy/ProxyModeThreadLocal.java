@@ -41,6 +41,6 @@ public class ProxyModeThreadLocal {
 
 	private static final CentralizedThreadLocal<Boolean> _forceSync =
 		new CentralizedThreadLocal<>(
-			ProxyModeThreadLocal.class + "_forceSync", () -> Boolean.FALSE);
+			ProxyModeThreadLocal.class + "_forceSync", () -> Boolean.TRUE);
 
 }

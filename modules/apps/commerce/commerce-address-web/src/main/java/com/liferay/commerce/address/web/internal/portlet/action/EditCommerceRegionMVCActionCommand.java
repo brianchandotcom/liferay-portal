@@ -125,9 +125,9 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 		long regionId = ParamUtil.getLong(actionRequest, "regionId");
 
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-		String code = ParamUtil.getString(actionRequest, "code");
+		String regionCode = ParamUtil.getString(actionRequest, "regionCode");
 		String name = ParamUtil.getString(actionRequest, "name");
-		double priority = ParamUtil.getDouble(actionRequest, "priority");
+		double position = ParamUtil.getDouble(actionRequest, "position");
 
 		Region region = null;
 
@@ -135,13 +135,13 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 			long countryId = ParamUtil.getLong(actionRequest, "countryId");
 
 			region = _regionService.addRegion(
-				countryId, active, name, priority, code,
+				countryId, active, name, position, regionCode,
 				ServiceContextFactory.getInstance(
 					Region.class.getName(), actionRequest));
 		}
 		else {
 			region = _regionService.updateRegion(
-				regionId, active, name, priority, code);
+				regionId, active, name, position, regionCode);
 		}
 
 		return region;

@@ -46,11 +46,9 @@ definition {
 			fieldName = "Date",
 			targetFieldLabel = "Text");
 
-		DataEngine.editFieldLocalizable(fieldFieldLabel = "Text");
-
-		DataEngine.editFieldLocalizable(fieldFieldLabel = "Date");
-
-		DataEngine.editFieldLocalizable(fieldFieldLabel = "Numeric");
+		for (var fieldFieldLabel : list "Text,Date,Numeric") {
+			DataEngine.editFieldLocalizable(fieldFieldLabel = "${fieldFieldLabel}");
+		}
 
 		WebContentStructures.saveCP();
 
@@ -75,11 +73,9 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		DataEngine.assertNonLocalizableField(fieldFieldName = "Numeric");
-
-		DataEngine.assertNonLocalizableField(fieldFieldName = "Text");
-
-		DataEngine.assertNonLocalizableField(fieldFieldName = "Date");
+		for (var fieldFieldLabel : list "Text,Date,Numeric") {
+			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldLabel}");
+		}
 	}
 
 	@description = "This test ensures that is possible to translate fields with Localizable set as true."

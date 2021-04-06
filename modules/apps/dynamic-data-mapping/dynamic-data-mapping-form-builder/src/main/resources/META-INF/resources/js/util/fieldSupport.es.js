@@ -23,6 +23,97 @@ import {
 import {updateField} from '../components/LayoutProvider/util/settingsContext.es';
 import {FIELD_TYPE_FIELDSET} from './constants.es';
 
+export const addField = ({
+	defaultLanguageId,
+	editingLanguageId,
+	fieldNameGenerator,
+	generateFieldNameUsingFieldLabel,
+	indexes,
+	newField,
+	pages,
+	parentFieldName,
+}) => {
+	const {columnIndex, pageIndex, rowIndex} = indexes;
+
+	let newPages;
+
+	if (parentFieldName) {
+		const visitor = new PagesVisitor(pages);
+
+		newPages = visitor.mapFields(
+			(field) => {
+				if (field.fieldName === parentFieldName) {
+					const nestedFields = field.nestedFields
+						? [...field.nestedFields, newField]
+						: [newField];
+
+					field = updateField(
+						{
+							defaultLanguageId,
+							editingLanguageId,
+							fieldNameGenerator,
+							generateFieldNameUsingFieldLabel,
+						},
+						field,
+						'nestedFields',
+						nestedFields
+					);
+
+					const {rows} = field;
+					const pages = FormSupport.addFieldToColumn(
+						[
+							{
+								rows:
+									typeof rows === 'string'
+										? JSON.parse(rows)
+										: rows,
+							},
+						], // TODO: Check if row can be a string
+						0,
+						rowIndex,
+						columnIndex,
+						newField.fieldName
+					);
+
+					return updateField(
+						{
+							defaultLanguageId,
+							editingLanguageId,
+							fieldNameGenerator,
+							generateFieldNameUsingFieldLabel,
+						},
+						field,
+						'rows',
+						pages[0].rows
+					);
+				}
+
+				return field;
+			},
+			true,
+			true
+		);
+	}
+	else {
+		newPages = FormSupport.addFieldToColumn(
+			pages,
+			pageIndex,
+			rowIndex,
+			columnIndex,
+			newField
+		);
+	}
+
+	return {
+		activePage: pageIndex,
+		focusedField: {
+			...newField,
+		},
+		pages: newPages,
+		previousFocusedField: newField,
+	};
+};
+
 export const generateId = (length, allowOnlyNumbers = false) => {
 	let text = '';
 

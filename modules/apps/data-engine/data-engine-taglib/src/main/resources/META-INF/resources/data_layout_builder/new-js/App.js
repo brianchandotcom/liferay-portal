@@ -36,6 +36,7 @@ import {FormBuilder} from './FormBuilder';
 import INITIAL_CONFIG from './config/initialConfig';
 import INITIAL_STATE from './config/initialState';
 import {useData} from './hooks/useData';
+import fieldSetReducer from './reducers/fieldSetReducer';
 import rulesReducer from './reducers/rulesReducer';
 import sidebarReducer from './reducers/sidebarReducer';
 
@@ -66,6 +67,7 @@ const App = (props) => {
 							dataLayoutReducer,
 							dragAndDropReducer,
 							fieldEditableReducer,
+							fieldSetReducer,
 							languageReducer,
 							pageReducer,
 							pagesStructureReducer,

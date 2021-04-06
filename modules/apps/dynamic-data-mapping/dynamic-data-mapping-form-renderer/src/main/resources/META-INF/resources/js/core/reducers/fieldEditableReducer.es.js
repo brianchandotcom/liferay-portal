@@ -13,7 +13,6 @@
  */
 
 import {
-	FieldSetUtil,
 	FieldSupport,
 	FieldUtil,
 	RulesSupport,
@@ -25,77 +24,6 @@ import sectionAdded from 'dynamic-data-mapping-form-builder/js/components/Layout
 import * as FormSupport from '../../util/FormSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
-
-export const addField = ({
-	defaultLanguageId,
-	editingLanguageId,
-	fieldNameGenerator,
-	generateFieldNameUsingFieldLabel,
-	indexes,
-	newField,
-	pages,
-	parentFieldName,
-}) => {
-	const {columnIndex, pageIndex, rowIndex} = indexes;
-
-	if (parentFieldName) {
-		const visitor = new PagesVisitor(pages);
-
-		return visitor.mapFields(
-			(field) => {
-				if (field.fieldName === parentFieldName) {
-					const nestedFields = field.nestedFields
-						? [...field.nestedFields, newField]
-						: [newField];
-
-					field = SettingsContext.updateField(
-						{
-							defaultLanguageId,
-							editingLanguageId,
-							fieldNameGenerator,
-							generateFieldNameUsingFieldLabel,
-						},
-						field,
-						'nestedFields',
-						nestedFields
-					);
-
-					const pages = FormSupport.addFieldToColumn(
-						[{rows: field.rows}],
-						0,
-						rowIndex,
-						columnIndex,
-						newField.fieldName
-					);
-
-					return SettingsContext.updateField(
-						{
-							defaultLanguageId,
-							editingLanguageId,
-							fieldNameGenerator,
-							generateFieldNameUsingFieldLabel,
-						},
-						field,
-						'rows',
-						pages[0].rows
-					);
-				}
-
-				return field;
-			},
-			true,
-			true
-		);
-	}
-
-	return FormSupport.addFieldToColumn(
-		pages,
-		pageIndex,
-		rowIndex,
-		columnIndex,
-		newField
-	);
-};
 
 export const deleteField = ({
 	clean = false,
@@ -229,7 +157,7 @@ export default (state, action, config) => {
 				},
 			};
 
-			const newPages = addField({
+			return FieldSupport.addField({
 				defaultLanguageId,
 				editingLanguageId,
 				fieldNameGenerator,
@@ -239,15 +167,6 @@ export default (state, action, config) => {
 				pages,
 				parentFieldName,
 			});
-
-			return {
-				activePage: indexes.pageIndex,
-				focusedField: {
-					...newField,
-				},
-				pages: newPages,
-				previousFocusedField: newField,
-			};
 		}
 		case EVENT_TYPES.FIELD.BLUR: {
 			const {propertyName, propertyValue} = action.payload;
@@ -531,136 +450,6 @@ export default (state, action, config) => {
 					...newField,
 				},
 				pages: newPages,
-			};
-		}
-		case EVENT_TYPES.FIELD_SET.ADD: {
-			const {
-				fieldSet,
-				indexes,
-				parentFieldName,
-				properties,
-				rows,
-				useFieldName,
-			} = action.payload;
-			const {
-				availableLanguageIds,
-				defaultLanguageId,
-				editingLanguageId,
-				pages,
-			} = state;
-			const {
-				generateFieldNameUsingFieldLabel,
-				getFieldNameGenerator,
-			} = config;
-
-			const fieldNameGenerator = getFieldNameGenerator(
-				pages,
-				generateFieldNameUsingFieldLabel
-			);
-
-			const visitor = new PagesVisitor(fieldSet.pages);
-			const nestedFields = [];
-
-			visitor.mapFields((nestedField) => {
-				nestedFields.push(
-					SettingsContext.updateField(
-						{
-							availableLanguageIds,
-							defaultLanguageId,
-							fieldNameGenerator,
-							generateFieldNameUsingFieldLabel,
-						},
-						nestedField,
-						'label',
-						nestedField.label
-					)
-				);
-			});
-
-			let fieldSetField = FieldSetUtil.createFieldSet(
-				{
-					availableLanguageIds,
-					defaultLanguageId,
-					editingLanguageId,
-					fieldNameGenerator,
-					generateFieldNameUsingFieldLabel,
-				},
-				{skipFieldNameGeneration: false, useFieldName},
-				nestedFields
-			);
-
-			if (properties) {
-				Object.keys(properties).forEach((key) => {
-					fieldSetField = SettingsContext.updateField(
-						{
-							availableLanguageIds,
-							defaultLanguageId,
-							fieldNameGenerator,
-							generateFieldNameUsingFieldLabel,
-						},
-						fieldSetField,
-						key,
-						properties[key]
-					);
-				});
-			}
-
-			if (fieldSet.id) {
-				fieldSetField = SettingsContext.updateField(
-					{
-						availableLanguageIds,
-						defaultLanguageId,
-						fieldNameGenerator,
-						generateFieldNameUsingFieldLabel,
-					},
-					fieldSetField,
-					'ddmStructureId',
-					fieldSet.id
-				);
-			}
-
-			if (rows && rows.length) {
-				fieldSetField = SettingsContext.updateField(
-					{
-						availableLanguageIds,
-						defaultLanguageId,
-						fieldNameGenerator,
-						generateFieldNameUsingFieldLabel,
-					},
-					fieldSetField,
-					'rows',
-					rows
-				);
-			}
-
-			const newField = SettingsContext.updateField(
-				{
-					availableLanguageIds,
-					defaultLanguageId,
-					fieldNameGenerator,
-					generateFieldNameUsingFieldLabel,
-				},
-				fieldSetField,
-				'label',
-				fieldSet.localizedTitle
-			);
-
-			return {
-				activePage: indexes.pageIndex,
-				focusedField: {
-					...newField,
-				},
-				pages: addField({
-					defaultLanguageId,
-					editingLanguageId,
-					fieldNameGenerator,
-					generateFieldNameUsingFieldLabel,
-					indexes,
-					newField,
-					pages,
-					parentFieldName,
-				}),
-				previousFocusedField: newField,
 			};
 		}
 		case EVENT_TYPES.FIELD.EVALUATE: {

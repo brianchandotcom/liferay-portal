@@ -23,11 +23,13 @@ import {
 } from 'dynamic-data-mapping-form-renderer';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
 import fieldDelete from 'dynamic-data-mapping-form-renderer/js/core/thunks/fieldDelete.es';
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import MultiPanelSidebar from '../js/components/sidebar/MultiPanelSidebar.es';
 import initializeSidebarConfig from '../js/components/sidebar/initializeSidebarConfig.es';
 import DragLayer from '../js/drag-and-drop/DragLayer.es';
+import {getItem} from '../js/utils/client.es';
+import {EVENT_TYPES} from './eventTypes';
 
 const SIDEBAR_INITIAL_STATE = {
 	sidebarOpen: true,
@@ -39,7 +41,12 @@ export const FormBuilder = () => {
 	const [{onClose}, modalDispatch] = useContext(ModalContext);
 	const {rules, sidebarPanels: initialSidebarPanels} = useFormState();
 
-	const {portletNamespace} = useConfig();
+	const {
+		allowFieldSets,
+		contentType,
+		groupId,
+		portletNamespace,
+	} = useConfig();
 
 	const [sidebarState, setSidebarState] = useState(SIDEBAR_INITIAL_STATE);
 
@@ -51,6 +58,50 @@ export const FormBuilder = () => {
 			}),
 		[initialSidebarPanels, portletNamespace]
 	);
+
+	useEffect(() => {
+		if (allowFieldSets && contentType) {
+			let globalFieldSetsPromise = [];
+
+			if (groupId) {
+				globalFieldSetsPromise = getItem(
+					`/o/data-engine/v2.0/sites/${groupId}/data-definitions/by-content-type/${contentType}`
+				);
+			}
+
+			const groupFieldSetsPromise = getItem(
+				`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}`
+			);
+
+			const fetchFieldSets = async () => {
+				try {
+					const [
+						{items: globalFieldSets = []},
+						{items: groupFieldSets = []},
+					] = await Promise.all([
+						globalFieldSetsPromise,
+						groupFieldSetsPromise,
+					]);
+
+					dispatch({
+						payload: {
+							fieldSets: [...globalFieldSets, ...groupFieldSets],
+						},
+						type: EVENT_TYPES.FIELD_SET.UPDATE,
+					});
+				}
+				catch (error) {
+					if (process.env.NODE_ENV === 'development') {
+						console.warn(
+							`[DataEngineFormBuilder] fetchFieldSets promise rejected: ${error}`
+						);
+					}
+				}
+			};
+
+			fetchFieldSets();
+		}
+	}, [allowFieldSets, contentType, dispatch, groupId]);
 
 	return (
 		<div

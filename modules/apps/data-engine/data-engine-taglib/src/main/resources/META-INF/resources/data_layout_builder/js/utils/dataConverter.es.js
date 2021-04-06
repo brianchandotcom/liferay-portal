@@ -24,31 +24,30 @@ import {
 
 export function getDataDefinitionFieldSet({
 	allowInvalidAvailableLocalesForProperty,
-	availableLanguageIds,
+	availableLanguageIds = [],
 	defaultLanguageId,
 	editingLanguageId,
 	fieldSet,
 	fieldTypes,
 }) {
-	const dataLayoutPages = (
-		fieldSet.defaultDataLayout || getDefaultDataLayout(fieldSet)
-	).dataLayoutPages;
-
 	if (!availableLanguageIds.includes(defaultLanguageId)) {
 		availableLanguageIds = [...availableLanguageIds, defaultLanguageId];
 	}
 
+	const {dataLayoutPages} =
+		fieldSet.defaultDataLayout || getDefaultDataLayout(fieldSet);
+
+	const fieldSetDDMForm = getFieldSetDDMForm({
+		allowInvalidAvailableLocalesForProperty,
+		availableLanguageIds,
+		editingLanguageId,
+		fieldSet,
+		fieldTypes,
+	});
+
 	return {
-		fieldSet: getFieldSetDDMForm({
-			allowInvalidAvailableLocalesForProperty,
-			availableLanguageIds,
-			editingLanguageId,
-			fieldSet,
-			fieldTypes,
-		}),
-		...(fieldSet.id && {
-			rows: normalizeDataLayoutRows(dataLayoutPages),
-		}),
+		fieldSet: fieldSetDDMForm,
+		rows: fieldSet.id && normalizeDataLayoutRows(dataLayoutPages),
 	};
 }
 

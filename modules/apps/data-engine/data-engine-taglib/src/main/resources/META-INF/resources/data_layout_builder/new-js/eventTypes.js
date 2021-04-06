@@ -12,6 +12,11 @@
  * details.
  */
 
+const FIELD_SET = {
+	ADD: 'fieldset_add',
+	UPDATE: 'fieldset_update',
+};
+
 const SIDEBAR = {
 	FIELD: {BLUR: 'sidebar_field_blur'},
 };
@@ -23,6 +28,7 @@ const RULE = {
 };
 
 export const EVENT_TYPES = {
+	FIELD_SET,
 	RULE,
 	SIDEBAR,
 };

@@ -15,8 +15,8 @@
 import {useConfig} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
-import FieldSets from '../../../../js/components/field-sets/FieldSets.es';
 import Sidebar from '../../../../js/components/sidebar/Sidebar.es';
+import FieldSetList from '../../../components/field-sets/FieldSetList';
 import FieldTypeList from '../../../components/field-types/FieldTypeList.es';
 
 export default function FieldsSidebarBody({keywords, setKeywords}) {
@@ -32,7 +32,7 @@ export default function FieldsSidebarBody({keywords, setKeywords}) {
 	if (allowFieldSets) {
 		sidebarTabs.push({
 			label: Liferay.Language.get('fieldsets'),
-			render: () => <FieldSets keywords={keywords} />,
+			render: () => <FieldSetList serachTerm={keywords} />,
 		});
 	}
 

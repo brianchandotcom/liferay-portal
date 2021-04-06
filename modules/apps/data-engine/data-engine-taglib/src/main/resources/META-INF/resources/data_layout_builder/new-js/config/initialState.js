@@ -20,6 +20,7 @@ const INITIAL_STATE = {
 	dataDefinitionId: 0,
 	dataLayoutId: 0,
 	editingDataDefinitionId: 0,
+	fieldSets: [],
 	name: {},
 };
 

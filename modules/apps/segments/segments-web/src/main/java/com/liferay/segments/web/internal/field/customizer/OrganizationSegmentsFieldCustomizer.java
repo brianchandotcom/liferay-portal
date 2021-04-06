@@ -14,20 +14,23 @@
 
 package com.liferay.segments.web.internal.field.customizer;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -87,21 +90,23 @@ public class OrganizationSegmentsFieldCustomizer
 	@Override
 	public Field.SelectEntity getSelectEntity(PortletRequest portletRequest) {
 		try {
+			OrganizationItemSelectorCriterion
+				organizationItemSelectorCriterion =
+					new OrganizationItemSelectorCriterion();
+
+			organizationItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				Collections.singletonList(new UUIDItemSelectorReturnType()));
+
 			return new Field.SelectEntity(
 				"selectEntity",
 				getSelectEntityTitle(
 					_portal.getLocale(portletRequest),
 					Organization.class.getName()),
 				PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						portletRequest, SegmentsPortletKeys.SEGMENTS,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/segments/select_organizations"
-				).setParameter(
-					"eventName", "selectEntity"
-				).setWindowState(
-					LiferayWindowState.POP_UP
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							portletRequest),
+						"selectEntity", organizationItemSelectorCriterion)
 				).buildString(),
 				true);
 		}
@@ -129,6 +134,9 @@ public class OrganizationSegmentsFieldCustomizer
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
 		"organizationId", "parentOrganizationId");
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

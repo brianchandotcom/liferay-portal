@@ -38,10 +38,8 @@ import java.text.Format;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -75,7 +73,6 @@ public class GetCTCommentsMVCResourceCommand extends BaseMVCResourceCommand {
 	protected JSONObject getCTCommentsJSONObject(
 		ResourceRequest resourceRequest) {
 
-		Set<Long> ctCommentIds = new HashSet<>();
 		JSONArray commentsJSONArray = JSONFactoryUtil.createJSONArray();
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -92,8 +89,6 @@ public class GetCTCommentsMVCResourceCommand extends BaseMVCResourceCommand {
 			ctEntryId, Collections.emptyList());
 
 		for (CTComment ctComment : ctComments) {
-			ctCommentIds.add(ctComment.getCtCommentId());
-
 			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
@@ -125,15 +120,18 @@ public class GetCTCommentsMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONObject ctCommentsJSONObject = JSONUtil.put(
 			"comments", commentsJSONArray);
 
-		if (!ctCommentIds.isEmpty()) {
+		if (!ctComments.isEmpty()) {
 			ctCommentsJSONObject.put(
 				"userInfo",
 				DisplayContextUtil.getUserInfoJSONObject(
 					CTCommentTable.INSTANCE.userId.eq(
 						UserTable.INSTANCE.userId),
 					CTCommentTable.INSTANCE, themeDisplay, userLocalService,
-					CTCommentTable.INSTANCE.ctCommentId.in(
-						ctCommentIds.toArray(new Long[0]))));
+					CTCommentTable.INSTANCE.ctCollectionId.eq(
+						ctCollectionId
+					).and(
+						CTCommentTable.INSTANCE.ctEntryId.eq(ctEntryId)
+					)));
 		}
 
 		return ctCommentsJSONObject;

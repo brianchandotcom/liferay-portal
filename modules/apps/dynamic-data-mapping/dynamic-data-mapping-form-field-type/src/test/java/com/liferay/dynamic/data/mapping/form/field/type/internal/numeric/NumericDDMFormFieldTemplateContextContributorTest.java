@@ -17,15 +17,20 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.util.HtmlImpl;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -39,6 +44,40 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class NumericDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_setUpHtmlUtil();
+	}
+
+	@Test
+	public void testGetConfirmationFieldProperties() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+
+		ddmFormField.setProperty(
+			"confirmationErrorMessage",
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"The information does not match", _locale));
+		ddmFormField.setProperty(
+			"confirmationLabel",
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"Confirm Field", _locale));
+		ddmFormField.setProperty("requireConfirmation", true);
+
+		Map<String, Object> parameters =
+			_numericDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, _createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals(
+			"The information does not match",
+			parameters.get("confirmationErrorMessage"));
+		Assert.assertEquals(
+			"Confirm Field", parameters.get("confirmationLabel"));
+		Assert.assertEquals(true, parameters.get("requireConfirmation"));
+	}
 
 	@Test
 	public void testGetDataType1() {
@@ -118,6 +157,22 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(".", separatorSymbolsMap.get("thousandsSeparator"));
 	}
 
+	private DDMFormFieldRenderingContext _createDDMFormFieldRenderingContext() {
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setLocale(_locale);
+
+		return ddmFormFieldRenderingContext;
+	}
+
+	private void _setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
+	}
+
+	private final Locale _locale = LocaleUtil.US;
 	private final NumericDDMFormFieldTemplateContextContributor
 		_numericDDMFormFieldTemplateContextContributor =
 			new NumericDDMFormFieldTemplateContextContributor();

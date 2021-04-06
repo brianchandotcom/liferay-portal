@@ -10,7 +10,6 @@ Export-Package:\
 	com.liferay.dataset.filter.checkbox,\
 	com.liferay.dataset.filter.date,\
 	com.liferay.dataset.filter.radio,\
-	com.liferay.dataset.model,\
 	com.liferay.dataset.view.cards,\
 	com.liferay.dataset.view.list,\
 	com.liferay.dataset.view.table,\

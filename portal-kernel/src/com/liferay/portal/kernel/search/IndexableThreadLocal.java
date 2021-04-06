@@ -19,7 +19,9 @@ import com.liferay.petra.lang.SafeClosable;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class IndexableThreadLocal {
 
 	public static boolean isForceSync() {

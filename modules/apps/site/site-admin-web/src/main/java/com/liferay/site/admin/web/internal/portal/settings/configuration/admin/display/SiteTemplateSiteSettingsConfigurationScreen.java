@@ -15,7 +15,6 @@
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,18 +28,19 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
+
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -153,9 +153,6 @@ public class SiteTemplateSiteSettingsConfigurationScreen
 		}
 	}
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
-	private ServletContext _servletContext;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteTemplateSiteSettingsConfigurationScreen.class);
 
@@ -164,5 +161,8 @@ public class SiteTemplateSiteSettingsConfigurationScreen
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
+	private ServletContext _servletContext;
 
 }

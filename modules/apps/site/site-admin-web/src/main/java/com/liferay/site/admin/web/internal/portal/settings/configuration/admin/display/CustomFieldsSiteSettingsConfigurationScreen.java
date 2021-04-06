@@ -12,70 +12,78 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.frontend.taglib.form.navigator;
+package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
+import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
+import java.io.IOException;
+
 import java.util.Locale;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
-@Component(
-	property = "form.navigator.entry.order:Integer=50",
-	service = FormNavigatorEntry.class
-)
-public class SiteCustomFieldsFormNavigatorEntry
-	extends BaseSiteFormNavigatorEntry {
+@Component(service = ConfigurationScreen.class)
+public class CustomFieldsSiteSettingsConfigurationScreen
+	implements ConfigurationScreen {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_GENERAL;
+		return "other";
 	}
 
 	@Override
 	public String getKey() {
-		return "custom-fields";
+		return "site-configuration-custom-fields";
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
+	public String getName(Locale locale) {
 		return LanguageUtil.get(locale, "custom-fields");
 	}
 
 	@Override
-	public boolean isVisible(User user, Group group) {
-		if ((group == null) || group.isCompany()) {
+	public String getScope() {
+		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
+	}
+
+	@Override
+	public boolean isVisible() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		if ((siteGroup == null) || siteGroup.isCompany()) {
 			return false;
 		}
 
 		boolean hasCustomAttributesAvailable = false;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
 			hasCustomAttributesAvailable =
 				CustomAttributesUtil.hasCustomAttributes(
 					themeDisplay.getCompanyId(), Group.class.getName(),
-					group.getGroupId(), null);
+					siteGroup.getGroupId(), null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -91,20 +99,27 @@ public class SiteCustomFieldsFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
 
-	@Override
-	protected String getJspPath() {
-		return "/site/custom_fields.jsp";
+		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/edit_custom_fields.jsp");
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			throw new IOException(
+				"Unable to render edit_custom_fields.jsp", exception);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SiteCustomFieldsFormNavigatorEntry.class);
+		CustomFieldsSiteSettingsConfigurationScreen.class);
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
+	private ServletContext _servletContext;
 
 }

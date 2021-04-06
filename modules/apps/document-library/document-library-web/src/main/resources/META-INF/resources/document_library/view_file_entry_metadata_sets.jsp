@@ -27,9 +27,7 @@ DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayCont
 	propsTransformer="document_library/js/DDMStructuresManagementToolbarPropsTransformer"
 />
 
-<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/document_library/delete_data_definition" var="deleteDataDefinitionURL">
-	<portlet:param name="mvcPath" value="/view_file_entry_metadata_sets.jsp" />
-</portlet:actionURL>
+<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/document_library/delete_data_definition" var="deleteDataDefinitionURL" />
 
 <aui:form action="<%= deleteDataDefinitionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

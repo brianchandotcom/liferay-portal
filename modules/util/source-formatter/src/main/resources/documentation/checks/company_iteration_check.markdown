@@ -16,7 +16,7 @@ for (Company company : companies) {
 	_commerceAccountGroupLocalService.
 		checkGuestCommerceAccountGroup(company.getCompanyId());
 }
-```	
+```
 
 We should do:
 ```java
@@ -25,7 +25,7 @@ _companyLocalService.forEachCompanyId(
 		_commerceAccountGroupLocalService.
 			checkGuestCommerceAccountGroup(companyId));
 	}
-```		
+```
 #### Example 2
 
 Instead of:
@@ -34,13 +34,13 @@ public void cleanUp(String... companyIds) {
 	for (long companyId : companyIds) {
 		_cleanUp(companyId);
 	}
-}	
-```	
+}
+```
 
 We should do:
 ```java
 public void cleanUp(String... companyIds) {
 	_companyLocalService.forEachCompanyId(
 		companyId -> _cleanUp(companyId), companyIds);
-}	
-```		
+}
+```

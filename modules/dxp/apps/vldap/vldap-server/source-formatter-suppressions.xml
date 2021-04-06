@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
-  
+
 <suppressions>
-        <checkstyle>
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/CommunitiesBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/CommunityBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/CompanyBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/OrganizationBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/OrganizationsBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/RoleBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/RolesBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/SambaGroupBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/SambaMachineBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/UserBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/UserGroupBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/UserGroupsBuilder.java" />
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/UsersBuilder.java" />
-        </checkstyle>
+	<checkstyle>
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/CommunitiesBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/CommunityBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/CompanyBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/OrganizationBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/OrganizationsBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/RoleBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/RolesBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/SambaGroupBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/SambaMachineBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/UserBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/UserGroupBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/UserGroupsBuilder.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/vldap/server/internal/directory/builder/UsersBuilder.java" />
+	</checkstyle>
 </suppressions>

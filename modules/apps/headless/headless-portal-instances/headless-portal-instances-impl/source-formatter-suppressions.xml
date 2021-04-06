@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-  
+
 <suppressions>
-        <checkstyle>
-                <suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/headless/portal/instances/internal/resource/v1_0/PortalInstanceResourceImpl.java" />
-        </checkstyle>
+	<checkstyle>
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/headless/portal/instances/internal/resource/v1_0/PortalInstanceResourceImpl.java" />
+	</checkstyle>
 </suppressions>

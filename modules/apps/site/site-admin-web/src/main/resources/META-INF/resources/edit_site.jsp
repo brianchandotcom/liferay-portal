@@ -45,8 +45,6 @@ Group stagingGroup = null;
 
 long stagingGroupId = 0;
 
-UnicodeProperties liveGroupTypeSettings = null;
-
 if (group != null) {
 	if (group.isStagingGroup()) {
 		liveGroup = group.getLiveGroup();
@@ -66,11 +64,6 @@ if (group != null) {
 	if (stagingGroup != null) {
 		stagingGroupId = stagingGroup.getGroupId();
 	}
-
-	liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
-}
-else {
-	liveGroupTypeSettings = new UnicodeProperties();
 }
 
 LayoutSetPrototype layoutSetPrototype = null;
@@ -105,7 +98,6 @@ if (layoutSetPrototypeId > 0) {
 	request.setAttribute("site.layoutSetPrototype", layoutSetPrototype);
 	request.setAttribute("site.liveGroup", liveGroup);
 	request.setAttribute("site.liveGroupId", Long.valueOf(liveGroupId));
-	request.setAttribute("site.liveGroupTypeSettings", liveGroupTypeSettings);
 	request.setAttribute("site.stagingGroup", stagingGroup);
 	request.setAttribute("site.stagingGroupId", Long.valueOf(stagingGroupId));
 	%>

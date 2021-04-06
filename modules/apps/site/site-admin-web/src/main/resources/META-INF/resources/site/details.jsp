@@ -35,15 +35,6 @@ Group parentGroup = null;
 if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 	parentGroup = GroupLocalServiceUtil.fetchGroup(parentGroupId);
 }
-
-UnicodeProperties typeSettingsProperties = null;
-
-if (liveGroup != null) {
-	typeSettingsProperties = liveGroup.getTypeSettingsProperties();
-}
-else {
-	typeSettingsProperties = group.getTypeSettingsProperties();
-}
 %>
 
 <liferay-ui:error-marker

@@ -33,7 +33,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.dependency.checker", version: "1.0.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.go", version: "1.0.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jsdoc", version: "2.0.59"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.19"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.20"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.10"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.9"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.1.0"

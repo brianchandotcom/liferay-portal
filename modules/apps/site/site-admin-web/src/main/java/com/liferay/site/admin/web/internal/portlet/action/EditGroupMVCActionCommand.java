@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
-import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.List;
@@ -232,28 +231,6 @@ public class EditGroupMVCActionCommand
 				actionRequest, "TypeSettingsProperties--");
 
 		typeSettingsUnicodeProperties.putAll(formTypeSettingsUnicodeProperties);
-
-		UnicodeProperties ratingsTypeUnicodeProperties =
-			PropertiesParamUtil.getProperties(actionRequest, "RatingsType--");
-
-		for (String propertyKey : ratingsTypeUnicodeProperties.keySet()) {
-			String newRatingsType = ratingsTypeUnicodeProperties.getProperty(
-				propertyKey);
-
-			String oldRatingsType = typeSettingsUnicodeProperties.getProperty(
-				propertyKey);
-
-			if (newRatingsType.equals(oldRatingsType)) {
-				continue;
-			}
-
-			if (RatingsType.isValid(newRatingsType)) {
-				typeSettingsUnicodeProperties.put(propertyKey, newRatingsType);
-			}
-			else {
-				typeSettingsUnicodeProperties.remove(propertyKey);
-			}
-		}
 
 		// Virtual hosts
 

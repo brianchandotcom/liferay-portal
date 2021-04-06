@@ -15,6 +15,7 @@
 import React, {useMemo} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
+import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
 import {useSelector} from '../../../../../app/store/index';
 import SidebarPanelContent from '../../../../../common/components/SidebarPanelContent';
 import NoPageContents from './NoPageContents';
@@ -47,24 +48,27 @@ const getEditableValues = (fragmentEntryLinks) =>
 			[]
 		);
 
-const normalizeEditableValues = (editable) => {
+const normalizeEditableValues = (editable, languageId) => {
 	return {
 		...editable,
 		icon: 'align-left',
-		title: editable.title || editable.defaultValue,
+		title: editable[languageId] || editable.title || editable.defaultValue,
 	};
 };
 
 export default function ContentsSidebar() {
 	const contents = [];
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const languageId = useSelector(selectLanguageId);
 	const pageContents = useSelector((state) => state.pageContents);
 	let view = <NoPageContents />;
 
 	const inlineTextContents = useMemo(
 		() =>
-			getEditableValues(fragmentEntryLinks).map(normalizeEditableValues),
-		[fragmentEntryLinks]
+			getEditableValues(fragmentEntryLinks).map((editable) =>
+				normalizeEditableValues(editable, languageId)
+			),
+		[fragmentEntryLinks, languageId]
 	);
 
 	if (pageContents.length) {

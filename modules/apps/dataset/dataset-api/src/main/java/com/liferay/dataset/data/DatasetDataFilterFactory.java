@@ -16,9 +16,12 @@ package com.liferay.dataset.data;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface DatasetDataFilterFactory {
 
 	public DatasetDataFilter create(HttpServletRequest httpServletRequest);

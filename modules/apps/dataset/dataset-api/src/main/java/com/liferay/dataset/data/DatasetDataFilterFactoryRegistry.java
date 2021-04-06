@@ -16,9 +16,12 @@ package com.liferay.dataset.data;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface DatasetDataFilterFactoryRegistry {
 
 	public List<DatasetDataFilterFactory> getDatasetDataFilterFactories();

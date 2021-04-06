@@ -19,9 +19,12 @@ import com.liferay.dataset.view.DatasetView;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface DatasetContentRendererContextContributor {
 
 	public Map<String, Object> getContentRendererContext(

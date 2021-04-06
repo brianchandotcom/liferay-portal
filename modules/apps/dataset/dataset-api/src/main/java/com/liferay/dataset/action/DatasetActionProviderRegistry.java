@@ -16,9 +16,12 @@ package com.liferay.dataset.action;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface DatasetActionProviderRegistry {
 
 	public List<DatasetActionProvider> getDatasetActionProviders(

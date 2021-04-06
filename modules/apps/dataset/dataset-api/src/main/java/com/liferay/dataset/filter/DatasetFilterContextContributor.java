@@ -17,9 +17,12 @@ package com.liferay.dataset.filter;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface DatasetFilterContextContributor {
 
 	public Map<String, Object> getDatasetFilterContext(

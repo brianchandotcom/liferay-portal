@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 
 import java.util.Locale;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface DatasetFilterSerializer {
 
 	public JSONArray serialize(String datasetDisplayName, Locale locale);

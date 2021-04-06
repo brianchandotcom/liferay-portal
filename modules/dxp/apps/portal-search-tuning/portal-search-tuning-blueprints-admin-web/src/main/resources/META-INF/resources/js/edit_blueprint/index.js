@@ -20,7 +20,7 @@ import React, {useCallback, useContext, useRef, useState} from 'react';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import PageToolbar from '../shared/PageToolbar';
 import ThemeContext from '../shared/ThemeContext';
-import {CUSTOM_JSON_ELEMENT, QUERY_ELEMENTS} from '../utils/data';
+import {CUSTOM_JSON_ELEMENT} from '../utils/data';
 import {
 	getElementOutput,
 	getUIConfigurationValues,
@@ -64,9 +64,8 @@ function EditBlueprintForm({
 
 	const form = useRef();
 	const sidebarQueryElements = useRef([
-		...QUERY_ELEMENTS,
-		CUSTOM_JSON_ELEMENT,
 		...queryElements,
+		CUSTOM_JSON_ELEMENT,
 	]);
 
 	const [isSubmitting, setIsSubmitting] = useState(false);

@@ -9,6 +9,11 @@
  * distribution rights of the Software.
  */
 
+/**
+ * Keep these in sync with the elements in
+ * portal-search-tuning-blueprints-resources/
+ * src/main/resources/META-INF/search/elements
+ */
 export default {
 	elementTemplateJSON: {
 		category: 'custom',

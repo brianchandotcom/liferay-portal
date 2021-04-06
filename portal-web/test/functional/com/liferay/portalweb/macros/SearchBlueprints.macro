@@ -10,6 +10,10 @@ definition {
 
 		PortletEntry.inputTitle(title = "${name}");
 
+		if (isSet(description)) {
+			PortletEntry.inputDescription(description = "${description}");
+		}
+
 		if (isSet(clauseOption)) {
 			LexiconCard.clickCard(card = "Custom Clauses");
 		}

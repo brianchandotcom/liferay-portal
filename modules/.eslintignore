@@ -26,6 +26,7 @@
     classes/**
     css/clay/**
     node_modules/**
+    types/**/*.d.ts
     yarn-*.js
     zippableResources/**
 

@@ -60,6 +60,10 @@ public class BeanPropertiesImpl implements BeanProperties {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void copyProperties(
 		Object source, Object target, Class<?> editable) {
@@ -76,6 +80,10 @@ public class BeanPropertiesImpl implements BeanProperties {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void copyProperties(
 		Object source, Object target, String[] ignoreProperties) {

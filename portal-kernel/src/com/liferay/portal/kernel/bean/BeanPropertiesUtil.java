@@ -25,12 +25,20 @@ public class BeanPropertiesUtil {
 		getBeanProperties().copyProperties(source, target);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void copyProperties(
 		Object source, Object target, Class<?> editable) {
 
 		getBeanProperties().copyProperties(source, target, editable);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void copyProperties(
 		Object source, Object target, String[] ignoreProperties) {
 

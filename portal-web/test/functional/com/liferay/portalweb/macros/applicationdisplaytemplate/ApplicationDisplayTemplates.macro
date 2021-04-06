@@ -171,6 +171,14 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro editADTScript {
+		Type.sendKeysAceEditor(
+			locator1 = "TextArea#ACE_EDITOR",
+			value1 = "${adtScript}");
+
+		PortletEntry.save();
+	}
+
 	macro editWidgetTemplate {
 		SiteAdmin.viewPortletTitle(portletTitle = "${oldWidgetTemplateName}");
 

@@ -170,7 +170,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 								String description = HtmlUtil.escape(formInstance.getDescription(displayLocale));
 								%>
 
-								<c:if test="<%= Validator.isNotNull(description) %>">
+								<c:if test="<%= Validator.isNotNull(description) && Validator.isNotNull(description.trim()) %>">
 									<p class="ddm-form-description"><%= description %></p>
 								</c:if>
 							</clay:container-fluid>

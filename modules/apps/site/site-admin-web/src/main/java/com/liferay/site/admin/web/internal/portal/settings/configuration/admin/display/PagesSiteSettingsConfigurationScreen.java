@@ -12,66 +12,74 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.frontend.taglib.form.navigator;
+package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
+import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.io.IOException;
+
 import java.util.Locale;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
-@Component(
-	property = "form.navigator.entry.order:Integer=60",
-	service = FormNavigatorEntry.class
-)
-public class SitePagesFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
+@Component(service = ConfigurationScreen.class)
+public class PagesSiteSettingsConfigurationScreen
+	implements ConfigurationScreen {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_GENERAL;
-	}
-
-	@Override
-	public String getKey() {
 		return "pages";
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
+	public String getKey() {
+		return "site-configuration-pages";
+	}
+
+	@Override
+	public String getName(Locale locale) {
 		return LanguageUtil.get(locale, "pages");
 	}
 
 	@Override
-	public boolean isVisible(User user, Group group) {
-		if ((group != null) && group.isCompany()) {
-			return false;
-		}
+	public String getScope() {
+		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
+	}
 
-		if (group != null) {
-			return true;
-		}
-
+	@Override
+	public boolean isVisible() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		if ((siteGroup != null) && siteGroup.isCompany()) {
+			return false;
+		}
+
+		if (siteGroup != null) {
+			return true;
+		}
 
 		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
@@ -92,20 +100,26 @@ public class SitePagesFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
 
-	@Override
-	protected String getJspPath() {
-		return "/site/pages.jsp";
+		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/edit_pages.jsp");
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			throw new IOException("Unable to render edit_pages.jsp", exception);
+		}
 	}
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
+	private ServletContext _servletContext;
 
 }

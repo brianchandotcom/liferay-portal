@@ -14,19 +14,7 @@
 
 package com.liferay.click.to.chat.web.internal.servlet.taglib;
 
-import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
-import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-
 import java.io.IOException;
-
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -37,6 +25,18 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+
+import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
+import com.liferay.click.to.chat.web.internal.configuration.ProviderOptions;
+import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 /**
  * @author José Abelenda
@@ -71,10 +71,26 @@ public class ClickToChatTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_ENABLED, clickToChatEnabled);
+		
 
 		if (!_clickToChatConfiguration.enable()) {
 			return;
 		}
+		
+		if(_clickToChatConfiguration.provider() == null) {
+			return;
+		}
+		
+		ProviderOptions provider = _clickToChatConfiguration.provider();
+		
+		httpServletRequest.setAttribute(
+				ClickToChatWebKeys.CLICK_TO_CHAT_PROVIDER_NAME, 
+				_clickToChatConfiguration.provider().getValue().toLowerCase());
+		
+		httpServletRequest.setAttribute(
+				ClickToChatWebKeys.CLICK_TO_CHAT_ACCOUNT_TOKEN, 
+				_clickToChatConfiguration.accountToken());
+
 
 		httpServletRequest.setAttribute(
 			ClickToChatConfiguration.class.getName(),

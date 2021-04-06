@@ -16,8 +16,4 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<%
-String clickToChatProviderName = "chatwoot";
-%>
-
 <liferay-util:include page='<%= "/dynamic_include/" + clickToChatProviderName + ".jsp" %>' servletContext="<%= application %>" />

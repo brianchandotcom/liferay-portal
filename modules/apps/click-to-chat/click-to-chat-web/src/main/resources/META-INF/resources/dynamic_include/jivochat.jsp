@@ -14,9 +14,15 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
-<%
-String accountToken = (String) request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_ACCOUNT_TOKEN);
-String clickToChatProviderName = (String) request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_PROVIDER_NAME);
-%>
+<script src="//code.jivosite.com/widget/<%= accountToken %>" async></script>
+
+<script>
+	function jivo_onOpen() {
+		jivo_api.setContactInfo({
+			name: '<%= user.getScreenName() %>',
+			email: '<%= user.getEmailAddress() %>',
+		});
+	}
+</script>

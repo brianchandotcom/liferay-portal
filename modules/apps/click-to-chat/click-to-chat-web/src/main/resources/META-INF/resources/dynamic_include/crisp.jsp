@@ -14,9 +14,19 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
-<%
-String accountToken = (String) request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_ACCOUNT_TOKEN);
-String clickToChatProviderName = (String) request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_PROVIDER_NAME);
-%>
+<script type="text/javascript">
+	window.$crisp = [];
+	window.CRISP_WEBSITE_ID = '<%= accountToken %>';
+	(function () {
+		d = document;
+		s = d.createElement('script');
+		s.src = 'https://client.crisp.chat/l.js';
+		s.async = 1;
+		d.getElementsByTagName('head')[0].appendChild(s);
+	})();
+	
+	$crisp.push(['set', 'user:email', '<%= user.getScreenName() %>']);
+	$crisp.push(['set', 'user:nickname', '<%= user.getEmailAddress() %>']);
+</script>

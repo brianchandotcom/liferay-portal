@@ -429,13 +429,17 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.gotoPublish(publicationsName = "Publication 2 Name");
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationsName = "Publication 2 Name");
 
 		Publications.publishPublication(publicationsName = "Publication 2 Name");
 
 		Publications.selectPublication(publicationsName = "Publication Name");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		Publications.gotoPublish(
+			gotoReviewPublications = "true",
+			publicationsName = "Publication Name");
 
 		Publications.publishPublication(publicationsName = "Publication Name");
 

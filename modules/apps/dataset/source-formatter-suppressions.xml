@@ -2,8 +2,8 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/ClayDataSetDataJSONFactory\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/data/FilterFactory\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/provider/ClayDataSetDataProvider\.java" />
+		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/data/DatasetDataJSONFactory\.java" />
+		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/data/DatasetDataFilterFactory\.java" />
+		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/data/DatasetDataProvider\.java" />
 	</source-check>
 </suppressions>

@@ -12972,6 +12972,10 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 
 		<set-up-search-engine />
 
+		<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+			<param name="database.type" value="@{database.type}" />
+		</antcall>
+
 		<get-testcase-property property.name="osgi.module.configuration.file.names" />
 		<get-testcase-property property.name="osgi.module.configurations" />
 
@@ -13084,10 +13088,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 						</move>
 					</then>
 				</if>
-
-				<antcall inheritAll="false" target="prepare-log4j-ext-xml">
-					<param name="database.type" value="@{database.type}" />
-				</antcall>
 
 				<antcall target="start-app-server-preserve-liferay-home" />
 

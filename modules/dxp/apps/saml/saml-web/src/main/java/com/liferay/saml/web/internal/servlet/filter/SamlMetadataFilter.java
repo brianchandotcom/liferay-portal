@@ -12,15 +12,19 @@
  *
  */
 
-package com.liferay.saml.web.internal.struts;
+package com.liferay.saml.web.internal.servlet.filter;
 
-import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.util.SamlHttpRequestUtil;
 
 import java.io.PrintWriter;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,24 +35,35 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true, property = "path=/portal/saml/metadata",
-	service = StrutsAction.class
+	immediate = true,
+	property = {
+		"before-filter=Auto Login Filter", "dispatcher=FORWARD",
+		"dispatcher=REQUEST", "servlet-context-name=",
+		"servlet-filter-name=SSO SAML Metadata Filter",
+		"url-pattern=/c/portal/saml/metadata"
+	},
+	service = Filter.class
 )
-public class MetadataAction extends BaseSamlStrutsAction {
+public class SamlMetadataFilter extends BaseFilter {
 
 	@Override
-	@Reference(unbind = "-")
-	public void setSamlProviderConfigurationHelper(
-		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
+	public boolean isFilterEnabled() {
+		if (_samlProviderConfigurationHelper.isEnabled()) {
+			return true;
+		}
 
-		super.setSamlProviderConfigurationHelper(
-			samlProviderConfigurationHelper);
+		return false;
 	}
 
 	@Override
-	protected String doExecute(
+	protected Log getLog() {
+		return _log;
+	}
+
+	@Override
+	protected void processFilter(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		httpServletResponse.setContentType(ContentTypes.TEXT_XML);
@@ -59,11 +74,15 @@ public class MetadataAction extends BaseSamlStrutsAction {
 			httpServletRequest);
 
 		printWriter.print(metadata);
-
-		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SamlMetadataFilter.class);
 
 	@Reference
 	private SamlHttpRequestUtil _samlHttpRequestUtil;
+
+	@Reference
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 }

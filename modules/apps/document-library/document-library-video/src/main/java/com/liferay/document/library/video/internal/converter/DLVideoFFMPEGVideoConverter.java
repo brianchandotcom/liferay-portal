@@ -76,9 +76,9 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 		try {
 			return _runFFMPEGCommand(
 				String.format(
-					"ffmpeg -y -i %s -vf thumbnail,scale=w=min(%s\\,iw):h=-1 " +
-						"-frames:v 1",
+					"ffmpeg -y -i %s -vf thumbnail,scale=%d:%d/dar -frames:v 1",
 					file.getAbsolutePath(),
+					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
 				format);
 		}

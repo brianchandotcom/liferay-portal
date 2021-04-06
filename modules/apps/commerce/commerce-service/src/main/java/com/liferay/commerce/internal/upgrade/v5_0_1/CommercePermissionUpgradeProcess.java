@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -190,13 +191,18 @@ public class CommercePermissionUpgradeProcess
 
 		Stream<ResourceAction> stream = resourceActions.stream();
 
+		List<String> resourceActionIds = stream.map(
+			ResourceAction::getActionId
+		).collect(
+			Collectors.toList()
+		);
+
+		_resourceActionLocalService.checkResourceActions(
+			newName, resourceActionIds);
+
 		_resourcePermissionLocalService.setResourcePermissions(
 			companyId, newName, scope, primKey, roleId,
-			stream.map(
-				ResourceAction::getActionId
-			).toArray(
-				String[]::new
-			));
+			resourceActionIds.toArray(new String[0]));
 	}
 
 	private void _setResourcePermissions(

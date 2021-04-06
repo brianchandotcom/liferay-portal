@@ -54,6 +54,30 @@ public class AttachmentUtilTest extends PowerMockito {
 		);
 	}
 
+	@Test(expected = MethodRequiredParameterMissingException.class)
+	public void testAddOrUpdateCPAttachmentFileEntryWithInvalidAttachment()
+		throws Exception {
+
+		AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
+			0, null, null, new Attachment(), 0, 0, 0, new ServiceContext());
+	}
+
+	@Test(expected = MethodRequiredParameterMissingException.class)
+	public void testAddOrUpdateCPAttachmentFileEntryWithInvalidAttachmentBase64()
+		throws Exception {
+
+		AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
+			null, null, new AttachmentBase64(), 0, 0, 0, new ServiceContext());
+	}
+
+	@Test(expected = MethodRequiredParameterMissingException.class)
+	public void testAddOrUpdateCPAttachmentFileEntryWithInvalidAttachmentUrl()
+		throws Exception {
+
+		AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
+			null, null, new AttachmentUrl(), 0, 0, 0, new ServiceContext());
+	}
+
 	@Test
 	public void testGetTitleMapIfCPAttachmentFileEntryIsNull()
 		throws Exception {
@@ -68,30 +92,6 @@ public class AttachmentUtilTest extends PowerMockito {
 			(key, value) -> Assert.assertTrue(
 				"title map contains " + key.toString(),
 				_titleMap.containsKey(key.toString())));
-	}
-
-	@Test(expected = MethodRequiredParameterMissingException.class)
-	public void testUpsertCPAttachmentFileEntryWithInvalidAttachment()
-		throws Exception {
-
-		AttachmentUtil.upsertCPAttachmentFileEntry(
-			0, null, null, new Attachment(), 0, 0, 0, new ServiceContext());
-	}
-
-	@Test(expected = MethodRequiredParameterMissingException.class)
-	public void testUpsertCPAttachmentFileEntryWithInvalidAttachmentBase64()
-		throws Exception {
-
-		AttachmentUtil.upsertCPAttachmentFileEntry(
-			null, null, new AttachmentBase64(), 0, 0, 0, new ServiceContext());
-	}
-
-	@Test(expected = MethodRequiredParameterMissingException.class)
-	public void testUpsertCPAttachmentFileEntryWithInvalidAttachmentUrl()
-		throws Exception {
-
-		AttachmentUtil.upsertCPAttachmentFileEntry(
-			null, null, new AttachmentUrl(), 0, 0, 0, new ServiceContext());
 	}
 
 	private static final Map<String, String> _titleMap = HashMapBuilder.put(

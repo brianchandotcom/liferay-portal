@@ -45,6 +45,42 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MeasurementUnitHelper {
 
+	public MeasurementUnit addOrUpdateMeasurementUnit(
+			Long groupId, MeasurementUnit measurementUnit, User user)
+		throws PortalException {
+
+		try {
+			CPMeasurementUnit cpMeasurementUnit = updateMeasurementUnit(
+				measurementUnit.getId(), measurementUnit, user);
+
+			return _dtoMapper.modelToDTO(cpMeasurementUnit);
+		}
+		catch (NoSuchCPMeasurementUnitException
+					noSuchCPMeasurementUnitException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find measurementUnit with ID: " +
+						measurementUnit.getId(),
+					noSuchCPMeasurementUnitException);
+			}
+		}
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			groupId, new long[0], user, true);
+
+		CPMeasurementUnit cpMeasurementUnit =
+			_cpMeasurementUnitService.addCPMeasurementUnit(
+				LanguageUtils.getLocalizedMap(measurementUnit.getName()),
+				measurementUnit.getKey(),
+				GetterUtil.get(measurementUnit.getRate(), 0D),
+				GetterUtil.get(measurementUnit.getPrimary(), false),
+				GetterUtil.get(measurementUnit.getPriority(), 0D),
+				GetterUtil.get(measurementUnit.getType(), 0), serviceContext);
+
+		return _dtoMapper.modelToDTO(cpMeasurementUnit);
+	}
+
 	public void deleteMeasurementUnit(Long id) throws PortalException {
 		_cpMeasurementUnitService.deleteCPMeasurementUnit(id);
 	}
@@ -112,42 +148,6 @@ public class MeasurementUnitHelper {
 			GetterUtil.get(
 				measurementUnit.getType(), cpMeasurementUnit.getType()),
 			serviceContext);
-	}
-
-	public MeasurementUnit upsertMeasurementUnit(
-			Long groupId, MeasurementUnit measurementUnit, User user)
-		throws PortalException {
-
-		try {
-			CPMeasurementUnit cpMeasurementUnit = updateMeasurementUnit(
-				measurementUnit.getId(), measurementUnit, user);
-
-			return _dtoMapper.modelToDTO(cpMeasurementUnit);
-		}
-		catch (NoSuchCPMeasurementUnitException
-					noSuchCPMeasurementUnitException) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to find measurementUnit with ID: " +
-						measurementUnit.getId(),
-					noSuchCPMeasurementUnitException);
-			}
-		}
-
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			groupId, new long[0], user, true);
-
-		CPMeasurementUnit cpMeasurementUnit =
-			_cpMeasurementUnitService.addCPMeasurementUnit(
-				LanguageUtils.getLocalizedMap(measurementUnit.getName()),
-				measurementUnit.getKey(),
-				GetterUtil.get(measurementUnit.getRate(), 0D),
-				GetterUtil.get(measurementUnit.getPrimary(), false),
-				GetterUtil.get(measurementUnit.getPriority(), 0D),
-				GetterUtil.get(measurementUnit.getType(), 0), serviceContext);
-
-		return _dtoMapper.modelToDTO(cpMeasurementUnit);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

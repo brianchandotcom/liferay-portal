@@ -111,6 +111,35 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		return cpOption;
 	}
 
+	@Override
+	public CPOption addOrUpdateCPOption(
+			String externalReferenceCode, long userId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			boolean skuContributor, String key, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+		else {
+			CPOption cpOption = cpOptionPersistence.fetchByC_ERC(
+				serviceContext.getCompanyId(), externalReferenceCode);
+
+			if (cpOption != null) {
+				return updateCPOption(
+					cpOption.getCPOptionId(), nameMap, descriptionMap,
+					ddmFormFieldTypeName, facetable, required, skuContributor,
+					key, serviceContext);
+			}
+		}
+
+		return addCPOption(
+			externalReferenceCode, userId, nameMap, descriptionMap,
+			ddmFormFieldTypeName, facetable, required, skuContributor, key,
+			serviceContext);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -246,35 +275,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		cpOption.setExternalReferenceCode(externalReferenceCode);
 
 		return cpOptionPersistence.update(cpOption);
-	}
-
-	@Override
-	public CPOption upsertCPOption(
-			String externalReferenceCode, long userId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable, boolean required,
-			boolean skuContributor, String key, ServiceContext serviceContext)
-		throws PortalException {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-		else {
-			CPOption cpOption = cpOptionPersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
-
-			if (cpOption != null) {
-				return updateCPOption(
-					cpOption.getCPOptionId(), nameMap, descriptionMap,
-					ddmFormFieldTypeName, facetable, required, skuContributor,
-					key, serviceContext);
-			}
-		}
-
-		return addCPOption(
-			externalReferenceCode, userId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, facetable, required, skuContributor, key,
-			serviceContext);
 	}
 
 	protected SearchContext buildSearchContext(

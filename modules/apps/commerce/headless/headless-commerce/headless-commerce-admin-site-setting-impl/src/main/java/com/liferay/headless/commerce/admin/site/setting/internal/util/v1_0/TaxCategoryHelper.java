@@ -43,6 +43,37 @@ import org.osgi.service.component.annotations.Reference;
 @Component(enabled = false, immediate = true, service = TaxCategoryHelper.class)
 public class TaxCategoryHelper {
 
+	public TaxCategory addOrUpdateTaxCategory(
+			Long groupId, TaxCategory taxCategory, User user)
+		throws PortalException {
+
+		try {
+			CPTaxCategory cpTaxCategory = updateTaxCategory(
+				taxCategory.getId(), taxCategory);
+
+			return _dtoMapper.modelToDTO(cpTaxCategory);
+		}
+		catch (NoSuchCPTaxCategoryException noSuchCPTaxCategoryException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find taxCategory with ID: " +
+						taxCategory.getId(),
+					noSuchCPTaxCategoryException);
+			}
+		}
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			groupId, new long[0], user, true);
+
+		CPTaxCategory cpTaxCategory = _cpTaxCategoryService.addCPTaxCategory(
+			StringPool.BLANK,
+			LanguageUtils.getLocalizedMap(taxCategory.getName()),
+			LanguageUtils.getLocalizedMap(taxCategory.getDescription()),
+			serviceContext);
+
+		return _dtoMapper.modelToDTO(cpTaxCategory);
+	}
+
 	public void deleteTaxCategory(Long id) throws PortalException {
 		_cpTaxCategoryService.deleteCPTaxCategory(id);
 	}
@@ -83,37 +114,6 @@ public class TaxCategoryHelper {
 			cpTaxCategory.getCPTaxCategoryId(),
 			LanguageUtils.getLocalizedMap(taxCategory.getName()),
 			LanguageUtils.getLocalizedMap(taxCategory.getDescription()));
-	}
-
-	public TaxCategory upsertTaxCategory(
-			Long groupId, TaxCategory taxCategory, User user)
-		throws PortalException {
-
-		try {
-			CPTaxCategory cpTaxCategory = updateTaxCategory(
-				taxCategory.getId(), taxCategory);
-
-			return _dtoMapper.modelToDTO(cpTaxCategory);
-		}
-		catch (NoSuchCPTaxCategoryException noSuchCPTaxCategoryException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to find taxCategory with ID: " +
-						taxCategory.getId(),
-					noSuchCPTaxCategoryException);
-			}
-		}
-
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			groupId, new long[0], user, true);
-
-		CPTaxCategory cpTaxCategory = _cpTaxCategoryService.addCPTaxCategory(
-			StringPool.BLANK,
-			LanguageUtils.getLocalizedMap(taxCategory.getName()),
-			LanguageUtils.getLocalizedMap(taxCategory.getDescription()),
-			serviceContext);
-
-		return _dtoMapper.modelToDTO(cpTaxCategory);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -267,6 +267,289 @@ public class CommercePriceListLocalServiceTest {
 	}
 
 	@Test
+	public void testAddOrUpdateCommercePriceList1() throws Exception {
+		frutillaRule.scenario(
+			"Adding a new Price List"
+		).given(
+			"A site (group)"
+		).and(
+			"A currency code expressed with 3-letter ISO 4217 format"
+		).and(
+			"The name of the new list"
+		).when(
+			"The external reference code (externalReferenceCode)"
+		).and(
+			"(commercePriceListId) is not used in the method invocation"
+		).then(
+			"The result should be a new Price List on the given site"
+		);
+
+		Currency currency = Currency.getInstance(LocaleUtil.US);
+		String name = RandomTestUtil.randomString();
+
+		List<CommerceCatalog> commerceCatalogs =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
+				_group.getCompanyId(), true);
+
+		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addOrUpdateCommercePriceList(
+				null, commerceCatalog.getGroupId(), 0,
+				currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
+				true, null, null);
+
+		_assertPriceListAttributes(currency, name, commercePriceList);
+	}
+
+	@Test
+	public void testAddOrUpdateCommercePriceList2() throws Exception {
+		frutillaRule.scenario(
+			"Update an existing Price List"
+		).given(
+			"A site (group)"
+		).and(
+			"A currency code expressed with 3-letter ISO 4217 format"
+		).and(
+			"The name of the list"
+		).when(
+			"The external reference code (externalReferenceCode) is used"
+		).and(
+			"(commercePriceListId) is not used in the method invocation"
+		).then(
+			"The result should be the updated Price List with the given " +
+				"(externalReferenceCode) on the given site"
+		);
+
+		Currency currency = Currency.getInstance(LocaleUtil.US);
+		String externalReferenceCode = RandomTestUtil.randomString();
+		String name = RandomTestUtil.randomString();
+
+		List<CommerceCatalog> commerceCatalogs =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
+				_group.getCompanyId(), true);
+
+		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		CommercePriceListTestUtil.addCommercePriceList(
+			externalReferenceCode, commerceCatalog.getGroupId(),
+			currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
+			true, null, null);
+
+		Currency updatedCurrency = Currency.getInstance(LocaleUtil.UK);
+		String updatedName = RandomTestUtil.randomString();
+
+		CommercePriceListTestUtil.addOrUpdateCommercePriceList(
+			externalReferenceCode, _group.getGroupId(), 0,
+			updatedCurrency.getCurrencyCode(), updatedName,
+			RandomTestUtil.randomDouble(), true, null, null);
+
+		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.fetchByExternalReferenceCode(
+				externalReferenceCode, _group.getCompanyId());
+
+		_assertPriceListAttributes(
+			updatedCurrency, updatedName, commercePriceList);
+	}
+
+	@Test
+	public void testAddOrUpdateCommercePriceList3() throws Exception {
+		frutillaRule.scenario(
+			"Update an existing Price List"
+		).given(
+			"A site (group)"
+		).and(
+			"A currency code expressed with 3-letter ISO 4217 format"
+		).and(
+			"The name of the new list"
+		).when(
+			"The external reference code (externalReferenceCode) is not used"
+		).and(
+			"(commercePriceListId) is used in the method invocation"
+		).then(
+			"The result should be the updated Price List with the given " +
+				"(commercePriceListId) on the given site"
+		);
+
+		Currency currency = Currency.getInstance(LocaleUtil.US);
+		String name = RandomTestUtil.randomString();
+
+		List<CommerceCatalog> commerceCatalogs =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
+				_group.getCompanyId(), true);
+
+		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				null, commerceCatalog.getGroupId(), currency.getCurrencyCode(),
+				name, RandomTestUtil.randomDouble(), true, null, null);
+
+		Currency updatedCurrency = Currency.getInstance(LocaleUtil.UK);
+		String updatedName = RandomTestUtil.randomString();
+
+		CommercePriceListTestUtil.addOrUpdateCommercePriceList(
+			null, _group.getGroupId(),
+			commercePriceList.getCommercePriceListId(),
+			updatedCurrency.getCurrencyCode(), updatedName,
+			RandomTestUtil.randomDouble(), true, null, null);
+
+		CommercePriceList updatedCommercePriceList =
+			_commercePriceListLocalService.getCommercePriceList(
+				commercePriceList.getCommercePriceListId());
+
+		_assertPriceListAttributes(
+			updatedCurrency, updatedName, updatedCommercePriceList);
+	}
+
+	@Test(expected = NoSuchCurrencyException.class)
+	public void testAddOrUpdateCommercePriceList4() throws Exception {
+		frutillaRule.scenario(
+			"Adding a new Price List"
+		).given(
+			"A site (group)"
+		).and(
+			"A non-existent currency code on the site"
+		).and(
+			"The name of the new list"
+		).when(
+			"The external reference code (externalReferenceCode)"
+		).and(
+			"(commercePriceListId) is not used in the method invocation"
+		).then(
+			"CommercePriceListCurrencyException should be thrown"
+		);
+
+		Currency currency = Currency.getInstance("KGS");
+		String name = RandomTestUtil.randomString();
+
+		CommercePriceListTestUtil.addOrUpdateCommercePriceList(
+			null, _group.getGroupId(), 0, currency.getCurrencyCode(), name,
+			RandomTestUtil.randomDouble(), true, null, null);
+	}
+
+	@Test
+	public void testAddOrUpdateCommercePriceList5() throws Exception {
+		frutillaRule.scenario(
+			"Adding a new Price List"
+		).given(
+			"A site (group)"
+		).and(
+			"A currency code expressed with 3-letter ISO 4217 format"
+		).and(
+			"The name of the new list"
+		).when(
+			"The external reference code (externalReferenceCode) is not used"
+		).and(
+			"A non-existent but greater than 0 (commercePriceListId) is used " +
+				"in the method invocation"
+		).then(
+			"The result should be a new Price List on the given site"
+		);
+
+		Currency currency = Currency.getInstance(LocaleUtil.US);
+		String name = RandomTestUtil.randomString();
+
+		List<CommerceCatalog> commerceCatalogs =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
+				_group.getCompanyId(), true);
+
+		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addOrUpdateCommercePriceList(
+				null, commerceCatalog.getGroupId(), 1,
+				currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
+				true, null, null);
+
+		_assertPriceListAttributes(currency, name, commercePriceList);
+	}
+
+	@Test
+	public void testAddOrUpdateCommercePriceList6() throws Exception {
+		frutillaRule.scenario(
+			"Adding a new Price List"
+		).given(
+			"A site (group)"
+		).and(
+			"A currency code expressed with 3-letter ISO 4217 format"
+		).and(
+			"A parent price list ID"
+		).and(
+			"The name of the new list"
+		).when(
+			"The external reference code (externalReferenceCode)"
+		).and(
+			"(commercePriceListId) is not used in the method invocation"
+		).then(
+			"The result should be a new Price List with the given " +
+				"(parentCommercePriceListId) on the given site"
+		);
+
+		Currency currency = Currency.getInstance(LocaleUtil.US);
+		String name = RandomTestUtil.randomString();
+		long parentCommercePriceListId = RandomTestUtil.randomLong();
+
+		List<CommerceCatalog> commerceCatalogs =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
+				_group.getCompanyId(), true);
+
+		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addOrUpdateCommercePriceList(
+				null, commerceCatalog.getGroupId(), 1,
+				currency.getCurrencyCode(), parentCommercePriceListId, name,
+				RandomTestUtil.randomDouble(), true, null, null);
+
+		Assert.assertThat(
+			commercePriceList.getParentCommercePriceListId(),
+			CoreMatchers.equalTo(parentCommercePriceListId));
+	}
+
+	@Test
+	public void testAddOrUpdateCommercePriceList7() throws Exception {
+		frutillaRule.scenario(
+			"Update an existing Price List"
+		).given(
+			"A site (group)"
+		).and(
+			"A currency code expressed with 3-letter ISO 4217 format"
+		).and(
+			"A parent price list ID"
+		).and(
+			"The name of the list"
+		).when(
+			"The external reference code (externalReferenceCode) is used"
+		).and(
+			"(commercePriceListId) is not used in the method invocation"
+		).then(
+			"The result should be the updated Price List with the given " +
+				"(parentCommercePriceListId) on the given site"
+		);
+
+		Currency currency = Currency.getInstance(LocaleUtil.US);
+		String name = RandomTestUtil.randomString();
+		long parentCommercePriceListId = RandomTestUtil.randomLong();
+
+		List<CommerceCatalog> commerceCatalogs =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
+				_group.getCompanyId(), true);
+
+		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addOrUpdateCommercePriceList(
+				null, commerceCatalog.getGroupId(), 1,
+				currency.getCurrencyCode(), parentCommercePriceListId, name,
+				RandomTestUtil.randomDouble(), true, null, null);
+
+		Assert.assertThat(
+			commercePriceList.getParentCommercePriceListId(),
+			CoreMatchers.equalTo(parentCommercePriceListId));
+	}
+
+	@Test
 	public void testCreateGrossPriceList() throws Exception {
 		frutillaRule.scenario(
 			"Adding a new Price List with gross price entries"
@@ -448,289 +731,6 @@ public class CommercePriceListLocalServiceTest {
 
 		Assert.assertThat(
 			updatedCommercePriceList.getParentCommercePriceListId(),
-			CoreMatchers.equalTo(parentCommercePriceListId));
-	}
-
-	@Test
-	public void testUpsertCommercePriceList1() throws Exception {
-		frutillaRule.scenario(
-			"Adding a new Price List"
-		).given(
-			"A site (group)"
-		).and(
-			"A currency code expressed with 3-letter ISO 4217 format"
-		).and(
-			"The name of the new list"
-		).when(
-			"The external reference code (externalReferenceCode)"
-		).and(
-			"(commercePriceListId) is not used in the method invocation"
-		).then(
-			"The result should be a new Price List on the given site"
-		);
-
-		Currency currency = Currency.getInstance(LocaleUtil.US);
-		String name = RandomTestUtil.randomString();
-
-		List<CommerceCatalog> commerceCatalogs =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
-				_group.getCompanyId(), true);
-
-		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
-
-		CommercePriceList commercePriceList =
-			CommercePriceListTestUtil.upsertCommercePriceList(
-				null, commerceCatalog.getGroupId(), 0,
-				currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
-				true, null, null);
-
-		_assertPriceListAttributes(currency, name, commercePriceList);
-	}
-
-	@Test
-	public void testUpsertCommercePriceList2() throws Exception {
-		frutillaRule.scenario(
-			"Update an existing Price List"
-		).given(
-			"A site (group)"
-		).and(
-			"A currency code expressed with 3-letter ISO 4217 format"
-		).and(
-			"The name of the list"
-		).when(
-			"The external reference code (externalReferenceCode) is used"
-		).and(
-			"(commercePriceListId) is not used in the method invocation"
-		).then(
-			"The result should be the updated Price List with the given " +
-				"(externalReferenceCode) on the given site"
-		);
-
-		Currency currency = Currency.getInstance(LocaleUtil.US);
-		String externalReferenceCode = RandomTestUtil.randomString();
-		String name = RandomTestUtil.randomString();
-
-		List<CommerceCatalog> commerceCatalogs =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
-				_group.getCompanyId(), true);
-
-		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
-
-		CommercePriceListTestUtil.addCommercePriceList(
-			externalReferenceCode, commerceCatalog.getGroupId(),
-			currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
-			true, null, null);
-
-		Currency updatedCurrency = Currency.getInstance(LocaleUtil.UK);
-		String updatedName = RandomTestUtil.randomString();
-
-		CommercePriceListTestUtil.upsertCommercePriceList(
-			externalReferenceCode, _group.getGroupId(), 0,
-			updatedCurrency.getCurrencyCode(), updatedName,
-			RandomTestUtil.randomDouble(), true, null, null);
-
-		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, _group.getCompanyId());
-
-		_assertPriceListAttributes(
-			updatedCurrency, updatedName, commercePriceList);
-	}
-
-	@Test
-	public void testUpsertCommercePriceList3() throws Exception {
-		frutillaRule.scenario(
-			"Update an existing Price List"
-		).given(
-			"A site (group)"
-		).and(
-			"A currency code expressed with 3-letter ISO 4217 format"
-		).and(
-			"The name of the new list"
-		).when(
-			"The external reference code (externalReferenceCode) is not used"
-		).and(
-			"(commercePriceListId) is used in the method invocation"
-		).then(
-			"The result should be the updated Price List with the given " +
-				"(commercePriceListId) on the given site"
-		);
-
-		Currency currency = Currency.getInstance(LocaleUtil.US);
-		String name = RandomTestUtil.randomString();
-
-		List<CommerceCatalog> commerceCatalogs =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
-				_group.getCompanyId(), true);
-
-		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
-
-		CommercePriceList commercePriceList =
-			CommercePriceListTestUtil.addCommercePriceList(
-				null, commerceCatalog.getGroupId(), currency.getCurrencyCode(),
-				name, RandomTestUtil.randomDouble(), true, null, null);
-
-		Currency updatedCurrency = Currency.getInstance(LocaleUtil.UK);
-		String updatedName = RandomTestUtil.randomString();
-
-		CommercePriceListTestUtil.upsertCommercePriceList(
-			null, _group.getGroupId(),
-			commercePriceList.getCommercePriceListId(),
-			updatedCurrency.getCurrencyCode(), updatedName,
-			RandomTestUtil.randomDouble(), true, null, null);
-
-		CommercePriceList updatedCommercePriceList =
-			_commercePriceListLocalService.getCommercePriceList(
-				commercePriceList.getCommercePriceListId());
-
-		_assertPriceListAttributes(
-			updatedCurrency, updatedName, updatedCommercePriceList);
-	}
-
-	@Test(expected = NoSuchCurrencyException.class)
-	public void testUpsertCommercePriceList4() throws Exception {
-		frutillaRule.scenario(
-			"Adding a new Price List"
-		).given(
-			"A site (group)"
-		).and(
-			"A non-existent currency code on the site"
-		).and(
-			"The name of the new list"
-		).when(
-			"The external reference code (externalReferenceCode)"
-		).and(
-			"(commercePriceListId) is not used in the method invocation"
-		).then(
-			"CommercePriceListCurrencyException should be thrown"
-		);
-
-		Currency currency = Currency.getInstance("KGS");
-		String name = RandomTestUtil.randomString();
-
-		CommercePriceListTestUtil.upsertCommercePriceList(
-			null, _group.getGroupId(), 0, currency.getCurrencyCode(), name,
-			RandomTestUtil.randomDouble(), true, null, null);
-	}
-
-	@Test
-	public void testUpsertCommercePriceList5() throws Exception {
-		frutillaRule.scenario(
-			"Adding a new Price List"
-		).given(
-			"A site (group)"
-		).and(
-			"A currency code expressed with 3-letter ISO 4217 format"
-		).and(
-			"The name of the new list"
-		).when(
-			"The external reference code (externalReferenceCode) is not used"
-		).and(
-			"A non-existent but greater than 0 (commercePriceListId) is used " +
-				"in the method invocation"
-		).then(
-			"The result should be a new Price List on the given site"
-		);
-
-		Currency currency = Currency.getInstance(LocaleUtil.US);
-		String name = RandomTestUtil.randomString();
-
-		List<CommerceCatalog> commerceCatalogs =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
-				_group.getCompanyId(), true);
-
-		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
-
-		CommercePriceList commercePriceList =
-			CommercePriceListTestUtil.upsertCommercePriceList(
-				null, commerceCatalog.getGroupId(), 1,
-				currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
-				true, null, null);
-
-		_assertPriceListAttributes(currency, name, commercePriceList);
-	}
-
-	@Test
-	public void testUpsertCommercePriceList6() throws Exception {
-		frutillaRule.scenario(
-			"Adding a new Price List"
-		).given(
-			"A site (group)"
-		).and(
-			"A currency code expressed with 3-letter ISO 4217 format"
-		).and(
-			"A parent price list ID"
-		).and(
-			"The name of the new list"
-		).when(
-			"The external reference code (externalReferenceCode)"
-		).and(
-			"(commercePriceListId) is not used in the method invocation"
-		).then(
-			"The result should be a new Price List with the given " +
-				"(parentCommercePriceListId) on the given site"
-		);
-
-		Currency currency = Currency.getInstance(LocaleUtil.US);
-		String name = RandomTestUtil.randomString();
-		long parentCommercePriceListId = RandomTestUtil.randomLong();
-
-		List<CommerceCatalog> commerceCatalogs =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
-				_group.getCompanyId(), true);
-
-		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
-
-		CommercePriceList commercePriceList =
-			CommercePriceListTestUtil.upsertCommercePriceList(
-				null, commerceCatalog.getGroupId(), 1,
-				currency.getCurrencyCode(), parentCommercePriceListId, name,
-				RandomTestUtil.randomDouble(), true, null, null);
-
-		Assert.assertThat(
-			commercePriceList.getParentCommercePriceListId(),
-			CoreMatchers.equalTo(parentCommercePriceListId));
-	}
-
-	@Test
-	public void testUpsertCommercePriceList7() throws Exception {
-		frutillaRule.scenario(
-			"Update an existing Price List"
-		).given(
-			"A site (group)"
-		).and(
-			"A currency code expressed with 3-letter ISO 4217 format"
-		).and(
-			"A parent price list ID"
-		).and(
-			"The name of the list"
-		).when(
-			"The external reference code (externalReferenceCode) is used"
-		).and(
-			"(commercePriceListId) is not used in the method invocation"
-		).then(
-			"The result should be the updated Price List with the given " +
-				"(parentCommercePriceListId) on the given site"
-		);
-
-		Currency currency = Currency.getInstance(LocaleUtil.US);
-		String name = RandomTestUtil.randomString();
-		long parentCommercePriceListId = RandomTestUtil.randomLong();
-
-		List<CommerceCatalog> commerceCatalogs =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
-				_group.getCompanyId(), true);
-
-		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
-
-		CommercePriceList commercePriceList =
-			CommercePriceListTestUtil.upsertCommercePriceList(
-				null, commerceCatalog.getGroupId(), 1,
-				currency.getCurrencyCode(), parentCommercePriceListId, name,
-				RandomTestUtil.randomDouble(), true, null, null);
-
-		Assert.assertThat(
-			commercePriceList.getParentCommercePriceListId(),
 			CoreMatchers.equalTo(parentCommercePriceListId));
 	}
 

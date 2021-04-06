@@ -32,6 +32,58 @@ import java.util.List;
 public class CommerceMLForecastAlertEntryLocalServiceImpl
 	extends CommerceMLForecastAlertEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceMLForecastAlertEntry addOrUpdateCommerceMLForecastAlertEntry(
+			long companyId, long userId, long commerceAccountId, Date timestamp,
+			float actual, float forecast, float relativeChange)
+		throws PortalException {
+
+		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
+			commerceMLForecastAlertEntryPersistence.findByC_C_T(
+				companyId, commerceAccountId, timestamp);
+
+		User user = userLocalService.getUser(userId);
+
+		if (commerceMLForecastAlertEntry == null) {
+			long commerceMLForecastAlertEntryId =
+				counterLocalService.increment();
+
+			commerceMLForecastAlertEntry =
+				commerceMLForecastAlertEntryPersistence.create(
+					commerceMLForecastAlertEntryId);
+
+			commerceMLForecastAlertEntry.setCompanyId(companyId);
+			commerceMLForecastAlertEntry.setUserId(userId);
+			commerceMLForecastAlertEntry.setUserName(user.getFullName());
+			commerceMLForecastAlertEntry.setCreateDate(new Date());
+			commerceMLForecastAlertEntry.setCommerceAccountId(
+				commerceAccountId);
+			commerceMLForecastAlertEntry.setTimestamp(timestamp);
+		}
+
+		commerceMLForecastAlertEntry.setModifiedDate(new Date());
+		commerceMLForecastAlertEntry.setActual(actual);
+		commerceMLForecastAlertEntry.setForecast(forecast);
+		commerceMLForecastAlertEntry.setRelativeChange(relativeChange);
+		commerceMLForecastAlertEntry.setStatus(
+			CommerceMLForecastAlertConstants.STATUS_NEW);
+
+		commerceMLForecastAlertEntry =
+			commerceMLForecastAlertEntryPersistence.update(
+				commerceMLForecastAlertEntry);
+
+		// Resources
+
+		resourceLocalService.addResources(
+			user.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			user.getUserId(), CommerceMLForecastAlertEntry.class.getName(),
+			commerceMLForecastAlertEntry.getCommerceAccountId(), false, false,
+			false);
+
+		return commerceMLForecastAlertEntry;
+	}
+
 	@Override
 	public List<CommerceMLForecastAlertEntry>
 		getAboveThresholdCommerceMLForecastAlertEntries(
@@ -105,58 +157,6 @@ public class CommerceMLForecastAlertEntryLocalServiceImpl
 
 		return commerceMLForecastAlertEntryPersistence.update(
 			commerceMLForecastAlertEntry);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceMLForecastAlertEntry upsertCommerceMLForecastAlertEntry(
-			long companyId, long userId, long commerceAccountId, Date timestamp,
-			float actual, float forecast, float relativeChange)
-		throws PortalException {
-
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
-			commerceMLForecastAlertEntryPersistence.findByC_C_T(
-				companyId, commerceAccountId, timestamp);
-
-		User user = userLocalService.getUser(userId);
-
-		if (commerceMLForecastAlertEntry == null) {
-			long commerceMLForecastAlertEntryId =
-				counterLocalService.increment();
-
-			commerceMLForecastAlertEntry =
-				commerceMLForecastAlertEntryPersistence.create(
-					commerceMLForecastAlertEntryId);
-
-			commerceMLForecastAlertEntry.setCompanyId(companyId);
-			commerceMLForecastAlertEntry.setUserId(userId);
-			commerceMLForecastAlertEntry.setUserName(user.getFullName());
-			commerceMLForecastAlertEntry.setCreateDate(new Date());
-			commerceMLForecastAlertEntry.setCommerceAccountId(
-				commerceAccountId);
-			commerceMLForecastAlertEntry.setTimestamp(timestamp);
-		}
-
-		commerceMLForecastAlertEntry.setModifiedDate(new Date());
-		commerceMLForecastAlertEntry.setActual(actual);
-		commerceMLForecastAlertEntry.setForecast(forecast);
-		commerceMLForecastAlertEntry.setRelativeChange(relativeChange);
-		commerceMLForecastAlertEntry.setStatus(
-			CommerceMLForecastAlertConstants.STATUS_NEW);
-
-		commerceMLForecastAlertEntry =
-			commerceMLForecastAlertEntryPersistence.update(
-				commerceMLForecastAlertEntry);
-
-		// Resources
-
-		resourceLocalService.addResources(
-			user.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			user.getUserId(), CommerceMLForecastAlertEntry.class.getName(),
-			commerceMLForecastAlertEntry.getCommerceAccountId(), false, false,
-			false);
-
-		return commerceMLForecastAlertEntry;
 	}
 
 }

@@ -179,7 +179,7 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceDiscount.class.getName(), actionRequest);
 
-		return _commerceDiscountService.upsertCommerceDiscount(
+		return _commerceDiscountService.addOrUpdateCommerceDiscount(
 			externalReferenceCode, serviceContext.getUserId(),
 			commerceDiscountId, title, target, useCouponCode, couponCode,
 			usePercentage, maximumDiscountAmount, level, discountLevels[0],

@@ -48,6 +48,27 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 	}
 
 	@Override
+	public CPOptionValue addOrUpdateCPOptionValue(
+			String externalReferenceCode, long cpOptionId,
+			Map<Locale, String> nameMap, double priority, String key,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CPOptionValue cpOptionValue =
+			cpOptionValueLocalService.fetchByExternalReferenceCode(
+				externalReferenceCode, serviceContext.getCompanyId());
+
+		if (cpOptionValue == null) {
+			_cpOptionModelResourcePermission.check(
+				getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
+		}
+
+		return cpOptionValueLocalService.addOrUpdateCPOptionValue(
+			externalReferenceCode, cpOptionId, nameMap, priority, key,
+			serviceContext);
+	}
+
+	@Override
 	public void deleteCPOptionValue(long cpOptionValueId)
 		throws PortalException {
 
@@ -169,27 +190,6 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 		return cpOptionValueLocalService.updateCPOptionValue(
 			cpOptionValue.getCPOptionValueId(), titleMap, priority, key,
-			serviceContext);
-	}
-
-	@Override
-	public CPOptionValue upsertCPOptionValue(
-			String externalReferenceCode, long cpOptionId,
-			Map<Locale, String> nameMap, double priority, String key,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CPOptionValue cpOptionValue =
-			cpOptionValueLocalService.fetchByExternalReferenceCode(
-				externalReferenceCode, serviceContext.getCompanyId());
-
-		if (cpOptionValue == null) {
-			_cpOptionModelResourcePermission.check(
-				getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
-		}
-
-		return cpOptionValueLocalService.upsertCPOptionValue(
-			externalReferenceCode, cpOptionId, nameMap, priority, key,
 			serviceContext);
 	}
 

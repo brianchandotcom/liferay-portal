@@ -242,7 +242,7 @@ public class SkuResourceImpl
 	private Sku _addOrUpdateSKU(CPDefinition cpDefinition, Sku sku)
 		throws Exception {
 
-		CPInstance cpInstance = SkuUtil.upsertCPInstance(
+		CPInstance cpInstance = SkuUtil.addOrUpdateCPInstance(
 			_cpInstanceService, sku, cpDefinition,
 			_serviceContextHelper.getServiceContext(cpDefinition.getGroupId()));
 

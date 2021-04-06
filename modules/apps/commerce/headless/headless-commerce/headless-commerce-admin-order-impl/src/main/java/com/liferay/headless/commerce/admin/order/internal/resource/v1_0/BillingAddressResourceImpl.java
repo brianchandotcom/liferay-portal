@@ -107,7 +107,7 @@ public class BillingAddressResourceImpl
 					externalReferenceCode);
 		}
 
-		BillingAddressUtil.upsertBillingAddress(
+		BillingAddressUtil.addOrUpdateBillingAddress(
 			_commerceAddressService, _commerceOrderService, commerceOrder,
 			billingAddress, _serviceContextHelper.getServiceContext());
 
@@ -121,7 +121,7 @@ public class BillingAddressResourceImpl
 			Long id, BillingAddress billingAddress)
 		throws Exception {
 
-		BillingAddressUtil.upsertBillingAddress(
+		BillingAddressUtil.addOrUpdateBillingAddress(
 			_commerceAddressService, _commerceOrderService,
 			_commerceOrderService.getCommerceOrder(id), billingAddress,
 			_serviceContextHelper.getServiceContext());

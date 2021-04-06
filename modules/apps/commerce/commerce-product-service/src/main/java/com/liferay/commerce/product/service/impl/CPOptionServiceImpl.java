@@ -56,6 +56,32 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	}
 
 	@Override
+	public CPOption addOrUpdateCPOption(
+			String externalReferenceCode, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			boolean facetable, boolean required, boolean skuContributor,
+			String key, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPOption cpOption = cpOptionLocalService.fetchByExternalReferenceCode(
+			externalReferenceCode, serviceContext.getCompanyId());
+
+		if (cpOption == null) {
+			PortletResourcePermission portletResourcePermission =
+				_cpOptionModelResourcePermission.getPortletResourcePermission();
+
+			portletResourcePermission.check(
+				getPermissionChecker(), null,
+				CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION);
+		}
+
+		return cpOptionLocalService.addOrUpdateCPOption(
+			externalReferenceCode, getUserId(), nameMap, descriptionMap,
+			ddmFormFieldTypeName, facetable, required, skuContributor, key,
+			serviceContext);
+	}
+
+	@Override
 	public void deleteCPOption(long cpOptionId) throws PortalException {
 		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.DELETE);
@@ -158,32 +184,6 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 		return cpOptionLocalService.updateCPOptionExternalReferenceCode(
 			externalReferenceCode, cpOptionId);
-	}
-
-	@Override
-	public CPOption upsertCPOption(
-			String externalReferenceCode, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-			boolean facetable, boolean required, boolean skuContributor,
-			String key, ServiceContext serviceContext)
-		throws PortalException {
-
-		CPOption cpOption = cpOptionLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, serviceContext.getCompanyId());
-
-		if (cpOption == null) {
-			PortletResourcePermission portletResourcePermission =
-				_cpOptionModelResourcePermission.getPortletResourcePermission();
-
-			portletResourcePermission.check(
-				getPermissionChecker(), null,
-				CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION);
-		}
-
-		return cpOptionLocalService.upsertCPOption(
-			externalReferenceCode, getUserId(), nameMap, descriptionMap,
-			ddmFormFieldTypeName, facetable, required, skuContributor, key,
-			serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CPOption>

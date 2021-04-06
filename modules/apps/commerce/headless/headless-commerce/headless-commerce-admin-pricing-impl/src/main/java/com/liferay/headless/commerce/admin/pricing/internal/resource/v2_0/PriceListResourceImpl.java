@@ -238,7 +238,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 			priceList.getExpirationDate(), serviceContext.getTimeZone());
 
 		CommercePriceList commercePriceList =
-			_commercePriceListService.upsertCommercePriceList(
+			_commercePriceListService.addOrUpdateCommercePriceList(
 				priceList.getExternalReferenceCode(),
 				commerceCatalog.getGroupId(), contextUser.getUserId(), 0L,
 				commerceCurrency.getCommerceCurrencyId(),
@@ -474,31 +474,34 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 					serviceContext.getTimeZone());
 
 				CommercePriceModifier commercePriceModifier =
-					_commercePriceModifierService.upsertCommercePriceModifier(
-						priceModifier.getExternalReferenceCode(),
-						serviceContext.getUserId(),
-						GetterUtil.getLong(priceModifier.getId()),
-						commercePriceList.getGroupId(),
-						priceModifier.getTitle(), priceModifier.getTarget(),
-						commercePriceList.getCommercePriceListId(),
-						priceModifier.getModifierType(),
-						priceModifier.getModifierAmount(),
-						GetterUtil.get(priceList.getPriority(), 0D),
-						GetterUtil.getBoolean(priceModifier.getActive(), true),
-						displayDateConfig.getMonth(),
-						displayDateConfig.getDay(), displayDateConfig.getYear(),
-						displayDateConfig.getHour(),
-						displayDateConfig.getMinute(),
-						expirationDateConfig.getMonth(),
-						expirationDateConfig.getDay(),
-						expirationDateConfig.getYear(),
-						expirationDateConfig.getHour(),
-						expirationDateConfig.getMinute(),
-						GetterUtil.getBoolean(
-							priceModifier.getNeverExpire(), true),
-						serviceContext);
+					_commercePriceModifierService.
+						addOrUpdateCommercePriceModifier(
+							priceModifier.getExternalReferenceCode(),
+							serviceContext.getUserId(),
+							GetterUtil.getLong(priceModifier.getId()),
+							commercePriceList.getGroupId(),
+							priceModifier.getTitle(), priceModifier.getTarget(),
+							commercePriceList.getCommercePriceListId(),
+							priceModifier.getModifierType(),
+							priceModifier.getModifierAmount(),
+							GetterUtil.get(priceList.getPriority(), 0D),
+							GetterUtil.getBoolean(
+								priceModifier.getActive(), true),
+							displayDateConfig.getMonth(),
+							displayDateConfig.getDay(),
+							displayDateConfig.getYear(),
+							displayDateConfig.getHour(),
+							displayDateConfig.getMinute(),
+							expirationDateConfig.getMonth(),
+							expirationDateConfig.getDay(),
+							expirationDateConfig.getYear(),
+							expirationDateConfig.getHour(),
+							expirationDateConfig.getMinute(),
+							GetterUtil.getBoolean(
+								priceModifier.getNeverExpire(), true),
+							serviceContext);
 
-				PriceModifierUtil.upsertCommercePriceModifierRels(
+				PriceModifierUtil.addOrUpdateCommercePriceModifierRels(
 					_assetCategoryLocalService, _commercePricingClassService,
 					_cProductLocalService, _commercePriceModifierRelService,
 					priceModifier, commercePriceModifier,
@@ -520,7 +523,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 					serviceContext.getTimeZone());
 
 				CommercePriceEntry commercePriceEntry =
-					_commercePriceEntryService.upsertCommercePriceEntry(
+					_commercePriceEntryService.addOrUpdateCommercePriceEntry(
 						priceEntry.getExternalReferenceCode(),
 						GetterUtil.getLong(priceEntry.getPriceEntryId()),
 						GetterUtil.getLong(priceEntry.getSkuId()), null,
@@ -549,7 +552,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 				if (tierPrices != null) {
 					for (TierPrice tierPrice : tierPrices) {
-						TierPriceUtil.upsertCommerceTierPriceEntry(
+						TierPriceUtil.addOrUpdateCommerceTierPriceEntry(
 							_commerceTierPriceEntryService, tierPrice,
 							commercePriceEntry, _serviceContextHelper);
 					}

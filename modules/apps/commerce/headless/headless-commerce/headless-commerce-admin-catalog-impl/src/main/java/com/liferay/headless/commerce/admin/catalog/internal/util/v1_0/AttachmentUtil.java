@@ -122,23 +122,7 @@ public class AttachmentUtil {
 			uniqueFileNameProvider);
 	}
 
-	public static Map<Locale, String> getTitleMap(
-			CPAttachmentFileEntry cpAttachmentFileEntry,
-			Map<String, String> titleMap)
-		throws PortalException {
-
-		if (titleMap != null) {
-			return LanguageUtils.getLocalizedMap(titleMap);
-		}
-
-		if (cpAttachmentFileEntry == null) {
-			return null;
-		}
-
-		return cpAttachmentFileEntry.getTitleMap();
-	}
-
-	public static CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			AttachmentBase64 attachmentBase64, long classNameId, long classPK,
@@ -181,7 +165,7 @@ public class AttachmentUtil {
 			fileEntryId = fileEntry.getFileEntryId();
 		}
 
-		return cpAttachmentFileEntryService.upsertCPAttachmentFileEntry(
+		return cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			attachmentBase64.getExternalReferenceCode(),
 			serviceContext.getScopeGroupId(), classNameId, classPK,
 			GetterUtil.getLong(attachmentBase64.getId()), fileEntryId,
@@ -197,7 +181,7 @@ public class AttachmentUtil {
 			serviceContext);
 	}
 
-	public static CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			AttachmentUrl attachmentUrl, long classNameId, long classPK,
@@ -239,7 +223,7 @@ public class AttachmentUtil {
 			fileEntryId = fileEntry.getFileEntryId();
 		}
 
-		return cpAttachmentFileEntryService.upsertCPAttachmentFileEntry(
+		return cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			attachmentUrl.getExternalReferenceCode(),
 			serviceContext.getScopeGroupId(), classNameId, classPK,
 			GetterUtil.getLong(attachmentUrl.getId()), fileEntryId,
@@ -255,7 +239,7 @@ public class AttachmentUtil {
 			serviceContext);
 	}
 
-	public static CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			long groupId,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			UniqueFileNameProvider uniqueFileNameProvider,
@@ -298,7 +282,7 @@ public class AttachmentUtil {
 			fileEntryId = fileEntry.getFileEntryId();
 		}
 
-		return cpAttachmentFileEntryService.upsertCPAttachmentFileEntry(
+		return cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			attachment.getExternalReferenceCode(), groupId, classNameId,
 			classPK, GetterUtil.getLong(attachment.getId()), fileEntryId,
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
@@ -311,6 +295,22 @@ public class AttachmentUtil {
 			GetterUtil.getString(attachment.getOptions()),
 			GetterUtil.getDouble(attachment.getPriority()), type,
 			serviceContext);
+	}
+
+	public static Map<Locale, String> getTitleMap(
+			CPAttachmentFileEntry cpAttachmentFileEntry,
+			Map<String, String> titleMap)
+		throws PortalException {
+
+		if (titleMap != null) {
+			return LanguageUtils.getLocalizedMap(titleMap);
+		}
+
+		if (cpAttachmentFileEntry == null) {
+			return null;
+		}
+
+		return cpAttachmentFileEntry.getTitleMap();
 	}
 
 	private static FileEntry _addFileEntry(

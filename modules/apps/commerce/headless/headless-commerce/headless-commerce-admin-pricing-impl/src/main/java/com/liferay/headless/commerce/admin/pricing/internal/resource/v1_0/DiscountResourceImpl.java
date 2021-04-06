@@ -209,7 +209,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountService.upsertCommerceDiscount(
+			_commerceDiscountService.addOrUpdateCommerceDiscount(
 				discount.getExternalReferenceCode(), contextUser.getUserId(),
 				GetterUtil.getLong(discount.getId()), discount.getTitle(),
 				discount.getTarget(),

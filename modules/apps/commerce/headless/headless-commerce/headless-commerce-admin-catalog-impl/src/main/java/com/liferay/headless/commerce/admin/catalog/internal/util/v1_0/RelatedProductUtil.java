@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class RelatedProductUtil {
 
-	public static CPDefinitionLink upsertCPDefinitionLink(
+	public static CPDefinitionLink addOrUpdateCPDefinitionLink(
 			CPDefinitionLinkService cpDefinitionLinkService,
 			CPDefinitionService cpDefinitionService,
 			RelatedProduct relatedProduct, long cpDefinitionId,

@@ -163,6 +163,35 @@ public class CommerceAccountLocalServiceImpl
 	}
 
 	@Override
+	public CommerceAccount addOrUpdateCommerceAccount(
+			String name, long parentCommerceAccountId, boolean logo,
+			byte[] logoBytes, String email, String taxId, int type,
+			boolean active, String externalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+		else {
+			CommerceAccount commerceAccount =
+				CommerceAccountImpl.fromAccountEntry(
+					accountEntryLocalService.fetchAccountEntryByReferenceCode(
+						serviceContext.getCompanyId(), externalReferenceCode));
+
+			if (commerceAccount != null) {
+				return commerceAccountLocalService.updateCommerceAccount(
+					commerceAccount.getCommerceAccountId(), name, logo,
+					logoBytes, email, taxId, active, serviceContext);
+			}
+		}
+
+		return commerceAccountLocalService.addCommerceAccount(
+			name, parentCommerceAccountId, email, taxId, type, active,
+			externalReferenceCode, serviceContext);
+	}
+
+	@Override
 	public CommerceAccount addPersonalCommerceAccount(
 			long userId, String taxId, String externalReferenceCode,
 			ServiceContext serviceContext)
@@ -665,35 +694,6 @@ public class CommerceAccountLocalServiceImpl
 
 		return CommerceAccountImpl.fromAccountEntry(
 			accountEntryLocalService.updateStatus(commerceAccountId, status));
-	}
-
-	@Override
-	public CommerceAccount upsertCommerceAccount(
-			String name, long parentCommerceAccountId, boolean logo,
-			byte[] logoBytes, String email, String taxId, int type,
-			boolean active, String externalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-		else {
-			CommerceAccount commerceAccount =
-				CommerceAccountImpl.fromAccountEntry(
-					accountEntryLocalService.fetchAccountEntryByReferenceCode(
-						serviceContext.getCompanyId(), externalReferenceCode));
-
-			if (commerceAccount != null) {
-				return commerceAccountLocalService.updateCommerceAccount(
-					commerceAccount.getCommerceAccountId(), name, logo,
-					logoBytes, email, taxId, active, serviceContext);
-			}
-		}
-
-		return commerceAccountLocalService.addCommerceAccount(
-			name, parentCommerceAccountId, email, taxId, type, active,
-			externalReferenceCode, serviceContext);
 	}
 
 	protected long getParentCommerceAccountId(

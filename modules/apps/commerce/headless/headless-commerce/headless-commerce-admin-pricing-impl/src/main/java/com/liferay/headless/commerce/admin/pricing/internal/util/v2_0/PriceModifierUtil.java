@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class PriceModifierUtil {
 
-	public static void upsertCommercePriceModifierRels(
+	public static void addOrUpdateCommercePriceModifierRels(
 			AssetCategoryLocalService assetCategoryLocalService,
 			CommercePricingClassService commercePricingClassService,
 			CProductLocalService cProductLocalService,

@@ -351,7 +351,7 @@ public class AttachmentResourceImpl
 		throws Exception {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			AttachmentUtil.upsertCPAttachmentFileEntry(
+			AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 				cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 				_uniqueFileNameProvider, attachment,
 				_classNameLocalService.getClassNameId(
@@ -370,7 +370,7 @@ public class AttachmentResourceImpl
 		throws Exception {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			AttachmentUtil.upsertCPAttachmentFileEntry(
+			AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 				_cpAttachmentFileEntryService, _uniqueFileNameProvider,
 				attachmentBase64,
 				_classNameLocalService.getClassNameId(
@@ -388,7 +388,7 @@ public class AttachmentResourceImpl
 		throws Exception {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			AttachmentUtil.upsertCPAttachmentFileEntry(
+			AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 				_cpAttachmentFileEntryService, _uniqueFileNameProvider,
 				attachmentUrl,
 				_classNameLocalService.getClassNameId(

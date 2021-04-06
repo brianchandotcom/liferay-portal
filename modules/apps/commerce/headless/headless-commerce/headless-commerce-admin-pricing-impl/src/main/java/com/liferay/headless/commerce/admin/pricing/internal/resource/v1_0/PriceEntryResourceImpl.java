@@ -268,7 +268,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		}
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryService.upsertCommercePriceEntry(
+			_commercePriceEntryService.addOrUpdateCommercePriceEntry(
 				priceEntry.getExternalReferenceCode(),
 				GetterUtil.getLong(priceEntry.getId()), cProductId,
 				cpInstanceUuid, commercePriceList.getCommercePriceListId(),
@@ -316,7 +316,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		if (tierPrices != null) {
 			for (TierPrice tierPrice : tierPrices) {
-				TierPriceUtil.upsertCommerceTierPriceEntry(
+				TierPriceUtil.addOrUpdateCommerceTierPriceEntry(
 					_commerceTierPriceEntryService, tierPrice,
 					commercePriceEntry, serviceContext);
 			}

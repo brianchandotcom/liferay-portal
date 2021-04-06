@@ -272,11 +272,14 @@ public class OptionValueResourceImpl
 			CPOption cpOption, OptionValue optionValue)
 		throws Exception {
 
-		CPOptionValue cpOptionValue = _cpOptionValueService.upsertCPOptionValue(
-			optionValue.getExternalReferenceCode(), cpOption.getCPOptionId(),
-			LanguageUtils.getLocalizedMap(optionValue.getName()),
-			GetterUtil.get(optionValue.getPriority(), 0D), optionValue.getKey(),
-			_serviceContextHelper.getServiceContext());
+		CPOptionValue cpOptionValue =
+			_cpOptionValueService.addOrUpdateCPOptionValue(
+				optionValue.getExternalReferenceCode(),
+				cpOption.getCPOptionId(),
+				LanguageUtils.getLocalizedMap(optionValue.getName()),
+				GetterUtil.get(optionValue.getPriority(), 0D),
+				optionValue.getKey(),
+				_serviceContextHelper.getServiceContext());
 
 		return _toOptionValue(cpOptionValue.getCPOptionValueId());
 	}

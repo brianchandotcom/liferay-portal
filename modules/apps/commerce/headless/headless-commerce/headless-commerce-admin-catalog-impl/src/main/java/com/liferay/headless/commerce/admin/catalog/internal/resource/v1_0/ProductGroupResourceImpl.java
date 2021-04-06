@@ -194,7 +194,7 @@ public class ProductGroupResourceImpl
 		throws Exception {
 
 		CommercePricingClass commercePricingClass =
-			_commercePricingClassService.upsertCommercePricingClass(
+			_commercePricingClassService.addOrUpdateCommercePricingClass(
 				productGroup.getExternalReferenceCode(), 0L,
 				contextUser.getUserId(),
 				LanguageUtils.getLocalizedMap(productGroup.getTitle()),

@@ -670,7 +670,7 @@ public class CommerceOrderItemLocalServiceTest {
 			commerceOrderItems.size(), 3, commerceOrderItems.size());
 
 		CommerceOrderItem commerceOrderItem3 =
-			_commerceOrderItemLocalService.upsertCommerceOrderItem(
+			_commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), "[]", 1, 0, _commerceContext,
 				_serviceContext);

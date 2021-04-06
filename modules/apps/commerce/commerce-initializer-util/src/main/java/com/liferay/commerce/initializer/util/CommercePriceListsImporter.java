@@ -164,7 +164,7 @@ public class CommercePriceListsImporter {
 				name);
 
 			CommercePriceList commercePriceList =
-				_commercePriceListLocalService.upsertCommercePriceList(
+				_commercePriceListLocalService.addOrUpdateCommercePriceList(
 					externalReferenceCode, catalogGroupId, user.getUserId(), 0,
 					commerceCurrency.getCommerceCurrencyId(), parentPriceListId,
 					name, priority, displayDateMonth, displayDateDay,

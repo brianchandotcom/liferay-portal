@@ -202,7 +202,7 @@ public class ProductOptionResourceImpl
 		throws Exception {
 
 		for (ProductOption productOption : productOptions) {
-			ProductOptionUtil.upsertCPDefinitionOptionRel(
+			ProductOptionUtil.addOrUpdateCPDefinitionOptionRel(
 				_cpDefinitionOptionRelService, _cpOptionService, productOption,
 				cpDefinition.getCPDefinitionId(),
 				_serviceContextHelper.getServiceContext(

@@ -119,7 +119,7 @@ public class CartItemResourceImpl
 			commerceOrder.getCommerceAccountId());
 
 		return _toCartItem(
-			_commerceOrderItemService.upsertCommerceOrderItem(
+			_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
 				cartItem.getOptions(), cartItem.getQuantity(), 0,
 				commerceContext, serviceContext));

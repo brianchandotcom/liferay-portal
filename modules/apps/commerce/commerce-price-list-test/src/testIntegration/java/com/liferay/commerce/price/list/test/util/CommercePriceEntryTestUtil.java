@@ -107,7 +107,7 @@ public class CommercePriceEntryTestUtil {
 			commercePriceListId, price, BigDecimal.ZERO, serviceContext);
 	}
 
-	public static CommercePriceEntry upsertCommercePriceEntry(
+	public static CommercePriceEntry addOrUpdateCommercePriceEntry(
 			String externalReferenceCode, long commercePriceEntryId, long skuId,
 			long commercePriceListId, String skuExternalReferenceCode,
 			Double price, Double promoPrice)

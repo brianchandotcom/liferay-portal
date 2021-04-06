@@ -54,6 +54,28 @@ public class CommerceOrderNoteServiceImpl
 	}
 
 	@Override
+	public CommerceOrderNote addOrUpdateCommerceOrderNote(
+			String externalReferenceCode, long commerceOrderNoteId,
+			long commerceOrderId, String content, boolean restricted,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		String actionId = CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES;
+
+		if (restricted) {
+			actionId =
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES;
+		}
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, actionId);
+
+		return commerceOrderNoteLocalService.addOrUpdateCommerceOrderNote(
+			externalReferenceCode, commerceOrderNoteId, commerceOrderId,
+			content, restricted, serviceContext);
+	}
+
+	@Override
 	public void deleteCommerceOrderNote(long commerceOrderNoteId)
 		throws PortalException {
 
@@ -205,28 +227,6 @@ public class CommerceOrderNoteServiceImpl
 
 		return commerceOrderNoteLocalService.updateCommerceOrderNote(
 			commerceOrderNote.getCommerceOrderNoteId(), content, restricted);
-	}
-
-	@Override
-	public CommerceOrderNote upsertCommerceOrderNote(
-			String externalReferenceCode, long commerceOrderNoteId,
-			long commerceOrderId, String content, boolean restricted,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		String actionId = CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES;
-
-		if (restricted) {
-			actionId =
-				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES;
-		}
-
-		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderId, actionId);
-
-		return commerceOrderNoteLocalService.upsertCommerceOrderNote(
-			externalReferenceCode, commerceOrderNoteId, commerceOrderId,
-			content, restricted, serviceContext);
 	}
 
 	protected void checkCommerceOrderNotePermissions(

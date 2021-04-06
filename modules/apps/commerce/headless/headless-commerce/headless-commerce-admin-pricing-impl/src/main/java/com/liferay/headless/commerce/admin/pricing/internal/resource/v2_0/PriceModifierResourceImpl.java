@@ -250,7 +250,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 			priceModifier.getExpirationDate(), serviceContext.getTimeZone());
 
 		CommercePriceModifier commercePriceModifier =
-			_commercePriceModifierService.upsertCommercePriceModifier(
+			_commercePriceModifierService.addOrUpdateCommercePriceModifier(
 				priceModifier.getExternalReferenceCode(),
 				serviceContext.getUserId(),
 				GetterUtil.getLong(priceModifier.getId()),
@@ -367,7 +367,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 			CommercePriceModifier commercePriceModifier)
 		throws Exception {
 
-		PriceModifierUtil.upsertCommercePriceModifierRels(
+		PriceModifierUtil.addOrUpdateCommercePriceModifierRels(
 			_assetCategoryLocalService, _commercePricingClassService,
 			_cProductLocalService, _commercePriceModifierRelService,
 			priceModifier, commercePriceModifier, _serviceContextHelper);

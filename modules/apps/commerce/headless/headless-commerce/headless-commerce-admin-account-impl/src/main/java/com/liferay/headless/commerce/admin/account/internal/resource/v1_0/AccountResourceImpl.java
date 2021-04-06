@@ -264,7 +264,7 @@ public class AccountResourceImpl
 	@Override
 	public Account postAccount(Account account) throws Exception {
 		CommerceAccount commerceAccount =
-			_commerceAccountService.upsertCommerceAccount(
+			_commerceAccountService.addOrUpdateCommerceAccount(
 				account.getName(),
 				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID, true, null,
 				_getEmailAddress(account, null), account.getTaxId(),

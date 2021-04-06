@@ -244,7 +244,7 @@ public class WarehouseResourceImpl
 		if (warehouseItems != null) {
 			for (WarehouseItem warehouseItem : warehouseItems) {
 				_commerceInventoryWarehouseItemService.
-					upsertCommerceInventoryWarehouseItem(
+					addOrUpdateCommerceInventoryWarehouseItem(
 						contextUser.getUserId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),

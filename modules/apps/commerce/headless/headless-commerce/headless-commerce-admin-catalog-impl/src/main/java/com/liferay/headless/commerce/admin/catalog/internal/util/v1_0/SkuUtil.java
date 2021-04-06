@@ -40,7 +40,7 @@ import java.util.Map;
  */
 public class SkuUtil {
 
-	public static CPInstance upsertCPInstance(
+	public static CPInstance addOrUpdateCPInstance(
 			CPInstanceService cpInstanceService, Sku sku,
 			CPDefinition cpDefinition, ServiceContext serviceContext)
 		throws PortalException {
@@ -67,7 +67,7 @@ public class SkuUtil {
 
 		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
 
-		return cpInstanceService.upsertCPInstance(
+		return cpInstanceService.addOrUpdateCPInstance(
 			sku.getExternalReferenceCode(), cpDefinition.getCPDefinitionId(),
 			cpDefinition.getGroupId(), sku.getSku(), sku.getGtin(),
 			sku.getManufacturerPartNumber(),

@@ -88,6 +88,39 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	}
 
 	@Override
+	public CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				long userId, long commerceInventoryWarehouseId, String sku,
+				int quantity)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.UPDATE);
+
+		return commerceInventoryWarehouseItemLocalService.
+			addOrUpdateCommerceInventoryWarehouseItem(
+				userId, commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	@Override
+	public CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				String externalReferenceCode, long companyId, long userId,
+				long commerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.UPDATE);
+
+		return commerceInventoryWarehouseItemLocalService.
+			addOrUpdateCommerceInventoryWarehouseItem(
+				externalReferenceCode, companyId, userId,
+				commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	@Override
 	public void deleteCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseItemId)
 		throws PortalException {
@@ -479,7 +512,7 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #upsertCommerceInventoryWarehouseItem(String,
+	 *             #addOrUpdateCommerceInventoryWarehouseItem(String,
 	 *             long, long, long, String, int)}
 	 */
 	@Deprecated
@@ -493,40 +526,9 @@ public class CommerceInventoryWarehouseItemServiceImpl
 			getPermissionChecker(), commerceInventoryWarehouseId,
 			ActionKeys.UPDATE);
 
-		return upsertCommerceInventoryWarehouseItem(
+		return addOrUpdateCommerceInventoryWarehouseItem(
 			externalReferenceCode, companyId, userId,
 			commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	@Override
-	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity)
-		throws PortalException {
-
-		_commerceInventoryWarehouseModelResourcePermission.check(
-			getPermissionChecker(), commerceInventoryWarehouseId,
-			ActionKeys.UPDATE);
-
-		return commerceInventoryWarehouseItemLocalService.
-			upsertCommerceInventoryWarehouseItem(
-				userId, commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	@Override
-	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
-			String externalReferenceCode, long companyId, long userId,
-			long commerceInventoryWarehouseId, String sku, int quantity)
-		throws PortalException {
-
-		_commerceInventoryWarehouseModelResourcePermission.check(
-			getPermissionChecker(), commerceInventoryWarehouseId,
-			ActionKeys.UPDATE);
-
-		return commerceInventoryWarehouseItemLocalService.
-			upsertCommerceInventoryWarehouseItem(
-				externalReferenceCode, companyId, userId,
-				commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	private static volatile ModelResourcePermission<CommerceInventoryWarehouse>

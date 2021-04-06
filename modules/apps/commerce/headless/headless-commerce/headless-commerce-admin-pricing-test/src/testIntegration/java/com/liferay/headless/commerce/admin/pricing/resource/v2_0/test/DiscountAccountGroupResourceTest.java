@@ -234,7 +234,7 @@ public class DiscountAccountGroupResourceTest
 			_user.getTimeZone());
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountLocalService.upsertCommerceDiscount(
+			_commerceDiscountLocalService.addOrUpdateCommerceDiscount(
 				RandomTestUtil.randomString(), _user.getUserId(), 0,
 				RandomTestUtil.randomString(),
 				CommerceDiscountConstants.TARGET_PRODUCTS, false, null, false,
@@ -302,7 +302,7 @@ public class DiscountAccountGroupResourceTest
 				_user.getTimeZone());
 
 			_commerceDiscount =
-				_commerceDiscountLocalService.upsertCommerceDiscount(
+				_commerceDiscountLocalService.addOrUpdateCommerceDiscount(
 					"external-reference-code-test", _user.getUserId(), 0,
 					RandomTestUtil.randomString(),
 					CommerceDiscountConstants.TARGET_PRODUCTS, false, null,
@@ -351,7 +351,7 @@ public class DiscountAccountGroupResourceTest
 				_user.getTimeZone());
 
 			_commerceDiscount =
-				_commerceDiscountLocalService.upsertCommerceDiscount(
+				_commerceDiscountLocalService.addOrUpdateCommerceDiscount(
 					"external-reference-code-test", _user.getUserId(), 0,
 					RandomTestUtil.randomString(),
 					CommerceDiscountConstants.TARGET_PRODUCTS, false, null,

@@ -138,21 +138,7 @@ public class CommerceUsersImporter {
 		}
 	}
 
-	protected ServiceContext getServiceContext(long scopeGroupId, long userId)
-		throws PortalException {
-
-		User user = _userLocalService.getUser(userId);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(user.getCompanyId());
-		serviceContext.setScopeGroupId(scopeGroupId);
-		serviceContext.setUserId(userId);
-
-		return serviceContext;
-	}
-
-	protected User upsertUser(
+	protected User addOrUpdateUser(
 			String password, String userReminderQueryQuestion,
 			String userReminderQueryAnswer, String screenName,
 			String emailAddress, long facebookId, String openId,
@@ -214,6 +200,20 @@ public class CommerceUsersImporter {
 		}
 
 		return user;
+	}
+
+	protected ServiceContext getServiceContext(long scopeGroupId, long userId)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setScopeGroupId(scopeGroupId);
+		serviceContext.setUserId(userId);
+
+		return serviceContext;
 	}
 
 	@SuppressFBWarnings("PATH_TRAVERSAL_IN")
@@ -367,7 +367,7 @@ public class CommerceUsersImporter {
 
 		long[] userGroupIds = null;
 
-		user = upsertUser(
+		user = addOrUpdateUser(
 			password, userReminderQueryQuestion, userReminderQueryAnswer,
 			screenName, emailAddress, facebookId, openId, hasPortrait,
 			portraitBytes, locale, timeZoneId, greeting, comments, firstName,

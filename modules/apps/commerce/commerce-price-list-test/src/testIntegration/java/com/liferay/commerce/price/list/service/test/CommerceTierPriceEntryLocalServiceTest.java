@@ -170,7 +170,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpsertCommerceTierPriceEntry1() throws Exception {
+	public void testAddOrUpdateCommerceTierPriceEntry1() throws Exception {
 		frutillaRule.scenario(
 			"Adding a Tier Price Entry to a Price Entry"
 		).given(
@@ -204,7 +204,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 		double promoPrice = RandomTestUtil.randomDouble();
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
-			CommerceTierPriceEntryTestUtil.upsertCommerceTierPriceEntry(
+			CommerceTierPriceEntryTestUtil.addOrUpdateCommerceTierPriceEntry(
 				_company.getCompanyId(), 0L,
 				commercePriceEntry.getCommercePriceEntryId(), minQuantity,
 				price, promoPrice, null, null);
@@ -215,7 +215,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpsertCommerceTierPriceEntry2() throws Exception {
+	public void testAddOrUpdateCommerceTierPriceEntry2() throws Exception {
 		frutillaRule.scenario(
 			"Updating a Tier Price Entry on a Price Entry"
 		).given(
@@ -251,7 +251,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
 
-		CommerceTierPriceEntryTestUtil.upsertCommerceTierPriceEntry(
+		CommerceTierPriceEntryTestUtil.addOrUpdateCommerceTierPriceEntry(
 			_company.getCompanyId(), 0L,
 			commercePriceEntry.getCommercePriceEntryId(), minQuantity, price,
 			promoPrice, externalReferenceCode, null);
@@ -266,7 +266,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 	}
 
 	@Test(expected = DuplicateCommerceTierPriceEntryException.class)
-	public void testUpsertCommerceTierPriceEntry3() throws Exception {
+	public void testAddOrUpdateCommerceTierPriceEntry3() throws Exception {
 		frutillaRule.scenario(
 			"Adding a new Tier Price Entry on a Price Entry where the same " +
 				"amount of minQuantity is already used in another entry"
@@ -304,14 +304,14 @@ public class CommerceTierPriceEntryLocalServiceTest {
 			commercePriceEntry.getCommercePriceEntryId(), minQuantity, price,
 			promoPrice, null);
 
-		CommerceTierPriceEntryTestUtil.upsertCommerceTierPriceEntry(
+		CommerceTierPriceEntryTestUtil.addOrUpdateCommerceTierPriceEntry(
 			_company.getCompanyId(), 0L,
 			commercePriceEntry.getCommercePriceEntryId(), minQuantity, price,
 			promoPrice, null, null);
 	}
 
 	@Test(expected = NoSuchPriceEntryException.class)
-	public void testUpsertCommerceTierPriceEntry4() throws Exception {
+	public void testAddOrUpdateCommerceTierPriceEntry4() throws Exception {
 		frutillaRule.scenario(
 			"Adding a new Tier Price Entry where the referred Price Entry " +
 				"does not exist"
@@ -343,13 +343,13 @@ public class CommerceTierPriceEntryLocalServiceTest {
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
 
-		CommerceTierPriceEntryTestUtil.upsertCommerceTierPriceEntry(
+		CommerceTierPriceEntryTestUtil.addOrUpdateCommerceTierPriceEntry(
 			_company.getCompanyId(), 0L, commercePriceEntryId, minQuantity,
 			price, promoPrice, null, null);
 	}
 
 	@Test
-	public void testUpsertCommerceTierPriceEntry5() throws Exception {
+	public void testAddOrUpdateCommerceTierPriceEntry5() throws Exception {
 		frutillaRule.scenario(
 			"Adding a new Tier Price Entry where the referred Price Entry is " +
 				"given by its external reference code"
@@ -388,7 +388,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
 
-		CommerceTierPriceEntryTestUtil.upsertCommerceTierPriceEntry(
+		CommerceTierPriceEntryTestUtil.addOrUpdateCommerceTierPriceEntry(
 			_company.getCompanyId(), 0L, 0L, minQuantity, price, promoPrice,
 			null, priceEntryExternalReferenceCode);
 

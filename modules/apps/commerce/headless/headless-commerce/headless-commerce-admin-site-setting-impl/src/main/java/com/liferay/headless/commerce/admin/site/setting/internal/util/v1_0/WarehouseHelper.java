@@ -39,6 +39,40 @@ import org.osgi.service.component.annotations.Reference;
 @Component(enabled = false, immediate = true, service = WarehouseHelper.class)
 public class WarehouseHelper {
 
+	public Warehouse addOrUpdateWarehouse(
+			Long groupId, Warehouse warehouse, User user)
+		throws PortalException {
+
+		try {
+			CommerceInventoryWarehouse commerceInventoryWarehouse =
+				updateWarehouse(warehouse.getId(), warehouse, user);
+
+			return _dtoMapper.modelToDTO(commerceInventoryWarehouse);
+		}
+		catch (NoSuchWarehouseException noSuchWarehouseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find availabilityEstimate with ID: " +
+						warehouse.getId(),
+					noSuchWarehouseException);
+			}
+		}
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			groupId, new long[0], user, true);
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			_commerceInventoryWarehouseService.addCommerceInventoryWarehouse(
+				null, warehouse.getName(), warehouse.getDescription(),
+				GetterUtil.get(warehouse.getActive(), false),
+				warehouse.getStreet1(), warehouse.getStreet2(),
+				warehouse.getStreet3(), warehouse.getCity(), warehouse.getZip(),
+				"", "", GetterUtil.get(warehouse.getLatitude(), 0D),
+				GetterUtil.get(warehouse.getLongitude(), 0D), serviceContext);
+
+		return _dtoMapper.modelToDTO(commerceInventoryWarehouse);
+	}
+
 	public void deleteWarehouse(Long id) throws PortalException {
 		_commerceInventoryWarehouseService.deleteCommerceInventoryWarehouse(id);
 	}
@@ -133,40 +167,6 @@ public class WarehouseHelper {
 					warehouse.getMvccVersion(),
 					commerceInventoryWarehouse.getMvccVersion()),
 				serviceContext);
-	}
-
-	public Warehouse upsertWarehouse(
-			Long groupId, Warehouse warehouse, User user)
-		throws PortalException {
-
-		try {
-			CommerceInventoryWarehouse commerceInventoryWarehouse =
-				updateWarehouse(warehouse.getId(), warehouse, user);
-
-			return _dtoMapper.modelToDTO(commerceInventoryWarehouse);
-		}
-		catch (NoSuchWarehouseException noSuchWarehouseException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to find availabilityEstimate with ID: " +
-						warehouse.getId(),
-					noSuchWarehouseException);
-			}
-		}
-
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			groupId, new long[0], user, true);
-
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			_commerceInventoryWarehouseService.addCommerceInventoryWarehouse(
-				null, warehouse.getName(), warehouse.getDescription(),
-				GetterUtil.get(warehouse.getActive(), false),
-				warehouse.getStreet1(), warehouse.getStreet2(),
-				warehouse.getStreet3(), warehouse.getCity(), warehouse.getZip(),
-				"", "", GetterUtil.get(warehouse.getLatitude(), 0D),
-				GetterUtil.get(warehouse.getLongitude(), 0D), serviceContext);
-
-		return _dtoMapper.modelToDTO(commerceInventoryWarehouse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

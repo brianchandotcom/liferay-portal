@@ -80,6 +80,39 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceAccount addOrUpdateCommerceAccount(
+			String name, long parentCommerceAccountId, boolean logo,
+			byte[] logoBytes, String email, String taxId, int type,
+			boolean active, String externalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		CommerceAccount commerceAccount =
+			commerceAccountLocalService.fetchCommerceAccountByReferenceCode(
+				permissionChecker.getCompanyId(), externalReferenceCode);
+
+		if (commerceAccount == null) {
+			PortletResourcePermission portletResourcePermission =
+				_commerceAccountModelResourcePermission.
+					getPortletResourcePermission();
+
+			portletResourcePermission.check(
+				getPermissionChecker(), null,
+				CommerceAccountActionKeys.ADD_ACCOUNT);
+		}
+		else {
+			_commerceAccountModelResourcePermission.check(
+				permissionChecker, commerceAccount, ActionKeys.UPDATE);
+		}
+
+		return commerceAccountLocalService.addOrUpdateCommerceAccount(
+			name, parentCommerceAccountId, logo, logoBytes, email, taxId, type,
+			active, externalReferenceCode, serviceContext);
+	}
+
+	@Override
 	public void deleteCommerceAccount(long commerceAccountId)
 		throws PortalException {
 
@@ -358,39 +391,6 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 
 		return commerceAccountLocalService.updateDefaultShippingAddress(
 			commerceAccountId, commerceAddressId);
-	}
-
-	@Override
-	public CommerceAccount upsertCommerceAccount(
-			String name, long parentCommerceAccountId, boolean logo,
-			byte[] logoBytes, String email, String taxId, int type,
-			boolean active, String externalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		CommerceAccount commerceAccount =
-			commerceAccountLocalService.fetchCommerceAccountByReferenceCode(
-				permissionChecker.getCompanyId(), externalReferenceCode);
-
-		if (commerceAccount == null) {
-			PortletResourcePermission portletResourcePermission =
-				_commerceAccountModelResourcePermission.
-					getPortletResourcePermission();
-
-			portletResourcePermission.check(
-				getPermissionChecker(), null,
-				CommerceAccountActionKeys.ADD_ACCOUNT);
-		}
-		else {
-			_commerceAccountModelResourcePermission.check(
-				permissionChecker, commerceAccount, ActionKeys.UPDATE);
-		}
-
-		return commerceAccountLocalService.upsertCommerceAccount(
-			name, parentCommerceAccountId, logo, logoBytes, email, taxId, type,
-			active, externalReferenceCode, serviceContext);
 	}
 
 	protected boolean hasManageCommerceAccountPermissions()

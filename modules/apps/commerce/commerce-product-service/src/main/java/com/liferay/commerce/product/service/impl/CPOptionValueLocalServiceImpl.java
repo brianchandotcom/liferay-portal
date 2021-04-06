@@ -112,6 +112,32 @@ public class CPOptionValueLocalServiceImpl
 		return cpOptionValue;
 	}
 
+	@Override
+	public CPOptionValue addOrUpdateCPOptionValue(
+			String externalReferenceCode, long cpOptionId,
+			Map<Locale, String> nameMap, double priority, String key,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+		else {
+			CPOptionValue cpOptionValue = cpOptionValuePersistence.fetchByC_ERC(
+				serviceContext.getCompanyId(), externalReferenceCode);
+
+			if (cpOptionValue != null) {
+				return cpOptionValueLocalService.updateCPOptionValue(
+					cpOptionValue.getCPOptionValueId(), nameMap, priority, key,
+					serviceContext);
+			}
+		}
+
+		return cpOptionValueLocalService.addCPOptionValue(
+			externalReferenceCode, cpOptionId, nameMap, priority, key,
+			serviceContext);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -283,32 +309,6 @@ public class CPOptionValueLocalServiceImpl
 		reindexCPOption(cpOptionValue.getCPOptionId());
 
 		return cpOptionValue;
-	}
-
-	@Override
-	public CPOptionValue upsertCPOptionValue(
-			String externalReferenceCode, long cpOptionId,
-			Map<Locale, String> nameMap, double priority, String key,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-		else {
-			CPOptionValue cpOptionValue = cpOptionValuePersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
-
-			if (cpOptionValue != null) {
-				return cpOptionValueLocalService.updateCPOptionValue(
-					cpOptionValue.getCPOptionValueId(), nameMap, priority, key,
-					serviceContext);
-			}
-		}
-
-		return cpOptionValueLocalService.addCPOptionValue(
-			externalReferenceCode, cpOptionId, nameMap, priority, key,
-			serviceContext);
 	}
 
 	protected SearchContext buildSearchContext(

@@ -110,7 +110,7 @@ public class CartCommentResourceImpl
 		throws Exception {
 
 		CommerceOrderNote commerceOrderNote =
-			_commerceOrderNoteService.upsertCommerceOrderNote(
+			_commerceOrderNoteService.addOrUpdateCommerceOrderNote(
 				null, GetterUtil.get(cartComment.getId(), 0L),
 				commerceOrder.getCommerceOrderId(), cartComment.getContent(),
 				GetterUtil.get(cartComment.getRestricted(), false),

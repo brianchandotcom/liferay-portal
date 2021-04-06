@@ -137,7 +137,7 @@ public class CommerceMLForecastAlertEntryDispatchTaskExecutor
 				}
 
 				_commerceMLForecastAlertEntryLocalService.
-					upsertCommerceMLForecastAlertEntry(
+					addOrUpdateCommerceMLForecastAlertEntry(
 						dispatchTrigger.getCompanyId(),
 						dispatchTrigger.getUserId(),
 						commerceAccountCommerceMLForecast.

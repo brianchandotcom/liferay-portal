@@ -52,7 +52,7 @@ public class CommerceSAPConstants {
 				CommerceOrderItemService.class.getName(),
 				"#getCommerceOrderItemsQuantity\n",
 				CommerceOrderItemService.class.getName(),
-				"#upsertCommerceOrderItem\n",
+				"#addOrUpdateCommerceOrderItem\n",
 				CommerceOrderService.class.getName(), "#addCommerceOrder\n",
 				CommerceOrderService.class.getName(), "#fetchCommerceOrder\n",
 				CommerceOrderService.class.getName(), "#getCommerceOrder\n",

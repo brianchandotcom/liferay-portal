@@ -241,7 +241,7 @@ public class OrderItemResourceImpl
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			OrderItemUtil.upsertCommerceOrderItem(
+			OrderItemUtil.addOrUpdateCommerceOrderItem(
 				_cpInstanceService, _commerceOrderItemService,
 				_commerceOrderModelResourcePermission, orderItem, commerceOrder,
 				_commerceContextFactory.create(

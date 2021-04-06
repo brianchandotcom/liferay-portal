@@ -226,7 +226,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 			discount.getExpirationDate(), serviceContext.getTimeZone());
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountService.upsertCommerceDiscount(
+			_commerceDiscountService.addOrUpdateCommerceDiscount(
 				discount.getExternalReferenceCode(), contextUser.getUserId(),
 				GetterUtil.getLong(discount.getId()), discount.getTitle(),
 				discount.getTarget(),

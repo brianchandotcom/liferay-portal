@@ -46,6 +46,42 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AvailabilityEstimateHelper {
 
+	public AvailabilityEstimate addOrUpdateAvailabilityEstimate(
+			Long groupId, AvailabilityEstimate availabilityEstimate, User user)
+		throws PortalException {
+
+		try {
+			CommerceAvailabilityEstimate commerceAvailabilityEstimate =
+				updateAvailabilityEstimate(
+					availabilityEstimate.getId(), availabilityEstimate, user);
+
+			return _dtoMapper.modelToDTO(commerceAvailabilityEstimate);
+		}
+		catch (NoSuchAvailabilityEstimateException
+					noSuchAvailabilityEstimateException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find availabilityEstimate with ID: " +
+						availabilityEstimate.getId(),
+					noSuchAvailabilityEstimateException);
+			}
+		}
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			groupId, new long[0], user, true);
+
+		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
+			_commerceAvailabilityEstimateService.
+				addCommerceAvailabilityEstimate(
+					LanguageUtils.getLocalizedMap(
+						availabilityEstimate.getTitle()),
+					GetterUtil.get(availabilityEstimate.getPriority(), 0D),
+					serviceContext);
+
+		return _dtoMapper.modelToDTO(commerceAvailabilityEstimate);
+	}
+
 	public void deleteAvailabilityEstimate(Long id) throws PortalException {
 		_commerceAvailabilityEstimateService.deleteCommerceAvailabilityEstimate(
 			id);
@@ -105,42 +141,6 @@ public class AvailabilityEstimateHelper {
 					availabilityEstimate.getPriority(),
 					commerceAvailabilityEstimate.getPriority()),
 				serviceContext);
-	}
-
-	public AvailabilityEstimate upsertAvailabilityEstimate(
-			Long groupId, AvailabilityEstimate availabilityEstimate, User user)
-		throws PortalException {
-
-		try {
-			CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-				updateAvailabilityEstimate(
-					availabilityEstimate.getId(), availabilityEstimate, user);
-
-			return _dtoMapper.modelToDTO(commerceAvailabilityEstimate);
-		}
-		catch (NoSuchAvailabilityEstimateException
-					noSuchAvailabilityEstimateException) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to find availabilityEstimate with ID: " +
-						availabilityEstimate.getId(),
-					noSuchAvailabilityEstimateException);
-			}
-		}
-
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			groupId, new long[0], user, true);
-
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-			_commerceAvailabilityEstimateService.
-				addCommerceAvailabilityEstimate(
-					LanguageUtils.getLocalizedMap(
-						availabilityEstimate.getTitle()),
-					GetterUtil.get(availabilityEstimate.getPriority(), 0D),
-					serviceContext);
-
-		return _dtoMapper.modelToDTO(commerceAvailabilityEstimate);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

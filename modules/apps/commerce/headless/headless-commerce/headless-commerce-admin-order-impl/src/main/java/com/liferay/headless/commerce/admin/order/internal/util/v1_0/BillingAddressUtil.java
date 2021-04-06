@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class BillingAddressUtil {
 
-	public static CommerceOrder upsertBillingAddress(
+	public static CommerceOrder addOrUpdateBillingAddress(
 			CommerceAddressService commerceAddressService,
 			CommerceOrderService commerceOrderService,
 			CommerceOrder commerceOrder, BillingAddress billingAddress,

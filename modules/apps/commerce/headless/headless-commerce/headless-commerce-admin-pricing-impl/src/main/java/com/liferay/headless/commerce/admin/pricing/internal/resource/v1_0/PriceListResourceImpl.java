@@ -233,7 +233,7 @@ public class PriceListResourceImpl
 		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
 
 		CommercePriceList commercePriceList =
-			_commercePriceListService.upsertCommercePriceList(
+			_commercePriceListService.addOrUpdateCommercePriceList(
 				priceList.getExternalReferenceCode(),
 				commerceCatalog.getGroupId(), contextUser.getUserId(), 0L,
 				commerceCurrency.getCommerceCurrencyId(), priceList.getName(),
@@ -311,7 +311,7 @@ public class PriceListResourceImpl
 		if (priceEntries != null) {
 			for (PriceEntry priceEntry : priceEntries) {
 				CommercePriceEntry commercePriceEntry =
-					_commercePriceEntryService.upsertCommercePriceEntry(
+					_commercePriceEntryService.addOrUpdateCommercePriceEntry(
 						priceEntry.getExternalReferenceCode(),
 						GetterUtil.getLong(priceEntry.getId()),
 						GetterUtil.getLong(priceEntry.getSkuId()), null,
@@ -326,7 +326,7 @@ public class PriceListResourceImpl
 
 				if (tierPrices != null) {
 					for (TierPrice tierPrice : tierPrices) {
-						TierPriceUtil.upsertCommerceTierPriceEntry(
+						TierPriceUtil.addOrUpdateCommerceTierPriceEntry(
 							_commerceTierPriceEntryService, tierPrice,
 							commercePriceEntry, serviceContext);
 					}

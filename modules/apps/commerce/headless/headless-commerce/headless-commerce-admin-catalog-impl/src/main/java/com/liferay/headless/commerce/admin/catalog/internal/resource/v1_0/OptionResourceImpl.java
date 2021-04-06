@@ -179,7 +179,7 @@ public class OptionResourceImpl
 	private Option _addOrUpdateOption(Option option) throws Exception {
 		Option.FieldType fieldType = option.getFieldType();
 
-		CPOption cpOption = _cpOptionService.upsertCPOption(
+		CPOption cpOption = _cpOptionService.addOrUpdateCPOption(
 			option.getExternalReferenceCode(),
 			LanguageUtils.getLocalizedMap(option.getName()),
 			LanguageUtils.getLocalizedMap(option.getDescription()),

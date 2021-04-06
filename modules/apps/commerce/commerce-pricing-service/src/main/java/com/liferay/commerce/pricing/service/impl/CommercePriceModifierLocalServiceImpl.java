@@ -192,6 +192,72 @@ public class CommercePriceModifierLocalServiceImpl
 	}
 
 	@Override
+	public CommercePriceModifier addOrUpdateCommercePriceModifier(
+			String externalReferenceCode, long userId,
+			long commercePriceModifierId, long groupId, String title,
+			String target, long commercePriceListId, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Update
+
+		if (commercePriceModifierId > 0) {
+			try {
+				return commercePriceModifierLocalService.
+					updateCommercePriceModifier(
+						commercePriceModifierId, groupId, title, target,
+						commercePriceListId, modifierType, modifierAmount,
+						priority, active, displayDateMonth, displayDateDay,
+						displayDateYear, displayDateHour, displayDateMinute,
+						expirationDateMonth, expirationDateDay,
+						expirationDateYear, expirationDateHour,
+						expirationDateMinute, neverExpire, serviceContext);
+			}
+			catch (NoSuchPriceModifierException noSuchPriceModifierException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find price modifier with ID: " +
+							commercePriceModifierId,
+						noSuchPriceModifierException);
+				}
+			}
+		}
+
+		if (!Validator.isBlank(externalReferenceCode)) {
+			CommercePriceModifier commercePriceModifier =
+				commercePriceModifierPersistence.fetchByC_ERC(
+					serviceContext.getCompanyId(), externalReferenceCode);
+
+			if (commercePriceModifier != null) {
+				return commercePriceModifierLocalService.
+					updateCommercePriceModifier(
+						commercePriceModifierId, groupId, title, target,
+						commercePriceListId, modifierType, modifierAmount,
+						priority, active, displayDateMonth, displayDateDay,
+						displayDateYear, displayDateHour, displayDateMinute,
+						expirationDateMonth, expirationDateDay,
+						expirationDateYear, expirationDateHour,
+						expirationDateMinute, neverExpire, serviceContext);
+			}
+		}
+
+		// Add
+
+		return commercePriceModifierLocalService.addCommercePriceModifier(
+			externalReferenceCode, groupId, title, target, commercePriceListId,
+			modifierType, modifierAmount, priority, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommercePriceModifier deleteCommercePriceModifier(
 			CommercePriceModifier commercePriceModifier)
@@ -433,72 +499,6 @@ public class CommercePriceModifierLocalServiceImpl
 			serviceContext.getModifiedDate(now));
 
 		return commercePriceModifierPersistence.update(commercePriceModifier);
-	}
-
-	@Override
-	public CommercePriceModifier upsertCommercePriceModifier(
-			String externalReferenceCode, long userId,
-			long commercePriceModifierId, long groupId, String title,
-			String target, long commercePriceListId, String modifierType,
-			BigDecimal modifierAmount, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException {
-
-		// Update
-
-		if (commercePriceModifierId > 0) {
-			try {
-				return commercePriceModifierLocalService.
-					updateCommercePriceModifier(
-						commercePriceModifierId, groupId, title, target,
-						commercePriceListId, modifierType, modifierAmount,
-						priority, active, displayDateMonth, displayDateDay,
-						displayDateYear, displayDateHour, displayDateMinute,
-						expirationDateMonth, expirationDateDay,
-						expirationDateYear, expirationDateHour,
-						expirationDateMinute, neverExpire, serviceContext);
-			}
-			catch (NoSuchPriceModifierException noSuchPriceModifierException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to find price modifier with ID: " +
-							commercePriceModifierId,
-						noSuchPriceModifierException);
-				}
-			}
-		}
-
-		if (!Validator.isBlank(externalReferenceCode)) {
-			CommercePriceModifier commercePriceModifier =
-				commercePriceModifierPersistence.fetchByC_ERC(
-					serviceContext.getCompanyId(), externalReferenceCode);
-
-			if (commercePriceModifier != null) {
-				return commercePriceModifierLocalService.
-					updateCommercePriceModifier(
-						commercePriceModifierId, groupId, title, target,
-						commercePriceListId, modifierType, modifierAmount,
-						priority, active, displayDateMonth, displayDateDay,
-						displayDateYear, displayDateHour, displayDateMinute,
-						expirationDateMonth, expirationDateDay,
-						expirationDateYear, expirationDateHour,
-						expirationDateMinute, neverExpire, serviceContext);
-			}
-		}
-
-		// Add
-
-		return commercePriceModifierLocalService.addCommercePriceModifier(
-			externalReferenceCode, groupId, title, target, commercePriceListId,
-			modifierType, modifierAmount, priority, active, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
 	}
 
 	protected CommercePriceModifier startWorkflowInstance(

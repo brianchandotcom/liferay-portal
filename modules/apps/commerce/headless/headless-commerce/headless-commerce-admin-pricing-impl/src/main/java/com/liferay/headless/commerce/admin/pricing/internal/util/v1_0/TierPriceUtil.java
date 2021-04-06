@@ -27,13 +27,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class TierPriceUtil {
 
-	public static CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			CommerceTierPriceEntryService commerceTierPriceEntryService,
 			TierPrice tierPrice, CommercePriceEntry commercePriceEntry,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return commerceTierPriceEntryService.upsertCommerceTierPriceEntry(
+		return commerceTierPriceEntryService.addOrUpdateCommerceTierPriceEntry(
 			tierPrice.getExternalReferenceCode(),
 			GetterUtil.getLong(tierPrice.getId()),
 			commercePriceEntry.getCommercePriceEntryId(), tierPrice.getPrice(),

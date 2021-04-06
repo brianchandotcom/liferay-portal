@@ -105,6 +105,88 @@ public class CommerceTierPriceEntryServiceImpl
 	}
 
 	@Override
+	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, String priceEntryExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryLocalService.fetchCommercePriceEntry(
+				commercePriceEntryId);
+
+		if ((commercePriceEntry == null) &&
+			Validator.isNotNull(priceEntryExternalReferenceCode)) {
+
+			commercePriceEntry =
+				commercePriceEntryLocalService.
+					fetchCommercePriceEntryByReferenceCode(
+						serviceContext.getCompanyId(),
+						priceEntryExternalReferenceCode);
+		}
+
+		if (commercePriceEntry != null) {
+			_commercePriceListModelResourcePermission.check(
+				getPermissionChecker(),
+				commercePriceEntry.getCommercePriceListId(), ActionKeys.UPDATE);
+		}
+
+		return commerceTierPriceEntryLocalService.
+			addOrUpdateCommerceTierPriceEntry(
+				externalReferenceCode, commerceTierPriceEntryId,
+				commercePriceEntryId, price, promoPrice, minQuantity,
+				priceEntryExternalReferenceCode, serviceContext);
+	}
+
+	@Override
+	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, int minQuantity,
+			boolean bulkPricing, boolean discountDiscovery,
+			BigDecimal discountLevel1, BigDecimal discountLevel2,
+			BigDecimal discountLevel3, BigDecimal discountLevel4,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String priceEntryExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryLocalService.fetchCommercePriceEntry(
+				commercePriceEntryId);
+
+		if ((commercePriceEntry == null) &&
+			Validator.isNotNull(priceEntryExternalReferenceCode)) {
+
+			commercePriceEntry =
+				commercePriceEntryLocalService.
+					fetchCommercePriceEntryByReferenceCode(
+						serviceContext.getCompanyId(),
+						priceEntryExternalReferenceCode);
+		}
+
+		if (commercePriceEntry != null) {
+			_commercePriceListModelResourcePermission.check(
+				getPermissionChecker(),
+				commercePriceEntry.getCommercePriceListId(), ActionKeys.UPDATE);
+		}
+
+		return commerceTierPriceEntryLocalService.
+			addOrUpdateCommerceTierPriceEntry(
+				externalReferenceCode, commerceTierPriceEntryId,
+				commercePriceEntryId, price, minQuantity, bulkPricing,
+				discountDiscovery, discountLevel1, discountLevel2,
+				discountLevel3, discountLevel4, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, priceEntryExternalReferenceCode, serviceContext);
+	}
+
+	@Override
 	public void deleteCommerceTierPriceEntry(long commerceTierPriceEntryId)
 		throws PortalException {
 
@@ -370,86 +452,6 @@ public class CommerceTierPriceEntryServiceImpl
 
 		return commerceTierPriceEntryLocalService.updateExternalReferenceCode(
 			commerceTierPriceEntry, externalReferenceCode);
-	}
-
-	@Override
-	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
-			int minQuantity, String priceEntryExternalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceEntryId);
-
-		if ((commercePriceEntry == null) &&
-			Validator.isNotNull(priceEntryExternalReferenceCode)) {
-
-			commercePriceEntry =
-				commercePriceEntryLocalService.
-					fetchCommercePriceEntryByReferenceCode(
-						serviceContext.getCompanyId(),
-						priceEntryExternalReferenceCode);
-		}
-
-		if (commercePriceEntry != null) {
-			_commercePriceListModelResourcePermission.check(
-				getPermissionChecker(),
-				commercePriceEntry.getCommercePriceListId(), ActionKeys.UPDATE);
-		}
-
-		return commerceTierPriceEntryLocalService.upsertCommerceTierPriceEntry(
-			externalReferenceCode, commerceTierPriceEntryId,
-			commercePriceEntryId, price, promoPrice, minQuantity,
-			priceEntryExternalReferenceCode, serviceContext);
-	}
-
-	@Override
-	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, BigDecimal price, int minQuantity,
-			boolean bulkPricing, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String priceEntryExternalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceEntryId);
-
-		if ((commercePriceEntry == null) &&
-			Validator.isNotNull(priceEntryExternalReferenceCode)) {
-
-			commercePriceEntry =
-				commercePriceEntryLocalService.
-					fetchCommercePriceEntryByReferenceCode(
-						serviceContext.getCompanyId(),
-						priceEntryExternalReferenceCode);
-		}
-
-		if (commercePriceEntry != null) {
-			_commercePriceListModelResourcePermission.check(
-				getPermissionChecker(),
-				commercePriceEntry.getCommercePriceListId(), ActionKeys.UPDATE);
-		}
-
-		return commerceTierPriceEntryLocalService.upsertCommerceTierPriceEntry(
-			externalReferenceCode, commerceTierPriceEntryId,
-			commercePriceEntryId, price, minQuantity, bulkPricing,
-			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
-			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, priceEntryExternalReferenceCode,
-			serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CommercePriceList>

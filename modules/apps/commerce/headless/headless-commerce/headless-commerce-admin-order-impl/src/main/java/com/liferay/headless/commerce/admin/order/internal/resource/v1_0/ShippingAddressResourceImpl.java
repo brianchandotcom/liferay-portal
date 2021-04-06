@@ -128,7 +128,7 @@ public class ShippingAddressResourceImpl
 					externalReferenceCode);
 		}
 
-		ShippingAddressUtil.upsertShippingAddress(
+		ShippingAddressUtil.addOrUpdateShippingAddress(
 			_commerceAddressService, _commerceOrderService, commerceOrder,
 			shippingAddress, _serviceContextHelper.getServiceContext());
 
@@ -142,7 +142,7 @@ public class ShippingAddressResourceImpl
 			Long id, ShippingAddress shippingAddress)
 		throws Exception {
 
-		ShippingAddressUtil.upsertShippingAddress(
+		ShippingAddressUtil.addOrUpdateShippingAddress(
 			_commerceAddressService, _commerceOrderService,
 			_commerceOrderService.getCommerceOrder(id), shippingAddress,
 			_serviceContextHelper.getServiceContext());

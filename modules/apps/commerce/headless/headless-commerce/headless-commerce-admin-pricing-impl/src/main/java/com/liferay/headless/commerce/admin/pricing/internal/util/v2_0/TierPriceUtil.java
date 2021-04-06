@@ -36,7 +36,7 @@ import java.util.TimeZone;
  */
 public class TierPriceUtil {
 
-	public static CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			CommerceTierPriceEntryService commerceTierPriceEntryService,
 			TierPrice tierPrice, CommercePriceEntry commercePriceEntry,
 			ServiceContextHelper serviceContextHelper)
@@ -51,7 +51,7 @@ public class TierPriceUtil {
 		DateConfig expirationDateConfig = _getExpirationDateConfig(
 			tierPrice.getExpirationDate(), serviceContext.getTimeZone());
 
-		return commerceTierPriceEntryService.upsertCommerceTierPriceEntry(
+		return commerceTierPriceEntryService.addOrUpdateCommerceTierPriceEntry(
 			tierPrice.getExternalReferenceCode(),
 			GetterUtil.getLong(tierPrice.getId()),
 			commercePriceEntry.getCommercePriceEntryId(),

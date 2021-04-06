@@ -279,7 +279,7 @@ public class WarehouseItemResourceImpl
 		if (warehouseItem.getExternalReferenceCode() != null) {
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
-					upsertCommerceInventoryWarehouseItem(
+					addOrUpdateCommerceInventoryWarehouseItem(
 						warehouseItem.getExternalReferenceCode(),
 						contextUser.getCompanyId(), contextUser.getUserId(),
 						commerceInventoryWarehouse.
@@ -289,7 +289,7 @@ public class WarehouseItemResourceImpl
 		else {
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
-					upsertCommerceInventoryWarehouseItem(
+					addOrUpdateCommerceInventoryWarehouseItem(
 						contextUser.getUserId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),

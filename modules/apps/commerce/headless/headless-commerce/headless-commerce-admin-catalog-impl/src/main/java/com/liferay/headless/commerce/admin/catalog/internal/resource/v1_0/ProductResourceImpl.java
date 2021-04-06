@@ -413,7 +413,7 @@ public class ProductResourceImpl
 			ignoreSKUCombinations = cpDefinition.isIgnoreSKUCombinations();
 		}
 
-		cpDefinition = _cpDefinitionService.upsertCPDefinition(
+		cpDefinition = _cpDefinitionService.addOrUpdateCPDefinition(
 			product.getExternalReferenceCode(), commerceCatalog.getGroupId(),
 			contextUser.getUserId(), LanguageUtils.getLocalizedMap(nameMap),
 			LanguageUtils.getLocalizedMap(shortDescriptionMap),
@@ -620,7 +620,7 @@ public class ProductResourceImpl
 
 		if (images != null) {
 			for (Attachment attachment : images) {
-				AttachmentUtil.upsertCPAttachmentFileEntry(
+				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
@@ -636,7 +636,7 @@ public class ProductResourceImpl
 
 		if (attachments != null) {
 			for (Attachment attachment : attachments) {
-				AttachmentUtil.upsertCPAttachmentFileEntry(
+				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
@@ -675,7 +675,7 @@ public class ProductResourceImpl
 		if (productOptions != null) {
 			for (ProductOption productOption : productOptions) {
 				CPDefinitionOptionRel cpDefinitionOptionRel =
-					ProductOptionUtil.upsertCPDefinitionOptionRel(
+					ProductOptionUtil.addOrUpdateCPDefinitionOptionRel(
 						_cpDefinitionOptionRelService, _cpOptionService,
 						productOption, cpDefinition.getCPDefinitionId(),
 						serviceContext);
@@ -687,11 +687,13 @@ public class ProductResourceImpl
 					for (ProductOptionValue productOptionValue :
 							productOptionValues) {
 
-						ProductOptionValueUtil.upsertCPDefinitionOptionValueRel(
-							_cpDefinitionOptionValueRelService,
-							productOptionValue,
-							cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-							serviceContext);
+						ProductOptionValueUtil.
+							addOrUpdateCPDefinitionOptionValueRel(
+								_cpDefinitionOptionValueRelService,
+								productOptionValue,
+								cpDefinitionOptionRel.
+									getCPDefinitionOptionRelId(),
+								serviceContext);
 					}
 				}
 			}
@@ -703,7 +705,7 @@ public class ProductResourceImpl
 
 		if (relatedProducts != null) {
 			for (RelatedProduct relatedProduct : relatedProducts) {
-				RelatedProductUtil.upsertCPDefinitionLink(
+				RelatedProductUtil.addOrUpdateCPDefinitionLink(
 					_cpDefinitionLinkService, _cpDefinitionService,
 					relatedProduct, cpDefinition.getCPDefinitionId(),
 					_serviceContextHelper.getServiceContext(
@@ -717,7 +719,7 @@ public class ProductResourceImpl
 
 		if (skus != null) {
 			for (Sku sku : skus) {
-				SkuUtil.upsertCPInstance(
+				SkuUtil.addOrUpdateCPInstance(
 					_cpInstanceService, sku, cpDefinition, serviceContext);
 			}
 		}
@@ -728,7 +730,7 @@ public class ProductResourceImpl
 
 		if (categories != null) {
 
-			// TODO upsert categories
+			// TODO addOrUpdate categories
 
 		}
 

@@ -296,7 +296,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 			priceEntry.getExpirationDate(), serviceContext.getTimeZone());
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryService.upsertCommercePriceEntry(
+			_commercePriceEntryService.addOrUpdateCommercePriceEntry(
 				priceEntry.getExternalReferenceCode(),
 				GetterUtil.getLong(priceEntry.getPriceEntryId()), cProductId,
 				cpInstanceUuid, commercePriceList.getCommercePriceListId(),
@@ -413,7 +413,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		if (tierPrices != null) {
 			for (TierPrice tierPrice : tierPrices) {
-				TierPriceUtil.upsertCommerceTierPriceEntry(
+				TierPriceUtil.addOrUpdateCommerceTierPriceEntry(
 					_commerceTierPriceEntryService, tierPrice,
 					commercePriceEntry, _serviceContextHelper);
 			}

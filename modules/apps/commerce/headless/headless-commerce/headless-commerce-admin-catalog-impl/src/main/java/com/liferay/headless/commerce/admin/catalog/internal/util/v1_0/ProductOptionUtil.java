@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class ProductOptionUtil {
 
-	public static CPDefinitionOptionRel upsertCPDefinitionOptionRel(
+	public static CPDefinitionOptionRel addOrUpdateCPDefinitionOptionRel(
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPOptionService cpOptionService, ProductOption productOption,
 			long cpDefinitionId, ServiceContext serviceContext)

@@ -96,7 +96,7 @@ public class ProductOptionValueResourceImpl
 				productOptionId);
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			ProductOptionValueUtil.upsertCPDefinitionOptionValueRel(
+			ProductOptionValueUtil.addOrUpdateCPDefinitionOptionValueRel(
 				_cpDefinitionOptionValueRelService, productOptionValue,
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 				_serviceContextHelper.getServiceContext(

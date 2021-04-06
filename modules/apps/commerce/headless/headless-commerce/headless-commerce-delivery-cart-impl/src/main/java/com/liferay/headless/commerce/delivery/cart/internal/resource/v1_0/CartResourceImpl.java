@@ -312,7 +312,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				cartItem.getSkuId());
 		}
 
-		_commerceOrderItemService.upsertCommerceOrderItem(
+		_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
 			cartItem.getOptions(), GetterUtil.get(cartItem.getQuantity(), 1), 0,
 			commerceContext, serviceContext);

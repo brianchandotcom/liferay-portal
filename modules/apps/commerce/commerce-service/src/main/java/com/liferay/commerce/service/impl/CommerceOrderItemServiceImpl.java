@@ -65,6 +65,33 @@ public class CommerceOrderItemServiceImpl
 	}
 
 	@Override
+	public CommerceOrderItem addOrUpdateCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId, String json, int quantity,
+			int shippedQuantity, CommerceContext commerceContext,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+		CommerceOrder commerceOrder = commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrder, ActionKeys.UPDATE);
+
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		commerceProductViewPermission.check(
+			getPermissionChecker(), commerceAccount.getCommerceAccountId(),
+			commerceOrder.getGroupId(), cpInstance.getCPDefinitionId());
+
+		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
+			commerceOrderId, cpInstanceId, json, quantity, shippedQuantity,
+			commerceContext, serviceContext);
+	}
+
+	@Override
 	public int countSubscriptionCommerceOrderItems(long commerceOrderId)
 		throws PortalException {
 
@@ -587,33 +614,6 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.updateCustomFields(
 			commerceOrderItemId, serviceContext);
-	}
-
-	@Override
-	public CommerceOrderItem upsertCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		CommerceOrder commerceOrder = commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrder, ActionKeys.UPDATE);
-
-		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
-			cpInstanceId);
-
-		commerceProductViewPermission.check(
-			getPermissionChecker(), commerceAccount.getCommerceAccountId(),
-			commerceOrder.getGroupId(), cpInstance.getCPDefinitionId());
-
-		return commerceOrderItemLocalService.upsertCommerceOrderItem(
-			commerceOrderId, cpInstanceId, json, quantity, shippedQuantity,
-			commerceContext, serviceContext);
 	}
 
 	@ServiceReference(type = CommerceAccountPermission.class)

@@ -212,7 +212,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		}
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
-			TierPriceUtil.upsertCommerceTierPriceEntry(
+			TierPriceUtil.addOrUpdateCommerceTierPriceEntry(
 				_commerceTierPriceEntryService, tierPrice, commercePriceEntry,
 				_serviceContextHelper);
 
@@ -225,7 +225,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		throws Exception {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
-			TierPriceUtil.upsertCommerceTierPriceEntry(
+			TierPriceUtil.addOrUpdateCommerceTierPriceEntry(
 				_commerceTierPriceEntryService, tierPrice,
 				_commercePriceEntryService.getCommercePriceEntry(id),
 				_serviceContextHelper);

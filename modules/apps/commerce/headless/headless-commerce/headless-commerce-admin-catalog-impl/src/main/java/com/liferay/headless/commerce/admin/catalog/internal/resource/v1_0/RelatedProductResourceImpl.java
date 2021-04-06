@@ -148,7 +148,7 @@ public class RelatedProductResourceImpl
 		throws Exception {
 
 		CPDefinitionLink cpDefinitionLink =
-			RelatedProductUtil.upsertCPDefinitionLink(
+			RelatedProductUtil.addOrUpdateCPDefinitionLink(
 				_cpDefinitionLinkService, _cpDefinitionService, relatedProduct,
 				cpDefinition.getCPDefinitionId(),
 				_serviceContextHelper.getServiceContext(

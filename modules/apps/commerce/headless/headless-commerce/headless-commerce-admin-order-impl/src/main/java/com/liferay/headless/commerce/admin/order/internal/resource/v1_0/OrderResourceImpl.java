@@ -294,30 +294,31 @@ public class OrderResourceImpl
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commerceChannel.getGroupId());
 
-		CommerceOrder commerceOrder = _commerceOrderService.upsertCommerceOrder(
-			order.getExternalReferenceCode(), contextUser.getUserId(),
-			commerceChannel.getGroupId(),
-			commerceAccount.getCommerceAccountId(),
-			commerceCurrency.getCommerceCurrencyId(),
-			GetterUtil.getLong(order.getBillingAddressId()),
-			GetterUtil.getLong(order.getShippingAddressId()),
-			order.getPaymentMethod(), commerceShippingMethodId,
-			order.getShippingOption(), order.getPurchaseOrderNumber(),
-			order.getSubtotal(), order.getShippingAmount(), order.getTotal(),
-			order.getSubtotalWithTaxAmount(), order.getShippingWithTaxAmount(),
-			order.getTotalWithTaxAmount(),
-			GetterUtil.getInteger(
-				order.getPaymentStatus(),
-				CommerceOrderConstants.PAYMENT_STATUS_PENDING),
-			GetterUtil.getInteger(
-				order.getOrderStatus(),
-				CommerceOrderConstants.ORDER_STATUS_PENDING),
-			order.getAdvanceStatus(),
-			_commerceContextFactory.create(
-				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-				contextUser.getUserId(), 0,
-				commerceAccount.getCommerceAccountId()),
-			serviceContext);
+		CommerceOrder commerceOrder =
+			_commerceOrderService.addOrUpdateCommerceOrder(
+				order.getExternalReferenceCode(), contextUser.getUserId(),
+				commerceChannel.getGroupId(),
+				commerceAccount.getCommerceAccountId(),
+				commerceCurrency.getCommerceCurrencyId(),
+				GetterUtil.getLong(order.getBillingAddressId()),
+				GetterUtil.getLong(order.getShippingAddressId()),
+				order.getPaymentMethod(), commerceShippingMethodId,
+				order.getShippingOption(), order.getPurchaseOrderNumber(),
+				order.getSubtotal(), order.getShippingAmount(),
+				order.getTotal(), order.getSubtotalWithTaxAmount(),
+				order.getShippingWithTaxAmount(), order.getTotalWithTaxAmount(),
+				GetterUtil.getInteger(
+					order.getPaymentStatus(),
+					CommerceOrderConstants.PAYMENT_STATUS_PENDING),
+				GetterUtil.getInteger(
+					order.getOrderStatus(),
+					CommerceOrderConstants.ORDER_STATUS_PENDING),
+				order.getAdvanceStatus(),
+				_commerceContextFactory.create(
+					contextCompany.getCompanyId(), commerceChannel.getGroupId(),
+					contextUser.getUserId(), 0,
+					commerceAccount.getCommerceAccountId()),
+				serviceContext);
 
 		// Order date
 
@@ -444,7 +445,7 @@ public class OrderResourceImpl
 				commerceOrder.getCommerceOrderId());
 
 			for (OrderItem orderItem : orderItems) {
-				OrderItemUtil.upsertCommerceOrderItem(
+				OrderItemUtil.addOrUpdateCommerceOrderItem(
 					_cpInstanceService, _commerceOrderItemService,
 					_commerceOrderModelResourcePermission, orderItem,
 					commerceOrder,
@@ -462,7 +463,7 @@ public class OrderResourceImpl
 		BillingAddress billingAddress = order.getBillingAddress();
 
 		if (billingAddress != null) {
-			commerceOrder = BillingAddressUtil.upsertBillingAddress(
+			commerceOrder = BillingAddressUtil.addOrUpdateBillingAddress(
 				_commerceAddressService, _commerceOrderService, commerceOrder,
 				billingAddress, serviceContext);
 		}
@@ -472,7 +473,7 @@ public class OrderResourceImpl
 		ShippingAddress shippingAddress = order.getShippingAddress();
 
 		if (shippingAddress != null) {
-			commerceOrder = ShippingAddressUtil.upsertShippingAddress(
+			commerceOrder = ShippingAddressUtil.addOrUpdateShippingAddress(
 				_commerceAddressService, _commerceOrderService, commerceOrder,
 				shippingAddress, serviceContext);
 		}

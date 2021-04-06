@@ -56,7 +56,7 @@ public class CommerceTierPriceEntryTestUtil {
 			minQuantity, serviceContext);
 	}
 
-	public static CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			long companyId, long commerceTierPriceEntryId,
 			long commercePriceEntryId, int minQuantity, double price,
 			double promoPrice, String externalReferenceCode,
@@ -67,7 +67,7 @@ public class CommerceTierPriceEntryTestUtil {
 			companyId, commercePriceEntryId, priceEntryExternalReferenceCode);
 
 		return CommerceTierPriceEntryLocalServiceUtil.
-			upsertCommerceTierPriceEntry(
+			addOrUpdateCommerceTierPriceEntry(
 				externalReferenceCode, commerceTierPriceEntryId,
 				commercePriceEntryId, BigDecimal.valueOf(price),
 				BigDecimal.valueOf(promoPrice), minQuantity,

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -48,7 +47,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.ratings.kernel.RatingsType;
-import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.List;
@@ -228,17 +226,6 @@ public class EditGroupMVCActionCommand
 			"defaultTeamIds",
 			ListUtil.toString(
 				ActionUtil.getTeamIds(actionRequest), StringPool.BLANK));
-
-		int contentSharingWithChildrenEnabled = ParamUtil.getInteger(
-			actionRequest, "contentSharingWithChildrenEnabled",
-			GetterUtil.getInteger(
-				typeSettingsUnicodeProperties.getProperty(
-					"contentSharingWithChildrenEnabled"),
-				Sites.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE));
-
-		typeSettingsUnicodeProperties.setProperty(
-			"contentSharingWithChildrenEnabled",
-			String.valueOf(contentSharingWithChildrenEnabled));
 
 		UnicodeProperties formTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(

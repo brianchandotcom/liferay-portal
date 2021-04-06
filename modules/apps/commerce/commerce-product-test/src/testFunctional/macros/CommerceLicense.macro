@@ -8,7 +8,9 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "deploy-commerce-license-xml -Dliferay.home=${liferayHome}");
 
-		Pause(locator1 = "40000");
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "wait-for-license-activation");
 	}
 
 	@summary = "Assert Commerce basic functionality is working after activating with licensing"

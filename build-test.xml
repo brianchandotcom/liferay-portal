@@ -13656,6 +13656,10 @@ url=${short.hostname}:8080</echo>
 		</trycatch>
 	</target>
 
+	<target name="wait-for-license-activation">
+		<wait-for-license-activation />
+	</target>
+
 	<target name="wait-for-plugins-deployment">
 		<fail message="Please set the property ${test.class}." unless="test.class" />
 

@@ -3,7 +3,7 @@
 <suppressions>
 	<source-check>
 		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/data/DatasetDataFilterFactory\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/data/DatasetDataJSONFactory\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/data/DatasetDataProvider\.java" />
+		<suppress checks="JavaAPISignatureCheck" files="dataset-api/src/main/java/com/liferay/dataset/serializer/DatasetDataSerializer\.java" />
 	</source-check>
 </suppressions>

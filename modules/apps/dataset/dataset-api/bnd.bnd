@@ -2,15 +2,16 @@ Bundle-Name: Liferay Dataset API
 Bundle-SymbolicName: com.liferay.dataset.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.dataset.action,\
-	com.liferay.dataset.content.renderer,\
 	com.liferay.dataset.data,\
-	com.liferay.dataset.filter,\
-	com.liferay.dataset.filter.autocomplete,\
-	com.liferay.dataset.filter.checkbox,\
-	com.liferay.dataset.filter.date,\
-	com.liferay.dataset.filter.radio,\
-	com.liferay.dataset.view.cards,\
-	com.liferay.dataset.view.list,\
-	com.liferay.dataset.view.table,\
-	com.liferay.dataset.view.timeline
+	com.liferay.dataset.serializer,\
+	com.liferay.dataset.ui.action,\
+	com.liferay.dataset.ui.filter,\
+	com.liferay.dataset.ui.filter.autocomplete,\
+	com.liferay.dataset.ui.filter.checkbox,\
+	com.liferay.dataset.ui.filter.date,\
+	com.liferay.dataset.ui.filter.radio,\
+	com.liferay.dataset.ui.view,\
+	com.liferay.dataset.ui.view.cards,\
+	com.liferay.dataset.ui.view.list,\
+	com.liferay.dataset.ui.view.table,\
+	com.liferay.dataset.ui.view.timeline

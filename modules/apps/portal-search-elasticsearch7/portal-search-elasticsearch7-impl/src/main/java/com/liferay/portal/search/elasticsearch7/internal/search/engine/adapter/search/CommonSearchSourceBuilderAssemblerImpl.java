@@ -49,6 +49,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.rescore.QueryRescoreMode;
 import org.elasticsearch.search.rescore.QueryRescorerBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -404,7 +405,23 @@ public class CommonSearchSourceBuilderAssemblerImpl
 					_queryToQueryBuilderTranslator.translate(
 						rescore.getQuery()));
 
-			queryRescorerBuilder.windowSize(rescore.getWindowSize());
+			if (rescore.getQueryWeight() != null) {
+				queryRescorerBuilder.setQueryWeight(rescore.getQueryWeight());
+			}
+
+			if (rescore.getRescoreQueryWeight() != null) {
+				queryRescorerBuilder.setRescoreQueryWeight(
+					rescore.getRescoreQueryWeight());
+			}
+
+			if (rescore.getScoreMode() != null) {
+				queryRescorerBuilder.setScoreMode(
+					translate(rescore.getScoreMode()));
+			}
+
+			if (rescore.getWindowSize() != null) {
+				queryRescorerBuilder.windowSize(rescore.getWindowSize());
+			}
 
 			searchSourceBuilder.addRescorer(queryRescorerBuilder);
 		}
@@ -480,6 +497,28 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		transfer(booleanQuery, boolQueryBuilder);
 
 		return boolQueryBuilder;
+	}
+
+	protected QueryRescoreMode translate(Rescore.ScoreMode scoreMode) {
+		if (scoreMode == Rescore.ScoreMode.AVG) {
+			return QueryRescoreMode.Avg;
+		}
+		else if (scoreMode == Rescore.ScoreMode.MAX) {
+			return QueryRescoreMode.Max;
+		}
+		else if (scoreMode == Rescore.ScoreMode.MIN) {
+			return QueryRescoreMode.Min;
+		}
+		else if (scoreMode == Rescore.ScoreMode.MULTIPLY) {
+			return QueryRescoreMode.Multiply;
+		}
+		else if (scoreMode == Rescore.ScoreMode.TOTAL) {
+			return QueryRescoreMode.Total;
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Invalid Rescore.ScoreMode: " + scoreMode);
+		}
 	}
 
 	protected QueryBuilder translateQuery(

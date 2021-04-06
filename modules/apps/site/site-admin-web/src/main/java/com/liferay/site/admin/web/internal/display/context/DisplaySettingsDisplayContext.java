@@ -60,6 +60,12 @@ public class DisplaySettingsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public long getLiveGroupId() {
+		Group liveGroup = _getLiveGroup();
+
+		return liveGroup.getGroupId();
+	}
+
 	public Map<String, Object> getPropsMap() {
 		Group liveGroup = _getLiveGroup();
 
@@ -188,7 +194,14 @@ public class DisplaySettingsDisplayContext {
 			return _liveGroup;
 		}
 
-		_liveGroup = (Group)_httpServletRequest.getAttribute("site.liveGroup");
+		Group siteGroup = _themeDisplay.getSiteGroup();
+
+		if (siteGroup.isStagingGroup()) {
+			_liveGroup = siteGroup.getLiveGroup();
+		}
+		else {
+			_liveGroup = siteGroup;
+		}
 
 		return _liveGroup;
 	}

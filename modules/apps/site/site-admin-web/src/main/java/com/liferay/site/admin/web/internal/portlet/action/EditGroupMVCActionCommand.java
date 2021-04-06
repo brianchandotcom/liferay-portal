@@ -19,14 +19,12 @@ import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupNameException;
-import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -322,38 +320,6 @@ public class EditGroupMVCActionCommand
 		UnicodeProperties formTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
-
-		boolean inheritLocales = GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.getProperty("inheritLocales"));
-
-		if (formTypeSettingsUnicodeProperties.containsKey("inheritLocales")) {
-			inheritLocales = GetterUtil.getBoolean(
-				formTypeSettingsUnicodeProperties.getProperty(
-					"inheritLocales"));
-		}
-
-		if (inheritLocales) {
-			formTypeSettingsUnicodeProperties.setProperty(
-				PropsKeys.LOCALES,
-				StringUtil.merge(
-					LocaleUtil.toLanguageIds(
-						LanguageUtil.getAvailableLocales())));
-
-			User user = themeDisplay.getDefaultUser();
-
-			formTypeSettingsUnicodeProperties.setProperty(
-				"languageId", user.getLanguageId());
-		}
-
-		if (formTypeSettingsUnicodeProperties.containsKey(PropsKeys.LOCALES) &&
-			Validator.isNull(
-				formTypeSettingsUnicodeProperties.getProperty(
-					PropsKeys.LOCALES))) {
-
-			throw new LocaleException(
-				LocaleException.TYPE_DEFAULT,
-				"Must have at least one valid locale for site " + liveGroupId);
-		}
 
 		typeSettingsUnicodeProperties.putAll(formTypeSettingsUnicodeProperties);
 

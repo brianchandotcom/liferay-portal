@@ -47,7 +47,7 @@ public class CommerceNotificationTemplateServiceImpl
 		throws PortalException {
 
 		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			getPermissionChecker(), groupId,
 			CommerceNotificationActionKeys.ADD_COMMERCE_NOTIFICATION_TEMPLATE);
 
 		return commerceNotificationTemplateLocalService.

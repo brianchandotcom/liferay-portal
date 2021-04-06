@@ -3,6 +3,16 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="CamelCaseNameCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/SearchEngineInitializer\.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-admin-web/src/main/java/com/liferay/portal/search/admin/web/internal/util/DictionaryReindexer.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-admin-web/src/test/java/com/liferay/portal/search/admin/web/internal/util/DictionaryReindexerTest.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/internal/test/IndexWriterHelperImplTest.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/test/BackupAndRestoreIndexesTest.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/background/task/ReindexBackgroundTaskStatusMessageTranslator.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/background/task/ReindexPortalBackgroundTaskExecutor.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/background/task/ReindexSingleIndexerBackgroundTaskExecutor.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/IndexAdminHelperImpl.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/IndexWriterHelperImpl.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/SearchEngineHelperImpl.java" />
 		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/PermissionFilterFacetedSearcherTest\.java" />
 		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/SearchPermissionCheckerFacetedSearcherTest\.java" />
 		<suppress checks="GenericTypeCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/indexer/IndexerDocumentBuilderImpl\.java" />

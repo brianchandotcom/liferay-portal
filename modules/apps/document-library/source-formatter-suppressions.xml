@@ -3,6 +3,7 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="CamelCaseNameCheck" files="document-library-repository-cmis-impl/src/main/java/com/liferay/document/library/repository/cmis/internal/CMISRepository\.java" />
+		<suppress checks="CompanyIterationCheck" files="document-library-asset-auto-tagger-tensorflow/src/main/java/com/liferay/document/library/asset/auto/tagger/tensorflow/internal/upgrade/v0_0_2/TensorFlowModelUpgradeProcess.java" />
 		<suppress checks="PersistenceCallCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFileEntryTypeFinderTest\.java" />
 		<suppress checks="PersistenceCallCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFolderFinderTest\.java" />
 		<suppress checks="TestClassCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />

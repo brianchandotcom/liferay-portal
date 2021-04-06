@@ -2,6 +2,9 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="CompanyIterationCheck" files="portal-db-partition-test/src/testIntegration/java/com/liferay/portal/db/partition/messaging/test/DBPartitionMessageBusInterceptorTest.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-db-partition/src/main/java/com/liferay/portal/db/partition/internal/messaging/DBPartitionMessageBusInterceptor.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-instance-lifecycle-impl/src/main/java/com/liferay/portal/instance/lifecycle/internal/PortalInstanceLifecycleListenerManagerImpl.java" />
 		<suppress checks="PersistenceCallCheck" files="portal-dao-test/src/testIntegration/java/com/liferay/portal/dao/orm/hibernate/test/SuspendedSessionConnectionTest\.java" />
 		<suppress checks="PersistenceCallCheck" files="portal-upgrade-test/src/testIntegration/java/com/liferay/portal/upgrade/test/BaseBuildAutoUpgradeTestCase\.java" />
 	</checkstyle>

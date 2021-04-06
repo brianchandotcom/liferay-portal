@@ -13,7 +13,12 @@
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PropsKeys\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/ListUtilTest\.java" />
 		<suppress checks="ChainingCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/StringBundler\.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-impl/src/com/liferay/portal/security/jaas/ext/BasicLoginModule\.java" />
 		<suppress checks="CompanyIterationCheck" files="portal-impl/src/com/liferay/portal/service/impl/CompanyLocalServiceImpl\.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-impl/src/com/liferay/portal/upgrade/v7_0_0/UpgradeGroup\.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-impl/src/com/liferay/portal/util/PortalInstances\.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-impl/src/com/liferay/portal/verify/VerifyResourcePermissions\.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-kernel/src/com/liferay/portal/kernel/upgrade/BaseUpgradeLocalizedColumn\.java" />
 		<suppress checks="ConcatCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/BaseIntraband\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/welder/socket/SocketWelder\.java" />

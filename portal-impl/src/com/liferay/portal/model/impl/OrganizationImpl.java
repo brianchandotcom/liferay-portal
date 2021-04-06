@@ -199,7 +199,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public String getLogoURL() throws PortalException {
+	public String getLogoURL() {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append(PortalUtil.getPathImage());

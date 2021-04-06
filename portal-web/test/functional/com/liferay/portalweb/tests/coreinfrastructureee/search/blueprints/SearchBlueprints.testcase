@@ -268,4 +268,26 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	test SearchBlueprintsByTitleOrDescription {
+		SearchBlueprints.addBlueprint(
+			description = "Blueprint Test Description",
+			name = "Test Blueprint - Adminicle");
+
+		SearchBlueprints.addBlueprint(
+			description = "Serendipitous Blueprint Test Description",
+			name = "Test Blueprint - Aid");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "Adminicle");
+
+		AssertElementPresent(
+			key_searchAssetTitle = "Test Blueprint - Adminicle",
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "Serendipitous");
+
+		AssertElementPresent(
+			key_searchAssetTitle = "Test Blueprint - Aid",
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
+	}
+
 }

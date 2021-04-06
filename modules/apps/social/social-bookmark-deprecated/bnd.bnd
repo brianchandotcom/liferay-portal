@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Social Bookmark Deprecated
+Bundle-SymbolicName: com.liferay.social.bookmark.deprecated
+Bundle-Version: 1.0.0
+Web-ContextPath: /social-bookmark-deprecated
+-dsannotations-options: inherit

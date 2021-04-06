@@ -17,29 +17,52 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+Group siteGroup = themeDisplay.getSiteGroup();
 
-UnicodeProperties groupTypeSettings = null;
+Group liveGroup = null;
 
-if (liveGroup != null) {
-	groupTypeSettings = liveGroup.getTypeSettingsProperties();
+if (siteGroup.isStagingGroup()) {
+	liveGroup = siteGroup.getLiveGroup();
 }
 else {
-	groupTypeSettings = new UnicodeProperties();
+	liveGroup = siteGroup;
 }
+
+UnicodeProperties groupTypeSettings = liveGroup.getTypeSettingsProperties();
 
 boolean groupTrashEnabled = PropertiesParamUtil.getBoolean(groupTypeSettings, request, "trashEnabled", true);
 
 int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, request, "trashEntriesMaxAge", PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE));
 %>
 
-<aui:input id="trashEnabled" inlineLabel="right" label="enable-recycle-bin" labelCssClass="simple-toggle-switch" name="trashEnabled" type="toggle-switch" value="<%= groupTrashEnabled %>" />
+<portlet:actionURL name="/site_admin/edit_recycle_bin" var="editRecycleBinURL">
+	<portlet:param name="mvcPath" value="/edit_recycle_bin.jsp" />
+</portlet:actionURL>
 
-<div class="trash-entries-max-age">
-	<aui:input disabled="<%= !groupTrashEnabled %>" helpMessage="trash-entries-max-age-help" label="trash-entries-max-age" name="trashEntriesMaxAge" type="text" value="<%= ((trashEntriesMaxAge % 1) == 0) ? GetterUtil.getInteger(trashEntriesMaxAge) : String.valueOf(trashEntriesMaxAge) %>">
-		<aui:validator name="min"><%= PropsValues.TRASH_ENTRY_CHECK_INTERVAL %></aui:validator>
-	</aui:input>
-</div>
+<liferay-frontend:edit-form
+	action="<%= editRecycleBinURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroup.getGroupId() %>" />
+
+	<liferay-frontend:edit-form-body>
+		<aui:input id="trashEnabled" inlineLabel="right" label="enable-recycle-bin" labelCssClass="simple-toggle-switch" name="trashEnabled" type="toggle-switch" value="<%= groupTrashEnabled %>" />
+
+		<div class="trash-entries-max-age">
+			<aui:input disabled="<%= !groupTrashEnabled %>" helpMessage="trash-entries-max-age-help" label="trash-entries-max-age" name="trashEntriesMaxAge" type="text" value="<%= ((trashEntriesMaxAge % 1) == 0) ? GetterUtil.getInteger(trashEntriesMaxAge) : String.valueOf(trashEntriesMaxAge) %>">
+				<aui:validator name="min"><%= PropsValues.TRASH_ENTRY_CHECK_INTERVAL %></aui:validator>
+			</aui:input>
+		</div>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button type="submit" />
+
+		<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <script>
 	var trashEnabledCheckbox = document.getElementById(

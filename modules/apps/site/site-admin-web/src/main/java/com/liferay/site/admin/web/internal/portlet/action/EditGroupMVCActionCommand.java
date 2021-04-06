@@ -42,9 +42,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -230,36 +228,6 @@ public class EditGroupMVCActionCommand
 			"defaultTeamIds",
 			ListUtil.toString(
 				ActionUtil.getTeamIds(actionRequest), StringPool.BLANK));
-
-		boolean trashEnabled = ParamUtil.getBoolean(
-			actionRequest, "trashEnabled",
-			GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.getProperty("trashEnabled"),
-				true));
-
-		typeSettingsUnicodeProperties.setProperty(
-			"trashEnabled", String.valueOf(trashEnabled));
-
-		int trashEntriesMaxAgeCompany = PrefsPropsUtil.getInteger(
-			themeDisplay.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE);
-
-		int trashEntriesMaxAgeGroup = ParamUtil.getInteger(
-			actionRequest, "trashEntriesMaxAge");
-
-		if (trashEntriesMaxAgeGroup <= 0) {
-			trashEntriesMaxAgeGroup = GetterUtil.getInteger(
-				typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"),
-				trashEntriesMaxAgeCompany);
-		}
-
-		if (trashEntriesMaxAgeGroup != trashEntriesMaxAgeCompany) {
-			typeSettingsUnicodeProperties.setProperty(
-				"trashEntriesMaxAge",
-				String.valueOf(GetterUtil.getInteger(trashEntriesMaxAgeGroup)));
-		}
-		else {
-			typeSettingsUnicodeProperties.remove("trashEntriesMaxAge");
-		}
 
 		int contentSharingWithChildrenEnabled = ParamUtil.getInteger(
 			actionRequest, "contentSharingWithChildrenEnabled",

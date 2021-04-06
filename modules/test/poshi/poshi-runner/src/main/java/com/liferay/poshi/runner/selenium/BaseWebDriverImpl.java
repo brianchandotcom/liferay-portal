@@ -2242,8 +2242,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void pause(String waitTime) throws Exception {
-		LiferaySeleniumUtil.pause(waitTime);
+	public void pause(String durationString) throws Exception {
+		int duration = GetterUtil.getInteger(durationString);
+
+		_totalPauseDuration = _totalPauseDuration + duration;
+
+		LiferaySeleniumUtil.pause(duration);
 	}
 
 	@Override
@@ -2252,6 +2256,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void quit() {
+		System.out.println(
+			"Total duration of 'LiferaySelenium.pause' usages: " +
+				_totalPauseDuration + " ms");
+
 		_webDriver.quit();
 	}
 
@@ -4755,6 +4763,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	private String _primaryTestSuiteName;
 	private int _screenshotCount;
 	private int _screenshotErrorCount;
+	private int _totalPauseDuration;
 	private final WebDriver _webDriver;
 
 	private class LocationCallable implements Callable<String> {

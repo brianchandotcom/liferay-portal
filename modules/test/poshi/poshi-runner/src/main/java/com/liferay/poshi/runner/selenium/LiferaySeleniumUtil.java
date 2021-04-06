@@ -678,8 +678,8 @@ public class LiferaySeleniumUtil {
 		return false;
 	}
 
-	public static void pause(String waitTime) throws Exception {
-		Thread.sleep(GetterUtil.getInteger(waitTime));
+	public static void pause(int duration) throws Exception {
+		Thread.sleep(duration);
 	}
 
 	public static void printJavaProcessStacktrace() throws Exception {

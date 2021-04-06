@@ -675,8 +675,6 @@ AUI.add(
 						return;
 					}
 
-					instance.set('editor', window[nativeEditor.name]);
-
 					instance.set(STR_INPUT_PLACEHOLDER, newPlaceholder);
 				},
 			},

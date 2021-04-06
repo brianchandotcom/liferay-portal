@@ -502,4 +502,88 @@ definition {
 			value1 = "There are no categories selected");
 	}
 
+	@description = "When an asset has S1 and S2 (Stage) assigned categories, but no "Audience" (Vocab2) categories, it will be represented in two different bars in the No Audience Category"
+	@priority = "5"
+	test AuditGraphTwoBarsForNoSpecifiedCategory {
+		property portal.acceptance = "true";
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Audience 2",
+			vocabularyName = "Audience");
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Stage 2",
+			vocabularyName = "Stage");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Audience 1",
+			vocabularyName = "Audience",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC A1 A2");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC A1 A2");
+
+		WebContent.selectCategory(
+			categoryName = "Audience 2",
+			userSegmentDetailTitle = "${userSegmentDetailTitle}",
+			vocabularyName = "Audience");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Stage 1",
+			vocabularyName = "Stage",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC S1 S2");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC S1 S2");
+
+		WebContent.selectCategory(
+			categoryName = "Stage 2",
+			userSegmentDetailTitle = "${userSegmentDetailTitle}",
+			vocabularyName = "Stage");
+
+		PortletEntry.publish();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+
+		AssertElementPresent(
+			fillColor = "4B9FFF",
+			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+
+		AssertElementPresent(
+			fillColor = "FFB46E",
+			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+
+		ContentDashboard.flipAxesButtonClick();
+
+		AssertElementPresent(
+			fillColor = "4B9FFF",
+			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+
+		AssertElementPresent(
+			fillColor = "FFB46E",
+			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+	}
+
 }

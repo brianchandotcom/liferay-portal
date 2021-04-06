@@ -68,6 +68,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BAR_FROM_NO_VOCABULARY_SPECIFIED</td>
+	<td>//*[contains(@class, 'recharts-bar-rectangle')]//*[contains(@fill,'${fillColor}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BAR_SELECTED_MESSAGE</td>
 	<td>//span[contains(text(),'Press escape')]</td>
 	<td></td>

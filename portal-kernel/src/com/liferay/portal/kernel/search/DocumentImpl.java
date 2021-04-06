@@ -347,6 +347,10 @@ public class DocumentImpl implements Document {
 
 	@Override
 	public void addKeyword(String name, String value, boolean lowerCase) {
+		if (Validator.isNull(value)) {
+			return;
+		}
+
 		createKeywordField(name, value, lowerCase);
 
 		createSortableKeywordField(name, value);

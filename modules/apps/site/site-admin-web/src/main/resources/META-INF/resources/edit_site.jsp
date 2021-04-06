@@ -82,7 +82,7 @@ if (layoutSetPrototypeId > 0) {
 }
 %>
 
-<liferay-ui:success key='<%= SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
+<liferay-ui:success key='<%= ConfigurationAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
 
 <portlet:actionURL name="/site_admin/edit_group" var="editGroupURL">
 	<portlet:param name="mvcPath" value="/edit_site.jsp" />

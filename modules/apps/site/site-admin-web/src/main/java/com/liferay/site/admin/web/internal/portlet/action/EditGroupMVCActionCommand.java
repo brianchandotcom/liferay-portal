@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -231,50 +230,6 @@ public class EditGroupMVCActionCommand
 			"defaultTeamIds",
 			ListUtil.toString(
 				ActionUtil.getTeamIds(actionRequest), StringPool.BLANK));
-
-		String[] analyticsTypes = PrefsPropsUtil.getStringArray(
-			themeDisplay.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES,
-			StringPool.NEW_LINE);
-
-		for (String analyticsType : analyticsTypes) {
-			if (StringUtil.equalsIgnoreCase(analyticsType, "google")) {
-				String googleAnalyticsCreateCustomConfiguration =
-					ParamUtil.getString(
-						actionRequest,
-						"googleAnalyticsCreateCustomConfiguration",
-						typeSettingsUnicodeProperties.getProperty(
-							"googleAnalyticsCreateCustomConfiguration"));
-
-				typeSettingsUnicodeProperties.setProperty(
-					"googleAnalyticsCreateCustomConfiguration",
-					googleAnalyticsCreateCustomConfiguration);
-
-				String googleAnalyticsCustomConfiguration = ParamUtil.getString(
-					actionRequest, "googleAnalyticsCustomConfiguration",
-					typeSettingsUnicodeProperties.getProperty(
-						"googleAnalyticsCustomConfiguration"));
-
-				typeSettingsUnicodeProperties.setProperty(
-					"googleAnalyticsCustomConfiguration",
-					googleAnalyticsCustomConfiguration);
-
-				String googleAnalyticsId = ParamUtil.getString(
-					actionRequest, "googleAnalyticsId",
-					typeSettingsUnicodeProperties.getProperty(
-						"googleAnalyticsId"));
-
-				typeSettingsUnicodeProperties.setProperty(
-					"googleAnalyticsId", googleAnalyticsId);
-			}
-			else {
-				String analyticsScript = ParamUtil.getString(
-					actionRequest, Sites.ANALYTICS_PREFIX + analyticsType,
-					typeSettingsUnicodeProperties.getProperty(analyticsType));
-
-				typeSettingsUnicodeProperties.setProperty(
-					Sites.ANALYTICS_PREFIX + analyticsType, analyticsScript);
-			}
-		}
 
 		boolean trashEnabled = ParamUtil.getBoolean(
 			actionRequest, "trashEnabled",

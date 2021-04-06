@@ -87,13 +87,10 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		Click(
-			key_productName = "U-Joint",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
 		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
-			value1 = "$");
+			card_name = "U-Joint",
+			locator1 = "CommerceEntry#PRODUCT_CARD_NAME_AND_PRICE",
+			value1 = "$ 24.00");
 	}
 
 	@description = "COMMERCE-6657. As a buyer, I want to be unable to add a bundled product(Price Type Dynamic) to cart directly"

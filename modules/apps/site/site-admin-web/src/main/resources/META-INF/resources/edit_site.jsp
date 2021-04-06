@@ -77,7 +77,6 @@ if (group != null) {
 	action="<%= editGroupURL %>"
 	method="post"
 	name="fm"
-	onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveGroup();" %>'
 >
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
@@ -108,9 +107,3 @@ if (group != null) {
 		<aui:button href="<%= backURL %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
-
-<script>
-	function <portlet:namespace />saveGroup(forceDisable) {
-		submitForm(document.<portlet:namespace />fm);
-	}
-</script>

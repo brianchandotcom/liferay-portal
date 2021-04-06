@@ -673,23 +673,23 @@ public interface BaseProjectTemplatesTestCase {
 
 			if (liferayVersion.startsWith("7.0")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.product=portal-7.0-ga7");
+					workspaceDir, "liferay.workspace.target.platform.version=7.0.6-2");
 			}
 			else if (liferayVersion.startsWith("7.1")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.product=portal-7.1-ga4");
+					workspaceDir, "liferay.workspace.target.platform.version=7.1.3-1");
 			}
 			else if (liferayVersion.startsWith("7.2")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.product=portal-7.2-ga2");
+					workspaceDir, "liferay.workspace.target.platform.version=7.2.1-1");
 			}
 			else if (liferayVersion.startsWith("7.3")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.product=portal-7.3-ga7");
+					workspaceDir, "liferay.workspace.target.platform.version=7.3.6");
 			}
 			else if (liferayVersion.startsWith("7.4")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.product=portal-7.3-ga6");
+					workspaceDir, "liferay.workspace.target.platform.version=7.4.0");
 			}
 		}
 		else {
@@ -857,7 +857,7 @@ public interface BaseProjectTemplatesTestCase {
 					System.lineSeparator() +
 						"allprojects {\n\trepositories {\n\t\tmavenLocal()\n" +
 							"\t\tmaven {\n\t\t\turl file(\"" + m2tmpPath +
-								"\").toURI()\n\t\t}\n\t}\n\tconfigurations." +
+								"\").toURI()\n\t\t}\n\t\tmaven {\n\t\t\tcredentials {\n\t\t\t\tusername = \"nexus-private-bravo\"\n\t\t\t\tpassword = \"qGL@ihMsdFa3h3z\"\n\t\t\t}\n\t\t\turl \"http://repository.liferay.com/nexus/content/repositories/xanadu\" \n\t\t}\n\t}\n\tconfigurations." +
 									"all {\n\t\tresolutionStrategy.force " +
 										"'javax.servlet:javax.servlet-api:" +
 											"3.0.1'\n\t}\n}";

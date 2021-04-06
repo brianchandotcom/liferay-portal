@@ -241,7 +241,7 @@ public class ProjectTemplatesServiceBuilderTest
 			mavenExecutor);
 
 		writeGradlePropertiesInWorkspace(
-			gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga7");
+			gradleWorkspaceDir, "liferay.workspace.target.platform.version=7.3.6");
 
 		File modulesDir = new File(gradleWorkspaceDir, "modules");
 

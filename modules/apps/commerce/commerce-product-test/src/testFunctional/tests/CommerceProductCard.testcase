@@ -88,8 +88,8 @@ definition {
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		AssertTextEquals.assertPartialText(
-			card_name = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_NAME_AND_PRICE",
+			key_productName = "U-Joint",
+			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 			value1 = "$ 24.00");
 	}
 
@@ -549,23 +549,7 @@ definition {
 			locator1 = "CommerceEntry#CATALOGS_FORM",
 			value1 = "${currencyName}");
 
-		AssertSelectedLabel(
-			key_title = "Currency",
-			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${currencyName}");
-
 		Button.clickSave();
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Catalogs");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium");
-
-		Select(
-			key_title = "Currency",
-			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${currencyName}");
 
 		AssertSelectedLabel(
 			key_title = "Currency",
@@ -574,12 +558,9 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		Click(
-			key_productName = "U-Joint",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
 		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			key_productName = "U-Joint",
+			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 			value1 = "€");
 	}
 
@@ -1211,8 +1192,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
 		AssertTextEquals.assertPartialText(
-			card_name = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_NAME_AND_PRICE",
+			key_productName = "U-Joint",
+			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 			value1 = "$ 24.00");
 
 	}

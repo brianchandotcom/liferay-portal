@@ -712,8 +712,8 @@
 </tr>
 <!--OPTION-->
 <tr>
-	<td>PRODUCT_CARD_NAME_AND_PRICE</td>
-	<td>//p[@title='${card_name}']//following-sibling::p[@class='card-text']//span[@class='price-value']</td>
+	<td>PRODUCT_CARD_LIST_PRICE</td>
+	<td>//p[@title='${key_productName}']//following-sibling::p[@class='card-text']//span[@class='price-value']</td>
 	<td></td>
 </tr>
 <tr>

@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.text.Format;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -89,7 +89,7 @@ public class GetCTCommentsMVCResourceCommand extends BaseMVCResourceCommand {
 		long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");
 
 		List<CTComment> ctComments = ctCommentsMap.getOrDefault(
-			ctEntryId, new ArrayList<>());
+			ctEntryId, Collections.emptyList());
 
 		for (CTComment ctComment : ctComments) {
 			ctCommentIds.add(ctComment.getCtCommentId());

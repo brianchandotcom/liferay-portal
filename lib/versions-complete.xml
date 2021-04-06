@@ -1193,38 +1193,14 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!jodd-core.jar</file-name>
-				<version>3.8.6</version>
-				<project-name>Jodd Core</project-name>
-				<project-url>http://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The BSD 2-Clause License</license-name>
-						<license-url>http://jodd.org/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!jodd-http.jar</file-name>
-				<version>3.8.6</version>
-				<project-name>Jodd HTTP client</project-name>
-				<project-url>http://jodd.org</project-url>
+				<version>6.0.6</version>
+				<project-name>Jodd HTTP</project-name>
+				<project-url>https://http.jodd.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The BSD 2-Clause License</license-name>
-						<license-url>http://jodd.org/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!jodd-upload.jar</file-name>
-				<version>3.8.6</version>
-				<project-name>Jodd Upload</project-name>
-				<project-url>http://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The BSD 2-Clause License</license-name>
-						<license-url>http://jodd.org/license.html</license-url>
+						<license-name>BSD-2-Clause</license-name>
+						<license-url>https://github.com/oblac/jodd-http/blob/master/LICENSE</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2253,18 +2229,6 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.crypto.hash.provider.bcrypt.jar!jodd-core.jar</file-name>
-				<version>5.0.13</version>
-				<project-name>Jodd Core</project-name>
-				<project-url>https://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The BSD 2-Clause License</license-name>
-						<license-url>http://jodd.org/license.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7111,32 +7075,8 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jodd-bean.jar</file-name>
-				<version>3.6.4</version>
-				<project-name>Jodd BeanUtil</project-name>
-				<project-url>http://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jodd-core.jar</file-name>
-				<version>3.6.8</version>
-				<project-name>Jodd Core</project-name>
-				<project-url>http://jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jodd-json.jar</file-name>
-				<version>3.6.8</version>
+				<version>6.0.3</version>
 				<project-name>Jodd JSON</project-name>
 				<project-url>http://jodd.org</project-url>
 				<licenses>
@@ -7148,8 +7088,20 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jodd-proxetta.jar</file-name>
-				<version>3.6.4</version>
+				<version>6.0.0</version>
 				<project-name>Jodd Proxetta</project-name>
+				<project-url>http://jodd.org</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/jodd-util.jar</file-name>
+				<version>6.0.1.LIFERAY-PATCHED-1</version>
+				<project-name>Jodd Util</project-name>
 				<project-url>http://jodd.org</project-url>
 				<licenses>
 					<license>

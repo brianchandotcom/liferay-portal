@@ -15,22 +15,29 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Collapse from '../../../../../common/components/Collapse';
 import PageContent from './PageContent';
 
-export default function PageContents(props) {
-	return (
-		<ul className="list-unstyled">
-			{props.pageContents.map((pageContent) => (
-				<PageContent key={pageContent.classPK} {...pageContent} />
-			))}
-		</ul>
-	);
+export default function PageContents({pageContents}) {
+	return pageContents.map((content) => (
+		<Collapse key={content.label} label={content.label} open>
+			<ul className="list-unstyled">
+				{content.items.map((pageContent, index) => (
+					<PageContent
+						key={`${pageContent.classPK}${index}`}
+						{...pageContent}
+					/>
+				))}
+			</ul>
+		</Collapse>
+	));
 }
 
 PageContents.propTypes = {
 	pageContents: PropTypes.arrayOf(
 		PropTypes.shape({
-			classPK: PropTypes.string,
+			items: PropTypes.array,
+			label: PropTypes.string,
 		})
 	),
 };

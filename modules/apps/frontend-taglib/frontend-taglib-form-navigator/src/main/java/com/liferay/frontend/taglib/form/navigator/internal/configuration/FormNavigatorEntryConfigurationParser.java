@@ -109,7 +109,7 @@ public class FormNavigatorEntryConfigurationParser {
 	private static final Pattern _pattern = Pattern.compile(
 		"^(?:(?<key>.*)=)?(?<value>.*)$", Pattern.MULTILINE);
 
-	private FormNavigatorConfiguration _formNavigatorConfiguration;
+	private volatile FormNavigatorConfiguration _formNavigatorConfiguration;
 	private Map<String, List<String>> _formNavigatorEntryKeysMap;
 
 }

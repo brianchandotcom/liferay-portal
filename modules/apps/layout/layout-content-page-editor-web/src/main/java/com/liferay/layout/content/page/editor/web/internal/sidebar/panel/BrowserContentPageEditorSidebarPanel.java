@@ -94,7 +94,7 @@ public class BrowserContentPageEditorSidebarPanel
 	private static final Log _log = LogFactoryUtil.getLog(
 		BrowserContentPageEditorSidebarPanel.class);
 
-	private FFLayoutContentPageEditorConfiguration
+	private volatile FFLayoutContentPageEditorConfiguration
 		_ffLayoutContentPageEditorConfiguration;
 
 }

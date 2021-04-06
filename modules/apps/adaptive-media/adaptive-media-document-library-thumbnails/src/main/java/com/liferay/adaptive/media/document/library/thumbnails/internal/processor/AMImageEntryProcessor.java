@@ -402,7 +402,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	@Reference
 	private AMImageValidator _amImageValidator;
 
-	private AMSystemImagesConfiguration _amSystemImagesConfiguration;
+	private volatile AMSystemImagesConfiguration _amSystemImagesConfiguration;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

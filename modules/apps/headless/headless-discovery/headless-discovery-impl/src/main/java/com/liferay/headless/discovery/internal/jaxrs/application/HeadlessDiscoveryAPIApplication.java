@@ -300,7 +300,8 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 	}
 
 	private BundleContext _bundleContext;
-	private HeadlessDiscoveryConfiguration _headlessDiscoveryConfiguration;
+	private volatile HeadlessDiscoveryConfiguration
+		_headlessDiscoveryConfiguration;
 
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;

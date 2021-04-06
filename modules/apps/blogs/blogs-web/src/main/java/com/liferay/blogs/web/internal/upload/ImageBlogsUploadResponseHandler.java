@@ -101,7 +101,8 @@ public class ImageBlogsUploadResponseHandler implements UploadResponseHandler {
 			BlogsFileUploadsConfiguration.class, properties);
 	}
 
-	private BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
+	private volatile BlogsFileUploadsConfiguration
+		_blogsFileUploadsConfiguration;
 
 	@Reference
 	private ItemSelectorUploadResponseHandler

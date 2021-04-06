@@ -140,6 +140,6 @@ public class CommentsContentMetadataAssetAddonEntry
 
 	private CommentRatingsContentMetadataAssetAddonEntry
 		_commentRatingsContentMetadataAssetAddonEntry;
-	private JournalServiceConfiguration _journalServiceConfiguration;
+	private volatile JournalServiceConfiguration _journalServiceConfiguration;
 
 }

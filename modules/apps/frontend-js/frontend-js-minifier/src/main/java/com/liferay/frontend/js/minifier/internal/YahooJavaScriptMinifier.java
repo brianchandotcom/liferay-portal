@@ -85,7 +85,7 @@ public class YahooJavaScriptMinifier implements JavaScriptMinifier {
 	private static final Log _log = LogFactoryUtil.getLog(
 		YahooJavaScriptMinifier.class);
 
-	private YahooJavaScriptMinifierConfiguration
+	private volatile YahooJavaScriptMinifierConfiguration
 		_yahooJavaScriptMinifierConfiguration;
 
 	private static class JavaScriptErrorReporter implements ErrorReporter {

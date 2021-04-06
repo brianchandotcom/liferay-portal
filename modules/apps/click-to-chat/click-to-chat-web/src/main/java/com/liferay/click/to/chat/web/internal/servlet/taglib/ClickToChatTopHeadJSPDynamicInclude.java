@@ -238,6 +238,6 @@ public class ClickToChatTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClickToChatTopHeadJSPDynamicInclude.class);
 
-	private ClickToChatConfiguration _clickToChatConfiguration;
+	private volatile ClickToChatConfiguration _clickToChatConfiguration;
 
 }

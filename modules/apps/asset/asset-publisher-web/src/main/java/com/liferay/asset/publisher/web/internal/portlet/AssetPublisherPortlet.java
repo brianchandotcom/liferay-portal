@@ -396,7 +396,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;
 
-	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
+	protected volatile AssetPublisherWebConfiguration
+		assetPublisherWebConfiguration;
 
 	@Reference
 	protected AssetPublisherWebHelper assetPublisherWebHelper;

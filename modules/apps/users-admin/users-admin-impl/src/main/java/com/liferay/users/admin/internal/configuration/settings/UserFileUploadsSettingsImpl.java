@@ -69,6 +69,6 @@ public class UserFileUploadsSettingsImpl implements UserFileUploadsSettings {
 			UserFileUploadsConfiguration.class, properties);
 	}
 
-	private UserFileUploadsConfiguration _userFileUploadsConfiguration;
+	private volatile UserFileUploadsConfiguration _userFileUploadsConfiguration;
 
 }

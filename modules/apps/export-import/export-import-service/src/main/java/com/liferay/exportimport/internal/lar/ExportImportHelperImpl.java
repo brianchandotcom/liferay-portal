@@ -1502,7 +1502,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private ConfigurationProvider _configurationProvider;
 
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-	private ExportImportServiceConfiguration _exportImportServiceConfiguration;
+	private volatile ExportImportServiceConfiguration
+		_exportImportServiceConfiguration;
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private LayoutRevisionLocalService _layoutRevisionLocalService;

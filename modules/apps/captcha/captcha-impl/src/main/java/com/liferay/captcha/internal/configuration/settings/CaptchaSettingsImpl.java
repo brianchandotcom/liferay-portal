@@ -153,7 +153,7 @@ public class CaptchaSettingsImpl implements CaptchaSettings {
 			CaptchaConfiguration.class, properties);
 	}
 
-	private CaptchaConfiguration _captchaConfiguration;
+	private volatile CaptchaConfiguration _captchaConfiguration;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

@@ -146,6 +146,7 @@ public class ImageBlogsUploadFileEntryHandler
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
-	private BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
+	private volatile BlogsFileUploadsConfiguration
+		_blogsFileUploadsConfiguration;
 
 }

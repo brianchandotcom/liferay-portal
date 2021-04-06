@@ -64,6 +64,6 @@ public class BatchIndexingHelperImpl implements BatchIndexingHelper {
 			ReindexConfiguration.class, properties);
 	}
 
-	private ReindexConfiguration _reindexConfiguration;
+	private volatile ReindexConfiguration _reindexConfiguration;
 
 }

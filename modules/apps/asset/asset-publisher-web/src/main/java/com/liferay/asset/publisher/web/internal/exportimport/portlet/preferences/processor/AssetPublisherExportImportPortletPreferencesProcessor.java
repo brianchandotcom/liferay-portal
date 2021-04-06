@@ -1466,6 +1466,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherExportImportPortletPreferencesProcessor.class);
 
-	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
+	private volatile AssetPublisherWebConfiguration
+		_assetPublisherWebConfiguration;
 
 }

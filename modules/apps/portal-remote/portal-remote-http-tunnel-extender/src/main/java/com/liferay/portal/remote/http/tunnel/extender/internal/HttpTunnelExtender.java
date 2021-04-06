@@ -223,7 +223,8 @@ public class HttpTunnelExtender
 	}
 
 	private BundleTracker<?> _bundleTracker;
-	private HttpTunnelExtenderConfiguration _httpTunnelExtenderConfiguration;
+	private volatile HttpTunnelExtenderConfiguration
+		_httpTunnelExtenderConfiguration;
 
 	private final class ServiceRegistrations {
 

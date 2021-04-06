@@ -106,6 +106,6 @@ public class WikiAttachmentImageCreoleEditorConfigContributor
 	}
 
 	private ItemSelector _itemSelector;
-	private WikiFileUploadConfiguration _wikiFileUploadConfiguration;
+	private volatile WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 
 }

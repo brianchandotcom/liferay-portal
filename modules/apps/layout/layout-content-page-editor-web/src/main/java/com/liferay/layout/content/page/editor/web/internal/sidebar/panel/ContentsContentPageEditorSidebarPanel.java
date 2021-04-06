@@ -102,7 +102,7 @@ public class ContentsContentPageEditorSidebarPanel
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentsContentPageEditorSidebarPanel.class);
 
-	private FFLayoutContentPageEditorConfiguration
+	private volatile FFLayoutContentPageEditorConfiguration
 		_ffLayoutContentPageEditorConfiguration;
 
 	@Reference

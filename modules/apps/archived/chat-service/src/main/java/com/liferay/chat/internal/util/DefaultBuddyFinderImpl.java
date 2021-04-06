@@ -125,6 +125,7 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 			ChatGroupServiceConfiguration.class, properties);
 	}
 
-	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
+	private volatile ChatGroupServiceConfiguration
+		_chatGroupServiceConfiguration;
 
 }

@@ -513,7 +513,8 @@ public class JabberImpl implements Jabber {
 
 	private static final Log _log = LogFactoryUtil.getLog(JabberImpl.class);
 
-	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
+	private volatile ChatGroupServiceConfiguration
+		_chatGroupServiceConfiguration;
 	private ConnectionConfiguration _connectionConfiguration;
 	private final Map<Long, Connection> _connections = new HashMap<>();
 	private final Set<Long> _onlineUserIds = new HashSet<>();

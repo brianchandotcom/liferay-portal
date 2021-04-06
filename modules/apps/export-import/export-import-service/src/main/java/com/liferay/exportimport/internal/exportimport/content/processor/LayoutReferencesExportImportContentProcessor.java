@@ -1140,7 +1140,8 @@ public class LayoutReferencesExportImportContentProcessor
 	private CompanyLocalService _companyLocalService;
 
 	private ConfigurationProvider _configurationProvider;
-	private ExportImportServiceConfiguration _exportImportServiceConfiguration;
+	private volatile ExportImportServiceConfiguration
+		_exportImportServiceConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

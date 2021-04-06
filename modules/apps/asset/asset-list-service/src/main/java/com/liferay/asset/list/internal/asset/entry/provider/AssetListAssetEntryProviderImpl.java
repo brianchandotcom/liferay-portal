@@ -985,7 +985,7 @@ public class AssetListAssetEntryProviderImpl
 
 	private final List<AssetListAssetEntryQueryProcessor>
 		_assetListAssetEntryQueryProcessors = new CopyOnWriteArrayList<>();
-	private AssetListConfiguration _assetListConfiguration;
+	private volatile AssetListConfiguration _assetListConfiguration;
 
 	@Reference
 	private AssetListEntryAssetEntryRelLocalService

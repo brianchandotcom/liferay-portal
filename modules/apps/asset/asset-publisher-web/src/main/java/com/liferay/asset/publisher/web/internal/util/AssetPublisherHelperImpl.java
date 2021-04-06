@@ -1368,7 +1368,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 	@Reference
 	private AssetListEntryService _assetListEntryService;
 
-	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
+	private volatile AssetPublisherWebConfiguration
+		_assetPublisherWebConfiguration;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

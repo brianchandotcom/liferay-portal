@@ -2342,7 +2342,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryLocalServiceImpl.class);
 
-	private BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
+	private volatile BlogsFileUploadsConfiguration
+		_blogsFileUploadsConfiguration;
 
 	@Reference
 	private BlogsStatsUserLocalService _blogsStatsUserLocalService;

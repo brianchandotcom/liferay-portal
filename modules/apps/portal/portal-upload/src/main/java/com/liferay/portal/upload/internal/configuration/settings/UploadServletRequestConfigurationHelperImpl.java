@@ -65,7 +65,7 @@ public class UploadServletRequestConfigurationHelperImpl
 				UploadServletRequestConfiguration.class, properties);
 	}
 
-	private UploadServletRequestConfiguration
+	private volatile UploadServletRequestConfiguration
 		_uploadServletRequestConfiguration;
 
 }

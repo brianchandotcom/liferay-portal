@@ -163,7 +163,7 @@ public class PageAttachmentWikiUploadFileEntryHandler
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
-	private WikiFileUploadConfiguration _wikiFileUploadConfiguration;
+	private volatile WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;

@@ -116,7 +116,7 @@ public class CheckCommerceNotificationQueueEntryMessageListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckCommerceNotificationQueueEntryMessageListener.class);
 
-	private CommerceNotificationQueueEntryConfiguration
+	private volatile CommerceNotificationQueueEntryConfiguration
 		_commerceNotificationQueueEntryConfiguration;
 
 	@Reference

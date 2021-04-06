@@ -190,7 +190,8 @@ public class ImageJournalUploadFileEntryHandler
 
 	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
-	private JournalFileUploadsConfiguration _journalFileUploadsConfiguration;
+	private volatile JournalFileUploadsConfiguration
+		_journalFileUploadsConfiguration;
 	private ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission;
 

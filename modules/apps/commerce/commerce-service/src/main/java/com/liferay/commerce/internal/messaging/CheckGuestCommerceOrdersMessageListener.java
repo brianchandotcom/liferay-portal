@@ -95,7 +95,7 @@ public class CheckGuestCommerceOrdersMessageListener
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private CommerceOrderConfiguration _commerceOrderConfiguration;
+	private volatile CommerceOrderConfiguration _commerceOrderConfiguration;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

@@ -482,7 +482,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		).buildString();
 	}
 
-	private AssetCategoriesAdminWebConfiguration
+	private volatile AssetCategoriesAdminWebConfiguration
 		_assetCategoriesAdminWebConfiguration;
 
 	@Reference

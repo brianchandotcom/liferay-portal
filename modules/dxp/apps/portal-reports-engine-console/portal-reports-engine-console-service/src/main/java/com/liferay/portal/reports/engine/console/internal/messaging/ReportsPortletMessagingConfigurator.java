@@ -193,7 +193,7 @@ public class ReportsPortletMessagingConfigurator {
 
 	private final List<ServiceRegistration<MessageListener>>
 		_messageListenerServiceRegistrations = new ArrayList<>();
-	private ReportsPortletMessagingConfiguration
+	private volatile ReportsPortletMessagingConfiguration
 		_reportsPortletMessagingConfiguration;
 
 }

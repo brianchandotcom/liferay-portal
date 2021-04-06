@@ -109,6 +109,6 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 	}
 
 	private ItemSelector _itemSelector;
-	private WikiFileUploadConfiguration _wikiFileUploadConfiguration;
+	private volatile WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 
 }

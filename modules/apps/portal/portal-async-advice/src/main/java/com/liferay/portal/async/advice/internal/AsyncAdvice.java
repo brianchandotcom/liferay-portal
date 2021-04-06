@@ -148,7 +148,7 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 
 	private static final Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
 
-	private AsyncAdviceConfiguration _asyncAdviceConfiguration;
+	private volatile AsyncAdviceConfiguration _asyncAdviceConfiguration;
 	private Map<String, String> _destinationNames;
 
 	@Reference

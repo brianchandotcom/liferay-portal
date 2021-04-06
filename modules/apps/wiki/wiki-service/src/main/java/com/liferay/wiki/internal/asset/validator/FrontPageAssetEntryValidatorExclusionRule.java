@@ -90,7 +90,8 @@ public class FrontPageAssetEntryValidatorExclusionRule
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontPageAssetEntryValidatorExclusionRule.class);
 
-	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
 
 	@Reference(unbind = "-")
 	private WikiPageLocalService _wikiPageLocalService;

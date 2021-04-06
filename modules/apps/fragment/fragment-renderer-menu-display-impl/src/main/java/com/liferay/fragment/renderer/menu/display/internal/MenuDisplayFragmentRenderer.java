@@ -331,7 +331,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private DDMTemplateService _ddmTemplateService;
 
-	private FFFragmentRendererMenuDisplayConfiguration
+	private volatile FFFragmentRendererMenuDisplayConfiguration
 		_ffFragmentRendererMenuDisplayConfiguration;
 
 	@Reference

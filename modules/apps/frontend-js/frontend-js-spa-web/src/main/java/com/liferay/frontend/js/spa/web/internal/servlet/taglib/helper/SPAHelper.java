@@ -306,7 +306,7 @@ public class SPAHelper {
 	private Portal _portal;
 
 	private PortletLocalService _portletLocalService;
-	private SPAConfiguration _spaConfiguration;
+	private volatile SPAConfiguration _spaConfiguration;
 	private JSONArray _spaExcludedPathsJSONArray;
 
 	private static final class NavigationExceptionSelectorTrackerCustomizer

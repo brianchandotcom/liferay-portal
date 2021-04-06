@@ -110,7 +110,7 @@ public class IndexerRequestBufferExecutorWatcher {
 	@Reference(target = "(buffered.execution.mode=DEFAULT)")
 	private IndexerRequestBufferExecutor _defaultIndexerRequestBufferExecutor;
 
-	private IndexerRegistryConfiguration _indexerRegistryConfiguration;
+	private volatile IndexerRegistryConfiguration _indexerRegistryConfiguration;
 	private final Map<String, IndexerRequestBufferExecutor>
 		_indexerRequestBufferExecutors = new ConcurrentHashMap<>();
 

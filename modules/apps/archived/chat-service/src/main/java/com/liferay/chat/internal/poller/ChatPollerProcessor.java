@@ -323,7 +323,8 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 	@Reference
 	private BuddyFinder _buddyFinder;
 
-	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
+	private volatile ChatGroupServiceConfiguration
+		_chatGroupServiceConfiguration;
 
 	@Reference
 	private Http _http;

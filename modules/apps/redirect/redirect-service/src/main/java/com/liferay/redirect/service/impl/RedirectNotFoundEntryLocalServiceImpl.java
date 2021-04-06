@@ -247,7 +247,7 @@ public class RedirectNotFoundEntryLocalServiceImpl
 	@Reference
 	private Portal _portal;
 
-	private RedirectConfiguration _redirectConfiguration;
+	private volatile RedirectConfiguration _redirectConfiguration;
 
 	@Reference
 	private ViewCountManager _viewCountManager;

@@ -653,7 +653,7 @@ public class AssetPublisherWebHelper {
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;
 
-	private AssetPublisherPortletInstanceConfiguration
+	private volatile AssetPublisherPortletInstanceConfiguration
 		_assetPublisherPortletInstanceConfiguration;
 
 	@Reference

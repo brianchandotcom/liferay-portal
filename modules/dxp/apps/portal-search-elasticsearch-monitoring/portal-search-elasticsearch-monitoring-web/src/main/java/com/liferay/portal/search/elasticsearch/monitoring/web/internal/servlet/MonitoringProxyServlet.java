@@ -237,6 +237,6 @@ public class MonitoringProxyServlet extends ProxyServlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringProxyServlet.class);
 
-	private MonitoringConfiguration _monitoringConfiguration;
+	private volatile MonitoringConfiguration _monitoringConfiguration;
 
 }

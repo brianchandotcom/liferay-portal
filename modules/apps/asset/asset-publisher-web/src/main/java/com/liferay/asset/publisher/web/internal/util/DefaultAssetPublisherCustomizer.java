@@ -201,6 +201,7 @@ public class DefaultAssetPublisherCustomizer
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;
 
-	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
+	protected volatile AssetPublisherWebConfiguration
+		assetPublisherWebConfiguration;
 
 }

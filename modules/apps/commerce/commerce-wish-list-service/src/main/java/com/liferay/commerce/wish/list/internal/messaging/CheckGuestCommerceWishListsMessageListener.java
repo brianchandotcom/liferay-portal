@@ -92,7 +92,8 @@ public class CheckGuestCommerceWishListsMessageListener
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private CommerceWishListConfiguration _commerceWishListConfiguration;
+	private volatile CommerceWishListConfiguration
+		_commerceWishListConfiguration;
 
 	@Reference
 	private CommerceWishListLocalService _commerceWishListLocalService;

@@ -96,7 +96,7 @@ public class PageStructureContentPageEditorSidebarPanel
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageStructureContentPageEditorSidebarPanel.class);
 
-	private FFLayoutContentPageEditorConfiguration
+	private volatile FFLayoutContentPageEditorConfiguration
 		_ffLayoutContentPageEditorConfiguration;
 
 }

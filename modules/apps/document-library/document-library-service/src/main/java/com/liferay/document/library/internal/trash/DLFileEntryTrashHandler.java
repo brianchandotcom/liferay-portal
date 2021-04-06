@@ -137,6 +137,13 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			return null;
 		}
 
+		DLFolder parentFolder = _dlFolderLocalService.fetchDLFolder(
+			parentFolderId);
+
+		if (parentFolder == null) {
+			return null;
+		}
+
 		return getContainerModel(parentFolderId);
 	}
 

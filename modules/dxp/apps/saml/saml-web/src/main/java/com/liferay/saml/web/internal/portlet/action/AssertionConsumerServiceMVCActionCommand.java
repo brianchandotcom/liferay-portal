@@ -12,18 +12,18 @@
  *
  */
 
-package com.liferay.saml.web.internal.struts;
+package com.liferay.saml.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ContactNameException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException.MustNotUseCompanyMx;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
-import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlPortletKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
@@ -31,8 +31,6 @@ import com.liferay.saml.runtime.exception.AuthnAgeException;
 import com.liferay.saml.runtime.exception.EntityInteractionException;
 import com.liferay.saml.runtime.exception.SubjectException;
 import com.liferay.saml.runtime.servlet.profile.WebSsoProfile;
-
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,18 +43,30 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true, property = "path=/portal/saml/acs",
-	service = StrutsAction.class
+	immediate = true,
+	property = {
+		"auth.token.ignore.mvc.action=true",
+		"javax.portlet.name=" + SamlPortletKeys.SAML,
+		"mvc.command.name=/saml/assertion_consumer_service"
+	},
+	service = MVCActionCommand.class
 )
-public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
+public class AssertionConsumerServiceMVCActionCommand
+	extends BaseSamlMVCActionCommand {
 
 	@Override
 	public boolean isEnabled() {
-		if (samlProviderConfigurationHelper.isRoleSp()) {
-			return super.isEnabled();
+		if (super.isEnabled()) {
+			return samlProviderConfigurationHelper.isRoleSp();
 		}
 
 		return false;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	public void setPortal(Portal portal) {
+		super.setPortal(portal);
 	}
 
 	@Override
@@ -69,7 +79,7 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 	}
 
 	@Override
-	protected String doExecute(
+	protected void doProcessAction(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
@@ -79,10 +89,7 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 				httpServletRequest, httpServletResponse);
 		}
 		catch (EntityInteractionException entityInteractionException) {
-			HttpServletRequest originalHttpServletRequest =
-				_portal.getOriginalServletRequest(httpServletRequest);
-
-			HttpSession httpSession = originalHttpServletRequest.getSession();
+			HttpSession httpSession = httpServletRequest.getSession();
 
 			httpSession.setAttribute(
 				com.liferay.saml.web.internal.constants.SamlWebKeys.
@@ -127,27 +134,15 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 			String redirect = ParamUtil.getString(
 				httpServletRequest, "RelayState");
 
-			redirect = _portal.escapeRedirect(redirect);
+			redirect = portal.escapeRedirect(redirect);
 
 			if (Validator.isNull(redirect)) {
-				redirect = _portal.getHomeURL(httpServletRequest);
+				redirect = portal.getHomeURL(httpServletRequest);
 			}
 
-			try {
-				httpServletResponse.sendRedirect(redirect);
-
-				return null;
-			}
-			catch (IOException ioException) {
-				throw new SystemException(ioException);
-			}
+			httpServletResponse.sendRedirect(redirect);
 		}
-
-		return null;
 	}
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;

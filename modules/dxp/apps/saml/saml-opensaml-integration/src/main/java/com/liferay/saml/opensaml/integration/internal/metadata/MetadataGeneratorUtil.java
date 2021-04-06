@@ -14,9 +14,9 @@
 
 package com.liferay.saml.opensaml.integration.internal.metadata;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.runtime.exception.CredentialException;
 import com.liferay.saml.runtime.exception.EntityIdException;
@@ -221,8 +221,7 @@ public class MetadataGeneratorUtil {
 		AssertionConsumerService assertionConsumerService =
 			OpenSamlUtil.buildAssertionConsumerService(
 				SAMLConstants.SAML2_POST_BINDING_URI, 1, true,
-				StringBundler.concat(
-					portalURL, PortalUtil.getPathMain(), "/portal/saml/acs"));
+				portalURL + "/web/guest" + SamlCommandQueryConstants.ACS);
 
 		assertionConsumerServices.add(assertionConsumerService);
 

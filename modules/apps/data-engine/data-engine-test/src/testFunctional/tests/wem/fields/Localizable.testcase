@@ -78,6 +78,63 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that it's possible to translate the content of the fields in a fieldset"
+	@priority = "5"
+	test TranslateFieldSetLocalizableOn {
+		DataEngine.addFields(fieldNameList = "Text,Numeric");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Numeric");
+
+		WebContentStructures.saveCP();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title Fieldset");
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "WC Structure Title");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title Fieldset");
+
+		WebContent.addCP(webContentTitle = "Web Content Title");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "04/06/2021",
+			webContentNumeric = "123",
+			webContentText = "This is a text field");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addCP(webContentTitle = "Título do conteudo da Web");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "06/04/2021",
+			webContentNumeric = "456",
+			webContentText = "Este é um campo de texto");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentDate = "04/06/2021",
+			webContentNumeric = "123",
+			webContentText = "This is a text field");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentDate = "06/04/2021",
+			webContentNumeric = "456",
+			webContentText = "Este é um campo de texto");
+	}
+
 	@description = "This test ensures that is possible to translate fields with Localizable set as true."
 	@priority = "5"
 	test TranslateLocalizable {

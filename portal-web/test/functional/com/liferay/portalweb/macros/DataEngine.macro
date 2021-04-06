@@ -499,6 +499,20 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro addFieldsetToBuilder {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Fieldsets");
+		}
+
+		DoubleClick(
+			key_fieldName = "${fieldsetName}",
+			locator1 = "Sidebar#ADD_FIELD_NAME");
+	}
+
 	macro addFieldToFieldsGroup {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");

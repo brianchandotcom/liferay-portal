@@ -18,7 +18,6 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupNameException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.service.MembershipRequestLocalService;
 import com.liferay.portal.kernel.service.MembershipRequestService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -50,7 +48,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -145,8 +142,6 @@ public class EditGroupMVCActionCommand
 			actionRequest, "type", liveGroup.getType());
 		boolean manualMembership = ParamUtil.getBoolean(
 			actionRequest, "manualMembership", liveGroup.isManualMembership());
-		String friendlyURL = ParamUtil.getString(
-			actionRequest, "groupFriendlyURL", liveGroup.getFriendlyURL());
 		boolean inheritContent = ParamUtil.getBoolean(
 			actionRequest, "inheritContent", liveGroup.isInheritContent());
 		boolean active = ParamUtil.getBoolean(
@@ -168,7 +163,7 @@ public class EditGroupMVCActionCommand
 
 		liveGroup = _groupService.updateGroup(
 			liveGroupId, parentGroupId, nameMap, descriptionMap, type,
-			manualMembership, membershipRestriction, friendlyURL,
+			manualMembership, membershipRestriction, liveGroup.getFriendlyURL(),
 			inheritContent, active, serviceContext);
 
 		if (type == GroupConstants.TYPE_SITE_OPEN) {
@@ -221,48 +216,10 @@ public class EditGroupMVCActionCommand
 
 		typeSettingsUnicodeProperties.putAll(formTypeSettingsUnicodeProperties);
 
-		// Virtual hosts
-
-		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
-
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
-			liveGroup.getGroupId());
-
-		_layoutSetService.updateVirtualHosts(
-			liveGroup.getGroupId(), false,
-			ActionUtil.toTreeMap(
-				actionRequest, "publicVirtualHost", availableLocales));
-
-		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
-
-		_layoutSetService.updateVirtualHosts(
-			liveGroup.getGroupId(), true,
-			ActionUtil.toTreeMap(
-				actionRequest, "privateVirtualHost", availableLocales));
-
 		// Staging
 
 		if (liveGroup.hasStagingGroup()) {
 			Group stagingGroup = liveGroup.getStagingGroup();
-
-			friendlyURL = ParamUtil.getString(
-				actionRequest, "stagingFriendlyURL",
-				stagingGroup.getFriendlyURL());
-
-			_groupService.updateFriendlyURL(
-				stagingGroup.getGroupId(), friendlyURL);
-
-			_layoutSetService.updateVirtualHosts(
-				stagingGroup.getGroupId(), false,
-				ActionUtil.toTreeMap(
-					actionRequest, "stagingPublicVirtualHost",
-					availableLocales));
-
-			_layoutSetService.updateVirtualHosts(
-				stagingGroup.getGroupId(), true,
-				ActionUtil.toTreeMap(
-					actionRequest, "stagingPrivateVirtualHost",
-					availableLocales));
 
 			UnicodeProperties stagedGroupTypeSettingsUnicodeProperties =
 				stagingGroup.getTypeSettingsProperties();
@@ -283,9 +240,14 @@ public class EditGroupMVCActionCommand
 		long publicLayoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "publicLayoutSetPrototypeId");
 
+		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
+
 		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 			actionRequest, "privateLayoutSetPrototypeLinkEnabled",
 			privateLayoutSet.isLayoutSetPrototypeLinkEnabled());
+
+		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
+
 		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 			actionRequest, "publicLayoutSetPrototypeLinkEnabled",
 			publicLayoutSet.isLayoutSetPrototypeLinkEnabled());
@@ -374,9 +336,6 @@ public class EditGroupMVCActionCommand
 
 	@Reference
 	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
-
-	@Reference
-	private LayoutSetService _layoutSetService;
 
 	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;

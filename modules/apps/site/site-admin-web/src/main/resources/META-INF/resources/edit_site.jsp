@@ -65,14 +65,6 @@ if (group != null) {
 		stagingGroupId = stagingGroup.getGroupId();
 	}
 }
-
-LayoutSetPrototype layoutSetPrototype = null;
-
-long layoutSetPrototypeId = ParamUtil.getLong(request, "layoutSetPrototypeId");
-
-if (layoutSetPrototypeId > 0) {
-	layoutSetPrototype = LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(layoutSetPrototypeId);
-}
 %>
 
 <liferay-ui:success key='<%= ConfigurationAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
@@ -95,7 +87,6 @@ if (layoutSetPrototypeId > 0) {
 
 	<%
 	request.setAttribute("site.group", group);
-	request.setAttribute("site.layoutSetPrototype", layoutSetPrototype);
 	request.setAttribute("site.liveGroup", liveGroup);
 	request.setAttribute("site.liveGroupId", Long.valueOf(liveGroupId));
 	request.setAttribute("site.stagingGroup", stagingGroup);

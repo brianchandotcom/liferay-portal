@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Locale;
 
@@ -73,12 +75,17 @@ public class SitePagesFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
-		LayoutSetPrototype layoutSetPrototype =
-			(LayoutSetPrototype)httpServletRequest.getAttribute(
-				"site.layoutSetPrototype");
+		long layoutSetPrototypeId = ParamUtil.getLong(
+			httpServletRequest, "layoutSetPrototypeId");
 
-		if (layoutSetPrototype != null) {
-			return true;
+		if (layoutSetPrototypeId > 0) {
+			LayoutSetPrototype layoutSetPrototype =
+				_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+					layoutSetPrototypeId);
+
+			if (layoutSetPrototype != null) {
+				return true;
+			}
 		}
 
 		return false;
@@ -97,5 +104,8 @@ public class SitePagesFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 	protected String getJspPath() {
 		return "/site/pages.jsp";
 	}
+
+	@Reference
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 }

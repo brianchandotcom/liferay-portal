@@ -85,7 +85,7 @@ public class CKEditorCreoleConfigContributor
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("bidi,codemirror,colorbutton,colordialog,div,");
-		sb.append("elementspath,font,forms,indentblock,justify,keystrokes");
+		sb.append("elementspath,font,forms,indentblock,justify,keystrokes,");
 		sb.append("link,maximize,newpage,pagebreak,preview,print,save,");
 		sb.append("showblocks,smiley,stylescombo,templates,video");
 

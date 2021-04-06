@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.upgrade.v6_0_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
@@ -32,6 +33,19 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		try (Statement selectStatement = connection.createStatement()) {
+			ResultSet rs = selectStatement.executeQuery(
+				"select * from CommerceCountry where twoLettersISOCode is " +
+					"null or threeLettersISOCode is null or numericISOCode = " +
+						"0");
+
+			if (rs.next()) {
+				throw new UpgradeException(
+					"Unable to migrate data in CommerceCountry to Country " +
+						"because it contains countries missing ISO codes");
+			}
+		}
+
 		try (Statement selectStatement = connection.createStatement()) {
 			ResultSet rs = selectStatement.executeQuery(
 				"select * from CommerceCountry order by commerceCountryId asc");

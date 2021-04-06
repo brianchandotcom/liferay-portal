@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayPanel from '@clayui/panel';
 import React, {useMemo, useState} from 'react';
 
 import Panel from '../../../shared/components/panel/Panel.es';
@@ -85,7 +86,7 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 
 	return (
 		<PromisesResolver promises={promises}>
-			<Panel elementClasses="workload-by-assignee-card">
+			<ClayPanel className="mt-4 workload-by-assignee-card">
 				<WorkloadByAssigneeCard.Header processId={processId} />
 
 				<div className="border-bottom container-nav">
@@ -102,7 +103,7 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 					processStepKey={taskNames && taskName}
 					{...routeParams}
 				/>
-			</Panel>
+			</ClayPanel>
 		</PromisesResolver>
 	);
 };

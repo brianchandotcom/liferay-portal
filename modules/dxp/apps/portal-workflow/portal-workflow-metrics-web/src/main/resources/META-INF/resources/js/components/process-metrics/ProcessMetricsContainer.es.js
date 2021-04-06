@@ -37,13 +37,17 @@ const DashboardTab = (props) => {
 		<ClayLayout.ContainerFluid>
 			<ClayLayout.Row>
 				<ClayLayout.Col className="p-0" md="9">
-					<PendingItemsCard {...props} />
+					<ClayLayout.ContainerFluid>
+						<PendingItemsCard {...props} />
 
-					<WorkloadByStepCard {...props} />
+						<WorkloadByStepCard {...props} />
+					</ClayLayout.ContainerFluid>
 				</ClayLayout.Col>
 
 				<ClayLayout.Col className="p-0" md="3">
-					<WorkloadByAssigneeCard {...props} />
+					<ClayLayout.ContainerFluid>
+						<WorkloadByAssigneeCard {...props} />
+					</ClayLayout.ContainerFluid>
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 		</ClayLayout.ContainerFluid>
@@ -54,12 +58,12 @@ const PerformanceTab = (props) => {
 	useTimeRangeFetch();
 
 	return (
-		<>
+		<ClayLayout.ContainerFluid>
 			<CompletedItemsCard {...props} />
 			<CompletionVelocityCard {...props} />
 			<PerformanceByStepCard {...props} />
 			<PerformanceByAssigneeCard {...props} />
-		</>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

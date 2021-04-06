@@ -12,6 +12,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayPanel from '@clayui/panel';
 import React, {useMemo} from 'react';
 
 import ContentView from '../../../shared/components/content-view/ContentView.es';
@@ -48,7 +49,7 @@ const ProcessItemsCard = ({
 
 	return (
 		<PromisesResolver promises={promises}>
-			<Panel>
+			<ClayPanel className="mt-4">
 				<ProcessItemsCard.Header
 					data={data}
 					description={description}
@@ -63,7 +64,7 @@ const ProcessItemsCard = ({
 					processId={processId}
 					timeRange={timeRange}
 				/>
-			</Panel>
+			</ClayPanel>
 		</PromisesResolver>
 	);
 };

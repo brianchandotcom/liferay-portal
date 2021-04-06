@@ -10,6 +10,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import ClayPanel from '@clayui/panel';
 import React, {useMemo} from 'react';
 
 import Panel from '../../../shared/components/panel/Panel.es';
@@ -72,7 +73,7 @@ const CompletionVelocityCard = ({routeParams}) => {
 
 	return (
 		<PromisesResolver promises={promises}>
-			<Panel>
+			<ClayPanel className="mt-4">
 				<CompletionVelocityCard.Header
 					disableFilters={filtersError}
 					prefixKey={prefixKey}
@@ -84,7 +85,7 @@ const CompletionVelocityCard = ({routeParams}) => {
 					timeRange={timeRange}
 					velocityUnit={velocityUnit}
 				/>
-			</Panel>
+			</ClayPanel>
 		</PromisesResolver>
 	);
 };

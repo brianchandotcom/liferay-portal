@@ -10,6 +10,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import ClayPanel from '@clayui/panel';
 import React, {useMemo} from 'react';
 
 import Panel from '../../../shared/components/panel/Panel.es';
@@ -105,7 +106,7 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 	}, [filtersError, postData, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
-		<Panel elementClasses="dashboard-card">
+		<ClayPanel className="dashboard-card mt-4">
 			<PromisesResolver promises={promises}>
 				<PerformanceByAssigneeCard.Header
 					disableFilters={filtersError}
@@ -125,7 +126,7 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 					{...routeParams}
 				/>
 			</PromisesResolver>
-		</Panel>
+		</ClayPanel>
 	);
 };
 

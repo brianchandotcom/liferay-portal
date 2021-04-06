@@ -58,7 +58,7 @@ import jodd.bean.BeanUtil;
 import jodd.typeconverter.TypeConversionException;
 import jodd.typeconverter.TypeConverterManager;
 
-import jodd.util.ReflectUtil;
+import jodd.util.ClassUtil;
 
 /**
  * @author Igor Spasic
@@ -120,7 +120,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return;
 		}
 
-		if (!ReflectUtil.isTypeOf(parameterType, targetClass)) {
+		if (!ClassUtil.isTypeOf(parameterType, targetClass)) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"Unmatched argument type ", parameterTypeName,
@@ -190,10 +190,12 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return inputObject;
 		}
 
+		TypeConverterManager typeConverterManager = TypeConverterManager.get();
+
 		Object outputObject = null;
 
 		try {
-			outputObject = TypeConverterManager.convertType(
+			outputObject = typeConverterManager.convertType(
 				inputObject, targetType);
 		}
 		catch (TypeConversionException typeConversionException) {
@@ -229,8 +231,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 					outputObject = targetType.newInstance();
 
-					BeanCopy beanCopy = BeanCopy.beans(
-						inputObject, outputObject);
+					BeanCopy beanCopy = new BeanCopy(inputObject, outputObject);
 
 					beanCopy.copy();
 
@@ -373,7 +374,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						throw classCastException;
 					}
 
-					BeanCopy beanCopy = BeanCopy.beans(value, parameterValue);
+					BeanCopy beanCopy = new BeanCopy(value, parameterValue);
 
 					beanCopy.copy();
 				}
@@ -479,7 +480,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 		for (Map.Entry<String, Object> innerParameter : innerParameters) {
 			try {
-				BeanUtil.setProperty(
+				BeanUtil.pojo.setProperty(
 					parameterValue, innerParameter.getKey(),
 					innerParameter.getValue());
 			}

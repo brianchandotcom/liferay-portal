@@ -16,8 +16,8 @@ package com.liferay.portal.typeconverter;
 
 import java.util.Date;
 
-import jodd.typeconverter.ConvertBean;
 import jodd.typeconverter.TypeConverter;
+import jodd.typeconverter.impl.DateConverter;
 
 import jodd.util.CsvUtil;
 
@@ -26,8 +26,8 @@ import jodd.util.CsvUtil;
  */
 public class DateArrayConverter implements TypeConverter<Date[]> {
 
-	public DateArrayConverter(ConvertBean convertBean) {
-		_convertBean = convertBean;
+	public DateArrayConverter() {
+		_dateConverter = new DateConverter();
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class DateArrayConverter implements TypeConverter<Date[]> {
 				return convertArray(values);
 			}
 
-			return new Date[] {_convertBean.toDate(value)};
+			return new Date[] {_dateConverter.convert(value)};
 		}
 
 		Class<?> componentType = type.getComponentType();
@@ -56,7 +56,7 @@ public class DateArrayConverter implements TypeConverter<Date[]> {
 			Date[] results = new Date[values.length];
 
 			for (int i = 0; i < values.length; i++) {
-				results[i] = _convertBean.toDate(values[i]);
+				results[i] = _dateConverter.convert(values[i]);
 			}
 
 			return results;
@@ -69,12 +69,12 @@ public class DateArrayConverter implements TypeConverter<Date[]> {
 		Date[] results = new Date[values.length];
 
 		for (int i = 0; i < values.length; i++) {
-			results[i] = _convertBean.toDate(values[i]);
+			results[i] = _dateConverter.convert(values[i]);
 		}
 
 		return results;
 	}
 
-	private final ConvertBean _convertBean;
+	private final DateConverter _dateConverter;
 
 }

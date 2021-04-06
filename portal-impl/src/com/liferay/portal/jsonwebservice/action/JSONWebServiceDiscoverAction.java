@@ -58,7 +58,7 @@ import java.util.TimeZone;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import jodd.util.ReflectUtil;
+import jodd.util.ClassUtil;
 
 /**
  * @author Igor Spasic
@@ -334,7 +334,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		else if (type.equals(Object.class) || type.equals(Serializable.class)) {
 			return "map";
 		}
-		else if (ReflectUtil.isTypeOf(type, Number.class)) {
+		else if (ClassUtil.isTypeOf(type, Number.class)) {
 			String typeName = null;
 
 			if (type == Character.class) {
@@ -353,11 +353,11 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		String typeName = type.getName();
 
 		if ((type == Collection.class) ||
-			ReflectUtil.isTypeOf(type, List.class)) {
+			ClassUtil.isTypeOf(type, List.class)) {
 
 			typeName = "list";
 		}
-		else if (ReflectUtil.isTypeOf(type, Map.class)) {
+		else if (ClassUtil.isTypeOf(type, Map.class)) {
 			typeName = "map";
 		}
 		else {
@@ -416,7 +416,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		for (int i = 0; i < genericTypes.length; i++) {
 			Type genericType = genericTypes[i];
 
-			genericReturnTypes[i] = ReflectUtil.getRawType(
+			genericReturnTypes[i] = ClassUtil.getRawType(
 				genericType, jsonWebServiceActionMapping.getActionClass());
 		}
 

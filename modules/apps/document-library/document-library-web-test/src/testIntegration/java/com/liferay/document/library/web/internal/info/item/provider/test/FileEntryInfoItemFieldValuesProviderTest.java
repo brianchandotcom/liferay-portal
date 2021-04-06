@@ -33,7 +33,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import jodd.util.MimeTypes;
+import jodd.net.MimeTypes;
 
 import org.junit.Assert;
 import org.junit.Before;

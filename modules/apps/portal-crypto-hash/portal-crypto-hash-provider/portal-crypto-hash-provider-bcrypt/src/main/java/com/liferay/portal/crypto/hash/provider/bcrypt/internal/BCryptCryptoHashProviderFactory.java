@@ -25,7 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
 
-import jodd.crypt.BCrypt;
+import jodd.util.BCrypt;
 
 /**
  * @author Arthur Chan

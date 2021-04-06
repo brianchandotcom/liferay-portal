@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group group = (Group)request.getAttribute("site.group");
+Group group = themeDisplay.getSiteGroup();
 
 LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), true);
 LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), false);
@@ -42,11 +42,6 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 	publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
 }
 %>
-
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="site-tempate"
-/>
 
 <c:if test="<%= publicLayoutSetPrototype != null %>">
 	<aui:fieldset label="public-site-template">

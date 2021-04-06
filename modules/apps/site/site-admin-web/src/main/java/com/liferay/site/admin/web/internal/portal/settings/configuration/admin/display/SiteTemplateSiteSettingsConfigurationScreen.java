@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.frontend.taglib.form.navigator;
+package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
+import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -23,49 +24,61 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Locale;
-
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Locale;
+
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
-@Component(
-	property = "form.navigator.entry.order:Integer=10",
-	service = FormNavigatorEntry.class
-)
-public class SiteSiteTemplateFormNavigatorEntry
-	extends BaseSiteFormNavigatorEntry {
+@Component(service = ConfigurationScreen.class)
+public class SiteTemplateSiteSettingsConfigurationScreen
+	implements ConfigurationScreen {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_GENERAL;
+		return "other";
 	}
 
 	@Override
 	public String getKey() {
-		return "site-template";
+		return "site-configuration-site-template";
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
+	public String getName(Locale locale) {
 		return LanguageUtil.get(locale, "site-template");
 	}
 
 	@Override
-	public boolean isVisible(User user, Group group) {
-		if ((group == null) || group.isCompany()) {
+	public String getScope() {
+		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
+	}
+
+	@Override
+	public boolean isVisible() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		if ((siteGroup == null) || siteGroup.isCompany()) {
 			return false;
 		}
 
@@ -74,9 +87,9 @@ public class SiteSiteTemplateFormNavigatorEntry
 
 		try {
 			privateLayoutSet = _layoutSetLocalService.getLayoutSet(
-				group.getGroupId(), true);
+				siteGroup.getGroupId(), true);
 			publicLayoutSet = _layoutSetLocalService.getLayoutSet(
-				group.getGroupId(), false);
+				siteGroup.getGroupId(), false);
 		}
 		catch (PortalException portalException) {
 
@@ -92,11 +105,6 @@ public class SiteSiteTemplateFormNavigatorEntry
 		if ((privateLayoutSet == null) && (publicLayoutSet == null)) {
 			return false;
 		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		LayoutSetPrototype privateLayoutSetPrototype = null;
 
@@ -128,37 +136,33 @@ public class SiteSiteTemplateFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/edit_site_template.jsp");
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			throw new IOException(
+				"Unable to render edit_site_template.jsp", exception);
+		}
 	}
 
-	@Override
-	protected String getJspPath() {
-		return "/site/site_template.jsp";
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetPrototypeLocalService(
-		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
-
-		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
-	}
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
+	private ServletContext _servletContext;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SiteSiteTemplateFormNavigatorEntry.class);
+		SiteTemplateSiteSettingsConfigurationScreen.class);
 
+	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 }

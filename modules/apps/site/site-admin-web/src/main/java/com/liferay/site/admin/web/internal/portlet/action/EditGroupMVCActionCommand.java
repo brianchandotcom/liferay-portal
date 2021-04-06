@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.MembershipRequestService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -61,7 +60,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
-import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
@@ -89,7 +87,6 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SITE_SETTINGS,
-		"javax.portlet.name=" + SiteAdminPortletKeys.SITE_SETTINGS,
 		"mvc.command.name=/site_admin/edit_group"
 	},
 	service = MVCActionCommand.class
@@ -106,16 +103,6 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			Group group = TransactionInvokerUtil.invoke(
 				_transactionConfig, groupCallable);
-
-			long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-
-			if (liveGroupId <= 0) {
-				hideDefaultSuccessMessage(actionRequest);
-
-				MultiSessionMessages.add(
-					actionRequest,
-					SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed");
-			}
 
 			PortletURL siteAdministrationURL = _getSiteAdministrationURL(
 				actionRequest, group);
@@ -153,8 +140,8 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return _portal.getControlPanelPortletURL(
-			actionRequest, group, SiteAdminPortletKeys.SITE_SETTINGS, 0, 0,
-			PortletRequest.RENDER_PHASE);
+			actionRequest, group, ConfigurationAdminPortletKeys.SITE_SETTINGS,
+			0, 0, PortletRequest.RENDER_PHASE);
 	}
 
 	private Group _updateGroup(ActionRequest actionRequest) throws Exception {

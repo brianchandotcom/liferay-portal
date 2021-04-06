@@ -26,7 +26,7 @@
 		s.async = 1;
 		d.getElementsByTagName('head')[0].appendChild(s);
 	})();
-	
+
 	$crisp.push(['set', 'user:email', '<%= user.getScreenName() %>']);
 	$crisp.push(['set', 'user:nickname', '<%= user.getEmailAddress() %>']);
 </script>

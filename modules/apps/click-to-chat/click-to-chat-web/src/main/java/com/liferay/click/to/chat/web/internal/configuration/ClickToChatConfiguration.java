@@ -33,10 +33,10 @@ public interface ClickToChatConfiguration {
 
 	@Meta.AD(deflt = "false", name = "enable-click-to-chat", required = false)
 	public boolean enable();
-	
+
 	@Meta.AD(deflt = "", name = "account-token", required = false)
 	public String accountToken();
-	
+
 	@Meta.AD(
 		name = "provider",
 		optionLabels = {
@@ -45,10 +45,9 @@ public interface ClickToChatConfiguration {
 		required = false
 	)
 	public ProviderOptions provider();
-	
+
 	@Meta.AD(
-		deflt = "PROVIDE_OR_INHERIT",
-		description = "strategy-description",
+		deflt = "PROVIDE_OR_INHERIT", description = "strategy-description",
 		name = "strategy",
 		optionLabels = {
 			"group-provider-site-strategy.ALWAYS_INHERIT",
@@ -58,4 +57,5 @@ public interface ClickToChatConfiguration {
 		required = false
 	)
 	public ClickToChatProviderSiteStrategy groupProviderSiteStrategy();
+
 }

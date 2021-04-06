@@ -30,7 +30,7 @@
 			});
 		};
 	})(document, 'script');
-	
+
 	window.onload = function () {
 		window.$chatwoot.setUser('<%= user.getUserId() %>', {
 			email: '<%= user.getEmailAddress() %>',

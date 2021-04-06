@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -73,12 +75,26 @@ public class DeleteDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getUser()
 			).build();
 
-		for (long deleteDataDefinitionId : deleteDataDefinitionIds) {
-			dataDefinitionResource.deleteDataDefinition(deleteDataDefinitionId);
+		try {
+			for (long deleteDataDefinitionId : deleteDataDefinitionIds) {
+				dataDefinitionResource.deleteDataDefinition(
+					deleteDataDefinitionId);
+			}
+		}
+		finally {
+			String redirect = _portal.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
 		}
 	}
 
 	@Reference
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
+
+	@Reference
+	private Portal _portal;
 
 }

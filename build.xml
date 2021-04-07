@@ -439,14 +439,6 @@ message.
 
 	<target name="deploy-additional-jars">
 		<copy
-			todir="${app.server.lib.global.dir}"
-		>
-			<fileset
-				dir="lib/global"
-				excludes="dependencies.properties"
-			/>
-		</copy>
-		<copy
 			todir="${app.server.lib.portal.dir}"
 		>
 			<fileset

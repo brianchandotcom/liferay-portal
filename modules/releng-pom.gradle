@@ -213,12 +213,6 @@ generatePomThirdParty {
 			dependenciesProperties.load(it)
 		}
 
-		File dependenciesPropertiesGlobalFile = new File("../lib/global/dependencies.properties")
-
-		dependenciesPropertiesGlobalFile.withInputStream {
-			dependenciesProperties.load(it)
-		}
-
 		File dependenciesPropertiesPortalFile = new File("../lib/portal/dependencies.properties")
 
 		dependenciesPropertiesPortalFile.withInputStream {

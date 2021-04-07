@@ -2925,11 +2925,6 @@ plugins.includes=</echo>
 				includes="hsql.jar"
 				prefix="liferay-portal-dependencies-${lp.version}"
 			/>
-			<zipfileset
-				dir="lib/global"
-				includes="*.jar"
-				prefix="liferay-portal-dependencies-${lp.version}"
-			/>
 		</zip>
 	</target>
 

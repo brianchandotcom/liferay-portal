@@ -59,10 +59,6 @@
 			includes="*.jar"
 		/>
 		<fileset
-			dir="${project.dir}/lib/global"
-			includes="*.jar"
-		/>
-		<fileset
 			dir="${project.dir}/lib/portal"
 			includes="*.jar"
 		/>
@@ -89,8 +85,8 @@
 			includes="osgi-annotation-versioning.jar,jsp-api.jar,mail.jar,servlet-api.jar"
 		/>
 		<fileset
-			dir="${project.dir}/lib/global"
-			includes="*.jar"
+			dir="${project.dir}/lib/portal"
+			includes="portlet.jar"
 		/>
 		<path refid="lib.pre.classpath" />
 		<path refid="web-lib.classpath" />
@@ -1802,10 +1798,6 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 				<fileset
 					dir="${project.dir}/lib/development"
 					excludes="jalopy.jar,tomcat*.jar"
-					includes="*.jar"
-				/>
-				<fileset
-					dir="${project.dir}/lib/global"
 					includes="*.jar"
 				/>
 				<fileset

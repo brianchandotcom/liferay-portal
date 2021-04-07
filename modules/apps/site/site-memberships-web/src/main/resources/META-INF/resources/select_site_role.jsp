@@ -100,10 +100,3 @@ SelectRolesDisplayContext selectRolesDisplayContext = new SelectRolesDisplayCont
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />fm',
-		'<%= HtmlUtil.escapeJS(selectRolesDisplayContext.getEventName()) %>'
-	);
-</aui:script>

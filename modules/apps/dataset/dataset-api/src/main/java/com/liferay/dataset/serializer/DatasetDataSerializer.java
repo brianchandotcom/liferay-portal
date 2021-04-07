@@ -24,13 +24,13 @@ import javax.servlet.http.HttpServletRequest;
 public interface DatasetDataSerializer {
 
 	public String create(
-			long groupId, String tableName, List<Object> items,
+			long groupId, String datasetDataProviderKey, List<Object> items,
 			HttpServletRequest httpServletRequest)
 		throws Exception;
 
 	public String create(
-			long groupId, String tableName, List<Object> items, int itemsCount,
-			HttpServletRequest httpServletRequest)
+			long groupId, String datasetDataProviderKey, List<Object> items,
+			int itemsCount, HttpServletRequest httpServletRequest)
 		throws Exception;
 
 }

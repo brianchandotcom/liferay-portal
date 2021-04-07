@@ -12,9 +12,11 @@
  *
  */
 
-package com.liferay.saml.web.internal.struts;
+package com.liferay.saml.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.saml.constants.SamlPortletKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.servlet.profile.WebSsoProfile;
 
@@ -28,18 +30,28 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true, property = "path=/portal/saml/sso",
-	service = StrutsAction.class
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + SamlPortletKeys.SAML,
+		"mvc.command.name=/saml/web_sso"
+	},
+	service = MVCResourceCommand.class
 )
-public class WebSsoAction extends BaseSamlStrutsAction {
+public class WebSsoMVCResourceCommand extends BaseSamlMVCResourceCommand {
 
 	@Override
 	public boolean isEnabled() {
-		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			return super.isEnabled();
+		if (super.isEnabled()) {
+			return samlProviderConfigurationHelper.isRoleIdp();
 		}
 
 		return false;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	public void setPortal(Portal portal) {
+		super.setPortal(portal);
 	}
 
 	@Override
@@ -52,15 +64,13 @@ public class WebSsoAction extends BaseSamlStrutsAction {
 	}
 
 	@Override
-	protected String doExecute(
+	protected void doServeResource(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		_webSsoProfile.processAuthnRequest(
 			httpServletRequest, httpServletResponse);
-
-		return null;
 	}
 
 	@Reference(unbind = "-")

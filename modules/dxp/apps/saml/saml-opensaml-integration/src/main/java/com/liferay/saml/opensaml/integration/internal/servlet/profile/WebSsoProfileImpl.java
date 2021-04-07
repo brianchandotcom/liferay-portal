@@ -1353,9 +1353,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void redirectToLogin(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
-		SamlSsoRequestContext samlSsoRequestContext, boolean forceAuthn) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			SamlSsoRequestContext samlSsoRequestContext, boolean forceAuthn)
+		throws PortalException {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
@@ -1394,8 +1395,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		StringBundler redirectSB = new StringBundler(4);
 
-		redirectSB.append(themeDisplay.getPathMain());
-		redirectSB.append("/portal/saml/sso");
+		redirectSB.append(_portal.getRelativeHomeURL(httpServletRequest));
+		redirectSB.append(SamlCommandQueryConstants.WEB_SSO);
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			samlMessageContext.getSubcontext(SAMLPeerEntityContext.class);
@@ -1415,13 +1416,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			if ((samlMessageInfoContext != null) &&
 				(samlMessageInfoContext.getMessageId() != null)) {
 
-				redirectSB.append("?saml_message_id=");
+				redirectSB.append("&saml_message_id=");
 				redirectSB.append(
 					URLCodec.encodeURL(samlMessageInfoContext.getMessageId()));
 			}
 		}
 		else if (samlPeerEntityContext.getEntityId() != null) {
-			redirectSB.append("?entityId=");
+			redirectSB.append("&entityId=");
 			redirectSB.append(
 				URLCodec.encodeURL(samlPeerEntityContext.getEntityId()));
 		}

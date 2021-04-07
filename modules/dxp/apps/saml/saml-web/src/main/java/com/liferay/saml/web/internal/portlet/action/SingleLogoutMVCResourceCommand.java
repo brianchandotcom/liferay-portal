@@ -12,9 +12,11 @@
  *
  */
 
-package com.liferay.saml.web.internal.struts;
+package com.liferay.saml.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.saml.constants.SamlPortletKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
 
@@ -29,10 +31,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"path=/portal/saml/slo", "path=/portal/saml/slo_soap"},
-	service = StrutsAction.class
+	property = {
+		"javax.portlet.name=" + SamlPortletKeys.SAML,
+		"mvc.command.name=/saml/slo", "mvc.command.name=/saml/slo_soap"
+	},
+	service = MVCResourceCommand.class
 )
-public class SingleLogoutAction extends BaseSamlStrutsAction {
+public class SingleLogoutMVCResourceCommand extends BaseSamlMVCResourceCommand {
+
+	@Override
+	@Reference(unbind = "-")
+	public void setPortal(Portal portal) {
+		super.setPortal(portal);
+	}
 
 	@Override
 	@Reference(unbind = "-")
@@ -44,15 +55,13 @@ public class SingleLogoutAction extends BaseSamlStrutsAction {
 	}
 
 	@Override
-	protected String doExecute(
+	protected void doServeResource(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		_singleLogoutProfile.processSingleLogout(
 			httpServletRequest, httpServletResponse);
-
-		return null;
 	}
 
 	@Reference

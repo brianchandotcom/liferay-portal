@@ -253,21 +253,20 @@ public class SingleLogoutProfileImpl
 		SamlBinding samlBinding = null;
 
 		String method = httpServletRequest.getMethod();
-		String requestPath = _samlHttpRequestUtil.getRequestPath(
-			httpServletRequest);
+		String actionName = httpServletRequest.getParameter("p_p_resource_id");
 
-		if (requestPath.endsWith("/slo") &&
+		if (actionName.endsWith("/slo") &&
 			StringUtil.equalsIgnoreCase(method, HttpMethods.GET)) {
 
 			samlBinding = getSamlBinding(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI);
 		}
-		else if (requestPath.endsWith("/slo") &&
+		else if (actionName.endsWith("/slo") &&
 				 StringUtil.equalsIgnoreCase(method, HttpMethods.POST)) {
 
 			samlBinding = getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI);
 		}
-		else if (requestPath.endsWith("/slo_soap") &&
+		else if (actionName.endsWith("/slo_soap") &&
 				 StringUtil.equalsIgnoreCase(method, HttpMethods.POST)) {
 
 			samlBinding = getSamlBinding(

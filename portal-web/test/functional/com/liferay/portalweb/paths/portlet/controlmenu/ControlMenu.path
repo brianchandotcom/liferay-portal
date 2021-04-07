@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MERGE</td>
+	<td>//*[@data-qa-id='controlMenu']//*[name()='svg'][contains(@class,'lexicon-icon-merge')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_COLLECTION_PAGE_ITEM_BUTTON</td>
 	<td>//*[@data-qa-id='controlMenu']//a[@*='${key_title}']//*[name()='svg'][contains(@class,'lexicon-icon-plus')]</td>
 	<td></td>

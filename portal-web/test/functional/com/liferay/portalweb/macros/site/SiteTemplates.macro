@@ -205,9 +205,9 @@ definition {
 	}
 
 	macro disablePropagationPG {
-		WaitForElementPresent(locator1 = "ControlMenu#INFO");
+		WaitForElementPresent(locator1 = "ControlMenu#MERGE");
 
-		Click(locator1 = "ControlMenu#INFO");
+		Click(locator1 = "ControlMenu#MERGE");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
@@ -268,9 +268,9 @@ definition {
 	}
 
 	macro enablePropagationPG {
-		WaitForElementPresent(locator1 = "ControlMenu#INFO");
+		WaitForElementPresent(locator1 = "ControlMenu#MERGE");
 
-		Click(locator1 = "ControlMenu#INFO");
+		Click(locator1 = "ControlMenu#MERGE");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#CUSTOMIZED_PAGE_INFO",

@@ -653,7 +653,7 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
-	@description = "This is a use case for LPS-124594."
+	@description = "This is a use case for LPS-124594 and LPS-129081."
 	@priority = "4"
 	test SwitchPropagationWithOneClickControl {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

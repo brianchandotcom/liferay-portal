@@ -58,18 +58,6 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = "5"
-	test AddUserGroup {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
-
-		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
-	}
-
 	@priority = "3"
 	test AddUserGroupNameDuplicate {
 		ApplicationsMenu.gotoPortlet(
@@ -351,27 +339,18 @@ definition {
 	}
 
 	@priority = "5"
-	test SearchUserGroup {
+	test Smoke {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
+
+		UserGroup.viewPortletCP();
+
+		UserGroup.viewDefault();
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
 		UserGroup.searchCP(userGroupName = "UG UserGroup Name");
-	}
-
-	@priority = "3"
-	test ViewPortletUserGroup {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.viewPortletCP();
 	}
 
 }

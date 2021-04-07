@@ -17,6 +17,8 @@ import React from 'react';
 
 import {Editor} from './Editor';
 
+import '../css/main.scss';
+
 const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 	const defaultExtraPlugins = 'balloontoolbar,floatingspace';
 

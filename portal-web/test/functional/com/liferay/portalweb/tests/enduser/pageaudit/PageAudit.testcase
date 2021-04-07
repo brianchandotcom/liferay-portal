@@ -48,7 +48,57 @@ definition {
 			value1 = "Google PageSpeed");
 	}
 
-    @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
+    @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a display page, the issue icon for displaying the page audit panel shows"
+	@priority = "5"
+	test PageAuditDisplayPage {
+		property portal.acceptance = "true";
+
+        JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		Button.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+        JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+        ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		LexiconTable.clickTableEntryColumnLink(
+			columnName = "title",
+			tableEntry = "");
+
+        PageAudit.openPageAuditPanel();
+
+        AssertTextPresent(
+			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+			value1 = "Check issues that impact on your page's accessibility and SEO.");
+
+        PageAudit.connectToGooglePageAudit();
+
+        AssertTextPresent(
+			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+			value1 = "Google PageSpeed");
+	}
+
+    @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditWidgetPage {
 		property portal.acceptance = "true";

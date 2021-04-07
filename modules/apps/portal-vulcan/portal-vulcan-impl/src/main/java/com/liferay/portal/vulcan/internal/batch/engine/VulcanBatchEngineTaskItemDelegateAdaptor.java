@@ -150,16 +150,14 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 			if (key.equals("assetLibraryId") && (value != null)) {
 				parameters.put(
 					key,
-					String.valueOf(
-						siteParamConverterProvider.getDepotGroupId(
-							String.valueOf(value), _company.getCompanyId())));
+					siteParamConverterProvider.getDepotGroupId(
+						String.valueOf(value), _company.getCompanyId()));
 			}
 			else if (key.equals("siteId") && (value != null)) {
 				parameters.put(
 					key,
-					String.valueOf(
-						siteParamConverterProvider.getGroupId(
-							_company.getCompanyId(), String.valueOf(value))));
+					siteParamConverterProvider.getGroupId(
+						_company.getCompanyId(), String.valueOf(value)));
 			}
 		}
 

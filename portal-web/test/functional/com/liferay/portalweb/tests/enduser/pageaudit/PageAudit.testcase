@@ -23,37 +23,37 @@ definition {
 		}
 	}
 
-    @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
+	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditContentPage {
 		property portal.acceptance = "true";
 
-        JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Content Page",
-				type = "content");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page",
+			type = "content");
 
-        Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-        PageAudit.openPageAuditPanel();
+		PageAudit.openPageAuditPanel();
 
-        AssertTextPresent(
+		AssertTextPresent(
 			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 			value1 = "Check issues that impact on your page's accessibility and SEO.");
 
-        PageAudit.connectToGooglePageAudit();
+		PageAudit.connectToGooglePageAudit();
 
-        AssertTextPresent(
+		AssertTextPresent(
 			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
 			value1 = "Google PageSpeed");
 	}
 
-    @description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
+	@description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
 	@priority = "5"
 	test PageAuditContentPageDisabled {
 		property portal.acceptance = "true";
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -63,18 +63,18 @@ definition {
 			configurationName = "Google PageSpeed",
 			configurationScope = "Virtual Instance Scope");
 
-        PageAudit.disableGooglePageSpeed();
+		PageAudit.disableGooglePageSpeed();
 
-        JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Content Page",
-				type = "content");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page",
+			type = "content");
 
-        Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-        AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
+		AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -84,15 +84,15 @@ definition {
 			configurationName = "Google PageSpeed",
 			configurationScope = "Virtual Instance Scope");
 
-        PageAudit.enableGooglePageSpeed();
+		PageAudit.enableGooglePageSpeed();
 	}
 
-    @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a display page, the issue icon for displaying the page audit panel shows"
+	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a display page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditDisplayPage {
 		property portal.acceptance = "true";
 
-        JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
 			displayPageTemplateEntryName = "Display Page Name",
 			groupName = "Test Site Name",
@@ -108,12 +108,12 @@ definition {
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
-        JSONWebcontent.addWebContent(
+		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Test Site Name",
 			title = "WC Title");
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
 			portlet = "Content Dashboard");
@@ -124,25 +124,25 @@ definition {
 			columnName = "title",
 			tableEntry = "");
 
-        PageAudit.openPageAuditPanel();
+		PageAudit.openPageAuditPanel();
 
-        AssertTextPresent(
+		AssertTextPresent(
 			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 			value1 = "Check issues that impact on your page's accessibility and SEO.");
 
-        PageAudit.connectToGooglePageAudit();
+		PageAudit.connectToGooglePageAudit();
 
-        AssertTextPresent(
+		AssertTextPresent(
 			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
 			value1 = "Google PageSpeed");
 	}
 
-    @description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the display pages doesn't show"
+	@description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the display pages doesn't show"
 	@priority = "5"
 	test PageAuditDisplayPageDisabled {
 		property portal.acceptance = "true";
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -152,9 +152,9 @@ definition {
 			configurationName = "Google PageSpeed",
 			configurationScope = "Virtual Instance Scope");
 
-        PageAudit.disableGooglePageSpeed();
+		PageAudit.disableGooglePageSpeed();
 
-        JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
 			displayPageTemplateEntryName = "Display Page Name",
 			groupName = "Test Site Name",
@@ -170,12 +170,12 @@ definition {
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
-        JSONWebcontent.addWebContent(
+		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Test Site Name",
 			title = "WC Title");
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
 			portlet = "Content Dashboard");
@@ -186,9 +186,9 @@ definition {
 			columnName = "title",
 			tableEntry = "");
 
-        AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
+		AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -198,40 +198,39 @@ definition {
 			configurationName = "Google PageSpeed",
 			configurationScope = "Virtual Instance Scope");
 
-        PageAudit.enableGooglePageSpeed();
+		PageAudit.enableGooglePageSpeed();
 	}
 
-
-    @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
+	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditWidgetPage {
 		property portal.acceptance = "true";
 
-        JSONLayout.addPublicLayout(
+		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Widget Page");
 
-        Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
 
-        PageAudit.openPageAuditPanel();
+		PageAudit.openPageAuditPanel();
 
-        AssertTextPresent(
+		AssertTextPresent(
 			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 			value1 = "Check issues that impact on your page's accessibility and SEO.");
 
-        PageAudit.connectToGooglePageAudit();
+		PageAudit.connectToGooglePageAudit();
 
-        AssertTextPresent(
+		AssertTextPresent(
 			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
 			value1 = "Google PageSpeed");
 	}
 
-    @description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the widget pages doesn't show"
+	@description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the widget pages doesn't show"
 	@priority = "5"
 	test PageAuditWidgetPageDisabled {
 		property portal.acceptance = "true";
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -241,17 +240,17 @@ definition {
 			configurationName = "Google PageSpeed",
 			configurationScope = "Virtual Instance Scope");
 
-        PageAudit.disableGooglePageSpeed();
+		PageAudit.disableGooglePageSpeed();
 
-        JSONLayout.addPublicLayout(
+		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Widget Page");
 
-        Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
 
-        AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
+		AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -261,7 +260,7 @@ definition {
 			configurationName = "Google PageSpeed",
 			configurationScope = "Virtual Instance Scope");
 
-        PageAudit.enableGooglePageSpeed();
+		PageAudit.enableGooglePageSpeed();
 	}
 
 }

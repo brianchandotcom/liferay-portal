@@ -39,9 +39,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -608,7 +610,22 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 	@Test
 	public void testGetDataRecordCollectionPermissionsPage() throws Exception {
-		Assert.assertTrue(false);
+		DataRecordCollection postDataRecordCollection =
+			testGetDataRecordCollectionPermissionsPage_addDataRecordCollection();
+
+		Page<Permission> page =
+			dataRecordCollectionResource.getDataRecordCollectionPermissionsPage(
+				postDataRecordCollection.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected DataRecordCollection
+			testGetDataRecordCollectionPermissionsPage_addDataRecordCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -616,6 +633,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecordCollection dataRecordCollection =
 			testPutDataRecordCollectionPermission_addDataRecordCollection();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
 			204,
@@ -626,7 +646,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 						new Permission() {
 							{
 								setActionIds(new String[] {"VIEW"});
-								setRoleName("Guest");
+								setRoleName(role.getName());
 							}
 						}
 					}));

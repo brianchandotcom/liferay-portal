@@ -67,6 +67,16 @@ public interface StructuredContentFolderResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getAssetLibraryStructuredContentFolderPermissionsPage(
+				Long assetLibraryId, String roleNames)
+		throws Exception;
+
+	public void putAssetLibraryStructuredContentFolderPermission(
+			Long assetLibraryId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public Page<StructuredContentFolder> getSiteStructuredContentFoldersPage(
 			Long siteId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -79,6 +89,26 @@ public interface StructuredContentFolderResource {
 
 	public Response postSiteStructuredContentFolderBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteStructuredContentFolderPermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public void putSiteStructuredContentFolderPermission(
+			Long siteId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getStructuredContentFolderPermissionsPage(
+				Long structuredContentFolderId, String roleNames)
+		throws Exception;
+
+	public void putStructuredContentFolderPermission(
+			Long structuredContentFolderId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<StructuredContentFolder>

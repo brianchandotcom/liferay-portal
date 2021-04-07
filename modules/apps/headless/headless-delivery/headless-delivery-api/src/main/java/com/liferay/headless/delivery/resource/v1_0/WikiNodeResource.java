@@ -64,6 +64,15 @@ public interface WikiNodeResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteWikiNodePermissionsPage(Long siteId, String roleNames)
+		throws Exception;
+
+	public void putSiteWikiNodePermission(
+			Long siteId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public void deleteWikiNode(Long wikiNodeId) throws Exception;
 
 	public Response deleteWikiNodeBatch(String callbackURL, Object object)
@@ -75,6 +84,15 @@ public interface WikiNodeResource {
 		throws Exception;
 
 	public Response putWikiNodeBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getWikiNodePermissionsPage(Long wikiNodeId, String roleNames)
+		throws Exception;
+
+	public void putWikiNodePermission(
+			Long wikiNodeId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception;

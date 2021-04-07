@@ -36,6 +36,7 @@ import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
+import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
@@ -104,6 +105,14 @@ public class Mutation {
 
 		_commentResourceComponentServiceObjects =
 			commentResourceComponentServiceObjects;
+	}
+
+	public static void setContentStructureResourceComponentServiceObjects(
+		ComponentServiceObjects<ContentStructureResource>
+			contentStructureResourceComponentServiceObjects) {
+
+		_contentStructureResourceComponentServiceObjects =
+			contentStructureResourceComponentServiceObjects;
 	}
 
 	public static void setDocumentResourceComponentServiceObjects(
@@ -346,6 +355,22 @@ public class Mutation {
 				blogPostingId, rating));
 	}
 
+	@GraphQLField
+	public boolean updateBlogPostingPermission(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.putBlogPostingPermission(
+				blogPostingId, permissions));
+
+		return true;
+	}
+
 	@GraphQLField(description = "Creates a new blog post.")
 	public BlogPosting createSiteBlogPosting(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -371,6 +396,23 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.postSiteBlogPostingBatch(
 				Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateSiteBlogPostingPermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.putSiteBlogPostingPermission(
+					Long.valueOf(siteKey), permissions));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -622,6 +664,58 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateAssetLibraryContentStructurePermission(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_contentStructureResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentStructureResource ->
+				contentStructureResource.
+					putAssetLibraryContentStructurePermission(
+						Long.valueOf(assetLibraryId), permissions));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateContentStructurePermission(
+			@GraphQLName("contentStructureId") Long contentStructureId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_contentStructureResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentStructureResource ->
+				contentStructureResource.putContentStructurePermission(
+					contentStructureId, permissions));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateSiteContentStructurePermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_contentStructureResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentStructureResource ->
+				contentStructureResource.putSiteContentStructurePermission(
+					Long.valueOf(siteKey), permissions));
+
+		return true;
+	}
+
+	@GraphQLField
 	@GraphQLName(
 		description = "null",
 		value = "postAssetLibraryDocumentAssetLibraryIdMultipartBody"
@@ -652,6 +746,23 @@ public class Mutation {
 			documentResource -> documentResource.postAssetLibraryDocumentBatch(
 				Long.valueOf(assetLibraryId), multipartBody, callbackURL,
 				object));
+	}
+
+	@GraphQLField
+	public boolean updateAssetLibraryDocumentPermission(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource ->
+				documentResource.putAssetLibraryDocumentPermission(
+					Long.valueOf(assetLibraryId), permissions));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -814,6 +925,22 @@ public class Mutation {
 				documentId, rating));
 	}
 
+	@GraphQLField
+	public boolean updateDocumentPermission(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.putDocumentPermission(
+				documentId, permissions));
+
+		return true;
+	}
+
 	@GraphQLField(
 		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
@@ -849,6 +976,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateSiteDocumentPermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.putSiteDocumentPermission(
+				Long.valueOf(siteKey), permissions));
+
+		return true;
+	}
+
+	@GraphQLField
 	public DocumentFolder createAssetLibraryDocumentFolder(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
@@ -875,6 +1018,23 @@ public class Mutation {
 			documentFolderResource ->
 				documentFolderResource.postAssetLibraryDocumentFolderBatch(
 					Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateAssetLibraryDocumentFolderPermission(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.putAssetLibraryDocumentFolderPermission(
+					Long.valueOf(assetLibraryId), permissions));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -953,6 +1113,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateDocumentFolderPermission(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.putDocumentFolderPermission(
+					documentFolderId, permissions));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean updateDocumentFolderSubscribe(
 			@GraphQLName("documentFolderId") Long documentFolderId)
 		throws Exception {
@@ -1025,6 +1202,23 @@ public class Mutation {
 			documentFolderResource ->
 				documentFolderResource.postSiteDocumentFolderBatch(
 					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateSiteDocumentFolderPermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.putSiteDocumentFolderPermission(
+					Long.valueOf(siteKey), permissions));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -1156,6 +1350,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateKnowledgeBaseArticlePermission(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticlePermission(
+					knowledgeBaseArticleId, permissions));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean updateKnowledgeBaseArticleSubscribe(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
@@ -1266,6 +1477,24 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticleBatch(
 					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateSiteKnowledgeBaseArticlePermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					putSiteKnowledgeBaseArticlePermission(
+						Long.valueOf(siteKey), permissions));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -1452,6 +1681,23 @@ public class Mutation {
 					callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean updateKnowledgeBaseFolderPermission(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.putKnowledgeBaseFolderPermission(
+					knowledgeBaseFolderId, permissions));
+
+		return true;
+	}
+
 	@GraphQLField(
 		description = "Creates a knowledge base folder inside the parent folder."
 	)
@@ -1499,6 +1745,24 @@ public class Mutation {
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolderBatch(
 					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateSiteKnowledgeBaseFolderPermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.
+					putSiteKnowledgeBaseFolderPermission(
+						Long.valueOf(siteKey), permissions));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -1743,6 +2007,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateMessageBoardMessagePermission(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.putMessageBoardMessagePermission(
+					messageBoardMessageId, permissions));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean updateMessageBoardMessageSubscribe(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
@@ -1829,8 +2110,8 @@ public class Mutation {
 		description = "Deletes the site's message board message by external reference code."
 	)
 	public boolean deleteSiteMessageBoardMessageByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("siteKey") @NotEmpty String siteKey)
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -1839,7 +2120,7 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.
 					deleteSiteMessageBoardMessageByExternalReferenceCode(
-						externalReferenceCode, Long.valueOf(siteKey)));
+						Long.valueOf(siteKey), externalReferenceCode));
 
 		return true;
 	}
@@ -1849,9 +2130,9 @@ public class Mutation {
 	)
 	public MessageBoardMessage
 			updateSiteMessageBoardMessageByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("externalReferenceCode") String
 					externalReferenceCode,
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("messageBoardMessage") MessageBoardMessage
 					messageBoardMessage)
 		throws Exception {
@@ -1862,8 +2143,26 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.
 					putSiteMessageBoardMessageByExternalReferenceCode(
-						externalReferenceCode, Long.valueOf(siteKey),
+						Long.valueOf(siteKey), externalReferenceCode,
 						messageBoardMessage));
+	}
+
+	@GraphQLField
+	public boolean updateSiteMessageBoardMessagePermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					putSiteMessageBoardMessagePermission(
+						Long.valueOf(siteKey), permissions));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -1946,6 +2245,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateMessageBoardSectionPermission(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.putMessageBoardSectionPermission(
+					messageBoardSectionId, permissions));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean updateMessageBoardSectionSubscribe(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
@@ -2022,6 +2338,24 @@ public class Mutation {
 			messageBoardSectionResource ->
 				messageBoardSectionResource.postSiteMessageBoardSectionBatch(
 					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateSiteMessageBoardSectionPermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.
+					putSiteMessageBoardSectionPermission(
+						Long.valueOf(siteKey), permissions));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -2185,6 +2519,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateMessageBoardThreadPermission(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putMessageBoardThreadPermission(
+					messageBoardThreadId, permissions));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean updateMessageBoardThreadSubscribe(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
@@ -2242,6 +2593,23 @@ public class Mutation {
 			messageBoardThreadResource ->
 				messageBoardThreadResource.postSiteMessageBoardThreadBatch(
 					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateSiteMessageBoardThreadPermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putSiteMessageBoardThreadPermission(
+					Long.valueOf(siteKey), permissions));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -2303,6 +2671,23 @@ public class Mutation {
 					callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean updateNavigationMenuPermission(
+			@GraphQLName("navigationMenuId") Long navigationMenuId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.putNavigationMenuPermission(
+					navigationMenuId, permissions));
+
+		return true;
+	}
+
 	@GraphQLField(description = "Creates a new navigation menu.")
 	public NavigationMenu createSiteNavigationMenu(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -2330,6 +2715,23 @@ public class Mutation {
 			navigationMenuResource ->
 				navigationMenuResource.postSiteNavigationMenuBatch(
 					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateSiteNavigationMenuPermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.putSiteNavigationMenuPermission(
+					Long.valueOf(siteKey), permissions));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -2361,6 +2763,24 @@ public class Mutation {
 				structuredContentResource.
 					postAssetLibraryStructuredContentBatch(
 						Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateAssetLibraryStructuredContentPermission(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					putAssetLibraryStructuredContentPermission(
+						Long.valueOf(assetLibraryId), permissions));
+
+		return true;
 	}
 
 	@GraphQLField(description = "Creates a new structured content.")
@@ -2651,6 +3071,24 @@ public class Mutation {
 						Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean updateAssetLibraryStructuredContentFolderPermission(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					putAssetLibraryStructuredContentFolderPermission(
+						Long.valueOf(assetLibraryId), permissions));
+
+		return true;
+	}
+
 	@GraphQLField(description = "Creates a new structured content folder.")
 	public StructuredContentFolder createSiteStructuredContentFolder(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -2680,6 +3118,43 @@ public class Mutation {
 				structuredContentFolderResource.
 					postSiteStructuredContentFolderBatch(
 						Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateSiteStructuredContentFolderPermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					putSiteStructuredContentFolderPermission(
+						Long.valueOf(siteKey), permissions));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateStructuredContentFolderPermission(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					putStructuredContentFolderPermission(
+						structuredContentFolderId, permissions));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -2846,6 +3321,22 @@ public class Mutation {
 				Long.valueOf(siteKey), callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean updateSiteWikiNodePermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.putSiteWikiNodePermission(
+				Long.valueOf(siteKey), permissions));
+
+		return true;
+	}
+
 	@GraphQLField(
 		description = "Deletes the wiki node and returns a 204 if the operation succeeds."
 	)
@@ -2899,6 +3390,22 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiNodeResource -> wikiNodeResource.putWikiNodeBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateWikiNodePermission(
+			@GraphQLName("wikiNodeId") Long wikiNodeId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.putWikiNodePermission(
+				wikiNodeId, permissions));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -3024,6 +3531,22 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiPageResource -> wikiPageResource.putWikiPageBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateWikiPagePermission(
+			@GraphQLName("wikiPageId") Long wikiPageId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.putWikiPagePermission(
+				wikiPageId, permissions));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -3200,6 +3723,22 @@ public class Mutation {
 		commentResource.setContextUser(_user);
 		commentResource.setGroupLocalService(_groupLocalService);
 		commentResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			ContentStructureResource contentStructureResource)
+		throws Exception {
+
+		contentStructureResource.setContextAcceptLanguage(_acceptLanguage);
+		contentStructureResource.setContextCompany(_company);
+		contentStructureResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		contentStructureResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		contentStructureResource.setContextUriInfo(_uriInfo);
+		contentStructureResource.setContextUser(_user);
+		contentStructureResource.setGroupLocalService(_groupLocalService);
+		contentStructureResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(DocumentResource documentResource)
@@ -3444,6 +3983,8 @@ public class Mutation {
 		_blogPostingImageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ContentStructureResource>
+		_contentStructureResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentResource>
 		_documentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentFolderResource>

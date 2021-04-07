@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -405,12 +406,13 @@ public abstract class BaseDataDefinitionResourceImpl
 
 		String resourceName = getPermissionCheckerResourceName(
 			dataDefinitionId);
+		Long resourceId = getPermissionCheckerResourceId(dataDefinitionId);
 
 		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName,
-			dataDefinitionId, getPermissionCheckerGroupId(dataDefinitionId));
+			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
+			getPermissionCheckerGroupId(dataDefinitionId));
 
-		return toPermissionPage(dataDefinitionId, resourceName, roleNames);
+		return toPermissionPage(resourceId, resourceName, roleNames);
 	}
 
 	/**
@@ -434,16 +436,17 @@ public abstract class BaseDataDefinitionResourceImpl
 
 		String resourceName = getPermissionCheckerResourceName(
 			dataDefinitionId);
+		Long resourceId = getPermissionCheckerResourceId(dataDefinitionId);
 
 		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName,
-			dataDefinitionId, getPermissionCheckerGroupId(dataDefinitionId));
+			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
+			getPermissionCheckerGroupId(dataDefinitionId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
 			contextCompany.getCompanyId(), 0, resourceName,
-			String.valueOf(dataDefinitionId),
+			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permissions, dataDefinitionId,
+				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
 	}
@@ -634,6 +637,10 @@ public abstract class BaseDataDefinitionResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Long getPermissionCheckerResourceId(Object id) throws Exception {
+		return GetterUtil.getLong(id);
 	}
 
 	protected String getPermissionCheckerResourceName(Object id)

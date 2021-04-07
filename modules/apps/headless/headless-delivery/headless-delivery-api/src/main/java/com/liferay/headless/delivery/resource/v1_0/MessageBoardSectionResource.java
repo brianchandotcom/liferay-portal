@@ -74,6 +74,16 @@ public interface MessageBoardSectionResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getMessageBoardSectionPermissionsPage(
+				Long messageBoardSectionId, String roleNames)
+		throws Exception;
+
+	public void putMessageBoardSectionPermission(
+			Long messageBoardSectionId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public void putMessageBoardSectionSubscribe(Long messageBoardSectionId)
 		throws Exception;
 
@@ -104,6 +114,16 @@ public interface MessageBoardSectionResource {
 
 	public Response postSiteMessageBoardSectionBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteMessageBoardSectionPermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public void putSiteMessageBoardSectionPermission(
+			Long siteId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

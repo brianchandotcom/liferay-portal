@@ -56,13 +56,43 @@ public interface ContentStructureResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getAssetLibraryContentStructurePermissionsPage(
+				Long assetLibraryId, String roleNames)
+		throws Exception;
+
+	public void putAssetLibraryContentStructurePermission(
+			Long assetLibraryId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public ContentStructure getContentStructure(Long contentStructureId)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getContentStructurePermissionsPage(
+				Long contentStructureId, String roleNames)
+		throws Exception;
+
+	public void putContentStructurePermission(
+			Long contentStructureId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<ContentStructure> getSiteContentStructuresPage(
 			Long siteId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteContentStructurePermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public void putSiteContentStructurePermission(
+			Long siteId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

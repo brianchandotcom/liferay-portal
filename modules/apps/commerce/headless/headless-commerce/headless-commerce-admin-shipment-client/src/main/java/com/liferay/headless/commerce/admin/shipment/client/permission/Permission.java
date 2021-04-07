@@ -34,7 +34,7 @@ public class Permission {
 		return permissionJSONParser.parseToDTO(json);
 	}
 
-	public String[] getActionIds() {
+	public Object[] getActionIds() {
 		return actionIds;
 	}
 
@@ -42,7 +42,7 @@ public class Permission {
 		return roleName;
 	}
 
-	public void setActionIds(String[] actionIds) {
+	public void setActionIds(Object[] actionIds) {
 		this.actionIds = actionIds;
 	}
 
@@ -87,7 +87,7 @@ public class Permission {
 		return sb.toString();
 	}
 
-	protected String[] actionIds;
+	protected Object[] actionIds;
 	protected String roleName;
 
 	private static class PermissionJSONParser<T>
@@ -110,7 +110,7 @@ public class Permission {
 
 			if (Objects.equals(jsonParserFieldName, "actionIds")) {
 				if (jsonParserFieldValue != null) {
-					permission.setActionIds((String[])jsonParserFieldValue);
+					permission.setActionIds((Object[])jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "roleName")) {

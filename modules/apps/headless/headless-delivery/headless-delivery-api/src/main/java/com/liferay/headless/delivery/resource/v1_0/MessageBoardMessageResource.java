@@ -89,6 +89,16 @@ public interface MessageBoardMessageResource {
 			Long messageBoardMessageId, Rating rating)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getMessageBoardMessagePermissionsPage(
+				Long messageBoardMessageId, String roleNames)
+		throws Exception;
+
+	public void putMessageBoardMessagePermission(
+			Long messageBoardMessageId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public void putMessageBoardMessageSubscribe(Long messageBoardMessageId)
 		throws Exception;
 
@@ -130,22 +140,32 @@ public interface MessageBoardMessageResource {
 		throws Exception;
 
 	public void deleteSiteMessageBoardMessageByExternalReferenceCode(
-			String externalReferenceCode, Long siteId)
+			Long siteId, String externalReferenceCode)
 		throws Exception;
 
 	public MessageBoardMessage
 			getSiteMessageBoardMessageByExternalReferenceCode(
-				String externalReferenceCode, Long siteId)
+				Long siteId, String externalReferenceCode)
 		throws Exception;
 
 	public MessageBoardMessage
 			putSiteMessageBoardMessageByExternalReferenceCode(
-				String externalReferenceCode, Long siteId,
+				Long siteId, String externalReferenceCode,
 				MessageBoardMessage messageBoardMessage)
 		throws Exception;
 
 	public MessageBoardMessage getSiteMessageBoardMessageByFriendlyUrlPath(
 			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteMessageBoardMessagePermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public void putSiteMessageBoardMessagePermission(
+			Long siteId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

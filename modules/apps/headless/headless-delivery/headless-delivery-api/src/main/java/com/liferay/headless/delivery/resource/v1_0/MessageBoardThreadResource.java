@@ -109,6 +109,16 @@ public interface MessageBoardThreadResource {
 			Long messageBoardThreadId, Rating rating)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getMessageBoardThreadPermissionsPage(
+				Long messageBoardThreadId, String roleNames)
+		throws Exception;
+
+	public void putMessageBoardThreadPermission(
+			Long messageBoardThreadId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public void putMessageBoardThreadSubscribe(Long messageBoardThreadId)
 		throws Exception;
 
@@ -131,6 +141,16 @@ public interface MessageBoardThreadResource {
 
 	public MessageBoardThread getSiteMessageBoardThreadByFriendlyUrlPath(
 			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteMessageBoardThreadPermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public void putSiteMessageBoardThreadPermission(
+			Long siteId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

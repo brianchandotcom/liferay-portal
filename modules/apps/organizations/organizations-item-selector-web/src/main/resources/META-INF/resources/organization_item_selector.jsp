@@ -20,40 +20,11 @@
 OrganizationItemSelectorViewDisplayContext organizationItemSelectorViewDisplayContext = (OrganizationItemSelectorViewDisplayContext)request.getAttribute(OrganizationItemSelectorViewConstants.ORGANIZATION_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 String itemSelectedEventName = organizationItemSelectorViewDisplayContext.getItemSelectedEventName();
-
-PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="organizations"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= organizationItemSelectorViewDisplayContext.getOrderByCol() %>"
-			orderByType="<%= organizationItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name", "type"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<liferay-item-selector:search />
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new OrganizationItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationItemSelectorViewDisplayContext) %>"
+/>
 
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "organizationSelectorWrapper" %>'

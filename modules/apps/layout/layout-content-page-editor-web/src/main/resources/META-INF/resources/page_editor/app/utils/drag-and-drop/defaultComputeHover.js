@@ -12,6 +12,7 @@
  * details.
  */
 
+import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
@@ -68,6 +69,7 @@ export default function defaultComputeHover({
 	const validDropInsideTarget = (() => {
 		const targetIsColumn =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.column;
+		const targetIsContainerFlex = itemIsContainerFlex(targetItem);
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
 		const targetIsEmpty =
@@ -76,7 +78,7 @@ export default function defaultComputeHover({
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITION.MIDDLE &&
-			(targetIsEmpty || targetIsColumn) &&
+			(targetIsEmpty || targetIsColumn || targetIsContainerFlex) &&
 			!targetIsFragment
 		);
 	})();
@@ -249,4 +251,11 @@ function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
 		targetPositionWithoutMiddle,
 		elevationDepth,
 	];
+}
+
+function itemIsContainerFlex(item) {
+	return (
+		item.type === LAYOUT_DATA_ITEM_TYPES.container &&
+		item.config.contentDisplay === CONTAINER_DISPLAY_OPTIONS.flexRow
+	);
 }

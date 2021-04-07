@@ -49,7 +49,7 @@ const SELECTOR_TRIGGER = `
 	.preview-toolbar-container [title]:not(.lfr-portal-tooltip),
 	.preview-tooltbar-containter [data-restore-title],
 	.progress-container[data-title],
-	.redirect-entries span[data-title],
+	.redirect-entries [data-title]:not(.lfr-portal-tooltip),
 	.source-editor__fixed-text__help[data-title],
 	.upper-tbar [data-title]:not(.lfr-portal-tooltip),
 	.upper-tbar [title]:not(.lfr-portal-tooltip),

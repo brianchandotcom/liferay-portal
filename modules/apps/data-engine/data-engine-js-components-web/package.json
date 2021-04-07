@@ -1,15 +1,39 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.6.0",
+		"@clayui/data-provider": "3.3.10",
+		"@clayui/drop-down": "3.25.1",
+		"@clayui/icon": "3.1.0",
+		"@clayui/layout": "3.3.0",
+		"@clayui/loading-indicator": "3.2.0",
+		"@clayui/pagination": "3.25.1",
+		"@clayui/tabs": "3.3.5",
+		"@clayui/tooltip": "3.4.5",
+		"classnames": "2.2.6",
+		"dom-align": "1.10.4",
+		"frontend-js-web": "*",
+		"incremental-dom-string": "0.0.2",
+		"metal-component": "2.16.8",
+		"metal-soy": "2.16.9",
+		"moment": "^2.22.2",
 		"qs": "^6.9.6",
 		"react": "16.12.0",
-		"react-dom": "16.12.0"
+		"react-dom": "16.12.0",
+		"react-dnd": "11.1.1",
+		"react-dnd-html5-backend": "11.1.1"
 	},
 	"jest": {
 		"collectCoverageFrom": [
 			"src/main/resources/META-INF/resources/js/**/*.es.js"
 		],
+		"modulePathIgnorePatterns": [
+			"/__mock__/"
+		],
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.js"
+		],
+		"snapshotSerializers": [
+			"metal-jest-serializer"
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/js/[^/]+\\.js"
@@ -22,7 +46,7 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"test": "metalsoy -s \"test/**/*.soy\" -d \"test\" && liferay-npm-scripts test"
 	},
 	"version": "1.0.2"
 }

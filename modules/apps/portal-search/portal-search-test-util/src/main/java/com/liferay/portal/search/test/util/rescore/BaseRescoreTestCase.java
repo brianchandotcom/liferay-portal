@@ -23,7 +23,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.rescore.Rescore;
-import com.liferay.portal.search.rescore.RescoreBuilder;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -141,13 +140,8 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 	}
 
 	protected Rescore buildRescore(String fieldName, String value) {
-		RescoreBuilder rescoreBuilder =
-			rescoreBuilderFactory.getRescoreBuilder();
-
-		Query rescoreQuery = queries.match(fieldName, value);
-
-		return rescoreBuilder.query(
-			rescoreQuery
+		return rescoreBuilderFactory.builder(
+			queries.match(fieldName, value)
 		).windowSize(
 			100
 		).build();

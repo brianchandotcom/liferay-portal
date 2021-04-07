@@ -47,12 +47,9 @@ import com.liferay.sites.kernel.util.SitesUtil;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,30 +70,6 @@ public class EditGroupMVCActionCommand
 
 	@Override
 	protected void doTransactionalCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		_updateGroup(actionRequest, actionResponse);
-	}
-
-	private PortletURL _getSiteAdministrationURL(
-		ActionRequest actionRequest, Group group) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		if (scopeGroup.isStagingGroup()) {
-			group = group.getStagingGroup();
-		}
-
-		return _portal.getControlPanelPortletURL(
-			actionRequest, group, ConfigurationAdminPortletKeys.SITE_SETTINGS,
-			0, 0, PortletRequest.RENDER_PHASE);
-	}
-
-	private void _updateGroup(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -157,9 +130,6 @@ public class EditGroupMVCActionCommand
 
 			_validateDefaultLocaleGroupName(nameMap, defaultLocale);
 		}
-
-		boolean redirect = !Objects.equals(
-			friendlyURL, liveGroup.getFriendlyURL());
 
 		liveGroup = _groupService.updateGroup(
 			liveGroupId, parentGroupId, nameMap, descriptionMap, type,
@@ -299,22 +269,6 @@ public class EditGroupMVCActionCommand
 		}
 
 		themeDisplay.setSiteGroupId(liveGroup.getGroupId());
-
-		if (!redirect) {
-			return;
-		}
-
-		PortletURL siteAdministrationURL = _getSiteAdministrationURL(
-			actionRequest, liveGroup);
-
-		siteAdministrationURL.setParameter(
-			"redirect", siteAdministrationURL.toString());
-		siteAdministrationURL.setParameter(
-			"historyKey",
-			ActionUtil.getHistoryKey(actionRequest, actionResponse));
-
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT, siteAdministrationURL.toString());
 	}
 
 	private void _validateDefaultLocaleGroupName(

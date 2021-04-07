@@ -10,6 +10,13 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
 	tearDown {
@@ -1009,11 +1016,18 @@ definition {
 
 		CommerceNavigator.searchEntry(entryName = "MIN55861");
 
+		AssertElementPresent(
+			key_orderQuantity= "1",
+			locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
+
 		CommerceNavigator.gotoEntry(entryName = "MIN55861");
 
 		Navigator.gotoNavTab(navTab = "On Order");
+		
 
-		AssertElementPresent(locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
+		AssertElementPresent(
+			key_orderQuantity= "1",
+			locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
 	}
 
 }

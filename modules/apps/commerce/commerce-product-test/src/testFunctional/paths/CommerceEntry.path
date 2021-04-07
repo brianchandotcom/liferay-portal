@@ -759,7 +759,8 @@
 <tr>
 	<td>MODAL_BUTTON_CLOSE</td>
 	<td>//div[contains(@class,'side-panel-iframe-header')]//button[contains(@class,'side-panel-iframe-close')]</td>
-<!--INVENTORY-->
+	<td></td>
+</tr>
 <tr>
 	<td>FIRST_CURRENCY_ELEMENT</td>
 	<td>//tr[contains(@data-qa-id,'row')]//a[contains(text(),'${key_entryName}')] | //a[@id='_com_liferay_commerce_currency_web_internal_portlet_CommerceCurrencyPortlet_commerceCurrencies_1_menu']</td>
@@ -771,13 +772,8 @@
     <td></td>
 </tr>
 <tr>
-	<td>NO_ITEMS_WERE_FOUND_CHECK</td>
-	<td>//div[contains(@class,'sheet-text text-center')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ON_ORDER_QUANTITY</td>
-	<td>//div[@class="dnd-tr with-bg"]//div[contains(text(),'1')]</td>
+	<td>//div[@class="dnd-tr with-bg"]//div[contains(text(),'${key_orderQuantity}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -847,6 +843,6 @@
 	<td></td>
 </tr>
 </tbody>
-</table> 
+</table>
 </body>
 </html>

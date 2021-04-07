@@ -192,6 +192,22 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ANY");
 	}
 
+	macro viewEntryMenu {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			AssertElementPresent(
+				key_rowEntry = "${rowEntry}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_SAFARI");
+		}
+
+		else {
+			AssertElementPresent(
+				key_rowEntry = "${rowEntry}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+		}
+	}
+
 	macro viewEntryName {
 		var browserType = PropsUtil.get("browser.type");
 

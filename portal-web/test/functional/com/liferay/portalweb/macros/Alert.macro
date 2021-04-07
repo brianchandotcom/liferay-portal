@@ -12,6 +12,12 @@ definition {
 		Pause(locator1 = "2000");
 	}
 
+	macro viewDuplicateErrorMessage {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_1",
+			value1 = "Please enter a unique name.");
+	}
+
 	macro viewErrorMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",

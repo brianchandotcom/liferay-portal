@@ -1,10 +1,48 @@
 @import 'atlas-variables';
 
-.page-editor__contents__page-content {
-	border-top: solid thin $secondary-l2;
+.page-editor {
+	&__contents__page-content {
+		border-top: solid thin $secondary-l2;
 
-	&--mapped-item-hovered {
-		background-color: fade_out($purple, 0.9);
-		transition: background-color ease 0.3s;
+		&--mapped-item-hovered {
+			background-color: fade_out($purple, 0.9);
+			transition: background-color ease 0.3s;
+		}
+	}
+
+	&__page-contents {
+		padding: 0 16px;
+
+		.sheet-subtitle {
+			border: 0;
+			font-size: 0.688rem;
+			margin-bottom: 2px;
+		}
+
+		&__page-content {
+			font-size: 0.75rem;
+			padding: 4px 0 4px 12px;
+
+			&:hover {
+				button.text-secondary {
+					opacity: 1;
+				}
+			}
+
+			&--mapped-item-hovered {
+				background-color: $gray-100;
+				transition: background-color ease 0.3s;
+			}
+
+			button.text-secondary {
+				min-width: 2rem;
+				opacity: 0;
+			}
+
+			.lexicon-icon {
+				margin-top: 0;
+				min-width: 1rem;
+			}
+		}
 	}
 }

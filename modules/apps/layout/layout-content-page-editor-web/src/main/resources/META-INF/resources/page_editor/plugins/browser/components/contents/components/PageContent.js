@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {openModal} from 'frontend-js-web';
@@ -30,13 +29,30 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/const
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {useSelector} from '../../../../../app/store/index';
 
-export default function PageContent(props) {
+export default function PageContent({
+	actions,
+	classNameId,
+	classPK,
+	icon,
+	name,
+	subtype,
+	title,
+}) {
 	const [active, setActive] = useState(false);
-	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [isHovered, setIsHovered] = useState(false);
+
+	let editURL = null;
+	let permissionsURL = null;
+	let viewUsagesURL = null;
+
+	if (actions) {
+		editURL = actions.editURL;
+		permissionsURL = actions.permissionsURL;
+		viewUsagesURL = actions.viewUsagesURL;
+	}
 
 	useEffect(() => {
 		if (hoveredItemId) {
@@ -56,19 +72,19 @@ export default function PageContent(props) {
 				const editable = editableValue[editableId.join('-')];
 
 				if (editable) {
-					setIsHovered(editable.classPK === props.classPK);
+					setIsHovered(editable.classPK === classPK);
 				}
 			}
 		}
 		else {
 			setIsHovered(false);
 		}
-	}, [fragmentEntryLinks, hoveredItemId, props.classPK]);
+	}, [fragmentEntryLinks, hoveredItemId, classPK]);
 
 	const handleMouseOver = () => {
 		setIsHovered(true);
 
-		hoverItem(`${props.classNameId}-${props.classPK}`, {
+		hoverItem(`${classNameId}-${classPK}`, {
 			itemType: ITEM_TYPES.mappedContent,
 		});
 	};
@@ -80,42 +96,41 @@ export default function PageContent(props) {
 
 	return (
 		<li
-			className={classNames('page-editor__contents__page-content', {
-				'page-editor__contents__page-content--mapped-item-hovered': isHovered,
+			className={classNames('page-editor__page-contents__page-content', {
+				'page-editor__page-contents__page-content--mapped-item-hovered': isHovered,
 			})}
 			onMouseLeave={handleMouseLeave}
 			onMouseOver={handleMouseOver}
 		>
-			<div className="d-flex pl-3 pr-2 py-3">
+			<div
+				className={classNames('d-flex', {
+					'align-items-baseline': actions,
+					'align-items-center': !actions,
+				})}
+			>
+				<ClayIcon
+					className="mr-3"
+					focusable="false"
+					monospaced="true"
+					role="presentation"
+					symbol={icon || 'document-text'}
+				/>
 				<ClayLayout.ContentCol expand>
-					<strong className="list-group-title text-truncate">
-						{props.title}
-					</strong>
+					<span className="text-truncate">{title}</span>
 
-					<span className="small text-secondary">{props.name}</span>
-
-					<span className="small text-secondary">
-						{props.usagesCount === 1
-							? Liferay.Language.get('used-in-1-page')
-							: Liferay.Util.sub(
-									Liferay.Language.get('used-in-x-pages'),
-									props.usagesCount
-							  )}
-					</span>
-
-					<div>
-						{props.status.hasApprovedVersion && (
-							<ClayLabel displayType="success">
-								{Liferay.Language.get('approved')}
-							</ClayLabel>
-						)}
-						<ClayLabel displayType={props.status.style}>
-							{props.status.label}
-						</ClayLabel>
-					</div>
+					{name && (
+						<span className="text-secondary">
+							{Liferay.Language.get('type')}: {name}
+						</span>
+					)}
+					{subtype && (
+						<span className="text-secondary">
+							{Liferay.Language.get('subtype')}:
+						</span>
+					)}
 				</ClayLayout.ContentCol>
 
-				{(editURL || permissionsURL || viewUsagesURL) && (
+				{actions && (editURL || permissionsURL || viewUsagesURL) ? (
 					<ClayDropDown
 						active={active}
 						onActiveChange={setActive}
@@ -171,6 +186,16 @@ export default function PageContent(props) {
 							)}
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
+				) : (
+					<ClayButton
+						className="btn-monospaced btn-sm text-secondary"
+						displayType="unstyled"
+					>
+						<span className="sr-only">
+							{Liferay.Language.get('edit-inline-text')}
+						</span>
+						<ClayIcon symbol="pencil" />
+					</ClayButton>
 				)}
 			</div>
 		</li>
@@ -179,12 +204,9 @@ export default function PageContent(props) {
 
 PageContent.propTypes = {
 	actions: PropTypes.object,
-	name: PropTypes.string.isRequired,
-	status: PropTypes.shape({
-		hasApprovedVersion: PropTypes.bool,
-		label: PropTypes.string,
-		style: PropTypes.string,
-	}),
+	icon: PropTypes.string,
+	name: PropTypes.string,
+	subtype: PropTypes.string,
 	title: PropTypes.string.isRequired,
-	usagesCount: PropTypes.number.isRequired,
+	usagesCount: PropTypes.number,
 };

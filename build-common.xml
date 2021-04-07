@@ -1749,6 +1749,44 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-plugins-sdk">
+		<sequential>
+			<gradle-execute forcedcacheenabled="true" outputproperty="sdk.zip.file" setupbinariescache="@{setupbinariescache}" task="printDependencyPath">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+				<arg value="--quiet" />
+				<arg value="-Dorg.gradle.internal.launcher.welcomeMessageEnabled=false" />
+				<arg value="-PdependencyNotation=com.liferay.portal:com.liferay.portal.plugins.sdk:${build.sdk.version}" />
+			</gradle-execute>
+
+			<propertyregex
+				input="${sdk.zip.file}"
+				override="true"
+				property="sdk.zip.file"
+				regexp="(.*$)"
+				select="\1"
+			/>
+
+			<dirname file="${sdk.zip.file}" property="sdk.zip.dir" />
+
+			<delete dir="${sdk.dir}" />
+
+			<unzip
+				dest="${project.dir}/tools"
+				src="${sdk.zip.dir}/com.liferay.portal.plugins.sdk-${build.sdk.version}.zip"
+			>
+				<mapper
+					from="com.liferay.portal.plugins.sdk-${build.sdk.version}/*"
+					to="sdk/*"
+					type="glob"
+				/>
+			</unzip>
+
+			<update-sdk-properties />
+
+			<setup-sdk />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-sdk">
 		<attribute default="true" name="setupbinariescache" />
 
@@ -2393,12 +2431,16 @@ rerun your task.
 	</target>
 
 	<target name="run-cpd">
+		<setup-plugins-sdk />
+
 		<ant antfile="build-common.xml" dir="${sdk.dir}" inheritRefs="true" target="run-cpd">
 			<property name="cpd.basedir" value="${basedir}" />
 		</ant>
 	</target>
 
 	<target name="run-pmd">
+		<setup-plugins-sdk />
+
 		<ant antfile="build-common.xml" dir="${sdk.dir}" inheritRefs="true" target="run-pmd">
 			<property name="pmd.basedir" value="${basedir}" />
 		</ant>

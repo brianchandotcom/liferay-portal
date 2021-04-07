@@ -155,7 +155,7 @@ const ClassicEditor = React.forwardRef(
 						}
 					}}
 					onInstanceReady={({editor}) => {
-						editor.setData(contents);
+						editor.setData(contents, {internal: true});
 					}}
 					ref={editorRefsCallback}
 					{...otherProps}

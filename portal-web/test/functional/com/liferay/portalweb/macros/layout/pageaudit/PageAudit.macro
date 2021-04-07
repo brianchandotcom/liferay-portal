@@ -1,0 +1,11 @@
+definition {
+
+    macro connectToGooglePageAudit {
+		Click(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+	}
+
+	macro openPageAuditPanel {
+		Click(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
+	}
+
+}

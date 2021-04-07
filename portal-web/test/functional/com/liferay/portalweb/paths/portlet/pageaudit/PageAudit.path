@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>PageAudit</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PageAudit</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CHECK_ISSUES_TEXT</td>
+	<td>//*[contains(@class, 'font-weight-semi-bold') and contains(@class, 'c-mb-2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECT_TO_GOOGLE_PAGESPEED_BUTTON</td>
+	<td>//*[contains(@class, 'btn-secondary') and contains(text(), 'Connect To Google PageSpeed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GOOGLE_PAGESPEED_TITLE</td>
+	<td>//h2[contains(text(), 'Google PageSpeed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_AUDIT_PANEL_BUTTON</td>
+	<td>//*[contains(@class, 'lexicon-icon-info-circle')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

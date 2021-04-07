@@ -1,0 +1,51 @@
+@component-name = "portal-page-audit"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Page Audit";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
+	@priority = "5"
+	test PageAuditContentPage {
+		property portal.acceptance = "true";
+
+        JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
+
+        Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+        PageAudit.openPageAuditPanel();
+
+        AssertTextPresent(
+			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+			value1 = "Check issues that impact on your page's accessibility and SEO.");
+
+        PageAudit.connectToGooglePageAudit();
+
+        AssertTextPresent(
+			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+			value1 = "Google PageSpeed");
+	}
+
+}

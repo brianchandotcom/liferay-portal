@@ -37,7 +37,7 @@ const mockFetch = jest.fn().mockResolvedValue();
 const mockNavigate = jest.fn();
 const mockToast = jest.fn();
 
-jest.mock('dynamic-data-mapping-form-renderer', () => ({
+jest.mock('data-engine-js-components-web', () => ({
 	PagesVisitor: jest.fn().mockImplementation(() => ({
 		mapFields: (callback) =>
 			[

@@ -16,7 +16,7 @@ import {
 	PagesVisitor,
 	generateInstanceId,
 	normalizeFieldName,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 
 import {getDefaultFieldName} from '../../../util/fieldSupport.es';
 import {updateFieldValidationProperty} from './fields.es';

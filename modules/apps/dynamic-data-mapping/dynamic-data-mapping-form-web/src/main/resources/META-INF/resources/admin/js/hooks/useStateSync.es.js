@@ -16,7 +16,7 @@ import {
 	PagesVisitor,
 	useConfig,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {useCallback, useEffect, useRef} from 'react';
 
 const getSerializedSettingsContextPages = (pages, defaultLanguageId) => {

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor} from 'data-engine-js-components-web/js/utils/visitors.es';
 
 import {getField} from '../../../util/fieldSupport.es';
 import {findInvalidFieldReference} from '../util/fields.es';

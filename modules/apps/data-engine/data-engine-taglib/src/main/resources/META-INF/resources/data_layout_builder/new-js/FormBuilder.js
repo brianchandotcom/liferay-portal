@@ -20,9 +20,9 @@ import {
 	useConfig,
 	useForm,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
-import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
-import fieldDelete from 'dynamic-data-mapping-form-renderer/js/core/thunks/fieldDelete.es';
+} from 'data-engine-js-components-web';
+import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
+import fieldDelete from 'data-engine-js-components-web/js/core/thunks/fieldDelete.es';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import MultiPanelSidebar from '../js/components/sidebar/MultiPanelSidebar.es';

@@ -13,7 +13,7 @@
  */
 
 import {DataLayoutBuilderActions} from 'data-engine-taglib';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'data-engine-js-components-web';
 
 /**
  * Check if contains field inside the FormBuilder

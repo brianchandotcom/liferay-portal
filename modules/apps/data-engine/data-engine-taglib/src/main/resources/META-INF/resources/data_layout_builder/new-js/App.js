@@ -17,7 +17,7 @@ import {
 	ConfigProvider,
 	FormProvider,
 	parseProps,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {
 	dataDefinitionReducer,
 	dataLayoutReducer,
@@ -25,8 +25,8 @@ import {
 	fieldEditableReducer,
 	languageReducer,
 	pagesStructureReducer,
-} from 'dynamic-data-mapping-form-renderer/js/core/reducers/index.es';
-import {pageReducer} from 'dynamic-data-mapping-form-renderer/js/custom/form/reducers/index.es';
+} from 'data-engine-js-components-web/js/core/reducers/index.es';
+import {pageReducer} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';

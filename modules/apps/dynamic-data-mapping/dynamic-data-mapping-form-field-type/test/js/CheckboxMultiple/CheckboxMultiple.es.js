@@ -14,7 +14,7 @@
 
 import {act, cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
 import CheckboxMultiple from '../../../src/main/resources/META-INF/resources/CheckboxMultiple/CheckboxMultiple.es';

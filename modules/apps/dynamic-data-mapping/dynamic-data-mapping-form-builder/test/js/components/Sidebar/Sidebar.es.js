@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'data-engine-js-components-web';
 
 import Sidebar from '../../../../src/main/resources/META-INF/resources/js/components/Sidebar/Sidebar.es';
 import mockFieldType from '../../__mock__/mockFieldType.es';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'data-engine-js-components-web';
 
 import {Tokenizer} from '../../expressions/Tokenizer.es';
 import {DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION} from '../../util/regex.es';

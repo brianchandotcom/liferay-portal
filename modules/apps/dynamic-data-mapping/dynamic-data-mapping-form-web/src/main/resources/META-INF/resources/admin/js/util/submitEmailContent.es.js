@@ -12,7 +12,7 @@
  * details.
  */
 
-import {convertToFormData, makeFetch} from 'dynamic-data-mapping-form-renderer';
+import {convertToFormData, makeFetch} from 'data-engine-js-components-web';
 import {openToast} from 'frontend-js-web';
 
 const openNotification = ({error, message}) => {

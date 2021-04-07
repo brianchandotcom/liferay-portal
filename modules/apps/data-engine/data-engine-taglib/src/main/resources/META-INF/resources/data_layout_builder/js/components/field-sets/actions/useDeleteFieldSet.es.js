@@ -16,7 +16,7 @@ import {
 	PagesVisitor,
 	useForm,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {useContext} from 'react';
 
 import {EVENT_TYPES} from '../../../../new-js/eventTypes';

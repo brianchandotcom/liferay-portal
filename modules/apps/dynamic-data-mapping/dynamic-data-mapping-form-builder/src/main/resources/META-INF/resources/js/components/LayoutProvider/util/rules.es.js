@@ -12,7 +12,7 @@
  * details.
  */
 
-import {RulesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {RulesVisitor} from 'data-engine-js-components-web';
 
 import Token from '../../../expressions/Token.es';
 import Tokenizer from '../../../expressions/Tokenizer.es';

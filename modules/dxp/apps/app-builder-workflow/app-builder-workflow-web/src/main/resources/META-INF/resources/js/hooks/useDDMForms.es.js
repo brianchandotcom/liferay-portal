@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {PagesVisitor, setDataRecord} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor, setDataRecord} from 'data-engine-js-components-web';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 
 export function useDDMFormsSubmit(ddmForms, onSubmit) {

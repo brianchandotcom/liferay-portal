@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'data-engine-js-components-web';
 import Component from 'metal-jsx';
 
 import {sub} from '../../util/strings.es';

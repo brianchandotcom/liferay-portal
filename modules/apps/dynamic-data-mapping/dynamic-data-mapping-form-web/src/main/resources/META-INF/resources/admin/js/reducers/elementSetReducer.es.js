@@ -13,7 +13,7 @@
  */
 
 import {FieldUtil} from 'dynamic-data-mapping-form-builder';
-import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport, PagesVisitor} from 'data-engine-js-components-web';
 
 import {EVENT_TYPES} from '../eventTypes.es';
 

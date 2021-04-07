@@ -13,7 +13,7 @@
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
-import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
 import Validation from '../../../src/main/resources/META-INF/resources/Validation/Validation.es';

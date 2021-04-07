@@ -12,7 +12,7 @@
  * details.
  */
 
-import {compose} from 'dynamic-data-mapping-form-renderer';
+import {compose} from 'data-engine-js-components-web';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 

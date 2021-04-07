@@ -19,7 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {usePage} from 'dynamic-data-mapping-form-renderer';
+import {usePage} from 'data-engine-js-components-web';
 import {delegate} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 

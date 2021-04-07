@@ -16,7 +16,7 @@ import {
 	PagesVisitor,
 	formatFieldValue,
 	setDataRecord,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 export function useDDMFormSubmit(ddmForm, onSubmit) {

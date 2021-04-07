@@ -12,7 +12,7 @@
  * details.
  */
 
-import {FormSupport} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport} from 'data-engine-js-components-web';
 import {DragDrop} from 'metal-drag-drop';
 import Component from 'metal-jsx';
 

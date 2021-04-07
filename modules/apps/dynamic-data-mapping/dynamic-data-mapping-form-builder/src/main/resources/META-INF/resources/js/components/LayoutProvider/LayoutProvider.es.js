@@ -18,7 +18,7 @@ import {
 	generateInstanceId,
 	generateName,
 	getRepeatedIndex,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {openModal} from 'frontend-js-web';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {FormSupport} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport} from 'data-engine-js-components-web';
 
 import {removeField} from '../../../util/fieldSupport.es';
 import RulesSupport from '../../RuleBuilder/RulesSupport.es';

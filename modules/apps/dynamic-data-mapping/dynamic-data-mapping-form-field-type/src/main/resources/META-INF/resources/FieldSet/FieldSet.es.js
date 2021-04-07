@@ -18,7 +18,7 @@ import {
 	Layout,
 	getRepeatedIndex,
 	usePage,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import React, {useMemo} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';

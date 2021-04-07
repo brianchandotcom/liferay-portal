@@ -12,7 +12,7 @@
  * details.
  */
 
-import {FormSupport} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport} from 'data-engine-js-components-web';
 
 import {updateField} from '../util/settingsContext.es';
 

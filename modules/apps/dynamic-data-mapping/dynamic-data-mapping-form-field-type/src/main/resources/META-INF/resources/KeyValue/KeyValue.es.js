@@ -12,7 +12,7 @@
  * details.
  */
 
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
+import {normalizeFieldName} from 'data-engine-js-components-web';
 import React, {useRef} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';

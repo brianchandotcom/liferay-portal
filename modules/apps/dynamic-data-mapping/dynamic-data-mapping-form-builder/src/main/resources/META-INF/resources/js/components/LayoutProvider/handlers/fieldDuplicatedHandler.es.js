@@ -12,7 +12,7 @@
  * details.
  */
 
-import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport, PagesVisitor} from 'data-engine-js-components-web';
 
 import {createDuplicatedField} from '../util/fields.es';
 import {updateField} from '../util/settingsContext.es';

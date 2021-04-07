@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 

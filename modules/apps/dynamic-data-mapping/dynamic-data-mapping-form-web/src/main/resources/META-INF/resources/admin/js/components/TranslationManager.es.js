@@ -15,7 +15,7 @@
 import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
 	useForm,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {useEffect} from 'react';
 
 import {EVENT_TYPES} from '../eventTypes.es';

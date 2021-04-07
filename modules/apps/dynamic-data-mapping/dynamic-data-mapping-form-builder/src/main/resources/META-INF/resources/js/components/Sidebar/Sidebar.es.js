@@ -23,7 +23,7 @@ import {
 	generateInstanceId,
 	generateName,
 	makeFetch,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {EventHandler, openModal} from 'frontend-js-web';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import Component, {Fragment} from 'metal-jsx';

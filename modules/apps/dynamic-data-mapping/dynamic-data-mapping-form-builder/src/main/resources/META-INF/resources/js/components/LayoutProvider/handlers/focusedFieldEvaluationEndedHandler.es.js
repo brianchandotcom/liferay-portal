@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'data-engine-js-components-web';
 
 import RulesSupport from '../../RuleBuilder/RulesSupport.es';
 import {getField} from '../util/fields.es';

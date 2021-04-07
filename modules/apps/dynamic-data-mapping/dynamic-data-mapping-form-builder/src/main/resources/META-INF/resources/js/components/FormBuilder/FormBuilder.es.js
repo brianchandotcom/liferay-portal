@@ -12,9 +12,9 @@
  * details.
  */
 
-import {LegacyFormBuilder} from 'dynamic-data-mapping-form-renderer';
-import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {LegacyFormBuilder} from 'data-engine-js-components-web';
+import compose from 'data-engine-js-components-web/js/utils/compose.es';
+import {PagesVisitor} from 'data-engine-js-components-web/js/utils/visitors.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 

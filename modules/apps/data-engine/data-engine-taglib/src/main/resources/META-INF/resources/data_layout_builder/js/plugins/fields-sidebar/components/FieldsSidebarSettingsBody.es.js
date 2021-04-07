@@ -14,8 +14,8 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {FormFieldSettings, Pages} from 'dynamic-data-mapping-form-renderer';
-import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
+import {FormFieldSettings, Pages} from 'data-engine-js-components-web';
+import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import AppContext from '../../../AppContext.es';

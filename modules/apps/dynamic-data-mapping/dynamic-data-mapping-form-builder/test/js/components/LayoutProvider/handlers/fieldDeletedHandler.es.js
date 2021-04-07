@@ -12,7 +12,7 @@
  * details.
  */
 
-import {FormSupport} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport} from 'data-engine-js-components-web';
 
 import * as fieldDeletedHandler from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldDeletedHandler.es';
 import RulesSupport from '../../../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RulesSupport.es';

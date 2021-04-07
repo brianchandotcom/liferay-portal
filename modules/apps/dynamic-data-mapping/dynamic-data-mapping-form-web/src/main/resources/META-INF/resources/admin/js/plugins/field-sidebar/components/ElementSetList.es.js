@@ -17,7 +17,7 @@ import {
 	elementSetAdded,
 	useForm,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import React from 'react';
 
 const EmptyPanel = ({searchTerm}) => (

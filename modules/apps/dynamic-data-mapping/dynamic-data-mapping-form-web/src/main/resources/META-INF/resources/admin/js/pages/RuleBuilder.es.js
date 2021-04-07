@@ -19,7 +19,7 @@ import {
 	useConfig,
 	useForm,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {Route, Switch} from 'react-router-dom';

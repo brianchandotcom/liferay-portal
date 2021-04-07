@@ -12,7 +12,7 @@
  * details.
  */
 
-import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport, PagesVisitor} from 'data-engine-js-components-web';
 
 import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
 import {addField, getParentField} from '../../../util/fieldSupport.es';

@@ -18,7 +18,7 @@ import {
 	generateName,
 	getRepeatedIndex,
 	normalizeFieldName,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 
 import {updateField} from '../components/LayoutProvider/util/settingsContext.es';
 import {FIELD_TYPE_FIELDSET} from './constants.es';

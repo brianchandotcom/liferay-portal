@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'data-engine-js-components-web';
 
 import {addField} from '../../../util/fieldSupport.es';
 import {createFieldSet} from '../util/fieldset.es';

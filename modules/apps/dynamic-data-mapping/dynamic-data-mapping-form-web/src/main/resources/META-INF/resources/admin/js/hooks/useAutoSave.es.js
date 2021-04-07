@@ -20,7 +20,7 @@ import {
 	makeFetch,
 	useConfig,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import objectHash from 'object-hash';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 

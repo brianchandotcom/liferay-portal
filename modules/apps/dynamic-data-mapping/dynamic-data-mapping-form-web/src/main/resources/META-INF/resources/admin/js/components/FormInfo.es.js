@@ -22,7 +22,7 @@ import {
 	useConfig,
 	useForm,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {autoSize} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 

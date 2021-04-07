@@ -14,7 +14,7 @@
 
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
-import {MAPPED_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer';
+import {MAPPED_EVENT_TYPES} from 'data-engine-js-components-web';
 import React, {useContext, useState} from 'react';
 
 import AppContext from '../../../AppContext.es';

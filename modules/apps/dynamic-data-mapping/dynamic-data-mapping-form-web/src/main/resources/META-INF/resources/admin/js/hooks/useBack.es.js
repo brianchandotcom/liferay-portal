@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import {Context as ModalContext} from '@clayui/modal';
 import {useEventListener} from '@liferay/frontend-js-react-web';
-import {useConfig} from 'dynamic-data-mapping-form-renderer';
+import {useConfig} from 'data-engine-js-components-web';
 import React, {useCallback, useContext} from 'react';
 
 import {useAutoSave} from './useAutoSave.es';

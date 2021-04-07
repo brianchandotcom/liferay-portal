@@ -12,7 +12,7 @@
  * details.
  */
 
-import {parseName} from 'dynamic-data-mapping-form-renderer';
+import {parseName} from 'data-engine-js-components-web';
 import Leaflet from 'leaflet';
 import MapGoogleMaps from 'map-google-maps/js/MapGoogleMaps.es';
 import MapOpenStreetMap from 'map-openstreetmap/js/MapOpenStreetMap.es';

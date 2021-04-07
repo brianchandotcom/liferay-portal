@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor, generateName} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor, generateName} from 'data-engine-js-components-web';
 
 const getPredefinedValues = ({locale, localizedValue, options}) => {
 	if (Array.isArray(localizedValue[locale])) {

@@ -17,7 +17,7 @@ import {
 	RulesSupport,
 	SettingsContext,
 } from 'dynamic-data-mapping-form-builder';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'data-engine-js-components-web';
 
 import {EVENT_TYPES} from '../eventTypes.es';
 

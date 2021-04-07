@@ -56,6 +56,20 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
+	const selectRoles = (itemData) => {
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				location.href = addParams(
+					`${`${portletNamespace}roleId`}=${selectedItem.id}`,
+					itemData.viewRoleURL
+				);
+			},
+			selectEventName: `${portletNamespace}selectRole`,
+			title: Liferay.Language.get('select-role'),
+			url: itemData?.selectRolesURL,
+		});
+	};
+
 	const selectUsers = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
@@ -108,6 +122,11 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 			if (data?.action === 'selectUsers') {
 				selectUsers(data);
+			}
+		},
+		onFilterDropdownItemClick(event, {item}) {
+			if (item?.data?.action === 'selectRoles') {
+				selectRoles(item?.data);
 			}
 		},
 	};

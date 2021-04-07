@@ -143,6 +143,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DONE_BUTTON</td>
+	<td>//button[contains(@class,'btn btn-primary') and '${status}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIALOG_BOX_DUE_DATE_TIME</td>
 	<td>//input[contains(@id,'_dueDateTime')] | //input[contains(@placeholder,'HH:mm')]</td>
 	<td></td>

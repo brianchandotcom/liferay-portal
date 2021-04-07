@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KEBAB_DROPDOWN_DISABLED</td>
+	<td>//button[contains(@class, 'dropdown-toggle component-action btn btn-monospaced btn-unstyled') and 'disabled']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DUE_DATE_ICON</td>
+	<td>//div[@class="quick-action-menu"]//button[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REASSIGN_TASK_DROPDOWN</td>
 	<td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Reassign Task')]</td>
 	<td></td>

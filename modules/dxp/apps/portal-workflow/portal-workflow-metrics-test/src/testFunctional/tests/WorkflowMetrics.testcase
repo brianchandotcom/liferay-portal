@@ -905,6 +905,131 @@ definition {
 		}
 	}
 
+	@description = "LRQA-60717 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
+	@priority = "4"
+	test BulkUpdateDueDateInvalidDateTime {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var blogNumber : list "1,2") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${blogNumber} Content",
+				entryTitle = "Blogs Entry Title ${blogNumber}");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Blogs Entry Title ${blogNumber}",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
+		}
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+		WorkflowMetrics.goToUpdateDueDateTasks();
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
+		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			value1 = "Done");
+
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
+			value1 = "88/88/8888");
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			value1 = "Disable");
+
+		Button.click(button = "Previous");
+		Button.clickNext();
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			value1 = "Done");
+
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
+			value1 = "99:99 PM");
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			value1 = "Disable");
+	}
+
+	@description = "LRQA-60717 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
+	@priority = "4"
+	test BulkUpdateDueDateUnassignedUser {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 1 Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "password",
+			userEmailAddress = "userea@liferay.com");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.assertAllItemsValues(
+			assigneeName = "Test Test",
+			isNotPresent = "userfn userln",
+			isPresent = "Blogs Entry Title 1",
+			taskName = "Review");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+
+		AssertElementNotPresent(locator1 = "WorkflowAllItems#DUE_DATE_ICON");
+	}
+
 	@description = "LRQA-53629 Automate LRQA-53629: Automate LPS-100679: [Performance] Change the order of the all steps performance list"
 	@priority = "5"
 	test ChangePerformanceByStepOrder {

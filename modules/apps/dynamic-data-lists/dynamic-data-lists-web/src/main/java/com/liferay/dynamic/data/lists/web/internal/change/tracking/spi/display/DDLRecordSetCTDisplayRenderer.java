@@ -17,12 +17,19 @@ package com.liferay.dynamic.data.lists.web.internal.change.tracking.spi.display;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cheryl Tang
@@ -37,9 +44,7 @@ public class DDLRecordSetCTDisplayRenderer
 	}
 
 	@Override
-	public String getTitle(Locale locale, DDLRecordSet ddlRecordSet)
-		throws PortalException {
-
+	public String getTitle(Locale locale, DDLRecordSet ddlRecordSet) {
 		return ddlRecordSet.getName(locale);
 	}
 
@@ -52,27 +57,51 @@ public class DDLRecordSetCTDisplayRenderer
 		displayBuilder.display(
 			"name", ddlRecordSet.getName(locale)
 		).display(
-			"created-by",
-			() -> {
-				String userName = ddlRecordSet.getUserName();
-
-				if (Validator.isNotNull(userName)) {
-					return userName;
-				}
-
-				return null;
-			}
-		).display(
-			"create-date", ddlRecordSet.getCreateDate()
-		).display(
-			"last-modified", ddlRecordSet.getModifiedDate()
-		).display(
-			"version", ddlRecordSet.getVersion()
-		).display(
 			"description", ddlRecordSet.getDescription(locale)
 		).display(
-			"cached", ddlRecordSet.isCachedModel()
+			"data-definition",
+			() -> {
+				DDMStructure ddmStructure =
+					_ddmStructureLocalService.fetchDDMStructure(
+						ddlRecordSet.getDDMStructureId());
+
+				if (ddmStructure != null) {
+					return ddmStructure.getName(locale);
+				}
+
+				return StringPool.BLANK;
+			}
+		).display(
+			"workflow",
+			() -> {
+				WorkflowDefinitionLink workflowDefinitionLink =
+					_workflowDefinitionLinkLocalService.
+						fetchWorkflowDefinitionLink(
+							ddlRecordSet.getCompanyId(),
+							ddlRecordSet.getGroupId(),
+							DDLRecordSet.class.getName(),
+							ddlRecordSet.getRecordSetId(), 0, true);
+
+				if (workflowDefinitionLink != null) {
+					return workflowDefinitionLink.getWorkflowDefinitionName();
+				}
+
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					locale, DDLRecordSetCTDisplayRenderer.class);
+
+				return _language.get(resourceBundle, "no-workflow");
+			}
 		);
 	}
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

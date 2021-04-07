@@ -22,6 +22,11 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import SearchInput from '../shared/SearchInput';
 import ThemeContext from '../shared/ThemeContext';
 
+const DEFAULT_CATEGORY = 'other';
+const DEFAULT_EXPANDED_LIST = ['match'];
+
+const LAST_CATEGORIES = [DEFAULT_CATEGORY, 'custom'];
+
 const EmptyListMessage = () => (
 	<div className="empty-list-message">
 		<ClayEmptyState
@@ -29,8 +34,6 @@ const EmptyListMessage = () => (
 		/>
 	</div>
 );
-
-const DEFAULT_EXPANDED_LIST = ['match'];
 
 const QueryElementList = ({category, expand, onAddElement, queryElements}) => {
 	const {locale} = useContext(ThemeContext);
@@ -158,7 +161,7 @@ function Sidebar({elements = [], onAddElement, onClose, visible}) {
 		elements.map((element) => {
 			const category = element.elementTemplateJSON.category
 				? element.elementTemplateJSON.category
-				: Liferay.Language.get('other');
+				: DEFAULT_CATEGORY;
 
 			if (newCategorizedElements[category]) {
 				newCategorizedElements[category] = [
@@ -167,12 +170,22 @@ function Sidebar({elements = [], onAddElement, onClose, visible}) {
 				];
 			}
 			else {
-				newCategories.push(category);
 				newCategorizedElements[category] = [element];
+
+				if (!LAST_CATEGORIES.includes(category)) {
+					newCategories.push(category);
+				}
 			}
 		});
 
-		setCategories(newCategories);
+		setCategories([
+			...newCategories.sort(),
+			...LAST_CATEGORIES.filter(
+				(category) =>
+					newCategorizedElements[category] &&
+					newCategorizedElements[category].length
+			),
+		]);
 		setCategorizedElements(newCategorizedElements);
 	};
 

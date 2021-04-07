@@ -12,7 +12,7 @@
 import ClayPanel from '@clayui/panel';
 import React, {useMemo, useState} from 'react';
 
-import Panel from '../../../shared/components/panel/Panel.es';
+import PanelHeaderWithOptions from '../../../shared/components/panel-header-with-options/PanelHeaderWithOptions.es';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import Tabs from '../../../shared/components/tabs/Tabs.es';
 import {useFilter} from '../../../shared/hooks/useFilter.es';
@@ -22,11 +22,11 @@ import {Body} from './WorkloadByAssigneeCardBody.es';
 
 const Header = ({processId}) => (
 	<>
-		<Panel.HeaderWithOptions
+		<PanelHeaderWithOptions
+			className="dashboard-panel-header"
 			description={Liferay.Language.get(
 				'workload-by-assignee-description'
 			)}
-			elementClasses="dashboard-panel-header"
 			title={Liferay.Language.get('workload-by-assignee')}
 			tooltipPosition="bottom"
 		/>

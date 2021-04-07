@@ -13,7 +13,7 @@ import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import React, {useMemo} from 'react';
 
-import Panel from '../../../shared/components/panel/Panel.es';
+import PanelHeaderWithOptions from '../../../shared/components/panel-header-with-options/PanelHeaderWithOptions.es';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import {useFetch} from '../../../shared/hooks/useFetch.es';
 import {useFilter} from '../../../shared/hooks/useFilter.es';
@@ -22,9 +22,9 @@ import {getTimeRangeParams} from '../../filter/util/timeRangeUtil.es';
 import {Body, Footer} from './PerformanceByStepCardBody.es';
 
 const Header = ({disableFilters, prefixKey, totalCount}) => (
-	<Panel.HeaderWithOptions
+	<PanelHeaderWithOptions
+		className="dashboard-panel-header"
 		description={Liferay.Language.get('performance-by-step-description')}
-		elementClasses="dashboard-panel-header"
 		title={Liferay.Language.get('performance-by-step')}
 	>
 		<ClayLayout.ContentCol className="m-0 management-bar management-bar-light navbar">
@@ -36,7 +36,7 @@ const Header = ({disableFilters, prefixKey, totalCount}) => (
 				/>
 			</ul>
 		</ClayLayout.ContentCol>
-	</Panel.HeaderWithOptions>
+	</PanelHeaderWithOptions>
 );
 
 const PerformanceByStepCard = ({routeParams}) => {

@@ -12,7 +12,7 @@
 import ClayPanel from '@clayui/panel';
 import React, {useMemo} from 'react';
 
-import Panel from '../../../shared/components/panel/Panel.es';
+import PanelHeaderWithOptions from '../../../shared/components/panel-header-with-options/PanelHeaderWithOptions.es';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import {useFetch} from '../../../shared/hooks/useFetch.es';
 import {Body} from './WorkloadByStepCardBody.es';
@@ -28,11 +28,11 @@ const WorkloadByStepCard = ({processId, routeParams}) => {
 	return (
 		<PromisesResolver promises={promises}>
 			<ClayPanel className="mt-4">
-				<Panel.HeaderWithOptions
+				<PanelHeaderWithOptions
+					className="dashboard-panel-header"
 					description={Liferay.Language.get(
 						'workload-by-step-description'
 					)}
-					elementClasses="dashboard-panel-header"
 					title={Liferay.Language.get('workload-by-step')}
 					tooltipPosition="bottom"
 				/>

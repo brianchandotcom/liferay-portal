@@ -382,7 +382,9 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		AssertTextEquals( locator1 = "Staging#PROCESS_SUCCESSFUL", value1 = "Successful");
+		AssertTextEquals(
+			locator1 = "Staging#PROCESS_SUCCESSFUL",
+			value1 = "Successful");
 
 		SelectFrameTop();
 

@@ -79,7 +79,6 @@
 /development/velocity-tools.jar
 /development/websocket-api.jar
 /development/xmlresolver.jar
-/global/portlet.jar
 /portal/abdera.jar
 /portal/activation.jar
 /portal/ant.jar
@@ -222,6 +221,7 @@
 /portal/poi-ooxml-schemas.jar
 /portal/poi-scratchpad.jar
 /portal/poi.jar
+/portal/portlet.jar
 /portal/portletmvc4spring-framework.jar
 /portal/rdffilter.jar
 /portal/rhino.jar

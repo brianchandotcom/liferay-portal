@@ -63,9 +63,11 @@ definition {
 			locator1 = "GoogleDrive#LIST_VIEW_DOCUMENT_SPECIFIC",
 			value1 = "${googleDocName}");
 
-		Click.clickAt(
+		ClickNoError(
 			locator1 = "GoogleDrive#SELECT_BUTTON",
 			value1 = "Select");
+
+		AssertConfirm.waitForConfirmation(value1 = "You are about to send 1 item to localhost. Would you like to continue?");
 
 		SelectFrameTop();
 

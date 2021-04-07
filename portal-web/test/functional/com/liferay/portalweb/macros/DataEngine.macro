@@ -1269,6 +1269,31 @@ definition {
 			value1 = "${optionValue}");
 	}
 
+	macro editImageFieldPredefinedValue {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+
+		Click(locator1 = "FormFields#UPLOAD_PREDEFINED_VALUE");
+
+		if (isSet(selectFromDepot)) {
+			ItemSelector.selectRepositoryImage(
+				depotName = "${depotName}",
+				imageFileName = "${imageFileName}");
+		}
+		else if (isSet(selectFromCurrentSite)) {
+			ItemSelector.selectDMImage(imageFileName = "${imageFileName}");
+		}
+		else {
+			ItemSelector.uploadFile(uploadFileName = "${imageFileName}");
+		}
+	}
+
 	macro editOptionValue {
 		var key_rowNumber = "${rowNumber}";
 

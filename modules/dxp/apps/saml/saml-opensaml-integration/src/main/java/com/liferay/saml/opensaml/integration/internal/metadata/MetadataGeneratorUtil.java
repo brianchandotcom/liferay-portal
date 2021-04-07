@@ -148,16 +148,14 @@ public class MetadataGeneratorUtil {
 		SingleLogoutService postSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_POST_BINDING_URI,
-				StringBundler.concat(
-					portalURL, PortalUtil.getPathMain(), "/portal/saml/slo"));
+				portalURL + "/web/guest" + SamlCommandQueryConstants.SLO);
 
 		singleLogoutServices.add(postSingleLogoutService);
 
 		SingleLogoutService redirectSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI,
-				StringBundler.concat(
-					portalURL, PortalUtil.getPathMain(), "/portal/saml/slo"));
+				portalURL + "/web/guest" + SamlCommandQueryConstants.SLO);
 
 		singleLogoutServices.add(redirectSingleLogoutService);
 
@@ -242,25 +240,21 @@ public class MetadataGeneratorUtil {
 		SingleLogoutService postSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_POST_BINDING_URI,
-				StringBundler.concat(
-					portalURL, PortalUtil.getPathMain(), "/portal/saml/slo"));
+				portalURL + "/web/guest" + SamlCommandQueryConstants.SLO);
 
 		singleLogoutServices.add(postSingleLogoutService);
 
 		SingleLogoutService redirectSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI,
-				StringBundler.concat(
-					portalURL, PortalUtil.getPathMain(), "/portal/saml/slo"));
+				portalURL + "/web/guest" + SamlCommandQueryConstants.SLO);
 
 		singleLogoutServices.add(redirectSingleLogoutService);
 
 		SingleLogoutService soapSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_SOAP11_BINDING_URI,
-				StringBundler.concat(
-					portalURL, PortalUtil.getPathMain(),
-					"/portal/saml/slo_soap"));
+				portalURL + "/web/guest" + SamlCommandQueryConstants.SLO_SOAP);
 
 		singleLogoutServices.add(soapSingleLogoutService);
 

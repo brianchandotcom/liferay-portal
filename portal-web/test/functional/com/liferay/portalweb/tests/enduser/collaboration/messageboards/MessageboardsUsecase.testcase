@@ -33,6 +33,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddMBThreadWithLinkToDocument {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
@@ -73,6 +74,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddMBThreadWithLinkToPage {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";

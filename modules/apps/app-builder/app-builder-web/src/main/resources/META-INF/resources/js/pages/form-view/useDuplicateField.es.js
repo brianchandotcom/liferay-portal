@@ -12,12 +12,12 @@
  * details.
  */
 
+import {PagesVisitor} from 'data-engine-js-components-web';
 import {
 	DataConverter,
 	DataDefinitionUtils,
 	DataLayoutBuilderActions,
 } from 'data-engine-taglib';
-import {PagesVisitor} from 'data-engine-js-components-web';
 import {useContext} from 'react';
 
 import {sub} from '../../utils/lang.es';

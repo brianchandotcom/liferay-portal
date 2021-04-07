@@ -14,15 +14,11 @@
 
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import {useConfig, useForm, useFormState} from 'data-engine-js-components-web';
 import {
 	isKeyInSet,
 	isModifyingKey,
 } from 'dynamic-data-mapping-form-builder/js/util/dom.es';
-import {
-	useConfig,
-	useForm,
-	useFormState,
-} from 'data-engine-js-components-web';
 import {autoSize} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 

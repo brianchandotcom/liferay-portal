@@ -12,8 +12,8 @@
  * details.
  */
 
-import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import {PagesVisitor} from 'data-engine-js-components-web';
+import {DataLayoutBuilderActions} from 'data-engine-taglib';
 
 /**
  * Check if contains field inside the FormBuilder

@@ -12,8 +12,8 @@
  * details.
  */
 
-import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {PagesVisitor, getUid} from 'data-engine-js-components-web';
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {
 	INITIAL_PAGES,
 	INITIAL_STATE,

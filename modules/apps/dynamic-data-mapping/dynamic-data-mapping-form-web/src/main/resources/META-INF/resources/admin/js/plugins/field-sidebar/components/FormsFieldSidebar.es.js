@@ -13,13 +13,9 @@
  */
 
 import classNames from 'classnames';
-import {FieldsSidebar} from 'data-engine-taglib';
-import {
-	useConfig,
-	useForm,
-	useFormState,
-} from 'data-engine-js-components-web';
+import {useConfig, useForm, useFormState} from 'data-engine-js-components-web';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
+import {FieldsSidebar} from 'data-engine-taglib';
 import React from 'react';
 
 import {EVENT_TYPES} from '../../../eventTypes.es';

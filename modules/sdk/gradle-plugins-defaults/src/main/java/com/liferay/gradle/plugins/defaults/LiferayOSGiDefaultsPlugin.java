@@ -2928,7 +2928,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		try {
 			ruleSet = FileUtil.read(
 				"com/liferay/gradle/plugins/defaults/dependencies" +
-					"/pmd-standard-rules.xml");
+					"/standard-rules.xml");
 		}
 		catch (IOException ioException) {
 			throw new UncheckedIOException(ioException);

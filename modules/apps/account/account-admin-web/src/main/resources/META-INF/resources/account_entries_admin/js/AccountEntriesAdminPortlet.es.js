@@ -20,8 +20,6 @@ class AccountEntriesAdminPortlet extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		this.businessAccountOnlySection = this.one('.business-account-only');
-
 		const typeSelect = this.one('#type');
 
 		if (typeSelect) {
@@ -42,10 +40,14 @@ class AccountEntriesAdminPortlet extends PortletBase {
 	 * @private
 	 */
 	_updateVisibility(typeSelect) {
-		this.businessAccountOnlySection.classList.toggle(
-			'hide',
-			typeSelect.value === 'person'
-		);
+		const businessAccountOnlySection = this.one('.business-account-only');
+
+		if (businessAccountOnlySection) {
+			businessAccountOnlySection.classList.toggle(
+				'hide',
+				typeSelect.value === 'person'
+			);
+		}
 	}
 
 	/**

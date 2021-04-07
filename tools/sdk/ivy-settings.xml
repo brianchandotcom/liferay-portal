@@ -1,0 +1,19 @@
+<ivysettings>
+	<settings defaultResolver="default" />
+
+	<credentials host="repository.liferay.com" passwd="${ivy.repository.liferay.private.password}" realm="Sonatype Nexus Repository Manager API" username="${ivy.repository.liferay.private.username}" />
+
+	<resolvers>
+		<ibiblio m2compatible="true" name="liferay-private" root="${ivy.repository.liferay.private.url}" />
+		<ibiblio m2compatible="true" name="liferay-public" root="https://repository-cdn.liferay.com/nexus/content/groups/public" />
+		<ibiblio m2compatible="true" name="local-m2" root="file://${user.home}/.m2/repository" />
+
+		<chain dual="true" name="default">
+			<resolver ref="local-m2" />
+
+			<resolver ref="liferay-public" />
+
+			<resolver ref="liferay-private" />
+		</chain>
+	</resolvers>
+</ivysettings>

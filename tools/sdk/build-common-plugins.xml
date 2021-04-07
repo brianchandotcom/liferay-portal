@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="build-common-plugins" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-common.xml" />
+
+	<path id="plugins.includes.path">
+		<dirset dir="." excludes="${plugins.excludes}" includes="${plugins.includes}" />
+	</path>
+
+	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
+
+	<if>
+		<equals arg1="${basedir}" arg2="${user.dir}" />
+		<then>
+			<property name="plugin.type.dir" value=".." />
+		</then>
+		<else>
+			<property name="plugin.type.dir" value="${basedir}" />
+		</else>
+	</if>
+
+	<target name="build-service">
+		<for param="service.file">
+			<path>
+				<fileset
+					dir="."
+					includes="**/service.xml"
+				/>
+			</path>
+			<sequential>
+				<antelope:stringutil property="service.file.index" string="@{service.file}">
+					<antelope:indexof fromindex="0" string="docroot" />
+				</antelope:stringutil>
+
+				<if>
+					<equals arg1="${service.file.index}" arg2="-1" />
+					<then>
+						<antelope:stringutil property="service.file.index" string="@{service.file}">
+							<antelope:indexof fromindex="0" string="service.xml" />
+						</antelope:stringutil>
+					</then>
+				</if>
+
+				<antelope:stringutil property="portlet.dir" string="@{service.file}">
+					<antelope:substring beginindex="0" endindex="${service.file.index}" />
+				</antelope:stringutil>
+
+				<if>
+					<available file="${portlet.dir}/build.xml" />
+					<then>
+						<ant dir="${portlet.dir}" inheritAll="false" target="build-service" />
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="install">
+		<multiroot-subant
+			build.file="build.xml"
+			excludes="${plugins.excludes}"
+			includes="${plugins.includes}"
+			root.dir="${basedir}"
+			target="install"
+		/>
+	</target>
+
+	<target name="setup-eclipse">
+		<multiroot-subant
+			build.file="build.xml"
+			excludes="${plugins.excludes}"
+			includes="${plugins.includes}"
+			root.dir="${basedir}"
+			target="setup-eclipse"
+		/>
+	</target>
+
+	<target name="test-class-group">
+		<multiroot-subant
+			build.file="build.xml"
+			excludes="${plugins.excludes}"
+			includes="${plugins.includes}"
+			root.dir="${basedir}"
+			target="test-class-group"
+		>
+			<properties>
+				<propertyset>
+					<propertyref name="test.type" />
+				</propertyset>
+			</properties>
+		</multiroot-subant>
+	</target>
+
+	<target name="test-package">
+		<multiroot-subant
+			build.file="build.xml"
+			excludes="${plugins.excludes}"
+			includes="${plugins.includes}"
+			root.dir="${basedir}"
+			target="test-package"
+		/>
+	</target>
+</project>

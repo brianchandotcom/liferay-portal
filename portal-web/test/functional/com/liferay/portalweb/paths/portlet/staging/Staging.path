@@ -21,6 +21,11 @@
 </tr>
 <!--PROCESSES-->
 <tr>
+	<td>PROCESS_HALF_DISPLAY_PAGE</td>
+	<td>//div[contains(@id,'backgroundTasksSearchContainer')]//td[contains(@class,'lfr-entry-action-column')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROCESS_SUCCESSFUL</td>
 	<td>//*[@data-qa-id='processResult'][contains(.,'Successful')] | //h6[contains(.,'Successful')]</td>
 	<td></td>

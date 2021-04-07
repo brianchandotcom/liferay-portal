@@ -365,6 +365,34 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This is a use case for LPS-125709."
+	@priority = "3"
+	test AssertPublishPageDisplayInFullPage {
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+
+		Pause(locator1 = "3000");
+
+		AssertTextEquals( locator1 = "Staging#PROCESS_SUCCESSFUL", value1 = "Successful");
+
+		SelectFrameTop();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		takeScreenshot();
+
+		AssertElementNotPresent(locator1 = "Staging#PROCESS_HALF_DISPLAY_PAGE");
+	}
+
 	@priority = "4"
 	test DeactivateStaging {
 		Navigator.openSiteURL(siteName = "Site Name");

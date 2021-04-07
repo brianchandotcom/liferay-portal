@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.rescore;
 
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.rescore.RescoreBuilder;
 import com.liferay.portal.search.rescore.RescoreBuilderFactory;
 
@@ -26,8 +27,18 @@ import org.osgi.service.component.annotations.Component;
 public class RescoreBuilderFactoryImpl implements RescoreBuilderFactory {
 
 	@Override
+	public RescoreBuilder builder(Query query) {
+		return new RescoreBuilderImpl(query);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #builder(Query)}
+	 */
+	@Deprecated
+	@Override
 	public RescoreBuilder getRescoreBuilder() {
-		return new RescoreBuilderImpl();
+		return new RescoreBuilderImpl(null);
 	}
 
 }

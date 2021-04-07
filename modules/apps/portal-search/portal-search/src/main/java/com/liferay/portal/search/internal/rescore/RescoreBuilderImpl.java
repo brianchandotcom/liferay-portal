@@ -23,14 +23,45 @@ import com.liferay.portal.search.rescore.RescoreBuilder;
  */
 public class RescoreBuilderImpl implements RescoreBuilder {
 
-	@Override
-	public Rescore build() {
-		return new RescoreImpl(_query, _windowSize);
+	public RescoreBuilderImpl(Query query) {
+		_query = query;
 	}
 
 	@Override
+	public Rescore build() {
+		return new RescoreImpl(
+			_query, _windowSize, _queryWeight, _rescoreQueryWeight, _scoreMode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             RescoreBuilderFactory#builder(Query)}
+	 */
+	@Deprecated
+	@Override
 	public RescoreBuilder query(Query query) {
 		_query = query;
+
+		return this;
+	}
+
+	@Override
+	public RescoreBuilder queryWeight(Float queryWeight) {
+		_queryWeight = queryWeight;
+
+		return this;
+	}
+
+	@Override
+	public RescoreBuilder rescoreQueryWeight(Float rescoreQueryWeight) {
+		_rescoreQueryWeight = rescoreQueryWeight;
+
+		return this;
+	}
+
+	@Override
+	public RescoreBuilder scoreMode(Rescore.ScoreMode scoreMode) {
+		_scoreMode = scoreMode;
 
 		return this;
 	}
@@ -43,6 +74,9 @@ public class RescoreBuilderImpl implements RescoreBuilder {
 	}
 
 	private Query _query;
+	private Float _queryWeight;
+	private Float _rescoreQueryWeight;
+	private Rescore.ScoreMode _scoreMode;
 	private Integer _windowSize;
 
 }

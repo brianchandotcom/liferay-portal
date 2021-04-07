@@ -63,11 +63,12 @@ definition {
 
 		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
+		MobileDevice.gotoMobileDeviceFamily(mobileDeviceFamilyName = "Test Family Name");
+
 		MobileDevice.addClassificationRuleCP(
 			classificationDescription = "This is Test Classification",
 			classificationName = "Test Classification Name",
 			deviceType = "Other Devices",
-			mobileDeviceFamilyName = "Test Family Name",
 			ruleOSScope = "Any Operating System");
 
 		AssertElementPresent(

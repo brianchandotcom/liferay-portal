@@ -10,11 +10,11 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayPanel from '@clayui/panel';
 import React, {useContext} from 'react';
 
 import ContentView from '../../../shared/components/content-view/ContentView.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
-import Panel from '../../../shared/components/panel/Panel.es';
 import ChildLink from '../../../shared/components/router/ChildLink.es';
 import {AppContext} from '../../AppContext.es';
 import {Table} from './PerformanceByStepCardTable.es';
@@ -39,11 +39,11 @@ const Body = ({items, totalCount}) => {
 	};
 
 	return (
-		<Panel.Body>
+		<ClayPanel.Body>
 			<ContentView {...statesProps}>
 				{totalCount > 0 && <Body.Table items={items} />}
 			</ContentView>
-		</Panel.Body>
+		</ClayPanel.Body>
 	);
 };
 
@@ -62,7 +62,7 @@ const Footer = ({processId, timeRange, totalCount}) => {
 	const viewAllStepsUrl = `/performance/step/${processId}/${defaultDelta}/1/breachedInstancePercentage:desc`;
 
 	return (
-		<Panel.Footer elementClasses="fixed-bottom">
+		<ClayPanel.Footer className="fixed-bottom">
 			<div className="mb-1 text-right">
 				<ChildLink
 					className="border-0 btn btn-secondary btn-sm"
@@ -78,7 +78,7 @@ const Footer = ({processId, timeRange, totalCount}) => {
 					<ClayIcon symbol="caret-right-l" />
 				</ChildLink>
 			</div>
-		</Panel.Footer>
+		</ClayPanel.Footer>
 	);
 };
 

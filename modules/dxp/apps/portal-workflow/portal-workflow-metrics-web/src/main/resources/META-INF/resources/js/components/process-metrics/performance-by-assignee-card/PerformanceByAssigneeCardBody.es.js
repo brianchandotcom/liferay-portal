@@ -10,11 +10,11 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayPanel from '@clayui/panel';
 import React, {useContext} from 'react';
 
 import ContentView from '../../../shared/components/content-view/ContentView.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
-import Panel from '../../../shared/components/panel/Panel.es';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import ChildLink from '../../../shared/components/router/ChildLink.es';
 import {AppContext} from '../../AppContext.es';
@@ -41,11 +41,11 @@ const Body = ({filtered, items, totalCount}) => {
 	};
 
 	return (
-		<Panel.Body>
+		<ClayPanel.Body>
 			<ContentView {...statesProps}>
 				{totalCount > 0 && <Body.Table items={items} />}
 			</ContentView>
-		</Panel.Body>
+		</ClayPanel.Body>
 	);
 };
 
@@ -70,7 +70,7 @@ const Footer = ({processId, processStep, timeRange, totalCount}) => {
 	return (
 		<PromisesResolver.Resolved>
 			{totalCount > 0 ? (
-				<Panel.Footer elementClasses="fixed-bottom">
+				<ClayPanel.Footer className="fixed-bottom">
 					<div className="mb-1 text-right">
 						<ChildLink
 							className="border-0 btn btn-secondary btn-sm"
@@ -86,7 +86,7 @@ const Footer = ({processId, processStep, timeRange, totalCount}) => {
 							<ClayIcon symbol="caret-right-l" />
 						</ChildLink>
 					</div>
-				</Panel.Footer>
+				</ClayPanel.Footer>
 			) : null}
 		</PromisesResolver.Resolved>
 	);

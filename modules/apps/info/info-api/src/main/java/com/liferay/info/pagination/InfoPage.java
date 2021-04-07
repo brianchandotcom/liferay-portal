@@ -15,6 +15,7 @@
 package com.liferay.info.pagination;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 /**
@@ -79,7 +80,24 @@ public class InfoPage<T> {
 
 		_pageItems = pageItems;
 		_pagination = pagination;
-		_totalCountSupplier = totalCountSupplier;
+		_totalCountSupplier = _getCachedSupplier(totalCountSupplier);
+	}
+
+	private Supplier<Integer> _getCachedSupplier(Supplier<Integer> supplier) {
+		final AtomicReference<Integer> atomicReference =
+			new AtomicReference<>();
+
+		return () -> {
+			if (atomicReference.get() != null) {
+				return atomicReference.get();
+			}
+
+			Integer result = supplier.get();
+
+			atomicReference.set(result);
+
+			return result;
+		};
 	}
 
 	private final List<? extends T> _pageItems;

@@ -33,6 +33,30 @@ definition {
 	}
 
 	@priority = "4"
+	test DeleteMobileDeviceFamilyClassificationRule {
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
+
+		MobileDevice.addDeviceFamilyCP(
+			deviceDescription = "This is Test Family",
+			deviceFamilyName = "Test Family Name");
+
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
+
+		MobileDevice.gotoMobileDeviceFamily(mobileDeviceFamilyName = "Test Family Name");
+
+		MobileDevice.addClassificationRuleCP(
+			classificationDescription = "This is Test Classification",
+			classificationName = "Test Classification Name",
+			deviceType = "Other Devices",
+			mobileDeviceFamilyName = "Test Family Name",
+			ruleOSScope = "Any Operating System");
+
+		LexiconEntry.delete(rowEntry = "Test Classification Name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Test Classification Name");
+	}
+
+	@priority = "4"
 	test EditMobileDeviceFamily {
 		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 

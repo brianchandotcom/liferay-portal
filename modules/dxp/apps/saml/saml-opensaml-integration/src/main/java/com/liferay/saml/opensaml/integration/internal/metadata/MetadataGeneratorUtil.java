@@ -132,15 +132,13 @@ public class MetadataGeneratorUtil {
 		SingleSignOnService singleSignOnService =
 			OpenSamlUtil.buildSingleSignOnService(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI,
-				StringBundler.concat(
-					portalURL, PortalUtil.getPathMain(), "/portal/saml/sso"));
+				portalURL + "/web/guest" + SamlCommandQueryConstants.WEB_SSO);
 
 		singleSignOnServices.add(singleSignOnService);
 
 		singleSignOnService = OpenSamlUtil.buildSingleSignOnService(
 			SAMLConstants.SAML2_POST_BINDING_URI,
-			StringBundler.concat(
-				portalURL, PortalUtil.getPathMain(), "/portal/saml/sso"));
+			portalURL + "/web/guest" + SamlCommandQueryConstants.WEB_SSO);
 
 		singleSignOnServices.add(singleSignOnService);
 

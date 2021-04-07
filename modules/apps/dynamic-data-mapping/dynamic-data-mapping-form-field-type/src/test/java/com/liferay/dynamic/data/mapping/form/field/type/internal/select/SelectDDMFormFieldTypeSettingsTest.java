@@ -163,8 +163,10 @@ public class SelectDDMFormFieldTypeSettingsTest
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
-				"setRequired('options', contains(getValue('dataSourceType'), " +
-					"\"manual\"))"));
+				StringBundler.concat(
+					"setRequired('options', ",
+					"isEmpty(getValue('dataSourceType')) OR ",
+					"contains(getValue('dataSourceType'), \"manual\"))")));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
@@ -178,8 +180,10 @@ public class SelectDDMFormFieldTypeSettingsTest
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
-				"setVisible('options', contains(getValue('dataSourceType'), " +
-					"\"manual\"))"));
+				StringBundler.concat(
+					"setVisible('options', ",
+					"isEmpty(getValue('dataSourceType')) OR ",
+					"contains(getValue('dataSourceType'), \"manual\"))")));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(

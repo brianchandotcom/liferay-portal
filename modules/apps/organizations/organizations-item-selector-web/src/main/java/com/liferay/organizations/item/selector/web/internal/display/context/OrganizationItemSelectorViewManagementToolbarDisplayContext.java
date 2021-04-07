@@ -66,6 +66,11 @@ public class OrganizationItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean getSupportsBulkActions() {
+		return true;
+	}
+
+	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "type"};
 	}

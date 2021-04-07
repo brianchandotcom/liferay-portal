@@ -48,6 +48,7 @@
 		left: $borderWidth;
 		line-height: 22px;
 		max-width: calc(100% - #{$borderWidth * 2});
+		min-width: 120px;
 		opacity: 0;
 		padding: 0 8px 0 4px;
 		position: absolute;

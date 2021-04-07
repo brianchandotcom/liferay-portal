@@ -43,12 +43,14 @@ import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.geolocation.GeoBuilders;
-import com.liferay.portal.search.highlight.Highlights;
+import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
+import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
-import com.liferay.portal.search.internal.highlight.HighlightsImpl;
+import com.liferay.portal.search.internal.highlight.FieldConfigBuilderFactoryImpl;
+import com.liferay.portal.search.internal.highlight.HighlightBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
@@ -337,8 +339,11 @@ public abstract class BaseIndexingTestCase {
 			new ComplexQueryPartBuilderFactoryImpl();
 	protected DocumentBuilderFactory documentBuilderFactory =
 		new DocumentBuilderFactoryImpl();
+	protected final FieldConfigBuilderFactory fieldConfigBuilderFactory =
+		new FieldConfigBuilderFactoryImpl();
 	protected final GeoBuilders geoBuilders = new GeoBuildersImpl();
-	protected final Highlights highlights = new HighlightsImpl();
+	protected final HighlightBuilderFactory highlightBuilderFactory =
+		new HighlightBuilderFactoryImpl();
 	protected final Queries queries = new QueriesImpl();
 	protected final RescoreBuilderFactory rescoreBuilderFactory =
 		new RescoreBuilderFactoryImpl();

@@ -54,10 +54,9 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 
 		Query query = queries.string(fieldName.concat(":alpha"));
 
-		Highlight highlight = highlights.builder(
+		Highlight highlight = highlightBuilderFactory.builder(
 		).addFieldConfig(
-			highlights.fieldConfigBuilder(
-			).field(
+			fieldConfigBuilderFactory.builder(
 				fieldName
 			).build()
 		).fragmentSize(

@@ -435,7 +435,9 @@ public class SourceFormatter {
 			throw executionException1;
 		}
 
-		if (!_sourceFormatterMessages.isEmpty()) {
+		if (!_sourceFormatterMessages.isEmpty() ||
+			!_sourceMismatchExceptions.isEmpty()) {
+
 			String outputFileName = _sourceFormatterArgs.getOutputFileName();
 
 			if (outputFileName != null) {
@@ -746,11 +748,7 @@ public class SourceFormatter {
 			modifiedFilesJSONArray.put(sourceMismatchException.getFileName());
 		}
 
-		jsonObject.put(
-			"modifiedFileNames", modifiedFilesJSONArray
-		).put(
-			"violationsCount", _sourceFormatterMessages.size()
-		);
+		jsonObject.put("modifiedFileNames", modifiedFilesJSONArray);
 
 		JSONArray checksJSONArray = new JSONArrayImpl();
 
@@ -762,6 +760,8 @@ public class SourceFormatter {
 			new TreeSet<>(new SourceFormatterMessageCheckNameComparator());
 
 		sortedSourceFormatterMessages.addAll(_sourceFormatterMessages);
+
+		int violationsCount = 0;
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sortedSourceFormatterMessages) {
@@ -807,6 +807,8 @@ public class SourceFormatter {
 				"message", sourceFormatterMessage.getMessage()
 			);
 
+			violationsCount++;
+
 			violationsJSONArray.put(violationJSONObject);
 		}
 
@@ -817,6 +819,8 @@ public class SourceFormatter {
 
 			jsonObject.put("checks", checksJSONArray);
 		}
+
+		jsonObject.put("violationsCount", violationsCount);
 
 		return JSONUtil.toString(jsonObject);
 	}

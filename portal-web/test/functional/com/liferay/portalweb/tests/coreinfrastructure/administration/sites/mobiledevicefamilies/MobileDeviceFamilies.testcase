@@ -32,6 +32,25 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Test Family Name");
 	}
 
+	@priority = "4"
+	test EditMobileDeviceFamily {
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
+
+		MobileDevice.addDeviceFamilyCP(
+			deviceDescription = "Test Family Description",
+			deviceFamilyName = "Test Family Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Test Family Name");
+
+		PortletEntry.inputName(name = "Test Family Name Edit");
+
+		PortletEntry.save();
+
+		LexiconEntry.viewEntryName(rowEntry = "Test Family Name Edit");
+	}
+
 	@priority = "5"
 	test Smoke {
 		ProductMenu.gotoPortlet(

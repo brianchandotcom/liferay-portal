@@ -14,14 +14,15 @@
 
 package com.liferay.roles.item.selector;
 
-import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Mueller (7.2.x), , with no direct replacement
  */
-public class RoleItemSelectorCriterion extends BaseItemSelectorCriterion {
+@Deprecated
+public class RoleItemSelectorCriterion extends BaseRoleItemSelectorCriterion {
 
 	public RoleItemSelectorCriterion() {
 	}
@@ -32,24 +33,8 @@ public class RoleItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_type = type;
 	}
 
-	public long[] getCheckedRoleIds() {
-		return _checkedRoleIds;
-	}
-
-	public String[] getExcludedRoleNames() {
-		return _excludedRoleNames;
-	}
-
 	public int getType() {
 		return _type;
-	}
-
-	public void setCheckedRoleIds(long[] checkedRoleIds) {
-		_checkedRoleIds = checkedRoleIds;
-	}
-
-	public void setExcludedRoleNames(String[] excludedRoleNames) {
-		_excludedRoleNames = excludedRoleNames;
 	}
 
 	public void setType(int type) {
@@ -67,8 +52,6 @@ public class RoleItemSelectorCriterion extends BaseItemSelectorCriterion {
 		}
 	}
 
-	private long[] _checkedRoleIds = new long[0];
-	private String[] _excludedRoleNames = new String[0];
 	private int _type = RoleConstants.TYPE_REGULAR;
 
 }

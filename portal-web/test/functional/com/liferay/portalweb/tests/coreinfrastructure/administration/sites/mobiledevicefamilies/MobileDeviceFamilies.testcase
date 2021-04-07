@@ -75,6 +75,36 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Test Family Name Edit");
 	}
 
+	@priority = "4"
+	test EditMobileDeviceFamilyClassificationRule {
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
+
+		MobileDevice.addDeviceFamilyCP(
+			deviceDescription = "This is Test Family",
+			deviceFamilyName = "Test Family Name");
+
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
+
+		MobileDevice.gotoMobileDeviceFamily(mobileDeviceFamilyName = "Test Family Name");
+
+		MobileDevice.addClassificationRuleCP(
+			classificationDescription = "This is Test Classification",
+			classificationName = "Test Classification Name",
+			deviceType = "Other Devices",
+			mobileDeviceFamilyName = "Test Family Name",
+			ruleOSScope = "Any Operating System");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Test Classification Name");
+
+		PortletEntry.inputName(name = "Test Classification Name Edit");
+
+		PortletEntry.save();
+
+		LexiconEntry.viewEntryName(rowEntry = "Test Classification Name Edit");
+	}
+
 	@priority = "5"
 	test Smoke {
 		ProductMenu.gotoPortlet(

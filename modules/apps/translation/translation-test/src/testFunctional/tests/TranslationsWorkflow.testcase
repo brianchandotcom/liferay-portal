@@ -158,6 +158,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "Contenidoweb",
 			descriptionTranslateion = "Descripcion",
+			encoding = "utf8",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
 			translationZipFileName = "WebContentTitle-en_US.zip",
@@ -345,6 +346,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "ContenuWeb",
 			descriptionTranslateion = "Ladescription",
+			encoding = "utf8",
 			titleTranslation = "TitreducontenuWeb",
 			translationFileName = "WebContentTitle-en_US-fr_FR",
 			translationZipFileName = "WebContentTitle-en_US.zip",

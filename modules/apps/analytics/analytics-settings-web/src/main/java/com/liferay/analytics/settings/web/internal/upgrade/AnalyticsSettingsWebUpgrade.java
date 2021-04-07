@@ -15,7 +15,6 @@
 package com.liferay.analytics.settings.web.internal.upgrade;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -30,7 +29,11 @@ public class AnalyticsSettingsWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.register(
+			"0.0.0", "1.0.0",
+			new com.liferay.analytics.settings.web.internal.upgrade.v1_0_0.
+				AnalyticsConfigurationPreferencesUpgradeProcess(
+					_configurationAdmin));
 
 		registry.register(
 			"0.0.1", "1.0.0",

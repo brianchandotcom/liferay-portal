@@ -384,9 +384,21 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
+			// Click Sidebar is a workaround for LPS-130035
+
+			Click.clickNoMouseOver(
+				key_tabName = "Builder",
+				locator1 = "Sidebar#TAB");
+
 			DataEngine.editFieldSearchable(
 				fieldFieldLabel = "PaginaOrigem",
 				searchableType = "Disable");
+
+			// Click Sidebar is a workaround for LPS-130035
+
+			Click.clickNoMouseOver(
+				key_tabName = "Builder",
+				locator1 = "Sidebar#TAB");
 
 			WebContentStructures.saveCP();
 

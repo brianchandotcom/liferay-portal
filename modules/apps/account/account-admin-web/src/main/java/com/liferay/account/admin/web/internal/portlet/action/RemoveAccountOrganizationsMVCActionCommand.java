@@ -17,8 +17,6 @@ package com.liferay.account.admin.web.internal.portlet.action;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.NoSuchEntryOrganizationRelException;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
-import com.liferay.petra.lang.SafeClosable;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -50,9 +48,7 @@ public class RemoveAccountOrganizationsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		try (SafeClosable safeClosable =
-				ProxyModeThreadLocal.setWithSafeClosable(true)) {
-
+		try {
 			long accountEntryId = ParamUtil.getLong(
 				actionRequest, "accountEntryId");
 			long[] accountOrganizationIds = ParamUtil.getLongValues(

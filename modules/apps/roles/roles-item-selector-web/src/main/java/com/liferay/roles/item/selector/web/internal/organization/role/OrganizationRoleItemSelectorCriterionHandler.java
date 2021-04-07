@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.roles.item.selector.web.internal;
+package com.liferay.roles.item.selector.web.internal.organization.role;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
+import com.liferay.roles.item.selector.organization.role.OrganizationRoleItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,17 +24,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Alessio Antonio Rendina
- * @deprecated As of Mueller (7.2.x), , with no direct replacement
+ * @author Roberto Díaz
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-@Deprecated
-public class RoleItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<RoleItemSelectorCriterion> {
+public class OrganizationRoleItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler
+		<OrganizationRoleItemSelectorCriterion> {
 
 	@Override
-	public Class<RoleItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return RoleItemSelectorCriterion.class;
+	public Class<OrganizationRoleItemSelectorCriterion>
+		getItemSelectorCriterionClass() {
+
+		return OrganizationRoleItemSelectorCriterion.class;
 	}
 
 	@Activate

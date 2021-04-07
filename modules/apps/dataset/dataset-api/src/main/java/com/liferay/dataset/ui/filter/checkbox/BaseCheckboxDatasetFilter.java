@@ -15,6 +15,7 @@
 package com.liferay.dataset.ui.filter.checkbox;
 
 import com.liferay.dataset.ui.filter.DatasetFilter;
+import com.liferay.dataset.ui.filter.DatasetFilterTypes;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public abstract class BaseCheckboxDatasetFilter implements DatasetFilter {
 
 	@Override
 	public String getType() {
-		return "checkbox";
+		return DatasetFilterTypes.CHECKBOX;
 	}
 
 }

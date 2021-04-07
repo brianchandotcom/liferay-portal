@@ -127,7 +127,9 @@ function TopperContent({
 		targetRef,
 	} = useDropTarget(item);
 
-	const name = getLayoutDataItemLabel(item, fragmentEntryLinks);
+	const name =
+		getLayoutDataItemLabel(item, fragmentEntryLinks) ||
+		Liferay.Language.get('element');
 
 	const {handlerRef, isDraggingSource} = useDragItem(
 		{
@@ -221,10 +223,11 @@ function TopperContent({
 					)}
 
 					<TopperListItem
-						className="page-editor__topper__title"
+						className="d-inline-block page-editor__topper__title"
 						expand
+						title={name}
 					>
-						{name || Liferay.Language.get('element')}
+						{name}
 					</TopperListItem>
 					{item.type === LAYOUT_DATA_ITEM_TYPES.fragment && (
 						<TopperListItem>

@@ -36,9 +36,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.rescore.Rescore;
-import com.liferay.portal.search.rescore.RescoreBuilder;
 import com.liferay.portal.search.rescore.RescoreBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -444,13 +442,8 @@ public class SearchRequestBuilderTest {
 	}
 
 	private Rescore _buildRescore(String fieldName, String value) {
-		RescoreBuilder rescoreBuilder =
-			_rescoreBuilderFactory.getRescoreBuilder();
-
-		Query rescoreQuery = _queries.match(fieldName, value);
-
-		return rescoreBuilder.query(
-			rescoreQuery
+		return _rescoreBuilderFactory.builder(
+			_queries.match(fieldName, value)
 		).windowSize(
 			100
 		).build();

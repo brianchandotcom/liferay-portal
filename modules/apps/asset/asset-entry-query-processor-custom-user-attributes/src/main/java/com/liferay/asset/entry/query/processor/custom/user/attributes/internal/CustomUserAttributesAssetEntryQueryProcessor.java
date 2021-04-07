@@ -15,7 +15,9 @@
 package com.liferay.asset.entry.query.processor.custom.user.attributes.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
@@ -98,7 +100,15 @@ public class CustomUserAttributesAssetEntryQueryProcessor
 					new String[0], QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (AssetCategory assetCategory : assetCategories) {
-				allCategoryIdsList.add(assetCategory.getCategoryId());
+				AssetVocabulary assetVocabulary =
+					_assetVocabularyLocalService.fetchAssetVocabulary(
+						assetCategory.getVocabularyId());
+
+				String vocabularyTitle = assetVocabulary.getTitleCurrentValue();
+
+				if (vocabularyTitle.equals(customUserAttributeName)) {
+					allCategoryIdsList.add(assetCategory.getCategoryId());
+				}
 			}
 		}
 
@@ -107,6 +117,9 @@ public class CustomUserAttributesAssetEntryQueryProcessor
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

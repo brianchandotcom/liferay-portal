@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.view.list;
 
 import com.liferay.dataset.ui.view.DatasetView;
-import com.liferay.dataset.ui.view.DatasetViewType;
+import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
 import com.liferay.petra.string.StringPool;
 
 /**
@@ -24,8 +24,8 @@ import com.liferay.petra.string.StringPool;
 public abstract class BaseListDatasetView implements DatasetView {
 
 	@Override
-	public String getContentRenderer() {
-		return DatasetViewType.LIST;
+	public String getContentRendererName() {
+		return DatasetViewContentRendererNames.LIST;
 	}
 
 	public abstract String getDescription();
@@ -36,12 +36,12 @@ public abstract class BaseListDatasetView implements DatasetView {
 
 	@Override
 	public String getLabel() {
-		return DatasetViewType.LIST;
+		return DatasetViewContentRendererNames.LIST;
 	}
 
 	@Override
 	public String getName() {
-		return DatasetViewType.LIST;
+		return DatasetViewContentRendererNames.LIST;
 	}
 
 	public String getSticker() {
@@ -54,7 +54,7 @@ public abstract class BaseListDatasetView implements DatasetView {
 
 	@Override
 	public String getThumbnail() {
-		return DatasetViewType.LIST;
+		return DatasetViewContentRendererNames.LIST;
 	}
 
 	public abstract String getTitle();

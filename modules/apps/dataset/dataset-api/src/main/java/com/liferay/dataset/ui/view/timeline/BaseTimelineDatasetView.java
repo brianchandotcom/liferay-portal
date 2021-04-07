@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.view.timeline;
 
 import com.liferay.dataset.ui.view.DatasetView;
-import com.liferay.dataset.ui.view.DatasetViewType;
+import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
 
 /**
  * @author Marco Leo
@@ -23,8 +23,8 @@ import com.liferay.dataset.ui.view.DatasetViewType;
 public abstract class BaseTimelineDatasetView implements DatasetView {
 
 	@Override
-	public String getContentRenderer() {
-		return DatasetViewType.TIMELINE;
+	public String getContentRendererName() {
+		return DatasetViewContentRendererNames.TIMELINE;
 	}
 
 	public abstract String getDate();
@@ -33,17 +33,17 @@ public abstract class BaseTimelineDatasetView implements DatasetView {
 
 	@Override
 	public String getLabel() {
-		return DatasetViewType.TIMELINE;
+		return DatasetViewContentRendererNames.TIMELINE;
 	}
 
 	@Override
 	public String getName() {
-		return DatasetViewType.TIMELINE;
+		return DatasetViewContentRendererNames.TIMELINE;
 	}
 
 	@Override
 	public String getThumbnail() {
-		return DatasetViewType.TIMELINE;
+		return DatasetViewContentRendererNames.TIMELINE;
 	}
 
 	public abstract String getTitle();

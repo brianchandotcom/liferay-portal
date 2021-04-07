@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.view.table;
 
 import com.liferay.dataset.ui.view.DatasetView;
-import com.liferay.dataset.ui.view.DatasetViewType;
+import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
 import com.liferay.dataset.ui.view.table.schema.TableDatasetViewSchema;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -28,18 +28,18 @@ import java.util.ResourceBundle;
 public abstract class BaseTableDatasetView implements DatasetView {
 
 	@Override
-	public String getContentRenderer() {
-		return DatasetViewType.TABLE;
+	public String getContentRendererName() {
+		return DatasetViewContentRendererNames.TABLE;
 	}
 
 	@Override
 	public String getLabel() {
-		return DatasetViewType.TABLE;
+		return DatasetViewContentRendererNames.TABLE;
 	}
 
 	@Override
 	public String getName() {
-		return DatasetViewType.TABLE;
+		return DatasetViewContentRendererNames.TABLE;
 	}
 
 	public ResourceBundle getResourceBundle(Locale locale) {
@@ -51,7 +51,7 @@ public abstract class BaseTableDatasetView implements DatasetView {
 
 	@Override
 	public String getThumbnail() {
-		return DatasetViewType.TABLE;
+		return DatasetViewContentRendererNames.TABLE;
 	}
 
 }

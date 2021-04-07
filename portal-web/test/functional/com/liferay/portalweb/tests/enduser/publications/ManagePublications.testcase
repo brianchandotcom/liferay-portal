@@ -96,7 +96,9 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.createNewPublication(publicationsName = "Publication 2 Name");
+		Publications.createNewPublication(
+			gotoManagePublications = "true",
+			publicationsName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -122,7 +124,15 @@ definition {
 			key_webContentTitle = "Web Content Title 2",
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
-		Publications.selectPublication(publicationsName = "Publication 2 Name");
+		Publications.selectPublication(
+			gotoManagePublications = "true",
+			publicationsName = "Publication 2 Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
 
 		AssertElementPresent(
 			key_webContentTitle = "Web Content Title 2",

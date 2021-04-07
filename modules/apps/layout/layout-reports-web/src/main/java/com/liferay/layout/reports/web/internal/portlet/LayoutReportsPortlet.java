@@ -14,42 +14,17 @@
 
 package com.liferay.layout.reports.web.internal.portlet;
 
-import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
-import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
-import com.liferay.layout.reports.web.internal.constants.LayoutReportsWebKeys;
-import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
-import com.liferay.layout.reports.web.internal.display.context.LayoutReportsDisplayContext;
-import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
-
-import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -75,87 +50,12 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class LayoutReportsPortlet extends MVCPortlet {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_layoutReportsGooglePageSpeedConfigurationProvider =
-			new LayoutReportsGooglePageSpeedConfigurationProvider(
-				_configurationProvider,
-				ConfigurableUtil.createConfigurable(
-					LayoutReportsGooglePageSpeedConfiguration.class,
-					properties));
-	}
-
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(httpServletRequest);
-
-		String layoutMode = ParamUtil.getString(
-			originalHttpServletRequest, "p_l_mode", Constants.VIEW);
-
-		if (layoutMode.equals(Constants.PREVIEW)) {
-			return;
-		}
-
-		try {
-			Group group = _groupLocalService.getGroup(
-				_portal.getScopeGroupId(httpServletRequest));
-
-			if (!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
-					group)) {
-
-				return;
-			}
-
-			httpServletRequest.setAttribute(
-				LayoutReportsWebKeys.LAYOUT_REPORTS_DISPLAY_CONTEXT,
-				new LayoutReportsDisplayContext(
-					_groupLocalService, _infoItemServiceTracker,
-					_layoutLocalService,
-					new LayoutReportsDataProvider(
-						_layoutReportsGooglePageSpeedConfigurationProvider.
-							getApiKey(group)),
-					_layoutSEOLinkManager, _language, _portal, renderRequest));
-
-			super.doDispatch(renderRequest, renderResponse);
-		}
-		catch (PortalException portalException) {
-			throw new PortletException(portalException);
-		}
+		super.doDispatch(renderRequest, renderResponse);
 	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	private LayoutReportsGooglePageSpeedConfigurationProvider
-		_layoutReportsGooglePageSpeedConfigurationProvider;
-
-	@Reference
-	private LayoutSEOLinkManager _layoutSEOLinkManager;
-
-	@Reference
-	private Portal _portal;
 
 }

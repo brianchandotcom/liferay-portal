@@ -1,6 +1,7 @@
 definition {
 
 	macro addClassificationRuleCP {
+
 		// Workaround for LPS-92682
 
 		Click(locator1 = "Button#PLUS");
@@ -68,6 +69,10 @@ definition {
 			value1 = "${mobileDeviceFamilyName}");
 	}
 
+	macro openMobileDeviceAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_mobile_device_rules_web_portlet_MDRPortlet");
+	}
+
 	macro previewPG {
 		Click(locator1 = "ControlMenu#SIMULATION");
 
@@ -133,10 +138,6 @@ definition {
 		}
 
 		SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
-	}
-
-	macro openMobileDeviceAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_mobile_device_rules_web_portlet_MDRPortlet");
 	}
 
 }

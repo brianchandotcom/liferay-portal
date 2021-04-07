@@ -38,13 +38,28 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6085. UseSubscriptions"
-	@ignore = "true"
 	@priority = "3"
 	test UseSubscriptions {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductSubscriptions#UseSubscriptions";
 
-		// TODO COMMERCE-6085 UseSubscriptions
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
 
+		CPCommerceCatalog.newProductsEntry(
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
+		Click(locator1 = "CommerceEntry#PAYMENT_SUBSCRIPTION_TOGGLE");
+
+		Click(locator1 = "CommerceEntry#DELIVERY_SUBSCRIPTION_TOGGLE");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
 	}
 
 }

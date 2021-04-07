@@ -118,7 +118,6 @@
 	<classpathentry kind="lib" path="lib/development/websocket-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmlresolver.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmltask.jar"/>
-	<classpathentry kind="lib" path="lib/global/portlet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/abdera.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ant.jar"/>
 	<classpathentry kind="lib" path="lib/portal/antlr2.jar"/>
@@ -255,6 +254,7 @@
 	<classpathentry kind="lib" path="lib/portal/poi-ooxml-schemas.jar"/>
 	<classpathentry kind="lib" path="lib/portal/poi-scratchpad.jar"/>
 	<classpathentry kind="lib" path="lib/portal/portal-client.jar"/>
+	<classpathentry kind="lib" path="lib/portal/portlet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/portletmvc4spring-framework.jar"/>
 	<classpathentry kind="lib" path="lib/portal/rdffilter.jar"/>
 	<classpathentry kind="lib" path="lib/portal/rhino.jar"/>

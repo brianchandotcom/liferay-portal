@@ -18,8 +18,6 @@
 		<pathelement location="${project.dir}/lib/development/activation.jar" />
 		<pathelement location="${project.dir}/lib/development/mail.jar" />
 		<pathelement location="${project.dir}/lib/development/velocity.jar" />
-		<pathelement location="${project.dir}/lib/global/portal-settings-shared.jar" />
-		<pathelement location="${project.dir}/lib/global/portlet.jar" />
 		<pathelement location="${project.dir}/lib/portal/ant.jar" />
 		<pathelement location="${project.dir}/lib/portal/commons-collections.jar" />
 		<pathelement location="${project.dir}/lib/portal/commons-fileupload.jar" />
@@ -40,6 +38,7 @@
 		<pathelement location="${project.dir}/lib/portal/log4j-api.jar" />
 		<pathelement location="${project.dir}/lib/portal/log4j-core.jar" />
 		<pathelement location="${project.dir}/lib/portal/openid4java.jar" />
+		<pathelement location="${project.dir}/lib/portal/portlet.jar" />
 		<pathelement location="${project.dir}/lib/portal/rome.jar" />
 	</path>
 

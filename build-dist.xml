@@ -3034,7 +3034,11 @@ plugins.includes=</echo>
 		>
 			<fileset
 				dir="${app.server.lib.global.dir}"
-				includes="annotations.jar,portlet.jar"
+				includes="annotations.jar"
+			/>
+			<fileset
+				dir="${app.server.lib.portal.dir}"
+				includes="portlet.jar"
 			/>
 		</copy>
 
@@ -3099,7 +3103,11 @@ plugins.includes=</echo>
 		>
 			<fileset
 				dir="${app.server.lib.global.dir}"
-				includes="annotations.jar,portlet.jar"
+				includes="annotations.jar"
+			/>
+			<fileset
+				dir="${app.server.lib.portal.dir}"
+				includes="portlet.jar"
 			/>
 		</copy>
 

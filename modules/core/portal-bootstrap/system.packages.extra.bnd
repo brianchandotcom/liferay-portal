@@ -319,7 +319,6 @@ Provide-Capability:\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/persistence.jar,\
 	@../../../lib/development/servlet-api.jar,\
-	@../../../lib/global/portlet.jar,\
 	@../../../lib/portal/ant.jar,\
 	@../../../lib/portal/asm-analysis.jar,\
 	@../../../lib/portal/asm-commons.jar,\
@@ -350,6 +349,7 @@ Provide-Capability:\
 	@../../../lib/portal/log4j-1.2-api.jar,\
 	@../../../lib/portal/log4j-api.jar,\
 	@../../../lib/portal/log4j-core.jar,\
+	@../../../lib/portal/portlet.jar,\
 	@../../../lib/portal/portletmvc4spring-framework.jar,\
 	@../../../lib/portal/rome.jar,\
 	@../../../lib/portal/slf4j-api.jar,\

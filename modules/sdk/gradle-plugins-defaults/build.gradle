@@ -44,6 +44,12 @@ gradleTest {
 	versions "5.6.4", gradleVersion
 }
 
+processResources {
+	into("com/liferay/gradle/plugins/defaults/dependencies") {
+		from "../../../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml"
+	}
+}
+
 updateFileVersions {
 	match(/classpath group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.defaults", version: "(\d.+)"/, "../../../portal-web/build-test.gradle")
 }

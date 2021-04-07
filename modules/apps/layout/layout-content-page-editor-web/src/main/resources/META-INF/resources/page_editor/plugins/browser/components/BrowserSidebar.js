@@ -13,6 +13,7 @@
  */
 
 import ClayTabs from '@clayui/tabs';
+import classNames from 'classnames';
 import React, {useState} from 'react';
 
 import {useId} from '../../../app/utils/useId';
@@ -40,7 +41,11 @@ export default function BrowserSidebar({title}) {
 	const getTabPanelId = (tabId) => `${tabIdNamespace}tabPanel${tabId}`;
 
 	return (
-		<div className="page-editor__sidebar__browser">
+		<div
+			className={classNames('page-editor__sidebar__browser', {
+				'first-tab--active': activeTabId === 0,
+			})}
+		>
 			<SidebarPanelHeader>{title}</SidebarPanelHeader>
 
 			<ClayTabs className="page-editor__sidebar__browser__tabs" modern>

@@ -48,4 +48,28 @@ definition {
 			value1 = "Google PageSpeed");
 	}
 
+    @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
+	@priority = "5"
+	test PageAuditWidgetPage {
+		property portal.acceptance = "true";
+
+        JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Widget Page");
+
+        Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+
+        PageAudit.openPageAuditPanel();
+
+        AssertTextPresent(
+			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+			value1 = "Check issues that impact on your page's accessibility and SEO.");
+
+        PageAudit.connectToGooglePageAudit();
+
+        AssertTextPresent(
+			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+			value1 = "Google PageSpeed");
+	}
+
 }

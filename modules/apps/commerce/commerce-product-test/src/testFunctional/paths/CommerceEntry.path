@@ -526,6 +526,16 @@
 	<td>//div/label[@class='control-label' and contains(.,'${key_customFieldName}')]/..//p</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAYMENT_SUBSCRIPTION_TOGGLE</td>
+	<td>//h4[contains(text(), 'Payment Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELIVERY_SUBSCRIPTION_TOGGLE</td>
+	<td>//h4[contains(text(), 'Delivery Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
+	<td></td>
+</tr>
 <!--OPTION-->
 <tr>
 	<td>DELETE_OPTION_BUTTON</td>

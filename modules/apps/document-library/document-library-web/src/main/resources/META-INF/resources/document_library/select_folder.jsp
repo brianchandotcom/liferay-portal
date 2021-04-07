@@ -77,6 +77,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 		</aui:button-row>
 
 		<liferay-ui:search-container
+			cssClass="pb-6"
 			iteratorURL='<%=
 				PortletURLBuilder.createRenderURL(
 					renderResponse

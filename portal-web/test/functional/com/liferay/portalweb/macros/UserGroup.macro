@@ -17,7 +17,7 @@ definition {
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		if (("${userGroupNameVariation}" == "Asterik") || ("${userGroupNameVariation}" == "Comma") || ("${userGroupNameVariation}" == "Number")) {
+		if ("${userGroupNameVariation}" == "Invalid") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
@@ -31,9 +31,7 @@ definition {
 		else if ("${userGroupNameVariation}" == "Duplicate") {
 			Alert.viewRequestFailedToComplete();
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_1",
-				value1 = "Please enter a unique name.");
+			Alert.viewDuplicateErrorMessage();
 		}
 		else if ("${userGroupNameVariation}" == "Null") {
 			Alert.viewRequiredField();
@@ -48,11 +46,9 @@ definition {
 	}
 
 	macro assignAllMembersCP {
-		Search.searchCP(searchTerm = "${userGroupName}");
-
-		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign Members");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Assign Members",
+			rowEntry = "${userGroupName}");
 
 		LexiconEntry.gotoAdd();
 
@@ -68,16 +64,7 @@ definition {
 	}
 
 	macro assignMemberCP {
-		Search.searchCP(searchTerm = "${userGroupName}");
-
-		Pause(locator1 = "3000");
-
-		AssertElementPresent(
-			key_rowEntry = "${userGroupName}",
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
-
 		LexiconEntry.gotoEntryMenuItem(
-			key_rowEntry = "${userGroupName}",
 			menuItem = "Assign Members",
 			rowEntry = "${userGroupName}");
 
@@ -113,10 +100,6 @@ definition {
 	}
 
 	macro deleteCP {
-		Search.searchCP(searchTerm = "${userGroupName}");
-
-		Pause(locator1 = "3000");
-
 		AssertTextEquals(
 			key_userGroupName = "${userGroupName}",
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
@@ -148,9 +131,9 @@ definition {
 	}
 
 	macro editCP {
-		Pause(locator1 = "3000");
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${userGroupName}");
 
 		if (isSet(userGroupNameEdit)) {
 			PortletEntry.inputName(name = "${userGroupNameEdit}");
@@ -195,13 +178,9 @@ definition {
 	}
 
 	macro removeMemberCP {
-		Search.searchCP(searchTerm = "${userGroupName}");
-
-		Pause(locator1 = "3000");
-
-		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign Members");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Assign Members",
+			rowEntry = "${userGroupName}");
 
 		Check(
 			key_userScreenName = "${userScreenName}",
@@ -223,10 +202,7 @@ definition {
 	}
 
 	macro tearDownCP {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			PortletEntry.selectAll();
@@ -244,14 +220,6 @@ definition {
 	}
 
 	macro viewAssignMemberCP {
-		Search.searchCP(searchTerm = "${userGroupName}");
-
-		var key_userGroupName = "${userGroupName}";
-
-		AssertTextEquals(
-			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}");
-
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
 			rowEntry = "${userGroupName}");
@@ -263,16 +231,9 @@ definition {
 	}
 
 	macro viewCP {
-		Search.searchCP(searchTerm = "${userGroupName}");
+		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
 
-		Pause(locator1 = "3000");
-
-		AssertTextEquals(
-			key_userGroupName = "${userGroupName}",
-			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}");
-
-		AssertElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		LexiconEntry.viewEntryMenu(rowEntry = "${userGroupName}");
 
 		AssertElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 
@@ -321,17 +282,9 @@ definition {
 	}
 
 	macro viewRemoveMemberCP {
-		var key_userGroupName = "${userGroupName}";
+		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
 
-		Search.searchCP(searchTerm = "${userGroupName}");
-
-		AssertTextEquals(
-			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}");
-
-		AssertClick(
-			locator1 = "UserGroups#USER_GROUP_TABLE_NAME_LINK",
-			value1 = "${userGroupName}");
+		LexiconEntry.gotoEntry(rowEntry = "${userGroupName}");
 
 		AssertTextNotPresent(value1 = "${userFirstName}");
 	}

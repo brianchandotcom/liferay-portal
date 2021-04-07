@@ -112,7 +112,7 @@ public class ClickToChatFormNavigatorEntry
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_PROVIDER_ID,
 			typeSettingsUnicodeProperties.getProperty(
-				"curClickToChatProviderId"));
+				"clickToChatProviderId"));
 
 		super.include(httpServletRequest, httpServletResponse);
 	}

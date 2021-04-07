@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.WikiNodeResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.WikiNodeSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -40,9 +41,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -546,6 +549,62 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteWikiNodePermissionsPage() throws Exception {
+		Page<Permission> page = wikiNodeResource.getSiteWikiNodePermissionsPage(
+			testGroup.getGroupId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected WikiNode testGetSiteWikiNodePermissionsPage_addWikiNode()
+		throws Exception {
+
+		return testPostSiteWikiNode_addWikiNode(randomWikiNode());
+	}
+
+	@Test
+	public void testPutSiteWikiNodePermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiNode wikiNode = testPutSiteWikiNodePermission_addWikiNode();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiNodeResource.putSiteWikiNodePermissionHttpResponse(
+				wikiNode.getSiteId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			wikiNodeResource.putSiteWikiNodePermissionHttpResponse(
+				wikiNode.getSiteId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected WikiNode testPutSiteWikiNodePermission_addWikiNode()
+		throws Exception {
+
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
+	}
+
+	@Test
 	public void testDeleteWikiNode() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiNode wikiNode = testDeleteWikiNode_addWikiNode();
@@ -673,6 +732,64 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	protected WikiNode testPutWikiNode_addWikiNode() throws Exception {
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
+	}
+
+	@Test
+	public void testGetWikiNodePermissionsPage() throws Exception {
+		WikiNode postWikiNode = testGetWikiNodePermissionsPage_addWikiNode();
+
+		Page<Permission> page = wikiNodeResource.getWikiNodePermissionsPage(
+			postWikiNode.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected WikiNode testGetWikiNodePermissionsPage_addWikiNode()
+		throws Exception {
+
+		return testPostSiteWikiNode_addWikiNode(randomWikiNode());
+	}
+
+	@Test
+	public void testPutWikiNodePermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiNode wikiNode = testPutWikiNodePermission_addWikiNode();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiNodeResource.putWikiNodePermissionHttpResponse(
+				wikiNode.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"VIEW"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			wikiNodeResource.putWikiNodePermissionHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected WikiNode testPutWikiNodePermission_addWikiNode()
+		throws Exception {
+
 		return wikiNodeResource.postSiteWikiNode(
 			testGroup.getGroupId(), randomWikiNode());
 	}

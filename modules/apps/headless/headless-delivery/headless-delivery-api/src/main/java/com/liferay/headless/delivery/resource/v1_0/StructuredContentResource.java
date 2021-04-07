@@ -66,6 +66,16 @@ public interface StructuredContentResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getAssetLibraryStructuredContentPermissionsPage(
+				Long assetLibraryId, String roleNames)
+		throws Exception;
+
+	public void putAssetLibraryStructuredContentPermission(
+			Long assetLibraryId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			Long contentStructureId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,

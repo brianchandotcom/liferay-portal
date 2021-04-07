@@ -80,6 +80,15 @@ public interface BlogPostingResource {
 	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getBlogPostingPermissionsPage(Long blogPostingId, String roleNames)
+		throws Exception;
+
+	public void putBlogPostingPermission(
+			Long blogPostingId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public String getBlogPostingRenderedContentByDisplayPageDisplayPageKey(
 			Long blogPostingId, String displayPageKey)
 		throws Exception;
@@ -95,6 +104,15 @@ public interface BlogPostingResource {
 
 	public Response postSiteBlogPostingBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteBlogPostingPermissionsPage(Long siteId, String roleNames)
+		throws Exception;
+
+	public void putSiteBlogPostingPermission(
+			Long siteId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void putSiteBlogPostingSubscribe(Long siteId) throws Exception;

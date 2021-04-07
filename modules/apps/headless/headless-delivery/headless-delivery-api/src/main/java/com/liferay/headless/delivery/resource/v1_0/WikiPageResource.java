@@ -84,6 +84,15 @@ public interface WikiPageResource {
 	public Response putWikiPageBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getWikiPagePermissionsPage(Long wikiPageId, String roleNames)
+		throws Exception;
+
+	public void putWikiPagePermission(
+			Long wikiPageId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public void putWikiPageSubscribe(Long wikiPageId) throws Exception;
 
 	public void putWikiPageUnsubscribe(Long wikiPageId) throws Exception;

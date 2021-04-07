@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.KnowledgeBaseFolderSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -39,9 +40,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -391,6 +394,72 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	protected KnowledgeBaseFolder
 			testPutKnowledgeBaseFolder_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+	}
+
+	@Test
+	public void testGetKnowledgeBaseFolderPermissionsPage() throws Exception {
+		KnowledgeBaseFolder postKnowledgeBaseFolder =
+			testGetKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder();
+
+		Page<Permission> page =
+			knowledgeBaseFolderResource.getKnowledgeBaseFolderPermissionsPage(
+				postKnowledgeBaseFolder.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected KnowledgeBaseFolder
+			testGetKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return testPostKnowledgeBaseFolderKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			randomKnowledgeBaseFolder());
+	}
+
+	@Test
+	public void testPutKnowledgeBaseFolderPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			testPutKnowledgeBaseFolderPermission_addKnowledgeBaseFolder();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseFolderResource.
+				putKnowledgeBaseFolderPermissionHttpResponse(
+					knowledgeBaseFolder.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseFolderResource.
+				putKnowledgeBaseFolderPermissionHttpResponse(
+					0L,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected KnowledgeBaseFolder
+			testPutKnowledgeBaseFolderPermission_addKnowledgeBaseFolder()
 		throws Exception {
 
 		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
@@ -772,6 +841,72 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		Assert.assertTrue(
 			equals(randomKnowledgeBaseFolder, knowledgeBaseFolder));
+	}
+
+	@Test
+	public void testGetSiteKnowledgeBaseFolderPermissionsPage()
+		throws Exception {
+
+		Page<Permission> page =
+			knowledgeBaseFolderResource.
+				getSiteKnowledgeBaseFolderPermissionsPage(
+					testGroup.getGroupId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected KnowledgeBaseFolder
+			testGetSiteKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return testPostSiteKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			randomKnowledgeBaseFolder());
+	}
+
+	@Test
+	public void testPutSiteKnowledgeBaseFolderPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			testPutSiteKnowledgeBaseFolderPermission_addKnowledgeBaseFolder();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseFolderResource.
+				putSiteKnowledgeBaseFolderPermissionHttpResponse(
+					knowledgeBaseFolder.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseFolderResource.
+				putSiteKnowledgeBaseFolderPermissionHttpResponse(
+					knowledgeBaseFolder.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected KnowledgeBaseFolder
+			testPutSiteKnowledgeBaseFolderPermission_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)

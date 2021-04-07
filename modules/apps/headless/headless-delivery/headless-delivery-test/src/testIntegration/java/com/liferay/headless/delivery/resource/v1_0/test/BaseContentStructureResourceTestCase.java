@@ -28,6 +28,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.ContentStructureSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -40,10 +41,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -547,6 +550,74 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryContentStructurePermissionsPage()
+		throws Exception {
+
+		Page<Permission> page =
+			contentStructureResource.
+				getAssetLibraryContentStructurePermissionsPage(
+					testDepotEntry.getDepotEntryId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected ContentStructure
+			testGetAssetLibraryContentStructurePermissionsPage_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAssetLibraryContentStructurePermission()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentStructure contentStructure =
+			testPutAssetLibraryContentStructurePermission_addContentStructure();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			contentStructureResource.
+				putAssetLibraryContentStructurePermissionHttpResponse(
+					testDepotEntry.getDepotEntryId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			contentStructureResource.
+				putAssetLibraryContentStructurePermissionHttpResponse(
+					testDepotEntry.getDepotEntryId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected ContentStructure
+			testPutAssetLibraryContentStructurePermission_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetContentStructure() throws Exception {
 		ContentStructure postContentStructure =
 			testGetContentStructure_addContentStructure();
@@ -610,6 +681,70 @@ public abstract class BaseContentStructureResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	@Test
+	public void testGetContentStructurePermissionsPage() throws Exception {
+		ContentStructure postContentStructure =
+			testGetContentStructurePermissionsPage_addContentStructure();
+
+		Page<Permission> page =
+			contentStructureResource.getContentStructurePermissionsPage(
+				postContentStructure.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected ContentStructure
+			testGetContentStructurePermissionsPage_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutContentStructurePermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentStructure contentStructure =
+			testPutContentStructurePermission_addContentStructure();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			contentStructureResource.putContentStructurePermissionHttpResponse(
+				contentStructure.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"VIEW"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			contentStructureResource.putContentStructurePermissionHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected ContentStructure
+			testPutContentStructurePermission_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -970,6 +1105,69 @@ public abstract class BaseContentStructureResourceTestCase {
 			Arrays.asList(
 				ContentStructureSerDes.toDTOs(
 					contentStructuresJSONObject.getString("items"))));
+	}
+
+	@Test
+	public void testGetSiteContentStructurePermissionsPage() throws Exception {
+		Page<Permission> page =
+			contentStructureResource.getSiteContentStructurePermissionsPage(
+				testGroup.getGroupId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected ContentStructure
+			testGetSiteContentStructurePermissionsPage_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSiteContentStructurePermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentStructure contentStructure =
+			testPutSiteContentStructurePermission_addContentStructure();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			contentStructureResource.
+				putSiteContentStructurePermissionHttpResponse(
+					contentStructure.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			contentStructureResource.
+				putSiteContentStructurePermissionHttpResponse(
+					contentStructure.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected ContentStructure
+			testPutSiteContentStructurePermission_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

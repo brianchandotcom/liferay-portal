@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.WikiPageResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.WikiPageSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -39,9 +40,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -728,6 +731,64 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	protected WikiPage testPutWikiPage_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetWikiPagePermissionsPage() throws Exception {
+		WikiPage postWikiPage = testGetWikiPagePermissionsPage_addWikiPage();
+
+		Page<Permission> page = wikiPageResource.getWikiPagePermissionsPage(
+			postWikiPage.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected WikiPage testGetWikiPagePermissionsPage_addWikiPage()
+		throws Exception {
+
+		return testPostWikiPageWikiPage_addWikiPage(randomWikiPage());
+	}
+
+	@Test
+	public void testPutWikiPagePermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPage wikiPage = testPutWikiPagePermission_addWikiPage();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiPageResource.putWikiPagePermissionHttpResponse(
+				wikiPage.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"VIEW"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			wikiPageResource.putWikiPagePermissionHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected WikiPage testPutWikiPagePermission_addWikiPage()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

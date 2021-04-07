@@ -157,9 +157,7 @@
 /tools/gradle-*-bin.zip
 /tools/maven/*.asc
 /tools/node*
-/tools/sdk/dependencies/*/ivy.xml.MD5
-/tools/sdk/dependencies/*/lib
-/tools/sdk/dist
+/tools/sdk
 /tools/selenium/*.exe
 /tools/selenium/extensions/ide.*.js
 /tools/zip_tmpl

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -350,7 +349,7 @@ public class MenuItemProvider {
 				fileEntryTypes, themeDisplay.getScopeGroupId(),
 				themeDisplay.getLocale()));
 
-		urlMenuItem.setLabel(HtmlUtil.escape(label));
+		urlMenuItem.setLabel(label);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

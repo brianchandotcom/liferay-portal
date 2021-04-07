@@ -42,7 +42,7 @@ public interface ClickToChatConfiguration {
 			"chat-provider-smartsupp", "chat-provider-tidio"
 		},
 		optionValues = {
-			"chatwoot", "crips", "jivochat", "liveperson", "smartsupp", "tidio"
+			"chatwoot", "crisp", "jivochat", "liveperson", "smartsupp", "tidio"
 		},
 		required = false
 	)

@@ -38,6 +38,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AdvancedFileSystemStoreSmoke {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.AdvancedFileSystemStore";
 		property osgi.module.configuration.file.names = "com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration.config";
@@ -64,6 +65,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DBStoreSmoke {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
 
@@ -92,6 +94,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test FileSystemStoreSmoke {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore";
 		property osgi.module.configuration.file.names = "com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration.config";

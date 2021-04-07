@@ -33,6 +33,7 @@ definition {
 
 	@description = "This is a use case for LPS-68599."
 	@priority = "5"
+	@refactorneeded
 	test AddCommentInWorkflowSubmission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -94,6 +95,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test AddKBChildArticleAsDraft {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -140,6 +142,7 @@ definition {
 
 	@description = "This test covers LPS-91303. It ensures that the configured KB root folder is available for selection."
 	@priority = "3"
+	@refactorneeded
 	test ConfiguredKBRootFolder {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -203,6 +206,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteConfiguredKBFolder {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -257,6 +261,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteImportedArticles {
 		property testray.component.names = "Training";
 
@@ -294,6 +299,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test EditKBArticleWithCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -350,6 +356,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test EditKBFolderWithCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -434,6 +441,7 @@ definition {
 
 	@description = "This test ensures that a user is able to embed a video in a KB article."
 	@priority = "4"
+	@refactorneeded
 	test EmbedVideo {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -452,6 +460,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test SaveEditedChildArticleAsDraft {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -511,6 +520,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchChildArticleViaSearchPortletPG {
 		JSONKnowledgeBase.addkBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -537,6 +547,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test SearchKBArticleInFolderViaSearchPortlet {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -581,6 +592,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchKBArticleViaSearchPortlet {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -603,6 +615,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test SearchKBArticleWithSpecialCharactersViaSearchPortletPG {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -626,6 +639,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewChildArticleViaUserDefinedFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -667,6 +681,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewConfiguredKBArticleWithinFolderViaKBDisplay {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -712,6 +727,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewDefaultFolderViaKBDisplay {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -739,6 +755,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewImportedKBArticlesInHierarchyWithMarkdownFormat {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -782,6 +799,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewImportedKBArticlesWithMultiplePeerHierarchies {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -817,6 +835,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewImportedKBArticleWithImagesAsKBAttachments {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -856,6 +875,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewImportedKBArticleWithSourceURLMetadata {
 		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewImportedKBArticleWithSourceURLMetadata";
 
@@ -906,6 +926,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticleFriendlyURL {
 		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewKBArticleFriendlyURL";
 
@@ -946,6 +967,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticleGitHubSourceURL {
 		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewKBArticleGitHubSourceURL";
 
@@ -996,6 +1018,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticleNoHierarchyInFolder {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1043,6 +1066,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticlesHierarchyWithinFolders {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1142,6 +1166,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticlesInDifferentScopesPerSite {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1211,6 +1236,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticlesInKBFolder {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1254,6 +1280,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticlesInMultipleKBFolders {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1329,6 +1356,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticleSuggestionsWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1435,6 +1463,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticleSuggestionsWorkflowNotificationEmail {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
@@ -1562,6 +1591,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticlesWithTheSamePriorityViaNavigationLinks {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1665,6 +1695,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1744,6 +1775,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewSuggestionsWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1926,6 +1958,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewUnchangedKBArticlePriorityAfterEdit {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1995,6 +2028,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewUnchangedKBArticleTitleViaLocalizedPage {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

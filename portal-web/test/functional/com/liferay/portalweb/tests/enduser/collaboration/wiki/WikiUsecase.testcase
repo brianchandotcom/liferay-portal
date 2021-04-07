@@ -43,6 +43,7 @@ definition {
 
 	@description = "This test covers LPS-95501. It asserts added wiki attachment file via item selector."
 	@priority = "4"
+	@refactorneeded
 	test ActivateInitialStagingWithAttachment {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -115,6 +116,7 @@ definition {
 
 	@description = "This test covers LPS-106280. It ensures that the wiki Email content can be edited."
 	@priority = "3"
+	@refactorneeded
 	test ConfigureEmailContent {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
@@ -142,6 +144,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ConfigurePortletDisplaySettings {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -173,6 +176,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ImportLARLinkNode {
 		property testray.component.names = "Training";
 
@@ -219,6 +223,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test NavigationPortletSmoke {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -234,6 +239,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test RestoreDeletedFrontPage {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
@@ -279,6 +285,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchChildPageComment {
 		WikiPage.addFrontPagePG(
 			wikiNodeName = "Main",
@@ -308,6 +315,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchFrontPageAttachments {
 		WikiPage.addFrontPagePG(
 			wikiNodeName = "Main",
@@ -330,6 +338,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewDraftPagesViaBreadcrumb {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -373,6 +382,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewNoXSSViaAddPage {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

@@ -28,6 +28,7 @@ definition {
 
 	@description = "This test covers LPS-127049. It ensures that a document can be created with duplicate fields."
 	@priority = "4"
+	@refactorneeded
 	test AddDuplicateFields {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -82,6 +83,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddEntryWithMetadataSet {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -141,6 +143,7 @@ definition {
 
 	@description = "This test covers LPS-123711. It ensures that the document type cannot be published if the title is left blank."
 	@priority = "4"
+	@refactorneeded
 	test AddEntryWithNoTitle {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -190,6 +193,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddMultipleEntries {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -245,6 +249,7 @@ definition {
 
 	@description = "This test covers LPS-127602. It ensures that a predefined image can be added."
 	@priority = "4"
+	@refactorneeded
 	test AddPredefinedImageViaRichText {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -288,6 +293,7 @@ definition {
 
 	@description = "This test covers LPS-127598. It ensures that a user can check out a document with the custom field via editing."
 	@priority = "4"
+	@refactorneeded
 	test CheckOutDocumentWithCustomField {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -321,6 +327,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteEntry {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -354,6 +361,7 @@ definition {
 
 	@description = "This ensures that the user can delete fields within a document type ."
 	@priority = "3"
+	@refactorneeded
 	test DeleteFields {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -398,6 +406,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditEntry {
 		property testray.component.names = "Training";
 
@@ -437,6 +446,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test UpdateEntryWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#UpdateDocumentTypeWithPermissions";
@@ -632,6 +642,7 @@ definition {
 
 	@description = "This ensures that the user can create a document using edited image field inside document type."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentwithEditedImageField {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -697,6 +708,7 @@ definition {
 
 	@description = "This ensures that the user can create a document using edited text field inside document type."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentwithEditedTextField {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -767,6 +779,7 @@ definition {
 
 	@description = "This ensures that the user can create a document using edited upload field inside document type."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentwithEditedUploadField {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.doc",
@@ -838,6 +851,7 @@ definition {
 
 	@description = "This test covers LPS-127131. It ensures that a user can view document with repeatable Image field when editing."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentwithRepeatableImageField {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -896,6 +910,7 @@ definition {
 
 	@description = "This test covers LPS-128182. It ensures that the translated document field can be localized properly."
 	@priority = "3"
+	@refactorneeded
 	test ViewLocalizedDocumentField {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -964,6 +979,7 @@ definition {
 
 	@description = "This test covers LPS-127092. It ensures that the translated document type can be localized properly."
 	@priority = "5"
+	@refactorneeded
 	test ViewLocalizedDocumentType {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

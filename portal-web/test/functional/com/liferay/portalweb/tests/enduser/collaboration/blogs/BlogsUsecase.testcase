@@ -51,6 +51,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryWithHTML {
 		JSONBlog.addEntry(
 			entryContent = "<b>Bold Type</b> <i>Italics</i>",
@@ -71,6 +72,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryWithInlineImage {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -101,6 +103,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddBlogsEntryWithSpecialCharacters {
 		Blogs.addEntry(
 			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
@@ -118,6 +121,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AllowMultiplePortletConfigurationsPerSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -193,6 +197,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ChangeBlogsEntryCoverImage {
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -249,6 +254,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteBlogsEntry {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -276,6 +282,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteDraftBlogsEntry {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -308,6 +315,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DemoTrackbackURL {
 		property custom.properties = "blogs.trackback.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
@@ -507,6 +515,7 @@ definition {
 
 	@description = "This test covers LPS-127212 and LPS-128781. This ensures that can export and import blog entries into a site with existing entry with same title."
 	@priority = "3"
+	@refactorneeded
 	test ExportImportBlogsWithSameTitle {
 		JSONGroup.addGroup(groupName = "Target Site Name");
 
@@ -548,6 +557,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ImportBlogsCommentLAR {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -617,6 +627,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test RestoreBlogsEntry {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -649,6 +660,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntriesAsGuestViaAP {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesAsGuestViaAP";
 
@@ -704,6 +716,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing";
 
@@ -737,6 +750,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryAsPublishedViaAP {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedViaAP";
 
@@ -805,6 +819,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryFriendlyURLViaBlogsPortletAndRecentBloggers {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryFriendlyURLViaBlogsPortletAndRecentBloggers";
 
@@ -852,6 +867,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope";
 
@@ -940,6 +956,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryWithCoverImageFromDMFolders {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1033,6 +1050,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryWithCoverImageUploadedToDM {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -1068,6 +1086,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntryWithCustomAbstract {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryWithCustomAbstract";
 
@@ -1095,6 +1114,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntryWithDefaultAbstract {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryWithDefaultAbstract";
 
@@ -1122,6 +1142,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1220,6 +1241,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryWithSpecialCharactersOnPrivateVirtualHost {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesWithSpecialCharactersOnPublicAndPrivateVirtualHostPages";
 
@@ -1263,6 +1285,7 @@ definition {
 
 	@description = "This test covers LPS-128451. It ensures that a blog entry can be published normally with xss code injected title."
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntryWithXSSCodeInjectedTitle {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -1285,6 +1308,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewNoBlogsDraftDisplaysInAP {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1355,6 +1379,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration {
 		Portlet.addPG(portletName = "Blogs Aggregator");
 

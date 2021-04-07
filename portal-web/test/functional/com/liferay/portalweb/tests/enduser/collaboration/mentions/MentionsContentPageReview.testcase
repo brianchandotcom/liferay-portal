@@ -60,6 +60,7 @@ definition {
 
 	@description = "This case ensures a user can be mentioned in a comment when he has valid permission."
 	@priority = "5"
+	@refactorneeded
 	test MentionUserWithValidPermissions {
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
@@ -134,6 +135,7 @@ definition {
 
 	@description = "This case ensures that the user can mention the other user in a comment."
 	@priority = "5"
+	@refactorneeded
 	test ViewCommentMentionedUser {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -170,6 +172,7 @@ definition {
 
 	@description = "This case ensures a user cannot access a comment he is mentioned on after his permissions are revoked."
 	@priority = "5"
+	@refactorneeded
 	test ViewMentionAfterRevokingPermissions {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

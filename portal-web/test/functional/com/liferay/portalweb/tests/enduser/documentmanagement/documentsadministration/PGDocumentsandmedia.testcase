@@ -49,6 +49,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddDocuments {
 		property testray.component.names = "Training";
 
@@ -202,6 +203,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddFolderDocumentDuplicate {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -224,6 +226,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddFolderDocuments {
 		property testray.component.names = "Training";
 
@@ -265,6 +268,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddFolderImage {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -285,6 +289,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddFolderImageDuplicate {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -307,6 +312,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddFolderImages {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -353,6 +359,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddFolderNameSymbol {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -368,6 +375,7 @@ definition {
 
 	@description = "This is a test for LPS-LPS-128366, it ensures that the folder permissions are removed after removing permissions during folder addition."
 	@priority = "3"
+	@refactorneeded
 	test AddFolderWithViewOnlyByOwnerPermissions {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -397,6 +405,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddSubFolderImageAndDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -438,6 +447,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddSubFolderNameDocumentNameDuplicate {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -464,6 +474,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddSubFolders {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -516,6 +527,7 @@ definition {
 
 	@description = "This test ensures that a document with forbidden characters in the title can be published successfully."
 	@priority = "5"
+	@refactorneeded
 	test AllowTitleWithForbiddenCharacters {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -534,6 +546,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test CancelCheckout {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -553,6 +566,7 @@ definition {
 
 	@description = "This test covers LPS-94508 and LPS-129430. It ensures that a tag can be created when selecting an item from autocomplete on a content page."
 	@priority = "5"
+	@refactorneeded
 	test CreateTagUsingAutocomplete {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -632,6 +646,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteDocumentInFolder {
 		property portal.acceptance = "true";
 
@@ -655,6 +670,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteDocumentType {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -683,6 +699,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteDocumentWithSlashesInTitle {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -715,6 +732,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteFolderWithDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -738,6 +756,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteSubFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -761,6 +780,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteSubFolderImageActions {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -785,6 +805,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DownloadDocumentWithSlashesInTitleViaDocumentView {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -797,6 +818,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -827,6 +849,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditDocumentType {
 		property testray.component.names = "Training";
 
@@ -867,6 +890,7 @@ definition {
 
 	@description = "This test ensures that user can edit document in folder via a content page."
 	@priority = "5"
+	@refactorneeded
 	test EditFolderDocument {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -916,6 +940,7 @@ definition {
 
 	@description = "This test edits a document inside a folder. It also asserts a major version increment since the change involved changing the actual file."
 	@priority = "4"
+	@refactorneeded
 	test EditFolderDocumentFile {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -948,6 +973,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditSubFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -968,6 +994,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test EditSubFolderImage {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1006,6 +1033,7 @@ definition {
 
 	@description = "This ensures that users can not upload files that exceed the storage quota through the multiple upload."
 	@priority = "5"
+	@refactorneeded
 	test ExceedStorageQuotaMultipleUpload {
 		property custom.properties = "data.limit.dl.storage.max.size=1048576";
 
@@ -1032,6 +1060,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test MoveDocumentWithSlashesInTitle {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1056,6 +1085,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test MoveFolderDocumentDuplicateToFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1095,6 +1125,7 @@ definition {
 
 	@description = "This case covers the folder name of a document can be viewed in the info panel and navigate to it."
 	@priority = "4"
+	@refactorneeded
 	test MoveFolderDocumentToFolder {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
@@ -1144,6 +1175,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test RemovePortlet {
 		property portal.acceptance = "true";
 
@@ -1153,6 +1185,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test RevertVersionFolderDocumentFile {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1206,6 +1239,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchContentDocument {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1225,6 +1259,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchDocument {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1243,6 +1278,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchFolderDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1268,6 +1304,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchFolderImage {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1293,6 +1330,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchSubFolderDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1322,6 +1360,7 @@ definition {
 
 	@description = "This is a use case for LPS-51280"
 	@priority = "5"
+	@refactorneeded
 	test SubscribeToCommentAndViewEmailNotification {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
@@ -1397,6 +1436,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test SubscribeToFolderAndViewEmailNotifications {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
@@ -1506,6 +1546,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test UnlockDocumentInFolder {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -1552,6 +1593,7 @@ definition {
 
 	@description = "This test covers LPS-91595. It ensures that the document selection persists when navigating through the pagination in the DM widget."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentPagination {
 		for (var documentName : list "Document_2.doc,Document_1.xls,Document_4.jpg,Document_3.jpg,Document_2.xls,Document_1.txt,Document_4.txt,Document_3.xls,Document_2.jpg,Document_1.doc") {
 			var extension = StringUtil.extractLast("${documentName}", ".");
@@ -1600,6 +1642,7 @@ definition {
 
 	@description = "This ensures that the user can create a document with the topic from the Global site."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentWithTopic {
 		JSONCategory.addCategory(
 			groupName = "Global",
@@ -1649,6 +1692,7 @@ definition {
 
 	@description = "This ensures that a user can view the information about an image when navigating to info panel."
 	@priority = "4"
+	@refactorneeded
 	test ViewImageInfoPanel {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1668,6 +1712,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewOlderVersion {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1704,6 +1749,7 @@ definition {
 
 	@description = "This ensures that the user can view the document through related assets."
 	@priority = "3"
+	@refactorneeded
 	test ViewRelatedDocument {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1745,6 +1791,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewSearchResultsForChildObjectRespectsParentFolderPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "PGDocumentsandmedia#ViewSearchResultsForChildObjectRespectsParentFolderPermissions";

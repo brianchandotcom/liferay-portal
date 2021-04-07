@@ -32,6 +32,7 @@ definition {
 
 	@description = "This test covers LPS-127369. This ensures that the applications in a depot can be disabled and enabled."
 	@priority = "4"
+	@refactorneeded
 	test DisableAndEnableApplications {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -77,6 +78,7 @@ definition {
 
 	@description = "This ensures that a depot can be edited via settings."
 	@priority = "4"
+	@refactorneeded
 	test EditName {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -101,6 +103,7 @@ definition {
 
 	@description = "This ensures that a user can set the depot site connection via settings."
 	@priority = "4"
+	@refactorneeded
 	test SearchForDocument {
 		property test.name.skip.portal.instance = "DepotSettings#SearchForDocument";
 
@@ -158,6 +161,7 @@ definition {
 
 	@description = "This ensures that the depot language can be set via settings."
 	@priority = "4"
+	@refactorneeded
 	test ViewCustomLanguage {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

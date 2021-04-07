@@ -45,6 +45,7 @@ definition {
 
 	@description = "This test asserts that proper notifications are sent based on sharing permissions granted."
 	@priority = "5"
+	@refactorneeded
 	test AssertNotifications {
 		property portal.acceptance = "true";
 
@@ -105,6 +106,7 @@ definition {
 
 	@description = "This case ensures that sharing permissions can be updated through Shared by Me."
 	@priority = "4"
+	@refactorneeded
 	test ChangePermissionsViaSharedByMe {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
@@ -150,6 +152,7 @@ definition {
 
 	@description = "This test ensures a user can only comment on a blog entry once it is shared with him."
 	@priority = "5"
+	@refactorneeded
 	test ShareWithCommentPermissions {
 		property portal.acceptance = "true";
 
@@ -186,6 +189,7 @@ definition {
 
 	@description = "This test ensures a user can update a blog entry once it is shared with him."
 	@priority = "5"
+	@refactorneeded
 	test ShareWithUpdatePermissions {
 		property portal.acceptance = "true";
 
@@ -231,6 +235,7 @@ definition {
 
 	@description = "This test ensures that when a blog entry that was shared is deleted, it cannot be accessed."
 	@priority = "5"
+	@refactorneeded
 	test ViewDeletedEntry {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
@@ -266,6 +271,7 @@ definition {
 
 	@description = "This case ensures that the latest sharing permissions set for a user persists across all notification entries."
 	@priority = "4"
+	@refactorneeded
 	test ViewUpdatedPermissions {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 

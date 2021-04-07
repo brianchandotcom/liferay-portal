@@ -38,6 +38,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewBlogsEntryRegRoleInline {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -124,6 +125,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsPortletRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -158,6 +160,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsPortletSiteRole {
 		Permissions.setUpSiteRoleLoginUserCP(
 			pageName = "Blogs Page",

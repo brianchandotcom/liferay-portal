@@ -32,6 +32,7 @@ definition {
 
 	@description = "This ensures that a shortcut can be added to a depot."
 	@priority = "3"
+	@refactorneeded
 	test AccessShortcut {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -58,6 +59,7 @@ definition {
 
 	@description = "This ensures that a document with document type and metadata set can be added in a depot."
 	@priority = "5"
+	@refactorneeded
 	test AddDocumentTypeAndMetadata {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -104,6 +106,7 @@ definition {
 
 	@description = "This ensures that a folder can be deleted in a depot."
 	@priority = "5"
+	@refactorneeded
 	test DeleteFolder {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -120,6 +123,7 @@ definition {
 
 	@description = "This test makes sure that all files are deleted when user selects all in a depot."
 	@priority = "4"
+	@refactorneeded
 	test DeleteMultipleImages {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -140,6 +144,7 @@ definition {
 
 	@description = "This test edits the title and description of a document in a depot."
 	@priority = "5"
+	@refactorneeded
 	test EditDocument {
 		property portal.acceptance = "true";
 
@@ -171,6 +176,7 @@ definition {
 
 	@description = "This ensures that a folder can be edited in a depot."
 	@priority = "5"
+	@refactorneeded
 	test EditFolder {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -195,6 +201,7 @@ definition {
 
 	@description = "This ensures that a LAR file consisting of a DL document and image can be imported in a depot."
 	@priority = "4"
+	@refactorneeded
 	test ImportFile {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -237,6 +244,7 @@ definition {
 
 	@description = "This ensures that a document can be moved to a folder in a depot."
 	@priority = "5"
+	@refactorneeded
 	test MoveDocumentToFolder {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -273,6 +281,7 @@ definition {
 
 	@description = "This ensures that document can be restored to a depot."
 	@priority = "5"
+	@refactorneeded
 	test RestoreDocument {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -305,6 +314,7 @@ definition {
 
 	@description = "This ensures that a document can be shared with another user in a depot."
 	@priority = "4"
+	@refactorneeded
 	test ShareDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

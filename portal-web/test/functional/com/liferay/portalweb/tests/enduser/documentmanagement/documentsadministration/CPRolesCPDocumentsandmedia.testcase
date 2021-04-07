@@ -36,6 +36,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewDocumentsAndMediaPortletRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -79,6 +80,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentsAndMediaPortletSiteRole {
 		Permissions.setUpSiteRoleLoginUserCP(
 			pageName = "Documents and Media Page",

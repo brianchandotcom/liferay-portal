@@ -51,6 +51,7 @@ definition {
 
 	@description = "This test ensures that an internal video can be selected via item selector when creating Blog with enabling Xuggler."
 	@priority = "5"
+	@refactorneeded
 	test AddBlogEntryWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideo#AddBlogEntryWithEmbeddedVideo";
 
@@ -79,6 +80,7 @@ definition {
 
 	@description = "This test ensures that an internal video can be selected via item selector when creating KB article with enabling Xuggler."
 	@priority = "5"
+	@refactorneeded
 	test AddKBArticleWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideo#AddKBArticleWithEmbeddedVideo";
 
@@ -105,6 +107,7 @@ definition {
 
 	@description = "This test ensures that an internal video can be selected via item selector when creating Web Content with enabling Xuggler."
 	@priority = "5"
+	@refactorneeded
 	test AddWCWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideo#AddWCWithEmbeddedVideo";
 
@@ -189,6 +192,7 @@ definition {
 
 	@description = "This test ensures that no internal video is not listed via item selector after disabling Xuggler."
 	@priority = "3"
+	@refactorneeded
 	test AssertNoVideoInItemSelectorAfterDisablingXuggler {
 		property test.name.skip.portal.instance = "DLVideo#AssertNoVideoInItemSelectorAfterDisablingXuggler";
 
@@ -215,6 +219,7 @@ definition {
 
 	@description = "This test ensures that a blog entry created with an internal video embedded in it can be exported and imported."
 	@priority = "5"
+	@refactorneeded
 	test ImportExportedBlogWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideo#ImportExportedBlogWithEmbeddedVideo";
 
@@ -255,6 +260,7 @@ definition {
 
 	@description = "This test ensures that a kb article created with an internal video embedded in it can be exported and imported."
 	@priority = "5"
+	@refactorneeded
 	test ImportExportedKBWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideo#ImportExportedKBWithEmbeddedVideo";
 
@@ -313,6 +319,7 @@ definition {
 
 	@description = "This test ensures that a web content created with an internal video embedded in it can be exported and imported."
 	@priority = "5"
+	@refactorneeded
 	test ImportExportedWebContentWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideo#ImportExportedWebContentWithEmbeddedVideo";
 
@@ -373,6 +380,7 @@ definition {
 
 	@description = "This ensures that a depot internal video cannot be viewed from the disconnected site."
 	@priority = "4"
+	@refactorneeded
 	test ViewFromDisconnectedSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

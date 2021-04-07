@@ -36,6 +36,7 @@ definition {
 
 	@description = "This case ensures that the user can add a comment to a fragment of a content page."
 	@priority = "5"
+	@refactorneeded
 	test AddComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -57,6 +58,7 @@ definition {
 
 	@description = "This case ensures that the user can add a comment with escape characters to a fragment of a content page."
 	@priority = "4"
+	@refactorneeded
 	test AddCommentWithEscapeCharacters {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -78,6 +80,7 @@ definition {
 
 	@description = "This case ensures a user can delete a fragment comment after publishing a content page."
 	@priority = "5"
+	@refactorneeded
 	test DeleteComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -121,6 +124,7 @@ definition {
 
 	@description = "This case ensures a user can reopen a resolved comment after publishing a content page."
 	@priority = "4"
+	@refactorneeded
 	test ReopenResolvedComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -164,6 +168,7 @@ definition {
 
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
 	@priority = "4"
+	@refactorneeded
 	test ResolveComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -199,6 +204,7 @@ definition {
 
 	@description = "This test ensures that Content Page Comments is being used once the proper configuration is enabled."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -213,6 +219,7 @@ definition {
 
 	@description = "This case ensures that the user can see a fragment comment after publishing a content page."
 	@priority = "5"
+	@refactorneeded
 	test ViewComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -250,6 +257,7 @@ definition {
 
 	@description = "This test covers LPS-101027. It ensures that a published comment should remain if staging is deactivated."
 	@priority = "3"
+	@refactorneeded
 	test ViewCommentAfterDeactivatingStaging {
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
@@ -310,6 +318,7 @@ definition {
 
 	@description = "This test covers LPS-99643. It ensures that the comment on the content page is not removed after the draft is discarded."
 	@priority = "4"
+	@refactorneeded
 	test ViewCommentAfterDiscardedDraft {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -360,6 +369,7 @@ definition {
 
 	@description = "This test covers LPS-99063. It ensures that Edit and Delete actions should not appear for comment if a user did not create it."
 	@priority = "4"
+	@refactorneeded
 	test ViewCommentAsNonCreator {
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
@@ -430,6 +440,7 @@ definition {
 
 	@description = "This case ensures that users can view created comments when no fragment is selected and navigate to them."
 	@priority = "5"
+	@refactorneeded
 	test ViewCommentList {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -489,6 +500,7 @@ definition {
 
 	@description = "This case ensures that comment list can be viewed and accessed via site navigation."
 	@priority = "5"
+	@refactorneeded
 	test ViewCommentListNavigation {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -525,6 +537,7 @@ definition {
 
 	@description = "This test covers LPS-100024. It ensures that comments from different experiences are independent from one another."
 	@priority = "4"
+	@refactorneeded
 	test ViewCommentOnDifferentExperience {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -593,6 +606,7 @@ definition {
 
 	@description = "This case ensures that a comment can be added and viewed using the icon in the fragment topper."
 	@priority = "5"
+	@refactorneeded
 	test ViewCommentViaFragment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -629,6 +643,7 @@ definition {
 
 	@description = "This case ensures that the user can see an edited fragment comment after publishing a content page."
 	@priority = "4"
+	@refactorneeded
 	test ViewEditedComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -666,6 +681,7 @@ definition {
 
 	@description = "This case ensures that multiple comments can be added, viewed and accessed in the fragment list."
 	@priority = "4"
+	@refactorneeded
 	test ViewMultipleCommentsList {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -700,6 +716,7 @@ definition {
 
 	@description = "This case ensures that multiple replies can be added and viewed in a comment."
 	@priority = "4"
+	@refactorneeded
 	test ViewMultipleReplies {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

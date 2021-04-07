@@ -36,6 +36,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewMessageBoardsPortletRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -75,6 +76,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewMessageBoardsPortletSiteRole {
 		Permissions.setUpSiteRoleLoginUserCP(
 			pageName = "Blogs Page",

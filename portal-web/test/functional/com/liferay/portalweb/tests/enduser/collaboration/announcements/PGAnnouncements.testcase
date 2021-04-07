@@ -45,6 +45,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddAnnouncementsEntry {
 		property test.name.skip.portal.instance = "PGAnnouncements#AddAnnouncementsEntry";
 
@@ -66,6 +67,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddAnnouncementsEntryFutureDate {
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -95,6 +97,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test AddAnnouncementsEntryPastExpirationDate {
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -121,6 +124,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddAnnouncementsEntryPriorityImportant {
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
@@ -137,6 +141,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test AddAnnouncementsEntrySite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -170,6 +175,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteAnnouncementsEntry {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PGAnnouncements#DeleteAnnouncementsEntry";
@@ -192,6 +198,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditAnnouncementsEntry {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PGAnnouncements#EditAnnouncementsEntry";
@@ -220,6 +227,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewPreviousAnnouncementEntries {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PGAnnouncements#ViewPreviousAnnouncementEntries";

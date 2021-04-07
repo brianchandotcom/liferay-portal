@@ -69,6 +69,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test FilterByReadAndUnread {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -142,6 +143,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewNoWebsiteNotificationForNewThreadInCategory {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -195,6 +197,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewNoWebsiteNotificationForUpdatedThreadInCategory {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -261,6 +264,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWebsiteNotificationForNewThreadInCategory {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -317,6 +321,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWebsiteNotificationForUpdatedThreadInCategory {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

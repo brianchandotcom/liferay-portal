@@ -31,6 +31,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test StagingDemoDocumentsAndMedia {
 		property custom.properties = "default.layout.template.id=1_column";
 		property portal.acceptance = "true";

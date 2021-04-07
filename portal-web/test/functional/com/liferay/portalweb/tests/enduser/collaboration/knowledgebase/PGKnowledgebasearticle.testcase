@@ -37,6 +37,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test DeleteKBArticleViaKBArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

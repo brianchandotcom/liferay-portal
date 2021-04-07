@@ -35,6 +35,7 @@ definition {
 
 	@description = "This test ensures that Sharing can be disabled at the instance level."
 	@priority = "4"
+	@refactorneeded
 	test DisableSharingAtInstanceScope {
 		property test.name.skip.portal.instance = "SharingUsecase#DisableSharingAtInstanceScope";
 
@@ -108,6 +109,7 @@ definition {
 
 	@description = "This test ensures that Sharing can be disabled at the system level."
 	@priority = "4"
+	@refactorneeded
 	test DisableSharingAtSystemScope {
 		property test.name.skip.portal.instance = "SharingUsecase#DisableSharingAtSystemScope";
 
@@ -181,6 +183,7 @@ definition {
 
 	@description = "This test ensures that users can Filter By AssetType in the Shared Content app."
 	@priority = "3"
+	@refactorneeded
 	test FilterByAssetType {
 		property test.name.skip.portal.instance = "SharingUsecase#FilterByAssetType";
 
@@ -291,6 +294,7 @@ definition {
 
 	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
 	@priority = "3"
+	@refactorneeded
 	test OrderBySharedDate {
 		property test.name.skip.portal.instance = "SharingUsecase#OrderBySharedDate";
 

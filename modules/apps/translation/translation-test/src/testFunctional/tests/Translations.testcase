@@ -24,6 +24,7 @@ definition {
 
 	@description = "This ensures that the translation in the web content will not be retained after deleting the translation in draft status from the app."
 	@priority = "4"
+	@refactorneeded
 	test DeleteDraftTranslation {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -81,6 +82,7 @@ definition {
 
 	@description = "This ensures that the translation in the web content will not be retained after deleting the translation in pending status from the app."
 	@priority = "4"
+	@refactorneeded
 	test DeletePendingTranslation {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -148,6 +150,7 @@ definition {
 
 	@description = "This ensures that The translation in the web content remains after deleting the translation in approved status from the app."
 	@priority = "5"
+	@refactorneeded
 	test DeleteTranslation {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -203,6 +206,7 @@ definition {
 
 	@description = "This ensures that the translation can be edited under Translations app."
 	@priority = "5"
+	@refactorneeded
 	test EditTranslation {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -277,6 +281,7 @@ definition {
 
 	@description = "This ensures that the translation can be edited to a new language under Translations app."
 	@priority = "5"
+	@refactorneeded
 	test EditTranslationToNewLanguage {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -362,6 +367,7 @@ definition {
 
 	@description = "This ensures that translate side by side shows the latest values after editing the web content article."
 	@priority = "5"
+	@refactorneeded
 	test EditWCAfterSideBySideTranslation {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -422,6 +428,7 @@ definition {
 
 	@description = "This ensures that a translated zip file with all available language can be exported."
 	@priority = "5"
+	@refactorneeded
 	test ExportWCWithAllLanguages {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -441,6 +448,7 @@ definition {
 
 	@description = "This ensures that a translated zip file with an available language can be exported."
 	@priority = "5"
+	@refactorneeded
 	test ExportWebContent {
 		property portal.acceptance = "true";
 
@@ -462,6 +470,7 @@ definition {
 
 	@description = "This ensures that user can import the exported xliff file with 1.2 version."
 	@priority = "5"
+	@refactorneeded
 	test ImportExportedXLIFF {
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
@@ -505,6 +514,7 @@ definition {
 
 	@description = "This ensures that a translated file(.xlf) with an available language can be imported."
 	@priority = "5"
+	@refactorneeded
 	test ImportWebContent {
 		property portal.acceptance = "true";
 
@@ -549,6 +559,7 @@ definition {
 
 	@description = "This ensures that a translated file(.xlf) after re-encoding it to UTF-8 can be imported."
 	@priority = "4"
+	@refactorneeded
 	test ImportWebContentWithUTF8 {
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
@@ -591,6 +602,7 @@ definition {
 
 	@description = "This ensures that a translated file(.xliff) with an available language can be imported."
 	@priority = "5"
+	@refactorneeded
 	test ImportWebContentWithXliffFile {
 		property portal.acceptance = "true";
 
@@ -636,6 +648,7 @@ definition {
 
 	@description = "This ensures that the translator can select which target language she wants to translate."
 	@priority = "5"
+	@refactorneeded
 	test TranslateCustomizedWC {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -785,6 +798,7 @@ definition {
 
 	@description = "This test covers LPS-127980. This ensures that the newly added field can be translated after updating the WC structure."
 	@priority = "4"
+	@refactorneeded
 	test TranslateWCAfterEditingStructure {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -878,6 +892,7 @@ definition {
 
 	@description = "This ensures that the user can not translate a web content to an unavailable language."
 	@priority = "4"
+	@refactorneeded
 	test TranslateWCToUnavailableLanguage {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -943,6 +958,7 @@ definition {
 
 	@description = "This ensures that the user can not translate a web content without any languages permissions."
 	@priority = "4"
+	@refactorneeded
 	test TranslateWCWithoutLanguagesPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1005,6 +1021,7 @@ definition {
 
 	@description = "This ensures that the user can translate a Web content to the language she has permissions."
 	@priority = "5"
+	@refactorneeded
 	test TranslateWCWithSpecificLanguagesPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1104,6 +1121,7 @@ definition {
 
 	@description = "This ensures that the translator can select which base language she wants to translate."
 	@priority = "5"
+	@refactorneeded
 	test TranslateWebContent {
 		property portal.acceptance = "true";
 
@@ -1208,6 +1226,7 @@ definition {
 
 	@description = "This ensures that the modification date of a translation can be displayed correctly after editing."
 	@priority = "3"
+	@refactorneeded
 	test ViewEntryModifiedDate {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -1274,6 +1293,7 @@ definition {
 
 	@description = "This ensures that the user can see translation options after move all available languages to current."
 	@priority = "4"
+	@refactorneeded
 	test ViewOptionsWithAllLanguages {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -1335,6 +1355,7 @@ definition {
 
 	@description = "This ensures that the user can see translation options after move one more available language to current."
 	@priority = "5"
+	@refactorneeded
 	test ViewOptionsWithOneMoreLanguage {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -1366,6 +1387,7 @@ definition {
 
 	@description = "This test covers LPS-125966. This ensures that a warning message shows when viewing a translation that its web content has been deleted."
 	@priority = "4"
+	@refactorneeded
 	test ViewTranslateAfterWebContentDeleted {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -1437,6 +1459,7 @@ definition {
 
 	@description = "This test covers LPS-128546. It ensures that the translated field content can be displayed correctly after editing by different translation ways."
 	@priority = "4"
+	@refactorneeded
 	test ViewTranslatedFieldContentAfterEditing {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 

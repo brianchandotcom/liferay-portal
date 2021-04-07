@@ -24,6 +24,7 @@ definition {
 
 	@description = "Ensure that a user can add multiple Blogs Entries."
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntries {
 		property testray.component.names = "Blogs";
 		property testray.main.component.name = "Blogs";
@@ -84,6 +85,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddBlogsEntry {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -106,6 +108,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryContentNull {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -119,6 +122,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryTitleEscapeCharacters {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -136,6 +140,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryTitleNull {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -150,6 +155,7 @@ definition {
 
 	@description = "This is a use case for LPS-70143."
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryWithDMLink {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.jpg",
@@ -202,6 +208,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryWithSubtitle {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -221,6 +228,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddBlogWithFormatting {
 		property testray.component.names = "Training,WYSIWYG";
 
@@ -245,6 +253,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteBlogsEntries {
 		property portal.acceptance = "true";
 
@@ -289,6 +298,7 @@ definition {
 
 	@description = "This test covers LPS-121443. It ensures that a blog entry can be published normally after saving automatically."
 	@priority = "4"
+	@refactorneeded
 	test PublishBlogsEntryAutoDraft {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -320,6 +330,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test PublishBlogsEntryDraft {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -346,6 +357,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SaveBlogsEntryDraft {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -367,6 +379,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SaveBlogsEntryDraftAuto {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -388,6 +401,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchBlogsEntryContent {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -426,6 +440,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchBlogsEntryTitle {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -462,6 +477,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test SearchBlogsImagesViaItemSelector {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -491,6 +507,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test SearchDMImagesViaItemSelector {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -520,6 +537,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryDraftWithCoverImage {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -558,6 +576,7 @@ definition {
 
 	@description = "This test covers LPS-126756. It ensures that a blog entry can be added with a static gif."
 	@priority = "5"
+	@refactorneeded
 	test ViewBlogsEntryWithStaticGif {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -583,6 +602,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewCoverImageDetails {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -619,6 +639,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewErrorMessageForNullCustomAbstract {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

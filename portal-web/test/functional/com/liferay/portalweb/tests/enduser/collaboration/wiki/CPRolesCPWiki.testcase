@@ -36,6 +36,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWikiPortletRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -72,6 +73,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWikiPortletSiteRole {
 		Permissions.setUpSiteRoleLoginUserCP(
 			pageName = "Wiki Page",

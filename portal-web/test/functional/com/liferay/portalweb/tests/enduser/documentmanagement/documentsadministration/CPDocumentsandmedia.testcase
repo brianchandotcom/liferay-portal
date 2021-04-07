@@ -28,6 +28,7 @@ definition {
 
 	@description = "This is a use case for LPS-82073."
 	@priority = "5"
+	@refactorneeded
 	test AddShortcutToSiteDocument {
 		property testray.component.names = "Training";
 
@@ -59,6 +60,7 @@ definition {
 
 	@description = "This test ensures that the document type of a published basic document can be changed."
 	@priority = "4"
+	@refactorneeded
 	test ChangeDocumentType {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -107,6 +109,7 @@ definition {
 
 	@description = "This test covers LPS-88313 and LPS-92145. It ensures that a user can check in a document without changing versions."
 	@priority = "5"
+	@refactorneeded
 	test CheckInDocumentAsCurrentVersion {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Check in as current version",
@@ -146,6 +149,7 @@ definition {
 
 	@description = "This test ensures that a user can check in a document as a major version."
 	@priority = "5"
+	@refactorneeded
 	test CheckInDocumentAsMajorVersion {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Check in as major version",
@@ -178,6 +182,7 @@ definition {
 
 	@description = "This test ensures that a user can check in a document as a minor version."
 	@priority = "5"
+	@refactorneeded
 	test CheckInDocumentAsMinorVersion {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Check in as minor version",
@@ -210,6 +215,7 @@ definition {
 
 	@description = "This test covers LPS-82306. It ensures that a user can check in a document through Management bar and allow to select the change version."
 	@priority = "4"
+	@refactorneeded
 	test CheckInDocumentAtManagementBar {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Check in as current version",
@@ -242,6 +248,7 @@ definition {
 
 	@description = "This test asserts that major version increment will occur even if only metadata was changed if version increment was selected manually."
 	@priority = "4"
+	@refactorneeded
 	test CustomizeVersionNumberMajor {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -275,6 +282,7 @@ definition {
 
 	@description = "This test asserts that minor version increment will occur even if the actual file was changed if version increment was selected manually."
 	@priority = "4"
+	@refactorneeded
 	test CustomizeVersionNumberMinor {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -306,6 +314,7 @@ definition {
 
 	@description = "This case covers LPS-110213. It ensures that a document file can be downloaded after moving it between folders."
 	@priority = "5"
+	@refactorneeded
 	test DownloadDocumentAfterMoveBetweenFolders {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -344,6 +353,7 @@ definition {
 
 	@description = "This ensures that the document file can be downloaded through the document file name."
 	@priority = "5"
+	@refactorneeded
 	test DownloadDocumentThroughFileName {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
@@ -392,6 +402,7 @@ definition {
 
 	@description = "This ensures that the document file can be downloaded through the document title."
 	@priority = "5"
+	@refactorneeded
 	test DownloadDocumentThroughTitle {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
@@ -440,6 +451,7 @@ definition {
 
 	@description = "This ensures that the document file name will be applied to the downloaded file name."
 	@priority = "5"
+	@refactorneeded
 	test DownloadDocumentWithCustomFileName {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -460,6 +472,7 @@ definition {
 
 	@description = "This ensures that multiple documents can be downloaded simultaneously."
 	@priority = "5"
+	@refactorneeded
 	test DownloadMultipleDocumentsSimultaneously {
 		JSONGroup.addGroup(groupName = "Site_1");
 
@@ -483,6 +496,7 @@ definition {
 
 	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."
 	@priority = "5"
+	@refactorneeded
 	test EditDocument {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -520,6 +534,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditFolder {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -545,6 +560,7 @@ definition {
 
 	@description = "This ensures that the user can edit the shortcut."
 	@priority = "4"
+	@refactorneeded
 	test EditShortcutDestination {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -589,6 +605,7 @@ definition {
 
 	@description = "This ensures that users can not upload a file that exceed the storage quota through the single upload."
 	@priority = "5"
+	@refactorneeded
 	test ExceedStorageQuotaSingleUpload {
 		property custom.properties = "data.limit.dl.storage.max.size=1048576";
 
@@ -617,6 +634,7 @@ definition {
 
 	@description = "This test covers LPS-94820. This test ensures that only the last two checked in versions of a file are kept when the max version limit is set."
 	@priority = "4"
+	@refactorneeded
 	test LimitCheckInMaxFileVersion {
 		property test.name.skip.portal.instance = "CPDocumentsandmedia#LimitCheckInMaxFileVersion";
 
@@ -700,6 +718,7 @@ definition {
 
 	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."
 	@priority = "5"
+	@refactorneeded
 	test LimitMaxFileVersion {
 		property test.name.skip.portal.instance = "CPDocumentsandmedia#LimitMaxFileVersion";
 
@@ -757,6 +776,7 @@ definition {
 
 	@description = "This case covers the folder name of a document can be viewed in the info panel and navigate to it."
 	@priority = "5"
+	@refactorneeded
 	test MoveDocumentToFolder {
 		property portal.acceptance = "true";
 
@@ -805,6 +825,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test MoveFolderToFolder {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -824,6 +845,7 @@ definition {
 
 	@description = "This case covers LPS-127681. It ensures that a subfolder cannot be moved to parent folder when they are using same name."
 	@priority = "3"
+	@refactorneeded
 	test MoveSubfolderToParentFolderWithSameName {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -851,6 +873,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test MoveToRecycleBinDocument {
 		property portal.acceptance = "true";
 
@@ -869,6 +892,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test MoveToRecycleBinFolder {
 		property portal.acceptance = "true";
 
@@ -889,6 +913,7 @@ definition {
 
 	@description = "This ensures that the document file can be accessed through the original URL."
 	@priority = "5"
+	@refactorneeded
 	test PreviewDocumentThroughURL {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
@@ -935,6 +960,7 @@ definition {
 
 	@description = "This ensures that the empty state displays when the preview file doesn't have anything previewable."
 	@priority = "4"
+	@refactorneeded
 	test PreviewEmptyState {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -956,6 +982,7 @@ definition {
 
 	@description = "This is a test for LPS-91751. It ensures that a user cannot preview a file with size that exceeds the preview limit."
 	@priority = "4"
+	@refactorneeded
 	test PreviewFileThatExceedsLimit {
 		property test.name.skip.portal.instance = "CPDocumentsandmedia#PreviewFileThatExceedsLimit";
 
@@ -991,6 +1018,7 @@ definition {
 
 	@description = "This test covers LPS-104957. It ensures that the JPG file can be previewed."
 	@priority = "5"
+	@refactorneeded
 	test PreviewJPG {
 		property portal.acceptance = "true";
 
@@ -1016,6 +1044,7 @@ definition {
 
 	@description = "It ensures that the MP4 file can be previewed."
 	@priority = "4"
+	@refactorneeded
 	test PreviewMP4 {
 		property test.name.skip.portal.instance = "CPDocumentsandmedia#PreviewMP4";
 
@@ -1049,6 +1078,7 @@ definition {
 
 	@description = "This is a use case for LPS-88785."
 	@priority = "5"
+	@refactorneeded
 	test PreviewPDF {
 		property portal.acceptance = "true";
 
@@ -1077,6 +1107,7 @@ definition {
 
 	@description = "This test covers LPS-104957. It ensures that the PNG file can be previewed."
 	@priority = "5"
+	@refactorneeded
 	test PreviewPNG {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1100,6 +1131,7 @@ definition {
 
 	@description = "This ensures that the SVG file can be previewed."
 	@priority = "5"
+	@refactorneeded
 	test PreviewSVG {
 		property portal.acceptance = "true";
 
@@ -1125,6 +1157,7 @@ definition {
 
 	@description = "This test covers LPS-127683. It ensures that the shortcut cannot be restored before the shortcut target is restored."
 	@priority = "3"
+	@refactorneeded
 	test RestoreShortcutAfterDeletingTarget {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -1209,6 +1242,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchForDocumentInHomeFolder {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1224,6 +1258,7 @@ definition {
 
 	@description = "This ensures that the user can search for document file name using partial text."
 	@priority = "5"
+	@refactorneeded
 	test SearchForDocumentWithPartialText {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1239,6 +1274,7 @@ definition {
 
 	@description = "This test covers LPS-101908. It makes sure that all elements selected on different pages can be checked out and checked in."
 	@priority = "3"
+	@refactorneeded
 	test SelectAllAndCheckIn {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1283,6 +1319,7 @@ definition {
 
 	@description = "This test covers LPS-91598. It makes sure that all files are deleted when user selects all."
 	@priority = "4"
+	@refactorneeded
 	test SelectAllAndDelete {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1307,6 +1344,7 @@ definition {
 
 	@description = "This ensures that the document title can be displayed correctly in the different views."
 	@priority = "5"
+	@refactorneeded
 	test ViewDocumentInDifferentViews {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1335,6 +1373,7 @@ definition {
 
 	@description = "This ensures that the user can create a document with edited display page template."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentWithEditedDisplayPageTemplate {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -1408,6 +1447,7 @@ definition {
 
 	@description = "This ensures that the shortcut is deleted after deleting the shortcut target."
 	@priority = "4"
+	@refactorneeded
 	test ViewShortcutAfterDeletingTarget {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -1445,6 +1485,7 @@ definition {
 
 	@description = "This ensures that the shortcut target is not deleted after deleting the shortcut."
 	@priority = "4"
+	@refactorneeded
 	test ViewTargetAfterDeletingShortcut {
 		JSONGroup.addGroup(groupName = "Site Name");
 

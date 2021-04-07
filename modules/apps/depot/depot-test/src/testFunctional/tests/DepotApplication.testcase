@@ -32,6 +32,7 @@ definition {
 
 	@description = "This ensures that previous asset selections persist in collections after DM and WC applications are disabled."
 	@priority = "5"
+	@refactorneeded
 	test SelectDisabledAssetsFromCollections {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -94,6 +95,7 @@ definition {
 
 	@description = "This ensures that the Applications can be set in a depot."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		property portal.acceptance = "true";
 		property testray.component.names = "Asset Lists";
@@ -148,6 +150,7 @@ definition {
 
 	@description = "This ensures that the Collections application can be viewed after reactivating in a depot."
 	@priority = "5"
+	@refactorneeded
 	test ViewCollectionsAfterReactivating {
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
@@ -209,6 +212,7 @@ definition {
 
 	@description = "This ensures that a user cannot see the sections of both the product menu and the dashboard that contain disabled applications."
 	@priority = "5"
+	@refactorneeded
 	test ViewDepotWithAllAppsDisabled {
 		DepotNavigator.openDepotAdmin();
 
@@ -251,6 +255,7 @@ definition {
 
 	@description = "This ensures that a depot web content persists in WCD as previously and it's not appeared in the item selector on a connected site when WC application is disabled."
 	@priority = "5"
+	@refactorneeded
 	test ViewDisabledAssetViaWCD {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -344,6 +349,7 @@ definition {
 
 	@description = "This ensures that a depot image persists in blog entry as previously and it's not appeared in the item selector on a connected site when DM application is disabled."
 	@priority = "5"
+	@refactorneeded
 	test ViewDisabledImageViaBlogs {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -421,6 +427,7 @@ definition {
 
 	@description = "This ensures that the DM application can be viewed after reactivating in a depot."
 	@priority = "5"
+	@refactorneeded
 	test ViewDMAfterReactivating {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -475,6 +482,7 @@ definition {
 
 	@description = "This ensures that the WC application can be viewed after reactivating in a depot."
 	@priority = "5"
+	@refactorneeded
 	test ViewWCAfterReactivating {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

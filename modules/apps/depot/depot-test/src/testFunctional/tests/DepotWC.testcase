@@ -32,6 +32,7 @@ definition {
 
 	@description = "This ensures that a web content folder can be deleted in a depot."
 	@priority = "4"
+	@refactorneeded
 	test DeleteFolder {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -46,6 +47,7 @@ definition {
 
 	@description = "This test deletes multiple web content in a depot."
 	@priority = "5"
+	@refactorneeded
 	test DeleteMultipleWebContent {
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -76,6 +78,7 @@ definition {
 
 	@description = "This test deletes template and structure in a depot."
 	@priority = "5"
+	@refactorneeded
 	test DeleteTemplateAndStructure {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -124,6 +127,7 @@ definition {
 
 	@description = "This ensures that a web content folder can be edited in a depot."
 	@priority = "3"
+	@refactorneeded
 	test EditFolder {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -151,6 +155,7 @@ definition {
 
 	@description = "This test edits template and structure in a depot."
 	@priority = "5"
+	@refactorneeded
 	test EditTemplateAndStructure {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -207,6 +212,7 @@ definition {
 
 	@description = "This ensures that a web content can be edited in a depot."
 	@priority = "5"
+	@refactorneeded
 	test EditWebContent {
 		property portal.acceptance = "true";
 
@@ -249,6 +255,7 @@ definition {
 
 	@description = "This ensures that a web content can be expired in a depot."
 	@priority = "3"
+	@refactorneeded
 	test ExpireWebContent {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -276,6 +283,7 @@ definition {
 
 	@description = "This ensures that a LAR file consisting of web content can be imported in a depot."
 	@priority = "4"
+	@refactorneeded
 	test ImportWebContent {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -297,6 +305,7 @@ definition {
 
 	@description = "This ensures that web content can be moved to a folder in a depot."
 	@priority = "3"
+	@refactorneeded
 	test MoveWebContentToFolder {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -323,6 +332,7 @@ definition {
 
 	@description = "This ensures that web content with structure can be restored to a depot."
 	@priority = "5"
+	@refactorneeded
 	test RestoreWebContentWithStructure {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

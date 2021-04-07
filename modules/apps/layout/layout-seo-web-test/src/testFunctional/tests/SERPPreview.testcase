@@ -24,6 +24,7 @@ definition {
 
 	@description = "This test ensures that a SERP preview is shown correctly based on the meta tags."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
@@ -72,6 +73,7 @@ definition {
 
 	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
 	@priority = "5"
+	@refactorneeded
 	test ValidateLongInputs {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -119,6 +121,7 @@ definition {
 
 	@description = "This test ensures that a SERP preview is refreshed when switching translations."
 	@priority = "4"
+	@refactorneeded
 	test ViewPreviewWhenSwitchingTranslations {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -202,6 +205,7 @@ definition {
 
 	@description = "This test ensures that a user can preview SEO tags with different languages."
 	@priority = "5"
+	@refactorneeded
 	test ViewTranslatedLanguages {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

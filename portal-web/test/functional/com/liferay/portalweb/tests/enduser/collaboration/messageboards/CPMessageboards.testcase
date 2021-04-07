@@ -27,6 +27,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddMBCategory {
 		property portal.acceptance = "true";
 
@@ -41,6 +42,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddMBCategorySubcategory {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
@@ -58,6 +60,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddMBThread {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -79,6 +82,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test CKEditorSmoke {
 		property custom.properties = "editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=ckeditor${line.separator}editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp=ckeditor";
 
@@ -107,6 +111,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteMBCategories {
 		for (var num : list "1,2,3") {
 			JSONMBMessage.addCategory(
@@ -127,6 +132,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test DeleteMBThreadWithAttachment {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
 
@@ -157,6 +163,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditMBThreadSubjectAndBody {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -180,6 +187,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test MoveToRecycleBinMBThread {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -196,6 +204,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewAnonymousPostingAllowedCheckboxConfiguration {
 		property test.name.skip.portal.instance = "CPMessageboards#ViewAnonymousPostingAllowedCheckboxConfiguration";
 
@@ -217,6 +226,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBBCodeNoXSS {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 

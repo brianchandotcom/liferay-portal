@@ -33,6 +33,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddWikiAndCreateContentWithStagingThenPublishAfterDelete {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -111,6 +112,7 @@ definition {
 
 	@description = "This is a use case for LPS-73992."
 	@priority = "5"
+	@refactorneeded
 	test RemoveStagedWikiAttachment {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -183,6 +185,7 @@ definition {
 
 	@description = "This is a use case for LPS-73471."
 	@priority = "5"
+	@refactorneeded
 	test RenameChildPageNameCP {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

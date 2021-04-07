@@ -17,6 +17,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddAMIWithHighDensityResolution {
 		property portal.acceptance = "true";
 
@@ -50,6 +51,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddAMIWithZeroPixels {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -71,6 +73,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddAndEditEntriesWithSpecialCharacters {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -102,6 +105,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddAndUpdateAMIWithImagesInDM {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -159,6 +163,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddDuplicateImageResolution {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -196,6 +201,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddImageResolutionWithNoDimensions {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -217,6 +223,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddImageResolutionWithSingleDimension {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -247,6 +254,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AssertAdaptedImageInBlogsEntry {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -283,6 +291,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AssertAdaptedImageInWebContent {
 		property portal.acceptance = "true";
 
@@ -323,6 +332,7 @@ definition {
 
 	@description = "This ensures that the SVG image can be added and optimized in a blog entry."
 	@priority = "5"
+	@refactorneeded
 	test AssertAdaptedSVGImageInBlogsEntry {
 		property portal.acceptance = "true";
 
@@ -357,6 +367,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test CannotAddNonNumericWidthOrHeight {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -377,6 +388,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditAndDeleteDisabledAMI {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -417,6 +429,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditImageResolutionWithAdaptedImages {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -472,6 +485,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test EditImageResolutionWithNoDimensions {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -504,6 +518,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditImageResolutionWithoutAdaptedImage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -538,6 +553,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test EditImageResolutionWithSingleDimension {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -576,6 +592,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test OptimizeAllImageResolutions {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -608,6 +625,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewAutomaticAndCustomImageVariantIDs {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -666,6 +684,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewNoImageResolutionInNewVirtualInstance {
 		property test.name.skip.portal.instance = "AdaptiveMedia#ViewNoImageResolutionInNewVirtualInstance";
 
@@ -707,6 +726,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewNumberOfAdaptedImagesAfterAdaptingImages {
 		JSONGroup.addGroup(groupName = "Site Name");
 

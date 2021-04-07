@@ -21,6 +21,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewMessageBoardsArchive625 {
 		property data.archive.type = "data-archive-message-boards";
 		property database.types = "mariadb,mysql,postgresql";
@@ -32,6 +33,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewMessageBoardsArchive621015 {
 		property data.archive.type = "data-archive-message-boards";
 		property portal.version = "6.2.10.15";
@@ -42,6 +44,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewMessageBoardsArchive621021 {
 		property data.archive.type = "data-archive-message-boards";
 		property portal.version = "6.2.10.21";

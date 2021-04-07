@@ -30,6 +30,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test MarkNotificationAsReadAndAcceptRequest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -132,6 +133,7 @@ definition {
 
 	@description = "This test covers LPS-102749. It views a notification of the edited Web Content Article when staging is turned on."
 	@priority = "4"
+	@refactorneeded
 	test StagingViewEditedArticleNotification {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -247,6 +249,7 @@ definition {
 
 	@description = "This test covers LPS-104398. It views a notification of a web content article created in a folder."
 	@priority = "4"
+	@refactorneeded
 	test ViewFolderArticleNotification {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -327,6 +330,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewNoNotification {
 		Notifications.viewNoNotifications(activePanel = "Profile");
 
@@ -337,6 +341,7 @@ definition {
 
 	@description = "This test covers LPS-126145. This ensures that the notification can be viewed after restoring the entry from recycle bin."
 	@priority = "4"
+	@refactorneeded
 	test ViewNotificationAfterRestoring {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

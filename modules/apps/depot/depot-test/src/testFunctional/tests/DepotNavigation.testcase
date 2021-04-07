@@ -28,6 +28,7 @@ definition {
 
 	@description = "This ensures that a depot can be accessed from a connected site to create shortcut."
 	@priority = "5"
+	@refactorneeded
 	test AccessViaShortcut {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -63,6 +64,7 @@ definition {
 
 	@description = "This test covers LPS-120834. It ensures that a user can not redirect to the depot via Space icon."
 	@priority = "5"
+	@refactorneeded
 	test CannotAccessDepotViaSite {
 		property portal.acceptance = "true";
 
@@ -84,6 +86,7 @@ definition {
 
 	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."
 	@priority = "5"
+	@refactorneeded
 	test ViewRestrictionWhenConnectingSites {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

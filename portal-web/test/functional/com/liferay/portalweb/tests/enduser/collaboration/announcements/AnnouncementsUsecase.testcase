@@ -49,6 +49,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewAnnouncementsEntryWithDistributedScope {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -148,6 +149,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewAnnouncementsPagination {
 		for (var entryCount : list "1,2,3,4,5,6,7") {
 			JSONAnnouncement.addAnnouncement(

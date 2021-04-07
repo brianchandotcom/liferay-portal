@@ -31,6 +31,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ChangeSocialBookmarkSitesForKBArticle {
 		property osgi.app.includes = "social-bookmarks,knowledge-base";
 
@@ -82,6 +83,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryWithSocialBookmarksSites {
 		property osgi.app.includes = "social-bookmarks";
 
@@ -130,6 +132,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticleWithAllSocialBookmarkSites {
 		property osgi.app.includes = "social-bookmarks,knowledge-base";
 

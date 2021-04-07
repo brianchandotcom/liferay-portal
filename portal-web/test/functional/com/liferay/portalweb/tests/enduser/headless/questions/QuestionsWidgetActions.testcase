@@ -42,6 +42,7 @@ definition {
 
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "4"
+	@refactorneeded
 	test AddQuestionWithDepotImage {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -92,6 +93,7 @@ definition {
 
 	@description = "Validate if the user can create a question with an image."
 	@priority = "4"
+	@refactorneeded
 	test AddQuestionWithImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -129,6 +131,7 @@ definition {
 
 	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
 	@priority = "2"
+	@refactorneeded
 	test AddQuestionWithMoreThanTheMaximumTagsIsNotPossible {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -151,6 +154,7 @@ definition {
 
 	@description = "Validate if the user can create a question with the maximum of 5 tags with unexisting tag"
 	@priority = "3"
+	@refactorneeded
 	test AddQuestionWithTheMaximumTags {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -183,6 +187,7 @@ definition {
 
 	@description = "Validate if the user can view the topic selector and category label."
 	@priority = "4"
+	@refactorneeded
 	test AddSubcategoryConfigureParentCategoryDisplay {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -272,6 +277,7 @@ definition {
 
 	@description = "Validate if the user can add a subtopic using the widget."
 	@priority = "4"
+	@refactorneeded
 	test AddSubTopicsViaWidget {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -311,6 +317,7 @@ definition {
 
 	@description = "Validate if the anonymous user can ask questions and redirected to login, it also covers LPS-129203."
 	@priority = "4"
+	@refactorneeded
 	test AskQuestionsThroughAnonymousUser {
 		property test.name.skip.portal.instance = "QuestionsWidgetActions#AskQuestionsThroughAnonymousUser";
 
@@ -366,6 +373,7 @@ definition {
 
 	@description = "Validate if the user can cancel the deletions."
 	@priority = "4"
+	@refactorneeded
 	test CancelDeletions {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -405,6 +413,7 @@ definition {
 
 	@description = "Validate if the user can add root topic without permission."
 	@priority = "4"
+	@refactorneeded
 	test CannotAddRootTopicWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -458,6 +467,7 @@ definition {
 
 	@description = "Validate if the user can add subtopic without permission."
 	@priority = "4"
+	@refactorneeded
 	test CannotAddSubTopicWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -511,6 +521,7 @@ definition {
 
 	@description = "Validate if the guest user cannot ask question, it also covers LPS-128823."
 	@priority = "4"
+	@refactorneeded
 	test CannotAskQuestionAsGuest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -552,6 +563,7 @@ definition {
 
 	@description = "Validate if the user can setup the landing page topic navigation for the widget."
 	@priority = "4"
+	@refactorneeded
 	test ConfigureLandingPageTopicNavigation {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -624,6 +636,7 @@ definition {
 
 	@description = "Validate if the user can setup the root topic for the widget."
 	@priority = "4"
+	@refactorneeded
 	test ConfigureRootTopic {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -694,6 +707,7 @@ definition {
 
 	@description = "Validate if the user can delete an answer to a question."
 	@priority = "4"
+	@refactorneeded
 	test DeleteAnswer {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -721,6 +735,7 @@ definition {
 
 	@description = "Validate if the user can delete a comment to an answer."
 	@priority = "4"
+	@refactorneeded
 	test DeleteComment {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -750,6 +765,7 @@ definition {
 
 	@description = "Validate if the user can delete a question with an answer."
 	@priority = "4"
+	@refactorneeded
 	test DeleteQuestionWithAnAnswer {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -777,6 +793,7 @@ definition {
 
 	@description = "Validate if the user can delete a topic, it also covers LPS-128699."
 	@priority = "5"
+	@refactorneeded
 	test DeleteTopic {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -796,6 +813,7 @@ definition {
 
 	@description = "Validate if the user can edit an answer to a question."
 	@priority = "5"
+	@refactorneeded
 	test EditAnswer {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -823,6 +841,7 @@ definition {
 
 	@description = "Validate if the user can lock and unlock a question through the MB."
 	@priority = "4"
+	@refactorneeded
 	test LockAndUnlockThroughMB {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -900,6 +919,7 @@ definition {
 
 	@description = "Validate if the user can add a comment to an answer, it also covers that the published dates for responses can be shown."
 	@priority = "4"
+	@refactorneeded
 	test ReplyToAnAnswer {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -931,6 +951,7 @@ definition {
 
 	@description = "Validate if the user can search for the questions."
 	@priority = "4"
+	@refactorneeded
 	test SearchForQuestions {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1018,6 +1039,7 @@ definition {
 
 	@description = "Validate if the user can subscribe and unsubscribe from the question."
 	@priority = "5"
+	@refactorneeded
 	test SubscribeAndUnsubscribeFromQuestion {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1111,6 +1133,7 @@ definition {
 
 	@description = "Validate if the user can subscribe and unsubscribe from the topic."
 	@priority = "5"
+	@refactorneeded
 	test SubscribeAndUnsubscribeFromTopic {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1185,6 +1208,7 @@ definition {
 
 	@description = "Validate if the user can unsubscribe a question from the details page, it also covers LPS-125842."
 	@priority = "3"
+	@refactorneeded
 	test UnsubscribeFromQuestionDetails {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1220,6 +1244,7 @@ definition {
 
 	@description = "Validate if the My Activity tab appears"
 	@priority = "4"
+	@refactorneeded
 	test ValidateIfTheMyActivityAppears {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1237,6 +1262,7 @@ definition {
 
 	@description = "Validate if the user can view the statistics."
 	@priority = "3"
+	@refactorneeded
 	test ViewCreatorStatistics {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1264,6 +1290,7 @@ definition {
 
 	@description = "Validate if the user can view the my activity default after delete all the responses."
 	@priority = "4"
+	@refactorneeded
 	test ViewMyActivityDeletions {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1335,6 +1362,7 @@ definition {
 
 	@description = "Validate if the user can view the edited responses from my activity."
 	@priority = "4"
+	@refactorneeded
 	test ViewMyActivityEditedResponses {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1390,6 +1418,7 @@ definition {
 
 	@description = "Validate if the user can view the responses from my activity."
 	@priority = "4"
+	@refactorneeded
 	test ViewMyActivityResponses {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1436,6 +1465,7 @@ definition {
 
 	@description = "Validate if the user can view the question after changing the subtopic using the breadcrumb filter."
 	@priority = "3"
+	@refactorneeded
 	test ViewQuestionAfterChangingSubTopic {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1503,6 +1533,7 @@ definition {
 
 	@description = "Validate if the user can view a question via an edited topic."
 	@priority = "5"
+	@refactorneeded
 	test ViewQuestionAfterEditingTopic {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1532,6 +1563,7 @@ definition {
 
 	@description = "Validate if the user can filter by votes."
 	@priority = "4"
+	@refactorneeded
 	test ViewQuestionsFilteredByVotes {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1639,6 +1671,7 @@ definition {
 
 	@description = "Validate if the users can view the questions from different topics via the breadcrumb."
 	@priority = "4"
+	@refactorneeded
 	test ViewQuestionsFromDifferentSubTopics {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1710,6 +1743,7 @@ definition {
 
 	@description = "Validate if the pagination will appear and works when we have more than 4 questions."
 	@priority = "3"
+	@refactorneeded
 	test ViewQuestionsPagination {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1747,6 +1781,7 @@ definition {
 
 	@description = "Validate if the user can select the filter and view the related results."
 	@priority = "4"
+	@refactorneeded
 	test ViewQuestionsWithConfiguredFilter {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1816,6 +1851,7 @@ definition {
 
 	@description = "Validate if the user can view the related question."
 	@priority = "4"
+	@refactorneeded
 	test ViewRelatedQuestion {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1845,6 +1881,7 @@ definition {
 
 	@description = "Validate if the user can create the second answer to a question, it also covers LPS-125810."
 	@priority = "3"
+	@refactorneeded
 	test ViewSecondAnswer {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1874,6 +1911,7 @@ definition {
 
 	@description = "Validate if the user can view the voting style from the answers list."
 	@priority = "4"
+	@refactorneeded
 	test ViewVotingStyleFromAnswersList {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1951,6 +1989,7 @@ definition {
 
 	@description = "Validate if the user can view the voting style from the questions list."
 	@priority = "4"
+	@refactorneeded
 	test ViewVotingStyleFromQuestionsList {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",

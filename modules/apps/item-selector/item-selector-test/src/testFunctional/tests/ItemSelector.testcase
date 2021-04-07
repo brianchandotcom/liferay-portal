@@ -28,6 +28,7 @@ definition {
 
 	@description = "This makes sure that an image can be uploaded via URL."
 	@priority = "5"
+	@refactorneeded
 	test AddBlogsImageViaURL {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ItemSelector#AddBlogsImageViaURL";
@@ -70,6 +71,7 @@ definition {
 
 	@description = "This ensures that the SVG image can be added to a fragment background."
 	@priority = "5"
+	@refactorneeded
 	test AddSVGImageToFragmentBackground {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -120,6 +122,7 @@ definition {
 
 	@description = "This test covers LPS-105188. It ensures that a user can change selected page for Navigation Menu item based on page after creation."
 	@priority = "4"
+	@refactorneeded
 	test ChangeSelectedPageNavigationMenu {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -147,6 +150,7 @@ definition {
 
 	@description = "This test covers LPS-119899, It ensures that the search results can clear after filtering everywhere in the item selector."
 	@priority = "4"
+	@refactorneeded
 	test ClearFilterResults {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -202,6 +206,7 @@ definition {
 
 	@description = "This test ensures that documents can filter by the current site in the item selector."
 	@priority = "5"
+	@refactorneeded
 	test FilterByCurrentSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -246,6 +251,7 @@ definition {
 
 	@description = "This test ensures that web content using a structure can be filtered from the current depot."
 	@priority = "5"
+	@refactorneeded
 	test FilterCustomWCFromCurrentDepot {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -303,6 +309,7 @@ definition {
 
 	@description = "This test ensures that a folder can be filtered from the current depot."
 	@priority = "5"
+	@refactorneeded
 	test FilterFolderFromCurrentDepot {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -335,6 +342,7 @@ definition {
 
 	@description = "This test ensures that a document can be filtered from the current depot."
 	@priority = "5"
+	@refactorneeded
 	test FilterImageFromCurrentDepot {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -363,6 +371,7 @@ definition {
 
 	@description = "This test ensures that web contents can filter by the current site in the item selector."
 	@priority = "5"
+	@refactorneeded
 	test FilterWCByCurrentSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -425,6 +434,7 @@ definition {
 
 	@description = "This test ensures that the web content folder can be filtered from the current depot."
 	@priority = "5"
+	@refactorneeded
 	test FilterWCFolderFromCurrentDepot {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -458,6 +468,7 @@ definition {
 
 	@description = "This test ensures that web content can be filtered from the current depot."
 	@priority = "5"
+	@refactorneeded
 	test FilterWCFromCurrentDepot {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -485,6 +496,7 @@ definition {
 
 	@description = "This ensures that the background image of a fragment can be added."
 	@priority = "5"
+	@refactorneeded
 	test FragmentSmoke {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -521,6 +533,7 @@ definition {
 
 	@description = "This makes sure that the files in item selector can display by pagination."
 	@priority = "4"
+	@refactorneeded
 	test PaginateFiles {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -566,6 +579,7 @@ definition {
 
 	@description = "This test covers LPS-122139. It ensures that the files in the item selector can display by pagination after scoped everywhere filter."
 	@priority = "4"
+	@refactorneeded
 	test PaginateFilesAfterScopedFilter {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -632,6 +646,7 @@ definition {
 
 	@description = "This ensures that users can preview the Facebook video in item selector."
 	@priority = "5"
+	@refactorneeded
 	test PreviewFacebookVideo {
 		property test.name.skip.portal.instance = "ItemSelector#PreviewFacebookVideo";
 
@@ -674,6 +689,7 @@ definition {
 
 	@description = "This ensures that a message is displayed in the preview section of the item selector when pasting an invalid URL."
 	@priority = "5"
+	@refactorneeded
 	test PreviewInvalidVideos {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -719,6 +735,7 @@ definition {
 
 	@description = "This ensures that users can preview the supported videos in the item selector."
 	@priority = "5"
+	@refactorneeded
 	test PreviewSupportedVideos {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -766,6 +783,7 @@ definition {
 
 	@description = "This ensures that users can preview the SVG image in item selector."
 	@priority = "5"
+	@refactorneeded
 	test PreviewSVG {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -787,6 +805,7 @@ definition {
 
 	@description = "This ensures that users can preview the Twitch video in item selector."
 	@priority = "5"
+	@refactorneeded
 	test PreviewTwitchVideo {
 		property test.name.skip.portal.instance = "ItemSelector#PreviewTwitchVideo";
 
@@ -829,6 +848,7 @@ definition {
 
 	@description = "This ensures that users can preview the Vimeo video in item selector."
 	@priority = "5"
+	@refactorneeded
 	test PreviewVimeoVideo {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -852,6 +872,7 @@ definition {
 
 	@description = "This ensures that users can preview the YouTube video in item selector."
 	@priority = "5"
+	@refactorneeded
 	test PreviewYouTubeVideo {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -873,6 +894,7 @@ definition {
 
 	@description = "This test covers LPS-119709. It ensures that the blog images can not filter by the everywhere and the current site."
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsImageNoScopeFilter {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -901,6 +923,7 @@ definition {
 
 	@description = "This ensures that the location info of the documents can be viewed through Blogs on a connected site."
 	@priority = "5"
+	@refactorneeded
 	test ViewDocumentsLocationInfo {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -973,6 +996,7 @@ definition {
 
 	@description = "This test covers LPS-119553. It ensures that the assets in the connected site can not be filtered out after navigating to the depot through the breadcrumb."
 	@priority = "4"
+	@refactorneeded
 	test ViewFilterResultsInSpecificBreadcrumb {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -1070,6 +1094,7 @@ definition {
 
 	@description = "This test covers LPS-118808. It ensures that an image in the depot folder can be viewed through everywhere filter on a connected site."
 	@priority = "4"
+	@refactorneeded
 	test ViewFolderImageViaFilterResults {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -1111,6 +1136,7 @@ definition {
 
 	@description = "This test covers LPS-119707. It ensures that the web content in the depot folder can be viewed through everywhere filter on a connected site."
 	@priority = "4"
+	@refactorneeded
 	test ViewFolderWCViaFilterResults {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -1186,6 +1212,7 @@ definition {
 
 	@description = "This ensures that the video thumbnails can be viewed in Item Selector."
 	@priority = "5"
+	@refactorneeded
 	test ViewVideoThumbnailsViaWC {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -1240,6 +1267,7 @@ definition {
 
 	@description = "It ensures that the web content draft in an Asset Library cannot be found when searching in an Item Selector in that Library."
 	@priority = "4"
+	@refactorneeded
 	test ViewWCDraftViaFilterResults {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -1320,6 +1348,7 @@ definition {
 
 	@description = "This ensures that the location info of depot web content can be viewed through WCD on a connected site."
 	@priority = "5"
+	@refactorneeded
 	test ViewWCLocationInfo {
 		JSONGroup.addGroup(groupName = "Site Name");
 

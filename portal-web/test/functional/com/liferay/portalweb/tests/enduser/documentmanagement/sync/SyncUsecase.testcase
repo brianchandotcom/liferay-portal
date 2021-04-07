@@ -67,6 +67,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddDocument {
 		property portal.acceptance = "false";
 		property testray.component.names = "Training";

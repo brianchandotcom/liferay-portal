@@ -38,6 +38,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddDMDocumentRegRoleDefaultPermissions {
 		property portal.acceptance = "true";
 
@@ -60,6 +61,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddDMDocumentRegRoleDefinePermissions {
 		property portal.acceptance = "true";
 
@@ -106,6 +108,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddDMDocumentSiteMemberRoleInline {
 		property custom.properties = "default.layout.template.id=1_column";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -185,6 +188,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddDMDocumentSiteRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -269,6 +273,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteDMFolderRegRoleInline {
 		property testray.component.names = "Training";
 
@@ -358,6 +363,7 @@ definition {
 
 	@description = "This is a use case for LPS-43104."
 	@priority = "5"
+	@refactorneeded
 	test ViewDMDocumentNoGuestRole {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -395,6 +401,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewDMFolderGuestInline {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

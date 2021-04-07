@@ -39,6 +39,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddChildArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -63,6 +64,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test AddKBArticleContentNull {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -77,6 +79,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddKBArticleSuggestion {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -103,6 +106,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test AddKBArticleTitleNull {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -116,6 +120,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddMultipleKBArticleSuggestions {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -150,6 +155,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test CancelAddChildArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -174,6 +180,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test CannotViewDuplicateBreadcrumbsWhenAddingParentArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -201,6 +208,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteChildArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -227,6 +235,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteKBArticleViaKBDisplay {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -242,6 +251,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test EditChildArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 		KBArticle.addCP(
@@ -287,6 +297,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditKBArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -317,6 +328,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test EditKBArticleDisplaySettingsViaKBDisplayConfiguration {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -342,6 +354,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SelectParentArticleViaKBDisplay {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -369,6 +382,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewEditedKBArticleTitleHistory {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -394,6 +408,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticleSuggestionsWorkflow {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -436,6 +451,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticleViaDefaultFriendlyURL {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -461,6 +477,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticleViaNavigationLinks {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -522,6 +539,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticleViaUserDefinedFriendlyURL {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -548,6 +566,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticleWithBlogsEntryRelatedAsset {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -579,6 +598,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticleWithKBChildArticleHierarchyNavigation {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -636,6 +656,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBArticleWithoutConfiguration {
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -655,6 +676,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewKBArticleWithXSSCodeInjectedTitle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -680,6 +702,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewKBChildArticleViaNextLink {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -702,6 +725,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewNoDuplicateKBSuggestionAfterRefresh {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

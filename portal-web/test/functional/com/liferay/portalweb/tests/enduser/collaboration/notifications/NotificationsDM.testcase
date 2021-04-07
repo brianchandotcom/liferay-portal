@@ -71,6 +71,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewNoWebsiteNotificationForNewDocumentInFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -129,6 +130,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewNoWebsiteNotificationForUpdatedDocumentInFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -190,6 +192,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWebsiteNotificationForNewDocumentInFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -247,6 +250,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWebsiteNotificationForUpdatedDocumentInFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

@@ -82,6 +82,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs cover image when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test DeleteBlogImageInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -172,6 +173,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs inline image when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test DeleteBlogInlineImageInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -272,6 +274,7 @@ definition {
 
 	@description = "This ensures that a document in depot can be removed and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test DeleteDocumentInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -354,6 +357,7 @@ definition {
 
 	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test DeleteDocumentWithCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -440,6 +444,7 @@ definition {
 
 	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test DeleteImageInDepot {
 		property portal.acceptance = "true";
 
@@ -514,6 +519,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in open graph when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test DeleteOpenGraphImageInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -624,6 +630,7 @@ definition {
 
 	@description = "This ensures that video shortcut in depot can be deleted and republished in Blogs when enabling local staging."
 	@priority = "4"
+	@refactorneeded
 	test DeleteVideoShortcutInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -726,6 +733,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in web content when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test DeleteWebContentImageInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -821,6 +829,7 @@ definition {
 
 	@description = "This ensures that the blog image from a depot can be edited and republished when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test EditBlogImage {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -920,6 +929,7 @@ definition {
 
 	@description = "This ensures that the blog inline image from a depot can be edited and republished when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test EditBlogInlineImage {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -1033,6 +1043,7 @@ definition {
 
 	@description = "This ensures that the blog small image from a depot can be edited and republished when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test EditBlogSmallImage {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -1127,6 +1138,7 @@ definition {
 
 	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test EditDocumentInDepot {
 		property portal.acceptance = "true";
 
@@ -1210,6 +1222,7 @@ definition {
 
 	@description = "This ensures that the custom field in document from depot can be edited and republished in the site when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test EditDocumentWithCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1296,6 +1309,7 @@ definition {
 
 	@description = "This ensures that an image in depot can be replaced and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test EditImageInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -1377,6 +1391,7 @@ definition {
 
 	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling Xuggler."
 	@priority = "4"
+	@refactorneeded
 	test EditInternalVideoInDepot {
 		property test.name.skip.portal.instance = "DepotLocalStagingDM#EditInternalVideoInDepot";
 
@@ -1497,6 +1512,7 @@ definition {
 
 	@description = "This ensures that the open graph image from a depot can be edited and republished when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test EditOpenGraphImage {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -1601,6 +1617,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test EditWebContentImage {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -1694,6 +1711,7 @@ definition {
 
 	@description = "This ensures that a document using a custom document type from a depot can be published in the staging site when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test PublishDMWithDocumentType {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -1759,6 +1777,7 @@ definition {
 
 	@description = "This ensures that a folder with a document in depot can be published in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test PublishDocumentFolder {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -1831,6 +1850,7 @@ definition {
 
 	@description = "This ensures that the shortcut to an image in the depot can be added and published in the staging site when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test PublishImageShortcut {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -1883,6 +1903,7 @@ definition {
 
 	@description = "This ensures that an image with custom field in depot can be published in staging site when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test PublishImageWithCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1941,6 +1962,7 @@ definition {
 
 	@description = "This ensures that the latest version of an image in a depot can be published in local staging site."
 	@priority = "5"
+	@refactorneeded
 	test PublishImageWithLatestVersion {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -2028,6 +2050,7 @@ definition {
 
 	@description = "This ensures that the latest version of an image in a depot can be published in blogs when local staging is enabled."
 	@priority = "5"
+	@refactorneeded
 	test PublishImageWithLatestVersionInBlogs {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -2108,6 +2131,7 @@ definition {
 
 	@description = "This ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling local staging."
 	@priority = "3"
+	@refactorneeded
 	test PublishVideoShortcutThumbnail {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -2153,6 +2177,7 @@ definition {
 
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test RemoveBlogSmallImage {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -2225,6 +2250,7 @@ definition {
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test SearchForPendingDocument {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -2263,6 +2289,7 @@ definition {
 
 	@description = "This ensures that an unavailable structure from a depot can not be viewed in the staged site when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test SelectUnavailableStructure {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -2292,6 +2319,7 @@ definition {
 
 	@description = "This ensures that a document can be accessed in a staged site through the item selector after it has been approved when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test ViewApprovedDocument {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -2369,6 +2397,7 @@ definition {
 
 	@description = "This ensures that a depot image can be displayed in the Blog's item selector after scoped everywhere filter when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test ViewImageAfterScopedFilter {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -2402,6 +2431,7 @@ definition {
 
 	@description = "This test covers LPS-122133. It ensures that a depot image cannot be found from the disconnected local staging site."
 	@priority = "4"
+	@refactorneeded
 	test ViewImageFromDisconnectedSite {
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -2471,6 +2501,7 @@ definition {
 
 	@description = "This ensures that a pending image in depot cannot be found in staging site when enabling local staging."
 	@priority = "5"
+	@refactorneeded
 	test ViewPendingImage {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

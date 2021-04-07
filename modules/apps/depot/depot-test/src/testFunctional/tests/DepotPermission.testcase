@@ -32,6 +32,7 @@ definition {
 
 	@description = "This ensures that the user can perform operations to memberships with all permissions."
 	@priority = "5"
+	@refactorneeded
 	test AccessMembershipWithAllPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -117,6 +118,7 @@ definition {
 
 	@description = "This ensures that the user can only view memberships with view permissions."
 	@priority = "5"
+	@refactorneeded
 	test AccessMembershipWithViewOnlyPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -191,6 +193,7 @@ definition {
 
 	@description = "This ensures that the user can only add web content to the depot that has permissions set."
 	@priority = "5"
+	@refactorneeded
 	test AddWebContentPermissionWithinDepot {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -280,6 +283,7 @@ definition {
 
 	@description = "This ensures that user can perform CRUD operations to depots with all permissions."
 	@priority = "5"
+	@refactorneeded
 	test ConfigureRoleWithAllPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -355,6 +359,7 @@ definition {
 
 	@description = "This ensures that the user can only view depots with view permissions."
 	@priority = "5"
+	@refactorneeded
 	test ConfigureRoleWithViewOnly {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -405,6 +410,7 @@ definition {
 
 	@description = "This test covers LPS-120011. This ensures that no asset libraries be returned when a user without view permission searches the asset library."
 	@priority = "4"
+	@refactorneeded
 	test SearchDepotWithoutViewPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -471,6 +477,7 @@ definition {
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from Collections permissions."
 	@priority = "5"
+	@refactorneeded
 	test SelectAndDeselectScopeFromCollectionsPermissions {
 		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
 
@@ -509,6 +516,7 @@ definition {
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from DM permissions."
 	@priority = "5"
+	@refactorneeded
 	test SelectAndDeselectScopeFromDMPermissions {
 		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
 
@@ -547,6 +555,7 @@ definition {
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from WC permissions."
 	@priority = "5"
+	@refactorneeded
 	test SelectAndDeselectScopeFromWCPermissions {
 		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
 
@@ -585,6 +594,7 @@ definition {
 
 	@description = "This ensures that a document from depot cannot be accessed through Blogs on a connected site when a user doesn't have permissions."
 	@priority = "5"
+	@refactorneeded
 	test ValidateDocumentCannotBeSelectedWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -708,6 +718,7 @@ definition {
 
 	@description = "This ensures that the permissions scope can be applied correctly for the depot."
 	@priority = "5"
+	@refactorneeded
 	test ValidatePermissionsScope {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -815,6 +826,7 @@ definition {
 
 	@description = "This test covers LPS-119994. It ensures that the user with access application permission can view the depot dashboard."
 	@priority = "4"
+	@refactorneeded
 	test ViewDashBoardWithAccessApplicationPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -882,6 +894,7 @@ definition {
 
 	@description = "This ensures that the user can view documents on site and library with all sites and libraries scope view permissions."
 	@priority = "5"
+	@refactorneeded
 	test ViewDocumentOnSiteAndLibrary {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -972,6 +985,7 @@ definition {
 
 	@description = "This ensures that the unsupported application can not select a depot as the scope of the permission."
 	@priority = "5"
+	@refactorneeded
 	test ViewScopeFromUnsupportedApplicationPermissions {
 		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
 

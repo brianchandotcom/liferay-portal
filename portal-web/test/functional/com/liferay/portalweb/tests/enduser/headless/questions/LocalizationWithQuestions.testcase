@@ -50,6 +50,7 @@ definition {
 
 	@description = "Validate if the user can add multiple subtopics with non-Latin characters."
 	@priority = "3"
+	@refactorneeded
 	test AddMultipleSubTopics {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -78,6 +79,7 @@ definition {
 
 	@description = "Validate if the user can post a question with non-Latin characters via subtopic."
 	@priority = "4"
+	@refactorneeded
 	test AddQuestionViaSubTopic {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -120,6 +122,7 @@ definition {
 
 	@description = "Validate if the user can post a question with multiple tags that contain non-Latin characters."
 	@priority = "3"
+	@refactorneeded
 	test AddQuestionWithMultipleTags {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -147,6 +150,7 @@ definition {
 
 	@description = "Validate if the user can post a question with non-Latin characters， it also covers LPS-128639."
 	@priority = "5"
+	@refactorneeded
 	test AddQuestionWithNonLatinCharacters {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -173,6 +177,7 @@ definition {
 
 	@description = "Validate if the user can cancel the deletions that contain non-Latin characters."
 	@priority = "4"
+	@refactorneeded
 	test CancelDeletions {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -217,6 +222,7 @@ definition {
 
 	@description = "Validate if the user can delete a comment that contains non-Latin characters to an answer."
 	@priority = "4"
+	@refactorneeded
 	test DeleteCommentWithNonLatinCharacters {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -251,6 +257,7 @@ definition {
 
 	@description = "Validate if the user can delete an edited answer that contains non-Latin characters."
 	@priority = "4"
+	@refactorneeded
 	test DeleteEditedAnswer {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -285,6 +292,7 @@ definition {
 
 	@description = "Validate if the user can delete a question that contains non-Latin characters."
 	@priority = "4"
+	@refactorneeded
 	test DeleteQuestionWithComment {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -319,6 +327,7 @@ definition {
 
 	@description = "Validate if the user can delete a topic that contains non-Latin characters."
 	@priority = "5"
+	@refactorneeded
 	test DeleteTopicWithNonLatinCharacters {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -341,6 +350,7 @@ definition {
 
 	@description = "Validate if the user can add a comment to an answer with non-Latin characters."
 	@priority = "4"
+	@refactorneeded
 	test ReplyToAnAnswerWithNonLatinCharacters {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -373,6 +383,7 @@ definition {
 
 	@description = "Validate if the user can view a question via an edited topic that contains non-Latin characters."
 	@priority = "4"
+	@refactorneeded
 	test ViewQuestionAfterEditingTopic {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -405,6 +416,7 @@ definition {
 
 	@description = "Validate if the user can redirect to the question after clicking a tag that contains non-Latin characters."
 	@priority = "5"
+	@refactorneeded
 	test ViewQuestionViaTags {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -450,6 +462,7 @@ definition {
 
 	@description = "Validate if the user can view the sorted tags that contain non-Latin characters."
 	@priority = "4"
+	@refactorneeded
 	test ViewSortedTags {
 		Navigator.gotoPage(pageName = "Questions Page");
 

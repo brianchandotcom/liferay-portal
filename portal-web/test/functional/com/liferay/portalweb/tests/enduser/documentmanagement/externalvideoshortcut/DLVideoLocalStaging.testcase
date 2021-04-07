@@ -55,6 +55,7 @@ definition {
 
 	@description = "This test ensures that a kb article can be published successfully after deleting the embedded video."
 	@priority = "5"
+	@refactorneeded
 	test PublishKBAfterDeletingEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideoLocalStaging#PublishKBAfterDeletingEmbeddedVideo";
 
@@ -155,6 +156,7 @@ definition {
 
 	@description = "This test ensures that a web content can be published successfully after editing the embedded video."
 	@priority = "5"
+	@refactorneeded
 	test PublishWCAfterEditingEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideoLocalStaging#PublishWCAfterEditingEmbeddedVideo";
 

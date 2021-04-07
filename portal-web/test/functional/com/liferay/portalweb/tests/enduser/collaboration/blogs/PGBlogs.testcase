@@ -55,6 +55,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddBlogsEntry {
 		property testray.component.names = "WYSIWYG";
 
@@ -72,6 +73,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryComment {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -100,6 +102,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryContentNull {
 		Blogs.addWithInvalidContent(
 			entryInvalidContent = "",
@@ -111,6 +114,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryScheduled {
 		BlogsNavigator.gotoAddEntry();
 
@@ -134,6 +138,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryTitle255Characters {
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -149,6 +154,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryTitle256Characters {
 		Blogs.addWithInvalidTitleLength(
 			entryContent = "Blogs Entry Content",
@@ -166,6 +172,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryTitleEscapeCharacters {
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -181,6 +188,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryTitleNull {
 		Blogs.addWithInvalidTitle(
 			entryContent = "Blogs Entry Content",
@@ -192,6 +200,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryWithSamePageScope {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -275,6 +284,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryWithSubtitle {
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -292,6 +302,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryWithTrackbackURL {
 		property custom.properties = "blogs.trackback.enabled=true";
 
@@ -319,6 +330,7 @@ definition {
 
 	@description = "This is usecase 3 for LPS-69240"
 	@priority = "4"
+	@refactorneeded
 	test AddCustomURL {
 		var portalURL = PropsUtil.get("portal.url");
 		var entryContent = "Blogs Entry Content";
@@ -355,6 +367,7 @@ definition {
 
 	@description = "This is usecase 4 for LPS-69240"
 	@priority = "4"
+	@refactorneeded
 	test AddDuplicateCustomURL {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -392,6 +405,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddPortletToOrganizationSitePublicPage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -442,6 +456,7 @@ definition {
 
 	@description = "This is usecase 1 for LPS-69240"
 	@priority = "4"
+	@refactorneeded
 	test AssertAutomaticURL {
 		var entryContent = "Blogs Entry Content";
 		var entrySubtitle = "Blogs Entry Subtitle";
@@ -467,6 +482,7 @@ definition {
 
 	@description = "This is usecase 2 for LPS-69240"
 	@priority = "4"
+	@refactorneeded
 	test AssertDuplicateAutomaticURLNormalizes {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -493,6 +509,7 @@ definition {
 
 	@description = "These are usecases 6-8 for LPS-69240"
 	@priority = "4"
+	@refactorneeded
 	test AssertInputBetweenStateChanges {
 		var entryContent = "Blogs Entry Content";
 		var entrySubtitle = "Blogs Entry Subtitle";
@@ -539,6 +556,7 @@ definition {
 
 	@description = "This is usecase 5 for LPS-69240"
 	@priority = "4"
+	@refactorneeded
 	test AssertValidationForCustomURL {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -575,6 +593,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeleteBlogsEntries {
 		for (var entryCount : list "1,2,3") {
 			Navigator.gotoPage(pageName = "Blogs Page");
@@ -615,6 +634,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteBlogsEntryComment {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -638,6 +658,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditBlogsEntry {
 		property portal.acceptance = "true";
 
@@ -665,6 +686,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditBlogsEntryComment {
 		property portal.acceptance = "true";
 
@@ -692,6 +714,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test EditBlogsEntryComments {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -755,6 +778,7 @@ definition {
 
 	@description = "This is a usecase for LPS-75241"
 	@priority = "5"
+	@refactorneeded
 	test EmbedVideo {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
@@ -779,6 +803,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test MoveToRecycleBinBlogsEntry {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -804,6 +829,7 @@ definition {
 
 	@description = "This is a usecase for LPS-83229. This is the only small image test for blogs."
 	@priority = "5"
+	@refactorneeded
 	test RemoveSmallImage {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
@@ -852,6 +878,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test SaveBlogsEntryDraft {
 		property portal.acceptance = "true";
 
@@ -877,6 +904,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test SaveBlogsEntryDraftAuto {
 		Blogs.addDraftViaAutoSave(
 			entryContent = "Blogs Entry Content",
@@ -900,6 +928,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchBlogsEntryContent {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -924,6 +953,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchBlogsEntryContentQuotes {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -956,6 +986,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchBlogsEntryTitle {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -980,6 +1011,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test SearchBlogsEntryTitleQuotes {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1012,6 +1044,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test SubscribeToBlogsEntryComment {
 		property test.name.skip.portal.instance = "PGBlogs#SubscribeToBlogsEntryComment";
 
@@ -1031,6 +1064,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test UserFlagsEntryAndAdminViewsNotificationInMockMock {
 		property test.smtp.server.enabled = "true";
 
@@ -1075,6 +1109,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test UserSubscribeToBlogsAndViewEntryEmails {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
@@ -1149,6 +1184,7 @@ definition {
 
 	@description = "This test covers LPS-106613. It ensures that the custom abstract field cannot be reset to empty after typing in the content field."
 	@priority = "3"
+	@refactorneeded
 	test ViewAbstractDescriptionWithEntryContent {
 		property test.name.skip.portal.instance = "PGBlogs#ViewAbstractDescriptionWithEntryContent";
 
@@ -1213,6 +1249,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntryCommentAsGuest {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=&quot;com.liferay.saml.addon.keep.alive.web,com.liferay.saml.api,com.liferay.saml.impl,com.liferay.saml.opensaml.integration,com.liferay.saml.persistence.api,com.liferay.saml.persistence.service,com.liferay.saml.web,saml-hook&quot;";
@@ -1294,6 +1331,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryDraftNoAsUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1332,6 +1370,7 @@ definition {
 
 	@description = "Basic test that ensures reading time displays when enabled."
 	@priority = "5"
+	@refactorneeded
 	test ViewBlogsEntryReadingTime {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryReadingTime";
@@ -1359,6 +1398,7 @@ definition {
 
 	@ignore = "true"
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntryRSS {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -1378,6 +1418,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryViewCount {
 		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryViewCount";
 
@@ -1403,6 +1444,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryWithAbstractDisplayTemplate {
 		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryWithAbstractDisplayTemplate";
 
@@ -1442,6 +1484,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryWithDefaultScope {
 		Portlet.selectScopePG(
 			portletName = "Blogs",
@@ -1498,6 +1541,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntryWithFullContentDisplayTemplate {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1525,6 +1569,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsEntryWithGuestPermissionsRemoved {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry1 Content",
@@ -1558,6 +1603,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryWithTitleDisplayTemplate {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1581,6 +1627,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ViewBlogsEntryWithUploadedCoverImage {
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
@@ -1606,6 +1653,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewBlogsPortletWithNoPermissions {
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
@@ -1651,6 +1699,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewEntriesUsingCardADT {
 		ApplicationDisplayTemplates.selectPortletADT(
 			portletName = "Blogs",
@@ -1678,6 +1727,7 @@ definition {
 
 	@description = "This is a usecase for LPS-82025"
 	@priority = "5"
+	@refactorneeded
 	test ViewUpdatedFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 

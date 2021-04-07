@@ -32,6 +32,7 @@ definition {
 
 	@description = "This test covers LPS-89073. It ensures that users can add and remove tags for existing images via Gogo Shell."
 	@priority = "4"
+	@refactorneeded
 	test AddAndRemoveImageAutoTagViaGogoShell {
 		property test.name.skip.portal.instance = "DMAutoTagging#AddAndRemoveImageAutoTagViaGogoShell";
 
@@ -94,6 +95,7 @@ definition {
 
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
 	@priority = "4"
+	@refactorneeded
 	test AssertImageAutoTagAfterPublishToLive {
 		property test.name.skip.portal.instance = "DMAutoTagging#AssertImageAutoTagAfterPublishToLive";
 
@@ -159,6 +161,7 @@ definition {
 
 	@description = "This test asserts that tags are added to the images when they are uploaded on both nodes with tensorflow enabled on a clustered configuration."
 	@priority = "4"
+	@refactorneeded
 	test AutoTagImagesOnSeparateNodes {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
@@ -281,6 +284,7 @@ definition {
 
 	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a site that has auto-tagging disabled despite the auto-tagging functionality enabled at portal level."
 	@priority = "4"
+	@refactorneeded
 	test ConfigureImageAutoTaggingPerSite {
 		property test.name.skip.portal.instance = "DMAutoTagging#ConfigureImageAutoTaggingPerSite";
 
@@ -335,6 +339,7 @@ definition {
 
 	@description = "This test covers LPS-101885. It asserts that an auto-tagged document can be deleted when OpenNLP Auto-Tagging is enabled."
 	@priority = "4"
+	@refactorneeded
 	test DeleteAutoTaggedDocument {
 		property test.name.skip.portal.instance = "DMAutoTagging#DeleteAutoTaggedDocument";
 
@@ -360,6 +365,7 @@ definition {
 
 	@description = "This test asserts that the max number of tags at the instance level cannot be greater than the max number of tags at the portal level."
 	@priority = "4"
+	@refactorneeded
 	test MaxNumberOfTagsCheckBetweenInstanceLevelAndPortalLevel {
 		property test.name.skip.portal.instance = "DMAutoTagging#MaxNumberOfTagsCheckBetweenInstanceLevelAndPortalLevel";
 
@@ -375,6 +381,7 @@ definition {
 
 	@description = "This test asserts that no auto-tags are generated for manually tagged images."
 	@priority = "4"
+	@refactorneeded
 	test NoAutoTagForManuallyTaggedImage {
 		property test.name.skip.portal.instance = "DMAutoTagging#NoAutoTagForManuallyTaggedImage";
 
@@ -414,6 +421,7 @@ definition {
 
 	@description = "This test covers LPS-94208. It asserts that a document is auto tagged when OpenNLP Auto-Tagging is enabled."
 	@priority = "5"
+	@refactorneeded
 	test OpenNLPSmoke {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
@@ -443,6 +451,7 @@ definition {
 
 	@description = "This test asserts that auto-tags can be deleted."
 	@priority = "4"
+	@refactorneeded
 	test RemoveImageAutoTag {
 		property test.name.skip.portal.instance = "DMAutoTagging#RemoveImageAutoTag";
 
@@ -491,6 +500,7 @@ definition {
 
 	@description = "This test covers LPS-94209. It asserts that OpenNLP auto-tags can be deleted."
 	@priority = "4"
+	@refactorneeded
 	test RemoveOpenNLPAutoTag {
 		property test.name.skip.portal.instance = "DMAutoTagging#RemoveOpenNLPAutoTag";
 
@@ -552,6 +562,7 @@ definition {
 
 	@description = "This test asserts that an image is auto-tagged during upload when Auto-Tagging is enabled."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMAutoTagging#Smoke";

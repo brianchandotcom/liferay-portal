@@ -36,6 +36,7 @@ definition {
 
 	@description = "This test asserts that Not Found error returns when visiting FTP mode if indexing is disabled."
 	@priority = "5"
+	@refactorneeded
 	test DisableIndexing {
 		DepotNavigator.openDepotAdmin();
 
@@ -58,6 +59,7 @@ definition {
 
 	@description = "This test asserts that a document stored in a depot can be accessed from FTP mode."
 	@priority = "5"
+	@refactorneeded
 	test ViewDocument {
 		DepotNavigator.openDepotAdmin();
 
@@ -91,6 +93,7 @@ definition {
 
 	@description = "This test asserts that no document shows in FTP mode after deleting it in a depot."
 	@priority = "5"
+	@refactorneeded
 	test ViewDocumentAfterDeleting {
 		DepotNavigator.openDepotAdmin();
 
@@ -122,6 +125,7 @@ definition {
 
 	@description = "This test asserts that an edited document stored in a depot can be accessed from FTP mode."
 	@priority = "5"
+	@refactorneeded
 	test ViewDocumentAfterEditing {
 		DepotNavigator.openDepotAdmin();
 
@@ -161,6 +165,7 @@ definition {
 
 	@description = "This test asserts that a document in a folder stored in a depot can be accessed from FTP mode."
 	@priority = "5"
+	@refactorneeded
 	test ViewDocumentInFolder {
 		DepotNavigator.openDepotAdmin();
 
@@ -200,6 +205,7 @@ definition {
 
 	@description = "This test asserts that the approved document in a depot can be accessed from FTP mode."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentInWorkflow {
 		DepotNavigator.openDepotAdmin();
 
@@ -255,6 +261,7 @@ definition {
 
 	@description = "This test asserts that a document with escape characters stored in a depot can be accessed from FTP mode."
 	@priority = "3"
+	@refactorneeded
 	test ViewDocumentWithEscapeCharacters {
 		DepotNavigator.openDepotAdmin();
 
@@ -284,6 +291,7 @@ definition {
 
 	@description = "This test asserts that a document without guest permissions in a depot can not be accessed from FTP mode."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentWithoutPermissions {
 		DepotNavigator.openDepotAdmin();
 

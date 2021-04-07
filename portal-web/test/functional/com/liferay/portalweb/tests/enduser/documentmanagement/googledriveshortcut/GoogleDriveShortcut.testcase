@@ -60,6 +60,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test EditAndDeleteGoogleDoc {
 		property test.name.skip.portal.instance = "GoogleDriveShortcut#EditAndDeleteGoogleDoc";
 
@@ -91,6 +92,7 @@ definition {
 
 	@description = "This test makes sure that the Google Drive Shortcut can be added in a depot."
 	@priority = "4"
+	@refactorneeded
 	test EditAndDeleteGoogleDocDepot {
 		property test.name.skip.portal.instance = "GoogleDriveShortcut#EditAndDeleteGoogleDocDepot";
 
@@ -144,6 +146,7 @@ definition {
 
 	@description = "This ensures that a user can move google doc to a folder on a content page."
 	@priority = "5"
+	@refactorneeded
 	test MoveGoogleDocToFolder {
 		property test.name.skip.portal.instance = "GoogleDriveShortcut#MoveGoogleDocToFolder";
 

@@ -34,6 +34,7 @@ definition {
 
 	@description = "This ensures that a user will be redirected to the target URL of a permanent redirection."
 	@priority = "5"
+	@refactorneeded
 	test AccessPermanentEntry {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -69,6 +70,7 @@ definition {
 
 	@description = "This ensures that the user will be redirected to the cached target URL of a permanent redirection after it is updated."
 	@priority = "5"
+	@refactorneeded
 	test AccessPermanentEntryAfterEdit {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -103,6 +105,7 @@ definition {
 
 	@description = "This ensures that a user will be redirected to the target URL of a temporary redirection."
 	@priority = "5"
+	@refactorneeded
 	test AccessTemporaryEntry {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -135,6 +138,7 @@ definition {
 
 	@description = "This ensures that the user will be redirected to the latest target URL of a temporary redirection after it is updated."
 	@priority = "5"
+	@refactorneeded
 	test AccessTemporaryEntryAfterEdit {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -167,6 +171,7 @@ definition {
 
 	@description = "This ensures that a user cannot create more than one redirection with the same sourceURL."
 	@priority = "5"
+	@refactorneeded
 	test AddDuplicateSourceURL {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -187,6 +192,7 @@ definition {
 
 	@description = "This ensures that an entry can be added without update references."
 	@priority = "5"
+	@refactorneeded
 	test AddEntryWithoutReferences {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -229,6 +235,7 @@ definition {
 
 	@description = "This ensures that an entry can be added with update references."
 	@priority = "5"
+	@refactorneeded
 	test AddEntryWithReferences {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -274,6 +281,7 @@ definition {
 
 	@description = "This ensures that an expired permanent redirect can be added from an active 404 URL."
 	@priority = "4"
+	@refactorneeded
 	test AddExpiredEntryFromActive404 {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -309,6 +317,7 @@ definition {
 
 	@description = "This ensures that an expired temporary redirect can be added from an ignored 404 URL."
 	@priority = "4"
+	@refactorneeded
 	test AddExpiredEntryFromIgnored404 {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -348,6 +357,7 @@ definition {
 
 	@description = "This ensures that a permanent redirect can be added."
 	@priority = "5"
+	@refactorneeded
 	test AddPermanentEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -369,6 +379,7 @@ definition {
 
 	@description = "This ensures that a permanent redirect can be added from an active 404 URL."
 	@priority = "5"
+	@refactorneeded
 	test AddPermanentEntryFromActive404 {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -403,6 +414,7 @@ definition {
 
 	@description = "This ensures that a permanent redirect can be added from an ignored 404 URL."
 	@priority = "5"
+	@refactorneeded
 	test AddPermanentEntryFromIgnored404 {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -440,6 +452,7 @@ definition {
 
 	@description = "This ensures that a user cannot create a redirect if the sourceURL has invalid characters."
 	@priority = "5"
+	@refactorneeded
 	test AddSourceURLWithInvalidCharacters {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -460,6 +473,7 @@ definition {
 
 	@description = "This ensures that a temporary redirect can be added from an active 404 URL."
 	@priority = "5"
+	@refactorneeded
 	test AddTempEntryFromActive404 {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -493,6 +507,7 @@ definition {
 
 	@description = "This ensures that a temporary redirect can be added from an ignored 404 URL."
 	@priority = "5"
+	@refactorneeded
 	test AddTempEntryFromIgnored404 {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -531,6 +546,7 @@ definition {
 
 	@description = "This ensures that a redirection chain can be avoided."
 	@priority = "5"
+	@refactorneeded
 	test AvoidRedirectChain {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -577,6 +593,7 @@ definition {
 
 	@description = "This ensures that the destination URL passes validation before it can be used."
 	@priority = "5"
+	@refactorneeded
 	test CheckDestinationURL {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -618,6 +635,7 @@ definition {
 
 	@description = "This ensures that a redirection chain will be created."
 	@priority = "5"
+	@refactorneeded
 	test CreateRedirectChain {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -662,6 +680,7 @@ definition {
 
 	@description = "This ensures that all redirect entries can be deleted simultaneously."
 	@priority = "5"
+	@refactorneeded
 	test DeleteEntries {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -699,6 +718,7 @@ definition {
 
 	@description = "This ensures that a redirect entry can be deleted."
 	@priority = "5"
+	@refactorneeded
 	test DeleteEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -722,6 +742,7 @@ definition {
 
 	@description = "This ensures that an unexpired redirect can be edited."
 	@priority = "5"
+	@refactorneeded
 	test EditEntry {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -763,6 +784,7 @@ definition {
 
 	@description = "This ensures that a URL can be ignored after reactivation."
 	@priority = "5"
+	@refactorneeded
 	test IgnoreURLAfterReactivation {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -809,6 +831,7 @@ definition {
 
 	@description = "This ensures that the 404 URLs can be ordered by requests."
 	@priority = "5"
+	@refactorneeded
 	test Order404URLsByRequests {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -862,6 +885,7 @@ definition {
 
 	@description = "This ensures that accessing a nonexistent URL redirects the user to the home of the current site."
 	@priority = "4"
+	@refactorneeded
 	test Redirect404sToSiteHomePage {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -880,6 +904,7 @@ definition {
 
 	@description = "This ensures that an expired permanent redirect can be reset."
 	@priority = "5"
+	@refactorneeded
 	test ResetExpiredEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -907,6 +932,7 @@ definition {
 
 	@description = "This test covers LPS-110773. It ensures that a redirect entry can be found by search."
 	@priority = "3"
+	@refactorneeded
 	test SearchEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -926,6 +952,7 @@ definition {
 
 	@description = "This ensures that the redirect can be set."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -959,6 +986,7 @@ definition {
 
 	@description = "This ensures that an entry can be updated with checking update redirect."
 	@priority = "5"
+	@refactorneeded
 	test UpdateEntryWithCheckingUpdateRedirect {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1011,6 +1039,7 @@ definition {
 
 	@description = "This ensures that the 404 URLs can be viewed after reactivating."
 	@priority = "5"
+	@refactorneeded
 	test View404URLsAfterReactivating {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1060,6 +1089,7 @@ definition {
 
 	@description = "This ensures that the information related to the redirection can be viewed."
 	@priority = "5"
+	@refactorneeded
 	test ViewEntryInfo {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1087,6 +1117,7 @@ definition {
 
 	@description = "This ensures that an expired temporary redirect can be reactivated."
 	@priority = "5"
+	@refactorneeded
 	test ViewExpiredAndActiveEntries {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1122,6 +1153,7 @@ definition {
 
 	@description = "This ensures that an expired permanent redirect can be viewed."
 	@priority = "5"
+	@refactorneeded
 	test ViewExpiredPermanentEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1143,6 +1175,7 @@ definition {
 
 	@description = "This ensures that an expired temporary redirect can be viewed."
 	@priority = "5"
+	@refactorneeded
 	test ViewExpiredTempEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1163,6 +1196,7 @@ definition {
 
 	@description = "This ensures that an ignored URL can be viewed."
 	@priority = "5"
+	@refactorneeded
 	test ViewIgnoredURL {
 		var portalURL = PropsUtil.get("portal.url");
 

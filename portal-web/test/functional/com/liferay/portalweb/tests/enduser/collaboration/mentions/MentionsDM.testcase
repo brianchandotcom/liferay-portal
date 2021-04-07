@@ -61,6 +61,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewMentionViaDMComment {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -106,6 +107,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewReplyMentionViaDMComment {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

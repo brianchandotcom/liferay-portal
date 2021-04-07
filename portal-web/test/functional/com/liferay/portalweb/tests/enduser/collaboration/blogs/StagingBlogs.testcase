@@ -40,6 +40,7 @@ definition {
 
 	@description = "This test covers LPS-79000. It ensures that users can only publish an Approved blog entry. Draft entries should not have the Publish option."
 	@priority = "5"
+	@refactorneeded
 	test PublishDraftViaSAP {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -63,6 +64,7 @@ definition {
 
 	@description = "This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing."
 	@priority = "4"
+	@refactorneeded
 	test PublishEntryViaSAP {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
@@ -120,6 +122,7 @@ definition {
 
 	@description = "This is a use case for LPS-78833 and LPS-122140."
 	@priority = "5"
+	@refactorneeded
 	test PublishEntryWithDeletedSmallImage {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
@@ -234,6 +237,7 @@ definition {
 
 	@description = "This test covers LPS-99265. It ensures that a staged blogs entry cannot be shared unless it is first published to Live."
 	@priority = "4"
+	@refactorneeded
 	test ShareBlogsEntryOnLiveSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -316,6 +320,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test StagingBlogsCP {
 		property testray.component.names = "Training";
 
@@ -351,6 +356,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test StagingBlogsPG {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
@@ -531,6 +537,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test StagingBlogsWithScheduledPublishing {
 		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsWithScheduledPublishing";
 
@@ -587,6 +594,7 @@ definition {
 
 	@description = "This is a use case for LPS-72949."
 	@priority = "5"
+	@refactorneeded
 	test StagingLocalLiveLockAndEditBlogsEntry {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
@@ -657,6 +665,7 @@ definition {
 
 	@description = "This is a use case for LPS-80543."
 	@priority = "5"
+	@refactorneeded
 	test ViewBlogsAsAGuestAndSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

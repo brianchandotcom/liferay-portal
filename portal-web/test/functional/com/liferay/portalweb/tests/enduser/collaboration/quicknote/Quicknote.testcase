@@ -29,6 +29,7 @@ definition {
 
 	@ignore = "true"
 	@priority = "2"
+	@refactorneeded
 	test AddQuickNote {
 		Portlet.addPG(portletName = "Quick Note");
 

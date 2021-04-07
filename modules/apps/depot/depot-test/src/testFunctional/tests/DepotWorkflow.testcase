@@ -46,6 +46,7 @@ definition {
 
 	@description = "This ensures that the approved image from a depot is available to use in its connected site."
 	@priority = "5"
+	@refactorneeded
 	test ApproveImage {
 		property portal.acceptance = "true";
 
@@ -137,6 +138,7 @@ definition {
 
 	@description = "This ensures that the approved WC article from a depot is available to use in its connected site."
 	@priority = "5"
+	@refactorneeded
 	test ApproveWCArticle {
 		property portal.acceptance = "true";
 
@@ -236,6 +238,7 @@ definition {
 
 	@description = "This test covers LPS-113392. It ensures that an asset library WC article can be approved by the content reviewer."
 	@priority = "5"
+	@refactorneeded
 	test ApproveWCArticleByContentReviewer {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -337,6 +340,7 @@ definition {
 
 	@description = "This ensures that a single approver workflow of web content can be defined for the asset library."
 	@priority = "5"
+	@refactorneeded
 	test ApproveWCArticleWithinDepot {
 		DepotNavigator.openDepotAdmin();
 
@@ -386,6 +390,7 @@ definition {
 
 	@description = "This ensures that the approved WC article in folder from a depot is available to use in its connected site."
 	@priority = "5"
+	@refactorneeded
 	test ApproveWCInFolder {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -491,6 +496,7 @@ definition {
 
 	@description = "This ensures that the resubmitted image from a depot is available to use in its connected site."
 	@priority = "5"
+	@refactorneeded
 	test RejectAndResubmitImage {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -609,6 +615,7 @@ definition {
 
 	@description = "This ensures that the resubmitted WC article from a depot is available to use in its connected site."
 	@priority = "5"
+	@refactorneeded
 	test RejectAndResubmitWC {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -727,6 +734,7 @@ definition {
 
 	@description = "This ensures that the resubmitted web content can be approved in an asset library."
 	@priority = "5"
+	@refactorneeded
 	test RejectandResubmitWCArticleWithinDepot {
 		DepotNavigator.openDepotAdmin();
 
@@ -808,6 +816,7 @@ definition {
 
 	@description = "This ensures that an asset library WC article can be rejected by the content reviewer."
 	@priority = "5"
+	@refactorneeded
 	test RejectWCArticleByContentReviewer {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -898,6 +907,7 @@ definition {
 
 	@description = "This ensures that a DM folder workflow can be restored to default from other settings."
 	@priority = "4"
+	@refactorneeded
 	test RestoreDMFolderWorkflowToDefault {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -938,6 +948,7 @@ definition {
 
 	@description = "This ensures that a WC folder workflow can be restored to default from other settings."
 	@priority = "4"
+	@refactorneeded
 	test RestoreWCFolderWorkflowToDefault {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -979,6 +990,7 @@ definition {
 
 	@description = "This ensures that the workflow can be set in an asset library."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		property portal.acceptance = "true";
 

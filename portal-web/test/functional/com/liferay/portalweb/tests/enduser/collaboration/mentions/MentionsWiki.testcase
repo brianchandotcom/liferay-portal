@@ -95,6 +95,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewWikiCommentMentionedUser {
 		property test.name.skip.portal.instance = "MentionsWiki#ViewWikiCommentMentionedUser";
 

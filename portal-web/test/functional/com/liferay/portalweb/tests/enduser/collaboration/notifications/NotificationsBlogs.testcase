@@ -68,6 +68,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteNotifications {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -119,6 +120,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test MarkAllNotificationsAsRead {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -160,6 +162,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewMultipleNotifications {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -246,6 +249,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewNoWebsiteNotificationForNewBlogsEntry {
 		NotificationsPortlet.gotoNotificationDelivery();
 
@@ -288,6 +292,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewNoWebsiteNotificationForUpdatedBlogsEntry {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -332,6 +337,7 @@ definition {
 
 	@description = "This test covers LPS-103502. It ensures that notifications are displayed correctly after being mentioned."
 	@priority = "3"
+	@refactorneeded
 	test ViewWebsiteNotificationdForMention {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -407,6 +413,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWebsiteNotificationForNewBlogsEntry {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -453,6 +460,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWebsiteNotificationForNewCommentViaBlogs {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

@@ -40,6 +40,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test AddWikiFrontPageChildPage {
 		Navigator.openURL();
 
@@ -81,6 +82,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddWikiFrontPageChildPageFormatHTML {
 		var welcomeToLiferay = '''
 				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
@@ -142,6 +144,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddWikiFrontPageChildPageInvalidTitle {
 		Navigator.openURL();
 
@@ -233,6 +236,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DeleteWikiFrontPage {
 		Navigator.openURL();
 
@@ -271,6 +275,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewConfigurationSetupPageFrontPage {
 		Navigator.openURL();
 

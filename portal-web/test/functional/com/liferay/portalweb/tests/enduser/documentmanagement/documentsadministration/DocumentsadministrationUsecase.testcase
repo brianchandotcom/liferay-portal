@@ -39,6 +39,7 @@ definition {
 
 	@description = "This test ensures that the filename character restriction can be configured through the blacklist."
 	@priority = "4"
+	@refactorneeded
 	test AddAndRemoveCharactersFromBlacklist {
 		property custom.properties = "dl.char.blacklist=\\\\,//,:,*,?,<,#,|,../,/..";
 
@@ -78,6 +79,7 @@ definition {
 
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
 	@priority = "5"
+	@refactorneeded
 	test AddAutoAssertionCategoryViaDMDocument {
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#AddAutoAssertionCategoryViaDMDocument";
 
@@ -143,6 +145,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AllowMultiplePortletConfigurationsPerSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -184,6 +187,7 @@ definition {
 
 	@description = "This is a use case for LPS-50760."
 	@priority = "4"
+	@refactorneeded
 	test AssertFileSizeValidation {
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#AssertFileSizeValidation";
 
@@ -258,6 +262,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test CannotViewFolderAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Training";
@@ -372,6 +377,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test CannotViewMultipleDocumentsAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Training";
@@ -424,6 +430,7 @@ definition {
 
 	@description = "This test ensures that a checked out document cannot be edited by another user."
 	@priority = "5"
+	@refactorneeded
 	test CheckOutDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -501,6 +508,7 @@ definition {
 
 	@description = "This test checks if the file extension upload restrictions in System Settings works as expected."
 	@priority = "5"
+	@refactorneeded
 	test CheckValidationForFileEntries {
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#CheckValidationForFileEntries";
 
@@ -550,6 +558,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test Comments {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -644,6 +653,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ConfigureXugglerVideoPreviewSizePG {
 		property custom.properties = "xuggler.enabled=true${line.separator}dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
 		property dummy.socket.proxy.disabled = "true";
@@ -733,6 +743,7 @@ definition {
 
 	@description = "This test covers LPS-128473. This test ensures that users can filter documents by Recent."
 	@priority = "3"
+	@refactorneeded
 	test FilterByRecent {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title 2",
@@ -779,6 +790,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ImportAudioAndLimitPermissionsToSubfolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Training";
@@ -906,6 +918,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ImportDocumentWithDBStore {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
 		property test.assert.warning.exceptions = "false";
@@ -937,6 +950,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test RemoveCurrentDisplayStyleViews {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -955,6 +969,7 @@ definition {
 
 	@description = "This case covers LPS-97708. It ensures that a document can be restored from the Recycle Bin even if its original folder no longer exists."
 	@priority = "3"
+	@refactorneeded
 	test RestoreDocumentWithoutOriginalFolder {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -1004,6 +1019,7 @@ definition {
 
 	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents simultaneously."
 	@priority = "4"
+	@refactorneeded
 	test SelectMultipleDocumentsAndDeleteViaActionsButton {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1045,6 +1061,7 @@ definition {
 
 	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."
 	@priority = "5"
+	@refactorneeded
 	test ValidateFileNameRestrictions {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1094,6 +1111,7 @@ definition {
 
 	@description = "This test covers LPS-93031. It ensures that the document still can be viewed after the author is deleted."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentAfterDeletingAuthor {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1160,6 +1178,7 @@ definition {
 
 	@description = "This test covers LPS-118268. It ensures that the user without document view permission can not view the document via the display page."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentViaDisplayPage {
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
@@ -1215,6 +1234,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewDocumentWithGlobalScope {
 		property testray.component.names = "Training";
 
@@ -1362,6 +1382,7 @@ definition {
 
 	@description = "This ensures that the user can create document viewable only by the owner."
 	@priority = "4"
+	@refactorneeded
 	test ViewDocumentWithOwnerAccessOnly {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1437,6 +1458,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewFileCategoryAndTags {
 		property testray.component.names = "Training";
 
@@ -1526,6 +1548,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ViewFolderAsOrganizationUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Training";
@@ -1684,6 +1707,7 @@ definition {
 
 	@description = "This test covers LPS-93601 and LPS-91661. It ensures that the user can check all files in the current pagination using the DM toolbar and can move documents not on the current pagination to another folder."
 	@priority = "4"
+	@refactorneeded
 	test ViewPaginationToolbarCheckboxAndMoveMultiplePaginationDocuments {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1770,6 +1794,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewPortletAfterRenamingDocumentWithDuplicateTitlePG {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1816,6 +1841,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP {
 		for (var documentNumber : list "1,2") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

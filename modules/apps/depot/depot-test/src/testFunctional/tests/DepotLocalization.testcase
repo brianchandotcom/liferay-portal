@@ -32,6 +32,7 @@ definition {
 
 	@description = "This ensures that the language can be set in a depot."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		property portal.acceptance = "true";
 
@@ -58,6 +59,7 @@ definition {
 
 	@description = "This ensures that the custom type language can be set in a depot."
 	@priority = "4"
+	@refactorneeded
 	test ViewCustomLanguagesOrderForCustomType {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -154,6 +156,7 @@ definition {
 
 	@description = "This ensures that the web content language can be set in a depot."
 	@priority = "5"
+	@refactorneeded
 	test ViewCustomLanguagesOrderForWebContent {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

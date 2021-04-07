@@ -68,6 +68,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWebsiteNotificationForNewWikiPage {
 		Navigator.openURL();
 
@@ -120,6 +121,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWebsiteNotificationForUpdatedWikiPage {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

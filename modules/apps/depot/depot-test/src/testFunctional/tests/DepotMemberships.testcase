@@ -32,6 +32,7 @@ definition {
 
 	@description = "This ensures that an organization can be added and removed in the membership of an asset library."
 	@priority = "5"
+	@refactorneeded
 	test AddAndRemoveOrganization {
 		JSONOrganization.addOrganization(
 			organizationName = "Organization Name",
@@ -70,6 +71,7 @@ definition {
 
 	@description = "This ensures that a user can be added and removed in the membership of an asset library."
 	@priority = "5"
+	@refactorneeded
 	test AddAndRemoveUser {
 		property portal.acceptance = "true";
 
@@ -116,6 +118,7 @@ definition {
 
 	@description = "This ensures that a user group can be added and removed in the membership of an asset library."
 	@priority = "5"
+	@refactorneeded
 	test AddAndRemoveUserGroup {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -159,6 +162,7 @@ definition {
 
 	@description = "This ensures that an asset library can be assigned to a user from the user profile."
 	@priority = "5"
+	@refactorneeded
 	test AssignALFromUserProfile {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -188,6 +192,7 @@ definition {
 
 	@description = "This ensures that an asset library with translation can be assigned to a user from the user profile."
 	@priority = "3"
+	@refactorneeded
 	test AssignALWithTranslationForUser {
 		property test.name.skip.portal.instance = "DepotMemberships#AssignALWithTranslationForUser";
 
@@ -236,6 +241,7 @@ definition {
 
 	@description = "This ensures that an assigned asset library can be removed from the user profile."
 	@priority = "5"
+	@refactorneeded
 	test RemoveALFromUserProfile {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -277,6 +283,7 @@ definition {
 
 	@description = "This ensures that the asset library can be displayed correctly in the memberships after selecting the same depot for the user."
 	@priority = "3"
+	@refactorneeded
 	test SelectSameDepotForUser {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -320,6 +327,7 @@ definition {
 
 	@description = "This ensures that the organizations page pagination can be displayed correctly in the depot memberships."
 	@priority = "3"
+	@refactorneeded
 	test ViewOrganizationPagination {
 		for (var num : list "1,2,3,4,5") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name ${num}");
@@ -346,6 +354,7 @@ definition {
 
 	@description = "This ensures that the users page pagination can be displayed correctly in the depot memberships."
 	@priority = "3"
+	@refactorneeded
 	test ViewUsersPagination {
 		for (var num : list "1,2,3,4,5") {
 			JSONUser.addUser(

@@ -58,6 +58,7 @@ definition {
 
 	@description = "This test asserts that users get the proper notification based on sharing permissions granted to him, also covers LPS-94448"
 	@priority = "4"
+	@refactorneeded
 	test AssertNotifications {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
@@ -164,6 +165,7 @@ definition {
 
 	@description = "This test covers LPS-94858. It asserts deleted entry displays in a user's Shared Content using share button from info panel."
 	@priority = "4"
+	@refactorneeded
 	test AssertSingleDeleteEntry {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -218,6 +220,7 @@ definition {
 
 	@description = "This test asserts only one entry displays in a user's Shared Content app when multiple users share the same document to him."
 	@priority = "4"
+	@refactorneeded
 	test AssertSingleEntry {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -314,6 +317,7 @@ definition {
 
 	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared Content app."
 	@priority = "4"
+	@refactorneeded
 	test GoToSharedContentViaEmail {
 		property custom.properties = "message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
 		property dummy.socket.proxy.disabled = "true";
@@ -418,6 +422,7 @@ definition {
 
 	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared Content app."
 	@priority = "4"
+	@refactorneeded
 	test GoToSharedContentViaNotifications {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
@@ -455,6 +460,7 @@ definition {
 
 	@description = "This test covers LPS-94294. It ensures that sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him."
 	@priority = "5"
+	@refactorneeded
 	test ManageCollaborators {
 		property portal.acceptance = "true";
 
@@ -551,6 +557,7 @@ definition {
 
 	@description = "This test covers LPS-101927. It ensures that a user can reply to a comment on an image via shared content"
 	@priority = "4"
+	@refactorneeded
 	test ReplyToCommentViaSharedContent {
 		JSONUser.addUser(
 			userEmailAddress = "userea2@liferay.com",
@@ -655,6 +662,7 @@ definition {
 
 	@description = "This test covers LPS-94284. It ensures that the invalid email still does not add if it has a space."
 	@priority = "4"
+	@refactorneeded
 	test ShareViaInvalidAddress {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
@@ -686,6 +694,7 @@ definition {
 
 	@description = "This test covers LPS-94585. It ensures that users can share via Shared Content app."
 	@priority = "5"
+	@refactorneeded
 	test ShareViaSharedContent {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -830,6 +839,7 @@ definition {
 
 	@description = "This test share an content to a user and disable the sharing option. This test asserts that a collaborator without sharing permissions will not be able to share this content."
 	@priority = "5"
+	@refactorneeded
 	test ShareWithNoSharingPermissions {
 		property portal.acceptance = "true";
 
@@ -883,6 +893,7 @@ definition {
 
 	@description = "This test covers LPS-94661. It ensures that the user can share a document with an apostrophe in the title."
 	@priority = "3"
+	@refactorneeded
 	test ShareWithSpecialCharacter {
 		property test.name.skip.portal.instance = "DMSharing#ShareWithSpecialCharacter";
 
@@ -940,6 +951,7 @@ definition {
 
 	@description = "This test makes sure all collaborators will view all collaborators of the document that was shared to him. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."
 	@priority = "5"
+	@refactorneeded
 	test ViewAndRemoveCollaborators {
 		JSONUser.addUser(
 			userEmailAddress = "userea2@liferay.com",

@@ -38,6 +38,7 @@ definition {
 
 	@description = "This ensures that a depot can be connected to different types of sites."
 	@priority = "5"
+	@refactorneeded
 	test AddMultipleSites {
 		Site.openSitesAdmin();
 
@@ -92,6 +93,7 @@ definition {
 
 	@description = "This ensures that an asset library can not be connected to a staged site."
 	@priority = "4"
+	@refactorneeded
 	test ConnectStagedSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -130,6 +132,7 @@ definition {
 
 	@description = "This asserts that a deactivated site is still shown in connected sites and a deleted site is removed from connected sites."
 	@priority = "4"
+	@refactorneeded
 	test DeactivateAndDeleteSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -194,6 +197,7 @@ definition {
 
 	@description = "This ensures that the disconnected site can not access the the depot."
 	@priority = "5"
+	@refactorneeded
 	test DisconnectFromSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -224,6 +228,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be searched on a connected site when searching is reenabled."
 	@priority = "5"
+	@refactorneeded
 	test ReenableSearchability {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -286,6 +291,7 @@ definition {
 
 	@description = "This ensures that users can search for depot document from connected site."
 	@priority = "5"
+	@refactorneeded
 	test SearchForDocument {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -333,6 +339,7 @@ definition {
 
 	@description = "This ensures that a depot document cannot be searched from the disconnected site."
 	@priority = "5"
+	@refactorneeded
 	test SearchForDocumentFromDisconnectedSite {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -364,6 +371,7 @@ definition {
 
 	@description = "This ensures that a depot document associated with a tag can be searched from the connected site."
 	@priority = "5"
+	@refactorneeded
 	test SearchForTag {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -414,6 +422,7 @@ definition {
 
 	@description = "This ensures that a depot document cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
+	@refactorneeded
 	test SearchForUnsearchableDocument {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -461,6 +470,7 @@ definition {
 
 	@description = "This ensures that a depot document associated with a tag cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
+	@refactorneeded
 	test SearchForUnsearchableTag {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -511,6 +521,7 @@ definition {
 
 	@description = "This ensures that a depot content associated with the user cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
+	@refactorneeded
 	test SearchForUnsearchableUser {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -572,6 +583,7 @@ definition {
 
 	@description = "This ensures that a depot web content cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
+	@refactorneeded
 	test SearchForUnsearchableWC {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -620,6 +632,7 @@ definition {
 
 	@description = "This ensures that a depot content associated with the user can be searched with from the connected site."
 	@priority = "5"
+	@refactorneeded
 	test SearchForUser {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -671,6 +684,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be searched from the connected site."
 	@priority = "5"
+	@refactorneeded
 	test SearchForWebContent {
 		property portal.acceptance = "true";
 
@@ -721,6 +735,7 @@ definition {
 
 	@description = "This ensures that a depot can be connected to the site."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		property portal.acceptance = "true";
 
@@ -749,6 +764,7 @@ definition {
 
 	@description = "This ensures that a connected site can access the depot document."
 	@priority = "5"
+	@refactorneeded
 	test ViewDocumentFromAnotherSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -776,6 +792,7 @@ definition {
 
 	@description = "This ensures that a connected child site can access the depot image."
 	@priority = "5"
+	@refactorneeded
 	test ViewImageFromChildSite {
 		JSONGroup.addChildSite(
 			groupName = "Child Site Name",

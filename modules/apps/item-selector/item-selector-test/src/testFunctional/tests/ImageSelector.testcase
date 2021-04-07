@@ -28,6 +28,7 @@ definition {
 
 	@description = "This makes sure that multiple blog images can be previewed by using the keyboard."
 	@priority = "5"
+	@refactorneeded
 	test PreviewMultipleImagesInBlogsImages {
 		for (var i : list "1,2,3") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -91,6 +92,7 @@ definition {
 
 	@description = "This makes sure that multiple DM images can be previewed by using the keyboard."
 	@priority = "5"
+	@refactorneeded
 	test PreviewMultipleImagesInDM {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -149,6 +151,7 @@ definition {
 
 	@description = "This ensures that navigation arrows do not appear in image preview when there is only one image in the library."
 	@priority = "5"
+	@refactorneeded
 	test PreviewSingleImage {
 		property portal.acceptance = "true";
 

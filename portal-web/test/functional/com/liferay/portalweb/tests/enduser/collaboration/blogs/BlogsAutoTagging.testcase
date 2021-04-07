@@ -44,6 +44,7 @@ definition {
 
 	@description = "This test covers LPS-98324. It ensures that Auto tags can be added and removed via Gogo Shell."
 	@priority = "4"
+	@refactorneeded
 	test AddAndRemoveAutoTagViaGogoShell {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#AddOrRemoveAutoTagViaGogoShell";
 
@@ -99,6 +100,7 @@ definition {
 
 	@description = "This test ensures that a blog entry can get autotagged on a staging site and that the tags will be published to live successfully."
 	@priority = "4"
+	@refactorneeded
 	test AssertAutoTagAfterPublishToLive {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#AssertAutoTagAfterPublishToLive";
 
@@ -151,6 +153,7 @@ definition {
 
 	@description = "This test ensures that when autotagging is disabled while adding a site, Blog entries will not be autotagged."
 	@priority = "5"
+	@refactorneeded
 	test DisableAutoTaggingForSite {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BlogsAutoTagging#DisableAutoTaggingForSite";
@@ -191,6 +194,7 @@ definition {
 
 	@description = "This test ensures that if a user manual adds a tag when adding a blog entry, the entry will not be autotagged."
 	@priority = "5"
+	@refactorneeded
 	test NoAutoTagForManuallyAddedEntry {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#NoAutoTagForManuallyAddedEntry";
 
@@ -219,6 +223,7 @@ definition {
 
 	@description = "This test ensures that autotags generated for a blog entry can be removed."
 	@priority = "4"
+	@refactorneeded
 	test RemoveAutoTag {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#RemoveAutoTag";
 
@@ -250,6 +255,7 @@ definition {
 
 	@description = "This test asserts that a blog entry is auto tagged when OpenNLP Text Auto Tagging is enabled."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BlogsAutoTagging#Smoke";

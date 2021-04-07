@@ -40,6 +40,7 @@ definition {
 
 	@description = "Validate if the user can create a question category"
 	@priority = "5"
+	@refactorneeded
 	test AddQuestionCategory {
 		property portal.acceptance = "true";
 

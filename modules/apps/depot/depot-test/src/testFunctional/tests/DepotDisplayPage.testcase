@@ -34,6 +34,7 @@ definition {
 
 	@description = "This test ensures that a user can map the display page with Open Graph when using the DM type from AL on a connect site."
 	@priority = "5"
+	@refactorneeded
 	test MapDMWithOpenGraph {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -154,6 +155,7 @@ definition {
 
 	@description = "This test ensures that a user can map the display page with SEO when using the DM type from AL on a connect site."
 	@priority = "5"
+	@refactorneeded
 	test MapDMWithSEO {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -213,6 +215,7 @@ definition {
 
 	@description = "This test ensures that a user can map the display page with Open Graph when using the WC structure from AL on a connect site."
 	@priority = "5"
+	@refactorneeded
 	test MapWCWithOpenGraph {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -347,6 +350,7 @@ definition {
 
 	@description = "This test ensures that a user can map the display page with SEO when using the WC structure from AL on a connect site."
 	@priority = "5"
+	@refactorneeded
 	test MapWCWithSEO {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -421,6 +425,7 @@ definition {
 
 	@description = "This test ensures that a user can view the image using display page template with DM type from AL on a connect site."
 	@priority = "5"
+	@refactorneeded
 	test ViewImage {
 		property portal.acceptance = "true";
 
@@ -497,6 +502,7 @@ definition {
 
 	@description = "This test ensures that a user can view the web content using display page template with WC structure from AL on a connect site."
 	@priority = "5"
+	@refactorneeded
 	test ViewWC {
 		property portal.acceptance = "true";
 

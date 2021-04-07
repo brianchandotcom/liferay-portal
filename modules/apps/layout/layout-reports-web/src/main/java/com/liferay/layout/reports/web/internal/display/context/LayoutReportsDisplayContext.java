@@ -210,10 +210,7 @@ public class LayoutReportsDisplayContext {
 			portletURL.setParameter(
 				"mvcRenderCommandName",
 				"/configuration_admin/edit_configuration");
-			portletURL.setParameter(
-				"redirect",
-				_portal.getCurrentCompleteURL(
-					_portal.getHttpServletRequest(portletRequest)));
+			portletURL.setParameter("redirect", _getCompleteURL());
 			portletURL.setParameter(
 				"factoryPid",
 				LayoutReportsGooglePageSpeedConfiguration.class.getName());
@@ -231,10 +228,7 @@ public class LayoutReportsDisplayContext {
 			portletURL.setParameter(
 				"mvcRenderCommandName",
 				"/configuration_admin/edit_configuration");
-			portletURL.setParameter(
-				"redirect",
-				_portal.getCurrentCompleteURL(
-					_portal.getHttpServletRequest(portletRequest)));
+			portletURL.setParameter("redirect", _getCompleteURL());
 			portletURL.setParameter(
 				"factoryPid",
 				LayoutReportsGooglePageSpeedCompanyConfiguration.class.

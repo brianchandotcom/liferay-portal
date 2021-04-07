@@ -11,7 +11,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-import type { Atom, Immutable, Selector } from '@liferay/frontend-js-state-web';
+
+import type {Atom, Immutable, Selector} from '@liferay/frontend-js-state-web';
+
 /**
  * Hook-based abstraction over `State.read()`, `State.write()`, and
  * `State.subscribe()` that allows you to conveniently read/update/watch atoms
@@ -24,4 +26,6 @@ import type { Atom, Immutable, Selector } from '@liferay/frontend-js-state-web';
  * (Note, however, that actually trying to update a selector will throw
  * an error because selectors are read-only.)
  */
-export default function useLiferayState<T>(atomOrSelector: Atom<T> | Selector<T>): [value: Immutable<T>, setValue: (newValue: T) => void];
+export default function useLiferayState<T>(
+	atomOrSelector: Atom<T> | Selector<T>
+): [value: Immutable<T>, setValue: (newValue: T) => void];

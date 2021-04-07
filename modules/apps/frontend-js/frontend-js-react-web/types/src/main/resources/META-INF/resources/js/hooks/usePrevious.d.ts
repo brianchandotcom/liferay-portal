@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /**
  * Hook for comparing current and previous values (of state, props or any
  * arbitrary value).

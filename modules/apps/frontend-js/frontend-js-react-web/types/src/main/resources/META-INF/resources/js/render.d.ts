@@ -11,7 +11,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 import React from 'react';
+
 /**
  * Wrapper for ReactDOM render that automatically:
  *
@@ -29,8 +31,15 @@ import React from 'react';
  *
  * @see https://reactjs.org/docs/react-dom.html#render
  */
-export default function render(renderable: NonNullable<React.ReactNode> | NonNullable<React.ForwardRefExoticComponent<any>> | (() => NonNullable<React.ReactNode>), renderData: {
-    componentId?: string;
-    portletId?: string;
-    [key: string]: unknown;
-}, container: Element | DocumentFragment): void;
+export default function render(
+	renderable:
+		| NonNullable<React.ReactNode>
+		| NonNullable<React.ForwardRefExoticComponent<any>>
+		| (() => NonNullable<React.ReactNode>),
+	renderData: {
+		componentId?: string;
+		portletId?: string;
+		[key: string]: unknown;
+	},
+	container: Element | DocumentFragment
+): void;

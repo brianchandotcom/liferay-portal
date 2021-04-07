@@ -11,8 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /**
  * Wrapper for `useState` that does an `isMounted()` check behind the scenes
  * before triggering side-effects.
  */
-export default function useStateSafe<T = unknown>(initialValue: T | (() => T)): readonly [T, (newValue: T | ((previousValue: T) => T)) => void];
+export default function useStateSafe<T = unknown>(
+	initialValue: T | (() => T)
+): readonly [T, (newValue: T | ((previousValue: T) => T)) => void];

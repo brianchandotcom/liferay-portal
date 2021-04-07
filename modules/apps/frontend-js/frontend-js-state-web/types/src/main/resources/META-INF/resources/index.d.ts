@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-export { default as State } from './State';
-export type { Atom, Selector } from './State';
-export type { Immutable } from './types';
+
+export {default as State} from './State';
+export type {Atom, Selector} from './State';
+export type {Immutable} from './types';

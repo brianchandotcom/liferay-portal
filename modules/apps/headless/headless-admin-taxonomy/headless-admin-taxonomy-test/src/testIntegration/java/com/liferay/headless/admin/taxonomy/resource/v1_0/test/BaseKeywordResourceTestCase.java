@@ -28,6 +28,7 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.client.http.HttpInvoker;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
+import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.KeywordSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -42,10 +43,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -535,6 +538,63 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryKeywordPermissionsPage() throws Exception {
+		Page<Permission> page =
+			keywordResource.getAssetLibraryKeywordPermissionsPage(
+				testDepotEntry.getDepotEntryId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected Keyword testGetAssetLibraryKeywordPermissionsPage_addKeyword()
+		throws Exception {
+
+		return testPostAssetLibraryKeyword_addKeyword(randomKeyword());
+	}
+
+	@Test
+	public void testPutAssetLibraryKeywordPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword = testPutAssetLibraryKeywordPermission_addKeyword();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			keywordResource.putAssetLibraryKeywordPermissionHttpResponse(
+				testDepotEntry.getDepotEntryId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			keywordResource.putAssetLibraryKeywordPermissionHttpResponse(
+				testDepotEntry.getDepotEntryId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected Keyword testPutAssetLibraryKeywordPermission_addKeyword()
+		throws Exception {
+
+		return keywordResource.postAssetLibraryKeyword(
+			testDepotEntry.getDepotEntryId(), randomKeyword());
+	}
+
+	@Test
 	public void testGetKeywordsRankedPage() throws Exception {
 		Page<Keyword> page = keywordResource.getKeywordsRankedPage(
 			null, RandomTestUtil.randomString(), Pagination.of(1, 2));
@@ -729,6 +789,62 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected Keyword testPutKeyword_addKeyword() throws Exception {
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
+	public void testGetKeywordPermissionsPage() throws Exception {
+		Keyword postKeyword = testGetKeywordPermissionsPage_addKeyword();
+
+		Page<Permission> page = keywordResource.getKeywordPermissionsPage(
+			postKeyword.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected Keyword testGetKeywordPermissionsPage_addKeyword()
+		throws Exception {
+
+		return testPostSiteKeyword_addKeyword(randomKeyword());
+	}
+
+	@Test
+	public void testPutKeywordPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword = testPutKeywordPermission_addKeyword();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			keywordResource.putKeywordPermissionHttpResponse(
+				keyword.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"VIEW"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			keywordResource.putKeywordPermissionHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected Keyword testPutKeywordPermission_addKeyword() throws Exception {
 		return keywordResource.postSiteKeyword(
 			testGroup.getGroupId(), randomKeyword());
 	}
@@ -1070,6 +1186,62 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword = testGraphQLKeyword_addKeyword(randomKeyword);
 
 		Assert.assertTrue(equals(randomKeyword, keyword));
+	}
+
+	@Test
+	public void testGetSiteKeywordPermissionsPage() throws Exception {
+		Page<Permission> page = keywordResource.getSiteKeywordPermissionsPage(
+			testGroup.getGroupId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected Keyword testGetSiteKeywordPermissionsPage_addKeyword()
+		throws Exception {
+
+		return testPostSiteKeyword_addKeyword(randomKeyword());
+	}
+
+	@Test
+	public void testPutSiteKeywordPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword = testPutSiteKeywordPermission_addKeyword();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			keywordResource.putSiteKeywordPermissionHttpResponse(
+				keyword.getSiteId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			keywordResource.putSiteKeywordPermissionHttpResponse(
+				keyword.getSiteId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected Keyword testPutSiteKeywordPermission_addKeyword()
+		throws Exception {
+
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
 	}
 
 	@Rule

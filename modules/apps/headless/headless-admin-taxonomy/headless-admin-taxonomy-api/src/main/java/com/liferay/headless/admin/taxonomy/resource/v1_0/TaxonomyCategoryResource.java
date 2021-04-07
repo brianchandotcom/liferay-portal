@@ -85,6 +85,16 @@ public interface TaxonomyCategoryResource {
 	public Response putTaxonomyCategoryBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getTaxonomyCategoryPermissionsPage(
+				String taxonomyCategoryId, String roleNames)
+		throws Exception;
+
+	public void putTaxonomyCategoryPermission(
+			String taxonomyCategoryId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
 			Long taxonomyVocabularyId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

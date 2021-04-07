@@ -399,6 +399,7 @@ paths:
             tags: ["Keyword"]
     "/asset-libraries/{assetLibraryId}/keywords/permissions":
         get:
+            operationId: getAssetLibraryKeywordPermissionsPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -419,6 +420,7 @@ paths:
                         ""
             tags: [ "Keyword" ]
         put:
+            operationId: putAssetLibraryKeywordPermission
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -511,6 +513,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
     "/asset-libraries/{assetLibraryId}/taxonomy-vocabularies/permissions":
         get:
+            operationId: getAssetLibraryTaxonomyVocabularyPermissionsPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -531,6 +534,7 @@ paths:
                         ""
             tags: [ "TaxonomyVocabulary" ]
         put:
+            operationId: putAssetLibraryTaxonomyVocabularyPermission
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -660,6 +664,7 @@ paths:
             tags: ["Keyword"]
     "/keywords/{keywordId}/permissions":
         get:
+            operationId: getKeywordPermissionsPage
             parameters:
                 - in: path
                   name: keywordId
@@ -680,6 +685,7 @@ paths:
                         ""
             tags: [ "Keyword" ]
         put:
+            operationId: putKeywordPermission
             parameters:
                 - in: path
                   name: keywordId
@@ -776,6 +782,7 @@ paths:
             tags: ["Keyword"]
     "/sites/{siteId}/keywords/permissions":
         get:
+            operationId: getSiteKeywordPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -796,6 +803,7 @@ paths:
                         ""
             tags: [ "Keyword" ]
         put:
+            operationId: putSiteKeywordPermission
             parameters:
                 - in: path
                   name: siteId
@@ -892,6 +900,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
     "/sites/{siteId}/taxonomy-vocabularies/permissions":
         get:
+            operationId: getSiteTaxonomyVocabularyPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -912,6 +921,7 @@ paths:
                         ""
             tags: [ "TaxonomyVocabulary" ]
         put:
+            operationId: putSiteTaxonomyVocabularyPermission
             parameters:
                 - in: path
                   name: siteId
@@ -1142,6 +1152,7 @@ paths:
             tags: ["TaxonomyCategory"]
     "/taxonomy-categories/{taxonomyCategoryId}/permissions":
         get:
+            operationId: getTaxonomyCategoryPermissionsPage
             parameters:
                 - in: path
                   name: taxonomyCategoryId
@@ -1161,6 +1172,7 @@ paths:
                         ""
             tags: [ "TaxonomyCategory" ]
         put:
+            operationId: putTaxonomyCategoryPermission
             parameters:
                 - in: path
                   name: taxonomyCategoryId
@@ -1283,6 +1295,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}/permissions":
         get:
+            operationId: getTaxonomyVocabularyPermissionsPage
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1303,6 +1316,7 @@ paths:
                         ""
             tags: [ "TaxonomyVocabulary" ]
         put:
+            operationId: putTaxonomyVocabularyPermission
             parameters:
                 - in: path
                   name: taxonomyVocabularyId

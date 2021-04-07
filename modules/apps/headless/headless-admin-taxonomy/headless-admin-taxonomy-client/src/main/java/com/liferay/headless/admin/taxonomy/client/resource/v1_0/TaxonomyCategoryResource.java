@@ -18,6 +18,7 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.http.HttpInvoker;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
+import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyCategorySerDes;
 
@@ -26,6 +27,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -111,6 +114,23 @@ public interface TaxonomyCategoryResource {
 
 	public HttpInvoker.HttpResponse putTaxonomyCategoryBatchHttpResponse(
 			String callbackURL, Object object)
+		throws Exception;
+
+	public Page<Permission> getTaxonomyCategoryPermissionsPage(
+			String taxonomyCategoryId, String roleNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getTaxonomyCategoryPermissionsPageHttpResponse(
+				String taxonomyCategoryId, String roleNames)
+		throws Exception;
+
+	public void putTaxonomyCategoryPermission(
+			String taxonomyCategoryId, Permission[] permissions)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse putTaxonomyCategoryPermissionHttpResponse(
+			String taxonomyCategoryId, Permission[] permissions)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
@@ -977,6 +997,188 @@ public interface TaxonomyCategoryResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/batch");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<Permission> getTaxonomyCategoryPermissionsPage(
+				String taxonomyCategoryId, String roleNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getTaxonomyCategoryPermissionsPageHttpResponse(
+					taxonomyCategoryId, roleNames);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, Permission::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getTaxonomyCategoryPermissionsPageHttpResponse(
+					String taxonomyCategoryId, String roleNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (roleNames != null) {
+				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}/permissions");
+
+			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putTaxonomyCategoryPermission(
+				String taxonomyCategoryId, Permission[] permissions)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putTaxonomyCategoryPermissionHttpResponse(
+					taxonomyCategoryId, permissions);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				putTaxonomyCategoryPermissionHttpResponse(
+					String taxonomyCategoryId, Permission[] permissions)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				Stream.of(
+					permissions
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}/permissions");
+
+			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

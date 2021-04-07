@@ -980,10 +980,10 @@
     fast-json-stable-stringify "^2.0.0"
     warning "^4.0.3"
 
-"@clayui/date-picker@3.25.1":
-  version "3.25.1"
-  resolved "https://registry.yarnpkg.com/@clayui/date-picker/-/date-picker-3.25.1.tgz#539644af297551133874acb46d976d837db25f49"
-  integrity sha512-BzulbC8GoVUcy+AOFOVDJ1nMwqTr2JKBgdIDP9ZfWfikyy7EuWAVKjhJSn04m8AXxbtg9v2nsHJbT4utzABbcg==
+"@clayui/date-picker@3.25.4":
+  version "3.25.4"
+  resolved "https://registry.yarnpkg.com/@clayui/date-picker/-/date-picker-3.25.4.tgz#f59ddbba0b46c94ed99bb9d061346cd558ffc3ff"
+  integrity sha512-u71vq5fb0uRFUXkHvrx9TVNBZfncVmXh5kC/iUaFUpqWvM02htKkiKIpSwGC0nhsLghavjkGwG3Q+iFodUrmFQ==
   dependencies:
     "@clayui/button" "^3.6.0"
     "@clayui/drop-down" "^3.25.1"

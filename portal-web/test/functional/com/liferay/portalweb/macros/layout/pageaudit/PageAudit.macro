@@ -4,6 +4,46 @@ definition {
 		Click(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
 	}
 
+    macro disableGooglePageSpeed {
+        if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled")) {
+			Click.javaScriptClick(
+			    checkboxName = "Enabled",
+			    locator1 = "Checkbox#ANY_CHECKBOX");
+
+            AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Enabled",
+			    locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+        if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Button#UPDATE");
+		}
+	}
+
+     macro enableGooglePageSpeed {
+        if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled")) {
+			Click.javaScriptClick(
+			    checkboxName = "Enabled",
+			    locator1 = "Checkbox#ANY_CHECKBOX");
+            
+            AssertChecked.assertCheckedNotVisible(
+                checkboxName = "Enabled",
+			    locator1 = "Checkbox#ANY_CHECKBOX");    
+		}
+
+        if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Button#UPDATE");
+		}
+	}
+
 	macro openPageAuditPanel {
 		Click(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
 	}

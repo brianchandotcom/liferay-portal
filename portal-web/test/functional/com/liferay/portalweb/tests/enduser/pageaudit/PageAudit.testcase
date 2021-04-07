@@ -48,6 +48,45 @@ definition {
 			value1 = "Google PageSpeed");
 	}
 
+    @description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
+	@priority = "5"
+	test PageAuditContentPageDisabled {
+		property portal.acceptance = "true";
+
+        ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed",
+			configurationScope = "Virtual Instance Scope");
+
+        PageAudit.disableGooglePageSpeed();
+
+        JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
+
+        Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+        AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
+
+        ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed",
+			configurationScope = "Virtual Instance Scope");
+
+        PageAudit.enableGooglePageSpeed();
+	}
+
     @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a display page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditDisplayPage {
@@ -98,6 +137,71 @@ definition {
 			value1 = "Google PageSpeed");
 	}
 
+    @description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the display pages doesn't show"
+	@priority = "5"
+	test PageAuditDisplayPageDisabled {
+		property portal.acceptance = "true";
+
+        ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed",
+			configurationScope = "Virtual Instance Scope");
+
+        PageAudit.disableGooglePageSpeed();
+
+        JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		Button.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+        JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+        ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		LexiconTable.clickTableEntryColumnLink(
+			columnName = "title",
+			tableEntry = "");
+
+        AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
+
+        ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed",
+			configurationScope = "Virtual Instance Scope");
+
+        PageAudit.enableGooglePageSpeed();
+	}
+
+
     @description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditWidgetPage {
@@ -120,6 +224,44 @@ definition {
         AssertTextPresent(
 			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
 			value1 = "Google PageSpeed");
+	}
+
+    @description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the widget pages doesn't show"
+	@priority = "5"
+	test PageAuditWidgetPageDisabled {
+		property portal.acceptance = "true";
+
+        ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed",
+			configurationScope = "Virtual Instance Scope");
+
+        PageAudit.disableGooglePageSpeed();
+
+        JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Widget Page");
+
+        Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+
+        AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
+
+        ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed",
+			configurationScope = "Virtual Instance Scope");
+
+        PageAudit.enableGooglePageSpeed();
 	}
 
 }

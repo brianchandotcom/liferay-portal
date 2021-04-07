@@ -2084,7 +2084,7 @@ public class TestrayImporter {
 				"build-test.xml", "prepare-test-bundle", parameters);
 		}
 		catch (AntException antException) {
-			throw new RuntimeException(antException);
+			antException.printStackTrace();
 		}
 	}
 

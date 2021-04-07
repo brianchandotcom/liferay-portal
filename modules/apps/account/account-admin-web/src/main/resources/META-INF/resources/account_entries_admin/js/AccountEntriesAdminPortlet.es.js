@@ -19,6 +19,13 @@ class AccountEntriesAdminPortlet extends PortletBase {
 	/**
 	 * @inheritDoc
 	 */
+	created() {
+		this._handleTypeSelectChange = this._handleTypeSelectChange.bind(this);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	attached() {
 		const typeSelect = this.one('#type');
 

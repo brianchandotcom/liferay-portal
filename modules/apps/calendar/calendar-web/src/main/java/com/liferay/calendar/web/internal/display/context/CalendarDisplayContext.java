@@ -181,6 +181,17 @@ public class CalendarDisplayContext {
 			}
 		}
 
+		if (defaultCalendar == null) {
+			for (Calendar groupCalendar : groupCalendars) {
+				if (CalendarPermission.contains(
+						_themeDisplay.getPermissionChecker(), groupCalendar,
+						CalendarActionKeys.VIEW_BOOKING_DETAILS)) {
+
+					defaultCalendar = groupCalendar;
+				}
+			}
+		}
+
 		return defaultCalendar;
 	}
 

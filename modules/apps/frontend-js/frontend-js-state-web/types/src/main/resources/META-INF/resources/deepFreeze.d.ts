@@ -11,5 +11,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-import type { Immutable } from './types';
+
+import type {Immutable} from './types';
 export default function deepFreeze<T>(value: T): Immutable<T>;

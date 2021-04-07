@@ -11,12 +11,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-export { default as render } from './render';
-export { default as useEventListener } from './hooks/useEventListener';
-export { default as useInterval } from './hooks/useInterval';
-export { default as useIsMounted } from './hooks/useIsMounted';
-export { default as useLiferayState } from './hooks/useLiferayState';
-export { default as usePrevious } from './hooks/usePrevious';
-export { default as useStateSafe } from './hooks/useStateSafe';
-export { default as useThunk } from './hooks/useThunk';
-export { default as useTimeout } from './hooks/useTimeout';
+
+export {default as render} from './render';
+export {default as useEventListener} from './hooks/useEventListener';
+export {default as useInterval} from './hooks/useInterval';
+export {default as useIsMounted} from './hooks/useIsMounted';
+export {default as useLiferayState} from './hooks/useLiferayState';
+export {default as usePrevious} from './hooks/usePrevious';
+export {default as useStateSafe} from './hooks/useStateSafe';
+export {default as useThunk} from './hooks/useThunk';
+export {default as useTimeout} from './hooks/useTimeout';

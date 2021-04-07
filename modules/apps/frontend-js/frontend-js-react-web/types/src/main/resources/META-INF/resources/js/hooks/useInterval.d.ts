@@ -11,8 +11,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /**
  * Hook for scheduling a repeating function call with the specified
  * interval (in milliseconds).
  */
-export default function useInterval(): (fn: () => void, ms: number | undefined) => () => void;
+export default function useInterval(): (
+	fn: () => void,
+	ms: number | undefined
+) => () => void;

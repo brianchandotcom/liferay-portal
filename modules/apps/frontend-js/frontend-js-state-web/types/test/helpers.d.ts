@@ -11,4 +11,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-export declare function withEnv(env: 'production' | 'development', callback: Function): void;
+
+export declare function withEnv(
+	env: 'production' | 'development',
+	callback: Function
+): void;

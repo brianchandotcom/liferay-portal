@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /**
  * Hook for adding an event listener on mount and removing it on
  * unmount.
@@ -21,4 +22,9 @@
  * outside of your component's DOM (eg. attaching a "scroll" or "resize"
  * listener to the `window`).
  */
-export default function useEventListener(eventName: string, handler: EventListenerOrEventListenerObject, phase: boolean, target: Node): void;
+export default function useEventListener(
+	eventName: string,
+	handler: EventListenerOrEventListenerObject,
+	phase: boolean,
+	target: Node
+): void;

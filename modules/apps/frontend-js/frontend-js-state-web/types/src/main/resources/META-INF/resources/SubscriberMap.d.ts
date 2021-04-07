@@ -11,8 +11,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-import type { Atom, Selector } from './State';
-import type { Immutable } from './types';
+
+import type {Atom, Selector} from './State';
+import type {Immutable} from './types';
+
 /**
  * `Map` wrapper for type safety. While a vanilla `Map` is totally adequate for
  * our needs in terms of implementation, at the type-system level the declared
@@ -22,10 +24,18 @@ import type { Immutable } from './types';
  * concrete type is, only that it is the same within each key/value pair).
  */
 export default class SubscriberMap {
-    _id: number;
-    _subscribers: Map<Atom<unknown> | Selector<unknown>, Map<number, (value: unknown) => void>>;
-    constructor();
-    clear(): void;
-    getCallbacks<T>(atomOrSelector: Atom<T> | Selector<T>): Map<number, (value: Immutable<T>) => void>;
-    addCallback<T extends unknown>(atomOrSelector: Atom<T> | Selector<T>, callback: (value: Immutable<T>) => void): () => void;
+	_id: number;
+	_subscribers: Map<
+		Atom<unknown> | Selector<unknown>,
+		Map<number, (value: unknown) => void>
+	>;
+	constructor();
+	clear(): void;
+	getCallbacks<T>(
+		atomOrSelector: Atom<T> | Selector<T>
+	): Map<number, (value: Immutable<T>) => void>;
+	addCallback<T extends unknown>(
+		atomOrSelector: Atom<T> | Selector<T>,
+		callback: (value: Immutable<T>) => void
+	): () => void;
 }

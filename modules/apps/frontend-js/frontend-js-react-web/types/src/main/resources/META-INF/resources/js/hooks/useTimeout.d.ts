@@ -11,8 +11,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /**
  * Hook for delaying a function call by the specified interval (in
  * milliseconds).
  */
-export default function useTimeout(): (fn: () => void, ms: number | undefined) => () => void;
+export default function useTimeout(): (
+	fn: () => void,
+	ms: number | undefined
+) => () => void;

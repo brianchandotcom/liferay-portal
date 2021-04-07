@@ -279,12 +279,6 @@ definition {
 		AssertElementPresent(
 			key_userGroupName = "${userGroupName}",
 			locator1 = "UserGroups#USER_GROUP_TABLE_CHECKBOX");
-
-		AssertElementPresent(locator1 = "Button#PLUS");
-
-		AssertElementPresent(locator1 = "TextInput#SEARCH");
-
-		AssertElementPresent(locator1 = "Button#SUBMIT");
 	}
 
 	macro viewDefault {
@@ -324,8 +318,6 @@ definition {
 		AssertElementPresent(locator1 = "Button#SUBMIT");
 
 		AssertElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-		AssertElementPresent(locator1 = "Message#EMPTY_INFO");
 	}
 
 	macro viewRemoveMemberCP {

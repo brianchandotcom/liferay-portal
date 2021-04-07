@@ -18,7 +18,7 @@ package com.liferay.dataset.ui.view;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public class DatasetViewType {
+public class DatasetViewContentRendererNames {
 
 	public static final String CARDS = "cards";
 

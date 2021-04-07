@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.view.cards;
 
 import com.liferay.dataset.ui.view.DatasetView;
-import com.liferay.dataset.ui.view.DatasetViewType;
+import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
 import com.liferay.petra.string.StringPool;
 
 /**
@@ -24,8 +24,8 @@ import com.liferay.petra.string.StringPool;
 public abstract class BaseCardsDatasetView implements DatasetView {
 
 	@Override
-	public String getContentRenderer() {
-		return DatasetViewType.CARDS;
+	public String getContentRendererName() {
+		return DatasetViewContentRendererNames.CARDS;
 	}
 
 	public abstract String getDescription();
@@ -36,7 +36,7 @@ public abstract class BaseCardsDatasetView implements DatasetView {
 
 	@Override
 	public String getLabel() {
-		return DatasetViewType.CARDS;
+		return DatasetViewContentRendererNames.CARDS;
 	}
 
 	public String getLink() {
@@ -45,7 +45,7 @@ public abstract class BaseCardsDatasetView implements DatasetView {
 
 	@Override
 	public String getName() {
-		return DatasetViewType.CARDS;
+		return DatasetViewContentRendererNames.CARDS;
 	}
 
 	public String getSticker() {

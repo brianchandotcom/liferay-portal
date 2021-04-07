@@ -19,11 +19,11 @@ package com.liferay.dataset.ui.view;
  */
 public interface DatasetView {
 
-	public String getContentRenderer();
-
 	public default String getContentRendererModuleURL() {
 		return null;
 	}
+
+	public String getContentRendererName();
 
 	public String getLabel();
 

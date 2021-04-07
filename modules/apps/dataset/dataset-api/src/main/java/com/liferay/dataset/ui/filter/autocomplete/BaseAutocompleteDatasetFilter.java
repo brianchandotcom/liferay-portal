@@ -15,6 +15,7 @@
 package com.liferay.dataset.ui.filter.autocomplete;
 
 import com.liferay.dataset.ui.filter.DatasetFilter;
+import com.liferay.dataset.ui.filter.DatasetFilterTypes;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -42,7 +43,7 @@ public abstract class BaseAutocompleteDatasetFilter implements DatasetFilter {
 
 	@Override
 	public String getType() {
-		return "autocomplete";
+		return DatasetFilterTypes.AUTOCOMPLETE;
 	}
 
 	public boolean isMultipleSelection() {

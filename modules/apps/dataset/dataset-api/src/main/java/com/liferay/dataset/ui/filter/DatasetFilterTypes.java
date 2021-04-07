@@ -12,23 +12,19 @@
  * details.
  */
 
-package com.liferay.dataset.ui.filter.date;
-
-import com.liferay.dataset.ui.filter.DatasetFilter;
-import com.liferay.dataset.ui.filter.DatasetFilterTypes;
+package com.liferay.dataset.ui.filter;
 
 /**
- * @author Luca Pellizzon
+ * @author Iván Zaera Avellón
  */
-public abstract class BaseDateRangeDatasetFilter implements DatasetFilter {
+public class DatasetFilterTypes {
 
-	public abstract DateDatasetFilterItem getMaxDateDatasetFilterItem();
+	public static final String AUTOCOMPLETE = "autocomplete";
 
-	public abstract DateDatasetFilterItem getMinDateDatasetFilterItem();
+	public static final String CHECKBOX = "checkbox";
 
-	@Override
-	public String getType() {
-		return DatasetFilterTypes.DATE_RANGE;
-	}
+	public static final String DATE_RANGE = "dateRange";
+
+	public static final String RADIO = "radio";
 
 }

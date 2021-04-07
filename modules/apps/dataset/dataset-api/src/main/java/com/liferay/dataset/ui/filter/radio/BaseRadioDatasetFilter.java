@@ -15,6 +15,7 @@
 package com.liferay.dataset.ui.filter.radio;
 
 import com.liferay.dataset.ui.filter.DatasetFilter;
+import com.liferay.dataset.ui.filter.DatasetFilterTypes;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public abstract class BaseRadioDatasetFilter implements DatasetFilter {
 
 	@Override
 	public String getType() {
-		return "radio";
+		return DatasetFilterTypes.RADIO;
 	}
 
 }

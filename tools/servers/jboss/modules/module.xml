@@ -16,7 +16,6 @@
 		<resource-root path="com.liferay.petra.string.jar" />
 		<resource-root path="com.liferay.petra.url.pattern.mapper.jar" />
 		<resource-root path="com.liferay.registry.api.jar" />
-		<resource-root path="portlet.jar" />
 	</resources>
 	<dependencies>
 		<module name="ibm.jdk" />

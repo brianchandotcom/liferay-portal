@@ -19,6 +19,19 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test DeleteMobileDeviceFamily {
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
+
+		MobileDevice.addDeviceFamilyCP(
+			deviceDescription = "This is Test Family",
+			deviceFamilyName = "Test Family Name");
+
+		LexiconEntry.delete(rowEntry = "Test Family Name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Test Family Name");
+	}
+
 	@priority = "5"
 	test Smoke {
 		ProductMenu.gotoPortlet(

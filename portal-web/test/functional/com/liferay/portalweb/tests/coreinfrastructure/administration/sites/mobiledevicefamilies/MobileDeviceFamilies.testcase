@@ -29,9 +29,7 @@ definition {
 			deviceDescription = "This is Test Family",
 			deviceFamilyName = "Test Family Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Mobile Device Families");
+		MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
 		MobileDevice.addClassificationRuleCP(
 			classificationDescription = "This is Test Classification",

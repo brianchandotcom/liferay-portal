@@ -133,4 +133,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
 	}
 
+	macro openMobileDeviceAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_mobile_device_rules_web_portlet_MDRPortlet");
+	}
+
 }

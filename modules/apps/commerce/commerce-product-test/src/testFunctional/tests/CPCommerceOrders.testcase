@@ -110,9 +110,15 @@ definition {
 		// TODO COMMERCE-6210 CancelShipmentAndCreateNewFromPendingOrder Pending Implementation
 
 	}
-	
+
+	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
+	@ignore = "true"
+	@priority = "3"
 	test DeactivateCurrency {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceOrders#DeactivateCurrency";
+
+		// TODO Review
 
 		var currencyName = "British Pound";
 		var currencyAbbreviation = "GBP";

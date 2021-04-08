@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {addParams, openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteSelectedUserGroups = () => {
@@ -53,6 +53,20 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			selectEventName: `${portletNamespace}selectRole`,
 			title: Liferay.Language.get('assign-roles'),
 			url: itemData?.selectRoleURL,
+		});
+	};
+
+	const selectRoles = (itemData) => {
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				location.href = addParams(
+					`${`${portletNamespace}roleId`}=${selectedItem.id}`,
+					itemData.viewRoleURL
+				);
+			},
+			selectEventName: `${portletNamespace}selectRole`,
+			title: Liferay.Language.get('select-role'),
+			url: itemData?.selectRolesURL,
 		});
 	};
 
@@ -107,6 +121,11 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 			if (action === 'selectUserGroups') {
 				selectUserGroups(data);
+			}
+		},
+		onFilterDropdownItemClick(event, {item}) {
+			if (item?.data?.action === 'selectRoles') {
+				selectRoles(item?.data);
 			}
 		},
 	};

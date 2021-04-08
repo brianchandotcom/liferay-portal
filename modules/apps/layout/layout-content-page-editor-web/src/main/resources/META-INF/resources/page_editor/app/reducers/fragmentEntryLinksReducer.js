@@ -15,6 +15,7 @@
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_FRAGMENT_ENTRY_LINK_COMMENT,
+	ADD_ITEM,
 	CHANGE_MASTER_LAYOUT,
 	DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
 	DUPLICATE_ITEM,
@@ -32,6 +33,26 @@ export default function fragmentEntryLinksReducer(
 	action
 ) {
 	switch (action.type) {
+		case ADD_ITEM: {
+			const newFragmentEntryLinks = {};
+
+			if (action.fragmentEntryLinkIds) {
+				action.fragmentEntryLinkIds.forEach((fragmentEntryLinkId) => {
+					newFragmentEntryLinks[fragmentEntryLinkId] = {
+						...fragmentEntryLinks[fragmentEntryLinkId],
+						removed: false,
+					};
+				});
+
+				return {
+					...fragmentEntryLinks,
+					...newFragmentEntryLinks,
+				};
+			}
+
+			return fragmentEntryLinks;
+		}
+
 		case ADD_FRAGMENT_ENTRY_LINKS: {
 			const newFragmentEntryLinks = {};
 

@@ -88,9 +88,4 @@ JournalArticleDisplay articleDisplay = journalPreviewArticleContentTemplateDispl
 			'<%= journalPreviewArticleContentTemplateDisplayContext.getPortletURL() %>'
 		);
 	}
-
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />previewFm',
-		'<%= HtmlUtil.escapeJS(journalPreviewArticleContentTemplateDisplayContext.getEventName()) %>'
-	);
 </script>

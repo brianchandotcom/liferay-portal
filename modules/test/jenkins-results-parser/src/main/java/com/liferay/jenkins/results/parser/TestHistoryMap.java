@@ -216,6 +216,36 @@ public class TestHistoryMap
 		_minimumStatusChanges = minimumStatusChanges;
 	}
 
+	public void writeDurationDataJavaScriptFile(
+			String filePath, String batchNameRegex)
+		throws IOException {
+
+		JSONArray durationDataJSONArray = new JSONArray();
+
+		durationDataJSONArray.put(
+			new String[] {
+				"Name", "Batch Type", "Results", "Duration", "Average Duration"
+			});
+
+		for (TestHistory testHistory : values()) {
+			String batchName = testHistory.getBatchName();
+
+			if (batchName.matches(batchNameRegex)) {
+				durationDataJSONArray.put(testHistory.toDurationJSONArray());
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var durationData = ");
+		sb.append(durationDataJSONArray.toString());
+		sb.append(";\nvar durationDataGeneratedDate = new Date(");
+		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
+		sb.append(");");
+
+		JenkinsResultsParserUtil.write(filePath, sb.toString());
+	}
+
 	public void writeFlakyTestDataJavaScriptFile(String filePath)
 		throws IOException {
 
@@ -226,7 +256,7 @@ public class TestHistoryMap
 
 		for (TestHistory testHistory : values()) {
 			if (testHistory.isFlaky()) {
-				flakyTestDataJSONArray.put(testHistory.toJSONArray());
+				flakyTestDataJSONArray.put(testHistory.toStatusJSONArray());
 			}
 		}
 
@@ -305,15 +335,56 @@ public class TestHistoryMap
 			return false;
 		}
 
-		public JSONArray toJSONArray() {
+		public JSONArray toDurationJSONArray() {
+			JSONArray jsonArray = new JSONArray();
+
+			jsonArray.put(getName());
+			jsonArray.put(getBatchName());
+
+			JSONArray durationJSONArray = new JSONArray();
+			JSONArray statusesJSONArray = new JSONArray();
+
+			long totalDuration = 0;
+
+			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
+				long duration = testHistoryEntry.getDuration();
+
+				if (duration > _MAXIMUM_TEST_DURATION) {
+					continue;
+				}
+
+				totalDuration = totalDuration + duration;
+
+				durationJSONArray.put(duration);
+
+				JSONArray statusJSONArray = new JSONArray();
+
+				statusJSONArray.put(testHistoryEntry.getStatus());
+				statusJSONArray.put(testHistoryEntry.getBuildURL());
+
+				statusesJSONArray.put(statusJSONArray);
+			}
+
+			jsonArray.put(statusesJSONArray);
+			jsonArray.put(durationJSONArray);
+
+			if (durationJSONArray.length() == 0) {
+				jsonArray.put(0);
+			}
+			else {
+				jsonArray.put(totalDuration / durationJSONArray.length());
+			}
+
+			return jsonArray;
+		}
+
+		public JSONArray toStatusJSONArray() {
 			JSONArray jsonArray = new JSONArray();
 
 			jsonArray.put(getName());
 			jsonArray.put(getBatchName());
 
 			JSONArray statusesJSONArray = new JSONArray();
-
-			Collections.reverse(_testHistoryEntries);
 
 			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
 				JSONArray statusJSONArray = new JSONArray();
@@ -372,6 +443,8 @@ public class TestHistoryMap
 		}
 
 	}
+
+	private static final long _MAXIMUM_TEST_DURATION = 2 * 60 * 60 * 1000;
 
 	private static final List<String> _excludedTestNameRegexes =
 		new ArrayList<String>() {

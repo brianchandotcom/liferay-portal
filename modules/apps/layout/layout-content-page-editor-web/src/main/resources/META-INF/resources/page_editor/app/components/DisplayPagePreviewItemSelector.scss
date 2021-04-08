@@ -1,0 +1,11 @@
+.page-editor__display-page-preview-item-selector {
+	&-label {
+		font-size: 0.875rem;
+		font-weight: 600;
+		padding-right: 8px;
+	}
+
+	&-horizontal-input {
+		max-width: 20ch;
+	}
+}

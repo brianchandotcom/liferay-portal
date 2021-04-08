@@ -287,6 +287,7 @@ describe('Field Numeric', () => {
 				{...defaultNumericConfig}
 				dataType="integer"
 				onChange={jest.fn()}
+				symbols={{decimalSymbol: ','}}
 				value="22,82"
 			/>
 		);

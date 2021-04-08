@@ -1268,7 +1268,7 @@ definition {
 				pageName = "Test Page Name");
 		}
 
-		Pause(locator1 = "10000");
+		WaitForPageLoad();
 
 		PageEditor.gotoTab(tabName = "Fragments");
 

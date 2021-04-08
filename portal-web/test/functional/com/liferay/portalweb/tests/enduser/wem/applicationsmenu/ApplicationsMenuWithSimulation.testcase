@@ -44,7 +44,7 @@ definition {
 		task ("Assert the categories are shown in Product Menu") {
 			ProductMenuHelper.openProductMenu();
 
-			Pause(locator1 = "10000");
+			WaitForPageLoad();
 
 			for (var category : list "Design,Site Builder,Content & Data,Categorization,Recycle Bin,People,Configuration,Publishing") {
 				AssertElementPresent(

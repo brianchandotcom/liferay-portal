@@ -1690,7 +1690,7 @@ definition {
 
 		IFrame.selectTopFrame();
 
-		Pause(locator1 = "10000");
+		WaitForPageLoad();
 
 		Panel.expandPanel(panel = "Default Template");
 

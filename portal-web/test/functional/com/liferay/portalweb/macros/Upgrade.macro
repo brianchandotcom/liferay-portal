@@ -1980,7 +1980,7 @@ definition {
 
 			Refresh();
 
-			Pause(locator1 = "10000");
+			WaitForPageLoad();
 		}
 
 		task ("Assert styles of Container in view mode") {
@@ -2152,7 +2152,7 @@ definition {
 				pageName = "Test Fragment Content Page",
 				siteName = "Test Site Name");
 
-			Pause(locator1 = "10000");
+			WaitForPageLoad();
 		}
 
 		task ("Assert styles of Container in edit mode") {

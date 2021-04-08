@@ -29,7 +29,7 @@ import {useSelectItem} from '../../components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
-import {TARGET_POSITION} from './constants/targetPosition';
+import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
 import toControlsId from './toControlsId';
 
@@ -330,8 +330,8 @@ function getSiblingPosition(state, parentItem) {
 	);
 
 	if (
-		state.targetPositionWithoutMiddle === TARGET_POSITION.BOTTOM ||
-		state.targetPositionWithoutMiddle === TARGET_POSITION.RIGHT
+		state.targetPositionWithoutMiddle === TARGET_POSITIONS.BOTTOM ||
+		state.targetPositionWithoutMiddle === TARGET_POSITIONS.RIGHT
 	) {
 		return siblingPosition + 1;
 	}

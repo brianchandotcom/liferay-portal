@@ -12,7 +12,7 @@
  * details.
  */
 
-import {TARGET_POSITION} from './constants/targetPosition';
+import {TARGET_POSITIONS} from './constants/targetPositions';
 
 /**
  * Returns the cursor vertical position (extracted from provided dnd monitor)
@@ -31,13 +31,13 @@ export default function getTargetPosition(
 
 	const targetPositionWithoutMiddle =
 		clientOffsetY < hoverMiddleY
-			? TARGET_POSITION.TOP
-			: TARGET_POSITION.BOTTOM;
+			? TARGET_POSITIONS.TOP
+			: TARGET_POSITIONS.BOTTOM;
 
 	const targetPositionWithMiddle =
 		clientOffsetY < hoverBoundingRect.bottom - elevationBorderSize &&
 		clientOffsetY > hoverBoundingRect.top + elevationBorderSize
-			? TARGET_POSITION.MIDDLE
+			? TARGET_POSITIONS.MIDDLE
 			: targetPositionWithoutMiddle;
 
 	return [targetPositionWithMiddle, targetPositionWithoutMiddle];

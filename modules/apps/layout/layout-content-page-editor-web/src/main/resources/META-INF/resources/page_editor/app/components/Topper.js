@@ -28,7 +28,7 @@ import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStruct
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
-import {TARGET_POSITION} from '../utils/drag-and-drop/constants/targetPosition';
+import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
 import {
 	useDragItem,
 	useDropTarget,
@@ -165,15 +165,15 @@ function TopperContent({
 			className={classNames(className, 'page-editor__topper', {
 				active: isActive,
 				'drag-over-bottom':
-					isOverTarget && targetPosition === TARGET_POSITION.BOTTOM,
+					isOverTarget && targetPosition === TARGET_POSITIONS.BOTTOM,
 				'drag-over-left':
-					isOverTarget && targetPosition === TARGET_POSITION.LEFT,
+					isOverTarget && targetPosition === TARGET_POSITIONS.LEFT,
 				'drag-over-middle':
-					isOverTarget && targetPosition === TARGET_POSITION.MIDDLE,
+					isOverTarget && targetPosition === TARGET_POSITIONS.MIDDLE,
 				'drag-over-right':
-					isOverTarget && targetPosition === TARGET_POSITION.RIGHT,
+					isOverTarget && targetPosition === TARGET_POSITIONS.RIGHT,
 				'drag-over-top':
-					isOverTarget && targetPosition === TARGET_POSITION.TOP,
+					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
 				dragged: isDraggingSource,
 				hovered: isHovered,
 				'not-droppable': !!notDroppableMessage,

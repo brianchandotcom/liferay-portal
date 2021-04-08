@@ -38,7 +38,7 @@ import moveItem from '../../../../../app/thunks/moveItem';
 import {deepEqual} from '../../../../../app/utils/checkDeepEqual';
 import checkAllowedChild from '../../../../../app/utils/drag-and-drop/checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from '../../../../../app/utils/drag-and-drop/constants/dragDropTargetType';
-import {TARGET_POSITION} from '../../../../../app/utils/drag-and-drop/constants/targetPosition';
+import {TARGET_POSITIONS} from '../../../../../app/utils/drag-and-drop/constants/targetPositions';
 import getTargetPosition from '../../../../../app/utils/drag-and-drop/getTargetPosition';
 import itemIsAncestor from '../../../../../app/utils/drag-and-drop/itemIsAncestor';
 import toControlsId from '../../../../../app/utils/drag-and-drop/toControlsId';
@@ -162,11 +162,11 @@ function StructureTreeNodeContent({
 			aria-selected={isActive}
 			className={classNames('page-editor__page-structure__tree-node', {
 				'drag-over-bottom':
-					isOverTarget && targetPosition === TARGET_POSITION.BOTTOM,
+					isOverTarget && targetPosition === TARGET_POSITIONS.BOTTOM,
 				'drag-over-middle':
-					isOverTarget && targetPosition === TARGET_POSITION.MIDDLE,
+					isOverTarget && targetPosition === TARGET_POSITIONS.MIDDLE,
 				'drag-over-top':
-					isOverTarget && targetPosition === TARGET_POSITION.TOP,
+					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
 				dragged: isDraggingSource,
 				'page-editor__page-structure__tree-node--activable':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
@@ -322,7 +322,7 @@ function computeHover({
 		const targetIsParent = sourceItem.parentId === targetItem.itemId;
 
 		return (
-			targetPositionWithMiddle === TARGET_POSITION.MIDDLE &&
+			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
 			(targetIsEmpty || targetIsColumn || targetIsContainer) &&
 			!targetIsFragment &&
 			!targetIsParent
@@ -437,7 +437,7 @@ function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
 		ELEVATION_BORDER_SIZE
 	);
 
-	const elevation = targetPositionWithMiddle !== TARGET_POSITION.MIDDLE;
+	const elevation = targetPositionWithMiddle !== TARGET_POSITIONS.MIDDLE;
 
 	return [targetPositionWithMiddle, targetPositionWithoutMiddle, elevation];
 }

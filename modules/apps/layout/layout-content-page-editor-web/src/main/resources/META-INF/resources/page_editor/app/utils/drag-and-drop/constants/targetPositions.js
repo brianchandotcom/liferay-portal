@@ -12,7 +12,7 @@
  * details.
  */
 
-export const TARGET_POSITION = {
+export const TARGET_POSITIONS = {
 	BOTTOM: 'bottom',
 	LEFT: 'left',
 	MIDDLE: 'middle',

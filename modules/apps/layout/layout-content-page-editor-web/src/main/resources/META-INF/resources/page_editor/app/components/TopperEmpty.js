@@ -18,7 +18,7 @@ import React, {useRef} from 'react';
 import {getLayoutDataItemPropTypes} from '../../prop-types/index';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../store/index';
-import {TARGET_POSITION} from '../utils/drag-and-drop/constants/targetPosition';
+import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
 import {useDropTarget} from '../utils/drag-and-drop/useDragAndDrop';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
 
@@ -70,13 +70,13 @@ function TopperEmpty({children, item}) {
 					className: classNames(child.props.className, {
 						'drag-over-bottom':
 							isOverTarget &&
-							targetPosition === TARGET_POSITION.BOTTOM,
+							targetPosition === TARGET_POSITIONS.BOTTOM,
 						'drag-over-middle':
 							isOverTarget &&
-							targetPosition === TARGET_POSITION.MIDDLE,
+							targetPosition === TARGET_POSITIONS.MIDDLE,
 						'drag-over-top':
 							isOverTarget &&
-							targetPosition === TARGET_POSITION.TOP,
+							targetPosition === TARGET_POSITIONS.TOP,
 						'not-droppable': !!notDroppableMessage,
 						'page-editor__topper': true,
 					}),

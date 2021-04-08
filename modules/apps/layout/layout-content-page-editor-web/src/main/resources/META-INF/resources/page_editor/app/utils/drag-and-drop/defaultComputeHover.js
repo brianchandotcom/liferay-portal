@@ -16,7 +16,7 @@ import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplay
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
-import {TARGET_POSITION} from './constants/targetPosition';
+import {TARGET_POSITIONS} from './constants/targetPositions';
 import getTargetPosition from './getTargetPosition';
 import itemIsAncestor from './itemIsAncestor';
 import toControlsId from './toControlsId';
@@ -77,7 +77,7 @@ export default function defaultComputeHover({
 			0;
 
 		return (
-			targetPositionWithMiddle === TARGET_POSITION.MIDDLE &&
+			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
 			(targetIsEmpty || targetIsColumn || targetIsContainerFlex) &&
 			!targetIsFragment
 		);
@@ -232,9 +232,9 @@ function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
 
 	let elevationDepth = 0;
 
-	if (targetPositionWithMiddle !== TARGET_POSITION.MIDDLE) {
+	if (targetPositionWithMiddle !== TARGET_POSITIONS.MIDDLE) {
 		const distanceFromBorder =
-			targetPositionWithMiddle === TARGET_POSITION.TOP
+			targetPositionWithMiddle === TARGET_POSITIONS.TOP
 				? clientOffsetY - hoverBoundingRect.top
 				: hoverBoundingRect.bottom - clientOffsetY;
 

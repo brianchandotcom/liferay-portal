@@ -14,6 +14,7 @@
 
 package com.liferay.roles.item.selector.web.internal;
 
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
-import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
 import com.liferay.roles.item.selector.web.internal.constants.RoleItemSelectorViewConstants;
 import com.liferay.roles.item.selector.web.internal.display.context.RoleItemSelectorViewDisplayContext;
 import com.liferay.roles.item.selector.web.internal.search.RoleItemSelectorChecker;
@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -52,25 +51,17 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
- * @deprecated As of Mueller (7.2.x), , with no direct replacement
+ * @author Roberto Díaz
  */
-@Component(immediate = true, service = ItemSelectorView.class)
-@Deprecated
-public class RoleItemSelectorView
-	implements ItemSelectorView<RoleItemSelectorCriterion> {
-
-	@Override
-	public Class<RoleItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return RoleItemSelectorCriterion.class;
-	}
+public abstract class BaseRoleItemSelectorView<T extends ItemSelectorCriterion>
+	implements ItemSelectorView<T> {
 
 	public ServletContext getServletContext() {
-		return _servletContext;
+		return servletContext;
 	}
 
 	@Override
@@ -78,15 +69,11 @@ public class RoleItemSelectorView
 		return _supportedItemSelectorReturnTypes;
 	}
 
-	@Override
-	public String getTitle(Locale locale) {
-		return _language.get(_portal.getResourceBundle(locale), "roles");
-	}
+	public abstract int getType();
 
 	@Override
 	public void renderHTML(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			RoleItemSelectorCriterion roleItemSelectorCriterion,
+			ServletRequest servletRequest, ServletResponse servletResponse, T t,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -104,12 +91,10 @@ public class RoleItemSelectorView
 			new RoleItemSelectorViewDisplayContext(
 				httpServletRequest, itemSelectedEventName,
 				_getSearchContainer(
-					renderRequest, renderResponse,
-					roleItemSelectorCriterion.getCheckedRoleIds(),
-					roleItemSelectorCriterion.getExcludedRoleNames(),
-					roleItemSelectorCriterion.getType()),
-				_portal.getLiferayPortletRequest(renderRequest),
-				_portal.getLiferayPortletResponse(renderResponse));
+					renderRequest, renderResponse, getCheckedRoleIds(t),
+					getExcludedRoleNames(t), getType()),
+				portal.getLiferayPortletRequest(renderRequest),
+				portal.getLiferayPortletResponse(renderResponse));
 
 		servletRequest.setAttribute(
 			RoleItemSelectorViewConstants.
@@ -124,6 +109,27 @@ public class RoleItemSelectorView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
+	protected abstract long[] getCheckedRoleIds(T t);
+
+	protected abstract String[] getExcludedRoleNames(T t);
+
+	@Reference
+	protected Language language;
+
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected RoleService roleService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.roles.item.selector.web)"
+	)
+	protected ServletContext servletContext;
+
+	@Reference
+	protected UsersAdmin usersAdmin;
+
 	private SearchContainer<Role> _getSearchContainer(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		long[] checkedRoleIds, String[] excludedRoleNames, int type) {
@@ -137,7 +143,7 @@ public class RoleItemSelectorView
 		searchContainer.setEmptyResultsMessage("no-roles-were-found");
 
 		OrderByComparator<Role> orderByComparator =
-			_usersAdmin.getRoleOrderByComparator(
+			usersAdmin.getRoleOrderByComparator(
 				searchContainer.getOrderByCol(),
 				searchContainer.getOrderByType());
 
@@ -152,13 +158,13 @@ public class RoleItemSelectorView
 
 		searchTerms.setType(type);
 
-		List<Role> results = _roleService.search(
+		List<Role> results = roleService.search(
 			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
 			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>(),
 			searchContainer.getStart(), searchContainer.getEnd(),
 			searchContainer.getOrderByComparator());
 
-		int total = _roleService.searchCount(
+		int total = roleService.searchCount(
 			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
 			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>());
 
@@ -172,22 +178,5 @@ public class RoleItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new UUIDItemSelectorReturnType());
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RoleService _roleService;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.roles.item.selector.web)"
-	)
-	private ServletContext _servletContext;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 }

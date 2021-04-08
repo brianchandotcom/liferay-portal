@@ -202,7 +202,7 @@ definition {
 
 			MenuItem.clickNoError(menuItem = "Delete");
 
-			AssertConfirm(value1 = "Are you sure you want to delete Selected Blueprints?");
+			AssertConfirm(value1 = "Are you sure you want to delete selected Blueprints?");
 
 			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}

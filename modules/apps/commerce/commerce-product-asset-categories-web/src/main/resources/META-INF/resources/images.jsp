@@ -35,39 +35,9 @@ cpAttachmentFileEntrySearchContainer.setTotal(cpAttachmentFileEntryService.getCP
 cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 %>
 
-<liferay-frontend:management-bar
-	searchContainerId="cpAttachmentFileEntries"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="list"
-		/>
-
-		<liferay-portlet:renderURL var="addAttachmentFileEntryURL">
-			<portlet:param name="mvcRenderCommandName" value="/commerce_product_asset_categories/edit_asset_category_cp_attachment_file_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="categoryId" value="<%= String.valueOf(assetCategory.getCategoryId()) %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "add-image") %>'
-				url="<%= addAttachmentFileEntryURL.toString() %>"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new CategoryCPAttachmentFileEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, cpAttachmentFileEntrySearchContainer) %>"
+/>
 
 <div id="<portlet:namespace />attachmentFileEntriesContainer">
 	<div class="product-attachments-container" id="<portlet:namespace />entriesContainer">

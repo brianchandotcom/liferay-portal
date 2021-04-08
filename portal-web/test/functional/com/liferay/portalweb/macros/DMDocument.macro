@@ -2849,6 +2849,13 @@ definition {
 			value1 = "${dmDocumentTitle}");
 	}
 
+	macro viewSearchResultsPG {
+		AssertTextEquals.assertPartialText(
+			key_dmDocumentTitle = "${dmDocumentTitle}",
+			locator1 = "DocumentsAndMedia#SEARCH_TITLE",
+			value1 = "${dmDocumentTitle}");
+	}
+
 	macro viewStagingDetailsManagementBar {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

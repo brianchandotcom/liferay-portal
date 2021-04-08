@@ -17,13 +17,17 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueEditingAware;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.util.NumberUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 
 import java.util.Locale;
@@ -72,14 +76,22 @@ public class NumericDDMFormFieldValueLocalizer
 
 				formattedNumber = decimalFormat.format(number);
 
-				String lastChar = String.valueOf(
-					value.charAt(value.length() - 1));
+				if (isEditingFieldValue() && _endsWithDecimalSeparator(value)) {
+					formattedNumber = formattedNumber.concat(
+						String.valueOf(value.charAt(value.length() - 1)));
+				}
+				else if (!NumberUtil.hasDecimalSeparator(formattedNumber) &&
+						 NumberUtil.hasDecimalSeparator(value) &&
+						 !_endsWithDecimalSeparator(value)) {
 
-				if (isEditingFieldValue() &&
-					(lastChar.equals(StringPool.COMMA) ||
-					 lastChar.equals(StringPool.PERIOD))) {
+					DecimalFormatSymbols decimalFormatSymbols =
+						decimalFormat.getDecimalFormatSymbols();
 
-					formattedNumber = formattedNumber.concat(lastChar);
+					formattedNumber = StringBundler.concat(
+						formattedNumber,
+						decimalFormatSymbols.getDecimalSeparator(),
+						value.substring(
+							NumberUtil.getDecimalSeparatorIndex(value) + 1));
 				}
 			}
 
@@ -99,6 +111,16 @@ public class NumericDDMFormFieldValueLocalizer
 	@Override
 	public void setEditingFieldValue(boolean editingFieldValue) {
 		_editingFieldValue = editingFieldValue;
+	}
+
+	private final boolean _endsWithDecimalSeparator(String value) {
+		if (StringUtil.endsWith(value, StringPool.COMMA) ||
+			StringUtil.endsWith(value, StringPool.PERIOD)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

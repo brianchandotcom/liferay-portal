@@ -162,8 +162,20 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			currentCommerceOrderStatus);
 
 		if (currentOrderStatusIndex != (commerceOrderStatuses.size() - 1)) {
-			CommerceOrderStatus nextCommerceOrderStatus =
-				commerceOrderStatuses.get(currentOrderStatusIndex + 1);
+			CommerceOrderStatus nextCommerceOrderStatus = null;
+
+			for (int i = currentOrderStatusIndex + 1;
+				 i < commerceOrderStatuses.size(); i++) {
+
+				if ((nextCommerceOrderStatus != null) &&
+					(nextCommerceOrderStatus.getPriority() >
+						currentCommerceOrderStatus.getPriority())) {
+
+					break;
+				}
+
+				nextCommerceOrderStatus = commerceOrderStatuses.get(i);
+			}
 
 			for (CommerceOrderStatus commerceOrderStatus :
 					commerceOrderStatuses) {

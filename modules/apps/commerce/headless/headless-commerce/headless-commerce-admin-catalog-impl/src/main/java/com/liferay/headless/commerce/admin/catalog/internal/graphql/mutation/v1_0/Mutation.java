@@ -41,6 +41,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResourc
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductAccountGroupResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductChannelResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupProductResource;
@@ -138,6 +139,14 @@ public class Mutation {
 
 		_productResourceComponentServiceObjects =
 			productResourceComponentServiceObjects;
+	}
+
+	public static void setProductAccountGroupResourceComponentServiceObjects(
+		ComponentServiceObjects<ProductAccountGroupResource>
+			productAccountGroupResourceComponentServiceObjects) {
+
+		_productAccountGroupResourceComponentServiceObjects =
+			productAccountGroupResourceComponentServiceObjects;
 	}
 
 	public static void setProductChannelResourceComponentServiceObjects(
@@ -901,6 +910,34 @@ public class Mutation {
 			_productResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productResource -> productResource.postProductClone(id, catalogId));
+	}
+
+	@GraphQLField
+	public boolean deleteProductAccountGroup(@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_productAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productAccountGroupResource ->
+				productAccountGroupResource.deleteProductAccountGroup(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteProductAccountGroupBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productAccountGroupResource ->
+				productAccountGroupResource.deleteProductAccountGroupBatch(
+					id, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -1733,6 +1770,22 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			ProductAccountGroupResource productAccountGroupResource)
+		throws Exception {
+
+		productAccountGroupResource.setContextAcceptLanguage(_acceptLanguage);
+		productAccountGroupResource.setContextCompany(_company);
+		productAccountGroupResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		productAccountGroupResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		productAccountGroupResource.setContextUriInfo(_uriInfo);
+		productAccountGroupResource.setContextUser(_user);
+		productAccountGroupResource.setGroupLocalService(_groupLocalService);
+		productAccountGroupResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			ProductChannelResource productChannelResource)
 		throws Exception {
 
@@ -1958,6 +2011,8 @@ public class Mutation {
 		_optionValueResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductResource>
 		_productResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ProductAccountGroupResource>
+		_productAccountGroupResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductChannelResource>
 		_productChannelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductConfigurationResource>

@@ -1021,6 +1021,26 @@ public abstract class BaseProductResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"productAccountGroupFilter", additionalAssertFieldName)) {
+
+				if (product.getProductAccountGroupFilter() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productAccountGroups", additionalAssertFieldName)) {
+
+				if (product.getProductAccountGroups() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"productChannelFilter", additionalAssertFieldName)) {
 
 				if (product.getProductChannelFilter() == null) {
@@ -1493,6 +1513,32 @@ public abstract class BaseProductResourceTestCase {
 			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getNeverExpire(), product2.getNeverExpire())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productAccountGroupFilter", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						product1.getProductAccountGroupFilter(),
+						product2.getProductAccountGroupFilter())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productAccountGroups", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						product1.getProductAccountGroups(),
+						product2.getProductAccountGroups())) {
 
 					return false;
 				}
@@ -2026,6 +2072,16 @@ public abstract class BaseProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("productAccountGroupFilter")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("productAccountGroups")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("productChannelFilter")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2189,6 +2245,7 @@ public abstract class BaseProductResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
 				neverExpire = RandomTestUtil.randomBoolean();
+				productAccountGroupFilter = RandomTestUtil.randomBoolean();
 				productChannelFilter = RandomTestUtil.randomBoolean();
 				productId = RandomTestUtil.randomLong();
 				productStatus = RandomTestUtil.randomInt();

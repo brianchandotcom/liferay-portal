@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductAccountGroup;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductChannel;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
@@ -341,6 +342,36 @@ public class ProductSerDes {
 			sb.append("\"neverExpire\": ");
 
 			sb.append(product.getNeverExpire());
+		}
+
+		if (product.getProductAccountGroupFilter() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productAccountGroupFilter\": ");
+
+			sb.append(product.getProductAccountGroupFilter());
+		}
+
+		if (product.getProductAccountGroups() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productAccountGroups\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < product.getProductAccountGroups().length; i++) {
+				sb.append(String.valueOf(product.getProductAccountGroups()[i]));
+
+				if ((i + 1) < product.getProductAccountGroups().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (product.getProductChannelFilter() != null) {
@@ -804,6 +835,24 @@ public class ProductSerDes {
 			map.put("neverExpire", String.valueOf(product.getNeverExpire()));
 		}
 
+		if (product.getProductAccountGroupFilter() == null) {
+			map.put("productAccountGroupFilter", null);
+		}
+		else {
+			map.put(
+				"productAccountGroupFilter",
+				String.valueOf(product.getProductAccountGroupFilter()));
+		}
+
+		if (product.getProductAccountGroups() == null) {
+			map.put("productAccountGroups", null);
+		}
+		else {
+			map.put(
+				"productAccountGroups",
+				String.valueOf(product.getProductAccountGroups()));
+		}
+
 		if (product.getProductChannelFilter() == null) {
 			map.put("productChannelFilter", null);
 		}
@@ -1125,6 +1174,29 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {
 				if (jsonParserFieldValue != null) {
 					product.setNeverExpire((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "productAccountGroupFilter")) {
+
+				if (jsonParserFieldValue != null) {
+					product.setProductAccountGroupFilter(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "productAccountGroups")) {
+
+				if (jsonParserFieldValue != null) {
+					product.setProductAccountGroups(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ProductAccountGroupSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new ProductAccountGroup[size]
+						));
 				}
 			}
 			else if (Objects.equals(

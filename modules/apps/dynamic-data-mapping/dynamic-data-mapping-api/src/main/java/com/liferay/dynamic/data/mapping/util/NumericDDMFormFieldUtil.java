@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
+package com.liferay.dynamic.data.mapping.util;
 
 import java.text.DecimalFormat;
 
@@ -21,10 +21,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * @author Marcos Martins
  * @author Rafael Praxedes
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil}
  */
-@Deprecated
 public class NumericDDMFormFieldUtil {
 
 	public static DecimalFormat getNumberFormat(Locale locale) {

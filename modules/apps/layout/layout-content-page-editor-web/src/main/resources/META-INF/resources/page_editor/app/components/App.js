@@ -18,6 +18,7 @@ import React, {useEffect} from 'react';
 import {StyleBookContextProvider} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {INIT} from '../actions/types';
 import {config} from '../config/index';
+import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePreviewItemContext';
 import {reducer} from '../reducers/index';
 import selectLanguageId from '../selectors/selectLanguageId';
 import {StoreContextProvider, useSelector} from '../store/index';
@@ -59,17 +60,19 @@ export default function App({state}) {
 				<CollectionActiveItemContextProvider>
 					<DragAndDropContextProvider>
 						<EditableProcessorContextProvider>
-							<DragPreview />
-							<Toolbar />
-							<ShortcutManager />
+							<DisplayPagePreviewItemContextProvider>
+								<DragPreview />
+								<Toolbar />
+								<ShortcutManager />
 
-							<GlobalContextProvider>
-								<LayoutViewport />
+								<GlobalContextProvider>
+									<LayoutViewport />
 
-								<StyleBookContextProvider>
-									<Sidebar />
-								</StyleBookContextProvider>
-							</GlobalContextProvider>
+									<StyleBookContextProvider>
+										<Sidebar />
+									</StyleBookContextProvider>
+								</GlobalContextProvider>
+							</DisplayPagePreviewItemContextProvider>
 						</EditableProcessorContextProvider>
 					</DragAndDropContextProvider>
 				</CollectionActiveItemContextProvider>

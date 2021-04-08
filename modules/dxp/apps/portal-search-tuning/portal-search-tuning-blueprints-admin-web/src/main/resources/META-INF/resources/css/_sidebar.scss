@@ -174,12 +174,12 @@
 			}
 		}
 
-		.pagination-bar {
-			justify-content: flex-end;
+		&.sidebar-body {
+			padding: 0;
 		}
 	}
 
-	.query-element-list {
+	.element-list {
 		overflow-y: scroll;
 		padding-bottom: 16px;
 
@@ -189,31 +189,46 @@
 			.list-group-item {
 				border: 0;
 
-				&.hover {
+				&:hover {
 					background-color: $primaryL4;
+
+					.add-element-button,
+					.add-element-button-background {
+						opacity: 1;
+					}
 				}
 
-				.sticker {
-					background-color: $lightBackground;
-					color: $mainLighten28;
+				.add-element-button {
+					opacity: 0;
+					position: absolute;
+					right: 0.5rem;
+					top: 50%;
+					transform: translateY(-50%);
+
+					// Show button if focused using keyboard
+
+					&:focus-visible {
+						opacity: 1;
+					}
+				}
+
+				.add-element-button-background {
+					background-color: $primaryL4;
+					height: 100%;
+					opacity: 0;
+					padding-left: 1rem;
+					position: absolute;
+					right: 0.5rem;
+					width: 72px;
 				}
 
 				.autofit-col:first-of-type {
 					padding-right: 0.5rem;
 				}
 
-				.button-wrapper {
-					background-color: $primaryL4;
-					display: table;
-					height: 100%;
-					padding-left: 1rem;
-					position: absolute;
-					right: 0.5rem;
-
-					.add-fragment-button {
-						display: table-cell;
-						vertical-align: middle;
-					}
+				.sticker {
+					background-color: $lightBackground;
+					color: $mainLighten28;
 				}
 			}
 		}

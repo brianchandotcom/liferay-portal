@@ -82,16 +82,18 @@ function ResultListItem({item}) {
 				)}
 
 				{!collapse &&
-					Object.keys(item).map((property) => {
-						if (
-							![
-								...RESULTS_DEFAULT_KEYS,
-								...RESULTS_HIDE_KEYS,
-							].includes(property)
-						) {
-							return _renderListRow(property);
-						}
-					})}
+					Object.keys(item)
+						.sort()
+						.map((property) => {
+							if (
+								![
+									...RESULTS_DEFAULT_KEYS,
+									...RESULTS_HIDE_KEYS,
+								].includes(property)
+							) {
+								return _renderListRow(property);
+							}
+						})}
 			</ClayList.ItemField>
 
 			<ClayList.ItemField>

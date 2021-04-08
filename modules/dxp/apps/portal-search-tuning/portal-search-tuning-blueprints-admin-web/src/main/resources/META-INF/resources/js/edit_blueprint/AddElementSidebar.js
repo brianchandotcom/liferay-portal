@@ -27,23 +27,24 @@ const DEFAULT_EXPANDED_LIST = ['match'];
 
 const LAST_CATEGORIES = [DEFAULT_CATEGORY, 'custom'];
 
-const EmptyListMessage = () => (
-	<div className="empty-list-message">
-		<ClayEmptyState
-			title={Liferay.Language.get('no-query-elements-found')}
-		/>
-	</div>
-);
-
-const QueryElementList = ({category, expand, onAddElement, queryElements}) => {
+const ElementList = ({category, elements, expand, onAddElement}) => {
 	const {locale} = useContext(ThemeContext);
 
-	const [showAdd, setShowAdd] = useState(-1);
 	const [showList, setShowList] = useState(expand);
 
 	useEffect(() => {
 		setShowList(expand);
 	}, [expand]);
+
+	const _handleAddElement = (
+		elementTemplateJSON,
+		uiConfigurationJSON
+	) => () => {
+		onAddElement({
+			elementTemplateJSON,
+			uiConfigurationJSON,
+		});
+	};
 
 	return (
 		<>
@@ -65,17 +66,13 @@ const QueryElementList = ({category, expand, onAddElement, queryElements}) => {
 
 			{showList && (
 				<ClayList>
-					{queryElements.map(
+					{elements.map(
 						({elementTemplateJSON, uiConfigurationJSON}, index) => {
 							return (
 								<ClayList.Item
-									className={`${
-										showAdd === index ? 'hover' : ''
-									}`}
+									className="element-item"
 									flex
 									key={index}
-									onMouseEnter={() => setShowAdd(index)}
-									onMouseLeave={() => setShowAdd(-1)}
 								>
 									<ClayList.ItemField>
 										<ClaySticker size="md">
@@ -109,29 +106,22 @@ const QueryElementList = ({category, expand, onAddElement, queryElements}) => {
 									</ClayList.ItemField>
 
 									<ClayList.ItemField>
-										{showAdd === index && (
-											<div className="button-wrapper">
-												<div className="add-element-button">
-													<ClayButton
-														aria-label={Liferay.Language.get(
-															'add'
-														)}
-														displayType="secondary"
-														onClick={() => {
-															onAddElement({
-																elementTemplateJSON,
-																uiConfigurationJSON,
-															});
-														}}
-														small
-													>
-														{Liferay.Language.get(
-															'add'
-														)}
-													</ClayButton>
-												</div>
-											</div>
-										)}
+										<div className="add-element-button-background" />
+
+										<ClayButton
+											aria-label={Liferay.Language.get(
+												'add'
+											)}
+											className="add-element-button"
+											displayType="secondary"
+											onClick={_handleAddElement(
+												elementTemplateJSON,
+												uiConfigurationJSON
+											)}
+											small
+										>
+											{Liferay.Language.get('add')}
+										</ClayButton>
 									</ClayList.ItemField>
 								</ClayList.Item>
 							);
@@ -143,38 +133,45 @@ const QueryElementList = ({category, expand, onAddElement, queryElements}) => {
 	);
 };
 
-function Sidebar({elements = [], onAddElement, onClose, visible}) {
+function AddElementSidebar({
+	elements = [],
+	emptyMessage,
+	onAddElement,
+	onClose,
+	title,
+	visible,
+}) {
 	const {locale} = useContext(ThemeContext);
 
 	const [loading, setLoading] = useState(true);
 
-	const [queryElements, setQueryElements] = useState(elements);
+	const [filteredElements, setFilteredElements] = useState(elements);
 
 	const [categories, setCategories] = useState([]);
 	const [categorizedElements, setCategorizedElements] = useState({});
 	const [expandAll, setExpandAll] = useState(false);
 
-	const categorizeElements = (elements) => {
+	const _categorizeElements = (elements) => {
 		const newCategories = [];
 		const newCategorizedElements = {};
 
 		elements.map((element) => {
-			const category = element.elementTemplateJSON.category
-				? element.elementTemplateJSON.category
-				: DEFAULT_CATEGORY;
+			const category =
+				element.elementTemplateJSON.category || DEFAULT_CATEGORY;
 
-			if (newCategorizedElements[category]) {
-				newCategorizedElements[category] = [
-					...newCategorizedElements[category],
-					element,
-				];
-			}
-			else {
-				newCategorizedElements[category] = [element];
+			newCategorizedElements[category] = [
+				...(newCategorizedElements[category] || []),
+				element,
+			];
 
-				if (!LAST_CATEGORIES.includes(category)) {
-					newCategories.push(category);
-				}
+			// Don't add last categories since they will be added in the
+			// `setCategories` call below
+
+			if (
+				!newCategories.includes(category) &&
+				!LAST_CATEGORIES.includes(category)
+			) {
+				newCategories.push(category);
 			}
 		});
 
@@ -184,20 +181,21 @@ function Sidebar({elements = [], onAddElement, onClose, visible}) {
 				(category) =>
 					newCategorizedElements[category] &&
 					newCategorizedElements[category].length
-			),
+			), // Add last categories unless there are no elements
 		]);
+
 		setCategorizedElements(newCategorizedElements);
 	};
 
 	useEffect(() => {
-		categorizeElements(elements);
+		_categorizeElements(elements);
 
 		setLoading(false);
 	}, [elements]);
 
 	const _handleSearchChange = useCallback(
 		(value) => {
-			const newQueryElements = elements.filter((element) => {
+			const newElements = elements.filter((element) => {
 				if (value) {
 					const elementTitle =
 						element.elementTemplateJSON.title[locale] ||
@@ -206,14 +204,13 @@ function Sidebar({elements = [], onAddElement, onClose, visible}) {
 					return elementTitle
 						.toLowerCase()
 						.includes(value.toLowerCase());
-				}
-				else {
+				} else {
 					return true;
 				}
 			});
 
-			categorizeElements(newQueryElements);
-			setQueryElements(newQueryElements);
+			_categorizeElements(newElements);
+			setFilteredElements(newElements);
 			setExpandAll(!!value);
 		},
 		[elements, locale]
@@ -224,9 +221,7 @@ function Sidebar({elements = [], onAddElement, onClose, visible}) {
 			<div className="sidebar-header">
 				<h4 className="component-title">
 					<span className="text-truncate-inline">
-						<span className="text-truncate">
-							{Liferay.Language.get('add-query-elements')}
-						</span>
+						<span className="text-truncate">{title}</span>
 					</span>
 				</h4>
 
@@ -247,23 +242,25 @@ function Sidebar({elements = [], onAddElement, onClose, visible}) {
 			</nav>
 
 			{!loading ? (
-				queryElements.length ? (
-					<div className="query-element-list">
+				filteredElements.length ? (
+					<div className="element-list">
 						{categories.map((category) => (
-							<QueryElementList
+							<ElementList
 								category={category}
+								elements={categorizedElements[category]}
 								expand={
 									expandAll ||
 									DEFAULT_EXPANDED_LIST.includes(category)
 								}
 								key={category}
 								onAddElement={onAddElement}
-								queryElements={categorizedElements[category]}
 							/>
 						))}
 					</div>
 				) : (
-					<EmptyListMessage />
+					<div className="empty-list-message">
+						<ClayEmptyState title={emptyMessage} />
+					</div>
 				)
 			) : (
 				<ClayLoadingIndicator />
@@ -272,11 +269,13 @@ function Sidebar({elements = [], onAddElement, onClose, visible}) {
 	);
 }
 
-Sidebar.propTypes = {
+AddElementSidebar.propTypes = {
 	elements: PropTypes.arrayOf(PropTypes.object),
+	emptyMessage: PropTypes.string,
 	onAddElement: PropTypes.func,
 	onClose: PropTypes.func,
+	title: PropTypes.string,
 	visible: PropTypes.bool,
 };
 
-export default React.memo(Sidebar);
+export default React.memo(AddElementSidebar);

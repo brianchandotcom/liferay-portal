@@ -23,8 +23,8 @@ import '../../src/main/resources/META-INF/resources/css/main.scss';
 import ClayLayout from '@clayui/layout';
 
 import BlueprintForm from '../../src/main/resources/META-INF/resources/js/edit_blueprint';
+import AddElementSidebar from '../../src/main/resources/META-INF/resources/js/edit_blueprint/AddElementSidebar';
 import Preview from '../../src/main/resources/META-INF/resources/js/edit_blueprint/Preview';
-import Sidebar from '../../src/main/resources/META-INF/resources/js/edit_blueprint/Sidebar';
 import QueryBuilder from '../../src/main/resources/META-INF/resources/js/edit_blueprint/tabs/QueryBuilder';
 import SelectAssetTypes from '../../src/main/resources/META-INF/resources/js/edit_blueprint/tabs/SelectAssetTypes';
 import ElementForm from '../../src/main/resources/META-INF/resources/js/edit_element';
@@ -305,10 +305,10 @@ storiesOf('Components|SelectAssetTypes', module)
 		/>
 	));
 
-storiesOf('Components|Sidebar', module)
+storiesOf('Components|AddElementSidebar', module)
 	.addDecorator(withBlueprintsClass)
-	.add('Sidebar', () => (
-		<Sidebar
+	.add('AddElementSidebar', () => (
+		<AddElementSidebar
 			addElement={action('addElement')}
 			elements={SELECTED_ELEMENTS}
 			visible={true}
@@ -325,6 +325,22 @@ storiesOf('Components|Preview', module)
 			visible={true}
 		/>
 	))
+	.add('Empty', () => (
+		<Preview
+			loading={false}
+			onFetchResults={action('onFetchResults')}
+			results={{
+				hits: [],
+				meta: {
+					executionTime: '0.061',
+					keywords: 'test',
+					totalHits: 0,
+				},
+				pagination: {activePage: 1, totalPages: 1},
+			}}
+			visible={true}
+		/>
+	))
 	.add('Error', () => (
 		<Preview
 			loading={false}
@@ -334,6 +350,7 @@ storiesOf('Components|Preview', module)
 					{
 						className:
 							'com.liferay.portal.search.tuning.blueprints.engine.internal.searchrequest.QuerySearchRequestBodyContributor',
+						elementId: 'queryElement-1',
 						localizationKey: 'core.error.unknown-occur-value',
 						msg:
 							'No enum constant com.liferay.portal.search.tuning.blueprints.constants.json.values.Occur.FILTERED',

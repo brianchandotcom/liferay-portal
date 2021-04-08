@@ -12,16 +12,16 @@
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import Sidebar from '../../../src/main/resources/META-INF/resources/js/edit_blueprint/Sidebar';
+import AddElementSidebar from '../../../src/main/resources/META-INF/resources/js/edit_blueprint/AddElementSidebar';
 import {SELECTED_ELEMENTS} from '../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
 
 const DEFAULT_EXPANDED_LIST = ['match'];
 
-function renderSidebar(props) {
+function renderAddElementSidebar(props) {
 	return render(
-		<Sidebar
+		<AddElementSidebar
 			elements={SELECTED_ELEMENTS}
 			onAddElement={jest.fn()}
 			{...props}
@@ -29,15 +29,15 @@ function renderSidebar(props) {
 	);
 }
 
-describe('Sidebar', () => {
+describe('AddElementSidebar', () => {
 	it('renders the sidebar', () => {
-		const {container} = renderSidebar();
+		const {container} = renderAddElementSidebar();
 
 		expect(container).not.toBeNull();
 	});
 
 	it('renders the titles for the possible query elements', () => {
-		const {getByText} = renderSidebar();
+		const {getByText} = renderAddElementSidebar();
 
 		SELECTED_ELEMENTS.map((element) => {
 			if (
@@ -51,7 +51,7 @@ describe('Sidebar', () => {
 	});
 
 	it('renders the descriptions for the possible query elements', () => {
-		const {getByText} = renderSidebar();
+		const {getByText} = renderAddElementSidebar();
 
 		SELECTED_ELEMENTS.map((element) => {
 			if (
@@ -64,13 +64,11 @@ describe('Sidebar', () => {
 		});
 	});
 
-	it('renders the add button when mouseOver item', () => {
-		const {container, getByLabelText, queryByLabelText} = renderSidebar();
-
-		expect(queryByLabelText('add')).toBeNull();
+	it('displays the add button when hovering over an element item', () => {
+		const {container, queryAllByText} = renderAddElementSidebar();
 
 		fireEvent.mouseOver(container.querySelectorAll('.list-group-title')[1]);
 
-		getByLabelText('add');
+		expect(queryAllByText('add')[1]).toBeVisible();
 	});
 });

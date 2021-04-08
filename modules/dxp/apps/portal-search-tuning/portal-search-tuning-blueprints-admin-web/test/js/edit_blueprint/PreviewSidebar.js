@@ -12,7 +12,7 @@
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import Preview from '../../../src/main/resources/META-INF/resources/js/edit_blueprint/Preview';
+import PreviewSidebar from '../../../src/main/resources/META-INF/resources/js/edit_blueprint/PreviewSidebar';
 import {mockSearchResults} from '../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -27,9 +27,9 @@ jest.mock(
 const COLLAPSED_VIEW = ['type', 'description', 'date', 'userName'];
 const SEARCH_RESULTS = mockSearchResults();
 
-function renderPreview(props) {
+function renderPreviewSidebar(props) {
 	return render(
-		<Preview
+		<PreviewSidebar
 			loading={false}
 			onClose={jest.fn()}
 			onFetchResults={jest.fn()}
@@ -40,15 +40,15 @@ function renderPreview(props) {
 	);
 }
 
-describe('Preview', () => {
+describe('PreviewSidebar', () => {
 	it('renders the preview', () => {
-		const {container} = renderPreview();
+		const {container} = renderPreviewSidebar();
 
 		expect(container).not.toBeNull();
 	});
 
 	it('renders the introduction', () => {
-		const {getByText} = renderPreview({
+		const {getByText} = renderPreviewSidebar({
 			loading: false,
 			results: {},
 		});
@@ -57,7 +57,7 @@ describe('Preview', () => {
 	});
 
 	it('renders the loading icon', () => {
-		const {container} = renderPreview({
+		const {container} = renderPreviewSidebar({
 			loading: true,
 			results: {},
 		});
@@ -66,7 +66,7 @@ describe('Preview', () => {
 	});
 
 	it('renders the titles for the search results', () => {
-		const {getByText} = renderPreview();
+		const {getByText} = renderPreviewSidebar();
 
 		SEARCH_RESULTS.hits.map((result) => {
 			getByText(result.title);
@@ -74,7 +74,7 @@ describe('Preview', () => {
 	});
 
 	it('expands the result when clicked on', () => {
-		const {getAllByLabelText, queryAllByText} = renderPreview();
+		const {getAllByLabelText, queryAllByText} = renderPreviewSidebar();
 
 		fireEvent.click(getAllByLabelText('expand')[0]);
 
@@ -97,7 +97,7 @@ describe('Preview', () => {
 			},
 		];
 
-		const {getByText} = renderPreview({
+		const {getByText} = renderPreviewSidebar({
 			loading: false,
 			results: {
 				errors,

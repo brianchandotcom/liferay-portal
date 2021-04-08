@@ -39,6 +39,12 @@
 		line-height: 1;
 	}
 
+	.tbar-divider {
+		background-color: $secondary;
+		height: 16px;
+		width: 1px;
+	}
+
 	.tbar-item {
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;

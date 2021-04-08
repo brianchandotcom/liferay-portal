@@ -182,9 +182,9 @@ export const mockSearchResults = (itemsPerPage = 10) => {
 		meta: {
 			executionTime: '0.061',
 			keywords: 'test',
-			totalHits: 75,
+			totalHits: 1362,
 		},
-		pagination: {activePage: 1, totalPages: 8},
+		pagination: {activePage: 1, totalPages: 100},
 		suggest: {},
 	};
 };

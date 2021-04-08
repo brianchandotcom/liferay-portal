@@ -35,8 +35,8 @@ import {
 	validateNumberRange,
 	validateRequired,
 } from '../utils/validation';
+import AddElementSidebar from './AddElementSidebar';
 import Preview from './Preview';
-import Sidebar from './Sidebar';
 import QueryBuilder from './tabs/QueryBuilder';
 import Settings from './tabs/Settings';
 
@@ -115,8 +115,7 @@ function EditBlueprintForm({
 							}
 						});
 					});
-				}
-				else {
+				} else {
 					const configValue =
 						uiConfigurationValues.elementTemplateJSON;
 
@@ -230,8 +229,7 @@ function EditBlueprintForm({
 					),
 				})
 			);
-		}
-		catch {
+		} catch {
 			return;
 		}
 
@@ -253,8 +251,7 @@ function EditBlueprintForm({
 					responseContent.errors.forEach((message) =>
 						openErrorToast({message})
 					);
-				}
-				else {
+				} else {
 					navigate(redirectURL);
 				}
 			})
@@ -347,8 +344,7 @@ function EditBlueprintForm({
 					sort_configuration: JSON.parse(formik.values.sortConfig),
 				})
 			);
-		}
-		catch {
+		} catch {
 			return;
 		}
 
@@ -461,10 +457,14 @@ function EditBlueprintForm({
 							visible={showPreview}
 						/>
 
-						<Sidebar
+						<AddElementSidebar
 							elements={sidebarQueryElements.current}
+							emptyMessage={Liferay.Language.get(
+								'no-query-elements-found'
+							)}
 							onAddElement={_handleAddElement}
 							onClose={() => setShowSidebar(false)}
+							title={Liferay.Language.get('add-query-elements')}
 							visible={showSidebar}
 						/>
 

@@ -10,12 +10,14 @@
  */
 
 import ClayButton from '@clayui/button';
+import {Align} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {ClayPaginationWithBasicItems} from '@clayui/pagination';
+import ClayPaginationBar from '@clayui/pagination-bar';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -25,6 +27,8 @@ import useDidUpdateEffect from '../utils/useDidUpdateEffect';
 import {sub} from './../utils/utils';
 import ErrorListItem from './ErrorListItem';
 import ResultListItem from './ResultListItem';
+
+const DELTAS = [10, 20, 30, 50];
 
 function Preview({
 	loading,
@@ -46,6 +50,11 @@ function Preview({
 		_handleFetch();
 	}, [activeDelta, activePage]);
 
+	const _handleDeltaChange = (delta) => () => {
+		setActiveDelta(delta);
+		setActivePage(1);
+	};
+
 	const _renderErrors = () => (
 		<ClayList className="preview-error-list">
 			{results.errors.map((error, index) => (
@@ -59,31 +68,49 @@ function Preview({
 	);
 
 	const _renderHits = () => (
-		<div className="preview-results-list">
+		<div className="preview-results-list sidebar-body">
 			<ClayList>
 				{results.hits.map((result) => (
 					<ResultListItem item={result} key={result.id} />
 				))}
 			</ClayList>
 
-			<ClayPaginationBarWithBasicItems
-				activeDelta={activeDelta}
-				activePage={activePage}
-				ellipsisBuffer={1}
-				labels={{
-					paginationResults: Liferay.Language.get(
-						'showing-x-to-x-of-x-entries'
-					),
-					perPageItems: Liferay.Language.get('x-entries'),
-					selectPerPageItems: '{0}',
-				}}
-				onDeltaChange={(delta) => {
-					setActiveDelta(delta);
-					setActivePage(1);
-				}}
-				onPageChange={setActivePage}
-				totalItems={results.meta.totalHits}
-			/>
+			<ClayPaginationBar>
+				<ClayPaginationBar.DropDown
+					alignmentPosition={Align.TopLeft}
+					items={DELTAS.map((delta) => ({
+						label: delta,
+						onClick: _handleDeltaChange(delta),
+					}))}
+					trigger={
+						<ClayButton displayType="unstyled">
+							{sub(Liferay.Language.get('x-entries'), [
+								activeDelta,
+							])}
+
+							<ClayIcon symbol="caret-double-l" />
+						</ClayButton>
+					}
+				/>
+
+				<ClayPaginationBar.Results>
+					{sub(Liferay.Language.get('showing-x-to-x-of-x-entries'), [
+						(activePage - 1) * activeDelta + 1,
+						activePage * activeDelta < results.meta.totalHits
+							? activePage * activeDelta
+							: results.meta.totalHits,
+						results.meta.totalHits,
+					])}
+				</ClayPaginationBar.Results>
+
+				<ClayPaginationWithBasicItems
+					activePage={activePage}
+					alignmentPosition={Align.TopLeft}
+					ellipsisBuffer={1}
+					onPageChange={setActivePage}
+					totalPages={Math.ceil(results.meta.totalHits / activeDelta)}
+				/>
+			</ClayPaginationBar>
 		</div>
 	);
 
@@ -94,7 +121,7 @@ function Preview({
 					<span className="component-text text-truncate-inline">
 						<span className="text-truncate">
 							{sub(Liferay.Language.get('x-results'), [
-								results.meta.totalHits,
+								results.meta.totalHits.toLocaleString(),
 							])}
 						</span>
 					</span>
@@ -160,7 +187,7 @@ function Preview({
 					_renderHits()
 				) : results.meta ? (
 					<div className="empty-list-message">
-						<ClayEmptyState />
+						<ClayEmptyState description="" />
 					</div>
 				) : (
 					<div className="search-message">

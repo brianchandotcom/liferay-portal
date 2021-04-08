@@ -272,6 +272,12 @@ export default function PageToolbar({
 
 						{children}
 
+						{!!children && (
+							<ClayToolbar.Item>
+								<div className="tbar-divider" />
+							</ClayToolbar.Item>
+						)}
+
 						<ClayToolbar.Item>
 							<ClayLink
 								displayType="secondary"

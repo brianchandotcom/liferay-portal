@@ -14,8 +14,10 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalFixpackEnvironmentJob;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -71,14 +73,78 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 		super(parentEnvironmentFunctionalBatchTestClassGroup);
 	}
 
+	private String _getAppServerType() {
+		BatchTestClassGroup parentBatchTestClassGroup =
+			getParentBatchTestClassGroup();
+
+		String appServerType = JenkinsResultsParserUtil.getProperty(
+			parentBatchTestClassGroup.getJobProperties(),
+			"environment.app.server.type",
+			parentBatchTestClassGroup.getBatchName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(appServerType)) {
+			return appServerType;
+		}
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			parentBatchTestClassGroup.getPortalGitWorkingDirectory();
+
+		if (portalGitWorkingDirectory == null) {
+			return null;
+		}
+
+		return JenkinsResultsParserUtil.getProperty(
+			portalGitWorkingDirectory.getAppServerProperties(),
+			"app.server.type");
+	}
+
 	private Map.Entry<String, String> _getAppServerTypeEntry() {
-		return getEnvironmentVariableEntry(
-			"APP_SERVER_TYPE", "environment.app.server.type");
+		String appServerType = _getAppServerType();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(appServerType)) {
+			return null;
+		}
+
+		return new AbstractMap.SimpleEntry<>("APP_SERVER_TYPE", appServerType);
+	}
+
+	private String _getAppServerVersion() {
+		BatchTestClassGroup parentBatchTestClassGroup =
+			getParentBatchTestClassGroup();
+
+		String appServerVersion = JenkinsResultsParserUtil.getProperty(
+			parentBatchTestClassGroup.getJobProperties(),
+			"environment.app.server.version",
+			parentBatchTestClassGroup.getBatchName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(appServerVersion)) {
+			return appServerVersion;
+		}
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			parentBatchTestClassGroup.getPortalGitWorkingDirectory();
+		String appServerType = _getAppServerType();
+
+		if ((portalGitWorkingDirectory == null) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(appServerType)) {
+
+			return null;
+		}
+
+		return JenkinsResultsParserUtil.getProperty(
+			portalGitWorkingDirectory.getAppServerProperties(),
+			"app.server." + appServerType + ".version");
 	}
 
 	private Map.Entry<String, String> _getAppServerVersionEntry() {
-		return getEnvironmentVariableEntry(
-			"APP_SERVER_VERSION", "environment.app.server.version");
+		String appServerVersion = _getAppServerVersion();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(appServerVersion)) {
+			return null;
+		}
+
+		return new AbstractMap.SimpleEntry<>(
+			"APP_SERVER_VERSION", appServerVersion);
 	}
 
 	private Map.Entry<String, String> _getBrowserTypeEntry() {

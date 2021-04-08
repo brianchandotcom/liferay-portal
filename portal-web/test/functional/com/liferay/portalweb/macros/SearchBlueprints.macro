@@ -259,4 +259,17 @@ definition {
 		}
 	}
 
+	macro viewBlueprintsSpecificOrder {
+		var resultOrder = "0";
+
+		for (var blueprintsTitle : list "${blueprintsList}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_LIST_TITLE_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}",
+				value1 = "${blueprintsTitle}");
+		}
+	}
+
 }

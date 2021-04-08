@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.repository;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.File;
@@ -46,6 +48,30 @@ public interface DocumentRepository extends CapabilityProvider {
 			String title, String description, String changeLog,
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException;
+
+	public default FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, file, serviceContext);
+	}
+
+	public default FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream inputStream,
+			long size, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, inputStream, size, serviceContext);
+	}
 
 	public FileShortcut addFileShortcut(
 			long userId, long folderId, long toFileEntryId,
@@ -126,6 +152,22 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public FileEntry getFileEntry(long folderId, String title)
 		throws PortalException;
+
+	public default FileEntry getFileEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		try {
+			return getFileEntry(
+				GetterUtil.getLongStrict(externalReferenceCode));
+		}
+		catch (NumberFormatException numberFormatException) {
+			throw new NoSuchFileEntryException(
+				"No file entry exists with external reference code " +
+					externalReferenceCode,
+				numberFormatException);
+		}
+	}
 
 	public default FileEntry getFileEntryByFileName(
 			long folderId, String fileName)

@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
+import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
@@ -39,6 +40,7 @@ import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductAccountGroup;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductChannel;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
@@ -812,6 +814,41 @@ public class ProductResourceImpl
 			cpDefinition.getCPDefinitionId(),
 			GetterUtil.getBoolean(product.getProductChannelFilter()));
 
+		// Account Groups visibility
+
+		_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
+		ProductAccountGroup[] productAccountGroups =
+			product.getProductAccountGroups();
+
+		if (productAccountGroups == null) {
+			return cpDefinition;
+		}
+
+		Stream<ProductAccountGroup> productAccountGroupStream = Arrays.stream(
+			productAccountGroups);
+
+		List<Long> accountGroupIds = productAccountGroupStream.map(
+			ProductAccountGroup::getAccountGroupId
+		).collect(
+			Collectors.toList()
+		);
+
+		for (long accountGroupId : accountGroupIds) {
+			if (accountGroupId == 0) {
+				continue;
+			}
+
+			_commerceAccountGroupRelService.addCommerceAccountGroupRel(
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
+				accountGroupId, serviceContext);
+		}
+
+		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
+			cpDefinition.getCPDefinitionId(),
+			GetterUtil.getBoolean(product.getProductAccountGroupFilter()));
+
 		return cpDefinition;
 	}
 
@@ -929,6 +966,9 @@ public class ProductResourceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
 
 	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;

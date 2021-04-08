@@ -674,7 +674,7 @@ public class UADPartialEntryPersistenceImpl
 			return UADPartialEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			UADPartialEntryModelImpl uadPartialEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -697,8 +697,8 @@ public class UADPartialEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

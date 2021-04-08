@@ -51,7 +51,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,7 +59,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -8787,16 +8786,12 @@ public class CommerceOrderPersistenceImpl
 			CommerceOrderModelImpl commerceOrderModelImpl =
 				(CommerceOrderModelImpl)baseModel;
 
-			Object[] values = _getValue(
-				commerceOrderModelImpl, columnNames, original);
-
 			if (!checkColumn ||
-				!Arrays.equals(
-					values,
-					_getValue(
-						commerceOrderModelImpl, columnNames, !original))) {
+				_hasModifiedColumns(commerceOrderModelImpl, columnNames) ||
+				_hasModifiedColumns(
+					commerceOrderModelImpl, _ORDER_BY_COLUMNS)) {
 
-				return values;
+				return _getValue(commerceOrderModelImpl, columnNames, original);
 			}
 
 			return null;
@@ -8812,7 +8807,7 @@ public class CommerceOrderPersistenceImpl
 			return CommerceOrderTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceOrderModelImpl commerceOrderModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -8835,8 +8830,36 @@ public class CommerceOrderPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static boolean _hasModifiedColumns(
+			CommerceOrderModelImpl commerceOrderModelImpl,
+			String[] columnNames) {
+
+			if (columnNames.length == 0) {
+				return false;
+			}
+
+			for (String columnName : columnNames) {
+				if (!Objects.equals(
+						commerceOrderModelImpl.getColumnOriginalValue(
+							columnName),
+						commerceOrderModelImpl.getColumnValue(columnName))) {
+
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private static final String[] _ORDER_BY_COLUMNS;
+
+		static {
+			List<String> orderByColumns = new ArrayList<String>();
+
+			orderByColumns.add("createDate");
+
+			_ORDER_BY_COLUMNS = orderByColumns.toArray(new String[0]);
+		}
 
 	}
 

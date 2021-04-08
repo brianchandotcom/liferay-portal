@@ -4834,7 +4834,7 @@ public class DDMFormInstanceRecordPersistenceImpl
 			return DDMFormInstanceRecordTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMFormInstanceRecordModelImpl ddmFormInstanceRecordModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4858,8 +4858,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

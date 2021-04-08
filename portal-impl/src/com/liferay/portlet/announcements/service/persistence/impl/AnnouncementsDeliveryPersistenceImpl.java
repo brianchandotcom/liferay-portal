@@ -2061,7 +2061,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 			return AnnouncementsDeliveryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2085,8 +2085,8 @@ public class AnnouncementsDeliveryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

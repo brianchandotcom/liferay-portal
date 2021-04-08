@@ -7217,7 +7217,7 @@ public class DLFileShortcutPersistenceImpl
 			return DLFileShortcutTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DLFileShortcutModelImpl dlFileShortcutModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -7240,8 +7240,8 @@ public class DLFileShortcutPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -1976,7 +1976,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 				getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceApplicationModelCProductRelModelImpl
 				commerceApplicationModelCProductRelModelImpl,
 			String[] columnNames, boolean original) {
@@ -2001,8 +2001,8 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

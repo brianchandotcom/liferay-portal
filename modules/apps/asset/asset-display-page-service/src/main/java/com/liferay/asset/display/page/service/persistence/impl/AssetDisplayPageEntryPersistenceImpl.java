@@ -3945,7 +3945,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 			return AssetDisplayPageEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AssetDisplayPageEntryModelImpl assetDisplayPageEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3969,8 +3969,8 @@ public class AssetDisplayPageEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

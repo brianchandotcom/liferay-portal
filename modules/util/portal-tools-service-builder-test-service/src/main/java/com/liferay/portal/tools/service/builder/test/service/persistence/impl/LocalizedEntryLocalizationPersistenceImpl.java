@@ -1594,7 +1594,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			return LocalizedEntryLocalizationTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LocalizedEntryLocalizationModelImpl
 				localizedEntryLocalizationModelImpl,
 			String[] columnNames, boolean original) {
@@ -1619,8 +1619,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

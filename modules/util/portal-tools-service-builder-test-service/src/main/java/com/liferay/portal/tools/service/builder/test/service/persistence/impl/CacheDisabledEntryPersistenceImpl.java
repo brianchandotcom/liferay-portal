@@ -961,7 +961,7 @@ public class CacheDisabledEntryPersistenceImpl
 			return CacheDisabledEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CacheDisabledEntryModelImpl cacheDisabledEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -984,8 +984,8 @@ public class CacheDisabledEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

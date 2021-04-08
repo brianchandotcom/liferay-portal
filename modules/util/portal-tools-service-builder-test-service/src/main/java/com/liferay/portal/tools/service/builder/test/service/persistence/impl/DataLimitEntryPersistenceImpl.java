@@ -723,7 +723,7 @@ public class DataLimitEntryPersistenceImpl
 			return DataLimitEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DataLimitEntryModelImpl dataLimitEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -746,8 +746,8 @@ public class DataLimitEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

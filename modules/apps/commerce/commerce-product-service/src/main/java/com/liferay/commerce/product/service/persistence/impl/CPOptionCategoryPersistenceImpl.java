@@ -3982,6 +3982,13 @@ public class CPOptionCategoryPersistenceImpl
 						cpOptionCategoryModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4004,7 +4011,7 @@ public class CPOptionCategoryPersistenceImpl
 			return CPOptionCategoryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CPOptionCategoryModelImpl cpOptionCategoryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4027,8 +4034,21 @@ public class CPOptionCategoryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CPOptionCategoryModelImpl.getColumnBitmask(
+				"title");
+			orderByColumnsBitmask |= CPOptionCategoryModelImpl.getColumnBitmask(
+				"priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

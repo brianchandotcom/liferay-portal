@@ -4335,7 +4335,7 @@ public class KBFolderPersistenceImpl
 			return KBFolderTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			KBFolderModelImpl kbFolderModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -4356,8 +4356,8 @@ public class KBFolderPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

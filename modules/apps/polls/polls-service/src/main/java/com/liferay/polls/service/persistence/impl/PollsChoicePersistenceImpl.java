@@ -2971,6 +2971,13 @@ public class PollsChoicePersistenceImpl
 						pollsChoiceModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2992,7 +2999,7 @@ public class PollsChoicePersistenceImpl
 			return PollsChoiceTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			PollsChoiceModelImpl pollsChoiceModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3014,8 +3021,21 @@ public class PollsChoicePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= PollsChoiceModelImpl.getColumnBitmask(
+				"questionId");
+			orderByColumnsBitmask |= PollsChoiceModelImpl.getColumnBitmask(
+				"name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

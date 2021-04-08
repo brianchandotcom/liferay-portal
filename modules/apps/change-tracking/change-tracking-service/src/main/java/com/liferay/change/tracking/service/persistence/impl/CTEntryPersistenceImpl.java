@@ -3010,7 +3010,7 @@ public class CTEntryPersistenceImpl
 			return CTEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CTEntryModelImpl ctEntryModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3031,8 +3031,8 @@ public class CTEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

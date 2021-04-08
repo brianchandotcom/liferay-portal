@@ -3112,7 +3112,7 @@ public class FriendlyURLEntryPersistenceImpl
 			return FriendlyURLEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			FriendlyURLEntryModelImpl friendlyURLEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3135,8 +3135,8 @@ public class FriendlyURLEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -1759,7 +1759,7 @@ public class LVEntryLocalizationPersistenceImpl
 			return LVEntryLocalizationTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LVEntryLocalizationModelImpl lvEntryLocalizationModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1782,8 +1782,8 @@ public class LVEntryLocalizationPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

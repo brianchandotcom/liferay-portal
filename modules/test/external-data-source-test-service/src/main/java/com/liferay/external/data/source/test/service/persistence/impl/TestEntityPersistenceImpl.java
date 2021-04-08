@@ -677,7 +677,7 @@ public class TestEntityPersistenceImpl
 			return TestEntityTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			TestEntityModelImpl testEntityModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -699,8 +699,8 @@ public class TestEntityPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -2527,7 +2527,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			return CPDefinitionVirtualSettingTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CPDefinitionVirtualSettingModelImpl
 				cpDefinitionVirtualSettingModelImpl,
 			String[] columnNames, boolean original) {
@@ -2552,8 +2552,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

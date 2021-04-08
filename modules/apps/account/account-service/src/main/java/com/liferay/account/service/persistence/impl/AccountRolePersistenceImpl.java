@@ -2253,7 +2253,7 @@ public class AccountRolePersistenceImpl
 			return AccountRoleTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AccountRoleModelImpl accountRoleModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -2275,8 +2275,8 @@ public class AccountRolePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

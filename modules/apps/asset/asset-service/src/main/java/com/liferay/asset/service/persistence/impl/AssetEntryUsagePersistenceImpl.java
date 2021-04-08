@@ -5169,7 +5169,7 @@ public class AssetEntryUsagePersistenceImpl
 			return AssetEntryUsageTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AssetEntryUsageModelImpl assetEntryUsageModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -5192,8 +5192,8 @@ public class AssetEntryUsagePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

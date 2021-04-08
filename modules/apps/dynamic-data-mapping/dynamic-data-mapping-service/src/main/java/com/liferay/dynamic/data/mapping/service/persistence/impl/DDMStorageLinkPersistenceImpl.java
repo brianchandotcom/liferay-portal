@@ -3759,7 +3759,7 @@ public class DDMStorageLinkPersistenceImpl
 			return DDMStorageLinkTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMStorageLinkModelImpl ddmStorageLinkModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3782,8 +3782,8 @@ public class DDMStorageLinkPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

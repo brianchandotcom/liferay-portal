@@ -2441,7 +2441,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 			return AppBuilderAppDataRecordLinkTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AppBuilderAppDataRecordLinkModelImpl
 				appBuilderAppDataRecordLinkModelImpl,
 			String[] columnNames, boolean original) {
@@ -2466,8 +2466,8 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

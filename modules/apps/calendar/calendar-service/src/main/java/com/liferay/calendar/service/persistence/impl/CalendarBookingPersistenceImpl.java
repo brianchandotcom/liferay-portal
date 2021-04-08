@@ -6283,6 +6283,13 @@ public class CalendarBookingPersistenceImpl
 						calendarBookingModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -6305,7 +6312,7 @@ public class CalendarBookingPersistenceImpl
 			return CalendarBookingTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CalendarBookingModelImpl calendarBookingModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -6328,8 +6335,21 @@ public class CalendarBookingPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CalendarBookingModelImpl.getColumnBitmask(
+				"startTime");
+			orderByColumnsBitmask |= CalendarBookingModelImpl.getColumnBitmask(
+				"title");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -4700,7 +4700,7 @@ public class LayoutSetPrototypePersistenceImpl
 			return LayoutSetPrototypeTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LayoutSetPrototypeModelImpl layoutSetPrototypeModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4723,8 +4723,8 @@ public class LayoutSetPrototypePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

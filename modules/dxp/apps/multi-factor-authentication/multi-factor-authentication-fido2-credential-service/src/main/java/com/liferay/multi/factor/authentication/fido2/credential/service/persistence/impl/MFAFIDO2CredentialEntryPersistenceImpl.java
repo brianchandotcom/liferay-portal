@@ -2116,7 +2116,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			return MFAFIDO2CredentialEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MFAFIDO2CredentialEntryModelImpl mfaFIDO2CredentialEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2140,8 +2140,8 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -373,7 +374,9 @@ public class CTMessageModelImpl
 		for (Map.Entry<String, Object> entry :
 				_columnOriginalValues.entrySet()) {
 
-			if (entry.getValue() != getColumnValue(entry.getKey())) {
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
 				_columnBitmask |= _columnBitmasks.get(entry.getKey());
 			}
 		}

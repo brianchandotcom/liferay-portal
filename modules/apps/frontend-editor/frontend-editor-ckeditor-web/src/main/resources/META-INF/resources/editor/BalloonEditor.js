@@ -39,30 +39,22 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 			onInstanceReady={(event) => {
 				const editor = event.editor;
 
-				const balloonToolbars = editor.balloonToolbars;
+				const toolbars = config.toolbars;
 
-				balloonToolbars.create({
-					buttons:
-						'Bold,Italic,Underline,RemoveFormat,Link,NumberedList,BulletedList,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,Anchor',
-					cssSelector: '*',
-				});
+				if (toolbars) {
+					const balloonToolbars = editor.balloonToolbars;
 
-				balloonToolbars.create({
-					buttons: 'Link,Unlink',
-					priority:
-						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
-					refresh(editor, path) {
-						return path.contains('a');
-					},
-				});
-
-				balloonToolbars.create({
-					buttons:
-						'JustifyLeft,JustifyCenter,JustifyRight,Link,Unlink',
-					priority:
-						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
-					widgets: 'image,image2',
-				});
+					toolbars.forEach((toolbar) => {
+						if (toolbar.priority) {
+							toolbar = {
+								...toolbar, 
+								priority:
+									window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH
+							}
+						}
+						balloonToolbars.create(toolbar);
+					});
+				}
 
 				if (contents) {
 					editor.setData(contents);

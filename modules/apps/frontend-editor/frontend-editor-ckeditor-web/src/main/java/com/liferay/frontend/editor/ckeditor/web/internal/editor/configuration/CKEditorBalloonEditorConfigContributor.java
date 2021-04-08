@@ -15,7 +15,10 @@
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,5 +60,41 @@ public class CKEditorBalloonEditorConfigContributor
 		}
 
 		jsonObject.put("extraPlugins", extraPlugins);
+
+
+		JSONArray toolbars = JSONUtil.putAll(
+			getToolbarImage(), getToolbarLink(), getToolbarText()
+		);
+
+		jsonObject.put("toolbars", toolbars);
+	}
+
+	protected JSONObject getToolbarImage() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("buttons", "JustifyLeft,JustifyCenter,JustifyRight,Link,Unlink");
+		jsonObject.put("priority", Boolean.TRUE);
+		jsonObject.put("widgets", "image,image2");
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarLink() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("buttons", "Link,Unlink");
+		jsonObject.put("priority", Boolean.TRUE);
+		jsonObject.put("cssSelector", "a");
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarText() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("buttons", "Bold,Italic,Underline,RemoveFormat,Link,NumberedList,BulletedList,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,Anchor");
+		jsonObject.put("cssSelector", "*");
+
+		return jsonObject;
 	}
 }

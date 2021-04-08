@@ -76,9 +76,21 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws ModuleException {
 
+		return delete(
+			pathParams, queryParams, endpoint, connectionTimeout,
+			oasURLParser.getJaxRSAppBase());
+	}
+
+	public HttpResponse delete(
+			Map<String, String> pathParams,
+			MultiMap<String, String> queryParams, String endpoint,
+			long connectionTimeout, String jaxRSAppBase)
+		throws ModuleException {
+
 		return send(
 			HttpConstants.Method.DELETE, null, pathParams, queryParams,
-			endpoint, connectionTimeout);
+			endpoint, connectionTimeout,
+			oasURLParser.getServerBaseURL(jaxRSAppBase));
 	}
 
 	public HttpResponse get(
@@ -87,9 +99,20 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws ModuleException {
 
+		return get(
+			pathParams, queryParams, endpoint, connectionTimeout,
+			oasURLParser.getJaxRSAppBase());
+	}
+
+	public HttpResponse get(
+			Map<String, String> pathParams,
+			MultiMap<String, String> queryParams, String endpoint,
+			long connectionTimeout, String jaxRSAppBase)
+		throws ModuleException {
+
 		return send(
 			HttpConstants.Method.GET, null, pathParams, queryParams, endpoint,
-			connectionTimeout);
+			connectionTimeout, oasURLParser.getServerBaseURL(jaxRSAppBase));
 	}
 
 	public HttpResponse getOpenAPISpecHttpResponse()
@@ -112,9 +135,21 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws ModuleException {
 
+		return patch(
+			inputStream, pathParams, queryParams, endpoint, connectionTimeout,
+			oasURLParser.getJaxRSAppBase());
+	}
+
+	public HttpResponse patch(
+			InputStream inputStream, Map<String, String> pathParams,
+			MultiMap<String, String> queryParams, String endpoint,
+			long connectionTimeout, String jaxRSAppBase)
+		throws ModuleException {
+
 		return send(
 			HttpConstants.Method.PATCH, inputStream, pathParams, queryParams,
-			endpoint, connectionTimeout);
+			endpoint, connectionTimeout,
+			oasURLParser.getServerBaseURL(jaxRSAppBase));
 	}
 
 	public HttpResponse post(
@@ -123,9 +158,21 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws ModuleException {
 
+		return post(
+			inputStream, pathParams, queryParams, endpoint, connectionTimeout,
+			oasURLParser.getJaxRSAppBase());
+	}
+
+	public HttpResponse post(
+			InputStream inputStream, Map<String, String> pathParams,
+			MultiMap<String, String> queryParams, String endpoint,
+			long connectionTimeout, String jaxRSAppBase)
+		throws ModuleException {
+
 		return send(
 			HttpConstants.Method.POST, inputStream, pathParams, queryParams,
-			endpoint, connectionTimeout);
+			endpoint, connectionTimeout,
+			oasURLParser.getServerBaseURL(jaxRSAppBase));
 	}
 
 	private LiferayConnection(
@@ -134,7 +181,8 @@ public final class LiferayConnection {
 		throws ConnectionException {
 
 		openAPISpecPath = openApiSpecPath;
-		serverBaseURL = getServerBaseURL(openApiSpecPath);
+		oasURLParser = getOASURLParser(openApiSpecPath);
+
 		httpAuthentication = basicAuthentication;
 
 		initHttpClient(httpService, proxyConfig);
@@ -146,7 +194,7 @@ public final class LiferayConnection {
 		throws ConnectionException {
 
 		openAPISpecPath = openApiSpecPath;
-		serverBaseURL = getServerBaseURL(openApiSpecPath);
+		oasURLParser = getOASURLParser(openApiSpecPath);
 
 		initHttpClient(httpService, proxyConfig);
 
@@ -185,13 +233,11 @@ public final class LiferayConnection {
 		return httpRequestBuilder.build();
 	}
 
-	private String getServerBaseURL(String openApiSpecPath)
+	private OASURLParser getOASURLParser(String openApiSpecPath)
 		throws ConnectionException {
 
 		try {
-			OASURLParser oasURLParser = new OASURLParser(openApiSpecPath);
-
-			return oasURLParser.getServerBaseURL();
+			return new OASURLParser(openApiSpecPath);
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new ConnectionException(malformedURLException);
@@ -243,10 +289,10 @@ public final class LiferayConnection {
 			HttpConstants.Method method, InputStream inputStream,
 			Map<String, String> pathParams,
 			MultiMap<String, String> queryParams, String endpoint,
-			long connectionTimeout)
+			long connectionTimeout, String basePath)
 		throws ModuleException {
 
-		String uri = serverBaseURL + resolvePathParams(endpoint, pathParams);
+		String uri = basePath + resolvePathParams(endpoint, pathParams);
 
 		HttpRequest httpRequest = getHttpRequest(
 			method, uri, queryParams, inputStream);
@@ -277,7 +323,7 @@ public final class LiferayConnection {
 
 	private final HttpAuthentication httpAuthentication;
 	private HttpClient httpClient;
+	private final OASURLParser oasURLParser;
 	private final String openAPISpecPath;
-	private final String serverBaseURL;
 
 }

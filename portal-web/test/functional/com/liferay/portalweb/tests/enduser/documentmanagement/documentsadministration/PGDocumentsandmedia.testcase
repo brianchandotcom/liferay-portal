@@ -1312,6 +1312,42 @@ definition {
 			searchAssetType = "Document");
 	}
 
+	@description = "This test covers LPS-129887. It ensures that the user can search for documents using file name."
+	@priority = "5"
+	test SearchForDocumentsWithFileName {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Image Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		for (var searchTermList : list "Document_1.doc,Document_1") {
+			Search.searchPG(
+				portletName = "Documents and Media",
+				searchTerm = "${searchTermList}");
+
+			DMDocument.viewSearchResultsPG(dmDocumentTitle = "DM Document Title");
+		}
+
+		for (var searchTermList : list "Document_2.jpg,Document_2") {
+			Search.searchPG(
+				portletName = "Documents and Media",
+				searchTerm = "${searchTermList}");
+
+			DMDocument.viewSearchResultsPG(dmDocumentTitle = "DM Image Title");
+		}
+	}
+
 	@priority = "4"
 	test SearchSubFolderDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");

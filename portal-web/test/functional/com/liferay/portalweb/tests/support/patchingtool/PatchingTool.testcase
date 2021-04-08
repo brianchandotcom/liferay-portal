@@ -55,6 +55,48 @@ definition {
 		}
 	}
 
+	@description = "Ensures that a hotfix can be reverted."
+	@priority = "5"
+	test RevertHotfix {
+		property portal.hotfix.release = "true";
+		property portal.release = "true";
+		property skip.install-patch = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "PatchingTool#RevertHotfix";
+
+		SignOut.signOut();
+
+		Portlet.shutdownServer();
+
+		PatchingTool.installPatch(patchFileZipURL = "${testBuildFixPackZipURL}");
+
+		Portlet.startServer(
+			deleteLiferayHome = "true",
+			keepCachedAppServerData = "true");
+
+		SignIn.signIn();
+
+		SignOut.signOut();
+
+		Portlet.shutdownServer();
+
+		PatchingTool.uninstallPatches();
+
+		Portlet.startServer(
+			deleteLiferayHome = "true",
+			keepCachedAppServerData = "true");
+
+		SignIn.signIn();
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "system:check");
+
+		for (var outputContent : list "Declarative Service Soft Circular Dependency Checker check result: No issues were found,Declarative Service Unsatisfied Component Checker check result: No issues were found,Spring Extender Unavailable Component Checker check result: No issues were found") {
+			GogoShell.viewOutput(outputContent = "${outputContent}");
+		}
+	}
+
 	@description = "Ensures that a fix pack can be reverted to the latest heavy fix pack."
 	@priority = "5"
 	test RevertToLatestHeavyFixPack {

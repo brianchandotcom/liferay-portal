@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -44,6 +45,10 @@ public class UserSearchPermissionFilterContributor
 	public void contribute(
 		BooleanFilter booleanFilter, long companyId, long[] groupIds,
 		long userId, PermissionChecker permissionChecker, String className) {
+
+		if (!className.equals(User.class.getName())) {
+			return;
+		}
 
 		try {
 			TermsFilter roleIdsTermsFilter = new TermsFilter(Field.ROLE_IDS);

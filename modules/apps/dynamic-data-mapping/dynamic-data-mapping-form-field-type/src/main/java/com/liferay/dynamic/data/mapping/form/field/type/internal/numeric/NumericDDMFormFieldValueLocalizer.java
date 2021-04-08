@@ -49,17 +49,25 @@ public class NumericDDMFormFieldValueLocalizer
 	@Override
 	public String localize(String value, Locale locale) {
 		try {
+			DecimalFormat defaultDecimalFormat =
+				NumericDDMFormFieldUtil.getNumberFormat(LocaleUtil.US);
+
 			DecimalFormat decimalFormat =
 				NumericDDMFormFieldUtil.getNumberFormat(locale);
 
-			Number number = GetterUtil.getNumber(decimalFormat.parse(value));
+			Number number = null;
+
+			if (value.indexOf(StringPool.PERIOD) != -1) {
+				number = GetterUtil.getNumber(
+					defaultDecimalFormat.parse(value));
+			}
+			else {
+				number = GetterUtil.getNumber(decimalFormat.parse(value));
+			}
 
 			String formattedNumber = decimalFormat.format(number);
 
 			if (!value.equals(formattedNumber)) {
-				DecimalFormat defaultDecimalFormat =
-					NumericDDMFormFieldUtil.getNumberFormat(LocaleUtil.US);
-
 				number = defaultDecimalFormat.parse(value);
 
 				formattedNumber = decimalFormat.format(number);

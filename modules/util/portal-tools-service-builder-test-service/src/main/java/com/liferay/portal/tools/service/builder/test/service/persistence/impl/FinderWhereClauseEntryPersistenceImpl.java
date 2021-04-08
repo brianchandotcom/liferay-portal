@@ -1296,7 +1296,7 @@ public class FinderWhereClauseEntryPersistenceImpl
 			return FinderWhereClauseEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			FinderWhereClauseEntryModelImpl finderWhereClauseEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1320,8 +1320,8 @@ public class FinderWhereClauseEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

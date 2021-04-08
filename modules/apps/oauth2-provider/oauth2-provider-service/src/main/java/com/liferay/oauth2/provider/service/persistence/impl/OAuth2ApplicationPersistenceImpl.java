@@ -2020,7 +2020,7 @@ public class OAuth2ApplicationPersistenceImpl
 			return OAuth2ApplicationTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			OAuth2ApplicationModelImpl oAuth2ApplicationModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2043,8 +2043,8 @@ public class OAuth2ApplicationPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

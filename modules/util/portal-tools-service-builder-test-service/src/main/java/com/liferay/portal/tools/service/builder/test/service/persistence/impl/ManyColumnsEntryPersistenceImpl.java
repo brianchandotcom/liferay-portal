@@ -38,11 +38,10 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.ManyCol
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -635,16 +634,11 @@ public class ManyColumnsEntryPersistenceImpl
 			ManyColumnsEntryModelImpl manyColumnsEntryModelImpl =
 				(ManyColumnsEntryModelImpl)baseModel;
 
-			Object[] values = _getValue(
-				manyColumnsEntryModelImpl, columnNames, original);
-
 			if (!checkColumn ||
-				!Arrays.equals(
-					values,
-					_getValue(
-						manyColumnsEntryModelImpl, columnNames, !original))) {
+				_hasModifiedColumns(manyColumnsEntryModelImpl, columnNames)) {
 
-				return values;
+				return _getValue(
+					manyColumnsEntryModelImpl, columnNames, original);
 			}
 
 			return null;
@@ -660,7 +654,7 @@ public class ManyColumnsEntryPersistenceImpl
 			return ManyColumnsEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			ManyColumnsEntryModelImpl manyColumnsEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -683,8 +677,26 @@ public class ManyColumnsEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static boolean _hasModifiedColumns(
+			ManyColumnsEntryModelImpl manyColumnsEntryModelImpl,
+			String[] columnNames) {
+
+			if (columnNames.length == 0) {
+				return false;
+			}
+
+			for (String columnName : columnNames) {
+				if (!Objects.equals(
+						manyColumnsEntryModelImpl.getColumnOriginalValue(
+							columnName),
+						manyColumnsEntryModelImpl.getColumnValue(columnName))) {
+
+					return true;
+				}
+			}
+
+			return false;
+		}
 
 	}
 

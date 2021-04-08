@@ -3264,6 +3264,13 @@ public class SystemEventPersistenceImpl
 						systemEventModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3285,7 +3292,7 @@ public class SystemEventPersistenceImpl
 			return SystemEventTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SystemEventModelImpl systemEventModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3307,8 +3314,19 @@ public class SystemEventPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= SystemEventModelImpl.getColumnBitmask(
+				"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

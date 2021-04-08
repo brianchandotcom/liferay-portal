@@ -1715,7 +1715,7 @@ public class OrgGroupRolePersistenceImpl
 			return OrgGroupRoleTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			OrgGroupRoleModelImpl orgGroupRoleModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -1737,8 +1737,8 @@ public class OrgGroupRolePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

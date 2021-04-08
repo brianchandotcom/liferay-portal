@@ -2145,7 +2145,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 			return OAuth2ScopeGrantTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			OAuth2ScopeGrantModelImpl oAuth2ScopeGrantModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2168,8 +2168,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

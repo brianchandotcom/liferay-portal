@@ -2736,6 +2736,13 @@ public class CommercePriceModifierRelPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2758,7 +2765,7 @@ public class CommercePriceModifierRelPersistenceImpl
 			return CommercePriceModifierRelTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommercePriceModifierRelModelImpl commercePriceModifierRelModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2782,8 +2789,20 @@ public class CommercePriceModifierRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommercePriceModifierRelModelImpl.getColumnBitmask(
+					"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

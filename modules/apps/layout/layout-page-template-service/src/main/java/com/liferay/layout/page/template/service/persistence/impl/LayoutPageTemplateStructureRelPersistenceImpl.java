@@ -4060,7 +4060,7 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			return LayoutPageTemplateStructureRelTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LayoutPageTemplateStructureRelModelImpl
 				layoutPageTemplateStructureRelModelImpl,
 			String[] columnNames, boolean original) {
@@ -4085,8 +4085,8 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

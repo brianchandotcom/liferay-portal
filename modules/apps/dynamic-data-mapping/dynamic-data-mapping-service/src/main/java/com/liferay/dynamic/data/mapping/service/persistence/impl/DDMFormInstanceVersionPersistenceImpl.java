@@ -2445,7 +2445,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 			return DDMFormInstanceVersionTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMFormInstanceVersionModelImpl ddmFormInstanceVersionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2469,8 +2469,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

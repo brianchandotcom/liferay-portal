@@ -7201,7 +7201,7 @@ public class LVEntryPersistenceImpl
 			return LVEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LVEntryModelImpl lvEntryModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -7222,8 +7222,8 @@ public class LVEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

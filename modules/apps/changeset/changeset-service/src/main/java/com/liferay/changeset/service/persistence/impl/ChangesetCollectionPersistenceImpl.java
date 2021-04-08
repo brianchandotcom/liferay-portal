@@ -3268,7 +3268,7 @@ public class ChangesetCollectionPersistenceImpl
 			return ChangesetCollectionTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			ChangesetCollectionModelImpl changesetCollectionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3291,8 +3291,8 @@ public class ChangesetCollectionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

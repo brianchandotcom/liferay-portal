@@ -3988,7 +3988,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			return AssetListEntrySegmentsEntryRelTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AssetListEntrySegmentsEntryRelModelImpl
 				assetListEntrySegmentsEntryRelModelImpl,
 			String[] columnNames, boolean original) {
@@ -4013,8 +4013,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

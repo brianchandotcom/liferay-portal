@@ -963,7 +963,7 @@ public class DLStorageQuotaPersistenceImpl
 			return DLStorageQuotaTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DLStorageQuotaModelImpl dlStorageQuotaModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -986,8 +986,8 @@ public class DLStorageQuotaPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -5455,7 +5455,7 @@ public class DDMStructureLayoutPersistenceImpl
 			return DDMStructureLayoutTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -5478,8 +5478,8 @@ public class DDMStructureLayoutPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

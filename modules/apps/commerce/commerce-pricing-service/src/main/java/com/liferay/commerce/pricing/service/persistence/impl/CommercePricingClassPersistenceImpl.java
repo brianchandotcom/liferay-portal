@@ -4048,6 +4048,13 @@ public class CommercePricingClassPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4070,7 +4077,7 @@ public class CommercePricingClassPersistenceImpl
 			return CommercePricingClassTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommercePricingClassModelImpl commercePricingClassModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4093,8 +4100,19 @@ public class CommercePricingClassPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommercePricingClassModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

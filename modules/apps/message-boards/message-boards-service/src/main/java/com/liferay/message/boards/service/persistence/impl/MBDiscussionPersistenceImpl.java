@@ -2970,7 +2970,7 @@ public class MBDiscussionPersistenceImpl
 			return MBDiscussionTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MBDiscussionModelImpl mbDiscussionModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -2992,8 +2992,8 @@ public class MBDiscussionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

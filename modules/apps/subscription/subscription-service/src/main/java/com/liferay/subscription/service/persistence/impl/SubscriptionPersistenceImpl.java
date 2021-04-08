@@ -4479,7 +4479,7 @@ public class SubscriptionPersistenceImpl
 			return SubscriptionTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SubscriptionModelImpl subscriptionModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -4501,8 +4501,8 @@ public class SubscriptionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

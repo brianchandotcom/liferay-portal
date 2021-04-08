@@ -2303,7 +2303,7 @@ public class PortletItemPersistenceImpl
 			return PortletItemTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			PortletItemModelImpl portletItemModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -2325,8 +2325,8 @@ public class PortletItemPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

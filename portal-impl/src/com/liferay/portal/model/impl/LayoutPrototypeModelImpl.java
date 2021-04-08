@@ -53,6 +53,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.BiConsumer;
@@ -877,7 +878,9 @@ public class LayoutPrototypeModelImpl
 		for (Map.Entry<String, Object> entry :
 				_columnOriginalValues.entrySet()) {
 
-			if (entry.getValue() != getColumnValue(entry.getKey())) {
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
 				_columnBitmask |= _columnBitmasks.get(entry.getKey());
 			}
 		}

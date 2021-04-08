@@ -991,7 +991,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 			return MFAEmailOTPEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MFAEmailOTPEntryModelImpl mfaEmailOTPEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1014,8 +1014,8 @@ public class MFAEmailOTPEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -1079,7 +1079,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 			return NestedSetsTreeEntryTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			NestedSetsTreeEntryModelImpl nestedSetsTreeEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1102,8 +1102,8 @@ public class NestedSetsTreeEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

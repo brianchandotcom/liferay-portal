@@ -4023,7 +4023,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			return OAuth2AuthorizationTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4046,8 +4046,8 @@ public class OAuth2AuthorizationPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -4252,7 +4252,7 @@ public class MBBanPersistenceImpl
 			return MBBanTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MBBanModelImpl mbBanModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -4273,8 +4273,8 @@ public class MBBanPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

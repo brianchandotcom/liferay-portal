@@ -13445,7 +13445,7 @@ public class DDMTemplatePersistenceImpl
 			return DDMTemplateTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMTemplateModelImpl ddmTemplateModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -13467,8 +13467,8 @@ public class DDMTemplatePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -2415,7 +2415,7 @@ public class DDMStructureVersionPersistenceImpl
 			return DDMStructureVersionTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMStructureVersionModelImpl ddmStructureVersionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2438,8 +2438,8 @@ public class DDMStructureVersionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

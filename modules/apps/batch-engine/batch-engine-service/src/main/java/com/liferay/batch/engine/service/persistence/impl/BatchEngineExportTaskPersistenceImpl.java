@@ -2567,7 +2567,7 @@ public class BatchEngineExportTaskPersistenceImpl
 			return BatchEngineExportTaskTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			BatchEngineExportTaskModelImpl batchEngineExportTaskModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2591,8 +2591,8 @@ public class BatchEngineExportTaskPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

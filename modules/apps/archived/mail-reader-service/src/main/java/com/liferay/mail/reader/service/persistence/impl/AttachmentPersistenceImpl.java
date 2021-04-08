@@ -1260,7 +1260,7 @@ public class AttachmentPersistenceImpl
 			return AttachmentTable.INSTANCE.getTableName();
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AttachmentModelImpl attachmentModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -1282,8 +1282,8 @@ public class AttachmentPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -111,10 +111,6 @@ public class IndexerClausesTest {
 
 		assertSearch("[Gamma Article]", consumer);
 
-		if (!_LPS_123611_FIXED) {
-			return;
-		}
-
 		assertSearch(
 			"[Gamma Article, Omega Article]", withoutIndexerClauses(),
 			consumer);
@@ -138,10 +134,6 @@ public class IndexerClausesTest {
 
 		assertSearch("[Gamma Blog]", consumer);
 
-		if (!_LPS_123611_FIXED) {
-			return;
-		}
-
 		assertSearch(
 			"[Gamma Blog, Omega Blog]", withoutIndexerClauses(), consumer);
 	}
@@ -163,10 +155,6 @@ public class IndexerClausesTest {
 			);
 
 		assertSearch("[Gamma Article, Gamma Blog]", consumer);
-
-		if (!_LPS_123611_FIXED) {
-			return;
-		}
 
 		assertSearch(
 			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog]",
@@ -275,8 +263,6 @@ public class IndexerClausesTest {
 		return ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), _user.getUserId());
 	}
-
-	private static final boolean _LPS_123611_FIXED = false;
 
 	private static final String _TITLE_EN_US = StringBundler.concat(
 		Field.TITLE, StringPool.UNDERLINE, LocaleUtil.US);

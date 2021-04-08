@@ -19,6 +19,11 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.test.util.search.BlogsEntryBlueprint.BlogsEntryBlueprintBuilder;
 import com.liferay.blogs.test.util.search.BlogsEntrySearchFixture;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleBlueprintBuilder;
@@ -29,39 +34,33 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.search.filter.ComplexQueryPart;
-import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.query.MatchQuery;
-import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.test.util.DocumentsAssert;
+import com.liferay.portal.search.test.util.ExpandoTableSearchFixture;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -73,21 +72,27 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Adam Brandizzi
  * @author André de Oliveira
  */
 @RunWith(Arquillian.class)
-public class IndexerClausesComplexQueryPartTest {
+public class IndexerClausesExpandoTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
 		BlogsEntrySearchFixture blogsEntrySearchFixture =
 			new BlogsEntrySearchFixture(blogsEntryLocalService);
+
+		ExpandoTableSearchFixture expandoTableSearchFixture =
+			new ExpandoTableSearchFixture(
+				classNameLocalService, expandoColumnLocalService,
+				expandoTableLocalService);
 
 		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
@@ -96,6 +101,9 @@ public class IndexerClausesComplexQueryPartTest {
 
 		_blogsEntries = blogsEntrySearchFixture.getBlogsEntries();
 		_blogsEntrySearchFixture = blogsEntrySearchFixture;
+		_expandoColumns = expandoTableSearchFixture.getExpandoColumns();
+		_expandoTables = expandoTableSearchFixture.getExpandoTables();
+		_expandoTableSearchFixture = expandoTableSearchFixture;
 		_group = groupSearchFixture.addGroup(new GroupBlueprint());
 		_groups = groupSearchFixture.getGroups();
 		_journalArticles = journalArticleSearchFixture.getJournalArticles();
@@ -107,34 +115,23 @@ public class IndexerClausesComplexQueryPartTest {
 	public void testBaseIndexer() throws Exception {
 		Assert.assertTrue(journalArticleIndexer instanceof BaseIndexer);
 
+		addExpandoColumn(JournalArticle.class);
+
 		addJournalArticle("Gamma Article");
 		addJournalArticle("Omega Article");
 
-		_consumer =
+		Consumer<SearchRequestBuilder> consumer =
 			searchRequestBuilder -> searchRequestBuilder.modelIndexerClasses(
 				JournalArticle.class
 			).queryString(
 				"gamma"
 			);
 
-		_query = _queries.match(_TITLE_EN_US, "omega");
+		assertSearch("[Gamma Article]", consumer);
 
-		assertSearch("[Gamma Article]");
-		assertSearch("[Gamma Article]", should());
-		assertSearch("[]", must());
-		assertSearch("[Gamma Article, Omega Article]", shouldAdditive());
-		assertSearch("[Omega Article]", mustAdditive());
-
-		assertSearch("[Gamma Article, Omega Article]", withoutIndexerClauses());
 		assertSearch(
-			"[Gamma Article, Omega Article]", should(),
-			withoutIndexerClauses());
-		assertSearch("[Omega Article]", must(), withoutIndexerClauses());
-		assertSearch(
-			"[Gamma Article, Omega Article]", shouldAdditive(),
-			withoutIndexerClauses());
-		assertSearch(
-			"[Omega Article]", mustAdditive(), withoutIndexerClauses());
+			"[Gamma Article, Omega Article]", withoutIndexerClauses(),
+			consumer);
 	}
 
 	@Test
@@ -143,36 +140,30 @@ public class IndexerClausesComplexQueryPartTest {
 			"class com.liferay.portal.search.internal.indexer.DefaultIndexer",
 			String.valueOf(blogsEntryIndexer.getClass()));
 
+		addExpandoColumn(BlogsEntry.class);
+
 		addBlogsEntry("Gamma Blog");
 		addBlogsEntry("Omega Blog");
 
-		_consumer =
+		Consumer<SearchRequestBuilder> consumer =
 			searchRequestBuilder -> searchRequestBuilder.modelIndexerClasses(
 				BlogsEntry.class
 			).queryString(
 				"gamma"
 			);
 
-		_query = _queries.match(_TITLE_EN_US, "omega");
+		assertSearch("[Gamma Blog]", consumer);
 
-		assertSearch("[Gamma Blog]");
-		assertSearch("[Gamma Blog]", should());
-		assertSearch("[]", must());
-		assertSearch("[Gamma Blog, Omega Blog]", shouldAdditive());
-		assertSearch("[Omega Blog]", mustAdditive());
-
-		assertSearch("[Gamma Blog, Omega Blog]", withoutIndexerClauses());
 		assertSearch(
-			"[Gamma Blog, Omega Blog]", should(), withoutIndexerClauses());
-		assertSearch("[Omega Blog]", must(), withoutIndexerClauses());
-		assertSearch(
-			"[Gamma Blog, Omega Blog]", shouldAdditive(),
-			withoutIndexerClauses());
-		assertSearch("[Omega Blog]", mustAdditive(), withoutIndexerClauses());
+			"[Gamma Blog, Omega Blog]", withoutIndexerClauses(), consumer);
 	}
 
 	@Test
 	public void testFacetedSearcher() throws Exception {
+		addExpandoColumn(BlogsEntry.class);
+		addExpandoColumn(JournalArticle.class);
+		addExpandoColumn(MBMessage.class);
+
 		addBlogsEntry("Gamma Blog");
 		addBlogsEntry("Omega Blog");
 		addJournalArticle("Gamma Article");
@@ -180,62 +171,49 @@ public class IndexerClausesComplexQueryPartTest {
 		addMessage("Gamma Message");
 		addMessage("Omega Message");
 
-		_consumer =
+		Consumer<SearchRequestBuilder> consumer =
 			searchRequestBuilder -> searchRequestBuilder.modelIndexerClasses(
 				BlogsEntry.class, JournalArticle.class
 			).queryString(
 				"gamma"
 			);
 
-		_query = _queries.match(_TITLE_EN_US, "omega");
-
-		assertSearch("[Gamma Article, Gamma Blog]");
-		assertSearch("[Gamma Article, Gamma Blog]", should());
-		assertSearch("[]", must());
-		assertSearch(
-			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog, Omega " +
-				"Message]",
-			shouldAdditive());
-		assertSearch(
-			"[Omega Article, Omega Blog, Omega Message]", mustAdditive());
+		assertSearch("[Gamma Article, Gamma Blog]", consumer);
 
 		assertSearch(
 			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog]",
-			withoutIndexerClauses());
-		assertSearch(
-			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog]", should(),
-			withoutIndexerClauses());
-		assertSearch(
-			"[Omega Article, Omega Blog]", must(), withoutIndexerClauses());
-		assertSearch(
-			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog, Omega " +
-				"Message]",
-			shouldAdditive(), withoutIndexerClauses());
-		assertSearch(
-			"[Omega Article, Omega Blog, Omega Message]", mustAdditive(),
-			withoutIndexerClauses());
+			withoutIndexerClauses(), consumer);
 	}
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected BlogsEntry addBlogsEntry(String title) {
+	protected BlogsEntry addBlogsEntry(String title) throws Exception {
 		return _blogsEntrySearchFixture.addBlogsEntry(
 			BlogsEntryBlueprintBuilder.builder(
 			).content(
 				RandomTestUtil.randomString()
 			).groupId(
 				_group.getGroupId()
+			).serviceContext(
+				createServiceContext(title)
 			).title(
-				title
+				RandomTestUtil.randomString()
 			).userId(
 				_user.getUserId()
 			).build());
 	}
 
-	protected JournalArticle addJournalArticle(String title) {
+	protected void addExpandoColumn(Class<?> clazz) throws Exception {
+		_expandoTableSearchFixture.addExpandoColumn(
+			clazz, ExpandoColumnConstants.INDEX_TYPE_KEYWORD, _EXPANDO_COLUMN);
+	}
+
+	protected JournalArticle addJournalArticle(String expandoValue) {
 		return _journalArticleSearchFixture.addArticle(
 			JournalArticleBlueprintBuilder.builder(
+			).expandoBridgeAttributes(
+				Collections.singletonMap(_EXPANDO_COLUMN, expandoValue)
 			).groupId(
 				_group.getGroupId()
 			).journalArticleContent(
@@ -250,7 +228,7 @@ public class IndexerClausesComplexQueryPartTest {
 			).journalArticleTitle(
 				new JournalArticleTitle() {
 					{
-						put(LocaleUtil.US, title);
+						put(LocaleUtil.US, RandomTestUtil.randomString());
 					}
 				}
 			).userId(
@@ -258,13 +236,14 @@ public class IndexerClausesComplexQueryPartTest {
 			).build());
 	}
 
-	protected MBMessage addMessage(String title) throws Exception {
+	protected MBMessage addMessage(String expandoValue) throws Exception {
 		return mbMessageLocalService.addMessage(
 			null, _user.getUserId(), RandomTestUtil.randomString(),
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			0L, MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, title,
-			RandomTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
-			null, false, 0.0, false, _createServiceContext());
+			0L, MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			MBMessageConstants.DEFAULT_FORMAT, null, false, 0.0, false,
+			createServiceContext(expandoValue));
 	}
 
 	protected void assertSearch(
@@ -279,45 +258,25 @@ public class IndexerClausesComplexQueryPartTest {
 			).groupIds(
 				_group.getGroupId()
 			).withSearchRequestBuilder(
-				ArrayUtil.append(consumers, _consumer)
+				consumers
 			).build());
 
-		String requestString = searchResponse.getRequestString();
-
-		String evidence = "match_all";
-
-		if (requestString.contains(evidence)) {
-			Assert.assertEquals("NOT " + evidence, requestString);
-		}
-
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			requestString, searchResponse.getDocumentsStream(), _TITLE_EN_US,
-			expected);
+			searchResponse.getRequestString(),
+			searchResponse.getDocumentsStream(),
+			"expando__keyword__custom_fields__" + _EXPANDO_COLUMN, expected);
 	}
 
-	protected ComplexQueryPart getComplexQueryPart(Query query) {
-		return _complexQueryPartBuilderFactory.builder(
-		).occur(
-			"must"
-		).query(
-			query
-		).build();
-	}
+	protected ServiceContext createServiceContext(String expandoValue)
+		throws Exception {
 
-	protected Consumer<SearchRequestBuilder> must() {
-		return withPart("must", _query);
-	}
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-	protected Consumer<SearchRequestBuilder> mustAdditive() {
-		return withPartAdditive("must", _query);
-	}
+		serviceContext.setExpandoBridgeAttributes(
+			Collections.singletonMap(_EXPANDO_COLUMN, expandoValue));
 
-	protected Consumer<SearchRequestBuilder> should() {
-		return withPart("should", _query);
-	}
-
-	protected Consumer<SearchRequestBuilder> shouldAdditive() {
-		return withPartAdditive("should", _query);
+		return serviceContext;
 	}
 
 	protected Consumer<SearchRequestBuilder> withoutIndexerClauses() {
@@ -326,37 +285,20 @@ public class IndexerClausesComplexQueryPartTest {
 				"search.full.query.suppress.indexer.provided.clauses", true));
 	}
 
-	protected Consumer<SearchRequestBuilder> withPart(
-		String occur, Query query) {
-
-		return searchRequestBuilder -> searchRequestBuilder.addComplexQueryPart(
-			_complexQueryPartBuilderFactory.builder(
-			).occur(
-				occur
-			).query(
-				query
-			).build());
-	}
-
-	protected Consumer<SearchRequestBuilder> withPartAdditive(
-		String occur, Query query) {
-
-		return searchRequestBuilder -> searchRequestBuilder.addComplexQueryPart(
-			_complexQueryPartBuilderFactory.builder(
-			).additive(
-				true
-			).occur(
-				occur
-			).query(
-				query
-			).build());
-	}
-
 	@Inject(filter = "indexer.class.name=com.liferay.blogs.model.BlogsEntry")
 	protected Indexer<BlogsEntry> blogsEntryIndexer;
 
 	@Inject
 	protected BlogsEntryLocalService blogsEntryLocalService;
+
+	@Inject
+	protected ClassNameLocalService classNameLocalService;
+
+	@Inject
+	protected ExpandoColumnLocalService expandoColumnLocalService;
+
+	@Inject
+	protected ExpandoTableLocalService expandoTableLocalService;
 
 	@Inject(filter = "component.name=*.JournalArticleIndexer")
 	protected Indexer<JournalArticle> journalArticleIndexer;
@@ -373,27 +315,20 @@ public class IndexerClausesComplexQueryPartTest {
 	@Inject
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
-	private ServiceContext _createServiceContext() throws Exception {
-		return ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), _user.getUserId());
-	}
-
-	private static final String _TITLE_EN_US = StringBundler.concat(
-		Field.TITLE, StringPool.UNDERLINE, LocaleUtil.US);
+	private static final String _EXPANDO_COLUMN = "expandoColumn";
 
 	@DeleteAfterTestRun
 	private List<BlogsEntry> _blogsEntries;
 
 	private BlogsEntrySearchFixture _blogsEntrySearchFixture;
 
-	@Inject
-	private ComplexQueryPartBuilderFactory _complexQueryPartBuilderFactory;
+	@DeleteAfterTestRun
+	private List<ExpandoColumn> _expandoColumns;
 
-	private Consumer<SearchRequestBuilder> _consumer;
+	@DeleteAfterTestRun
+	private List<ExpandoTable> _expandoTables;
 
-	@Inject
-	private FacetedSearcherManager _facetedSearcherManager;
-
+	private ExpandoTableSearchFixture _expandoTableSearchFixture;
 	private Group _group;
 
 	@DeleteAfterTestRun
@@ -403,18 +338,6 @@ public class IndexerClausesComplexQueryPartTest {
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
-
-	@Inject
-	private Queries _queries;
-
-	private MatchQuery _query;
-
-	@Inject
-	private Sorts _sorts;
-
 	private User _user;
-
-	@DeleteAfterTestRun
-	private List<User> _users;
 
 }

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 
@@ -161,9 +162,26 @@ public class JUnitTestResult extends BaseTestResult {
 		}
 
 		if (propertiesMap != null) {
+			String topLevelStartDateString = null;
+
+			String topLevelStartTimeString = propertiesMap.get(
+				"TOP_LEVEL_START_TIME");
+
+			if ((topLevelStartTimeString != null) &&
+				topLevelStartTimeString.matches("\\d+")) {
+
+				long topLevelStartTime = Long.parseLong(
+					propertiesMap.get("TOP_LEVEL_START_TIME"));
+
+				Date topLevelStartDate = new Date(topLevelStartTime);
+
+				topLevelStartDateString = JenkinsResultsParserUtil.toDateString(
+					topLevelStartDate, "yyyy-MM", "America/Los_Angeles");
+			}
+
 			return JenkinsResultsParserUtil.combine(
-				logBaseURL, "/", propertiesMap.get("TOP_LEVEL_MASTER_HOSTNAME"),
-				"/", propertiesMap.get("TOP_LEVEL_START_TIME"), "/",
+				logBaseURL, "/", topLevelStartDateString, "/",
+				propertiesMap.get("TOP_LEVEL_MASTER_HOSTNAME"), "/",
 				propertiesMap.get("TOP_LEVEL_JOB_NAME"), "/",
 				propertiesMap.get("TOP_LEVEL_BUILD_NUMBER"), "/",
 				build.getJobVariant(), "/", getAxisNumber());

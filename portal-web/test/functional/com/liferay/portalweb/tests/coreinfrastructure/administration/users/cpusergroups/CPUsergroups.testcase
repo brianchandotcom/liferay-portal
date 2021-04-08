@@ -32,26 +32,17 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup Name Description",
+			userGroupName = "UG UserGroup Name");
 
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.assignMemberCP(
 			userGroupName = "UG UserGroup Name",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewAssignMemberCP(
 			userGroupName = "UG UserGroup Name",
@@ -60,10 +51,7 @@ definition {
 
 	@priority = "3"
 	test AddUserGroupNameDuplicate {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
@@ -71,56 +59,40 @@ definition {
 			userGroupName = "UG UserGroup Name",
 			userGroupNameVariation = "Duplicate");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		Alert.viewDuplicateErrorMessage();
+
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
 	}
 
 	@priority = "3"
 	test AddUserGroupNameWithInvalidCharacters {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(
-			userGroupName = "UG UserGroup Name*",
-			userGroupNameVariation = "Asterik");
+			userGroupName = "UG UserGroup Name Asterik*",
+			userGroupNameVariation = "Invalid");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(
-			userGroupName = "UG UserGroup Name,",
-			userGroupNameVariation = "Comma");
+			userGroupName = "UG UserGroup Name Comma,",
+			userGroupNameVariation = "Invalid");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(
 			userGroupName = " ",
 			userGroupNameVariation = "Null");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(
 			userGroupName = "1",
-			userGroupNameVariation = "Number");
+			userGroupNameVariation = "Invalid");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewDefault();
 	}
@@ -129,21 +101,13 @@ definition {
 	test AddUserGroups {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		for (var userGroupNumber : list "1,2,3") {
+			JSONUserGroup.addUserGroup(
+				userGroupDescription = "UG UserGroup${userGroupNumber} Name Description.",
+				userGroupName = "UG UserGroup${userGroupNumber} Name");
+		}
 
-		UserGroup.addCP(userGroupName = "UG UserGroup1 Name");
-
-		UserGroup.addCP(userGroupName = "UG UserGroup2 Name");
-
-		UserGroup.addCP(userGroupName = "UG UserGroup3 Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewCP(userGroupName = "UG UserGroup1 Name");
 
@@ -160,10 +124,7 @@ definition {
 			userGroupDescription = "UG UserGroup Description",
 			userGroupName = "UG UserGroup Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.deleteCP(userGroupName = "UG UserGroup Name");
 
@@ -178,37 +139,21 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup Description",
+			userGroupName = "UG UserGroup Name");
 
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+		JSONUser.addUserToUserGroup(
+			userEmailAddress = "userea@liferay.com",
+			userGroupName = "UG UserGroup Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
-
-		UserGroup.assignMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.deleteCP(
 			userGroupName = "UG UserGroup Name",
 			withUser = "Yes");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
 	}
@@ -217,26 +162,17 @@ definition {
 	test EditUserGroup {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup Description",
+			userGroupName = "UG UserGroup Name");
 
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.editCP(
 			userGroupName = "UG UserGroup Name",
 			userGroupNameEdit = "UG UserGroup Name Edit");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewCP(userGroupName = "UG UserGroup Name Edit");
 	}
@@ -251,35 +187,21 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup Description",
+			userGroupName = "UG UserGroup Name");
 
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+		JSONUser.addUserToUserGroup(
+			userEmailAddress = "userea@liferay.com",
+			userGroupName = "UG UserGroup Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.assignMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.removeMemberCP(
 			userGroupName = "UG UserGroup Name",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewRemoveMemberCP(
 			userFirstName = "userfn",
@@ -298,12 +220,9 @@ definition {
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup Description",
+			userGroupName = "UG UserGroup Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -311,23 +230,17 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		JSONUser.addUserToUserGroup(
+			userEmailAddress = "test@liferay.com",
+			userGroupName = "UG UserGroup Name");
 
-		UserGroup.assignMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "test");
+		JSONUser.addUserToUserGroup(
+			userEmailAddress = "userea@liferay.com",
+			userGroupName = "UG UserGroup Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
-		UserGroup.assignMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "usersn");
+		LexiconEntry.gotoEntry(rowEntry = "UG UserGroup Name");
 
 		Search.searchCP(searchTerm = "usersn");
 

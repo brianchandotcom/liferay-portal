@@ -255,10 +255,7 @@ definition {
 	}
 
 	macro gotoUserGroupSitePermissionsCP {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		LexiconEntry.openEntryMenu(rowEntry = "${userGroupName}");
 

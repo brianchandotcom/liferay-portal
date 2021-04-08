@@ -430,7 +430,27 @@ definition {
 	}
 
 	@priority = "5"
-	test InstallUninstallApp {
+	test InstallViaUpload {
+		property test.name.skip.portal.instance = "AppManagerUsecase#InstallUninstallApp";
+
+		var appName = "test-app-portlet";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.uploadAppCP(
+			appName = "${appName}",
+			warFileName = "${appName}-7.2.0.war");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active");
+	}
+
+	@priority = "5"
+	test UninstallApp {
 		property test.name.skip.portal.instance = "AppManagerUsecase#InstallUninstallApp";
 
 		var appName = "test-app-portlet";

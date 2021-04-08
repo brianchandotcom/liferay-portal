@@ -13,21 +13,15 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Media Gallery Page");
 
-		SitePages.addPublicPage(pageName = "Media Gallery Page");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Media Gallery Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		Portlet.addPG(portletName = "Media Gallery");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Media Gallery Page",
+			widgetName = "Media Gallery");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

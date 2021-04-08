@@ -46,7 +46,7 @@ export const DisplayPagePreviewItemSelector = ({horizontal = false}) => {
 		openItemSelector({
 			callback: (data) => selectItem({data, label: data.title}),
 			eventName: `${config.portletNamespace}selectInfoItem`,
-			itemSelectorURL: config.infoItemSelectorURL,
+			itemSelectorURL: config.infoItemPreviewSelectorURL,
 			transformValueCallback: itemSelectorValueToInfoItem,
 		});
 

@@ -14,7 +14,13 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
@@ -31,6 +37,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
@@ -111,12 +118,24 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 
 			layout.setClassNameId(0);
 
-			if (layout.isTypeAssetDisplay()) {
+			String className = ParamUtil.getString(
+				resourceRequest, "className");
+
+			long classPK = ParamUtil.getLong(resourceRequest, "classPK");
+
+			if (layout.isTypeAssetDisplay() &&
+				(Validator.isNull(className) || (classPK <= 0))) {
+
 				layout.setType(LayoutConstants.TYPE_CONTENT);
 			}
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(resourceRequest);
+
+			if (Validator.isNotNull(className) && (classPK > 0)) {
+				_includeInfoItemObjects(className, classPK, httpServletRequest);
+			}
+
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(resourceResponse);
 
@@ -153,6 +172,32 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 			themeDisplay.setUser(currentUser);
 		}
 	}
+
+	private void _includeInfoItemObjects(
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		InfoItemObjectProvider<?> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className);
+
+		Object infoItem = infoItemObjectProvider.getInfoItem(
+			new ClassPKInfoItemIdentifier(classPK));
+
+		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
+
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className));
+	}
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private Portal _portal;

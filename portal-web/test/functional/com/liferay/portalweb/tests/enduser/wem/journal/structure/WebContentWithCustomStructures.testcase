@@ -508,16 +508,15 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			for (var nestedFieldLabel : list "Imagem Aba 01,Descricao Aba 01,Logo") {
-				DynamicDataMapping.moveNestedField(
-					fieldFieldLabel = "Breadcrumb",
+			for (var nestedFieldLabel : list "Imagem Aba 01,Descricao Aba 01") {
+
+			DataEngine.moveNestedField(
 					nestedFieldLabel = "${nestedFieldLabel}");
 			}
 
-			for (var key_nestedFieldLabel : list "Imagem Aba 01,Descricao Aba 01,Logo") {
+			for (var nestedFieldLabel : list "Imagem Aba 01,Descricao Aba 01") {
 				AssertElementNotPresent(
-					locator1 = "DDMEditStructure#FORM_FIELD_NESTED_ANY",
-					siteURLKey = "test-site-name");
+					locator1 = "//div[contains(@data-field-name,'TituloAba01FieldSet')]//label[normalize-space(text())='${nestedFieldLabel}']");
 			}
 
 			WebContentStructures.saveCP();

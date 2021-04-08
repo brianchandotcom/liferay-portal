@@ -44,7 +44,7 @@ public class DLTestUtil {
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 
 		return DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			null, TestPropsValues.getUserId(), dlFolder.getGroupId(),
 			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,

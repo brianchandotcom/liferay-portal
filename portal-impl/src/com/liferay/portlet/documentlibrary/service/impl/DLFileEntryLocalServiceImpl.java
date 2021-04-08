@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.document.library.kernel.exception.DuplicateFileEntryExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
@@ -156,6 +157,13 @@ import java.util.regex.Pattern;
 public class DLFileEntryLocalServiceImpl
 	extends DLFileEntryLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFileEntry(String, long, long, long, long, String, String,
+	 *             String, String, String, long, Map, File, InputStream, long,
+	 *             Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFileEntry addFileEntry(
 			long userId, long groupId, long repositoryId, long folderId,
@@ -163,6 +171,45 @@ public class DLFileEntryLocalServiceImpl
 			String description, String changeLog, long fileEntryTypeId,
 			Map<String, DDMFormValues> ddmFormValuesMap, File file,
 			InputStream inputStream, long size, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			null, userId, groupId, repositoryId, folderId, sourceFileName,
+			mimeType, title, description, changeLog, fileEntryTypeId,
+			ddmFormValuesMap, file, inputStream, size, expirationDate,
+			reviewDate, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFileEntry(String, long, long, long, long, String, String,
+	 *             String, String, String, long, Map, File, InputStream, long,
+	 *             Date, Date, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public DLFileEntry addFileEntry(
+			long userId, long groupId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, long fileEntryTypeId,
+			Map<String, DDMFormValues> ddmFormValuesMap, File file,
+			InputStream inputStream, long size, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			userId, groupId, repositoryId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, fileEntryTypeId, ddmFormValuesMap,
+			file, inputStream, size, null, null, serviceContext);
+	}
+
+	@Override
+	public DLFileEntry addFileEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+			File file, InputStream inputStream, long size, Date expirationDate,
 			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -209,9 +256,16 @@ public class DLFileEntryLocalServiceImpl
 
 		long fileEntryId = counterLocalService.increment();
 
+		if (externalReferenceCode == null) {
+			externalReferenceCode = String.valueOf(fileEntryId);
+		}
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.create(fileEntryId);
 
 		dlFileEntry.setUuid(serviceContext.getUuid());
+		dlFileEntry.setExternalReferenceCode(externalReferenceCode);
 		dlFileEntry.setGroupId(groupId);
 		dlFileEntry.setCompanyId(user.getCompanyId());
 		dlFileEntry.setUserId(user.getUserId());
@@ -289,25 +343,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileEntry;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addFileEntry(long, long, long, long, String, String, String, String, String, long, Map, File, InputStream, long, Date, Date, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFileEntry addFileEntry(
-			long userId, long groupId, long repositoryId, long folderId,
-			String sourceFileName, String mimeType, String title,
-			String description, String changeLog, long fileEntryTypeId,
-			Map<String, DDMFormValues> ddmFormValuesMap, File file,
-			InputStream inputStream, long size, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFileEntry(
-			userId, groupId, repositoryId, folderId, sourceFileName, mimeType,
-			title, description, changeLog, fileEntryTypeId, ddmFormValuesMap,
-			file, inputStream, size, null, null, serviceContext);
 	}
 
 	@Override
@@ -1209,6 +1244,15 @@ public class DLFileEntryLocalServiceImpl
 				"No DLFileEntry exists with the key {groupId=", groupId,
 				", folderId=", folderId, ", title=", title,
 				StringPool.CLOSE_CURLY_BRACE));
+	}
+
+	@Override
+	public DLFileEntry getFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return dlFileEntryPersistence.findByG_ERC(
+			groupId, externalReferenceCode);
 	}
 
 	@Override
@@ -2897,6 +2941,21 @@ public class DLFileEntryLocalServiceImpl
 		// Latest file version
 
 		removeFileVersion(dlFileEntry, latestDLFileVersion);
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (dlFileEntry != null) {
+			throw new DuplicateFileEntryExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate file entry external reference code ",
+					externalReferenceCode, " in group ", groupId));
+		}
 	}
 
 	private void _validateFolder(long groupId, long folderId, String title)

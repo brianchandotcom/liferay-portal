@@ -168,7 +168,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 					repository.getRepositoryId());
 
 			return localRepository.addFileEntry(
-				userId, folderId, fileName, mimeType, fileName,
+				null, userId, folderId, fileName, mimeType, fileName,
 				StringPool.BLANK, StringPool.BLANK, file, serviceContext);
 		}
 		finally {

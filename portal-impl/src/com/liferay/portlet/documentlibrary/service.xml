@@ -573,6 +573,7 @@
 	<exceptions>
 		<exception>DirectoryName</exception>
 		<exception>DuplicateFileEntry</exception>
+		<exception>DuplicateFileEntryExternalReferenceCode</exception>
 		<exception>DuplicateFileEntryType</exception>
 		<exception>DuplicateFolderName</exception>
 		<exception>DuplicateRepositoryName</exception>

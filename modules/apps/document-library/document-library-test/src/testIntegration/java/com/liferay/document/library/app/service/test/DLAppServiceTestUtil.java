@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,12 +62,14 @@ public class DLAppServiceTestUtil {
 			long groupId, long folderId, String fileName)
 		throws Exception {
 
-		return addFileEntry(groupId, folderId, fileName, fileName, null);
+		return addFileEntry(
+			RandomTestUtil.randomString(), groupId, folderId, fileName,
+			fileName, null);
 	}
 
 	protected static FileEntry addFileEntry(
-			long groupId, long folderId, String fileName, String title,
-			String[] assetTagNames)
+			String externalReferenceCode, long groupId, long folderId,
+			String fileName, String title, String[] assetTagNames)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -75,8 +78,8 @@ public class DLAppServiceTestUtil {
 		serviceContext.setAssetTagNames(assetTagNames);
 
 		return DLAppServiceUtil.addFileEntry(
-			groupId, folderId, fileName, ContentTypes.TEXT_PLAIN, title,
-			StringPool.BLANK, StringPool.BLANK,
+			externalReferenceCode, groupId, folderId, fileName,
+			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
 			BaseDLAppTestCase.CONTENT.getBytes(), serviceContext);
 	}
 

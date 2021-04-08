@@ -323,10 +323,10 @@ public class LiferayDynamicCapabilityTest {
 
 							@Override
 							public FileEntry addFileEntry(
-								long userId, long folderId,
-								String sourceFileName, String mimeType,
-								String title, String description,
-								String changeLog, File file,
+								String externalReferenceCode, long userId,
+								long folderId, String sourceFileName,
+								String mimeType, String title,
+								String description, String changeLog, File file,
 								ServiceContext serviceContext) {
 
 								return fileEntry1;
@@ -377,10 +377,10 @@ public class LiferayDynamicCapabilityTest {
 
 							@Override
 							public FileEntry addFileEntry(
-								long userId, long folderId,
-								String sourceFileName, String mimeType,
-								String title, String description,
-								String changeLog, File file,
+								String externalReferenceCode, long userId,
+								long folderId, String sourceFileName,
+								String mimeType, String title,
+								String description, String changeLog, File file,
 								ServiceContext serviceContext) {
 
 								return fileEntry1;

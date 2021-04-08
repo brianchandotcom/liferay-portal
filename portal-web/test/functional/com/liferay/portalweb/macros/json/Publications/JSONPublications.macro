@@ -1,0 +1,7 @@
+definition {
+
+	macro enablePublications {
+		JSONPublicationsAPI._enablePublications();
+	}
+
+}

@@ -20,9 +20,13 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -92,13 +96,25 @@ public class SetupUserAccountMVCActionCommand extends BaseMVCActionCommand {
 			throw new PrincipalException();
 		}
 
-		long userId = themeDisplay.getUserId();
+		User selectedUser = _portal.getSelectedUser(actionRequest);
+
+		long userId = _portal.getUserId(actionRequest);
+
+		if ((selectedUser.getUserId() != userId) &&
+			!ModelResourcePermissionUtil.contains(
+				_userModelResourcePermission,
+				themeDisplay.getPermissionChecker(), 0,
+				selectedUser.getUserId(), ActionKeys.IMPERSONATE)) {
+
+			return;
+		}
 
 		if (ParamUtil.getBoolean(actionRequest, "removeExistingSetup")) {
-			setupMFAChecker.removeExistingSetup(userId);
+			setupMFAChecker.removeExistingSetup(selectedUser.getUserId());
 		}
 		else if (!setupMFAChecker.setUp(
-					_portal.getHttpServletRequest(actionRequest), userId)) {
+					_portal.getHttpServletRequest(actionRequest),
+					selectedUser.getUserId())) {
 
 			SessionErrors.add(actionRequest, "setupUserAccountFailed");
 		}
@@ -121,5 +137,10 @@ public class SetupUserAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private ModelResourcePermission<User> _userModelResourcePermission;
 
 }

@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>CHECK_ISSUES_TEXT</td>
-	<td>//*[contains(@class, 'font-weight-semi-bold') and contains(@class, 'c-mb-2')]</td>
+	<td>//*[contains(@class, 'text-center')]//*[contains(@class, 'font-weight-semi-bold')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONNECT_TO_GOOGLE_PAGESPEED_BUTTON</td>
-	<td>//*[contains(@class, 'btn-secondary') and contains(text(), 'Connect To Google PageSpeed')]</td>
+	<td>//*[contains(@class, 'text-center')]//*[contains(@class, 'btn-secondary')]</td>
 	<td></td>
 </tr>
 <tr>

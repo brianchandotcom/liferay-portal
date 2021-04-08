@@ -118,8 +118,6 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = "3000");
-
 		LexiconTable.clickTableEntryColumnLink(
 			columnName = "title",
 			tableEntry = "");
@@ -179,8 +177,6 @@ definition {
 			category = "Content",
 			panel = "Applications",
 			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
 
 		LexiconTable.clickTableEntryColumnLink(
 			columnName = "title",

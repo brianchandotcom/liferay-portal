@@ -23,20 +23,21 @@ import {TARGET_POSITIONS} from './constants/targetPositions';
  *  targetPositionWithoutMiddle
  */
 export default function getDropTargetPosition(
-	clientOffsetY,
-	hoverBoundingRect,
-	elevationBorderSize
+	clientOffset,
+	elevationBorderSize,
+	targetPositions,
+	targetData
 ) {
-	const hoverMiddleY = hoverBoundingRect.top + hoverBoundingRect.height / 2;
+	const hoverMiddle = targetData.start + targetData.length / 2;
 
 	const targetPositionWithoutMiddle =
-		clientOffsetY < hoverMiddleY
-			? TARGET_POSITIONS.TOP
-			: TARGET_POSITIONS.BOTTOM;
+		clientOffset < hoverMiddle
+			? targetPositions.start
+			: targetPositions.end;
 
 	const targetPositionWithMiddle =
-		clientOffsetY < hoverBoundingRect.bottom - elevationBorderSize &&
-		clientOffsetY > hoverBoundingRect.top + elevationBorderSize
+		clientOffset < targetData.end - elevationBorderSize &&
+		clientOffset > targetData.start + elevationBorderSize
 			? TARGET_POSITIONS.MIDDLE
 			: targetPositionWithoutMiddle;
 

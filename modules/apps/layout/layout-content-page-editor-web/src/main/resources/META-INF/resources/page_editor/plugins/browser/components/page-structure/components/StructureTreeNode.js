@@ -38,8 +38,11 @@ import moveItem from '../../../../../app/thunks/moveItem';
 import {deepEqual} from '../../../../../app/utils/checkDeepEqual';
 import checkAllowedChild from '../../../../../app/utils/drag-and-drop/checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from '../../../../../app/utils/drag-and-drop/constants/dragDropTargetType';
+import {ORIENTATIONS} from '../../../../../app/utils/drag-and-drop/constants/orientations';
 import {TARGET_POSITIONS} from '../../../../../app/utils/drag-and-drop/constants/targetPositions';
 import getDropTargetPosition from '../../../../../app/utils/drag-and-drop/getDropTargetPosition';
+import getTargetData from '../../../../../app/utils/drag-and-drop/getTargetData';
+import getTargetPositions from '../../../../../app/utils/drag-and-drop/getTargetPositions';
 import itemIsAncestor from '../../../../../app/utils/drag-and-drop/itemIsAncestor';
 import toControlsId from '../../../../../app/utils/drag-and-drop/toControlsId';
 import {
@@ -433,8 +436,9 @@ function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
 		targetPositionWithoutMiddle,
 	] = getDropTargetPosition(
 		clientOffsetY,
-		hoverBoundingRect,
-		ELEVATION_BORDER_SIZE
+		ELEVATION_BORDER_SIZE,
+		getTargetPositions(ORIENTATIONS.vertical),
+		getTargetData(hoverBoundingRect, ORIENTATIONS.vertical)
 	);
 
 	const elevation = targetPositionWithMiddle !== TARGET_POSITIONS.MIDDLE;

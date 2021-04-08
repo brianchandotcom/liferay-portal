@@ -18,17 +18,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.auth.http.HttpAuthManagerImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HttpImpl;
 
 import java.util.Map;
 
 import jodd.util.StringUtil;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,13 +41,6 @@ public class HttpAuthManagerImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() {
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(new HttpImpl());
-	}
 
 	@Test
 	public void testLPS88011() {

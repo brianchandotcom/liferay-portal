@@ -14,8 +14,6 @@
 
 package com.liferay.saml.opensaml.integration.internal.util;
 
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 
@@ -51,12 +49,6 @@ public class SamlUtilTest extends BaseSamlTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		_http = mock(Http.class);
-
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(_http);
 	}
 
 	@Test
@@ -183,7 +175,5 @@ public class SamlUtilTest extends BaseSamlTestCase {
 		Assert.assertEquals(
 			"TestJobTitle", SamlUtil.getValueAsString("title", attributesMap));
 	}
-
-	private Http _http;
 
 }

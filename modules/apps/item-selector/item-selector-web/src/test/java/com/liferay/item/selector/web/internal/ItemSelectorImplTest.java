@@ -103,10 +103,6 @@ public class ItemSelectorImplTest extends PowerMockito {
 			new TestFileEntryItemSelectorReturnType(),
 			_testURLItemSelectorReturnType);
 
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(new HttpImpl());
-
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());

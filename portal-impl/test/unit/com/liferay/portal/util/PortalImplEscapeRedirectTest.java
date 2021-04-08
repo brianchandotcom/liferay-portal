@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -41,10 +40,6 @@ public class PortalImplEscapeRedirectTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(new HttpImpl());
-
 		PropsTestUtil.setProps(
 			HashMapBuilder.<String, Object>put(
 				PropsKeys.DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS,

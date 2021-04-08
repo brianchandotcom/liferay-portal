@@ -120,7 +120,6 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 
 			String className = ParamUtil.getString(
 				resourceRequest, "className");
-
 			long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
 			if (layout.isTypeAssetDisplay() &&

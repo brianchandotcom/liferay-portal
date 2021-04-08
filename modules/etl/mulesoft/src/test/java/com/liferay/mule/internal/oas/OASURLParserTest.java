@@ -79,6 +79,17 @@ public class OASURLParserTest {
 			oasURLParser.getServerBaseURL());
 	}
 
+	@Test
+	public void testGetServerBaseURLWithCustomJaxRSAppBase()
+		throws MalformedURLException {
+
+		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
+
+		Assert.assertEquals(
+			"http://localhost:8080/o/custom-jax-rs-app",
+			oasURLParser.getServerBaseURL("custom-jax-rs-app"));
+	}
+
 	@Test(expected = MalformedURLException.class)
 	public void testOASURLParserWithMalformedURL()
 		throws MalformedURLException {

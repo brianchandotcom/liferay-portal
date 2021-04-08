@@ -75,6 +75,10 @@ public class OASURLParser {
 	}
 
 	public String getServerBaseURL() {
+		return getServerBaseURL(jaxRSAppBase);
+	}
+
+	public String getServerBaseURL(String jaxRSAppBase) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getAuthorityWithScheme());

@@ -456,7 +456,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ViewIndependentModulesIsNotNestedWithinItself {
+	test ViewBreadcrumbForNestedFolders {
 		property test.name.skip.portal.instance = "AppManagerUsecase#ViewIndependentModulesIsNotNestedWithinItself";
 
 		ApplicationsMenu.gotoPortlet(

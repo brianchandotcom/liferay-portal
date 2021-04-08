@@ -1,0 +1,16 @@
+@default = "waitForPageLoad"
+definition {
+
+	function waitForPageLoad {
+		var javascript = '''
+			return document.readyState === "complete";
+		''';
+
+		var message = '''Page is still loading.''';
+
+		selenium.waitForJavaScriptNoError("${javascript}", "${message}", "");
+
+		selenium.verifyJavaScript("${javascript}", "${message}", "");
+	}
+
+}

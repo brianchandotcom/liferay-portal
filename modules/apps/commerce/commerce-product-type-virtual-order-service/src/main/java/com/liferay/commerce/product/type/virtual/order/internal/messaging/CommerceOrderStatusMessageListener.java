@@ -15,11 +15,21 @@
 package com.liferay.commerce.product.type.virtual.order.internal.messaging;
 
 import com.liferay.commerce.constants.CommerceDestinationNames;
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
+import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -71,8 +81,51 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 					commerceVirtualOrderItem.getCommerceVirtualOrderItemId(),
 					true);
 			}
+
+			if (orderStatus == CommerceOrderConstants.ORDER_STATUS_PENDING) {
+				_checkLowStockActivity(commerceOrderItem);
+			}
 		}
 	}
+
+	private void _checkLowStockActivity(CommerceOrderItem commerceOrderItem)
+		throws Exception {
+
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			commerceOrderItem.getCPInstanceId());
+
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpInstance.getCPDefinitionId());
+
+		CommerceLowStockActivity commerceLowStockActivity =
+			_commerceLowStockActivityRegistry.getCommerceLowStockActivity(
+				cpDefinitionInventory);
+
+		if (commerceLowStockActivity == null) {
+			return;
+		}
+
+		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+			commerceOrderItem.getCompanyId(), commerceOrderItem.getSku());
+
+		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
+			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
+				cpDefinitionInventory);
+
+		if (stockQuantity <= cpDefinitionInventoryEngine.getMinStockQuantity(
+				cpInstance)) {
+
+			commerceLowStockActivity.execute(cpInstance);
+		}
+	}
+
+	@Reference
+	private CommerceInventoryEngine _commerceInventoryEngine;
+
+	@Reference
+	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
@@ -80,5 +133,16 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 	@Reference
 	private CommerceVirtualOrderItemLocalService
 		_commerceVirtualOrderItemLocalService;
+
+	@Reference
+	private CPDefinitionInventoryEngineRegistry
+		_cpDefinitionInventoryEngineRegistry;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

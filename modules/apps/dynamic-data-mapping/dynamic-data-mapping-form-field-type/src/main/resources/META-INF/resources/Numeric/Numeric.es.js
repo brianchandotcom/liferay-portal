@@ -73,7 +73,7 @@ const getValue = (dataType, symbols, value = '') => {
 	if (dataType === 'integer' && newValue) {
 		newValue = newValue.replace(decimalSymbol, '.');
 
-		if (!isNaN(Number(newValue))) {
+		if (!isNaN(Number(newValue)) && newValue.indexOf('.') !== -1) {
 			newValue = String(Math.round(newValue.replace(decimalSymbol, '.')));
 		}
 	}

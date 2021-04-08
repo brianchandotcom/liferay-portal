@@ -74,7 +74,7 @@ const getLocalizedValue = ({
 	}
 
 	try {
-		_value = JSON.parse(_value);
+		_value = type === 'numeric' ? _value : JSON.parse(_value);
 	}
 	catch (e) {}
 

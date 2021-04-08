@@ -15,12 +15,14 @@
 import React, {useCallback, useContext, useEffect} from 'react';
 
 import {updateFragmentEntryLinkContent} from '../actions/index';
+import {useDisplayPagePreviewItem} from '../contexts/DisplayPagePreviewItemContext';
 import FragmentService from '../services/FragmentService';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 import {useDispatch} from '../store/index';
 import isMappedToInfoItem from '../utils/editable-value/isMappedToInfoItem';
 import isMappedToLayout from '../utils/editable-value/isMappedToLayout';
+import isMappedToStructure from '../utils/editable-value/isMappedToStructure';
 
 const defaultFromControlsId = (itemId) => itemId;
 const defaultToControlsId = (controlId) => controlId;
@@ -121,31 +123,51 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 
 const useGetFieldValue = () => {
 	const {collectionItem} = useContext(CollectionItemContext);
+	const displayPagePreviewItem = useDisplayPagePreviewItem();
 
-	const getFromServer = useCallback((editable) => {
-		if (isMappedToInfoItem(editable)) {
-			return InfoItemService.getInfoItemFieldValue({
-				...editable,
-				onNetworkStatus: () => {},
-			}).then((response) => {
-				if (!response || !Object.keys(response).length) {
-					throw new Error('Field value does not exist');
-				}
+	const getFromServer = useCallback(
+		(editable) => {
+			if (isMappedToInfoItem(editable)) {
+				return InfoItemService.getInfoItemFieldValue({
+					...editable,
+					onNetworkStatus: () => {},
+				}).then((response) => {
+					if (!response || !Object.keys(response).length) {
+						throw new Error('Field value does not exist');
+					}
 
-				const {fieldValue = ''} = response;
+					const {fieldValue = ''} = response;
 
-				return fieldValue;
-			});
-		}
+					return fieldValue;
+				});
+			}
 
-		if (isMappedToLayout(editable)) {
-			return LayoutService.getLayoutFriendlyURL(editable.layout).then(
-				(response) => response.friendlyURL || ''
-			);
-		}
+			if (isMappedToLayout(editable)) {
+				return LayoutService.getLayoutFriendlyURL(editable.layout).then(
+					(response) => response.friendlyURL || ''
+				);
+			}
 
-		return Promise.resolve(editable?.defaultValue || editable);
-	}, []);
+			if (isMappedToStructure(editable) && displayPagePreviewItem) {
+				return InfoItemService.getInfoItemFieldValue({
+					...displayPagePreviewItem.data,
+					fieldId: editable.mappedField,
+					onNetworkStatus: () => {},
+				}).then((response) => {
+					if (!response || !Object.keys(response).length) {
+						throw new Error('Field value does not exist');
+					}
+
+					const {fieldValue = ''} = response;
+
+					return fieldValue;
+				});
+			}
+
+			return Promise.resolve(editable?.defaultValue || editable);
+		},
+		[displayPagePreviewItem]
+	);
 
 	const getFromCollectionItem = useCallback(
 		({collectionFieldId}) =>

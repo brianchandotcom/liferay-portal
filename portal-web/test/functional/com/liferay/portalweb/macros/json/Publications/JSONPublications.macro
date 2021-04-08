@@ -1,5 +1,17 @@
 definition {
 
+	macro addPublication {
+		Variables.assertDefined(parameterList = "${publicationName}");
+
+		var publicationDescription = JSONPublicationsSetter.setPublicationDescription(publicationDescription = "${publicationDescription}");
+
+		var publicationName = JSONPublicationsSetter.setPublicationName(publicationName = "${publicationName}");
+
+		JSONPublicationsAPI._addPublication(
+			publicationDescription = "${publicationDescription}",
+			publicationName = "${publicationName}");
+	}
+
 	macro enablePublications {
 		JSONPublicationsAPI._enablePublications();
 	}

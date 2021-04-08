@@ -1,0 +1,19 @@
+definition {
+
+	macro setPublicationDescription {
+		if (!(isSet(publicationDescription))) {
+			var publicationDescription = "";
+		}
+
+		return "${publicationDescription}";
+	}
+
+	macro setPublicationName {
+		Variables.assertDefined(parameterList = "${publicationName}");
+
+		var publicationName = URLUtil.encodeUTF8("${publicationName}");
+
+		return "${publicationName}";
+	}
+
+}

@@ -1,5 +1,26 @@
 definition {
 
+	macro _addPublication {
+		Variables.assertDefined(parameterList = "${publicationDescription},${publicationName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+
+		var curl = '''
+			${portalURL}/api/jsonws/ct.ctcollection/add-ct-collection \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d userId=${userId} \
+				-d name=${publicationName} \
+				-d description=${publicationDescription}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _enablePublications {
 		var portalURL = JSONCompany.getPortalURL();
 

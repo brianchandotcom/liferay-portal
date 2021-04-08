@@ -13,6 +13,14 @@ definition {
 		Page.tearDownCP();
 	}
 
+	@description = "This is a test for LPS-102506."
+	@ignore = "true"
+	@priority = "3"
+	test ActivateAppAfterUninstall {
+		// TODO LPS-102506 Unable to activate an app (lpkg) after uninstalling it via the app manager, waiting for fix
+
+	}
+
 	@description = "This ensures that the Adaptive Media app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test DeactivateAndActivateAdaptiveMedia {

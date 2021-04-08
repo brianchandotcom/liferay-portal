@@ -46,7 +46,7 @@ export class DataLayoutPageSchema extends Schema {
 }
 
 export class DataLayoutSchema extends Schema {
-	static props = ['pages', 'rules'];
+	static props = ['dataLayout', 'pages', 'rules'];
 
 	constructor(raw) {
 		super('data_engine', 'dataLayout', raw);
@@ -54,6 +54,10 @@ export class DataLayoutSchema extends Schema {
 
 	get dataRules() {
 		return this[SYMBOL_RAW].rules;
+	}
+
+	get dataLayoutFields() {
+		return this[SYMBOL_RAW].dataLayout.dataLayoutFields;
 	}
 
 	get dataLayoutPages() {

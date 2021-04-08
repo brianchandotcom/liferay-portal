@@ -15,7 +15,7 @@
 import {SYMBOL_RAW, Schema} from './Schema.es';
 
 export class DataDefinitionSchema extends Schema {
-	static props = ['availableLanguageIds'];
+	static props = ['availableLanguageIds', 'dataDefinition'];
 
 	constructor(raw) {
 		super('data_engine', 'dataDefinition', raw);
@@ -23,5 +23,9 @@ export class DataDefinitionSchema extends Schema {
 
 	get availableLanguageIds() {
 		return this[SYMBOL_RAW].availableLanguageIds;
+	}
+
+	get contentType() {
+		return this[SYMBOL_RAW].dataDefinition.contentType;
 	}
 }

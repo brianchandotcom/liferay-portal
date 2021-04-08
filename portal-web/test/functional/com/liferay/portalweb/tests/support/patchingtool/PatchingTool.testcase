@@ -18,6 +18,7 @@ definition {
 	@priority = "5"
 	test RevertFixPack {
 		property skip.install-patch = "true";
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "PatchingTool#RevertFixPack";
 
 		SignOut.signOut();
@@ -101,6 +102,7 @@ definition {
 	@priority = "5"
 	test RevertToLatestHeavyFixPack {
 		property skip.install-patch = "true";
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "PatchingTool#RevertToLatestHeavyFixPack";
 
 		if ("${testBuildFixPackZipURLPrevious}" == "${testBuildFixPackZipURLLatestHeavy}") {

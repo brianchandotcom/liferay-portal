@@ -55,6 +55,51 @@ public class TestHistoryMap
 		populate(testrayServerName, projectName, routineName, maxBuildCount);
 	}
 
+	public void populate(JSONObject buildResultJSONObject) {
+		JSONArray batchResultsJSONArray = buildResultJSONObject.getJSONArray(
+			"batchResults");
+
+		for (int i = 0; i < batchResultsJSONArray.length(); i++) {
+			JSONObject batchResultJSONObject =
+				batchResultsJSONArray.getJSONObject(i);
+
+			String jobVariant = batchResultJSONObject.getString("jobVariant");
+
+			jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
+
+			JSONArray testResultsJSONArray = batchResultJSONObject.getJSONArray(
+				"testResults");
+
+			for (int j = 0; j < testResultsJSONArray.length(); j++) {
+				JSONObject testResultJSONObject =
+					testResultsJSONArray.getJSONObject(j);
+
+				String name = testResultJSONObject.optString("name");
+
+				String status = testResultJSONObject.optString("status");
+
+				status = status.replace("REGRESSION", "FAILED");
+				status = status.replace("FIXED", "PASSED");
+
+				if (name.startsWith("PortalLogAssertorTest") ||
+					name.startsWith("JenkinsLogAsserterTest") ||
+					status.equals("SKIPPED")) {
+
+					continue;
+				}
+
+				String buildURL = testResultJSONObject.optString("buildURL");
+
+				long duration = testResultJSONObject.optLong("duration");
+
+				String errorDetails = testResultJSONObject.optString(
+					"errorDetails");
+
+				put(name, jobVariant, buildURL, duration, errorDetails, status);
+			}
+		}
+	}
+
 	public void populate(String jenkinsJobURL, int maxBuildCount) {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
@@ -68,7 +113,7 @@ public class TestHistoryMap
 
 		for (String buildResultJsonURL : buildResultJsonURLs) {
 			if (buildResultJSONObjects.containsKey(buildResultJsonURL)) {
-				_populate(buildResultJSONObjects.get(buildResultJsonURL));
+				populate(buildResultJSONObjects.get(buildResultJsonURL));
 			}
 		}
 
@@ -316,49 +361,6 @@ public class TestHistoryMap
 
 		}
 
-	}
-
-	private void _populate(JSONObject buildResultJSONObject) {
-		JSONArray batchResultsJSONArray = buildResultJSONObject.getJSONArray(
-			"batchResults");
-
-		for (int i = 0; i < batchResultsJSONArray.length(); i++) {
-			JSONObject batchResultJSONObject =
-				batchResultsJSONArray.getJSONObject(i);
-
-			String jobVariant = batchResultJSONObject.getString("jobVariant");
-
-			jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
-
-			JSONArray testResultsJSONArray = batchResultJSONObject.getJSONArray(
-				"testResults");
-
-			for (int j = 0; j < testResultsJSONArray.length(); j++) {
-				JSONObject testResultJSONObject =
-					testResultsJSONArray.getJSONObject(j);
-
-				String name = testResultJSONObject.optString("name");
-
-				String status = testResultJSONObject.optString("status");
-
-				status = status.replace("REGRESSION", "FAILED");
-				status = status.replace("FIXED", "PASSED");
-
-				if (name.startsWith("PortalLogAssertorTest") ||
-					name.startsWith("JenkinsLogAsserterTest") ||
-					status.equals("SKIPPED")) {
-
-					continue;
-				}
-
-				String buildURL = testResultJSONObject.optString("buildURL");
-
-				String errorDetails = testResultJSONObject.optString(
-					"errorDetails");
-
-				put(name, jobVariant, buildURL, errorDetails, status);
-			}
-		}
 	}
 
 	private static final List<String> _excludedTestNameRegexes =

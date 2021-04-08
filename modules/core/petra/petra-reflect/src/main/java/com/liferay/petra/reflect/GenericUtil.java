@@ -29,22 +29,19 @@ public class GenericUtil {
 	public static Class<?> getGenericClass(Class<?> clazz, int index) {
 		Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
 
-		int count = index;
-		
 		for (Type genericInterfaceType : genericInterfaceTypes) {
 			if (genericInterfaceType instanceof ParameterizedType) {
 				ParameterizedType parameterizedType =
 					(ParameterizedType)genericInterfaceType;
 
-				if (count > 0) {
-					count--;
+				Type[] actualTypeArguments =
+					parameterizedType.getActualTypeArguments();
 
-					continue;
+				if (index >= actualTypeArguments.length) {
+					return Object.class;
 				}
-				else {
-					return (Class<?>) parameterizedType.
-						getActualTypeArguments()[0];
-				}
+
+				return (Class<?>)actualTypeArguments[index];
 			}
 		}
 

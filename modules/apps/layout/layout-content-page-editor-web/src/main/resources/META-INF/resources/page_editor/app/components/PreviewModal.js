@@ -18,18 +18,22 @@ import {addParams} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
+import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
+import {useDisplayPagePreviewItem} from '../contexts/DisplayPagePreviewItemContext';
 import selectLanguageId from '../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import {useSelector} from '../store/index';
 import {useId} from '../utils/useId';
+import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import Translation from './Translation';
 import ViewportSizeSelector from './ViewportSizeSelector';
 
 const PreviewModal = ({observer}) => {
 	const initialSegmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const [languageId, setLanguageId] = useState(useSelector(selectLanguageId));
+	const displayPagePreviewItem = useDisplayPagePreviewItem();
 
 	const [viewportSize, setViewportSize] = useState(
 		useSelector((state) => state.selectedViewportSize)
@@ -45,17 +49,33 @@ const PreviewModal = ({observer}) => {
 	);
 	const experienceSelectId = useId();
 
-	const previewURL = useMemo(
-		() =>
-			addParams(
+	const previewURL = useMemo(() => {
+		let nextURL = addParams(
+			{
+				[`${config.portletNamespace}languageId`]: languageId,
+				[`${config.portletNamespace}segmentsExperienceId`]: segmentsExperienceId,
+			},
+			config.previewPageURL
+		);
+
+		if (
+			config.displayPageItemPreviewEnabled &&
+			config.layoutType === LAYOUT_TYPES.display &&
+			displayPagePreviewItem
+		) {
+			nextURL = addParams(
 				{
-					[`${config.portletNamespace}languageId`]: languageId,
-					[`${config.portletNamespace}segmentsExperienceId`]: segmentsExperienceId,
+					[`${config.portletNamespace}className`]: displayPagePreviewItem
+						.data.className,
+					[`${config.portletNamespace}classPK`]: displayPagePreviewItem
+						.data.classPK,
 				},
-				config.previewPageURL
-			),
-		[languageId, segmentsExperienceId]
-	);
+				nextURL
+			);
+		}
+
+		return nextURL;
+	}, [languageId, segmentsExperienceId, displayPagePreviewItem]);
 
 	const modalBodyWidth = useMemo(() => {
 		const {maxWidth, minWidth} = config.availableViewportSizes[
@@ -139,7 +159,12 @@ const PreviewModal = ({observer}) => {
 						/>
 					</div>
 
-					<div className="page-editor__preview-modal__part" />
+					<div className="page-editor__preview-modal__part">
+						{config.displayPageItemPreviewEnabled &&
+						config.layoutType === LAYOUT_TYPES.display ? (
+							<DisplayPagePreviewItemSelector horizontal />
+						) : null}
+					</div>
 				</div>
 			</ClayModal.Header>
 

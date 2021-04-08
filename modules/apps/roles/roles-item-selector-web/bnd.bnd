@@ -2,3 +2,4 @@ Bundle-Name: Liferay Roles Item Selector Web
 Bundle-SymbolicName: com.liferay.roles.item.selector.web
 Bundle-Version: 4.0.1
 Web-ContextPath: /roles-item-selector-web
+-dsannotations-options: inherit

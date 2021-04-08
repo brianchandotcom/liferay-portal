@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Roles Item Selector API
 Bundle-SymbolicName: com.liferay.roles.item.selector.api
-Bundle-Version: 4.0.1
-Export-Package: com.liferay.roles.item.selector
+Bundle-Version: 4.1.0
+Export-Package:\
+	com.liferay.roles.item.selector,\
+	com.liferay.roles.item.selector.organization.role,\
+	com.liferay.roles.item.selector.regular.role,\
+	com.liferay.roles.item.selector.site.role

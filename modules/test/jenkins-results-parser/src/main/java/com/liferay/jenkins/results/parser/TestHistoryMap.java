@@ -67,7 +67,9 @@ public class TestHistoryMap
 				buildResultJsonURLs);
 
 		for (String buildResultJsonURL : buildResultJsonURLs) {
-			_populate(buildResultJSONObjects.get(buildResultJsonURL));
+			if (buildResultJSONObjects.containsKey(buildResultJsonURL)) {
+				_populate(buildResultJSONObjects.get(buildResultJsonURL));
+			}
 		}
 
 		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;

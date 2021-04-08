@@ -1037,9 +1037,20 @@ public class JenkinsResultsParserUtil {
 			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
-				public Void call() throws IOException {
-					buildResultJSONObjects.put(
-						buildResultJsonURL, toJSONObject(buildResultJsonURL));
+				public Void call() {
+					JSONObject jsonObject = null;
+
+					try {
+						jsonObject = toJSONObject(buildResultJsonURL);
+					}
+					catch (Exception exception) {
+						System.out.println(exception.toString());
+					}
+
+					if (jsonObject != null) {
+						buildResultJSONObjects.put(
+							buildResultJsonURL, jsonObject);
+					}
 
 					return null;
 				}

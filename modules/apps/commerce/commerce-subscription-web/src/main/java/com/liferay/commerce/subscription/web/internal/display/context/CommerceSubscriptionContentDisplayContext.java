@@ -30,6 +30,8 @@ import com.liferay.commerce.util.comparator.CommerceSubscriptionEntryCreateDateC
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -203,17 +205,27 @@ public class CommerceSubscriptionContentDisplayContext {
 	}
 
 	public boolean isPaymentMethodActive(String engineKey) {
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-			_commercePaymentMethodGroupRelLocalService.
-				fetchCommercePaymentMethodGroupRel(
-					_cpRequestHelper.getScopeGroupId(), engineKey);
+		try {
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+				_commercePaymentMethodGroupRelLocalService.
+					fetchCommercePaymentMethodGroupRel(
+						_cpRequestHelper.getChannelGroupId(), engineKey);
 
-		if (commercePaymentMethodGroupRel == null) {
-			return false;
+			if (commercePaymentMethodGroupRel == null) {
+				return false;
+			}
+
+			return commercePaymentMethodGroupRel.isActive();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException.getMessage(), portalException);
 		}
 
-		return commercePaymentMethodGroupRel.isActive();
+		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceSubscriptionContentDisplayContext.class);
 
 	private final CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;

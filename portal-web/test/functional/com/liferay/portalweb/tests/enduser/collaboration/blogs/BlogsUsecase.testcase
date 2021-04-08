@@ -1118,6 +1118,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 	}
 
+	@description = "This test also covers LPS-106613. It ensures that the custom abstract can be added and edited to the blog entry."
 	@priority = "4"
 	@refactorneeded
 	test ViewBlogsEntryWithCustomAbstract {
@@ -1143,6 +1144,28 @@ definition {
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Edit");
+
+		Type(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR",
+			value1 = "Blogs Entry Content Edit");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = "Blogs Entry Custom AbstractEdit",
+			entryContent = "Blogs Entry Content Edit",
 			entryTitle = "Blogs Entry Title");
 	}
 

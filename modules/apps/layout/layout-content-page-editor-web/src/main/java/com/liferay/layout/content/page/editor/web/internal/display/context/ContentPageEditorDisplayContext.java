@@ -341,6 +341,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"discardDraftURL", _getDiscardDraftURL()
 			).put(
+				"displayPageItemPreviewEnabled",
+				_ffLayoutContentPageEditorConfiguration.
+					displayPageItemPreviewEnabled()
+			).put(
 				"draft",
 				() -> {
 					Layout layout = themeDisplay.getLayout();

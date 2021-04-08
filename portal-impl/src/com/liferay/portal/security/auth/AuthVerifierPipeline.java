@@ -59,14 +59,16 @@ public class AuthVerifierPipeline {
 
 	public static final String AUTH_TYPE = "auth.type";
 
-	public static final AuthVerifierPipeline PORTAL_AUTH_VERIFIER_PIPELINE;
-
 	public static String getAuthVerifierPropertyName(String className) {
 		String simpleClassName = StringUtil.extractLast(
 			className, StringPool.PERIOD);
 
 		return StringBundler.concat(
 			PropsKeys.AUTH_VERIFIER, simpleClassName, StringPool.PERIOD);
+	}
+
+	public static AuthVerifierPipeline getPortalAuthVerifierPipeline() {
+		return LazyInitializer._PORTAL_AUTH_VERIFIER_PIPELINE;
 	}
 
 	public AuthVerifierPipeline(
@@ -212,66 +214,6 @@ public class AuthVerifierPipeline {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierPipeline.class);
-
-	private static final ServiceTracker
-		<AuthVerifierConfiguration, AuthVerifierConfiguration> _serviceTracker;
-
-	static {
-		if (PortalUtil.getPortal() != null) {
-			PORTAL_AUTH_VERIFIER_PIPELINE = new AuthVerifierPipeline(
-				Collections.emptyList(), PortalUtil.getServletContextName());
-		}
-		else {
-			PORTAL_AUTH_VERIFIER_PIPELINE = new AuthVerifierPipeline(
-				Collections.emptyList(), "");
-		}
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			AuthVerifierConfiguration.class,
-			new ServiceTrackerCustomizer
-				<AuthVerifierConfiguration, AuthVerifierConfiguration>() {
-
-				@Override
-				public AuthVerifierConfiguration addingService(
-					ServiceReference<AuthVerifierConfiguration>
-						serviceReference) {
-
-					AuthVerifierConfiguration authVerifierConfiguration =
-						registry.getService(serviceReference);
-
-					if (authVerifierConfiguration != null) {
-						PORTAL_AUTH_VERIFIER_PIPELINE.
-							_addAuthVerifierConfiguration(
-								authVerifierConfiguration);
-					}
-
-					return authVerifierConfiguration;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<AuthVerifierConfiguration>
-						serviceReference,
-					AuthVerifierConfiguration authVerifierConfiguration) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<AuthVerifierConfiguration>
-						serviceReference,
-					AuthVerifierConfiguration authVerifierConfiguration) {
-
-					PORTAL_AUTH_VERIFIER_PIPELINE.
-						_removeAuthVerifierConfiguration(
-							authVerifierConfiguration);
-				}
-
-			});
-
-		_serviceTracker.open();
-	}
 
 	private final List<AuthVerifierConfiguration> _authVerifierConfigurations;
 	private final String _contextPath;
@@ -435,6 +377,66 @@ public class AuthVerifierPipeline {
 		private final URLPatternMapper<List<AuthVerifierConfiguration>>
 			_excludeURLPatternMapper;
 		private final String _requestURI;
+
+	}
+
+	private static class LazyInitializer {
+
+		private static final AuthVerifierPipeline
+			_PORTAL_AUTH_VERIFIER_PIPELINE = new AuthVerifierPipeline(
+				Collections.emptyList(), PortalUtil.getPathContext());
+
+		private static final ServiceTracker
+			<AuthVerifierConfiguration, AuthVerifierConfiguration>
+				_serviceTracker;
+
+		static {
+			Registry registry = RegistryUtil.getRegistry();
+
+			_serviceTracker = registry.trackServices(
+				AuthVerifierConfiguration.class,
+				new ServiceTrackerCustomizer
+					<AuthVerifierConfiguration, AuthVerifierConfiguration>() {
+
+					@Override
+					public AuthVerifierConfiguration addingService(
+						ServiceReference<AuthVerifierConfiguration>
+							serviceReference) {
+
+						AuthVerifierConfiguration authVerifierConfiguration =
+							registry.getService(serviceReference);
+
+						if (authVerifierConfiguration != null) {
+							_PORTAL_AUTH_VERIFIER_PIPELINE.
+								_addAuthVerifierConfiguration(
+									authVerifierConfiguration);
+						}
+
+						return authVerifierConfiguration;
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<AuthVerifierConfiguration>
+							serviceReference,
+						AuthVerifierConfiguration authVerifierConfiguration) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<AuthVerifierConfiguration>
+							serviceReference,
+						AuthVerifierConfiguration authVerifierConfiguration) {
+
+						_PORTAL_AUTH_VERIFIER_PIPELINE.
+							_removeAuthVerifierConfiguration(
+								authVerifierConfiguration);
+					}
+
+				});
+
+			_serviceTracker.open();
+		}
 
 	}
 

@@ -17,7 +17,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {TARGET_POSITIONS} from './constants/targetPositions';
-import getTargetPosition from './getTargetPosition';
+import getDropTargetPosition from './getDropTargetPosition';
 import itemIsAncestor from './itemIsAncestor';
 import toControlsId from './toControlsId';
 import {initialDragDrop} from './useDragAndDrop';
@@ -224,7 +224,7 @@ function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
 	const [
 		targetPositionWithMiddle,
 		targetPositionWithoutMiddle,
-	] = getTargetPosition(
+	] = getDropTargetPosition(
 		clientOffsetY,
 		hoverBoundingRect,
 		totalElevationBorderSize

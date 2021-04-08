@@ -22,7 +22,7 @@ import {TARGET_POSITIONS} from './constants/targetPositions';
  * @return {Array} Returns a tuple with targetPositionWithMiddle and
  *  targetPositionWithoutMiddle
  */
-export default function getTargetPosition(
+export default function getDropTargetPosition(
 	clientOffsetY,
 	hoverBoundingRect,
 	elevationBorderSize

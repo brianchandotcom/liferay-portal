@@ -39,7 +39,7 @@ import {deepEqual} from '../../../../../app/utils/checkDeepEqual';
 import checkAllowedChild from '../../../../../app/utils/drag-and-drop/checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from '../../../../../app/utils/drag-and-drop/constants/dragDropTargetType';
 import {TARGET_POSITIONS} from '../../../../../app/utils/drag-and-drop/constants/targetPositions';
-import getTargetPosition from '../../../../../app/utils/drag-and-drop/getTargetPosition';
+import getDropTargetPosition from '../../../../../app/utils/drag-and-drop/getDropTargetPosition';
 import itemIsAncestor from '../../../../../app/utils/drag-and-drop/itemIsAncestor';
 import toControlsId from '../../../../../app/utils/drag-and-drop/toControlsId';
 import {
@@ -431,7 +431,7 @@ function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
 	const [
 		targetPositionWithMiddle,
 		targetPositionWithoutMiddle,
-	] = getTargetPosition(
+	] = getDropTargetPosition(
 		clientOffsetY,
 		hoverBoundingRect,
 		ELEVATION_BORDER_SIZE

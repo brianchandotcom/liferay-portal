@@ -188,13 +188,17 @@ public class FieldConstants {
 			return value;
 		}
 		else if (type.equals(DOUBLE)) {
-			if (value.matches(_SCIENTIFIC_NOTATION_PATTERN)) {
-				return new BigDecimal(value.trim());
+			if (!NumberUtil.hasDecimalSeparator(value)) {
+				return GetterUtil.getInteger(value);
 			}
 
 			return GetterUtil.getDouble(value);
 		}
 		else if (type.equals(FLOAT)) {
+			if (!NumberUtil.hasDecimalSeparator(value)) {
+				return GetterUtil.getInteger(value);
+			}
+
 			return GetterUtil.getFloat(value);
 		}
 		else if (type.equals(INTEGER)) {

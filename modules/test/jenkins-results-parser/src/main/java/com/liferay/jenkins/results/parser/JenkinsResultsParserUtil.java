@@ -1079,15 +1079,15 @@ public class JenkinsResultsParserUtil {
 		int lastCompletedBuildNumber =
 			JenkinsAPIUtil.getLastCompletedBuildNumber(jobURL);
 
-		int buildNumber = lastCompletedBuildNumber;
+		int buildNumber = Math.max(0, lastCompletedBuildNumber - maxBuildCount);
 
-		while (buildNumber > (lastCompletedBuildNumber - maxBuildCount)) {
+		while (buildNumber <= lastCompletedBuildNumber) {
 			String buildURL = jobURL + buildNumber;
 
 			buildResultJsonURLs.add(
 				getBuildArtifactURL(buildURL, "build-result.json"));
 
-			buildNumber--;
+			buildNumber++;
 		}
 
 		return buildResultJsonURLs;

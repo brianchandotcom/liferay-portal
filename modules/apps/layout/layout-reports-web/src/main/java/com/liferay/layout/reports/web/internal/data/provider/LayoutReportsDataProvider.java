@@ -14,6 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.data.provider;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -27,6 +28,19 @@ public class LayoutReportsDataProvider {
 
 	public boolean isValidConnection() {
 		return Validator.isNotNull(_apiKey);
+	}
+
+	public static class LayoutReportsDataProviderException
+		extends PortalException {
+
+		public LayoutReportsDataProviderException(Exception exception) {
+			super(exception);
+		}
+
+		public LayoutReportsDataProviderException(String message) {
+			super(message);
+		}
+
 	}
 
 	private final String _apiKey;

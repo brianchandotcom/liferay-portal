@@ -14,15 +14,20 @@
 
 package com.liferay.users.admin.internal.search.spi.model.permission.contributor;
 
-import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jesse Yeh
@@ -40,26 +45,26 @@ public class UserSearchPermissionFilterContributor
 		BooleanFilter booleanFilter, long companyId, long[] groupIds,
 		long userId, PermissionChecker permissionChecker, String className) {
 
-		for (BooleanClause<Filter> clause :
-				booleanFilter.getShouldBooleanClauses()) {
+		try {
+			TermsFilter roleIdsTermsFilter = new TermsFilter(Field.ROLE_IDS);
 
-			if (clause.getClause() instanceof TermsFilter) {
-				TermsFilter termsFilter = (TermsFilter)clause.getClause();
+			Role role = roleLocalService.getRole(companyId, RoleConstants.USER);
 
-				String field = termsFilter.getField();
+			roleIdsTermsFilter.addValue(String.valueOf(role.getRoleId()));
 
-				if (field.equals(Field.ROLE_ID)) {
-					TermsFilter roleIdsTermsFilter = new TermsFilter(
-						Field.ROLE_IDS);
-
-					roleIdsTermsFilter.addValues(termsFilter.getValues());
-
-					booleanFilter.add(roleIdsTermsFilter);
-
-					break;
-				}
-			}
+			booleanFilter.add(roleIdsTermsFilter);
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get User role in company " + companyId,
+				portalException);
 		}
 	}
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserSearchPermissionFilterContributor.class);
 
 }

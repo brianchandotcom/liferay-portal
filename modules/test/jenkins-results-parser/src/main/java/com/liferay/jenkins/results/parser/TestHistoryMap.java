@@ -174,7 +174,7 @@ public class TestHistoryMap
 				URL url = testrayCaseResult.getURL();
 
 				put(
-					name, jobVariant, url.toString(),
+					name, jobVariant, url.toString(), 0,
 					testrayCaseResult.getErrors(), status.getName());
 			}
 		}
@@ -188,8 +188,8 @@ public class TestHistoryMap
 	}
 
 	public void put(
-		String testName, String batchName, String buildURL, String errorSnippet,
-		String status) {
+		String testName, String batchName, String buildURL, long duration,
+		String errorSnippet, String status) {
 
 		for (String excludedTestNameRegex : _excludedTestNameRegexes) {
 			if (testName.matches(".*" + excludedTestNameRegex + ".*")) {
@@ -201,7 +201,7 @@ public class TestHistoryMap
 			TestHistory testHistory = get(
 				Collections.singletonMap(testName, batchName));
 
-			testHistory.add(buildURL, errorSnippet, status);
+			testHistory.add(buildURL, duration, errorSnippet, status);
 
 			return;
 		}
@@ -209,7 +209,7 @@ public class TestHistoryMap
 		put(
 			Collections.singletonMap(testName, batchName),
 			new TestHistory(
-				testName, batchName, buildURL, errorSnippet, status));
+				testName, batchName, buildURL, duration, errorSnippet, status));
 	}
 
 	public void setMinimumStatusChanges(int minimumStatusChanges) {
@@ -244,18 +244,21 @@ public class TestHistoryMap
 	public class TestHistory {
 
 		public TestHistory(
-			String name, String batchName, String buildURL, String errorSnippet,
-			String status) {
+			String name, String batchName, String buildURL, long duration,
+			String errorSnippet, String status) {
 
 			_name = name;
 			_batchName = batchName;
 
-			add(buildURL, errorSnippet, status);
+			add(buildURL, duration, errorSnippet, status);
 		}
 
-		public void add(String buildURL, String errorSnippet, String status) {
+		public void add(
+			String buildURL, long duration, String errorSnippet,
+			String status) {
+
 			_testHistoryEntries.add(
-				new TestHistoryEntry(buildURL, errorSnippet, status));
+				new TestHistoryEntry(buildURL, duration, errorSnippet, status));
 		}
 
 		public String getBatchName() {
@@ -336,15 +339,21 @@ public class TestHistoryMap
 		private class TestHistoryEntry {
 
 			public TestHistoryEntry(
-				String buildURL, String errorSnippet, String status) {
+				String buildURL, long duration, String errorSnippet,
+				String status) {
 
 				_buildURL = buildURL;
+				_duration = duration;
 				_errorSnippet = errorSnippet;
 				_status = status;
 			}
 
 			public String getBuildURL() {
 				return _buildURL;
+			}
+
+			public long getDuration() {
+				return _duration;
 			}
 
 			public String getErrorSnippet() {
@@ -356,6 +365,7 @@ public class TestHistoryMap
 			}
 
 			private final String _buildURL;
+			private final long _duration;
 			private final String _errorSnippet;
 			private final String _status;
 

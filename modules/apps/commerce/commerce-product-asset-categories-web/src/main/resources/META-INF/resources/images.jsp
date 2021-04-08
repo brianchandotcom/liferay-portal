@@ -39,84 +39,82 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 	managementToolbarDisplayContext="<%= new CategoryCPAttachmentFileEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, cpAttachmentFileEntrySearchContainer) %>"
 />
 
-<div id="<portlet:namespace />attachmentFileEntriesContainer">
-	<div class="product-attachments-container" id="<portlet:namespace />entriesContainer">
-		<liferay-ui:search-container
-			emptyResultsMessage="there-are-no-images"
-			id="cpAttachmentFileEntries"
-			searchContainer="<%= cpAttachmentFileEntrySearchContainer %>"
+<clay:container-fluid>
+	<liferay-ui:search-container
+		emptyResultsMessage="there-are-no-images"
+		id="cpAttachmentFileEntries"
+		searchContainer="<%= cpAttachmentFileEntrySearchContainer %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.commerce.product.model.CPAttachmentFileEntry"
+			keyProperty="CPAttachmentFileEntryId"
+			modelVar="cpAttachmentFileEntry"
 		>
-			<liferay-ui:search-container-row
-				className="com.liferay.commerce.product.model.CPAttachmentFileEntry"
-				keyProperty="CPAttachmentFileEntryId"
-				modelVar="cpAttachmentFileEntry"
-			>
 
-				<%
-				FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+			<%
+			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
 
-				String thumbnailSrc = CommerceMediaResolverUtil.getThumbnailUrl(cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-				%>
+			String thumbnailSrc = CommerceMediaResolverUtil.getThumbnailUrl(cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+			%>
 
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
-						<liferay-ui:search-container-column-image
-							cssClass="table-cell-expand"
-							name="image"
-							src="<%= thumbnailSrc %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:search-container-column-icon
-							icon="documents-and-media"
-						/>
-					</c:otherwise>
-				</c:choose>
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
+					<liferay-ui:search-container-column-image
+						cssClass="table-cell-expand"
+						name="image"
+						src="<%= thumbnailSrc %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-icon
+						icon="documents-and-media"
+					/>
+				</c:otherwise>
+			</c:choose>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="title"
-					value="<%= HtmlUtil.escape(cpAttachmentFileEntry.getTitle(languageId)) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="extension"
-					value="<%= HtmlUtil.escape(fileEntry.getExtension()) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					property="priority"
-				/>
-
-				<liferay-ui:search-container-column-status
-					cssClass="table-cell-expand"
-					name="status"
-					status="<%= cpAttachmentFileEntry.getStatus() %>"
-				/>
-
-				<liferay-ui:search-container-column-date
-					cssClass="table-cell-expand"
-					name="modified-date"
-					property="modifiedDate"
-				/>
-
-				<liferay-ui:search-container-column-date
-					cssClass="table-cell-expand"
-					name="display-date"
-					property="displayDate"
-				/>
-
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/image_action.jsp"
-				/>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator
-				markupView="lexicon"
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="title"
+				value="<%= HtmlUtil.escape(cpAttachmentFileEntry.getTitle(languageId)) %>"
 			/>
-		</liferay-ui:search-container>
-	</div>
-</div>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="extension"
+				value="<%= HtmlUtil.escape(fileEntry.getExtension()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				property="priority"
+			/>
+
+			<liferay-ui:search-container-column-status
+				cssClass="table-cell-expand"
+				name="status"
+				status="<%= cpAttachmentFileEntry.getStatus() %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				cssClass="table-cell-expand"
+				name="modified-date"
+				property="modifiedDate"
+			/>
+
+			<liferay-ui:search-container-column-date
+				cssClass="table-cell-expand"
+				name="display-date"
+				property="displayDate"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/image_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</clay:container-fluid>

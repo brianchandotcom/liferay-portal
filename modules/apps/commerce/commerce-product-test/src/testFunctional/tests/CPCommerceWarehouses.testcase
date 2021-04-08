@@ -143,7 +143,89 @@ definition {
 	test UpdateInventorySKUQuantity {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5708 UpdateInventorySKUQuantity Pending Implementation
+		var key_inventoryName = "test new warehouse";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Inventory Management",
+			panel = "Commerce",
+			portlet = "Warehouses");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewAccountGroupsEntry(entryName = "test new warehouse");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		if (IsElementNotPresent(locator1 = "CommerceEntry#WAREHOUSE_GEOLOCATION_SHOW")) {
+			Click(locator1 = "CommerceEntry#WAREHOUSE_GEOLOCATION");
+		}
+
+		Type(
+			key_fieldLabel = "Latitude",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "50");
+
+		Type(
+			key_fieldLabel = "Longitude",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "50");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			panel = "Commerce",
+			portlet = "Catalogs");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Master");
+
+		Button.click(button = "Submit");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Product Management",
+			panel = "Commerce",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		Button.clickPublish();
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoEntry(entryName = "default");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+		Type(
+			locator1 = "CommerceEntry#INVENTORY_INPUT",
+			value1 = "50");
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Inventory Management",
+			panel = "Commerce",
+			portlet = "Inventory");
+
+		Search.searchCP(searchTerm = "default");
+
+		AssertVisible(
+			key_productQuantity = "50",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
 	}
 
 }

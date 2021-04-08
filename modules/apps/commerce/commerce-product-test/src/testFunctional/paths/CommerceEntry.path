@@ -595,6 +595,16 @@
 <tr>
 	<td>HEALTH_CHECK_ICON_CHECK_N</td>
 	<td>//div[contains(@class,'commerce-health-status-check-row-icon-check${key_value}')][not(contains(@class,'hide'))]</td>
+	<td></td> 
+</tr>
+<tr>
+	<td>INVENTORY_BUTTON</td>
+	<td>//table//tr[contains(.,'${key_inventoryName}')]//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVENTORY_INPUT</td>
+	<td>//table//tr[contains(.,'${key_inventoryName}')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -617,6 +627,10 @@
 	<td>//h4[contains(text(), '${key_entryName}')]</td>
 	<td></td>
 </tr>
+	<td>WAREHOUSE_GEOLOCATION</td>
+	<td>//div[contains(@id, 'geolocationTitle')]</td>
+	<td></td>
+</tr>  
 </tbody>
 </table>
 </body>

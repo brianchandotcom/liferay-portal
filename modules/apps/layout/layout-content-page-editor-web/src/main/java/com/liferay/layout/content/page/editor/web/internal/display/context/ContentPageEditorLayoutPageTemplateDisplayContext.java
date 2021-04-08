@@ -14,6 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
@@ -140,7 +142,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		itemSelectorCriterion.setItemType(
 			layoutPageTemplateEntry.getClassName());
 		itemSelectorCriterion.setItemSubtype(
-			String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+			_getItemSubtype(layoutPageTemplateEntry.getClassTypeId()));
 
 		PortletURL infoItemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
@@ -152,6 +154,21 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		}
 
 		return infoItemSelectorURL.toString();
+	}
+
+	private String _getItemSubtype(long classTypeId) {
+		if (classTypeId <= 0) {
+			return StringPool.BLANK;
+		}
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructure(classTypeId);
+
+		if (ddmStructure != null) {
+			return ddmStructure.getStructureKey();
+		}
+
+		return String.valueOf(classTypeId);
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {

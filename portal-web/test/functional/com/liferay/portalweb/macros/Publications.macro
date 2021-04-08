@@ -540,6 +540,31 @@ definition {
 		}
 	}
 
+	macro viewPublicationPublished {
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		var key_navBarTitle = "History";
+
+		Click(
+			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE",
+			value1 = "History");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		// Workaround LPS-115320
+
+		Refresh();
+
+		var key_publicationsName = "${publicationsName}";
+
+		AssertTextEquals(
+			locator1 = "Publications#LIST_PUBLISHED_STATUS",
+			value1 = "Published");
+	}
+
 	macro workOnProduction {
 		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 

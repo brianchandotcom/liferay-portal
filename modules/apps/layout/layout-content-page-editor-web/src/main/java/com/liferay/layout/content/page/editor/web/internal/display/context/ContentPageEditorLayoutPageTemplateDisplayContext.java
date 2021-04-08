@@ -26,6 +26,8 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
@@ -35,6 +37,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -44,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +85,9 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			httpServletRequest, infoItemServiceTracker, itemSelector,
 			pageEditorConfiguration, portletRequest, renderResponse);
 
+		_itemSelector = itemSelector;
 		_pageIsDisplayPage = pageIsDisplayPage;
+		_renderResponse = renderResponse;
 	}
 
 	@Override
@@ -98,6 +104,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		Map<String, Object> configContext =
 			(Map<String, Object>)editorContext.get("config");
 
+		configContext.put(
+			"infoItemPreviewSelectorURL", _getInfoItemPreviewSelectorURL());
 		configContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 
 		return editorContext;
@@ -112,6 +120,39 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	@Override
 	public boolean isWorkflowEnabled() {
 		return false;
+	}
+
+	private String _getInfoItemPreviewSelectorURL() {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
+
+		if ((layoutPageTemplateEntry == null) ||
+			(layoutPageTemplateEntry.getClassNameId() <= 0)) {
+
+			return StringPool.BLANK;
+		}
+
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
+
+		itemSelectorCriterion.setItemType(
+			layoutPageTemplateEntry.getClassName());
+		itemSelectorCriterion.setItemSubtype(
+			String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+
+		PortletURL infoItemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			_renderResponse.getNamespace() + "selectInfoItem",
+			itemSelectorCriterion);
+
+		if (infoItemSelectorURL == null) {
+			return StringPool.BLANK;
+		}
+
+		return infoItemSelectorURL.toString();
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {
@@ -234,7 +275,9 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		).build();
 	}
 
+	private final ItemSelector _itemSelector;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final boolean _pageIsDisplayPage;
+	private final RenderResponse _renderResponse;
 
 }

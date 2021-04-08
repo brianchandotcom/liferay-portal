@@ -131,6 +131,7 @@ export interface Config {
 	getLayoutFriendlyURL: string;
 	getPageContentsURL: string;
 	imageSelectorURL: string;
+	infoItemPreviewSelectorURL: string;
 	infoItemSelectorURL: string;
 	layoutConversionWarningMessages: string[] | null;
 	layoutItemSelectorURL: String;

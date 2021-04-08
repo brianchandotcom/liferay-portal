@@ -21,6 +21,19 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+        else {
+			ApplicationsMenu.gotoPortlet(
+			    category = "Configuration",
+			    panel = "Control Panel",
+			    portlet = "System Settings");
+
+		    SystemSettings.gotoConfiguration(
+			    configurationCategory = "Pages",
+			    configurationName = "Google PageSpeed",
+			    configurationScope = "Virtual Instance Scope");
+
+		    PageAudit.enableGooglePageSpeed();
+		}
 	}
 
 	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
@@ -73,18 +86,6 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 		AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed",
-			configurationScope = "Virtual Instance Scope");
-
-		PageAudit.enableGooglePageSpeed();
 	}
 
 	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a display page, the issue icon for displaying the page audit panel shows"
@@ -183,18 +184,6 @@ definition {
 			tableEntry = "");
 
 		AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed",
-			configurationScope = "Virtual Instance Scope");
-
-		PageAudit.enableGooglePageSpeed();
 	}
 
 	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
@@ -245,18 +234,6 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
 
 		AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed",
-			configurationScope = "Virtual Instance Scope");
-
-		PageAudit.enableGooglePageSpeed();
 	}
 
 }

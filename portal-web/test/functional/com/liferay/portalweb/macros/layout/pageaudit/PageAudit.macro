@@ -1,7 +1,9 @@
 definition {
 
 	macro connectToGooglePageAudit {
-		Click(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		Click(
+			key_text = "info-circle",
+			locator1 = "Icon#ANY");
 	}
 
 	macro disableGooglePageSpeed {

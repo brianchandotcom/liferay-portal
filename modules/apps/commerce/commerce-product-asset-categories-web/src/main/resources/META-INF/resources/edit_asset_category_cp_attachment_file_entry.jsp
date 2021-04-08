@@ -31,7 +31,11 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 
 <portlet:actionURL name="/commerce_product_asset_categories/edit_asset_category_cp_attachment_file_entry" var="editAssetCategoryCPAttachmentFileEntryActionURL" />
 
-<aui:form action="<%= editAssetCategoryCPAttachmentFileEntryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= editAssetCategoryCPAttachmentFileEntryActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
@@ -39,15 +43,15 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 	<aui:input name="type" type="hidden" value="<%= CPAttachmentFileEntryConstants.TYPE_IMAGE %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
-	<div class="lfr-form-content">
+	<liferay-frontend:edit-form-body>
 		<liferay-frontend:form-navigator
 			formModelBean="<%= cpAttachmentFileEntry %>"
 			id="<%= CategoryCPAttachmentFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_CP_ATTACHMENT_FILE_ENTRY %>"
 			showButtons="<%= false %>"
 		/>
-	</div>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row cssClass="product-definition-button-row">
+	<liferay-frontend:edit-form-footer>
 
 		<%
 		boolean pending = false;
@@ -69,13 +73,13 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 		}
 		%>
 
-		<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+		<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
-		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+		<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+		<aui:button href="<%= backURL %>" type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script use="aui-base,event-input">
 	A.one('#<portlet:namespace />publishButton').on('click', () => {

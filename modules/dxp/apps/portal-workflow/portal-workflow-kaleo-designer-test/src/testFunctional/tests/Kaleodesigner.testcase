@@ -426,19 +426,18 @@ definition {
 	@description = "This is a use case for LPS-37209."
 	@priority = "4"
 	test ConfigureTaskTimersViaSourceTab {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#ConfigureTaskTimersViaSourceTab";
-
-		var fileContent = TestCase.getFileContent(fileName = "workflow_definition_task_timers.xml");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_definition_task_timers.xml",
+			workflowDefinitionTitle = "New Workflow Definition Title");
 
-		KaleoDesigner.addNodeViaSourceXML(sourceXML = "${fileContent}");
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "__TIMER_REVIEW__");
 

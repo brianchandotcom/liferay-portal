@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,19 +52,28 @@ public class UserSearchPermissionFilterContributor
 			return;
 		}
 
-		try {
-			TermsFilter roleIdsTermsFilter = new TermsFilter(Field.ROLE_IDS);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-			Role role = roleLocalService.getRole(companyId, RoleConstants.USER);
+		if ((serviceContext != null) &&
+			permissionChecker.isGroupAdmin(serviceContext.getScopeGroupId())) {
 
-			roleIdsTermsFilter.addValue(String.valueOf(role.getRoleId()));
+			try {
+				TermsFilter roleIdsTermsFilter = new TermsFilter(
+					Field.ROLE_IDS);
 
-			booleanFilter.add(roleIdsTermsFilter);
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to get User role in company " + companyId,
-				portalException);
+				Role role = roleLocalService.getRole(
+					companyId, RoleConstants.USER);
+
+				roleIdsTermsFilter.addValue(String.valueOf(role.getRoleId()));
+
+				booleanFilter.add(roleIdsTermsFilter);
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to get User role in company " + companyId,
+					portalException);
+			}
 		}
 	}
 

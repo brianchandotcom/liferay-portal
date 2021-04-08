@@ -390,7 +390,7 @@ public class IndexerClausesComplexQueryPartTest {
 			_group.getGroupId(), _user.getUserId());
 	}
 
-	private static final boolean _LPS_123611_FIXED = false;
+	private static final boolean _LPS_123611_FIXED = true;
 
 	private static final String _TITLE_EN_US = StringBundler.concat(
 		Field.TITLE, StringPool.UNDERLINE, LocaleUtil.US);

@@ -164,6 +164,38 @@ definition {
 		Page.assertCanonicalURL(customCanonicalURL = "localhost:8080/chinese-canonical-url");
 	}
 
+	@description = "This test covers LPS-122797. It ensures that the Canonical URL does not have a limit of 75 characters."
+	@priority = "4"
+	test SetCustomURLWith76Characters {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Canonical URL Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Canonical URL Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Click(
+			checkboxName = "Use Custom Canonical URL",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Type(
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
+			value1 = "http://mycustomizedcharactersurl.com/mydesiredmorethan75charactersurlfortest");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
+			value1 = "http://mycustomizedcharactersurl.com/mydesiredmorethan75charactersurlfortest");
+	}
+
 	@priority = "5"
 	test SetDefaultURLAtSystemLevel {
 		property test.name.skip.portal.instance = "CanonicalURL#SetDefaultURLAtSystemLevel";

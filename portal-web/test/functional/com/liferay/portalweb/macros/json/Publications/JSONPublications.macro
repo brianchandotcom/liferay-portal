@@ -16,4 +16,10 @@ definition {
 		JSONPublicationsAPI._enablePublications();
 	}
 
+	macro selectPublication {
+		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(ctCollectionId = "${ctCollectionId}");
+
+		JSONPublicationsAPI._selectPublication(ctCollectionId = "${ctCollectionId}");
+	}
+
 }

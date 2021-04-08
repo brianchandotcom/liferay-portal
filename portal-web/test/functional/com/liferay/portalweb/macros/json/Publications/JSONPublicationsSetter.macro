@@ -1,5 +1,13 @@
 definition {
 
+	macro setCTCollectionId {
+		if (!(isSet(ctCollectionId))) {
+			var ctCollectionId = "1";
+		}
+
+		return "${ctCollectionId}";
+	}
+
 	macro setPublicationDescription {
 		if (!(isSet(publicationDescription))) {
 			var publicationDescription = "";

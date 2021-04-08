@@ -37,4 +37,24 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _selectPublication {
+		Variables.assertDefined(parameterList = "${ctCollectionId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+
+		var curl = '''
+			${portalURL}/api/jsonws/ct.ctpreferences/checkout-ct-collection \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d ctCollectionId=${ctCollectionId} \
+				-d userId=${userId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

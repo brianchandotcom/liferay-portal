@@ -857,10 +857,11 @@ public interface BaseProjectTemplatesTestCase {
 					System.lineSeparator() +
 						"allprojects {\n\trepositories {\n\t\tmavenLocal()\n" +
 							"\t\tmaven {\n\t\t\turl file(\"" + m2tmpPath +
-								"\").toURI()\n\t\t}\n\t\tmaven {\n\t\t\tcredentials {\n\t\t\t\tusername = \"nexus-private-bravo\"\n\t\t\t\tpassword = \"qGL@ihMsdFa3h3z\"\n\t\t\t}\n\t\t\turl \"http://repository.liferay.com/nexus/content/repositories/xanadu\" \n\t\t}\n\t}\n\tconfigurations." +
-									"all {\n\t\tresolutionStrategy.force " +
-										"'javax.servlet:javax.servlet-api:" +
-											"3.0.1'\n\t}\n}";
+								"\").toURI()\n\t\t}\n\t\tmaven {\n\t\t\t" +
+									"credentials {\n\t\t\t\tusername \"" + System.getProperty("build.repository.private.username") + "\"\n\t\t\t\tpassword \"" + System.getProperty("build.repository.private.password") + "\"\n\t\t\t}\n\t\t\turl \"http://repository.liferay.com/nexus/content/repositories/xanadu\" \n\t\t}\n\t}\n\tconfigurations." +
+										"all {\n\t\tresolutionStrategy.force " +
+											"'javax.servlet:javax.servlet-api:" +
+												"3.0.1'\n\t}\n}";
 
 				Files.write(
 					buildFilePath, content.getBytes(StandardCharsets.UTF_8));
@@ -1019,11 +1020,13 @@ public interface BaseProjectTemplatesTestCase {
 				});
 		}
 
-		String[] completeArgs = new String[args.length + 1];
+		String[] completeArgs = new String[args.length + 3];
 
 		completeArgs[0] = "--update-snapshots";
+		completeArgs[1] = "-Dbuild.repository.private.username=" + System.getProperty("build.repository.private.username");
+		completeArgs[2] = "-Dbuild.repository.private.password=" + System.getProperty("build.repository.private.password");
 
-		System.arraycopy(args, 0, completeArgs, 1, args.length);
+		System.arraycopy(args, 0, completeArgs, 3, args.length);
 
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 

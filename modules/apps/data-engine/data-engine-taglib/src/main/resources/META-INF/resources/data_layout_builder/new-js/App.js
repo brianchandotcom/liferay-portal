@@ -32,10 +32,24 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import {FormBuilder} from './FormBuilder';
 import INITIAL_CONFIG from './config/initialConfig';
 import INITIAL_STATE from './config/initialState';
+import {useData} from './hooks/useData';
 import sidebarReducer from './reducers/sidebarReducer';
 
 const App = (props) => {
 	const {config, state} = parseProps(props);
+
+	const data = useData({
+		dataDefinitionId: config.dataDefinitionId,
+		dataLayoutId: config.dataLayoutId,
+	});
+
+	// We block the rendering of the application when the data is not ready, this
+	// can be replaced in the future by using `React.Suspense` when `useResource`
+	// is compatible.
+
+	if (!data) {
+		return null;
+	}
 
 	return (
 		<DndProvider backend={HTML5Backend}>
@@ -51,7 +65,7 @@ const App = (props) => {
 							pagesStructureReducer,
 							sidebarReducer,
 						]}
-						value={state}
+						value={{...state, ...data}}
 					>
 						<FormBuilder />
 					</FormProvider>

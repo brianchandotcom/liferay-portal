@@ -134,6 +134,8 @@ definition {
 	@description = "This is a test for LPS-110144. Configure the Heading fragment in content page template."
 	@priority = "5"
 	test ConfigureBasicComponentHeading {
+		property portal.acceptance = "true";
+
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",

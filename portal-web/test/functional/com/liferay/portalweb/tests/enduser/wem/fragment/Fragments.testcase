@@ -490,6 +490,8 @@ definition {
 	@description = "This is a test for LPS-98241 and LPS-128667. Basic Component Image can be configured. Interact with image selector of fragment."
 	@priority = "5"
 	test ConfigureBasicComponentImage {
+		property portal.acceptance = "true";
+
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -595,6 +597,8 @@ definition {
 	@description = "This is a test for LPS-98241 and LPS-128667. Contributed fragment components Paragraph can be configured. Interact with color picker selector of fragment."
 	@priority = "5"
 	test ConfigureBasicComponentParagraph {
+		property portal.acceptance = "true";
+
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

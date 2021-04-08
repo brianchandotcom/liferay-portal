@@ -220,6 +220,8 @@ definition {
 	@description = "This is a test for LPS-109590. Assert no Container element is outside when add a Grid element to content page. Can nest a Grid fragment or multiple Grid inside one module of another one."
 	@priority = "5"
 	test AddGridToColumnOfAnotherGrid {
+		property portal.acceptance = "true";
+
 		task ("Assert add Grid without Container") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",

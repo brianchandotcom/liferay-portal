@@ -117,6 +117,8 @@ definition {
 	@description = "This is a test for LPS-129182. View react fragment is rendered correctly in page."
 	@priority = "5"
 	test ViewReactFragmentInPage {
+		property portal.acceptance = "true";
+
 		task ("Navigate to fragments admin") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}

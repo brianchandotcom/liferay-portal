@@ -414,6 +414,9 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return FieldConstants.getSerializable(
+			LocaleUtil.ROOT,
+			LocaleUtil.fromLanguageId(
+				dynamicContentElement.attributeValue("language-id")),
 			ddmFormField.getDataType(), dynamicContentElement.getText());
 	}
 

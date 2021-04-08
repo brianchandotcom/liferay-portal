@@ -16,13 +16,13 @@ package com.liferay.portlet.asset.model.adapter.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.asset.kernel.model.AssetLinkWrapper;
 import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -34,43 +34,16 @@ import java.util.Map;
 /**
  * @author Máté Thurzó
  */
-public class StagedAssetLinkImpl implements StagedAssetLink {
-
-	public StagedAssetLinkImpl() {
-	}
+public class StagedAssetLinkImpl
+	extends AssetLinkWrapper implements StagedAssetLink {
 
 	public StagedAssetLinkImpl(AssetLink assetLink) {
-		_assetLink = assetLink;
+		super(assetLink);
 
 		populateEntry1Attributes();
 		populateEntry2Attributes();
 
 		populateUuid();
-	}
-
-	@Override
-	public Object clone() {
-		return new StagedAssetLinkImpl(_assetLink);
-	}
-
-	@Override
-	public int compareTo(AssetLink assetLink) {
-		return _assetLink.compareTo(assetLink);
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _assetLink.getCompanyId();
-	}
-
-	@Override
-	public Date getCreateDate() {
-		return _assetLink.getCreateDate();
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _assetLink.getCtCollectionId();
 	}
 
 	@Override
@@ -118,83 +91,13 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 	}
 
 	@Override
-	public long getEntryId1() {
-		return _assetLink.getEntryId1();
-	}
-
-	@Override
-	public long getEntryId2() {
-		return _assetLink.getEntryId2();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetLink.getExpandoBridge();
-	}
-
-	@Override
-	public long getLinkId() {
-		return _assetLink.getLinkId();
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		return _assetLink.getModelAttributes();
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return _assetLink.getModelClass();
-	}
-
-	@Override
-	public String getModelClassName() {
-		return _assetLink.getModelClassName();
-	}
-
-	@Override
 	public Date getModifiedDate() {
-		return _assetLink.getCreateDate();
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return _assetLink.getMvccVersion();
-	}
-
-	@Override
-	public long getPrimaryKey() {
-		return _assetLink.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetLink.getPrimaryKeyObj();
+		return getCreateDate();
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(StagedAssetLink.class);
-	}
-
-	@Override
-	public int getType() {
-		return _assetLink.getType();
-	}
-
-	@Override
-	public long getUserId() {
-		return _assetLink.getUserId();
-	}
-
-	@Override
-	public String getUserName() {
-		return _assetLink.getUserName();
-	}
-
-	@Override
-	public String getUserUuid() {
-		return _assetLink.getUserUuid();
 	}
 
 	@Override
@@ -209,47 +112,8 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 	}
 
 	@Override
-	public int getWeight() {
-		return _assetLink.getWeight();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return false;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return false;
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return false;
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return false;
-	}
-
-	@Override
-	public boolean isNew() {
-		return false;
-	}
-
-	@Override
 	public void persist() {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void setAssetLink(AssetLink assetLink) {
-		_assetLink = assetLink;
 	}
 
 	@Override
@@ -362,26 +226,6 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public CacheModel<AssetLink> toCacheModel() {
-		return null;
-	}
-
-	@Override
-	public AssetLink toEscapedModel() {
-		return null;
-	}
-
-	@Override
-	public AssetLink toUnescapedModel() {
-		return null;
-	}
-
-	@Override
-	public String toXmlString() {
-		return null;
-	}
-
 	protected void populateEntry1Attributes() {
 		if (Validator.isNotNull(_entry1ClassName) &&
 			Validator.isNotNull(_entry1Uuid)) {
@@ -390,7 +234,7 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 		}
 
 		AssetEntry entry1 = AssetEntryLocalServiceUtil.fetchAssetEntry(
-			_assetLink.getEntryId1());
+			getEntryId1());
 
 		if (entry1 == null) {
 			return;
@@ -408,7 +252,7 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 		}
 
 		AssetEntry entry2 = AssetEntryLocalServiceUtil.fetchAssetEntry(
-			_assetLink.getEntryId2());
+			getEntryId2());
 
 		if (entry2 == null) {
 			return;
@@ -433,7 +277,11 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 		}
 	}
 
-	private AssetLink _assetLink;
+	@Override
+	protected AssetLinkWrapper wrap(AssetLink assetLink) {
+		return new StagedAssetLinkImpl(assetLink);
+	}
+
 	private String _entry1ClassName;
 	private String _entry1Uuid;
 	private String _entry2ClassName;

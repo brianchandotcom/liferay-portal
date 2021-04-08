@@ -31,14 +31,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.Serializable;
-
 import java.time.Instant;
 
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.TreeMap;
 
 /**
  * @author Máté Thurzó
@@ -47,18 +44,15 @@ public class StagedLayoutSetImpl
 	extends LayoutSetWrapper implements StagedLayoutSet {
 
 	public StagedLayoutSetImpl(LayoutSet layoutSet) {
-		super(layoutSet);
-
-		Objects.requireNonNull(
-			layoutSet,
-			"Unable to create a new staged layout set for a null layout set");
-
-		_layoutSet = layoutSet;
+		super(
+			Objects.requireNonNull(
+				layoutSet,
+				"Unable to create a new staged layout set for a null layout " +
+					"set"));
 
 		// Last publish date
 
-		UnicodeProperties settingsUnicodeProperties =
-			_layoutSet.getSettingsProperties();
+		UnicodeProperties settingsUnicodeProperties = getSettingsProperties();
 
 		String lastPublishDateString = settingsUnicodeProperties.getProperty(
 			"last-publish-date");
@@ -70,21 +64,24 @@ public class StagedLayoutSetImpl
 
 		// Layout set prototype
 
-		if (Validator.isNotNull(_layoutSet.getLayoutSetPrototypeUuid())) {
+		String layoutSetPrototypeName = null;
+
+		if (Validator.isNotNull(getLayoutSetPrototypeUuid())) {
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.
 					fetchLayoutSetPrototypeByUuidAndCompanyId(
-						_layoutSet.getLayoutSetPrototypeUuid(),
-						_layoutSet.getCompanyId());
+						getLayoutSetPrototypeUuid(), getCompanyId());
 
 			if (layoutSetPrototype != null) {
-				_layoutSetPrototypeName = layoutSetPrototype.getName(
+				layoutSetPrototypeName = layoutSetPrototype.getName(
 					LocaleUtil.getDefault());
 			}
 		}
 
+		_layoutSetPrototypeName = layoutSetPrototypeName;
+
 		try {
-			Group layoutSetGroup = _layoutSet.getGroup();
+			Group layoutSetGroup = getGroup();
 
 			_userId = layoutSetGroup.getCreatorUserId();
 
@@ -104,23 +101,13 @@ public class StagedLayoutSetImpl
 	}
 
 	@Override
-	public Object clone() {
-		return new StagedLayoutSetImpl((LayoutSet)_layoutSet.clone());
-	}
-
-	@Override
-	public long getGroupId() {
-		return _layoutSet.getGroupId();
-	}
-
-	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
 
 	@Override
 	public LayoutSet getLayoutSet() {
-		return _layoutSet;
+		return getWrappedModel();
 	}
 
 	@Override
@@ -136,11 +123,6 @@ public class StagedLayoutSetImpl
 	@Override
 	public String getModelClassName() {
 		return StagedLayoutSet.class.getName();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _layoutSet.getPrimaryKeyObj();
 	}
 
 	@Override
@@ -165,17 +147,7 @@ public class StagedLayoutSetImpl
 
 	@Override
 	public String getUuid() {
-		return String.valueOf(_layoutSet.isPrivateLayout());
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getVirtualHostnames()}
-	 */
-	@Deprecated
-	@Override
-	public String getVirtualHostname() {
-		return _layoutSet.getVirtualHostname();
+		return String.valueOf(isPrivateLayout());
 	}
 
 	@Override
@@ -186,14 +158,6 @@ public class StagedLayoutSetImpl
 
 		settingsUnicodeProperties.setProperty(
 			"last-publish-date", String.valueOf(_lastPublishDate.getTime()));
-	}
-
-	public void setLayoutSet(LayoutSet layoutSet) {
-		_layoutSet = layoutSet;
-	}
-
-	public void setLayoutSetPrototypeName(String layoutSetPrototypeName) {
-		_layoutSetPrototypeName = layoutSetPrototypeName;
 	}
 
 	@Override
@@ -216,27 +180,16 @@ public class StagedLayoutSetImpl
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #setVirtualHostnames(TreeMap)}
-	 */
-	@Deprecated
 	@Override
-	public void setVirtualHostname(String virtualHostname) {
-		_layoutSet.setVirtualHostname(virtualHostname);
-	}
-
-	@Override
-	public void setVirtualHostnames(TreeMap virtualHostnames) {
-		_layoutSet.setVirtualHostnames(virtualHostnames);
+	protected LayoutSetWrapper wrap(LayoutSet layoutSet) {
+		return new StagedLayoutSetImpl(layoutSet);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagedLayoutSetImpl.class);
 
 	private Date _lastPublishDate;
-	private LayoutSet _layoutSet;
-	private String _layoutSetPrototypeName;
+	private final String _layoutSetPrototypeName;
 	private long _userId;
 	private String _userName;
 	private String _userUuid;

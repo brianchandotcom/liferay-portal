@@ -45,25 +45,15 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 
 		_jenkinsMaster = JenkinsMaster.getInstance(jenkinsMasterName);
 
-		String jenkinsSlaveJSONObjectURL = JenkinsResultsParserUtil.getLocalURL(
-			JenkinsResultsParserUtil.combine(
-				_jenkinsMaster.getURL(), "/computer/", hostname,
-				"/api/json?tree=displayName,", "idle,offline"));
-
-		JSONObject jenkinsSlaveJSONObject = null;
-
-		try {
-			jenkinsSlaveJSONObject = JenkinsResultsParserUtil.toJSONObject(
-				jenkinsSlaveJSONObjectURL, false);
+		if (hostname.equals(jenkinsMasterName)) {
+			_name = "master";
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to retrieve Jenkins slave node JSON object from " +
-					jenkinsSlaveJSONObjectURL,
-				ioException);
+		else {
+			_name = hostname;
 		}
 
-		_name = jenkinsSlaveJSONObject.getString("displayName");
+		JSONObject jenkinsSlaveJSONObject = JenkinsAPIUtil.getAPIJSONObject(
+			getComputerURL(), "displayName,idle,offline");
 
 		update(jenkinsSlaveJSONObject);
 	}
@@ -88,21 +78,20 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 		return super.equals(object);
 	}
 
+	public String getComputerURL() {
+		String name = getName();
+
+		if (name.equals("master")) {
+			name = "(" + name + ")";
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			_jenkinsMaster.getURL(), "/computer/", name);
+	}
+
 	public Build getCurrentBuild() {
-		JSONObject jsonObject = null;
-
-		String jsonObjectURL = JenkinsResultsParserUtil.combine(
-			_jenkinsMaster.getURL(), "computer/", getName(),
-			"/api/json?tree=executors[currentExecutable[url]]");
-
-		try {
-			jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				jsonObjectURL, false);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to determine current build", ioException);
-		}
+		JSONObject jsonObject = JenkinsAPIUtil.getAPIJSONObject(
+			getComputerURL(), "executors[currentExecutable[url]]");
 
 		JSONArray jsonArray = jsonObject.getJSONArray("executors");
 

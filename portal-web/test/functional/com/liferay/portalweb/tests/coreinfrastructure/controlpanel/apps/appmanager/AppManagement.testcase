@@ -508,4 +508,45 @@ definition {
 		AssertElementNotPresent(locator1 = "Portlet#HEADER_DUPLICATE");
 	}
 
+	@description = "This test asserts that apps in App Management do not display in non default instances"
+	@priority = "4"
+	test ViewNotInNonDefaultInstance {
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		Portlet.viewNoPortletsPresentCP(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		Portlet.viewNoPortletsPresentCP(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Purchased");
+
+		Portlet.viewNoPortletsPresentCP(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Store");
+
+		Portlet.viewNoPortletsPresentCP(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "License Manager");
+	}
+
 }

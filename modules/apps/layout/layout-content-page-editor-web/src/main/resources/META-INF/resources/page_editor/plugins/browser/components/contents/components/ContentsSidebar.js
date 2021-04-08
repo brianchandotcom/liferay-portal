@@ -21,12 +21,13 @@ import SidebarPanelContent from '../../../../../common/components/SidebarPanelCo
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
 
-const getEditableValues = (fragmentEntryLinks) =>
+const getEditableValues = (fragmentEntryLinks, languageId) =>
 	Object.values(fragmentEntryLinks)
 		.filter(
 			(fragmentEntryLink) =>
 				!fragmentEntryLink.masterLayout &&
-				fragmentEntryLink.editableValues
+				fragmentEntryLink.editableValues &&
+				!fragmentEntryLink.removed
 		)
 		.map((fragmentEntryLink) => {
 			const editableValues = Object.entries(
@@ -46,7 +47,8 @@ const getEditableValues = (fragmentEntryLinks) =>
 				...editableValuesB,
 			],
 			[]
-		);
+		)
+		.filter((fragmentEntryLink) => fragmentEntryLink[languageId]);
 
 const normalizeEditableValues = (editable, languageId) => {
 	return {
@@ -65,7 +67,7 @@ export default function ContentsSidebar() {
 
 	const inlineTextContents = useMemo(
 		() =>
-			getEditableValues(fragmentEntryLinks).map((editable) =>
+			getEditableValues(fragmentEntryLinks, languageId).map((editable) =>
 				normalizeEditableValues(editable, languageId)
 			),
 		[fragmentEntryLinks, languageId]

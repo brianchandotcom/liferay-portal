@@ -290,4 +290,42 @@ definition {
 			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
 	}
 
+	test SortAndViewSearchBlueprints {
+		SearchBlueprints.tearDownCP();
+
+		for (var blueprintNumber : list "1,3,2") {
+			Click(locator1 = "Button#PLUS");
+
+			PortletEntry.inputTitle(title = "Blueprint ${blueprintNumber}");
+
+			Button.click(button = "Create");
+
+			PortletEntry.save();
+		}
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Title");
+
+		SearchBlueprints.viewBlueprintsSpecificOrder(blueprintsList = "Blueprint 1,Blueprint 2,Blueprint 3");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Created");
+
+		SearchBlueprints.viewBlueprintsSpecificOrder(blueprintsList = "Blueprint 1,Blueprint 3,Blueprint 2");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Blueprint 1");
+
+		SearchBlueprints.addQueryElements(fragment = "Boost Asset Type");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Modified");
+
+		SearchBlueprints.viewBlueprintsSpecificOrder(blueprintsList = "Blueprint 3,Blueprint 2,Blueprint 1");
+	}
+
 }

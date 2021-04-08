@@ -16,15 +16,15 @@ package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ambrín Chaudhary
@@ -46,9 +46,7 @@ public class CKEditorBalloonEditorConfigContributor
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put(
-			"extraAllowedContent", Boolean.TRUE
-		);
+		jsonObject.put("extraAllowedContent", Boolean.TRUE);
 
 		String extraPlugins = jsonObject.getString("extraPlugins");
 
@@ -61,40 +59,42 @@ public class CKEditorBalloonEditorConfigContributor
 
 		jsonObject.put("extraPlugins", extraPlugins);
 
+		JSONArray toolbarsJSONArray = JSONUtil.putAll(
+			getToolbarImageJSONObject(), getToolbarLinkJSONObject(),
+			getToolbarTextJSONObject());
 
-		JSONArray toolbars = JSONUtil.putAll(
-			getToolbarImage(), getToolbarLink(), getToolbarText()
+		jsonObject.put("toolbars", toolbarsJSONArray);
+	}
+
+	protected JSONObject getToolbarImageJSONObject() {
+		return JSONUtil.put(
+			"buttons", "JustifyLeft,JustifyCenter,JustifyRight,Link,Unlink"
+		).put(
+			"priority", Boolean.TRUE
+		).put(
+			"widgets", "image,image2"
 		);
-
-		jsonObject.put("toolbars", toolbars);
 	}
 
-	protected JSONObject getToolbarImage() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("buttons", "JustifyLeft,JustifyCenter,JustifyRight,Link,Unlink");
-		jsonObject.put("priority", Boolean.TRUE);
-		jsonObject.put("widgets", "image,image2");
-
-		return jsonObject;
+	protected JSONObject getToolbarLinkJSONObject() {
+		return JSONUtil.put(
+			"buttons", "Link,Unlink"
+		).put(
+			"cssSelector", "a"
+		).put(
+			"priority", Boolean.TRUE
+		);
 	}
 
-	protected JSONObject getToolbarLink() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("buttons", "Link,Unlink");
-		jsonObject.put("priority", Boolean.TRUE);
-		jsonObject.put("cssSelector", "a");
-
-		return jsonObject;
+	protected JSONObject getToolbarTextJSONObject() {
+		return JSONUtil.put(
+			"buttons",
+			"Bold,Italic,Underline,RemoveFormat,Link,NumberedList," +
+				"BulletedList,JustifyLeft,JustifyCenter,JustifyRight," +
+					"JustifyBlock,Anchor"
+		).put(
+			"cssSelector", "*"
+		);
 	}
 
-	protected JSONObject getToolbarText() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("buttons", "Bold,Italic,Underline,RemoveFormat,Link,NumberedList,BulletedList,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,Anchor");
-		jsonObject.put("cssSelector", "*");
-
-		return jsonObject;
-	}
 }

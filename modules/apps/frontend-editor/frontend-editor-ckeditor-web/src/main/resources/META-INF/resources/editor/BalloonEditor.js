@@ -47,10 +47,11 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 					toolbars.forEach((toolbar) => {
 						if (toolbar.priority) {
 							toolbar = {
-								...toolbar, 
+								...toolbar,
 								priority:
-									window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH
-							}
+									window.CKEDITOR.plugins.balloontoolbar
+										.PRIORITY.HIGH,
+							};
 						}
 						balloonToolbars.create(toolbar);
 					});

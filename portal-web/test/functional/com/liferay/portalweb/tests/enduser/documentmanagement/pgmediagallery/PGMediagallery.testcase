@@ -323,6 +323,21 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "asdf");
 	}
 
+	@description = "This test covers LPS-107521. It ensures that the SVG file can be viewed."
+	@priority = "4"
+	test ViewSVG {
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMDocument.addPGViaMG(
+			mgDocumentDescription = "DM Document Description",
+			mgDocumentFile = "Document_1.svg",
+			mgDocumentTitle = "Document_1.svg");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1.svg");
+	}
+
 	@description = "This test covers LPS-89361. It ensures that video can be played via media gallery."
 	@priority = "4"
 	test ViewVideoViaMediaGallery {

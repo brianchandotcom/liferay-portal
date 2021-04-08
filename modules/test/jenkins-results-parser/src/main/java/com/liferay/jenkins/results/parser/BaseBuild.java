@@ -2664,7 +2664,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected JSONObject getBuildJSONObject(String tree) {
-		return JenkinsAPIUtil.getBuildJSONObject(getBuildURL(), tree);
+		return JenkinsAPIUtil.getAPIJSONObject(getBuildURL(), tree);
 	}
 
 	protected String getBuildMessage() {

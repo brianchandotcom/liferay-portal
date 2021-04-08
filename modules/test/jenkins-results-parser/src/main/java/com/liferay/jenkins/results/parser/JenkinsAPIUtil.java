@@ -27,22 +27,22 @@ import org.json.JSONObject;
  */
 public class JenkinsAPIUtil {
 
-	public static JSONObject getBuildJSONObject(String buildURL) {
-		return getBuildJSONObject(buildURL, null);
+	public static JSONObject getAPIJSONObject(String jenkinsURL) {
+		return getAPIJSONObject(jenkinsURL, null);
 	}
 
-	public static JSONObject getBuildJSONObject(String buildURL, String tree) {
-		if (buildURL == null) {
+	public static JSONObject getAPIJSONObject(String jenkinsURL, String tree) {
+		if (jenkinsURL == null) {
 			return null;
 		}
 
 		StringBuffer sb = new StringBuffer();
 
-		sb.append(JenkinsResultsParserUtil.getLocalURL(buildURL));
-		sb.append("/api/json?pretty");
+		sb.append(JenkinsResultsParserUtil.getLocalURL(jenkinsURL));
+		sb.append("/api/json");
 
 		if (tree != null) {
-			sb.append("&tree=");
+			sb.append("?tree=");
 			sb.append(tree);
 		}
 
@@ -50,7 +50,9 @@ public class JenkinsAPIUtil {
 			return JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException("Unable to get build JSON", ioException);
+			throw new RuntimeException(
+				"Unable to get Jenkins API JSON object from " + sb.toString(),
+				ioException);
 		}
 	}
 

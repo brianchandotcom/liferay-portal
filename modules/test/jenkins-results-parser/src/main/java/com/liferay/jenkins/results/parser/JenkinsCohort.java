@@ -244,7 +244,7 @@ public class JenkinsCohort {
 				for (String buildURL :
 						jenkinsCohortJob.getTopLevelBuildURLs()) {
 
-					JSONObject jsonObject = JenkinsAPIUtil.getBuildJSONObject(
+					JSONObject jsonObject = JenkinsAPIUtil.getAPIJSONObject(
 						buildURL);
 
 					long queuedDuration = 0;

@@ -135,13 +135,12 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		InfoItemItemSelectorCriterion itemSelectorCriterion =
 			new InfoItemItemSelectorCriterion();
 
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
 		itemSelectorCriterion.setItemType(
 			layoutPageTemplateEntry.getClassName());
 		itemSelectorCriterion.setItemSubtype(
 			String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new InfoItemItemSelectorReturnType());
 
 		PortletURL infoItemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),

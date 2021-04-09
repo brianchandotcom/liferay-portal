@@ -1335,6 +1335,26 @@ public class LayoutsAdminDisplayContext {
 			return _privateLayout;
 		}
 
+		if (Validator.isNull(
+				ParamUtil.getString(_liferayPortletRequest, "privateLayout"))) {
+
+			if (LayoutServiceUtil.getLayoutsCount(getSelGroupId(), false, 0) >
+					0) {
+
+				_privateLayout = false;
+
+				return _privateLayout;
+			}
+
+			if (LayoutServiceUtil.getLayoutsCount(getSelGroupId(), true, 0) >
+					0) {
+
+				_privateLayout = true;
+
+				return _privateLayout;
+			}
+		}
+
 		_privateLayout = ParamUtil.getBoolean(
 			_liferayPortletRequest, "privateLayout");
 

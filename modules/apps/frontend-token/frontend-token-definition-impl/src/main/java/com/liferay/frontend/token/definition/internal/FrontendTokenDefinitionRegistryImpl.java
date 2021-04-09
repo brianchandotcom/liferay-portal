@@ -253,7 +253,9 @@ public class FrontendTokenDefinitionRegistryImpl
 					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
 						bundleFrontendTokenDefinitionImpls.remove(bundle1);
 
-					if (frontendTokenDefinitionImpl.getThemeId() != null) {
+					if ((frontendTokenDefinitionImpl != null) &&
+						(frontendTokenDefinitionImpl.getThemeId() != null)) {
+
 						themeIdFrontendTokenDefinitionImpls.remove(
 							frontendTokenDefinitionImpl.getThemeId());
 					}

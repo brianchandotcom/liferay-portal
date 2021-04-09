@@ -34,6 +34,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-130345."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByOtherSegments {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130345 AddSegmentByOtherSegments pending implementation
+	}
+
+	@description = "This is a test for LPS-130346."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByOtherSegmentsUnableToAddNewSegments {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130346 AddSegmentByOtherSegmentsUnableToAddNewSegments pending implementation
+	}
+
+	@description = "This is a test for LPS-130347."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByOtherSegmentsWarning {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130347 AddSegmentByOtherSegmentsWarning pending implementation
+	}
+
 	@description = "This is a test for LPS-130281."
 	@ignore = "true"
 	@priority = "5"

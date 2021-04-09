@@ -559,20 +559,6 @@ public interface BaseProjectTemplatesTestCase {
 		completeArgs.add("archetype:generate");
 		completeArgs.add("--batch-mode");
 
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			completeArgs.add("--settings");
-
-			String content = FileTestUtil.read(
-				BaseProjectTemplatesTestCase.class.getClassLoader(),
-				"com/liferay/project/templates/dependencies/settings.xml");
-
-			Path tempPath = Files.createTempFile("settings", "xml");
-
-			Files.write(tempPath, content.getBytes());
-
-			completeArgs.add(tempPath.toString());
-		}
-
 		String archetypeArtifactId =
 			"com.liferay.project.templates." + template.replace('-', '.');
 
@@ -1019,14 +1005,32 @@ public interface BaseProjectTemplatesTestCase {
 						document, "pluginRepositories", "pluginRepository");
 				});
 		}
+		
+		String tempPathString;
+		
+		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			String content = FileTestUtil.read(
+				BaseProjectTemplatesTestCase.class.getClassLoader(),
+				"com/liferay/project/templates/dependencies/settings.xml");
 
-		String[] completeArgs = new String[args.length + 3];
+			Path tempPath = Files.createTempFile("settings", "xml");
 
-		completeArgs[0] = "--update-snapshots";
-		completeArgs[1] = "-Dbuild.repository.private.username=" + System.getProperty("build.repository.private.username");
-		completeArgs[2] = "-Dbuild.repository.private.password=" + System.getProperty("build.repository.private.password");
+			Files.write(tempPath, content.getBytes());
+			
+			tempPathString = tempPath.toString();
+		}
 
-		System.arraycopy(args, 0, completeArgs, 3, args.length);
+		String[] completeArgs = new String[args.length + 5];
+
+		completeArgs[0] = "--settings";
+		completeArgs[1] = tempPathString;
+		completeArgs[2] = "--update-snapshots";
+		completeArgs[3] = "-Dbuild.repository.private.username=" + 
+			System.getProperty("build.repository.private.username");
+		completeArgs[4] = "-Dbuild.repository.private.password=" + 
+			System.getProperty("build.repository.private.password");
+
+		System.arraycopy(args, 0, completeArgs, 5, args.length);
 
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 

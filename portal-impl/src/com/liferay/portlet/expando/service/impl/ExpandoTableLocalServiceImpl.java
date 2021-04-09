@@ -80,30 +80,32 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public ExpandoTable deleteExpandoTable(ExpandoTable expandoTable) {
+	public ExpandoTable deleteExpandoTable(ExpandoTable expandoTable)
+		throws PortalException {
+
 		deleteTable(expandoTable);
 
 		return expandoTable;
 	}
 
 	@Override
-	public void deleteTable(ExpandoTable table) {
+	public void deleteTable(ExpandoTable table) throws PortalException {
 
-		// Table
+		// Values
 
-		expandoTablePersistence.remove(table);
-
-		// Columns
-
-		expandoColumnPersistence.removeByTableId(table.getTableId());
+		expandoValuePersistence.removeByTableId(table.getTableId());
 
 		// Rows
 
 		expandoRowPersistence.removeByTableId(table.getTableId());
 
-		// Values
+		// Columns
 
-		expandoValuePersistence.removeByTableId(table.getTableId());
+		expandoColumnLocalService.deleteColumns(table.getTableId());
+
+		// Table
+
+		expandoTablePersistence.remove(table);
 	}
 
 	@Override
@@ -132,7 +134,9 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public void deleteTables(long companyId, long classNameId) {
+	public void deleteTables(long companyId, long classNameId)
+		throws PortalException {
+
 		List<ExpandoTable> tables = expandoTablePersistence.findByC_C(
 			companyId, classNameId);
 
@@ -142,7 +146,9 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public void deleteTables(long companyId, String className) {
+	public void deleteTables(long companyId, String className)
+		throws PortalException {
+
 		deleteTables(
 			companyId, classNameLocalService.getClassNameId(className));
 	}

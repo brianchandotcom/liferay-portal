@@ -13044,15 +13044,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<get-testcase-property property.name="deploy.lcs.token.file" />
-
-		<if>
-			<equals arg1="${deploy.lcs.token.file}" arg2="true" />
-			<then>
-				<antcall target="deploy-lcs-environment-token" />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="skip.start-app-server" />
 
 		<if>

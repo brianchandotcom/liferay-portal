@@ -12,12 +12,7 @@
  * details.
  */
 
-import {
-	ItemSelectorDialog,
-	addParams,
-	navigate,
-	openSelectionModal,
-} from 'frontend-js-web';
+import {addParams, navigate, openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectAuthor = (itemData) => {
@@ -45,35 +40,31 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	};
 
 	const selectAssetCategory = (itemData) => {
-		const itemSelectorDialog = new ItemSelectorDialog({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
-			eventName: `${portletNamespace}selectedAssetCategory`,
+			multiple: true,
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const assetCategories = Object.keys(selectedItem).filter(
+						(key) => !selectedItem[key].unchecked
+					);
+
+					let redirectURL = itemData?.redirectURL;
+
+					assetCategories.forEach((assetCategory) => {
+						redirectURL = addParams(
+							`${portletNamespace}assetCategoryId=${selectedItem[assetCategory].categoryId}`,
+							redirectURL
+						);
+					});
+
+					navigate(redirectURL);
+				}
+			},
+			selectEventName: `${portletNamespace}selectedAssetCategory`,
 			title: itemData?.dialogTitle,
 			url: itemData?.selectAssetCategoryURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', (event) => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				const assetCategories = Object.keys(selectedItem).filter(
-					(key) => !selectedItem[key].unchecked
-				);
-
-				let redirectURL = itemData?.redirectURL;
-
-				assetCategories.forEach((assetCategory) => {
-					redirectURL = addParams(
-						`${portletNamespace}assetCategoryId=${selectedItem[assetCategory].categoryId}`,
-						redirectURL
-					);
-				});
-
-				navigate(redirectURL);
-			}
-		});
-
-		itemSelectorDialog.open();
 	};
 
 	const selectAssetTag = (itemData) => {
@@ -106,11 +97,22 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
 			multiple: true,
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
+			onSelect: (selectedItems) => {
+				if (selectedItems.length) {
+					const values = selectedItems.map((item) => {
+						const payload = JSON.parse(
+							Liferay.Util.unescape(item.value)
+						);
+
+						return {
+							className: payload.className,
+							classPK: payload.classPK,
+						};
+					});
+
 					let redirectURL = itemData?.redirectURL;
 
-					selectedItem.forEach((item) => {
+					values.forEach((item) => {
 						redirectURL = addParams(
 							`${portletNamespace}contentDashboardItemTypePayload=${JSON.stringify(
 								item

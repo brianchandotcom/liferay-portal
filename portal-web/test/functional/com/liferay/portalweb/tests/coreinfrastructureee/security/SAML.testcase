@@ -1250,6 +1250,7 @@ definition {
 	@description = "This is a use case for LPS-129934"
 	@priority = "4"
 	test ViewIdPSingleLogoutWithMultipleSPs {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#ViewIdPSingleLogoutWithMultipleSPs";
 
 		User.logoutAndLoginPG(

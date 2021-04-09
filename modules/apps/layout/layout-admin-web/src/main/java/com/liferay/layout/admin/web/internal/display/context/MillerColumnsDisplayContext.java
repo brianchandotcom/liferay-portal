@@ -217,9 +217,7 @@ public class MillerColumnsDisplayContext {
 				"states", _getLayoutStatesJSONArray(layout)
 			).put(
 				"title", layout.getName(_themeDisplay.getLocale())
-			);
-
-			layoutJSONObject.put(
+			).put(
 				"url",
 				PortletURLBuilder.create(
 					_layoutsAdminDisplayContext.getPortletURL()
@@ -230,7 +228,8 @@ public class MillerColumnsDisplayContext {
 					_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
 				).setParameter(
 					"privateLayout", layout.isPrivateLayout()
-				).buildString());
+				).buildString()
+			);
 
 			if (_layoutsAdminDisplayContext.isShowViewLayoutAction(layout)) {
 				layoutJSONObject.put(

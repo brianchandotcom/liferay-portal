@@ -24,6 +24,7 @@ import React, {useEffect, useState} from 'react';
 import {
 	useHoverItem,
 	useHoveredItemId,
+	useSelectItem,
 } from '../../../../../app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
@@ -33,6 +34,7 @@ export default function PageContent({
 	actions,
 	classNameId,
 	classPK,
+	editableId,
 	icon,
 	name,
 	subtype,
@@ -43,6 +45,7 @@ export default function PageContent({
 	const hoveredItemId = useHoveredItemId();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [isHovered, setIsHovered] = useState(false);
+	const selectItem = useSelectItem();
 
 	let editURL = null;
 	let permissionsURL = null;
@@ -84,14 +87,22 @@ export default function PageContent({
 	const handleMouseOver = () => {
 		setIsHovered(true);
 
-		hoverItem(`${classNameId}-${classPK}`, {
-			itemType: ITEM_TYPES.mappedContent,
-		});
+		if (classNameId && classPK) {
+			hoverItem(`${classNameId}-${classPK}`, {
+				itemType: ITEM_TYPES.mappedContent,
+			});
+		}
 	};
 
 	const handleMouseLeave = () => {
 		setIsHovered(false);
 		hoverItem(null);
+	};
+
+	const onClickEditInlineText = () => {
+		selectItem(`${editableId}`, {
+			itemType: ITEM_TYPES.editable,
+		});
 	};
 
 	return (
@@ -190,6 +201,7 @@ export default function PageContent({
 					<ClayButton
 						className="btn-monospaced btn-sm text-secondary"
 						displayType="unstyled"
+						onClick={onClickEditInlineText}
 					>
 						<span className="sr-only">
 							{Liferay.Language.get('edit-inline-text')}

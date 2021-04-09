@@ -162,310 +162,311 @@ definition {
 		PageEditor.clickPublish();
 	}
 
+	@description = "This is a test for LPS-130348."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceBasedOtherSegmentsSegment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130348 AddNewExperienceBasedOtherSegmentsSegment pending implementation
+
+	}
+
 	@description = "This is a test for LPS-130309."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationCountrySegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130309 AddNewExperienceOrganizationCountrySegment pending implementation
+		// TODO LPS-130309 AddNewExperienceOrganizationCountrySegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130302."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationDateModifiedSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130302 AddNewExperienceOrganizationDateModifiedSegment pending implementation
+		// TODO LPS-130302 AddNewExperienceOrganizationDateModifiedSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130303."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationHierarchyPathSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130303 AddNewExperienceOrganizationHierarchyPathSegment pending implementation
+		// TODO LPS-130303 AddNewExperienceOrganizationHierarchyPathSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130304."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationNameSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130304 AddNewExperienceOrganizationNameSegment pending implementation
+		// TODO LPS-130304 AddNewExperienceOrganizationNameSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130306."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationOrganizationSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130306 AddNewExperienceOrganizationOrganizationSegment pending implementation
+		// TODO LPS-130306 AddNewExperienceOrganizationOrganizationSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130307."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationParentOrganizationSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130307 AddNewExperienceOrganizationParentOrganizationSegment pending implementation
+		// TODO LPS-130307 AddNewExperienceOrganizationParentOrganizationSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130310."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationRegionSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130310 AddNewExperienceOrganizationRegionSegment pending implementation
+		// TODO LPS-130310 AddNewExperienceOrganizationRegionSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130311."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationTagSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130311 AddNewExperienceOrganizationTagSegment pending implementation
+		// TODO LPS-130311 AddNewExperienceOrganizationTagSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130308."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationTypeSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130308 AddNewExperienceOrganizationTypeSegment pending implementation
-	}
-
-	@description = "This is a test for LPS-130348."
-	@ignore = "true"
-	@priority = "5"
-	test AddNewExperienceBasedOtherSegmentsSegment {
-  		property portal.acceptance = "false";
-
-  		// TODO LPS-130348 AddNewExperienceBasedOtherSegmentsSegment pending implementation
+		// TODO LPS-130308 AddNewExperienceOrganizationTypeSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130327."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionBrowserSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130327 AddNewExperienceSessionBrowserSegment pending implementation
+		// TODO LPS-130327 AddNewExperienceSessionBrowserSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130328."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionCookiesSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130328 AddNewExperienceSessionCookiesSegment pending implementation
+		// TODO LPS-130328 AddNewExperienceSessionCookiesSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130329."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionDeviceBrandSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130329 AddNewExperienceSessionDeviceBrandSegment pending implementation
+		// TODO LPS-130329 AddNewExperienceSessionDeviceBrandSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130330."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionDeviceModelSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130330 AddNewExperienceSessionDeviceModelSegment pending implementation
+		// TODO LPS-130330 AddNewExperienceSessionDeviceModelSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130331."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionDeviceScreenResolutionHeightSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130331 AddNewExperienceSessionDeviceScreenResolutionHeightSegment pending implementation
+		// TODO LPS-130331 AddNewExperienceSessionDeviceScreenResolutionHeightSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130332."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionDeviceScreenResolutionWidthSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130332 AddNewExperienceSessionDeviceScreenResolutionWidthSegment pending implementation
+		// TODO LPS-130332 AddNewExperienceSessionDeviceScreenResolutionWidthSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130333."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionHostnameSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130333 AddNewExperienceSessionHostnameSegment pending implementation
+		// TODO LPS-130333 AddNewExperienceSessionHostnameSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130334."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionLanguageSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130334 AddNewExperienceSessionLanguageSegment pending implementation
+		// TODO LPS-130334 AddNewExperienceSessionLanguageSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130335."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionLastSignInDateSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130335 AddNewExperienceSessionLastSignInDateSegment pending implementation
+		// TODO LPS-130335 AddNewExperienceSessionLastSignInDateSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130336."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionLocalDateSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130336 AddNewExperienceSessionLocalDateSegment pending implementation
+		// TODO LPS-130336 AddNewExperienceSessionLocalDateSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130337."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionReferrerURLSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130337 AddNewExperienceSessionReferrerURLSegment pending implementation
+		// TODO LPS-130337 AddNewExperienceSessionReferrerURLSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130338."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionRequestParametersSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130338 AddNewExperienceSessionRequestParametersSegment pending implementation
+		// TODO LPS-130338 AddNewExperienceSessionRequestParametersSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130339."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionSignedInSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130339 AddNewExperienceSessionSignedInSegment pending implementation
+		// TODO LPS-130339 AddNewExperienceSessionSignedInSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130340."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionURLSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130340 AddNewExperienceSessionURLSegment pending implementation
+		// TODO LPS-130340 AddNewExperienceSessionURLSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130341."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionUserAgentSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130341 AddNewExperienceSessionUserAgentSegment pending implementation
+		// TODO LPS-130341 AddNewExperienceSessionUserAgentSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130293."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserDateModifiedSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130293 AddNewExperienceUserDateModifiedSegment pending implementation
+		// TODO LPS-130293 AddNewExperienceUserDateModifiedSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130294."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserDateOfBirthSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130294 AddNewExperienceUserDateOfBirthSegment pending implementation
+		// TODO LPS-130294 AddNewExperienceUserDateOfBirthSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130301."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserEmailAddressSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130301 AddNewExperienceUserEmailAddressSegment pending implementation
+		// TODO LPS-130301 AddNewExperienceUserEmailAddressSegment pending implementation
 	}
-	
+
 	@description = "This is a test for LPS-130295."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserFirstNameSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130295 AddNewExperienceUserFirstNameSegment pending implementation
+		// TODO LPS-130295 AddNewExperienceUserFirstNameSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130296."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserJobTitleSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130296 AddNewExperienceUserJobTitleSegment pending implementation
+		// TODO LPS-130296 AddNewExperienceUserJobTitleSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130297."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserLastNameSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130297 AddNewExperienceUserLastNameSegment pending implementation
+		// TODO LPS-130297 AddNewExperienceUserLastNameSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130298."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserNameSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130298 AddNewExperienceUserNameSegment pending implementation
+		// TODO LPS-130298 AddNewExperienceUserNameSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130299."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserRoleSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130299 AddNewExperienceUserRoleSegment pending implementation
+		// TODO LPS-130299 AddNewExperienceUserRoleSegment pending implementation
 	}
 
 	@description = "This is a test for LPS-130300."
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserScreenNameSegment {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130300 AddNewExperienceUserScreenNameSegment pending implementation
+		// TODO LPS-130300 AddNewExperienceUserScreenNameSegment pending implementation
 	}
 
 	@description = "When the user opens the experiences selection modal and select a different locale for an experience, the experience version for that language is shown"

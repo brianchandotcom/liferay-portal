@@ -34,328 +34,329 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130345."
-	@ignore = "true"
-	@priority = "5"
-	test AddSegmentByOtherSegments {
-  		property portal.acceptance = "false";
-
-  		// TODO LPS-130345 AddSegmentByOtherSegments pending implementation
-	}
-
-	@description = "This is a test for LPS-130346."
-	@ignore = "true"
-	@priority = "5"
-	test AddSegmentByOtherSegmentsUnableToAddNewSegments {
-  		property portal.acceptance = "false";
-
-  		// TODO LPS-130346 AddSegmentByOtherSegmentsUnableToAddNewSegments pending implementation
-	}
-
-	@description = "This is a test for LPS-130347."
-	@ignore = "true"
-	@priority = "5"
-	test AddSegmentByOtherSegmentsWarning {
-  		property portal.acceptance = "false";
-
-  		// TODO LPS-130347 AddSegmentByOtherSegmentsWarning pending implementation
-	}
-
 	@description = "This is a test for LPS-130281."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationCountry {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130281 AddSegmentByOrganizationCountry pending implementation. This test is already created as EditSegmentUserByOrganizationCountryAndRegion, but if you are able to do it better, delete the test EditSegmentUserByOrganizationCountryAndRegion.
+		// TODO LPS-130281 AddSegmentByOrganizationCountry pending implementation. This test is already created as EditSegmentUserByOrganizationCountryAndRegion, but if you are able to do it better, delete the test EditSegmentUserByOrganizationCountryAndRegion.
+
 	}
 
 	@description = "This is a test for LPS-130275."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationDateModified {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130275 AddSegmentByOrganizationDateModified pending implementation
+		// TODO LPS-130275 AddSegmentByOrganizationDateModified pending implementation
 	}
 
 	@description = "This is a test for LPS-130276."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationHierarchyPath {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130276 AddSegmentByOrganizationHierarchyPath pending implementation
+		// TODO LPS-130276 AddSegmentByOrganizationHierarchyPath pending implementation
 	}
 
 	@description = "This is a test for LPS-130277."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationName {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130277 AddSegmentByOrganizationName pending implementation
+		// TODO LPS-130277 AddSegmentByOrganizationName pending implementation
 	}
 
 	@description = "This is a test for LPS-130278."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationOrganization {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130278 AddSegmentByOrganizationOrganization pending implementation
+		// TODO LPS-130278 AddSegmentByOrganizationOrganization pending implementation
 	}
 
 	@description = "This is a test for LPS-130279."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationParentOrganization {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130279 AddSegmentByOrganizationParentOrganization pending implementation
+		// TODO LPS-130279 AddSegmentByOrganizationParentOrganization pending implementation
 	}
 
 	@description = "This is a test for LPS-130282."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationRegion {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130282 AddSegmentByOrganizationRegion pending implementation. This test is already created as EditSegmentUserByOrganizationCountryAndRegion, but if you are able to do it better, delete the test EditSegmentUserByOrganizationCountryAndRegion.
+		// TODO LPS-130282 AddSegmentByOrganizationRegion pending implementation. This test is already created as EditSegmentUserByOrganizationCountryAndRegion, but if you are able to do it better, delete the test EditSegmentUserByOrganizationCountryAndRegion.
 	}
 
 	@description = "This is a test for LPS-130283."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationTag {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130283 AddSegmentByOrganizationTag pending implementation. This test is already created as EditSegmentUserByOrganizationTag, but if you are able to do it better, delete the test EditSegmentUserByOrganizationTag.
+		// TODO LPS-130283 AddSegmentByOrganizationTag pending implementation. This test is already created as EditSegmentUserByOrganizationTag, but if you are able to do it better, delete the test EditSegmentUserByOrganizationTag.
 	}
 
 	@description = "This is a test for LPS-130280."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationType {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130280 AddSegmentByOrganizationType pending implementation
+		// TODO LPS-130280 AddSegmentByOrganizationType pending implementation
+	}
+
+	@description = "This is a test for LPS-130345."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByOtherSegments {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130345 AddSegmentByOtherSegments pending implementation
+	}
+
+	@description = "This is a test for LPS-130346."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByOtherSegmentsUnableToAddNewSegments {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130346 AddSegmentByOtherSegmentsUnableToAddNewSegments pending implementation
+	}
+
+	@description = "This is a test for LPS-130347."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByOtherSegmentsWarning {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130347 AddSegmentByOtherSegmentsWarning pending implementation
 	}
 
 	@description = "This is a test for LPS-130313."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionBrowser {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130313 AddSegmentBySessionBrowser pending implementation
+		// TODO LPS-130313 AddSegmentBySessionBrowser pending implementation
 	}
 
 	@description = "This is a test for LPS-130314."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionCookies {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130314 AddSegmentBySessionCookies pending implementation
+		// TODO LPS-130314 AddSegmentBySessionCookies pending implementation
 	}
 
 	@description = "This is a test for LPS-130315."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionDeviceBrand {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130315 AddSegmentBySessionDeviceBrand pending implementation
+		// TODO LPS-130315 AddSegmentBySessionDeviceBrand pending implementation
 	}
 
 	@description = "This is a test for LPS-130316."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionDeviceModel {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130316 AddSegmentBySessionDeviceModel pending implementation
+		// TODO LPS-130316 AddSegmentBySessionDeviceModel pending implementation
 	}
 
 	@description = "This is a test for LPS-130317."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionDeviceScreenResolutionHeight {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130317 AddSegmentBySessionDeviceScreenResolutionHeight pending implementation
+		// TODO LPS-130317 AddSegmentBySessionDeviceScreenResolutionHeight pending implementation
 	}
 
 	@description = "This is a test for LPS-130318."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionDeviceScreenResolutionWidth {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130318 AddSegmentBySessionDeviceScreenResolutionWidth pending implementation
+		// TODO LPS-130318 AddSegmentBySessionDeviceScreenResolutionWidth pending implementation
 	}
 
 	@description = "This is a test for LPS-130319."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionHostname {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130319 AddSegmentBySessionHostname pending implementation. This test is already created as EditSegmentUserBySessionHostname, but if you are able to do it better, delete the test EditSegmentUserBySessionHostname.
+		// TODO LPS-130319 AddSegmentBySessionHostname pending implementation. This test is already created as EditSegmentUserBySessionHostname, but if you are able to do it better, delete the test EditSegmentUserBySessionHostname.
 	}
 
 	@description = "This is a test for LPS-130351."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionLanguage {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130351 AddSegmentBySessionLanguage pending implementation
+		// TODO LPS-130351 AddSegmentBySessionLanguage pending implementation
 	}
 
 	@description = "This is a test for LPS-130320."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionLastSignInDate {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130320 AddSegmentBySessionLastSignInDate pending implementation
+		// TODO LPS-130320 AddSegmentBySessionLastSignInDate pending implementation
 	}
 
 	@description = "This is a test for LPS-130321."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionLocalDate {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130321 AddSegmentBySessionLocalDate pending implementation
+		// TODO LPS-130321 AddSegmentBySessionLocalDate pending implementation
 	}
 
 	@description = "This is a test for LPS-130322."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionReferrerURL {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130322 AddSegmentBySessionReferrerURL pending implementation
+		// TODO LPS-130322 AddSegmentBySessionReferrerURL pending implementation
 	}
 
 	@description = "This is a test for LPS-130323."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionRequestParameters {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130323 AddSegmentBySessionRequestParameters pending implementation
+		// TODO LPS-130323 AddSegmentBySessionRequestParameters pending implementation
 	}
 
 	@description = "This is a test for LPS-130324."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionSignedIn {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130324 AddSegmentBySessionSignedIn pending implementation
+		// TODO LPS-130324 AddSegmentBySessionSignedIn pending implementation
 	}
 
 	@description = "This is a test for LPS-130325."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionURL {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130325 AddSegmentBySessionURL pending implementation. This test is already created as EditSegmentUserBySessionURL, but if you are able to do it better, delete the test EditSegmentUserBySessionURL.
+		// TODO LPS-130325 AddSegmentBySessionURL pending implementation. This test is already created as EditSegmentUserBySessionURL, but if you are able to do it better, delete the test EditSegmentUserBySessionURL.
 	}
 
 	@description = "This is a test for LPS-130326."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionUserAgent {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130326 AddSegmentBySessionUserAgent pending implementation
+		// TODO LPS-130326 AddSegmentBySessionUserAgent pending implementation
 	}
 
 	@description = "This is a test for LPS-130284."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserDateModified {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130284 AddSegmentByUserDateModified pending implementation
+		// TODO LPS-130284 AddSegmentByUserDateModified pending implementation
 	}
 
 	@description = "This is a test for LPS-130285."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserDateOfBirth {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130285 AddSegmentByUserDateOfBirth pending implementation
+		// TODO LPS-130285 AddSegmentByUserDateOfBirth pending implementation
 	}
 
 	@description = "This is a test for LPS-130291."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserEmailAddress {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130291 AddSegmentByUserEmailAddress pending implementation. This test is already created as AddSegmentUserEmailAddressContains, but if you are able to do it better, delete the test AddSegmentUserEmailAddressContains.
+		// TODO LPS-130291 AddSegmentByUserEmailAddress pending implementation. This test is already created as AddSegmentUserEmailAddressContains, but if you are able to do it better, delete the test AddSegmentUserEmailAddressContains.
 	}
 
 	@description = "This is a test for LPS-130286."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserFirstName {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130286 AddSegmentByUserFirstName pending implementation
+		// TODO LPS-130286 AddSegmentByUserFirstName pending implementation
 	}
 
 	@description = "This is a test for LPS-130287."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserJobTitle {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130287 AddSegmentByUserJobTitle pending implementation
+		// TODO LPS-130287 AddSegmentByUserJobTitle pending implementation
 	}
 
 	@description = "This is a test for LPS-130288."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserLastName {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130288 AddSegmentByUserLastName pending implementation
+		// TODO LPS-130288 AddSegmentByUserLastName pending implementation
 	}
 
 	@description = "This is a test for LPS-130292."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserName {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130292 AddSegmentByUserName pending implementation
+		// TODO LPS-130292 AddSegmentByUserName pending implementation
 	}
 
 	@description = "This is a test for LPS-130289."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserRole {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130289 AddSegmentByUserRole pending implementation
+		// TODO LPS-130289 AddSegmentByUserRole pending implementation
 	}
 
 	@description = "This is a test for LPS-130290."
 	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserScreenName {
-  		property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
-  		// TODO LPS-130290 AddSegmentByUserScreenName pending implementation
+		// TODO LPS-130290 AddSegmentByUserScreenName pending implementation
 	}
 
 	@description = "Validate if the user can create a segment with Properties User and Email Segment with Contains Option"

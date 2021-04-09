@@ -16,17 +16,31 @@ package com.liferay.dynamic.data.lists.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,6 +51,45 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTDisplayRenderer.class)
 public class DDLRecordSetCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DDLRecordSet> {
+
+	@Override
+	public String getEditURL(
+			HttpServletRequest httpServletRequest, DDLRecordSet ddlRecordSet)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!DDLRecordSetPermission.contains(
+				themeDisplay.getPermissionChecker(), ddlRecordSet,
+				ActionKeys.UPDATE)) {
+
+			return null;
+		}
+
+		Group group = _groupLocalService.getGroup(ddlRecordSet.getGroupId());
+
+		if (group.isCompany()) {
+			group = themeDisplay.getScopeGroup();
+		}
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, group, DDLPortletKeys.DYNAMIC_DATA_LISTS, 0,
+				0, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_record_set.jsp"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
+			"groupId", ddlRecordSet.getGroupId()
+		).setParameter(
+			"recordSetId", ddlRecordSet.getRecordSetId()
+		).setParameter(
+			"version", ddlRecordSet.getVersion()
+		).buildString();
+	}
 
 	@Override
 	public Class<DDLRecordSet> getModelClass() {
@@ -98,7 +151,13 @@ public class DDLRecordSetCTDisplayRenderer
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

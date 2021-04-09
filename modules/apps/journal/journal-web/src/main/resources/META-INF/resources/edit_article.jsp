@@ -94,6 +94,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 							icon="cog"
 							id='<%= liferayPortletResponse.getNamespace() + "contextualSidebarButton" %>'
 							small="<%= true %>"
+							type="button"
 						/>
 					</div>
 				</li>

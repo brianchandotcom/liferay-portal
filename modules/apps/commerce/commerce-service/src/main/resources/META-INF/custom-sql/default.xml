@@ -68,12 +68,9 @@
 				COUNT(DISTINCT CommerceOrderItem.commerceOrderItemId) AS COUNT_VALUE
 			FROM
 				CommerceOrderItem
-			JOIN
+			INNER JOIN
 				CommerceOrder ON
 					CommerceOrder.commerceOrderId = CommerceOrderItem.commerceOrderId
-			LEFT JOIN
-				CommerceShipmentItem ON
-					CommerceOrderItem.commerceOrderItemId = CommerceShipmentItem.commerceOrderItemId
 			WHERE
 				(CommerceOrder.commerceAccountId = ?) AND
 				(CommerceOrder.groupId = ?) AND
@@ -95,15 +92,12 @@
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.findByG_A_O">
 		<![CDATA[
 			SELECT
-				DISTINCT {CommerceOrderItem.*}
+				{CommerceOrderItem.*}
 			FROM
 				CommerceOrderItem
-			JOIN
+			INNER JOIN
 				CommerceOrder ON
 					CommerceOrder.commerceOrderId = CommerceOrderItem.commerceOrderId
-			LEFT JOIN
-				CommerceShipmentItem ON
-					CommerceOrderItem.commerceOrderItemId = CommerceShipmentItem.commerceOrderItemId
 			WHERE
 				(commerceAccountId = ?) AND
 				(CommerceOrderItem.groupId = ?) AND

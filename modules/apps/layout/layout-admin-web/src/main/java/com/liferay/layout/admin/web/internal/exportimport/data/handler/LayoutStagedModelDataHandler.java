@@ -522,7 +522,9 @@ public class LayoutStagedModelDataHandler
 
 		long oldLayoutId = layoutId;
 
-		final boolean privateLayout = portletDataContext.isPrivateLayout();
+		final boolean privateLayout =
+			portletDataContext.isPrivateLayout() &&
+			!layout.isTypeAssetDisplay();
 
 		Map<Long, Layout> layouts =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(

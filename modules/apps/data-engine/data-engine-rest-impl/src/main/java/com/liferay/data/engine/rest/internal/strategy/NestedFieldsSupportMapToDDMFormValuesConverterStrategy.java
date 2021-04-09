@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -88,7 +89,9 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 
 		if (ListUtil.isNotEmpty(ddmFormField.getNestedDDMFormFields())) {
 			Map<String, Object> nestedValues =
-				(Map<String, Object>)fieldInstanceValue.get("nestedValues");
+				(Map<String, Object>)GetterUtil.getObject(
+					fieldInstanceValue.get("nestedValues"),
+					new HashMap<String, Object>());
 
 			_addMissingValues(
 				ddmFormField.getNestedDDMFormFieldsMap(), locale, nestedValues);

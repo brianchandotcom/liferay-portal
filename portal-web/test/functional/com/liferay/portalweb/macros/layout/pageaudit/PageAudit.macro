@@ -1,9 +1,17 @@
 definition {
 
+    macro backToPageBackButton {
+		Click(locator1 = "Icon#BACK");
+	}
+
+    macro backToPageCancelButton {
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
+	}
+
 	macro connectToGooglePageAudit {
-		Click(
-			key_text = "info-circle",
-			locator1 = "Icon#ANY");
+		Click(locator1 = "CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
 	}
 
 	macro disableGooglePageSpeed {
@@ -47,7 +55,9 @@ definition {
 	}
 
 	macro openPageAuditPanel {
-		Click(locator1 = "PageAudit#PAGE_AUDIT_PANEL_BUTTON");
+		Click(
+            key_text = "info-circle",
+			locator1 = "Icon#ANY");
 	}
 
 }

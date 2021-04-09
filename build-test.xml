@@ -12987,6 +12987,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<remake-dir dir="${selenium.output.dir.name}" />
+
 		<prepare-portal-licenses />
 
 		<get-testcase-property property.name="app.server.bundles.size" />
@@ -13041,8 +13043,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<stop-app-server />
 			</then>
 		</if>
-
-		<remake-dir dir="${selenium.output.dir.name}" />
 
 		<get-testcase-property property.name="deploy.lcs.token.file" />
 

@@ -659,23 +659,28 @@ public interface BaseProjectTemplatesTestCase {
 
 			if (liferayVersion.startsWith("7.0")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.target.platform.version=7.0.6-2");
+					workspaceDir,
+					"liferay.workspace.target.platform.version=7.0.6-2");
 			}
 			else if (liferayVersion.startsWith("7.1")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.target.platform.version=7.1.3-1");
+					workspaceDir,
+					"liferay.workspace.target.platform.version=7.1.3-1");
 			}
 			else if (liferayVersion.startsWith("7.2")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.target.platform.version=7.2.1-1");
+					workspaceDir,
+					"liferay.workspace.target.platform.version=7.2.1-1");
 			}
 			else if (liferayVersion.startsWith("7.3")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.target.platform.version=7.3.6");
+					workspaceDir,
+					"liferay.workspace.target.platform.version=7.3.6");
 			}
 			else if (liferayVersion.startsWith("7.4")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.target.platform.version=7.4.0");
+					workspaceDir,
+					"liferay.workspace.target.platform.version=7.4.0");
 			}
 		}
 		else {
@@ -839,15 +844,24 @@ public interface BaseProjectTemplatesTestCase {
 				Path m2tmpPath = Paths.get(
 					System.getProperty("maven.repo.local") + "-tmp");
 
-				content +=
-					System.lineSeparator() +
-						"allprojects {\n\trepositories {\n\t\tmavenLocal()\n" +
-							"\t\tmaven {\n\t\t\turl file(\"" + m2tmpPath +
-								"\").toURI()\n\t\t}\n\t\tmaven {\n\t\t\t" +
-									"credentials {\n\t\t\t\tusername \"" + System.getProperty("build.repository.private.username") + "\"\n\t\t\t\tpassword \"" + System.getProperty("build.repository.private.password") + "\"\n\t\t\t}\n\t\t\turl \"http://repository.liferay.com/nexus/content/repositories/xanadu\" \n\t\t}\n\t}\n\tconfigurations." +
-										"all {\n\t\tresolutionStrategy.force " +
-											"'javax.servlet:javax.servlet-api:" +
-												"3.0.1'\n\t}\n}";
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("allprojects {\n\trepositories {\n\t\tmavenLocal()");
+				sb.append("\n\t\tmaven {\n\t\t\turl file(\"" + m2tmpPath);
+				sb.append("\").toURI()\n\t\t}\n\t\tmaven {\n\t\t\t");
+				sb.append("credentials {\n\t\t\t\tusername \"");
+				sb.append(
+					System.getProperty("build.repository.private.username"));
+				sb.append("\"\n\t\t\t\tpassword \"");
+				sb.append(
+					System.getProperty("build.repository.private.password"));
+				sb.append("\"\n\t\t\t}\n\t\t\turl \"http://repository-cdn");
+				sb.append(".liferay.com/nexus/content/repositories/xanadu\"");
+				sb.append("\n\t\t}\n\t}\n\tconfigurations.all {\n\t\t");
+				sb.append("resolutionStrategy.force 'javax.servlet:javax");
+				sb.append(".servlet-api:3.0.1'\n\t}\n}");
+
+				content += System.lineSeparator() + sb.toString();
 
 				Files.write(
 					buildFilePath, content.getBytes(StandardCharsets.UTF_8));
@@ -993,9 +1007,11 @@ public interface BaseProjectTemplatesTestCase {
 			String... args)
 		throws Exception {
 
+		File gettingStartedFile = new File(
+			projectDir, "GETTING_STARTED.markdown");
 		File pomXmlFile = new File(projectDir, "pom.xml");
 
-		if (pomXmlFile.exists()) {
+		if (gettingStartedFile.exists() && pomXmlFile.exists()) {
 			editXml(
 				pomXmlFile,
 				document -> {
@@ -1005,9 +1021,9 @@ public interface BaseProjectTemplatesTestCase {
 						document, "pluginRepositories", "pluginRepository");
 				});
 		}
-		
-		String tempPathString;
-		
+
+		String tempPathString = null;
+
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			String content = FileTestUtil.read(
 				BaseProjectTemplatesTestCase.class.getClassLoader(),
@@ -1016,7 +1032,7 @@ public interface BaseProjectTemplatesTestCase {
 			Path tempPath = Files.createTempFile("settings", "xml");
 
 			Files.write(tempPath, content.getBytes());
-			
+
 			tempPathString = tempPath.toString();
 		}
 
@@ -1025,10 +1041,12 @@ public interface BaseProjectTemplatesTestCase {
 		completeArgs[0] = "--settings";
 		completeArgs[1] = tempPathString;
 		completeArgs[2] = "--update-snapshots";
-		completeArgs[3] = "-Dbuild.repository.private.username=" + 
-			System.getProperty("build.repository.private.username");
-		completeArgs[4] = "-Dbuild.repository.private.password=" + 
-			System.getProperty("build.repository.private.password");
+		completeArgs[3] =
+			"-Dbuild.repository.private.username=" +
+				System.getProperty("build.repository.private.username");
+		completeArgs[4] =
+			"-Dbuild.repository.private.password=" +
+				System.getProperty("build.repository.private.password");
 
 		System.arraycopy(args, 0, completeArgs, 5, args.length);
 

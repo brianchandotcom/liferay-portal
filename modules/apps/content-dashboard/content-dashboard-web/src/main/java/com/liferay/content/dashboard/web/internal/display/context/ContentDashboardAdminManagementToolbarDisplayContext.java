@@ -118,11 +118,6 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "contentDashboardManagementToolbarDefaultEventHandler";
-	}
-
-	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {

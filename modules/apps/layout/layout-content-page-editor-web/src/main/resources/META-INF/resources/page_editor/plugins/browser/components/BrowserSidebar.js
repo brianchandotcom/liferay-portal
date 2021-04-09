@@ -14,8 +14,13 @@
 
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
+import {
+	useActiveItemId,
+	useActiveItemType,
+} from '../../../app/components/Controls';
+import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {useId} from '../../../app/utils/useId';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import ContentsSidebar from './contents/components/ContentsSidebar';
@@ -34,11 +39,19 @@ const TABS = [
 ];
 
 export default function BrowserSidebar({title}) {
+	const activeItemId = useActiveItemId();
+	const activeItemType = useActiveItemType();
 	const [activeTabId, setActiveTabId] = useState(0);
 	const tabIdNamespace = useId();
 
 	const getTabId = (tabId) => `${tabIdNamespace}tab${tabId}`;
 	const getTabPanelId = (tabId) => `${tabIdNamespace}tabPanel${tabId}`;
+
+	useEffect(() => {
+		if (activeItemId && activeItemType !== ITEM_TYPES.editable) {
+			setActiveTabId(0);
+		}
+	}, [activeItemType, activeItemId]);
 
 	return (
 		<div

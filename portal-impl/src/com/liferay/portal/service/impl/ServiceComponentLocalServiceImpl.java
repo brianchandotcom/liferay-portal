@@ -209,14 +209,8 @@ public class ServiceComponentLocalServiceImpl
 
 			serviceComponent.setData(dataXML);
 
-			int countServiceComponent =
-				serviceComponentPersistence.countByBNS_BNU(
-					buildNamespace, buildNumber);
-
-			if (countServiceComponent == 0) {
-				serviceComponent = serviceComponentPersistence.update(
-					serviceComponent);
-			}
+			serviceComponent = serviceComponentPersistence.update(
+				serviceComponent);
 
 			if (((serviceComponentConfiguration instanceof
 					ServletServiceContextComponentConfiguration) &&

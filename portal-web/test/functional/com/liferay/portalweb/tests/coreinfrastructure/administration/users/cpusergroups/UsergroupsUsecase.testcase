@@ -133,6 +133,26 @@ definition {
 		AssertElementPresent(
 			key_entryTitle = "Blogs Entry Title",
 			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONUser.removeUserFromUserGroup(
+			userEmailAddress = "userea2@liferay.com",
+			userGroupName = "UG UserGroup Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		AssertElementNotPresent(
+			key_entryTitle = "Blogs Entry Title",
+			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR",
+			value1 = "You do not have the roles required to access this portlet.");
 	}
 
 	@priority = "4"

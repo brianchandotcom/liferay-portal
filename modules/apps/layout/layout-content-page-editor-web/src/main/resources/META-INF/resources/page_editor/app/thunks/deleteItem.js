@@ -16,12 +16,25 @@ import deleteItemAction from '../actions/deleteItem';
 import deleteWidgets from '../actions/deleteWidgets';
 import updatePageContents from '../actions/updatePageContents';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {config} from '../config/index';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
+
+const getFragmentEntryLinkIds = ({itemId, layoutData}) =>
+	layoutData.items[itemId].type === LAYOUT_DATA_ITEM_TYPES.fragment
+		? [layoutData.items[itemId].config.fragmentEntryLinkId]
+		: layoutData.items[itemId].children.reduce(
+				(acc, childId) => [
+					...acc,
+					...getFragmentEntryLinkIds({itemId: childId, layoutData}),
+				],
+				[]
+		  );
 
 export default function deleteItem({itemId, selectItem = () => {}, store}) {
 	return (dispatch) => {
 		const {fragmentEntryLinks, layoutData, segmentsExperienceId} = store;
+		let fragmentEntryLinkIds = null;
 
 		return markItemForDeletion({
 			fragmentEntryLinks,
@@ -52,8 +65,16 @@ export default function deleteItem({itemId, selectItem = () => {}, store}) {
 
 					selectItem(null);
 
+					if (config.contentBrowsingEnabled) {
+						fragmentEntryLinkIds = getFragmentEntryLinkIds({
+							itemId,
+							layoutData,
+						});
+					}
+
 					dispatch(
 						deleteItemAction({
+							fragmentEntryLinkIds,
 							itemId,
 							layoutData,
 							portletIds,

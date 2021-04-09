@@ -14,8 +14,14 @@
 
 import {DELETE_ITEM} from './types';
 
-export default function deleteItem({itemId, layoutData, portletIds = []}) {
+export default function deleteItem({
+	fragmentEntryLinkIds,
+	itemId,
+	layoutData,
+	portletIds = [],
+}) {
 	return {
+		fragmentEntryLinkIds,
 		itemId,
 		layoutData,
 		portletIds,

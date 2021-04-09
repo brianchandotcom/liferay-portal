@@ -279,6 +279,17 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 				message="delete"
 				url="<%= deleteURL %>"
 			/>
+
+			<portlet:actionURL name="/commerce_open_order_content/edit_commerce_order_item" var="deleteOrderContentURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESET %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon-delete
+				message="remove-all-items"
+				url="<%= deleteOrderContentURL %>"
+			/>
 		</c:if>
 	</liferay-ui:icon-menu>
 

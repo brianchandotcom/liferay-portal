@@ -285,6 +285,23 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	@description = "Since we log in through navigation by default normally, this will test the login through the UI."
+	@priority = "5"
+	test LoginWithUI {
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPageSetByProperty";
+
+		User.firstLoginUI();
+
+		//Standard and safe UI action to assert Portal is accessible after login
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+	}
+
 	@description = "This is a use case for LPS-105151."
 	@priority = "4"
 	test MultipleOpenIDConnectProvider {

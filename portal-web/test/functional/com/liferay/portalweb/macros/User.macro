@@ -1820,6 +1820,35 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
+	@summary = "Log into Liferay using the UI"
+	macro firstLoginUI {
+		Navigator.openURL();
+
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
+
+		Type.typePause(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "${userEmailAddress}");
+
+		Type.typePause(
+			locator1 = "TextInput#PASSWORD",
+			value1 = "${password}");
+
+		Click(locator1 = "Button#SIGN_IN");
+
+		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
+			SignIn.agreeToTermsOfUse();
+		}
+
+		if (IsElementPresent(locator1 = "Select#QUESTION")) {
+			SignIn.setPasswordReminder();
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
 	macro forgotPasswordSendResetLink {
 		SignInNavigator.gotoForgotPassword();
 

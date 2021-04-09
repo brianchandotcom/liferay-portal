@@ -50,6 +50,84 @@ definition {
 			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
 	}
 
+	test AssertNonAdminsCannotSeeSearchExperience {
+		JSONWebcontent.addWebContent(
+			content = "Los Angeles",
+			groupName = "Guest",
+			title = "Java Cafe");
+
+		for (var userNumber : list "1,2") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNumber}@liferay.com",
+				userFirstName = "userfn${userNumber}",
+				userLastName = "userln${userNumber}",
+				userScreenName = "usersn${userNumber}");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+		}
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "User",
+			userEmailAddress = "userea2@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		SearchBlueprints.addBlueprint(name = "Los Angeles Boost");
+
+		var blueprintsID = SearchBlueprints.findBlueprintID(name = "Los Angeles Boost");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Reactive Widget");
+
+		PageEditor.addWidget(portletName = "Blueprints Search");
+
+		SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "${blueprintsID}");
+
+		PageEditor.clickPublish();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "cafe");
+
+		SearchBlueprints.viewBlueprintsSearchResults(
+			searchAssetTitle = "Cafe",
+			searchAssetType = "Web Content Article");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		AssertElementNotPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_portal_search_tuning_blueprints_web_internal_portlet_BlueprintsAdminPortlet");
+
+		Portlet.viewNoPermissionPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "cafe");
+
+		SearchBlueprints.viewBlueprintsSearchResults(
+			searchAssetTitle = "Cafe",
+			searchAssetType = "Web Content Article");
+	}
+
 	test AssertSearchResultsScore {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

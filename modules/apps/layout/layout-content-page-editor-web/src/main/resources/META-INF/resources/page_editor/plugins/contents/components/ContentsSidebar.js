@@ -18,7 +18,7 @@ import {useSelector} from '../../../app/store/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoPageContents from '../../browser/components/contents/components/NoPageContents';
-import PageContents from '../../browser/components/contents/components/PageContents';
+import PageContents from './PageContents';
 
 export default function ContentsSidebar() {
 	const pageContents = useSelector((state) => state.pageContents);

@@ -8825,6 +8825,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<prepare-portal-search-osgi-configuration/>
 
 		<prepare-portal-template-freemarker-osgi-configuration />
+
+		<antcall target="prepare-selenium-login-config" />
 	</target>
 
 	<target name="prepare-patching-tool">
@@ -9708,6 +9710,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 
+		<antcall target="prepare-selenium-login-config" />
+
 		<antcall target="prepare-selenium-analytics-cloud-properties" />
 		<antcall target="prepare-selenium-app-server-properties" />
 		<antcall target="prepare-selenium-browser" />
@@ -10584,6 +10588,14 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				</echo>
 			</then>
 		</if>
+	</target>
+
+	<target name="prepare-selenium-login-config">
+		<copy
+			file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/core/com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config"
+			overwrite="true"
+			tofile="${liferay.home}/osgi/configs/com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config"
+		/>
 	</target>
 
 	<target name="prepare-selenium-onedrive-properties">

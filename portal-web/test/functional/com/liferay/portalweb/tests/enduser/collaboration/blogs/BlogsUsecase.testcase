@@ -1118,10 +1118,10 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 	}
 
-	@description = "This test also covers LPS-106613. It ensures that the custom abstract can be added and edited to the blog entry."
+	@description = "This test covers LPS-106613. It ensures that the custom abstract can be added and edited."
 	@priority = "4"
 	@refactorneeded
-	test ViewBlogsEntryWithCustomAbstract {
+	test ViewBlogsEntryWithEditedCustomAbstract {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryWithCustomAbstract";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");

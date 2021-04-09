@@ -15,5 +15,5 @@
 module.exports = {
 	build: {
 		bundler: false,
-	}
+	},
 };

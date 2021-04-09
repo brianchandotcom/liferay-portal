@@ -27,6 +27,7 @@ import {
 	useSelectItem,
 } from '../../../../../app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {useSelector} from '../../../../../app/store/index';
 
@@ -102,6 +103,7 @@ export default function PageContent({
 	const onClickEditInlineText = () => {
 		selectItem(`${editableId}`, {
 			itemType: ITEM_TYPES.editable,
+			origin: ITEM_ACTIVATION_ORIGINS.pageContent,
 		});
 	};
 

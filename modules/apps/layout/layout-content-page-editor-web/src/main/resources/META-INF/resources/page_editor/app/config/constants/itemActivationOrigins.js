@@ -13,6 +13,7 @@
  */
 
 export const ITEM_ACTIVATION_ORIGINS = {
+	pageContent: 'pageContent',
 	pageEditor: 'pageEditor',
 	structureTree: 'structureTreeNode',
 };

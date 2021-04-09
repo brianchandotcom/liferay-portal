@@ -135,6 +135,67 @@ definition {
 			webContentText = "Este é um campo de texto");
 	}
 
+	@description = "This test ensures that it's possible/not possible to translate fields with Localizable set as true/false when those fields are in a field group."
+	@priority = "5"
+	test LocalizableSetToFalseAndTrueFieldGroup {
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DataEngine.addFieldToFieldsGroup(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			fieldsGroupLabel = "Fields Group");
+
+		DataEngine.editFieldLocalizable(fieldFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addCP(webContentTitle = "Web Content Title");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "04/09/2021",
+			webContentNumeric = "123",
+			webContentText = "This is a text field");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addCP(webContentTitle = "Título do conteudo da Web");
+
+		DataEngine.assertNonLocalizableField(fieldFieldName = "Text");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "09/04/2021",
+			webContentNumeric = "456");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentDate = "04/09/2021",
+			webContentNumeric = "123",
+			webContentText = "This is a text field");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentDate = "09/04/2021",
+			webContentNumeric = "456",
+			webContentText = "This is a text field");
+	}
+
 	@description = "This test ensures that is possible to translate fields with Localizable set as true."
 	@priority = "5"
 	test TranslateLocalizable {

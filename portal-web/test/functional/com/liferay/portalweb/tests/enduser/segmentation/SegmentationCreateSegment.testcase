@@ -250,6 +250,87 @@ definition {
   		// TODO LPS-130326 AddSegmentBySessionUserAgent pending implementation
 	}
 
+	@description = "This is a test for LPS-130284."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserDateModified {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130284 AddSegmentByUserDateModified pending implementation
+	}
+
+	@description = "This is a test for LPS-130285."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserDateOfBirth {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130285 AddSegmentByUserDateOfBirth pending implementation
+	}
+
+	@description = "This is a test for LPS-130291."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserEmailAddress {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130291 AddSegmentByUserEmailAddress pending implementation. This test is already created as AddSegmentUserEmailAddressContains, but if you are able to do it better, delete the test AddSegmentUserEmailAddressContains.
+	}
+
+	@description = "This is a test for LPS-130286."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserFirstName {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130286 AddSegmentByUserFirstName pending implementation
+	}
+
+	@description = "This is a test for LPS-130287."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserJobTitle {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130287 AddSegmentByUserJobTitle pending implementation
+	}
+
+	@description = "This is a test for LPS-130288."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserLastName {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130288 AddSegmentByUserLastName pending implementation
+	}
+
+	@description = "This is a test for LPS-130292."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserName {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130292 AddSegmentByUserName pending implementation
+	}
+
+	@description = "This is a test for LPS-130289."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserRole {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130289 AddSegmentByUserRole pending implementation
+	}
+
+	@description = "This is a test for LPS-130290."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserScreenName {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130290 AddSegmentByUserScreenName pending implementation
+	}
+
 	@description = "Validate if the user can create a segment with Properties User and Email Segment with Contains Option"
 	@priority = "5"
 	test AddSegmentUserEmailAddressContains {

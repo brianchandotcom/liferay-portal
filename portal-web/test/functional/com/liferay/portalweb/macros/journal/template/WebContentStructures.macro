@@ -77,6 +77,12 @@ definition {
 			PortletEntry.inputName(name = "${structureCopyName}");
 		}
 
+		if (isSet(structureCopyLocalName)) {
+			PortletEntry.changeLocale(locale = "${locale}");
+
+			PortletEntry.inputName(name = "${structureCopyLocalName}");
+		}
+
 		if ("${copyTemplates}" == "true") {
 			Check(
 				checkboxName = "Copy Templates",

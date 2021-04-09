@@ -475,6 +475,8 @@ definition {
 			NavItem.gotoStructures();
 
 			WebContentStructures.copyCP(
+				locale ="en_US",
+				structureCopyLocalName = "WC Structure Copy En-Es Name",
 				structureCopyName = "WC Structure Copy Name",
 				structureName = "WC Structure Name");
 		}
@@ -529,45 +531,29 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			Click.clickNoMouseOver(
-				key_localizedLanguage = "en_US",
-				locator1 = "Icon#AVAILABLE_TRANSLATION");
+			PortletEntry.changeLocale(locale = "en_US");
 
-			DoubleClick(
-				key_fieldFieldLabel = "PaginaOrigem",
-				locator1 = "DDMEditStructure#FORM_FIELD");
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "PaginaOrigem",
+				fieldFieldLabelEdit = "HomePage");
 
-			DynamicDataMapping.editFieldLabel(
-				field = "PaginaOrigem",
-				fieldFieldLabel = "HomePage",
-				fieldName = "PaginaOrigem");
-
-			DoubleClick(
-				key_fieldFieldLabel = "Link Pagina Origem",
-				locator1 = "DDMEditStructure#FORM_FIELD");
-
-			DynamicDataMapping.editFieldLabel(
-				field = "Link Pagina Origem",
-				fieldFieldLabel = "Link Home Page",
-				fieldName = "LinkPaginaOrigem");
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Link Pagina Origem",
+				fieldFieldLabelEdit = "Link Home Page");
 
 			WebContentStructures.saveCP();
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			Click.clickNoMouseOver(
-				key_localizedLanguage = "en_US",
-				locator1 = "Icon#AVAILABLE_TRANSLATION");
+			PortletEntry.changeLocale(locale = "en_US");
 
-			DynamicDataMapping.viewField(
-				field = "PaginaOrigem",
+			DataEngine.viewField(
 				fieldFieldLabel = "HomePage",
 				fieldName = "PaginaOrigem");
 
-			DynamicDataMapping.viewField(
-				field = "Link Pagina Origem",
+			DataEngine.viewField(
 				fieldFieldLabel = "Link Home Page",
-				fieldName = "LinkPaginaOrigem");
+				fieldName = "Link Pagina Origem");
 		}
 
 		task ("Add new translation") {

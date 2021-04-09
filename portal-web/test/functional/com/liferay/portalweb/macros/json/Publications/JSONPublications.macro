@@ -17,13 +17,13 @@ definition {
 	}
 
 	macro publishPublication {
-		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(ctCollectionId = "${ctCollectionId}");
+		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(publicationName = "${publicationName}");
 
 		JSONPublicationsAPI._publishPublication(ctCollectionId = "${ctCollectionId}");
 	}
 
 	macro selectPublication {
-		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(ctCollectionId = "${ctCollectionId}");
+		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(publicationName = "${publicationName}");
 
 		JSONPublicationsAPI._selectPublication(ctCollectionId = "${ctCollectionId}");
 	}

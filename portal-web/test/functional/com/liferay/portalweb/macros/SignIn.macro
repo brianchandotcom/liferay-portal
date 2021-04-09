@@ -5,29 +5,16 @@ definition {
 	var userPasswordReminderAnswer = "test";
 
 	macro _signIn {
-		if (IsElementNotPresent(locator1 = "TextInput#EMAIL_ADDRESS")) {
-			AssertClick(
-				locator1 = "UserBar#USER_SIGN_IN",
-				value1 = "Sign In");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
+		}
+		else {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 
-		Type.typePause(
-			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "${userEmailAddress}");
-
-		Type.typePause(
-			locator1 = "TextInput#PASSWORD",
-			value1 = "${userPassword}");
-
-		if ("${rememberMe}" == "true") {
-			Check(locator1 = "Checkbox#REMEMBER_ME");
-		}
-
-		AssertClick(
-			locator1 = "Button#SIGN_IN",
-			value1 = "Sign In");
-
-		AssertElementNotPresent(locator1 = "Button#SIGN_IN");
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
@@ -52,8 +39,6 @@ definition {
 
 	@summary = "Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'"
 	macro signIn {
-		Navigator.openURL();
-
 		SignIn._signIn(
 			rememberMe = "${rememberMe}",
 			userEmailAddress = "${userEmailAddress}",
@@ -61,23 +46,6 @@ definition {
 	}
 
 	macro signInPortalInstanceSetUp {
-		var defaultPortalURL = PropsUtil.get("default.portal.url");
-
-		if (isSet(freeLogin)) {
-			Navigator.openSpecificURL(url = "${defaultPortalURL}/web/guest?SM_USER=${userEmailAddress}");
-		}
-		else {
-			SignIn.signInSpecificURL(url = "${defaultPortalURL}");
-		}
-
-		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
-			SignIn.agreeToTermsOfUse();
-		}
-
-		if (IsElementPresent(locator1 = "Select#QUESTION")) {
-			SignIn.setPasswordReminder();
-		}
-
 		var portalURL = PropsUtil.get("portal.url");
 		var portalURL = StringUtil.replace("${portalURL}", "http://", "");
 		var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
@@ -88,15 +56,15 @@ definition {
 			domain = "liferay.com",
 			portalInstanceId = "${portalURL}",
 			virtualHost = "${portalURL}");
+
+		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "test@liferay.com");
 	}
 
 	macro signInSpecificURL {
-		Navigator.openSpecificURL(url = "${url}");
-
 		SignIn._signIn(
-			rememberMe = "${rememberMe}",
 			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			userPassword = "${userPassword}",
+			virtualHostsURL = "${url}");
 	}
 
 	@summary = "Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'"

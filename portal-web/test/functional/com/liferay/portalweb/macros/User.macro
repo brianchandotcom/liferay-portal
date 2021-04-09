@@ -1804,51 +1804,20 @@ definition {
 			locator1 = "ExportPersonalData#HEADER");
 	}
 
-	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'; if not logged in as '${userEmailAddress}', then log out first"
+	@summary = "Log into Liferay using URL navigation"
 	macro firstLoginPG {
-		if (isSet(freeLogin)) {
-			if (isSet(virtualHostsURL)) {
-				JSONUser.agreeToTermsAndAnswerReminderQuery(
-					portalInstanceName = "${portalInstanceName}",
-					userEmailAddress = "${userEmailAddress}");
-
-				Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
-			}
-			else {
-				JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "${userEmailAddress}");
-
-				Navigator.openURL(freeLogin = "true");
-			}
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			if (isSet(virtualHostsURL)) {
-				Navigator.openSpecificURL(url = "${virtualHostsURL}");
-			}
-			else {
-				Navigator.openURL();
-			}
+			var baseURL = PropsUtil.get("portal.url");
 
-			if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
-				User.logoutPG(
-					nodePort = "${nodePort}",
-					specificURL = "${virtualHostsURL}");
-
-				User.loginPG(
-					specificURL = "${virtualHostsURL}",
-					userEmailAddress = "${userEmailAddress}");
-			}
-			else {
-				User.loginPG(
-					localization = "${localization}",
-					localizedAgree = "${localizedAgree}",
-					localizedAnswer = "${localizedAnswer}",
-					localizedSaveButton = "${localizedSaveButton}",
-					samlEnabled = "${samlEnabled}",
-					setupWizardEnabled = "${setupWizardEnabled}",
-					specificURL = "${virtualHostsURL}",
-					userEmailAddress = "${userEmailAddress}");
-			}
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro forgotPasswordSendResetLink {
@@ -1917,105 +1886,13 @@ definition {
 
 	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'"
 	macro loginPG {
-		if (isSet(nodePort)) {
-			Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
-		}
-		else if (isSet(specificURL)) {
-			Navigator.openSpecificURL(url = "${specificURL}");
+		if (isSet(virtualHostsURL)) {
+			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			Navigator.openURL();
-		}
+			var baseURL = PropsUtil.get("portal.url");
 
-		if (IsElementPresent(locator1 = "Message#PORTAL_LOCALIZATION")) {
-			Alert.closePortalLocalizationWarning();
-		}
-
-		if ("${samlEnabled}" != "true") {
-			User.loginLocalizationPG(localization = "${localization}");
-		}
-
-		if ("${samlMultiIdPs}" == "true") {
-			Select(
-				key_fieldLabel = "Identity Provider",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${idpName}");
-
-			Button.click(button = "Sign In");
-		}
-
-		if ((isSet(authenticationMethod)) && ("${authenticationMethod}" == "By Screen Name")) {
-			Type(
-				locator1 = "TextInput#SCREEN_NAME",
-				value1 = "${userScreenName}");
-		}
-		else {
-			Type.typePause(
-				locator1 = "TextInput#EMAIL_ADDRESS",
-				value1 = "${userEmailAddress}");
-		}
-
-		Type.typePause(
-			locator1 = "TextInput#PASSWORD",
-			value1 = "${password}");
-
-		takeScreenshot();
-
-		if ((isSet(rememberMeChecked)) && ("${rememberMeChecked}" == "true")) {
-			Check(locator1 = "Checkbox#REMEMBER_ME");
-		}
-
-		if (isSet(localization)) {
-			var localizedSignIn = User._signInLocalization(localization = "${localization}");
-
-			Button.click(button = "${localizedSignIn}");
-		}
-		else {
-			Button.click(button = "Sign In");
-		}
-
-		if (IsElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED") && (IsElementNotPresent(locator1 = "TextInput#ENTER_AGAIN"))) {
-			echo("Sign in failed due to empty required field. Retrying...");
-
-			if ((isSet(authenticationMethod)) && ("${authenticationMethod}" == "By Screen Name")) {
-				Type(
-					locator1 = "TextInput#SCREEN_NAME",
-					value1 = "${userScreenName}");
-			}
-			else {
-				Type.typePause(
-					locator1 = "TextInput#EMAIL_ADDRESS",
-					value1 = "${userEmailAddress}");
-			}
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "${password}");
-
-			Button.click(button = "Sign In");
-		}
-
-		Button.viewNotPresent(button = "Sign In");
-
-		if (isSet(localizedAgree)) {
-			User.acceptEndUserLicenseAgreementLocalized(localizedAgree = "${localizedAgree}");
-		}
-		else {
-			User.acceptEndUserLicenseAgreement();
-		}
-
-		User.resetPassword(
-			resetPassword = "${resetPassword}",
-			setupWizardEnabled = "${setupWizardEnabled}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
-
-		if (isSet(localizedAnswer)) {
-			User.answerPasswordReminderLocalized(
-				localizedAnswer = "${localizedAnswer}",
-				localizedSaveButton = "${localizedSaveButton}");
-		}
-		else {
-			User.answerPasswordReminder();
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");

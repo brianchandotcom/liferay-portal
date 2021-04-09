@@ -1247,6 +1247,120 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
+	@description = "This is a use case for LPS-129934"
+	@priority = "4"
+	test ViewIdPSingleLogoutWithMultipleSPs {
+		property test.name.skip.portal.instance = "SAML#ViewIdPSingleLogoutWithMultipleSPs";
+
+		User.logoutAndLoginPG(
+			nodePort = "9080",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		PortalInstances.addCP(
+			mailDomain = "www.baker.com",
+			virtualHost = "www.baker.com",
+			webId = "www.baker.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:9080");
+
+		User.openUsersAdmin(baseURL = "http://www.able.com:9080");
+
+		User.editEmailAddressCP(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			userScreenName = "test");
+
+		User.logoutPG(specificURL = "http://www.able.com:9080/");
+
+		User.viewLoggedOutPG();
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.baker.com",
+			virtualHostsURL = "http://www.baker.com:9080");
+
+		User.openUsersAdmin(baseURL = "http://www.baker.com:9080");
+
+		User.editEmailAddressCP(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			userScreenName = "test");
+
+		User.logoutPG(specificURL = "http://www.baker.com:9080/");
+
+		User.viewLoggedOutPG();
+
+		User.firstLoginPG();
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/");
+
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp2",
+			spURL = "http://www.baker.com:9080");
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com");
+
+		User.viewLoggedInPG();
+
+		// Verify IdP is logged in
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG();
+
+		// Verify second SP is prompted to be logged in after click sign in button
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:9080");
+
+		Navigator.gotoLoginPage();
+
+		User.viewLoggedInPG();
+
+		// Initiate Single Logout for IdP
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		// Verify second SP is also logged out
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:9080");
+
+		User.viewLoggedOutPG();
+
+		// Verify first SP is also logged out
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+	}
+
 	@priority = "4"
 	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
 		property portal.upstream = "quarantine";

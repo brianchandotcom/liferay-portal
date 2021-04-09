@@ -24,7 +24,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
 			multiple: true,
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					let redirectURL = itemData?.redirectURL;
 
@@ -80,7 +80,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
 			multiple: true,
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					const assetTags = selectedItem['items'].split(',');
 
@@ -106,7 +106,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
 			multiple: true,
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					let redirectURL = itemData?.redirectURL;
 
@@ -131,7 +131,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectScope = (itemData) => {
 		openSelectionModal({
 			id: `${portletNamespace}selectedScopeIdItem`,
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				navigate(
 					addParams(
 						`${portletNamespace}scopeId=${selectedItem.groupid}`,

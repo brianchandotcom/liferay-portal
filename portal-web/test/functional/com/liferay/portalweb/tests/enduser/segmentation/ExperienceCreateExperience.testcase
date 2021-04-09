@@ -162,6 +162,87 @@ definition {
 		PageEditor.clickPublish();
 	}
 
+	@description = "This is a test for LPS-130293."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserDateModifiedSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130293 AddNewExperienceUserDateModifiedSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130294."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserDateOfBirthSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130294 AddNewExperienceUserDateOfBirthSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130301."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserEmailAddressSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130301 AddNewExperienceUserEmailAddressSegment pending implementation
+	}
+	
+	@description = "This is a test for LPS-130295."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserFirstNameSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130295 AddNewExperienceUserFirstNameSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130296."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserJobTitleSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130296 AddNewExperienceUserJobTitleSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130297."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserLastNameSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130297 AddNewExperienceUserLastNameSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130298."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserNameSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130298 AddNewExperienceUserNameSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130299."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserRoleSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130299 AddNewExperienceUserRoleSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130300."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserScreenNameSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130300 AddNewExperienceUserScreenNameSegment pending implementation
+	}
+
 	@description = "When the user opens the experiences selection modal and select a different locale for an experience, the experience version for that language is shown"
 	@priority = "5"
 	test AddNewExperienceWithLanguage {

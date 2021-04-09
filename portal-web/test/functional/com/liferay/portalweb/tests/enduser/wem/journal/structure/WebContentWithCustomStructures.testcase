@@ -493,6 +493,9 @@ definition {
 					key_fieldFieldLabel = "Companhia Operadora",
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
+				ScrollWebElementIntoView(key_fieldFieldLabel = "Companhia Operadora",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
 				MouseOver(locator1 = "//div[contains(@data-field-name,'CompanhiaOperadoraFieldSet')]//div[contains(@class,'placeholder')]");
 
 				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Duplicate");

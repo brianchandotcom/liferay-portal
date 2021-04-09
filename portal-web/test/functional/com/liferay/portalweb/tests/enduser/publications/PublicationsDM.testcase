@@ -10,12 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Settings");
-
-		Publications.enablePublications();
+		JSONPublications.enablePublications();
 	}
 
 	tearDown {
@@ -38,7 +33,9 @@ definition {
 	test CheckoutAndCheckinDocumentInPublication {
 		property test.assert.warning.exceptions = "true";
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -73,9 +70,9 @@ definition {
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "2.0");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -90,14 +87,15 @@ definition {
 
 	@priority = "4"
 	test ConflictingPublicationsNeedManualResolution {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
 
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title");
+		JSONPublications.addPublication(publicationName = "Publication Name");
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -111,7 +109,9 @@ definition {
 			dmDocumentTitleEdit = "DM Document Title Edit",
 			dmDocumentVersionNumber = "1.1");
 
-		Publications.createNewPublication(publicationsName = "Publication Name 2");
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -125,13 +125,13 @@ definition {
 			dmDocumentTitleEdit = "DM Document 2 Title Edit",
 			dmDocumentVersionNumber = "1.1");
 
-		Publications.gotoPublish(publicationsName = "Publication Name 2");
+		JSONPublications.publishPublication(publicationName = "Publication Name 2");
 
-		Publications.publishPublication(publicationsName = "Publication Name 2");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name 2");
 
-		Publications.selectPublication(publicationsName = "Publication Name");
-
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationsName = "Publication Name");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit",
@@ -167,13 +167,14 @@ definition {
 	test DeleteDMFolderWithMultipleFiles {
 		property test.assert.warning.exceptions = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.addCP(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder 1 Description",
-			dmFolderName = "DM Folder 1 Name");
+			dmFolderName = "DM Folder 1 Name",
+			groupName = "Guest");
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -230,18 +231,15 @@ definition {
 
 	@priority = "4"
 	test PublishDocumentFolderWithEditedDocument {
-		Navigator.openURL();
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
+		JSONPublications.addPublication(publicationName = "Publication Name");
 
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title");
-
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -297,9 +295,9 @@ definition {
 			publicationsDescription = "Test Test added a Documents Folder in Guest",
 			publicationsTitle = "DM Folder Name");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -316,7 +314,9 @@ definition {
 
 	@priority = "4"
 	test PublishDocumentWithNewDocumentType {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -369,9 +369,9 @@ definition {
 			publicationsDescription = "Test Test added a Document in Guest",
 			publicationsTitle = "DM Document Title");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 

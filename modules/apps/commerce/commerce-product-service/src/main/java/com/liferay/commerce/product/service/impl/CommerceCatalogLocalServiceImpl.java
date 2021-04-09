@@ -177,10 +177,11 @@ public class CommerceCatalogLocalServiceImpl
 	@Override
 	public void deleteCommerceCatalogs(long companyId) throws PortalException {
 		List<CommerceCatalog> commerceCatalogs =
-			commerceCatalogPersistence.findByC_S(companyId, false);
+			commerceCatalogPersistence.findByCompanyId(companyId);
 
 		for (CommerceCatalog commerceCatalog : commerceCatalogs) {
-			commerceCatalogLocalService.deleteCommerceCatalog(commerceCatalog);
+			commerceCatalogLocalService.forceDeleteCommerceCatalog(
+				commerceCatalog);
 		}
 	}
 
@@ -208,6 +209,31 @@ public class CommerceCatalogLocalServiceImpl
 		}
 
 		return null;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommerceCatalog forceDeleteCommerceCatalog(
+			CommerceCatalog commerceCatalog)
+		throws PortalException {
+
+		long groupId = commerceCatalog.getGroupId();
+
+		// Commerce catalog
+
+		commerceCatalogPersistence.remove(commerceCatalog);
+
+		// Group
+
+		groupLocalService.deleteGroup(groupId);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			commerceCatalog, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		return commerceCatalog;
 	}
 
 	@Override

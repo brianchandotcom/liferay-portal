@@ -1,9 +1,10 @@
 definition {
 
 	macro setCTCollectionId {
-		if (!(isSet(ctCollectionId))) {
-			var ctCollectionId = "1";
-		}
+		Variables.assertDefined(parameterList = "${publicationName}");
+
+		var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(
+			publicationName = "${publicationName}");
 
 		return "${ctCollectionId}";
 	}

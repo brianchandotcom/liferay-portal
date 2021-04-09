@@ -250,6 +250,12 @@ public interface CommerceCatalogLocalService
 	public CommerceCatalog fetchCommerceCatalogByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommerceCatalog forceDeleteCommerceCatalog(
+			CommerceCatalog commerceCatalog)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

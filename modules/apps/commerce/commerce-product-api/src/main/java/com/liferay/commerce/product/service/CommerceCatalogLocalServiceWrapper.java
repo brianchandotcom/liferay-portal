@@ -326,6 +326,17 @@ public class CommerceCatalogLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceCatalog
+			forceDeleteCommerceCatalog(
+				com.liferay.commerce.product.model.CommerceCatalog
+					commerceCatalog)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceCatalogLocalService.forceDeleteCommerceCatalog(
+			commerceCatalog);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -284,6 +284,13 @@ public class CommerceCatalogLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	public static CommerceCatalog forceDeleteCommerceCatalog(
+			CommerceCatalog commerceCatalog)
+		throws PortalException {
+
+		return getService().forceDeleteCommerceCatalog(commerceCatalog);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

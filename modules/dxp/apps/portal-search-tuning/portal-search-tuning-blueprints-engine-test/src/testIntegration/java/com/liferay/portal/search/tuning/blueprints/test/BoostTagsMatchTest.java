@@ -69,14 +69,14 @@ public class BoostTagsMatchTest extends BaseBlueprintsTestCase {
 			Collections.singletonMap(LocaleUtil.US, ""),
 			getConfigurationString((JSONObject[])null), "", 1);
 
-		TimeUnit.SECONDS.sleep(5);
-
 		assertSearch(
 			blueprint, null,
 			StringBundler.concat(
 				"[coca ", prefixRandomString, ", pepsi ", prefixRandomString,
 				"]"),
 			prefixRandomString, null);
+		
+		TimeUnit.SECONDS.sleep(5);
 
 		assertSearch(
 			blueprint, getConfigurationString(_getQueryElementJSONObject(100)),

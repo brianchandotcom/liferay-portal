@@ -1,17 +1,16 @@
 {
 	"elementTemplateJSON": {
-		"category": "match",
+		"category": "boost",
 		"clauses": [
 			{
 				"context": "query",
-				"occur": "must",
+				"occur": "should",
 				"query": {
 					"query": {
 						"multi_match": {
 							"boost": "${configuration.boost}",
 							"fields": "${configuration.fields}",
-							"fuzziness": "${configuration.fuzziness}",
-							"operator": "${configuration.operator}",
+							"operator": "and",
 							"query": "${keywords}",
 							"type": "${configuration.type}"
 						}
@@ -23,12 +22,12 @@
 		"conditions": [
 		],
 		"description": {
-			"en_US": "Search for a text match over multiple text fields"
+			"en_US": "Boost contents matching all the words in the search phrase"
 		},
 		"enabled": true,
-		"icon": "picture",
+		"icon": "thumbs-up",
 		"title": {
-			"en_US": "Text Match Over Multiple Fields"
+			"en_US": "Boost All Keywords Match"
 		}
 	},
 	"uiConfigurationJSON": {
@@ -38,39 +37,21 @@
 					{
 						"defaultValue": [
 							{
-								"boost": "2",
+								"boost": 2,
 								"field": "localized_title",
 								"locale": "${context.language_id}"
 							},
 							{
-								"boost": "1",
+								"boost": 1,
 								"field": "content",
 								"locale": "${context.language_id}"
 							}
 						],
-						"label": "Fields",
+						"label": "Field",
 						"name": "fields",
 						"type": "fieldMappingList",
 						"typeOptions": {
 							"boost": true
-						}
-					},
-					{
-						"defaultValue": "or",
-						"label": "Operator",
-						"name": "operator",
-						"type": "select",
-						"typeOptions": {
-							"options": [
-								{
-									"label": "OR",
-									"value": "or"
-								},
-								{
-									"label": "AND",
-									"value": "and"
-								}
-							]
 						}
 					},
 					{
@@ -108,32 +89,7 @@
 						}
 					},
 					{
-						"label": "Fuzziness",
-						"name": "fuzziness",
-						"type": "select",
-						"typeOptions": {
-							"options": [
-								{
-									"label": "Auto",
-									"value": "AUTO"
-								},
-								{
-									"label": "0",
-									"value": "0"
-								},
-								{
-									"label": "1",
-									"value": "1"
-								},
-								{
-									"label": "2",
-									"value": "2"
-								}
-							]
-						}
-					},
-					{
-						"defaultValue": 1,
+						"defaultValue": 10,
 						"label": "Boost",
 						"name": "boost",
 						"type": "slider"

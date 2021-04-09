@@ -84,7 +84,9 @@ public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
 		);
 	}
 
-	protected JSONObject getMultiMatchJSONObject(int boost, String operator) {
+	protected JSONObject getMultiMatchJSONObject(
+		int boost, String operator, String type) {
+
 		JSONArray fieldsJSONArray = createJSONArray();
 
 		return JSONUtil.put(
@@ -103,12 +105,19 @@ public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
 		).put(
 			"query", "${keywords}"
 		).put(
-			"type", "best_fields"
+			"type", type
 		);
 	}
 
 	protected JSONObject getMultiMatchQueryElementJSONObject(
 		int boost, String operator) {
+
+		return getMultiMatchQueryElementJSONObject(
+			boost, operator, "best_fields");
+	}
+
+	protected JSONObject getMultiMatchQueryElementJSONObject(
+		int boost, String operator, String type) {
 
 		return JSONUtil.put(
 			"category", "match"
@@ -125,7 +134,7 @@ public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
 						"query",
 						JSONUtil.put(
 							"multi_match",
-							getMultiMatchJSONObject(boost, operator)))
+							getMultiMatchJSONObject(boost, operator, type)))
 				).put(
 					"type", "wrapper"
 				))
@@ -209,46 +218,19 @@ public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
 			String operator)
 		throws Exception {
 
+		return getTextMatchOverMultipleFieldJSONObject(
+			boost, contentBoost, localizedTitleBoost, operator, "best_fields");
+	}
+
+	protected JSONObject getTextMatchOverMultipleFieldJSONObject(
+			int boost, int contentBoost, int localizedTitleBoost,
+			String operator, String type)
+		throws Exception {
+
 		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject(
 			"/elements/text-match-over-multiple-fields-test.json");
 
 		return JSONUtil.put(
-			"elementOutput",
-			JSONUtil.put(
-				"category", "match"
-			).put(
-				"clauses",
-				createJSONArray().put(
-					JSONUtil.put(
-						"context", "query"
-					).put(
-						"occur", "must"
-					).put(
-						"query",
-						JSONUtil.put(
-							"query",
-							JSONUtil.put(
-								"multi_match",
-								getMultiMatchJSONObject(boost, operator)))
-					).put(
-						"type", "wrapper"
-					))
-			).put(
-				"conditions", createJSONArray()
-			).put(
-				"description",
-				JSONUtil.put(
-					"en_US",
-					"Search for a text match over multiple text fields")
-			).put(
-				"enabled", true
-			).put(
-				"icon", "picture"
-			).put(
-				"title",
-				JSONUtil.put("en_US", "Text Match Over Multiple Fields")
-			)
-		).put(
 			"elementTemplateJSON",
 			elementTemplateJSONObject.get("elementTemplateJSON")
 		).put(
@@ -257,12 +239,20 @@ public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
 		).put(
 			"uiConfigurationValues",
 			getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
-				boost, contentBoost, localizedTitleBoost, operator)
+				boost, contentBoost, localizedTitleBoost, operator, type)
 		);
 	}
 
 	protected JSONObject getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
 		int boost, int contentBoost, int localizedTitleBoost, String operator) {
+
+		return getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
+			boost, contentBoost, localizedTitleBoost, operator, "best_fields");
+	}
+
+	protected JSONObject getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
+		int boost, int contentBoost, int localizedTitleBoost, String operator,
+		String type) {
 
 		JSONArray fieldsJSONArray = createJSONArray();
 
@@ -292,7 +282,7 @@ public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
 		).put(
 			"operator", operator
 		).put(
-			"type", "best_fields"
+			"type", type
 		);
 	}
 

@@ -58,43 +58,4 @@ definition {
 			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 	}
 
-	@description = "This case ensures that a user can select content via content display in content page template editor."
-	@priority = "4"
-	test SelectWebContentViaContentDisplay {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WebContent Title");
-
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
-
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
-
-		PageEditor.assertFragmentSidebarLoaded();
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Content Display");
-
-		PageEditor.editContentDisplay(
-			fragmentName = "Content Display",
-			webcontent = "true",
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WebContent Title");
-
-		PageEditor.clickPublish();
-
-		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
-
-		PageEditor.assertFragmentSidebarLoaded();
-
-		task ("Assert correct content is visible") {
-			AssertTextEquals.assertPartialTextAceEditor(
-				locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
-				value1 = "WC WebContent Content");
-		}
-	}
-
 }

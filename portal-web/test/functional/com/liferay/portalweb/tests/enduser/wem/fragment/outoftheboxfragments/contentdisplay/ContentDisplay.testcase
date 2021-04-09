@@ -1,0 +1,695 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages,Fragments";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-97182. If a page author does not have view permissions for an asset, it should not display for them."
+	@priority = "3"
+	test CannotViewAssetWithoutAssetViewPermission {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Change password") {
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add user to Test Site Name") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a site role") {
+			JSONRole.addSiteRole(
+				roleKey = "Roles Siterole Name",
+				roleTitle = "Roles Siterole Name");
+		}
+
+		task ("Define permissions for new site role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			for (var resourceActionIndex : list "VIEW,UPDATE_LAYOUT_CONTENT") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.Layout",
+					roleTitle = "Roles Siterole Name",
+					roleType = "site");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		task ("Assign new site role to new user") {
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Roles Siterole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Remove View permission for Guest and Site Member in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			WebContentAdmin.clickEntryEllipsisItem(
+				entry = "Web Content Title",
+				item = "Permissions");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+				addOrRemoveViewPermission = "Remove",
+				roleList = "Guest,Site Member");
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+		}
+
+		task ("logout and login as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert cannot view the web content in Content Display") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementNotPresent(
+				key_content = "[normalize-space(text())='Web Content Content']",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			AssertTextEquals(
+				locator1 = "Portlet#MESSAGE_INFO",
+				value1 = "You do not have permission to access the requested resource.");
+
+			ContentPages.clickPencil();
+
+			AssertElementNotPresent(
+				key_content = "[normalize-space(text())='Web Content Content']",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			AssertTextEquals(
+				locator1 = "Portlet#MESSAGE_INFO",
+				value1 = "You do not have permission to access the requested resource.");
+		}
+	}
+
+	@description = "Given a content page with a configured Content fragment, when the content is deleted the fragment should not be visible in view mode and a message should be shown in page editor."
+	@priority = "4"
+	test DeletedContentIsInvisible {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			fragmentName = "Content Display",
+			webcontent = "true",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		PageEditor.clickPublish();
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert the fragment is not visible in the site page") {
+			AssertElementNotPresent(
+				key_pageName = "Content Page Name",
+				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
+		}
+
+		ContentPages.clickPencil();
+
+		task ("Assert there is a message in page editor informing the page author that the content is no longer available") {
+			AssertVisible(
+				key_fragmentName = "Content Display",
+				key_messageIfo = "The selected content is no longer available. Please select another.",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+	}
+
+	@description = "This is a test for LPS-96795. Content author having permissions to create and update web content could see edit icon in the content page displaying the web contents and could edit web content in edit mode."
+	@priority = "5"
+	test EditContentWithCreateAndUpdateWebContentPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addSiteRole(
+			roleKey = "Roles Siterole Name",
+			roleTitle = "Roles Siterole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		for (var resourceActionIndex : list "VIEW,UPDATE_LAYOUT_CONTENT") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		for (var resourceActionIndex : list "ADD_ARTICLE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.journal.model.JournalArticle",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAdd();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "${webContentTitle}");
+
+			PortletEntry.publish();
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WC WebContent Title 1",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		SelectFrame(value1 = "relative=top");
+
+		PageEditor.waitForAutoSave();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addWidget(
+			portletName = "Web Content Display",
+			targetFragmentName = "Heading");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Web Content Display");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC WebContent Title 3",
+			assetType = "Basic Web Content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.clickPencil();
+
+		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+			PageEditor.gotoTab(tabName = "Contents");
+
+			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${webContentTitle}");
+
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			Navigator.gotoBack();
+		}
+	}
+
+	@description = "Given a published content page with an unconfigured Content fragment, when the page is viewed the fragment should not be visible."
+	@priority = "4"
+	test UnconfiguredContentDisplayIsInvisible {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert the fragment is not visible in the site page") {
+			AssertElementNotPresent(
+				key_pageName = "Content Page Name",
+				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
+		}
+	}
+
+	@description = "This is a test for LPS-97182. If you recycle bin the asset attached to a Content Display fragment and then restore it, it should re-appear in the Content Display fragment."
+	@priority = "2"
+	test ViewRestoredAsset {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the web content is shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+		}
+
+		task ("Delete the web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.moveToRecycleBinCP(webContentTitle = "Web Content Title");
+		}
+
+		task ("Assert the web content is not shown in Content Display") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementNotPresent(
+				key_content = "[normalize-space(text())='Web Content Content']",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			ContentPages.clickPencil();
+
+			AssertVisible(
+				key_fragmentName = "Content Display",
+				key_messageIfo = "The selected content is no longer available. Please select another.",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+
+		task ("Restore web content from Recycle Bin") {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+			RecycleBin.restoreCP(
+				assetName = "Web Content Title",
+				assetRestoreLocation = "Home",
+				assetType = "Web Content Article");
+		}
+
+		task ("Assert the web content is shown in Content Display") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+
+			ContentPages.clickPencil();
+
+			AssertTextEquals(
+				key_fragmentName = "Content Display",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Web Content Content");
+		}
+	}
+
+	@description = "This case ensures that a user can map a blogs content field to a fragment via the content display."
+	@priority = "5"
+	test ViewSelectedBlog {
+		property portal.acceptance = "true";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "This content maps from blog content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			blogs = "true",
+			entryContent = "This content maps from blog content",
+			entryTitle = "Blogs Entry Title",
+			fragmentName = "Content Display");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertVisible(
+			key_imageFileName = "Document_1.jpg",
+			locator1 = "PageEditor#CONTENT_PAGE_IMAGE_CONTENT");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+			value1 = "This content maps from blog content");
+	}
+
+	@description = "This case ensures that a user can map an image to a fragment via the content display."
+	@priority = "5"
+	test ViewSelectedDocument {
+		property portal.acceptance = "true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			documentandmedia = "true",
+			fragmentName = "Content Display",
+			imageFileName = "Document Title",
+			sourceFileName = "Document_1.jpg");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertVisible(
+			key_imageFileName = "Document_1.jpg",
+			locator1 = "PageEditor#CONTENT_PAGE_IMAGE_CONTENT");
+	}
+
+	@description = "This case ensures that a user can map the content field from web content to a fragment via the content display."
+	@priority = "5"
+	test ViewSelectedWebContentInContentPage {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "This content maps from web content",
+			groupName = "Test Site Name",
+			title = "Webcontent Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			fragmentName = "Content Display",
+			webcontent = "true",
+			webContentContent = "This content maps from web content",
+			webContentTitle = "Webcontent Title");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertTextEquals.assertPartialTextAceEditor(
+			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
+			value1 = "This content maps from web content");
+	}
+
+	@description = "This case ensures that a user can select content via content display in content page template editor."
+	@priority = "4"
+	test ViewSelectedWebContentInContentPageTemplate {
+		property testray.main.component.name = "Fragments,Layout Page Templates";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			fragmentName = "Content Display",
+			webcontent = "true",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		PageEditor.clickPublish();
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
+
+		task ("Assert correct content is visible") {
+			AssertTextEquals.assertPartialTextAceEditor(
+				locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
+				value1 = "WC WebContent Content");
+		}
+	}
+
+	@description = "This case ensures that a user can select content via content display in display page template editor."
+	@priority = "4"
+	test ViewSelectedWebContentInDisplayPageTemplate {
+		property testray.main.component.name = "Display Pages,Fragments";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			fragmentName = "Content Display",
+			webcontent = "true",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "Edit");
+
+		task ("Assert correct content is visible") {
+			AssertTextEquals.assertPartialTextAceEditor(
+				locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
+				value1 = "WC WebContent Content");
+		}
+	}
+
+}

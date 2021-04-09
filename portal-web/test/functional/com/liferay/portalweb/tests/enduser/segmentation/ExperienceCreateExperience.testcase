@@ -162,6 +162,87 @@ definition {
 		PageEditor.clickPublish();
 	}
 
+	@description = "This is a test for LPS-130309."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceOrganizationCountrySegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130309 AddNewExperienceOrganizationCountrySegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130302."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceOrganizationDateModifiedSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130302 AddNewExperienceOrganizationDateModifiedSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130303."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceOrganizationHierarchyPathSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130303 AddNewExperienceOrganizationHierarchyPathSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130304."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceOrganizationNameSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130304 AddNewExperienceOrganizationNameSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130306."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceOrganizationOrganizationSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130306 AddNewExperienceOrganizationOrganizationSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130307."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceOrganizationParentOrganizationSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130307 AddNewExperienceOrganizationParentOrganizationSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130310."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceOrganizationRegionSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130310 AddNewExperienceOrganizationRegionSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130311."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceOrganizationTagSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130311 AddNewExperienceOrganizationTagSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130308."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceOrganizationTypeSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130308 AddNewExperienceOrganizationTypeSegment pending implementation
+	}
+
 	@description = "This is a test for LPS-130293."
 	@ignore = "true"
 	@priority = "5"

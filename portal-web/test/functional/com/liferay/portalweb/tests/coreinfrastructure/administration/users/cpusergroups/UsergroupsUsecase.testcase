@@ -133,12 +133,6 @@ definition {
 		AssertElementPresent(
 			key_entryTitle = "Blogs Entry Title",
 			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -252,12 +246,6 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ApplicationsMenuHelper.assertNoApplicationsMenu();
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"

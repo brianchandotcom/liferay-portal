@@ -19,13 +19,20 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * @author Rafael Praxedes
@@ -83,6 +90,9 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 			Map<String, Object> nestedValues =
 				(Map<String, Object>)fieldInstanceValue.get("nestedValues");
 
+			_addMissingValues(
+				ddmFormField.getNestedDDMFormFieldsMap(), locale, nestedValues);
+
 			if (MapUtil.isEmpty(nestedValues)) {
 				return ddmFormFieldValue;
 			}
@@ -103,6 +113,34 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 	}
 
 	private NestedFieldsSupportMapToDDMFormValuesConverterStrategy() {
+	}
+
+	private void _addMissingValues(
+		Map<String, DDMFormField> ddmFormFieldsMap, Locale locale,
+		Map<String, Object> values) {
+
+		for (Map.Entry<String, DDMFormField> entry :
+				ddmFormFieldsMap.entrySet()) {
+
+			Set<String> keySet = values.keySet();
+
+			Stream<String> stream = keySet.stream();
+
+			if (!stream.anyMatch(
+					key -> StringUtil.startsWith(key, entry.getKey()))) {
+
+				values.put(
+					StringBundler.concat(
+						entry.getKey(), DDM.INSTANCE_SEPARATOR,
+						StringUtil.randomString()),
+					HashMapBuilder.<String, Object>put(
+						"value",
+						HashMapBuilder.<String, Object>put(
+							LocaleUtil.toLanguageId(locale), StringPool.BLANK
+						).build()
+					).build());
+			}
+		}
 	}
 
 	private static final NestedFieldsSupportMapToDDMFormValuesConverterStrategy

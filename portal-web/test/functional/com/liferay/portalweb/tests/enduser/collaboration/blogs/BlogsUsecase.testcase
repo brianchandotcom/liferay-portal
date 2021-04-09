@@ -659,9 +659,9 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This test covers LPS-102199, this ensures that the user can search a blog entry that is pending."
+	@description = "This test covers LPS-102199. This ensures that the user can search for a pending blog entry."
 	@priority = "3"
-	test SearchBlogsEntryInPending {
+	test SearchForPendingBlogsEntry {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",

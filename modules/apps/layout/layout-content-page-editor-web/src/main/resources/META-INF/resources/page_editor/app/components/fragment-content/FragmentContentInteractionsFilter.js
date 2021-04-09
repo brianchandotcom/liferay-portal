@@ -218,7 +218,9 @@ function FragmentContentInteractionsFilter({
 				}
 
 				if (
-					activationOrigin === ITEM_ACTIVATION_ORIGINS.structureTree
+					activationOrigin ===
+						ITEM_ACTIVATION_ORIGINS.structureTree ||
+					activationOrigin === ITEM_ACTIVATION_ORIGINS.pageContent
 				) {
 					activeEditable.element.scrollIntoView({
 						behavior: 'smooth',

@@ -249,6 +249,7 @@ definition {
 
 	@description = "This test covers LPS-129777. It ensures that a predefined image can be added via image field."
 	@priority = "4"
+	@refactorneeded
 	test AddPredefinedImageViaImageField {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

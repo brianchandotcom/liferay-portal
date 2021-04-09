@@ -661,6 +661,7 @@ definition {
 
 	@description = "This test covers LPS-102199. This ensures that the user can search for a pending blog entry."
 	@priority = "3"
+	@refactorneeded
 	test SearchForPendingBlogsEntry {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

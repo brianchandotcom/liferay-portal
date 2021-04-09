@@ -406,6 +406,7 @@ definition {
 
 	@description = "This test covers LPS-96652. It ensures that the PDF file can be added after enabling text extraction."
 	@priority = "4"
+	@refactorneeded
 	test AddPDFAfterEnablingTextExtraction {
 		property custom.properties = "text.extraction.fork.process.enabled=true${line.separator}text.extraction.fork.process.mime.types=application/x-tika-ooxml,application/pdf";
 
@@ -1351,6 +1352,7 @@ definition {
 
 	@description = "This test covers LPS-129887. It ensures that the user can search for documents using file name."
 	@priority = "5"
+	@refactorneeded
 	test SearchForDocumentsWithFileName {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

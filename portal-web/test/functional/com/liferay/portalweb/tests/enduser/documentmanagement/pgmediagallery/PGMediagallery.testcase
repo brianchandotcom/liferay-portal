@@ -329,6 +329,7 @@ definition {
 
 	@description = "This test covers LPS-107521. It ensures that the SVG file can be viewed."
 	@priority = "4"
+	@refactorneeded
 	test ViewSVG {
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

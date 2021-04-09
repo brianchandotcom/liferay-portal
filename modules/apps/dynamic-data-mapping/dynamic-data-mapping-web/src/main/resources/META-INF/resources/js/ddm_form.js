@@ -1002,7 +1002,11 @@ AUI.add(
 
 					var fieldDefinition = instance.getFieldDefinition();
 
-					if (fieldDefinition && fieldDefinition.dataType == 'html') {
+					if (
+						fieldDefinition &&
+						(fieldDefinition.dataType == 'html' ||
+							fieldDefinition.type == 'ddm-separator')
+					) {
 						container._node.insertAdjacentHTML(
 							'afterbegin',
 							TPL_REPEATABLE_ICON

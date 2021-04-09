@@ -847,17 +847,17 @@ definition {
 	}
 
 	macro viewEntryPG {
-		var key_entryContent = "${entryContent}";
-		var key_entrySubtitle = "${entrySubtitle}";
-		var key_entryTitle = "${entryTitle}";
-
 		AssertElementPresent(locator1 = "BlogsEntry#TITLE");
+
+		var key_entryTitle = "${entryTitle}";
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "${entryTitle}");
 
 		if (isSet(entrySubtitle)) {
+			var key_entrySubtitle = "${entrySubtitle}";
+
 			AssertTextEquals(
 				locator1 = "BlogsEntry#SUBTITLE",
 				value1 = "${entrySubtitle}");
@@ -891,6 +891,8 @@ definition {
 		}
 
 		if (isSet(entryContent)) {
+			var key_entryContent = "${entryContent}";
+
 			AssertTextEquals(
 				locator1 = "BlogsEntry#CONTENT",
 				value1 = "${entryContent}");

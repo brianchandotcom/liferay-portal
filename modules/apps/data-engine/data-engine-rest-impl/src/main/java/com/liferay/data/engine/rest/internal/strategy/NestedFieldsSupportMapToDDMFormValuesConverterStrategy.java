@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,7 +48,8 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 			true);
 
 		for (Map.Entry<String, Object> entry : dataRecordValues.entrySet()) {
-			String[] parts = StringUtil.split(entry.getKey(), "_INSTANCE_");
+			String[] parts = StringUtil.split(
+				entry.getKey(), DDM.INSTANCE_SEPARATOR);
 
 			ddmFormValues.addDDMFormFieldValue(
 				createDDMFormFieldValue(
@@ -86,7 +88,8 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 			}
 
 			for (Map.Entry<String, Object> entry : nestedValues.entrySet()) {
-				String[] parts = StringUtil.split(entry.getKey(), "_INSTANCE_");
+				String[] parts = StringUtil.split(
+					entry.getKey(), DDM.INSTANCE_SEPARATOR);
 
 				ddmFormFieldValue.addNestedDDMFormFieldValue(
 					createDDMFormFieldValue(

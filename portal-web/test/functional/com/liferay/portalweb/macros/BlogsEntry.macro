@@ -851,7 +851,7 @@ definition {
 		var key_entrySubtitle = "${entrySubtitle}";
 		var key_entryTitle = "${entryTitle}";
 
-		Pause(locator1 = "3000");
+		AssertElementPresent(locator1 = "BlogsEntry#TITLE");
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#TITLE",

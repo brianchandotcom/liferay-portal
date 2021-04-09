@@ -15,8 +15,5 @@
 module.exports = {
 	build: {
 		bundler: false,
-	},
-	federation: {
-		mode: 'disabled',
-	},
+	}
 };

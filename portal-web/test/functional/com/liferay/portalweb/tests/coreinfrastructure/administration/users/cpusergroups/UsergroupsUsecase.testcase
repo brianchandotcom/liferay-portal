@@ -83,11 +83,9 @@ definition {
 
 		UserGroup.assignAllMembersCP(userGroupName = "UG UserGroup Name");
 
-		UserGroup.openUserGroupsAdmin();
-
-		UserGroup.removeMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "test");
+		JSONUser.removeUserFromUserGroup(
+			userEmailAddress = "test@liferay.com",
+			userGroupName = "UG UserGroup Name");
 
 		JSONRole.addRegularRole(
 			roleKey = "Test UserGroup Role",

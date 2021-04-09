@@ -60,30 +60,3 @@ ContentDashboardItemTypeItemSelectorViewDisplayContext contentDashboardItemTypeI
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
-
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />contentDashboardItemTypes'
-	);
-
-	searchContainer.on('rowToggled', (event) => {
-		var allSelectedElements = event.elements.allSelectedElements;
-		var arr = [];
-
-		allSelectedElements.each(function () {
-			var payload = JSON.parse(Liferay.Util.unescape(this.getDOM().value));
-
-			arr.push({
-				classPK: payload.classPK,
-				className: payload.className,
-			});
-		});
-
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(contentDashboardItemTypeItemSelectorViewDisplayContext.getItemSelectedEventName()) %>',
-			{
-				data: arr,
-			}
-		);
-	});
-</aui:script>

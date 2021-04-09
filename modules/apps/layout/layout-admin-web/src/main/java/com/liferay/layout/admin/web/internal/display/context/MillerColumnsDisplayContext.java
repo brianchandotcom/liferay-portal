@@ -51,8 +51,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -221,18 +219,18 @@ public class MillerColumnsDisplayContext {
 				"title", layout.getName(_themeDisplay.getLocale())
 			);
 
-			PortletURL portletURL = PortletURLBuilder.create(
-				_layoutsAdminDisplayContext.getPortletURL()
-			).setParameter(
-				"selPlid", layout.getPlid()
-			).setParameter(
-				"layoutSetBranchId",
-				_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
-			).setParameter(
-				"privateLayout", layout.isPrivateLayout()
-			).build();
-
-			layoutJSONObject.put("url", portletURL.toString());
+			layoutJSONObject.put(
+				"url",
+				PortletURLBuilder.create(
+					_layoutsAdminDisplayContext.getPortletURL()
+				).setParameter(
+					"selPlid", layout.getPlid()
+				).setParameter(
+					"layoutSetBranchId",
+					_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
+				).setParameter(
+					"privateLayout", layout.isPrivateLayout()
+				).buildString());
 
 			if (_layoutsAdminDisplayContext.isShowViewLayoutAction(layout)) {
 				layoutJSONObject.put(

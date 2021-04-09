@@ -308,22 +308,21 @@ public class CPDefinitionsDisplayContext
 	public List<DropdownItem> getDropdownItems() throws Exception {
 		List<DropdownItem> dropdownItems = new ArrayList<>();
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				cpRequestHelper.getRenderRequest(),
-				cpRequestHelper.getPortletId(), PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/cp_definitions/duplicate_cp_definition"
-		).setParameter(
-			"cpDefinitionId",
-			ParamUtil.getString(httpServletRequest, "cpDefinitionId")
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).build();
-
 		DropdownItem dropdownItem = new DropdownItem();
 
-		dropdownItem.setHref(portletURL.toString());
+		dropdownItem.setHref(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					cpRequestHelper.getRenderRequest(),
+					cpRequestHelper.getPortletId(), PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/cp_definitions/duplicate_cp_definition"
+			).setParameter(
+				"cpDefinitionId",
+				ParamUtil.getString(httpServletRequest, "cpDefinitionId")
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString());
 		dropdownItem.setLabel(
 			LanguageUtil.get(httpServletRequest, "duplicate"));
 		dropdownItem.setTarget("modal");

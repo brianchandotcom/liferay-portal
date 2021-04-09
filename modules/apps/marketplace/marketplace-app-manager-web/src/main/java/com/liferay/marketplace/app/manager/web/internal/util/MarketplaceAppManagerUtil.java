@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,16 +47,14 @@ public class MarketplaceAppManagerUtil {
 		AppDisplay appDisplay, Bundle bundle,
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCPath(
-			"/view.jsp"
-		).build();
-
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest,
 			LanguageUtil.get(httpServletRequest, "app-manager"),
-			portletURL.toString());
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCPath(
+				"/view.jsp"
+			).buildString());
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, appDisplay.getDisplayTitle(),

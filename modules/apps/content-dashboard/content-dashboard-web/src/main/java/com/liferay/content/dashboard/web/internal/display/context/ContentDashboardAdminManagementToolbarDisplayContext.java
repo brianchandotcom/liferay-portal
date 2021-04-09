@@ -164,27 +164,27 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		for (Long assetCategoryId : assetCategoryIds) {
 			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL portletURL = PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							currentURLObj, liferayPortletResponse)
-					).setParameter(
-						"assetCategoryId",
-						() -> {
-							Stream<Long> stream = assetCategoryIds.stream();
-
-							return stream.filter(
-								id -> id != assetCategoryId
-							).map(
-								String::valueOf
-							).toArray(
-								String[]::new
-							);
-						}
-					).build();
-
 					labelItem.putData(
 						"removeLabelURL",
-						String.valueOf(portletURL.toString()));
+						String.valueOf(
+							PortletURLBuilder.create(
+								PortletURLUtil.clone(
+									currentURLObj, liferayPortletResponse)
+							).setParameter(
+								"assetCategoryId",
+								() -> {
+									Stream<Long> stream =
+										assetCategoryIds.stream();
+
+									return stream.filter(
+										id -> id != assetCategoryId
+									).map(
+										String::valueOf
+									).toArray(
+										String[]::new
+									);
+								}
+							).buildString()));
 
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
@@ -232,41 +232,44 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL portletURL = PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							currentURLObj, liferayPortletResponse)
-					).setParameter(
-						"contentDashboardItemTypePayload",
-						() -> {
-							Stream<? extends ContentDashboardItemType> stream =
-								contentDashboardItemTypes.stream();
-
-							InfoItemReference infoItemReference =
-								contentDashboardItemType.getInfoItemReference();
-
-							return stream.filter(
-								curContentDashboardItemType -> {
-									InfoItemReference curInfoItemReference =
-										curContentDashboardItemType.
-											getInfoItemReference();
-
-									return !Objects.equals(
-										curInfoItemReference.getClassPK(),
-										infoItemReference.getClassPK());
-								}
-							).map(
-								curContentDashboardItemType ->
-									curContentDashboardItemType.toJSONString(
-										_locale)
-							).toArray(
-								String[]::new
-							);
-						}
-					).build();
-
 					labelItem.putData(
 						"removeLabelURL",
-						String.valueOf(portletURL.toString()));
+						String.valueOf(
+							PortletURLBuilder.create(
+								PortletURLUtil.clone(
+									currentURLObj, liferayPortletResponse)
+							).setParameter(
+								"contentDashboardItemTypePayload",
+								() -> {
+									Stream<? extends ContentDashboardItemType>
+										stream =
+											contentDashboardItemTypes.stream();
+
+									InfoItemReference infoItemReference =
+										contentDashboardItemType.
+											getInfoItemReference();
+
+									return stream.filter(
+										curContentDashboardItemType -> {
+											InfoItemReference
+												curInfoItemReference =
+													curContentDashboardItemType.
+														getInfoItemReference();
+
+											return !Objects.equals(
+												curInfoItemReference.
+													getClassPK(),
+												infoItemReference.getClassPK());
+										}
+									).map(
+										curContentDashboardItemType ->
+											curContentDashboardItemType.
+												toJSONString(_locale)
+									).toArray(
+										String[]::new
+									);
+								}
+							).buildString()));
 
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
@@ -283,27 +286,26 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		for (Long authorId : authorIds) {
 			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL portletURL = PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							currentURLObj, liferayPortletResponse)
-					).setParameter(
-						"authorIds",
-						() -> {
-							Stream<Long> stream = authorIds.stream();
-
-							return stream.filter(
-								id -> id != authorId
-							).map(
-								String::valueOf
-							).toArray(
-								String[]::new
-							);
-						}
-					).build();
-
 					labelItem.putData(
 						"removeLabelURL",
-						String.valueOf(portletURL.toString()));
+						String.valueOf(
+							PortletURLBuilder.create(
+								PortletURLUtil.clone(
+									currentURLObj, liferayPortletResponse)
+							).setParameter(
+								"authorIds",
+								() -> {
+									Stream<Long> stream = authorIds.stream();
+
+									return stream.filter(
+										id -> id != authorId
+									).map(
+										String::valueOf
+									).toArray(
+										String[]::new
+									);
+								}
+							).buildString()));
 
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
@@ -348,25 +350,25 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		for (String assetTagId : assetTagIds) {
 			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL portletURL = PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							currentURLObj, liferayPortletResponse)
-					).setParameter(
-						"assetTagId",
-						() -> {
-							Stream<String> stream = assetTagIds.stream();
-
-							return stream.filter(
-								id -> !Objects.equals(id, assetTagId)
-							).toArray(
-								String[]::new
-							);
-						}
-					).build();
-
 					labelItem.putData(
 						"removeLabelURL",
-						String.valueOf(portletURL.toString()));
+						String.valueOf(
+							PortletURLBuilder.create(
+								PortletURLUtil.clone(
+									currentURLObj, liferayPortletResponse)
+							).setParameter(
+								"assetTagId",
+								() -> {
+									Stream<String> stream =
+										assetTagIds.stream();
+
+									return stream.filter(
+										id -> !Objects.equals(id, assetTagId)
+									).toArray(
+										String[]::new
+									);
+								}
+							).buildString()));
 
 					labelItem.setCloseable(true);
 					labelItem.setLabel(

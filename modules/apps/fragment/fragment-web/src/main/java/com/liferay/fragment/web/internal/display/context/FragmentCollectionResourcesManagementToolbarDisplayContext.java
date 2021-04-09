@@ -142,15 +142,14 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 	}
 
 	private String _getItemSelectorURL() {
-		PortletURL uploadURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
-		).setActionName(
-			"/fragment/upload_fragment_collection_resource"
-		).build();
-
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				FragmentPortletKeys.FRAGMENT, uploadURL.toString(),
+				FragmentPortletKeys.FRAGMENT,
+				PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/fragment/upload_fragment_collection_resource"
+				).buildString(),
 				LanguageUtil.get(_themeDisplay.getLocale(), "resources"),
 				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
 				_fragmentPortletConfiguration.thumbnailExtensions());

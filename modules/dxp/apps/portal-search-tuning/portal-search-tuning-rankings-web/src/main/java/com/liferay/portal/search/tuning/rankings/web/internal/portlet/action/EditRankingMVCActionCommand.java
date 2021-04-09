@@ -60,7 +60,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -128,15 +127,15 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception exception) {
-			PortletURL renderURL = PortletURLBuilder.createRenderURL(
-				portal.getLiferayPortletResponse(actionResponse)
-			).setMVCRenderCommandName(
-				"/result_rankings/add_results_rankings"
-			).setRedirect(
-				editRankingMVCActionRequest.getRedirect()
-			).build();
-
-			actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
+			actionRequest.setAttribute(
+				WebKeys.REDIRECT,
+				PortletURLBuilder.createRenderURL(
+					portal.getLiferayPortletResponse(actionResponse)
+				).setMVCRenderCommandName(
+					"/result_rankings/add_results_rankings"
+				).setRedirect(
+					editRankingMVCActionRequest.getRedirect()
+				).buildString());
 
 			SessionErrors.add(actionRequest, exception.getClass());
 

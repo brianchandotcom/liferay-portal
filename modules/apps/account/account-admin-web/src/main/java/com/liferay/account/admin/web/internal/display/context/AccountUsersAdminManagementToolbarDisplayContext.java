@@ -87,7 +87,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deactivateAccountUsers");
 
-				PortletURL deactivateAccountUsersURL =
+				dropdownItem.putData(
+					"deactivateAccountUsersURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
@@ -103,11 +104,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						"accountEntryIds",
 						ParamUtil.getString(
 							httpServletRequest, "accountEntryIds")
-					).build();
-
-				dropdownItem.putData(
-					"deactivateAccountUsersURL",
-					deactivateAccountUsersURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("hidden");
 				dropdownItem.setLabel(
@@ -125,7 +122,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "activateAccountUsers");
 
-				PortletURL activateAccountUsersURL =
+				dropdownItem.putData(
+					"activateAccountUsersURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
@@ -141,11 +139,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						"accountEntryIds",
 						ParamUtil.getString(
 							httpServletRequest, "accountEntryIds")
-					).build();
-
-				dropdownItem.putData(
-					"activateAccountUsersURL",
-					activateAccountUsersURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("undo");
 				dropdownItem.setLabel(
@@ -163,7 +157,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deleteAccountUsers");
 
-				PortletURL deleteAccountUsersURL =
+				dropdownItem.putData(
+					"deleteAccountUsersURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
@@ -179,10 +174,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						"accountEntryIds",
 						ParamUtil.getString(
 							httpServletRequest, "accountEntryIds")
-					).build();
-
-				dropdownItem.putData(
-					"deleteAccountUsersURL", deleteAccountUsersURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
@@ -241,7 +233,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "addAccountUser");
 
-				PortletURL accountEntrySelectorURL =
+				dropdownItem.putData(
+					"accountEntrySelectorURL",
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
@@ -250,11 +243,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						"singleSelect", "true"
 					).setWindowState(
 						LiferayWindowState.POP_UP
-					).build();
-
-				dropdownItem.putData(
-					"accountEntrySelectorURL",
-					accountEntrySelectorURL.toString());
+					).buildString());
 
 				dropdownItem.putData(
 					"addAccountUserURL",

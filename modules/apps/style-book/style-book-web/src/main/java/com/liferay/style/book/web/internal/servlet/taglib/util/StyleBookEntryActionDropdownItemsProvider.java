@@ -216,17 +216,16 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	}
 
 	private String _getItemSelectorURL() {
-		PortletURL uploadURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/style_book/upload_style_book_entry_preview"
-		).setParameter(
-			"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
-		).build();
-
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				StyleBookPortletKeys.STYLE_BOOK, uploadURL.toString(),
+				StyleBookPortletKeys.STYLE_BOOK,
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/style_book/upload_style_book_entry_preview"
+				).setParameter(
+					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
+				).buildString(),
 				LanguageUtil.get(_httpServletRequest, "style-book"),
 				UploadServletRequestConfigurationHelperUtil.getMaxSize());
 

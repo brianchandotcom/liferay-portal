@@ -304,20 +304,18 @@ public class DisplayPageActionDropdownItemsProvider {
 	}
 
 	private String _getItemSelectorURL() {
-		PortletURL uploadURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/layout_page_template_admin" +
-				"/upload_layout_page_template_entry_preview"
-		).setParameter(
-			"layoutPageTemplateEntryId",
-			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-		).build();
-
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-				uploadURL.toString(),
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_page_template_admin" +
+						"/upload_layout_page_template_entry_preview"
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				).buildString(),
 				LanguageUtil.get(_themeDisplay.getLocale(), "page-template"),
 				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
 				_layoutPageTemplateAdminWebConfiguration.thumbnailExtensions());

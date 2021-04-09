@@ -117,18 +117,15 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 						"accountEntryName", accountEntry.getName());
 				}
 
-				PortletURL assignAccountOrganizationsURL =
+				dropdownItem.putData(
+					"assignAccountOrganizationsURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/account_admin/assign_account_organizations"
 					).setRedirect(
 						currentURLObj.toString()
-					).build();
-
-				dropdownItem.putData(
-					"assignAccountOrganizationsURL",
-					assignAccountOrganizationsURL.toString());
+					).buildString());
 
 				dropdownItem.putData(
 					"selectAccountOrganizationsURL",

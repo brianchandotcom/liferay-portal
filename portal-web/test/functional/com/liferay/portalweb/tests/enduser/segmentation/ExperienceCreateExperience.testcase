@@ -243,6 +243,15 @@ definition {
   		// TODO LPS-130308 AddNewExperienceOrganizationTypeSegment pending implementation
 	}
 
+	@description = "This is a test for LPS-130348."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceBasedOtherSegmentsSegment {
+  		property portal.acceptance = "false";
+
+  		// TODO LPS-130348 AddNewExperienceBasedOtherSegmentsSegment pending implementation
+	}
+
 	@description = "This is a test for LPS-130327."
 	@ignore = "true"
 	@priority = "5"

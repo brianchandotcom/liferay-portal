@@ -475,7 +475,7 @@ definition {
 			NavItem.gotoStructures();
 
 			WebContentStructures.copyCP(
-				locale ="en_US",
+				locale = "en_US",
 				structureCopyLocalName = "WC Structure Copy En-Es Name",
 				structureCopyName = "WC Structure Copy Name",
 				structureName = "WC Structure Name");
@@ -493,7 +493,8 @@ definition {
 					key_fieldFieldLabel = "Companhia Operadora",
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
-				ScrollWebElementIntoView(key_fieldFieldLabel = "Companhia Operadora",
+				ScrollWebElementIntoView(
+					key_fieldFieldLabel = "Companhia Operadora",
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
 				MouseOver(locator1 = "//div[contains(@data-field-name,'CompanhiaOperadoraFieldSet')]//div[contains(@class,'placeholder')]");
@@ -514,14 +515,11 @@ definition {
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 			for (var nestedFieldLabel : list "Imagem Aba 01,Descricao Aba 01") {
-
-			DataEngine.moveNestedField(
-					nestedFieldLabel = "${nestedFieldLabel}");
+				DataEngine.moveNestedField(nestedFieldLabel = "${nestedFieldLabel}");
 			}
 
 			for (var nestedFieldLabel : list "Imagem Aba 01,Descricao Aba 01") {
-				AssertElementNotPresent(
-					locator1 = "//div[contains(@data-field-name,'TituloAba01FieldSet')]//label[normalize-space(text())='${nestedFieldLabel}']");
+				AssertElementNotPresent(locator1 = "//div[contains(@data-field-name,'TituloAba01FieldSet')]//label[normalize-space(text())='${nestedFieldLabel}']");
 			}
 
 			WebContentStructures.saveCP();
@@ -550,13 +548,9 @@ definition {
 
 			PortletEntry.changeLocale(locale = "en_US");
 
-			DataEngine.viewField(
-				fieldFieldLabel = "HomePage",
-				fieldName = "PaginaOrigem");
+			WebContent.assertFieldOnWebContent(fieldFieldLabel = "HomePage");
 
-			DataEngine.viewField(
-				fieldFieldLabel = "Link Home Page",
-				fieldName = "Link Pagina Origem");
+			WebContent.assertFieldOnWebContent(fieldFieldLabel = "Link Home Page");
 		}
 
 		task ("Add new translation") {

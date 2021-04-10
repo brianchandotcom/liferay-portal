@@ -63,7 +63,7 @@ public class AuthVerifierPipeline {
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */
 	@Deprecated
-	public static AuthVerifierPipeline PORTAL_AUTH_VERIFIER_PIPELINE;
+	public static volatile AuthVerifierPipeline PORTAL_AUTH_VERIFIER_PIPELINE;
 
 	public static String getAuthVerifierPropertyName(String className) {
 		String simpleClassName = StringUtil.extractLast(
@@ -448,6 +448,8 @@ public class AuthVerifierPipeline {
 			serviceTracker.open();
 
 			_PORTAL_AUTH_VERIFIER_PIPELINE = portalAuthVerifierPipeline;
+
+			PORTAL_AUTH_VERIFIER_PIPELINE = portalAuthVerifierPipeline;
 		}
 
 	}

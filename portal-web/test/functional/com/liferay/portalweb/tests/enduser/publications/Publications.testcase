@@ -10,12 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Settings");
-
-		Publications.enablePublications();
+		JSONPublications.enablePublications();
 	}
 
 	tearDown {
@@ -36,21 +31,14 @@ definition {
 
 	@priority = "5"
 	test ConflictingPublicationsAutomaticallyResolved {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
+		JSONPublications.addPublication(publicationName = "Publication Name");
 
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -92,11 +80,9 @@ definition {
 			publicationsName = "Publication Name",
 			publicationsTitle = "WC WebContent Title");
 
-		Publications.gotoPublish(publicationsName = "Publication 2 Name");
+		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
 
-		Publications.publishPublication(publicationsName = "Publication 2 Name");
-
-		Publications.selectPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication 2 Name");
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
@@ -116,26 +102,22 @@ definition {
 			key_warningMessage = "The conflict cannot be automatically resolved.",
 			locator1 = "Message#WARNING_SPECIFIC");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+
 	}
 
 	@priority = "4"
 	test ConflictingPublicationsNeedManualResolution {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
+		JSONPublications.addPublication(publicationName = "Publication Name");
 
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -148,7 +130,9 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		Publications.createNewPublication(publicationsName = "Publication 2 Name");
+		JSONPublications.addPublication(publicationName = "Publication 2 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -163,9 +147,9 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent Title 2 Edit");
 
-		Publications.selectPublication(publicationsName = "Publication Name");
-
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewPublications(
+			gotoManagePublications = "true",
+			publicationsName = "Publication Name");
 
 		PublicationsChanges.viewPublicationsViaChangesStyle(
 			publicationsCategory = "Web Content Article",
@@ -179,11 +163,11 @@ definition {
 			publicationsDescription = "Test Test deleted a Web Content Article in Guest",
 			publicationsTitle = "WC WebContent Title");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
-		Publications.selectPublication(publicationsName = "Publication 2 Name");
+		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
 		Navigator.gotoNavTab(navTab = "History");
 
@@ -242,9 +226,9 @@ definition {
 
 		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");
 
-		Publications.gotoPublish(publicationsName = "Publication 2 Name");
+		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
 
-		Publications.publishPublication(publicationsName = "Publication 2 Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -259,21 +243,20 @@ definition {
 
 	@priority = "4"
 	test DiscardSubsetsofChangesInPublication {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
 
 		NavItem.gotoStructures();
 
@@ -345,9 +328,9 @@ definition {
 			key_ddlTemplateName = "WC Template Name",
 			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -379,17 +362,13 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		Navigator.openURL();
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Guest");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
-
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(
+			gotoManagePublications = "true",
+			publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -464,23 +443,18 @@ definition {
 
 	@priority = "5"
 	test RescheduleAndCancelScheduledPublication {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(
+			gotoManagePublications = "true",
+			publicationsName = "Publication Name");
 
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		Publications.schedulePublication(publicationsName = "Publication Name");
+		Publications.schedulePublication(
+			gotoManagePublications = "true",
+			publicationsName = "Publication Name");
 
 		Publications.schedulePublication(
 			publicationsName = "Publication Name",
@@ -495,7 +469,9 @@ definition {
 
 	@priority = "5"
 	test RevertPublicationAndPublishNow {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(
+			gotoManagePublications = "true",
+			publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -556,7 +532,9 @@ definition {
 
 	@priority = "5"
 	test SchedulePublication {
-		Publications.createNewPublication(publicationsName = "Publication Name 1");
+		Publications.createNewPublication(
+			gotoManagePublications = "true",
+			publicationsName = "Publication Name 1");
 
 		Navigator.openURL();
 
@@ -629,7 +607,9 @@ definition {
 
 	@priority = "5"
 	test SearchPublishedPublications {
-		Publications.createNewPublication(publicationsName = "Apple");
+		Publications.createNewPublication(
+			gotoManagePublications = "true",
+			publicationsName = "Apple");
 
 		Publications.createNewPublication(publicationsName = "Banana");
 

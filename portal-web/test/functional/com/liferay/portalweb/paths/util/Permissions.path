@@ -242,6 +242,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERMISSIONS_MANAGE_PAGES_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_MANAGE_LAYOUTS']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_PERMISSIONS'] | //tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_PERMISSIONS')]</td>
 	<td></td>

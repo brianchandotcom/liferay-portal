@@ -526,7 +526,7 @@ definition {
 
 		Publications.changeDiffDisplayItem(displayItem = "Publication: ${publicationsName}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_displayItem = "${publicationsName}",
 			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
 			value1 = "${publicationsName}");

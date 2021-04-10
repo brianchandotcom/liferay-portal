@@ -59,6 +59,12 @@ public class AuthVerifierPipeline {
 
 	public static final String AUTH_TYPE = "auth.type";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	public static AuthVerifierPipeline PORTAL_AUTH_VERIFIER_PIPELINE;
+
 	public static String getAuthVerifierPropertyName(String className) {
 		String simpleClassName = StringUtil.extractLast(
 			className, StringPool.PERIOD);

@@ -389,10 +389,13 @@ public class AuthVerifierPipeline {
 	private static class LazyInitializer {
 
 		private static final AuthVerifierPipeline
-			_PORTAL_AUTH_VERIFIER_PIPELINE = new AuthVerifierPipeline(
-				Collections.emptyList(), PortalUtil.getPathContext());
+			_PORTAL_AUTH_VERIFIER_PIPELINE;
 
 		static {
+			AuthVerifierPipeline portalAuthVerifierPipeline =
+				new AuthVerifierPipeline(
+					Collections.emptyList(), PortalUtil.getPathContext());
+
 			Registry registry = RegistryUtil.getRegistry();
 
 			ServiceTracker<AuthVerifierConfiguration, AuthVerifierConfiguration>
@@ -412,7 +415,7 @@ public class AuthVerifierPipeline {
 									serviceReference);
 
 							if (authVerifierConfiguration != null) {
-								_PORTAL_AUTH_VERIFIER_PIPELINE.
+								portalAuthVerifierPipeline.
 									_addAuthVerifierConfiguration(
 										authVerifierConfiguration);
 							}
@@ -435,7 +438,7 @@ public class AuthVerifierPipeline {
 							AuthVerifierConfiguration
 								authVerifierConfiguration) {
 
-							_PORTAL_AUTH_VERIFIER_PIPELINE.
+							portalAuthVerifierPipeline.
 								_removeAuthVerifierConfiguration(
 									authVerifierConfiguration);
 						}
@@ -443,6 +446,8 @@ public class AuthVerifierPipeline {
 					});
 
 			serviceTracker.open();
+
+			_PORTAL_AUTH_VERIFIER_PIPELINE = portalAuthVerifierPipeline;
 		}
 
 	}

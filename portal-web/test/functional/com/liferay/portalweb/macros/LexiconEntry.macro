@@ -208,6 +208,14 @@ definition {
 		}
 	}
 
+	macro viewEntryMenuItem {
+		LexiconEntry.openEntryMenu(rowEntry = "${rowEntry}");
+
+		AssertElementPresent(
+			key_menuItem = "${menuItem}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 	macro viewEntryName {
 		var browserType = PropsUtil.get("browser.type");
 

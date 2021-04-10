@@ -132,9 +132,9 @@ definition {
 			groupName = "Site Name",
 			title = "WC WebContent Title");
 
-		JSONPublications.addPublication(publicationName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
 
-		JSONPublications.selectPublication(publicationName = "Publication Name");
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -185,6 +185,8 @@ definition {
 		PageEditor.clickPublish();
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 2");
+
+		Navigator.openURL();
 
 		Publications.viewPublicationPublished(publicationsName = "Publication Name 2");
 

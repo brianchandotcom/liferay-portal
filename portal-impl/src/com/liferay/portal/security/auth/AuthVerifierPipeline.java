@@ -60,7 +60,7 @@ public class AuthVerifierPipeline {
 	public static final String AUTH_TYPE = "auth.type";
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getPortalAuthVerifierPipeline()}
 	 */
 	@Deprecated
 	public static volatile AuthVerifierPipeline PORTAL_AUTH_VERIFIER_PIPELINE;

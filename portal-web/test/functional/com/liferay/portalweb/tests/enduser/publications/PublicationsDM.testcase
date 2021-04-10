@@ -139,7 +139,7 @@ definition {
 
 		Publications.gotoViewDiffInConflictingPublications(entryTitle = "DM Document Title Edit");
 
-		Publications.viewPublicationsDiff(
+		Publications.viewPublicationDiff(
 			columnName = "Title",
 			columnValueInProduction = "DM Document 2 Title Edit",
 			columnValueInPublication = "DM Document Title Edit",

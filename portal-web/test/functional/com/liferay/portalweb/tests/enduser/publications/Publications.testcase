@@ -105,7 +105,6 @@ definition {
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
 		Publications.viewPublicationPublished(publicationsName = "Publication Name");
-
 	}
 
 	@priority = "4"
@@ -201,7 +200,7 @@ definition {
 
 		Publications.gotoViewDiffInConflictingPublications(entryTitle = "WC WebContent Title 2 Edit");
 
-		Publications.viewPublicationsDiff(
+		Publications.viewPublicationDiff(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
 			publicationsName = "Publication 2 Name");

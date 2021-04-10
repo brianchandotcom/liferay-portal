@@ -489,7 +489,7 @@ definition {
 		AssertVisible(locator1 = "Publications#DISABLED_PUBLISH_BUTTON");
 	}
 
-	macro viewPublicationsDiff {
+	macro viewPublicationDiff {
 		AssertTextEquals(
 			key_displayItem = "Unified",
 			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",

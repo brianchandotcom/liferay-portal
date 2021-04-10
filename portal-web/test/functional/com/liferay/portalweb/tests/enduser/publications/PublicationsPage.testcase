@@ -92,7 +92,7 @@ definition {
 		Publications.viewPublicationPublished(publicationsName = "Publication Name 2");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
-		
+
 		Publications.gotoReviewPublications(
 			gotoManagePublications = "true",
 			publicationsName = "Publication Name");

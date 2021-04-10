@@ -30,6 +30,100 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test AssignPermissionsToUGPages {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup Name Description",
+			userGroupName = "UG UserGroup Name");
+
+		JSONUser.addUserToUserGroup(
+			userEmailAddress = "userea1@liferay.com",
+			userGroupName = "UG UserGroup Name");
+
+		JSONRole.addRegularRole(
+			roleKey = "UG Reg Role",
+			roleTitle = "UG Reg Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "UG Reg Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet",
+			roleTitle = "UG Reg Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet",
+			roleTitle = "UG Reg Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.portal.kernel.model.UserGroup",
+			roleTitle = "UG Reg Role");
+
+		Role.openRolesAdmin();
+
+		RoleNavigator.gotoAssignees(roleTitle = "UG Reg Role");
+
+		RoleNavigator.gotoAssigneeType(assigneeType = "User Groups");
+
+		Role.addAssignees(assigneeName = "UG UserGroup Name");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		UserGroup.openUserGroupsAdmin();
+
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Manage Pages",
+			rowEntry = "UG UserGroup Name");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		PermissionsInline.gotoUserGroupSitePermissionsCP(userGroupName = "UG UserGroup Name");
+
+		PermissionsInline.addOrRemoveManagePagesPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Add",
+			roleList = "UG Reg Role");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		UserGroup.openUserGroupsAdmin();
+
+		LexiconEntry.openEntryMenu(rowEntry = "UG UserGroup Name");
+
+		LexiconEntry.viewEntryMenuItem(
+			menuItem = "Manage Pages",
+			rowEntry = "UG UserGroup Name");
+	}
+
 	@priority = "3"
 	test ExportUserGroupMembers {
 		JSONUserGroup.addUserGroup(
@@ -442,8 +536,6 @@ definition {
 			userGroupName = "UG UserGroup Name");
 
 		PermissionsInline.gotoUserGroupSitePermissionsCP(userGroupName = "UG UserGroup Name");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals.assertPartialText(
 			key_roleTitle = "Roles Siterole Name",

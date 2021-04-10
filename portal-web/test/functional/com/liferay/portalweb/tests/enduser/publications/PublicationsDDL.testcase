@@ -10,12 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Settings");
-
-		Publications.enablePublications();
+		JSONPublications.enablePublications();
 	}
 
 	tearDown {
@@ -82,7 +77,9 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.createNewPublication(publicationsName = "Publication 1 Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -100,7 +97,9 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.createNewPublication(publicationsName = "Publication 2 Name");
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
 		Navigator.openURL();
 
@@ -118,13 +117,13 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.gotoPublish(publicationsName = "Publication 2 Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name 2");
 
-		Publications.publishPublication(publicationsName = "Publication 2 Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name 2");
 
-		Publications.selectPublication(publicationsName = "Publication 1 Name");
-
-		Publications.gotoPublish(publicationsName = "Publication 1 Name");
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationsName = "Publication 1 Name");
 
 		Publications.discardPublications(
 			conflictingPublications = "true",
@@ -132,9 +131,9 @@ definition {
 			publicationsCategory = "Dynamic Data Lists Record",
 			publicationsTitle = "Dynamic Data Lists Record");
 
-		Publications.gotoPublish(publicationsName = "Publication 1 Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication 1 Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -198,7 +197,9 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -265,9 +266,9 @@ definition {
 			publicationsTitle = "Dynamic Data Lists Record",
 			showAllItems = "true");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -280,7 +281,9 @@ definition {
 
 	@priority = "3"
 	test PublishPublicationWithDispalyTemplate {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -368,9 +371,9 @@ definition {
 			publicationsType = "Added",
 			publicationsUser = "Test Test");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -427,7 +430,9 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -520,9 +525,9 @@ definition {
 			publicationsTitle = "Dynamic Data Lists Record",
 			showAllItems = "true");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -540,7 +545,9 @@ definition {
 
 	@priority = "3"
 	test PublishPublicationWithFormTemplate {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -629,9 +636,9 @@ definition {
 			publicationsType = "Added",
 			publicationsUser = "Test Test");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -642,7 +649,9 @@ definition {
 
 	@priority = "4"
 	test PublishPublicationWithNewListAndRecord {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -732,9 +741,9 @@ definition {
 			publicationsTitle = "Dynamic Data Lists Record",
 			showAllItems = "true");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 

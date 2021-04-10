@@ -74,7 +74,7 @@ public class AuthVerifierPipeline {
 	}
 
 	public static AuthVerifierPipeline getPortalAuthVerifierPipeline() {
-		return LazyInitializer._PORTAL_AUTH_VERIFIER_PIPELINE;
+		return PortalAuthVerifierPipelineHolder._PORTAL_AUTH_VERIFIER_PIPELINE;
 	}
 
 	public AuthVerifierPipeline(
@@ -386,7 +386,7 @@ public class AuthVerifierPipeline {
 
 	}
 
-	private static class LazyInitializer {
+	private static class PortalAuthVerifierPipelineHolder {
 
 		private static final AuthVerifierPipeline
 			_PORTAL_AUTH_VERIFIER_PIPELINE;

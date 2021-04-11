@@ -24,15 +24,15 @@ import com.liferay.mule.internal.error.provider.LiferayResponseErrorProvider;
 import com.liferay.mule.internal.util.JsonNodeReader;
 import com.liferay.mule.internal.values.ClassNameValueProvider;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.mule.runtime.api.meta.model.display.PathModel;
 import org.mule.runtime.api.util.MultiMap;
@@ -91,12 +91,12 @@ public class LiferayBatchOperations {
 		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
 			connectionTimeout);
 
-		String exportTaskId = _submitExportTask(
+		String exportTaskId = submitExportTask(
 			batchExportContentType, className, connection, fieldNames, siteId,
 			connectionTimeoutMillis);
 
 		while (true) {
-			String exportTaskStatus = _getExportTaskStatus(
+			String exportTaskStatus = getExportTaskStatus(
 				connection, exportTaskId, connectionTimeoutMillis);
 
 			if (exportTaskStatus.equalsIgnoreCase("completed")) {
@@ -110,10 +110,10 @@ public class LiferayBatchOperations {
 			Thread.sleep(1000);
 		}
 
-		Files.copy(
-			_getExportTaskContentInputStream(
+		extractExportTaskContent(
+			getExportTaskContentZipInputStream(
 				connection, exportTaskId, connectionTimeoutMillis),
-			Paths.get(directoryPath + "/export.zip"));
+			directoryPath);
 	}
 
 	@DisplayName("Batch - Import records - Update")
@@ -122,7 +122,25 @@ public class LiferayBatchOperations {
 		return null;
 	}
 
-	private InputStream _getExportTaskContentInputStream(
+	private void extractExportTaskContent(
+			ZipInputStream zipInputStream, String directoryPath)
+		throws IOException {
+
+		ZipEntry zipEntry = zipInputStream.getNextEntry();
+
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				directoryPath + File.separator + zipEntry.getName())) {
+
+			byte[] buffer = new byte[1024];
+			int length;
+
+			while ((length = zipInputStream.read(buffer)) > 0) {
+				fileOutputStream.write(buffer, 0, length);
+			}
+		}
+	}
+
+	private ZipInputStream getExportTaskContentZipInputStream(
 		LiferayConnection connection, String exportTaskId,
 		long connectionTimeout) {
 
@@ -138,10 +156,10 @@ public class LiferayBatchOperations {
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
-		return httpEntity.getContent();
+		return new ZipInputStream(httpEntity.getContent());
 	}
 
-	private String _getExportTaskStatus(
+	private String getExportTaskStatus(
 		LiferayConnection connection, String exportTaskId,
 		long connectionTimeout) {
 
@@ -164,7 +182,7 @@ public class LiferayBatchOperations {
 		return exportTaskStatusJsonNode.textValue();
 	}
 
-	private String _submitExportTask(
+	private String submitExportTask(
 		BatchExportContentType batchExportContentType, String className,
 		LiferayConnection connection, String fieldNames, String siteId,
 		long connectionTimeout) {

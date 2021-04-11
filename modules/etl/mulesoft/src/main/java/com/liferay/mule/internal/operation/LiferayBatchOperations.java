@@ -22,6 +22,7 @@ import com.liferay.mule.internal.error.LiferayError;
 import com.liferay.mule.internal.error.LiferayResponseValidator;
 import com.liferay.mule.internal.error.provider.LiferayResponseErrorProvider;
 import com.liferay.mule.internal.util.JsonNodeReader;
+import com.liferay.mule.internal.values.ClassNameValueProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +43,7 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
+import org.mule.runtime.extension.api.annotation.values.OfValues;
 import org.mule.runtime.extension.api.exception.ModuleException;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
@@ -68,7 +70,8 @@ public class LiferayBatchOperations {
 	@DisplayName("Batch - Export records")
 	@MediaType(MediaType.APPLICATION_OCTET_STREAM)
 	public void executeExportTask(
-			@Connection LiferayConnection connection, String className,
+			@Connection LiferayConnection connection,
+			@OfValues(ClassNameValueProvider.class) String className,
 			BatchExportContentType batchExportContentType, String directoryPath,
 			String siteId, @Optional String fieldNames,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional

@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.mule.runtime.api.meta.model.display.PathModel;
 import org.mule.runtime.api.util.MultiMap;
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.param.ConfigOverride;
@@ -41,6 +42,7 @@ import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
+import org.mule.runtime.extension.api.annotation.param.display.Path;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
 import org.mule.runtime.extension.api.annotation.values.OfValues;
@@ -72,8 +74,10 @@ public class LiferayBatchOperations {
 	public void executeExportTask(
 			@Connection LiferayConnection connection,
 			@OfValues(ClassNameValueProvider.class) String className,
-			BatchExportContentType batchExportContentType, String directoryPath,
-			String siteId, @Optional String fieldNames,
+			BatchExportContentType batchExportContentType,
+			@Path(type = PathModel.Type.DIRECTORY) String directoryPath,
+			@Optional String siteId,
+			@Optional @Summary("Comma-separated list") String fieldNames,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
 			@Summary("Socket connection timeout value")
@@ -172,10 +176,12 @@ public class LiferayBatchOperations {
 
 		MultiMap<String, String> queryParams = new MultiMap<>();
 
-		queryParams.put("siteId", siteId);
-
 		if (fieldNames != null) {
 			queryParams.put("fieldNames", fieldNames);
+		}
+
+		if (siteId != null) {
+			queryParams.put("siteId", siteId);
 		}
 
 		HttpResponse httpResponse = connection.post(

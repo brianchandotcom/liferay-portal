@@ -71,6 +71,11 @@
 					},
 					"stringField": {
 						"type": "string"
+					},
+					"x-class-name": {
+						"default": "com.liferay.headless.v1_0.Entity",
+						"readOnly": true,
+						"type": "string"
 					}
 				},
 				"required": [
@@ -82,6 +87,11 @@
 			"NestedEntity": {
 				"properties": {
 					"nestedEntityStringField": {
+						"type": "string"
+					},
+					"x-class-name": {
+						"default": "com.liferay.headless.v1_0.NestedEntity",
+						"readOnly": true,
 						"type": "string"
 					}
 				},

@@ -276,7 +276,7 @@ public class MetadataTypeBuilderTest {
 			nestedEntityDefaultObjectType.getFields();
 
 		Assert.assertEquals(
-			objectFieldTypes.toString(), 1, objectFieldTypes.size());
+			objectFieldTypes.toString(), 2, objectFieldTypes.size());
 
 		Iterator<ObjectFieldType> iterator = objectFieldTypes.iterator();
 

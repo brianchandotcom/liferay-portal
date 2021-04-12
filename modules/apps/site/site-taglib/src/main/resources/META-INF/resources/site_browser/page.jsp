@@ -17,6 +17,7 @@
 <%@ include file="/site_browser/init.jsp" %>
 
 <%
+String eventName = GetterUtil.getString(request.getAttribute("liferay-site:site-browser:eventName"));
 long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay-site:site-browser:selectedGroupIds"));
 %>
 
@@ -122,3 +123,10 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script use="aui-base">
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectGroupFm',
+		'<%= HtmlUtil.escapeJS(eventName) %>'
+	);
+</aui:script>

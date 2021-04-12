@@ -116,3 +116,11 @@
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script>
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectGroupFm',
+		'<%= HtmlUtil.escapeJS(siteBrowserDisplayContext.getEventName()) %>',
+		<%= siteBrowserDisplayContext.getSelUser() != null %>
+	);
+</aui:script>

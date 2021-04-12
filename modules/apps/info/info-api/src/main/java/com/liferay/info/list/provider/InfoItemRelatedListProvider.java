@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.item.provider;
+package com.liferay.info.list.provider;
 
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
@@ -24,7 +24,7 @@ import com.liferay.petra.reflect.GenericUtil;
 /**
  * @author Jorge Ferrer
  */
-public interface InfoItemRelatedItemsProvider<S, R> extends Keyed, Labeled {
+public interface InfoItemRelatedListProvider<S, R> extends Keyed, Labeled {
 
 	public default Class<? extends R> getRelatedItemClass() {
 		return (Class<? extends R>)GenericUtil.getGenericClass(this, 1);

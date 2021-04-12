@@ -300,8 +300,7 @@ definition {
 			PageEditorEditableLink.mapEditableFieldToPage(
 				fragmentName = "Button",
 				id = "link",
-				pageName = "Test Content Page Name",
-				target = "Self");
+				pageName = "Test Content Page Name");
 		}
 
 		task ("View selected page is linked to Button fragment") {

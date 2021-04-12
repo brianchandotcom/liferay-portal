@@ -36,6 +36,7 @@ definition {
 	@refactorneeded
 	test AddMBThreadWithLinkToDocument {
 		property portal.acceptance = "true";
+		property testray.component.names = "WYSIWYG";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

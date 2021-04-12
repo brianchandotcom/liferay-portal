@@ -413,14 +413,14 @@ message.
 					<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
 					<then>
 						<move
-							file="${app.server.lib.global.dir}/portlet.jar"
+							file="${app.server.lib.portal.dir}/portlet.jar"
 							force="true"
 							toDir="${app.server.websphere.dir}/java_1.8_64/jre/lib/ext"
 						/>
 					</then>
 					<else>
 						<move
-							file="${app.server.lib.global.dir}/portlet.jar"
+							file="${app.server.lib.portal.dir}/portlet.jar"
 							force="true"
 							toDir="${app.server.websphere.dir}/javaext"
 						/>

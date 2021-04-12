@@ -10798,7 +10798,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						<mkdir dir="${app.server.websphere.java.ext.dir}" />
 
 						<move
-							file="${app.server.lib.global.dir}/portlet.jar"
+							file="${app.server.lib.portal.dir}/portlet.jar"
 							todir="${app.server.websphere.java.ext.dir}"
 						/>
 

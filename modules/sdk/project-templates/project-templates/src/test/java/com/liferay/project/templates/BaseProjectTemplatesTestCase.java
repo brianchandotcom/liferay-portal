@@ -1022,33 +1022,17 @@ public interface BaseProjectTemplatesTestCase {
 				});
 		}
 
-		String tempPathString = null;
+		String[] completeArgs = new String[args.length + 3];
 
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			String content = FileTestUtil.read(
-				BaseProjectTemplatesTestCase.class.getClassLoader(),
-				"com/liferay/project/templates/dependencies/settings.xml");
-
-			Path tempPath = Files.createTempFile("settings", "xml");
-
-			Files.write(tempPath, content.getBytes());
-
-			tempPathString = tempPath.toString();
-		}
-
-		String[] completeArgs = new String[args.length + 5];
-
-		completeArgs[0] = "--settings";
-		completeArgs[1] = tempPathString;
-		completeArgs[2] = "--update-snapshots";
-		completeArgs[3] =
+		completeArgs[0] = "--update-snapshots";
+		completeArgs[1] =
 			"-Dbuild.repository.private.username=" +
 				System.getProperty("build.repository.private.username");
-		completeArgs[4] =
+		completeArgs[2] =
 			"-Dbuild.repository.private.password=" +
 				System.getProperty("build.repository.private.password");
 
-		System.arraycopy(args, 0, completeArgs, 5, args.length);
+		System.arraycopy(args, 0, completeArgs, 3, args.length);
 
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 

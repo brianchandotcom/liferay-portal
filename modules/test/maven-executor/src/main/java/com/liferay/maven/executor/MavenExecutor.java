@@ -139,6 +139,14 @@ public class MavenExecutor extends ExternalResource {
 		return Paths.get(dirName);
 	}
 
+	public String getNexusPrivatePassword() {
+		return System.getProperty("build.repository.private.password");
+	}
+
+	public String getNexusPrivateUserName() {
+		return System.getProperty("build.repository.private.username");
+	}
+
 	public String getRepositoryUrl() {
 		return System.getProperty("repository.url");
 	}
@@ -271,6 +279,27 @@ public class MavenExecutor extends ExternalResource {
 				"<proxies>[\\s\\S]+<\\/proxies>", "");
 		}
 
+		settingsXml = _replaceSettingsXmlElement(
+			settingsXml, "[$LIFERAY_NEXUS_PROFILE_ID$]",
+			_LIFERAY_NEXUS_PROFILE_ID);
+		settingsXml = _replaceSettingsXmlElement(
+			settingsXml, "[$XANADU_NEXUS_PROFILE_ID$]",
+			_XANADU_NEXUS_PROFILE_ID);
+		settingsXml = _replaceSettingsXmlElement(
+			settingsXml, "[$LIFERAY_NEXUS_REPO_ID$]", _LIFERAY_NEXUS_REPO_ID);
+		settingsXml = _replaceSettingsXmlElement(
+			settingsXml, "[$XANADU_NEXUS_REPO_ID$]", _XANADU_NEXUS_REPO_ID);
+		settingsXml = _replaceSettingsXmlElement(
+			settingsXml, "[$LIFERAY_NEXUS_REPO_URL$]", _LIFERAY_NEXUS_REPO_URL);
+		settingsXml = _replaceSettingsXmlElement(
+			settingsXml, "[$XANADU_NEXUS_REPO_URL$]", _XANADU_NEXUS_REPO_URL);
+		settingsXml = _replaceSettingsXmlElement(
+			settingsXml, "[$NEXUS_PRIVATE_USERNAME$]",
+			getNexusPrivateUserName());
+		settingsXml = _replaceSettingsXmlElement(
+			settingsXml, "[$NEXUS_PRIVATE_PASSWORD$]",
+			getNexusPrivatePassword());
+
 		Path settingsXmlPath = _mavenHomeDirPath.resolve("conf/settings.xml");
 
 		Files.write(
@@ -325,6 +354,25 @@ public class MavenExecutor extends ExternalResource {
 
 		return settingsXml;
 	}
+
+	private static final String _LIFERAY_NEXUS_PROFILE_ID = "liferay";
+
+	private static final String _LIFERAY_NEXUS_REPO_ID =
+		_LIFERAY_NEXUS_PROFILE_ID + "Repo";
+
+	private static final String _LIFERAY_NEXUS_REPO_URL =
+		MavenExecutor._LIFERAY_NEXUS_URL + "public";
+
+	private static final String _LIFERAY_NEXUS_URL =
+		"https://repository-cdn.liferay.com/nexus/content/repositories/";
+
+	private static final String _XANADU_NEXUS_PROFILE_ID = "xanadu";
+
+	private static final String _XANADU_NEXUS_REPO_ID =
+		_XANADU_NEXUS_PROFILE_ID + "Repo";
+
+	private static final String _XANADU_NEXUS_REPO_URL =
+		_LIFERAY_NEXUS_URL + _XANADU_NEXUS_PROFILE_ID;
 
 	private Path _mavenHomeDirPath;
 

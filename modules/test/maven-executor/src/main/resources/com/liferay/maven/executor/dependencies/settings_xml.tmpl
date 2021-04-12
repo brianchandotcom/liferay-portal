@@ -5,6 +5,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd"
 >
+
+	<activeProfiles>
+		<activeProfile>[$LIFERAY_NEXUS_PROFILE_ID$]</activeProfile>
+		<activeProfile>[$XANADU_NEXUS_PROFILE_ID$]</activeProfile>
+	</activeProfiles>
 	<localRepository>[$LOCAL_REPOSITORY_DIR$]</localRepository>
 	<mirrors>
 		<mirror>
@@ -12,6 +17,26 @@
 			<url>[$REPOSITORY_URL$]</url>
 		</mirror>
 	</mirrors>
+	<profiles>
+		<profile>
+			<id>[$LIFERAY_NEXUS_PROFILE_ID$]</id>
+			<repositories>
+				<repository>
+					<id>[$LIFERAY_NEXUS_REPO_ID$]</id>
+					<url>[$LIFERAY_NEXUS_REPO_URL$]</url>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>[$XANADU_NEXUS_PROFILE_ID$]</id>
+			<repositories>
+				<repository>
+					<id>[$XANADU_NEXUS_REPO_ID$]</id>
+					<url>[$XANADU_NEXUS_REPO_URL$]</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
 	<proxies>
 		<proxy>
 			<host>[$HTTP_PROXY_HOST$]</host>
@@ -21,4 +46,11 @@
 			<nonProxyHosts>[$HTTP_PROXY_NON_PROXY_HOSTS$]</nonProxyHosts>
 		</proxy>
 	</proxies>
+	<servers>
+		<server>
+			<id>[$XANADU_NEXUS_REPO_ID$]</id>
+			<username>[$NEXUS_PRIVATE_USERNAME$]</username>
+			<password>[$NEXUS_PRIVATE_PASSWORD$]</password>
+		</server>
+	</servers>
 </settings>

@@ -258,17 +258,9 @@ definition {
 	@description = "This test ensures that the translations for all fields in a structure persists for each field."
 	@priority = "5"
 	test TranslateStructureWithAllFields {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.click(navItem = "Structures");
-
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "Structure Title");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addFields(fieldNameList = "Web Content,Date,Rich Text,Single Selection,Grid,Select from List,Numeric,Link to Page,Image,Upload,Color,Text,Multiple Selection,Geolocation,Separator");
 
@@ -283,7 +275,7 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		WebContentStructures.addName(structureName = "Testando");
+		WebContentStructures.addName(structureName = "WC Título da Estrutura");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Text",
@@ -347,9 +339,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Structure Title");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 

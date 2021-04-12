@@ -35,6 +35,7 @@ import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResu
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,6 +43,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -133,7 +135,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerBackgroundFragmentImage()
 		throws Exception {
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
 			"CLASS_PK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
@@ -144,9 +146,10 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		).build();
 
 		File expectedFile = _generateZipFile(
-			"container/background_fragment_image/expected", valuesMap);
+			"container/background_fragment_image/expected", numberValuesMap,
+			null);
 		File inputFile = _generateZipFile(
-			"container/background_fragment_image/input", valuesMap);
+			"container/background_fragment_image/input", numberValuesMap, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -155,7 +158,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerBackgroundImage()
 		throws Exception {
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
 			"CLASS_PK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
@@ -166,9 +169,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		).build();
 
 		File expectedFile = _generateZipFile(
-			"container/background_image/expected", valuesMap);
+			"container/background_image/expected", numberValuesMap, null);
 		File inputFile = _generateZipFile(
-			"container/background_image/input", valuesMap);
+			"container/background_image/input", numberValuesMap, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -178,8 +181,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		throws Exception {
 
 		File expectedFile = _generateZipFile(
-			"container/default/expected", null);
-		File inputFile = _generateZipFile("container/default/input", null);
+			"container/default/expected", null, null);
+		File inputFile = _generateZipFile(
+			"container/default/input", null, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -188,8 +192,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerEmpty()
 		throws Exception {
 
-		File expectedFile = _generateZipFile("container/empty/expected", null);
-		File inputFile = _generateZipFile("container/empty/input", null);
+		File expectedFile = _generateZipFile(
+			"container/empty/expected", null, null);
+		File inputFile = _generateZipFile("container/empty/input", null, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -198,8 +203,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerLayout()
 		throws Exception {
 
-		File expectedFile = _generateZipFile("container/layout/expected", null);
-		File inputFile = _generateZipFile("container/layout/input", null);
+		File expectedFile = _generateZipFile(
+			"container/layout/expected", null, null);
+		File inputFile = _generateZipFile("container/layout/input", null, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -208,8 +214,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerLink()
 		throws Exception {
 
-		File expectedFile = _generateZipFile("container/link/expected", null);
-		File inputFile = _generateZipFile("container/link/input", null);
+		File expectedFile = _generateZipFile(
+			"container/link/expected", null, null);
+		File inputFile = _generateZipFile("container/link/input", null, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -222,7 +229,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		_addDisplayPageTemplate(journalArticle);
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
 			"CLASS_PK", String.valueOf(journalArticle.getResourcePrimKey())
 		).put(
 			"DISPLAY_PAGE_URL",
@@ -233,10 +240,28 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		File expectedFile = _generateZipFile(
 			"container/link_mapped_journal_article_display_page_url/expected",
-			valuesMap);
+			numberValuesMap, null);
 		File inputFile = _generateZipFile(
 			"container/link_mapped_journal_article_display_page_url/input",
-			valuesMap);
+			numberValuesMap, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerLinkMappedToLayout()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+
+		Map<String, String> stringValuesMap = HashMapBuilder.put(
+			"PLID", String.valueOf(layout.getPlid())
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"container/link_mapped_layout/expected", null, stringValuesMap);
+		File inputFile = _generateZipFile(
+			"container/link_mapped_layout/input", null, stringValuesMap);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -247,7 +272,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		_addTextFragmentEntry();
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
 			"CLASS_PK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
@@ -260,10 +285,10 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		File expectedFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/expected" +
 				"/fragment_available",
-			valuesMap);
+			numberValuesMap, null);
 		File inputFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/input",
-			valuesMap);
+			numberValuesMap, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -274,7 +299,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		_addTextFragmentEntry();
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
 			"CLASS_PK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
@@ -287,10 +312,10 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		File expectedFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/expected" +
 				"/fragment_available",
-			valuesMap);
+			numberValuesMap, null);
 		File inputFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/input",
-			valuesMap);
+			numberValuesMap, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -301,7 +326,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		_addTextFragmentEntry();
 
-		Map<String, String> valuesMap1 = HashMapBuilder.put(
+		Map<String, String> numberValuesMap1 = HashMapBuilder.put(
 			"CLASS_PK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
@@ -314,11 +339,11 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		File expectedFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/expected" +
 				"/fragment_available",
-			valuesMap1);
+			numberValuesMap1, null);
 
 		File inputFile1 = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/input",
-			valuesMap1);
+			numberValuesMap1, null);
 
 		_getImportLayoutPageTemplateEntry(
 			inputFile1, _group.getGroupId(), false,
@@ -335,7 +360,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 					return String.valueOf(journalArticle.getResourcePrimKey());
 				}
-			).build());
+			).build(),
+			null);
 
 		File outputFile = _importExportLayoutPageTemplateEntry(
 			inputFile2, _group.getGroupId(), false,
@@ -350,7 +376,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		_addTextFragmentEntry();
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
 			"CLASS_PK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
@@ -363,11 +389,11 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		File expectedFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/expected" +
 				"/fragment_available",
-			valuesMap);
+			numberValuesMap, null);
 
 		File inputFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/input",
-			valuesMap);
+			numberValuesMap, null);
 
 		File outputFile = _importExportLayoutPageTemplateEntry(
 			inputFile, _group.getGroupId(), true,
@@ -392,13 +418,14 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 					return String.valueOf(journalArticle.getResourcePrimKey());
 				}
-			).build());
+			).build(),
+			null);
 
 		_getImportLayoutPageTemplateEntry(
 			inputFile1, _group.getGroupId(), false,
 			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
 			"CLASS_PK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
@@ -411,11 +438,11 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		File expectedFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/expected" +
 				"/fragment_available",
-			valuesMap);
+			numberValuesMap, null);
 
 		File inputFile2 = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/input",
-			valuesMap);
+			numberValuesMap, null);
 
 		File outputFile = _importExportLayoutPageTemplateEntry(
 			inputFile2, _group.getGroupId(), true,
@@ -430,17 +457,17 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		_addTextFragmentEntry();
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
 			"CLASS_PK", String.valueOf(RandomTestUtil.randomLong())
 		).build();
 
 		File expectedFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/expected" +
 				"/fragment_available",
-			valuesMap);
+			numberValuesMap, null);
 		File inputFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/input",
-			valuesMap);
+			numberValuesMap, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -449,7 +476,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryFragmentTextFieldFragmentNotAvailable()
 		throws Exception {
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
 			"CLASS_PK",
 			() -> {
 				JournalArticle journalArticle = _addJournalArticle(
@@ -462,10 +489,10 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		File expectedFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/expected" +
 				"/fragment_not_available",
-			valuesMap);
+			numberValuesMap, null);
 		File inputFile = _generateZipFile(
 			"fragment/text_field/mapped_value/class_pk_reference/input",
-			valuesMap);
+			numberValuesMap, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -474,8 +501,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryRowContainer()
 		throws Exception {
 
-		File expectedFile = _generateZipFile("row/container/expected", null);
-		File inputFile = _generateZipFile("row/container/input", null);
+		File expectedFile = _generateZipFile(
+			"row/container/expected", null, null);
+		File inputFile = _generateZipFile("row/container/input", null, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -549,7 +577,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	private void _addZipWriterEntry(
-			ZipWriter zipWriter, URL url, Map<String, String> valuesMap)
+			ZipWriter zipWriter, URL url, Map<String, String> numberValuesMap,
+			Map<String, String> stringValuesMap)
 		throws IOException {
 
 		String entryPath = url.getPath();
@@ -559,12 +588,15 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		String content = StringUtil.read(url.openStream());
 
-		zipWriter.addEntry(
-			zipPath, StringUtil.replace(content, "\"${", "}\"", valuesMap));
+		content = StringUtil.replace(content, "\"${", "}\"", numberValuesMap);
+		content = StringUtil.replace(content, "£{", "}", stringValuesMap);
+
+		zipWriter.addEntry(zipPath, content);
 	}
 
 	private File _generateZipFile(
-			String testPath, Map<String, String> valuesMap)
+			String testPath, Map<String, String> numberValuesMap,
+			Map<String, String> stringValuesMap)
 		throws Exception {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
@@ -585,7 +617,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				_populateZipWriter(zipWriter, url, valuesMap);
+				_populateZipWriter(
+					zipWriter, url, numberValuesMap, stringValuesMap);
 			}
 
 			return zipWriter.getFile();
@@ -701,7 +734,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	private void _populateZipWriter(
-			ZipWriter zipWriter, URL url, Map<String, String> valuesMap)
+			ZipWriter zipWriter, URL url, Map<String, String> numberValuesMap,
+			Map<String, String> stringValuesMap)
 		throws IOException {
 
 		String zipPath = StringUtil.removeSubstring(
@@ -719,7 +753,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		while (enumeration.hasMoreElements()) {
 			URL elementURL = enumeration.nextElement();
 
-			_addZipWriterEntry(zipWriter, elementURL, valuesMap);
+			_addZipWriterEntry(
+				zipWriter, elementURL, numberValuesMap, stringValuesMap);
 		}
 
 		enumeration = _bundle.findEntries(
@@ -730,7 +765,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		while (enumeration.hasMoreElements()) {
 			URL elementURL = enumeration.nextElement();
 
-			_addZipWriterEntry(zipWriter, elementURL, valuesMap);
+			_addZipWriterEntry(
+				zipWriter, elementURL, numberValuesMap, stringValuesMap);
 		}
 
 		enumeration = _bundle.findEntries(path, "thumbnail.png", true);
@@ -742,7 +778,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		while (enumeration.hasMoreElements()) {
 			URL elementURL = enumeration.nextElement();
 
-			_addZipWriterEntry(zipWriter, elementURL, valuesMap);
+			_addZipWriterEntry(
+				zipWriter, elementURL, numberValuesMap, stringValuesMap);
 		}
 	}
 

@@ -83,6 +83,10 @@ public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 
 	public String getExtension();
 
+	public default String getExternalReferenceCode() {
+		return String.valueOf(getFileEntryId());
+	}
+
 	public long getFileEntryId();
 
 	public String getFileName();

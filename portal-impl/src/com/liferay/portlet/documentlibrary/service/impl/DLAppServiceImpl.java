@@ -275,6 +275,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 *
+	 * @review
 	 */
 	@Override
 	public FileEntry addFileEntry(
@@ -335,6 +337,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 *
+	 * @review
 	 */
 	@Override
 	public FileEntry addFileEntry(
@@ -392,6 +396,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 *
+	 * @review
 	 */
 	@Override
 	public FileEntry addFileEntry(

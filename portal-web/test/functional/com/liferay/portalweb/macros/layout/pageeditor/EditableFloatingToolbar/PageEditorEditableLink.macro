@@ -82,7 +82,14 @@ definition {
 			Navigator.gotoNavItem(navItem = "${navItem}");
 		}
 
-		Portlet.expandTree();
+		if (isSet(keywords)) {
+			Type(
+				locator1 = "ItemSelector#SEARCH_FIELD",
+				value1 = "${keywords}");
+		}
+		else {
+			Portlet.expandTree();
+		}
 
 		AssertClick.assertPartialTextClickAt(
 			key_nodeName = "${pageName}",

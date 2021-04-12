@@ -14,6 +14,7 @@
 
 import ClayLayout from '@clayui/layout';
 import {Context as ModalContext} from '@clayui/modal';
+import classNames from 'classnames';
 import {
 	Pages,
 	useConfig,
@@ -52,7 +53,14 @@ export const FormBuilder = () => {
 	);
 
 	return (
-		<div className="data-engine-form-builder ddm-form-builder pb-5">
+		<div
+			className={classNames(
+				'data-engine-form-builder ddm-form-builder pb-5',
+				{
+					'ddm-form-builder--sidebar-open': sidebarState.sidebarOpen,
+				}
+			)}
+		>
 			<ClayLayout.Sheet>
 				<div className="ddm-form-builder-wrapper">
 					<div className="container ddm-form-builder">

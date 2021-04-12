@@ -195,15 +195,15 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 										</div>
 
 										<div class="autofit-col autofit-col-expand">
-											<h5 class="text-default">
-												<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
-											</h5>
-
-											<h4>
+											<h2 class="h5">
 												<aui:a href="<%= dlViewDisplayContext.getUploadURL() %>">
 													{title}
 												</aui:a>
-											</h4>
+											</h2>
+
+											<span>
+												<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
+											</span>
 										</div>
 
 										<div class="autofit-col"></div>

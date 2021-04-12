@@ -171,6 +171,22 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
+	public void testShouldFailIfDuplicateExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		DLAppServiceTestUtil.addFileEntry(
+			externalReferenceCode, group.getGroupId(),
+			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null);
+		DLAppServiceTestUtil.addFileEntry(
+			externalReferenceCode, group.getGroupId(),
+			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.FILE_NAME, null);
+	}
+
+	@Test(expected = DuplicateFileEntryException.class)
 	public void testShouldFailIfDuplicateNameAndExtensionInFolder1()
 		throws Exception {
 

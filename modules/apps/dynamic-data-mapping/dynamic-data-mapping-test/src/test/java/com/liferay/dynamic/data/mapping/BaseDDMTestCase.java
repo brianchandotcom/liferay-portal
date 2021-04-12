@@ -210,6 +210,18 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected DDMFormFieldValue createDDMFormFieldValue(
+		DDMFormValues ddmFormValues, String instanceId, String name,
+		Value value) {
+
+		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
+			instanceId, name, value);
+
+		ddmFormFieldValue.setDDMFormValues(ddmFormValues);
+
+		return ddmFormFieldValue;
+	}
+
+	protected DDMFormFieldValue createDDMFormFieldValue(
 		String instanceId, String name, Value value) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();

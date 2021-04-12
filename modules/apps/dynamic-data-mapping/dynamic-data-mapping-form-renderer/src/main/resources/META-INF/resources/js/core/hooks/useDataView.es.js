@@ -40,8 +40,10 @@ const getProps = (props, keys) =>
  * objects because props contain all the properties of the store but raw only
  * the properties that the schema needs.
  */
-const isStaleRaw = (props, schema) =>
-	schema.props.some((key) => props[key] !== schema[SYMBOL_RAW][key]);
+const isStaleRaw = (key, props, schema) =>
+	SCHEMAS_DICTIONARY[key].props.some(
+		(key) => props[key] !== schema[SYMBOL_RAW][key]
+	);
 
 const createSchema = (key, props) => {
 	const Schema = SCHEMAS_DICTIONARY[key];
@@ -56,7 +58,7 @@ const createSchema = (key, props) => {
 
 const getSchema = (key, props) => {
 	if (key in context) {
-		if (isStaleRaw(props, context[key])) {
+		if (isStaleRaw(key, props, context[key])) {
 			delete context[key];
 
 			return createSchema(key, props);

@@ -959,9 +959,9 @@ public class LayoutStagedModelDataHandler
 
 		fixImportTypeSettings(importedLayout);
 
-		importTheme(portletDataContext, layout, importedLayout);
-
 		importedLayout = _layoutLocalService.updateLayout(importedLayout);
+
+		importTheme(portletDataContext, layout, importedLayout);
 
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||

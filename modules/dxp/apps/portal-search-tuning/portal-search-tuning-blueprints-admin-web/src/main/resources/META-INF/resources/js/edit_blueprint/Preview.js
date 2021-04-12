@@ -87,7 +87,7 @@ function Preview({
 		</div>
 	);
 
-	const ResultsManagementBar = () => (
+	const _renderResultsManagementBar = () => (
 		<ClayManagementToolbar>
 			<ClayManagementToolbar.ItemList>
 				<ClayManagementToolbar.Item>
@@ -149,9 +149,9 @@ function Preview({
 				</div>
 			</nav>
 
-			{results.meta && (!results.errors || !results.errors.length) && (
-				<ResultsManagementBar />
-			)}
+			{results.meta &&
+				(!results.errors || !results.errors.length) &&
+				_renderResultsManagementBar()}
 
 			{!loading ? (
 				results.errors && results.errors.length ? (

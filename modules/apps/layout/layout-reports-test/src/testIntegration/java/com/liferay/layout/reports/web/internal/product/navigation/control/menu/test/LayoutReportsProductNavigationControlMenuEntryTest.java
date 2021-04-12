@@ -16,6 +16,7 @@ package com.liferay.layout.reports.web.internal.product.navigation.control.menu.
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.configuration.test.util.ConfigurationCompanyTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -73,18 +75,31 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsConfigurationGooglePageSpeed" +
-							"Configuration",
+						"LayoutReportsGooglePageSpeedConfiguration",
 					new HashMapDictionary<String, Object>() {
 						{
-							put("apiKey", RandomTestUtil.randomString());
 							put("enabled", true);
 						}
 					})) {
 
-			Assert.assertTrue(
-				_productNavigationControlMenuEntry.isShow(
-					_getHttpServletRequest()));
+			try (ConfigurationCompanyTemporarySwapper
+					configurationCompanyTemporarySwapper =
+						new ConfigurationCompanyTemporarySwapper(
+							_group.getCompanyId(),
+							"com.liferay.layout.reports.web.internal." +
+								"configuration.LayoutReportsGooglePageSpeed" +
+									"CompanyConfiguration",
+							new HashMapDictionary<String, Object>() {
+								{
+									put("enabled", true);
+								}
+							},
+							_settingsFactory)) {
+
+				Assert.assertTrue(
+					_productNavigationControlMenuEntry.isShow(
+						_getHttpServletRequest()));
+			}
 		}
 	}
 
@@ -165,5 +180,8 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 	)
 	private ProductNavigationControlMenuEntry
 		_productNavigationControlMenuEntry;
+
+	@Inject
+	private SettingsFactory _settingsFactory;
 
 }

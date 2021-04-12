@@ -16,11 +16,9 @@ package com.liferay.layout.reports.web.internal.frontend.taglib.form.navigator.t
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
+import com.liferay.portal.configuration.test.util.ConfigurationCompanyTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.ModifiableSettings;
-import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -31,9 +29,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.util.Dictionary;
-import java.util.Enumeration;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -165,69 +160,6 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntryTest {
 						TestPropsValues.getUser(), _group));
 			}
 		}
-	}
-
-	public static class ConfigurationCompanyTemporarySwapper
-		implements AutoCloseable {
-
-		public ConfigurationCompanyTemporarySwapper(
-				long companyId, String pid,
-				Dictionary<String, Object> properties,
-				SettingsFactory settingsFactory)
-			throws Exception {
-
-			_companyId = companyId;
-			_pid = pid;
-			_settingsFactory = settingsFactory;
-
-			Settings settings = _settingsFactory.getSettings(
-				new CompanyServiceSettingsLocator(_companyId, _pid));
-
-			ModifiableSettings modifiableSettings =
-				settings.getModifiableSettings();
-
-			_initialProperties = new HashMapDictionary();
-
-			Enumeration<String> keysEnumeration = properties.keys();
-
-			while (keysEnumeration.hasMoreElements()) {
-				String key = keysEnumeration.nextElement();
-
-				_initialProperties.put(
-					key, modifiableSettings.getValue(key, null));
-
-				modifiableSettings.setValue(
-					key, String.valueOf(properties.get(key)));
-			}
-
-			modifiableSettings.store();
-		}
-
-		@Override
-		public void close() throws Exception {
-			Settings settings = _settingsFactory.getSettings(
-				new CompanyServiceSettingsLocator(_companyId, _pid));
-
-			ModifiableSettings modifiableSettings =
-				settings.getModifiableSettings();
-
-			Enumeration<String> keysEnumeration = _initialProperties.keys();
-
-			while (keysEnumeration.hasMoreElements()) {
-				String key = keysEnumeration.nextElement();
-
-				modifiableSettings.setValue(
-					key, String.valueOf(_initialProperties.get(key)));
-			}
-
-			modifiableSettings.store();
-		}
-
-		private final long _companyId;
-		private final Dictionary<String, Object> _initialProperties;
-		private final String _pid;
-		private final SettingsFactory _settingsFactory;
-
 	}
 
 	@Inject(

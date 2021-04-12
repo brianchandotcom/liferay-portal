@@ -124,6 +124,41 @@ definition {
 			rowEntry = "UG UserGroup Name");
 	}
 
+	@priority = "4"
+	test AssignSiteRoleToUG {
+		property test.name.skip.portal.instance = "UsergroupsUsecase#AssignSiteRoleToUG";
+
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG User Group Description",
+			userGroupName = "UG User Group");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONGroup.assignUserGroupToGroup(
+			groupName = "Site Name",
+			userGroupName = "UG User Group");
+
+		JSONRole.addSiteRole(
+			roleKey = "UG Site Role",
+			roleTitle = "UG Site Role");
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoUserGroups();
+
+		Site.assignSiteRoleToUserGroup(
+			roleName = "UG Site Role",
+			userGroupName = "UG User Group");
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoUserGroups();
+
+		Site.viewUserGroupSiteRoleViaSiteMembershipsCP(
+			resourceName = "UG User Group",
+			roleTitle = "UG Site Role");
+	}
+
 	@priority = "3"
 	test ExportUserGroupMembers {
 		JSONUserGroup.addUserGroup(

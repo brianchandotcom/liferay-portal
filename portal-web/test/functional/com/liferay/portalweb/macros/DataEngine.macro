@@ -225,17 +225,6 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
-	macro moveNestedField {
-		var key_fieldsetLabel = "${fieldsetLabel}";
-		var key_fieldFieldLabel = "${nestedFieldLabel}";
-
-		Click(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
-
-		DragAndDrop.javaScriptDragAndDropToBottom(
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			locator2 = "Form#ADD_FIELD_POSITION_1");
-	}
-	
 	macro addFieldOption {
 		if (isSet(fieldFieldLabel)) {
 			AssertClick.assertPartialTextClickAt(
@@ -1387,6 +1376,17 @@ definition {
 		Click(
 			key_fieldsetName = "${fieldsetName}",
 			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
+	}
+
+	macro moveNestedField {
+		var key_fieldsetLabel = "${fieldsetLabel}";
+		var key_fieldFieldLabel = "${nestedFieldLabel}";
+
+		Click(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+		DragAndDrop.javaScriptDragAndDropToBottom(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			locator2 = "Form#ADD_FIELD_POSITION_1");
 	}
 
 	macro viewField {

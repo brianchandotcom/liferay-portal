@@ -14,7 +14,6 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/editor" prefix="liferay-editor" %>
 <%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 

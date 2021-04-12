@@ -1,4 +1,5 @@
 @component-name = "portal-document-management"
+@ignore = "true"
 definition {
 
 	property custom.properties = "xuggler.enabled=true";

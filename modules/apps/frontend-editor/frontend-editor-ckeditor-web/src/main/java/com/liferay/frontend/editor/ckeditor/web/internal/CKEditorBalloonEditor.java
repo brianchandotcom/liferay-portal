@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Julien Castelain
  */
 @Component(
-	property = "name=ballooneditor",
+	property = "name=ckeditor_balloon",
 	service = {Editor.class, EditorRenderer.class}
 )
 public class CKEditorBalloonEditor implements Editor, EditorRenderer {

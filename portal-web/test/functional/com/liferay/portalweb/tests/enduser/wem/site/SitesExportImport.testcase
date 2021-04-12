@@ -202,4 +202,104 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-120198. Export and import the whole site where a content page with fragment linked to page."
+	@priority = "4"
+	test ExportImportSiteWithMappedPage {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
+
+		task ("Add the first content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add the second content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Map the content page to editable field of Button") {
+			PageEditorEditableLink.mapEditableFieldToPage(
+				fragmentName = "Button",
+				id = "link",
+				pageName = "Test Content Page Name");
+		}
+
+		task ("View the selected page is shown in Page field") {
+			AssertVisible(
+				key_contentName = "Test Content Page Name",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("View selected page is linked to Button fragment") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			AssertVisible(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/test-site-name/test-content-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("Publish the content page") {
+			PortletEntry.publish();
+		}
+
+		task ("Export the site") {
+			LAR.exportSiteCP(siteScopeName = "Test Site Name");
+
+			var key_larFileName = "${larFileName}";
+
+			var larFileName = LAR.getLarFileName();
+
+			LAR.downloadLar();
+		}
+
+		task ("Import the lar file to a new site") {
+			JSONGroup.addGroup(groupName = "New Site");
+
+			LAR.importSiteCP(
+				larFileName = "${larFileName}",
+				siteName = "New Site");
+		}
+
+		task ("Navigate to content page in new site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "New Site");
+
+			Click(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/new-site/test-content-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("Assert redirect to content page in the new site") {
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Content Page Name");
+
+			AssertLocation.assertPartialLocation(value1 = "web/new-site/test-content-page-name");
+		}
+	}
+
 }

@@ -495,7 +495,7 @@ AUI.add(
 
 				_createEntriesContainer(searchContainer, displayStyle) {
 					var containerClasses =
-						'display-style-descriptive tabular-list-group';
+						'list-group list-group-notification show-quick-actions-on-hover';
 
 					if (displayStyle === CSS_ICON) {
 						containerClasses = 'card-page card-page-equal-height';

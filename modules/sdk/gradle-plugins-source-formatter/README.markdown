@@ -93,6 +93,8 @@ Property Name | Type | Default Value | Description
 `autoFix` | `boolean` | `false` | Whether to automatically fix source formatting errors. It sets the `source.auto.fix` argument.
 `baseDir` | `File` | | The Source Formatter base directory. It sets the `source.base.dir` argument. *(Read-only)*
 `baseDirName` | `String` | `"./"` | The name of the Source Formatter base directory, relative to the project directory.
+`checkCategoryNames` | `List<String>` | `null` | The check categories to run. It sets the `source.check.category.names` argument.
+`checkNames` | `List<String>` | `null` | The checks to run. It sets the `source.check.names` argument.
 `failOnAutoFix` | `boolean` | `false` | Whether to fail the build if formatting errors are found that were automatically fixed. It sets the `source.fail.on.auto.fix` argument.
 `failOnHasWarning` | `boolean` | `true` | Whether to fail the build if formatting errors are found that were not automatically fixed. It sets the `source.fail.on.has.warning` argument.
 `fileExtensions` | `List<String>` | `[]` | The file extensions to format. If empty, all file extensions will be formatted. It sets the `source.file.extensions` argument.

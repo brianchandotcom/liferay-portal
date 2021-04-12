@@ -78,7 +78,7 @@ public class AssetListEntryUsageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -106,8 +106,18 @@ public class AssetListEntryUsageCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", containerKey=");
+		sb.append(containerKey);
+		sb.append(", containerType=");
+		sb.append(containerType);
+		sb.append(", key=");
+		sb.append(key);
+		sb.append(", plid=");
+		sb.append(plid);
 		sb.append(", portletId=");
 		sb.append(portletId);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -160,12 +170,32 @@ public class AssetListEntryUsageCacheModel
 		assetListEntryUsageImpl.setClassNameId(classNameId);
 		assetListEntryUsageImpl.setClassPK(classPK);
 
+		if (containerKey == null) {
+			assetListEntryUsageImpl.setContainerKey("");
+		}
+		else {
+			assetListEntryUsageImpl.setContainerKey(containerKey);
+		}
+
+		assetListEntryUsageImpl.setContainerType(containerType);
+
+		if (key == null) {
+			assetListEntryUsageImpl.setKey("");
+		}
+		else {
+			assetListEntryUsageImpl.setKey(key);
+		}
+
+		assetListEntryUsageImpl.setPlid(plid);
+
 		if (portletId == null) {
 			assetListEntryUsageImpl.setPortletId("");
 		}
 		else {
 			assetListEntryUsageImpl.setPortletId(portletId);
 		}
+
+		assetListEntryUsageImpl.setType(type);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			assetListEntryUsageImpl.setLastPublishDate(null);
@@ -203,7 +233,15 @@ public class AssetListEntryUsageCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
+		containerKey = objectInput.readUTF();
+
+		containerType = objectInput.readLong();
+		key = objectInput.readUTF();
+
+		plid = objectInput.readLong();
 		portletId = objectInput.readUTF();
+
+		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -244,6 +282,24 @@ public class AssetListEntryUsageCacheModel
 
 		objectOutput.writeLong(classPK);
 
+		if (containerKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(containerKey);
+		}
+
+		objectOutput.writeLong(containerType);
+
+		if (key == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
+
+		objectOutput.writeLong(plid);
+
 		if (portletId == null) {
 			objectOutput.writeUTF("");
 		}
@@ -251,6 +307,7 @@ public class AssetListEntryUsageCacheModel
 			objectOutput.writeUTF(portletId);
 		}
 
+		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -267,7 +324,12 @@ public class AssetListEntryUsageCacheModel
 	public long assetListEntryId;
 	public long classNameId;
 	public long classPK;
+	public String containerKey;
+	public long containerType;
+	public String key;
+	public long plid;
 	public String portletId;
+	public int type;
 	public long lastPublishDate;
 
 }

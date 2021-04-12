@@ -298,6 +298,64 @@ public interface AssetListEntryUsageModel
 	public void setClassPK(long classPK);
 
 	/**
+	 * Returns the container key of this asset list entry usage.
+	 *
+	 * @return the container key of this asset list entry usage
+	 */
+	@AutoEscape
+	public String getContainerKey();
+
+	/**
+	 * Sets the container key of this asset list entry usage.
+	 *
+	 * @param containerKey the container key of this asset list entry usage
+	 */
+	public void setContainerKey(String containerKey);
+
+	/**
+	 * Returns the container type of this asset list entry usage.
+	 *
+	 * @return the container type of this asset list entry usage
+	 */
+	public long getContainerType();
+
+	/**
+	 * Sets the container type of this asset list entry usage.
+	 *
+	 * @param containerType the container type of this asset list entry usage
+	 */
+	public void setContainerType(long containerType);
+
+	/**
+	 * Returns the key of this asset list entry usage.
+	 *
+	 * @return the key of this asset list entry usage
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this asset list entry usage.
+	 *
+	 * @param key the key of this asset list entry usage
+	 */
+	public void setKey(String key);
+
+	/**
+	 * Returns the plid of this asset list entry usage.
+	 *
+	 * @return the plid of this asset list entry usage
+	 */
+	public long getPlid();
+
+	/**
+	 * Sets the plid of this asset list entry usage.
+	 *
+	 * @param plid the plid of this asset list entry usage
+	 */
+	public void setPlid(long plid);
+
+	/**
 	 * Returns the portlet ID of this asset list entry usage.
 	 *
 	 * @return the portlet ID of this asset list entry usage
@@ -311,6 +369,20 @@ public interface AssetListEntryUsageModel
 	 * @param portletId the portlet ID of this asset list entry usage
 	 */
 	public void setPortletId(String portletId);
+
+	/**
+	 * Returns the type of this asset list entry usage.
+	 *
+	 * @return the type of this asset list entry usage
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this asset list entry usage.
+	 *
+	 * @param type the type of this asset list entry usage
+	 */
+	public void setType(int type);
 
 	/**
 	 * Returns the last publish date of this asset list entry usage.

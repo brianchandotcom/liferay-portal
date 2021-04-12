@@ -70,9 +70,21 @@ public class AssetListEntryUsageTable
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryUsageTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AssetListEntryUsageTable, String> containerKey =
+		createColumn(
+			"containerKey", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AssetListEntryUsageTable, Long> containerType =
+		createColumn(
+			"containerType", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AssetListEntryUsageTable, String> key = createColumn(
+		"key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AssetListEntryUsageTable, Long> plid = createColumn(
+		"plid", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryUsageTable, String> portletId =
 		createColumn(
 			"portletId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AssetListEntryUsageTable, Integer> type = createColumn(
+		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryUsageTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

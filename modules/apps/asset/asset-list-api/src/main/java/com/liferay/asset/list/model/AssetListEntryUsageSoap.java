@@ -48,7 +48,12 @@ public class AssetListEntryUsageSoap implements Serializable {
 		soapModel.setAssetListEntryId(model.getAssetListEntryId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
+		soapModel.setContainerKey(model.getContainerKey());
+		soapModel.setContainerType(model.getContainerType());
+		soapModel.setKey(model.getKey());
+		soapModel.setPlid(model.getPlid());
 		soapModel.setPortletId(model.getPortletId());
+		soapModel.setType(model.getType());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -216,12 +221,52 @@ public class AssetListEntryUsageSoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	public String getContainerKey() {
+		return _containerKey;
+	}
+
+	public void setContainerKey(String containerKey) {
+		_containerKey = containerKey;
+	}
+
+	public long getContainerType() {
+		return _containerType;
+	}
+
+	public void setContainerType(long containerType) {
+		_containerType = containerType;
+	}
+
+	public String getKey() {
+		return _key;
+	}
+
+	public void setKey(String key) {
+		_key = key;
+	}
+
+	public long getPlid() {
+		return _plid;
+	}
+
+	public void setPlid(long plid) {
+		_plid = plid;
+	}
+
 	public String getPortletId() {
 		return _portletId;
 	}
 
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
+	}
+
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_type = type;
 	}
 
 	public Date getLastPublishDate() {
@@ -245,7 +290,12 @@ public class AssetListEntryUsageSoap implements Serializable {
 	private long _assetListEntryId;
 	private long _classNameId;
 	private long _classPK;
+	private String _containerKey;
+	private long _containerType;
+	private String _key;
+	private long _plid;
 	private String _portletId;
+	private int _type;
 	private Date _lastPublishDate;
 
 }

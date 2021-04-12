@@ -2910,6 +2910,8 @@ public class AssetListEntryUsagePersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("key", "key_");
+		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -3691,7 +3693,12 @@ public class AssetListEntryUsagePersistenceImpl
 		ctStrictColumnNames.add("assetListEntryId");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
+		ctStrictColumnNames.add("containerKey");
+		ctStrictColumnNames.add("containerType");
+		ctStrictColumnNames.add("key_");
+		ctStrictColumnNames.add("plid");
 		ctStrictColumnNames.add("portletId");
+		ctStrictColumnNames.add("type_");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
@@ -3904,7 +3911,7 @@ public class AssetListEntryUsagePersistenceImpl
 		AssetListEntryUsagePersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid"});
+		new String[] {"uuid", "key", "type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

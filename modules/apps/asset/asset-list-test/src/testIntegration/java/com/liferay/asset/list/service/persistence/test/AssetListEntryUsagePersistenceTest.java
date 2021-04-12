@@ -150,7 +150,17 @@ public class AssetListEntryUsagePersistenceTest {
 
 		newAssetListEntryUsage.setClassPK(RandomTestUtil.nextLong());
 
+		newAssetListEntryUsage.setContainerKey(RandomTestUtil.randomString());
+
+		newAssetListEntryUsage.setContainerType(RandomTestUtil.nextLong());
+
+		newAssetListEntryUsage.setKey(RandomTestUtil.randomString());
+
+		newAssetListEntryUsage.setPlid(RandomTestUtil.nextLong());
+
 		newAssetListEntryUsage.setPortletId(RandomTestUtil.randomString());
+
+		newAssetListEntryUsage.setType(RandomTestUtil.nextInt());
 
 		newAssetListEntryUsage.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -201,8 +211,23 @@ public class AssetListEntryUsagePersistenceTest {
 			existingAssetListEntryUsage.getClassPK(),
 			newAssetListEntryUsage.getClassPK());
 		Assert.assertEquals(
+			existingAssetListEntryUsage.getContainerKey(),
+			newAssetListEntryUsage.getContainerKey());
+		Assert.assertEquals(
+			existingAssetListEntryUsage.getContainerType(),
+			newAssetListEntryUsage.getContainerType());
+		Assert.assertEquals(
+			existingAssetListEntryUsage.getKey(),
+			newAssetListEntryUsage.getKey());
+		Assert.assertEquals(
+			existingAssetListEntryUsage.getPlid(),
+			newAssetListEntryUsage.getPlid());
+		Assert.assertEquals(
 			existingAssetListEntryUsage.getPortletId(),
 			newAssetListEntryUsage.getPortletId());
+		Assert.assertEquals(
+			existingAssetListEntryUsage.getType(),
+			newAssetListEntryUsage.getType());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingAssetListEntryUsage.getLastPublishDate()),
@@ -293,7 +318,9 @@ public class AssetListEntryUsagePersistenceTest {
 			"uuid", true, "assetListEntryUsageId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "assetListEntryId", true, "classNameId",
-			true, "classPK", true, "portletId", true, "lastPublishDate", true);
+			true, "classPK", true, "containerKey", true, "containerType", true,
+			"key", true, "plid", true, "portletId", true, "type", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -633,7 +660,17 @@ public class AssetListEntryUsagePersistenceTest {
 
 		assetListEntryUsage.setClassPK(RandomTestUtil.nextLong());
 
+		assetListEntryUsage.setContainerKey(RandomTestUtil.randomString());
+
+		assetListEntryUsage.setContainerType(RandomTestUtil.nextLong());
+
+		assetListEntryUsage.setKey(RandomTestUtil.randomString());
+
+		assetListEntryUsage.setPlid(RandomTestUtil.nextLong());
+
 		assetListEntryUsage.setPortletId(RandomTestUtil.randomString());
+
+		assetListEntryUsage.setType(RandomTestUtil.nextInt());
 
 		assetListEntryUsage.setLastPublishDate(RandomTestUtil.nextDate());
 

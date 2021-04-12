@@ -532,7 +532,7 @@ AUI.add(
 					}
 					else {
 						var entriesContainerSelector =
-							'ul.tabular-list-group:last-of-type';
+							'ul.list-group:last-of-type';
 
 						if (displayStyle === CSS_ICON) {
 							entriesContainerSelector =

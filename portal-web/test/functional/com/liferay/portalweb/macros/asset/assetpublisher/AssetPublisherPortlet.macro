@@ -1227,12 +1227,6 @@ definition {
 		AssertElementPresent(locator1 = "Button#SUBSCRIBE");
 
 		AssertElementPresent(locator1 = "Icon#CUSTOM_EDIT");
-
-		Click(
-			locator1 = "AP#ASSET_RICH_SUMMARY_TITLE",
-			value1 = "${assetTitle}");
-
-		SocialBookmarks.viewDefaultSharableBookmarks();
 	}
 
 	macro viewDefaultWithAllDisplaySettingsCheckboxesPG {

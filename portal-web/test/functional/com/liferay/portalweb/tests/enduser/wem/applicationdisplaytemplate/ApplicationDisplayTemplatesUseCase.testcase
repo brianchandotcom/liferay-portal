@@ -178,7 +178,6 @@ definition {
 
 	@priority = "3"
 	test ADTAssetPublisher {
-		property osgi.app.includes = "social-bookmarks";
 		property testray.component.names = "Asset Publisher,Content and Application Templates";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -209,7 +208,7 @@ definition {
 
 		AssetPublisherPortlet.configureDisplaySettings(
 			displaySettings = "Comments,Comment Ratings,Flags,Print,Ratings,Related Assets",
-			enableSocialBookmarkSites = "Facebook,LinkedIn,Twitter,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
+			enableSocialBookmarkSites = "Facebook,LinkedIn,Twitter");
 
 		Navigator.gotoSitePage(
 			pageName = "ADT Test Page",

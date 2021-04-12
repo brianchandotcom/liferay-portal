@@ -35,7 +35,6 @@ class DataEngineCompatibilityLayer {
 			dataDefinition,
 			dataLayout,
 			editingLanguageId,
-			focusedCustomObjectField,
 			focusedField,
 		} = this[SYMBOL_INTERNAL];
 
@@ -43,9 +42,7 @@ class DataEngineCompatibilityLayer {
 			dataDefinition,
 			dataLayout,
 			editingLanguageId,
-			focusedCustomObjectField,
 			focusedField,
-			hoveredField: {},
 		};
 	}
 

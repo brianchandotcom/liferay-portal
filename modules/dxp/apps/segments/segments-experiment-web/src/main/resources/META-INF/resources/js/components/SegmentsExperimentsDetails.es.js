@@ -18,6 +18,7 @@ import {STATUS_DRAFT} from '../util/statuses.es';
 function SegmentsExperimentsDetails({segmentsExperiment}) {
 	const {
 		confidenceLevel,
+		description,
 		goal,
 		segmentsEntryName,
 		status,
@@ -30,22 +31,39 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 			</h4>
 
 			<dl>
-				<div className="d-flex">
-					<dt>{Liferay.Language.get('segment') + ':'} </dt>
-					<dd className="ml-2 text-secondary">{segmentsEntryName}</dd>
+				<div className="c-my-2">
+					<dt className="d-inline-block">
+						{Liferay.Language.get('description') + ':'}{' '}
+					</dt>
+					<dd className="d-inline inline-item-after text-secondary">
+						{description}
+					</dd>
 				</div>
 
-				<div className="d-flex">
-					<dt>{Liferay.Language.get('goal') + ':'} </dt>
-					<dd className="ml-2 text-secondary">{goal.label}</dd>
+				<div className="c-my-2">
+					<dt className="d-inline-block">
+						{Liferay.Language.get('segment') + ':'}{' '}
+					</dt>
+					<dd className="d-inline inline-item-after text-secondary">
+						{segmentsEntryName}
+					</dd>
+				</div>
+
+				<div className="c-my-2">
+					<dt className="d-inline-block">
+						{Liferay.Language.get('goal') + ':'}{' '}
+					</dt>
+					<dd className="d-inline inline-item-after text-secondary">
+						{goal.label}
+					</dd>
 				</div>
 
 				{status.value !== STATUS_DRAFT && (
-					<div className="d-flex">
-						<dt>
+					<div className="c-my-2">
+						<dt className="d-inline-block">
 							{Liferay.Language.get('confidence-level') + ':'}{' '}
 						</dt>
-						<dd className="ml-2 text-secondary">
+						<dd className="d-inline inline-item-after text-secondary">
 							{indexToPercentageString(confidenceLevel)}
 						</dd>
 					</div>

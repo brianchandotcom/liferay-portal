@@ -1229,7 +1229,7 @@ AUI.add(
 							instance._updateFileLink(
 								fileNode,
 								response.message,
-								displayStyleList
+								displayStyle
 							);
 
 							instance._updateFileHiddenInput(
@@ -1386,16 +1386,19 @@ AUI.add(
 					}
 				},
 
-				_updateFileLink(node, id, displayStyleList) {
+				_updateFileLink(node, id, displayStyle) {
 					var instance = this;
 
-					var selector = SELECTOR_ENTRY_LINK;
+					var selector = 'a';
 
-					if (displayStyleList) {
+					if (displayStyle === STR_LIST) {
 						selector =
 							SELECTOR_ENTRY_DISPLAY_STYLE +
 							STR_SPACE +
 							SELECTOR_TAGLIB_ICON;
+					}
+					else if (displayStyle === CSS_ICON) {
+						selector = SELECTOR_ENTRY_LINK;
 					}
 
 					var link = node.all(selector);

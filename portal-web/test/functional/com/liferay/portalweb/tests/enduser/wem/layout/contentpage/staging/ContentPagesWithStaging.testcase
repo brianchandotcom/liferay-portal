@@ -424,6 +424,112 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120198. Link page to fragment works on Staging and Live site."
+	@priority = "4"
+	test MapPageToTextFragment {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Widget Page Name",
+				site = "false");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add a Heading fragment to content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the widget page to editable field of Heading") {
+			PageEditorEditableLink.mapEditableFieldToPage(
+				fragmentName = "Heading",
+				id = "element-text",
+				pageName = "Test Widget Page Name");
+		}
+
+		task ("View the selected page is shown in Page field") {
+			AssertVisible(
+				key_contentName = "Test Widget Page Name",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("View selected page is linked to Heading fragment") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			AssertVisible(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "${baseURL}/web/test-site-name-staging/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("Publish the content page") {
+			PortletEntry.publish();
+		}
+
+		task ("Publish to Live") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("Navigate to content page in staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			Click(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "${baseURL}/web/test-site-name-staging/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("Assert redirect to widget page in staging site") {
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Widget Page Name");
+
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name-staging/test-widget-page-name");
+		}
+
+		task ("Navigate to content page in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("Assert redirect to widget page in live site") {
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Widget Page Name");
+
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/test-widget-page-name");
+		}
+	}
+
 	@description = "This is a test for LPS-98030. A mapped editable background image of a fragment survives local staging."
 	@priority = "2"
 	test MapWebContentImageToBackgroundImageOfBannerCenter {

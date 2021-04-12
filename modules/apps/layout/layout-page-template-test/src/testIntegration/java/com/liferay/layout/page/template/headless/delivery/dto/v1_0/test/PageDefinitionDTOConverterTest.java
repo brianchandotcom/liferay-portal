@@ -32,6 +32,7 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLinkValue;
+import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
 import com.liferay.headless.delivery.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageDropZoneDefinition;
@@ -538,8 +539,11 @@ public class PageDefinitionDTOConverterTest {
 		PageSectionDefinition pageSectionDefinition1 =
 			(PageSectionDefinition)sectionPageElement1.getDefinition();
 
+		FragmentStyle fragmentStyle1 =
+			pageSectionDefinition1.getFragmentStyle();
+
 		FragmentImage fragmentImage1 =
-			pageSectionDefinition1.getBackgroundFragmentImage();
+			fragmentStyle1.getBackgroundFragmentImage();
 
 		FragmentInlineValue titleFragmentInlineValue =
 			(FragmentInlineValue)fragmentImage1.getTitle();
@@ -574,8 +578,11 @@ public class PageDefinitionDTOConverterTest {
 		PageSectionDefinition pageSectionDefinition2 =
 			(PageSectionDefinition)sectionPageElement2.getDefinition();
 
+		FragmentStyle fragmentStyle2 =
+			pageSectionDefinition2.getFragmentStyle();
+
 		FragmentImage fragmentImage2 =
-			pageSectionDefinition2.getBackgroundFragmentImage();
+			fragmentStyle2.getBackgroundFragmentImage();
 
 		Assert.assertNull(fragmentImage2.getTitle());
 

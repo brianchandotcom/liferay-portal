@@ -72,7 +72,7 @@ public class UpgradeExpiredJournalArticleTest {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("cleanUpExpiredJournalArticleModuleData", true);
+		properties.put("removeExpiredJournalArticles", true);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(

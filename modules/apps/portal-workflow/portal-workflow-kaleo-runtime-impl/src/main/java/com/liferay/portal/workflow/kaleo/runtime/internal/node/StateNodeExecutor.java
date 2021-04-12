@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.constants.KaleoInstanceTokenConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
@@ -94,19 +93,6 @@ public class StateNodeExecutor extends BaseNodeExecutor {
 			newExecutionContext);
 
 		remainingPathElements.add(pathElement);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 * @param currentKaleoNode
-	 * @param kaleoTimer
-	 * @param executionContext
-	 */
-	@Deprecated
-	@Override
-	protected void doExecuteTimer(
-		KaleoNode currentKaleoNode, KaleoTimer kaleoTimer,
-		ExecutionContext executionContext) {
 	}
 
 	@Override

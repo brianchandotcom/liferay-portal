@@ -94,6 +94,47 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
+	public void testAssetEntryShouldStoreExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			externalReferenceCode, group.getGroupId(),
+			parentFolder.getFolderId(), RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			externalReferenceCode, fileEntry.getExternalReferenceCode());
+
+		fileEntry = DLAppServiceUtil.getFileEntryByExternalReferenceCode(
+			group.getGroupId(), externalReferenceCode);
+
+		Assert.assertEquals(
+			externalReferenceCode, fileEntry.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAssetEntryShouldStoreFileEntryIdAsExternalReferenceCodeIfExternalReferenceCodeIsNotPresent()
+		throws Exception {
+
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString());
+
+		String externalReferenceCode = String.valueOf(
+			fileEntry.getFileEntryId());
+
+		Assert.assertEquals(
+			externalReferenceCode, fileEntry.getExternalReferenceCode());
+
+		fileEntry = DLAppServiceUtil.getFileEntryByExternalReferenceCode(
+			group.getGroupId(), externalReferenceCode);
+
+		Assert.assertEquals(
+			externalReferenceCode, fileEntry.getExternalReferenceCode());
+	}
+
+	@Test
 	public void testAssetTagsShouldBeOrdered() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
@@ -124,6 +165,22 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 				workflowHandlerInvocationCounter.getCount(
 					"updateStatus", int.class, Map.class));
 		}
+	}
+
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testShouldFailIfDuplicateExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		DLAppServiceTestUtil.addFileEntry(
+			externalReferenceCode, group.getGroupId(),
+			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null);
+		DLAppServiceTestUtil.addFileEntry(
+			externalReferenceCode, group.getGroupId(),
+			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.FILE_NAME, null);
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)

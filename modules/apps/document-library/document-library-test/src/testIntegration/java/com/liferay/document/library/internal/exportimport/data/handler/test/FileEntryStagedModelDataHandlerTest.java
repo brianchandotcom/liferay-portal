@@ -586,6 +586,9 @@ public class FileEntryStagedModelDataHandlerTest
 		FileEntry importedFileEntry = (FileEntry)importedStagedModel;
 
 		Assert.assertEquals(
+			fileEntry.getExternalReferenceCode(),
+			importedFileEntry.getExternalReferenceCode());
+		Assert.assertEquals(
 			fileEntry.getFileName(), importedFileEntry.getFileName());
 		Assert.assertEquals(
 			fileEntry.getExtension(), importedFileEntry.getExtension());

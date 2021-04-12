@@ -2360,6 +2360,121 @@ definition {
 			value1 = "Item Type:Document");
 	}
 
+	@description = "This is a use case for LPS-120198. The link information is still kept when the linked page is deleted."
+	@priority = "4"
+	test ViewMapInformationAfterDeleteMappedPage {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Map the widget page to editable field of Button") {
+			PageEditorEditableLink.mapEditableFieldToPage(
+				fragmentName = "Button",
+				id = "link",
+				pageName = "Test Widget Page Name");
+		}
+
+		task ("View the selected page is shown in Page field") {
+			AssertVisible(
+				key_contentName = "Test Widget Page Name",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("View selected page is linked to Button fragment") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			AssertVisible(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Delete the widget page") {
+			JSONLayout.deletePublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+		}
+
+		task ("Navigate to content page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View selected page is still linked to Button fragment") {
+			AssertVisible(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("Assert Not Found is shown") {
+			Click(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+		}
+
+		task ("Navigate to the content page in edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View # is linked to Button fragment") {
+			AssertVisible(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "#",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("View the selected page is still shown in Page field") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			AssertVisible(
+				key_contentName = "Test Widget Page Name",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("Publish to content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert no redirection") {
+			Click(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "#",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Content Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in content page."
 	@priority = "5"
 	test ViewMappableFieldsAreGroupedByFieldset {

@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.internal.runtime.node.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -49,12 +50,14 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.node.TaskNodeExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
+
+import java.lang.reflect.Method;
 
 import java.util.HashSet;
 import java.util.List;
@@ -71,7 +74,7 @@ import org.junit.runner.RunWith;
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
-public class TaskNodeExecutorImplTest extends BaseNodeExecutorTestCase {
+public class TaskNodeExecutorTest extends BaseNodeExecutorTestCase {
 
 	@ClassRule
 	@Rule
@@ -105,7 +108,7 @@ public class TaskNodeExecutorImplTest extends BaseNodeExecutorTestCase {
 			kaleoInstanceToken, kaleoTimerInstanceToken, workflowContext,
 			serviceContext);
 
-		_taskNodeExecutor.executeTimer(executionContext);
+		_executeTimer(executionContext);
 
 		List<KaleoNotification> kaleoNotifications =
 			_kaleoNotificationLocalService.getKaleoNotifications(
@@ -166,7 +169,7 @@ public class TaskNodeExecutorImplTest extends BaseNodeExecutorTestCase {
 
 		executionContext.setKaleoTaskInstanceToken(kaleoTaskInstanceToken);
 
-		_taskNodeExecutor.executeTimer(executionContext);
+		_executeTimer(executionContext);
 
 		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
 			_kaleoTaskAssignmentInstanceLocalService.
@@ -271,6 +274,15 @@ public class TaskNodeExecutorImplTest extends BaseNodeExecutorTestCase {
 
 	}
 
+	private void _executeTimer(ExecutionContext executionContext)
+		throws Exception {
+
+		Method executeTimerMethod = ReflectionUtil.getDeclaredMethod(
+			_nodeExecutor.getClass(), "executeTimer", ExecutionContext.class);
+
+		executeTimerMethod.invoke(_nodeExecutor, executionContext);
+	}
+
 	@Inject
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
@@ -289,8 +301,8 @@ public class TaskNodeExecutorImplTest extends BaseNodeExecutorTestCase {
 	@Inject
 	private KaleoTimerLocalService _kaleoTimerLocalService;
 
-	@Inject
-	private TaskNodeExecutor _taskNodeExecutor;
+	@Inject(filter = "node.type=TASK")
+	private NodeExecutor _nodeExecutor;
 
 	@Inject
 	private UserLocalService _userLocalService;

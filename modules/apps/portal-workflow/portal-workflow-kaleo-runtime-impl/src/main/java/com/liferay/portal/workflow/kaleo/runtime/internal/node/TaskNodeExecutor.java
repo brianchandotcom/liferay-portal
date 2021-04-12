@@ -37,7 +37,6 @@ import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.internal.assignment.TaskAssignerHelper;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
-import com.liferay.portal.workflow.kaleo.runtime.node.TaskNodeExecutor;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
@@ -59,10 +58,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "node.type=TASK",
 	service = {NodeExecutor.class, TaskNodeExecutor.class}
 )
-public class TaskNodeExecutorImpl
-	extends BaseNodeExecutor implements TaskNodeExecutor {
+public class TaskNodeExecutor extends BaseNodeExecutor {
 
-	@Override
 	public void executeTimer(ExecutionContext executionContext)
 		throws PortalException {
 

@@ -8966,8 +8966,8 @@
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>TaskNodeExecutorImpl</name>
-		<type>com.liferay.portal.workflow.kaleo.internal.runtime.node.TaskNodeExecutorImpl</type>
+		<name>TaskNodeExecutor</name>
+		<type>com.liferay.portal.workflow.kaleo.internal.runtime.node.TaskNodeExecutor</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
 			<name>setDueDateCalculator</name>

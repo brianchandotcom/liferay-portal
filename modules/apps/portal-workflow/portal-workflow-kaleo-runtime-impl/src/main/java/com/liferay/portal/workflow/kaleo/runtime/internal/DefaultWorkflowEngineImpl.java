@@ -55,7 +55,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
-import com.liferay.portal.workflow.kaleo.runtime.node.TaskNodeExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.internal.node.TaskNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoInstanceOrderByComparator;
 

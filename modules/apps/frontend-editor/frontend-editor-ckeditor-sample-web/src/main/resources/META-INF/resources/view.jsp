@@ -16,17 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-StringBuilder sb = new StringBuilder();
-
-sb.append("<h1>Ballon Editor</h1><p>This is a sample portlet ");
-sb.append("with a <a href=\"https://example.com\">link</a></p>");
-sb.append("<img src=\"https://images.unsplash.com/photo-1539037116277-4db20889f2d4?fit=crop&w=800\">");
-%>
-
 <div>
 	<liferay-editor:editor
-		contents="<%= sb.toString() %>"
+		contents="<h1>Ballon Editor</h1><p>More text goes here</p>"
 		editorName="ballooneditor"
 		name="contentEditor"
 		placeholder="content"

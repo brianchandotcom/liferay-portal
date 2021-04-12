@@ -76,6 +76,7 @@ import com.liferay.portal.tools.java.parser.util.comparator.ModifierComparator;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -912,7 +913,8 @@ public class JavaParserUtil {
 					extendsClauseDetailAST);
 
 			if ((extendedClassJavaTypes.size() > 1) &&
-				(definitionDetailAST.getParent() == null)) {
+				((definitionDetailAST.getParent() == null) ||
+				 !AnnotationUtil.containsAnnotation(definitionDetailAST))) {
 
 				Collections.sort(extendedClassJavaTypes);
 			}
@@ -930,7 +932,8 @@ public class JavaParserUtil {
 					implementsClauseDetailAST);
 
 			if ((implementedClassJavaTypes.size() > 1) &&
-				(definitionDetailAST.getParent() == null)) {
+				((definitionDetailAST.getParent() == null) ||
+				 !AnnotationUtil.containsAnnotation(definitionDetailAST))) {
 
 				Collections.sort(implementedClassJavaTypes);
 			}

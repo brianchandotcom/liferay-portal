@@ -88,7 +88,7 @@ public class LiferayCRUDOperations {
 		logEndpointParams(Method.DELETE, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.delete(
-			pathParams, queryParams, endpoint,
+			endpoint, pathParams, queryParams,
 			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
 
 		liferayResponseValidator.validate(httpResponse);
@@ -119,7 +119,7 @@ public class LiferayCRUDOperations {
 		logEndpointParams(Method.GET, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.get(
-			pathParams, queryParams, endpoint,
+			endpoint, pathParams, queryParams,
 			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
 
 		liferayResponseValidator.validate(httpResponse);
@@ -153,7 +153,7 @@ public class LiferayCRUDOperations {
 		logEndpointParams(Method.PATCH, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.patch(
-			inputStream, pathParams, queryParams, endpoint,
+			endpoint, inputStream, pathParams, queryParams,
 			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
 
 		liferayResponseValidator.validate(httpResponse);
@@ -187,7 +187,7 @@ public class LiferayCRUDOperations {
 		logEndpointParams(Method.POST, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.post(
-			inputStream, pathParams, queryParams, endpoint,
+			endpoint, inputStream, pathParams, queryParams,
 			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
 
 		liferayResponseValidator.validate(httpResponse);

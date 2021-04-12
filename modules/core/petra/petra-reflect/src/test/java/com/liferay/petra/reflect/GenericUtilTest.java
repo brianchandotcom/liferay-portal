@@ -85,7 +85,7 @@ public class GenericUtilTest {
 			Object.class,
 			GenericUtil.getGenericClass(NoParameterizedTypeImpl.class, 1));
 		Assert.assertEquals(
-			String.class,
+			Object.class,
 			GenericUtil.getGenericClass(StringParameterizedType.class, 1));
 	}
 

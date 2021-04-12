@@ -46,7 +46,7 @@ export class DataLayoutPageSchema extends Schema {
 }
 
 export class DataLayoutSchema extends Schema {
-	static props = ['dataLayout', 'pages', 'rules'];
+	static props = ['dataLayout', 'name', 'pages', 'rules'];
 
 	constructor(raw) {
 		super('data_engine', 'dataLayout', raw);
@@ -64,5 +64,9 @@ export class DataLayoutSchema extends Schema {
 		return this[SYMBOL_RAW].pages.map(
 			(page) => new DataLayoutPageSchema(page)
 		);
+	}
+
+	get name() {
+		return this[SYMBOL_RAW].name;
 	}
 }

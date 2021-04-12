@@ -428,12 +428,6 @@ public class JournalConverterImpl implements JournalConverter {
 		Field field) {
 
 		for (Locale locale : field.getAvailableLocales()) {
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
-
-			dynamicContentElement.addAttribute(
-				"language-id", LocaleUtil.toLanguageId(locale));
-
 			Serializable fieldValue = field.getValue(locale, count);
 
 			if (fieldValue == null) {
@@ -441,6 +435,16 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			String valueString = String.valueOf(fieldValue);
+
+			if (StringUtil.equals(valueString, DDM.FIELD_EMPTY_VALUE)) {
+				continue;
+			}
+
+			Element dynamicContentElement = dynamicElementElement.addElement(
+				"dynamic-content");
+
+			dynamicContentElement.addAttribute(
+				"language-id", LocaleUtil.toLanguageId(locale));
 
 			updateDynamicContentValue(
 				ddmFormField, dynamicContentElement, ddmFormField.getName(),

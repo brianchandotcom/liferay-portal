@@ -87,7 +87,7 @@ public final class LiferayConnection {
 			long connectionTimeout, String jaxRSAppBase)
 		throws ModuleException {
 
-		return _send(
+		return send(
 			HttpConstants.Method.DELETE, null, pathParams, queryParams,
 			endpoint, connectionTimeout,
 			oasURLParser.getServerBaseURL(jaxRSAppBase));
@@ -110,7 +110,7 @@ public final class LiferayConnection {
 			long connectionTimeout, String jaxRSAppBase)
 		throws ModuleException {
 
-		return _send(
+		return send(
 			HttpConstants.Method.GET, null, pathParams, queryParams, endpoint,
 			connectionTimeout, oasURLParser.getServerBaseURL(jaxRSAppBase));
 	}
@@ -119,7 +119,7 @@ public final class LiferayConnection {
 		throws IOException, TimeoutException {
 
 		return httpClient.send(
-			_getHttpRequest(
+			getHttpRequest(
 				HttpConstants.Method.GET, openAPISpecPath, new MultiMap<>(),
 				null),
 			10000, true, null);
@@ -146,7 +146,7 @@ public final class LiferayConnection {
 			long connectionTimeout, String jaxRSAppBase)
 		throws ModuleException {
 
-		return _send(
+		return send(
 			HttpConstants.Method.PATCH, inputStream, pathParams, queryParams,
 			endpoint, connectionTimeout,
 			oasURLParser.getServerBaseURL(jaxRSAppBase));
@@ -169,7 +169,7 @@ public final class LiferayConnection {
 			long connectionTimeout, String jaxRSAppBase)
 		throws ModuleException {
 
-		return _send(
+		return send(
 			HttpConstants.Method.POST, inputStream, pathParams, queryParams,
 			endpoint, connectionTimeout,
 			oasURLParser.getServerBaseURL(jaxRSAppBase));
@@ -185,7 +185,7 @@ public final class LiferayConnection {
 
 		httpAuthentication = basicAuthentication;
 
-		_initHttpClient(httpService, proxyConfig);
+		initHttpClient(httpService, proxyConfig);
 	}
 
 	private LiferayConnection(
@@ -196,7 +196,7 @@ public final class LiferayConnection {
 		openAPISpecPath = openApiSpecPath;
 		oasURLParser = getOASURLParser(openApiSpecPath);
 
-		_initHttpClient(httpService, proxyConfig);
+		initHttpClient(httpService, proxyConfig);
 
 		try {
 			httpAuthentication = new OAuth2Authentication(
@@ -207,7 +207,7 @@ public final class LiferayConnection {
 		}
 	}
 
-	private HttpRequest _getHttpRequest(
+	private HttpRequest getHttpRequest(
 			HttpConstants.Method method, String uri,
 			MultiMap<String, String> queryParams, InputStream inputStream)
 		throws ModuleException {
@@ -233,7 +233,18 @@ public final class LiferayConnection {
 		return httpRequestBuilder.build();
 	}
 
-	private void _initHttpClient(
+	private OASURLParser getOASURLParser(String openApiSpecPath)
+		throws ConnectionException {
+
+		try {
+			return new OASURLParser(openApiSpecPath);
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new ConnectionException(malformedURLException);
+		}
+	}
+
+	private void initHttpClient(
 		HttpService httpService, ProxyConfig proxyConfig) {
 
 		HttpClientConfiguration.Builder builder =
@@ -252,7 +263,7 @@ public final class LiferayConnection {
 		httpClient.start();
 	}
 
-	private void _logHttpRequest(
+	private void logHttpRequest(
 		long connectionTimeout, HttpConstants.Method method,
 		Map<String, String> pathParams, MultiMap<String, String> queryParams,
 		String uri) {
@@ -263,7 +274,7 @@ public final class LiferayConnection {
 			method, uri, pathParams, queryParams, connectionTimeout);
 	}
 
-	private String _resolvePathParams(
+	private String resolvePathParams(
 		String endpoint, Map<String, String> pathParams) {
 
 		for (Map.Entry<String, String> pathParam : pathParams.entrySet()) {
@@ -274,20 +285,19 @@ public final class LiferayConnection {
 		return endpoint;
 	}
 
-	private HttpResponse _send(
+	private HttpResponse send(
 			HttpConstants.Method method, InputStream inputStream,
 			Map<String, String> pathParams,
 			MultiMap<String, String> queryParams, String endpoint,
 			long connectionTimeout, String basePath)
 		throws ModuleException {
 
-		String uri = basePath + _resolvePathParams(endpoint, pathParams);
+		String uri = basePath + resolvePathParams(endpoint, pathParams);
 
-		HttpRequest httpRequest = _getHttpRequest(
+		HttpRequest httpRequest = getHttpRequest(
 			method, uri, queryParams, inputStream);
 
-		_logHttpRequest(
-			connectionTimeout, method, pathParams, queryParams, uri);
+		logHttpRequest(connectionTimeout, method, pathParams, queryParams, uri);
 
 		try {
 			return httpClient.send(
@@ -305,17 +315,6 @@ public final class LiferayConnection {
 			throw new ModuleException(
 				timeoutException.getMessage(), LiferayError.CONNECTION_TIMEOUT,
 				timeoutException);
-		}
-	}
-
-	private OASURLParser getOASURLParser(String openApiSpecPath)
-		throws ConnectionException {
-
-		try {
-			return new OASURLParser(openApiSpecPath);
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new ConnectionException(malformedURLException);
 		}
 	}
 

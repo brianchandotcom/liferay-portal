@@ -123,7 +123,7 @@ definition {
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name 1");
+			publicationName = "Publication Name 1");
 
 		Publications.discardChanges(
 			conflictingPublications = "true",
@@ -227,7 +227,7 @@ definition {
 
 		DDLDataDefinition.deleteCP(ddlDataDefinitionName = "Data Definition");
 
-		Publications.gotoReviewPublications(publicationsName = "Publication Name");
+		Publications.gotoReviewPublications(publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -484,7 +484,7 @@ definition {
 			ddlListName = "List Name",
 			ddlListNameEdit = "List Name Edit");
 
-		Publications.gotoReviewPublications(publicationsName = "Publication Name");
+		Publications.gotoReviewPublications(publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -701,7 +701,7 @@ definition {
 
 		Publications.gotoReviewPublications(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",

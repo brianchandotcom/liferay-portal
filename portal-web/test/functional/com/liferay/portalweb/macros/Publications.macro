@@ -46,7 +46,7 @@ definition {
 
 		Type(
 			locator1 = "Publications#PUBLICATION_NAME",
-			value1 = "${publicationsName}");
+			value1 = "${publicationName}");
 
 		Button.clickCancel();
 	}
@@ -72,16 +72,16 @@ definition {
 			MenuItem.click(menuItem = "Create New Publication");
 		}
 
-		if (isSet(publicationsName)) {
+		if (isSet(publicationName)) {
 			Type(
 				locator1 = "Publications#PUBLICATION_NAME",
-				value1 = "${publicationsName}");
+				value1 = "${publicationName}");
 		}
 
-		if (isSet(publicationsDescription)) {
+		if (isSet(publicationDescription)) {
 			Type(
 				locator1 = "Publications#PUBLICATION_DESCRIPTION",
-				value1 = "${publicationsDescription}");
+				value1 = "${publicationDescription}");
 		}
 
 		Button.click(button = "Create");
@@ -93,7 +93,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
-			key_publicationsName = "${publicationsName}",
+			key_publicationName = "${publicationName}",
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 		ClickNoError(
@@ -186,7 +186,7 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			Click(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Publish");
@@ -213,7 +213,7 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			Click(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 		}
 		else {
@@ -267,7 +267,7 @@ definition {
 
 		Refresh();
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
 			locator1 = "Publications#LIST_PUBLISHED_STATUS",
@@ -277,13 +277,13 @@ definition {
 	macro revertPublication {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		Click(locator1 = "Publications#LIST_REVERT_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "Publications#PUBLICATION_NAME",
-			value1 = "Revert &quot;${publicationsName}&quot;");
+			value1 = "Revert &quot;${publicationName}&quot;");
 
 		if ("${publishNow}" == "true") {
 			Click(
@@ -313,9 +313,9 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertTextPresent(
-			key_publicationsName = "Revert &quot;${publicationsName}&quot;",
+			key_publicationName = "Revert &quot;${publicationName}&quot;",
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
-			value1 = "Revert &quot;${publicationsName}&quot;");
+			value1 = "Revert &quot;${publicationName}&quot;");
 	}
 
 	macro schedulePublication {
@@ -328,7 +328,7 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			Click(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Schedule");
@@ -344,7 +344,7 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			Click(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Reschedule");
@@ -414,13 +414,13 @@ definition {
 	}
 
 	macro search {
-		Search.searchCP(searchTerm = "${publicationsName}");
+		Search.searchCP(searchTerm = "${publicationName}");
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME",
-			value1 = "${publicationsName}");
+			value1 = "${publicationName}");
 	}
 
 	macro selectPublication {
@@ -433,7 +433,7 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			Click(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Work on Publication");
@@ -445,16 +445,16 @@ definition {
 
 			SelectFrameTop(value1 = "relative=top");
 
-			var key_publicationsName = "${publicationsName}";
+			var key_publicationName = "${publicationName}";
 
 			Click(
 				locator1 = "Publications#SELECT_PUBLICATION_NAME",
-				value1 = "${publicationsName}");
+				value1 = "${publicationName}");
 		}
 
 		AssertTextPresent(
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
-			value1 = "${publicationsName}");
+			value1 = "${publicationName}");
 	}
 
 	macro unschedulePublication {
@@ -463,7 +463,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
-			key_publicationsName = "${publicationsName}",
+			key_publicationName = "${publicationName}",
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Unschedule");
@@ -524,12 +524,12 @@ definition {
 				value1 = "${columnValueInProduction}");
 		}
 
-		Publications.changeDiffDisplayItem(displayItem = "Publication: ${publicationsName}");
+		Publications.changeDiffDisplayItem(displayItem = "Publication: ${publicationName}");
 
 		AssertTextEquals.assertPartialText(
-			key_displayItem = "${publicationsName}",
+			key_displayItem = "${publicationName}",
 			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
-			value1 = "${publicationsName}");
+			value1 = "${publicationName}");
 
 		if (isSet(columnValueInPublication)) {
 			key_columnValueInPublication = "${columnValueInPublication}";

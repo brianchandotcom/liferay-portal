@@ -95,7 +95,7 @@ definition {
 
 		Publications.gotoReviewPublications(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		Publications.workOnProduction();
 
@@ -192,7 +192,7 @@ definition {
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name 1");
+			publicationName = "Publication Name 1");
 
 		Publications.discardChanges(
 			conflictingPublications = "true",
@@ -378,7 +378,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "History");
 
-		Publications.revertPublication(publicationsName = "Publication Name");
+		Publications.revertPublication(publicationName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 

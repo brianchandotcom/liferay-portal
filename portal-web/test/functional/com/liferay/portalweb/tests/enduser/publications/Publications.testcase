@@ -53,7 +53,7 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent Title");
 
-		Publications.createNewPublication(publicationsName = "Publication 2 Name");
+		Publications.createNewPublication(publicationName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -86,7 +86,7 @@ definition {
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		Publications.viewAutomaticallyResolved(
 			entryTitle = "Test Test added a Web Content Article",
@@ -148,7 +148,7 @@ definition {
 
 		Publications.gotoReviewPublications(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Web Content Article",
@@ -164,7 +164,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
@@ -192,7 +192,7 @@ definition {
 			changeDescription = "Test Test added a Web Content Article in Guest",
 			changeTitle = "WC WebContent Title 2 Edit");
 
-		Publications.gotoPublish(publicationsName = "Publication 2 Name");
+		Publications.gotoPublish(publicationName = "Publication 2 Name");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC WebContent Title 2 Edit",
@@ -203,7 +203,7 @@ definition {
 		Publications.viewPublicationDiff(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
-			publicationsName = "Publication 2 Name");
+			publicationName = "Publication 2 Name");
 
 		IFrame.closeFrame();
 
@@ -367,7 +367,7 @@ definition {
 
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -387,7 +387,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.createNewPublication(publicationsName = "Publication 2 Name");
+		Publications.createNewPublication(publicationName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -409,17 +409,17 @@ definition {
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
-			publicationsName = "Publication 2 Name");
+			publicationName = "Publication 2 Name");
 
-		Publications.publishPublication(publicationsName = "Publication 2 Name");
+		Publications.publishPublication(publicationName = "Publication 2 Name");
 
-		Publications.selectPublication(publicationsName = "Publication Name");
+		Publications.selectPublication(publicationName = "Publication Name");
 
 		Publications.gotoPublish(
 			gotoReviewPublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -444,7 +444,7 @@ definition {
 	test RescheduleAndCancelScheduledPublication {
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -453,13 +453,13 @@ definition {
 
 		Publications.schedulePublication(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		Publications.schedulePublication(
-			publicationsName = "Publication Name",
+			publicationName = "Publication Name",
 			reschedule = "true");
 
-		Publications.unschedulePublication(publicationsName = "Publication Name");
+		Publications.unschedulePublication(publicationName = "Publication Name");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -470,7 +470,7 @@ definition {
 	test RevertPublicationAndPublishNow {
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -486,12 +486,12 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		Publications.gotoPublish(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		AssertTextPresent(
-			key_publicationsName = "Production",
+			key_publicationName = "Production",
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
 			value1 = "Production");
 
@@ -513,10 +513,10 @@ definition {
 		Navigator.gotoNavTab(navTab = "History");
 
 		Publications.revertPublication(
-			publicationsName = "Publication Name",
+			publicationName = "Publication Name",
 			publishNow = "true");
 
-		Publications.publishPublication(publicationsName = "Revert &quot;Publication Name&quot;");
+		Publications.publishPublication(publicationName = "Revert &quot;Publication Name&quot;");
 
 		Navigator.openURL();
 
@@ -533,7 +533,7 @@ definition {
 	test SchedulePublication {
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name 1");
+			publicationName = "Publication Name 1");
 
 		Navigator.openURL();
 
@@ -549,13 +549,13 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.schedulePublication(publicationsName = "Publication Name 1");
+		Publications.schedulePublication(publicationName = "Publication Name 1");
 
 		Pause(locator1 = "240000");
 
 		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 1");
 
-		Publications.createNewPublication(publicationsName = "Publication Name 2");
+		Publications.createNewPublication(publicationName = "Publication Name 2");
 
 		Navigator.openURL();
 
@@ -573,13 +573,13 @@ definition {
 
 		Publications.schedulePublication(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name 2");
+			publicationName = "Publication Name 2");
 
 		Pause(locator1 = "240000");
 
 		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 2");
 
-		Publications.createNewPublication(publicationsName = "Publication Name 3");
+		Publications.createNewPublication(publicationName = "Publication Name 3");
 
 		Navigator.openURL();
 
@@ -597,7 +597,7 @@ definition {
 
 		Publications.schedulePublication(
 			gotoReviewPublications = "true",
-			publicationsName = "Publication Name 3");
+			publicationName = "Publication Name 3");
 
 		Pause(locator1 = "240000");
 
@@ -608,11 +608,11 @@ definition {
 	test SearchPublishedPublications {
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationsName = "Apple");
+			publicationName = "Apple");
 
-		Publications.createNewPublication(publicationsName = "Banana");
+		Publications.createNewPublication(publicationName = "Banana");
 
-		Publications.createNewPublication(publicationsName = "Cherry");
+		Publications.createNewPublication(publicationName = "Cherry");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
@@ -621,8 +621,8 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Ongoing");
 
-		for (var publicationsName : list "Apple,Banana,Cherry") {
-			Publications.search(publicationsName = "${publicationsName}");
+		for (var publicationName : list "Apple,Banana,Cherry") {
+			Publications.search(publicationName = "${publicationName}");
 		}
 
 		Navigator.openURL();
@@ -633,11 +633,11 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Cherry");
 
-		Publications.gotoPublish(publicationsName = "Cherry");
+		Publications.gotoPublish(publicationName = "Cherry");
 
-		Publications.publishPublication(publicationsName = "Cherry");
+		Publications.publishPublication(publicationName = "Cherry");
 
-		Publications.selectPublication(publicationsName = "Banana");
+		Publications.selectPublication(publicationName = "Banana");
 
 		Navigator.openURL();
 
@@ -647,11 +647,11 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Banana");
 
-		Publications.gotoPublish(publicationsName = "Banana");
+		Publications.gotoPublish(publicationName = "Banana");
 
-		Publications.publishPublication(publicationsName = "Banana");
+		Publications.publishPublication(publicationName = "Banana");
 
-		Publications.selectPublication(publicationsName = "Apple");
+		Publications.selectPublication(publicationName = "Apple");
 
 		Navigator.openURL();
 
@@ -661,14 +661,14 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Apple");
 
-		Publications.gotoPublish(publicationsName = "Apple");
+		Publications.gotoPublish(publicationName = "Apple");
 
-		Publications.publishPublication(publicationsName = "Apple");
+		Publications.publishPublication(publicationName = "Apple");
 
 		Navigator.gotoNavTab(navTab = "History");
 
-		for (var publicationsName : list "Apple,Banana,Cherry") {
-			Publications.search(publicationsName = "${publicationsName}");
+		for (var publicationName : list "Apple,Banana,Cherry") {
+			Publications.search(publicationName = "${publicationName}");
 		}
 	}
 

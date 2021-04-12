@@ -36,7 +36,7 @@ definition {
 
 	@priority = "3"
 	test CancelPublicationCreation {
-		Publications.cancelPublicationCreation(publicationsName = "Publication Name");
+		Publications.cancelPublicationCreation(publicationName = "Publication Name");
 
 		AssertElementNotPresent(
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME",
@@ -47,7 +47,7 @@ definition {
 	test CreateNewPublicationWithLongName {
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationsName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
+			publicationName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
 
 		Alert.viewLengthValidationField();
 	}
@@ -64,23 +64,23 @@ definition {
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
 			publicationsDescription = "Publication Description",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
 			portlet = "Publications");
 
-		Publications.deletePublication(publicationsName = "Publication Name");
+		Publications.deletePublication(publicationName = "Publication Name");
 
 		AssertElementNotPresent(
-			key_publicationsName = "Publication Name",
+			key_publicationName = "Publication Name",
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 	}
 
 	@priority = "4"
 	test SwitchPublication {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -98,7 +98,7 @@ definition {
 
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationsName = "Publication 2 Name");
+			publicationName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -114,7 +114,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.selectPublication(publicationsName = "Publication Name");
+		Publications.selectPublication(publicationName = "Publication Name");
 
 		AssertElementPresent(
 			key_webContentTitle = "Web Content Title 1",
@@ -126,7 +126,7 @@ definition {
 
 		Publications.selectPublication(
 			gotoManagePublications = "true",
-			publicationsName = "Publication 2 Name");
+			publicationName = "Publication 2 Name");
 
 		Navigator.openURL();
 

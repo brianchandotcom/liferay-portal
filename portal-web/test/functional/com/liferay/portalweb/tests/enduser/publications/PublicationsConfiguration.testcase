@@ -75,7 +75,7 @@ definition {
 			value1 = "Publications");
 
 		AssertTextPresent(
-			key_publicationsName = "Production",
+			key_publicationName = "Production",
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
 			value1 = "Production");
 

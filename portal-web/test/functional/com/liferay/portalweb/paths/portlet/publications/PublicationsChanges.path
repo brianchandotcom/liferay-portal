@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_SITE</td>
-	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_publicationsCategory}')]//following-sibling::tr[${changeOrder}]/td[2][contains(.,'${key_changeSite}')]</td>
+	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_changeCategory}')]//following-sibling::tr[${changeOrder}]/td[2][contains(.,'${key_changeSite}')]</td>
 	<td></td>
 </tr>
 <tr>

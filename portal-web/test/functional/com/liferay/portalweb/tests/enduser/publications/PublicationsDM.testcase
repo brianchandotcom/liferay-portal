@@ -131,7 +131,7 @@ definition {
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit",
@@ -144,7 +144,7 @@ definition {
 			columnValueInProduction = "DM Document 2 Title Edit",
 			columnValueInPublication = "DM Document Title Edit",
 			diffRemovedValue = "2",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		IFrame.closeFrame();
 
@@ -184,7 +184,7 @@ definition {
 
 		Publications.gotoReviewPublications(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Documents Folder",

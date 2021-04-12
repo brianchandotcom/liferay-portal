@@ -16,6 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
+import {CONTAINER_DISPLAY_OPTIONS} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/containerDisplayOptions';
 import {VIEWPORT_SIZES} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
@@ -23,6 +24,9 @@ import {ContainerStylesPanel} from '../../../../../../../src/main/resources/META
 
 const renderComponent = ({
 	dispatch = () => {},
+	itemConfig = {
+		tablet: {styles: {}},
+	},
 	selectedViewportSize = VIEWPORT_SIZES.desktop,
 } = {}) =>
 	render(
@@ -36,7 +40,7 @@ const renderComponent = ({
 			<ContainerStylesPanel
 				item={{
 					children: [],
-					config: {tablet: {styles: {}}},
+					config: itemConfig,
 					itemId: '0',
 					parentId: '',
 					type: '',
@@ -60,6 +64,7 @@ jest.mock(
 				tablet: {label: 'Tablet', sizeId: 'tablet'},
 			},
 			commonStyles: [],
+			containerItemFlexEnabled: true,
 			defaultSegmentsExperienceId: '0',
 			marginOptions: [],
 			paddingOptions: [],
@@ -101,5 +106,44 @@ describe('ContainerStylesPanel', () => {
 				},
 			})
 		);
+	});
+
+	it('calls dispatch method when changing the content display', async () => {
+		const {getByLabelText} = renderComponent();
+
+		const contentDisplaySelect = getByLabelText('content-display');
+
+		await fireEvent.change(contentDisplaySelect, {
+			target: {value: 'flex-row'},
+		});
+
+		expect(updateItemConfig).toBeCalledWith(
+			expect.objectContaining({
+				itemConfig: {
+					contentDisplay: 'flex-row',
+				},
+			})
+		);
+	});
+
+	it('shows Align and Justify selects when item is flex container', async () => {
+		const {getByLabelText} = renderComponent({
+			itemConfig: {contentDisplay: CONTAINER_DISPLAY_OPTIONS.flexRow},
+		});
+
+		expect(getByLabelText('align-items')).toBeInTheDocument();
+		expect(getByLabelText('justify-content')).toBeInTheDocument();
+	});
+
+	it('sets correct default values for Align and Justify when flex is selected', async () => {
+		const {getByLabelText} = renderComponent({
+			itemConfig: {contentDisplay: CONTAINER_DISPLAY_OPTIONS.flexRow},
+		});
+
+		const alignInput = getByLabelText('align-items');
+		const justifyInput = getByLabelText('justify-content');
+
+		expect(alignInput.value).toBe('align-items-stretch');
+		expect(justifyInput.value).toBe('justify-content-start');
 	});
 });

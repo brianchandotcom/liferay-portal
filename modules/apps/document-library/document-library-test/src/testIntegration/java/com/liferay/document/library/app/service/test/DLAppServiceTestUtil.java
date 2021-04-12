@@ -80,6 +80,31 @@ public class DLAppServiceTestUtil {
 			BaseDLAppTestCase.CONTENT.getBytes(), serviceContext);
 	}
 
+	protected static FileEntry addFileEntry(
+			String externalReferenceCode, long groupId, long folderId,
+			String fileName)
+		throws Exception {
+
+		return addFileEntry(
+			externalReferenceCode, groupId, folderId, fileName, fileName, null);
+	}
+
+	protected static FileEntry addFileEntry(
+			String externalReferenceCode, long groupId, long folderId,
+			String fileName, String title, String[] assetTagNames)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setAssetTagNames(assetTagNames);
+
+		return DLAppServiceUtil.addFileEntry(
+			externalReferenceCode, groupId, folderId, fileName,
+			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
+			BaseDLAppTestCase.CONTENT.getBytes(), serviceContext);
+	}
+
 	protected static ConfigurationTemporarySwapper
 			getConfigurationTemporarySwapper(String key, Object value)
 		throws Exception {

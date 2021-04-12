@@ -4,8 +4,6 @@
 			{
 				"definition": {
 					"backgroundColor": "",
-					"backgroundFragmentImage": {
-					},
 					"fragmentStyle": {
 						"backgroundColor": "",
 						"backgroundFragmentImage": {
@@ -53,11 +51,11 @@
 					{
 						"definition": {
 							"backgroundColor": "",
-							"backgroundFragmentImage": {
-							},
 							"fragmentStyle": {
-								"backgroundColor": "",
 								"backgroundFragmentImage": {
+									"url": {
+										"value": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Liferay-logo-full-color-2x.png"
+									}
 								},
 								"borderRadius": "rounded-0",
 								"borderWidth": "0",
@@ -102,12 +100,21 @@
 					},
 					{
 						"definition": {
-							"backgroundColor": "",
-							"backgroundFragmentImage": {
-							},
 							"fragmentStyle": {
 								"backgroundColor": "",
 								"backgroundFragmentImage": {
+									"url": {
+										"defaultValue": {
+											"value": "https://avatars1.githubusercontent.com/u/131436"
+										},
+										"mapping": {
+											"fieldKey": "smallImage",
+											"itemReference": {
+												"className": "com.liferay.journal.model.JournalArticle",
+												"classPK": "${CLASS_PK}"
+											}
+										}
+									}
 								},
 								"borderRadius": "rounded-0",
 								"borderWidth": "0",

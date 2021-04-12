@@ -227,7 +227,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		).put(
 			"DISPLAY_PAGE_URL",
 			StringBundler.concat(
-				"\"http://localhost:8080/web", _group.getFriendlyURL(), "/-/",
+				"\"http://localhost:8080/web", _group.getFriendlyURL(), "/w/",
 				journalArticle.getUrlTitle(), "\"")
 		).build();
 

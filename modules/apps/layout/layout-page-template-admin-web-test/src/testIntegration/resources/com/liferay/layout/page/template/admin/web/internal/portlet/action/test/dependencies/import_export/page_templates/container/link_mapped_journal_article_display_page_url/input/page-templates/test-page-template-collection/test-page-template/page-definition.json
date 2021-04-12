@@ -3,8 +3,19 @@
 		"pageElements": [
 			{
 				"definition": {
-					"backgroundColor": "",
-					"backgroundFragmentImage": {
+					"fragmentLink": {
+						"href": {
+							"defaultFragmentInlineValue": {
+								"value": "${DISPLAY_PAGE_URL}"
+							},
+							"mapping": {
+								"fieldKey": "displayPageURL",
+								"itemReference": {
+									"className": "com.liferay.journal.model.JournalArticle",
+									"classPK": "${CLASS_PK}"
+								}
+							}
+						}
 					},
 					"fragmentStyle": {
 						"backgroundColor": "",

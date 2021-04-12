@@ -56,6 +56,7 @@ import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
 import jodd.typeconverter.TypeConversionException;
+import jodd.typeconverter.TypeConverter;
 import jodd.typeconverter.TypeConverterManager;
 
 import jodd.util.ClassUtil;
@@ -592,6 +593,28 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 	private static final ServiceTracker<Object, Object> _serviceTracker;
 
+	private final JSONWebServiceActionConfig _jsonWebServiceActionConfig;
+	private final JSONWebServiceActionParameters
+		_jsonWebServiceActionParameters;
+	private final JSONWebServiceNaming _jsonWebServiceNaming;
+
+	private static class LocaleTypeConverter implements TypeConverter<Locale> {
+
+		@Override
+		public Locale convert(Object object) {
+			if (object == null) {
+				return null;
+			}
+
+			if (object instanceof Locale) {
+				return (Locale)object;
+			}
+
+			return LocaleUtil.fromLanguageId(String.valueOf(object), false);
+		}
+
+	}
+
 	static {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -604,11 +627,10 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					"=*)")));
 
 		_serviceTracker.open();
-	}
 
-	private final JSONWebServiceActionConfig _jsonWebServiceActionConfig;
-	private final JSONWebServiceActionParameters
-		_jsonWebServiceActionParameters;
-	private final JSONWebServiceNaming _jsonWebServiceNaming;
+		TypeConverterManager typeConverterManager = TypeConverterManager.get();
+
+		typeConverterManager.register(Locale.class, new LocaleTypeConverter());
+	}
 
 }

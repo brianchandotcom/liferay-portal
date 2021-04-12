@@ -96,9 +96,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		throws PortalException {
 
 		return addFileEntry(
-			userId, repositoryId, folderId, sourceFileName, mimeType,
-			sourceFileName, StringPool.BLANK, StringPool.BLANK, bytes,
-			serviceContext);
+			null, userId, repositoryId, folderId, sourceFileName, mimeType,
+			bytes, serviceContext);
 	}
 
 	/**
@@ -140,24 +139,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		File file = null;
-
-		try {
-			if (ArrayUtil.isNotEmpty(bytes)) {
-				file = FileUtil.createTempFile(bytes);
-			}
-
-			return addFileEntry(
-				userId, repositoryId, folderId, sourceFileName, mimeType, title,
-				description, changeLog, file, serviceContext);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(
-				"Unable to write temporary file", ioException);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
+		return addFileEntry(
+			null, userId, repositoryId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, bytes, serviceContext);
 	}
 
 	/**
@@ -199,19 +183,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if ((file == null) || !file.exists() || (file.length() == 0)) {
-			return addFileEntry(
-				userId, repositoryId, folderId, sourceFileName, mimeType, title,
-				description, changeLog, null, 0, serviceContext);
-		}
-
-		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
-
-		LocalRepository localRepository = getLocalRepository(repositoryId);
-
-		return localRepository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, file, serviceContext);
+		return addFileEntry(
+			null, userId, repositoryId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, file, serviceContext);
 	}
 
 	/**
@@ -255,6 +229,182 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long size, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFileEntry(
+			null, userId, repositoryId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, inputStream, size, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long repositoryId,
+			long folderId, String sourceFileName, String mimeType, byte[] bytes,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			externalReferenceCode, userId, repositoryId, folderId,
+			sourceFileName, mimeType, sourceFileName, StringPool.BLANK,
+			StringPool.BLANK, bytes, serviceContext);
+	}
+
+	/**
+	 * Adds a file entry and associated metadata based on a byte array.
+	 *
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
+	 *
+	 * @param  externalReferenceCode the file's external reference code
+	 * @param  userId the primary key of the file entry's creator/owner
+	 * @param  repositoryId the primary key of the file entry's repository
+	 * @param  folderId the primary key of the file entry's parent folder
+	 * @param  sourceFileName the original file's name
+	 * @param  mimeType the file's MIME type
+	 * @param  title the name to be assigned to the file (optionally <code>null
+	 *         </code>)
+	 * @param  description the file's description
+	 * @param  changeLog the file's version change log
+	 * @param  bytes the file's data (optionally <code>null</code>)
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         asset category IDs, asset tag names, and expando bridge
+	 *         attributes for the file entry. In a Liferay repository, it may
+	 *         include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
+	 *         type </li> <li> fieldsMap - mapping for fields associated with a
+	 *         custom file entry type </li> </ul>
+	 * @return the file entry
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long repositoryId,
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, byte[] bytes,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		File file = null;
+
+		try {
+			if (ArrayUtil.isNotEmpty(bytes)) {
+				file = FileUtil.createTempFile(bytes);
+			}
+
+			return addFileEntry(
+				externalReferenceCode, userId, repositoryId, folderId,
+				sourceFileName, mimeType, title, description, changeLog, file,
+				serviceContext);
+		}
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to write temporary file", ioException);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	/**
+	 * Adds a file entry and associated metadata based on a {@link File} object.
+	 *
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
+	 *
+	 * @param  externalReferenceCode the file's external reference code
+	 * @param  userId the primary key of the file entry's creator/owner
+	 * @param  repositoryId the primary key of the repository
+	 * @param  folderId the primary key of the file entry's parent folder
+	 * @param  sourceFileName the original file's name
+	 * @param  mimeType the file's MIME type
+	 * @param  title the name to be assigned to the file (optionally <code>null
+	 *         </code>)
+	 * @param  description the file's description
+	 * @param  changeLog the file's version change log
+	 * @param  file the file's data (optionally <code>null</code>)
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         asset category IDs, asset tag names, and expando bridge
+	 *         attributes for the file entry. In a Liferay repository, it may
+	 *         include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
+	 *         type </li> <li> fieldsMap - mapping for fields associated with a
+	 *         custom file entry type </li> </ul>
+	 * @return the file entry
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long repositoryId,
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if ((file == null) || !file.exists() || (file.length() == 0)) {
+			return addFileEntry(
+				userId, repositoryId, folderId, sourceFileName, mimeType, title,
+				description, changeLog, null, 0, serviceContext);
+		}
+
+		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
+
+		LocalRepository localRepository = getLocalRepository(repositoryId);
+
+		return localRepository.addFileEntry(
+			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, file, serviceContext);
+	}
+
+	/**
+	 * Adds a file entry and associated metadata based on an {@link InputStream}
+	 * object.
+	 *
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
+	 *
+	 * @param  externalReferenceCode the file's external reference code
+	 * @param  userId the primary key of the file entry's creator/owner
+	 * @param  repositoryId the primary key of the repository
+	 * @param  folderId the primary key of the file entry's parent folder
+	 * @param  sourceFileName the original file's name
+	 * @param  mimeType the file's MIME type
+	 * @param  title the name to be assigned to the file (optionally <code>null
+	 *         </code>)
+	 * @param  description the file's description
+	 * @param  changeLog the file's version change log
+	 * @param  inputStream the file's data (optionally <code>null</code>)
+	 * @param  size the file's size (optionally <code>0</code>)
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         asset category IDs, asset tag names, and expando bridge
+	 *         attributes for the file entry. In a Liferay repository, it may
+	 *         include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
+	 *         type </li> <li> fieldsMap - mapping for fields associated with a
+	 *         custom file entry type </li> </ul>
+	 * @return the file entry
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long repositoryId,
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream inputStream,
+			long size, ServiceContext serviceContext)
+		throws PortalException {
+
 		if (inputStream == null) {
 			inputStream = new UnsyncByteArrayInputStream(new byte[0]);
 			size = 0;
@@ -276,9 +426,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					file = FileUtil.createTempFile(inputStream);
 
 					return addFileEntry(
-						userId, repositoryId, folderId, sourceFileName,
-						mimeType, title, description, changeLog, file,
-						serviceContext);
+						externalReferenceCode, userId, repositoryId, folderId,
+						sourceFileName, mimeType, title, description, changeLog,
+						file, serviceContext);
 				}
 				catch (IOException ioException) {
 					throw new SystemException(
@@ -293,8 +443,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		return localRepository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, inputStream, size, serviceContext);
+			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, inputStream, size, serviceContext);
 	}
 
 	/**

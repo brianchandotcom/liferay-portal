@@ -59,6 +59,9 @@ public class CKEditorSamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		// If we need a DisplayContext, initialize it here
+		// and use renderRequest.setAttribute to make it available in the view
+
 		super.doDispatch(renderRequest, renderResponse);
 	}
 

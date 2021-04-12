@@ -235,9 +235,10 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	public static SamlSpSession fetchSamlSpSessionBySessionIndex(
-		String sessionIndex) {
+		long companyId, String sessionIndex) {
 
-		return getService().fetchSamlSpSessionBySessionIndex(sessionIndex);
+		return getService().fetchSamlSpSessionBySessionIndex(
+			companyId, sessionIndex);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -299,10 +300,11 @@ public class SamlSpSessionLocalServiceUtil {
 	}
 
 	public static SamlSpSession getSamlSpSessionBySessionIndex(
-			String sessionIndex)
+			long companyId, String sessionIndex)
 		throws PortalException {
 
-		return getService().getSamlSpSessionBySessionIndex(sessionIndex);
+		return getService().getSamlSpSessionBySessionIndex(
+			companyId, sessionIndex);
 	}
 
 	/**

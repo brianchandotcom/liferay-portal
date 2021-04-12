@@ -257,10 +257,10 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession
-		fetchSamlSpSessionBySessionIndex(String sessionIndex) {
+		fetchSamlSpSessionBySessionIndex(long companyId, String sessionIndex) {
 
 		return _samlSpSessionLocalService.fetchSamlSpSessionBySessionIndex(
-			sessionIndex);
+			companyId, sessionIndex);
 	}
 
 	@Override
@@ -333,11 +333,11 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession
-			getSamlSpSessionBySessionIndex(String sessionIndex)
+			getSamlSpSessionBySessionIndex(long companyId, String sessionIndex)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _samlSpSessionLocalService.getSamlSpSessionBySessionIndex(
-			sessionIndex);
+			companyId, sessionIndex);
 	}
 
 	/**

@@ -214,7 +214,8 @@ public interface SamlSpSessionLocalService
 		String samlSpSessionKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession fetchSamlSpSessionBySessionIndex(String sessionIndex);
+	public SamlSpSession fetchSamlSpSessionBySessionIndex(
+		long companyId, String sessionIndex);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -258,7 +259,8 @@ public interface SamlSpSessionLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlSpSession getSamlSpSessionBySessionIndex(String sessionIndex)
+	public SamlSpSession getSamlSpSessionBySessionIndex(
+			long companyId, String sessionIndex)
 		throws PortalException;
 
 	/**

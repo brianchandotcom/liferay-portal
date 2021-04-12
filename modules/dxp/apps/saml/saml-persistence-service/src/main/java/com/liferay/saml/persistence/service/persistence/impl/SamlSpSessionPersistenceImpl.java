@@ -1118,28 +1118,32 @@ public class SamlSpSessionPersistenceImpl
 	private static final String _FINDER_COLUMN_NAMEIDVALUE_NAMEIDVALUE_3 =
 		"(samlSpSession.nameIdValue IS NULL OR samlSpSession.nameIdValue = '')";
 
-	private FinderPath _finderPathFetchBySessionIndex;
-	private FinderPath _finderPathCountBySessionIndex;
+	private FinderPath _finderPathFetchByC_SI;
+	private FinderPath _finderPathCountByC_SI;
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
+	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the matching saml sp session
 	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	 */
 	@Override
-	public SamlSpSession findBySessionIndex(String sessionIndex)
+	public SamlSpSession findByC_SI(long companyId, String sessionIndex)
 		throws NoSuchSpSessionException {
 
-		SamlSpSession samlSpSession = fetchBySessionIndex(sessionIndex);
+		SamlSpSession samlSpSession = fetchByC_SI(companyId, sessionIndex);
 
 		if (samlSpSession == null) {
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("sessionIndex=");
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", sessionIndex=");
 			sb.append(sessionIndex);
 
 			sb.append("}");
@@ -1155,46 +1159,48 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	@Override
-	public SamlSpSession fetchBySessionIndex(String sessionIndex) {
-		return fetchBySessionIndex(sessionIndex, true);
+	public SamlSpSession fetchByC_SI(long companyId, String sessionIndex) {
+		return fetchByC_SI(companyId, sessionIndex, true);
 	}
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	@Override
-	public SamlSpSession fetchBySessionIndex(
-		String sessionIndex, boolean useFinderCache) {
+	public SamlSpSession fetchByC_SI(
+		long companyId, String sessionIndex, boolean useFinderCache) {
 
 		sessionIndex = Objects.toString(sessionIndex, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {sessionIndex};
+			finderArgs = new Object[] {companyId, sessionIndex};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchBySessionIndex, finderArgs);
+			result = finderCache.getResult(_finderPathFetchByC_SI, finderArgs);
 		}
 
 		if (result instanceof SamlSpSession) {
 			SamlSpSession samlSpSession = (SamlSpSession)result;
 
-			if (!Objects.equals(
+			if ((companyId != samlSpSession.getCompanyId()) ||
+				!Objects.equals(
 					sessionIndex, samlSpSession.getSessionIndex())) {
 
 				result = null;
@@ -1202,19 +1208,21 @@ public class SamlSpSessionPersistenceImpl
 		}
 
 		if (result == null) {
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_SQL_SELECT_SAMLSPSESSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_SI_COMPANYID_2);
 
 			boolean bindSessionIndex = false;
 
 			if (sessionIndex.isEmpty()) {
-				sb.append(_FINDER_COLUMN_SESSIONINDEX_SESSIONINDEX_3);
+				sb.append(_FINDER_COLUMN_C_SI_SESSIONINDEX_3);
 			}
 			else {
 				bindSessionIndex = true;
 
-				sb.append(_FINDER_COLUMN_SESSIONINDEX_SESSIONINDEX_2);
+				sb.append(_FINDER_COLUMN_C_SI_SESSIONINDEX_2);
 			}
 
 			String sql = sb.toString();
@@ -1228,6 +1236,8 @@ public class SamlSpSessionPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
+				queryPos.add(companyId);
+
 				if (bindSessionIndex) {
 					queryPos.add(sessionIndex);
 				}
@@ -1237,7 +1247,7 @@ public class SamlSpSessionPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchBySessionIndex, finderArgs, list);
+							_finderPathFetchByC_SI, finderArgs, list);
 					}
 				}
 				else {
@@ -1246,11 +1256,13 @@ public class SamlSpSessionPersistenceImpl
 
 						if (_log.isWarnEnabled()) {
 							if (!useFinderCache) {
-								finderArgs = new Object[] {sessionIndex};
+								finderArgs = new Object[] {
+									companyId, sessionIndex
+								};
 							}
 
 							_log.warn(
-								"SamlSpSessionPersistenceImpl.fetchBySessionIndex(String, boolean) with parameters (" +
+								"SamlSpSessionPersistenceImpl.fetchByC_SI(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -1280,50 +1292,54 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Removes the saml sp session where sessionIndex = &#63; from the database.
+	 * Removes the saml sp session where companyId = &#63; and sessionIndex = &#63; from the database.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the saml sp session that was removed
 	 */
 	@Override
-	public SamlSpSession removeBySessionIndex(String sessionIndex)
+	public SamlSpSession removeByC_SI(long companyId, String sessionIndex)
 		throws NoSuchSpSessionException {
 
-		SamlSpSession samlSpSession = findBySessionIndex(sessionIndex);
+		SamlSpSession samlSpSession = findByC_SI(companyId, sessionIndex);
 
 		return remove(samlSpSession);
 	}
 
 	/**
-	 * Returns the number of saml sp sessions where sessionIndex = &#63;.
+	 * Returns the number of saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the number of matching saml sp sessions
 	 */
 	@Override
-	public int countBySessionIndex(String sessionIndex) {
+	public int countByC_SI(long companyId, String sessionIndex) {
 		sessionIndex = Objects.toString(sessionIndex, "");
 
-		FinderPath finderPath = _finderPathCountBySessionIndex;
+		FinderPath finderPath = _finderPathCountByC_SI;
 
-		Object[] finderArgs = new Object[] {sessionIndex};
+		Object[] finderArgs = new Object[] {companyId, sessionIndex};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append(_SQL_COUNT_SAMLSPSESSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_SI_COMPANYID_2);
 
 			boolean bindSessionIndex = false;
 
 			if (sessionIndex.isEmpty()) {
-				sb.append(_FINDER_COLUMN_SESSIONINDEX_SESSIONINDEX_3);
+				sb.append(_FINDER_COLUMN_C_SI_SESSIONINDEX_3);
 			}
 			else {
 				bindSessionIndex = true;
 
-				sb.append(_FINDER_COLUMN_SESSIONINDEX_SESSIONINDEX_2);
+				sb.append(_FINDER_COLUMN_C_SI_SESSIONINDEX_2);
 			}
 
 			String sql = sb.toString();
@@ -1336,6 +1352,8 @@ public class SamlSpSessionPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
 
 				if (bindSessionIndex) {
 					queryPos.add(sessionIndex);
@@ -1356,10 +1374,13 @@ public class SamlSpSessionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_SESSIONINDEX_SESSIONINDEX_2 =
+	private static final String _FINDER_COLUMN_C_SI_COMPANYID_2 =
+		"samlSpSession.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_SI_SESSIONINDEX_2 =
 		"samlSpSession.sessionIndex = ?";
 
-	private static final String _FINDER_COLUMN_SESSIONINDEX_SESSIONINDEX_3 =
+	private static final String _FINDER_COLUMN_C_SI_SESSIONINDEX_3 =
 		"(samlSpSession.sessionIndex IS NULL OR samlSpSession.sessionIndex = '')";
 
 	public SamlSpSessionPersistenceImpl() {
@@ -1397,8 +1418,11 @@ public class SamlSpSessionPersistenceImpl
 			new Object[] {samlSpSession.getJSessionId()}, samlSpSession);
 
 		finderCache.putResult(
-			_finderPathFetchBySessionIndex,
-			new Object[] {samlSpSession.getSessionIndex()}, samlSpSession);
+			_finderPathFetchByC_SI,
+			new Object[] {
+				samlSpSession.getCompanyId(), samlSpSession.getSessionIndex()
+			},
+			samlSpSession);
 	}
 
 	/**
@@ -1479,12 +1503,14 @@ public class SamlSpSessionPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByJSessionId, args, samlSpSessionModelImpl);
 
-		args = new Object[] {samlSpSessionModelImpl.getSessionIndex()};
+		args = new Object[] {
+			samlSpSessionModelImpl.getCompanyId(),
+			samlSpSessionModelImpl.getSessionIndex()
+		};
 
+		finderCache.putResult(_finderPathCountByC_SI, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountBySessionIndex, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchBySessionIndex, args, samlSpSessionModelImpl);
+			_finderPathFetchByC_SI, args, samlSpSessionModelImpl);
 	}
 
 	/**
@@ -1987,15 +2013,15 @@ public class SamlSpSessionPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"nameIdValue"},
 			false);
 
-		_finderPathFetchBySessionIndex = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchBySessionIndex",
-			new String[] {String.class.getName()},
-			new String[] {"sessionIndex"}, true);
+		_finderPathFetchByC_SI = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_SI",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "sessionIndex"}, true);
 
-		_finderPathCountBySessionIndex = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySessionIndex",
-			new String[] {String.class.getName()},
-			new String[] {"sessionIndex"}, false);
+		_finderPathCountByC_SI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_SI",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "sessionIndex"}, false);
 	}
 
 	@Deactivate

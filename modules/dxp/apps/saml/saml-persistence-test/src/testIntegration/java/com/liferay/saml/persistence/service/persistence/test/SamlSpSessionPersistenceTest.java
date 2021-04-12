@@ -237,12 +237,12 @@ public class SamlSpSessionPersistenceTest {
 	}
 
 	@Test
-	public void testCountBySessionIndex() throws Exception {
-		_persistence.countBySessionIndex("");
+	public void testCountByC_SI() throws Exception {
+		_persistence.countByC_SI(RandomTestUtil.nextLong(), "");
 
-		_persistence.countBySessionIndex("null");
+		_persistence.countByC_SI(0L, "null");
 
-		_persistence.countBySessionIndex((String)null);
+		_persistence.countByC_SI(0L, (String)null);
 	}
 
 	@Test
@@ -554,6 +554,11 @@ public class SamlSpSessionPersistenceTest {
 				samlSpSession, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "jSessionId"));
 
+		Assert.assertEquals(
+			Long.valueOf(samlSpSession.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				samlSpSession, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			samlSpSession.getSessionIndex(),
 			ReflectionTestUtil.invoke(

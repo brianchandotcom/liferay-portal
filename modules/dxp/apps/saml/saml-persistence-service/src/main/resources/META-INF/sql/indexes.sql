@@ -14,6 +14,7 @@ create index IX_61204DD on SamlSpIdpConnection (companyId, samlIdpEntityId[$COLU
 create index IX_31762094 on SamlSpMessage (expirationDate);
 create index IX_5615F9DD on SamlSpMessage (samlIdpEntityId[$COLUMN_LENGTH:1024$], samlIdpResponseKey[$COLUMN_LENGTH:75$]);
 
+create index IX_C052F506 on SamlSpSession (companyId, sessionIndex[$COLUMN_LENGTH:75$]);
 create index IX_85F532ED on SamlSpSession (jSessionId[$COLUMN_LENGTH:200$]);
 create index IX_1040A689 on SamlSpSession (nameIdValue[$COLUMN_LENGTH:1024$]);
 create unique index IX_C66E4319 on SamlSpSession (samlSpSessionKey[$COLUMN_LENGTH:75$]);

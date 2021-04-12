@@ -417,62 +417,70 @@ public class SamlSpSessionUtil {
 	}
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
+	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the matching saml sp session
 	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	 */
-	public static SamlSpSession findBySessionIndex(String sessionIndex)
+	public static SamlSpSession findByC_SI(long companyId, String sessionIndex)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 
-		return getPersistence().findBySessionIndex(sessionIndex);
+		return getPersistence().findByC_SI(companyId, sessionIndex);
 	}
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
-	public static SamlSpSession fetchBySessionIndex(String sessionIndex) {
-		return getPersistence().fetchBySessionIndex(sessionIndex);
+	public static SamlSpSession fetchByC_SI(
+		long companyId, String sessionIndex) {
+
+		return getPersistence().fetchByC_SI(companyId, sessionIndex);
 	}
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
-	public static SamlSpSession fetchBySessionIndex(
-		String sessionIndex, boolean useFinderCache) {
+	public static SamlSpSession fetchByC_SI(
+		long companyId, String sessionIndex, boolean useFinderCache) {
 
-		return getPersistence().fetchBySessionIndex(
-			sessionIndex, useFinderCache);
+		return getPersistence().fetchByC_SI(
+			companyId, sessionIndex, useFinderCache);
 	}
 
 	/**
-	 * Removes the saml sp session where sessionIndex = &#63; from the database.
+	 * Removes the saml sp session where companyId = &#63; and sessionIndex = &#63; from the database.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the saml sp session that was removed
 	 */
-	public static SamlSpSession removeBySessionIndex(String sessionIndex)
+	public static SamlSpSession removeByC_SI(
+			long companyId, String sessionIndex)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 
-		return getPersistence().removeBySessionIndex(sessionIndex);
+		return getPersistence().removeByC_SI(companyId, sessionIndex);
 	}
 
 	/**
-	 * Returns the number of saml sp sessions where sessionIndex = &#63;.
+	 * Returns the number of saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the number of matching saml sp sessions
 	 */
-	public static int countBySessionIndex(String sessionIndex) {
-		return getPersistence().countBySessionIndex(sessionIndex);
+	public static int countByC_SI(long companyId, String sessionIndex) {
+		return getPersistence().countByC_SI(companyId, sessionIndex);
 	}
 
 	/**

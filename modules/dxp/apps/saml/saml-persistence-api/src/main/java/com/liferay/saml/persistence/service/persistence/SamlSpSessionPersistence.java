@@ -275,49 +275,54 @@ public interface SamlSpSessionPersistence
 	public int countByNameIdValue(String nameIdValue);
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
+	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the matching saml sp session
 	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	 */
-	public SamlSpSession findBySessionIndex(String sessionIndex)
+	public SamlSpSession findByC_SI(long companyId, String sessionIndex)
 		throws NoSuchSpSessionException;
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
-	public SamlSpSession fetchBySessionIndex(String sessionIndex);
+	public SamlSpSession fetchByC_SI(long companyId, String sessionIndex);
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
-	public SamlSpSession fetchBySessionIndex(
-		String sessionIndex, boolean useFinderCache);
+	public SamlSpSession fetchByC_SI(
+		long companyId, String sessionIndex, boolean useFinderCache);
 
 	/**
-	 * Removes the saml sp session where sessionIndex = &#63; from the database.
+	 * Removes the saml sp session where companyId = &#63; and sessionIndex = &#63; from the database.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the saml sp session that was removed
 	 */
-	public SamlSpSession removeBySessionIndex(String sessionIndex)
+	public SamlSpSession removeByC_SI(long companyId, String sessionIndex)
 		throws NoSuchSpSessionException;
 
 	/**
-	 * Returns the number of saml sp sessions where sessionIndex = &#63;.
+	 * Returns the number of saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param sessionIndex the session index
 	 * @return the number of matching saml sp sessions
 	 */
-	public int countBySessionIndex(String sessionIndex);
+	public int countByC_SI(long companyId, String sessionIndex);
 
 	/**
 	 * Caches the saml sp session in the entity cache if it is enabled.

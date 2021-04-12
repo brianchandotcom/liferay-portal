@@ -187,7 +187,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 										<div class="autofit-col"></div>
 
 										<div class="autofit-col">
-											<div class="click-selector sticker sticker-user-icon sticker-xl">
+											<div class="click-selector sticker">
 												<div class="sticker-overlay">
 													<img alt="thumbnail" class="sticker-img" src="<%= thumbnailSrc %>" />
 												</div>

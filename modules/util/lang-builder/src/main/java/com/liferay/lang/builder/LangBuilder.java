@@ -346,10 +346,13 @@ public class LangBuilder {
 					}
 				}
 
+				boolean automaticCopy = false;
+
 				if ((translatedText != null) &&
 					translatedText.endsWith(
 						LanguageBuilderUtil.AUTOMATIC_COPY)) {
 
+					automaticCopy = true;
 					translatedText = "";
 				}
 
@@ -381,6 +384,9 @@ public class LangBuilder {
 							translatedText =
 								value + LanguageBuilderUtil.AUTOMATIC_COPY;
 						}
+					}
+					else if (!automaticCopy && key.endsWith("-delimiter")) {
+						translatedText = "";
 					}
 					else if (languageId.equals("el") &&
 							 (key.equals("enabled") || key.equals("on") ||
@@ -427,7 +433,9 @@ public class LangBuilder {
 					}
 				}
 
-				if (Validator.isNotNull(translatedText)) {
+				if (Validator.isNotNull(translatedText) ||
+					key.endsWith("-delimiter")) {
+
 					translatedText = _fixTranslation(translatedText);
 
 					sb.append(key);

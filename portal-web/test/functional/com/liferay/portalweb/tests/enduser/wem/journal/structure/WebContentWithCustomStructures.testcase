@@ -476,7 +476,7 @@ definition {
 
 			WebContentStructures.copyCP(
 				locale = "en_US",
-				structureCopyLocalName = "WC Structure Copy En-Es Name",
+				structureCopyLocalName = "WC Structure Copy En-US Name",
 				structureCopyName = "WC Structure Copy Name",
 				structureName = "WC Structure Name");
 		}
@@ -560,7 +560,9 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			Form.addTranslation(localizedLanguage = "Chinese (China)");
+			WebContentStructures.addLocalization(
+				locale = "zh-CN",
+				localization1Name = "WC Structure zh-CN Name");
 
 			WebContentStructures.saveCP();
 
@@ -570,9 +572,12 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			AssertVisible(
-				key_localizedLanguage = "zh_CN",
-				locator1 = "Icon#AVAILABLE_TRANSLATION");
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			AssertTextEquals(
+				key_localizedLanguage = "zh-CN",
+				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+				value1 = "Translated");
 		}
 
 		task ("Remove translation") {

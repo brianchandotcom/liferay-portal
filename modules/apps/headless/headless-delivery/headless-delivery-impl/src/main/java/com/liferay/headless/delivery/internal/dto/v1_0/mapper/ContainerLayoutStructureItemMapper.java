@@ -29,7 +29,6 @@ import com.liferay.layout.page.template.util.ShadowConverter;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -59,14 +58,6 @@ public class ContainerLayoutStructureItemMapper
 			{
 				definition = new PageSectionDefinition() {
 					{
-						backgroundColor = GetterUtil.getString(
-							containerStyledLayoutStructureItem.
-								getBackgroundColorCssClass(),
-							null);
-						backgroundFragmentImage = toBackgroundFragmentImage(
-							containerStyledLayoutStructureItem.
-								getBackgroundImageJSONObject(),
-							saveMappingConfiguration);
 						fragmentLink = _toFragmentLink(
 							containerStyledLayoutStructureItem.
 								getLinkJSONObject(),

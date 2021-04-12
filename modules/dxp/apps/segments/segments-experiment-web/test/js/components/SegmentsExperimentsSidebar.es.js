@@ -85,6 +85,9 @@ describe('SegmentsExperimentsSidebar', () => {
 		expect(defaultExperience).not.toBe(null);
 
 		getByText(segmentsExperiment.name);
+		getByText(segmentsExperiment.description);
+		getByText(segmentsExperiment.segmentsEntryName);
+		getByText(segmentsExperiment.goal.label);
 
 		getByText('edit');
 		getByText('delete');

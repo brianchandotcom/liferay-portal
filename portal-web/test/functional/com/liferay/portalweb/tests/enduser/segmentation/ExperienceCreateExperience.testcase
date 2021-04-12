@@ -31,26 +31,6 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Experience Content Page");
-
-		// Create segmentation
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Segments");
-
-		LexiconEntry.gotoAdd();
-
-		Segmentation.addProperties(propertyOption = "Email Address");
-
-		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test");
-
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
-
-		Segmentation.fillProperty(PropertyField = "liferay");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
 	}
 
 	tearDown {
@@ -580,15 +560,64 @@ definition {
 
 		ContentPages.clickPencil();
 
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Default");
+
+		Button.clickPublish();
+
+		ContentPages.clickPencil();
+
 		PageEditor.addExperience(
 			experienceName = "NewExp1",
-			segmentName = "AddSegmentUserEmailAddressContains Test");
+			segmentName = "Anyone");
 
-		Refresh();
+		Button.clickPublish();
+
+		ContentPages.clickPencil();
+
+		PageEditor.changeExperience(newExperience = "NewExp1");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Exp1");
+
+		PageEditor.prioritizeExperience(experienceName = "NewExp1");
+
+		Button.clickPublish();
+
+		ContentPages.clickPencil();
 
 		PageEditor.changeExperience(newExperience = "NewExp1");
 
 		PageEditor.duplicateExperience(experienceName = "NewExp1");
+
+		Button.clickPublish();
+
+		ContentPages.clickPencil();
+
+		PageEditor.changeExperience(newExperience = "NewExp1 (Copy)");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Exp1");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Exp1 Copy");
+
+		PageEditor.changeExperience(newExperience = "NewExp1");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Exp1");
 
 		PageEditor.clickPublish();
 	}
@@ -671,7 +700,7 @@ definition {
 
 		PageEditor.addExperience(
 			experienceName = "exp1",
-			segmentName = "AddSegmentUserEmailAddressContains Test");
+			segmentName = "Anyone");
 
 		Refresh();
 

@@ -12,6 +12,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:captcha:captcha-api")
+	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
@@ -20,6 +21,7 @@ dependencies {
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-item-selector-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-taglib")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
+	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:frontend-editor:frontend-editor-taglib")
 	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")

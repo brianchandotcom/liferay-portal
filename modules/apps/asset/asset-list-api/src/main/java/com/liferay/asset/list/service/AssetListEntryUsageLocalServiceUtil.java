@@ -61,6 +61,12 @@ public class AssetListEntryUsageLocalServiceUtil {
 		return getService().addAssetListEntryUsage(assetListEntryUsage);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addAssetListEntryUsage(long, long, long, long, long, String,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static AssetListEntryUsage addAssetListEntryUsage(
 			long userId, long groupId, long assetListEntryId, long classNameId,
 			long classPK, String portletId,
@@ -70,6 +76,17 @@ public class AssetListEntryUsageLocalServiceUtil {
 		return getService().addAssetListEntryUsage(
 			userId, groupId, assetListEntryId, classNameId, classPK, portletId,
 			serviceContext);
+	}
+
+	public static AssetListEntryUsage addAssetListEntryUsage(
+			long userId, long groupId, long classNameId, String containerKey,
+			long containerType, String key, long plid,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addAssetListEntryUsage(
+			userId, groupId, classNameId, containerKey, containerType, key,
+			plid, serviceContext);
 	}
 
 	/**
@@ -126,6 +143,13 @@ public class AssetListEntryUsageLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteAssetListEntryUsage(assetListEntryUsageId);
+	}
+
+	public static void deleteAssetListEntryUsages(
+		String containerKey, long containerType, long plid) {
+
+		getService().deleteAssetListEntryUsages(
+			containerKey, containerType, plid);
 	}
 
 	/**
@@ -225,11 +249,24 @@ public class AssetListEntryUsageLocalServiceUtil {
 		return getService().fetchAssetListEntryUsage(assetListEntryUsageId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAssetListEntryUsages(String, long, long)}
+	 */
+	@Deprecated
 	public static AssetListEntryUsage fetchAssetListEntryUsage(
 		long classNameId, long classPK, String portletId) {
 
 		return getService().fetchAssetListEntryUsage(
 			classNameId, classPK, portletId);
+	}
+
+	public static AssetListEntryUsage fetchAssetListEntryUsage(
+		long groupId, long classNameId, String containerKey, long containerType,
+		String key, long plid) {
+
+		return getService().fetchAssetListEntryUsage(
+			groupId, classNameId, containerKey, containerType, key, plid);
 	}
 
 	/**
@@ -250,6 +287,12 @@ public class AssetListEntryUsageLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static List<AssetListEntryUsage> getAssetEntryListUsagesByPlid(
+		long plid) {
+
+		return getService().getAssetEntryListUsagesByPlid(plid);
 	}
 
 	/**
@@ -299,12 +342,23 @@ public class AssetListEntryUsageLocalServiceUtil {
 		return getService().getAssetListEntryUsages(start, end);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAssetListEntryUsages(long, long, String)}
+	 */
+	@Deprecated
 	public static List<AssetListEntryUsage> getAssetListEntryUsages(
 		long assetListEntryId) {
 
 		return getService().getAssetListEntryUsages(assetListEntryId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAssetListEntryUsages(long, long, String, int, int,
+	 OrderByComparator)}
+	 */
+	@Deprecated
 	public static List<AssetListEntryUsage> getAssetListEntryUsages(
 		long assetListEntryId, int start, int end,
 		OrderByComparator<AssetListEntryUsage> orderByComparator) {
@@ -313,6 +367,11 @@ public class AssetListEntryUsageLocalServiceUtil {
 			assetListEntryId, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAssetListEntryUsages(long, long, String, int)}
+	 */
+	@Deprecated
 	public static List<AssetListEntryUsage> getAssetListEntryUsages(
 		long assetListEntryId, long classNameId) {
 
@@ -320,12 +379,54 @@ public class AssetListEntryUsageLocalServiceUtil {
 			assetListEntryId, classNameId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAssetListEntryUsages(long, long, String, int, int, int,
+	 OrderByComparator)}
+	 */
+	@Deprecated
 	public static List<AssetListEntryUsage> getAssetListEntryUsages(
 		long assetListEntryId, long classNameId, int start, int end,
 		OrderByComparator<AssetListEntryUsage> orderByComparator) {
 
 		return getService().getAssetListEntryUsages(
 			assetListEntryId, classNameId, start, end, orderByComparator);
+	}
+
+	public static List<AssetListEntryUsage> getAssetListEntryUsages(
+		long groupId, long classNameId, String key) {
+
+		return getService().getAssetListEntryUsages(groupId, classNameId, key);
+	}
+
+	public static List<AssetListEntryUsage> getAssetListEntryUsages(
+		long groupId, long classNameId, String key, int type) {
+
+		return getService().getAssetListEntryUsages(
+			groupId, classNameId, key, type);
+	}
+
+	public static List<AssetListEntryUsage> getAssetListEntryUsages(
+		long groupId, long classNameId, String key, int type, int start,
+		int end, OrderByComparator<AssetListEntryUsage> orderByComparator) {
+
+		return getService().getAssetListEntryUsages(
+			groupId, classNameId, key, type, start, end, orderByComparator);
+	}
+
+	public static List<AssetListEntryUsage> getAssetListEntryUsages(
+		long groupId, long classNameId, String key, int start, int end,
+		OrderByComparator<AssetListEntryUsage> orderByComparator) {
+
+		return getService().getAssetListEntryUsages(
+			groupId, classNameId, key, start, end, orderByComparator);
+	}
+
+	public static List<AssetListEntryUsage> getAssetListEntryUsages(
+		String containerKey, long containerType, long plid) {
+
+		return getService().getAssetListEntryUsages(
+			containerKey, containerType, plid);
 	}
 
 	/**
@@ -370,15 +471,39 @@ public class AssetListEntryUsageLocalServiceUtil {
 		return getService().getAssetListEntryUsagesCount();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAssetListEntryUsagesCount(long, long, String)}
+	 */
+	@Deprecated
 	public static int getAssetListEntryUsagesCount(long assetListEntryId) {
 		return getService().getAssetListEntryUsagesCount(assetListEntryId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAssetListEntryUsagesCount(long, long, String, int)}
+	 */
+	@Deprecated
 	public static int getAssetListEntryUsagesCount(
 		long assetListEntryId, long classNameId) {
 
 		return getService().getAssetListEntryUsagesCount(
 			assetListEntryId, classNameId);
+	}
+
+	public static int getAssetListEntryUsagesCount(
+		long groupId, long classNameId, String key) {
+
+		return getService().getAssetListEntryUsagesCount(
+			groupId, classNameId, key);
+	}
+
+	public static int getAssetListEntryUsagesCount(
+		long groupId, long classNameId, String key, int type) {
+
+		return getService().getAssetListEntryUsagesCount(
+			groupId, classNameId, key, type);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

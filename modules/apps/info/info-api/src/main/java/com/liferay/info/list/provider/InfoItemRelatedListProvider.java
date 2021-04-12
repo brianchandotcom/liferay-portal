@@ -31,7 +31,8 @@ public interface InfoItemRelatedListProvider<S, R> extends Keyed, Labeled {
 	}
 
 	public InfoPage<? extends R> getRelatedItemsInfoPage(
-		S sourceItem, Pagination pagination, Sort sort);
+		S sourceItem, InfoListProviderContext infoListProviderContext,
+		Pagination pagination, Sort sort);
 
 	public default Class<? extends S> getSourceItemClass() {
 		return (Class<? extends S>)GenericUtil.getGenericClass(this, 0);

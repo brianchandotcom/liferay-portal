@@ -18,19 +18,16 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.info.item.provider.InfoItemRelatedItemsProvider;
+import com.liferay.info.list.provider.InfoItemRelatedListProvider;
+import com.liferay.info.list.provider.InfoListProviderContext;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -43,9 +40,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemRelatedItemsProvider.class)
-public class RelatedAssetsInfoItemRelatedItemsProvider
-	implements InfoItemRelatedItemsProvider<AssetEntry, AssetEntry> {
+@Component(immediate = true, service = InfoItemRelatedListProvider.class)
+public class RelatedAssetsInfoItemRelatedListProvider
+	implements InfoItemRelatedListProvider<AssetEntry, AssetEntry> {
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -54,44 +51,25 @@ public class RelatedAssetsInfoItemRelatedItemsProvider
 
 	@Override
 	public InfoPage<AssetEntry> getRelatedItemsInfoPage(
-		AssetEntry sourceAssetEntry, Pagination pagination, Sort sort) {
+		AssetEntry assetEntry, InfoListProviderContext infoListProviderContext,
+		Pagination pagination, Sort sort) {
 
-		try {
-			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
-				sourceAssetEntry.getCompanyId(), sourceAssetEntry.getGroupId(),
-				Field.MODIFIED_DATE, "DESC", pagination);
-
-			assetEntryQuery.setLinkedAssetEntryId(
-				sourceAssetEntry.getEntryId());
-
-			return InfoPage.of(
-				_assetEntryService.getEntries(assetEntryQuery), pagination,
-				() -> getTotalCount(sourceAssetEntry));
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(
-				"Unable to get asset entries", portalException);
-		}
-	}
-
-	public int getTotalCount(AssetEntry assetEntry) {
 		try {
 			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
 				assetEntry.getCompanyId(), assetEntry.getGroupId(),
-				Field.MODIFIED_DATE, "DESC", null);
+				sort.getFieldName(), _getOrderByType(sort), pagination);
 
 			assetEntryQuery.setLinkedAssetEntryId(assetEntry.getEntryId());
 
-			return _assetEntryService.getEntriesCount(assetEntryQuery);
+			return InfoPage.of(
+				_assetEntryService.getEntries(assetEntryQuery), pagination,
+				() -> _getTotalCount(assetEntry, sort));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
 				"Unable to get asset entries", portalException);
 		}
 	}
-
-	@Reference
-	protected Portal portal;
 
 	private AssetEntryQuery _getAssetEntryQuery(
 			long companyId, long groupId, String orderByCol, String orderByType,
@@ -100,17 +78,14 @@ public class RelatedAssetsInfoItemRelatedItemsProvider
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		Company company = _companyLocalService.getCompany(companyId);
-
 		long[] availableClassNameIds =
-			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				company.getCompanyId(), true);
+			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId, true);
 
 		availableClassNameIds = ArrayUtil.filter(
 			availableClassNameIds,
 			availableClassNameId -> {
 				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-					portal.getClassName(availableClassNameId));
+					_portal.getClassName(availableClassNameId));
 
 				if (indexer == null) {
 					return false;
@@ -123,9 +98,7 @@ public class RelatedAssetsInfoItemRelatedItemsProvider
 
 		assetEntryQuery.setEnablePermissions(true);
 
-		Group group = _groupLocalService.getGroup(groupId);
-
-		assetEntryQuery.setGroupIds(new long[] {group.getGroupId()});
+		assetEntryQuery.setGroupIds(new long[] {groupId});
 
 		if (pagination != null) {
 			assetEntryQuery.setStart(pagination.getStart());
@@ -141,13 +114,34 @@ public class RelatedAssetsInfoItemRelatedItemsProvider
 		return assetEntryQuery;
 	}
 
+	private String _getOrderByType(Sort sort) {
+		if (sort.isReverse()) {
+			return "DESC";
+		}
+
+		return "ASC";
+	}
+
+	private int _getTotalCount(AssetEntry assetEntry, Sort sort) {
+		try {
+			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
+				assetEntry.getCompanyId(), assetEntry.getGroupId(),
+				sort.getFieldName(), _getOrderByType(sort), null);
+
+			assetEntryQuery.setLinkedAssetEntryId(assetEntry.getEntryId());
+
+			return _assetEntryService.getEntriesCount(assetEntryQuery);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(
+				"Unable to get asset entries", portalException);
+		}
+	}
+
 	@Reference
 	private AssetEntryService _assetEntryService;
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
+	private Portal _portal;
 
 }

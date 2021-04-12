@@ -255,6 +255,86 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-120198. Search page in select page iframe."
+	@priority = "4"
+	test SearchPageWhenMapPageToFragment {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageWhenMapPageToFragment";
+
+		task ("Add a parent widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page Name");
+		}
+
+		task ("Add a child widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Child Page Name");
+		}
+
+		task ("Add a grandchild widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Grand Child Page Name");
+		}
+
+		task ("Add a Banner Center fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map the grandchild widget page to link type editable field of Banner Center") {
+			PageEditorEditableLink.mapEditableFieldToPage(
+				fragmentName = "Banner Center",
+				id = "link",
+				keywords = "Grand Child",
+				pageName = "Test Grand Child Page Name");
+		}
+
+		task ("View the selected page is shown in Page field") {
+			AssertVisible(
+				key_contentName = "Test Grand Child Page Name",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("View selected page is linked to Banner Center fragment") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			AssertVisible(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/test-site-name/test-grand-child-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to content page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Assert redirect to grandchild widget page") {
+			Click(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/test-site-name/test-grand-child-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Grand Child Page Name");
+
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/test-grand-child-page-name");
+		}
+	}
+
 	@description = "This is a test for LPS-78928. Static text in content pages is searchable."
 	@priority = "5"
 	test SearchStaticText {

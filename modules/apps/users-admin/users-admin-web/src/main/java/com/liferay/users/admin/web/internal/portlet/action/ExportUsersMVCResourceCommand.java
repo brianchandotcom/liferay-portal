@@ -47,6 +47,8 @@ import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
+import java.io.Serializable;
+
 import java.sql.Timestamp;
 
 import java.util.Collections;
@@ -111,8 +113,12 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 
 				ExpandoBridge expandoBridge = user.getExpandoBridge();
 
+				Serializable attributeValue = expandoBridge.getAttribute(
+					attributeName);
+
 				sb.append(
-					CSVUtil.encode(expandoBridge.getAttribute(attributeName)));
+					(attributeValue != null) ? CSVUtil.encode(attributeValue) :
+						"");
 			}
 			else if (field.contains("Date")) {
 				Date date = (Date)BeanPropertiesUtil.getObject(user, field);

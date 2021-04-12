@@ -207,34 +207,34 @@ definition {
 
 		Publications.gotoReviewPublications();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Dynamic Data Mapping Structure",
-			publicationsSite = "Guest",
-			publicationsTitle = "WC Structure Name",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Guest",
+			changeTitle = "WC Structure Name",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Dynamic Data Mapping Template",
-			publicationsSite = "Guest",
-			publicationsTitle = "WC Template Name",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Template",
+			changeSite = "Guest",
+			changeTitle = "WC Template Name",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Document",
-			publicationsSite = "Guest",
-			publicationsTitle = "DM Document Title",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Document",
-			publicationsOrder = "2",
-			publicationsSite = "Guest",
-			publicationsTitle = "Document_1.jpg",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeOrder = "2",
+			changeSite = "Guest",
+			changeTitle = "Document_1.jpg",
+			changeType = "Added",
+			changeUser = "Test Test");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
@@ -301,12 +301,12 @@ definition {
 
 		Publications.gotoReviewPublications();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Widget",
-			publicationsSite = "Guest",
-			publicationsTitle = "Asset Publisher on Test Page",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Widget",
+			changeSite = "Guest",
+			changeTitle = "Asset Publisher on Test Page",
+			changeType = "Added",
+			changeUser = "Test Test");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 

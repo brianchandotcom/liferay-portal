@@ -179,7 +179,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISHED_PUBLICATIONS_NAME</td>
+	<td>PUBLISHED_PUBLICATION_NAME</td>
 	<td>//div[contains(@class,'publication-name') and contains(.,'${key_publicationsName}')]</td>
 	<td></td>
 </tr>

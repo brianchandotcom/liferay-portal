@@ -186,13 +186,13 @@ definition {
 			gotoManagePublications = "true",
 			publicationsName = "Publication Name");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Documents Folder",
-			publicationsOrder = "5",
-			publicationsSite = "Guest",
-			publicationsTitle = "DM Folder 1 Name",
-			publicationsType = "Modified",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Documents Folder",
+			changeOrder = "5",
+			changeSite = "Guest",
+			changeTitle = "DM Folder 1 Name",
+			changeType = "Modified",
+			changeUser = "Test Test");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -202,13 +202,13 @@ definition {
 
 		Publications.gotoReviewPublications();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Documents Folder",
-			publicationsOrder = "5",
-			publicationsSite = "Guest",
-			publicationsTitle = "DM Folder 1 Name",
-			publicationsType = "Modified",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Documents Folder",
+			changeOrder = "5",
+			changeSite = "Guest",
+			changeTitle = "DM Folder 1 Name",
+			changeType = "Modified",
+			changeUser = "Test Test");
 
 		Navigator.openURL();
 
@@ -220,13 +220,13 @@ definition {
 
 		Publications.gotoReviewPublications();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Documents Folder",
-			publicationsOrder = "5",
-			publicationsSite = "Guest",
-			publicationsTitle = "DM Folder 1 Name",
-			publicationsType = "Deleted",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Documents Folder",
+			changeOrder = "5",
+			changeSite = "Guest",
+			changeTitle = "DM Folder 1 Name",
+			changeType = "Deleted",
+			changeUser = "Test Test");
 	}
 
 	@priority = "4"
@@ -271,29 +271,29 @@ definition {
 
 		Publications.gotoReviewPublications();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Document",
-			publicationsSite = "Guest",
-			publicationsTitle = "DM Document Title Edit",
-			publicationsType = "Modified",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Documents Folder",
-			publicationsSite = "Guest",
-			publicationsTitle = "DM Folder Name",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Documents Folder",
+			changeSite = "Guest",
+			changeTitle = "DM Folder Name",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaContextStyle(
-			publicationsCategory = "Document",
-			publicationsDescription = "Test Test modified a Document in Guest",
-			publicationsTitle = "DM Document Title Edit");
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Document",
+			changeDescription = "Test Test modified a Document in Guest",
+			changeTitle = "DM Document Title Edit");
 
-		PublicationsChanges.viewPublicationsViaContextStyle(
-			publicationsCategory = "Documents Folder",
-			publicationsDescription = "Test Test added a Documents Folder in Guest",
-			publicationsTitle = "DM Folder Name");
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Documents Folder",
+			changeDescription = "Test Test added a Documents Folder in Guest",
+			changeTitle = "DM Folder Name");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
@@ -350,24 +350,24 @@ definition {
 
 		Publications.gotoReviewPublications();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Document",
-			publicationsSite = "Guest",
-			publicationsTitle = "DM Document Title",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Dynamic Data Mapping Structure",
-			publicationsSite = "Guest",
-			publicationsTitle = "DM Document Type Name",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Guest",
+			changeTitle = "DM Document Type Name",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaContextStyle(
-			publicationsCategory = "Document",
-			publicationsDescription = "Test Test added a Document in Guest",
-			publicationsTitle = "DM Document Title");
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Document",
+			changeDescription = "Test Test added a Document in Guest",
+			changeTitle = "DM Document Title");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 

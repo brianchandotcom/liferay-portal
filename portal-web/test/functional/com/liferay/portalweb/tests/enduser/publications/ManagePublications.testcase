@@ -39,7 +39,7 @@ definition {
 		Publications.cancelPublicationCreation(publicationsName = "Publication Name");
 
 		AssertElementNotPresent(
-			locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME",
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME",
 			value1 = "Publication Name");
 	}
 
@@ -75,7 +75,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_publicationsName = "Publication Name",
-			locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME");
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 	}
 
 	@priority = "4"

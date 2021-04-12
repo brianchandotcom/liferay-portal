@@ -1,16 +1,16 @@
 definition {
 
 	macro assertDiscardIsUnavailableForInactivePublication {
-		if (isSet(publicationsOrder)) {
-			var publicationsOrder = "${publicationsOrder}";
+		if (isSet(publicationOrder)) {
+			var publicationOrder = "${publicationOrder}";
 		}
 		else {
-			var publicationsOrder = "1";
+			var publicationOrder = "1";
 		}
 
 		Click(
 			key_publicationsName = "${publicationsName}",
-			locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME");
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
 		Pause(locator1 = "1000");
 
@@ -118,11 +118,11 @@ definition {
 	}
 
 	macro discardPublications {
-		if (isSet(publicationsOrder)) {
-			var publicationsOrder = "${publicationsOrder}";
+		if (isSet(publicationOrder)) {
+			var publicationOrder = "${publicationOrder}";
 		}
 		else {
-			var publicationsOrder = "1";
+			var publicationOrder = "1";
 		}
 
 		if ("${conflictingPublications}" == "true") {
@@ -151,8 +151,8 @@ definition {
 		var key_publicationsTitle = "${publicationsTitle}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PublicationsChanges#CONTEXT_PUBLICATIONS_TITLE",
-			value1 = "${publicationsTitle}");
+			locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE",
+			value1 = "${changeTitle}");
 
 		Click(
 			key_text = "Discard",
@@ -419,7 +419,7 @@ definition {
 		var key_publicationsName = "${publicationsName}";
 
 		AssertTextEquals(
-			locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME",
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME",
 			value1 = "${publicationsName}");
 	}
 

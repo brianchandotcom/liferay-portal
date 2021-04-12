@@ -6,11 +6,11 @@ definition {
 		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
 	}
 
-	macro viewPublicationsViaChangesStyle {
+	macro viewChangesViaChangesStyle {
 		if ("${publishedPublication}" == "true") {
 			Click(
-				key_publicationsName = "Publication Name",
-				locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME");
+				key_publicationName = "Publication Name",
+				locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 		}
 		else {
 			PublicationsChanges.changeDisplayStyle(displayStyle = "Changes");
@@ -22,17 +22,17 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		var key_publicationsCategory = "${publicationsCategory}";
-		var key_publicationsUser = "${publicationsUser}";
-		var key_publicationsSite = "${publicationsSite}";
-		var key_publicationsTitle = "${publicationsTitle}";
-		var key_publicationsType = "${publicationsType}";
+		var key_changeCategory = "${publicationsCategory}";
+		var key_changeUser = "${changeUser}";
+		var key_changeSite = "${changeSite}";
+		var key_changeTitle = "${changeTitle}";
+		var key_changeType = "${changeType}";
 
-		if (isSet(publicationsOrder)) {
-			var publicationsOrder = "${publicationsOrder}";
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
 		}
 		else {
-			var publicationsOrder = "1";
+			var changeOrder = "1";
 		}
 
 		while (IsElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_USER")) {
@@ -41,18 +41,18 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_SITE",
-			value1 = "${publicationsSite}");
+			value1 = "${changeSite}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
-			value1 = "${publicationsTitle}");
+			value1 = "${changeTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TYPE",
-			value1 = "${publicationsType}");
+			value1 = "${changeType}");
 	}
 
-	macro viewPublicationsViaContextStyle {
+	macro viewChangesViaContextStyle {
 		PublicationsChanges.changeDisplayStyle(displayStyle = "Context");
 
 		Pause(locator1 = "3000");
@@ -61,19 +61,19 @@ definition {
 			Check.checkToggleSwitch(locator1 = "PublicationsSettings#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
 		}
 
-		var key_publicationsCategory = "${publicationsCategory}";
-		var key_publicationsDescription = "${publicationsDescription}";
-		var key_publicationsTitle = "${publicationsTitle}";
+		var key_changeCategory = "${changeCategory}";
+		var key_changeDescription = "${changeDescription}";
+		var key_changeTitle = "${changeTitle}";
 
-		Click.javaScriptClick(locator1 = "PublicationsChanges#CONTEXT_PUBLICATIONS_CATEGORY_RADIO");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PublicationsChanges#CONTEXT_PUBLICATIONS_TITLE",
-			value1 = "${publicationsTitle}");
+		Click.javaScriptClick(locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE_CATEGORY_RADIO");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PublicationsChanges#CONTEXT_PUBLICATIONS_DESCRIPTION",
-			value1 = "${publicationsDescription}");
+			locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE",
+			value1 = "${changeTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PublicationsChanges#CONTEXT_CHANGE_DESCRIPTION",
+			value1 = "${changeDescription}");
 	}
 
 }

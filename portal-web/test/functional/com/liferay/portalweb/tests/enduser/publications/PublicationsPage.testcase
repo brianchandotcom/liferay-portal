@@ -79,12 +79,12 @@ definition {
 
 		Publications.gotoReviewPublications();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Widget",
-			publicationsSite = "Site Name",
-			publicationsTitle = "Asset Publisher",
-			publicationsType = "Added",
-			publicationsUser = "Test Test",
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Widget",
+			changeSite = "Site Name",
+			changeTitle = "Asset Publisher",
+			changeType = "Added",
+			changeUser = "Test Test",
 			showAllItems = "true");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 2");
@@ -244,17 +244,17 @@ definition {
 
 		Publications.gotoReviewPublications();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Page",
-			publicationsSite = "Guest",
-			publicationsTitle = "Test Page",
-			publicationsType = "Deleted",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Page",
+			changeSite = "Guest",
+			changeTitle = "Test Page",
+			changeType = "Deleted",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaContextStyle(
-			publicationsCategory = "Page",
-			publicationsDescription = "Test Test deleted a Page in Guest",
-			publicationsTitle = "Test Page");
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Page",
+			changeDescription = "Test Test deleted a Page in Guest",
+			changeTitle = "Test Page");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 

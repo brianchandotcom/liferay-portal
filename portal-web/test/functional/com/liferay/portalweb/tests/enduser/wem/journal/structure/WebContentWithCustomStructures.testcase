@@ -587,11 +587,19 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			ClickNoError(
-				key_localizedLanguage = "zh_CN",
-				locator1 = "Icon#AVAILABLE_TRANSLATION_DELETE");
+			PortletEntry.changeLocale(locale = "zh-CN");
 
-			AssertConfirm(value1 = "Are you sure you want to deactivate this language?");
+			Click(locator1 = "TextInput#NAME");
+
+			RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
+
+			KeyPress(
+				locator1 = "TextInput#NAME",
+				value1 = "\BACK_SPACE");
+
+			// Change locale to default is a workaround for LPS-130070
+
+			PortletEntry.changeLocale(locale = "pt-BR");
 
 			WebContentStructures.saveCP();
 
@@ -601,9 +609,12 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			AssertElementNotPresent(
-				key_localizedLanguage = "zh_CN",
-				locator1 = "Icon#AVAILABLE_TRANSLATION");
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			AssertTextEquals(
+				key_localizedLanguage = "zh-CN",
+				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+				value1 = "Untranslated");
 		}
 
 		task ("View Translation while Editing article") {

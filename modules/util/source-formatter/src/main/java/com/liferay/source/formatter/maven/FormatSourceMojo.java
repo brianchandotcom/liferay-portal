@@ -18,6 +18,7 @@ import com.liferay.source.formatter.SourceFormatter;
 import com.liferay.source.formatter.SourceFormatterArgs;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -68,6 +69,20 @@ public class FormatSourceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setCheckCategoryNames(List<String> checkCategoryNames) {
+		_sourceFormatterArgs.setCheckCategoryNames(checkCategoryNames);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setCheckNames(List<String> checkNames) {
+		_sourceFormatterArgs.setCheckNames(checkNames);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setFailOnAutoFix(boolean failOnAutoFix) {
 		_sourceFormatterArgs.setFailOnAutoFix(failOnAutoFix);
 	}
@@ -77,6 +92,13 @@ public class FormatSourceMojo extends AbstractMojo {
 	 */
 	public void setFailOnHasWarning(boolean failOnHasWarning) {
 		_sourceFormatterArgs.setFailOnHasWarning(failOnHasWarning);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setFileExtensions(List<String> fileExtensions) {
+		_sourceFormatterArgs.setFileExtensions(fileExtensions);
 	}
 
 	/**

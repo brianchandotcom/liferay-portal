@@ -718,6 +718,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					<arg value="processor.thread.count=${source.formatter.processor.thread.count}" />
 					<arg value="show.debug.information=${source.formatter.show.debug.information}" />
 					<arg value="show.documentation=${source.formatter.show.documentation}" />
+					<arg value="show.status.updates=${source.formatter.show.status.updates}" />
 					<arg value="source.auto.fix=${source.auto.fix}" />
 					<arg value="source.base.dir=${source.base.dir}" />
 					<arg value="source.check.category.names=${source.check.category.names}" />

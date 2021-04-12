@@ -57,6 +57,14 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.getBaseDirName();
 	}
 
+	public List<String> getCheckCategoryNames() {
+		return _sourceFormatterArgs.getCheckCategoryNames();
+	}
+
+	public List<String> getCheckNames() {
+		return _sourceFormatterArgs.getCheckNames();
+	}
+
 	public List<String> getFileExtensions() {
 		return _sourceFormatterArgs.getFileExtensions();
 	}
@@ -143,6 +151,24 @@ public class FormatSourceTask extends JavaExec {
 
 	public void setBaseDirName(String baseDirName) {
 		_sourceFormatterArgs.setBaseDirName(baseDirName);
+	}
+
+	public void setCheckCategoryNames(Iterable<String> checkCategoryNames) {
+		_sourceFormatterArgs.setCheckCategoryNames(
+			CollectionUtils.toList(checkCategoryNames));
+	}
+
+	public void setCheckCategoryNames(String... checkCategoryNames) {
+		_sourceFormatterArgs.setCheckCategoryNames(
+			CollectionUtils.toList(checkCategoryNames));
+	}
+
+	public void setCheckNames(Iterable<String> checkNames) {
+		_sourceFormatterArgs.setCheckNames(CollectionUtils.toList(checkNames));
+	}
+
+	public void setCheckNames(String... checkNames) {
+		_sourceFormatterArgs.setCheckNames(CollectionUtils.toList(checkNames));
 	}
 
 	public void setFailOnAutoFix(boolean failOnAutoFix) {
@@ -234,6 +260,11 @@ public class FormatSourceTask extends JavaExec {
 		args.add("show.documentation=" + isShowDocumentation());
 		args.add("show.status.updates=" + isShowStatusUpdates());
 		args.add("source.auto.fix=" + isAutoFix());
+		args.add(
+			"source.check.category.names=" +
+				CollectionUtils.join(",", getCheckCategoryNames()));
+		args.add(
+			"source.check.names=" + CollectionUtils.join(",", getCheckNames()));
 		args.add("source.fail.on.auto.fix=" + isFailOnAutoFix());
 		args.add("source.fail.on.has.warning=" + isFailOnHasWarning());
 		args.add(

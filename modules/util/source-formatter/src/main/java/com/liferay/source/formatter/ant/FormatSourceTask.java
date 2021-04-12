@@ -76,12 +76,24 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setBaseDirName(baseDirName);
 	}
 
+	public void setCheckCategoryNames(List<String> checkCategoryNames) {
+		_sourceFormatterArgs.setCheckCategoryNames(checkCategoryNames);
+	}
+
+	public void setCheckNames(List<String> checkNames) {
+		_sourceFormatterArgs.setCheckNames(checkNames);
+	}
+
 	public void setFailOnAutoFix(boolean failOnAutoFix) {
 		_sourceFormatterArgs.setFailOnAutoFix(failOnAutoFix);
 	}
 
 	public void setFailOnHasWarning(boolean failOnHasWarning) {
 		_sourceFormatterArgs.setFailOnHasWarning(failOnHasWarning);
+	}
+
+	public void setFileExtensions(List<String> fileExtensions) {
+		_sourceFormatterArgs.setFileExtensions(fileExtensions);
 	}
 
 	public void setFileNames(String fileNames) {

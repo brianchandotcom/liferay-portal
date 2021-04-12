@@ -208,6 +208,75 @@ public class SourceFormatterDefaultsPlugin
 	private void _configureTaskFormatSource(FormatSourceTask formatSourceTask) {
 		Project project = formatSourceTask.getProject();
 
+		String autoFix = GradleUtil.getProperty(
+			project, "source.auto.fix", (String)null);
+
+		if (Validator.isNotNull(autoFix)) {
+			formatSourceTask.setAutoFix(Boolean.parseBoolean(autoFix));
+		}
+
+		String baseDirName = GradleUtil.getProperty(
+			project, "source.base.dir", (String)null);
+
+		if (Validator.isNotNull(baseDirName)) {
+			formatSourceTask.setBaseDirName(baseDirName);
+		}
+
+		String checkCategoryNames = GradleUtil.getProperty(
+			project, "source.check.category.names", (String)null);
+
+		if (Validator.isNotNull(checkCategoryNames)) {
+			formatSourceTask.setCheckCategoryNames(
+				checkCategoryNames.split(","));
+		}
+
+		String checkNames = GradleUtil.getProperty(
+			project, "source.check.names", (String)null);
+
+		if (Validator.isNotNull(checkNames)) {
+			formatSourceTask.setCheckNames(checkNames.split(","));
+		}
+
+		String failOnAutoFix = GradleUtil.getProperty(
+			project, "source.fail.on.auto.fix", (String)null);
+
+		if (Validator.isNotNull(failOnAutoFix)) {
+			formatSourceTask.setFailOnAutoFix(
+				Boolean.parseBoolean(failOnAutoFix));
+		}
+
+		String failOnHasWarning = GradleUtil.getProperty(
+			project, "source.fail.on.has.warning", (String)null);
+
+		if (Validator.isNotNull(failOnHasWarning)) {
+			formatSourceTask.setFailOnHasWarning(
+				Boolean.parseBoolean(failOnHasWarning));
+		}
+
+		String formatCurrentBranch = GradleUtil.getProperty(
+			project, "format.current.branch", (String)null);
+
+		if (Validator.isNotNull(formatCurrentBranch)) {
+			formatSourceTask.setFormatCurrentBranch(
+				Boolean.parseBoolean(formatCurrentBranch));
+		}
+
+		String formatLatestAuthor = GradleUtil.getProperty(
+			project, "format.latest.author", (String)null);
+
+		if (Validator.isNotNull(formatLatestAuthor)) {
+			formatSourceTask.setFormatLatestAuthor(
+				Boolean.parseBoolean(formatLatestAuthor));
+		}
+
+		String formatLocalChanges = GradleUtil.getProperty(
+			project, "format.local.changes", (String)null);
+
+		if (Validator.isNotNull(formatLocalChanges)) {
+			formatSourceTask.setFormatLocalChanges(
+				Boolean.parseBoolean(formatLocalChanges));
+		}
+
 		String gitWorkingBranchName = GradleUtil.getProperty(
 			project, "git.working.branch.name", (String)null);
 
@@ -228,6 +297,13 @@ public class SourceFormatterDefaultsPlugin
 
 		if (Validator.isNotNull(maxLineLength)) {
 			formatSourceTask.setMaxLineLength(Integer.parseInt(maxLineLength));
+		}
+
+		String printErrors = GradleUtil.getProperty(
+			project, "source.print.errors", (String)null);
+
+		if (Validator.isNotNull(printErrors)) {
+			formatSourceTask.setPrintErrors(Boolean.parseBoolean(printErrors));
 		}
 
 		String processorThreadCount = GradleUtil.getProperty(
@@ -260,6 +336,28 @@ public class SourceFormatterDefaultsPlugin
 		if (Validator.isNotNull(showStatusUpdates)) {
 			formatSourceTask.setShowStatusUpdates(
 				Boolean.parseBoolean(showStatusUpdates));
+		}
+
+		String sourceFileNames = GradleUtil.getProperty(
+			project, "source.files", (String)null);
+
+		if (Validator.isNotNull(sourceFileNames)) {
+			formatSourceTask.setFileNames(sourceFileNames.split(","));
+		}
+
+		String sourceFileExtensions = GradleUtil.getProperty(
+			project, "source.file.extensions", (String)null);
+
+		if (Validator.isNotNull(sourceFileExtensions)) {
+			formatSourceTask.setFileExtensions(sourceFileExtensions.split(","));
+		}
+
+		String validateCommitMessages = GradleUtil.getProperty(
+			project, "validate.commit.message", (String)null);
+
+		if (Validator.isNotNull(validateCommitMessages)) {
+			formatSourceTask.setValidateCommitMessages(
+				Boolean.parseBoolean(validateCommitMessages));
 		}
 	}
 

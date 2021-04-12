@@ -17,15 +17,11 @@ package com.liferay.commerce.pricing.web.internal;
 import com.liferay.commerce.discount.constants.CommerceDiscountRuleConstants;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeJSPContributor;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
-import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.pricing.web.internal.display.context.AddedAllCommerceDiscountRuleDisplayContext;
-import com.liferay.commerce.pricing.web.internal.util.CommercePricingUtil;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-
-import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -62,20 +58,9 @@ public class AddedAllCommerceDiscountRuleTypeJSPContributor
 			"view.jsp-addedAllCommerceDiscountRuleDisplayContext",
 			addedAllCommerceDiscountRuleDisplayContext);
 
-		if (Objects.equals(
-				CommercePricingUtil.getPricingEngineVersion(
-					_configurationProvider),
-				CommercePricingConstants.VERSION_1_0)) {
-
-			_jspRenderer.renderJSP(
-				_servletContext, httpServletRequest, httpServletResponse,
-				"/discount/rule/type/added_all/v1_0/view.jsp");
-		}
-		else {
-			_jspRenderer.renderJSP(
-				_servletContext, httpServletRequest, httpServletResponse,
-				"/discount/rule/type/added_all/v2_0/view.jsp");
-		}
+		_jspRenderer.renderJSP(
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/discount/rule/type/added_all/v2_0/view.jsp");
 	}
 
 	@Reference

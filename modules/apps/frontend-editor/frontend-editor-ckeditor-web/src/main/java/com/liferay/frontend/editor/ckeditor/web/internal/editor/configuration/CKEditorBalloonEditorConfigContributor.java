@@ -89,9 +89,9 @@ public class CKEditorBalloonEditorConfigContributor
 	protected JSONObject getToolbarTextJSONObject() {
 		return JSONUtil.put(
 			"buttons",
-			"Bold,Italic,Underline,RemoveFormat,Link,NumberedList," +
-				"BulletedList,JustifyLeft,JustifyCenter,JustifyRight," +
-					"JustifyBlock,Anchor"
+			"Bold,Italic,Underline,BulletedList,NumberedList,Link," +
+				"JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock," +
+				"RemoveFormat"
 		).put(
 			"cssSelector", "*"
 		);

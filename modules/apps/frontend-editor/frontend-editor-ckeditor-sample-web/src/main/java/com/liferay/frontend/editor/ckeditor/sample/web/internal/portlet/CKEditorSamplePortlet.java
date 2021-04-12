@@ -16,10 +16,17 @@ package com.liferay.frontend.editor.ckeditor.sample.web.internal.portlet;
 
 import com.liferay.frontend.editor.ckeditor.sample.web.internal.constants.CKEditorSamplePortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julien Castelain
@@ -46,4 +53,16 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class CKEditorSamplePortlet extends MVCPortlet {
+
+	@Override
+	public void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private Portal _portal;
+
 }

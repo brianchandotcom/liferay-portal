@@ -1195,7 +1195,6 @@ definition {
 			key_productName = "U-Joint",
 			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 			value1 = "$ 24.00");
-
 	}
 
 	@description = "COMMERCE-6158. As a buyer, I want to see the barred list price and a discount price of a product, if set"

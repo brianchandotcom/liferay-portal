@@ -78,6 +78,10 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
+		if (isSet(navItem)) {
+			Navigator.gotoNavItem(navItem = "${navItem}");
+		}
+
 		Portlet.expandTree();
 
 		AssertClick.assertPartialTextClickAt(

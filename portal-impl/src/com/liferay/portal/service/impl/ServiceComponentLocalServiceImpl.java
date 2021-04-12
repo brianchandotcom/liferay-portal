@@ -155,6 +155,26 @@ public class ServiceComponentLocalServiceImpl
 			previousBuildNumber = serviceComponent.getBuildNumber();
 
 			if (previousBuildNumber < buildNumber) {
+				List<ServiceComponent> currentServiceComponents =
+					serviceComponentPersistence.findByBuildNamespace(
+						buildNamespace, 0, 1);
+
+				ServiceComponent currentServiceComponent =
+					currentServiceComponents.get(0);
+
+				long currentBuildNumber =
+					currentServiceComponent.getBuildNumber();
+
+				if (currentBuildNumber > previousBuildNumber) {
+					serviceComponent = currentServiceComponent;
+
+					previousBuildNumber = currentBuildNumber;
+
+					_serviceComponents.put(buildNamespace, serviceComponent);
+				}
+			}
+
+			if (previousBuildNumber < buildNumber) {
 				previousServiceComponent = serviceComponent;
 
 				long serviceComponentId = counterLocalService.increment();

@@ -138,7 +138,7 @@ definition {
 		task ("The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin") {
 			SitePages.openPagesAdmin(siteURLKey = "guest");
 
-			MetalComponent.waitForManagementBar();
+			WaitForPageLoad();
 
 			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
 
@@ -146,7 +146,7 @@ definition {
 
 			Site.openSitesAdmin();
 
-			MetalComponent.waitForManagementBar();
+			WaitForPageLoad();
 
 			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
 

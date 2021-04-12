@@ -93,11 +93,7 @@ definition {
 
 			NavItem.gotoTemplates();
 
-			var browserType = PropsUtil.get("browser.type");
-
-			if ("${browserType}" == "chrome") {
-				MetalComponent.waitForManagementBar();
-			}
+			WaitForPageLoad();
 
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}

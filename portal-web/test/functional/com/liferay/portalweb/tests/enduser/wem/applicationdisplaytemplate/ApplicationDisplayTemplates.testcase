@@ -62,11 +62,7 @@ definition {
 		task ("Assert the New button doesn't present") {
 			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			var browserType = PropsUtil.get("browser.type");
-
-			if ("${browserType}" == "chrome") {
-				MetalComponent.waitForManagementBar();
-			}
+			WaitForPageLoad();
 
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}

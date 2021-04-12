@@ -1,11 +1,7 @@
 definition {
 
 	macro changeDisplayStyle {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "chrome") {
-			MetalComponent.waitForManagementBar();
-		}
+		WaitForPageLoad();
 
 		Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
@@ -52,11 +48,8 @@ definition {
 	}
 
 	macro gotoAdd {
-		var browserType = PropsUtil.get("browser.type");
+		WaitForPageLoad();
 
-		if ("${browserType}" == "chrome") {
-			MetalComponent.waitForManagementBar();
-		}
 		Click(locator1 = "Button#PLUS");
 	}
 

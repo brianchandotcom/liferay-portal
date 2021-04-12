@@ -61,7 +61,7 @@ definition {
 		task ("Assert pages order in Staging site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			MetalComponent.waitForManagementBar();
+			WaitForPageLoad();
 
 			Page.viewPagesOrder(
 				depth = "2",
@@ -91,7 +91,7 @@ definition {
 		task ("Assert pages order in Live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForManagementBar();
+			WaitForPageLoad();
 
 			Page.viewPagesOrder(
 				depth = "2",

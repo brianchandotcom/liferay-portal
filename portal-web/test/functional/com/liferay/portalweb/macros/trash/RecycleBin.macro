@@ -1,11 +1,7 @@
 definition {
 
 	macro bulkRestoreCP {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "chrome") {
-			MetalComponent.waitForManagementBar();
-		}
+		WaitForPageLoad();
 
 		for (var assetName : list "${assetList}") {
 			LexiconTable.viewTableEntryTitle(tableEntry = "${assetName}");

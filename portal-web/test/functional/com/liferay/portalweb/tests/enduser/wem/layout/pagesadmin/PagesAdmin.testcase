@@ -770,7 +770,7 @@ definition {
 		task ("Move Test Page Name 2 and Child Child Page Name 1 to the same level with Child Page Name 1") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForManagementBar();
+			WaitForPageLoad();
 
 			Click(
 				key_itemName = "Test Page Name 1",
@@ -825,7 +825,7 @@ definition {
 		task ("Assert pages order") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForManagementBar();
+			WaitForPageLoad();
 
 			Page.viewPagesOrder(
 				depth = "2",
@@ -878,7 +878,7 @@ definition {
 		task ("Move Test Page Name 1 and 2 to child level of Test Page Name 3") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForManagementBar();
+			WaitForPageLoad();
 
 			Click(
 				key_itemName = "Test Page Name 3",

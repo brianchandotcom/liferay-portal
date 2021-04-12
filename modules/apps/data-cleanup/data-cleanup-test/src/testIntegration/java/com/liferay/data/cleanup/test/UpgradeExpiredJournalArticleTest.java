@@ -56,19 +56,19 @@ public class UpgradeExpiredJournalArticleTest {
 
 	@Test
 	public void testUpgradeExpiredJournalArticle() throws Exception {
-		JournalArticle expiredJournalArticleA = JournalTestUtil.addArticle(
+		JournalArticle expiredJournalArticle1 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		JournalArticle expiredJournalArticleB = JournalTestUtil.updateArticle(
-			expiredJournalArticleA);
+		JournalArticle expiredJournalArticle2 = JournalTestUtil.updateArticle(
+			expiredJournalArticle1);
 
 		JournalArticle unexpiredJournalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		JournalTestUtil.expireArticle(
-			expiredJournalArticleB.getGroupId(), expiredJournalArticleB);
+			expiredJournalArticle2.getGroupId(), expiredJournalArticle2);
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -82,11 +82,11 @@ public class UpgradeExpiredJournalArticleTest {
 
 			Assert.assertNull(
 				_journalArticleLocalService.fetchArticle(
-					expiredJournalArticleA.getId()));
+					expiredJournalArticle1.getId()));
 
 			Assert.assertNull(
 				_journalArticleLocalService.fetchArticle(
-					expiredJournalArticleB.getId()));
+					expiredJournalArticle2.getId()));
 
 			Assert.assertNotNull(
 				_journalArticleLocalService.fetchArticle(

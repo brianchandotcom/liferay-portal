@@ -28,6 +28,67 @@ definition {
 		}
 	}
 
+	@description = "This test validates adding, editing and deleting fields on the builder"
+	@priority = "5"
+	test AddEditAndDeleteFieldsOnStructure {
+		property portal.acceptance = "true";
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addFields(fieldNameList = "Text,Date,Numeric");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		for (var fieldList : list "Text,Date,Numeric") {
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "${fieldList}",
+				fieldFieldLabelEdit = "${fieldList} edited");
+
+			DataEngine.editFieldTip(
+				fieldFieldLabel = "${fieldList} edited",
+				fieldHelp = "Help text");
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		for (var fieldList : list "Text,Date,Numeric") {
+			DataEngine.viewField(
+				fieldFieldLabel = "${fieldList} edited",
+				fieldHelp = "Help text",
+				fieldName = "${fieldList}");
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		for (var fieldList : list "Text,Date,Numeric") {
+			DataEngine.delete(fieldFieldLabel = "${fieldList} edited");
+		}
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		for (var fieldList : list "Text,Date,Numeric") {
+			AssertElementNotPresent(
+				key_fieldFieldLabel = "${fieldList} edited",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
+	}
+
 	@description = "This test ensures that the title displayed on the structures list is the title defined on the default language."
 	@priority = "4"
 	test CheckDefaultStructureTitleDisplayedOnStructureList {

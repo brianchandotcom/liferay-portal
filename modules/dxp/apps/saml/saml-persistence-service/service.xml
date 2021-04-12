@@ -234,7 +234,8 @@
 		<finder name="NameIdValue" return-type="Collection">
 			<finder-column name="nameIdValue" />
 		</finder>
-		<finder name="SessionIndex" return-type="SamlSpSession">
+		<finder name="C_SI" return-type="SamlSpSession">
+			<finder-column name="companyId" />
 			<finder-column name="sessionIndex" />
 		</finder>
 	</entity>

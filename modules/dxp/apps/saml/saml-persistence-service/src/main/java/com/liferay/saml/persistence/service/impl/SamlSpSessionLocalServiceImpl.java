@@ -89,12 +89,14 @@ public class SamlSpSessionLocalServiceImpl
 	}
 
 	@Override
-	public SamlSpSession fetchSamlSpSessionBySessionIndex(String sessionIndex) {
+	public SamlSpSession fetchSamlSpSessionBySessionIndex(
+		long companyId, String sessionIndex) {
+
 		if (Validator.isNull(sessionIndex)) {
 			return null;
 		}
 
-		return samlSpSessionPersistence.fetchBySessionIndex(sessionIndex);
+		return samlSpSessionPersistence.fetchByC_SI(companyId, sessionIndex);
 	}
 
 	@Override
@@ -114,14 +116,15 @@ public class SamlSpSessionLocalServiceImpl
 	}
 
 	@Override
-	public SamlSpSession getSamlSpSessionBySessionIndex(String sessionIndex)
+	public SamlSpSession getSamlSpSessionBySessionIndex(
+			long companyId, String sessionIndex)
 		throws PortalException {
 
 		if (Validator.isNull(sessionIndex)) {
 			throw new NoSuchSpSessionException(sessionIndex);
 		}
 
-		return samlSpSessionPersistence.findBySessionIndex(sessionIndex);
+		return samlSpSessionPersistence.findByC_SI(companyId, sessionIndex);
 	}
 
 	@Override

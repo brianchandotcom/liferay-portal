@@ -102,4 +102,5 @@ BalloonEditor.propTypes = {
 	name: PropTypes.string,
 };
 
+export {BalloonEditor};
 export default BalloonEditor;

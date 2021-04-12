@@ -76,8 +76,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -172,7 +174,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _createInstancesBooleanQuery(
-			new Long[0], new Long[0], null, null, null, processId,
+			new Long[0], new Long[0], null, null, null, new Long[0], processId,
 			new String[0], null, new String[0]);
 
 		searchSearchRequest.setQuery(
@@ -390,8 +392,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private BooleanQuery _createInstancesBooleanQuery(
 		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
-		Date dateStart, long processId, String[] slaStatuses,
-		Long startInstanceId, String[] taskNames) {
+		Date dateStart, Long[] instanceIds, long processId,
+		String[] slaStatuses, Long startInstanceId, String[] taskNames) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -449,6 +451,21 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				_queries.dateRangeTerm(
 					"completionDate", true, true, _getDate(dateStart),
 					_getDate(dateEnd)));
+		}
+
+		if (ArrayUtil.isNotEmpty(instanceIds)) {
+			TermsQuery termsQuery = _queries.terms("instanceId");
+
+			termsQuery.addValues(
+				Stream.of(
+					instanceIds
+				).map(
+					String::valueOf
+				).toArray(
+					Object[]::new
+				));
+
+			booleanQuery.addMustQueryClauses(termsQuery);
 		}
 
 		if (startInstanceId != null) {
@@ -618,7 +635,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
 					assigneeIds, classPKs, completed, dateEnd, dateStart,
-					processId, slaStatuses, null, taskNames)));
+					new Long[0], processId, slaStatuses, null, taskNames)));
 
 		CountSearchResponse countSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(countSearchRequest);
@@ -645,7 +662,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
 					assigneeIds, classPKs, completed, dateEnd, dateStart,
-					processId, slaStatuses, startInstanceId, taskNames)));
+					new Long[0], processId, slaStatuses, startInstanceId,
+					taskNames)));
 
 		searchSearchRequest.setSize(1);
 		searchSearchRequest.setStart(9999);
@@ -688,12 +706,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
 					assigneeIds, classPKs, completed, dateEnd, dateStart,
-					processId, slaStatuses, startInstanceId, taskNames)));
+					new Long[0], processId, slaStatuses, startInstanceId,
+					taskNames)));
 
 		searchSearchRequest.setSize(pagination.getPageSize());
 		searchSearchRequest.setStart(pagination.getStartPosition());
 
-		return Stream.of(
+		Map<Long, Instance> instancesMap = Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
 		).map(
 			SearchSearchResponse::getSearchHits
@@ -706,8 +725,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		).map(
 			this::_createInstance
 		).collect(
-			Collectors.toList()
+			Collectors.toMap(Instance::getId, Function.identity())
 		);
+
+		_setSLAResults(processId, instancesMap);
+
+		return instancesMap.values();
 	}
 
 	private String _getLocalizedName(String name) {
@@ -987,6 +1010,75 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			).toArray(
 				SLAResult[]::new
 			));
+	}
+
+	private void _setSLAResults(
+		long processId, Map<Long, Instance> instancesMap) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		TermsAggregation instanceIdtermsAggregation = _aggregations.terms(
+			"instanceId", "instanceId");
+
+		instanceIdtermsAggregation.addChildAggregation(
+			_aggregations.topHits("topHits"));
+
+		searchSearchRequest.addAggregation(instanceIdtermsAggregation);
+
+		Long[] instanceIds = Stream.of(
+			instancesMap.keySet()
+		).flatMap(
+			Set::stream
+		).toArray(
+			Long[]::new
+		);
+
+		BooleanQuery booleanQuery = _createInstancesBooleanQuery(
+			new Long[0], new Long[0], null, null, null, instanceIds, processId,
+			new String[0], null, new String[0]);
+
+		searchSearchRequest.setQuery(booleanQuery);
+
+		searchSearchRequest.setIndexNames(
+			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		Stream.of(
+			searchSearchResponse.getAggregationResultsMap()
+		).map(
+			aggregationResultsMap ->
+				(TermsAggregationResult)aggregationResultsMap.get("instanceId")
+		).map(
+			TermsAggregationResult::getBuckets
+		).flatMap(
+			Collection::stream
+		).forEach(
+			bucket -> {
+				Instance instance = instancesMap.get(
+					GetterUtil.getLong(bucket.getKey()));
+
+				instance.setSlaResults(
+					Stream.of(
+						(TopHitsAggregationResult)
+							bucket.getChildAggregationResult("topHits")
+					).map(
+						TopHitsAggregationResult::getSearchHits
+					).map(
+						SearchHits::getSearchHits
+					).flatMap(
+						List::stream
+					).map(
+						SearchHit::getSourcesMap
+					).map(
+						this::_createSLAResult
+					).toArray(
+						SLAResult[]::new
+					));
+			}
+		);
 	}
 
 	private void _setTaskNames(Bucket bucket, Instance instance) {

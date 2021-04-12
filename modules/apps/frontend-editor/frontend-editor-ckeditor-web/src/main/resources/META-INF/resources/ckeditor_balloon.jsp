@@ -20,6 +20,11 @@
 String contents = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":contents");
 Map<String, Object> editorData = (Map<String, Object>)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":data");
 String name = namespace + GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
+JSONObject editorConfigJSONObject = null;
+
+if (editorData != null) {
+	editorConfigJSONObject = (JSONObject)editorData.get("editorConfig");
+}
 %>
 
 <div>
@@ -27,7 +32,7 @@ String name = namespace + GetterUtil.getString((String)request.getAttribute(CKEd
 		module="editor/BalloonEditor"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"config", (editorData == null) ? null : (JSONObject)editorData.get("editorConfig")
+				"config", editorConfigJSONObject
 			).put(
 				"contents", contents
 			).put(

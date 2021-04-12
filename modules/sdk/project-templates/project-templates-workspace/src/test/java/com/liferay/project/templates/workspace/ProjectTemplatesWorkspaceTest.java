@@ -105,7 +105,7 @@ public class ProjectTemplatesWorkspaceTest
 			mavenExecutor);
 
 		writeGradlePropertiesInWorkspace(
-			workspaceProjectDir, "liferay.workspace.product=dxp-7.3-ep5");
+			workspaceProjectDir, "liferay.workspace.product=dxp-7.3-ga1");
 
 		File modulesProjectDir = buildTemplateWithGradle(
 			new File(workspaceProjectDir, "modules"), "mvc-portlet",

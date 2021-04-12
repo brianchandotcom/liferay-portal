@@ -48,9 +48,7 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 	@Parameterized.Parameters(name = "Testcase-{index}: testing {0}")
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
-			new Object[][] {
-				{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.6"}, {"7.4.0"}
-			});
+			new Object[][] {{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.6"}});
 	}
 
 	@BeforeClass
@@ -127,6 +125,11 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 						"release.portal.bom:" + _liferayVersion));
 			}
 			else if (_liferayVersion.startsWith("7.2")) {
+				Assert.assertTrue(
+					gradleOutput.contains(
+						"release.portal.bom:" + _liferayVersion));
+			}
+			else if (_liferayVersion.startsWith("7.3")) {
 				Assert.assertTrue(
 					gradleOutput.contains(
 						"release.portal.bom:" + _liferayVersion));

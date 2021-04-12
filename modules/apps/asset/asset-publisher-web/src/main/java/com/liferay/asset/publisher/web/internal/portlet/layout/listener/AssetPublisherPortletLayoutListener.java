@@ -21,6 +21,7 @@ import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
+import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.List;
@@ -132,10 +134,22 @@ public class AssetPublisherPortletLayoutListener
 		long assetListEntryId = GetterUtil.getLong(
 			portletPreferences.getValue("assetListEntryId", null));
 
+		String infoListProviderKey = portletPreferences.getValue(
+			"infoListProviderKey", StringPool.BLANK);
+
 		if (Objects.equals(selectionStyle, "asset-list") &&
 			(assetListEntryId > 0)) {
 
-			_addAssetListEntryUsage(assetListEntryId, plid, portletId);
+			_addAssetListEntryUsage(
+				_portal.getClassNameId(AssetListEntry.class),
+				String.valueOf(assetListEntryId), plid, portletId);
+		}
+		else if (Objects.equals(selectionStyle, "asset-list-provider") &&
+				 Validator.isNotNull(infoListProviderKey)) {
+
+			_addAssetListEntryUsage(
+				_portal.getClassNameId(InfoListProvider.class),
+				infoListProviderKey, plid, portletId);
 		}
 		else if (Objects.equals(selectionStyle, "manual")) {
 			_deleteLayoutClassedModelUsages(layout, portletId);
@@ -168,7 +182,7 @@ public class AssetPublisherPortletLayoutListener
 	}
 
 	private void _addAssetListEntryUsage(
-		long assetListEntryId, long plid, String portletId) {
+		long classNameId, String key, long plid, String portletId) {
 
 		List<AssetListEntryUsage> assetListEntryUsages =
 			_assetListEntryUsageLocalService.getAssetListEntryUsages(
@@ -178,16 +192,12 @@ public class AssetPublisherPortletLayoutListener
 			for (AssetListEntryUsage assetListEntryUsage :
 					assetListEntryUsages) {
 
-				if (Objects.equals(
-						String.valueOf(assetListEntryId),
-						assetListEntryUsage.getKey())) {
-
-					return;
+				if (Objects.equals(key, assetListEntryUsage.getKey())) {
+					continue;
 				}
-				
-				assetListEntryUsage.setKey(String.valueOf(assetListEntryId));
-				assetListEntryUsage.setClassNameId(
-					_portal.getClassNameId(AssetListEntry.class));
+
+				assetListEntryUsage.setKey(key);
+				assetListEntryUsage.setClassNameId(classNameId);
 
 				_assetListEntryUsageLocalService.updateAssetListEntryUsage(
 					assetListEntryUsage);
@@ -202,14 +212,8 @@ public class AssetPublisherPortletLayoutListener
 		try {
 			_assetListEntryUsageLocalService.addAssetListEntryUsage(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-<<<<<<< HEAD
-				_portal.getClassNameId(AssetListEntry.class),
-				String.valueOf(assetListEntryId), portletId,
-				_portal.getClassNameId(Portlet.class), plid, serviceContext);
-=======
 				classNameId, portletId, _portal.getClassNameId(Portlet.class),
 				key, plid, serviceContext);
->>>>>>> a4831d1d6383... fixup! LPS-129685 Use new services
 		}
 		catch (PortalException portalException) {
 			_log.error("Unable to add asset list entry usage", portalException);

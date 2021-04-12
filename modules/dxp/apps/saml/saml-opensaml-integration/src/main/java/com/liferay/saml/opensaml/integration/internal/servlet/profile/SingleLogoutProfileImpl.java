@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -850,6 +851,7 @@ public class SingleLogoutProfileImpl
 		for (SessionIndex sessionIndex : sessionIndexes) {
 			SamlSpSession samlSpSession =
 				samlSpSessionLocalService.fetchSamlSpSessionBySessionIndex(
+					CompanyThreadLocal.getCompanyId(),
 					sessionIndex.getSessionIndex());
 
 			if (samlSpSession == null) {

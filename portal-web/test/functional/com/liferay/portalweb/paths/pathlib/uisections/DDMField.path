@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//label[contains(.,'${key_fieldFieldLabel}')]</td>
+	<td>//div[@data-field-name='${key_fieldName}']//label[contains(.,'${key_fieldFieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

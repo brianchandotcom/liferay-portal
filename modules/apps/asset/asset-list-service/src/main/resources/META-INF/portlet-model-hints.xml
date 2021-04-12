@@ -72,9 +72,13 @@
 		<field name="assetListEntryId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="containerKey" type="String" />
+		<field name="containerKey" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="containerType" type="long" />
-		<field name="key" type="String"/>
+		<field name="key" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="plid" type="long" />
 		<field name="portletId" type="String">
 			<hint name="max-length">200</hint>

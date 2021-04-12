@@ -770,12 +770,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (exception instanceof InvalidFileEntryTypeException) {
 			errorMessage = _language.get(
-				themeDisplay.getLocale(),
+				_portal.getHttpServletRequest(actionRequest),
 				"the-document-type-you-selected-is-not-valid-for-this-folder");
 		}
 		else {
 			errorMessage = _language.get(
-				themeDisplay.getLocale(),
+				_portal.getHttpServletRequest(actionRequest),
 				"an-unexpected-error-occurred-while-saving-your-document");
 		}
 

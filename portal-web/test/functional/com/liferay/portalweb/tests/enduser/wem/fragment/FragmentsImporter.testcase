@@ -445,6 +445,137 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-120198. Export and import fragment composition linked to page."
+	@priority = "4"
+	test ExportImportFragmentCompositionWithMappedPage {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Grid element to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Add a Card to the second module of Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "2",
+				fragmentName = "Card",
+				navTab = "Fragments");
+		}
+
+		task ("Map the widget page to link type editable field of Card") {
+			PageEditorEditableLink.mapEditableFieldToPage(
+				fragmentName = "Card",
+				id = "link",
+				pageName = "Test Widget Page Name");
+		}
+
+		task ("View the selected page is shown in Page field") {
+			AssertVisible(
+				key_contentName = "Test Widget Page Name",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("View selected page is linked to Card fragment") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			AssertVisible(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("Save the fragment composition as fragment") {
+			PageEditor.gotoSaveAsFragment(fragmentName = "Grid");
+
+			PageEditorComposition.saveAsFragment(
+				fragmentName = "New Composition",
+				saveMappingConfigurationAndLink = "true");
+		}
+
+		task ("Export the fragment composition") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
+
+			FragmentsAdmin.exportCollection(collectionName = "Saved Fragments");
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "New Site");
+		}
+
+		task ("Navigate to fragments admin in the new site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site");
+		}
+
+		task ("Import the fragment collection into the new site") {
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Add a content page in new site") {
+			JSONLayout.addPublicLayout(
+				groupName = "New Site",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a fragment composition to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "New Site");
+
+			PageEditor.addFragment(
+				collectionName = "Saved Fragments",
+				composition = "true",
+				fragmentName = "New Composition");
+
+			AssertVisible(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("Publish the content page") {
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to content page in new site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "New Site");
+
+			Click(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("Assert redirect to widget page in the first site") {
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Widget Page Name");
+
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/test-widget-page-name");
+		}
+	}
+
 	@description = "This is a test case for LPS-110462. The value of editable field is reset in saved composition when unchecking Save Mapping Configuration."
 	@priority = "4"
 	test ExportImportFragmentCompositionWithoutCheckingSaveMappingConfiguration {

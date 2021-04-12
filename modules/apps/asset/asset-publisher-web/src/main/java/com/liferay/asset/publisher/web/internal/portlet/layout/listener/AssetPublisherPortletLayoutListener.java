@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.internal.portlet.layout.listener;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -168,15 +170,28 @@ public class AssetPublisherPortletLayoutListener
 	private void _addAssetListEntryUsage(
 		long assetListEntryId, long plid, String portletId) {
 
-		AssetListEntryUsage assetListEntryUsage =
-			_assetListEntryUsageLocalService.fetchAssetListEntryUsage(
-				_portal.getClassNameId(Layout.class), plid, portletId);
+		List<AssetListEntryUsage> assetListEntryUsages =
+			_assetListEntryUsageLocalService.getAssetListEntryUsages(
+				portletId, _portal.getClassNameId(Portlet.class), plid);
 
-		if (assetListEntryUsage != null) {
-			assetListEntryUsage.setAssetListEntryId(assetListEntryId);
+		if (ListUtil.isNotEmpty(assetListEntryUsages)) {
+			for (AssetListEntryUsage assetListEntryUsage :
+					assetListEntryUsages) {
 
-			_assetListEntryUsageLocalService.updateAssetListEntryUsage(
-				assetListEntryUsage);
+				if (Objects.equals(
+						String.valueOf(assetListEntryId),
+						assetListEntryUsage.getKey())) {
+
+					return;
+				}
+				
+				assetListEntryUsage.setKey(String.valueOf(assetListEntryId));
+				assetListEntryUsage.setClassNameId(
+					_portal.getClassNameId(AssetListEntry.class));
+
+				_assetListEntryUsageLocalService.updateAssetListEntryUsage(
+					assetListEntryUsage);
+			}
 
 			return;
 		}
@@ -187,8 +202,14 @@ public class AssetPublisherPortletLayoutListener
 		try {
 			_assetListEntryUsageLocalService.addAssetListEntryUsage(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				assetListEntryId, _portal.getClassNameId(Layout.class), plid,
-				portletId, serviceContext);
+<<<<<<< HEAD
+				_portal.getClassNameId(AssetListEntry.class),
+				String.valueOf(assetListEntryId), portletId,
+				_portal.getClassNameId(Portlet.class), plid, serviceContext);
+=======
+				classNameId, portletId, _portal.getClassNameId(Portlet.class),
+				key, plid, serviceContext);
+>>>>>>> a4831d1d6383... fixup! LPS-129685 Use new services
 		}
 		catch (PortalException portalException) {
 			_log.error("Unable to add asset list entry usage", portalException);
@@ -232,14 +253,8 @@ public class AssetPublisherPortletLayoutListener
 	}
 
 	private void _deleteAssetListEntryUsage(long plid, String portletId) {
-		AssetListEntryUsage assetListEntryUsage =
-			_assetListEntryUsageLocalService.fetchAssetListEntryUsage(
-				_portal.getClassNameId(Layout.class), plid, portletId);
-
-		if (assetListEntryUsage != null) {
-			_assetListEntryUsageLocalService.deleteAssetListEntryUsage(
-				assetListEntryUsage);
-		}
+		_assetListEntryUsageLocalService.deleteAssetListEntryUsages(
+			portletId, _portal.getClassNameId(Portlet.class), plid);
 	}
 
 	private void _deleteLayoutClassedModelUsages(

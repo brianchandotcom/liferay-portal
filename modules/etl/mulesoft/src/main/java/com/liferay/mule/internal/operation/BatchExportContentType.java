@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mule.api;
+package com.liferay.mule.internal.operation;
 
 /**
  * @author Matija Petanjek

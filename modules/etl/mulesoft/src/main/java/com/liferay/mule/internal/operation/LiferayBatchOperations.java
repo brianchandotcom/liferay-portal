@@ -16,7 +16,6 @@ package com.liferay.mule.internal.operation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.mule.api.BatchExportContentType;
 import com.liferay.mule.internal.connection.LiferayConnection;
 import com.liferay.mule.internal.error.LiferayError;
 import com.liferay.mule.internal.error.LiferayResponseValidator;

@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstan
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -29,6 +30,7 @@ import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -98,20 +100,78 @@ public class ClickToChatFormNavigatorEntry
 			typeSettingsUnicodeProperties = new UnicodeProperties();
 		}
 
+		boolean disabled = false;
+		boolean enabled = false;
+		String chatProviderId = null;
+		String chatProviderAccountId = null;
+		boolean guestUsersAllowed = false;
+
+		if (Objects.equals(
+				_clickToChatConfiguration.siteSettingsStrategy(),
+				"always-inherit")) {
+
+			disabled = true;
+			enabled = _clickToChatConfiguration.enabled();
+			chatProviderId = _clickToChatConfiguration.chatProviderId();
+			chatProviderAccountId =
+				_clickToChatConfiguration.chatProviderAccountId();
+			guestUsersAllowed = _clickToChatConfiguration.guestUsersAllowed();
+		}
+		else if (Objects.equals(
+					_clickToChatConfiguration.siteSettingsStrategy(),
+					"always-override")) {
+
+			enabled = GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.getProperty(
+					"clickToChatEnabled"));
+			chatProviderId = typeSettingsUnicodeProperties.getProperty(
+				"clickToChatProviderId");
+			chatProviderAccountId = typeSettingsUnicodeProperties.getProperty(
+				"clickToChatProviderAccountId");
+			guestUsersAllowed = GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.getProperty(
+					"clickToChatGuestUsersAllowed"));
+		}
+		else if (Objects.equals(
+					_clickToChatConfiguration.siteSettingsStrategy(),
+					"inherit-or-override")) {
+
+			String clickToChatEnabled =
+				typeSettingsUnicodeProperties.getProperty("clickToChatEnabled");
+
+			enabled = (clickToChatEnabled != null) ?
+				GetterUtil.getBoolean(clickToChatEnabled) :
+					_clickToChatConfiguration.enabled();
+
+			chatProviderId = typeSettingsUnicodeProperties.getProperty(
+				"clickToChatProviderId");
+			chatProviderAccountId = typeSettingsUnicodeProperties.getProperty(
+				"clickToChatProviderAccountId");
+
+			String clickToChatGuestUsersAllowed =
+				typeSettingsUnicodeProperties.getProperty(
+					"clickToChatGuestUsersAllowed");
+
+			guestUsersAllowed = (clickToChatGuestUsersAllowed != null) ?
+				GetterUtil.getBoolean(clickToChatGuestUsersAllowed) :
+					_clickToChatConfiguration.guestUsersAllowed();
+		}
+
+		httpServletRequest.setAttribute("disabled", disabled);
+
 		httpServletRequest.setAttribute(
-			ClickToChatWebKeys.CLICK_TO_CHAT_ENABLED,
-			typeSettingsUnicodeProperties.getProperty("clickToChatEnabled"));
+			ClickToChatWebKeys.CLICK_TO_CHAT_ENABLED, enabled);
+
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_GUEST_USERS_ALLOWED,
-			typeSettingsUnicodeProperties.getProperty(
-				"clickToChatGuestUsersAllowed"));
+			guestUsersAllowed);
+
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_PROVIDER_ACCOUNT_ID,
-			typeSettingsUnicodeProperties.getProperty(
-				"clickToChatProviderAccountId"));
+			chatProviderAccountId);
+
 		httpServletRequest.setAttribute(
-			ClickToChatWebKeys.CLICK_TO_CHAT_PROVIDER_ID,
-			typeSettingsUnicodeProperties.getProperty("clickToChatProviderId"));
+			ClickToChatWebKeys.CLICK_TO_CHAT_PROVIDER_ID, chatProviderId);
 
 		super.include(httpServletRequest, httpServletResponse);
 	}

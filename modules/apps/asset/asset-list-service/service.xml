@@ -200,7 +200,12 @@
 		<column name="assetListEntryId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="containerKey" type="String" />
+		<column name="containerType" type="long" />
+		<column name="key" type="String" />
+		<column name="plid" type="long" />
 		<column name="portletId" type="String" />
+		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->

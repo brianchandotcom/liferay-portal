@@ -119,21 +119,21 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 2");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name 2");
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
 			publicationsName = "Publication Name 1");
 
-		Publications.discardPublications(
+		Publications.discardChanges(
 			conflictingPublications = "true",
 			entryTitle = "Dynamic Data Lists Record",
-			publicationsCategory = "Dynamic Data Lists Record",
-			publicationsTitle = "Dynamic Data Lists Record");
+			changeCategory = "Dynamic Data Lists Record",
+			changeTitle = "Dynamic Data Lists Record");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 1");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name 1");
+		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
 
 		Navigator.openURL();
 
@@ -268,7 +268,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -373,7 +373,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -527,7 +527,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -638,7 +638,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -743,7 +743,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 

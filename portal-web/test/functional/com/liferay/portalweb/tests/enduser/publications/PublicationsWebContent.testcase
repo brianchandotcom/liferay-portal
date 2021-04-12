@@ -73,7 +73,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -124,7 +124,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -238,7 +238,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -310,7 +310,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/-/friendlyUrl");
 

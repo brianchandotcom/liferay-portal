@@ -89,7 +89,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 2");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name 2");
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
@@ -188,23 +188,23 @@ definition {
 
 		Navigator.openURL();
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name 2");
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
 			publicationsName = "Publication Name 1");
 
-		Publications.discardPublications(
+		Publications.discardChanges(
 			conflictingPublications = "true",
 			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
-			publicationsCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
-			publicationsTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
+			changeCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
+			changeTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
 
-		Publications.discardPublications(
+		Publications.discardChanges(
 			conflictingPublications = "true",
 			entryTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue",
-			publicationsCategory = "com.liferay.portal.kernel.model.PortletPreferenceValue",
-			publicationsTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
+			changeCategory = "com.liferay.portal.kernel.model.PortletPreferenceValue",
+			changeTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
 
 		// Workaround LPS-124618
 
@@ -258,7 +258,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -318,7 +318,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.gotoPrivateSitePage(
 			pageName = "Test Page",
@@ -359,7 +359,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 

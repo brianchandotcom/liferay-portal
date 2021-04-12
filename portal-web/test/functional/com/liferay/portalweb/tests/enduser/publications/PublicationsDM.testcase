@@ -72,7 +72,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -127,7 +127,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 2");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name 2");
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
@@ -150,11 +150,11 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Publications.discardPublications(
+		Publications.discardChanges(
 			conflictingPublications = "true",
 			entryTitle = "DM Document Title Edit",
-			publicationsCategory = "Asset",
-			publicationsTitle = "DM Document Title Edit");
+			changeCategory = "Asset",
+			changeTitle = "DM Document Title Edit");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -297,7 +297,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -371,7 +371,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 

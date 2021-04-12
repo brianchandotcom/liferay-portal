@@ -1,21 +1,21 @@
 definition {
 
 	macro assertDiscardIsUnavailableForInactivePublication {
-		if (isSet(publicationOrder)) {
-			var publicationOrder = "${publicationOrder}";
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
 		}
 		else {
-			var publicationOrder = "1";
+			var changeOrder = "1";
 		}
 
 		Click(
-			key_publicationsName = "${publicationsName}",
+			key_publicationName = "${publicationName}",
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
 		Pause(locator1 = "1000");
 
-		var key_publicationsCategory = "${publicationsCategory}";
-		var key_publicationsTitle = "${publicationsTitle}";
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
 
 		Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
 
@@ -29,7 +29,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
 			locator1 = "Publications#LIST_PUBLISHED_STATUS",
@@ -117,12 +117,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro discardPublications {
-		if (isSet(publicationOrder)) {
-			var publicationOrder = "${publicationOrder}";
+	macro discardChanges {
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
 		}
 		else {
-			var publicationOrder = "1";
+			var changeOrder = "1";
 		}
 
 		if ("${conflictingPublications}" == "true") {
@@ -133,8 +133,8 @@ definition {
 			MenuItem.click(menuItem = "Discard Change");
 		}
 		else {
-			var key_publicationsCategory = "${publicationsCategory}";
-			var key_publicationsTitle = "${publicationsTitle}";
+			var key_changeCategory = "${changeCategory}";
+			var key_changeTitle = "${changeTitle}";
 
 			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
 
@@ -147,8 +147,8 @@ definition {
 
 		AssertElementPresent(locator1 = "Publications#DISCARDED_CHANGES_TITLE");
 
-		var key_publicationsCategory = "${publicationsCategory}";
-		var key_publicationsTitle = "${publicationsTitle}";
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE",
@@ -558,7 +558,7 @@ definition {
 
 		Refresh();
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
 			locator1 = "Publications#LIST_PUBLISHED_STATUS",

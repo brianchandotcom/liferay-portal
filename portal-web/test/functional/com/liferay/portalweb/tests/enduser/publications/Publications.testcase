@@ -76,13 +76,13 @@ definition {
 		Navigator.gotoNavTab(navTab = "Ongoing");
 
 		Publications.assertDiscardIsUnavailableForInactivePublication(
-			publicationsCategory = "Web Content Article",
-			publicationsName = "Publication Name",
-			publicationsTitle = "WC WebContent Title");
+			changeCategory = "Web Content Article",
+			changeName = "Publication Name",
+			changeTitle = "WC WebContent Title");
 
 		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication 2 Name");
+		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
@@ -104,7 +104,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 	}
 
 	@priority = "4"
@@ -227,7 +227,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication 2 Name");
+		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -301,9 +301,9 @@ definition {
 
 		Publications.gotoReviewPublications();
 
-		Publications.discardPublications(
-			publicationsCategory = "Dynamic Data Mapping Structure",
-			publicationsTitle = "WC Structure Name");
+		Publications.discardChanges(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeTitle = "WC Structure Name");
 
 		Navigator.openURL();
 
@@ -329,7 +329,7 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
-		Publications.viewPublicationPublished(publicationsName = "Publication Name");
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -553,7 +553,7 @@ definition {
 
 		Pause(locator1 = "240000");
 
-		Publications.assertScheduledPublicationPublished(publicationsName = "Publication Name 1");
+		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 1");
 
 		Publications.createNewPublication(publicationsName = "Publication Name 2");
 
@@ -577,7 +577,7 @@ definition {
 
 		Pause(locator1 = "240000");
 
-		Publications.assertScheduledPublicationPublished(publicationsName = "Publication Name 2");
+		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 2");
 
 		Publications.createNewPublication(publicationsName = "Publication Name 3");
 
@@ -601,7 +601,7 @@ definition {
 
 		Pause(locator1 = "240000");
 
-		Publications.assertScheduledPublicationPublished(publicationsName = "Publication Name 3");
+		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 3");
 	}
 
 	@priority = "5"

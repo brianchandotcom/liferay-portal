@@ -167,12 +167,6 @@
 								/>
 							</c:if>
 
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand table-cell-minw-200 text-truncate"
-								name="description"
-								value="<%= HtmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse)) %>"
-							/>
-
 							<c:if test="<%= assetBrowserDisplayContext.isSearchEverywhere() %>">
 								<liferay-ui:search-container-column-text
 									name="location"

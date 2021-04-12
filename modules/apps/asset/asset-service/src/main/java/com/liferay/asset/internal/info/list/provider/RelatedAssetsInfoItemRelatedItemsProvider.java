@@ -34,21 +34,23 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso
  * @author Jorge Ferrer
  */
-@Component(
-	immediate = true,
-	service = InfoItemRelatedItemsProvider.class
-)
-public class RelatedAssetsInfoItemRelatedItemsProvider implements
-	InfoItemRelatedItemsProvider<AssetEntry, AssetEntry> {
+@Component(immediate = true, service = InfoItemRelatedItemsProvider.class)
+public class RelatedAssetsInfoItemRelatedItemsProvider
+	implements InfoItemRelatedItemsProvider<AssetEntry, AssetEntry> {
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "related-assets");
+	}
 
 	@Override
 	public InfoPage<AssetEntry> getRelatedItemsInfoPage(
@@ -59,7 +61,8 @@ public class RelatedAssetsInfoItemRelatedItemsProvider implements
 				sourceAssetEntry.getCompanyId(), sourceAssetEntry.getGroupId(),
 				Field.MODIFIED_DATE, "DESC", pagination);
 
-			assetEntryQuery.setLinkedAssetEntryId(sourceAssetEntry.getEntryId());
+			assetEntryQuery.setLinkedAssetEntryId(
+				sourceAssetEntry.getEntryId());
 
 			return InfoPage.of(
 				_assetEntryService.getEntries(assetEntryQuery), pagination,
@@ -85,17 +88,14 @@ public class RelatedAssetsInfoItemRelatedItemsProvider implements
 			throw new RuntimeException(
 				"Unable to get asset entries", portalException);
 		}
-
 	}
 
-	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "related-assets");
-	}
+	@Reference
+	protected Portal portal;
 
 	private AssetEntryQuery _getAssetEntryQuery(
-			long companyId, long groupId, String orderByCol,
-			String orderByType, Pagination pagination)
+			long companyId, long groupId, String orderByCol, String orderByType,
+			Pagination pagination)
 		throws PortalException {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
@@ -142,15 +142,12 @@ public class RelatedAssetsInfoItemRelatedItemsProvider implements
 	}
 
 	@Reference
+	private AssetEntryService _assetEntryService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private AssetEntryService _assetEntryService;
-
-	@Reference
-	protected Portal portal;
 
 }

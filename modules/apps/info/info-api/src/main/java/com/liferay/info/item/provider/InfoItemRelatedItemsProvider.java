@@ -26,16 +26,15 @@ import com.liferay.petra.reflect.GenericUtil;
  */
 public interface InfoItemRelatedItemsProvider<S, R> extends Keyed, Labeled {
 
+	public default Class<? extends R> getRelatedItemClass() {
+		return (Class<? extends R>)GenericUtil.getGenericClass(this, 1);
+	}
+
 	public InfoPage<? extends R> getRelatedItemsInfoPage(
 		S sourceItem, Pagination pagination, Sort sort);
 
 	public default Class<? extends S> getSourceItemClass() {
-		return (Class<? extends S>) GenericUtil.getGenericClass(this, 0);
-	}
-
-	public default Class<? extends R> getRelatedItemClass() {
-
-		return (Class<? extends R>) GenericUtil.getGenericClass(this, 1);
+		return (Class<? extends S>)GenericUtil.getGenericClass(this, 0);
 	}
 
 }

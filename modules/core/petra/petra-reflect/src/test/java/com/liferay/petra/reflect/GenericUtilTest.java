@@ -59,6 +59,16 @@ public class GenericUtilTest {
 	}
 
 	@Test
+	public void testGetGenericClassName() {
+		Assert.assertEquals(
+			Object.class.getCanonicalName(),
+			GenericUtil.getGenericClassName(new NoParameterizedTypeImpl()));
+		Assert.assertEquals(
+			String.class.getCanonicalName(),
+			GenericUtil.getGenericClassName(new StringParameterizedType()));
+	}
+
+	@Test
 	public void testGetSecondGenericClass() {
 		Assert.assertEquals(
 			String.class,
@@ -79,16 +89,6 @@ public class GenericUtilTest {
 			GenericUtil.getGenericClass(StringParameterizedType.class, 1));
 	}
 
-	@Test
-	public void testGetGenericClassName() {
-		Assert.assertEquals(
-			Object.class.getCanonicalName(),
-			GenericUtil.getGenericClassName(new NoParameterizedTypeImpl()));
-		Assert.assertEquals(
-			String.class.getCanonicalName(),
-			GenericUtil.getGenericClassName(new StringParameterizedType()));
-	}
-
 	public static class ExtendsNoParameterizedTypeImpl
 		extends NoParameterizedTypeImpl {
 	}
@@ -96,21 +96,21 @@ public class GenericUtilTest {
 	public static class NoParameterizedTypeImpl implements NoParameterizedType {
 	}
 
+	public static class StringDoubleParameterizedType
+		implements DoubleParameterizedType<Object, String> {
+	}
+
 	public static class StringParameterizedType
 		implements ParameterizedType<String> {
 	}
 
-	public static class StringDoubleParameterizedType
-		implements DoubleParameterizedType<Object, String> {
+	public interface DoubleParameterizedType<O, T> {
 	}
 
 	public interface NoParameterizedType {
 	}
 
 	public interface ParameterizedType<T> {
-	}
-
-	public interface DoubleParameterizedType<O, T> {
 	}
 
 }

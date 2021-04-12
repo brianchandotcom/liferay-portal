@@ -23,26 +23,26 @@ import java.util.function.Supplier;
 public class InfoPage<T> {
 
 	public static <T> InfoPage<T> of(List<? extends T> pageItems) {
-		return new InfoPage<T>(pageItems);
+		return new InfoPage<>(pageItems);
 	}
 
 	public static <T> InfoPage<T> of(
 		List<? extends T> pageItems, Pagination pagination, int totalCount) {
 
-		return new InfoPage<T>(pageItems, pagination, totalCount);
+		return new InfoPage<>(pageItems, pagination, totalCount);
 	}
 
 	public static <T> InfoPage<T> of(
 		List<? extends T> pageItems, Pagination pagination,
 		Supplier<Integer> totalCountSupplier) {
 
-		return new InfoPage<T>(pageItems, pagination, totalCountSupplier);
+		return new InfoPage<>(pageItems, pagination, totalCountSupplier);
 	}
 
 	public List<? extends T> getPageItems() {
 		return _pageItems;
 	}
-	
+
 	public long getTotalCount() {
 		return _totalCountSupplier.get();
 	}
@@ -64,9 +64,7 @@ public class InfoPage<T> {
 	}
 
 	private InfoPage(List<? extends T> pageItems) {
-		this(
-			pageItems, Pagination.of(0, pageItems.size()),
-			() -> pageItems.size());
+		this(pageItems, Pagination.of(0, pageItems.size()), pageItems::size);
 	}
 
 	private InfoPage(

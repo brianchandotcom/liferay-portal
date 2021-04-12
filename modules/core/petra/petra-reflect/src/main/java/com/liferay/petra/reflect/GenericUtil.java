@@ -26,23 +26,7 @@ public class GenericUtil {
 		return getGenericClass(clazz, 0);
 	}
 
-	public static Class<?> getGenericClass(Object object) {
-		return getGenericClass(object, 0);
-	}
-
-	public static Class<?> getGenericClass(Object object, int index) {
-		Class<?> clazz = object.getClass();
-
-		return getGenericClass(clazz, index);
-	}
-
-	public static String getGenericClassName(Object object) {
-		Class<?> clazz = getGenericClass(object);
-
-		return clazz.getName();
-	}
-
-	public static Class getGenericClass(Class<?> clazz, int index) {
+	public static Class<?> getGenericClass(Class<?> clazz, int index) {
 		Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
 
 		int count = index;
@@ -72,4 +56,21 @@ public class GenericUtil {
 
 		return Object.class;
 	}
+
+	public static Class<?> getGenericClass(Object object) {
+		return getGenericClass(object, 0);
+	}
+
+	public static Class<?> getGenericClass(Object object, int index) {
+		Class<?> clazz = object.getClass();
+
+		return getGenericClass(clazz, index);
+	}
+
+	public static String getGenericClassName(Object object) {
+		Class<?> clazz = getGenericClass(object);
+
+		return clazz.getName();
+	}
+
 }

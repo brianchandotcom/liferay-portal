@@ -348,22 +348,20 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewVideoViaMediaGallery {
-		property custom.properties = "xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
 		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "PGMediagallery#ViewVideoViaMediaGallery";
 
-		ServerAdministration.openServerAdmin();
+		SystemSettings.openSystemSettingsAdmin();
 
-		ServerAdministration.configureExternalServices(installXuggler = "true");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "FFMPEG Video Converter",
+			configurationScope = "System Scope");
 
-		Portlet.shutdownServer();
+		FormFields.enableCheckbox(fieldName = "enabled");
 
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
+		SystemSettings.saveConfiguration();
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

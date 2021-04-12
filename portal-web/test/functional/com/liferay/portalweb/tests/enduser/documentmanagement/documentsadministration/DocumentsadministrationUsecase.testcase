@@ -656,22 +656,21 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ConfigureXugglerVideoPreviewSizePG {
-		property custom.properties = "xuggler.enabled=true${line.separator}dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
+		property custom.properties = "dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
 		property dummy.socket.proxy.disabled = "true";
 		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#ConfigureXugglerVideoPreviewSizePG";
 
-		ServerAdministration.openServerAdmin();
+		SystemSettings.openSystemSettingsAdmin();
 
-		ServerAdministration.configureExternalServices(installXuggler = "true");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "FFMPEG Video Converter",
+			configurationScope = "System Scope");
 
-		Portlet.shutdownServer();
+		FormFields.enableCheckbox(fieldName = "enabled");
 
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
+		SystemSettings.saveConfiguration();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

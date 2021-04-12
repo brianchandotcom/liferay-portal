@@ -2,7 +2,6 @@
 @ignore = "true"
 definition {
 
-	property custom.properties = "xuggler.enabled=true";
 	property dummy.socket.proxy.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -13,9 +12,16 @@ definition {
 
 		User.firstLoginPG();
 
-		ServerAdministration.openServerAdmin();
+		SystemSettings.openSystemSettingsAdmin();
 
-		ServerAdministration.configureExternalServices(installXuggler = "true");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "FFMPEG Video Converter",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
@@ -23,10 +29,6 @@ definition {
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
 			nodePort = "8080");
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

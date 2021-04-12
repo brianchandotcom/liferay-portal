@@ -1049,17 +1049,16 @@ definition {
 	test PreviewMP4 {
 		property test.name.skip.portal.instance = "CPDocumentsandmedia#PreviewMP4";
 
-		ServerAdministration.openServerAdmin();
+		SystemSettings.openSystemSettingsAdmin();
 
-		ServerAdministration.configureExternalServices(installXuggler = "true");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "FFMPEG Video Converter",
+			configurationScope = "System Scope");
 
-		Portlet.shutdownServer();
+		FormFields.enableCheckbox(fieldName = "enabled");
 
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
+		SystemSettings.saveConfiguration();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

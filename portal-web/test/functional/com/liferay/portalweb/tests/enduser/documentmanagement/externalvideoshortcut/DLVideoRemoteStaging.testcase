@@ -3,7 +3,7 @@
 definition {
 
 	property app.server.bundles.size = "1";
-	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}xuggler.enabled=true";
+	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 	property databases.size = "1";
 	property dummy.socket.proxy.disabled = "true";
 	property portal.release = "true";
@@ -15,9 +15,16 @@ definition {
 
 		User.firstLoginPG();
 
-		ServerAdministration.openServerAdmin();
+		SystemSettings.openSystemSettingsAdmin();
 
-		ServerAdministration.configureExternalServices(installXuggler = "true");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "FFMPEG Video Converter",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
@@ -25,10 +32,6 @@ definition {
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
 			nodePort = "8080");
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

@@ -1677,16 +1677,16 @@ definition {
 			subItemList = "General Permissions,Users,Sites,Configuration,Security,System,Marketplace");
 
 		Role.viewPermissionSubdirectory(
-			navItem = "Applications Menu",
-			subItemList = "Content,Accounts,Workflow,Communication,App Builder");
-
-		Role.viewPermissionSubdirectory(
 			navItem = "Site and Asset Library Administration",
 			subItemList = "Site Builder,Content & Data,Categorization,Recycle Bin,People,Configuration,Publishing,Applications");
 
 		Role.viewPermissionSubdirectory(
 			navItem = "User",
 			subItemList = "Notifications,My Submissions,My Workflow Tasks,Account Settings,My Organizations");
+
+		Role.viewPermissionSubdirectory(
+			navItem = "Applications Menu",
+			subItemList = "Content,Workflow,Communication,App Builder,Accounts");
 	}
 
 	@priority = "4"

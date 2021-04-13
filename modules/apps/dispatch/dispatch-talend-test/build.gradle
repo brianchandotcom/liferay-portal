@@ -5,4 +5,5 @@ dependencies {
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 
 	testIntegrationRuntime ext: "zip", group: "com.liferay.etl", name: "etl-talend-context-printer-sample", version: "1.0"
+	testIntegrationRuntime ext: "zip", group: "com.liferay.etl", name: "etl-talend-liferay-output-blog-sample", version: "1.0"
 }

@@ -112,6 +112,24 @@ import org.powermock.modules.junit4.PowerMockRunner;
 )
 public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
+	public static DDMFormFieldValue
+		createDDMFormFieldValueWithConfirmationValue(
+			String instanceId, String fieldName, String fieldValue,
+			String confirmationValue) {
+
+		Value localizedValue = new LocalizedValue(LocaleUtil.US);
+
+		localizedValue.addString(LocaleUtil.US, fieldValue);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, fieldName, localizedValue);
+
+		ddmFormFieldValue.setConfirmationValue(confirmationValue);
+
+		return ddmFormFieldValue;
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
@@ -238,6 +256,41 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 					"field0", "field0_instanceId"));
 
 		Assert.assertTrue((boolean)ddmFormFieldPropertyChanges.get("readOnly"));
+	}
+
+	@Test
+	public void testInvalidConfirmationValueWithTextField() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField = createDDMFormFieldWithConfirmationField(
+			"field0", "text", FieldConstants.STRING);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			createDDMFormFieldValueWithConfirmationValue(
+				"field0_instanceId", "field0", "field value",
+				"different field value");
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			doEvaluate(ddmForm, ddmFormValues);
+
+		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			ddmFormFieldsPropertyChanges =
+				ddmFormEvaluatorEvaluateResponse.
+					getDDMFormFieldsPropertyChanges();
+
+		Map<String, Object> ddmFormFieldPropertyChanges =
+			ddmFormFieldsPropertyChanges.get(
+				new DDMFormEvaluatorFieldContextKey(
+					"field0", "field0_instanceId"));
+
+		Assert.assertFalse((boolean)ddmFormFieldPropertyChanges.get("valid"));
 	}
 
 	@Test
@@ -1247,6 +1300,37 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 	}
 
 	@Test
+	public void testValidConfirmationValueWithTextField() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField = createDDMFormFieldWithConfirmationField(
+			"field0", "text", FieldConstants.STRING);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			createDDMFormFieldValueWithConfirmationValue(
+				"field0_instanceId", "field0", "field value", "field value");
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			doEvaluate(ddmForm, ddmFormValues);
+
+		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			ddmFormFieldsPropertyChanges =
+				ddmFormEvaluatorEvaluateResponse.
+					getDDMFormFieldsPropertyChanges();
+
+		Assert.assertEquals(
+			ddmFormFieldsPropertyChanges.toString(), 0,
+			ddmFormFieldsPropertyChanges.size());
+	}
+
+	@Test
 	public void testVisibilityExpression() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
@@ -1376,6 +1460,24 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		).put(
 			"text", new DefaultDDMFormFieldValueAccessor()
 		).build();
+	}
+
+	protected DDMFormField createDDMFormFieldWithConfirmationField(
+		String name, String type, String dataType) {
+
+		DDMFormField ddmFormField = createDDMFormField(name, type, dataType);
+
+		ddmFormField.setProperty(
+			"confirmationErrorMessage",
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"The information does not match", LocaleUtil.US));
+		ddmFormField.setProperty(
+			"confirmationLabel",
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"Confirmation Field", LocaleUtil.US));
+		ddmFormField.setProperty("requireConfirmation", true);
+
+		return ddmFormField;
 	}
 
 	protected DDMFormEvaluatorEvaluateResponse doEvaluate(

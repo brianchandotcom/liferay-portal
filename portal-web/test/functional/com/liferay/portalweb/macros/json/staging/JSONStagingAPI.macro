@@ -1,0 +1,19 @@
+definition {
+
+	macro _enableLocalStaging {
+		Variables.assertDefined(parameterList = "${groupId},${branchingPublic},${branchingPrivate}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/staging/enable-local-staging \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d branchingPublic=${branchingPublic} \
+				-d branchingPrivate=${branchingPrivate}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

@@ -3,6 +3,9 @@
 @import 'variables';
 
 $emptyItemMinHeight: 180px;
+$emptyCollectionItemMinWidth: 124px;
+$emptyColumnMinWidth: 48px;
+$emptyContainerMinWidth: 180px;
 
 .page-editor {
 	&__collection {
@@ -27,7 +30,7 @@ $emptyItemMinHeight: 180px;
 			font-size: 14px;
 			font-weight: 600;
 			margin-top: 0;
-			padding: 7em 0;
+			padding: 7em 1em;
 			text-align: center;
 		}
 
@@ -152,6 +155,7 @@ $emptyItemMinHeight: 180px;
 			}
 		}
 	}
+
 	&__editable {
 		min-height: 1rem;
 		min-width: 3ch;
@@ -284,5 +288,20 @@ $emptyItemMinHeight: 180px;
 
 	.portlet-borderless .portlet-content {
 		padding: 0;
+	}
+
+	&__container.flex-row {
+		.page-editor__collection-item.empty {
+			min-width: $emptyCollectionItemMinWidth;
+		}
+
+		.page-editor__container.empty {
+			min-width: $emptyContainerMinWidth;
+		}
+
+		.page-editor__row.empty .page-editor__col {
+			min-height: $emptyItemMinHeight / 2;
+			min-width: $emptyColumnMinWidth;
+		}
 	}
 }

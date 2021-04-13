@@ -12,9 +12,16 @@
  * details.
  */
 
-export {default as ItemSelectorRepositoryEntryBrowser} from './repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es';
+import {State} from '@liferay/frontend-js-state-web';
 
-export {
-	STR_NULL_IMAGE_FILE_ENTRY_ID,
-	default as imageSelectorCoverImageAtom,
-} from './atoms/imageSelectorCoverImageAtom';
+export const STR_NULL_IMAGE_FILE_ENTRY_ID = '0';
+
+const imageSelectorCoverImageAtom = State.atom<{
+	fileEntryId: string;
+	src: string;
+}>('imageSelectorCoverImage', {
+	fileEntryId: STR_NULL_IMAGE_FILE_ENTRY_ID,
+	src: '',
+});
+
+export default imageSelectorCoverImageAtom;

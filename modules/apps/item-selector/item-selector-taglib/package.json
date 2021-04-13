@@ -7,6 +7,8 @@
 		"@clayui/navigation-bar": "3.3.5",
 		"@clayui/progress-bar": "3.2.0",
 		"@clayui/tabs": "3.3.5",
+		"@liferay/frontend-js-react-web": "*",
+		"@liferay/frontend-js-state-web": "*",
 		"frontend-js-web": "*",
 		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",

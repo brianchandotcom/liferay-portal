@@ -194,6 +194,9 @@ module.exports = {
 						'clay-table': '>=2.9.0',
 						'clay-tooltip': '>=2.9.0',
 					},
+					'item-selector-taglib': {
+						'/': '>=1.0.0',
+					},
 				},
 			},
 			exclude: {

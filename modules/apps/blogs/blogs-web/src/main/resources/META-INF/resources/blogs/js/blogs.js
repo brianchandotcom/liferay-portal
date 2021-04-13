@@ -12,6 +12,12 @@
  * details.
  */
 
+import {State} from '@liferay/frontend-js-state-web';
+import {
+	STR_NULL_IMAGE_FILE_ENTRY_ID,
+	imageSelectorCoverImageAtom,
+} from 'item-selector-taglib';
+
 const CSS_INVISIBLE = 'invisible';
 const STR_BLANK = '';
 const STR_CHANGE = 'change';
@@ -128,11 +134,9 @@ export default class Blogs {
 			'.cover-image-caption'
 		);
 
-		Liferay.on('coverImageDeleted', this._removeCaption, this);
-		Liferay.on(
-			['coverImageUploaded', 'coverImageSelected'],
-			this._showCaption,
-			this
+		this._imageSelectorCoverImageSubscription = State.subscribe(
+			imageSelectorCoverImageAtom,
+			(data) => this._updateCaption(data)
 		);
 
 		const publishButton = this._getElementById('publishButton');
@@ -509,6 +513,15 @@ export default class Blogs {
 		}
 	}
 
+	_updateCaption(imageData) {
+		if (imageData.fileEntryId !== STR_NULL_IMAGE_FILE_ENTRY_ID) {
+			this._showCaption();
+		}
+		else {
+			this._removeCaption();
+		}
+	}
+
 	_updateContentImages(finalContent, attributeDataImageId) {
 		const originalContent = window[
 			`${this._config.namespace}contentEditor`
@@ -570,11 +583,8 @@ export default class Blogs {
 		this._eventsHandles.forEach((removeListener) => removeListener());
 		this._eventsHandles = [];
 
-		Liferay.detach('coverImageDeleted', this._removeCaption);
-		Liferay.detach(
-			['coverImageUploaded', 'coverImageSelected'],
-			this._showCaption
-		);
+		this._imageSelectorCoverImageSubscription.dispose();
+		this._imageSelectorCoverImageSubscription = null;
 	}
 
 	setCustomDescription(text) {

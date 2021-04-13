@@ -12,9 +12,13 @@
  * details.
  */
 
-export {default as ItemSelectorRepositoryEntryBrowser} from './repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es';
-
-export {
-	STR_NULL_IMAGE_FILE_ENTRY_ID,
-	default as imageSelectorCoverImageAtom,
-} from './atoms/imageSelectorCoverImageAtom';
+export declare const STR_NULL_IMAGE_FILE_ENTRY_ID = '0';
+declare const imageSelectorCoverImageAtom: {
+	readonly default: {
+		readonly fileEntryId: string;
+		readonly src: string;
+	};
+	readonly key: string;
+	readonly 'Liferay.State.ATOM': true;
+};
+export default imageSelectorCoverImageAtom;

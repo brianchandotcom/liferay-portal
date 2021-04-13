@@ -547,3 +547,37 @@ If your markup is based on Boostrap 3, you can update it with new Boostrap 4 mar
 #### Why was this change made?
 
 We included a "small" configurable CSS compatibility layer to simplify the migration from Liferay 7.0 to 7.1. Now it has been removed in order to fix conflicts with new styles and improve general CSS weight.
+
+---------------------------------------
+
+### item-selector-taglib no longer fires coverImage-related events
+- **Date:** 2021-Apr-15
+- **JIRA Ticket:** [LPS-130359](https://issues.liferay.com/browse/LPS-130359)
+
+#### What changed?
+
+The `ImageSelector` JS module no longer fires the `coverImageDeleted`,
+`coverImageSelected`, and `coverImageUploaded` events using the `Liferay.fire()`
+API. These events were used for internal communication between the
+`item-selector-taglib` and the `blogs-web` module, but now state is synchronized
+between the two modules via the `Liferay.State` mechanism instead, using
+`imageSelectorCoverImageAtom`.
+
+#### Who is affected?
+
+Anybody listening for the removed events with `Liferay.on()` or similar
+functions.
+
+#### How should I update my code?
+
+In practice, you should not be observing the interaction between these two
+modules, but if you must, you could instead use the `Liferay.State.subscribe()`
+API to subscribe to `imageSelectorCoverImageAtom`.
+
+#### Why was this change made?
+
+`Liferay.fire()` and `Liferay.on()` publish globally visible events on a shared
+channel. The `Liferay.State` API is a better fit for modules that wish to
+coordinate at a distance in this way, and it does so in a type-safe manner.
+
+---------------------------------------

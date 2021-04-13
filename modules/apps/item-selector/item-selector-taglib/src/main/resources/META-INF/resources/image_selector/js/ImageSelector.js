@@ -13,10 +13,14 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {useLiferayState} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+import imageSelectorCoverImageAtom, {
+	STR_NULL_IMAGE_FILE_ENTRY_ID,
+} from '../../atoms/imageSelectorCoverImageAtom';
 import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 import BrowseImage from './BrowseImage';
 import ChangeImageControls from './ChangeImageControls';
@@ -27,16 +31,14 @@ import ProgressWrapper from './ProgressWrapper';
 const CSS_DROP_ACTIVE = 'drop-active';
 const CSS_PROGRESS_ACTIVE = 'progress-active';
 const STATUS_CODE = Liferay.STATUS_CODE;
-const STR_IMAGE_DELETED = 'coverImageDeleted';
-const STR_IMAGE_SELECTED = 'coverImageSelected';
-const STR_IMAGE_UPLOADED = 'coverImageUploaded';
+
 const STR_SPACE = ' ';
 
 const TPL_PROGRESS_DATA =
 	'<strong>{0}</strong> {1} of <strong>{2}</strong> {3}';
 
 const ImageSelector = ({
-	fileEntryId = 0,
+	fileEntryId = STR_NULL_IMAGE_FILE_ENTRY_ID,
 	imageCropDirection,
 	imageCropRegion: initialImageCropRegion,
 	imageURL,
@@ -51,15 +53,20 @@ const ImageSelector = ({
 }) => {
 	const [errorMessage, setErrorMessage] = useState('');
 	const [fileName, setFileName] = useState('');
-	const [image, setImage] = useState({
-		fileEntryId,
-		src: imageURL,
-	});
 	const [imageCropRegion, setImageCropRegion] = useState(
 		initialImageCropRegion
 	);
 	const [progressData, setProgressData] = useState();
 	const [progressValue, setProgressValue] = useState(0);
+
+	const [image, setImage] = useLiferayState(imageSelectorCoverImageAtom);
+
+	useEffect(() => {
+		setImage({
+			fileEntryId,
+			src: imageURL,
+		});
+	}, [fileEntryId, imageURL, setImage]);
 
 	const rootNodeRef = useRef(null);
 	const uploaderRef = useRef(null);
@@ -146,12 +153,8 @@ const ImageSelector = ({
 
 	const handleDeleteImageClick = () => {
 		setImage({
-			fileEntryId: 0,
+			fileEntryId: STR_NULL_IMAGE_FILE_ENTRY_ID,
 			src: '',
-		});
-
-		Liferay.fire(STR_IMAGE_DELETED, {
-			imageData: null,
 		});
 	};
 
@@ -185,11 +188,11 @@ const ImageSelector = ({
 					const itemValue = JSON.parse(selectedItem.value);
 
 					setImage({
-						fileEntryId: itemValue.fileEntryId || 0,
+						fileEntryId:
+							itemValue.fileEntryId ||
+							STR_NULL_IMAGE_FILE_ENTRY_ID,
 						src: itemValue.url || '',
 					});
-
-					Liferay.fire(STR_IMAGE_SELECTED);
 				}
 			},
 			selectEventName: itemSelectorEventName,
@@ -211,11 +214,7 @@ const ImageSelector = ({
 		const image = data.file;
 		const success = data.success;
 
-		let fireEvent = STR_IMAGE_DELETED;
-
 		if (success) {
-			fireEvent = STR_IMAGE_UPLOADED;
-
 			setImage({
 				fileEntryId: image.fileEntryId,
 				src: image.url,
@@ -223,16 +222,12 @@ const ImageSelector = ({
 		}
 		else {
 			setImage({
-				fileEntryId: 0,
+				fileEntryId: STR_NULL_IMAGE_FILE_ENTRY_ID,
 				src: '',
 			});
 
 			setErrorMessage(getErrorMessage(data.error));
 		}
-
-		Liferay.fire(fireEvent, {
-			imageData: success ? image : null,
-		});
 	};
 
 	const handleUploadProgressChange = (event) => {
@@ -290,7 +285,7 @@ const ImageSelector = ({
 	}, []);
 
 	useEffect(() => {
-		if (image.fileEntryId) {
+		if (image.fileEntryId !== STR_NULL_IMAGE_FILE_ENTRY_ID) {
 			setErrorMessage('');
 		}
 	}, [image]);
@@ -301,7 +296,10 @@ const ImageSelector = ({
 				'drop-zone',
 				{'draggable-image': isDraggable},
 				{[`${imageCropDirection}`]: isDraggable},
-				{'drop-enabled': image.fileEntryId == 0},
+				{
+					'drop-enabled':
+						image.fileEntryId === STR_NULL_IMAGE_FILE_ENTRY_ID,
+				},
 				'taglib-image-selector'
 			)}
 			ref={rootNodeRef}
@@ -330,7 +328,7 @@ const ImageSelector = ({
 				/>
 			)}
 
-			{image.fileEntryId == 0 && (
+			{image.fileEntryId === STR_NULL_IMAGE_FILE_ENTRY_ID && (
 				<BrowseImage
 					handleClick={handleSelectFileClick}
 					itemSelectorEventName={itemSelectorEventName}
@@ -344,7 +342,7 @@ const ImageSelector = ({
 				<ClayIcon symbol="check" />
 			</span>
 
-			{image.fileEntryId != 0 && (
+			{image.fileEntryId !== STR_NULL_IMAGE_FILE_ENTRY_ID && (
 				<ChangeImageControls
 					handleClickDelete={handleDeleteImageClick}
 					handleClickPicture={handleSelectFileClick}

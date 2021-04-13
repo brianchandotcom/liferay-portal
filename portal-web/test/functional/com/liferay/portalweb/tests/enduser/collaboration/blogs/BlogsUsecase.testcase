@@ -73,9 +73,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddBlogsEntryWithInlineImage {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -745,7 +743,9 @@ definition {
 	test ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing";
 
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -1196,9 +1196,9 @@ definition {
 
 		Portlet.addPG(portletName = "Blogs Aggregator");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",

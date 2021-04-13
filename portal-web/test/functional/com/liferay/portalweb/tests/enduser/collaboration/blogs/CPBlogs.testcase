@@ -179,9 +179,7 @@ definition {
 			dmDocumentTitle = "Document_2.jpg",
 			site = "Guest");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -232,9 +230,7 @@ definition {
 	test AddBlogWithFormatting {
 		property testray.component.names = "Training,WYSIWYG";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoAdd();
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -641,9 +637,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewErrorMessageForNullCustomAbstract {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		Panel.expandPanel(panel = "Configuration");
 

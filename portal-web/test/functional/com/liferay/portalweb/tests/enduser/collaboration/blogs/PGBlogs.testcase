@@ -67,9 +67,11 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntryScheduled {
-		BlogsNavigator.gotoAddEntry();
+	@refactordone
+	test AddScheduledBlogsEntry {
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -294,7 +296,9 @@ definition {
 		var entrySubtitle = "Blogs Entry Subtitle";
 		var entryTitle = "Blogs Entry Title";
 
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
@@ -331,9 +335,9 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -419,7 +423,9 @@ definition {
 		var entrySubtitle = "Blogs Entry Subtitle";
 		var entryTitle = "Blogs Entry Title";
 
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
@@ -472,7 +478,9 @@ definition {
 		var entrySubtitle = "Blogs Entry Subtitle";
 		var entryTitle = "Blogs Entry Title";
 
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
@@ -520,9 +528,9 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -783,7 +791,9 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -1134,7 +1144,9 @@ definition {
 	test ViewAbstractDescriptionWithEntryContent {
 		property test.name.skip.portal.instance = "PGBlogs#ViewAbstractDescriptionWithEntryContent";
 
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -1673,7 +1685,9 @@ definition {
 	test ViewUpdatedFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",

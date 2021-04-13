@@ -48,6 +48,11 @@ public class ${schemaName}SerDes {
 		return ${schemaVarName}JSONParser.parseToDTOs(json);
 	}
 
+	<#assign
+		enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
+		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
+	/>
+
 	public static String toJSON(${schemaName} ${schemaVarName}) {
 		if (${schemaVarName} == null) {
 			return "null";
@@ -56,11 +61,6 @@ public class ${schemaName}SerDes {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("{");
-
-		<#assign
-			enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
-			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
-		/>
 
 		<#list properties?keys as propertyName>
 			<#assign propertyType = properties[propertyName] />
@@ -161,11 +161,6 @@ public class ${schemaName}SerDes {
 		}
 
 		Map<String, String> map = new TreeMap<>();
-
-		<#assign
-			enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
-			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
-		/>
 
 		<#list properties?keys as propertyName>
 			<#assign propertyType = properties[propertyName] />

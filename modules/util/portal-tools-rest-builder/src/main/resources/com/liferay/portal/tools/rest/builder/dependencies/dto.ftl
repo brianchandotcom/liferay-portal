@@ -250,11 +250,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 		sb.append("{");
 
-		<#assign
-			enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
-			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
-		/>
-
 		<#list properties?keys as propertyName>
 			<#assign propertyType = properties[propertyName] />
 

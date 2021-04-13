@@ -234,7 +234,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 		enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
 		generateGetMultipartFilesMethod = false
 		generateSearchTestRule = false
-		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
 		randomDataTypes = ["Boolean", "Double", "Integer", "Long", "String"]
 	/>
 

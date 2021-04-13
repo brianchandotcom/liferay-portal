@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -95,7 +96,8 @@ public class FreeMarkerTool {
 	}
 
 	public Map<String, Schema> getAllSchemas(
-		OpenAPIYAML openAPIYAML, Map<String, Schema> schemas) {
+		OpenAPIYAML openAPIYAML, Map<String, Schema> schemas,
+		Map<String, Schema> allExternalSchemas) {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
@@ -114,7 +116,14 @@ public class FreeMarkerTool {
 
 				for (String tag : tags) {
 					if (!schemas.containsKey(tag)) {
-						schemas.put(tag, new Schema());
+						if ((allExternalSchemas != null) &&
+							allExternalSchemas.containsKey(tag)) {
+
+							schemas.put(tag, allExternalSchemas.get(tag));
+						}
+						else {
+							schemas.put(tag, new Schema());
+						}
 					}
 				}
 			}
@@ -696,7 +705,7 @@ public class FreeMarkerTool {
 			return new HashMap<>();
 		}
 
-		return components.getSchemas();
+		return new TreeMap<>(components.getSchemas());
 	}
 
 	public String getSchemaVarName(String schemaName) {

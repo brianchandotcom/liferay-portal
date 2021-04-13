@@ -26,9 +26,7 @@ boolean showZeroAssetCount = GetterUtil.getBoolean((String)request.getAttribute(
 
 String tag = ParamUtil.getString(request, "tag");
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-String tagsNavigation = _buildTagsNavigation(scopeGroupId, tag, portletURL, classNameId, displayStyle, maxAssetTags, showAssetCount, showZeroAssetCount);
+String tagsNavigation = _buildTagsNavigation(scopeGroupId, tag, classNameId, displayStyle, maxAssetTags, renderResponse, showAssetCount, showZeroAssetCount);
 %>
 
 <c:choose>
@@ -62,7 +60,7 @@ if (Validator.isNotNull(tag)) {
 %>
 
 <%!
-private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, PortletURL portletURL, long classNameId, String displayStyle, int maxAssetTags, boolean showAssetCount, boolean showZeroAssetCount) throws Exception {
+private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, long classNameId, String displayStyle, int maxAssetTags, RenderResponse renderResponse, boolean showAssetCount, boolean showZeroAssetCount) throws Exception {
 	List<AssetTag> tags = null;
 
 	if (showAssetCount && (classNameId > 0)) {
@@ -120,10 +118,6 @@ private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, P
 		multiplier = (double)5 / (maxCount - minCount);
 	}
 
-	portletURL.setParameter("tag", StringPool.BLANK);
-
-	String originalPortletURLString = portletURL.toString();
-
 	for (AssetTag tag : tags) {
 		String tagName = tag.getName();
 
@@ -148,12 +142,24 @@ private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, P
 
 		if (tagName.equals(selectedTagName)) {
 			sb.append("<a class=\"tag-selected\" href=\"");
-			sb.append(HtmlUtil.escape(originalPortletURLString));
+
+			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setParameter(
+				"tag", StringPool.BLANK
+			).build();
+
+			sb.append(HtmlUtil.escape(portletURL.toString()));
 		}
 		else {
-			portletURL.setParameter("tag", tagName);
-
 			sb.append("<a href=\"");
+
+			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setParameter(
+				"tag", tagName
+			).build();
+
 			sb.append(HtmlUtil.escape(portletURL.toString()));
 		}
 

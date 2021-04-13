@@ -129,8 +129,8 @@ definition {
 			value1 = "Restore");
 
 		AssertTextPresent(
-			locator1 = "HelloWorld#PORTLET_CONTENT",
-			value1 = "Welcome to Liferay");
+			locator1 = "Portlet#PORTLET_CONTENT",
+			value1 = "Hello Velocity");
 
 		// Refresh step is a workaround for LPS-91762
 

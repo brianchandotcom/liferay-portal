@@ -781,15 +781,15 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page Name");
 
-		Portlet.addPG(portletName = "Hello World");
+		Portlet.addPG(portletName = "Hello Velocity");
 
 		Portlet.gotoPortletOptions(
-			portletName = "Hello World",
+			portletName = "Hello Velocity",
 			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Hello World");
+		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Hello Velocity");
 
 		PortletEntry.save();
 
@@ -807,7 +807,7 @@ definition {
 			pageName = "Test Site Page",
 			siteName = "Test Site Name");
 
-		Portlet.addPG(portletName = "Hello World");
+		Portlet.addPG(portletName = "Hello Velocity");
 
 		LAR.importPortlet(larFileName = "HelloWorld.lar");
 
@@ -815,7 +815,7 @@ definition {
 			pageName = "Test Site Page",
 			siteName = "Test Site Name");
 
-		Portlet.viewTitle(portletName = "Hello World Custom");
+		Portlet.viewTitle(portletName = "Hello Velocity Custom");
 	}
 
 	@priority = "3"

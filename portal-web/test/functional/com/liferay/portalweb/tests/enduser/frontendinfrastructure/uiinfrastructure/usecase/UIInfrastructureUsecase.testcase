@@ -196,11 +196,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		Portlet.addPG(portletName = "Hello World");
+		Portlet.addPG(portletName = "Hello Velocity");
 
-		task ("Assert the 'Configuration' iframe of the Hello World portlet") {
+		task ("Assert the 'Configuration' iframe of the Hello Velocity portlet") {
 			Portlet.gotoPortletOptions(
-				portletName = "Hello World",
+				portletName = "Hello Velocity",
 				portletOption = "Configuration");
 
 			IFrame.selectConfigurationFrame();
@@ -215,9 +215,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		task ("Assert the 'Look and Feel' iframe of the Hello World portlet") {
+		task ("Assert the 'Look and Feel' iframe of the Hello Velocity portlet") {
 			Portlet.gotoPortletOptions(
-				portletName = "Hello World",
+				portletName = "Hello Velocity",
 				portletOption = "Look and Feel Configuration");
 
 			IFrame.selectConfigurationFrame();
@@ -234,19 +234,19 @@ definition {
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "1",
 			columnNumberTo = "2",
-			portletName = "Hello World");
+			portletName = "Hello Velocity");
 
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "2",
 			columnNumberTo = "1",
-			portletName = "Hello World");
+			portletName = "Hello Velocity");
 
-		task ("Removes Hello World Portlet on Test Page") {
+		task ("Removes Hello Velocity Portlet on Test Page") {
 			Navigator.gotoPage(pageName = "Test Page");
 
-			Portlet.deletePG(portletName = "Hello World");
+			Portlet.deletePG(portletName = "Hello Velocity");
 
-			Portlet.viewNoSpecificPG(portletName = "Hello World");
+			Portlet.viewNoSpecificPG(portletName = "Hello Velocity");
 		}
 	}
 
@@ -307,7 +307,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		Portlet.addPG(portletName = "Hello World");
+		Portlet.addPG(portletName = "Hello Velocity");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -316,7 +316,7 @@ definition {
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "1",
 			columnNumberTo = "2",
-			portletName = "Hello World");
+			portletName = "Hello Velocity");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -334,10 +334,10 @@ definition {
 		takeScreenshot();
 
 		MouseOver(
-			key_portletTitleName = "Hello World",
+			key_portletTitleName = "Hello Velocity",
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE");
 
-		Portlet.assertPortletHeader(portletName = "HelloWorldPortlet");
+		Portlet.assertPortletHeader(portletName = "HelloVelocityPortlet");
 
 		takeScreenshot();
 

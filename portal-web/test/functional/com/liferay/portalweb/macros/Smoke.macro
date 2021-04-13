@@ -33,8 +33,8 @@ definition {
 		SitePages.addPublicPage(pageName = "Test Page3");
 
 		var pageName = "Test Page1";
-		var portletBody = "Welcome to Liferay";
-		var portletName = "Hello World";
+		var portletBody = "Hello Velocity";
+		var portletName = "Hello Velocity";
 		var siteName = "Site Name";
 
 		task ("Add a '${portletName}' portlet to the page named '${pageName}'") {

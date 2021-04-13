@@ -70,23 +70,23 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
-		Portlet.addPG(portletName = "Hello World");
+		Portlet.addPG(portletName = "Hello Velocity");
 
-		Portlet.gotoPortletOptions(portletName = "Hello World");
+		Portlet.gotoPortletOptions(portletName = "Hello Velocity");
 
 		Theme.viewMaxPortletOption();
 
 		Theme.viewMinPortlet();
 
 		AssertTextEquals(
-			locator1 = "HelloWorld#PORTLET_TITLE",
-			value1 = "Hello World");
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "Hello Velocity");
 
 		AssertTextNotPresent(
-			locator1 = "HelloWorld#PORTLET_CONTENT",
-			value1 = "Welcome to Liferay");
+			locator1 = "Portlet#PORTLET_CONTENT",
+			value1 = "Hello Velocity");
 
-		Portlet.gotoPortletOptions(portletName = "Hello World");
+		Portlet.gotoPortletOptions(portletName = "Hello Velocity");
 
 		Theme.viewRestorePortlet();
 	}

@@ -18,14 +18,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portlet.PortletResourceAccessor;
 import com.liferay.registry.BasicRegistryImpl;
@@ -59,10 +57,6 @@ public class ComboServletStaticURLGeneratorTest {
 	@Before
 	public void setUp() {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
 
 		PortalUtil portalUtil = new PortalUtil();
 

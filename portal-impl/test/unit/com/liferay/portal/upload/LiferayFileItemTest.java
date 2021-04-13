@@ -19,11 +19,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.MimeTypesImpl;
 
 import java.io.File;
@@ -52,10 +50,6 @@ public class LiferayFileItemTest {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
-
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
 
 		MimeTypesUtil mimeTypesUtil = new MimeTypesUtil();
 

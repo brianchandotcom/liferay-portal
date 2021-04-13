@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.DateFormatFactory;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -41,7 +40,6 @@ import com.liferay.portal.search.web.internal.modified.facet.configuration.Modif
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.DateFormatFactoryImpl;
-import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.HttpImpl;
 
 import java.util.List;
@@ -82,7 +80,6 @@ public class ModifiedFacetDisplayBuilderTest {
 		_httpImpl = new HttpImpl();
 		_jsonFactoryImpl = new JSONFactoryImpl();
 
-		setUpHtmlUtil();
 		setUpPortalUtil();
 
 		Mockito.doReturn(
@@ -486,12 +483,6 @@ public class ModifiedFacetDisplayBuilderTest {
 		).when(
 			termCollector
 		).getFrequency();
-	}
-
-	protected void setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	protected void setUpPortalUtil() {

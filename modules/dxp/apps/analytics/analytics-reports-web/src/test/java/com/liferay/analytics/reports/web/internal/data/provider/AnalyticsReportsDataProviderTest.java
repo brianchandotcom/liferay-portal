@@ -35,12 +35,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 
 import java.io.IOException;
 
@@ -76,10 +74,6 @@ public class AnalyticsReportsDataProviderTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
-
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());

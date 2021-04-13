@@ -90,7 +90,6 @@ public class DDMImplTest extends BaseDDMTestCase {
 		setUpDDMFormValuesJSONSerializer();
 		setUpDDMStructureLocalServiceUtil();
 		setUpJSONFactoryUtil();
-		setUpHtmlUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
 		setUpPortalUtil();

@@ -78,7 +78,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		setUpDDMFormJSONDeserializer();
 		setUpDDMFormJSONSerializer();
 		setUpDDMStructureLocalServiceUtil();
-		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpPortalUtil();

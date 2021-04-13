@@ -39,8 +39,6 @@ import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
-import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.internal.summary.SummaryBuilderFactoryImpl;
@@ -85,7 +83,6 @@ public class SearchResultSummaryDisplayBuilderTest {
 
 		setUpAssetRenderer();
 		setUpGroupLocalService();
-		setUpHtmlUtil();
 		setUpLocaleThreadLocal();
 		setUpPropsUtil();
 		setUpUser();
@@ -525,12 +522,6 @@ public class SearchResultSummaryDisplayBuilderTest {
 		).fetchGroup(
 			Mockito.anyLong()
 		);
-	}
-
-	protected void setUpHtmlUtil() throws Exception {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(Mockito.mock(Html.class));
 	}
 
 	protected void setUpLocaleThreadLocal() {

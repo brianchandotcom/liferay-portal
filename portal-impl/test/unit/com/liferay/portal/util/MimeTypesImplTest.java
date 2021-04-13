@@ -15,7 +15,6 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -38,10 +37,6 @@ public class MimeTypesImplTest {
 
 	@Before
 	public void setUp() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
-
 		MimeTypesImpl mimeTypesImpl = new MimeTypesImpl();
 
 		mimeTypesImpl.afterPropertiesSet();

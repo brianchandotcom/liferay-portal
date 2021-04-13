@@ -22,13 +22,10 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,11 +39,6 @@ public class RadioDDMFormFieldValueRendererTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_setUpHtmlUtil();
-	}
 
 	@Test
 	public void testRender() throws Exception {
@@ -94,12 +86,6 @@ public class RadioDDMFormFieldValueRendererTest {
 			new RadioDDMFormFieldValueAccessor();
 
 		return radioDDMFormFieldValueRenderer;
-	}
-
-	private void _setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 }

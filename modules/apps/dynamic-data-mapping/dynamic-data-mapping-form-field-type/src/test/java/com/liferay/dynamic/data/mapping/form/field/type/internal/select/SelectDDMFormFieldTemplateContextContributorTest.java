@@ -25,12 +25,10 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.util.HtmlImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,7 +71,6 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 		PropsTestUtil.setProps("collator.rules", "<<<");
 
-		_setUpHtmlUtil();
 		_setUpJSONFactory();
 		_setUpLocaleThreadLocal();
 	}
@@ -400,12 +397,6 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		).thenReturn(
 			ddmFormFieldOptions
 		);
-	}
-
-	private void _setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	private void _setUpJSONFactory() throws Exception {

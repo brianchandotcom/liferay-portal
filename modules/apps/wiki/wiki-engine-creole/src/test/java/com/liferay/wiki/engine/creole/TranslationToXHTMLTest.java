@@ -17,10 +17,8 @@ package com.liferay.wiki.engine.creole;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 import com.liferay.wiki.engine.creole.internal.parser.ast.WikiPageNode;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Lexer;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Parser;
@@ -54,10 +52,6 @@ public class TranslationToXHTMLTest {
 
 	@Before
 	public void setUp() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
-
 		_wikiEngineCreoleComponentProvider =
 			CreoleTestUtil.getWikiEngineCreoleComponentProvider();
 	}

@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -84,7 +82,6 @@ public class SearchResultsPortletTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpHtmlUtil();
 		setUpPortletSharedSearchResponse();
 		setUpPropsUtil();
 		setUpSearchSettings();
@@ -301,12 +298,6 @@ public class SearchResultsPortletTest {
 
 	protected void render() throws IOException, PortletException {
 		_searchResultsPortlet.render(_renderRequest, _renderResponse);
-	}
-
-	protected void setUpHtmlUtil() throws Exception {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(Mockito.mock(Html.class));
 	}
 
 	protected void setUpPortletSharedSearchResponse() {

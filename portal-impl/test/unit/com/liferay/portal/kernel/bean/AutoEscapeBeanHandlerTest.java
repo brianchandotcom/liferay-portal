@@ -14,10 +14,8 @@
 
 package com.liferay.portal.kernel.bean;
 
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 
 import java.io.Serializable;
 
@@ -39,10 +37,6 @@ public class AutoEscapeBeanHandlerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
-
 		_bean = new BeanImpl(_UNESCAPED_TEXT);
 	}
 

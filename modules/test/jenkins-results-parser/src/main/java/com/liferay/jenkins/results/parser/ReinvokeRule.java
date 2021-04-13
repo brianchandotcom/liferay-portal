@@ -69,6 +69,10 @@ public class ReinvokeRule {
 	}
 
 	public boolean matches(Build build) {
+		if (build == null) {
+			return false;
+		}
+
 		Matcher matcher = null;
 
 		if (axisVariablePattern != null) {

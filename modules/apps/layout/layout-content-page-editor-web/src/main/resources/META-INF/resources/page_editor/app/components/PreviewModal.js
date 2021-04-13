@@ -162,7 +162,7 @@ const PreviewModal = ({observer}) => {
 					<div className="page-editor__preview-modal__part">
 						{config.displayPageItemPreviewEnabled &&
 						config.layoutType === LAYOUT_TYPES.display ? (
-							<DisplayPagePreviewItemSelector horizontal />
+							<DisplayPagePreviewItemSelector />
 						) : null}
 					</div>
 				</div>

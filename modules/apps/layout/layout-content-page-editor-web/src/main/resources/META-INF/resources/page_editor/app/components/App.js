@@ -75,7 +75,7 @@ export default function App({state}) {
 								{displayPagePreviewItemSelectorWrapper
 									? createPortal(
 											<DisplayPagePreviewItemSelector
-												horizontal
+												dark
 											/>,
 											displayPagePreviewItemSelectorWrapper
 									  )

@@ -171,7 +171,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 								%>
 
 								<c:if test="<%= Validator.isNotNull(description) %>">
-									<p class="ddm-form-description"><%= description %></p>
+									<p class="ddm-form-description"><%= HtmlUtil.replaceNewLine(description) %></p>
 								</c:if>
 							</clay:container-fluid>
 						</div>

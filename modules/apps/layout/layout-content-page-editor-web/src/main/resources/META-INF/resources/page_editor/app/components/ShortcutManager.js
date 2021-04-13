@@ -14,8 +14,11 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 
+import {CONTAINER_DISPLAY_OPTIONS} from '../config/constants/containerDisplayOptions';
 import {
 	ARROW_DOWN_KEYCODE,
+	ARROW_LEFT_KEYCODE,
+	ARROW_RIGHT_KEYCODE,
 	ARROW_UP_KEYCODE,
 	BACKSPACE_KEYCODE,
 	D_KEYCODE,
@@ -120,7 +123,8 @@ export default function ShortcutManager() {
 		const currentPosition = parentItem.children.indexOf(itemId);
 
 		const direction =
-			event.keyCode === ARROW_UP_KEYCODE
+			event.keyCode === ARROW_UP_KEYCODE ||
+			event.keyCode === ARROW_LEFT_KEYCODE
 				? MOVE_ITEM_DIRECTIONS.UP
 				: MOVE_ITEM_DIRECTIONS.DOWN;
 
@@ -175,9 +179,30 @@ export default function ShortcutManager() {
 				!!layoutData.items[activeItemId] &&
 				!isEditableField(event.target) &&
 				!isInteractiveElement(event.target),
-			isKeyCombination: (event) =>
-				event.keyCode === ARROW_UP_KEYCODE ||
-				event.keyCode === ARROW_DOWN_KEYCODE,
+			isKeyCombination: (event) => {
+				if (!activeItem) {
+					return false;
+				}
+
+				const {parentId} = activeItem;
+
+				const parentItem = layoutData.items[parentId];
+
+				if (
+					parentItem.config.contentDisplay ===
+					CONTAINER_DISPLAY_OPTIONS.flexRow
+				) {
+					return (
+						event.keyCode === ARROW_RIGHT_KEYCODE ||
+						event.keyCode === ARROW_LEFT_KEYCODE
+					);
+				}
+
+				return (
+					event.keyCode === ARROW_UP_KEYCODE ||
+					event.keyCode === ARROW_DOWN_KEYCODE
+				);
+			},
 		},
 		remove: {
 			action: remove,

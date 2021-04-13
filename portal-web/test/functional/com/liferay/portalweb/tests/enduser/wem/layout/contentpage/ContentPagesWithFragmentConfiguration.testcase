@@ -384,4 +384,172 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-100963. When a fragment that uses JavaScript has a configuration, there is a JavaScript configuration object available which contains the current values of the fragment configuration."
+	@priority = "4"
+	test ConfigureFragmentWithJavaScript {
+		task ("Add a new fragment with the following codes") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "nm",
+					"label": "size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "normal",
+								"value": "nm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}
+				''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			Pause(locator1 = "3000");
+
+			FragmentsEditor.gotoCodeTab();
+
+			var htmlSnippet = '''
+<div class="component-fragment-name text-break">
+	<a
+		class="btn"
+		data-lfr-editable-id="link"
+		data-lfr-editable-type="link"
+		href=""
+		id="fragment-${fragmentEntryLinkNamespace}-link"
+	>
+		Go Somewhere
+	</a>
+</div>
+			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			var jsSnippet = '''
+
+const size = configuration.buttonSize;
+const type = configuration.buttonType;
+
+function main() {
+		const editableField = fragmentElement.querySelector('.btn');
+
+	editableField.classList.add(`btn-${size}`);
+	editableField.classList.add(`btn-${type}`);
+}
+
+main();
+
+			''';
+
+			FragmentsEditor.typeJsEditor(content = "${jsSnippet}");
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add the new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("View the fragment styles") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Fragment-Name",
+				size = "nm",
+				type = "primary");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
+
+			PageEditor.configureFragment(type = "Link");
+
+			PageEditor.gotoStyle(fragmentName = "Fragment Name");
+
+			PageEditor.configureFragment(size = "Large");
+		}
+
+		task ("View the fragment styles") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Fragment-Name",
+				size = "lg",
+				type = "link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the fragment styles in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Fragment-Name",
+				size = "lg",
+				type = "link");
+		}
+	}
+
 }

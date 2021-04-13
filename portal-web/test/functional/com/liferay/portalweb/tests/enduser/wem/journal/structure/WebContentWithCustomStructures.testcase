@@ -58,7 +58,7 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_hello_world_web_portlet_HelloWorldPortlet" />''';
+		var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet" />''';
 
 		WebContentTemplates.inputScript(templateScript = "${templateScript}");
 

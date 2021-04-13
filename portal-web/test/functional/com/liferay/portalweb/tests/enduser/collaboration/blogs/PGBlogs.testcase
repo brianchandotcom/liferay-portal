@@ -171,14 +171,6 @@ definition {
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
 
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
-
 		Portlet.viewTitle(portletName = "Blogs");
 
 		Navigator.gotoPage(pageName = "Blogs Page2");
@@ -186,10 +178,6 @@ definition {
 		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry1 Title");
 
 		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry2 Content",
-			entryTitle = "Blogs Entry2 Title");
-
-		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry2 Content",
 			entryTitle = "Blogs Entry2 Title");
 
@@ -208,10 +196,6 @@ definition {
 		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Title");
 
 		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
-
-		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
 

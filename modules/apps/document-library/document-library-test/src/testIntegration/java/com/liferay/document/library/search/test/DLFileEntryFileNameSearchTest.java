@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -151,6 +152,8 @@ public class DLFileEntryFileNameSearchTest {
 		assertSearch(
 			"Document_1.jpg",
 			Arrays.asList("Document_1.jpg", "Document_1.png"));
+		assertSearch(
+			"\"Document_1.jpg\"", Collections.singletonList("Document_1.jpg"));
 	}
 
 	@Test

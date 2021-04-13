@@ -528,6 +528,53 @@ definition {
 		AssertElementNotPresent(locator1 = "PageEditor#CONFIGURATION_PANEL_RESIZE");
 	}
 
+	@description = "This is a test for LPS-100121. Given a fragment with an editable image when the page author selects an image specifying a URL in the item selector then the URL is shown in selector input."
+	@priority = "4"
+	test ViewImageFromURLInImageFragment {
+		task ("Add an Image fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Select an image from URL") {
+			PageEditor.editFragmentImage(
+				fragmentName = "Image",
+				id = "image-square",
+				imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
+		}
+
+		task ("Assert the selected image is shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.jpg");
+		}
+
+		task ("Assert the URL is shown in selector input") {
+			AssertVisible(
+				key_contentName = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the selected image in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.jpg");
+		}
+	}
+
 	@description = "This is a test for LPS-121223. View nested content when increase number of tabs."
 	@priority = "4"
 	test ViewNestedContentWhenIncreaseNumberOfTabs {

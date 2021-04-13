@@ -343,8 +343,6 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
-
 		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 
 		Check(locator1 = "Radio#CUSTOM_URL");

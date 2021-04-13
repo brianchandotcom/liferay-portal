@@ -226,15 +226,15 @@ public class DDMFormPortlet extends MVCPortlet {
 		throws PortalException {
 
 		DDMFormDisplayContext ddmFormDisplayContext = new DDMFormDisplayContext(
-			renderRequest, renderResponse, _ddmFormFieldTypeServicesTracker,
-			_ddmFormInstanceLocalService, _ddmFormInstanceRecordLocalService,
+			_ddmFormFieldTypeServicesTracker, _ddmFormInstanceLocalService,
+			_ddmFormInstanceRecordLocalService,
 			_ddmFormInstanceRecordVersionLocalService, _ddmFormInstanceService,
 			_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
 			_ddmFormValuesFactory, _ddmFormValuesMerger,
 			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration(),
 			_ddmStorageAdapterTracker, _groupLocalService, _jsonFactory,
-			_roleLocalService, _userLocalService,
-			_workflowDefinitionLinkLocalService, _portal);
+			_portal, renderRequest, renderResponse, _roleLocalService,
+			_userLocalService, _workflowDefinitionLinkLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmFormDisplayContext);

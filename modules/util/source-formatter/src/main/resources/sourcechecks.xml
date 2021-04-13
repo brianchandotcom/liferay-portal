@@ -1424,6 +1424,10 @@
 			<category name="Styling" />
 			<description name="Checks the order of imports in `*-hbm.xml` file." />
 		</check>
+		<check name="XMLImportsCheck">
+			<category name="Styling" />
+			<description name="Sorts and groups imports in `.xml` files." />
+		</check>
 		<check name="XMLIndentationCheck">
 			<category name="Styling" />
 			<description name="Finds incorrect indentation in `.xml` files." />

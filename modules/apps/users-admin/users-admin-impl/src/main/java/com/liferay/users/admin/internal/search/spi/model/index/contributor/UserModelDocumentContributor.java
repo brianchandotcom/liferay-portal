@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -92,6 +94,8 @@ public class UserModelDocumentContributor
 			document.addText("screenName", user.getScreenName());
 			document.addKeyword("teamIds", user.getTeamIds());
 			document.addKeyword("userGroupIds", user.getUserGroupIds());
+			document.addKeyword(
+				"userGroupRoleIds", getUserGroupRoleIds(user.getUserId()));
 
 			populateAddresses(document, user.getAddresses(), 0, 0);
 		}
@@ -156,6 +160,18 @@ public class UserModelDocumentContributor
 		}
 
 		return countryNames;
+	}
+
+	protected long[] getUserGroupRoleIds(long userId) {
+		Set<Long> userGroupRoleIds = new HashSet<>();
+
+		for (UserGroupRole userGroupRole :
+				userGroupRoleLocalService.getUserGroupRoles(userId)) {
+
+			userGroupRoleIds.add(userGroupRole.getRoleId());
+		}
+
+		return ArrayUtil.toLongArray(userGroupRoleIds);
 	}
 
 	protected void populateAddresses(
@@ -234,6 +250,9 @@ public class UserModelDocumentContributor
 
 	@Reference
 	protected RegionService regionService;
+
+	@Reference
+	protected UserGroupRoleLocalService userGroupRoleLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserModelDocumentContributor.class);

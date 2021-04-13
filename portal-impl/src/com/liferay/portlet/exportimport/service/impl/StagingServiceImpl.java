@@ -24,10 +24,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portlet.exportimport.service.base.StagingServiceBaseImpl;
@@ -103,6 +106,22 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			ExportImportThreadLocal.setStagingInProcessOnRemoteLive(
 				stagingInProcessOnLive);
 		}
+	}
+
+	@Override
+	public void enableLocalStaging(
+			long groupId, boolean branchingPublic, boolean branchingPrivate,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Group liveGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
+
+		stagingLocalService.enableLocalStaging(
+			getUserId(), liveGroup, branchingPublic, branchingPrivate,
+			serviceContext);
 	}
 
 	@Override

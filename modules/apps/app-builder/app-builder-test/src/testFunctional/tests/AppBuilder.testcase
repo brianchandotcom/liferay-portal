@@ -1948,7 +1948,7 @@ definition {
 	@description = "LRQA-56514: Make sure predefined values are persisted when creating a Form View"
 	@priority = "5"
 	test PredefinedValuesArePersistedInFormView {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "My new object",

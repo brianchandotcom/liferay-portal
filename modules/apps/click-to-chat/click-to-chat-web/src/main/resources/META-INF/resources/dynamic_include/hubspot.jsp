@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,16 +12,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.click.to.chat.web.internal.constants;
+<%@ include file="/dynamic_include/init.jsp" %>
 
-/**
- * @author Brian Wing Shun Chan
- */
-public interface ClickToChatConstants {
-
-	public static final String[] CLICK_TO_CHAT_PROVIDER_IDS = {
-		"chatwoot", "crisp", "hubspot", "jivochat", "livechat", "liveperson", "smartsupp", "tidio"
-	};
-
-}
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/<%= clickToChatProviderAccountId %>.js"></script>

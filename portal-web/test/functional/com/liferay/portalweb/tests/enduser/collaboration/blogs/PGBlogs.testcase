@@ -141,8 +141,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddBlogsEntryWithSamePageScope {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page2");
@@ -167,13 +165,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
+		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Title");
+
 		Blogs.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Title");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry1 Content",
@@ -182,8 +178,6 @@ definition {
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
-
-		Pause(locator1 = "3000");
 
 		Portlet.viewTitle(portletName = "Blogs");
 
@@ -202,6 +196,8 @@ definition {
 		Portlet.viewTitle(portletName = "Blogs (Blogs Page2)");
 
 		Navigator.gotoPage(pageName = "Blogs Page2");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Portlet.selectScopePG(
 			portletName = "Blogs",

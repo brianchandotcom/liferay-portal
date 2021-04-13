@@ -13,10 +13,12 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
+import {createPortal} from 'react-dom';
 
 import {StyleBookContextProvider} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {INIT} from '../actions/types';
+import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
 import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePreviewItemContext';
 import {reducer} from '../reducers/index';
@@ -25,6 +27,7 @@ import {StoreContextProvider, useSelector} from '../store/index';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
 import {CollectionActiveItemContextProvider} from './CollectionActiveItemContext';
 import {ControlsProvider} from './Controls';
+import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreview from './DragPreview';
 import {GlobalContextProvider} from './GlobalContext';
 import LayoutViewport from './LayoutViewport';
@@ -37,6 +40,14 @@ import {EditableProcessorContextProvider} from './fragment-content/EditableProce
 const DEFAULT_SESSION_LENGTH = 60 * 1000;
 
 export default function App({state}) {
+	const displayPagePreviewItemSelectorWrapper = useMemo(
+		() =>
+			config.displayPageItemPreviewEnabled &&
+			config.layoutType === LAYOUT_TYPES.display &&
+			document.getElementById('infoItemSelectorContainer'),
+		[]
+	);
+
 	const initialState = reducer(state, {type: INIT});
 
 	useEffect(() => {
@@ -61,6 +72,15 @@ export default function App({state}) {
 					<DragAndDropContextProvider>
 						<EditableProcessorContextProvider>
 							<DisplayPagePreviewItemContextProvider>
+								{displayPagePreviewItemSelectorWrapper
+									? createPortal(
+											<DisplayPagePreviewItemSelector
+												horizontal
+											/>,
+											displayPagePreviewItemSelectorWrapper
+									  )
+									: null}
+
 								<DragPreview />
 								<Toolbar />
 								<ShortcutManager />

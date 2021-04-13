@@ -15,8 +15,6 @@
 import ClayLink from '@clayui/link';
 import React from 'react';
 
-import {DisplayPagePreviewItemSelector} from '../../../app/components/DisplayPagePreviewItemSelector';
-import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
@@ -93,11 +91,6 @@ export default function MappingSidebar() {
 							</p>
 						</div>
 					)}
-
-				{config.displayPageItemPreviewEnabled &&
-				config.layoutType === LAYOUT_TYPES.display ? (
-					<DisplayPagePreviewItemSelector />
-				) : null}
 			</SidebarPanelContent>
 		</>
 	);

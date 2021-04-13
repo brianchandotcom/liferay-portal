@@ -237,6 +237,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DOCUMENT_TOOLBAR-->
+<tr>
+	<td>DOCUMENT_TOOLBAR_DOWNLOAD</td>
+	<td>//ul[@class='tbar-nav']//li/a[@title='File Size ${key_dmDocumentSize}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TOOLBAR_VERTICAL_ELLIPSIS</td>
+	<td>//ul[@class='tbar-nav']//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DOCUMENT_VIEWPORT-->
 <tr>
 	<td>DOCUMENT_VIEWPORT_PREVIEW</td>

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.search.spi.model.query.contributor;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,8 +74,28 @@ public class DLFileEntryKeywordQueryContributor
 			try {
 				BooleanQuery fileNameBooleanQuery = new BooleanQueryImpl();
 
-				fileNameBooleanQuery.add(
-					_getShouldBooleanQuery(keywords), BooleanClauseOccur.MUST);
+				String exactMatch = StringUtils.substringBetween(
+					keywords, StringPool.QUOTE);
+
+				if (Validator.isNotNull(exactMatch)) {
+					String notExactKeyword = keywords.replaceFirst(
+						StringPool.QUOTE + exactMatch + StringPool.QUOTE, "");
+
+					fileNameBooleanQuery.add(
+						_getMatchQuery(exactMatch, MatchQuery.Type.PHRASE),
+						BooleanClauseOccur.MUST);
+
+					if (Validator.isNotNull(notExactKeyword)) {
+						fileNameBooleanQuery.add(
+							_getShouldBooleanQuery(notExactKeyword),
+							BooleanClauseOccur.MUST);
+					}
+				}
+				else {
+					fileNameBooleanQuery.add(
+						_getShouldBooleanQuery(keywords),
+						BooleanClauseOccur.MUST);
+				}
 
 				MatchQuery matchPhraseQuery = _getMatchQuery(
 					keywords, MatchQuery.Type.PHRASE);

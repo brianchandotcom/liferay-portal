@@ -3,7 +3,7 @@
 
 <routes>
 	<route>
-		<pattern>/{tag}</pattern>
+		<pattern>/{tag:[^/]+}</pattern>
 		<ignored-parameter name="mvcPath" />
 		<implicit-parameter name="resetCur">true</implicit-parameter>
 	</route>

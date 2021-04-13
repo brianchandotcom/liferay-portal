@@ -251,7 +251,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		new ArrayList<>();
 
 	private class ApplicationDescriptorsImpl
-		implements ScopeDescriptor, ApplicationDescriptor {
+		implements ApplicationDescriptor, ScopeDescriptor {
 
 		public ApplicationDescriptorsImpl(
 			ServiceTracker<?, ResourceBundleLoader> serviceTracker,

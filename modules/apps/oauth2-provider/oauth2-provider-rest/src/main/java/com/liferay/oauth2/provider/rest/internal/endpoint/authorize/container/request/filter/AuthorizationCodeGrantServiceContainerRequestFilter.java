@@ -260,7 +260,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 	private UserLocalService _userLocalService;
 
 	private abstract static class PortalCXFSecurityContext
-		implements SecurityContext, org.apache.cxf.security.SecurityContext {
+		implements org.apache.cxf.security.SecurityContext, SecurityContext {
 
 		@Override
 		public String getAuthenticationScheme() {

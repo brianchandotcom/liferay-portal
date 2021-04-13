@@ -395,7 +395,7 @@ public class PortletURLBuilder {
 				WindowStateStep {
 	}
 
-	public interface AfterSecureStep extends WindowStateStep, BuildStep {
+	public interface AfterSecureStep extends BuildStep, WindowStateStep {
 	}
 
 	public interface AfterWindowStateStep extends BuildStep {

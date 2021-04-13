@@ -2856,12 +2856,12 @@ public class IntrabandProxyUtilTest {
 	}
 
 	private interface TestGenerateInterface1
-		extends Comparable<String>, Callable<String>, Runnable,
+		extends Callable<String>, Comparable<String>, Runnable,
 				TestEmptyMethodsInterface, TestProxyMethodsInterface {
 	}
 
 	private interface TestGenerateInterface2
-		extends TestIdMethodsInterface, TestGenerateInterface1 {
+		extends TestGenerateInterface1, TestIdMethodsInterface {
 	}
 
 	private interface TestIdMethodsInterface {

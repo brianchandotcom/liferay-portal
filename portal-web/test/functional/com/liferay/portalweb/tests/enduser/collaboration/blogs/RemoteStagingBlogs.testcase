@@ -60,13 +60,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "site-name",
+			layoutName = "Staging Blogs Page");
 
 		Staging.gotoPublishToLive();
 
@@ -76,13 +73,10 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "remote-site",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -176,13 +170,10 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "remote-site",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -242,13 +233,10 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "remote-site",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -290,13 +278,10 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "PortletDataException");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "remote-site",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

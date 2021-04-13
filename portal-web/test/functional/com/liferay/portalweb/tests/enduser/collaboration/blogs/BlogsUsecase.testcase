@@ -58,11 +58,10 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Bold Type Italics",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContentBold = "Bold Type",
@@ -89,11 +88,10 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -332,11 +330,10 @@ definition {
 			entryTitle2 = "Blogs Entry2 Title",
 			pageName = "Blogs Page");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry1 Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -563,29 +560,26 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -604,21 +598,19 @@ definition {
 
 		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -724,11 +716,10 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
@@ -978,11 +969,10 @@ definition {
 			portletName = "Blogs",
 			scope = "Blogs Page2");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
@@ -1062,21 +1052,19 @@ definition {
 			imageFileName = "Document_2.jpg",
 			navTab = "Documents and Media");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry1 Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		AssertElementPresent(
 			key_uploadFileName = "Document_1",
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry2 Content",
-			entryTitle = "Blogs Entry2 Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry2 Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		AssertElementPresent(
 			key_uploadFileName = "Document_2",
@@ -1102,11 +1090,10 @@ definition {
 
 		Pause(locator1 = "10000");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

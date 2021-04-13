@@ -79,21 +79,17 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Pause(locator1 = "3000");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -144,9 +140,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
 
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -160,11 +157,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryInvalidTitleLength = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||XX");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -604,11 +600,10 @@ definition {
 		}
 
 		for (var entryCount : list "1,2,3") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			BlogsNavigator.gotoEntryPG(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
+			BlogsNavigator.openToBlogEntry(
+				entryTitle = "Blogs Entry${entryCount} Title",
+				siteURLKey = "guest",
+				layoutName = "Blogs Page");
 
 			BlogsEntry.viewEntryPG(
 				entryContent = "Blogs Entry${entryCount} Content",
@@ -640,19 +635,17 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.delete(entryComment = "Blogs Entry Comment");
 	}
@@ -694,19 +687,17 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.edit(
 			entryComment = "Blogs Entry Comment",
@@ -720,55 +711,49 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.addPG(entryComment = "1st Blog Comment");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.addPG(entryComment = "2nd Blog Comment");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.addPG(entryComment = "3rd Blog Comment");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.edit(
 			entryComment = "1st Blog Comment",
 			entryCommentEdit = "1st Blog Comment Edit");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.edit(
 			entryComment = "2nd Blog Comment",
 			entryCommentEdit = "2nd Blog Comment Edit");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.edit(
 			entryComment = "3rd Blog Comment",
@@ -790,11 +775,10 @@ definition {
 			navTab = "URL",
 			videoService = "youtube");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -809,11 +793,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -850,11 +833,10 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry with Small Image");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry with Small Image",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry with Small Image");
 
@@ -1052,11 +1034,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.subscribePG();
 
@@ -1089,11 +1070,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.flagPG(
 			flagReason = "Spam",
@@ -1270,11 +1250,10 @@ definition {
 			userFirstName = "Guestfn",
 			userLastName = "Guestln");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -1307,11 +1286,10 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -1557,11 +1535,10 @@ definition {
 
 		IFrame.saveConfiguration();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "${entryContent}",
@@ -1641,11 +1618,10 @@ definition {
 
 		Pause(locator1 = "10000");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "guest",
+			layoutName = "Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

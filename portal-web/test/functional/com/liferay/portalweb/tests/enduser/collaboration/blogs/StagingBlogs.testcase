@@ -98,11 +98,10 @@ definition {
 			confirmMessage = "Are you sure you want to publish to live?",
 			entryTitle = "Blogs Entry Title");
 
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			siteURLKey = "site-name",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -515,13 +514,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page 2",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title 2",
+			siteURLKey = "site-name",
+			layoutName = "Blogs Page 2");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content 2",
@@ -650,13 +646,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title Edit");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title Edit",
+			siteURLKey = "site-name",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content Edit",
@@ -744,39 +737,30 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content 1",
-			entryTitle = "Blogs Entry Title 1");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title 1",
+			siteURLKey = "site-name",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 1",
 			entryTitle = "Blogs Entry Title 1",
 			uploadFileName = "Document_1.jpg");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title 2",
+			siteURLKey = "site-name",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 2",
 			entryInlineImage = "Document_2.jpg",
 			entryTitle = "Blogs Entry Title 2");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content 3",
-			entryTitle = "Blogs Entry Title 3");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title 3",
+			siteURLKey = "site-name",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 3",
@@ -787,39 +771,30 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content 1",
-			entryTitle = "Blogs Entry Title 1");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title 1",
+			siteURLKey = "site-name",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 1",
 			entryTitle = "Blogs Entry Title 1",
 			uploadFileName = "Document_1.jpg");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title 2",
+			siteURLKey = "site-name",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 2",
 			entryInlineImage = "Document_2.jpg",
 			entryTitle = "Blogs Entry Title 2");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content 3",
-			entryTitle = "Blogs Entry Title 3");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title 3",
+			siteURLKey = "site-name",
+			layoutName = "Staging Blogs Page");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 3",

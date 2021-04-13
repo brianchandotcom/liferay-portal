@@ -68,7 +68,7 @@ export const DisplayPagePreviewItemSelector = ({horizontal = false}) => {
 					role="label"
 				>
 					<strong className="d-block page-editor__display-page-preview-item-selector-label">
-						{Liferay.Language.get('item-preview')}:
+						{Liferay.Language.get('item')}:
 					</strong>
 					<span className="align-items-center btn btn-secondary btn-sm d-flex">
 						<span

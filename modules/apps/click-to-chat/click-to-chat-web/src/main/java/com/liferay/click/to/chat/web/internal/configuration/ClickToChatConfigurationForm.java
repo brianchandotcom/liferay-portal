@@ -91,11 +91,11 @@ public interface ClickToChatConfigurationForm {
 			"%chat-provider-chatwoot", "%chat-provider-crisp",
 			"%chat-provider-hubspot", "%chat-provider-jivochat", "%chat-provider-livechat",
 			"%chat-provider-liveperson", "%chat-provider-smartsupp",
-			"%chat-provider-tawkto", "%chat-provider-tidio"
+			"%chat-provider-tawkto", "%chat-provider-tidio", "%chat-provider-zendesk"
 		},
 		optionValues = {
 			"chatwoot", "crisp", "hubspot", "jivochat", "livechat", "liveperson",
-			"smartsupp", "tawkto", "tidio"
+			"smartsupp", "tawkto", "tidio", "zendesk"
 		},
 		required = false, type = "select"
 	)

@@ -143,7 +143,7 @@ export default function PageContent({
 					)}
 				</ClayLayout.ContentCol>
 
-				{actions && (editURL || permissionsURL || viewUsagesURL) ? (
+				{editURL || permissionsURL || viewUsagesURL ? (
 					<ClayDropDown
 						active={active}
 						onActiveChange={setActive}
@@ -222,5 +222,4 @@ PageContent.propTypes = {
 	name: PropTypes.string,
 	subtype: PropTypes.string,
 	title: PropTypes.string.isRequired,
-	usagesCount: PropTypes.number,
 };

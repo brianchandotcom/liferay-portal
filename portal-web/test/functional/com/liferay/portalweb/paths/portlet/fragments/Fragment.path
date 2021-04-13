@@ -142,7 +142,7 @@
 </tr>
 <tr>
 	<td>BUTTON_SIZE</td>
-	<td>//div[contains(@class,'component-button')]/a[contains(@class,'btn-${key_size}')]</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]/a[contains(@class,'btn-${key_size}')]</td>
 	<td></td>
 </tr>
 <tr>

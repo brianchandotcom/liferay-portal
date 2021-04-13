@@ -17,8 +17,11 @@ import deepFreeze from './deepFreeze';
 
 import type {Immutable} from './types';
 
-const ATOM = Symbol('Liferay.State.ATOM');
-const SELECTOR = Symbol('Liferay.State.SELECTOR');
+// In the future, these should be Symbol(); see:
+// https://github.com/microsoft/TypeScript/issues/37888
+
+const ATOM = 'Liferay.State.ATOM';
+const SELECTOR = 'Liferay.State.SELECTOR';
 
 interface Getter {
 	<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T>;

@@ -16,6 +16,8 @@ const SYMBOL_CONTEXT = Symbol('schema.context');
 
 const SYMBOL_TYPE = Symbol('schema.type');
 
+export const SYMBOL_CACHE = Symbol('schema.cache');
+
 export const SYMBOL_RAW = Symbol('schema.raw');
 
 export class Schema {
@@ -23,5 +25,6 @@ export class Schema {
 		this[SYMBOL_CONTEXT] = context;
 		this[SYMBOL_TYPE] = type;
 		this[SYMBOL_RAW] = raw;
+		this[SYMBOL_CACHE] = {};
 	}
 }

@@ -12,7 +12,10 @@
  * details.
  */
 
-import {SYMBOL_RAW, Schema} from './Schema.es';
+import {DataConverter} from 'data-engine-taglib';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+
+import {SYMBOL_CACHE, SYMBOL_RAW, Schema} from './Schema.es';
 
 export class DataDefinitionSchema extends Schema {
 	static props = [
@@ -20,6 +23,7 @@ export class DataDefinitionSchema extends Schema {
 		'dataDefinition',
 		'defaultLanguageId',
 		'name',
+		'pages',
 	];
 
 	constructor(raw) {
@@ -35,7 +39,43 @@ export class DataDefinitionSchema extends Schema {
 	}
 
 	get dataDefinitionFields() {
-		return this[SYMBOL_RAW].dataDefinition.dataDefinitionFields;
+		const {dataDefinition, pages} = this[SYMBOL_RAW];
+
+		if (dataDefinition.dataDefinitionFields.length === 0) {
+			return dataDefinition.dataDefinitionFields;
+		}
+
+		// This operation will happen only once and the next calls are from the cache,
+		// the value will be revalidated by Schema that makes a comparison by reference
+		// of the Schema's props with the state, any changes in these properties the
+		// Schema is recreated.
+
+		if (this[SYMBOL_CACHE].dataDefinitionFields) {
+			return this[SYMBOL_CACHE].dataDefinitionFields;
+		}
+		else {
+			const fields = [...dataDefinition.dataDefinitionFields];
+			const visitor = new PagesVisitor(pages);
+
+			visitor.mapFields((field) => {
+				const index = fields.findIndex(
+					({name}) => name === field.fieldName
+				);
+
+				const newField = DataConverter.getDataDefinitionField(field);
+
+				if (index === -1) {
+					fields.push(newField);
+				}
+				else {
+					fields[index] = newField;
+				}
+			});
+
+			this[SYMBOL_CACHE].dataDefinitionFields = fields;
+
+			return this[SYMBOL_CACHE].dataDefinitionFields;
+		}
 	}
 
 	get defaultLanguageId() {

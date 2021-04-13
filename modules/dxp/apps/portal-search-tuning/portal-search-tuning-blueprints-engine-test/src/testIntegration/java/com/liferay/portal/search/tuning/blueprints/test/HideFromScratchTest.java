@@ -32,7 +32,7 @@ import org.junit.runner.RunWith;
  * @author Wade Cao
  */
 @RunWith(Arquillian.class)
-public class HideFromScratchTest extends BaseFromScratchTestCase {
+public class HideFromScratchTest extends BaseQueryElementsTestCase {
 
 	@ClassRule
 	@Rule
@@ -50,11 +50,13 @@ public class HideFromScratchTest extends BaseFromScratchTestCase {
 
 		String configurationString = getConfigurationString(
 			getMatchQueryElementJSONObject(200, "must_not", "los angeles"),
-			getMultiMatchQueryElementJSONObject(1, "or"));
+			getMultiMatchQueryElementJSONObject(1, "or"),
+			getHideHiddenContentsElementJSONObject());
 
 		String selectedElementString = getSelectedElementString(
 			getPasteESQueryJSONObject(200, "must_not", "los angeles", null),
-			getTextMatchOverMultipleFieldJSONObject(1, 1, 2, "or"));
+			getTextMatchOverMultipleFieldJSONObject(1, 1, 2, "or"),
+			getHideHiddenContentsJSONObject());
 
 		Blueprint blueprint = addCompanyBlueprint(
 			Collections.singletonMap(
@@ -67,11 +69,13 @@ public class HideFromScratchTest extends BaseFromScratchTestCase {
 
 		configurationString = getConfigurationString(
 			getMatchQueryElementJSONObject(200, "must_not", "orange county"),
-			getMultiMatchQueryElementJSONObject(1, "or"));
+			getMultiMatchQueryElementJSONObject(1, "or"),
+			getHideHiddenContentsElementJSONObject());
 
 		selectedElementString = getSelectedElementString(
 			getPasteESQueryJSONObject(200, "must_not", "orange county", null),
-			getTextMatchOverMultipleFieldJSONObject(1, 1, 2, "or"));
+			getTextMatchOverMultipleFieldJSONObject(1, 1, 2, "or"),
+			getHideHiddenContentsJSONObject());
 
 		assertSearchIgnoreRelevance(
 			blueprint, configurationString, "[cafe rio, starbucks cafe]",

@@ -88,7 +88,7 @@ public abstract class BaseBlueprintsTestCase {
 		throws Exception {
 
 		return blueprintService.addCompanyBlueprint(
-			titleMap, descriptionMap, configuration, selectedElements, 
+			titleMap, descriptionMap, configuration, selectedElements,
 			serviceContext);
 	}
 
@@ -151,8 +151,19 @@ public abstract class BaseBlueprintsTestCase {
 			String keywords, String selectedElementString)
 		throws Exception {
 
+		assertSearch(
+			blueprint, configurationString, expected, "127.0.0.1", keywords,
+			selectedElementString);
+	}
+
+	protected void assertSearch(
+			Blueprint blueprint, String configurationString, String expected,
+			String ipAddress, String keywords, String selectedElementString)
+		throws Exception {
+
 		SearchResponse searchResponse = _getSearchResponse(
-			blueprint, configurationString, keywords, selectedElementString);
+			blueprint, configurationString, ipAddress, keywords,
+			selectedElementString);
 
 		DocumentsAssert.assertValues(
 			searchResponse.getRequestString(),
@@ -166,7 +177,8 @@ public abstract class BaseBlueprintsTestCase {
 		throws Exception {
 
 		SearchResponse searchResponse = _getSearchResponse(
-			blueprint, configurationString, keywords, selectedElementString);
+			blueprint, configurationString, "127.0.0.1", keywords,
+			selectedElementString);
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
 			searchResponse.getRequestString(),
@@ -206,7 +218,8 @@ public abstract class BaseBlueprintsTestCase {
 		return createJSONArray();
 	}
 
-	protected BlueprintsAttributes getBlueprintsAttributes(String keywords)
+	protected BlueprintsAttributes getBlueprintsAttributes(
+			String ipAddress, String keywords)
 		throws Exception {
 
 		BlueprintsAttributesBuilder blueprintsAttributesBuilder =
@@ -221,9 +234,11 @@ public abstract class BaseBlueprintsTestCase {
 		).userId(
 			user.getUserId()
 		).addAttribute(
+			ReservedParameterNames.EXPLAIN.getKey(), true
+		).addAttribute(
 			ParameterConfigurationKeys.PAGE.getJsonKey(), 1
 		).addAttribute(
-			ReservedParameterNames.IP_ADDRESS.getKey(), "127.0.0.1"
+			ReservedParameterNames.IP_ADDRESS.getKey(), ipAddress
 		).addAttribute(
 			ReservedParameterNames.PLID.getKey(), TestPropsValues.getPlid()
 		).addAttribute(
@@ -308,6 +323,14 @@ public abstract class BaseBlueprintsTestCase {
 		return timeZone.getID();
 	}
 
+	protected JournalArticle updateJournalArticle(
+			JournalArticle journalArticle, String title, String content)
+		throws Exception {
+
+		return JournalTestUtil.updateArticle(
+			journalArticle, title, content, false, true, serviceContext);
+	}
+
 	@Inject
 	protected BlueprintsAttributesBuilderFactory
 		blueprintsAttributesBuilderFactory;
@@ -325,8 +348,8 @@ public abstract class BaseBlueprintsTestCase {
 	protected User user;
 
 	private SearchResponse _getSearchResponse(
-			Blueprint blueprint, String configurationString, String keywords,
-			String selectedElementString)
+			Blueprint blueprint, String configurationString, String ipAddress,
+			String keywords, String selectedElementString)
 		throws BlueprintsEngineException, Exception, PortalException {
 
 		if (!Validator.isBlank(configurationString) &&
@@ -339,7 +362,8 @@ public abstract class BaseBlueprintsTestCase {
 		}
 
 		return blueprintsEngineHelper.search(
-			blueprint, getBlueprintsAttributes(keywords), new Messages());
+			blueprint, getBlueprintsAttributes(ipAddress, keywords),
+			new Messages());
 	}
 
 }

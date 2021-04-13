@@ -53,7 +53,7 @@ public class SearchWithLuceneSyntaxTest extends BaseBlueprintsTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""),
-			getConfigurationString(null), "");
+			getConfigurationString((JSONObject[])null), "");
 
 		assertSearch(
 			blueprint, null, "[coca cola, pepsi cola]", "cola +coca", null);

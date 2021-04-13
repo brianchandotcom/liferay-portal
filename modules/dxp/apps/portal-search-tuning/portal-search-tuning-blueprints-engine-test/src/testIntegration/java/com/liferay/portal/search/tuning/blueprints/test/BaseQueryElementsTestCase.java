@@ -22,7 +22,7 @@ import com.liferay.portal.search.tuning.blueprints.constants.json.keys.framework
 /**
  * @author Wade Cao
  */
-public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
+public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 
 	@Override
 	protected JSONObject getFrameworkConfiguration() {
@@ -37,6 +37,31 @@ public abstract class BaseFromScratchTestCase extends BaseBlueprintsTestCase {
 			).put(
 				"com.liferay.journal.model.JournalArticle"
 			)
+		);
+	}
+
+	protected JSONObject getHideHiddenContentsElementJSONObject()
+		throws Exception {
+
+		JSONObject hideHiddenContentsJSONObject =
+			getHideHiddenContentsJSONObject();
+
+		return hideHiddenContentsJSONObject.getJSONObject(
+			"elementTemplateJSON");
+	}
+
+	protected JSONObject getHideHiddenContentsJSONObject() throws Exception {
+		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject(
+			"/elements/hide-hidden-contents-test.json");
+
+		return JSONUtil.put(
+			"elementTemplateJSON",
+			elementTemplateJSONObject.get("elementTemplateJSON")
+		).put(
+			"uiConfigurationJSON",
+			elementTemplateJSONObject.get("uiConfigurationJSON")
+		).put(
+			"uiConfigurationValues", JSONUtil.put(null, null)
 		);
 	}
 

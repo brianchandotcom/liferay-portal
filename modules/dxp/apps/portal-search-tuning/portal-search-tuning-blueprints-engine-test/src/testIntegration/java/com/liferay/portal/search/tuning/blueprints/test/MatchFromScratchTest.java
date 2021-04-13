@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
  * @author Wade Cao
  */
 @RunWith(Arquillian.class)
-public class MatchFromScratchTest extends BaseFromScratchTestCase {
+public class MatchFromScratchTest extends BaseQueryElementsTestCase {
 
 	@ClassRule
 	@Rule

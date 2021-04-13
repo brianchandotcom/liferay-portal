@@ -14,6 +14,8 @@
 
 package com.liferay.users.admin.management.toolbar;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -24,7 +26,10 @@ public interface FilterContributor {
 
 	public String getDefaultValue();
 
-	public String[] getFilterLabelValues();
+	public default String[] getFilterLabelValues() {
+		return ArrayUtil.filter(
+			getValues(), value -> !value.equals(getDefaultValue()));
+	}
 
 	public String getLabel(Locale locale);
 

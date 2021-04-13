@@ -62,10 +62,8 @@ const combinedReducer = (state, action) =>
  * been registered from plugins.
  */
 export function reducer(state, action) {
-	const nextState = defaultFragmentEntryLinksReducer(
-		undoReducer(state, action),
-		action
-	);
+	let nextState = undoReducer(state, action);
+	nextState = defaultFragmentEntryLinksReducer(nextState, action);
 
 	return [combinedReducer, ...Object.values(state.reducers || {})].reduce(
 		(nextState, nextReducer) => {

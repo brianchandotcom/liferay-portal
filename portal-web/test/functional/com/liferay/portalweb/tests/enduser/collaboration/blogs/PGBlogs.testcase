@@ -304,6 +304,10 @@ definition {
 
 		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
 
+		AssertTextEquals(
+			locator1 = "TextInput#BLOGS_ENTRY_URL",
+			value1 = "blogs-entry-title");
+
 		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 
 		Check(locator1 = "Radio#CUSTOM_URL");
@@ -358,34 +362,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_ENTER_A_UNIQUE_TITLE",
 			value1 = "The URL title is already in use. Please enter a unique URL title.");
-	}
-
-	@description = "This is usecase 1 for LPS-69240"
-	@priority = "4"
-	@refactorneeded
-	test AssertAutomaticURL {
-		var entryContent = "Blogs Entry Content";
-		var entrySubtitle = "Blogs Entry Subtitle";
-		var entryTitle = "Blogs Entry Title";
-
-		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
-
-		BlogsEntry.addEntryContent(
-			entryContent = "${entryContent}",
-			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}");
-
-		Panel.expandPanel(panel = "Configuration");
-
-		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
-
-		AssertTextEquals(
-			locator1 = "TextInput#BLOGS_ENTRY_URL",
-			value1 = "blogs-entry-title");
-
-		PortletEntry.publish();
 	}
 
 	@description = "This is usecase 2 for LPS-69240"

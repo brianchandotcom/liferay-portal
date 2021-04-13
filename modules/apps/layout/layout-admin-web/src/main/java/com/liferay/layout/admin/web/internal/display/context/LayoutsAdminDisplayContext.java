@@ -1335,28 +1335,25 @@ public class LayoutsAdminDisplayContext {
 			return _privateLayout;
 		}
 
-		if (Validator.isNull(
-				ParamUtil.getString(_liferayPortletRequest, "privateLayout"))) {
+		String privateLayout = _liferayPortletRequest.getParameter(
+			"privateLayout");
 
-			if (LayoutServiceUtil.getLayoutsCount(getSelGroupId(), false, 0) >
-					0) {
+		if (Validator.isNotNull(privateLayout)) {
+			_privateLayout = GetterUtil.getBoolean(privateLayout);
 
-				_privateLayout = false;
-
-				return _privateLayout;
-			}
-
-			if (LayoutServiceUtil.getLayoutsCount(getSelGroupId(), true, 0) >
-					0) {
-
-				_privateLayout = true;
-
-				return _privateLayout;
-			}
+			return _privateLayout;
 		}
 
-		_privateLayout = ParamUtil.getBoolean(
-			_liferayPortletRequest, "privateLayout");
+		_privateLayout = false;
+
+		int publicLayoutsCount = LayoutServiceUtil.getLayoutsCount(
+			getSelGroupId(), false, 0);
+		int privateLayoutsCount = LayoutServiceUtil.getLayoutsCount(
+			getSelGroupId(), true, 0);
+
+		if ((privateLayoutsCount > 0) && (publicLayoutsCount <= 0)) {
+			_privateLayout = true;
+		}
 
 		return _privateLayout;
 	}

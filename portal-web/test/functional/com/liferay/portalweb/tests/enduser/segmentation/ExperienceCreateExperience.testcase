@@ -57,6 +57,10 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Heading");
 
+		PageEditor.viewFragmentStyle(
+			fragmentName = "Heading",
+			headingLevel = "h1");
+
 		PageEditor.editFragmentText(
 			fragmentName = "Heading",
 			id = "element-text",
@@ -75,6 +79,10 @@ definition {
 		Refresh();
 
 		PageEditor.changeExperience(newExperience = "NewAnyoneExperience");
+
+		PageEditor.viewFragmentStyle(
+			fragmentName = "Heading",
+			headingLevel = "h1");
 
 		PageEditor.editFragmentText(
 			fragmentName = "Heading",

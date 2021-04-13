@@ -89,11 +89,11 @@ public interface ClickToChatConfigurationForm {
 		label = "%chat-provider",
 		optionLabels = {
 			"%chat-provider-chatwoot", "%chat-provider-crisp",
-			"%chat-provider-jivochat", "%chat-provider-liveperson",
+			"%chat-provider-jivochat", "%chat-provider-livechat", "%chat-provider-liveperson",
 			"%chat-provider-smartsupp", "%chat-provider-tidio"
 		},
 		optionValues = {
-			"chatwoot", "crisp", "jivochat", "liveperson", "smartsupp", "tidio"
+			"chatwoot", "crisp", "jivochat", "livechat", "liveperson", "smartsupp", "tidio"
 		},
 		required = false, type = "select"
 	)

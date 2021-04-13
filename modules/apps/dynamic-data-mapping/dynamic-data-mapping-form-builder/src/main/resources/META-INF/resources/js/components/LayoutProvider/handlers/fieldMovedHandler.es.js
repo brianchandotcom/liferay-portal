@@ -15,9 +15,8 @@
 import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
-import {getParentField} from '../../../util/fieldSupport.es';
+import {addField, getParentField} from '../../../util/fieldSupport.es';
 import {updateField} from '../util/settingsContext.es';
-import {addField} from './fieldAddedHandler.es';
 import handleFieldDeleted from './fieldDeletedHandler.es';
 import handleSectionAdded from './sectionAddedHandler.es';
 
@@ -111,7 +110,8 @@ export default (props, state, event) => {
 		};
 	}
 
-	const addedState = addField(props, {
+	const addedState = addField({
+		...props,
 		indexes: targetIndexes,
 		newField: sourceField,
 		pages: mergedState.pages,

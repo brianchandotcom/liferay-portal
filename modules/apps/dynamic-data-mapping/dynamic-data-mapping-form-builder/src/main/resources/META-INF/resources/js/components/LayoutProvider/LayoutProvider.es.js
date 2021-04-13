@@ -25,9 +25,13 @@ import {Config} from 'metal-state';
 
 import RulesSupport from '../../components/RuleBuilder/RulesSupport.es';
 import {pageStructure, ruleStructure} from '../../util/config.es';
-import {getFieldProperties, localizeField} from '../../util/fieldSupport.es';
+import {
+	addField,
+	createField,
+	getFieldProperties,
+	localizeField,
+} from '../../util/fieldSupport.es';
 import handleColumnResized from './handlers/columnResizedHandler.es';
-import handleFieldAdded from './handlers/fieldAddedHandler.es';
 import handleFieldBlurred from './handlers/fieldBlurredHandler.es';
 import handleFieldClicked from './handlers/fieldClickedHandler.es';
 import handleFieldDeleted from './handlers/fieldDeletedHandler.es';
@@ -47,18 +51,18 @@ import {generateFieldName} from './util/fields.es';
  */
 
 class LayoutProvider extends Component {
-	dispatch(event, payload) {
+	dispatch = (event, payload) => {
 		try {
 			this.emit(event, payload);
 		}
 		catch (e) {
 			console.error(e.message);
 		}
-	}
+	};
 
 	getChildContext() {
 		return {
-			dispatch: this.dispatch.bind(this),
+			dispatch: this.dispatch,
 			store: this,
 		};
 	}
@@ -297,10 +301,24 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldAdded(event) {
-		const {defaultLanguageId, editingLanguageId} = this.props;
-		const {availableLanguageIds = [editingLanguageId]} = this.props;
+		const {
+			availableLanguageIds = [editingLanguageId],
+			defaultLanguageId,
+			editingLanguageId,
+		} = this.props;
+		const {
+			data: {parentFieldName},
+			indexes,
+			newField,
+		} = event;
 
-		const newState = handleFieldAdded(this.props, this.state, event);
+		const newState = addField({
+			...this.props,
+			indexes,
+			newField: newField ?? createField(this.props, event),
+			pages: this.state.pages,
+			parentFieldName,
+		});
 
 		const {focusedField} = newState;
 

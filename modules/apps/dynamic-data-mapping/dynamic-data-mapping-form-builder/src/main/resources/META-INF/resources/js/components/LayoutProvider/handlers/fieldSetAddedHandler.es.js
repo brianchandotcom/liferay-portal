@@ -14,9 +14,9 @@
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
+import {addField} from '../../../util/fieldSupport.es';
 import {createFieldSet} from '../util/fieldset.es';
 import {updateField} from '../util/settingsContext.es';
-import {addField} from './fieldAddedHandler.es';
 import handleSectionAdded from './sectionAddedHandler.es';
 
 const handleFieldSetAdded = (props, state, event) => {
@@ -98,7 +98,8 @@ const handleFieldSetAdded = (props, state, event) => {
 		);
 	}
 
-	return addField(props, {
+	return addField({
+		...props,
 		indexes,
 		newField: updateField(
 			{...props, defaultLanguageId},

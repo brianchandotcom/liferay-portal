@@ -12,13 +12,8 @@
  * details.
  */
 
-import {
-	getDDMFormFieldSettingsContext,
-	getDefaultDataLayout,
-	getFieldSetDDMForm,
-} from './utils/dataConverter.es';
+import {getDDMFormFieldSettingsContext} from './utils/dataConverter.es';
 import {getDataDefinitionField} from './utils/dataDefinition.es';
-import {normalizeDataLayoutRows} from './utils/normalizers.es';
 
 export const ADD_CUSTOM_OBJECT_FIELD = 'ADD_CUSTOM_OBJECT_FIELD';
 export const ADD_DATA_LAYOUT_RULE = 'ADD_DATA_LAYOUT_RULE';
@@ -116,50 +111,5 @@ export const dropLayoutBuilderField = ({
 			editable: true,
 		},
 		indexes,
-	};
-};
-
-export const dropFieldSet = ({
-	availableLanguageIds = [],
-	dataLayoutBuilder,
-	defaultLanguageId,
-	fieldSet,
-	indexes,
-	parentFieldName,
-	useFieldName,
-	...otherProps
-}) => {
-	const dataLayoutPages = (
-		fieldSet.defaultDataLayout || getDefaultDataLayout(fieldSet)
-	).dataLayoutPages;
-
-	if (!availableLanguageIds.includes(defaultLanguageId)) {
-		availableLanguageIds = [...availableLanguageIds, defaultLanguageId];
-	}
-
-	const {
-		contentTypeConfig: {allowInvalidAvailableLocalesForProperty},
-		editingLanguageId,
-		fieldTypes,
-	} = dataLayoutBuilder.props;
-
-	const newFieldSet = getFieldSetDDMForm({
-		allowInvalidAvailableLocalesForProperty,
-		availableLanguageIds,
-		editingLanguageId,
-		fieldSet,
-		fieldTypes,
-	});
-
-	return {
-		...otherProps,
-		defaultLanguageId: fieldSet.defaultLanguageId,
-		fieldSet: newFieldSet,
-		indexes,
-		parentFieldName,
-		useFieldName,
-		...(fieldSet.id && {
-			rows: normalizeDataLayoutRows(dataLayoutPages),
-		}),
 	};
 };

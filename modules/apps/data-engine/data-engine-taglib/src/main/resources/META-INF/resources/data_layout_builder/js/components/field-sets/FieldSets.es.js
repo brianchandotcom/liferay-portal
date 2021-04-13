@@ -16,10 +16,12 @@ import ClayButton from '@clayui/button';
 import React, {useContext, useState} from 'react';
 
 import AppContext from '../../AppContext.es';
-import {dropFieldSet} from '../../actions.es';
 import DataLayoutBuilderContext from '../../data-layout-builder/DataLayoutBuilderContext.es';
 import {DRAG_FIELDSET_ADD} from '../../drag-and-drop/dragTypes.es';
-import {getFieldSetDDMForm} from '../../utils/dataConverter.es';
+import {
+	getDataDefinitionFieldSet,
+	getFieldSetDDMForm,
+} from '../../utils/dataConverter.es';
 import {containsFieldSet} from '../../utils/dataDefinition.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import {getSearchRegex} from '../../utils/search.es';
@@ -147,24 +149,34 @@ export default function FieldSets({keywords}) {
 
 	const onDoubleClick = ({fieldSet}) => {
 		const {
-			activePage,
-			pages,
-		} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.state;
-		const payload = dropFieldSet({
-			availableLanguageIds: dataDefinition.availableLanguageIds,
-			dataLayoutBuilder,
-			defaultLanguageId: dataDefinition.defaultLanguageId,
-			fieldSet,
-			indexes: {
-				columnIndex: 0,
-				pageIndex: activePage,
-				rowIndex: pages[activePage].rows.length,
-			},
+			dispatch,
+			state: {activePage, pages},
+		} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
+		const {availableLanguageIds, defaultLanguageId} = dataDefinition;
+		const {
+			contentTypeConfig: {allowInvalidAvailableLocalesForProperty},
+			editingLanguageId,
+			fieldTypes,
+		} = dataLayoutBuilder.props;
+		const indexes = {
+			columnIndex: 0,
+			pageIndex: activePage,
+			rowIndex: pages[activePage].rows.length,
+		};
+
+		dispatch('fieldSetAdded', {
+			availableLanguageIds,
+			defaultLanguageId,
+			indexes,
+			...getDataDefinitionFieldSet({
+				allowInvalidAvailableLocalesForProperty,
+				availableLanguageIds,
+				defaultLanguageId,
+				editingLanguageId,
+				fieldSet,
+				fieldTypes,
+			}),
 		});
-		dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
-			'fieldSetAdded',
-			payload
-		);
 	};
 
 	const onClickCreateNewFieldset = () => toggleFieldSet(null, dataDefinition);

@@ -15,10 +15,9 @@
 import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
-import {createField} from '../../../util/fieldSupport.es';
+import {addField, createField} from '../../../util/fieldSupport.es';
 import {createFieldSet} from '../util/fieldset.es';
 import {updateField} from '../util/settingsContext.es';
-import handleFieldAdded from './fieldAddedHandler.es';
 import handleFieldDeleted from './fieldDeletedHandler.es';
 
 const addNestedField = ({field, indexes, nestedField, props}) => {
@@ -49,7 +48,7 @@ const handleSectionAdded = (props, state, event) => {
 	const {fieldName, parentFieldName} = data;
 	const {pages} = state;
 
-	const newField = event.newField || createField(props, event);
+	const newField = event.newField ?? createField(props, event);
 	const existingField = FormSupport.findFieldByFieldName(pages, fieldName);
 	const fieldSetField = createFieldSet(props, event, [
 		existingField,
@@ -89,12 +88,12 @@ const handleSectionAdded = (props, state, event) => {
 		);
 	}
 	else if (existingField.type === FIELD_TYPE_FIELDSET) {
-		newPages = handleFieldAdded(props, state, {
-			...event,
-			data: {
-				...event.data,
-				parentFieldName: existingField.fieldName,
-			},
+		newPages = addField({
+			...props,
+			indexes,
+			newField,
+			pages,
+			parentFieldName: existingField.fieldName,
 		}).pages;
 	}
 	else {

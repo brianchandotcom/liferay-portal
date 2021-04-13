@@ -48,18 +48,13 @@ const defaultState = {
 	fieldSets: [],
 };
 
-let dataLayoutBuilderProps;
+let dataLayoutBuilder;
 let dispatch;
 let spySuccessToast;
 let spyErrorToast;
 let ddmFormSpy;
 
-export const FieldSetWrapper = ({
-	children,
-	dataLayoutBuilder = dataLayoutBuilderProps,
-	dispatch = jest.fn(),
-	state = defaultState,
-}) => (
+export const FieldSetWrapper = ({children, state = defaultState}) => (
 	<DndProvider backend={HTML5Backend}>
 		<ClayModalProvider>
 			<AppContext.Provider value={[state, dispatch]}>
@@ -75,7 +70,7 @@ export const FieldSetWrapper = ({
 
 describe('FieldSets', () => {
 	beforeEach(() => {
-		dataLayoutBuilderProps = getDataLayoutBuilderProps();
+		dataLayoutBuilder = getDataLayoutBuilderProps();
 
 		jest.spyOn(DataConverter, 'getFieldSetDDMForm').mockReturnValue({
 			name: 'Field53354166',
@@ -86,7 +81,7 @@ describe('FieldSets', () => {
 			.spyOn(DDMForm, 'default')
 			.mockImplementation((props) => {
 				const state = {
-					...dataLayoutBuilderProps,
+					...dataLayoutBuilder,
 					dispose: jest.fn(),
 					emit: jest.fn(),
 					formBuilderWithLayoutProvider: {
@@ -413,19 +408,22 @@ describe('FieldSets', () => {
 
 	it('renders fieldset list with one fieldset and create it on form builder', () => {
 		const {nestedDataDefinitionFields} = DATA_DEFINITION_FIELDSET;
+		const fieldSet = {
+			...DATA_DEFINITION_FIELDSET,
+			dataDefinitionFields: nestedDataDefinitionFields,
+		};
 		const state = {
 			...defaultState,
-			fieldSets: [
-				{
-					...DATA_DEFINITION_FIELDSET,
-					dataDefinitionFields: nestedDataDefinitionFields,
-				},
-			],
+			fieldSets: [fieldSet],
 		};
+
+		jest.spyOn(DataConverter, 'getDataDefinitionFieldSet').mockReturnValue({
+			fieldSet,
+		});
 
 		const {container} = render(
 			<DndProvider backend={HTML5Backend}>
-				<FieldSetWrapper dispatch={dispatch} state={state}>
+				<FieldSetWrapper state={state}>
 					<FieldSets />
 				</FieldSetWrapper>
 			</DndProvider>
@@ -435,16 +433,13 @@ describe('FieldSets', () => {
 
 		const [
 			action,
-			payload,
-		] = dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch.mock.calls[0];
-
-		const {
-			fieldSet: {name},
-			indexes,
-		} = payload;
+			{
+				fieldSet: {name},
+				indexes,
+			},
+		] = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch.mock.calls[0];
 
 		expect(action).toBe('fieldSetAdded');
-
 		expect(name).toStrictEqual('Field53354166');
 		expect(indexes).toStrictEqual({
 			columnIndex: 0,
@@ -533,7 +528,7 @@ describe('FieldSets', () => {
 
 		const {queryByText} = render(
 			<DndProvider backend={HTML5Backend}>
-				<FieldSetWrapper dispatch={dispatch} state={state}>
+				<FieldSetWrapper state={state}>
 					<FieldSets />
 				</FieldSetWrapper>
 			</DndProvider>
@@ -563,7 +558,7 @@ describe('FieldSets', () => {
 			dispatch: {
 				mock: {calls: dispatchCalls},
 			},
-		} = dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs.layoutProvider;
+		} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
 		const [action, payload] = dispatchCalls[0];
 
 		expect(action).toEqual('fieldDeleted');

@@ -14,6 +14,7 @@
 
 import classNames from 'classnames';
 import {
+	DataConverter,
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
 	DragTypes,
@@ -200,9 +201,10 @@ const CustomObjectFieldsList = ({keywords}) => {
 	};
 	const onDoubleClick = ({name}) => {
 		const {
-			activePage,
-			pages,
-		} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.state;
+			dispatch: layoutProviderDispatch,
+			state: {activePage, pages},
+		} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
+
 		const indexes = {
 			columnIndex: 0,
 			pageIndex: activePage,
@@ -219,29 +221,41 @@ const CustomObjectFieldsList = ({keywords}) => {
 		} = findFieldByName(dataDefinitionFields, name);
 
 		if (fieldType === 'fieldset') {
-			return dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
-				'fieldSetAdded',
-				DataLayoutBuilderActions.dropFieldSet({
-					dataLayoutBuilder,
-					fieldName: name,
-					fieldSet: getFieldSet({
-						...otherFieldProps,
-						customProperties,
-						fieldSets,
-						name: label,
-					}),
-					indexes,
-					properties: {
-						collapsible: customProperties.collapsible,
-						repeatable,
-						showLabel,
-					},
-					useFieldName: name,
-				})
-			);
+			const {
+				contentTypeConfig: {allowInvalidAvailableLocalesForProperty},
+				editingLanguageId,
+				fieldTypes,
+			} = dataLayoutBuilder.props;
+
+			const fieldSet = getFieldSet({
+				...otherFieldProps,
+				customProperties,
+				fieldSets,
+				name: label,
+			});
+
+			layoutProviderDispatch?.('fieldSetAdded', {
+				defaultLanguageId: fieldSet.defaultLanguageId,
+				fieldName: name,
+				indexes,
+				properties: {
+					collapsible: customProperties.collapsible,
+					repeatable,
+					showLabel,
+				},
+				useFieldName: name,
+				...DataConverter.getDataDefinitionFieldSet({
+					allowInvalidAvailableLocalesForProperty,
+					editingLanguageId,
+					fieldSet,
+					fieldTypes,
+				}),
+			});
+
+			return;
 		}
 
-		dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+		layoutProviderDispatch?.(
 			'fieldAdded',
 			DataLayoutBuilderActions.dropCustomObjectField({
 				addedToPlaceholder: true,

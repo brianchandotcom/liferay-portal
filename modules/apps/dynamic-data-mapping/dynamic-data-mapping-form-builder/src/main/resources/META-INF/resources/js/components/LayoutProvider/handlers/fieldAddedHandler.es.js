@@ -12,34 +12,20 @@
  * details.
  */
 
-import {
-	addField as addFieldToPage,
-	createField,
-} from '../../../util/fieldSupport.es';
-
-export const addField = (
-	props,
-	{indexes, newField, pages, parentFieldName}
-) => {
-	return addFieldToPage({
-		indexes,
-		newField,
-		pages,
-		parentFieldName,
-		...props,
-	});
-};
+import {addField, createField} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
-	const {data, indexes} = event;
-	const {pages} = state;
-	const {parentFieldName} = data;
-
-	const newField = event.newField || createField(props, event);
-
-	return addField(props, {
+	const {
+		data: {parentFieldName},
 		indexes,
 		newField,
+	} = event;
+	const {pages} = state;
+
+	return addField({
+		...props,
+		indexes,
+		newField: newField ?? createField(props, event),
 		pages,
 		parentFieldName,
 	});

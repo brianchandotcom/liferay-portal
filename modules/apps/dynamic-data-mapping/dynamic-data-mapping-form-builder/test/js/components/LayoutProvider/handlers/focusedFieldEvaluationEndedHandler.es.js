@@ -12,12 +12,35 @@
  * details.
  */
 
-import handleFieldAdded from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldAddedHandler.es';
+import {
+	addField,
+	createField,
+} from '../../../../../src/main/resources/META-INF/resources/js//util/fieldSupport.es';
 import handleFieldEdited from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldEditedHandler.es';
 import handleFocusedFieldEvaluationEnded from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/focusedFieldEvaluationEndedHandler.es';
 import {generateFieldName} from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/fields.es';
 import * as settingsContextUtil from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/settingsContext.es';
 import mockFieldTypes from '../../../__mock__/mockFieldTypes.es';
+
+const addFieldToPage = (props, state) => {
+	const indexes = {
+		columnIndex: 0,
+		pageIndex: 0,
+		rowIndex: 0,
+	};
+	const event = {
+		fieldType: mockFieldTypes[0],
+		indexes,
+	};
+	const {pages} = state;
+
+	return addField({
+		...props,
+		indexes,
+		newField: createField(props, event),
+		pages,
+	});
+};
 
 describe('LayoutProvider/handlers/focusedFieldEvaluationEndedHandler', () => {
 	describe('focusedFieldEvaluationEnded(props, state, event)', () => {
@@ -52,15 +75,7 @@ describe('LayoutProvider/handlers/focusedFieldEvaluationEndedHandler', () => {
 
 			// Adds a field
 
-			state = handleFieldAdded(props, state, {
-				data: {},
-				fieldType: mockFieldTypes[0],
-				indexes: {
-					columnIndex: 0,
-					pageIndex: 0,
-					rowIndex: 0,
-				},
-			});
+			state = addFieldToPage(props, state);
 
 			// Edits the field name
 

@@ -56,31 +56,6 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddBlogsEntryComment {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
-
-		Comments.addPG(entryComment = "Blogs Entry Comment");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
-
-		Comments.viewPG(
-			commentCount = "1",
-			entryComment = "Blogs Entry Comment",
-			userFullName = "Test Test (You)");
-	}
-
-	@priority = "4"
-	@refactorneeded
 	test AddBlogsEntryContentNull {
 		Blogs.addWithInvalidContent(
 			entryInvalidContent = "",
@@ -688,6 +663,11 @@ definition {
 		Comments.edit(
 			entryComment = "Blogs Entry Comment",
 			entryCommentEdit = "Blogs Entry Comment Edit");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment Edit",
+			userFullName = "Test Test (You)");
 	}
 
 	@priority = "4"

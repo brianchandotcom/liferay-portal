@@ -168,6 +168,20 @@ definition {
 			value1 = "INFO:Comments are unavailable in staged sites.");
 	}
 
+	macro viewNoPG {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Comments#ENTRY_COUNT_PANEL",
+			value1 = "0 COMMENTS");
+
+		AssertElementNotPresent(
+			key_userFullName = "${userFullName}",
+			locator1 = "Comments#USER_NAME");
+
+		AssertElementNotPresent(
+			key_entryComment = "${entryComment}",
+			locator1 = "Comments#COMMENT_BODY_SPECIFIC");
+	}
+
 	macro viewPG {
 		var key_entryComment = "${entryComment}";
 

@@ -45,7 +45,7 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 
 				initialCssClass = CKEDITOR.env.cssClass;
 
-				CKEDITOR.env.cssClass = 'lfr_balloon_editor';
+				CKEDITOR.env.cssClass = `${CKEDITOR.env.cssClass} lfr-balloon-editor`;
 			}}
 			onDestroy={() => {
 				CKEDITOR.env.cssClass = initialCssClass;

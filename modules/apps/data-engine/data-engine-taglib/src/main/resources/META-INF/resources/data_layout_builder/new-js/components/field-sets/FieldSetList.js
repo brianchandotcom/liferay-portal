@@ -19,7 +19,7 @@ import {
 	useForm,
 	useFormState,
 } from 'dynamic-data-mapping-form-renderer';
-import React from 'react';
+import React, {useState} from 'react';
 
 import EmptyState from '../../../js/components/empty-state/EmptyState.es';
 import FieldType from '../../../js/components/field-types/FieldType.es';
@@ -27,6 +27,7 @@ import {DRAG_FIELDSET_ADD} from '../../../js/drag-and-drop/dragTypes.es';
 import {getDataDefinitionFieldSet} from '../../../js/utils/dataConverter.es';
 import {getLocalizedValue, getPluralMessage} from '../../../js/utils/lang.es';
 import {getSearchRegex} from '../../../js/utils/search.es';
+import FieldSetModal from './FieldSetModal';
 
 function getSortedFieldsets(fieldsets) {
 	return fieldsets.sort((a, b) => {
@@ -47,6 +48,10 @@ function getFilteredFieldsets(fieldsets, keywords) {
 }
 
 export default function FieldSetList({searchTerm}) {
+	const [modalState, setModalState] = useState({
+		isVisible: false,
+	});
+
 	const {
 		activePage,
 		availableLanguageIds,
@@ -61,6 +66,12 @@ export default function FieldSetList({searchTerm}) {
 	const dispatch = useForm();
 
 	const filteredFieldsets = getFilteredFieldsets(fieldSets, searchTerm);
+
+	const toggleFieldSet = () => {
+		setModalState(({isVisible}) => ({
+			isVisible: !isVisible,
+		}));
+	};
 
 	const onDoubleClick = ({fieldSet}) => {
 		dispatch({
@@ -83,13 +94,12 @@ export default function FieldSetList({searchTerm}) {
 		});
 	};
 
-	const onClickCreateNewFieldset = () => null;
 	const CreateNewFieldsetButton = () => (
 		<ClayButton
 			block
 			className="add-fieldset"
 			displayType="secondary"
-			onClick={onClickCreateNewFieldset}
+			onClick={toggleFieldSet}
 		>
 			{Liferay.Language.get('create-new-fieldset')}
 		</ClayButton>
@@ -145,6 +155,8 @@ export default function FieldSetList({searchTerm}) {
 					/>
 				</div>
 			)}
+
+			<FieldSetModal onClose={() => toggleFieldSet()} {...modalState} />
 		</>
 	);
 }

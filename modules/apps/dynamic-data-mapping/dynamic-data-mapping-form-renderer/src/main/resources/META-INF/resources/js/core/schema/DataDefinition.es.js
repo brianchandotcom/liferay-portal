@@ -81,4 +81,14 @@ export class DataDefinitionSchema extends Schema {
 	get name() {
 		return this[SYMBOL_RAW].name;
 	}
+
+	build() {
+		return {
+			availableLanguageIds: this.availableLanguageIds,
+			contentType: this.contentType,
+			dataDefinitionFields: this.dataDefinitionFields,
+			defaultLanguageId: this.defaultLanguageId,
+			name: this.name
+		};
+	}
 }

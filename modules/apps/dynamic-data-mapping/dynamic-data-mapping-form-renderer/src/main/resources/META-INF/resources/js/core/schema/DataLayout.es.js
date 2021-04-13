@@ -25,6 +25,12 @@ export class DataLayoutRowSchema extends Schema {
 			fieldNames: column.fields.map(({fieldName}) => fieldName),
 		}));
 	}
+
+	build() {
+		return {
+			dataLayoutColumns: this.dataLayoutColumns,
+		};
+	}
 }
 
 export class DataLayoutPageSchema extends Schema {
@@ -42,6 +48,14 @@ export class DataLayoutPageSchema extends Schema {
 
 	get title() {
 		return this[SYMBOL_RAW].localizedTitle;
+	}
+
+	build() {
+		return {
+			dataLayoutRows: this.dataLayoutRows.map(row => row.build()),
+			description: this.description,
+			title: this.title,
+		};
 	}
 }
 
@@ -73,5 +87,14 @@ export class DataLayoutSchema extends Schema {
 
 	get name() {
 		return this[SYMBOL_RAW].name;
+	}
+
+	build() {
+		return {
+			dataRules: this.dataRules,
+			dataLayoutFields: this.dataLayoutFields,
+			dataLayoutPages: this.dataLayoutPages.map((page) => page.build()),
+			name: this.name,
+		};
 	}
 }

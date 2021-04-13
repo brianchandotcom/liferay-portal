@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.content.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.admin.content.resource.v1_0.PageDefinitionResource;
+import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -53,6 +54,14 @@ public class Mutation {
 			pageDefinitionResourceComponentServiceObjects;
 	}
 
+	public static void setStructuredContentResourceComponentServiceObjects(
+		ComponentServiceObjects<StructuredContentResource>
+			structuredContentResourceComponentServiceObjects) {
+
+		_structuredContentResourceComponentServiceObjects =
+			structuredContentResourceComponentServiceObjects;
+	}
+
 	@GraphQLField(
 		description = "Renders and retrieves HTML for the page definition using the theme of specified site."
 	)
@@ -69,6 +78,24 @@ public class Mutation {
 			pageDefinitionResource ->
 				pageDefinitionResource.postSitePageDefinitionPreview(
 					Long.valueOf(siteKey), pageDefinition));
+	}
+
+	@GraphQLField(
+		description = "Deletes a version of a structured content via its ID."
+	)
+	public boolean deleteStructuredContentByVersion(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("version") Double version)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContentByVersion(
+					structuredContentId, version));
+
+		return true;
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -125,8 +152,26 @@ public class Mutation {
 		pageDefinitionResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			StructuredContentResource structuredContentResource)
+		throws Exception {
+
+		structuredContentResource.setContextAcceptLanguage(_acceptLanguage);
+		structuredContentResource.setContextCompany(_company);
+		structuredContentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		structuredContentResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		structuredContentResource.setContextUriInfo(_uriInfo);
+		structuredContentResource.setContextUser(_user);
+		structuredContentResource.setGroupLocalService(_groupLocalService);
+		structuredContentResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<PageDefinitionResource>
 		_pageDefinitionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<StructuredContentResource>
+		_structuredContentResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

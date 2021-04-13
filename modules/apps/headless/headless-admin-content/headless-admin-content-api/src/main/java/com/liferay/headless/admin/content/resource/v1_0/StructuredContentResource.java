@@ -57,7 +57,16 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
-			getStructuredContentsVersionsPage(Long structuredContentId)
+			getStructuredContentsStructuredContentPage(Long structuredContentId)
+		throws Exception;
+
+	public void deleteStructuredContentByVersion(
+			Long structuredContentId, Double version)
+		throws Exception;
+
+	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
+			getStructuredContentByVersion(
+				Long structuredContentId, Double version)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

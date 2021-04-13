@@ -48,6 +48,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -108,7 +109,7 @@ public abstract class BaseStructuredContentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/versions'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Operation(
@@ -120,17 +121,73 @@ public abstract class BaseStructuredContentResourceImpl
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
 		}
 	)
-	@Path("/structured-contents/{structuredContentId}/versions")
+	@Path("/structured-contents/{structuredContentId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
-			getStructuredContentsVersionsPage(
+			getStructuredContentsStructuredContentPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("structuredContentId")
 				Long structuredContentId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/by-version/{version}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Operation(
+		description = "Deletes a version of a structured content via its ID."
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "structuredContentId"),
+			@Parameter(in = ParameterIn.PATH, name = "version")
+		}
+	)
+	@Path("/structured-contents/{structuredContentId}/by-version/{version}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public void deleteStructuredContentByVersion(
+			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
+				Long structuredContentId,
+			@NotNull @Parameter(hidden = true) @PathParam("version") Double
+				version)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/by-version/{version}'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Operation(description = "Retrieves a version of a structured content")
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "structuredContentId"),
+			@Parameter(in = ParameterIn.PATH, name = "version")
+		}
+	)
+	@Path("/structured-contents/{structuredContentId}/by-version/{version}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
+			getStructuredContentByVersion(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("structuredContentId")
+				Long structuredContentId,
+				@NotNull @Parameter(hidden = true) @PathParam("version") Double
+					version)
+		throws Exception {
+
+		return new com.liferay.headless.delivery.dto.v1_0.StructuredContent();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -572,26 +572,31 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testGetStructuredContentsVersionsPage() throws Exception {
+	public void testGetStructuredContentsStructuredContentPage()
+		throws Exception {
+
 		Page<StructuredContent> page =
-			structuredContentResource.getStructuredContentsVersionsPage(
-				testGetStructuredContentsVersionsPage_getStructuredContentId());
+			structuredContentResource.
+				getStructuredContentsStructuredContentPage(
+					testGetStructuredContentsStructuredContentPage_getStructuredContentId());
 
 		Assert.assertEquals(0, page.getTotalCount());
 
 		Long structuredContentId =
-			testGetStructuredContentsVersionsPage_getStructuredContentId();
+			testGetStructuredContentsStructuredContentPage_getStructuredContentId();
 		Long irrelevantStructuredContentId =
-			testGetStructuredContentsVersionsPage_getIrrelevantStructuredContentId();
+			testGetStructuredContentsStructuredContentPage_getIrrelevantStructuredContentId();
 
 		if (irrelevantStructuredContentId != null) {
 			StructuredContent irrelevantStructuredContent =
-				testGetStructuredContentsVersionsPage_addStructuredContent(
+				testGetStructuredContentsStructuredContentPage_addStructuredContent(
 					irrelevantStructuredContentId,
 					randomIrrelevantStructuredContent());
 
-			page = structuredContentResource.getStructuredContentsVersionsPage(
-				irrelevantStructuredContentId);
+			page =
+				structuredContentResource.
+					getStructuredContentsStructuredContentPage(
+						irrelevantStructuredContentId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -602,15 +607,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		StructuredContent structuredContent1 =
-			testGetStructuredContentsVersionsPage_addStructuredContent(
+			testGetStructuredContentsStructuredContentPage_addStructuredContent(
 				structuredContentId, randomStructuredContent());
 
 		StructuredContent structuredContent2 =
-			testGetStructuredContentsVersionsPage_addStructuredContent(
+			testGetStructuredContentsStructuredContentPage_addStructuredContent(
 				structuredContentId, randomStructuredContent());
 
-		page = structuredContentResource.getStructuredContentsVersionsPage(
-			structuredContentId);
+		page =
+			structuredContentResource.
+				getStructuredContentsStructuredContentPage(structuredContentId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -621,7 +627,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContent
-			testGetStructuredContentsVersionsPage_addStructuredContent(
+			testGetStructuredContentsStructuredContentPage_addStructuredContent(
 				Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -630,7 +636,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected Long
-			testGetStructuredContentsVersionsPage_getStructuredContentId()
+			testGetStructuredContentsStructuredContentPage_getStructuredContentId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -638,10 +644,114 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected Long
-			testGetStructuredContentsVersionsPage_getIrrelevantStructuredContentId()
+			testGetStructuredContentsStructuredContentPage_getIrrelevantStructuredContentId()
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testDeleteStructuredContentByVersion() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent =
+			testDeleteStructuredContentByVersion_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.
+				deleteStructuredContentByVersionHttpResponse(
+					structuredContent.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentByVersionHttpResponse(
+				structuredContent.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentByVersionHttpResponse(
+				0L, null));
+	}
+
+	protected StructuredContent
+			testDeleteStructuredContentByVersion_addStructuredContent()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetStructuredContentByVersion() throws Exception {
+		StructuredContent postStructuredContent =
+			testGetStructuredContentByVersion_addStructuredContent();
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContentByVersion(
+				postStructuredContent.getId(), null);
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	protected StructuredContent
+			testGetStructuredContentByVersion_addStructuredContent()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetStructuredContentByVersion() throws Exception {
+		StructuredContent structuredContent =
+			testGraphQLStructuredContent_addStructuredContent();
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"structuredContentByVersion",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"structuredContentId",
+											structuredContent.getId());
+										put("version", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/structuredContentByVersion"))));
+	}
+
+	@Test
+	public void testGraphQLGetStructuredContentByVersionNotFound()
+		throws Exception {
+
+		Long irrelevantStructuredContentId = RandomTestUtil.randomLong();
+		Double irrelevantVersion = RandomTestUtil.randomDouble();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"structuredContentByVersion",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentId",
+									irrelevantStructuredContentId);
+								put("version", irrelevantVersion);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	@Rule

@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -526,6 +527,13 @@ public class UIItemsBuilder {
 
 	public void addEditImageItem(List<MenuItem> menuItems)
 		throws PortalException {
+
+		if (!ArrayUtil.contains(
+				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+				_fileVersion.getMimeType())) {
+
+			return;
+		}
 
 		PortletURL portletURL = _getControlPanelRenderURL(
 			"/document_library/edit_image");

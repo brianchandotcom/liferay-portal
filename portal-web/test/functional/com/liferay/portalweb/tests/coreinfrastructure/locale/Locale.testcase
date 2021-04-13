@@ -246,19 +246,28 @@ definition {
 
 		User.firstLoginPG();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Navigation Menu Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Navigation Menu Page",
+			widgetName = "Navigation Menu");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest/navigation-menu-page");
 
 		task ("Assert preferred locale persists by asserting Widget name.") {
 			AssertElementPresent(
-				key_portletName = "Bonjour le monde",
+				key_portletName = "Menu de Navigation",
 				locator1 = "Portlet#TITLE");
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/guest");
+		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/guest/navigation-menu-page");
 
 		task ("Assert default locale returned by asserting Widget name.") {
 			AssertElementPresent(
-				key_portletName = "Hello Velocity",
+				key_portletName = "Navigation Menu",
 				locator1 = "Portlet#TITLE");
 		}
 	}

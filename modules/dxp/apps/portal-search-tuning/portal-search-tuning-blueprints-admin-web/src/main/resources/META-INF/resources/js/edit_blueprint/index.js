@@ -43,7 +43,6 @@ const TABS = {
 
 function EditBlueprintForm({
 	blueprintId,
-	blueprintType,
 	entityJSON,
 	initialConfigurationString = '{}',
 	initialDescription = {},
@@ -294,7 +293,6 @@ function EditBlueprintForm({
 				return;
 			}
 
-			formData.append(`${namespace}type`, blueprintType);
 			formData.append(`${namespace}blueprintId`, blueprintId);
 			formData.append(`${namespace}redirect`, redirectURL);
 
@@ -329,7 +327,6 @@ function EditBlueprintForm({
 		[
 			advancedConfig,
 			aggregationConfig,
-			blueprintType,
 			blueprintId,
 			frameworkConfig,
 			namespace,
@@ -481,7 +478,6 @@ function EditBlueprintForm({
 
 EditBlueprintForm.propTypes = {
 	blueprintId: PropTypes.string,
-	blueprintType: PropTypes.number,
 	entityJSON: PropTypes.object,
 	initialConfigurationString: PropTypes.string,
 	initialDescription: PropTypes.object,

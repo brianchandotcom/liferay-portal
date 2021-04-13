@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestUtil;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilder;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilderFactory;
@@ -127,7 +127,7 @@ public class PreviewBlueprintMVCResourceCommand extends BaseMVCResourceCommand {
 		Blueprint blueprint = _blueprintLocalService.createBlueprint(0L);
 
 		blueprint.setConfiguration(
-			ParamUtil.getString(resourceRequest, "configuration"));
+			BlueprintsAdminRequestUtil.getConfiguration(resourceRequest));
 
 		return blueprint;
 	}
@@ -153,6 +153,9 @@ public class PreviewBlueprintMVCResourceCommand extends BaseMVCResourceCommand {
 			_blueprintsAttributesHelper.getBlueprintsResponseAttributesBuilder(
 				resourceRequest, resourceResponse, blueprint,
 				blueprintsRequestAttributes);
+
+		blueprintsAttributesBuilder.addAttribute(
+			ResponseAttributeKeys.INCLUDE_DOCUMENT, true);
 
 		blueprintsAttributesBuilder.addAttribute(
 			ResponseAttributeKeys.INCLUDE_RESULT, true);

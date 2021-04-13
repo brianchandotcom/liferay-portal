@@ -148,7 +148,7 @@ public class CustomQueryBlueprintsTest {
 		Blueprint blueprint = blueprintService.addCompanyBlueprint(
 			Collections.singletonMap(LocaleUtil.US, "Los Angeles Boost"),
 			Collections.singletonMap(LocaleUtil.US, "test Description"),
-			configurationString, "", 1, _getServiceContext());
+			configurationString, "", _getServiceContext());
 
 		_blueprint = blueprint;
 
@@ -237,9 +237,6 @@ public class CustomQueryBlueprintsTest {
 		mockActionRequest.setParameter(
 			BlueprintsAdminWebKeys.BLUEPRINT_ID,
 			String.valueOf(blueprint.getBlueprintId()));
-
-		mockActionRequest.setParameter(
-			BlueprintsAdminWebKeys.BLUEPRINT_TYPE, "1");
 
 		mockActionRequest.setParameter(
 			"title_" + LocaleUtil.toLanguageId(LocaleUtil.US),

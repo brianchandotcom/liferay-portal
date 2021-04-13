@@ -3742,74 +3742,75 @@ public class BlueprintPersistenceImpl
 	private static final String _FINDER_COLUMN_G_S_STATUS_2 =
 		"blueprint.status = ?";
 
-	private FinderPath _finderPathWithPaginationFindByG_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_T;
-	private FinderPath _finderPathCountByG_T;
+	private FinderPath _finderPathWithPaginationFindByG_S_T;
+	private FinderPath _finderPathWithoutPaginationFindByG_S_T;
+	private FinderPath _finderPathCountByG_S_T;
 
 	/**
-	 * Returns all the blueprints where groupId = &#63; and type = &#63;.
+	 * Returns all the blueprints where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @return the matching blueprints
 	 */
 	@Override
-	public List<Blueprint> findByG_T(long groupId, int type) {
-		return findByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<Blueprint> findByG_S_T(long groupId, int status) {
+		return findByG_S_T(
+			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the blueprints where groupId = &#63; and type = &#63;.
+	 * Returns a range of all the blueprints where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param start the lower bound of the range of blueprints
 	 * @param end the upper bound of the range of blueprints (not inclusive)
 	 * @return the range of matching blueprints
 	 */
 	@Override
-	public List<Blueprint> findByG_T(
-		long groupId, int type, int start, int end) {
+	public List<Blueprint> findByG_S_T(
+		long groupId, int status, int start, int end) {
 
-		return findByG_T(groupId, type, start, end, null);
+		return findByG_S_T(groupId, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the blueprints where groupId = &#63; and type = &#63;.
+	 * Returns an ordered range of all the blueprints where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param start the lower bound of the range of blueprints
 	 * @param end the upper bound of the range of blueprints (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching blueprints
 	 */
 	@Override
-	public List<Blueprint> findByG_T(
-		long groupId, int type, int start, int end,
+	public List<Blueprint> findByG_S_T(
+		long groupId, int status, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator) {
 
-		return findByG_T(groupId, type, start, end, orderByComparator, true);
+		return findByG_S_T(
+			groupId, status, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the blueprints where groupId = &#63; and type = &#63;.
+	 * Returns an ordered range of all the blueprints where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param start the lower bound of the range of blueprints
 	 * @param end the upper bound of the range of blueprints (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -3817,8 +3818,8 @@ public class BlueprintPersistenceImpl
 	 * @return the ordered range of matching blueprints
 	 */
 	@Override
-	public List<Blueprint> findByG_T(
-		long groupId, int type, int start, int end,
+	public List<Blueprint> findByG_S_T(
+		long groupId, int status, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator,
 		boolean useFinderCache) {
 
@@ -3829,14 +3830,14 @@ public class BlueprintPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_T;
-				finderArgs = new Object[] {groupId, type};
+				finderPath = _finderPathWithoutPaginationFindByG_S_T;
+				finderArgs = new Object[] {groupId, status};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByG_T;
+			finderPath = _finderPathWithPaginationFindByG_S_T;
 			finderArgs = new Object[] {
-				groupId, type, start, end, orderByComparator
+				groupId, status, start, end, orderByComparator
 			};
 		}
 
@@ -3849,7 +3850,7 @@ public class BlueprintPersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (Blueprint blueprint : list) {
 					if ((groupId != blueprint.getGroupId()) ||
-						(type != blueprint.getType())) {
+						(status != blueprint.getStatus())) {
 
 						list = null;
 
@@ -3872,9 +3873,9 @@ public class BlueprintPersistenceImpl
 
 			sb.append(_SQL_SELECT_BLUEPRINT_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_T_GROUPID_2);
+			sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_T_TYPE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_STATUS_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -3897,7 +3898,7 @@ public class BlueprintPersistenceImpl
 
 				queryPos.add(groupId);
 
-				queryPos.add(type);
+				queryPos.add(status);
 
 				list = (List<Blueprint>)QueryUtil.list(
 					query, getDialect(), start, end);
@@ -3920,22 +3921,22 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Returns the first blueprint in the ordered set where groupId = &#63; and type = &#63;.
+	 * Returns the first blueprint in the ordered set where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching blueprint
 	 * @throws NoSuchBlueprintException if a matching blueprint could not be found
 	 */
 	@Override
-	public Blueprint findByG_T_First(
-			long groupId, int type,
+	public Blueprint findByG_S_T_First(
+			long groupId, int status,
 			OrderByComparator<Blueprint> orderByComparator)
 		throws NoSuchBlueprintException {
 
-		Blueprint blueprint = fetchByG_T_First(
-			groupId, type, orderByComparator);
+		Blueprint blueprint = fetchByG_S_T_First(
+			groupId, status, orderByComparator);
 
 		if (blueprint != null) {
 			return blueprint;
@@ -3948,8 +3949,8 @@ public class BlueprintPersistenceImpl
 		sb.append("groupId=");
 		sb.append(groupId);
 
-		sb.append(", type=");
-		sb.append(type);
+		sb.append(", status=");
+		sb.append(status);
 
 		sb.append("}");
 
@@ -3957,20 +3958,20 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Returns the first blueprint in the ordered set where groupId = &#63; and type = &#63;.
+	 * Returns the first blueprint in the ordered set where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching blueprint, or <code>null</code> if a matching blueprint could not be found
 	 */
 	@Override
-	public Blueprint fetchByG_T_First(
-		long groupId, int type,
+	public Blueprint fetchByG_S_T_First(
+		long groupId, int status,
 		OrderByComparator<Blueprint> orderByComparator) {
 
-		List<Blueprint> list = findByG_T(
-			groupId, type, 0, 1, orderByComparator);
+		List<Blueprint> list = findByG_S_T(
+			groupId, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3980,21 +3981,22 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Returns the last blueprint in the ordered set where groupId = &#63; and type = &#63;.
+	 * Returns the last blueprint in the ordered set where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching blueprint
 	 * @throws NoSuchBlueprintException if a matching blueprint could not be found
 	 */
 	@Override
-	public Blueprint findByG_T_Last(
-			long groupId, int type,
+	public Blueprint findByG_S_T_Last(
+			long groupId, int status,
 			OrderByComparator<Blueprint> orderByComparator)
 		throws NoSuchBlueprintException {
 
-		Blueprint blueprint = fetchByG_T_Last(groupId, type, orderByComparator);
+		Blueprint blueprint = fetchByG_S_T_Last(
+			groupId, status, orderByComparator);
 
 		if (blueprint != null) {
 			return blueprint;
@@ -4007,8 +4009,8 @@ public class BlueprintPersistenceImpl
 		sb.append("groupId=");
 		sb.append(groupId);
 
-		sb.append(", type=");
-		sb.append(type);
+		sb.append(", status=");
+		sb.append(status);
 
 		sb.append("}");
 
@@ -4016,26 +4018,26 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Returns the last blueprint in the ordered set where groupId = &#63; and type = &#63;.
+	 * Returns the last blueprint in the ordered set where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching blueprint, or <code>null</code> if a matching blueprint could not be found
 	 */
 	@Override
-	public Blueprint fetchByG_T_Last(
-		long groupId, int type,
+	public Blueprint fetchByG_S_T_Last(
+		long groupId, int status,
 		OrderByComparator<Blueprint> orderByComparator) {
 
-		int count = countByG_T(groupId, type);
+		int count = countByG_S_T(groupId, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Blueprint> list = findByG_T(
-			groupId, type, count - 1, count, orderByComparator);
+		List<Blueprint> list = findByG_S_T(
+			groupId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4045,18 +4047,18 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Returns the blueprints before and after the current blueprint in the ordered set where groupId = &#63; and type = &#63;.
+	 * Returns the blueprints before and after the current blueprint in the ordered set where groupId = &#63; and status = &#63;.
 	 *
 	 * @param blueprintId the primary key of the current blueprint
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next blueprint
 	 * @throws NoSuchBlueprintException if a blueprint with the primary key could not be found
 	 */
 	@Override
-	public Blueprint[] findByG_T_PrevAndNext(
-			long blueprintId, long groupId, int type,
+	public Blueprint[] findByG_S_T_PrevAndNext(
+			long blueprintId, long groupId, int status,
 			OrderByComparator<Blueprint> orderByComparator)
 		throws NoSuchBlueprintException {
 
@@ -4069,13 +4071,13 @@ public class BlueprintPersistenceImpl
 
 			Blueprint[] array = new BlueprintImpl[3];
 
-			array[0] = getByG_T_PrevAndNext(
-				session, blueprint, groupId, type, orderByComparator, true);
+			array[0] = getByG_S_T_PrevAndNext(
+				session, blueprint, groupId, status, orderByComparator, true);
 
 			array[1] = blueprint;
 
-			array[2] = getByG_T_PrevAndNext(
-				session, blueprint, groupId, type, orderByComparator, false);
+			array[2] = getByG_S_T_PrevAndNext(
+				session, blueprint, groupId, status, orderByComparator, false);
 
 			return array;
 		}
@@ -4087,8 +4089,8 @@ public class BlueprintPersistenceImpl
 		}
 	}
 
-	protected Blueprint getByG_T_PrevAndNext(
-		Session session, Blueprint blueprint, long groupId, int type,
+	protected Blueprint getByG_S_T_PrevAndNext(
+		Session session, Blueprint blueprint, long groupId, int status,
 		OrderByComparator<Blueprint> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -4104,9 +4106,9 @@ public class BlueprintPersistenceImpl
 
 		sb.append(_SQL_SELECT_BLUEPRINT_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_T_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_T_TYPE_2);
+		sb.append(_FINDER_COLUMN_G_S_T_STATUS_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -4179,7 +4181,7 @@ public class BlueprintPersistenceImpl
 
 		queryPos.add(groupId);
 
-		queryPos.add(type);
+		queryPos.add(status);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -4200,59 +4202,59 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Returns all the blueprints that the user has permission to view where groupId = &#63; and type = &#63;.
+	 * Returns all the blueprints that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @return the matching blueprints that the user has permission to view
 	 */
 	@Override
-	public List<Blueprint> filterFindByG_T(long groupId, int type) {
-		return filterFindByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<Blueprint> filterFindByG_S_T(long groupId, int status) {
+		return filterFindByG_S_T(
+			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the blueprints that the user has permission to view where groupId = &#63; and type = &#63;.
+	 * Returns a range of all the blueprints that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param start the lower bound of the range of blueprints
 	 * @param end the upper bound of the range of blueprints (not inclusive)
 	 * @return the range of matching blueprints that the user has permission to view
 	 */
 	@Override
-	public List<Blueprint> filterFindByG_T(
-		long groupId, int type, int start, int end) {
+	public List<Blueprint> filterFindByG_S_T(
+		long groupId, int status, int start, int end) {
 
-		return filterFindByG_T(groupId, type, start, end, null);
+		return filterFindByG_S_T(groupId, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the blueprints that the user has permissions to view where groupId = &#63; and type = &#63;.
+	 * Returns an ordered range of all the blueprints that the user has permissions to view where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param type the type
+	 * @param status the status
 	 * @param start the lower bound of the range of blueprints
 	 * @param end the upper bound of the range of blueprints (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching blueprints that the user has permission to view
 	 */
 	@Override
-	public List<Blueprint> filterFindByG_T(
-		long groupId, int type, int start, int end,
+	public List<Blueprint> filterFindByG_S_T(
+		long groupId, int status, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_T(groupId, type, start, end, orderByComparator);
+			return findByG_S_T(groupId, status, start, end, orderByComparator);
 		}
 
 		StringBundler sb = null;
@@ -4272,1507 +4274,9 @@ public class BlueprintPersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_BLUEPRINT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_BLUEPRINT_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlueprintModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				sb.append(BlueprintModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Blueprint.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, BlueprintImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, BlueprintImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(type);
-
-			return (List<Blueprint>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the blueprints before and after the current blueprint in the ordered set of blueprints that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param blueprintId the primary key of the current blueprint
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next blueprint
-	 * @throws NoSuchBlueprintException if a blueprint with the primary key could not be found
-	 */
-	@Override
-	public Blueprint[] filterFindByG_T_PrevAndNext(
-			long blueprintId, long groupId, int type,
-			OrderByComparator<Blueprint> orderByComparator)
-		throws NoSuchBlueprintException {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_T_PrevAndNext(
-				blueprintId, groupId, type, orderByComparator);
-		}
-
-		Blueprint blueprint = findByPrimaryKey(blueprintId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Blueprint[] array = new BlueprintImpl[3];
-
-			array[0] = filterGetByG_T_PrevAndNext(
-				session, blueprint, groupId, type, orderByComparator, true);
-
-			array[1] = blueprint;
-
-			array[2] = filterGetByG_T_PrevAndNext(
-				session, blueprint, groupId, type, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected Blueprint filterGetByG_T_PrevAndNext(
-		Session session, Blueprint blueprint, long groupId, int type,
-		OrderByComparator<Blueprint> orderByComparator, boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_BLUEPRINT_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_BLUEPRINT_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_BLUEPRINT_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
-							true));
-				}
-				else {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
-							true));
-				}
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
-				}
-				else {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
-				}
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlueprintModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				sb.append(BlueprintModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Blueprint.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-		sqlQuery.setFirstResult(0);
-		sqlQuery.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, BlueprintImpl.class);
-		}
-		else {
-			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, BlueprintImpl.class);
-		}
-
-		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-		queryPos.add(groupId);
-
-		queryPos.add(type);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(blueprint)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<Blueprint> list = sqlQuery.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the blueprints where groupId = &#63; and type = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 */
-	@Override
-	public void removeByG_T(long groupId, int type) {
-		for (Blueprint blueprint :
-				findByG_T(
-					groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blueprint);
-		}
-	}
-
-	/**
-	 * Returns the number of blueprints where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the number of matching blueprints
-	 */
-	@Override
-	public int countByG_T(long groupId, int type) {
-		FinderPath finderPath = _finderPathCountByG_T;
-
-		Object[] finderArgs = new Object[] {groupId, type};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_BLUEPRINT_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of blueprints that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the number of matching blueprints that the user has permission to view
-	 */
-	@Override
-	public int filterCountByG_T(long groupId, int type) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_T(groupId, type);
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_BLUEPRINT_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Blueprint.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(type);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	private static final String _FINDER_COLUMN_G_T_GROUPID_2 =
-		"blueprint.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_T_TYPE_2 =
-		"blueprint.type = ?";
-
-	private static final String _FINDER_COLUMN_G_T_TYPE_2_SQL =
-		"blueprint.type_ = ?";
-
-	private FinderPath _finderPathWithPaginationFindByC_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_T;
-	private FinderPath _finderPathCountByC_T;
-
-	/**
-	 * Returns all the blueprints where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @return the matching blueprints
-	 */
-	@Override
-	public List<Blueprint> findByC_T(long companyId, int type) {
-		return findByC_T(
-			companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the blueprints where companyId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param start the lower bound of the range of blueprints
-	 * @param end the upper bound of the range of blueprints (not inclusive)
-	 * @return the range of matching blueprints
-	 */
-	@Override
-	public List<Blueprint> findByC_T(
-		long companyId, int type, int start, int end) {
-
-		return findByC_T(companyId, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the blueprints where companyId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param start the lower bound of the range of blueprints
-	 * @param end the upper bound of the range of blueprints (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching blueprints
-	 */
-	@Override
-	public List<Blueprint> findByC_T(
-		long companyId, int type, int start, int end,
-		OrderByComparator<Blueprint> orderByComparator) {
-
-		return findByC_T(companyId, type, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the blueprints where companyId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param start the lower bound of the range of blueprints
-	 * @param end the upper bound of the range of blueprints (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching blueprints
-	 */
-	@Override
-	public List<Blueprint> findByC_T(
-		long companyId, int type, int start, int end,
-		OrderByComparator<Blueprint> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_T;
-				finderArgs = new Object[] {companyId, type};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_T;
-			finderArgs = new Object[] {
-				companyId, type, start, end, orderByComparator
-			};
-		}
-
-		List<Blueprint> list = null;
-
-		if (useFinderCache) {
-			list = (List<Blueprint>)finderCache.getResult(
-				finderPath, finderArgs);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (Blueprint blueprint : list) {
-					if ((companyId != blueprint.getCompanyId()) ||
-						(type != blueprint.getType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_BLUEPRINT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_T_TYPE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(BlueprintModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(type);
-
-				list = (List<Blueprint>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first blueprint in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching blueprint
-	 * @throws NoSuchBlueprintException if a matching blueprint could not be found
-	 */
-	@Override
-	public Blueprint findByC_T_First(
-			long companyId, int type,
-			OrderByComparator<Blueprint> orderByComparator)
-		throws NoSuchBlueprintException {
-
-		Blueprint blueprint = fetchByC_T_First(
-			companyId, type, orderByComparator);
-
-		if (blueprint != null) {
-			return blueprint;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchBlueprintException(sb.toString());
-	}
-
-	/**
-	 * Returns the first blueprint in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching blueprint, or <code>null</code> if a matching blueprint could not be found
-	 */
-	@Override
-	public Blueprint fetchByC_T_First(
-		long companyId, int type,
-		OrderByComparator<Blueprint> orderByComparator) {
-
-		List<Blueprint> list = findByC_T(
-			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last blueprint in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blueprint
-	 * @throws NoSuchBlueprintException if a matching blueprint could not be found
-	 */
-	@Override
-	public Blueprint findByC_T_Last(
-			long companyId, int type,
-			OrderByComparator<Blueprint> orderByComparator)
-		throws NoSuchBlueprintException {
-
-		Blueprint blueprint = fetchByC_T_Last(
-			companyId, type, orderByComparator);
-
-		if (blueprint != null) {
-			return blueprint;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchBlueprintException(sb.toString());
-	}
-
-	/**
-	 * Returns the last blueprint in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blueprint, or <code>null</code> if a matching blueprint could not be found
-	 */
-	@Override
-	public Blueprint fetchByC_T_Last(
-		long companyId, int type,
-		OrderByComparator<Blueprint> orderByComparator) {
-
-		int count = countByC_T(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Blueprint> list = findByC_T(
-			companyId, type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the blueprints before and after the current blueprint in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param blueprintId the primary key of the current blueprint
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next blueprint
-	 * @throws NoSuchBlueprintException if a blueprint with the primary key could not be found
-	 */
-	@Override
-	public Blueprint[] findByC_T_PrevAndNext(
-			long blueprintId, long companyId, int type,
-			OrderByComparator<Blueprint> orderByComparator)
-		throws NoSuchBlueprintException {
-
-		Blueprint blueprint = findByPrimaryKey(blueprintId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Blueprint[] array = new BlueprintImpl[3];
-
-			array[0] = getByC_T_PrevAndNext(
-				session, blueprint, companyId, type, orderByComparator, true);
-
-			array[1] = blueprint;
-
-			array[2] = getByC_T_PrevAndNext(
-				session, blueprint, companyId, type, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected Blueprint getByC_T_PrevAndNext(
-		Session session, Blueprint blueprint, long companyId, int type,
-		OrderByComparator<Blueprint> orderByComparator, boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		sb.append(_SQL_SELECT_BLUEPRINT_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_T_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_T_TYPE_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			sb.append(BlueprintModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = sb.toString();
-
-		Query query = session.createQuery(sql);
-
-		query.setFirstResult(0);
-		query.setMaxResults(2);
-
-		QueryPos queryPos = QueryPos.getInstance(query);
-
-		queryPos.add(companyId);
-
-		queryPos.add(type);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(blueprint)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<Blueprint> list = query.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the blueprints where companyId = &#63; and type = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 */
-	@Override
-	public void removeByC_T(long companyId, int type) {
-		for (Blueprint blueprint :
-				findByC_T(
-					companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blueprint);
-		}
-	}
-
-	/**
-	 * Returns the number of blueprints where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @return the number of matching blueprints
-	 */
-	@Override
-	public int countByC_T(long companyId, int type) {
-		FinderPath finderPath = _finderPathCountByC_T;
-
-		Object[] finderArgs = new Object[] {companyId, type};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_BLUEPRINT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_T_COMPANYID_2 =
-		"blueprint.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_T_TYPE_2 =
-		"blueprint.type = ?";
-
-	private FinderPath _finderPathWithPaginationFindByG_S_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_S_T;
-	private FinderPath _finderPathCountByG_S_T;
-
-	/**
-	 * Returns all the blueprints where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @return the matching blueprints
-	 */
-	@Override
-	public List<Blueprint> findByG_S_T(long groupId, int status, int type) {
-		return findByG_S_T(
-			groupId, status, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the blueprints where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param start the lower bound of the range of blueprints
-	 * @param end the upper bound of the range of blueprints (not inclusive)
-	 * @return the range of matching blueprints
-	 */
-	@Override
-	public List<Blueprint> findByG_S_T(
-		long groupId, int status, int type, int start, int end) {
-
-		return findByG_S_T(groupId, status, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the blueprints where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param start the lower bound of the range of blueprints
-	 * @param end the upper bound of the range of blueprints (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching blueprints
-	 */
-	@Override
-	public List<Blueprint> findByG_S_T(
-		long groupId, int status, int type, int start, int end,
-		OrderByComparator<Blueprint> orderByComparator) {
-
-		return findByG_S_T(
-			groupId, status, type, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the blueprints where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param start the lower bound of the range of blueprints
-	 * @param end the upper bound of the range of blueprints (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching blueprints
-	 */
-	@Override
-	public List<Blueprint> findByG_S_T(
-		long groupId, int status, int type, int start, int end,
-		OrderByComparator<Blueprint> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_S_T;
-				finderArgs = new Object[] {groupId, status, type};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByG_S_T;
-			finderArgs = new Object[] {
-				groupId, status, type, start, end, orderByComparator
-			};
-		}
-
-		List<Blueprint> list = null;
-
-		if (useFinderCache) {
-			list = (List<Blueprint>)finderCache.getResult(
-				finderPath, finderArgs);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (Blueprint blueprint : list) {
-					if ((groupId != blueprint.getGroupId()) ||
-						(status != blueprint.getStatus()) ||
-						(type != blueprint.getType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_BLUEPRINT_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_S_T_STATUS_2);
-
-			sb.append(_FINDER_COLUMN_G_S_T_TYPE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(BlueprintModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(status);
-
-				queryPos.add(type);
-
-				list = (List<Blueprint>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first blueprint in the ordered set where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching blueprint
-	 * @throws NoSuchBlueprintException if a matching blueprint could not be found
-	 */
-	@Override
-	public Blueprint findByG_S_T_First(
-			long groupId, int status, int type,
-			OrderByComparator<Blueprint> orderByComparator)
-		throws NoSuchBlueprintException {
-
-		Blueprint blueprint = fetchByG_S_T_First(
-			groupId, status, type, orderByComparator);
-
-		if (blueprint != null) {
-			return blueprint;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchBlueprintException(sb.toString());
-	}
-
-	/**
-	 * Returns the first blueprint in the ordered set where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching blueprint, or <code>null</code> if a matching blueprint could not be found
-	 */
-	@Override
-	public Blueprint fetchByG_S_T_First(
-		long groupId, int status, int type,
-		OrderByComparator<Blueprint> orderByComparator) {
-
-		List<Blueprint> list = findByG_S_T(
-			groupId, status, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last blueprint in the ordered set where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blueprint
-	 * @throws NoSuchBlueprintException if a matching blueprint could not be found
-	 */
-	@Override
-	public Blueprint findByG_S_T_Last(
-			long groupId, int status, int type,
-			OrderByComparator<Blueprint> orderByComparator)
-		throws NoSuchBlueprintException {
-
-		Blueprint blueprint = fetchByG_S_T_Last(
-			groupId, status, type, orderByComparator);
-
-		if (blueprint != null) {
-			return blueprint;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchBlueprintException(sb.toString());
-	}
-
-	/**
-	 * Returns the last blueprint in the ordered set where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blueprint, or <code>null</code> if a matching blueprint could not be found
-	 */
-	@Override
-	public Blueprint fetchByG_S_T_Last(
-		long groupId, int status, int type,
-		OrderByComparator<Blueprint> orderByComparator) {
-
-		int count = countByG_S_T(groupId, status, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Blueprint> list = findByG_S_T(
-			groupId, status, type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the blueprints before and after the current blueprint in the ordered set where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * @param blueprintId the primary key of the current blueprint
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next blueprint
-	 * @throws NoSuchBlueprintException if a blueprint with the primary key could not be found
-	 */
-	@Override
-	public Blueprint[] findByG_S_T_PrevAndNext(
-			long blueprintId, long groupId, int status, int type,
-			OrderByComparator<Blueprint> orderByComparator)
-		throws NoSuchBlueprintException {
-
-		Blueprint blueprint = findByPrimaryKey(blueprintId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Blueprint[] array = new BlueprintImpl[3];
-
-			array[0] = getByG_S_T_PrevAndNext(
-				session, blueprint, groupId, status, type, orderByComparator,
-				true);
-
-			array[1] = blueprint;
-
-			array[2] = getByG_S_T_PrevAndNext(
-				session, blueprint, groupId, status, type, orderByComparator,
-				false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected Blueprint getByG_S_T_PrevAndNext(
-		Session session, Blueprint blueprint, long groupId, int status,
-		int type, OrderByComparator<Blueprint> orderByComparator,
-		boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		sb.append(_SQL_SELECT_BLUEPRINT_WHERE);
-
 		sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 		sb.append(_FINDER_COLUMN_G_S_T_STATUS_2);
-
-		sb.append(_FINDER_COLUMN_G_S_T_TYPE_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			sb.append(BlueprintModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = sb.toString();
-
-		Query query = session.createQuery(sql);
-
-		query.setFirstResult(0);
-		query.setMaxResults(2);
-
-		QueryPos queryPos = QueryPos.getInstance(query);
-
-		queryPos.add(groupId);
-
-		queryPos.add(status);
-
-		queryPos.add(type);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(blueprint)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<Blueprint> list = query.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the blueprints that the user has permission to view where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @return the matching blueprints that the user has permission to view
-	 */
-	@Override
-	public List<Blueprint> filterFindByG_S_T(
-		long groupId, int status, int type) {
-
-		return filterFindByG_S_T(
-			groupId, status, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the blueprints that the user has permission to view where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param start the lower bound of the range of blueprints
-	 * @param end the upper bound of the range of blueprints (not inclusive)
-	 * @return the range of matching blueprints that the user has permission to view
-	 */
-	@Override
-	public List<Blueprint> filterFindByG_S_T(
-		long groupId, int status, int type, int start, int end) {
-
-		return filterFindByG_S_T(groupId, status, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the blueprints that the user has permissions to view where groupId = &#63; and status = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param type the type
-	 * @param start the lower bound of the range of blueprints
-	 * @param end the upper bound of the range of blueprints (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching blueprints that the user has permission to view
-	 */
-	@Override
-	public List<Blueprint> filterFindByG_S_T(
-		long groupId, int status, int type, int start, int end,
-		OrderByComparator<Blueprint> orderByComparator) {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_S_T(
-				groupId, status, type, start, end, orderByComparator);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(6);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_BLUEPRINT_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_BLUEPRINT_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_S_T_STATUS_2);
-
-		sb.append(_FINDER_COLUMN_G_S_T_TYPE_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(_FILTER_SQL_SELECT_BLUEPRINT_NO_INLINE_DISTINCT_WHERE_2);
@@ -5821,8 +4325,6 @@ public class BlueprintPersistenceImpl
 
 			queryPos.add(status);
 
-			queryPos.add(type);
-
 			return (List<Blueprint>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
 		}
@@ -5835,25 +4337,24 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Returns the blueprints before and after the current blueprint in the ordered set of blueprints that the user has permission to view where groupId = &#63; and status = &#63; and type = &#63;.
+	 * Returns the blueprints before and after the current blueprint in the ordered set of blueprints that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param blueprintId the primary key of the current blueprint
 	 * @param groupId the group ID
 	 * @param status the status
-	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next blueprint
 	 * @throws NoSuchBlueprintException if a blueprint with the primary key could not be found
 	 */
 	@Override
 	public Blueprint[] filterFindByG_S_T_PrevAndNext(
-			long blueprintId, long groupId, int status, int type,
+			long blueprintId, long groupId, int status,
 			OrderByComparator<Blueprint> orderByComparator)
 		throws NoSuchBlueprintException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_S_T_PrevAndNext(
-				blueprintId, groupId, status, type, orderByComparator);
+				blueprintId, groupId, status, orderByComparator);
 		}
 
 		Blueprint blueprint = findByPrimaryKey(blueprintId);
@@ -5866,14 +4367,12 @@ public class BlueprintPersistenceImpl
 			Blueprint[] array = new BlueprintImpl[3];
 
 			array[0] = filterGetByG_S_T_PrevAndNext(
-				session, blueprint, groupId, status, type, orderByComparator,
-				true);
+				session, blueprint, groupId, status, orderByComparator, true);
 
 			array[1] = blueprint;
 
 			array[2] = filterGetByG_S_T_PrevAndNext(
-				session, blueprint, groupId, status, type, orderByComparator,
-				false);
+				session, blueprint, groupId, status, orderByComparator, false);
 
 			return array;
 		}
@@ -5887,18 +4386,17 @@ public class BlueprintPersistenceImpl
 
 	protected Blueprint filterGetByG_S_T_PrevAndNext(
 		Session session, Blueprint blueprint, long groupId, int status,
-		int type, OrderByComparator<Blueprint> orderByComparator,
-		boolean previous) {
+		OrderByComparator<Blueprint> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			sb = new StringBundler(6);
+			sb = new StringBundler(5);
 		}
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -5911,8 +4409,6 @@ public class BlueprintPersistenceImpl
 		sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 		sb.append(_FINDER_COLUMN_G_S_T_STATUS_2);
-
-		sb.append(_FINDER_COLUMN_G_S_T_TYPE_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(_FILTER_SQL_SELECT_BLUEPRINT_NO_INLINE_DISTINCT_WHERE_2);
@@ -6023,8 +4519,6 @@ public class BlueprintPersistenceImpl
 
 		queryPos.add(status);
 
-		queryPos.add(type);
-
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(blueprint)) {
@@ -6044,17 +4538,16 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Removes all the blueprints where groupId = &#63; and status = &#63; and type = &#63; from the database.
+	 * Removes all the blueprints where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param status the status
-	 * @param type the type
 	 */
 	@Override
-	public void removeByG_S_T(long groupId, int status, int type) {
+	public void removeByG_S_T(long groupId, int status) {
 		for (Blueprint blueprint :
 				findByG_S_T(
-					groupId, status, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
 			remove(blueprint);
@@ -6062,31 +4555,28 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of blueprints where groupId = &#63; and status = &#63; and type = &#63;.
+	 * Returns the number of blueprints where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param status the status
-	 * @param type the type
 	 * @return the number of matching blueprints
 	 */
 	@Override
-	public int countByG_S_T(long groupId, int status, int type) {
+	public int countByG_S_T(long groupId, int status) {
 		FinderPath finderPath = _finderPathCountByG_S_T;
 
-		Object[] finderArgs = new Object[] {groupId, status, type};
+		Object[] finderArgs = new Object[] {groupId, status};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append(_SQL_COUNT_BLUEPRINT_WHERE);
 
 			sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 			sb.append(_FINDER_COLUMN_G_S_T_STATUS_2);
-
-			sb.append(_FINDER_COLUMN_G_S_T_TYPE_2);
 
 			String sql = sb.toString();
 
@@ -6102,8 +4592,6 @@ public class BlueprintPersistenceImpl
 				queryPos.add(groupId);
 
 				queryPos.add(status);
-
-				queryPos.add(type);
 
 				count = (Long)query.uniqueResult();
 
@@ -6121,28 +4609,25 @@ public class BlueprintPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of blueprints that the user has permission to view where groupId = &#63; and status = &#63; and type = &#63;.
+	 * Returns the number of blueprints that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param status the status
-	 * @param type the type
 	 * @return the number of matching blueprints that the user has permission to view
 	 */
 	@Override
-	public int filterCountByG_S_T(long groupId, int status, int type) {
+	public int filterCountByG_S_T(long groupId, int status) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_S_T(groupId, status, type);
+			return countByG_S_T(groupId, status);
 		}
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append(_FILTER_SQL_COUNT_BLUEPRINT_WHERE);
 
 		sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 		sb.append(_FINDER_COLUMN_G_S_T_STATUS_2);
-
-		sb.append(_FINDER_COLUMN_G_S_T_TYPE_2_SQL);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
 			sb.toString(), Blueprint.class.getName(),
@@ -6163,8 +4648,6 @@ public class BlueprintPersistenceImpl
 			queryPos.add(groupId);
 
 			queryPos.add(status);
-
-			queryPos.add(type);
 
 			Long count = (Long)sqlQuery.uniqueResult();
 
@@ -6182,19 +4665,12 @@ public class BlueprintPersistenceImpl
 		"blueprint.groupId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_S_T_STATUS_2 =
-		"blueprint.status = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_S_T_TYPE_2 =
-		"blueprint.type = ?";
-
-	private static final String _FINDER_COLUMN_G_S_T_TYPE_2_SQL =
-		"blueprint.type_ = ?";
+		"blueprint.status = ?";
 
 	public BlueprintPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
-		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -6885,68 +5361,24 @@ public class BlueprintPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "status"}, false);
 
-		_finderPathWithPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathCountByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "type_"}, false);
-
-		_finderPathWithPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathCountByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "type_"}, false);
-
 		_finderPathWithPaginationFindByG_S_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_T",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
+				OrderByComparator.class.getName()
 			},
-			new String[] {"groupId", "status", "type_"}, true);
+			new String[] {"groupId", "status"}, true);
 
 		_finderPathWithoutPaginationFindByG_S_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "status", "type_"}, true);
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"groupId", "status"}, true);
 
 		_finderPathCountByG_S_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "status", "type_"}, false);
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"groupId", "status"}, false);
 	}
 
 	@Deactivate
@@ -7037,7 +5469,7 @@ public class BlueprintPersistenceImpl
 		BlueprintPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "type"});
+		new String[] {"uuid"});
 
 	@Override
 	protected FinderCache getFinderCache() {

@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.handler.BlueprintExceptionRequestHandler;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
-import com.liferay.portal.search.tuning.blueprints.util.importer.BlueprintImporter;
+import com.liferay.portal.search.tuning.blueprints.util.importer.BlueprintsImporter;
 
 import java.io.InputStream;
 
@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BlueprintsPortletKeys.BLUEPRINTS_ADMIN,
-		"mvc.command.name=" + BlueprintsAdminMVCCommandNames.IMPORT_BLUEPRINT
+		"mvc.command.name=" + BlueprintsAdminMVCCommandNames.IMPORT
 	},
 	service = MVCActionCommand.class
 )
@@ -147,7 +147,7 @@ public class ImportBlueprintMVCActionCommand extends BaseMVCActionCommand {
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				"file")) {
 
-			_blueprintImporter.importBlueprint(actionRequest, inputStream);
+			_blueprintsImporter.importItem(actionRequest, inputStream);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -171,7 +171,7 @@ public class ImportBlueprintMVCActionCommand extends BaseMVCActionCommand {
 	private BlueprintExceptionRequestHandler _blueprintExceptionRequestHandler;
 
 	@Reference
-	private BlueprintImporter _blueprintImporter;
+	private BlueprintsImporter _blueprintsImporter;
 
 	@Reference
 	private Portal _portal;

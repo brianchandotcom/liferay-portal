@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "filter",
@@ -99,5 +99,5 @@
 			"en_US": "Scheduling Aware"
 		}
 	},
-	"type": 13
+	"type": 10
 }

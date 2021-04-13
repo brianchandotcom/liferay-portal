@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -31,7 +31,6 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermQuery;
-import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -39,9 +38,10 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintTypes;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
+import com.liferay.portal.search.tuning.blueprints.model.Element;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
+import com.liferay.portal.search.tuning.blueprints.service.ElementService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +51,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,47 +62,47 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class BlueprintsAdminIndexUtil {
 
-	public static void populateResults(
-		HttpServletRequest httpServletRequest, long groupId, int status,
-		String blueprintType, SearchContainer<Blueprint> searchContainer,
-		String orderByCol, String orderByType) {
+	public static void populateBlueprintResults(
+		PortletRequest portletRequest, long groupId, int status,
+		SearchContainer<Blueprint> searchContainer, String orderByCol,
+		String orderByType) {
 
-		SearchRequest searchRequest = _createSearchRequest(
-			httpServletRequest, groupId, status, blueprintType,
-			searchContainer.getStart(), searchContainer.getDelta(), orderByCol,
+		_populateBlueprintResults(
+			portletRequest, groupId, status, searchContainer, orderByCol,
+			orderByType);
+	}
+
+	public static void populateElementResults(
+		PortletRequest portletRequest, long groupId, int status,
+		SearchContainer<Element> searchContainer, String orderByCol,
+		String orderByType) {
+
+		_populateElementResults(
+			portletRequest, groupId, status, searchContainer, orderByCol,
+			orderByType);
+	}
+
+	public static SearchHits searchBlueprints(
+		PortletRequest portletRequest, long groupId, int status,
+		String blueprintType, int size, int start, String orderByCol,
+		String orderByType) {
+
+		SearchRequest searchRequest = _createBlueprintSearchRequest(
+			portletRequest, groupId, status, start, size, orderByCol,
 			orderByType);
 
 		SearchResponse searchResponse = _searcher.search(searchRequest);
 
-		SearchHits searchHits = searchResponse.getSearchHits();
-
-		searchContainer.setTotal(
-			GetterUtil.getInteger(searchHits.getTotalHits()));
-
-		List<SearchHit> hits = searchHits.getSearchHits();
-
-		Stream<SearchHit> stream = hits.stream();
-
-		searchContainer.setResults(
-			stream.map(
-				searchHit -> _toBlueprintOptional(searchHit)
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			).collect(
-				Collectors.toList()
-			));
+		return searchResponse.getSearchHits();
 	}
 
-	public static SearchHits searchBlueprints(
-		HttpServletRequest httpServletRequest, long groupId, int status,
-		String blueprintType, int size, int start, String orderByCol,
-		String orderByType) {
+	public static SearchHits searchElements(
+		PortletRequest portletRequest, long groupId, int status, int type,
+		int size, int start, String orderByCol, String orderByType) {
 
-		SearchRequest searchRequest = _createSearchRequest(
-			httpServletRequest, groupId, status, blueprintType, start, size,
-			orderByCol, orderByType);
+		SearchRequest searchRequest = _createElementSearchRequest(
+			portletRequest, groupId, status, type, start, size, orderByCol,
+			orderByType);
 
 		SearchResponse searchResponse = _searcher.search(searchRequest);
 
@@ -112,6 +112,11 @@ public class BlueprintsAdminIndexUtil {
 	@Reference(unbind = "-")
 	protected void setBlueprintService(BlueprintService blueprintService) {
 		_blueprintService = blueprintService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setElementService(ElementService elementService) {
+		_elementService = elementService;
 	}
 
 	@Reference(unbind = "-")
@@ -134,21 +139,6 @@ public class BlueprintsAdminIndexUtil {
 	@Reference(unbind = "-")
 	protected void setSorts(Sorts sorts) {
 		_sorts = sorts;
-	}
-
-	private static void _addBlueprintTypeFilterClause(
-		BooleanQuery booleanQuery) {
-
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(Field.TYPE, BlueprintTypes.BLUEPRINT));
-	}
-
-	private static void _addElementTypeFilterClause(BooleanQuery booleanQuery) {
-		TermsQuery termsQuery = _queries.terms(Field.TYPE + "_sortable");
-
-		termsQuery.addValues(_getElementTypes());
-
-		booleanQuery.addFilterQueryClauses(termsQuery);
 	}
 
 	private static void _addGroupFilterClause(
@@ -177,14 +167,12 @@ public class BlueprintsAdminIndexUtil {
 		booleanQuery.addFilterQueryClauses(_queries.term(Field.STATUS, status));
 	}
 
-	private static SearchRequest _createSearchRequest(
-		HttpServletRequest httpServletRequest, long groupId, int status,
-		String blueprintType, int start, int size, String orderByCol,
-		String orderByType) {
+	private static SearchRequest _createBlueprintSearchRequest(
+		PortletRequest portletRequest, long groupId, int status, int start,
+		int size, String orderByCol, String orderByType) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String languageId = themeDisplay.getLanguageId();
 
@@ -196,8 +184,8 @@ public class BlueprintsAdminIndexUtil {
 		).modelIndexerClasses(
 			Blueprint.class
 		).query(
-			_getQuery(
-				_getKeywords(httpServletRequest), blueprintType, groupId,
+			_getBlueprintSearchQuery(
+				BlueprintsAdminRequestUtil.getKeywords(portletRequest), groupId,
 				status, languageId)
 		).size(
 			size
@@ -206,45 +194,72 @@ public class BlueprintsAdminIndexUtil {
 		).build();
 	}
 
-	private static Object[] _getElementTypes() {
-		return new Object[] {
-			String.valueOf(BlueprintTypes.AGGREGATION_ELEMENT),
-			String.valueOf(BlueprintTypes.FACET_ELEMENT),
-			String.valueOf(BlueprintTypes.QUERY_ELEMENT),
-			String.valueOf(BlueprintTypes.SUGGESTER_ELEMENT)
-		};
+	private static SearchRequest _createElementSearchRequest(
+		PortletRequest portletRequest, long groupId, int status, int type,
+		int start, int size, String orderByCol, String orderByType) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String languageId = themeDisplay.getLanguageId();
+
+		return _searchRequestBuilderFactory.builder(
+		).companyId(
+			themeDisplay.getCompanyId()
+		).from(
+			start
+		).modelIndexerClasses(
+			Element.class
+		).query(
+			_getElementSearchQuery(
+				BlueprintsAdminRequestUtil.getKeywords(portletRequest), type,
+				groupId, status, languageId)
+		).size(
+			size
+		).addSort(
+			_getSort(orderByCol, orderByType, languageId)
+		).build();
 	}
 
-	private static long _getEntryClassPK(SearchHit searchHit) {
-		Document document = searchHit.getDocument();
-
-		return document.getLong(Field.ENTRY_CLASS_PK);
-	}
-
-	private static String _getKeywords(HttpServletRequest httpServletRequest) {
-		return ParamUtil.getString(httpServletRequest, "keywords");
-	}
-
-	private static Query _getQuery(
-		String keywords, String blueprintType, long groupId, int status,
-		String languageId) {
+	private static Query _getBlueprintSearchQuery(
+		String keywords, long groupId, int status, String languageId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		_addGroupFilterClause(booleanQuery, groupId);
-
-		if (blueprintType.equals("blueprints")) {
-			_addBlueprintTypeFilterClause(booleanQuery);
-		}
-		else {
-			_addElementTypeFilterClause(booleanQuery);
-		}
 
 		_addStatusFilterClause(booleanQuery, status);
 
 		_addSearchClauses(booleanQuery, keywords, languageId);
 
 		return booleanQuery;
+	}
+
+	private static Query _getElementSearchQuery(
+		String keywords, long type, long groupId, int status,
+		String languageId) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		_addGroupFilterClause(booleanQuery, groupId);
+
+		if (type > 0) {
+			booleanQuery.addFilterQueryClauses(_queries.term(Field.TYPE, type));
+		}
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			_addStatusFilterClause(booleanQuery, status);
+		}
+
+		_addSearchClauses(booleanQuery, keywords, languageId);
+
+		return booleanQuery;
+	}
+
+	private static long _getEntryClassPK(SearchHit searchHit) {
+		Document document = searchHit.getDocument();
+
+		return document.getLong(Field.ENTRY_CLASS_PK);
 	}
 
 	private static Set<String> _getSearchFields(String languageId) {
@@ -279,6 +294,72 @@ public class BlueprintsAdminIndexUtil {
 			"localized_" + Field.TITLE, languageId);
 	}
 
+	private static void _populateBlueprintResults(
+		PortletRequest portletRequest, long groupId, int status,
+		SearchContainer<Blueprint> searchContainer, String orderByCol,
+		String orderByType) {
+
+		SearchRequest searchRequest = _createBlueprintSearchRequest(
+			portletRequest, groupId, status, searchContainer.getStart(),
+			searchContainer.getDelta(), orderByCol, orderByType);
+
+		SearchResponse searchResponse = _searcher.search(searchRequest);
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		searchContainer.setTotal(
+			GetterUtil.getInteger(searchHits.getTotalHits()));
+
+		List<SearchHit> hits = searchHits.getSearchHits();
+
+		Stream<SearchHit> stream = hits.stream();
+
+		searchContainer.setResults(
+			stream.map(
+				searchHit -> _toBlueprintOptional(searchHit)
+			).filter(
+				Optional::isPresent
+			).map(
+				Optional::get
+			).collect(
+				Collectors.toList()
+			));
+	}
+
+	private static void _populateElementResults(
+		PortletRequest portletRequest, long groupId, int status,
+		SearchContainer<Element> searchContainer, String orderByCol,
+		String orderByType) {
+
+		SearchRequest searchRequest = _createElementSearchRequest(
+			portletRequest, groupId, status,
+			BlueprintsAdminRequestUtil.getElementType(portletRequest),
+			searchContainer.getStart(), searchContainer.getDelta(), orderByCol,
+			orderByType);
+
+		SearchResponse searchResponse = _searcher.search(searchRequest);
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		searchContainer.setTotal(
+			GetterUtil.getInteger(searchHits.getTotalHits()));
+
+		List<SearchHit> hits = searchHits.getSearchHits();
+
+		Stream<SearchHit> stream = hits.stream();
+
+		searchContainer.setResults(
+			stream.map(
+				searchHit -> _toElementOptional(searchHit)
+			).filter(
+				Optional::isPresent
+			).map(
+				Optional::get
+			).collect(
+				Collectors.toList()
+			));
+	}
+
 	private static Optional<Blueprint> _toBlueprintOptional(
 		SearchHit searchHit) {
 
@@ -290,18 +371,36 @@ public class BlueprintsAdminIndexUtil {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Search index is stale and contains a Blueprint entry " +
-						entryClassPK);
+					"Search index is stale and contains a non-existent " +
+						"Blueprint entry " + entryClassPK);
 			}
-
-			return Optional.empty();
 		}
+
+		return Optional.empty();
+	}
+
+	private static Optional<Element> _toElementOptional(SearchHit searchHit) {
+		long entryClassPK = _getEntryClassPK(searchHit);
+
+		try {
+			return Optional.of(_elementService.getElement(entryClassPK));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Search index is stale and contains a non-existent " +
+						"Element entry " + entryClassPK);
+			}
+		}
+
+		return Optional.empty();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlueprintsAdminIndexUtil.class);
 
 	private static BlueprintService _blueprintService;
+	private static ElementService _elementService;
 	private static Queries _queries;
 	private static Searcher _searcher;
 	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;

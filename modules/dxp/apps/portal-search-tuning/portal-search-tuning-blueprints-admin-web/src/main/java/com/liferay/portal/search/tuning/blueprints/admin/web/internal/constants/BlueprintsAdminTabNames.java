@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants;
 
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintTypes;
-
 /**
  * @author Petteri Karttunen
  */
@@ -24,13 +22,5 @@ public class BlueprintsAdminTabNames {
 	public static final String BLUEPRINTS = "blueprints";
 
 	public static final String ELEMENTS = "elements";
-
-	public static final String getTabName(int blueprintType) {
-		if (blueprintType == BlueprintTypes.BLUEPRINT) {
-			return BLUEPRINTS;
-		}
-
-		return ELEMENTS;
-	}
 
 }

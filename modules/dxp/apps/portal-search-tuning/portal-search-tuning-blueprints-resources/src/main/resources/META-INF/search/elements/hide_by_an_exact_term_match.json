@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "hide",
@@ -62,5 +62,5 @@
 			"en_US": "Hide by an Exact Term Match"
 		}
 	},
-	"type": 13
+	"type": 10
 }

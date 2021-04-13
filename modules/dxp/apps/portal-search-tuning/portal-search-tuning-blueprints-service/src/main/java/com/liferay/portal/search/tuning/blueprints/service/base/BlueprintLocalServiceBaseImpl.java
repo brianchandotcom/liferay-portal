@@ -54,14 +54,18 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintLocalService;
+import com.liferay.portal.search.tuning.blueprints.service.BlueprintLocalServiceUtil;
 import com.liferay.portal.search.tuning.blueprints.service.persistence.BlueprintPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -82,7 +86,7 @@ public abstract class BlueprintLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BlueprintLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.search.tuning.blueprints.service.BlueprintLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BlueprintLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BlueprintLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -540,6 +544,11 @@ public abstract class BlueprintLocalServiceBaseImpl
 		return blueprintPersistence.update(blueprint);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -551,6 +560,8 @@ public abstract class BlueprintLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		blueprintLocalService = (BlueprintLocalService)aopProxy;
+
+		_setLocalServiceUtilService(blueprintLocalService);
 	}
 
 	/**
@@ -592,6 +603,22 @@ public abstract class BlueprintLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		BlueprintLocalService blueprintLocalService) {
+
+		try {
+			Field field = BlueprintLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, blueprintLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

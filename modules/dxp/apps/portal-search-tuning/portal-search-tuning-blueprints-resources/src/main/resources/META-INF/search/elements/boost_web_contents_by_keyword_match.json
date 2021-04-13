@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "conditional",
@@ -69,5 +69,5 @@
 			"en_US": "Boost Web Contents by Keyword Match"
 		}
 	},
-	"type": 13
+	"type": 10
 }

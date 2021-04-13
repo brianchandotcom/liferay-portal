@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"blueprint-payload": {
 		"configuration": {
 			"advanced_configuration": {
 				"query_processing": {
@@ -455,6 +455,5 @@
 		"title": {
 			"en_US": "Personalization (Sample Contributor Blueprint)"
 		}
-	},
-	"type": 1
+	}
 }

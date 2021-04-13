@@ -91,7 +91,7 @@ public class BlueprintModelImpl
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}, {"title", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"configuration", Types.CLOB},
-		{"selectedElements", Types.CLOB}, {"type_", Types.INTEGER}
+		{"selectedElements", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -115,11 +115,10 @@ public class BlueprintModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("configuration", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("selectedElements", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Blueprint (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,blueprintId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,title STRING null,description STRING null,configuration TEXT null,selectedElements TEXT null,type_ INTEGER)";
+		"create table Blueprint (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,blueprintId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,title STRING null,description STRING null,configuration TEXT null,selectedElements TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Blueprint";
 
@@ -136,48 +135,42 @@ public class BlueprintModelImpl
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
 	public static final long STATUS_COLUMN_BITMASK = 4L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 8L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
+	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
+	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long BLUEPRINTID_COLUMN_BITMASK = 64L;
+	public static final long BLUEPRINTID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -225,7 +218,6 @@ public class BlueprintModelImpl
 		model.setDescription(soapModel.getDescription());
 		model.setConfiguration(soapModel.getConfiguration());
 		model.setSelectedElements(soapModel.getSelectedElements());
-		model.setType(soapModel.getType());
 
 		return model;
 	}
@@ -441,9 +433,6 @@ public class BlueprintModelImpl
 		attributeSetterBiConsumers.put(
 			"selectedElements",
 			(BiConsumer<Blueprint, String>)Blueprint::setSelectedElements);
-		attributeGetterFunctions.put("type", Blueprint::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<Blueprint, Integer>)Blueprint::setType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -998,31 +987,6 @@ public class BlueprintModelImpl
 		_selectedElements = selectedElements;
 	}
 
-	@JSON
-	@Override
-	public int getType() {
-		return _type;
-	}
-
-	@Override
-	public void setType(int type) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_type = type;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public int getOriginalType() {
-		return GetterUtil.getInteger(
-			this.<Integer>getColumnOriginalValue("type_"));
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1268,7 +1232,6 @@ public class BlueprintModelImpl
 		blueprintImpl.setDescription(getDescription());
 		blueprintImpl.setConfiguration(getConfiguration());
 		blueprintImpl.setSelectedElements(getSelectedElements());
-		blueprintImpl.setType(getType());
 
 		blueprintImpl.resetOriginalValues();
 
@@ -1457,8 +1420,6 @@ public class BlueprintModelImpl
 			blueprintCacheModel.selectedElements = null;
 		}
 
-		blueprintCacheModel.type = getType();
-
 		return blueprintCacheModel;
 	}
 
@@ -1552,7 +1513,6 @@ public class BlueprintModelImpl
 	private String _descriptionCurrentLanguageId;
 	private String _configuration;
 	private String _selectedElements;
-	private int _type;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1600,7 +1560,6 @@ public class BlueprintModelImpl
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("configuration", _configuration);
 		_columnOriginalValues.put("selectedElements", _selectedElements);
-		_columnOriginalValues.put("type_", _type);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1609,7 +1568,6 @@ public class BlueprintModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
-		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1658,8 +1616,6 @@ public class BlueprintModelImpl
 		columnBitmasks.put("configuration", 32768L);
 
 		columnBitmasks.put("selectedElements", 65536L);
-
-		columnBitmasks.put("type_", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

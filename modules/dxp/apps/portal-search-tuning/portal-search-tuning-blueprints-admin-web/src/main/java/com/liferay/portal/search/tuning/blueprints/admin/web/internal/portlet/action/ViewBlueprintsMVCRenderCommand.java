@@ -19,14 +19,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminTabNames;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminWebKeys;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context.ViewBlueprintsDisplayContext;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context.ViewBlueprintsManagementToolbarDisplayContext;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context.ViewElementsManagementToolbarDisplayContext;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
 
 import javax.portlet.PortletException;
@@ -43,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BlueprintsPortletKeys.BLUEPRINTS_ADMIN,
-		"mvc.command.name=" + BlueprintsAdminMVCCommandNames.VIEW,
+		"mvc.command.name=" + BlueprintsAdminMVCCommandNames.VIEW_BLUEPRINTS,
 		"mvc.command.name=/"
 	},
 	service = MVCRenderCommand.class
@@ -55,36 +52,25 @@ public class ViewBlueprintsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		String tab = ParamUtil.getString(
-			renderRequest, "tabs", BlueprintsAdminTabNames.BLUEPRINTS);
-
 		ViewBlueprintsDisplayContext viewBlueprintsDisplayContext =
-			_getViewBlueprintsDisplayContext(
-				renderRequest, renderResponse, tab);
+			_getViewBlueprintsDisplayContext(renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			BlueprintsAdminWebKeys.VIEW_BLUEPRINTS_DISPLAY_CONTEXT,
 			viewBlueprintsDisplayContext);
 
-		if (tab.equals(BlueprintsAdminTabNames.BLUEPRINTS)) {
-			_setBlueprintsManagementToolbar(
-				renderRequest, renderResponse, viewBlueprintsDisplayContext);
-		}
-		else if (tab.equals(BlueprintsAdminTabNames.ELEMENTS)) {
-			_setElementsManagementToolbar(
-				renderRequest, renderResponse, viewBlueprintsDisplayContext);
-		}
+		_setBlueprintsManagementToolbar(
+			renderRequest, renderResponse, viewBlueprintsDisplayContext);
 
 		return "/view.jsp";
 	}
 
 	private ViewBlueprintsDisplayContext _getViewBlueprintsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		String tab) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return new ViewBlueprintsDisplayContext(
 			_portal.getLiferayPortletRequest(renderRequest),
-			_portal.getLiferayPortletResponse(renderResponse), tab);
+			_portal.getLiferayPortletResponse(renderResponse));
 	}
 
 	private void _setBlueprintsManagementToolbar(
@@ -95,7 +81,6 @@ public class ViewBlueprintsMVCRenderCommand implements MVCRenderCommand {
 			ViewBlueprintsManagementToolbarDisplayContext
 				viewBlueprintsManagementToolbarDisplayContext =
 					new ViewBlueprintsManagementToolbarDisplayContext(
-						_portal.getHttpServletRequest(renderRequest),
 						_portal.getLiferayPortletRequest(renderRequest),
 						_portal.getLiferayPortletResponse(renderResponse),
 						viewBlueprintsDisplayContext.getSearchContainer(),
@@ -105,34 +90,6 @@ public class ViewBlueprintsMVCRenderCommand implements MVCRenderCommand {
 				BlueprintsAdminWebKeys.
 					VIEW_BLUEPRINTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT,
 				viewBlueprintsManagementToolbarDisplayContext);
-		}
-		catch (PortalException | PortletException exception) {
-			_log.error(exception.getMessage(), exception);
-
-			SessionErrors.add(
-				renderRequest, BlueprintsAdminWebKeys.ERROR,
-				exception.getMessage());
-		}
-	}
-
-	private void _setElementsManagementToolbar(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		ViewBlueprintsDisplayContext viewBlueprintsDisplayContext) {
-
-		try {
-			ViewElementsManagementToolbarDisplayContext
-				viewElementEntriesManagementToolbarDisplayContext =
-					new ViewElementsManagementToolbarDisplayContext(
-						_portal.getHttpServletRequest(renderRequest),
-						_portal.getLiferayPortletRequest(renderRequest),
-						_portal.getLiferayPortletResponse(renderResponse),
-						viewBlueprintsDisplayContext.getSearchContainer(),
-						viewBlueprintsDisplayContext.getDisplayStyle());
-
-			renderRequest.setAttribute(
-				BlueprintsAdminWebKeys.
-					VIEW_ELEMENTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT,
-				viewElementEntriesManagementToolbarDisplayContext);
 		}
 		catch (PortalException | PortletException exception) {
 			_log.error(exception.getMessage(), exception);

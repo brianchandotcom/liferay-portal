@@ -25,10 +25,14 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
+import com.liferay.portal.search.tuning.blueprints.service.BlueprintServiceUtil;
 import com.liferay.portal.search.tuning.blueprints.service.persistence.BlueprintPersistence;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -49,8 +53,13 @@ public abstract class BlueprintServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BlueprintService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.search.tuning.blueprints.service.BlueprintServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BlueprintService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BlueprintServiceUtil</code>.
 	 */
+	@Deactivate
+	protected void deactivate() {
+		_setServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -61,6 +70,8 @@ public abstract class BlueprintServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		blueprintService = (BlueprintService)aopProxy;
+
+		_setServiceUtilService(blueprintService);
 	}
 
 	/**
@@ -102,6 +113,20 @@ public abstract class BlueprintServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(BlueprintService blueprintService) {
+		try {
+			Field field = BlueprintServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, blueprintService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

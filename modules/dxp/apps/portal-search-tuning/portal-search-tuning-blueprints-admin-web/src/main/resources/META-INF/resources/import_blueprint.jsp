@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.IMPORT_BLUEPRINT %>" var="importBlueprintURL">
+<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.IMPORT %>" var="importURL">
 	<portlet:param name="redirect" value='<%= ParamUtil.getString(request, "redirect") %>' />
 </portlet:actionURL>
 
@@ -24,7 +24,7 @@
 	module="js/view_blueprints/ImportBlueprintModal"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"formSubmitURL", importBlueprintURL
+			"formSubmitURL", importURL
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).build()

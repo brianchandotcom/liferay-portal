@@ -15,12 +15,15 @@
 package com.liferay.portal.search.tuning.blueprints.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
+import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsConstants;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
+import com.liferay.portal.search.tuning.blueprints.model.Element;
+import com.liferay.portal.search.tuning.blueprints.service.ElementLocalService;
 
 import java.util.Dictionary;
 
@@ -35,21 +38,25 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(immediate = true, service = {})
-public class BlueprintPortletResourcePermissionRegistrar {
+public class ElementModelResourcePermissionRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("resource.name", BlueprintsConstants.RESOURCE_NAME);
+		properties.put("model.class.name", Element.class.getName());
 
 		_serviceRegistration = bundleContext.registerService(
-			PortletResourcePermission.class,
-			PortletResourcePermissionFactory.create(
-				BlueprintsConstants.RESOURCE_NAME,
-				new StagedPortletPermissionLogic(
-					_stagingPermission,
-					BlueprintsPortletKeys.BLUEPRINTS_ADMIN)),
+			(Class<ModelResourcePermission<Element>>)
+				(Class<?>)ModelResourcePermission.class,
+			ModelResourcePermissionFactory.create(
+				Element.class, Element::getElementId,
+				_elementLocalService::getElement, _portletResourcePermission,
+				(modelResourcePermission, consumer) -> consumer.accept(
+					new StagedModelPermissionLogic<>(
+						_stagingPermission,
+						BlueprintsPortletKeys.BLUEPRINTS_ADMIN,
+						Element::getElementId))),
 			properties);
 	}
 
@@ -58,7 +65,16 @@ public class BlueprintPortletResourcePermissionRegistrar {
 		_serviceRegistration.unregister();
 	}
 
-	private ServiceRegistration<PortletResourcePermission> _serviceRegistration;
+	@Reference
+	private ElementLocalService _elementLocalService;
+
+	@Reference(
+		target = "(resource.name=" + BlueprintsConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
+	private ServiceRegistration<ModelResourcePermission<Element>>
+		_serviceRegistration;
 
 	@Reference
 	private StagingPermission _stagingPermission;

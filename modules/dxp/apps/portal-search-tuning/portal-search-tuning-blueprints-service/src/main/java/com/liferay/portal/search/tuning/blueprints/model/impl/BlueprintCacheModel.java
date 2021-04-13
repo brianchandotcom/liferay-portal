@@ -76,7 +76,7 @@ public class BlueprintCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -112,8 +112,6 @@ public class BlueprintCacheModel
 		sb.append(configuration);
 		sb.append(", selectedElements=");
 		sb.append(selectedElements);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -203,8 +201,6 @@ public class BlueprintCacheModel
 			blueprintImpl.setSelectedElements(selectedElements);
 		}
 
-		blueprintImpl.setType(type);
-
 		blueprintImpl.resetOriginalValues();
 
 		return blueprintImpl;
@@ -237,8 +233,6 @@ public class BlueprintCacheModel
 		description = objectInput.readUTF();
 		configuration = (String)objectInput.readObject();
 		selectedElements = (String)objectInput.readObject();
-
-		type = objectInput.readInt();
 	}
 
 	@Override
@@ -310,8 +304,6 @@ public class BlueprintCacheModel
 		else {
 			objectOutput.writeObject(selectedElements);
 		}
-
-		objectOutput.writeInt(type);
 	}
 
 	public long mvccVersion;
@@ -331,6 +323,5 @@ public class BlueprintCacheModel
 	public String description;
 	public String configuration;
 	public String selectedElements;
-	public int type;
 
 }

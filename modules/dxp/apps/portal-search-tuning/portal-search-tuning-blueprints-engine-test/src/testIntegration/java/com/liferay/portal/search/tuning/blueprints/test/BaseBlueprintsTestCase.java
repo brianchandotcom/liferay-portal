@@ -84,21 +84,21 @@ public abstract class BaseBlueprintsTestCase {
 
 	protected Blueprint addCompanyBlueprint(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String configuration, String selectedElements, int type)
+			String configuration, String selectedElements)
 		throws Exception {
 
 		return blueprintService.addCompanyBlueprint(
-			titleMap, descriptionMap, configuration, selectedElements, type,
+			titleMap, descriptionMap, configuration, selectedElements, 
 			serviceContext);
 	}
 
 	protected Blueprint addGroupBlueprint(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String configuration, String selectedElements, int type)
+			String configuration, String selectedElements)
 		throws Exception {
 
 		return blueprintService.addGroupBlueprint(
-			titleMap, descriptionMap, configuration, selectedElements, type,
+			titleMap, descriptionMap, configuration, selectedElements,
 			serviceContext);
 	}
 

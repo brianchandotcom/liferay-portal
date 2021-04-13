@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "conditional",
@@ -91,5 +91,5 @@
 			"en_US": "Boost Contents in a Category for the Time of Day"
 		}
 	},
-	"type": 13
+	"type": 10
 }

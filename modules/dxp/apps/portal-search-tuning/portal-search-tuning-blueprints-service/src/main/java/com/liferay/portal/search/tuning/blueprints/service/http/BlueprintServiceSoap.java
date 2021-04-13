@@ -73,7 +73,7 @@ public class BlueprintServiceSoap {
 					String[] titleMapLanguageIds, String[] titleMapValues,
 					String[] descriptionMapLanguageIds,
 					String[] descriptionMapValues, String configuration,
-					String selectedElements, int type,
+					String selectedElements,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws RemoteException {
@@ -88,7 +88,7 @@ public class BlueprintServiceSoap {
 			com.liferay.portal.search.tuning.blueprints.model.Blueprint
 				returnValue = BlueprintServiceUtil.addCompanyBlueprint(
 					titleMap, descriptionMap, configuration, selectedElements,
-					type, serviceContext);
+					serviceContext);
 
 			return com.liferay.portal.search.tuning.blueprints.model.
 				BlueprintSoap.toSoapModel(returnValue);
@@ -106,7 +106,7 @@ public class BlueprintServiceSoap {
 					String[] titleMapLanguageIds, String[] titleMapValues,
 					String[] descriptionMapLanguageIds,
 					String[] descriptionMapValues, String configuration,
-					String selectedElements, int type,
+					String selectedElements,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws RemoteException {
@@ -121,7 +121,7 @@ public class BlueprintServiceSoap {
 			com.liferay.portal.search.tuning.blueprints.model.Blueprint
 				returnValue = BlueprintServiceUtil.addGroupBlueprint(
 					titleMap, descriptionMap, configuration, selectedElements,
-					type, serviceContext);
+					serviceContext);
 
 			return com.liferay.portal.search.tuning.blueprints.model.
 				BlueprintSoap.toSoapModel(returnValue);
@@ -173,14 +173,35 @@ public class BlueprintServiceSoap {
 
 	public static
 		com.liferay.portal.search.tuning.blueprints.model.BlueprintSoap[]
-				getGroupBlueprints(long companyId, int type, int start, int end)
+				getGroupBlueprints(long groupId, int start, int end)
 			throws RemoteException {
 
 		try {
 			java.util.List
 				<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
 					returnValue = BlueprintServiceUtil.getGroupBlueprints(
-						companyId, type, start, end);
+						groupId, start, end);
+
+			return com.liferay.portal.search.tuning.blueprints.model.
+				BlueprintSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.portal.search.tuning.blueprints.model.BlueprintSoap[]
+				getGroupBlueprints(long groupId, int status, int start, int end)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
+					returnValue = BlueprintServiceUtil.getGroupBlueprints(
+						groupId, status, start, end);
 
 			return com.liferay.portal.search.tuning.blueprints.model.
 				BlueprintSoap.toSoapModels(returnValue);
@@ -195,29 +216,7 @@ public class BlueprintServiceSoap {
 	public static
 		com.liferay.portal.search.tuning.blueprints.model.BlueprintSoap[]
 				getGroupBlueprints(
-					long companyId, int status, int type, int start, int end)
-			throws RemoteException {
-
-		try {
-			java.util.List
-				<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-					returnValue = BlueprintServiceUtil.getGroupBlueprints(
-						companyId, status, type, start, end);
-
-			return com.liferay.portal.search.tuning.blueprints.model.
-				BlueprintSoap.toSoapModels(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static
-		com.liferay.portal.search.tuning.blueprints.model.BlueprintSoap[]
-				getGroupBlueprints(
-					long companyId, int status, int type, int start, int end,
+					long groupId, int status, int start, int end,
 					com.liferay.portal.kernel.util.OrderByComparator
 						<com.liferay.portal.search.tuning.blueprints.model.
 							Blueprint> orderByComparator)
@@ -227,7 +226,7 @@ public class BlueprintServiceSoap {
 			java.util.List
 				<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
 					returnValue = BlueprintServiceUtil.getGroupBlueprints(
-						companyId, status, type, start, end, orderByComparator);
+						groupId, status, start, end, orderByComparator);
 
 			return com.liferay.portal.search.tuning.blueprints.model.
 				BlueprintSoap.toSoapModels(returnValue);
@@ -242,7 +241,7 @@ public class BlueprintServiceSoap {
 	public static
 		com.liferay.portal.search.tuning.blueprints.model.BlueprintSoap[]
 				getGroupBlueprints(
-					long companyId, int type, int start, int end,
+					long groupId, int start, int end,
 					com.liferay.portal.kernel.util.OrderByComparator
 						<com.liferay.portal.search.tuning.blueprints.model.
 							Blueprint> orderByComparator)
@@ -252,7 +251,7 @@ public class BlueprintServiceSoap {
 			java.util.List
 				<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
 					returnValue = BlueprintServiceUtil.getGroupBlueprints(
-						companyId, type, start, end, orderByComparator);
+						groupId, start, end, orderByComparator);
 
 			return com.liferay.portal.search.tuning.blueprints.model.
 				BlueprintSoap.toSoapModels(returnValue);
@@ -264,12 +263,12 @@ public class BlueprintServiceSoap {
 		}
 	}
 
-	public static int getGroupBlueprintsCount(long companyId, int type)
+	public static int getGroupBlueprintsCount(long groupId)
 		throws RemoteException {
 
 		try {
 			int returnValue = BlueprintServiceUtil.getGroupBlueprintsCount(
-				companyId, type);
+				groupId);
 
 			return returnValue;
 		}
@@ -280,13 +279,12 @@ public class BlueprintServiceSoap {
 		}
 	}
 
-	public static int getGroupBlueprintsCount(
-			long companyId, int status, int type)
+	public static int getGroupBlueprintsCount(long groupId, int status)
 		throws RemoteException {
 
 		try {
 			int returnValue = BlueprintServiceUtil.getGroupBlueprintsCount(
-				companyId, status, type);
+				groupId, status);
 
 			return returnValue;
 		}

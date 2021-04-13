@@ -14,35 +14,25 @@
 
 package com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context;
 
-import com.liferay.exportimport.kernel.exception.NoSuchConfigurationException;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminWebKeys;
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintTypes;
-import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
-import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestUtil;
+import com.liferay.portal.search.tuning.blueprints.service.ElementService;
 
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -50,33 +40,25 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Kevin Tan
+ * @author Petteri Karttunen
  */
 public abstract class EditEntryDisplayBuilder {
 
 	public EditEntryDisplayBuilder(
-		BlueprintService blueprintService,
-		HttpServletRequest httpServletRequest, Language language,
-		JSONFactory jsonFactory, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		ElementService elementService, JSONFactory jsonFactory,
+		Language language) {
 
-		this.blueprintService = blueprintService;
-		this.httpServletRequest = httpServletRequest;
-		this.language = language;
-		this.jsonFactory = jsonFactory;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
+		this.elementService = elementService;
+		this.jsonFactory = jsonFactory;
+		this.language = language;
 
-		blueprintId = ParamUtil.getLong(
-			renderRequest, BlueprintsAdminWebKeys.BLUEPRINT_ID);
-		blueprintType = ParamUtil.getInteger(
-			renderRequest, BlueprintsAdminWebKeys.BLUEPRINT_TYPE,
-			BlueprintTypes.BLUEPRINT);
+		httpServletRequest = BlueprintsAdminRequestUtil.getHttpServletRequest(
+			renderRequest);
 
-		blueprint = getBlueprint();
-
-		portletRequest = (PortletRequest)httpServletRequest.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+		themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -92,41 +74,11 @@ public abstract class EditEntryDisplayBuilder {
 		return jsonObject;
 	}
 
-	protected Blueprint getBlueprint() {
-		Blueprint blueprint = null;
-
-		if (blueprintId > 0) {
-			try {
-				blueprint = blueprintService.getBlueprint(blueprintId);
-
-				blueprintType = blueprint.getType();
-			}
-			catch (NoSuchConfigurationException noSuchConfigurationException) {
-				_log.error(
-					"Blueprint " + blueprintId + " not found.",
-					noSuchConfigurationException);
-
-				SessionErrors.add(
-					renderRequest, BlueprintsAdminWebKeys.ERROR,
-					noSuchConfigurationException.getMessage());
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException.getMessage(), portalException);
-
-				SessionErrors.add(
-					renderRequest, BlueprintsAdminWebKeys.ERROR,
-					portalException.getMessage());
-			}
-		}
-
-		return blueprint;
-	}
-
 	protected Map<String, Object> getContext() {
 		return HashMapBuilder.<String, Object>put(
 			"availableLanguages", getAvailableLanguagesJSONObject()
 		).put(
-			"contextPath", portletRequest.getContextPath()
+			"contextPath", renderRequest.getContextPath()
 		).put(
 			"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
 		).put(
@@ -136,8 +88,8 @@ public abstract class EditEntryDisplayBuilder {
 		).build();
 	}
 
-	protected JSONObject getDescriptionJSONObject() {
-		Map<Locale, String> descriptionMap = blueprint.getDescriptionMap();
+	protected JSONObject getDescriptionJSONObject(
+		Map<Locale, String> descriptionMap) {
 
 		JSONObject descriptionJSONObject = jsonFactory.createJSONObject();
 
@@ -149,7 +101,7 @@ public abstract class EditEntryDisplayBuilder {
 	}
 
 	protected String getRedirect() {
-		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
+		String redirect = ParamUtil.getString(renderRequest, "redirect");
 
 		if (Validator.isNull(redirect)) {
 			redirect = String.valueOf(renderResponse.createRenderURL());
@@ -158,21 +110,18 @@ public abstract class EditEntryDisplayBuilder {
 		return redirect;
 	}
 
-	protected String getSubmitFormURL(String actionName) {
+	protected String getSubmitFormURL(String actionName, boolean edit) {
 		ActionURL actionURL = renderResponse.createActionURL();
 
 		actionURL.setParameter(ActionRequest.ACTION_NAME, actionName);
 		actionURL.setParameter(
-			Constants.CMD,
-			(blueprint != null) ? Constants.EDIT : Constants.ADD);
+			Constants.CMD, edit ? Constants.EDIT : Constants.ADD);
 		actionURL.setParameter("redirect", getRedirect());
 
 		return actionURL.toString();
 	}
 
-	protected JSONObject getTitleJSONObject() {
-		Map<Locale, String> titleMap = blueprint.getTitleMap();
-
+	protected JSONObject getTitleJSONObject(Map<Locale, String> titleMap) {
 		JSONObject titleJSONObject = jsonFactory.createJSONObject();
 
 		titleMap.forEach(
@@ -182,23 +131,10 @@ public abstract class EditEntryDisplayBuilder {
 		return titleJSONObject;
 	}
 
-	protected void setConfigurationId(
-		BlueprintDisplayContext editBlueprintDisplayContext) {
-
-		editBlueprintDisplayContext.setBlueprintId(blueprintId);
-	}
-
-	protected void setConfigurationType(
-		BlueprintDisplayContext editBlueprintDisplayContext) {
-
-		editBlueprintDisplayContext.setBlueprintType(blueprintType);
-	}
-
 	protected void setData(
-		BlueprintDisplayContext editBlueprintDisplayContext,
-		Map<String, Object> props) {
+		EntryDisplayContext entryDisplayContext, Map<String, Object> props) {
 
-		editBlueprintDisplayContext.setData(
+		entryDisplayContext.setData(
 			HashMapBuilder.<String, Object>put(
 				"context", getContext()
 			).put(
@@ -206,43 +142,16 @@ public abstract class EditEntryDisplayBuilder {
 			).build());
 	}
 
-	protected void setPageTitle(
-		BlueprintDisplayContext editBlueprintDisplayContext) {
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append((blueprint != null) ? "edit-" : "add-");
-
-		if (blueprintType == BlueprintTypes.BLUEPRINT) {
-			sb.append("blueprint");
-		}
-		else {
-			sb.append("element");
-		}
-
-		editBlueprintDisplayContext.setPageTitle(
-			language.get(httpServletRequest, sb.toString()));
+	protected void setRedirect(EntryDisplayContext entryDisplayContext) {
+		entryDisplayContext.setRedirect(getRedirect());
 	}
 
-	protected void setRedirect(
-		BlueprintDisplayContext editBlueprintDisplayContext) {
-
-		editBlueprintDisplayContext.setRedirect(getRedirect());
-	}
-
-	protected final Blueprint blueprint;
-	protected final long blueprintId;
-	protected final BlueprintService blueprintService;
-	protected int blueprintType;
+	protected final ElementService elementService;
 	protected final HttpServletRequest httpServletRequest;
 	protected final JSONFactory jsonFactory;
 	protected final Language language;
-	protected final PortletRequest portletRequest;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
 	protected final ThemeDisplay themeDisplay;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditEntryDisplayBuilder.class);
 
 }

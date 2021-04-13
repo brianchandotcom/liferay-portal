@@ -14,27 +14,29 @@
 
 package com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminIndexUtil;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 
 import javax.portlet.PortletException;
 
 /**
- * @author Petteri Karttunen
  * @author Kevin Tan
+ * @author Petteri Karttunen
  */
-public class SelectBlueprintDisplayContext extends BlueprintsDisplayContext {
+public class SelectBlueprintDisplayContext
+	extends ViewEntriesDisplayContext<Blueprint> {
 
 	public SelectBlueprintDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		super(liferayPortletRequest, liferayPortletResponse, StringPool.BLANK);
+		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getEventName() {
@@ -52,15 +54,12 @@ public class SelectBlueprintDisplayContext extends BlueprintsDisplayContext {
 	public SearchContainer<Blueprint> getSearchContainer()
 		throws PortalException, PortletException {
 
-		SearchContainer<Blueprint> searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getIteratorURL(), null,
-			"no-entries-were-found");
+		SearchContainer<Blueprint> searchContainer = super.getSearchContainer();
 
-		searchContainer.setOrderByCol(getOrderByCol());
-
-		searchContainer.setOrderByType(getOrderByType());
-
-		populateResults(searchContainer);
+		BlueprintsAdminIndexUtil.populateBlueprintResults(
+			liferayPortletRequest, themeDisplay.getCompanyGroupId(),
+			WorkflowConstants.STATUS_APPROVED, searchContainer, getOrderByCol(),
+			getOrderByType());
 
 		return searchContainer;
 	}

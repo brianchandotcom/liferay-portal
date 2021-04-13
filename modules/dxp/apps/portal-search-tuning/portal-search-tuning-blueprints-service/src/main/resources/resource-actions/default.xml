@@ -15,10 +15,8 @@
 				<action-key>ADD_ELEMENT</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
-			<site-member-defaults>
-			</site-member-defaults>
-			<guest-defaults>
-			</guest-defaults>
+			<site-member-defaults />
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_BLUEPRINT</action-key>
 				<action-key>ADD_ELEMENT</action-key>
@@ -35,29 +33,43 @@
 		<permissions>
 			<supports>
 				<action-key>APPLY_BLUEPRINT</action-key>
-				<action-key>DELETE_BLUEPRINT</action-key>
-				<action-key>DELETE_ELEMENT</action-key>
+				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE_BLUEPRINT</action-key>
-				<action-key>UPDATE_ELEMENT</action-key>
+				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
-				<action-key>VIEW_BLUEPRINT</action-key>
-				<action-key>VIEW_ELEMENT</action-key>
 			</supports>
-			<site-member-defaults>
-			</site-member-defaults>
+			<site-member-defaults />
 			<guest-defaults>
 				<action-key>APPLY_BLUEPRINT</action-key>
 			</guest-defaults>
 			<guest-unsupported>
-				<action-key>DELETE_BLUEPRINT</action-key>
-				<action-key>DELETE_ELEMENT</action-key>
+				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE_BLUEPRINT</action-key>
-				<action-key>UPDATE_ELEMENT</action-key>
+				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
-				<action-key>VIEW_BLUEPRINT</action-key>
-				<action-key>VIEW_ELEMENT</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.portal.search.tuning.blueprints.model.Element</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_portal_search_tuning_blueprints_web_internal_portlet_BlueprintsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<weight>3</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

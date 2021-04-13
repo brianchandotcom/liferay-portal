@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "conditional",
@@ -82,5 +82,5 @@
 			"en_US": "Boost Contents in a Category for a Period of Time"
 		}
 	},
-	"type": 13
+	"type": 10
 }

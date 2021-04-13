@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -40,14 +41,17 @@ import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminAssetUtil;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminComponentUtil;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminFieldsUtil;
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintTypes;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestUtil;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
+import com.liferay.portal.search.tuning.blueprints.constants.ElementTypes;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
-import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
+import com.liferay.portal.search.tuning.blueprints.model.Element;
+import com.liferay.portal.search.tuning.blueprints.service.ElementService;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -56,35 +60,43 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Kevin Tan
+ * @author Petteri Karttunen
  */
 public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 
 	public EditBlueprintDisplayBuilder(
-		BlueprintService blueprintService,
-		HttpServletRequest httpServletRequest, Language language,
-		JSONFactory jsonFactory, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		ElementService elementService, JSONFactory jsonFactory,
+		Language language) {
 
 		super(
-			blueprintService, httpServletRequest, language, jsonFactory,
-			renderRequest, renderResponse);
+			renderRequest, renderResponse, elementService, jsonFactory,
+			language);
+
+		_blueprint = getBlueprint();
+
+		_blueprintId = BlueprintsAdminRequestUtil.getBlueprintId(renderRequest);
 	}
 
-	public BlueprintDisplayContext build() {
-		BlueprintDisplayContext blueprintDisplayContext =
-			new BlueprintDisplayContext();
+	public EntryDisplayContext build() {
+		EntryDisplayContext entryDisplayContext = new EntryDisplayContext();
 
-		setConfigurationId(blueprintDisplayContext);
-		setConfigurationType(blueprintDisplayContext);
-		setData(blueprintDisplayContext, _getProps());
-		setPageTitle(blueprintDisplayContext);
-		setRedirect(blueprintDisplayContext);
+		entryDisplayContext.setId(_blueprintId);
 
-		return blueprintDisplayContext;
+		setData(entryDisplayContext, _getProps());
+		_setPageTitle(entryDisplayContext);
+		setRedirect(entryDisplayContext);
+
+		return entryDisplayContext;
+	}
+
+	protected Blueprint getBlueprint() {
+		Optional<Blueprint> optional = BlueprintsAdminRequestUtil.getBlueprint(
+			renderRequest, renderResponse);
+
+		return optional.orElse(null);
 	}
 
 	private JSONObject _getEntityJSONObject() {
@@ -106,9 +118,7 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 
 	private Map<String, Object> _getProps() {
 		Map<String, Object> props = HashMapBuilder.<String, Object>put(
-			"blueprintId", blueprintId
-		).put(
-			"blueprintType", blueprintType
+			"blueprintId", _blueprintId
 		).put(
 			"entityJSON", _getEntityJSONObject()
 		).put(
@@ -136,37 +146,42 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 			"searchResultsURL", _getSearchResultsURL()
 		).put(
 			"submitFormURL",
-			getSubmitFormURL(BlueprintsAdminMVCCommandNames.EDIT_BLUEPRINT)
+			getSubmitFormURL(
+				BlueprintsAdminMVCCommandNames.EDIT_BLUEPRINT,
+				_blueprint != null)
 		).build();
 
-		if (blueprint != null) {
+		if (_blueprint != null) {
 			props.put(
-				"initialConfigurationString", blueprint.getConfiguration());
-			props.put("initialDescription", getDescriptionJSONObject());
+				"initialConfigurationString", _blueprint.getConfiguration());
+			props.put(
+				"initialDescription",
+				getDescriptionJSONObject(_blueprint.getDescriptionMap()));
 			props.put(
 				"initialSelectedElementsString",
-				blueprint.getSelectedElements());
-			props.put("initialTitle", getTitleJSONObject());
+				_blueprint.getSelectedElements());
+			props.put(
+				"initialTitle", getTitleJSONObject(_blueprint.getTitleMap()));
 		}
 
 		return props;
 	}
 
 	private JSONArray _getQueryElementsJSONArray() {
-		int blueprintsTotalCount = blueprintService.getGroupBlueprintsCount(
+		int blueprintsTotalCount = elementService.getGroupElementsCount(
 			themeDisplay.getCompanyGroupId(), WorkflowConstants.STATUS_APPROVED,
-			BlueprintTypes.QUERY_ELEMENT);
+			ElementTypes.QUERY_ELEMENT);
 
-		List<Blueprint> queryElements = blueprintService.getGroupBlueprints(
-			themeDisplay.getCompanyGroupId(), BlueprintTypes.QUERY_ELEMENT, 0,
+		List<Element> queryElements = elementService.getGroupElements(
+			themeDisplay.getCompanyGroupId(), ElementTypes.QUERY_ELEMENT, 0,
 			blueprintsTotalCount);
 
 		JSONArray queryElementsJSONArray = jsonFactory.createJSONArray();
 
-		for (Blueprint blueprint : queryElements) {
+		for (Element element : queryElements) {
 			try {
 				JSONObject jsonObject = jsonFactory.createJSONObject(
-					blueprint.getConfiguration());
+					element.getConfiguration());
 
 				queryElementsJSONArray.put(jsonObject);
 			}
@@ -192,11 +207,11 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
 				renderRequest, className, PortletProvider.Action.BROWSE);
 
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
 			if (portletURL == null) {
 				return null;
 			}
+
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			boolean multiple = false;
 
@@ -251,7 +266,20 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 		return portletURL;
 	}
 
+	private void _setPageTitle(EntryDisplayContext entryDisplayContext) {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append((_blueprint != null) ? "edit-" : "add-");
+		sb.append("blueprint");
+
+		entryDisplayContext.setPageTitle(
+			language.get(httpServletRequest, sb.toString()));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditBlueprintDisplayBuilder.class);
+
+	private final Blueprint _blueprint;
+	private final long _blueprintId;
 
 }

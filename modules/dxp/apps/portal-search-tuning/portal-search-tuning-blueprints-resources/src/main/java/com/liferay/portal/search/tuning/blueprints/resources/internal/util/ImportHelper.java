@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.tuning.blueprints.util.importer.BlueprintImporter;
+import com.liferay.portal.search.tuning.blueprints.util.importer.BlueprintsImporter;
 
 import java.net.URL;
 
@@ -38,13 +38,21 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ImportHelper.class)
 public class ImportHelper {
 
-	public void importDefaultBlueprints(
+	public void importDefaultResources(
 			long companyId, long groupId, long userId)
 		throws PortalException {
 
-		_importBlueprints(companyId, groupId, userId, _listBlueprints());
+		if (_log.isInfoEnabled()) {
+			_log.info("Importing default Blueprints and Elements");
+		}
 
-		_importBlueprints(companyId, groupId, userId, _listElements());
+		_processResources(companyId, groupId, userId, _listBlueprints());
+
+		_processResources(companyId, groupId, userId, _listElements());
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Import done");
+		}
 	}
 
 	private Bundle _getBundle() {
@@ -56,31 +64,11 @@ public class ImportHelper {
 			StringUtil.read(getClass(), "/" + url.getPath()));
 	}
 
-	private void _importBlueprints(
-			long companyId, long groupId, long userId,
-			Enumeration<URL> urlEnumeration)
-		throws PortalException {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Importing default Blueprints");
-		}
-
-		if ((urlEnumeration == null) || !urlEnumeration.hasMoreElements()) {
-			return;
-		}
-
-		while (urlEnumeration.hasMoreElements()) {
-			URL url = urlEnumeration.nextElement();
-
-			_importToCompany(companyId, groupId, userId, _getJSONObject(url));
-		}
-	}
-
-	private void _importToCompany(
+	private void _import(
 		long companyId, long groupId, long userId, JSONObject jsonObject) {
 
 		try {
-			_blueprintImporter.importBlueprint(
+			_blueprintsImporter.importItem(
 				companyId, groupId, userId, jsonObject);
 		}
 		catch (PortalException portalException) {
@@ -100,6 +88,22 @@ public class ImportHelper {
 		return bundle.findEntries(_ELEMENTS_PATH, "*.json", false);
 	}
 
+	private void _processResources(
+			long companyId, long groupId, long userId,
+			Enumeration<URL> urlEnumeration)
+		throws PortalException {
+
+		if ((urlEnumeration == null) || !urlEnumeration.hasMoreElements()) {
+			return;
+		}
+
+		while (urlEnumeration.hasMoreElements()) {
+			URL url = urlEnumeration.nextElement();
+
+			_import(companyId, groupId, userId, _getJSONObject(url));
+		}
+	}
+
 	private static final String _BLUEPRINTS_PATH =
 		"/META-INF/search/blueprints";
 
@@ -108,7 +112,7 @@ public class ImportHelper {
 	private static final Log _log = LogFactoryUtil.getLog(ImportHelper.class);
 
 	@Reference
-	private BlueprintImporter _blueprintImporter;
+	private BlueprintsImporter _blueprintsImporter;
 
 	@Reference
 	private JSONFactory _jsonFactory;

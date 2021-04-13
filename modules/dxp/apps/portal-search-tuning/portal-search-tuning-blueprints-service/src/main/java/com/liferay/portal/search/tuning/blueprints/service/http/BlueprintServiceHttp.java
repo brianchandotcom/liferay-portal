@@ -56,7 +56,7 @@ public class BlueprintServiceHttp {
 				HttpPrincipal httpPrincipal,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String configuration, String selectedElements, int type,
+				String configuration, String selectedElements,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -67,7 +67,7 @@ public class BlueprintServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, titleMap, descriptionMap, configuration,
-				selectedElements, type, serviceContext);
+				selectedElements, serviceContext);
 
 			Object returnObj = null;
 
@@ -103,7 +103,7 @@ public class BlueprintServiceHttp {
 				HttpPrincipal httpPrincipal,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String configuration, String selectedElements, int type,
+				String configuration, String selectedElements,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -114,7 +114,7 @@ public class BlueprintServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, titleMap, descriptionMap, configuration,
-				selectedElements, type, serviceContext);
+				selectedElements, serviceContext);
 
 			Object returnObj = null;
 
@@ -230,8 +230,7 @@ public class BlueprintServiceHttp {
 	public static java.util.List
 		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
 			getGroupBlueprints(
-				HttpPrincipal httpPrincipal, long companyId, int type,
-				int start, int end) {
+				HttpPrincipal httpPrincipal, long groupId, int start, int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -239,7 +238,7 @@ public class BlueprintServiceHttp {
 				_getGroupBlueprintsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, type, start, end);
+				methodKey, groupId, start, end);
 
 			Object returnObj = null;
 
@@ -267,8 +266,8 @@ public class BlueprintServiceHttp {
 	public static java.util.List
 		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
 			getGroupBlueprints(
-				HttpPrincipal httpPrincipal, long companyId, int status,
-				int type, int start, int end) {
+				HttpPrincipal httpPrincipal, long groupId, int status,
+				int start, int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -276,7 +275,7 @@ public class BlueprintServiceHttp {
 				_getGroupBlueprintsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, status, type, start, end);
+				methodKey, groupId, status, start, end);
 
 			Object returnObj = null;
 
@@ -304,8 +303,8 @@ public class BlueprintServiceHttp {
 	public static java.util.List
 		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
 			getGroupBlueprints(
-				HttpPrincipal httpPrincipal, long companyId, int status,
-				int type, int start, int end,
+				HttpPrincipal httpPrincipal, long groupId, int status,
+				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.search.tuning.blueprints.model.
 						Blueprint> orderByComparator) {
@@ -316,8 +315,7 @@ public class BlueprintServiceHttp {
 				_getGroupBlueprintsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, status, type, start, end,
-				orderByComparator);
+				methodKey, groupId, status, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -345,8 +343,7 @@ public class BlueprintServiceHttp {
 	public static java.util.List
 		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
 			getGroupBlueprints(
-				HttpPrincipal httpPrincipal, long companyId, int type,
-				int start, int end,
+				HttpPrincipal httpPrincipal, long groupId, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.search.tuning.blueprints.model.
 						Blueprint> orderByComparator) {
@@ -357,7 +354,7 @@ public class BlueprintServiceHttp {
 				_getGroupBlueprintsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, type, start, end, orderByComparator);
+				methodKey, groupId, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -383,15 +380,14 @@ public class BlueprintServiceHttp {
 	}
 
 	public static int getGroupBlueprintsCount(
-		HttpPrincipal httpPrincipal, long companyId, int type) {
+		HttpPrincipal httpPrincipal, long groupId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				BlueprintServiceUtil.class, "getGroupBlueprintsCount",
 				_getGroupBlueprintsCountParameterTypes8);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, type);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
 			Object returnObj = null;
 
@@ -415,7 +411,7 @@ public class BlueprintServiceHttp {
 	}
 
 	public static int getGroupBlueprintsCount(
-		HttpPrincipal httpPrincipal, long companyId, int status, int type) {
+		HttpPrincipal httpPrincipal, long groupId, int status) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -423,7 +419,7 @@ public class BlueprintServiceHttp {
 				_getGroupBlueprintsCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, status, type);
+				methodKey, groupId, status);
 
 			Object returnObj = null;
 
@@ -498,14 +494,12 @@ public class BlueprintServiceHttp {
 	private static final Class<?>[] _addCompanyBlueprintParameterTypes0 =
 		new Class[] {
 			java.util.Map.class, java.util.Map.class, String.class,
-			String.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addGroupBlueprintParameterTypes1 =
 		new Class[] {
 			java.util.Map.class, java.util.Map.class, String.class,
-			String.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteBlueprintParameterTypes2 =
 		new Class[] {long.class};
@@ -513,23 +507,23 @@ public class BlueprintServiceHttp {
 		long.class
 	};
 	private static final Class<?>[] _getGroupBlueprintsParameterTypes4 =
-		new Class[] {long.class, int.class, int.class, int.class};
+		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[] _getGroupBlueprintsParameterTypes5 =
-		new Class[] {long.class, int.class, int.class, int.class, int.class};
+		new Class[] {long.class, int.class, int.class, int.class};
 	private static final Class<?>[] _getGroupBlueprintsParameterTypes6 =
-		new Class[] {
-			long.class, int.class, int.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _getGroupBlueprintsParameterTypes7 =
 		new Class[] {
 			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
+	private static final Class<?>[] _getGroupBlueprintsParameterTypes7 =
+		new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
 	private static final Class<?>[] _getGroupBlueprintsCountParameterTypes8 =
-		new Class[] {long.class, int.class};
+		new Class[] {long.class};
 	private static final Class<?>[] _getGroupBlueprintsCountParameterTypes9 =
-		new Class[] {long.class, int.class, int.class};
+		new Class[] {long.class, int.class};
 	private static final Class<?>[] _updateBlueprintParameterTypes10 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, String.class,

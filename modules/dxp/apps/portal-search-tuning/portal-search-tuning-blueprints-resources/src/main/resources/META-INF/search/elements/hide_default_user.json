@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "hide",
@@ -61,5 +61,5 @@
 			"en_US": "Hide Default User"
 		}
 	},
-	"type": 13
+	"type": 10
 }

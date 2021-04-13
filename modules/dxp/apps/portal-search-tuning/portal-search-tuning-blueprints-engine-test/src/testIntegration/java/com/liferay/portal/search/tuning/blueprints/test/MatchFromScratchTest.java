@@ -64,7 +64,7 @@ public class MatchFromScratchTest extends BaseFromScratchTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""), configurationString,
-			selectedElementString, 1);
+			selectedElementString);
 
 		assertSearchIgnoreRelevance(
 			blueprint, null, "[cloud cafe]", "cafe", null);

@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "match",
@@ -152,5 +152,5 @@
 			"en_US": "Text Match Over Multiple Fields"
 		}
 	},
-	"type": 13
+	"type": 10
 }

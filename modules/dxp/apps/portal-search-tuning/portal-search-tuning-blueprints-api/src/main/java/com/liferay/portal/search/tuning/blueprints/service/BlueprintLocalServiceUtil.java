@@ -14,9 +14,17 @@
 
 package com.liferay.portal.search.tuning.blueprints.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for Blueprint. This utility wraps
@@ -48,26 +56,20 @@ public class BlueprintLocalServiceUtil {
 	 * @param blueprint the blueprint
 	 * @return the blueprint that was added
 	 */
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-		addBlueprint(
-			com.liferay.portal.search.tuning.blueprints.model.Blueprint
-				blueprint) {
-
+	public static Blueprint addBlueprint(Blueprint blueprint) {
 		return getService().addBlueprint(blueprint);
 	}
 
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			addBlueprint(
-				long userId, long groupId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String configuration, String selectedElements, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint addBlueprint(
+			long userId, long groupId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String configuration,
+			String selectedElements,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addBlueprint(
 			userId, groupId, titleMap, descriptionMap, configuration,
-			selectedElements, type, serviceContext);
+			selectedElements, serviceContext);
 	}
 
 	/**
@@ -76,18 +78,16 @@ public class BlueprintLocalServiceUtil {
 	 * @param blueprintId the primary key for the new blueprint
 	 * @return the new blueprint
 	 */
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-		createBlueprint(long blueprintId) {
-
+	public static Blueprint createBlueprint(long blueprintId) {
 		return getService().createBlueprint(blueprintId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -103,11 +103,8 @@ public class BlueprintLocalServiceUtil {
 	 * @return the blueprint that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			deleteBlueprint(
-				com.liferay.portal.search.tuning.blueprints.model.Blueprint
-					blueprint)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint deleteBlueprint(Blueprint blueprint)
+		throws PortalException {
 
 		return getService().deleteBlueprint(blueprint);
 	}
@@ -123,9 +120,8 @@ public class BlueprintLocalServiceUtil {
 	 * @return the blueprint that was removed
 	 * @throws PortalException if a blueprint with the primary key could not be found
 	 */
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			deleteBlueprint(long blueprintId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint deleteBlueprint(long blueprintId)
+		throws PortalException {
 
 		return getService().deleteBlueprint(blueprintId);
 	}
@@ -133,23 +129,18 @@ public class BlueprintLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -159,9 +150,7 @@ public class BlueprintLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -177,9 +166,8 @@ public class BlueprintLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -197,10 +185,9 @@ public class BlueprintLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -212,9 +199,7 @@ public class BlueprintLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -226,15 +211,13 @@ public class BlueprintLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-		fetchBlueprint(long blueprintId) {
-
+	public static Blueprint fetchBlueprint(long blueprintId) {
 		return getService().fetchBlueprint(blueprintId);
 	}
 
@@ -245,8 +228,8 @@ public class BlueprintLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching blueprint, or <code>null</code> if a matching blueprint could not be found
 	 */
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-		fetchBlueprintByUuidAndGroupId(String uuid, long groupId) {
+	public static Blueprint fetchBlueprintByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchBlueprintByUuidAndGroupId(uuid, groupId);
 	}
@@ -264,9 +247,8 @@ public class BlueprintLocalServiceUtil {
 	 * @return the blueprint
 	 * @throws PortalException if a blueprint with the primary key could not be found
 	 */
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			getBlueprint(long blueprintId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint getBlueprint(long blueprintId)
+		throws PortalException {
 
 		return getService().getBlueprint(blueprintId);
 	}
@@ -279,9 +261,9 @@ public class BlueprintLocalServiceUtil {
 	 * @return the matching blueprint
 	 * @throws PortalException if a matching blueprint could not be found
 	 */
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			getBlueprintByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint getBlueprintByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getBlueprintByUuidAndGroupId(uuid, groupId);
 	}
@@ -297,10 +279,7 @@ public class BlueprintLocalServiceUtil {
 	 * @param end the upper bound of the range of blueprints (not inclusive)
 	 * @return the range of blueprints
 	 */
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getBlueprints(int start, int end) {
-
+	public static List<Blueprint> getBlueprints(int start, int end) {
 		return getService().getBlueprints(start, end);
 	}
 
@@ -311,9 +290,8 @@ public class BlueprintLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching blueprints, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getBlueprintsByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<Blueprint> getBlueprintsByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getBlueprintsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -328,13 +306,9 @@ public class BlueprintLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching blueprints, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getBlueprintsByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.search.tuning.blueprints.model.
-						Blueprint> orderByComparator) {
+	public static List<Blueprint> getBlueprintsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<Blueprint> orderByComparator) {
 
 		return getService().getBlueprintsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -349,8 +323,8 @@ public class BlueprintLocalServiceUtil {
 		return getService().getBlueprintsCount();
 	}
 
-	public static int getCompanyBlueprintsCount(long companyId, int type) {
-		return getService().getCompanyBlueprintsCount(companyId, type);
+	public static int getCompanyBlueprintsCount(long companyId) {
+		return getService().getCompanyBlueprintsCount(companyId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
@@ -361,54 +335,40 @@ public class BlueprintLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(long groupId, int type, int start, int end) {
+	public static List<Blueprint> getGroupBlueprints(
+		long groupId, int start, int end) {
 
-		return getService().getGroupBlueprints(groupId, type, start, end);
+		return getService().getGroupBlueprints(groupId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(
-				long groupId, int status, int type, int start, int end) {
+	public static List<Blueprint> getGroupBlueprints(
+		long groupId, int status, int start, int end) {
+
+		return getService().getGroupBlueprints(groupId, status, start, end);
+	}
+
+	public static List<Blueprint> getGroupBlueprints(
+		long groupId, int status, int start, int end,
+		OrderByComparator<Blueprint> orderByComparator) {
 
 		return getService().getGroupBlueprints(
-			groupId, status, type, start, end);
+			groupId, status, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(
-				long groupId, int status, int type, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.search.tuning.blueprints.model.
-						Blueprint> orderByComparator) {
+	public static List<Blueprint> getGroupBlueprints(
+		long groupId, int start, int end,
+		OrderByComparator<Blueprint> orderByComparator) {
 
 		return getService().getGroupBlueprints(
-			groupId, status, type, start, end, orderByComparator);
+			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(
-				long groupId, int type, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.search.tuning.blueprints.model.
-						Blueprint> orderByComparator) {
-
-		return getService().getGroupBlueprints(
-			groupId, type, start, end, orderByComparator);
+	public static int getGroupBlueprintsCount(long groupId) {
+		return getService().getGroupBlueprintsCount(groupId);
 	}
 
-	public static int getGroupBlueprintsCount(long groupId, int type) {
-		return getService().getGroupBlueprintsCount(groupId, type);
-	}
-
-	public static int getGroupBlueprintsCount(
-		long groupId, int status, int type) {
-
-		return getService().getGroupBlueprintsCount(groupId, status, type);
+	public static int getGroupBlueprintsCount(long groupId, int status) {
+		return getService().getGroupBlueprintsCount(groupId, status);
 	}
 
 	public static
@@ -430,9 +390,8 @@ public class BlueprintLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -447,55 +406,34 @@ public class BlueprintLocalServiceUtil {
 	 * @param blueprint the blueprint
 	 * @return the blueprint that was updated
 	 */
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-		updateBlueprint(
-			com.liferay.portal.search.tuning.blueprints.model.Blueprint
-				blueprint) {
-
+	public static Blueprint updateBlueprint(Blueprint blueprint) {
 		return getService().updateBlueprint(blueprint);
 	}
 
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			updateBlueprint(
-				long userId, long blueprintId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String configuration, String selectedElements,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint updateBlueprint(
+			long userId, long blueprintId,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String configuration,
+			String selectedElements,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateBlueprint(
 			userId, blueprintId, titleMap, descriptionMap, configuration,
 			selectedElements, serviceContext);
 	}
 
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			updateStatus(long userId, long blueprintId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint updateStatus(
+			long userId, long blueprintId, int status)
+		throws PortalException {
 
 		return getService().updateStatus(userId, blueprintId, status);
 	}
 
 	public static BlueprintLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<BlueprintLocalService, BlueprintLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(BlueprintLocalService.class);
-
-		ServiceTracker<BlueprintLocalService, BlueprintLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<BlueprintLocalService, BlueprintLocalService>(
-						bundle.getBundleContext(), BlueprintLocalService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile BlueprintLocalService _service;
 
 }

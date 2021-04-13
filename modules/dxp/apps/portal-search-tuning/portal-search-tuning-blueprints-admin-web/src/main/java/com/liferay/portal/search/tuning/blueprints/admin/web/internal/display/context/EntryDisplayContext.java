@@ -17,20 +17,16 @@ package com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.c
 import java.util.Map;
 
 /**
- * @author Kevin Tan
+ * @author Petteri Karttunen
  */
-public class BlueprintDisplayContext {
-
-	public long getBlueprintId() {
-		return _blueprintId;
-	}
-
-	public int getBlueprintType() {
-		return _blueprintType;
-	}
+public class EntryDisplayContext {
 
 	public Map<String, Object> getData() {
 		return _data;
+	}
+
+	public long getId() {
+		return _id;
 	}
 
 	public String getPageTitle() {
@@ -41,16 +37,16 @@ public class BlueprintDisplayContext {
 		return _redirect;
 	}
 
-	public void setBlueprintId(long blueprintId) {
-		_blueprintId = blueprintId;
-	}
-
-	public void setBlueprintType(int blueprintType) {
-		_blueprintType = blueprintType;
+	public int getType() {
+		return _type;
 	}
 
 	public void setData(Map<String, Object> data) {
 		_data = data;
+	}
+
+	public void setId(long id) {
+		_id = id;
 	}
 
 	public void setPageTitle(String pageTitle) {
@@ -61,10 +57,14 @@ public class BlueprintDisplayContext {
 		_redirect = redirect;
 	}
 
-	private long _blueprintId;
-	private int _blueprintType;
+	public void setType(int type) {
+		_type = type;
+	}
+
 	private Map<String, Object> _data;
+	private long _id;
 	private String _pageTitle;
 	private String _redirect;
+	private int _type;
 
 }

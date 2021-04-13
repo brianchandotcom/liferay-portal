@@ -61,7 +61,7 @@ public class HideByExactTermMatchTest extends BaseBlueprintsTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""),
-			getConfigurationString((JSONObject[])null), "", 1);
+			getConfigurationString((JSONObject[])null), "");
 
 		assertSearch(
 			blueprint, null, "[hide me, do not hide me]", "hide me", null);

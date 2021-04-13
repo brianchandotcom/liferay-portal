@@ -157,8 +157,6 @@ public class BlueprintPersistenceTest {
 
 		newBlueprint.setSelectedElements(RandomTestUtil.randomString());
 
-		newBlueprint.setType(RandomTestUtil.nextInt());
-
 		_blueprints.add(_persistence.update(newBlueprint));
 
 		Blueprint existingBlueprint = _persistence.findByPrimaryKey(
@@ -205,8 +203,6 @@ public class BlueprintPersistenceTest {
 		Assert.assertEquals(
 			existingBlueprint.getSelectedElements(),
 			newBlueprint.getSelectedElements());
-		Assert.assertEquals(
-			existingBlueprint.getType(), newBlueprint.getType());
 	}
 
 	@Test
@@ -259,28 +255,11 @@ public class BlueprintPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_T() throws Exception {
-		_persistence.countByG_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByG_T(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_T() throws Exception {
-		_persistence.countByC_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByC_T(0L, 0);
-	}
-
-	@Test
 	public void testCountByG_S_T() throws Exception {
 		_persistence.countByG_S_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
-			RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
-		_persistence.countByG_S_T(0L, 0, 0);
+		_persistence.countByG_S_T(0L, 0);
 	}
 
 	@Test
@@ -318,7 +297,7 @@ public class BlueprintPersistenceTest {
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true, "title", true, "description", true, "type", true);
+			true, "title", true, "description", true);
 	}
 
 	@Test
@@ -629,8 +608,6 @@ public class BlueprintPersistenceTest {
 		blueprint.setConfiguration(RandomTestUtil.randomString());
 
 		blueprint.setSelectedElements(RandomTestUtil.randomString());
-
-		blueprint.setType(RandomTestUtil.nextInt());
 
 		_blueprints.add(_persistence.update(blueprint));
 

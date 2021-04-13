@@ -27,12 +27,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminWebKeys;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.handler.BlueprintExceptionRequestHandler;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestHelper;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestUtil;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
@@ -65,12 +64,17 @@ public class EditBlueprintMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, BlueprintsAdminWebKeys.TITLE);
+		String configuration = BlueprintsAdminRequestUtil.getConfiguration(
+			actionRequest);
 
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, BlueprintsAdminWebKeys.DESCRIPTION);
+			BlueprintsAdminRequestUtil.getDescription(actionRequest);
+
+		String selectedElements =
+			BlueprintsAdminRequestUtil.getSelectedElements(actionRequest);
+
+		Map<Locale, String> titleMap = BlueprintsAdminRequestUtil.getTitle(
+			actionRequest);
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -78,19 +82,11 @@ public class EditBlueprintMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Blueprint.class.getName(), actionRequest);
 
-			String configuration = ParamUtil.getString(
-				actionRequest, "configuration");
-
-			String selectedElements = ParamUtil.getString(
-				actionRequest, "selectedElements");
-
 			JSONObject jsonObject = JSONUtil.put("title", titleMap);
 
 			if (Constants.ADD.equals(cmd)) {
 				Blueprint blueprint = _blueprintService.addCompanyBlueprint(
 					titleMap, descriptionMap, configuration, selectedElements,
-					_blueprintsAdminRequestHelper.getTypeFromRequest(
-						actionRequest),
 					serviceContext);
 
 				jsonObject = JSONUtil.put(
@@ -101,8 +97,7 @@ public class EditBlueprintMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else {
 				_blueprintService.updateBlueprint(
-					_blueprintsAdminRequestHelper.getIdFromRequest(
-						actionRequest),
+					BlueprintsAdminRequestUtil.getBlueprintId(actionRequest),
 					titleMap, descriptionMap, configuration, selectedElements,
 					serviceContext);
 			}
@@ -145,9 +140,6 @@ public class EditBlueprintMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private BlueprintExceptionRequestHandler _blueprintExceptionRequestHandler;
-
-	@Reference
-	private BlueprintsAdminRequestHelper _blueprintsAdminRequestHelper;
 
 	@Reference
 	private BlueprintService _blueprintService;

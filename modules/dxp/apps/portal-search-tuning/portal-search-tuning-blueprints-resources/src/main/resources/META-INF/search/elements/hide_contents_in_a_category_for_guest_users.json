@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "conditional",
@@ -65,5 +65,5 @@
 			"en_US": "Hide Contents in a Category for Guest Users"
 		}
 	},
-	"type": 13
+	"type": 10
 }

@@ -14,29 +14,24 @@
 
 package com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminTabNames;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.security.permission.resource.BlueprintPermission;
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintTypes;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.security.permission.resource.BlueprintsAdminPermission;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminAssetUtil;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsActionKeys;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Petteri Karttunen
@@ -45,19 +40,19 @@ public class ViewBlueprintsManagementToolbarDisplayContext
 	extends ViewEntriesManagementToolbarDisplayContext {
 
 	public ViewBlueprintsManagementToolbarDisplayContext(
-		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer<Blueprint> searchContainer, String displayStyle) {
 
 		super(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			searchContainer, displayStyle, BlueprintsAdminTabNames.BLUEPRINTS);
+			liferayPortletRequest.getHttpServletRequest(),
+			liferayPortletRequest, liferayPortletResponse, searchContainer,
+			displayStyle);
 	}
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!BlueprintPermission.contains(
+		if (!BlueprintsAdminPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
 				BlueprintsActionKeys.ADD_BLUEPRINT)) {
@@ -69,7 +64,7 @@ public class ViewBlueprintsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "addBlueprint");
 				dropdownItem.putData(
-					"contextPath", portletRequest.getContextPath());
+					"contextPath", liferayPortletRequest.getContextPath());
 				dropdownItem.putData(
 					"defaultLocale",
 					LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
@@ -81,34 +76,22 @@ public class ViewBlueprintsManagementToolbarDisplayContext
 						Constants.ADD));
 
 				dropdownItem.putData(
-					"searchableAssetTypesString",
-					_getSearchableAssetTypesString());
+					"searchableAssetTypesString", _getSearchableAssetTypes());
 
-				dropdownItem.putData(
-					"type", String.valueOf(BlueprintTypes.BLUEPRINT));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add-blueprint"));
 			}
 		).build();
 	}
 
-	private String _getSearchableAssetTypesString() {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+	private String _getSearchableAssetTypes() {
+		List<String> list = Arrays.asList(
+			BlueprintsAdminAssetUtil.getSearchableAssetNames(
+				themeDisplay.getCompanyId()));
 
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				themeDisplay.getCompanyId(), false);
+		Stream<String> stream = list.stream();
 
-		Stream<AssetRendererFactory<?>> stream =
-			assetRendererFactories.stream();
-
-		stream.filter(
-			item -> item.isSearchable()
-		).forEach(
-			item -> jsonArray.put(item.getClassName())
-		);
-
-		return jsonArray.toString();
+		return stream.collect(Collectors.joining("\",\"", "[\"", "\"]"));
 	}
 
 }

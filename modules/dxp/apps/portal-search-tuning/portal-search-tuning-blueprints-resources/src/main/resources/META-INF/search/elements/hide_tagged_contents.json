@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "hide",
@@ -58,5 +58,5 @@
 			"en_US": "Hide Tagged Contents"
 		}
 	},
-	"type": 13
+	"type": 10
 }

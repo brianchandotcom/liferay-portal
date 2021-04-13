@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -26,18 +27,18 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
-import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminTabNames;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminWebKeys;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestUtil;
 
 import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,20 +53,17 @@ public abstract class ViewEntriesManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer<Blueprint> searchContainer, String displayStyle,
-		String tab) {
+		SearchContainer<?> searchContainer, String displayStyle) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 
-		this.httpServletRequest = httpServletRequest;
 		this.displayStyle = displayStyle;
-		this.tab = tab;
 
-		portletRequest = (PortletRequest)httpServletRequest.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+		tab = getTabName();
+
+		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -85,7 +83,17 @@ public abstract class ViewEntriesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		return getSearchActionURL();
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter(
+			"mvcRenderCommandName", getMVCRenderCommandName());
+		clearResultsURL.setParameter(BlueprintsAdminWebKeys.TAB, tab);
+
+		clearResultsURL.setProperty("orderByCol", getOrderByCol());
+		clearResultsURL.setProperty("orderByType", getOrderByType());
+
+		return clearResultsURL.toString();
 	}
 
 	@Override
@@ -95,17 +103,17 @@ public abstract class ViewEntriesManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchURL = liferayPortletResponse.createRenderURL();
+		PortletURL searchActionURL = getPortletURL();
 
-		searchURL.setProperty(
-			"mvcRenderCommandName", BlueprintsAdminMVCCommandNames.VIEW);
+		searchActionURL.setParameter(
+			"mvcRenderCommandName", getMVCRenderCommandName());
 
-		searchURL.setParameter("tabs", tab);
+		searchActionURL.setParameter(BlueprintsAdminWebKeys.TAB, tab);
 
-		searchURL.setProperty("orderByCol", getOrderByCol());
-		searchURL.setProperty("orderByType", getOrderByType());
+		searchActionURL.setProperty("orderByCol", getOrderByCol());
+		searchActionURL.setProperty("orderByType", getOrderByType());
 
-		return searchURL.toString();
+		return searchActionURL.toString();
 	}
 
 	@Override
@@ -113,9 +121,9 @@ public abstract class ViewEntriesManagementToolbarDisplayContext
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setProperty(
-			"mvcRenderCommandName", BlueprintsAdminMVCCommandNames.VIEW);
+			"mvcRenderCommandName", getMVCRenderCommandName());
 
-		portletURL.setParameter("tabs", tab);
+		portletURL.setParameter(BlueprintsAdminWebKeys.TAB, tab);
 
 		if (searchContainer.getDelta() > 0) {
 			portletURL.setProperty(
@@ -149,7 +157,7 @@ public abstract class ViewEntriesManagementToolbarDisplayContext
 		}
 
 		portletURL.setParameter("redirect", currentURLObj.toString());
-		portletURL.setParameter("tabs", tab);
+		portletURL.setParameter(BlueprintsAdminWebKeys.TAB, tab);
 
 		return portletURL.toString();
 	}
@@ -158,20 +166,28 @@ public abstract class ViewEntriesManagementToolbarDisplayContext
 		PortletURL sortingURL = getPortletURL();
 
 		sortingURL.setProperty(
-			"mvcRenderCommandName", BlueprintsAdminMVCCommandNames.VIEW);
+			"mvcRenderCommandName", getMVCRenderCommandName());
 
-		sortingURL.setParameter("tabs", tab);
+		sortingURL.setParameter(BlueprintsAdminWebKeys.TAB, tab);
 
 		sortingURL.setProperty(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
-		String keywords = ParamUtil.getString(
-			liferayPortletRequest, "keywords");
+		String keywords = BlueprintsAdminRequestUtil.getKeywords(
+			liferayPortletRequest);
 
-		if (Validator.isNotNull(keywords)) {
+		if (!Validator.isBlank(keywords)) {
 			sortingURL.setProperty("keywords", keywords);
 		}
 
 		return sortingURL;
+	}
+
+	protected String getMVCRenderCommandName() {
+		if (tab.equals(BlueprintsAdminTabNames.ELEMENTS)) {
+			return BlueprintsAdminMVCCommandNames.VIEW_ELEMENTS;
+		}
+
+		return BlueprintsAdminMVCCommandNames.VIEW_BLUEPRINTS;
 	}
 
 	@Override
@@ -206,9 +222,13 @@ public abstract class ViewEntriesManagementToolbarDisplayContext
 		).build();
 	}
 
+	protected String getTabName() {
+		return ParamUtil.getString(
+			liferayPortletRequest, BlueprintsAdminWebKeys.TAB,
+			BlueprintsAdminTabNames.BLUEPRINTS);
+	}
+
 	protected final String displayStyle;
-	protected final HttpServletRequest httpServletRequest;
-	protected final PortletRequest portletRequest;
 	protected final String tab;
 	protected final ThemeDisplay themeDisplay;
 

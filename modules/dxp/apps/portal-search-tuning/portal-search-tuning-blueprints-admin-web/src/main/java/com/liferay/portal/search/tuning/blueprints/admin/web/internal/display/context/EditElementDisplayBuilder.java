@@ -14,54 +14,67 @@
 
 package com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestUtil;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterDefinition;
 import com.liferay.portal.search.tuning.blueprints.engine.util.BlueprintsEngineContextHelper;
-import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
+import com.liferay.portal.search.tuning.blueprints.model.Element;
+import com.liferay.portal.search.tuning.blueprints.service.ElementService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Kevin Tan
+ * @author Petteri Karttunen
  */
 public class EditElementDisplayBuilder extends EditEntryDisplayBuilder {
 
 	public EditElementDisplayBuilder(
+		RenderRequest renderRequest, RenderResponse renderResponse,
 		BlueprintsEngineContextHelper blueprintsEngineContextHelper,
-		BlueprintService blueprintService,
-		HttpServletRequest httpServletRequest, Language language,
-		JSONFactory jsonFactory, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		ElementService elementService, JSONFactory jsonFactory,
+		Language language) {
 
 		super(
-			blueprintService, httpServletRequest, language, jsonFactory,
-			renderRequest, renderResponse);
+			renderRequest, renderResponse, elementService, jsonFactory,
+			language);
 
 		_blueprintsEngineContextHelper = blueprintsEngineContextHelper;
+
+		_element = _getElement();
+
+		_elementId = BlueprintsAdminRequestUtil.getElementId(renderRequest);
 	}
 
-	public BlueprintDisplayContext build() {
-		BlueprintDisplayContext blueprintDisplayContext =
-			new BlueprintDisplayContext();
+	public EntryDisplayContext build() {
+		EntryDisplayContext entryDisplayContext = new EntryDisplayContext();
 
-		setConfigurationId(blueprintDisplayContext);
-		setConfigurationType(blueprintDisplayContext);
-		setData(blueprintDisplayContext, _getProps());
-		setPageTitle(blueprintDisplayContext);
-		setRedirect(blueprintDisplayContext);
+		entryDisplayContext.setId(_elementId);
 
-		return blueprintDisplayContext;
+		_setType(entryDisplayContext);
+		setData(entryDisplayContext, _getProps());
+		_setPageTitle(entryDisplayContext);
+		setRedirect(entryDisplayContext);
+
+		return entryDisplayContext;
+	}
+
+	private Element _getElement() {
+		Optional<Element> optional = BlueprintsAdminRequestUtil.getElement(
+			renderRequest, renderResponse);
+
+		return optional.orElse(null);
 	}
 
 	private JSONArray _getPredefinedVariablesJSONArray() {
@@ -112,21 +125,25 @@ public class EditElementDisplayBuilder extends EditEntryDisplayBuilder {
 
 	private Map<String, Object> _getProps() {
 		Map<String, Object> props = HashMapBuilder.<String, Object>put(
-			"blueprintId", blueprintId
-		).put(
-			"blueprintType", blueprintType
+			"elementId", _elementId
 		).put(
 			"redirectURL", getRedirect()
 		).put(
 			"submitFormURL",
-			getSubmitFormURL(BlueprintsAdminMVCCommandNames.EDIT_ELEMENT)
+			getSubmitFormURL(
+				BlueprintsAdminMVCCommandNames.EDIT_ELEMENT, _element != null)
+		).put(
+			"type", _getType()
 		).build();
 
-		if (blueprint != null) {
+		if (_element != null) {
 			props.put(
-				"initialConfigurationString", blueprint.getConfiguration());
-			props.put("initialDescription", getDescriptionJSONObject());
-			props.put("initialTitle", getTitleJSONObject());
+				"initialConfigurationString", _element.getConfiguration());
+			props.put(
+				"initialDescription",
+				getDescriptionJSONObject(_element.getDescriptionMap()));
+			props.put(
+				"initialTitle", getTitleJSONObject(_element.getTitleMap()));
 			props.put(
 				"predefinedVariables", _getPredefinedVariablesJSONArray());
 		}
@@ -134,6 +151,30 @@ public class EditElementDisplayBuilder extends EditEntryDisplayBuilder {
 		return props;
 	}
 
+	private int _getType() {
+		if (_element != null) {
+			return _element.getType();
+		}
+
+		return BlueprintsAdminRequestUtil.getElementType(renderRequest);
+	}
+
+	private void _setPageTitle(EntryDisplayContext entryDisplayContext) {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append((_element != null) ? "edit-" : "add-");
+		sb.append("element");
+
+		entryDisplayContext.setPageTitle(
+			language.get(httpServletRequest, sb.toString()));
+	}
+
+	private void _setType(EntryDisplayContext entryDisplayContext) {
+		entryDisplayContext.setType(_getType());
+	}
+
 	private final BlueprintsEngineContextHelper _blueprintsEngineContextHelper;
+	private final Element _element;
+	private final long _elementId;
 
 }

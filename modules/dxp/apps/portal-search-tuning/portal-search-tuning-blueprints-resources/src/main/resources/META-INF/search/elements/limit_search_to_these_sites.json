@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "filter",
@@ -50,5 +50,5 @@
 			"en_US": "Limit Search to These Sites"
 		}
 	},
-	"type": 13
+	"type": 10
 }

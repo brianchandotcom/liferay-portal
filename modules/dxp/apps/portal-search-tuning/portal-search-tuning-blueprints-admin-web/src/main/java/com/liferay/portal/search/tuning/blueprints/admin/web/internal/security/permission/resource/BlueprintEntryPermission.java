@@ -17,7 +17,6 @@ package com.liferay.portal.search.tuning.blueprints.admin.web.internal.security.
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsActionKeys;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,20 +30,16 @@ public class BlueprintEntryPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, Blueprint entry,
-			String actionId)
+			String actionKey)
 		throws PortalException {
 
 		return _blueprintEntryModelResourcePermission.contains(
-			permissionChecker, entry, actionId);
+			permissionChecker, entry, actionKey);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long entryId,
-			int blueprintType, String actionId)
+			PermissionChecker permissionChecker, long entryId, String actionKey)
 		throws PortalException {
-
-		String actionKey = BlueprintsActionKeys.getActionKeyForBlueprintType(
-			blueprintType, actionId);
 
 		return _blueprintEntryModelResourcePermission.contains(
 			permissionChecker, entryId, actionKey);

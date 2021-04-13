@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "filter",
@@ -54,5 +54,5 @@
 			"en_US": "Filter by Exact Terms Match"
 		}
 	},
-	"type": 13
+	"type": 10
 }

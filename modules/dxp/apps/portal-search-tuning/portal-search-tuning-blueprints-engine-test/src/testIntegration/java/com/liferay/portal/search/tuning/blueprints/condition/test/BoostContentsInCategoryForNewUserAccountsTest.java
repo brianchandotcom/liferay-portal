@@ -64,7 +64,7 @@ public class BoostContentsInCategoryForNewUserAccountsTest
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""),
-			getConfigurationString((JSONObject[])null), "", 1);
+			getConfigurationString((JSONObject[])null), "");
 
 		assertSearch(
 			blueprint, null,

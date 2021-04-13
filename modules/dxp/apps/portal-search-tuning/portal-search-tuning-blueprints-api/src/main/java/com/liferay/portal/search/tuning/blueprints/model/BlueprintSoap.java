@@ -50,7 +50,6 @@ public class BlueprintSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setConfiguration(model.getConfiguration());
 		soapModel.setSelectedElements(model.getSelectedElements());
-		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -240,14 +239,6 @@ public class BlueprintSoap implements Serializable {
 		_selectedElements = selectedElements;
 	}
 
-	public int getType() {
-		return _type;
-	}
-
-	public void setType(int type) {
-		_type = type;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
 	private long _blueprintId;
@@ -265,6 +256,5 @@ public class BlueprintSoap implements Serializable {
 	private String _description;
 	private String _configuration;
 	private String _selectedElements;
-	private int _type;
 
 }

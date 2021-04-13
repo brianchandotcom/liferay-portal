@@ -64,50 +64,41 @@ public class BlueprintServiceImpl extends BlueprintServiceBaseImpl {
 
 	public Blueprint addCompanyBlueprint(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String configuration, String selectedElements, int type,
+			String configuration, String selectedElements,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		String actionKey = BlueprintsActionKeys.getActionKeyForBlueprintType(
-			type, ActionKeys.ADD_ENTRY);
 
 		long groupId = _getCompanyGroupId(serviceContext);
 
 		_portletResourcePermission.check(
-			getPermissionChecker(), groupId, actionKey);
+			getPermissionChecker(), groupId,
+			BlueprintsActionKeys.ADD_BLUEPRINT);
 
 		return blueprintLocalService.addBlueprint(
 			getUserId(), groupId, titleMap, descriptionMap, configuration,
-			selectedElements, type, serviceContext);
+			selectedElements, serviceContext);
 	}
 
 	public Blueprint addGroupBlueprint(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String configuration, String selectedElements, int type,
+			String configuration, String selectedElements,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		String actionKey = BlueprintsActionKeys.getActionKeyForBlueprintType(
-			type, ActionKeys.ADD_ENTRY);
 
 		long groupId = serviceContext.getScopeGroupId();
 
 		_portletResourcePermission.check(
-			getPermissionChecker(), groupId, actionKey);
+			getPermissionChecker(), groupId,
+			BlueprintsActionKeys.ADD_BLUEPRINT);
 
 		return blueprintLocalService.addBlueprint(
 			getUserId(), groupId, titleMap, descriptionMap, configuration,
-			selectedElements, type, serviceContext);
+			selectedElements, serviceContext);
 	}
 
 	public Blueprint deleteBlueprint(long blueprintId) throws PortalException {
-		Blueprint blueprint = _blueprintLocalService.getBlueprint(blueprintId);
-
-		String actionKey = BlueprintsActionKeys.getActionKeyForBlueprintType(
-			blueprint.getType(), ActionKeys.DELETE);
-
 		_blueprintModelResourcePermission.check(
-			getPermissionChecker(), blueprintId, actionKey);
+			getPermissionChecker(), blueprintId, ActionKeys.DELETE);
 
 		return blueprintLocalService.deleteBlueprint(blueprintId);
 	}
@@ -115,67 +106,65 @@ public class BlueprintServiceImpl extends BlueprintServiceBaseImpl {
 	public Blueprint getBlueprint(long blueprintId) throws PortalException {
 		Blueprint blueprint = _blueprintLocalService.getBlueprint(blueprintId);
 
-		String actionKey = BlueprintsActionKeys.getActionKeyForBlueprintType(
-			blueprint.getType(), BlueprintsActionKeys.APPLY_BLUEPRINT);
-
 		_blueprintModelResourcePermission.check(
-			getPermissionChecker(), blueprint, actionKey);
+			getPermissionChecker(), blueprint,
+			BlueprintsActionKeys.APPLY_BLUEPRINT);
 
 		return blueprint;
 	}
 
 	public List<Blueprint> getGroupBlueprints(
-		long companyId, int type, int start, int end) {
+		long groupId, int start, int end) {
 
 		return getGroupBlueprints(
-			companyId, WorkflowConstants.STATUS_APPROVED, type, start, end);
+			groupId, WorkflowConstants.STATUS_APPROVED, start, end);
 	}
 
 	public List<Blueprint> getGroupBlueprints(
-		long companyId, int status, int type, int start, int end) {
+		long groupId, int status, int start, int end) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blueprintPersistence.filterFindByG_T(
-				companyId, type, start, end);
+			return blueprintPersistence.filterFindByGroupId(
+				groupId, start, end);
 		}
 
-		return blueprintPersistence.filterFindByG_S_T(
-			companyId, status, type, start, end);
+		return blueprintPersistence.filterFindByG_S(
+			groupId, status, start, end);
 	}
 
 	public List<Blueprint> getGroupBlueprints(
-		long companyId, int status, int type, int start, int end,
+		long groupId, int status, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blueprintPersistence.findByG_T(
-				companyId, type, start, end, orderByComparator);
+			return blueprintPersistence.findByGroupId(
+				groupId, start, end, orderByComparator);
 		}
 
-		return blueprintPersistence.filterFindByG_S_T(
-			companyId, status, type, start, end, orderByComparator);
+		return blueprintPersistence.filterFindByG_S(
+			groupId, status, start, end, orderByComparator);
 	}
 
 	public List<Blueprint> getGroupBlueprints(
-		long companyId, int type, int start, int end,
+		long groupId, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator) {
 
 		return getGroupBlueprints(
-			companyId, WorkflowConstants.STATUS_APPROVED, type, start, end,
+			groupId, WorkflowConstants.STATUS_APPROVED, start, end,
 			orderByComparator);
 	}
 
-	public int getGroupBlueprintsCount(long companyId, int type) {
+	public int getGroupBlueprintsCount(long groupId) {
 		return getGroupBlueprintsCount(
-			companyId, WorkflowConstants.STATUS_APPROVED, type);
+			groupId, WorkflowConstants.STATUS_APPROVED);
 	}
 
-	public int getGroupBlueprintsCount(long companyId, int status, int type) {
+	public int getGroupBlueprintsCount(long groupId, int status) {
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blueprintPersistence.countByG_T(companyId, type);
+			return blueprintPersistence.countByGroupId(groupId);
 		}
 
-		return blueprintPersistence.countByG_S_T(companyId, status, type);
+		return blueprintPersistence.countByG_S(groupId, status);
 	}
 
 	public Blueprint updateBlueprint(
@@ -184,13 +173,8 @@ public class BlueprintServiceImpl extends BlueprintServiceBaseImpl {
 			String selectedElements, ServiceContext serviceContext)
 		throws PortalException {
 
-		Blueprint blueprint = _blueprintLocalService.getBlueprint(blueprintId);
-
-		String actionKey = BlueprintsActionKeys.getActionKeyForBlueprintType(
-			blueprint.getType(), ActionKeys.UPDATE);
-
 		_blueprintModelResourcePermission.check(
-			getPermissionChecker(), blueprintId, actionKey);
+			getPermissionChecker(), blueprintId, ActionKeys.UPDATE);
 
 		return _blueprintLocalService.updateBlueprint(
 			getUserId(), blueprintId, titleMap, descriptionMap, configuration,

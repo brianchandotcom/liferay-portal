@@ -86,7 +86,7 @@ public interface BlueprintLocalService
 	public Blueprint addBlueprint(
 			long userId, long groupId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String configuration,
-			String selectedElements, int type, ServiceContext serviceContext)
+			String selectedElements, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -297,35 +297,34 @@ public interface BlueprintLocalService
 	public int getBlueprintsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyBlueprintsCount(long companyId, int type);
+	public int getCompanyBlueprintsCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Blueprint> getGroupBlueprints(
-		long groupId, int type, int start, int end);
+	public List<Blueprint> getGroupBlueprints(long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Blueprint> getGroupBlueprints(
-		long groupId, int status, int type, int start, int end);
+		long groupId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Blueprint> getGroupBlueprints(
-		long groupId, int status, int type, int start, int end,
+		long groupId, int status, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Blueprint> getGroupBlueprints(
-		long groupId, int type, int start, int end,
+		long groupId, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupBlueprintsCount(long groupId, int type);
+	public int getGroupBlueprintsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupBlueprintsCount(long groupId, int status, int type);
+	public int getGroupBlueprintsCount(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

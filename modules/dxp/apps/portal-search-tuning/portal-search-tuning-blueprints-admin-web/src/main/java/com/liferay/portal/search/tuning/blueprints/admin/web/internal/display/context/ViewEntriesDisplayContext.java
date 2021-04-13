@@ -26,11 +26,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminTabNames;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminIndexUtil;
-import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminWebKeys;
+import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -40,27 +39,78 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Petteri Karttunen
  */
-public abstract class BlueprintsDisplayContext {
+public abstract class ViewEntriesDisplayContext<R> {
 
-	public BlueprintsDisplayContext(
+	public ViewEntriesDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, String tab) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
-		this.tab = tab;
 
 		httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
-		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+		tab = getTabName();
+		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public SearchContainer<Blueprint> getSearchContainer()
+	public String getDisplayStyle() {
+		String displayStyle = ParamUtil.getString(
+			liferayPortletRequest, "displayStyle");
+
+		String preferenceName = "entries-display-style-" + tab;
+
+		if (Validator.isNull(displayStyle)) {
+			return portalPreferences.getValue(
+				BlueprintsPortletKeys.BLUEPRINTS_ADMIN, preferenceName,
+				"descriptive");
+		}
+
+		portalPreferences.setValue(
+			BlueprintsPortletKeys.BLUEPRINTS_ADMIN, preferenceName,
+			displayStyle);
+
+		httpServletRequest.setAttribute(
+			WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+
+		return displayStyle;
+	}
+
+	protected PortletURL getIteratorURL() {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setProperty(
+			"mvcRenderCommandName", getMVCRenderCommandName());
+
+		portletURL.setParameter(BlueprintsAdminWebKeys.TAB, tab);
+
+		return portletURL;
+	}
+
+	protected String getMVCRenderCommandName() {
+		if (tab.equals(BlueprintsAdminTabNames.ELEMENTS)) {
+			return BlueprintsAdminMVCCommandNames.VIEW_ELEMENTS;
+		}
+
+		return BlueprintsAdminMVCCommandNames.VIEW_BLUEPRINTS;
+	}
+
+	protected String getOrderByCol() {
+		return ParamUtil.getString(
+			liferayPortletRequest, "orderByCol", Field.MODIFIED_DATE);
+	}
+
+	protected String getOrderByType() {
+		return ParamUtil.getString(
+			liferayPortletRequest, "orderByType", "desc");
+	}
+
+	protected SearchContainer<R> getSearchContainer()
 		throws PortalException, PortletException {
 
-		SearchContainer<Blueprint> searchContainer = new SearchContainer<>(
+		SearchContainer<R> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getIteratorURL(), null,
 			"no-entries-were-found");
 
@@ -71,40 +121,13 @@ public abstract class BlueprintsDisplayContext {
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 
-		populateResults(searchContainer);
-
 		return searchContainer;
 	}
 
-	protected PortletURL getIteratorURL() {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setProperty(
-			"mvcRenderCommandName", BlueprintsAdminMVCCommandNames.VIEW);
-
-		if (!Validator.isBlank(tab)) {
-			portletURL.setParameter("tabs", tab);
-		}
-
-		return portletURL;
-	}
-
-	protected String getOrderByCol() {
+	protected String getTabName() {
 		return ParamUtil.getString(
-			httpServletRequest, "orderByCol", Field.TITLE);
-	}
-
-	protected String getOrderByType() {
-		return ParamUtil.getString(httpServletRequest, "orderByType", "asc");
-	}
-
-	protected void populateResults(SearchContainer<Blueprint> searchContainer)
-		throws PortalException {
-
-		BlueprintsAdminIndexUtil.populateResults(
-			httpServletRequest, themeDisplay.getCompanyGroupId(),
-			WorkflowConstants.STATUS_APPROVED, _getSearchType(),
-			searchContainer, getOrderByCol(), getOrderByType());
+			liferayPortletRequest, BlueprintsAdminWebKeys.TAB,
+			BlueprintsAdminTabNames.BLUEPRINTS);
 	}
 
 	protected final HttpServletRequest httpServletRequest;
@@ -113,13 +136,5 @@ public abstract class BlueprintsDisplayContext {
 	protected final PortalPreferences portalPreferences;
 	protected final String tab;
 	protected final ThemeDisplay themeDisplay;
-
-	private String _getSearchType() {
-		if (BlueprintsAdminTabNames.ELEMENTS.equals(tab)) {
-			return "elements";
-		}
-
-		return "blueprints";
-	}
 
 }

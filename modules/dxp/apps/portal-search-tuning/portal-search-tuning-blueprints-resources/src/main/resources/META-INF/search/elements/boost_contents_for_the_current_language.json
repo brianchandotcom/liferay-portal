@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "boost",
@@ -67,5 +67,5 @@
 			"en_US": "Boost Contents for the Current Language"
 		}
 	},
-	"type": 13
+	"type": 10
 }

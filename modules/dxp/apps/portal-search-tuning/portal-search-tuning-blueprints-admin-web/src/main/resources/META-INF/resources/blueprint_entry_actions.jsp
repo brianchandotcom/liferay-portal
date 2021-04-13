@@ -33,7 +33,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= BlueprintEntryPermission.contains(permissionChecker, blueprint, BlueprintsActionKeys.UPDATE_BLUEPRINT) %>">
+	<c:if test="<%= BlueprintEntryPermission.contains(permissionChecker, blueprint, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= BlueprintsAdminMVCCommandNames.EDIT_BLUEPRINT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -46,7 +46,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		/>
 	</c:if>
 
-	<c:if test="<%= BlueprintPermission.contains(permissionChecker, companyGroupId, BlueprintsActionKeys.ADD_BLUEPRINT) %>">
+	<c:if test="<%= BlueprintsAdminPermission.contains(permissionChecker, companyGroupId, BlueprintsActionKeys.ADD_BLUEPRINT) %>">
 		<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.COPY_BLUEPRINT %>" var="copyEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="<%= BlueprintsAdminWebKeys.BLUEPRINT_ID %>" value="<%= String.valueOf(blueprintId) %>" />
@@ -58,7 +58,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		/>
 	</c:if>
 
-	<c:if test="<%= BlueprintPermission.contains(permissionChecker, companyGroupId, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= BlueprintsAdminPermission.contains(permissionChecker, companyGroupId, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Blueprint.class.getName() %>"
 			modelResourceDescription="<%= blueprint.getTitle(locale) %>"
@@ -87,7 +87,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		url="<%= exportEntryURL %>"
 	/>
 
-	<c:if test="<%= BlueprintEntryPermission.contains(permissionChecker, blueprint, BlueprintsActionKeys.DELETE_BLUEPRINT) %>">
+	<c:if test="<%= BlueprintEntryPermission.contains(permissionChecker, blueprint, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.DELETE_BLUEPRINT %>" var="deleteEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="<%= BlueprintsAdminWebKeys.BLUEPRINT_ID %>" value="<%= String.valueOf(blueprintId) %>" />

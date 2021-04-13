@@ -23,12 +23,15 @@ import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintTypes;
 import com.liferay.portal.search.tuning.blueprints.exception.BlueprintValidationException;
+import com.liferay.portal.search.tuning.blueprints.exception.ElementValidationException;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
+import com.liferay.portal.search.tuning.blueprints.model.Element;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintLocalService;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
-import com.liferay.portal.search.tuning.blueprints.util.importer.BlueprintImporter;
+import com.liferay.portal.search.tuning.blueprints.service.ElementLocalService;
+import com.liferay.portal.search.tuning.blueprints.service.ElementService;
+import com.liferay.portal.search.tuning.blueprints.util.importer.BlueprintsImporter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,99 +51,106 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = BlueprintImporter.class)
-public class BlueprintImporterImpl implements BlueprintImporter {
+@Component(immediate = true, service = BlueprintsImporter.class)
+public class BlueprintsImporterImpl implements BlueprintsImporter {
 
 	@Override
-	public void importBlueprint(
+	public void importItem(
 			long companyId, long groupId, long userId, JSONObject jsonObject)
 		throws PortalException {
 
-		if (!_validate(jsonObject)) {
-			throw new BlueprintValidationException("Invalid Blueprint syntax");
-		}
+		if (jsonObject.has("blueprint-payload")) {
+			if (!_validateBlueprint(jsonObject)) {
+				throw new BlueprintValidationException(
+					"Invalid Blueprint syntax");
+			}
 
-		_add(
-			jsonObject, _createServiceContext(companyId, groupId, userId),
-			true);
+			_addBlueprint(
+				jsonObject, _createServiceContext(companyId, groupId, userId),
+				true);
+		}
+		else if (jsonObject.has("element-payload")) {
+			if (!_validateElement(jsonObject)) {
+				throw new ElementValidationException("Invalid Element syntax");
+			}
+
+			_addElement(
+				jsonObject, _createServiceContext(companyId, groupId, userId),
+				true);
+		}
+		else {
+			throw new PortalException("Unknown payload type");
+		}
 	}
 
 	@Override
-	public void importBlueprint(
+	public void importItem(
 			PortletRequest portletRequest, InputStream inputStream)
 		throws IOException, PortalException {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			_getRawText(inputStream));
 
-		if (!_validate(jsonObject)) {
-			throw new BlueprintValidationException("Invalid Blueprint syntax");
+		if (jsonObject.has("blueprint-payload")) {
+			if (!_validateBlueprint(jsonObject)) {
+				throw new BlueprintValidationException(
+					"Invalid Blueprint syntax");
+			}
+
+			_addBlueprint(
+				jsonObject,
+				ServiceContextFactory.getInstance(
+					Blueprint.class.getName(), portletRequest),
+				false);
 		}
+		else if (jsonObject.has("element-payload")) {
+			if (!_validateElement(jsonObject)) {
+				throw new ElementValidationException("Invalid Element syntax");
+			}
 
-		_add(
-			jsonObject,
-			ServiceContextFactory.getInstance(
-				Blueprint.class.getName(), portletRequest),
-			false);
-	}
-
-	private void _add(
-			JSONObject jsonObject, ServiceContext serviceContext,
-			boolean privileged)
-		throws PortalException {
-
-		int type = jsonObject.getInt("type");
-
-		JSONObject payloadJSONObject = jsonObject.getJSONObject("payload");
-
-		if (type == BlueprintTypes.BLUEPRINT) {
-			_addBlueprint(payloadJSONObject, serviceContext, privileged);
+			_addElement(
+				jsonObject,
+				ServiceContextFactory.getInstance(
+					Element.class.getName(), portletRequest),
+				false);
 		}
-		else if (type == BlueprintTypes.QUERY_ELEMENT) {
-			_addElement(payloadJSONObject, type, serviceContext, privileged);
+		else {
+			throw new PortalException("Unknown payload type");
 		}
 	}
 
 	private void _addBlueprint(
-			JSONObject payloadJSONObject, ServiceContext serviceContext,
+			JSONObject jsonObject, ServiceContext serviceContext,
 			boolean privileged)
 		throws PortalException {
 
-		Map<Locale, String> titleMap = _getTitleMap(payloadJSONObject);
-
-		Map<Locale, String> descriptionMap = _getDescriptionMap(
-			payloadJSONObject);
-
-		String configuration = payloadJSONObject.getJSONObject(
-			"configuration"
-		).toJSONString();
+		JSONObject payloadJSONObject = jsonObject.getJSONObject(
+			"blueprint-payload");
 
 		String selectedElements = payloadJSONObject.getJSONObject(
 			"selectedElements"
 		).toJSONString();
 
-		_save(
-			titleMap, descriptionMap, configuration, selectedElements,
-			BlueprintTypes.BLUEPRINT, serviceContext, privileged);
+		_saveBlueprint(
+			_getTitleMap(payloadJSONObject),
+			_getDescriptionMap(payloadJSONObject),
+			_getConfiguration(payloadJSONObject), selectedElements,
+			serviceContext, privileged);
 	}
 
 	private void _addElement(
-			JSONObject payloadJSONObject, int blueprintType,
-			ServiceContext serviceContext, boolean privileged)
+			JSONObject jsonObject, ServiceContext serviceContext,
+			boolean privileged)
 		throws PortalException {
 
-		Map<Locale, String> titleMap = _getTitleMap(payloadJSONObject);
+		JSONObject payloadJSONObject = jsonObject.getJSONObject(
+			"element-payload");
 
-		Map<Locale, String> descriptionMap = _getDescriptionMap(
-				payloadJSONObject);
-
-		String configuration = payloadJSONObject.getJSONObject(
-			"configuration"
-		).toJSONString();
-
-		_save(
-			titleMap, descriptionMap, configuration, null, blueprintType, serviceContext,
-			privileged);
+		_saveElement(
+			_getTitleMap(payloadJSONObject),
+			_getDescriptionMap(payloadJSONObject),
+			_getConfiguration(payloadJSONObject), jsonObject.getInt("type"),
+			serviceContext, privileged);
 	}
 
 	private ServiceContext _createServiceContext(
@@ -164,6 +174,13 @@ public class BlueprintImporterImpl implements BlueprintImporter {
 			SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
 
 		return uuid.toString();
+	}
+
+	private String _getConfiguration(JSONObject jsonObject) {
+		JSONObject configurationJSONObject = jsonObject.getJSONObject(
+			"configuration");
+
+		return configurationJSONObject.toJSONString();
 	}
 
 	private Map<Locale, String> _getDescriptionMap(JSONObject jsonObject) {
@@ -211,9 +228,9 @@ public class BlueprintImporterImpl implements BlueprintImporter {
 		return _getLocalizationMap(titleJSONObject);
 	}
 
-	private void _save(
+	private void _saveBlueprint(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String configuration, String selectedElements, int type,
+			String configuration, String selectedElements,
 			ServiceContext serviceContext, boolean privileged)
 		throws PortalException {
 
@@ -221,25 +238,44 @@ public class BlueprintImporterImpl implements BlueprintImporter {
 			_blueprintLocalService.addBlueprint(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				titleMap, descriptionMap, configuration, selectedElements,
-					type, serviceContext);
+				serviceContext);
 		}
 		else {
 			_blueprintService.addCompanyBlueprint(
-				titleMap, descriptionMap, configuration, selectedElements, type,
+				titleMap, descriptionMap, configuration, selectedElements,
 				serviceContext);
 		}
 	}
 
-	private boolean _validate(JSONObject jsonObject) {
-		int type = jsonObject.getInt("type", 0);
+	private void _saveElement(
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String configuration, int type, ServiceContext serviceContext,
+			boolean privileged)
+		throws PortalException {
 
-		if (type == 0) {
-			_log.error("Missing Blueprint type");
+		if (privileged) {
+			_elementLocalService.addElement(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				titleMap, descriptionMap, configuration, type, serviceContext);
+		}
+		else {
+			_elementService.addCompanyElement(
+				titleMap, descriptionMap, configuration, type, serviceContext);
+		}
+	}
 
-			return false;
+	private boolean _validateBlueprint(JSONObject jsonObject) {
+		JSONObject payloadJSONObject = jsonObject.getJSONObject(
+			"blueprint-payload");
+
+		if (_validateTitle(payloadJSONObject) &&
+			_validateConfiguration(payloadJSONObject) &&
+			_validateSelectedElements(payloadJSONObject)) {
+
+			return true;
 		}
 
-		return _validatePayload(jsonObject.getJSONObject("payload"), type);
+		return false;
 	}
 
 	private boolean _validateConfiguration(JSONObject payloadJSONObject) {
@@ -252,20 +288,12 @@ public class BlueprintImporterImpl implements BlueprintImporter {
 		return true;
 	}
 
-	private boolean _validatePayload(JSONObject payloadJSONObject, int type) {
-		if ((payloadJSONObject == null) || (payloadJSONObject.length() == 0)) {
-			_log.error("Missing data payload");
+	private boolean _validateElement(JSONObject jsonObject) {
+		JSONObject payloadJSONObject = jsonObject.getJSONObject(
+			"element-payload");
 
-			return false;
-		}
-
-		if (type == BlueprintTypes.BLUEPRINT) {
-			if (_validateTitle(payloadJSONObject) &&
-				_validateConfiguration(payloadJSONObject) &&
-				_validateSelectedElements(payloadJSONObject)) {
-
-				return true;
-			}
+		if (!jsonObject.has("type")) {
+			_log.error("Missing element type");
 
 			return false;
 		}
@@ -300,13 +328,19 @@ public class BlueprintImporterImpl implements BlueprintImporter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlueprintImporterImpl.class);
+		BlueprintsImporterImpl.class);
 
 	@Reference
 	private BlueprintLocalService _blueprintLocalService;
 
 	@Reference
 	private BlueprintService _blueprintService;
+
+	@Reference
+	private ElementLocalService _elementLocalService;
+
+	@Reference
+	private ElementService _elementService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

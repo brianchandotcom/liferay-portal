@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "boost",
@@ -126,5 +126,5 @@
 			"en_US": "Boost Asset Type"
 		}
 	},
-	"type": 13
+	"type": 10
 }

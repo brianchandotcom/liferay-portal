@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"blueprint-payload": {
 		"configuration": {
 			"advanced_configuration": {
 				"highlighting": {
@@ -1811,6 +1811,5 @@
 		"title": {
 			"en_US": "Blade Sample (Sample Custom Blueprint)"
 		}
-	},
-	"type": 1
+	}
 }

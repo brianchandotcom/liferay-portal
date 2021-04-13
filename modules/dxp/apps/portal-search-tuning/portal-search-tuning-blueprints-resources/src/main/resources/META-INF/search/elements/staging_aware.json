@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "filter",
@@ -68,5 +68,5 @@
 			"en_US": "Staging Aware"
 		}
 	},
-	"type": 13
+	"type": 10
 }

@@ -57,13 +57,13 @@ public class BlueprintLocalServiceWrapper
 				long userId, long groupId,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String configuration, String selectedElements, int type,
+				String configuration, String selectedElements,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _blueprintLocalService.addBlueprint(
 			userId, groupId, titleMap, descriptionMap, configuration,
-			selectedElements, type, serviceContext);
+			selectedElements, serviceContext);
 	}
 
 	/**
@@ -366,9 +366,8 @@ public class BlueprintLocalServiceWrapper
 	}
 
 	@Override
-	public int getCompanyBlueprintsCount(long companyId, int type) {
-		return _blueprintLocalService.getCompanyBlueprintsCount(
-			companyId, type);
+	public int getCompanyBlueprintsCount(long companyId) {
+		return _blueprintLocalService.getCompanyBlueprintsCount(companyId);
 	}
 
 	@Override
@@ -384,57 +383,54 @@ public class BlueprintLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(long groupId, int type, int start, int end) {
+			getGroupBlueprints(long groupId, int start, int end) {
+
+		return _blueprintLocalService.getGroupBlueprints(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
+			getGroupBlueprints(long groupId, int status, int start, int end) {
 
 		return _blueprintLocalService.getGroupBlueprints(
-			groupId, type, start, end);
+			groupId, status, start, end);
 	}
 
 	@Override
 	public java.util.List
 		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
 			getGroupBlueprints(
-				long groupId, int status, int type, int start, int end) {
-
-		return _blueprintLocalService.getGroupBlueprints(
-			groupId, status, type, start, end);
-	}
-
-	@Override
-	public java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(
-				long groupId, int status, int type, int start, int end,
+				long groupId, int status, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.search.tuning.blueprints.model.
 						Blueprint> orderByComparator) {
 
 		return _blueprintLocalService.getGroupBlueprints(
-			groupId, status, type, start, end, orderByComparator);
+			groupId, status, start, end, orderByComparator);
 	}
 
 	@Override
 	public java.util.List
 		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
 			getGroupBlueprints(
-				long groupId, int type, int start, int end,
+				long groupId, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.search.tuning.blueprints.model.
 						Blueprint> orderByComparator) {
 
 		return _blueprintLocalService.getGroupBlueprints(
-			groupId, type, start, end, orderByComparator);
+			groupId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getGroupBlueprintsCount(long groupId, int type) {
-		return _blueprintLocalService.getGroupBlueprintsCount(groupId, type);
+	public int getGroupBlueprintsCount(long groupId) {
+		return _blueprintLocalService.getGroupBlueprintsCount(groupId);
 	}
 
 	@Override
-	public int getGroupBlueprintsCount(long groupId, int status, int type) {
-		return _blueprintLocalService.getGroupBlueprintsCount(
-			groupId, status, type);
+	public int getGroupBlueprintsCount(long groupId, int status) {
+		return _blueprintLocalService.getGroupBlueprintsCount(groupId, status);
 	}
 
 	@Override

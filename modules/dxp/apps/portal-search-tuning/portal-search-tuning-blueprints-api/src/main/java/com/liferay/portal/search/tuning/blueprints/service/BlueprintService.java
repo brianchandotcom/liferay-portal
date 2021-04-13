@@ -57,13 +57,13 @@ public interface BlueprintService extends BaseService {
 	 */
 	public Blueprint addCompanyBlueprint(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String configuration, String selectedElements, int type,
+			String configuration, String selectedElements,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public Blueprint addGroupBlueprint(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String configuration, String selectedElements, int type,
+			String configuration, String selectedElements,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -73,28 +73,27 @@ public interface BlueprintService extends BaseService {
 	public Blueprint getBlueprint(long blueprintId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Blueprint> getGroupBlueprints(
-		long companyId, int type, int start, int end);
+	public List<Blueprint> getGroupBlueprints(long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Blueprint> getGroupBlueprints(
-		long companyId, int status, int type, int start, int end);
+		long groupId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Blueprint> getGroupBlueprints(
-		long companyId, int status, int type, int start, int end,
+		long groupId, int status, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Blueprint> getGroupBlueprints(
-		long companyId, int type, int start, int end,
+		long groupId, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupBlueprintsCount(long companyId, int type);
+	public int getGroupBlueprintsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupBlueprintsCount(long companyId, int status, int type);
+	public int getGroupBlueprintsCount(long groupId, int status);
 
 	/**
 	 * Returns the OSGi service identifier.

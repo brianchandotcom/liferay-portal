@@ -19,16 +19,21 @@ package com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants
  */
 public class BlueprintsAdminWebKeys {
 
-	public static final String BLUEPRINT_DISPLAY_CONTEXT =
-		"BLUEPRINT_DISPLAY_CONTEXT";
-
 	public static final String BLUEPRINT_ID = "blueprintId";
 
-	public static final String BLUEPRINT_TYPE = "type";
+	public static final String CONFIGURATION = "configuration";
 
 	public static final String DESCRIPTION = "description";
 
+	public static final String ELEMENT_ID = "elementId";
+
+	public static final String ELEMENT_TYPE = "elementType";
+
+	public static final String ENTRY_DISPLAY_CONTEXT = "ENTRY_DISPLAY_CONTEXT";
+
 	public static final String ERROR = "error";
+
+	public static final String KEYWORDS = "keywords";
 
 	public static final String PAGE_TITLE_KEY = "pageTitleKey";
 
@@ -54,6 +59,10 @@ public class BlueprintsAdminWebKeys {
 	public static final String SELECT_USERS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT =
 		"SELECT_USERS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT";
 
+	public static final String SELECTED_ELEMENTS = "selectedElements";
+
+	public static final String TAB = "tab";
+
 	public static final String TITLE = "title";
 
 	public static final String VIEW_BLUEPRINTS_DISPLAY_CONTEXT =
@@ -62,6 +71,9 @@ public class BlueprintsAdminWebKeys {
 	public static final String
 		VIEW_BLUEPRINTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT =
 			"VIEW_BLUEPRINTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT";
+
+	public static final String VIEW_ELEMENTS_DISPLAY_CONTEXT =
+		"VIEW_ELEMENTS_DISPLAY_CONTEXT";
 
 	public static final String
 		VIEW_ELEMENTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT =

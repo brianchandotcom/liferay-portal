@@ -57,8 +57,7 @@ public class BoostPhraseMatchTest extends BaseFromScratchTestCase {
 				getMultiMatchQueryElementJSONObject(1, "or", "most_fields")),
 			getSelectedElementString(
 				getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
-					2, 1, 1, "or", "most_fields")),
-			1);
+					2, 1, 1, "or", "most_fields")));
 
 		assertSearch(
 			blueprint, null,

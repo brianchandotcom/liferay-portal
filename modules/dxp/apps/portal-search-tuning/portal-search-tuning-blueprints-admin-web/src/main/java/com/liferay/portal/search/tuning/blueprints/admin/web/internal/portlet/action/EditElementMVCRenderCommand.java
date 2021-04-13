@@ -23,11 +23,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminWebKeys;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context.BlueprintDisplayContext;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context.EditElementDisplayBuilder;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context.EntryDisplayContext;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
 import com.liferay.portal.search.tuning.blueprints.engine.util.BlueprintsEngineContextHelper;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
+import com.liferay.portal.search.tuning.blueprints.service.ElementService;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -52,16 +53,13 @@ public class EditElementMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		BlueprintDisplayContext blueprintDisplayContext =
-			new EditElementDisplayBuilder(
-				_blueprintsEngineContextHelper, _blueprintService,
-				_portal.getHttpServletRequest(renderRequest), _language,
-				_jsonFactory, renderRequest, renderResponse
-			).build();
+		EntryDisplayContext entryDisplayContext = new EditElementDisplayBuilder(
+			renderRequest, renderResponse, _blueprintsEngineContextHelper,
+			_elementService, _jsonFactory, _language
+		).build();
 
 		renderRequest.setAttribute(
-			BlueprintsAdminWebKeys.BLUEPRINT_DISPLAY_CONTEXT,
-			blueprintDisplayContext);
+			BlueprintsAdminWebKeys.ENTRY_DISPLAY_CONTEXT, entryDisplayContext);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -69,7 +67,7 @@ public class EditElementMVCRenderCommand implements MVCRenderCommand {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(blueprintDisplayContext.getRedirect());
+		portletDisplay.setURLBack(entryDisplayContext.getRedirect());
 
 		return "/edit_element.jsp";
 	}
@@ -79,6 +77,9 @@ public class EditElementMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private BlueprintService _blueprintService;
+
+	@Reference
+	private ElementService _elementService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

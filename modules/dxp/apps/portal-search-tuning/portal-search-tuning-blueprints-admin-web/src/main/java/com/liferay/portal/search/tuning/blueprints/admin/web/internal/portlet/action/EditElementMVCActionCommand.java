@@ -27,15 +27,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminWebKeys;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.handler.BlueprintExceptionRequestHandler;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestHelper;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestUtil;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
-import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
+import com.liferay.portal.search.tuning.blueprints.model.Element;
+import com.liferay.portal.search.tuning.blueprints.service.ElementService;
 
 import java.util.Locale;
 import java.util.Map;
@@ -65,45 +65,38 @@ public class EditElementMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, BlueprintsAdminWebKeys.TITLE);
+		Map<Locale, String> titleMap = BlueprintsAdminRequestUtil.getTitle(
+			actionRequest);
 
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, BlueprintsAdminWebKeys.DESCRIPTION);
+			BlueprintsAdminRequestUtil.getDescription(actionRequest);
+
+		String configuration = BlueprintsAdminRequestUtil.getConfiguration(
+			actionRequest);
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			String configuration = ParamUtil.getString(
-				actionRequest, "configuration");
-			String selectedElements = ParamUtil.getString(
-				actionRequest, "selectedElements");
-
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Blueprint.class.getName(), actionRequest);
 
 			JSONObject jsonObject = JSONUtil.put("title", titleMap);
 
 			if (Constants.ADD.equals(cmd)) {
-				Blueprint blueprint = _blueprintService.addCompanyBlueprint(
-					titleMap, descriptionMap, configuration, selectedElements,
-					_blueprintsAdminRequestHelper.getTypeFromRequest(
-						actionRequest),
+				Element element = _elementService.addCompanyElement(
+					titleMap, descriptionMap, configuration,
+					BlueprintsAdminRequestUtil.getElementType(actionRequest),
 					serviceContext);
 
 				jsonObject = JSONUtil.put(
 					"redirectURL",
 					_getRedirectURL(
-						actionRequest, actionResponse,
-						blueprint.getBlueprintId()));
+						actionRequest, actionResponse, element.getElementId()));
 			}
 			else {
-				_blueprintService.updateBlueprint(
-					_blueprintsAdminRequestHelper.getIdFromRequest(
-						actionRequest),
-					titleMap, descriptionMap, configuration, selectedElements,
-					serviceContext);
+				_elementService.updateElement(
+					BlueprintsAdminRequestUtil.getElementId(actionRequest),
+					titleMap, descriptionMap, configuration, serviceContext);
 			}
 
 			JSONPortletResponseUtil.writeJSON(
@@ -121,7 +114,7 @@ public class EditElementMVCActionCommand extends BaseMVCActionCommand {
 
 	private String _getRedirectURL(
 		ActionRequest actionRequest, ActionResponse actionResponse,
-		long blueprintId) {
+		long elementId) {
 
 		LiferayActionResponse liferayActionResponse =
 			(LiferayActionResponse)actionResponse;
@@ -134,7 +127,7 @@ public class EditElementMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setParameter(
 			"redirect", ParamUtil.getString(actionRequest, "redirect"));
 		portletURL.setParameter(
-			BlueprintsAdminWebKeys.BLUEPRINT_ID, String.valueOf(blueprintId));
+			BlueprintsAdminWebKeys.ELEMENT_ID, String.valueOf(elementId));
 
 		return portletURL.toString();
 	}
@@ -146,10 +139,7 @@ public class EditElementMVCActionCommand extends BaseMVCActionCommand {
 	private BlueprintExceptionRequestHandler _blueprintExceptionRequestHandler;
 
 	@Reference
-	private BlueprintsAdminRequestHelper _blueprintsAdminRequestHelper;
-
-	@Reference
-	private BlueprintService _blueprintService;
+	private ElementService _elementService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

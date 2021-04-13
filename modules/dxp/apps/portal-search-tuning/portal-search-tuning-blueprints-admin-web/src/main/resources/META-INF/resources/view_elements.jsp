@@ -19,7 +19,7 @@
 <%
 ViewElementsManagementToolbarDisplayContext viewElementsManagementToolbarDisplayContext = (ViewElementsManagementToolbarDisplayContext)request.getAttribute(BlueprintsAdminWebKeys.VIEW_ELEMENTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT);
 
-ViewBlueprintsDisplayContext viewBlueprintsDisplayContext = (ViewBlueprintsDisplayContext)request.getAttribute(BlueprintsAdminWebKeys.VIEW_BLUEPRINTS_DISPLAY_CONTEXT);
+ViewElementsDisplayContext viewElementsDisplayContext = (ViewElementsDisplayContext)request.getAttribute(BlueprintsAdminWebKeys.VIEW_ELEMENTS_DISPLAY_CONTEXT);
 %>
 
 <clay:management-toolbar-v2
@@ -35,18 +35,18 @@ ViewBlueprintsDisplayContext viewBlueprintsDisplayContext = (ViewBlueprintsDispl
 		<liferay-ui:search-container
 			cssClass="blueprints-search-container"
 			id="elementEntries"
-			searchContainer="<%= viewBlueprintsDisplayContext.getSearchContainer() %>"
+			searchContainer="<%= viewElementsDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.search.tuning.blueprints.model.Blueprint"
-				keyProperty="blueprintId"
+				className="com.liferay.portal.search.tuning.blueprints.model.Element"
+				keyProperty="elementId"
 				modelVar="entry"
 			>
 				<%@ include file="/element_entry_search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
-				displayStyle="<%= viewBlueprintsDisplayContext.getDisplayStyle() %>"
+				displayStyle="<%= viewElementsDisplayContext.getDisplayStyle() %>"
 				markupView="lexicon"
 			/>
 		</liferay-ui:search-container>
@@ -83,7 +83,7 @@ ViewBlueprintsDisplayContext viewBlueprintsDisplayContext = (ViewBlueprintsDispl
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-elements" />'
 			)
 		) {
-			<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.DELETE_BLUEPRINT %>" var="deleteElementURL">
+			<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.DELETE_ELEMENT %>" var="deleteElementURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 

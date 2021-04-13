@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "custom",
@@ -72,5 +72,5 @@
 			"en_US": "Paste any Elasticsearch query"
 		}
 	},
-	"type": 13
+	"type": 10
 }

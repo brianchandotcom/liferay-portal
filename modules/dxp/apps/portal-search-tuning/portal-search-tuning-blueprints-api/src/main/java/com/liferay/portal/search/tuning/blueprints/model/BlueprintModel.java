@@ -538,20 +538,6 @@ public interface BlueprintModel
 	public void setSelectedElements(String selectedElements);
 
 	/**
-	 * Returns the type of this blueprint.
-	 *
-	 * @return the type of this blueprint
-	 */
-	public int getType();
-
-	/**
-	 * Sets the type of this blueprint.
-	 *
-	 * @param type the type of this blueprint
-	 */
-	public void setType(int type);
-
-	/**
 	 * Returns <code>true</code> if this blueprint is approved.
 	 *
 	 * @return <code>true</code> if this blueprint is approved; <code>false</code> otherwise

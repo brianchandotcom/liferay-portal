@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintTypes;
 import com.liferay.portal.search.tuning.blueprints.resources.internal.util.ImportHelper;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintLocalService;
 
@@ -41,13 +40,25 @@ public class AddDefaultBlueprintsPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		if (_hasBlueprints(company.getCompanyId())) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Blueprints exists in company " + company.getCompanyId() +
+						".");
+			}
+
 			return;
 		}
 
 		try {
 			User user = company.getDefaultUser();
 
-			_importHelper.importDefaultBlueprints(
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Importing default resources to company " +
+						company.getCompanyId() + ".");
+			}
+
+			_importHelper.importDefaultResources(
 				company.getCompanyId(), company.getGroupId(), user.getUserId());
 		}
 		catch (PortalException portalException) {
@@ -56,8 +67,7 @@ public class AddDefaultBlueprintsPortalInstanceLifecycleListener
 	}
 
 	private boolean _hasBlueprints(long companyId) {
-		int count = _blueprintLocalService.getCompanyBlueprintsCount(
-			companyId, BlueprintTypes.BLUEPRINT);
+		int count = _blueprintLocalService.getCompanyBlueprintsCount(companyId);
 
 		if (count > 0) {
 			return true;

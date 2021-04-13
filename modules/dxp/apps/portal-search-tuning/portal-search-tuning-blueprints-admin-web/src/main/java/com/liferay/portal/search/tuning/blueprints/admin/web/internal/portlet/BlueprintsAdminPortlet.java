@@ -17,14 +17,7 @@ package com.liferay.portal.search.tuning.blueprints.admin.web.internal.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
 
-import java.io.IOException;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -49,38 +42,4 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class BlueprintsAdminPortlet extends MVCPortlet {
-
-	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
-
-		try {
-			super.processAction(actionRequest, actionResponse);
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-
-			throw ioException;
-		}
-		catch (PortletException portletException) {
-			portletException.printStackTrace();
-
-			throw portletException;
-		}
-		catch (RuntimeException runtimeException) {
-			runtimeException.printStackTrace();
-
-			throw runtimeException;
-		}
-	}
-
-	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		super.render(renderRequest, renderResponse);
-	}
-
 }

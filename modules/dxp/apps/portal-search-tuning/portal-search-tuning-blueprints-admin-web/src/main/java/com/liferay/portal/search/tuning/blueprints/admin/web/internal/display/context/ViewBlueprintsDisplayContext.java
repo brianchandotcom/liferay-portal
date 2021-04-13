@@ -14,30 +14,32 @@
 
 package com.liferay.portal.search.tuning.blueprints.admin.web.internal.display.context;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.security.permission.resource.BlueprintEntryPermission;
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminIndexUtil;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 
 import java.util.Collections;
 import java.util.List;
 
+import javax.portlet.PortletException;
+
 /**
  * @author Petteri Karttunen
  */
-public class ViewBlueprintsDisplayContext extends BlueprintsDisplayContext {
+public class ViewBlueprintsDisplayContext
+	extends ViewEntriesDisplayContext<Blueprint> {
 
 	public ViewBlueprintsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, String tab) {
+		LiferayPortletResponse liferayPortletResponse) {
 
-		super(liferayPortletRequest, liferayPortletResponse, tab);
+		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public List<String> getAvailableActions(Blueprint blueprint)
@@ -53,26 +55,17 @@ public class ViewBlueprintsDisplayContext extends BlueprintsDisplayContext {
 		return Collections.emptyList();
 	}
 
-	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle");
+	public SearchContainer<Blueprint> getSearchContainer()
+		throws PortalException, PortletException {
 
-		String preferenceName = "entries-display-style-" + tab;
+		SearchContainer<Blueprint> searchContainer = super.getSearchContainer();
 
-		if (Validator.isNull(displayStyle)) {
-			return portalPreferences.getValue(
-				BlueprintsPortletKeys.BLUEPRINTS_ADMIN, preferenceName,
-				"descriptive");
-		}
+		BlueprintsAdminIndexUtil.populateBlueprintResults(
+			liferayPortletRequest, themeDisplay.getCompanyGroupId(),
+			WorkflowConstants.STATUS_APPROVED, searchContainer, getOrderByCol(),
+			getOrderByType());
 
-		portalPreferences.setValue(
-			BlueprintsPortletKeys.BLUEPRINTS_ADMIN, preferenceName,
-			displayStyle);
-
-		httpServletRequest.setAttribute(
-			WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-
-		return displayStyle;
+		return searchContainer;
 	}
 
 }

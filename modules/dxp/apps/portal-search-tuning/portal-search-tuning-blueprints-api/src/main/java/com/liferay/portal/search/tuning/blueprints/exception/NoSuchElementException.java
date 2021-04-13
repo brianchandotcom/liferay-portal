@@ -12,21 +12,28 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.constants;
+package com.liferay.portal.search.tuning.blueprints.exception;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author Petteri Karttunen
+ * @author Brian Wing Shun Chan
  */
-public class BlueprintTypes {
+public class NoSuchElementException extends NoSuchModelException {
 
-	public static final int AGGREGATION_ELEMENT = 7;
+	public NoSuchElementException() {
+	}
 
-	public static final int BLUEPRINT = 1;
+	public NoSuchElementException(String msg) {
+		super(msg);
+	}
 
-	public static final int FACET_ELEMENT = 10;
+	public NoSuchElementException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
 
-	public static final int QUERY_ELEMENT = 13;
-
-	public static final int SUGGESTER_ELEMENT = 16;
+	public NoSuchElementException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

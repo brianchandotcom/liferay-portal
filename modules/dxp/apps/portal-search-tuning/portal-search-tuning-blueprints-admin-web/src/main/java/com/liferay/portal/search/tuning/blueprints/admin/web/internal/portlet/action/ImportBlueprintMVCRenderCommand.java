@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BlueprintsPortletKeys.BLUEPRINTS_ADMIN,
-		"mvc.command.name=" + BlueprintsAdminMVCCommandNames.IMPORT_BLUEPRINT
+		"mvc.command.name=" + BlueprintsAdminMVCCommandNames.IMPORT
 	},
 	service = MVCRenderCommand.class
 )

@@ -43,14 +43,14 @@ import {
 } from '../utils/utils';
 
 function EditElementForm({
-	blueprintId,
-	blueprintType,
+	elementId,
 	initialConfigurationString,
 	initialDescription,
 	initialTitle,
 	predefinedVariables,
 	redirectURL,
 	submitFormURL,
+	type,
 }) {
 	const {defaultLocale, namespace} = useContext(ThemeContext);
 
@@ -276,9 +276,9 @@ function EditElementForm({
 			return;
 		}
 
-		formData.append(`${namespace}type`, blueprintType);
-		formData.append(`${namespace}blueprintId`, blueprintId);
+		formData.append(`${namespace}elementId`, elementId);
 		formData.append(`${namespace}redirect`, redirectURL);
+		formData.append(`${namespace}type`, type);
 
 		return fetch(submitFormURL, {
 			body: formData,
@@ -539,14 +539,14 @@ function EditElementForm({
 }
 
 EditElementForm.propTypes = {
-	blueprintId: PropTypes.string,
-	blueprintType: PropTypes.number,
+	elementId: PropTypes.string,
 	initialConfigurationString: PropTypes.string,
 	initialDescription: PropTypes.object,
 	initialTitle: PropTypes.object,
 	predefinedVariables: PropTypes.arrayOf(PropTypes.object),
 	redirectURL: PropTypes.string,
 	submitFormURL: PropTypes.string,
+	type: PropTypes.number,
 };
 
 function SidebarPanel({categoryName, handleClick, parameterDefinitions}) {

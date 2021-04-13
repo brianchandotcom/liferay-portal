@@ -14,9 +14,12 @@
 
 package com.liferay.portal.search.tuning.blueprints.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for Blueprint. This utility wraps
@@ -37,94 +40,76 @@ public class BlueprintServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.search.tuning.blueprints.service.impl.BlueprintServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			addCompanyBlueprint(
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String configuration, String selectedElements, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint addCompanyBlueprint(
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String configuration,
+			String selectedElements,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCompanyBlueprint(
-			titleMap, descriptionMap, configuration, selectedElements, type,
+			titleMap, descriptionMap, configuration, selectedElements,
 			serviceContext);
 	}
 
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			addGroupBlueprint(
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String configuration, String selectedElements, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint addGroupBlueprint(
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String configuration,
+			String selectedElements,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addGroupBlueprint(
-			titleMap, descriptionMap, configuration, selectedElements, type,
+			titleMap, descriptionMap, configuration, selectedElements,
 			serviceContext);
 	}
 
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			deleteBlueprint(long blueprintId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint deleteBlueprint(long blueprintId)
+		throws PortalException {
 
 		return getService().deleteBlueprint(blueprintId);
 	}
 
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			getBlueprint(long blueprintId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint getBlueprint(long blueprintId)
+		throws PortalException {
 
 		return getService().getBlueprint(blueprintId);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(long companyId, int type, int start, int end) {
+	public static List<Blueprint> getGroupBlueprints(
+		long groupId, int start, int end) {
 
-		return getService().getGroupBlueprints(companyId, type, start, end);
+		return getService().getGroupBlueprints(groupId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(
-				long companyId, int status, int type, int start, int end) {
+	public static List<Blueprint> getGroupBlueprints(
+		long groupId, int status, int start, int end) {
+
+		return getService().getGroupBlueprints(groupId, status, start, end);
+	}
+
+	public static List<Blueprint> getGroupBlueprints(
+		long groupId, int status, int start, int end,
+		OrderByComparator<Blueprint> orderByComparator) {
 
 		return getService().getGroupBlueprints(
-			companyId, status, type, start, end);
+			groupId, status, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(
-				long companyId, int status, int type, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.search.tuning.blueprints.model.
-						Blueprint> orderByComparator) {
+	public static List<Blueprint> getGroupBlueprints(
+		long groupId, int start, int end,
+		OrderByComparator<Blueprint> orderByComparator) {
 
 		return getService().getGroupBlueprints(
-			companyId, status, type, start, end, orderByComparator);
+			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.search.tuning.blueprints.model.Blueprint>
-			getGroupBlueprints(
-				long companyId, int type, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.search.tuning.blueprints.model.
-						Blueprint> orderByComparator) {
-
-		return getService().getGroupBlueprints(
-			companyId, type, start, end, orderByComparator);
+	public static int getGroupBlueprintsCount(long groupId) {
+		return getService().getGroupBlueprintsCount(groupId);
 	}
 
-	public static int getGroupBlueprintsCount(long companyId, int type) {
-		return getService().getGroupBlueprintsCount(companyId, type);
-	}
-
-	public static int getGroupBlueprintsCount(
-		long companyId, int status, int type) {
-
-		return getService().getGroupBlueprintsCount(companyId, status, type);
+	public static int getGroupBlueprintsCount(long groupId, int status) {
+		return getService().getGroupBlueprintsCount(groupId, status);
 	}
 
 	/**
@@ -136,14 +121,12 @@ public class BlueprintServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.search.tuning.blueprints.model.Blueprint
-			updateBlueprint(
-				long blueprintId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String configuration, String selectedElements,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Blueprint updateBlueprint(
+			long blueprintId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String configuration,
+			String selectedElements,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateBlueprint(
 			blueprintId, titleMap, descriptionMap, configuration,
@@ -151,22 +134,9 @@ public class BlueprintServiceUtil {
 	}
 
 	public static BlueprintService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<BlueprintService, BlueprintService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(BlueprintService.class);
-
-		ServiceTracker<BlueprintService, BlueprintService> serviceTracker =
-			new ServiceTracker<BlueprintService, BlueprintService>(
-				bundle.getBundleContext(), BlueprintService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile BlueprintService _service;
 
 }

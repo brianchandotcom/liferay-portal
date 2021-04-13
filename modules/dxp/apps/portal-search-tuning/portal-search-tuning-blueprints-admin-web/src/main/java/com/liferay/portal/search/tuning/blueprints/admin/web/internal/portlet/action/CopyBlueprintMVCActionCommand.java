@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminWebKeys;
-import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestHelper;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestUtil;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
 import com.liferay.portal.search.tuning.blueprints.exception.BlueprintValidationException;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
@@ -65,7 +65,7 @@ public class CopyBlueprintMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		Optional<Blueprint> blueprintOptional =
-			_blueprintsAdminRequestHelper.getBlueprintFromRequest(
+			BlueprintsAdminRequestUtil.getBlueprint(
 				actionRequest, actionResponse);
 
 		if (!blueprintOptional.isPresent()) {
@@ -87,8 +87,7 @@ public class CopyBlueprintMVCActionCommand extends BaseMVCActionCommand {
 				_getTargetTitleMap(sourceBlueprint),
 				sourceBlueprint.getDescriptionMap(),
 				sourceBlueprint.getConfiguration(),
-				sourceBlueprint.getSelectedElements(),
-				sourceBlueprint.getType(), serviceContext);
+				sourceBlueprint.getSelectedElements(), serviceContext);
 
 			sendRedirect(actionRequest, actionResponse);
 		}
@@ -137,9 +136,6 @@ public class CopyBlueprintMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CopyBlueprintMVCActionCommand.class);
-
-	@Reference
-	private BlueprintsAdminRequestHelper _blueprintsAdminRequestHelper;
 
 	@Reference
 	private BlueprintService _blueprintService;

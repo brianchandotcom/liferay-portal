@@ -74,7 +74,7 @@ public class LimitSearchToMySitesTest extends BaseBlueprintsTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""), configurationString,
-			_getSelectedElementString(), 1);
+			_getSelectedElementString());
 
 		assertSearchIgnoreRelevance(
 			blueprint, null, "[cola coca, cola pepsi]", "cola", null);

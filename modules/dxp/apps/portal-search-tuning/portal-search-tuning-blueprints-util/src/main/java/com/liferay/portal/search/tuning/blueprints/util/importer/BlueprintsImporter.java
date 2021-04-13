@@ -25,13 +25,13 @@ import javax.portlet.PortletRequest;
 /**
  * @author Petteri Karttunen
  */
-public interface BlueprintImporter {
+public interface BlueprintsImporter {
 
-	public void importBlueprint(
+	public void importItem(
 			long companyId, long groupId, long userId, JSONObject jsonObject)
 		throws PortalException;
 
-	public void importBlueprint(
+	public void importItem(
 			PortletRequest portletRequest, InputStream inputStream)
 		throws IOException, PortalException;
 

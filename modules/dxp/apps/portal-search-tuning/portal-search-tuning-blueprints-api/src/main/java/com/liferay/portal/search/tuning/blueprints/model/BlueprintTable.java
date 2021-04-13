@@ -67,8 +67,6 @@ public class BlueprintTable extends BaseTable<BlueprintTable> {
 		"configuration", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<BlueprintTable, Clob> selectedElements = createColumn(
 		"selectedElements", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<BlueprintTable, Integer> type = createColumn(
-		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private BlueprintTable() {
 		super("Blueprint", BlueprintTable::new);

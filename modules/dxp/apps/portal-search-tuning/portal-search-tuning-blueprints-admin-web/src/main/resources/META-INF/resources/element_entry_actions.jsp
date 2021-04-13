@@ -19,9 +19,9 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Blueprint blueprint = (Blueprint)row.getObject();
+Element element = (Element)row.getObject();
 
-long blueprintId = blueprint.getBlueprintId();
+long elementId = element.getElementId();
 
 long companyGroupId = themeDisplay.getCompanyGroupId();
 %>
@@ -33,11 +33,11 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= BlueprintEntryPermission.contains(permissionChecker, blueprint, BlueprintsActionKeys.UPDATE_ELEMENT) %>">
+	<c:if test="<%= ElementEntryPermission.contains(permissionChecker, element, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= BlueprintsAdminMVCCommandNames.EDIT_ELEMENT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="<%= BlueprintsAdminWebKeys.BLUEPRINT_ID %>" value="<%= String.valueOf(blueprintId) %>" />
+			<portlet:param name="<%= BlueprintsAdminWebKeys.ELEMENT_ID %>" value="<%= String.valueOf(elementId) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -46,10 +46,10 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		/>
 	</c:if>
 
-	<c:if test="<%= BlueprintPermission.contains(permissionChecker, companyGroupId, BlueprintsActionKeys.ADD_ELEMENT) %>">
-		<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.COPY_BLUEPRINT %>" var="copyEntryURL">
+	<c:if test="<%= BlueprintsAdminPermission.contains(permissionChecker, companyGroupId, BlueprintsActionKeys.ADD_ELEMENT) %>">
+		<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.COPY_ELEMENT %>" var="copyEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="<%= BlueprintsAdminWebKeys.BLUEPRINT_ID %>" value="<%= String.valueOf(blueprintId) %>" />
+			<portlet:param name="<%= BlueprintsAdminWebKeys.ELEMENT_ID %>" value="<%= String.valueOf(elementId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon
@@ -58,12 +58,12 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		/>
 	</c:if>
 
-	<c:if test="<%= BlueprintPermission.contains(permissionChecker, companyGroupId, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= BlueprintsAdminPermission.contains(permissionChecker, companyGroupId, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= Blueprint.class.getName() %>"
-			modelResourceDescription="<%= blueprint.getTitle(locale) %>"
-			resourceGroupId="<%= String.valueOf(blueprint.getGroupId()) %>"
-			resourcePrimKey="<%= String.valueOf(blueprintId) %>"
+			modelResource="<%= Element.class.getName() %>"
+			modelResourceDescription="<%= element.getTitle(locale) %>"
+			resourceGroupId="<%= String.valueOf(element.getGroupId()) %>"
+			resourcePrimKey="<%= String.valueOf(elementId) %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
@@ -77,9 +77,9 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		/>
 	</c:if>
 
-	<portlet:resourceURL id="<%= BlueprintsAdminMVCCommandNames.EXPORT_BLUEPRINT %>" var="exportEntryURL">
+	<portlet:resourceURL id="<%= BlueprintsAdminMVCCommandNames.EXPORT_ELEMENT %>" var="exportEntryURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="<%= BlueprintsAdminWebKeys.BLUEPRINT_ID %>" value="<%= String.valueOf(blueprintId) %>" />
+		<portlet:param name="<%= BlueprintsAdminWebKeys.ELEMENT_ID %>" value="<%= String.valueOf(elementId) %>" />
 	</portlet:resourceURL>
 
 	<liferay-ui:icon
@@ -87,10 +87,10 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		url="<%= exportEntryURL %>"
 	/>
 
-	<c:if test="<%= BlueprintEntryPermission.contains(permissionChecker, blueprint, BlueprintsActionKeys.DELETE_ELEMENT) %>">
-		<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.DELETE_BLUEPRINT %>" var="deleteEntryURL">
+	<c:if test="<%= ElementEntryPermission.contains(permissionChecker, element, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.DELETE_ELEMENT %>" var="deleteEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="<%= BlueprintsAdminWebKeys.BLUEPRINT_ID %>" value="<%= String.valueOf(blueprintId) %>" />
+			<portlet:param name="<%= BlueprintsAdminWebKeys.ELEMENT_ID %>" value="<%= String.valueOf(elementId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

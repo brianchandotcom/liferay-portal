@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "boost",
@@ -90,5 +90,5 @@
 			"en_US": "Boost Proximity"
 		}
 	},
-	"type": 13
+	"type": 10
 }

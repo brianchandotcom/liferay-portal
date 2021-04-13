@@ -21,7 +21,7 @@
 </liferay-ui:error>
 
 <%
-final String tabs = ParamUtil.getString(request, "tabs", BlueprintsAdminTabNames.BLUEPRINTS);
+final String tab = ParamUtil.getString(request, BlueprintsAdminWebKeys.TAB, BlueprintsAdminTabNames.BLUEPRINTS);
 
 PortletURL renderURL = renderResponse.createRenderURL();
 %>
@@ -33,14 +33,14 @@ PortletURL renderURL = renderResponse.createRenderURL();
 			{
 				add(
 					navigationItem -> {
-						navigationItem.setActive(tabs.equals(BlueprintsAdminTabNames.BLUEPRINTS));
-						navigationItem.setHref(renderURL, "tabs", BlueprintsAdminTabNames.BLUEPRINTS);
+						navigationItem.setActive(tab.equals(BlueprintsAdminTabNames.BLUEPRINTS));
+						navigationItem.setHref(renderURL, BlueprintsAdminWebKeys.TAB, BlueprintsAdminTabNames.BLUEPRINTS, "mvcRenderCommandName", BlueprintsAdminMVCCommandNames.VIEW_BLUEPRINTS);
 						navigationItem.setLabel(LanguageUtil.get(request, "blueprints"));
 					});
 				add(
 					navigationItem -> {
-						navigationItem.setActive(tabs.equals(BlueprintsAdminTabNames.ELEMENTS));
-						navigationItem.setHref(renderURL, "tabs", BlueprintsAdminTabNames.ELEMENTS);
+						navigationItem.setActive(tab.equals(BlueprintsAdminTabNames.ELEMENTS));
+						navigationItem.setHref(renderURL, BlueprintsAdminWebKeys.TAB, BlueprintsAdminTabNames.ELEMENTS, "mvcRenderCommandName", BlueprintsAdminMVCCommandNames.VIEW_ELEMENTS);
 						navigationItem.setLabel(LanguageUtil.get(request, "elements"));
 					});
 			}
@@ -49,7 +49,7 @@ PortletURL renderURL = renderResponse.createRenderURL();
 />
 
 <c:choose>
-	<c:when test="<%= tabs.equals(BlueprintsAdminTabNames.ELEMENTS) %>">
+	<c:when test="<%= tab.equals(BlueprintsAdminTabNames.ELEMENTS) %>">
 		<liferay-util:include page="/view_elements.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>

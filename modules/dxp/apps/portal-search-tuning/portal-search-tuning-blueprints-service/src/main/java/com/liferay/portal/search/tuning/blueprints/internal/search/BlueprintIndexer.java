@@ -129,8 +129,6 @@ public class BlueprintIndexer extends BaseIndexer<Blueprint> {
 
 		document.addDate(Field.MODIFIED_DATE, blueprint.getModifiedDate());
 
-		document.addNumber(Field.TYPE, blueprint.getType());
-
 		for (Locale locale :
 				LanguageUtil.getCompanyAvailableLocales(
 					blueprint.getCompanyId())) {

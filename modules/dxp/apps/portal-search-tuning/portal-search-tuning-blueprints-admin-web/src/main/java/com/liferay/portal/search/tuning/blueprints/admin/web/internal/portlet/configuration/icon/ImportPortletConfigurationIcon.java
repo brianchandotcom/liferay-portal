@@ -71,8 +71,7 @@ public class ImportPortletConfigurationIcon
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
-				"mvcRenderCommandName",
-				BlueprintsAdminMVCCommandNames.IMPORT_BLUEPRINT);
+				"mvcRenderCommandName", BlueprintsAdminMVCCommandNames.IMPORT);
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			ThemeDisplay themeDisplay =
@@ -136,7 +135,8 @@ public class ImportPortletConfigurationIcon
 	private Portal _portal;
 
 	@Reference(
-		target = "(resource.name=" + BlueprintsConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + BlueprintsConstants.RESOURCE_NAME + ")",
+		unbind = "-"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

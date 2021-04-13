@@ -16,7 +16,6 @@ package com.liferay.portal.search.tuning.blueprints.admin.web.internal.security.
 
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsActionKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,19 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(immediate = true, service = {})
-public class BlueprintPermission {
-
-	public static boolean contains(
-		PermissionChecker permissionChecker, long groupId, int blueprintType,
-		String actionId) {
-
-		String typedActionKey =
-			BlueprintsActionKeys.getActionKeyForBlueprintType(
-				blueprintType, actionId);
-
-		return _portletResourcePermission.contains(
-			permissionChecker, groupId, typedActionKey);
-	}
+public class BlueprintsAdminPermission {
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionKey) {

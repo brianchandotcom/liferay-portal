@@ -60,7 +60,6 @@ public class BlueprintWrapper
 		attributes.put("description", getDescription());
 		attributes.put("configuration", getConfiguration());
 		attributes.put("selectedElements", getSelectedElements());
-		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -167,12 +166,6 @@ public class BlueprintWrapper
 
 		if (selectedElements != null) {
 			setSelectedElements(selectedElements);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 	}
 
@@ -476,16 +469,6 @@ public class BlueprintWrapper
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
 		return model.getTitleMap();
-	}
-
-	/**
-	 * Returns the type of this blueprint.
-	 *
-	 * @return the type of this blueprint
-	 */
-	@Override
-	public int getType() {
-		return model.getType();
 	}
 
 	/**
@@ -897,16 +880,6 @@ public class BlueprintWrapper
 		java.util.Locale defaultLocale) {
 
 		model.setTitleMap(titleMap, defaultLocale);
-	}
-
-	/**
-	 * Sets the type of this blueprint.
-	 *
-	 * @param type the type of this blueprint
-	 */
-	@Override
-	public void setType(int type) {
-		model.setType(type);
 	}
 
 	/**

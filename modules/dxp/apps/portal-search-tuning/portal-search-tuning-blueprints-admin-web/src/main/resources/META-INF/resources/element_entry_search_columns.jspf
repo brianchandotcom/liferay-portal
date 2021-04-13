@@ -17,11 +17,11 @@
 <portlet:renderURL var="editEntryURL">
 	<portlet:param name="mvcRenderCommandName" value="<%= BlueprintsAdminMVCCommandNames.EDIT_ELEMENT %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="<%= BlueprintsAdminWebKeys.BLUEPRINT_ID %>" value="<%= String.valueOf(entry.getBlueprintId()) %>" />
+	<portlet:param name="<%= BlueprintsAdminWebKeys.ELEMENT_ID %>" value="<%= String.valueOf(entry.getElementId()) %>" />
 </portlet:renderURL>
 
 <c:choose>
-	<c:when test='<%= viewBlueprintsDisplayContext.getDisplayStyle().equals("descriptive") %>'>
+	<c:when test='<%= viewElementsDisplayContext.getDisplayStyle().equals("descriptive") %>'>
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>

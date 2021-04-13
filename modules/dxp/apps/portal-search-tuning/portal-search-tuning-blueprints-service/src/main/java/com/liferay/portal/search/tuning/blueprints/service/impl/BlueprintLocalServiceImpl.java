@@ -68,7 +68,7 @@ public class BlueprintLocalServiceImpl extends BlueprintLocalServiceBaseImpl {
 	public Blueprint addBlueprint(
 			long userId, long groupId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String configuration,
-			String selectedElements, int type, ServiceContext serviceContext)
+			String selectedElements, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -100,7 +100,6 @@ public class BlueprintLocalServiceImpl extends BlueprintLocalServiceBaseImpl {
 
 		blueprint.setConfiguration(configuration);
 		blueprint.setSelectedElements(selectedElements);
-		blueprint.setType(type);
 
 		blueprint = super.addBlueprint(blueprint);
 
@@ -133,57 +132,56 @@ public class BlueprintLocalServiceImpl extends BlueprintLocalServiceBaseImpl {
 		return deleteBlueprint(blueprint);
 	}
 
-	public int getCompanyBlueprintsCount(long companyId, int type) {
-		return blueprintPersistence.countByC_T(companyId, type);
+	public int getCompanyBlueprintsCount(long companyId) {
+		return blueprintPersistence.countByCompanyId(companyId);
 	}
 
 	public List<Blueprint> getGroupBlueprints(
-		long groupId, int type, int start, int end) {
+		long groupId, int start, int end) {
 
 		return getGroupBlueprints(
-			groupId, WorkflowConstants.STATUS_APPROVED, type, start, end);
+			groupId, WorkflowConstants.STATUS_APPROVED, start, end);
 	}
 
 	public List<Blueprint> getGroupBlueprints(
-		long groupId, int status, int type, int start, int end) {
+		long groupId, int status, int start, int end) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blueprintPersistence.findByG_T(groupId, type, start, end);
+			return blueprintPersistence.findByGroupId(groupId, start, end);
 		}
 
-		return blueprintPersistence.findByG_S_T(
-			groupId, status, type, start, end);
+		return blueprintPersistence.findByG_S(groupId, status, start, end);
 	}
 
 	public List<Blueprint> getGroupBlueprints(
-		long groupId, int status, int type, int start, int end,
+		long groupId, int status, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blueprintPersistence.findByG_T(
-				groupId, type, start, end, orderByComparator);
+			return blueprintPersistence.findByGroupId(
+				groupId, start, end, orderByComparator);
 		}
 
-		return blueprintPersistence.findByG_S_T(
-			groupId, status, type, start, end, orderByComparator);
+		return blueprintPersistence.findByG_S(
+			groupId, status, start, end, orderByComparator);
 	}
 
 	public List<Blueprint> getGroupBlueprints(
-		long groupId, int type, int start, int end,
+		long groupId, int start, int end,
 		OrderByComparator<Blueprint> orderByComparator) {
 
 		return getGroupBlueprints(
-			groupId, WorkflowConstants.STATUS_APPROVED, type, start, end,
+			groupId, WorkflowConstants.STATUS_APPROVED, start, end,
 			orderByComparator);
 	}
 
-	public int getGroupBlueprintsCount(long groupId, int type) {
+	public int getGroupBlueprintsCount(long groupId) {
 		return getGroupBlueprintsCount(
-			groupId, WorkflowConstants.STATUS_APPROVED, type);
+			groupId, WorkflowConstants.STATUS_APPROVED);
 	}
 
-	public int getGroupBlueprintsCount(long groupId, int status, int type) {
-		return blueprintPersistence.countByG_S_T(groupId, status, type);
+	public int getGroupBlueprintsCount(long groupId, int status) {
+		return blueprintPersistence.countByG_S(groupId, status);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

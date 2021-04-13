@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.blueprints.exception.BlueprintValidationException;
+import com.liferay.portal.search.tuning.blueprints.exception.ElementValidationException;
 
 import java.io.IOException;
 
@@ -57,22 +58,17 @@ public class BlueprintExceptionRequestHandler {
 			BlueprintValidationException blueprintValidationException =
 				(BlueprintValidationException)portalException;
 
-			List<String> errors = blueprintValidationException.getErrors();
+			_addErrors(
+				jsonArray, blueprintValidationException.getErrors(),
+				themeDisplay);
+		}
+		else if (portalException instanceof ElementValidationException) {
+			ElementValidationException elementValidationException =
+				(ElementValidationException)portalException;
 
-			errors.forEach(
-				key -> {
-					String errorMessage = "an-unexpected-error-occurred";
-
-					if (key.equals("titleEmpty")) {
-						errorMessage = "error.title-empty";
-					}
-					else if (key.equals("defaultLocaleTitleEmpty")) {
-						errorMessage = "error.default-locale-title-empty";
-					}
-
-					jsonArray.put(
-						_language.get(themeDisplay.getRequest(), errorMessage));
-				});
+			_addErrors(
+				jsonArray, elementValidationException.getErrors(),
+				themeDisplay);
 		}
 		else if (portalException.getCause() instanceof JSONException) {
 			jsonArray.put(
@@ -94,6 +90,25 @@ public class BlueprintExceptionRequestHandler {
 		catch (IOException ioException) {
 			_log.error(ioException.getMessage(), ioException);
 		}
+	}
+
+	private void _addErrors(
+		JSONArray jsonArray, List<String> errors, ThemeDisplay themeDisplay) {
+
+		errors.forEach(
+			key -> {
+				String errorMessage = "an-unexpected-error-occurred";
+
+				if (key.equals("titleEmpty")) {
+					errorMessage = "error.title-empty";
+				}
+				else if (key.equals("defaultLocaleTitleEmpty")) {
+					errorMessage = "error.default-locale-title-empty";
+				}
+
+				jsonArray.put(
+					_language.get(themeDisplay.getRequest(), errorMessage));
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

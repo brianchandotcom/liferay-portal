@@ -1,5 +1,5 @@
 {
-	"payload": {
+	"element-payload": {
 		"configuration": {
 			"elementTemplateJSON": {
 				"category": "commerce",
@@ -51,5 +51,5 @@
 			"en_US": "Boost Items for My Commerce Account Groups"
 		}
 	},
-	"type": 13
+	"type": 10
 }

@@ -139,67 +139,75 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
+	@refactordone
+	// The JSON API doesn't seem to support adding a blog entry to a specific page, but this could be investigated further to optimize this setup.
 	test AddBlogsEntryWithSamePageScope {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page2");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page2",
-			widgetName = "Blogs");
+		task ("Set up a blog widget on another page scoped to that page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page2");
 
-		Navigator.gotoPage(pageName = "Blogs Page2");
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page2",
+				widgetName = "Blogs");
 
-		Portlet.selectScopePG(
-			portletName = "Blogs",
-			scope = "Blogs Page2");
+			Navigator.gotoPage(pageName = "Blogs Page2");
 
-		Navigator.gotoPage(pageName = "Blogs Page2");
+			Portlet.selectScopePG(
+				portletName = "Blogs",
+				scope = "Blogs Page2");
 
-		Blogs.addEntry(
-			entryContent = "Blogs Entry2 Content",
-			entryTitle = "Blogs Entry2 Title");
+			Navigator.gotoPage(pageName = "Blogs Page2");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+			Blogs.addEntry(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title");
+		}
 
-		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Title");
+		task ("Check that the blog entry added in the second page does not appear in the first page and vice-versa") {
+			Navigator.gotoPage(pageName = "Blogs Page");
 
-		Blogs.addEntry(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
+			BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Title");
 
-		Portlet.viewTitle(portletName = "Blogs");
+			Blogs.addEntry(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page2");
+			Portlet.viewTitle(portletName = "Blogs");
 
-		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry1 Title");
+			Navigator.gotoPage(pageName = "Blogs Page2");
 
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry2 Content",
-			entryTitle = "Blogs Entry2 Title");
+			BlogsEntry.viewNoPG(entryTitle = "Blogs Entry1 Title");
 
-		Portlet.viewTitle(portletName = "Blogs (Blogs Page2)");
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page2");
+			Portlet.viewTitle(portletName = "Blogs (Blogs Page2)");
+		}
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		task ("Check that the entry scoped to the second blog page disappears if the scope is changed to the site") {
+			Navigator.gotoPage(pageName = "Blogs Page2");
 
-		Portlet.selectScopePG(
-			portletName = "Blogs",
-			scope = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Navigator.gotoPage(pageName = "Blogs Page2");
+			Portlet.selectScopePG(
+				portletName = "Blogs",
+				scope = "${siteName}");
 
-		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Title");
+			Navigator.gotoPage(pageName = "Blogs Page2");
 
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
+			BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Title");
 
-		Portlet.viewTitle(portletName = "Blogs");
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title");
+
+			Portlet.viewTitle(portletName = "Blogs");
+		}
 	}
 
 	@description = "This checks that basic text can be inputted and displayed in the most common fields in a blog entry."

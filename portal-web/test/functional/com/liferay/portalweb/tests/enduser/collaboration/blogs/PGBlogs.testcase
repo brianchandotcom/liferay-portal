@@ -291,19 +291,14 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddCustomURL {
-		var portalURL = PropsUtil.get("portal.url");
-		var entryContent = "Blogs Entry Content";
-		var entrySubtitle = "Blogs Entry Subtitle";
-		var entryTitle = "Blogs Entry Title";
-
 		BlogsNavigator.openToAddEntry(
 			siteURLKey = "guest",
 			layoutName = "Blogs Page");
 
 		BlogsEntry.addEntryContent(
-			entryContent = "${entryContent}",
-			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}");
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
 
 		Panel.expandPanel(panel = "Configuration");
 
@@ -318,6 +313,8 @@ definition {
 			value1 = "custom-url-here");
 
 		PortletEntry.publish();
+
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/custom-url-here");
 

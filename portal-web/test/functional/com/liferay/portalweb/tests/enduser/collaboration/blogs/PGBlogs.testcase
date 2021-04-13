@@ -360,56 +360,6 @@ definition {
 			value1 = "The URL title is already in use. Please enter a unique URL title.");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddPortletToOrganizationSitePublicPage {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		Organization.addCP(
-			orgName = "Organization Name",
-			orgType = "Organization");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addSiteCP(orgName = "Organization Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(
-			pageName = "Blogs Page",
-			sitePageType = "Widget Page");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Blogs Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Organization Name");
-
-		Portlet.addPG(portletName = "Blogs");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Organization Name");
-
-		Blogs.viewControlsPG();
-	}
-
 	@description = "This is usecase 1 for LPS-69240"
 	@priority = "4"
 	@refactorneeded

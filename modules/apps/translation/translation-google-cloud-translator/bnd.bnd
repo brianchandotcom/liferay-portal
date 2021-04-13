@@ -1,3 +1,32 @@
 Bundle-Name: Liferay Translation Google Cloud Translator
 Bundle-SymbolicName: com.liferay.translation.google.cloud.translator
 Bundle-Version: 1.0.0
+Import-Package:\
+	!com.google.appengine.api.*,\
+	!com.google.protobuf.*,\
+	\
+	!com.jcraft.*,\
+	\
+	!com.ning.compress.*,\
+	\
+	!com.oracle.svm.core.annotate.*,\
+	\
+	!lzma.sdk.*,\
+	\
+	!net.jpountz.lz4.*,\
+	!net.jpountz.xxhash.*,\
+	\
+	!org.apache.avalon.framework.*,\
+	!org.apache.log.*,\
+	\
+	!org.bouncycastle.*,\
+	\
+	!org.eclipse.jetty.*,\
+	\
+	!org.jboss.marshalling.*,\
+	\
+	!reactor.blockhound.*,\
+	\
+	!sun.security.x509.*,\
+	\
+	*

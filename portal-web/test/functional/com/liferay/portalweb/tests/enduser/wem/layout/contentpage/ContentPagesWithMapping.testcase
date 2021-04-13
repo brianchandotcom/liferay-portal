@@ -146,6 +146,62 @@ definition {
 			value1 = "Category Name 1");
 	}
 
+	@description = "This is a test for LPS-99686. The user can map the content of link editable to a field of a Blog and the editable link display text will update to the published Blog field content."
+	@priority = "4"
+	test MapBlogsContentToLinkFragment {
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Map the Content field of blogs entry to link editable field of Button") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Blogs Entry Title",
+				navItem = "Blogs");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Content");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Blogs Entry Content",
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the mapped content of blogs entry is shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_append = "[contains(@data-lfr-editable-id,'link')]/p[normalize-space(text())='Blogs Entry Content']",
+				key_URL = "",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+	}
+
 	@description = "This is a test for LPS-116034. The custom ddmfields of content are available for mapping in editable field."
 	@priority = "4"
 	test MapCustomDDMFieldToFragment {

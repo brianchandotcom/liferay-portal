@@ -107,7 +107,7 @@ String clickToChatProviderId = GetterUtil.getString(request.getAttribute(ClickTo
 
 	var disabled = <%= disabled %>;
 
-	if(disabled) {
+	if(disabled || !clickToChatEnabled.checked) {
 		Liferay.Util.toggleDisabled(clickToChatProviderId, true);
 		Liferay.Util.toggleDisabled(chatProviderAccountId, true);
 		Liferay.Util.toggleDisabled(clickToChatGuestUsersAllowed, true);

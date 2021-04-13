@@ -29,6 +29,15 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 	rules = {
 		@DDMFormRule(
 			actions = {
+				"setEnabled('chatProviderId', false)",
+				"setEnabled('chatProviderAccountId', false)",
+				"setEnabled('guestUsersAllowed', false)",
+				"setEnabled('siteSettingsStrategy', false)"
+			},
+			condition = "equals(getValue('enabled'), false)"
+		),
+		@DDMFormRule(
+			actions = {
 				"setVisible('chatProviderId', false)",
 				"setVisible('chatProviderAccountId', false)",
 				"setVisible('guestUsersAllowed', false)"

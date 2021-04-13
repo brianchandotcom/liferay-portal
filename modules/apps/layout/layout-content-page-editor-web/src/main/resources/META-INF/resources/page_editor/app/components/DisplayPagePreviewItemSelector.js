@@ -30,7 +30,7 @@ import {useId} from '../utils/useId';
 
 const NO_ITEM_LABEL = `-- ${Liferay.Language.get('none')} --`;
 
-export const DisplayPagePreviewItemSelector = ({horizontal = false}) => {
+export const DisplayPagePreviewItemSelector = ({dark = false}) => {
 	const [active, setActive] = useState(false);
 	const previewItem = useDisplayPagePreviewItem();
 	const recentPreviewItemList = useDisplayPageRecentPreviewItemList();
@@ -59,30 +59,29 @@ export const DisplayPagePreviewItemSelector = ({horizontal = false}) => {
 			role="listbox"
 			trigger={
 				<p
-					className={classNames('d-flex mb-0 w-100', {
-						'align-items-center': horizontal,
-						'flex-column': !horizontal,
-						'flex-row': horizontal,
-					})}
+					className="align-items-center d-flex flex-row mb-0 w-100"
 					id={selectLabelId}
 					role="label"
 				>
-					<strong className="d-block page-editor__display-page-preview-item-selector-label">
+					<strong
+						className={classNames(
+							'd-block page-editor__display-page-preview-item-selector-label',
+							{'text-secondary': !dark}
+						)}
+					>
 						{Liferay.Language.get('item')}:
 					</strong>
-					<span className="align-items-center btn btn-secondary btn-sm d-flex">
-						<span
-							className={classNames(
-								'flex-grow-1 overflow-hidden text-left text-truncate',
-								{
-									'page-editor__display-page-preview-item-selector-horizontal-input': horizontal,
-								}
-							)}
-						>
+					<span
+						className={classNames(
+							'align-items-center btn btn-sm d-flex',
+							dark ? 'btn-dark' : 'btn-secondary'
+						)}
+					>
+						<span className="flex-grow-1 overflow-hidden page-editor__display-page-preview-item-selector-input text-left text-truncate">
 							{previewItem ? previewItem.label : NO_ITEM_LABEL}
 						</span>
 						<ClayIcon
-							className="flex-shrink-0"
+							className="flex-shrink-0 text-secondary"
 							symbol="caret-bottom"
 						/>
 					</span>
@@ -125,5 +124,5 @@ export const DisplayPagePreviewItemSelector = ({horizontal = false}) => {
 };
 
 DisplayPagePreviewItemSelector.propTypes = {
-	horizontal: PropTypes.bool,
+	dark: PropTypes.bool,
 };

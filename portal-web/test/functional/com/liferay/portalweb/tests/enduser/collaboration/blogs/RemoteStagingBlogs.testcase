@@ -62,8 +62,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "site-name",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
 
 		Staging.gotoPublishToLive();
 
@@ -75,8 +75,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "remote-site",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "remote-site");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -172,8 +172,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "remote-site",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "remote-site");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -235,8 +235,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "remote-site",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "remote-site");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -280,8 +280,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "remote-site",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "remote-site");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

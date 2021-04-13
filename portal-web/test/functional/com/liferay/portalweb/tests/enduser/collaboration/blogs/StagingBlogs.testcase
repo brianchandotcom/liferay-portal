@@ -100,8 +100,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "site-name",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -516,8 +516,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title 2",
-			siteURLKey = "site-name",
-			layoutName = "Blogs Page 2");
+			layoutName = "Blogs Page 2",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content 2",
@@ -648,8 +648,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title Edit",
-			siteURLKey = "site-name",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content Edit",
@@ -739,8 +739,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title 1",
-			siteURLKey = "site-name",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 1",
@@ -749,8 +749,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title 2",
-			siteURLKey = "site-name",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 2",
@@ -759,8 +759,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title 3",
-			siteURLKey = "site-name",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 3",
@@ -773,8 +773,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title 1",
-			siteURLKey = "site-name",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 1",
@@ -783,8 +783,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title 2",
-			siteURLKey = "site-name",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 2",
@@ -793,8 +793,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title 3",
-			siteURLKey = "site-name",
-			layoutName = "Staging Blogs Page");
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 3",

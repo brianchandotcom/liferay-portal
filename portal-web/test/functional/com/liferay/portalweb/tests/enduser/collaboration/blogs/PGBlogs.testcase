@@ -262,8 +262,8 @@ definition {
 	@refactorneeded
 	test AddCustomURL {
 		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -307,8 +307,8 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -370,8 +370,8 @@ definition {
 		var entryTitle = "Blogs Entry Title";
 
 		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
@@ -420,8 +420,8 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -462,8 +462,8 @@ definition {
 		for (var entryCount : list "1,2,3") {
 			BlogsNavigator.openToBlogEntry(
 				entryTitle = "Blogs Entry${entryCount} Title",
-				siteURLKey = "guest",
-				layoutName = "Blogs Page");
+				layoutName = "Blogs Page",
+				siteURLKey = "guest");
 
 			BlogsEntry.viewEntryPG(
 				entryContent = "Blogs Entry${entryCount} Content",
@@ -497,15 +497,15 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.delete(entryComment = "Blogs Entry Comment");
 	}
@@ -549,15 +549,15 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.edit(
 			entryComment = "Blogs Entry Comment",
@@ -578,29 +578,29 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.addPG(entryComment = "1st Blog Comment");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.addPG(entryComment = "2nd Blog Comment");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.addPG(entryComment = "3rd Blog Comment");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.edit(
 			entryComment = "1st Blog Comment",
@@ -608,8 +608,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.edit(
 			entryComment = "2nd Blog Comment",
@@ -617,8 +617,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.edit(
 			entryComment = "3rd Blog Comment",
@@ -642,8 +642,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -660,8 +660,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -683,8 +683,8 @@ definition {
 		property testray.component.names = "WYSIWYG";
 
 		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -702,8 +702,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry with Small Image",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry with Small Image");
 
@@ -903,8 +903,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.subscribePG();
 
@@ -939,8 +939,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.flagPG(
 			flagReason = "Spam",
@@ -1036,8 +1036,8 @@ definition {
 		property test.name.skip.portal.instance = "PGBlogs#ViewAbstractDescriptionWithEntryContent";
 
 		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -1121,8 +1121,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -1157,8 +1157,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -1406,8 +1406,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "${entryContent}",
@@ -1489,8 +1489,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -1577,8 +1577,8 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",

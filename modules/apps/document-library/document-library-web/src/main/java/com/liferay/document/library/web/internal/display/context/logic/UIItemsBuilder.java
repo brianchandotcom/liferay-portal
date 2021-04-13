@@ -1164,10 +1164,16 @@ public class UIItemsBuilder {
 	}
 
 	private String _getEditImageOnClickJavaScript() {
-		StringBundler sb = new StringBundler(2);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(getNamespace());
-		sb.append("editWithImageEditor();");
+		sb.append("editWithImageEditor('");
+		sb.append(
+			HtmlUtil.escapeJS(
+				_dlURLHelper.getPreviewURL(
+					_fileEntry, _fileVersion, _themeDisplay,
+					StringPool.BLANK)));
+		sb.append("');");
 
 		return sb.toString();
 	}
@@ -1329,7 +1335,7 @@ public class UIItemsBuilder {
 	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
-	private FileShortcut _fileShortcut;
+	private final FileShortcut _fileShortcut;
 	private final FileShortcutDisplayContextHelper
 		_fileShortcutDisplayContextHelper;
 	private final FileVersion _fileVersion;

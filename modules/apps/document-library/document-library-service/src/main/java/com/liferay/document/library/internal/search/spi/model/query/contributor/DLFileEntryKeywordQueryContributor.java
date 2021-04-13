@@ -14,9 +14,14 @@
 
 package com.liferay.document.library.internal.search.spi.model.query.contributor;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -58,14 +63,57 @@ public class DLFileEntryKeywordQueryContributor
 			booleanQuery, searchContext, "extension", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "fileEntryTypeId", false);
-		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "fileName", true);
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "path", false);
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.CONTENT, false);
+
+		if (Validator.isNotNull(keywords)) {
+			try {
+				BooleanQuery fileNameBooleanQuery = new BooleanQueryImpl();
+
+				fileNameBooleanQuery.add(
+					_getShouldBooleanQuery(keywords), BooleanClauseOccur.MUST);
+
+				MatchQuery matchPhraseQuery = _getMatchQuery(
+					keywords, MatchQuery.Type.PHRASE);
+
+				fileNameBooleanQuery.add(
+					matchPhraseQuery, BooleanClauseOccur.SHOULD);
+
+				booleanQuery.add(
+					fileNameBooleanQuery, BooleanClauseOccur.SHOULD);
+			}
+			catch (ParseException parseException) {
+				throw new SystemException(parseException);
+			}
+		}
 	}
 
 	@Reference
 	protected QueryHelper queryHelper;
+
+	private MatchQuery _getMatchQuery(String keywords, MatchQuery.Type phrase) {
+		MatchQuery matchPhraseQuery = new MatchQuery("fileName", keywords);
+
+		matchPhraseQuery.setType(phrase);
+
+		return matchPhraseQuery;
+	}
+
+	private BooleanQuery _getShouldBooleanQuery(String keyword)
+		throws ParseException {
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.add(
+			new MatchQuery("fileName", keyword), BooleanClauseOccur.SHOULD);
+
+		MatchQuery matchPhrasePrefixQuery = _getMatchQuery(
+			keyword, MatchQuery.Type.PHRASE_PREFIX);
+
+		booleanQuery.add(matchPhrasePrefixQuery, BooleanClauseOccur.SHOULD);
+
+		return booleanQuery;
+	}
 
 }

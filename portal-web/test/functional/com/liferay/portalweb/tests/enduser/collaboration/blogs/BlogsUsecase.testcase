@@ -1181,7 +1181,7 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Edit");
+		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Custom AbstractEdit");
 
 		Type(
 			key_editor = "content",

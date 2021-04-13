@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_CONFIRMATION_NAME_EDIT</td>
+	<td>//input[contains(@name,'confirmationLabel') and contains(@class,'ddm-field-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_REMOVE</td>
 	<td>xpath=(//div[contains(@class,'ddm-field')][contains(@data-field-name,'${key_fieldName}')][not(contains(@class,'container'))])[${key_index}]//button[contains(@class,'ddm-form-field-repeatable-delete-button')]</td>
 	<td></td>
@@ -276,6 +281,11 @@
 <tr>
 	<td>REPEATABLE_TEXT_MULTILINE_LABEL</td>
 	<td>//div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//label[contains(.,'${key_fieldLabel}')] | //div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//p[contains(.,'${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_CONFIRMATION_FIELD</td>
+	<td>//input[@type='text' and contains(@name, 'confirmationField') and contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

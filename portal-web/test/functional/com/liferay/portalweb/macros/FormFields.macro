@@ -110,6 +110,17 @@ definition {
 			locator1 = "FormFields#COLOR_SWATCH_ITEM");
 	}
 
+	macro editConfirmationFieldText {
+		AssertElementPresent.assertVisible(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_CONFIRMATION_FIELD");
+
+		Type(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_CONFIRMATION_FIELD",
+			value1 = "${fieldValue}");
+	}
+
 	macro editDate {
 		Type(
 			key_fieldName = "${fieldName}",
@@ -320,9 +331,6 @@ definition {
 			locator1 = "FormFields#SWITCHER");
 
 		Pause(locator1 = "2000");
-
-		//FormFields.viewSwitcherChecked(fieldName = "${fieldName}");
-
 	}
 
 	macro getFieldName {
@@ -548,6 +556,17 @@ definition {
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#COLOR_FIELD",
 			value1 = "${fieldValue}");
+	}
+
+	macro viewConfirmationFieldTextLabel {
+		FormFields.viewTextLabel(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}");
+
+		AssertElementPresent.assertVisible(
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_CONFIRMATION_FIELD");
 	}
 
 	macro viewDateField {

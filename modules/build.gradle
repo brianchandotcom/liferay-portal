@@ -294,8 +294,8 @@ gradle.beforeProject {
 				jvmArgs "-XX:MaxMetaspaceSize=256m"
 				maxHeapSize = "1024m"
 
-				systemProperty "build.repository.private.username", project.findProperty("build.repository.private.username")
-				systemProperty "build.repository.private.password", project.findProperty("build.repository.private.password")
+				systemProperty "repository.private.username", System.properties["repository.private.username"]
+				systemProperty "repository.private.password", System.properties["repository.private.password"]
 				systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 				systemProperty "http.proxyPort", System.properties["http.proxyPort"]
 				systemProperty "maven.debug", System.properties["maven.debug"]

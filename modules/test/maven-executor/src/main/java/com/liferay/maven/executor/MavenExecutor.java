@@ -140,11 +140,11 @@ public class MavenExecutor extends ExternalResource {
 	}
 
 	public String getNexusPrivatePassword() {
-		return System.getProperty("build.repository.private.password");
+		return System.getProperty("repository.private.password");
 	}
 
 	public String getNexusPrivateUserName() {
-		return System.getProperty("build.repository.private.username");
+		return System.getProperty("repository.private.username");
 	}
 
 	public String getRepositoryUrl() {

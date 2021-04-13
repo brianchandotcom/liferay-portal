@@ -1024,17 +1024,18 @@ public interface BaseProjectTemplatesTestCase {
 
 		String[] completeArgs = new String[args.length + 3];
 
-		completeArgs[0] = "--update-snapshots";
-		completeArgs[1] =
-			"-Dbuild.repository.private.username=" +
-				System.getProperty("build.repository.private.username");
-		completeArgs[2] =
-			"-Dbuild.repository.private.password=" +
-				System.getProperty("build.repository.private.password");
+		System.arraycopy(args, 0, completeArgs, 0, args.length);
 
-		System.arraycopy(args, 0, completeArgs, 3, args.length);
+		completeArgs[args.length] = "--update-snapshots";
+		completeArgs[args.length + 1] =
+			"-Drepository.private.username=" +
+				System.getProperty("repository.private.username");
+		completeArgs[args.length + 2] =
+			"-Drepository.private.password=" +
+				System.getProperty("repository.private.password");
 
-		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
+		MavenExecutor.Result result = mavenExecutor.execute(
+			projectDir, completeArgs);
 
 		if (buildAndFail) {
 			Assert.assertFalse(

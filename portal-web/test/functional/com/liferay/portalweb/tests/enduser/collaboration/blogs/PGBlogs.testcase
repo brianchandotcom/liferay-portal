@@ -54,24 +54,6 @@ definition {
 		}
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test AddBlogsEntry {
-		property testray.component.names = "WYSIWYG";
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@priority = "4"
 	@refactorneeded
 	test AddBlogsEntryComment {
@@ -279,9 +261,13 @@ definition {
 		Portlet.viewTitle(portletName = "Blogs");
 	}
 
-	@priority = "4"
-	@refactorneeded
+	@description = "This checks that basic text can be inputted and displayed in the most common fields in a blog entry."
+	@priority = "5"
+	@refactordone
+	@uitest
 	test AddBlogsEntryWithSubtitle {
+		property testray.component.names = "WYSIWYG";
+
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",

@@ -855,7 +855,7 @@ public interface BaseProjectTemplatesTestCase {
 				sb.append("\"\n\t\t\t\tpassword \"");
 				sb.append(
 					System.getProperty("build.repository.private.password"));
-				sb.append("\"\n\t\t\t}\n\t\t\turl \"http://repository-cdn");
+				sb.append("\"\n\t\t\t}\n\t\t\turl \"http://repository");
 				sb.append(".liferay.com/nexus/content/repositories/xanadu\"");
 				sb.append("\n\t\t}\n\t}\n\tconfigurations.all {\n\t\t");
 				sb.append("resolutionStrategy.force 'javax.servlet:javax");

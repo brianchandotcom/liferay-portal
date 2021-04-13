@@ -364,7 +364,7 @@ public class MavenExecutor extends ExternalResource {
 		MavenExecutor._LIFERAY_NEXUS_URL + "public";
 
 	private static final String _LIFERAY_NEXUS_URL =
-		"https://repository-cdn.liferay.com/nexus/content/repositories/";
+		"https://repository.liferay.com/nexus/content/repositories/";
 
 	private static final String _XANADU_NEXUS_PROFILE_ID = "xanadu";
 

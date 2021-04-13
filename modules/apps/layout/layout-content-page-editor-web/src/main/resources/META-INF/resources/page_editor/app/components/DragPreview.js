@@ -62,7 +62,7 @@ export default function DragPreview() {
 			<div
 				className={classNames('page-editor__drag-preview__content', {
 					'page-editor__drag-preview__content__treeview':
-						item?.origin === ITEM_ACTIVATION_ORIGINS.structureTree,
+						item?.origin === ITEM_ACTIVATION_ORIGINS.sidebar,
 				})}
 				ref={ref}
 				style={getItemStyles(

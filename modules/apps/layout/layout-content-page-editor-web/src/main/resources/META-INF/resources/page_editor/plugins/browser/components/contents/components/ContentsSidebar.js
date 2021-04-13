@@ -63,7 +63,6 @@ export default function ContentsSidebar() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
 	const pageContents = useSelector((state) => state.pageContents);
-	let view = <NoPageContents />;
 
 	const inlineTextContents = useMemo(
 		() =>
@@ -87,9 +86,11 @@ export default function ContentsSidebar() {
 		});
 	}
 
-	if (contents.length) {
-		view = <PageContents pageContents={contents} />;
-	}
+	const view = contents.length ? (
+		<PageContents pageContents={contents} />
+	) : (
+		<NoPageContents />
+	);
 
 	return (
 		<>

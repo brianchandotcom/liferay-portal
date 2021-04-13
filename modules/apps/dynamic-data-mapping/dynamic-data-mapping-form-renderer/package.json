@@ -21,11 +21,11 @@
 		"react-dnd-html5-backend": "11.1.1"
 	},
 	"jest": {
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.js"
-		],
 		"modulePathIgnorePatterns": [
 			"/__mock__/"
+		],
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.js"
 		],
 		"snapshotSerializers": [
 			"metal-jest-serializer"

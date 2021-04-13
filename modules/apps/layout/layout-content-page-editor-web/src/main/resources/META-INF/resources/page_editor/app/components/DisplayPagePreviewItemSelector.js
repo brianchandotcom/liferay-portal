@@ -71,11 +71,12 @@ export const DisplayPagePreviewItemSelector = ({dark = false}) => {
 					>
 						{Liferay.Language.get('item')}:
 					</strong>
-					<span
+					<button
 						className={classNames(
 							'align-items-center btn btn-sm d-flex',
 							dark ? 'btn-dark' : 'btn-secondary'
 						)}
+						type="button"
 					>
 						<span className="flex-grow-1 overflow-hidden page-editor__display-page-preview-item-selector-input text-left text-truncate">
 							{previewItem ? previewItem.label : NO_ITEM_LABEL}
@@ -84,7 +85,7 @@ export const DisplayPagePreviewItemSelector = ({dark = false}) => {
 							className="flex-shrink-0 text-secondary"
 							symbol="caret-bottom"
 						/>
-					</span>
+					</button>
 				</p>
 			}
 		>

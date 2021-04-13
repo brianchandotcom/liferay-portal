@@ -13,6 +13,7 @@ XMLEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds m
 XMLFSBExcludeFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `fsb-exclude.xml` file. |
 XMLFriendlyURLRoutesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Performs several checks on `*-routes.xml` file. |
 XMLHBMFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of imports in `*-hbm.xml` file. |
+XMLImportsCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts and groups imports in `.xml` files. |
 XMLIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | Finds incorrect indentation in `.xml` files. |
 XMLIvyFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of dependcies in `ivy.xml` file. |
 XMLLog4jFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of categories in `*-log4j.xml` file. |

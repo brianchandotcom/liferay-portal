@@ -160,7 +160,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			com.liferay.portal.kernel.model.PortletPreferences preferences =
 				layoutPreferences.get(0);
 
-			return PortletIdCodec.decodePortletName(preferences.getPortletId());
+			return preferences.getPortletId();
 		}
 
 		return null;

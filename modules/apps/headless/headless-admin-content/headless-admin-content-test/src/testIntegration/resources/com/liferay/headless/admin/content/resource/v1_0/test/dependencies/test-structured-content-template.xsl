@@ -1,0 +1,1 @@
+<div>${MyText.getData()}</div>

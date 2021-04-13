@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -74,15 +75,21 @@ public class GetLayoutFriendlyURLMVCResourceCommand
 					_portal.getLayoutFullURL(layout, themeDisplay)));
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+
+			String errorMessage = "an-unexpected-error-occurred";
+
+			if (portalException instanceof NoSuchLayoutException) {
+				errorMessage = "the-page-could-not-be-found";
+			}
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"error",
-					LanguageUtil.get(
-						themeDisplay.getRequest(),
-						"an-unexpected-error-occurred")));
+					LanguageUtil.get(themeDisplay.getRequest(), errorMessage)));
 		}
 	}
 

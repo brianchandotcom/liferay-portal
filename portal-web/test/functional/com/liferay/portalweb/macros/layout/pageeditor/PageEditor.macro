@@ -3104,7 +3104,10 @@ definition {
 		}
 
 		if (isSet(size)) {
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+
 			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
 				key_size = "${size}",
 				locator1 = "Fragment#BUTTON_SIZE");
 		}

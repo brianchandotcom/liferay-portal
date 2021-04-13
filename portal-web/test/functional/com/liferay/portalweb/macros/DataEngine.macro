@@ -916,6 +916,8 @@ definition {
 	}
 
 	macro editFieldLocalizable {
+		var checkboxName = "Localizable";
+
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
@@ -925,9 +927,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Advanced");
 		}
 
-		Uncheck.uncheckToggleSwitch(
-			checkboxName = "Localizable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		Click.javaScriptClick(locator1 = "Checkbox#ANY_CHECKBOX");
 
 		Click(locator1 = "Sidebar#BACK");
 	}

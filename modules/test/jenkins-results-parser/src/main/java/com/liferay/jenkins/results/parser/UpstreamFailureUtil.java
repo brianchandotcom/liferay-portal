@@ -353,6 +353,13 @@ public class UpstreamFailureUtil {
 
 		for (String buildResultJSONURL : buildResultJSONURLs) {
 			try {
+				buildResultJSONURL = buildResultJSONURL.replace(
+					"test-1-1/userContent/jobs/",
+					"test-1-0/userContent/testResults/");
+
+				buildResultJSONURL = buildResultJSONURL.replace(
+					"build-result.json", "test.results.json");
+
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 					buildResultJSONURL);
 

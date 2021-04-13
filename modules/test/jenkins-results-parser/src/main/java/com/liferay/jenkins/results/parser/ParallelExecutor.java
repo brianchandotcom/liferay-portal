@@ -29,9 +29,11 @@ import java.util.concurrent.Future;
 public class ParallelExecutor<T> {
 
 	public ParallelExecutor(
-		Collection<Callable<T>> callables, ExecutorService executorService) {
+		Collection<Callable<T>> callables, boolean excludeNulls,
+		ExecutorService executorService) {
 
 		_callables = callables;
+		_excludeNulls = excludeNulls;
 
 		_executorService = executorService;
 
@@ -42,6 +44,12 @@ public class ParallelExecutor<T> {
 		else {
 			_disposeExecutor = false;
 		}
+	}
+
+	public ParallelExecutor(
+		Collection<Callable<T>> callables, ExecutorService executorService) {
+
+		this(callables, false, executorService);
 	}
 
 	public List<T> execute() {
@@ -56,7 +64,13 @@ public class ParallelExecutor<T> {
 
 			for (Future<T> future : futures) {
 				try {
-					results.add(future.get());
+					T result = future.get();
+
+					if ((result == null) && _excludeNulls) {
+						continue;
+					}
+
+					results.add(result);
 				}
 				catch (ExecutionException | InterruptedException exception) {
 					throw new RuntimeException(exception);
@@ -80,6 +94,7 @@ public class ParallelExecutor<T> {
 
 	private final Collection<Callable<T>> _callables;
 	private final boolean _disposeExecutor;
+	private boolean _excludeNulls;
 	private ExecutorService _executorService;
 
 }

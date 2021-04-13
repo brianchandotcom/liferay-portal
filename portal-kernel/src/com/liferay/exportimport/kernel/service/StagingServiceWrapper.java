@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.kernel.service;
 
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -42,6 +43,16 @@ public class StagingServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _stagingService.createStagingRequest(groupId, checksum);
+	}
+
+	@Override
+	public void enableLocalStaging(
+			long groupId, boolean branchingPublic, boolean branchingPrivate,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_stagingService.enableLocalStaging(
+			groupId, branchingPublic, branchingPrivate, serviceContext);
 	}
 
 	/**

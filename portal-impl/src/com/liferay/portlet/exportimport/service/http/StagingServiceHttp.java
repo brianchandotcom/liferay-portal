@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
@@ -117,6 +118,43 @@ public class StagingServiceHttp {
 			}
 
 			return ((Long)returnObj).longValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static void enableLocalStaging(
+			HttpPrincipal httpPrincipal, long groupId, boolean branchingPublic,
+			boolean branchingPrivate, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				StagingServiceUtil.class, "enableLocalStaging",
+				_enableLocalStagingParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, branchingPublic, branchingPrivate, serviceContext);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -292,6 +330,10 @@ public class StagingServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _createStagingRequestParameterTypes1 =
 		new Class[] {long.class, String.class};
+	private static final Class<?>[] _enableLocalStagingParameterTypes6 =
+		new Class[] {
+			long.class, boolean.class, boolean.class, ServiceContext.class
+		};
 	private static final Class<?>[] _hasRemoteLayoutParameterTypes2 =
 		new Class[] {String.class, long.class, boolean.class};
 	private static final Class<?>[]

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -58,6 +59,10 @@ public interface StagingService extends BaseService {
 		throws PortalException;
 
 	public long createStagingRequest(long groupId, String checksum)
+		throws PortalException;
+
+	public void enableLocalStaging(long groupId, boolean branchingPublic,
+			boolean branchingPrivate, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

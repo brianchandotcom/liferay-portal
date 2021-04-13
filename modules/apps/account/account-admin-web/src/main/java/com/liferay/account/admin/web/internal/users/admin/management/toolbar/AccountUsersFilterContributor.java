@@ -40,11 +40,6 @@ public class AccountUsersFilterContributor implements FilterContributor {
 	}
 
 	@Override
-	public String[] getFilterLabelValues() {
-		return new String[] {"company-users", "account-users"};
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
 		return _getMessage(locale, "filter-by-domain");
 	}

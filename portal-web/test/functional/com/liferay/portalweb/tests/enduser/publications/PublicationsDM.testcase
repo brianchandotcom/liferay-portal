@@ -151,10 +151,10 @@ definition {
 		Pause(locator1 = "3000");
 
 		Publications.discardChanges(
-			conflictingPublications = "true",
-			entryTitle = "DM Document Title Edit",
 			changeCategory = "Asset",
-			changeTitle = "DM Document Title Edit");
+			changeTitle = "DM Document Title Edit",
+			conflictingPublications = "true",
+			entryTitle = "DM Document Title Edit");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -182,7 +182,7 @@ definition {
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf,Document_3.png");
 
-		Publications.gotoReviewPublications(
+		Publications.gotoReviewChanges(
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");
 
@@ -200,7 +200,7 @@ definition {
 			assetType = "Documents Folder",
 			dmFolderName = "DM Folder 1 Name");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Documents Folder",
@@ -218,7 +218,7 @@ definition {
 
 		RecycleBin.emptyCP();
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Documents Folder",
@@ -269,7 +269,7 @@ definition {
 			dmDocumentTitle = "DM Document Title Edit",
 			dmFolderName = "DM Folder Name");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Document",
@@ -348,7 +348,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Document",

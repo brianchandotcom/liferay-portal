@@ -2710,7 +2710,7 @@ definition {
 			key_menuItem = "Schedule",
 			locator1 = "MenuItem#DISABLED_MENU_ITEM");
 
-		Publications.gotoReviewPublications(
+		Publications.gotoReviewChanges(
 			gotoManagePublications = "true",
 			key_publicationName = "Publication 2 Name");
 

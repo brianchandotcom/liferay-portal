@@ -191,8 +191,8 @@ definition {
 
 			MenuItem.click(menuItem = "Publish");
 		}
-		else if ("${gotoReviewPublications}" == "true") {
-			Publications.gotoReviewPublications();
+		else if ("${gotoReviewChanges}" == "true") {
+			Publications.gotoReviewChanges();
 
 			Click(locator1 = "Publications#PUBLISH_NAV_BAR");
 		}
@@ -203,7 +203,7 @@ definition {
 		}
 	}
 
-	macro gotoReviewPublications {
+	macro gotoReviewChanges {
 		if ("${gotoManagePublications}" == "true") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
@@ -333,8 +333,8 @@ definition {
 
 			MenuItem.click(menuItem = "Schedule");
 		}
-		else if ("${gotoReviewPublications}" == "true") {
-			Publications.gotoReviewPublications();
+		else if ("${gotoReviewChanges}" == "true") {
+			Publications.gotoReviewChanges();
 
 			Click(locator1 = "Publications#SCHEDULE_NAV_BAR");
 		}

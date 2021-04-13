@@ -126,10 +126,10 @@ definition {
 			publicationName = "Publication Name 1");
 
 		Publications.discardChanges(
-			conflictingPublications = "true",
-			entryTitle = "Dynamic Data Lists Record",
 			changeCategory = "Dynamic Data Lists Record",
-			changeTitle = "Dynamic Data Lists Record");
+			changeTitle = "Dynamic Data Lists Record",
+			conflictingPublications = "true",
+			entryTitle = "Dynamic Data Lists Record");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 1");
 
@@ -227,7 +227,7 @@ definition {
 
 		DDLDataDefinition.deleteCP(ddlDataDefinitionName = "Data Definition");
 
-		Publications.gotoReviewPublications(publicationName = "Publication Name");
+		Publications.gotoReviewChanges(publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -362,14 +362,14 @@ definition {
 			locator1 = "//div[@class='portlet-body']",
 			value1 = "Text");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Dynamic Data Mapping Template",
-			publicationsSite = "Guest",
-			publicationsTitle = "Display Template Name",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Template",
+			changeSite = "Guest",
+			changeTitle = "Display Template Name",
+			changeType = "Added",
+			changeUser = "Test Test");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
@@ -484,7 +484,7 @@ definition {
 			ddlListName = "List Name",
 			ddlListNameEdit = "List Name Edit");
 
-		Publications.gotoReviewPublications(publicationName = "Publication Name");
+		Publications.gotoReviewChanges(publicationName = "Publication Name");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Structure",
@@ -627,7 +627,7 @@ definition {
 
 		DDLRecord.viewFieldFormTemplateSpecific(field = "Separator");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Mapping Template",
@@ -699,7 +699,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.gotoReviewPublications(
+		Publications.gotoReviewChanges(
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");
 

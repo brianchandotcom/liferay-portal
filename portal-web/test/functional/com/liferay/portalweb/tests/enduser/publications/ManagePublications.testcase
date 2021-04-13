@@ -63,7 +63,7 @@ definition {
 	test DeletePublication {
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationsDescription = "Publication Description",
+			publicationDescription = "Publication Description",
 			publicationName = "Publication Name");
 
 		ApplicationsMenu.gotoPortlet(

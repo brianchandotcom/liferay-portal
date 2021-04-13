@@ -77,7 +77,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Widget",
@@ -93,7 +93,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		Publications.gotoReviewPublications(
+		Publications.gotoReviewChanges(
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");
 
@@ -195,16 +195,16 @@ definition {
 			publicationName = "Publication Name 1");
 
 		Publications.discardChanges(
-			conflictingPublications = "true",
-			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
 			changeCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
-			changeTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
+			changeTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
+			conflictingPublications = "true",
+			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
 
 		Publications.discardChanges(
-			conflictingPublications = "true",
-			entryTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue",
 			changeCategory = "com.liferay.portal.kernel.model.PortletPreferenceValue",
-			changeTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
+			changeTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue",
+			conflictingPublications = "true",
+			entryTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
 
 		// Workaround LPS-124618
 
@@ -242,7 +242,7 @@ definition {
 
 		Page.viewNoPG(pageName = "Test Page");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Page",

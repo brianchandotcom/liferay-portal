@@ -1,0 +1,4173 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages,Fragments";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-112249. The Content Flags, Content Ratings and Content Display are compatible and consistent in the same cell of Collection Display."
+	@priority = "4"
+	test AddAllThreeContentFragmentsToOneCell {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content ${i}",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title ${i}");
+		}
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Web Content Article",
+			title = "Dynamic Asset List Test");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "WC WebContent Title 3",
+			fragmentName = "Content Flags");
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			fragmentName = "Content Ratings",
+			targetFragmentName = "Content Flags");
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			fragmentName = "Content Display",
+			targetFragmentName = "Content Ratings");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+
+			AssertTextEquals(
+				key_rowPosition = "${i}",
+				locator1 = "Fragment#CONTENT_FRAGMENT_BODY",
+				value1 = "Report");
+		}
+
+		var n = "1";
+
+		for (var content : list "WC WebContent Content 3,WC WebContent Content 2,WC WebContent Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.gotoContentConfiguration(
+			colPosition = "1",
+			entryContent = "Report",
+			fragmentName = "Content Flags",
+			rowPosition = "1");
+
+		AssertTextEquals(
+			key_text = "Content",
+			locator1 = "TextInput#ANY",
+			value1 = "WC WebContent Title 3");
+
+		PageEditor.gotoContentConfiguration(
+			colPosition = "1",
+			entryContent = "0.0",
+			fragmentName = "Content Ratings",
+			rowPosition = "1");
+
+		AssertTextEquals(
+			key_text = "Content",
+			locator1 = "TextInput#ANY",
+			value1 = "WC WebContent Title 3");
+
+		PageEditor.gotoContentConfiguration(
+			colPosition = "1",
+			entryContent = "WC WebContent Content 3",
+			fragmentName = "Content Display",
+			rowPosition = "1");
+
+		AssertTextEquals(
+			key_text = "Content",
+			locator1 = "TextInput#ANY",
+			value1 = "WC WebContent Title 3");
+	}
+
+	@description = "This is a use case for LPS-86141. The fragment should be added to all cells of the Collection Display when add it to one cell."
+	@priority = "5"
+	test AddFragmentToOneCell {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+		property portal.acceptance = "true";
+
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Button fragment to the first cell") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Third Web Content",
+				fragmentName = "Button");
+		}
+
+		task ("Assert the Button fragment is also added to other cells") {
+			for (var n : list "1,2,3") {
+				AssertElementPresent(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+			}
+		}
+	}
+
+	@description = "This is a use case for LPS-86141. The mapped content of asset entries in selected collection should be respectively shown in each cell of the Collection Display when map content to editable field of one fragment in one cell."
+	@priority = "4"
+	test MapContentToTextFragment {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Heading fragment to the first cell") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Third Web Content",
+				fragmentName = "Heading");
+		}
+
+		task ("Map Title of collection items to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Assert the title of three Web Content Articles are respectively shown in each cell") {
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-116034. The custom ddmfields of single type collection items are available for mapping in editable field."
+	@priority = "4"
+	test MapCustomDDMFieldToFragmentBasedOnSingleTypeCollection {
+		task ("Add a custom Web Content structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Text",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Name",
+				webContentText = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a custom Document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "DM Document Type Description",
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "DM Document Type Name");
+		}
+
+		task ("Add a document based on new document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTypeName = "DM Document Type Name",
+				textField = "DM Document Text");
+		}
+
+		task ("Add a dynamic collection with Web Content Article and new web content structure") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "WC Structure Name",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add a manual collection with new document entry") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetName = "DM Document Title",
+				assetType = "DM Document Type Name",
+				itemSubtype = "DM Document Type Name",
+				itemType = "Document");
+		}
+
+		task ("Map custom ddmfield of web content structure to Heading fragment in Collection Display based on the dynamic collection") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Text",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+				value1 = "Web Content Content");
+
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+				value1 = "Web Content Content");
+		}
+
+		task ("Map custom ddmfield of document type to Paragraph fragment in Collection Display based on the manual collection") {
+			ContentPages.clickPencil();
+
+			PageEditor.removeFragment(fragmentName = "Collection Display");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "DM Document Title",
+				fragmentName = "Paragraph");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Text",
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Paragraph')]//*[contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+				value1 = "DM Document Text");
+
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_fragmentName = "paragraph",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+				value1 = "DM Document Text");
+		}
+	}
+
+	@description = "This is a use case for LPS-127706. Assert the mapped image to background image of Container in collection display is shown in view mode."
+	@priority = "3"
+	test MapImageToBackgroundImageOfContainer {
+		task ("Add a custom structure with image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a web content article based on new structure and select an image") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				webContentImage = "Document_1.jpg",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a manual collecton with Web Content Article item type and WC Structure Name item subtype") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetName = "Web Content Title",
+				assetType = "WC Structure Name",
+				itemSubtype = "WC Structure Name",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Highest Rated Assets") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Container element to the cell of Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Layout Elements",
+				entryTitle = "Web Content Title",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Paragraph fragment into Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				navTab = "Fragments");
+		}
+
+		task ("Map image field of web content article to background image of Container") {
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				fieldName = "Image",
+				panel = "Styles");
+		}
+
+		task ("Assert the mapping image is shown in Container") {
+			PageEditor.viewContainerStyle(
+				backgroundImage = "Document_1.jpg",
+				position = "1");
+		}
+
+		task ("Assert the image is shown in view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
+
+			AssertVisible(
+				key_imageName = "Document_1.jpg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+		}
+	}
+
+	@description = "This is a use case for LPS-120309. Assert the mapped image to Image fragment in collection display is shown in view mode."
+	@priority = "4"
+	test MapImageToImageFragment {
+		task ("Add a custom structure with image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content article based on new structure and select an image") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				structureName = "WC Structure Name",
+				webContentImage = "Document_1.jpg",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a dynamic collection with Web Content Article and new structure") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "WC Structure Name",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add an Image fragment to the cell of Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title",
+				fragmentName = "Image");
+		}
+
+		task ("Map image field of web content article to editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Image",
+				id = "image-square");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Image");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Assert the image is shown in collection display") {
+			AssertVisible(
+				id = "image-square",
+				key_image = "Document_1.jpg",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
+
+		task ("Assert the image is shown in view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				id = "image-square",
+				key_image = "Document_1.jpg",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
+	}
+
+	@description = "This is a use case for LPS-86141. The changes will be propagated to others cells when edit inline content of fragment in one cell."
+	@priority = "4"
+	test PropagateChangesOfInlineContentToOtherCells {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
+		task ("Add three documents") {
+			for (var entryTitle : list "First Document,Second Document,Third Document") {
+				JSONDocument.addFile(
+					dmDocumentDescription = "DM Description",
+					dmDocumentTitle = "${entryTitle}",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("Add a dynamic Collections and select Document as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "Document",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection and 3 Columns") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display",
+				layout = "3 Columns");
+		}
+
+		task ("Add a Heading fragment to the first cell") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Third Document",
+				fragmentName = "Heading");
+		}
+
+		task ("Edit inline Content of Heading in the first column") {
+			Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
+
+			Click.clickNoWaitForVisible(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Click(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			DoubleClick(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Type(
+				id = "element-text",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR",
+				value1 = "Modified Text");
+
+			PageEditor.clickManagementBar();
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Assert propagate changes of inline content to other cells") {
+			for (var n : list "1,2,3") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "1",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "Modified Text");
+			}
+		}
+	}
+
+	@description = "This is a use case for LPS-114727. The Content Display fragment can display abstract of asset entries in Collection Display."
+	@priority = "5"
+	test ViewAbstractInContentDisplayWithCollectionProvider {
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article, a document and a Blogs Entry") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				description = "Web Content Discription",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			Blogs.addWithCustomAbstract(
+				entryAbstractDescription = "Blogs Entry Custom Abstract",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert assets' title are displayed in Collection Display with Content Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Recent Content");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Document Title",
+				fragmentName = "Content Display");
+
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				inCollectionDisplay = "true",
+				templateOption = "Abstract");
+
+			var n = "1";
+
+			for (var description : list "Blogs Entry Custom Abstract,DM Document Description,Web Content Discription") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${description}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		var n = "1";
+
+		for (var description : list "Blogs Entry Custom Abstract,DM Document Description,Web Content Discription") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${description}",
+				key_rowPosition = "${n}",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			var n = ${n} + 1;
+		}
+	}
+
+	@description = "This is a test for LPS-112094. TThe abstract of asset entries should be shown when select Abstract as List Item Style for different List styles."
+	@priority = "5"
+	test ViewAbstractListItemStyleInDifferentListStyles {
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				description = "This is a description for web content article",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			Blogs.addEntryWithUploadedCoverImage(
+				coverImageName = "Document_1",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				navTab = "Blog Images",
+				uploadFileName = "Document_1.jpg");
+
+			Pause(locator1 = "3000");
+
+			Panel.expandPanel(panel = "Configuration");
+
+			BlogsEntry.addCustomAbstract(entryAbstractDescription = "This is a description for blogs entry");
+
+			Pause(locator1 = "3000");
+
+			PortletEntry.publish();
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "This is a description for document",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection, Bordered List as List Style and Abstract as List Item Style") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets",
+				listItemStyle = "Abstract",
+				listStyle = "Bordered List");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Bordered List") {
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Bordered List at view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Bulleted List as List Style and Abstract as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Abstract",
+				listStyle = "Bulleted List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Bulleted List") {
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Bulleted List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Inline List as List Style and Abstract as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Abstract",
+				listStyle = "Inline List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Inline List") {
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Inline List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Numbered List as List Style and Abstract as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Abstract",
+				listStyle = "Numbered List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Numbered List") {
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Numbered List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Unstyled List as List Style and Abstract as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Abstract",
+				listStyle = "Unstyled List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Unstyled List") {
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+		}
+
+		task ("Assert the Abstract of collection items are shown in Unstyled List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var description : list "This is a description for document,This is a description for blogs entry,This is a description for web content article") {
+				AssertVisible(
+					key_entryContent = "//div[contains(@class,'asset-summary')][normalize-space()='${description}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+		}
+	}
+
+	@description = "This is a use case for LPS-114727. The Content Display fragment can display title of asset entries in Collection Provider."
+	@priority = "5"
+	test ViewAssetTitleInContentDisplayWithCollectionProvider {
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert assets' title are displayed in Collection Display with Content Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Document Title",
+				fragmentName = "Content Display");
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		var n = "1";
+
+		for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${title}",
+				key_rowPosition = "${n}",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			var n = ${n} + 1;
+		}
+	}
+
+	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."
+	@priority = "4"
+	test ViewBlogEntryInContentDisplay {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
+		for (var i : list "1,2,3") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content ${i}",
+				entryTitle = "Blogs Entry Title ${i}",
+				groupName = "Test Site Name");
+		}
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Blogs Entry",
+			title = "Dynamic Asset List Test");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		var n = "1";
+
+		for (var title : list "Blogs Entry Title 3,Blogs Entry Title 2,Blogs Entry Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "Blogs Entry Title 3",
+			fragmentName = "Content Display");
+
+		var n = "1";
+
+		for (var content : list "Blogs Entry Content 3,Blogs Entry Content 2,Blogs Entry Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.clickConfigurableField(fragmentName = "Content Display");
+
+		PageEditor.gotoTab(tabName = "Selection");
+
+		AssertClick(
+			key_navItem = "General",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "General");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Full Content");
+	}
+
+	@description = "This is a test for LPS-112093. The documents of collection are displayed using Abstract when add a Content Display to Collection Display."
+	@priority = "4"
+	test ViewDocumentInContentDisplay {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
+		for (var i : list "1,2,3") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title ${i}",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${i}.jpg");
+		}
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Document",
+			title = "Dynamic Asset List Test");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		var n = "1";
+
+		for (var title : list "Document Title 3,Document Title 2,Document Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "Document Title 3",
+			fragmentName = "Content Display");
+
+		var n = "1";
+
+		for (var image : list "Document_3.jpg,Document_2.jpg,Document_1.jpg") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryImage = "${image}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.clickConfigurableField(fragmentName = "Content Display");
+
+		PageEditor.gotoTab(tabName = "Selection");
+
+		AssertClick(
+			key_navItem = "General",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "General");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Abstract");
+	}
+
+	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Any asset types."
+	@priority = "5"
+	test ViewDynamicCollectionWithAnyAssetType {
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a dynamic Collection and select Any as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert assets are available to Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Select More Than One asset type."
+	@priority = "4"
+	test ViewDynamicCollectionWithMoreThanOneAssetType {
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a dynamic Collection and select Select More Than One... as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Select Types...");
+
+			for (var key_type : list "Web Content Article,Blogs Entry,Document") {
+				AssertVisible(locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE_SELECTED");
+			}
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert assets are available to Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-112249. The flags of each collection item are shown when add a Content Flags fragment to Collection Display."
+	@priority = "5"
+	test ViewFlagsInContentFlags {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+		property portal.acceptance = "true";
+
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content ${i}",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title ${i}");
+		}
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Web Content Article",
+			title = "Dynamic Asset List Test");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "WC WebContent Title 3",
+			fragmentName = "Content Flags");
+
+		for (var i : list "1,2,3") {
+			AssertTextEquals(
+				key_rowPosition = "${i}",
+				locator1 = "Fragment#CONTENT_FRAGMENT_BODY",
+				value1 = "Report");
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.gotoContentConfiguration(
+			fragmentName = "Content Ratings",
+			rowPosition = "1");
+
+		AssertTextEquals(
+			key_text = "Content",
+			locator1 = "TextInput#ANY",
+			value1 = "WC WebContent Title 3");
+
+		PageEditor.gotoContentConfiguration(
+			fragmentName = "Content Ratings",
+			rowPosition = "2");
+
+		AssertTextEquals(
+			key_text = "Content",
+			locator1 = "TextInput#ANY",
+			value1 = "WC WebContent Title 2");
+
+		PageEditor.gotoContentConfiguration(
+			fragmentName = "Content Ratings",
+			rowPosition = "3");
+
+		AssertTextEquals(
+			key_text = "Content",
+			locator1 = "TextInput#ANY",
+			value1 = "WC WebContent Title 1");
+	}
+
+	@description = "This is a use case for LPS-114727. The Content Display fragment can display full content of asset entries in Collection Display."
+	@priority = "5"
+	test ViewFullContentInContentDisplayWithCollectionProvider {
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert assets' title are displayed in Collection Display with Content Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Most Viewed Asset");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Document Title",
+				fragmentName = "Content Display");
+
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				inCollectionDisplay = "true",
+				templateOption = "Full Content");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_element = "//img[contains(@src,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${content}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertVisible(
+			key_colPosition = "1",
+			key_image = "Document_1.jpg",
+			key_rowPosition = "1",
+			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_IMAGE");
+
+		var n = "2";
+
+		for (var content : list "Blogs Entry Content,Web Content Content") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_rowPosition = "${n}",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			var n = ${n} + 1;
+		}
+	}
+
+	@description = "This is a test for LPS-112094. The full content of asset entries should be shown when select Full Content as List Item Style for different List styles."
+	@priority = "5"
+	test ViewFullContentListItemStyleInDifferentListStyles {
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			Blogs.addEntryWithUploadedCoverImage(
+				coverImageName = "Document_1",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				navTab = "Blog Images",
+				uploadFileName = "Document_1.jpg");
+
+			Pause(locator1 = "3000");
+
+			PortletEntry.publish();
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection, Bordered List as List Style and Full Content as List Item Style") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets",
+				listItemStyle = "Full Content",
+				listStyle = "Bordered List");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Bordered List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Bordered List at view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Bulleted List as List Style and Full Content as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Full Content",
+				listStyle = "Bulleted List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Bulleted List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Bulleted List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Inline List as List Style and Full Content as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Full Content",
+				listStyle = "Inline List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Inline List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Inline List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Numbered List as List Style and Full Content as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Full Content",
+				listStyle = "Numbered List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Numbered List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Numbered List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Unstyled List as List Style and Full Content as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Full Content",
+				listStyle = "Unstyled List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Unstyled List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Unstyled List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+		}
+	}
+
+	@description = "This is a use case for LPS-112360. The asset entries should be ordered by ratings from high to low in Collection Display when select Highest Rated Assets as Collection Provider."
+	@priority = "5"
+	test ViewHighestRatedAssets {
+		property portal.acceptance = "true";
+
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add a Collection Display to page and Select Highest Rated Assets Collection Providers") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+		}
+
+		task ("Add a Heading to Collection Display and Map Title of collection items to editable field") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "First Web Content",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Assert the title of collection items are respectively shown in each cell") {
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a Content Ratings to Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				fragmentName = "Content Ratings",
+				targetFragmentName = "Heading");
+
+			for (var i : list "1,2,3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
+
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+			}
+		}
+
+		task ("Rate Third Web Content as 1, Second Web Content as 3, First Web Content as 5") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			Ratings.rateStarCollectionItem(
+				colPosition = "1",
+				ratingStarCount = "1 star",
+				rowPosition = "1");
+
+			Ratings.rateStarCollectionItem(
+				colPosition = "1",
+				ratingStarCount = "3 stars",
+				rowPosition = "2");
+
+			Ratings.rateStarCollectionItem(
+				colPosition = "1",
+				ratingStarCount = "5 stars",
+				rowPosition = "3");
+		}
+
+		task ("Assert the display order of collection items") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "First Web Content,Second Web Content,Third Web Content") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert ratings of collection items") {
+			var n = "1";
+
+			for (var ratingStarCount : list "5 stars,3 stars,1 star") {
+				AssertElementPresent(
+					key_colPosition = "1",
+					key_ratingStarCount = "${ratingStarCount}",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_RESULT");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "1";
+
+			for (var averageStarCount : list "5.0,3.0,1.0") {
+				AssertTextEquals.assertPartialText(
+					key_colPosition = "1",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR_RESULT",
+					value1 = "${averageStarCount}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with multiple itemTypes, the Item Type label will be shown in mapping label."
+	@priority = "4"
+	test ViewItemTypeLabelMappedInCollectionWithMultipleItemTypes {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "All Types",
+			title = "Dynamic Collection");
+
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Site Name",
+			title = "Manual Collection");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Collection",
+			assetName = "Document Title",
+			assetType = "Basic Document",
+			itemType = "All Types");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Collection",
+			assetName = "Blogs Entry Title",
+			assetType = "Blogs Entry",
+			siteURLKey = "test-site-name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Collection",
+			assetName = "Web Content Title",
+			assetType = "Basic Web Content",
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Collection",
+			fragmentName = "Collection Display");
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Basic Components",
+			entryTitle = "Web Content Title",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Asset");
+
+		for (var field : list "Title,Description,Summary,User Name,Create Date,Modified Date,Expiration Date,View Count,URL,All Categories,Tags") {
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_value = "${field}",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Manual Collection",
+			fragmentName = "Collection Display");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Asset");
+
+		for (var field : list "Title,Description,Summary,User Name,Create Date,Modified Date,Expiration Date,View Count,URL,All Categories,Tags") {
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_value = "${field}",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+	}
+
+	@description = "This is a use case for LPS-112749. When mapping asset field fragment in Collection Display based on collection with single itemType and specific subType, the Item Type and Item Subtype label will be shown in mapping panel."
+	@priority = "4"
+	test ViewItemTypeLabelMappedInCollectionWithSingleAndSpecificItemType {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Web Content Article",
+			title = "Dynamic Collection");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+		AssetListsAdmin.configureItemTypeInDynamicCollection(itemSubtype = "Basic Web Content");
+
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Site Name",
+			title = "Manual Collection");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Collection",
+			assetName = "Document Title",
+			assetType = "Basic Document",
+			itemSubtype = "Basic Document",
+			itemType = "Document");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Collection",
+			fragmentName = "Collection Display");
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Basic Components",
+			entryTitle = "Web Content Title",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Web Content Article");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SUB_TYPE_LABEL",
+			value1 = "Item Subtype:Basic Web Content");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Manual Collection",
+			fragmentName = "Collection Display");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Document");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SUB_TYPE_LABEL",
+			value1 = "Item Subtype:Basic Document");
+	}
+
+	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with single itemType, the Item Type label will be shown in mapping panel."
+	@priority = "4"
+	test ViewItemTypeLabelMappedInCollectionWithSingleItemType {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Web Content Article",
+			title = "First Dynamic Collection");
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Blogs Entry",
+			title = "Second Dynamic Collection");
+
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Site Name",
+			title = "Manual Collection");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		Click(
+			key_title = "Manual Collection",
+			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
+		AssetListsAdmin.configureItemTypeInManualCollection(
+			itemSubtype = "All Subtypes",
+			itemType = "Document");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Collection",
+			assetName = "Document Title",
+			assetType = "Basic Document");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "First Dynamic Collection",
+			fragmentName = "Collection Display");
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Basic Components",
+			entryTitle = "Web Content Title",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Web Content Article");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Second Dynamic Collection",
+			fragmentName = "Collection Display");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Blogs Entry");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Manual Collection",
+			fragmentName = "Collection Display");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Document");
+	}
+
+	@description = "This is a use case for LPS-114770. The Collection Display can select a manual collection with multiple asset types."
+	@priority = "5"
+	test ViewManualCollectionWithAssetTypes {
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a manual Collection and select the Web Content Article,Blogs Entry and document") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetName = "Web Content Title",
+				assetType = "Basic Web Content",
+				itemType = "All Types");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetName = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetName = "Document Title",
+				assetType = "Basic Document");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert manual collection is unavailable to Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in Collection Display based on single type collection."
+	@priority = "4"
+	test ViewMappableFieldsAreGroupedByFieldsetBasedOnSingleTypeCollection {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
+		task ("Add a web content article based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a custom Document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "DM Document Type Description",
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "DM Document Type Name");
+		}
+
+		task ("Add a document based on new document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTypeName = "DM Document Type Name",
+				textField = "DM Document Text");
+		}
+
+		task ("Add a dynamic collection based on Web Content Article and Basic Web Content") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection 1");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add a dynamic collection based on Blogs Entry") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "Blogs Entry",
+				title = "Dynamic Collection 2");
+		}
+
+		task ("Add a manual collection based on Document and new document type and Select the document") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetName = "DM Document Title",
+				assetType = "DM Document Type Name",
+				itemSubtype = "DM Document Type Name",
+				itemType = "Document");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Dynamic Collection 1") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection 1",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Heading fragment to the cell of Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title",
+				fragmentName = "Heading");
+		}
+
+		task ("Access to the mapping panel of Heading") {
+			Click.clickNoWaitForVisible(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Click(
+				key_colPosition = "1",
+				key_element = "//*[contains(@class,'heading') and contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Pause(locator1 = "3000");
+
+			AssertClick(
+				key_navItem = "Mapping",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Mapping");
+		}
+
+		task ("Assert the mappable fields are grouped by fieldset") {
+			for (var field : list "Title,Description,Publish Date,Author Name,Last Editor Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Content (Basic Web Content)",
+				key_value = "Content",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Templates",
+				key_value = "Basic Web Content",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Display Page",
+				key_value = "Display Page URL",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Display Date,Expiration Date") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Schedule",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Select the Dynamic Collection 2") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection 2",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Access to the mapping panel of Heading") {
+			Click.clickNoWaitForVisible(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Click(
+				key_colPosition = "1",
+				key_element = "//*[contains(@class,'heading') and contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Pause(locator1 = "3000");
+
+			AssertClick(
+				key_navItem = "Mapping",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Mapping");
+		}
+
+		task ("Assert the mappable fields are grouped by fieldset") {
+			for (var field : list "Title,Author Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Subtitle,Cover Image Caption,Content") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Content",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Display Page URL,Description,Display Date") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Configuration",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Select the Manual Collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Access to the mapping panel of Heading") {
+			Click.clickNoWaitForVisible(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Click(
+				key_colPosition = "1",
+				key_element = "//*[contains(@class,'heading') and contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Pause(locator1 = "3000");
+
+			AssertClick(
+				key_navItem = "Mapping",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Mapping");
+		}
+
+		task ("Assert the mappable fields are grouped by fieldset") {
+			for (var field : list "Title,Description,Version,Publish Date,Author Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "File Name,Download URL,MIME Type,Size") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "File Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "DM Document Type Name",
+				key_value = "Text",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+	}
+
+	@description = "This is a use case for LPS-112360. The asset entries should be ordered by view count from high to low in Collection Display when select Most Viewed Assets as Collection Provider."
+	@priority = "5"
+	test ViewMostViewedAssets {
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article, a Blogs Entry and a Document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Row element to page and configure it to 2 columns") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add a Collection Display fragment to column 1") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "1",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select Most Viewed Assets Collection Providers in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Most Viewed Assets");
+		}
+
+		task ("Add an Asset Publisher widget to column 2") {
+			PageEditor.addElementToColumn(
+				columnNumber = "2",
+				navTab = "Widgets",
+				portletName = "Asset Publisher");
+		}
+
+		task ("Enable View Count Increment in Asset Publisher") {
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "View Count Increment");
+
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		task ("Add a Heading to Collection Display and Map Title of collection items to editable field") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Assert the title of collection items are respectively shown in each cell") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a Paragraph below Heading in Collection Display and Map View Count of collection items to editable field") {
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Paragraph",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Heading')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "View Count",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+
+		task ("Assert the view count of collection items are respectively shown in each cell") {
+			var n = "1";
+
+			for (var count : list "0,0,0") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//*[contains(@class,'paragraph') and contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${count}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View Web Content Article one time via Asset Publisher") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetDetailsPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+
+			Navigator.gotoBack();
+		}
+
+		task ("Assert the display order of collection items") {
+			var n = "1";
+
+			for (var title : list "Web Content Title,Document Title,Blogs Entry Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the view count of collection items") {
+			var n = "1";
+
+			for (var count : list "1,0,0") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "paragraph",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${count}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View Blogs Entry twice via Asset Publisher") {
+			var count = "0";
+
+			while ("${count}" != "2") {
+				AssetPublisherPortlet.viewAssetDetailsPG(
+					assetContent = "Blogs Entry Content",
+					assetTitle = "Blogs Entry Title");
+
+				Navigator.gotoBack();
+
+				var count = ${count} + 1;
+			}
+		}
+
+		task ("Assert the display order of collection items") {
+			var n = "1";
+
+			for (var title : list "Blogs Entry Title,Web Content Title,Document Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the view count of collection items") {
+			var n = "1";
+
+			for (var count : list "2,1,0") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "paragraph",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${count}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-112249. The ratings of each collection item are shown when add a Content Ratings fragment to Collection Display."
+	@priority = "5"
+	test ViewRatingsInContentRatings {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+		property portal.acceptance = "true";
+
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content ${i}",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title ${i}");
+		}
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Web Content Article",
+			title = "Dynamic Asset List Test");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "WC WebContent Title 3",
+			fragmentName = "Content Ratings");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+		}
+
+		PageEditor.waitForAutoSave();
+
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			PageEditor.gotoContentConfiguration(
+				fragmentName = "Content Ratings",
+				rowPosition = "${n}");
+
+			AssertTextEquals(
+				key_text = "Content",
+				locator1 = "TextInput#ANY",
+				value1 = "${title}");
+
+			var n = ${n} + 1;
+		}
+	}
+
+	@description = "This is a use case for LPS-112360. The asset entries should be ordered by modified time from recent to past in Collection Display when select Recent Content as Collection Provider."
+	@priority = "5"
+	test ViewRecentContent {
+		property portal.acceptance = "true";
+
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Get modified date of Web Content Articles") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "First Web Content",
+				menuItem = "View History");
+
+			Pause(locator1 = "3000");
+
+			var firstModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Second Web Content",
+				menuItem = "View History");
+
+			Pause(locator1 = "3000");
+
+			var secondModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Third Web Content",
+				menuItem = "View History");
+
+			Pause(locator1 = "3000");
+
+			var thirdModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
+		}
+
+		task ("Add a Collection Display to page and Select Recent Content Collection Providers") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Recent Content");
+		}
+
+		task ("Add a Heading to Collection Display and Map Title of collection items to editable field") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "First Web Content",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Assert the title of collection items are respectively shown in each cell") {
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a Paragraph to Collection Display and Map Modified Date of collection items to editable field") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Modified Date",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+
+		task ("Assert modified date of collection items are shown in Paragraph") {
+			var n = "1";
+
+			for (var modifiedDate : list "${thirdModifiedDate},${secondModifiedDate},${firstModifiedDate}") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//*[contains(@class,'paragraph') and contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${modifiedDate}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the display order of collection items") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert modified date of collection items are shown in Paragraph") {
+			var n = "1";
+
+			for (var modifiedDate : list "${thirdModifiedDate},${secondModifiedDate},${firstModifiedDate}") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "paragraph",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${modifiedDate}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Modify the First Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "First Web Content");
+
+			WebContent.editCP(
+				webContentContentEdit = "New Web Content Content",
+				webContentTitle = "First Web Content",
+				webContentTitleEdit = "First Web Content");
+		}
+
+		task ("Get modified date of the First Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "First Web Content",
+				menuItem = "View History");
+
+			Pause(locator1 = "3000");
+
+			var firstModifiedDate = selenium.getAttribute("//tr[2]//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
+		}
+
+		task ("Assert the display order of collection items") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "First Web Content,Third Web Content,Second Web Content") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert modified date of collection items are shown in Paragraph") {
+			var n = "1";
+
+			for (var modifiedDate : list "${firstModifiedDate},${thirdModifiedDate},${secondModifiedDate}") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "paragraph",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${modifiedDate}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a use case for LPS-112360. The related assets should be in Collection Display when select Related Assets as Collection Provider."
+	@priority = "5"
+	test ViewRelatedAssets {
+		property portal.acceptance = "true";
+		property testray.main.component.name = "Display Pages,Fragments";
+
+		task ("Add a display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Collection Display to display page template and Select Related Assets Collection Providers") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Related Assets");
+		}
+
+		task ("Add a Heading to Collection Display and Map Title of collection items to editable field") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Title",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Web Content Article, a Blogs Entry and a Document") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Web Content Article, Select display page template and Select related assets") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			RelatedAssets.selectAsset(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+
+			WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "Blogs Entry Title",
+				locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE",
+				value1 = "Blogs Entry Title");
+
+			RelatedAssets.selectAsset(
+				assetTitle = "Document Title",
+				assetType = "Basic Document");
+
+			WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "Blogs Entry Title",
+				locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE",
+				value1 = "Blogs Entry Title");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "Document Title",
+				locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE",
+				value1 = "Document Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a widget page and Add an Asset Publisher to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Assert related assets displayed in display page template") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Web Content Title");
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."
+	@priority = "5"
+	test ViewTitleListItemStyleInDifferentListStyles {
+		property environment.acceptance = "true";
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection, Bordered List as List Style and Title as List Item Style") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bordered List");
+		}
+
+		task ("Assert the Title of collection items are shown in Bordered List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Bordered List at view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Bulleted List as List Style and Title as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bulleted List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Assert the Title of collection items are shown in Bulleted List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Bulleted List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Inline List as List Style and Title as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Inline List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Assert the Title of collection items are shown in Inline List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Inline List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Numbered List as List Style and Title as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Numbered List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Assert the Title of collection items are shown in Numbered List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Numbered List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Unstyled List as List Style and Title as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Unstyled List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Assert the Title of collection items are shown in Unstyled List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Unstyled List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a use case for LPS-86141. The title of asset entries in selected collection should be shown as a list in the Collection Display."
+	@priority = "5"
+	test ViewTitleOfCollectionItems {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+		property portal.acceptance = "true";
+
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add three Blogs entries") {
+			for (var entryTitle : list "First Blogs Entry,Second Blogs Entry,Third Blogs Entry") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content",
+					entryTitle = "${entryTitle}",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a manual Collections and select three Blogs entries") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetType = "Blogs Entry",
+				entryList = "First Blogs Entry,Second Blogs Entry,Third Blogs Entry",
+				itemType = "Blogs Entry");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert the title of three Web Content Articles are shown as a list in Collection Display") {
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the manual collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert the title of three Blogs Entry are shown as a list in Collection Display") {
+			var n = "1";
+
+			for (var title : list "First Blogs Entry,Second Blogs Entry,Third Blogs Entry") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
+	@priority = "5"
+	test ViewWebContentInContentDisplay {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+		property portal.acceptance = "true";
+
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content ${i}",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title ${i}");
+		}
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Web Content Article",
+			title = "Dynamic Asset List Test");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "WC WebContent Title 3",
+			fragmentName = "Content Display");
+
+		var n = "1";
+
+		for (var content : list "WC WebContent Content 3,WC WebContent Content 2,WC WebContent Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.clickConfigurableField(fragmentName = "Content Display");
+
+		PageEditor.gotoTab(tabName = "Selection");
+
+		AssertClick(
+			key_navItem = "General",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "General");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Default Template");
+	}
+
+	@description = "This is a test for LPS-112093. Can display Web Content Articles of collection using custom template when add a Content Display to Collection Display."
+	@priority = "5"
+	test ViewWebContentWithCustomTemplateInContentDisplay {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		var templateScript = '''${Text.getData()}<hr>${Text.getName()}''';
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name",
+			templateScript = "${templateScript}");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		for (var i : list "1,2,3") {
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Name",
+				webContentText = "WC WebContent Text ${i}",
+				webContentTitle = "WC WebContent Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Web Content Article",
+			title = "Dynamic Asset List Test");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "WC WebContent Title 3",
+			fragmentName = "Content Display");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Text",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+		}
+
+		var n = "1";
+
+		for (var content : list "WC WebContent Text 3,WC WebContent Text 2,WC WebContent Text 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.clickConfigurableField(fragmentName = "Content Display");
+
+		PageEditor.gotoTab(tabName = "Selection");
+
+		AssertClick(
+			key_navItem = "General",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "General");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Default Template");
+
+		Select(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${title}",
+				key_fragmentName = "Content Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
+		}
+	}
+
+}

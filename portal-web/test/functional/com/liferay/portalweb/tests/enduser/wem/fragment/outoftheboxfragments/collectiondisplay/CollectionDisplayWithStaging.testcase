@@ -1,0 +1,507 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages,Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Activate local live staging") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+			Staging.activateStagingCP(siteName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-112249. The Content Flags, Content Ratings and Content Display are displayed normally when enable local staging."
+	@priority = "4"
+	test AddAllThreeContentFragmentsInCollectionDisplayOneCellWithLocalLiveStaging {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name-staging",
+			layoutName = "Test Content Page Name 2",
+			site = "false",
+			type = "content");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		for (var i : list "1,2,3") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content ${i}",
+				webContentTitle = "Web Content Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureItemTypeInDynamicCollection(
+			itemSubtype = "All Subtypes",
+			itemType = "Web Content Article");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name Staging");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		var n = "1";
+
+		for (var title : list "Web Content Title 3,Web Content Title 2,Web Content Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "Web Content Title 3",
+			fragmentName = "Content Flags");
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			fragmentName = "Content Ratings",
+			targetFragmentName = "Content Flags");
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			fragmentName = "Content Display",
+			targetFragmentName = "Content Ratings");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_DISABLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+
+			AssertTextEquals(
+				key_rowPosition = "${i}",
+				locator1 = "Fragment#CONTENT_FRAGMENT_BODY",
+				value1 = "Report");
+		}
+
+		var n = "1";
+
+		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name Staging");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_DISABLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+
+			AssertVisible(
+				locator1 = "Button#REPORT",
+				value1 = "Report");
+		}
+
+		var n = "1";
+
+		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_rowPosition = "${n}",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			var n = ${n} + 1;
+		}
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+
+			AssertVisible(
+				locator1 = "Button#REPORT",
+				value1 = "Report");
+		}
+
+		var n = "1";
+
+		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_rowPosition = "${n}",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			var n = ${n} + 1;
+		}
+	}
+
+	@description = "This is a test for LPS-114174. Can create a Collection Page based on Collections or Collection Providers in Staging site."
+	@priority = "4"
+	test AddCollectionPage {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		for (var i : list "3,2,1") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content ${i}",
+				webContentTitle = "Web Content Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Dynamic Asset List Test",
+			pageName = "Content Collection Page Name",
+			tabName = "Collections");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ControlMenu#PAGE_TYPE",
+			value1 = "Collection Page");
+
+		AssertVisible(
+			key_elementHeader = "//div[contains(.,'Dynamic Asset List Test') and contains(@id,'fragment-')]",
+			key_position = "1",
+			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title ${i}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+		PageEditor.gotoTab(tabName = "Selection");
+
+		AssertTextEquals(
+			key_fieldLabel = "Collection",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Dynamic Asset List Test");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Most Viewed Assets",
+			pageName = "Content Collection Page Name 2",
+			tabName = "Collection Providers");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ControlMenu#PAGE_TYPE",
+			value1 = "Collection Page");
+
+		AssertVisible(
+			key_elementHeader = "//div[contains(.,'Most Viewed Assets') and contains(@id,'fragment-')]",
+			key_position = "1",
+			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title ${i}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+		PageEditor.gotoTab(tabName = "Selection");
+
+		AssertTextEquals(
+			key_fieldLabel = "Collection",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Most Viewed Assets");
+	}
+
+	@description = "This is a use case for LPS-86193. Can export display page template and import to Staging site via UI."
+	@priority = "3"
+	test ExportImportDisplayPageTemplateWithCollectionDisplay {
+		property testray.main.component.name = "Display Pages,Fragments";
+
+		task ("Add a display page template with Web Content Article type and Basic Web Content subtype") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name-staging",
+				site = "false",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Collection Display to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content",
+				targetFragmentName = "Collection Display");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Export display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Export");
+
+			DownloadTempFile();
+		}
+
+		task ("Import display page template in a new staging site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(siteName = "Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name-staging");
+
+			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+		}
+
+		task ("Assert the Collection Display and the Display Page Template are shown in display page template") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Collection Display",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertVisible(
+				key_fragmentName = "Collection Display",
+				key_message = "No Collection Selected Yet",
+				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
+
+			AssertElementPresent(
+				key_fragmentName = "Display Page Content",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertVisible(
+				key_fragmentName = "Display Page Content",
+				key_messageIfo = "The display page content will be shown here.",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+	}
+
+	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed normally when enable local staging."
+	@priority = "4"
+	test ViewWebContentInContentDisplay {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name-staging",
+			layoutName = "Test Content Page Name 2",
+			site = "false",
+			type = "content");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		for (var i : list "1,2,3") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content ${i}",
+				webContentTitle = "Web Content Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureItemTypeInDynamicCollection(
+			itemSubtype = "All Subtypes",
+			itemType = "Web Content Article");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name Staging");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		var n = "1";
+
+		for (var title : list "Web Content Title 3,Web Content Title 2,Web Content Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "Web Content Title 3",
+			fragmentName = "Content Display");
+
+		var n = "1";
+
+		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Default Template");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name Staging");
+
+		var n = "1";
+
+		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_rowPosition = "${n}",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			var n = ${n} + 1;
+		}
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name");
+
+		var n = "1";
+
+		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_rowPosition = "${n}",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			var n = ${n} + 1;
+		}
+	}
+
+}

@@ -15,6 +15,13 @@ definition {
 		task ("Add a site via JSON") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 	}
 
 	tearDown {
@@ -25,6 +32,97 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-118100. 	Validate if the user can configure other languages to the contributed fragments."
+	@priority = "4"
+	test ViewContributedFragmentLocalization {
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Change to instance language to es-ES") {
+			var baseURL = PropsUtil.get("portal.url");
+			var currentURL = Navigator.getCurrentURL();
+			var localizedURL = StringUtil.replace("${currentURL}", "${baseURL}", "${baseURL}/es");
+
+			Navigator.openSpecificURL(url = "${localizedURL}");
+		}
+
+		task ("Assert the fragment name is localized") {
+			PageEditor.clickConfigurableField(fragmentName = "Título");
+
+			AssertVisible(
+				key_fragmentName = "Título",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		task ("Assert the field labels are localized") {
+			Click(
+				key_navItem = "General",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Nivel de título",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "H1");
+
+			Click(
+				key_navItem = "Estilos",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON");
+
+			for (var fieldSetLabel : list "Margen,Margen interno (padding),Tamaño,Texto,Fondo,Bordes,Efectos") {
+				AssertVisible(
+					key_fieldSetLabel = "${fieldSetLabel}",
+					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+			}
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Margen superior",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "0");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Relleno superior",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "0");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Desbordamiento",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Valor por defecto");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Familia de fuentes",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Valor por defecto");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Familia de fuentes",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Valor por defecto");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Origen de la imagen",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Directo");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Radio del borde",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Valor por defecto");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Sombra",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Valor por defecto");
 		}
 	}
 
@@ -102,13 +200,6 @@ definition {
 			Pause(locator1 = "3000");
 
 			PortletEntry.publish();
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
 		}
 
 		task ("Add the new fragment to page") {

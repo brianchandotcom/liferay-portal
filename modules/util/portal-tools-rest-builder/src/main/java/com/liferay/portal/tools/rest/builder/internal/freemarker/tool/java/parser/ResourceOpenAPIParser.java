@@ -972,7 +972,7 @@ public class ResourceOpenAPIParser {
 				String schemaReference = schema.getReference();
 
 				if ((schemaReference == null) ||
-					!schemaReference.startsWith("#/components/schemas/")) {
+					!schemaReference.contains("#")) {
 
 					continue;
 				}

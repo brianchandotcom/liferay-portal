@@ -41,10 +41,6 @@ export class DataDefinitionSchema extends Schema {
 	get dataDefinitionFields() {
 		const {dataDefinition, pages} = this[SYMBOL_RAW];
 
-		if (dataDefinition.dataDefinitionFields.length === 0) {
-			return dataDefinition.dataDefinitionFields;
-		}
-
 		// This operation will happen only once and the next calls are from the cache,
 		// the value will be revalidated by Schema that makes a comparison by reference
 		// of the Schema's props with the state, any changes in these properties the

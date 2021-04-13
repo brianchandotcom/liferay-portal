@@ -31,18 +31,7 @@ const omit = (obj, props) => {
  * some data is assembled from the props via data representation for the
  * Data Engine structure.
  */
-const parseData = ({dataDefinition, dataLayout}) => {
-	if (!dataDefinition || !dataLayout) {
-		return null;
-	}
-
-	const {
-		availableLanguageIds,
-		description,
-		name,
-		...dataDefinitions
-	} = omit(dataDefinition, ['defaultLanguageId', 'defaultDataLayout']);
-
+const parseDataLayout = (dataLayout) => {
 	const {paginationMode, ...dataLayouts} = omit(dataLayout, [
 		'dataRules',
 		'dataLayoutPages',
@@ -51,27 +40,71 @@ const parseData = ({dataDefinition, dataLayout}) => {
 	]);
 
 	return {
-		availableLanguageIds,
-		dataDefinition: dataDefinitions,
 		dataLayout: dataLayouts,
-		description,
-		name,
 		paginationMode,
 	};
 };
 
+const parseDataDefinition = (dataDefinition) => {
+	const {
+		availableLanguageIds,
+		description,
+		name,
+		...dataDefinitions
+	} = omit(dataDefinition, ['defaultLanguageId', 'defaultDataLayout']);
+
+	return {
+		availableLanguageIds,
+		dataDefinition: dataDefinitions,
+		description,
+		name,
+	};
+};
+
+const NOT_FOUND = 404;
+
+const customFetch = (parse, defaultData) => (url, init) =>
+	fetch(url, init).then(async (response) => {
+		if (response.ok) {
+			return parse(await response.json());
+		}
+
+		if (response.status === NOT_FOUND) {
+			return defaultData;
+		}
+
+		throw response;
+	});
+
+const DEFAULT_DATA_DEFINITION = {
+	dataDefinitionFields: [],
+};
+
+const DEFAULT_DATA_LAYOUT = {
+	dataLayoutFields: {},
+	dataLayoutPages: [],
+	dataRules: [],
+	paginationMode: 'single-page',
+};
+
 export const useData = ({dataDefinitionId, dataLayoutId}) => {
 	const {resource: dataDefinition} = useResource({
-		fetch,
+		fetch: customFetch(parseDataDefinition, DEFAULT_DATA_DEFINITION),
 		fetchPolicy: 'cache-first',
+		fetchRetry: {
+			attempts: 0,
+		},
 		link: `${window.location.origin}/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`,
 	});
 
 	const {resource: dataLayout} = useResource({
-		fetch,
+		fetch: customFetch(parseDataLayout, DEFAULT_DATA_LAYOUT),
 		fetchPolicy: 'cache-first',
+		fetchRetry: {
+			attempts: 0,
+		},
 		link: `${window.location.origin}/o/data-engine/v2.0/data-layouts/${dataLayoutId}`,
 	});
 
-	return parseData({dataDefinition, dataLayout});
+	return {dataDefinition, dataLayout};
 };

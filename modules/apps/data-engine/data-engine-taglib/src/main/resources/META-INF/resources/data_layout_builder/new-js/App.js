@@ -39,7 +39,7 @@ import sidebarReducer from './reducers/sidebarReducer';
 const App = (props) => {
 	const {config, state} = parseProps(props);
 
-	const data = useData({
+	const {dataDefinition, dataLayout} = useData({
 		dataDefinitionId: config.dataDefinitionId,
 		dataLayoutId: config.dataLayoutId,
 	});
@@ -48,7 +48,7 @@ const App = (props) => {
 	// can be replaced in the future by using `React.Suspense` when `useResource`
 	// is compatible.
 
-	if (!data) {
+	if (!dataDefinition || !dataLayout) {
 		return null;
 	}
 
@@ -66,7 +66,7 @@ const App = (props) => {
 							pagesStructureReducer,
 							sidebarReducer,
 						]}
-						value={{...state, ...data}}
+						value={{...state, dataDefinition, dataLayout}}
 					>
 						<AppBuilderCompatibilityLayer />
 						<FormBuilder />

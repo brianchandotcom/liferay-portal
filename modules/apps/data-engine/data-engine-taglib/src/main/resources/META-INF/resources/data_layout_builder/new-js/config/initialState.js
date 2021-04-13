@@ -16,6 +16,7 @@ import {INITIAL_STATE as CORE_INITIAL_STATE} from 'dynamic-data-mapping-form-ren
 
 const INITIAL_STATE = {
 	...CORE_INITIAL_STATE,
+	availableLanguageIds: [themeDisplay.getDefaultLanguageId()],
 	dataDefinitionId: 0,
 	dataLayoutId: 0,
 	editingDataDefinitionId: 0,

@@ -948,15 +948,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/document_library/error.jsp");
 		}
 		else {
-			Throwable throwable = exception.getCause();
-
-			if (throwable instanceof DuplicateFileEntryException) {
-				SessionErrors.add(
-					actionRequest, DuplicateFileEntryException.class);
-			}
-			else {
-				throw exception;
-			}
+			throw exception;
 		}
 	}
 

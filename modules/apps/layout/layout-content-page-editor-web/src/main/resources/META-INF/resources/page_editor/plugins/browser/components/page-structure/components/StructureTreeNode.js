@@ -108,7 +108,7 @@ function StructureTreeNodeContent({
 		icon: node.icon,
 		itemId: node.id,
 		name: node.name,
-		origin: ITEM_ACTIVATION_ORIGINS.structureTree,
+		origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 		parentId: node.parentItemId,
 		type: node.type || node.itemType,
 	};
@@ -202,7 +202,7 @@ function StructureTreeNodeContent({
 					if (node.activable) {
 						selectItem(toControlsId(node.id), {
 							itemType: node.itemType,
-							origin: ITEM_ACTIVATION_ORIGINS.structureTree,
+							origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 						});
 					}
 				}}

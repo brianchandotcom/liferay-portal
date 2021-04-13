@@ -217,11 +217,7 @@ function FragmentContentInteractionsFilter({
 					});
 				}
 
-				if (
-					activationOrigin ===
-						ITEM_ACTIVATION_ORIGINS.structureTree ||
-					activationOrigin === ITEM_ACTIVATION_ORIGINS.pageContent
-				) {
+				if (activationOrigin === ITEM_ACTIVATION_ORIGINS.sidebar) {
 					activeEditable.element.scrollIntoView({
 						behavior: 'smooth',
 						block: 'center',

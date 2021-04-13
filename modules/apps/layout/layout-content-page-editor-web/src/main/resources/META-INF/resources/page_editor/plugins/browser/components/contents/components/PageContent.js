@@ -103,7 +103,7 @@ export default function PageContent({
 	const onClickEditInlineText = () => {
 		selectItem(`${editableId}`, {
 			itemType: ITEM_TYPES.editable,
-			origin: ITEM_ACTIVATION_ORIGINS.pageContent,
+			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 		});
 	};
 

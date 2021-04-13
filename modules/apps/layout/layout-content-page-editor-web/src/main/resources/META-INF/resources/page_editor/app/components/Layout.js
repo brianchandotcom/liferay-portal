@@ -255,7 +255,7 @@ const LayoutDataItemInteractionFilter = ({componentRef, item}) => {
 			isActive &&
 			componentRef.current &&
 			isMounted() &&
-			activationOrigin === ITEM_ACTIVATION_ORIGINS.structureTree
+			activationOrigin === ITEM_ACTIVATION_ORIGINS.sidebar
 		) {
 			componentRef.current.scrollIntoView({
 				behavior: 'smooth',

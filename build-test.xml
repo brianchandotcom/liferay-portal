@@ -5851,7 +5851,12 @@ war.path=${app.server.portal.dir}/</echo>
 
 	<macrodef name="wait-for-license-activation">
 		<sequential>
-			<get-poshi-method-name />
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-poshi-method-name />
+				</then>
+			</if>
 
 			<get-commerce-license-product-name />
 

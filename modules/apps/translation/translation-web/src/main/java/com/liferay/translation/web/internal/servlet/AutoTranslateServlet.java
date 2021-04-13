@@ -15,18 +15,29 @@
 package com.liferay.translation.web.internal.servlet;
 
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.translation.translator.JSONTranslatorPacket;
+import com.liferay.translation.translator.Translator;
+import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.web.internal.constants.TranslationWebConstants;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.servlet.Servlet;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -45,15 +56,49 @@ public class AutoTranslateServlet extends HttpServlet {
 	protected void doPost(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException {
+		throws IOException, ServletException {
 
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		try {
+			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(
-			httpServletResponse,
-			StreamUtil.toString(httpServletRequest.getInputStream()));
+			String content = StreamUtil.toString(
+				httpServletRequest.getInputStream());
 
-		httpServletResponse.flushBuffer();
+			TranslatorPacket translatedTranslatorPacket = _translator.translate(
+				new JSONTranslatorPacket(
+					JSONFactoryUtil.createJSONObject(content)));
+
+			ServletResponseUtil.write(
+				httpServletResponse, _toJSON(translatedTranslatorPacket));
+
+			httpServletResponse.flushBuffer();
+		}
+		catch (JSONException jsonException) {
+			throw new ServletException(jsonException);
+		}
 	}
+
+	private JSONArray _getContentJSONArray(Map<String, String> fieldsMap) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Map.Entry<String, String> entry : fieldsMap.entrySet()) {
+			jsonArray.put(JSONUtil.put(entry.getKey(), entry.getValue()));
+		}
+
+		return jsonArray;
+	}
+
+	private String _toJSON(TranslatorPacket translatorPacket) {
+		return JSONUtil.put(
+			"fields", _getContentJSONArray(translatorPacket.getFieldsMap())
+		).put(
+			"sourceLanguageId", translatorPacket.getSourceLanguageId()
+		).put(
+			"targetLanguageId", translatorPacket.getTargetLanguageId()
+		).toString();
+	}
+
+	@Reference
+	private Translator _translator;
 
 }

@@ -124,13 +124,11 @@ definition {
 			Pause(locator1 = "1000");
 
 			if (IsElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC")) {
-				Check(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
+				Click.clickNoMouseOverNoWaitForVisible(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
 
 				Pause(locator1 = "1000");
 
-				AssertClick.waitForDMHomeAssertTextEqualsClick(
-					locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS",
-					value1 = "Actions");
+				Click(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS");
 
 				MenuItem.clickNoError(menuItem = "Delete");
 

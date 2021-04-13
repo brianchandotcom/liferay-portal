@@ -168,6 +168,26 @@ public class Query {
 					structuredContentId)));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentVersion(structuredContentId: ___, versionId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves a version of a structured content")
+	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
+			structuredContentVersion(
+				@GraphQLName("structuredContentId") Long structuredContentId,
+				@GraphQLName("versionId") Double versionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.getStructuredContentVersion(
+					structuredContentId, versionId));
+	}
+
 	@GraphQLName("DisplayPageTemplatePage")
 	public class DisplayPageTemplatePage {
 

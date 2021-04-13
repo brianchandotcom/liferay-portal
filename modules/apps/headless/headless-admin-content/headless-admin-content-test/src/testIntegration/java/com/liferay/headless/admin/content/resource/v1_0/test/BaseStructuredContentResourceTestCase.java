@@ -644,6 +644,110 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testDeleteStructuredContentVersion() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent =
+			testDeleteStructuredContentVersion_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.
+				deleteStructuredContentVersionHttpResponse(
+					structuredContent.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentVersionHttpResponse(
+				structuredContent.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentVersionHttpResponse(
+				0L, null));
+	}
+
+	protected StructuredContent
+			testDeleteStructuredContentVersion_addStructuredContent()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetStructuredContentVersion() throws Exception {
+		StructuredContent postStructuredContent =
+			testGetStructuredContentVersion_addStructuredContent();
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContentVersion(
+				postStructuredContent.getId(), null);
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	protected StructuredContent
+			testGetStructuredContentVersion_addStructuredContent()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetStructuredContentVersion() throws Exception {
+		StructuredContent structuredContent =
+			testGraphQLStructuredContent_addStructuredContent();
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"structuredContentVersion",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"structuredContentId",
+											structuredContent.getId());
+										put("versionId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/structuredContentVersion"))));
+	}
+
+	@Test
+	public void testGraphQLGetStructuredContentVersionNotFound()
+		throws Exception {
+
+		Long irrelevantStructuredContentId = RandomTestUtil.randomLong();
+		Double irrelevantVersionId = RandomTestUtil.randomDouble();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"structuredContentVersion",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentId",
+									irrelevantStructuredContentId);
+								put("versionId", irrelevantVersionId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

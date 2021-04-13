@@ -42,6 +42,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setPageDefinitionResourceComponentServiceObjects(
 			_pageDefinitionResourceComponentServiceObjects);
+		Mutation.setStructuredContentResourceComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects);
 
 		Query.setDisplayPageTemplateResourceComponentServiceObjects(
 			_displayPageTemplateResourceComponentServiceObjects);
@@ -74,11 +76,11 @@ public class ServletDataImpl implements ServletData {
 		_pageDefinitionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<DisplayPageTemplateResource>
-		_displayPageTemplateResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DisplayPageTemplateResource>
+		_displayPageTemplateResourceComponentServiceObjects;
 
 }

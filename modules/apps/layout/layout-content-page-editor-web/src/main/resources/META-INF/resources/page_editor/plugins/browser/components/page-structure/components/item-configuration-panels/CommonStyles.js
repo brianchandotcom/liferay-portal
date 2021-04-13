@@ -57,23 +57,24 @@ export const CommonStyles = ({commonStylesValues, item}) => {
 	};
 
 	return (
-		<div className="page-editor__row-styles-panel__common-styles">
+		<>
 			<h1 className="sr-only">{Liferay.Language.get('common-styles')}</h1>
-
-			{commonStyles.map((fieldSet, index) => {
-				return (
-					<FieldSet
-						fields={fieldSet.styles}
-						item={item}
-						key={index}
-						label={fieldSet.label}
-						languageId={config.defaultLanguageId}
-						onValueSelect={onCommonStylesValueSelect}
-						values={commonStylesValues}
-					/>
-				);
-			})}
-		</div>
+			<div className="page-editor__row-styles-panel__common-styles">
+				{commonStyles.map((fieldSet, index) => {
+					return (
+						<FieldSet
+							fields={fieldSet.styles}
+							item={item}
+							key={index}
+							label={fieldSet.label}
+							languageId={config.defaultLanguageId}
+							onValueSelect={onCommonStylesValueSelect}
+							values={commonStylesValues}
+						/>
+					);
+				})}
+			</div>
+		</>
 	);
 };
 

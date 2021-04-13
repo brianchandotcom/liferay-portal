@@ -6,14 +6,17 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	margin-bottom: $pageEditorSpacing * 2;
 
 	&__field {
-		margin-bottom: $pageEditorSpacing;
+		margin-bottom: $pageEditorSpacing * 1.5;
 		width: 100%;
 
 		&-small {
 			width: calc(50% - 4px);
+		}
+
+		&:last-child {
+			margin-bottom: $pageEditorSpacing * 2.5;
 		}
 	}
 
@@ -22,5 +25,9 @@
 		color: $black;
 		font-size: 0.75rem;
 		font-weight: 700;
+
+		&:first-child {
+			border-top: 0;
+		}
 	}
 }

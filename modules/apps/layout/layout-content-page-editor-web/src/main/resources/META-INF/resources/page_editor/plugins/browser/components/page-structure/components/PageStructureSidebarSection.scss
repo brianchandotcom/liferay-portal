@@ -17,8 +17,8 @@
 	}
 
 	&__custom-styles {
-		margin-bottom: $pageEditorSpacing;
-		padding-bottom: $pageEditorSpacing * 2;
+		border-bottom: 1px solid $secondary-l3;
+		padding-bottom: $pageEditorSpacing * 2.5;
 	}
 
 	&__resize-handler {

@@ -549,7 +549,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<beanshell>
 				<![CDATA[
 					import org.apache.commons.io.FileUtils;
-
 					import org.apache.commons.lang.StringUtils;
 
 					String projectDir = project.getProperty("project.dir");

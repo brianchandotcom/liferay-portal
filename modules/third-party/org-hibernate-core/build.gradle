@@ -10,6 +10,7 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
+	compile group: "org.hibernate", name: "hibernate-commons-annotations", version: "3.2.0.Final"
 	compile group: "org.hibernate", name: "hibernate-core", optional, version: "3.6.10.Final"
 }
 

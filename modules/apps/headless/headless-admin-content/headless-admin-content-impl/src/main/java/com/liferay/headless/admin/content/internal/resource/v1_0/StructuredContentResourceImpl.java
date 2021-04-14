@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -73,6 +74,20 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class StructuredContentResourceImpl
 	extends BaseStructuredContentResourceImpl implements EntityModelResource {
+
+	@Override
+	public void deleteStructuredContentByVersion(
+			Long structuredContentId, Double version)
+		throws Exception {
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.getLatestArticle(
+				structuredContentId, WorkflowConstants.STATUS_ANY, false);
+
+		_journalArticleService.deleteArticle(
+			journalArticle.getGroupId(), journalArticle.getArticleId(), version,
+			journalArticle.getUrlTitle(), new ServiceContext());
+	}
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
@@ -166,7 +181,22 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public Page<StructuredContent> getStructuredContentsVersionsPage(
+	public StructuredContent getStructuredContentByVersion(
+			Long structuredContentId, Double version)
+		throws Exception {
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.getLatestArticle(
+				structuredContentId, WorkflowConstants.STATUS_ANY, false);
+
+		return _toExtensionStructuredContent(
+			_journalArticleService.getArticle(
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
+				version));
+	}
+
+	@Override
+	public Page<StructuredContent> getStructuredContentsStructuredContentPage(
 			Long structuredContentId)
 		throws Exception {
 

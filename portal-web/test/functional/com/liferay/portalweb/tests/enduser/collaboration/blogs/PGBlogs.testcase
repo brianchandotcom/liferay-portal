@@ -535,13 +535,6 @@ definition {
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
 
-		Comments.addPG(entryComment = "3rd Blog Comment");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
 		Comments.edit(
 			entryComment = "1st Blog Comment",
 			entryCommentEdit = "1st Blog Comment Edit");
@@ -554,16 +547,6 @@ definition {
 		Comments.edit(
 			entryComment = "2nd Blog Comment",
 			entryCommentEdit = "2nd Blog Comment Edit");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		Comments.edit(
-			entryComment = "3rd Blog Comment",
-			entryCommentEdit = "3rd Blog Comment Edit",
-			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is a usecase for LPS-75241"

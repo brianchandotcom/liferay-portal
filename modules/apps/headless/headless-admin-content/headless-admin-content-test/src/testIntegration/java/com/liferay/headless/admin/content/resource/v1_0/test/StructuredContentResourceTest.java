@@ -27,11 +27,14 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.headless.admin.content.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.admin.content.client.pagination.Page;
+import com.liferay.headless.admin.content.client.serdes.v1_0.StructuredContentSerDes;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -74,14 +77,52 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
-	public void testGetStructuredContentsVersionsPage() throws Exception {
+	public void testDeleteStructuredContentByVersion() throws Exception {
+		StructuredContent structuredContent = _postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+
+		Page<StructuredContent> structuredContentsVersionsPage =
+			structuredContentResource.
+				getStructuredContentsStructuredContentPage(
+					structuredContent.getId());
+
+		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
+
+		structuredContentResource.deleteStructuredContentByVersion(
+			structuredContent.getId(), 1.0D);
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentByVersionHttpResponse(
+				structuredContent.getId(), 1.0D));
+	}
+
+	@Override
+	@Test
+	public void testGetStructuredContentByVersion() throws Exception {
+		StructuredContent structuredContent = _postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+
+		StructuredContent structuredContentVersion =
+			structuredContentResource.getStructuredContentByVersion(
+				structuredContent.getId(), 1.0D);
+
+		assertEquals(structuredContent, structuredContentVersion);
+	}
+
+	@Override
+	@Test
+	public void testGetStructuredContentsStructuredContentPage()
+		throws Exception {
+
 		StructuredContent structuredContent = _postSiteStructuredContent(
 			testGroup.getGroupId(), randomStructuredContent());
 
 		Long id = structuredContent.getId();
 
 		Page<StructuredContent> structuredContentsVersionsPage =
-			structuredContentResource.getStructuredContentsVersionsPage(id);
+			structuredContentResource.
+				getStructuredContentsStructuredContentPage(id);
 
 		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
 
@@ -89,9 +130,64 @@ public class StructuredContentResourceTest
 			id, _toStructuredContent(structuredContent));
 
 		structuredContentsVersionsPage =
-			structuredContentResource.getStructuredContentsVersionsPage(id);
+			structuredContentResource.
+				getStructuredContentsStructuredContentPage(id);
 
 		Assert.assertEquals(2L, structuredContentsVersionsPage.getTotalCount());
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetStructuredContentByVersion() throws Exception {
+		StructuredContent structuredContent =
+			testGraphQLStructuredContent_addStructuredContent();
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"admin",
+								new GraphQLField(
+									"structuredContentByVersion",
+									HashMapBuilder.<String, Object>put(
+										"structuredContentId",
+										structuredContent.getId()
+									).put(
+										"version", 1.0D
+									).build(),
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/admin",
+						"Object/structuredContentByVersion"))));
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetStructuredContentByVersionNotFound()
+		throws Exception {
+
+		Long irrelevantStructuredContentId = RandomTestUtil.randomLong();
+		Double irrelevantVersion = RandomTestUtil.randomDouble();
+
+		Assert.assertEquals(
+			"null",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"admin",
+						new GraphQLField(
+							"structuredContentByVersion",
+							HashMapBuilder.<String, Object>put(
+								"structuredContentId",
+								irrelevantStructuredContentId
+							).put(
+								"version", irrelevantVersion
+							).build(),
+							getGraphQLFields()))),
+				"JSONObject/data", "JSONObject/admin",
+				"Object/structuredContentByVersion"));
 	}
 
 	@Override

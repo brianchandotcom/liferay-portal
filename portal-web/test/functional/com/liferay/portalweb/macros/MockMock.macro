@@ -142,7 +142,7 @@ definition {
 		Navigator.openSpecificURL(url = "${bodyURL}");
 	}
 
-	macro openCalendatBodyLink {
+	macro openCalendarBodyLink {
 		var key_asset = "${asset}";
 
 		MockMock._gotoMail();

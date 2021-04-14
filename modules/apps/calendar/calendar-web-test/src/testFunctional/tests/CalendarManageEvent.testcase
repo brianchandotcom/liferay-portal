@@ -791,7 +791,7 @@ definition {
 			specificOptionSetValue = "userfn userln",
 			user = "userfn userln");
 
-		MockMock.openCalendatBodyLink(
+		MockMock.openCalendarBodyLink(
 			asset = '''Calendar: Event Notification for "Calendar Event Title"''',
 			content = "You have been invited to event",
 			subject = '''Calendar: Event Notification for "Calendar Event Title"''');

@@ -98,14 +98,15 @@ public interface ClickToChatConfigurationForm {
 		label = "%chat-provider",
 		optionLabels = {
 			"%chat-provider-chatwoot", "%chat-provider-crisp",
-			"%chat-provider-hubspot", "%chat-provider-jivochat", "%chat-provider-livechat",
-			"%chat-provider-liveperson", "%chat-provider-smartsupp",
-			"%chat-provider-tawkto", "%chat-provider-tidio",
+			"%chat-provider-hubspot", "%chat-provider-jivochat",
+			"%chat-provider-livechat", "%chat-provider-liveperson",
+			"%chat-provider-smartsupp", "%chat-provider-tawkto",
+			"%chat-provider-tidio", "%chat-provider-tolvnow",
 			"%chat-provider-zendesk"
 		},
 		optionValues = {
-			"chatwoot", "crisp", "hubspot", "jivochat", "livechat", "liveperson",
-			"smartsupp", "tawkto", "tidio", "zendesk"
+			"chatwoot", "crisp", "hubspot", "jivochat", "livechat",
+			"liveperson", "smartsupp", "tawkto", "tidio", "tolvnow", "zendesk"
 		},
 		required = false, type = "select"
 	)

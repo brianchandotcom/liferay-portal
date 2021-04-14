@@ -176,7 +176,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		return getModuleServletContext();
 	}
 
-	private String _getPluginEntryPoint() {
+	private String _getFieldsPluginEntryPoint() {
 		if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
 			return DataLayoutTaglibUtil.resolveModule(
 				"data-engine-taglib/data_layout_builder/new-js/plugins" +
@@ -185,6 +185,18 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 		return DataLayoutTaglibUtil.resolveModule(
 			"data-engine-taglib/data_layout_builder/js/plugins/fields-sidebar" +
+				"/index.es");
+	}
+
+	private String _getRulesPluginEntryPoint() {
+		if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
+			return DataLayoutTaglibUtil.resolveModule(
+				"data-engine-taglib/data_layout_builder/new-js/plugins" +
+					"/rules-sidebar/index");
+		}
+
+		return DataLayoutTaglibUtil.resolveModule(
+			"data-engine-taglib/data_layout_builder/js/plugins/rules-sidebar" +
 				"/index.es");
 	}
 
@@ -204,7 +216,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				).put(
 					"label", LanguageUtil.get(resourceBundle, "builder")
 				).put(
-					"pluginEntryPoint", _getPluginEntryPoint()
+					"pluginEntryPoint", _getFieldsPluginEntryPoint()
 				).put(
 					"sidebarPanelId", "fields"
 				).build()
@@ -224,10 +236,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				).put(
 					"label", LanguageUtil.get(resourceBundle, "rules")
 				).put(
-					"pluginEntryPoint",
-					DataLayoutTaglibUtil.resolveModule(
-						"data-engine-taglib/data_layout_builder/js/plugins" +
-							"/rules-sidebar/index.es")
+					"pluginEntryPoint", _getRulesPluginEntryPoint()
 				).put(
 					"sidebarPanelId", "rules"
 				).build());

@@ -44,5 +44,14 @@
 				min-width: 1rem;
 			}
 		}
+
+		&__content-filter {
+			margin-bottom: 12px;
+
+			&__help {
+				color: $gray-600;
+				font-size: 0.75rem;
+			}
+		}
 	}
 }

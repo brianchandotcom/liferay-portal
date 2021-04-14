@@ -17,20 +17,27 @@ import React from 'react';
 
 import Collapse from '../../../../../common/components/Collapse';
 import PageContent from './PageContent';
+import SearchContents from './SearchContents';
 
 export default function PageContents({pageContents}) {
-	return pageContents.map((content) => (
-		<Collapse key={content.label} label={content.label} open>
-			<ul className="list-unstyled">
-				{content.items.map((pageContent, index) => (
-					<PageContent
-						key={`${pageContent.classPK}${index}`}
-						{...pageContent}
-					/>
-				))}
-			</ul>
-		</Collapse>
-	));
+	return (
+		<>
+			<SearchContents />
+
+			{pageContents.map((content) => (
+				<Collapse key={content.label} label={content.label} open>
+					<ul className="list-unstyled">
+						{content.items.map((pageContent, index) => (
+							<PageContent
+								key={`${pageContent.classPK}${index}`}
+								{...pageContent}
+							/>
+						))}
+					</ul>
+				</Collapse>
+			))}
+		</>
+	);
 }
 
 PageContents.propTypes = {

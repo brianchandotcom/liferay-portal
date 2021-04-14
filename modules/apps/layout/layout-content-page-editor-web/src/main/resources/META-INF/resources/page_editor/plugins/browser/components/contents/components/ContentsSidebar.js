@@ -15,6 +15,7 @@
 import React, {useMemo} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
 import {useSelector} from '../../../../../app/store/index';
 import SidebarPanelContent from '../../../../../common/components/SidebarPanelContent';
@@ -36,10 +37,18 @@ const getEditableValues = (fragmentEntryLinks, languageId) =>
 				]
 			);
 
-			return editableValues.map(([key, value]) => ({
-				...value,
-				editableId: `${fragmentEntryLink.fragmentEntryLinkId}-${key}`,
-			}));
+			return editableValues
+				.filter(
+					([key]) =>
+						fragmentEntryLink.editableTypes[key] ===
+							EDITABLE_TYPES.text ||
+						fragmentEntryLink.editableTypes[key] ===
+							EDITABLE_TYPES['rich-text']
+				)
+				.map(([key, value]) => ({
+					...value,
+					editableId: `${fragmentEntryLink.fragmentEntryLinkId}-${key}`,
+				}));
 		})
 		.reduce(
 			(editableValuesA, editableValuesB) => [

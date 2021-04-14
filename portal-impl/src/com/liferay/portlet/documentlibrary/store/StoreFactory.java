@@ -70,7 +70,7 @@ public class StoreFactory {
 
 		boolean found = false;
 
-		for (String key : StoreServiceTrackerMapHolder.keySet()) {
+		for (String key : _storeServiceTrackerMapHolder.keySet()) {
 			Store store = getStore(key);
 
 			Class<?> clazz = store.getClass();
@@ -112,7 +112,7 @@ public class StoreFactory {
 	}
 
 	public Store getStore() {
-		Store store = StoreServiceTrackerMapHolder.getService(
+		Store store = _storeServiceTrackerMapHolder.getService(
 			PropsValues.DL_STORE_IMPL);
 
 		if (store == null) {
@@ -123,11 +123,11 @@ public class StoreFactory {
 	}
 
 	public Store getStore(String key) {
-		return StoreServiceTrackerMapHolder.getService(key);
+		return _storeServiceTrackerMapHolder.getService(key);
 	}
 
 	public String[] getStoreTypes() {
-		Set<String> storeTypes = StoreServiceTrackerMapHolder.keySet();
+		Set<String> storeTypes = _storeServiceTrackerMapHolder.keySet();
 
 		return storeTypes.toArray(new String[0]);
 	}
@@ -142,36 +142,13 @@ public class StoreFactory {
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static StoreFactory _storeFactory;
+	private static final StoreServiceTrackerMapHolder
+		_storeServiceTrackerMapHolder = new StoreServiceTrackerMapHolder();
 	private static boolean _warned;
 
 	private static class StoreServiceTrackerMapHolder {
 
-		public static Store getService(String key) {
-			ServiceTrackerMap<String, Store> serviceTrackerMap =
-				_serviceTracker.getService();
-
-			if (serviceTrackerMap == null) {
-				return null;
-			}
-
-			return serviceTrackerMap.getService(key);
-		}
-
-		public static Set<String> keySet() {
-			ServiceTrackerMap<String, Store> serviceTrackerMap =
-				_serviceTracker.getService();
-
-			if (serviceTrackerMap == null) {
-				return Collections.emptySet();
-			}
-
-			return serviceTrackerMap.keySet();
-		}
-
-		private static final ServiceTracker
-			<CTStoreFactory, ServiceTrackerMap<String, Store>> _serviceTracker;
-
-		static {
+		public StoreServiceTrackerMapHolder() {
 			Registry registry = RegistryUtil.getRegistry();
 
 			_serviceTracker = registry.trackServices(
@@ -297,6 +274,31 @@ public class StoreFactory {
 
 			_serviceTracker.open();
 		}
+
+		public Store getService(String key) {
+			ServiceTrackerMap<String, Store> serviceTrackerMap =
+				_serviceTracker.getService();
+
+			if (serviceTrackerMap == null) {
+				return null;
+			}
+
+			return serviceTrackerMap.getService(key);
+		}
+
+		public Set<String> keySet() {
+			ServiceTrackerMap<String, Store> serviceTrackerMap =
+				_serviceTracker.getService();
+
+			if (serviceTrackerMap == null) {
+				return Collections.emptySet();
+			}
+
+			return serviceTrackerMap.keySet();
+		}
+
+		private final ServiceTracker
+			<CTStoreFactory, ServiceTrackerMap<String, Store>> _serviceTracker;
 
 	}
 

@@ -26,7 +26,7 @@ export default function fieldBlur({
 		dispatch({payload: properties, type: EVENT_TYPES.FIELD.BLUR});
 
 		Liferay.fire('ddmFieldBlur', {
-			fieldName: fieldInstance.fieldName,
+			fieldName: fieldInstance.label,
 			focusDuration:
 				focusDuration.end - (focusDuration.start ?? focusDuration.end),
 			formId,

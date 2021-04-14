@@ -26,11 +26,15 @@ import {INPUT_TYPES} from '../utils/inputTypes';
 import {
 	getElementOutput,
 	getUIConfigurationValues,
-	isDefined,
 	openErrorToast,
 	openSuccessToast,
-	sub,
 } from '../utils/utils';
+import {
+	validateBoost,
+	validateJSON,
+	validateNumberRange,
+	validateRequired,
+} from '../utils/validation';
 import Preview from './Preview';
 import Sidebar from './Sidebar';
 import QueryBuilder from './tabs/QueryBuilder';
@@ -83,110 +87,55 @@ function EditBlueprintForm({
 
 		const selectedQueryElementsArray = [];
 
-		values.selectedQueryElements.map((element, index) => {
-			const configErrors = {};
+		values.selectedQueryElements.map(
+			({uiConfigurationJSON, uiConfigurationValues}, index) => {
+				const configErrors = {};
 
-			if (
-				element.uiConfigurationJSON &&
-				element.uiConfigurationJSON.fieldSets
-			) {
-				element.uiConfigurationJSON.fieldSets.map(({fields = []}) => {
-					fields.map(({name, type, typeOptions = {}}) => {
-						const configValue = element.uiConfigurationValues[name];
+				if (uiConfigurationJSON && uiConfigurationJSON.fieldSets) {
+					uiConfigurationJSON.fieldSets.map(({fields = []}) => {
+						fields.map(({name, type, typeOptions = {}}) => {
+							const configValue = uiConfigurationValues[name];
 
-						if (
-							!typeOptions.optional &&
-							(configValue === '' ||
-								JSON.stringify(configValue) === '[]' ||
-								(type === INPUT_TYPES.FIELD_MAPPING &&
-									!configValue.field) ||
-								(type === INPUT_TYPES.FIELD_MAPPING_LIST &&
-									configValue.every(({field}) => !field)))
-						) {
-							configErrors[name] = Liferay.Language.get(
-								'required'
-							);
-						}
-						else if (
-							(name === 'boost' && configValue < 0) ||
-							(type === INPUT_TYPES.FIELD_MAPPING &&
-								configValue.boost < 0) ||
-							(type === INPUT_TYPES.FIELD_MAPPING_LIST &&
-								configValue.some(({boost}) => boost < 0))
-						) {
-							configErrors[name] = Liferay.Language.get(
-								'boost-must-be-greater-than-or-equal-to-0'
-							);
-						}
-						else if (
-							type === INPUT_TYPES.NUMBER ||
-							type === INPUT_TYPES.SLIDER
-						) {
-							if (
-								isDefined(typeOptions.min) &&
-								configValue < typeOptions.min
-							) {
-								configErrors[name] = sub(
-									Liferay.Language.get(
-										'please-enter-a-value-greater-than-or-equal-to-x'
-									),
-									[typeOptions.min]
-								);
-							}
+							const configError =
+								validateRequired(
+									configValue,
+									type,
+									typeOptions.required
+								) ||
+								validateBoost(configValue, name, type) ||
+								validateNumberRange(
+									configValue,
+									type,
+									typeOptions
+								) ||
+								validateJSON(configValue, type);
 
-							if (
-								isDefined(typeOptions.max) &&
-								configValue > typeOptions.max
-							) {
-								configErrors[name] = sub(
-									Liferay.Language.get(
-										'please-enter-a-value-less-than-or-equal-to-x'
-									),
-									[typeOptions.max]
-								);
+							if (configError) {
+								configErrors[name] = configError;
 							}
-						}
-						else if (type === INPUT_TYPES.JSON) {
-							try {
-								JSON.parse(configValue);
-							}
-							catch {
-								configErrors[name] = Liferay.Language.get(
-									'unable-to-apply-changes-due-to-invalid-json'
-								);
-							}
-						}
+						});
 					});
-				});
-			}
-			else {
-				const configValue =
-					element.uiConfigurationValues.elementTemplateJSON;
+				}
+				else {
+					const configValue =
+						uiConfigurationValues.elementTemplateJSON;
 
-				if (isDefined(configValue)) {
-					try {
-						JSON.parse(configValue);
-					}
-					catch {
-						configErrors.elementTemplateJSON = Liferay.Language.get(
-							'unable-to-apply-changes-due-to-invalid-json'
-						);
-					}
+					const configError =
+						validateRequired(configValue, INPUT_TYPES.JSON) ||
+						validateJSON(configValue, INPUT_TYPES.JSON);
 
-					if (configValue == '') {
-						configErrors.elementTemplateJSON = Liferay.Language.get(
-							'required'
-						);
+					if (configError) {
+						configErrors.elementTemplateJSON = configError;
 					}
 				}
-			}
 
-			if (Object.keys(configErrors).length > 0) {
-				selectedQueryElementsArray[index] = {
-					uiConfigurationValues: configErrors,
-				};
+				if (Object.keys(configErrors).length > 0) {
+					selectedQueryElementsArray[index] = {
+						uiConfigurationValues: configErrors,
+					};
+				}
 			}
-		});
+		);
 
 		if (selectedQueryElementsArray.length > 0) {
 			errors.selectedQueryElements = selectedQueryElementsArray;
@@ -199,17 +148,12 @@ function EditBlueprintForm({
 			'parameterConfig',
 			'sortConfig',
 		].map((configName) => {
-			try {
-				JSON.parse(values[configName]);
-			}
-			catch {
-				errors[configName] = Liferay.Language.get(
-					'unable-to-apply-changes-due-to-invalid-json'
-				);
-			}
+			const configError =
+				validateRequired(values[configName], INPUT_TYPES.JSON) ||
+				validateJSON(values[configName], INPUT_TYPES.JSON);
 
-			if (values[configName] == '') {
-				errors[configName] = Liferay.Language.get('required');
+			if (configError) {
+				errors[configName] = configError;
 			}
 		});
 

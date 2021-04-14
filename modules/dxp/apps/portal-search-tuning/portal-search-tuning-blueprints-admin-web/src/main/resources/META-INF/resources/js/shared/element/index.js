@@ -21,7 +21,7 @@ import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {INPUT_TYPES} from '../../utils/inputTypes';
-import {getElementOutput, isEmpty} from '../../utils/utils';
+import {getElementOutput, isDefined, isEmpty} from '../../utils/utils';
 import CodeMirrorEditor from '../CodeMirrorEditor';
 import PreviewModal from '../PreviewModal';
 import ThemeContext from '../ThemeContext';
@@ -396,8 +396,12 @@ function Element({
 												)}
 
 												{config.typeOptions &&
-													config.typeOptions
-														.optional && (
+													isDefined(
+														config.typeOptions
+															.required
+													) &&
+													!config.typeOptions
+														.required && (
 														<span className="optional-text">
 															{Liferay.Language.get(
 																'optional'

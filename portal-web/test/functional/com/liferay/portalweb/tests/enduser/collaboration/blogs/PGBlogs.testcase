@@ -412,17 +412,6 @@ definition {
 				entryTitle = "Blogs Entry${entryCount} Title");
 		}
 
-		for (var entryCount : list "1,2,3") {
-			BlogsNavigator.openToBlogEntry(
-				entryTitle = "Blogs Entry${entryCount} Title",
-				layoutName = "Blogs Page",
-				siteURLKey = "guest");
-
-			BlogsEntry.viewEntryPG(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-		}
-
 		for (var entryCount : list "3,2,1") {
 			Navigator.gotoPage(pageName = "Blogs Page");
 

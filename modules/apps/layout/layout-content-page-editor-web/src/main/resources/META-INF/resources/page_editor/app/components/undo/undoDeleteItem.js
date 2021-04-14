@@ -13,19 +13,8 @@
  */
 
 import addItem from '../../actions/addItem';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import LayoutService from '../../services/LayoutService';
-
-const getFragmentEntryLinkIds = ({itemId, layoutData}) =>
-	layoutData.items[itemId].type === LAYOUT_DATA_ITEM_TYPES.fragment
-		? [layoutData.items[itemId].config.fragmentEntryLinkId]
-		: layoutData.items[itemId].children.reduce(
-				(acc, childId) => [
-					...acc,
-					...getFragmentEntryLinkIds({itemId: childId, layoutData}),
-				],
-				[]
-		  );
+import getFragmentEntryLinkIdsFromItemId from '../../utils/getFragmentEntryLinkIdsFromItemId';
 
 function undoAction({action, store}) {
 	const {itemId, portletIds} = action;
@@ -36,7 +25,7 @@ function undoAction({action, store}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
 		}).then(({layoutData}) => {
-			const fragmentEntryLinkIds = getFragmentEntryLinkIds({
+			const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
 				itemId,
 				layoutData,
 			});

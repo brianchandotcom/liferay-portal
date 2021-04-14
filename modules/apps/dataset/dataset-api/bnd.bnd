@@ -14,4 +14,5 @@ Export-Package:\
 	com.liferay.dataset.ui.view.cards,\
 	com.liferay.dataset.ui.view.list,\
 	com.liferay.dataset.ui.view.table,\
+	com.liferay.dataset.ui.view.table.schema,\
 	com.liferay.dataset.ui.view.timeline

@@ -13,55 +13,41 @@
  */
 
 import {INIT} from '../actions/types';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import getFragmentEntryLinkIdsFromItemId from '../utils/getFragmentEntryLinkIdsFromItemId';
 
 export default function defaultFragmentEntryLinksReducer(state, action) {
 	switch (action.type) {
 		case INIT: {
 			const {fragmentEntryLinks, layoutData} = state;
+			const deletedItemIds = layoutData.deletedItems.map(
+				(deletedItem) => deletedItem.itemId
+			);
+			const newFragmentEntryLinks = {};
 
-			const getDeletedFragments = (items, deletedItemId) => {
-				return items
-					.filter((item) => item.itemId === deletedItemId)
-					.reduce((acc, item) => {
-						return item.type === LAYOUT_DATA_ITEM_TYPES.fragment
-							? [...acc, item]
-							: item.children.flatMap((item) =>
-									getDeletedFragments(items, item)
-							  );
-					}, []);
-			};
-
-			const deletedFragments = layoutData.deletedItems.reduce(
-				(acc, deletedItem) => {
-					return [
-						...acc,
-						...getDeletedFragments(
-							Object.values(layoutData.items),
-							deletedItem.itemId
-						),
-					];
-				},
+			const deletedFragments = deletedItemIds.reduce(
+				(acc, deleteItemId) => [
+					...acc,
+					...getFragmentEntryLinkIdsFromItemId({
+						itemId: deleteItemId,
+						layoutData,
+					}),
+				],
 				[]
 			);
 
-			const newFragmentEntryLinks = Object.keys(
-				fragmentEntryLinks
-			).reduce((acc, key) => {
-				return {
-					...acc,
-					[key]: {
-						...fragmentEntryLinks[key],
-						removed: deletedFragments.some(
-							(item) => item.config.fragmentEntryLinkId === key
-						),
-					},
+			deletedFragments.forEach((deletedFragment) => {
+				newFragmentEntryLinks[deletedFragment] = {
+					...fragmentEntryLinks[deletedFragment],
+					removed: true,
 				};
-			}, {});
+			});
 
 			return {
 				...state,
-				fragmentEntryLinks: newFragmentEntryLinks,
+				fragmentEntryLinks: {
+					...fragmentEntryLinks,
+					...newFragmentEntryLinks,
+				},
 			};
 		}
 

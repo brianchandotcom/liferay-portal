@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.internal.upgrade;
 
-import com.liferay.document.library.kernel.store.Store;
 import com.liferay.knowledge.base.internal.upgrade.v2_0_2.KBArticleUpgradeProcess;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBArticleTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBCommentTable;
@@ -30,6 +29,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
+import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -108,7 +108,8 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.2.0", "1.3.0",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_0.
-				KBAttachmentsUpgradeProcess(_companyLocalService, _store),
+				KBAttachmentsUpgradeProcess(
+					_companyLocalService, _storeFactory.getStore()),
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_0.
 				UpgradePortletPreferences());
 
@@ -204,7 +205,7 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 	private SettingsFactory _settingsFactory;
 
 	@Reference(target = "(dl.store.upgrade=true)")
-	private Store _store;
+	private StoreFactory _storeFactory;
 
 	/**
 	 * See LPS-101085. The ViewCount table needs to exist.

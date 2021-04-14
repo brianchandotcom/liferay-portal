@@ -791,7 +791,7 @@ definition {
 
 	@description = "This is a test for LPS-101330. A user should be able to add a video fragment and the video should play."
 	@priority = "5"
-	test ConfigureBasicComponentVideo {
+	test ConfigureAndEditBasicComponentVideo {
 		property portal.acceptance = "true";
 
 		task ("Add a content page") {
@@ -825,6 +825,26 @@ definition {
 				siteName = "Test Site Name");
 
 			YoutubePortlet.assertVideoTitle(videoTitle = "Life at Liferay - A Look into Liferay Culture");
+		}
+
+		task ("Edit the video") {
+			ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+			PageEditor.gotoConfiguration(fragmentName = "Video");
+
+			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the video edited is displayed in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+			YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
 		}
 	}
 

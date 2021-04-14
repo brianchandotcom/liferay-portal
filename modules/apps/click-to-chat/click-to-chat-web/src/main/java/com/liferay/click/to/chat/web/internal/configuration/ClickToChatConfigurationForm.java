@@ -29,6 +29,15 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 	rules = {
 		@DDMFormRule(
 			actions = {
+				"setEnabled('chatProviderId', false)",
+				"setEnabled('chatProviderAccountId', false)",
+				"setEnabled('guestUsersAllowed', false)",
+				"setEnabled('siteSettingsStrategy', false)"
+			},
+			condition = "equals(getValue('enabled'), false)"
+		),
+		@DDMFormRule(
+			actions = {
 				"setVisible('chatProviderId', false)",
 				"setVisible('chatProviderAccountId', false)",
 				"setVisible('guestUsersAllowed', false)"
@@ -89,11 +98,15 @@ public interface ClickToChatConfigurationForm {
 		label = "%chat-provider",
 		optionLabels = {
 			"%chat-provider-chatwoot", "%chat-provider-crisp",
-			"%chat-provider-jivochat", "%chat-provider-liveperson",
-			"%chat-provider-smartsupp", "%chat-provider-tidio"
+			"%chat-provider-hubspot", "%chat-provider-jivochat",
+			"%chat-provider-livechat", "%chat-provider-liveperson",
+			"%chat-provider-smartsupp", "%chat-provider-tawkto",
+			"%chat-provider-tidio", "%chat-provider-tolvnow",
+			"%chat-provider-zendesk"
 		},
 		optionValues = {
-			"chatwoot", "crisp", "jivochat", "liveperson", "smartsupp", "tidio"
+			"chatwoot", "crisp", "hubspot", "jivochat", "livechat",
+			"liveperson", "smartsupp", "tawkto", "tidio", "tolvnow", "zendesk"
 		},
 		required = false, type = "select"
 	)

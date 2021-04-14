@@ -12,16 +12,23 @@
  * details.
  */
 
-package com.liferay.click.to.chat.web.internal.constants;
+package com.liferay.click.to.chat.web.internal.configuration.settings.definition;
+
+import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Antonio Almeida
  */
-public interface ClickToChatConstants {
+@Component(service = ConfigurationBeanDeclaration.class)
+public class ClickToChatConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String[] CLICK_TO_CHAT_PROVIDER_IDS = {
-		"chatwoot", "crisp", "hubspot", "jivochat", "livechat", "liveperson",
-		"smartsupp", "tawkto", "tidio", "tolvnow", "zendesk"
-	};
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return ClickToChatConfiguration.class;
+	}
 
 }

@@ -208,6 +208,9 @@ public class PortalPreferencesLocalServiceImpl
 
 			portalPreferencesModel.setOwnerId(ownerId);
 			portalPreferencesModel.setOwnerType(ownerType);
+
+			portalPreferencesModel = portalPreferencesPersistence.update(
+				portalPreferencesModel);
 		}
 		else {
 			portalPreferenceValuesMap =
@@ -220,7 +223,7 @@ public class PortalPreferencesLocalServiceImpl
 		_updatePortalPreferences(
 			portalPreferencesModel, portalPreferenceValuesMap, preferencesMap);
 
-		return portalPreferencesPersistence.update(portalPreferencesModel);
+		return portalPreferencesModel;
 	}
 
 	private void _updatePortalPreferences(

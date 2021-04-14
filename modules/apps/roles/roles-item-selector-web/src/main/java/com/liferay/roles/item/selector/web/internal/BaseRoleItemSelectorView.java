@@ -89,7 +89,7 @@ public abstract class BaseRoleItemSelectorView<T extends ItemSelectorCriterion>
 
 		RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext =
 			new RoleItemSelectorViewDisplayContext(
-				httpServletRequest, itemSelectedEventName,
+				httpServletRequest, t, itemSelectedEventName,
 				_getSearchContainer(
 					renderRequest, renderResponse, getCheckedRoleIds(t),
 					getExcludedRoleNames(t), getType()),

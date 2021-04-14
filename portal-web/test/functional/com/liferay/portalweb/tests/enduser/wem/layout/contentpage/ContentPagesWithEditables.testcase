@@ -67,37 +67,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-101333. Freemarker code should not be executed in an html fragment."
-	@priority = "5"
-	test AddContentPageWithHTMLFragment {
-		property portal.acceptance = "true";
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "HTML");
-
-		PageEditor.editFragmentHTML(
-			editableId = "element-html",
-			fileName = "fragment_freemarker_basic.html",
-			fragmentName = "HTML");
-
-		PageEditor.clickPublish();
-
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		task ("Assert the freemarker code was not executed") {
-			AssertTextNotEquals(
-				locator1 = "//div[contains(@class,'fragment-html-test')]",
-				value1 = "Basic Test");
-		}
-	}
-
 	@description = "This is a test for LPS-95045. A user should be able to add an image fragment and change the image in the fragment."
 	@priority = "5"
 	test AddContentPageWithImageFragment {
@@ -205,6 +174,37 @@ definition {
 				key_content = "New editable fragment ca-ES text",
 				key_fragmentClass = "rich-text",
 				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
+	@description = "This is a test for LPS-101333. Freemarker code should not be executed in an html fragment."
+	@priority = "5"
+	test CannotExecuteFreemarkerCodeInHTMLFragment {
+		property portal.acceptance = "true";
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "HTML");
+
+		PageEditor.editFragmentHTML(
+			editableId = "element-html",
+			fileName = "fragment_freemarker_basic.html",
+			fragmentName = "HTML");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert the freemarker code was not executed") {
+			AssertTextNotEquals(
+				locator1 = "//div[contains(@class,'fragment-html-test')]",
+				value1 = "Basic Test");
 		}
 	}
 

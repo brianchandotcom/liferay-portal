@@ -173,7 +173,7 @@ export default function FragmentsSidebar() {
 			</SidebarPanelHeader>
 
 			<SidebarPanelContent className="page-editor__sidebar__fragments-widgets-panel">
-				<SearchForm onChange={setSearchValue} />
+				<SearchForm className="mb-3" onChange={setSearchValue} />
 				{searchValue ? (
 					<SearchResultsPanel filteredTabs={filteredTabs} />
 				) : (

@@ -980,78 +980,74 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=&quot;com.liferay.saml.addon.keep.alive.web,com.liferay.saml.api,com.liferay.saml.impl,com.liferay.saml.opensaml.integration,com.liferay.saml.persistence.api,com.liferay.saml.persistence.service,com.liferay.saml.web,saml-hook&quot;";
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		task ("Add a comment to a blog as a guest and ensure comments can still be added.") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
 
-		User.logoutPG();
+			User.logoutPG();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+			Navigator.gotoPage(pageName = "Blogs Page");
 
-		Comments.addPGAsGuest(
-			entryComment = "Guest Blogs Entry Comment",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			userEmailAddress = "guest@liferay.com",
-			userFirstName = "Guestfn",
-			userLastName = "Guestln");
+			Comments.addPGAsGuest(
+				entryComment = "Guest Blogs Entry Comment",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				userEmailAddress = "guest@liferay.com",
+				userFirstName = "Guestfn",
+				userLastName = "Guestln");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			BlogsNavigator.openToBlogEntry(
+				entryTitle = "Blogs Entry Title",
+				layoutName = "Blogs Page",
+				siteURLKey = "guest");
 
-		Comments.viewPG(
-			commentCount = "1",
-			entryComment = "Guest Blogs Entry Comment",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			userFullName = "Guestfn Guestln");
+			Comments.viewPG(
+				commentCount = "1",
+				entryComment = "Guest Blogs Entry Comment",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				userFullName = "Guestfn Guestln");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		AssertElementPresent(locator1 = "CKEditor#BODY");
+			AssertElementPresent(locator1 = "CKEditor#BODY");
 
-		SelectFrame(value1 = "relative=top");
+			SelectFrame(value1 = "relative=top");
+		}
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		task ("Remove permissions for guest and ensure comments cannot be added anymore.") {
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+			Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
+			BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
-		Role.removePermissionPG(
-			entryTitle = "Blogs Entry Title",
-			pageName = "Blogs Page",
-			permissionDefinitionKey = "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest");
+			Role.removePermissionPG(
+				entryTitle = "Blogs Entry Title",
+				pageName = "Blogs Page",
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+				roleTitle = "Guest");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+			User.logoutPG();
 
-		User.logoutPG();
+			BlogsNavigator.openToBlogEntry(
+				entryTitle = "Blogs Entry Title",
+				layoutName = "Blogs Page",
+				siteURLKey = "guest");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			Comments.viewPG(
+				commentCount = "1",
+				entryComment = "Guest Blogs Entry Comment",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				noAddPermissions = "true",
+				userFullName = "Guestfn Guestln");
 
-		Comments.viewPG(
-			commentCount = "1",
-			entryComment = "Guest Blogs Entry Comment",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			noAddPermissions = "true",
-			userFullName = "Guestfn Guestln");
-
-		AssertElementNotPresent(locator1 = "CKEditor#BODY");
-
-		SelectFrame(value1 = "relative=top");
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+			AssertElementNotPresent(locator1 = "CKEditor#BODY");
+		}
 	}
 
 	@priority = "3"

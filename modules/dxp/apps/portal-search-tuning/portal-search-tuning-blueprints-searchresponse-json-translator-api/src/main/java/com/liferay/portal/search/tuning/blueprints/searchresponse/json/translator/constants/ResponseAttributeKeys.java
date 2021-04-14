@@ -29,6 +29,8 @@ public class ResponseAttributeKeys {
 	public static final String INCLUDE_HIGHLIGHT_FIELDS_MAP =
 		"includeHighlightFieldsMap";
 
+	public static final String INCLUDE_REQUEST_STRING = "includeRequestString";
+
 	public static final String INCLUDE_RESULT = "includeResult";
 
 	public static final String INCLUDE_RESULT_THUMBNAIL =

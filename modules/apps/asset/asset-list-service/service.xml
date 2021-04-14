@@ -241,6 +241,14 @@
 			<finder-column name="key" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="G_C_CK_CT_K_P" return-type="AssetListEntryUsage" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="containerKey" />
+			<finder-column name="containerType" />
+			<finder-column name="key" />
+			<finder-column name="plid" />
+		</finder>
 
 		<!-- References -->
 

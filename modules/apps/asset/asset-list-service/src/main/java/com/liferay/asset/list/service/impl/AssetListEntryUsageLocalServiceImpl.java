@@ -130,6 +130,15 @@ public class AssetListEntryUsageLocalServiceImpl
 	}
 
 	@Override
+	public AssetListEntryUsage fetchAssetListEntryUsage(
+		long groupId, long classNameId, String containerKey, long containerType,
+		String key, long plid) {
+
+		return assetListEntryUsagePersistence.fetchByG_C_CK_CT_K_P(
+			groupId, classNameId, containerKey, containerType, key, plid);
+	}
+
+	@Override
 	public List<AssetListEntryUsage> getAssetEntryListUsagesByPlid(long plid) {
 		return assetListEntryUsagePersistence.findByPlid(plid);
 	}

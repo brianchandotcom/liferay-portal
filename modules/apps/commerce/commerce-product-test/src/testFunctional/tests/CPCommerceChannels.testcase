@@ -384,7 +384,7 @@ definition {
 			channelCurrency = "US Dollar",
 			channelName = "Minium",
 			channelType = "Site");
-			
+
 		Click(locator1 = "Icon#BACK");
 
 		CommerceNavigator.searchEntry(entryName = "Test Channel");
@@ -396,7 +396,6 @@ definition {
 		CommerceNavigator.searchEntry(entryName = "1111");
 
 		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
-
 	}
 
 	@description = "This is a test for COMMERCE-6266. VerifyNotificationQueue"

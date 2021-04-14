@@ -19,11 +19,6 @@ package com.liferay.portal.search.tuning.blueprints.searchresponse.json.translat
  */
 public class ResponseAttributeKeys {
 
-	public static final String ADDITIONAL_RESULT_FIELDS =
-		"additionalResultFields";
-
-	public static final String DESCRIPTION_MAX_LENGTH = "descriptionMaxLength";
-
 	public static final String INCLUDE_DOCUMENT = "includeDocument";
 
 	public static final String INCLUDE_HIGHLIGHT_FIELDS_MAP =
@@ -33,15 +28,13 @@ public class ResponseAttributeKeys {
 
 	public static final String INCLUDE_RESULT = "includeResult";
 
-	public static final String INCLUDE_RESULT_THUMBNAIL =
-		"includeResultThumbnail";
-
-	public static final String INCLUDE_RESULT_USER_PORTRAIT =
-		"includeResultUserPortrait";
-
 	public static final String PORTLET_REQUEST = "portletRequest";
 
 	public static final String PORTLET_RESPONSE = "portletResponse";
+
+	public static final String RESULT_FIELDS = "resultFields";
+
+	public static final String SUMMARY_MAX_LENGTH = "summaryMaxLength";
 
 	public static final String VIEW_RESULT_IN_CONTEXT = "viewResultInContext";
 

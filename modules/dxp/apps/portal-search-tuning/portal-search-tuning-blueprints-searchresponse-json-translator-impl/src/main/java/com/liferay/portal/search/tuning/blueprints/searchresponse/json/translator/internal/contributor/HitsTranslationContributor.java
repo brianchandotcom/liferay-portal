@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,6 +49,7 @@ import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translato
 import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,8 +103,33 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 			_hitContributors, hitContributor, properties);
 	}
 
+	private void _addDefaultResultFields(
+			JSONObject hitJSONObject, ResultBuilder resultBuilder,
+			Document document, BlueprintsAttributes blueprintsAttributes,
+			ResourceBundle resourceBundle)
+		throws Exception {
+
+		hitJSONObject.put(
+			"b_author", resultBuilder.getAuthor(document, blueprintsAttributes)
+		).put(
+			"b_created",
+			resultBuilder.getCreateDate(document, blueprintsAttributes)
+		).put(
+			"b_modified",
+			resultBuilder.getModificationDate(document, blueprintsAttributes)
+		).put(
+			"b_summary",
+			resultBuilder.getSummary(document, blueprintsAttributes)
+		).put(
+			"b_title", resultBuilder.getTitle(document, blueprintsAttributes)
+		).put(
+			"b_type", _getType(resultBuilder, document, resourceBundle)
+		);
+	}
+
 	private void _addResultFields(
 			JSONObject hitJSONObject, SearchHit searchHit,
+			List<String> resultFields,
 			BlueprintsAttributes blueprintsAttributes,
 			ResourceBundle resourceBundle)
 		throws Exception {
@@ -114,35 +139,73 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 		ResultBuilder resultBuilder = _resultBuilderFactory.getBuilder(
 			document.getString("entryClassName"));
 
-		hitJSONObject.put(
-			"assetEntryId", _getAssetEntryId(document)
-		).put(
-			"author", resultBuilder.getAuthor(document, blueprintsAttributes)
-		).put(
-			"created",
-			resultBuilder.getCreateDate(document, blueprintsAttributes)
-		).put(
-			"entryClassName", document.getString(Field.ENTRY_CLASS_NAME)
-		).put(
-			"entryClassPK", document.getString(Field.ENTRY_CLASS_PK)
-		).put(
-			"modified",
-			resultBuilder.getModificationDate(document, blueprintsAttributes)
-		).put(
-			"summary", resultBuilder.getSummary(document, blueprintsAttributes)
-		).put(
-			"title", resultBuilder.getTitle(document, blueprintsAttributes)
-		);
+		if (resultFields.isEmpty()) {
+			_addDefaultResultFields(
+				hitJSONObject, resultBuilder, document, blueprintsAttributes,
+				resourceBundle);
+		}
+		else {
+			for (String fieldName : resultFields) {
+				if (fieldName.equalsIgnoreCase("b_assetEntryId")) {
+					hitJSONObject.put(
+						"b_assetEntryId", _getAssetEntryId(document));
+				}
+				else if (fieldName.equalsIgnoreCase("b_author")) {
+					hitJSONObject.put(
+						"b_author",
+						resultBuilder.getAuthor(
+							document, blueprintsAttributes));
+				}
+				else if (fieldName.equalsIgnoreCase("b_created")) {
+					hitJSONObject.put(
+						"b_created",
+						resultBuilder.getCreateDate(
+							document, blueprintsAttributes));
+				}
+				else if (fieldName.equalsIgnoreCase("b_modified")) {
+					hitJSONObject.put(
+						"b_modified",
+						resultBuilder.getModificationDate(
+							document, blueprintsAttributes));
+				}
+				else if (fieldName.equalsIgnoreCase("b_summary")) {
+					hitJSONObject.put(
+						"b_summary",
+						resultBuilder.getSummary(
+							document, blueprintsAttributes));
+				}
+				else if (fieldName.equalsIgnoreCase("b_title")) {
+					hitJSONObject.put(
+						"b_title",
+						resultBuilder.getTitle(document, blueprintsAttributes));
+				}
+				else if (fieldName.equalsIgnoreCase("b_type")) {
+					hitJSONObject.put(
+						"b_type",
+						_getType(resultBuilder, document, resourceBundle));
+				}
+				else if (fieldName.equalsIgnoreCase("b_authorPortraitUrl") ||
+						 fieldName.equalsIgnoreCase("b_authorInitials")) {
 
-		_setType(
-			hitJSONObject, resultBuilder.getType(document), resourceBundle);
-
-		_setThumbnail(
-			hitJSONObject, resultBuilder, document, blueprintsAttributes);
-
-		_setUserPortrait(hitJSONObject, document, blueprintsAttributes);
-
-		_setAdditionalFields(hitJSONObject, document, blueprintsAttributes);
+					_setUserPortrait(hitJSONObject, document);
+				}
+				else if (fieldName.equalsIgnoreCase("b_thumbnailSrc")) {
+					hitJSONObject.put(
+						"b_thumbnailSrc",
+						resultBuilder.getThumbnail(
+							document, blueprintsAttributes));
+				}
+				else if (fieldName.equalsIgnoreCase("id")) {
+					hitJSONObject.put("id", searchHit.getId());
+				}
+				else if (fieldName.equalsIgnoreCase("score")) {
+					hitJSONObject.put("score", searchHit.getScore());
+				}
+				else {
+					hitJSONObject.put(fieldName, document.getValue(fieldName));
+				}
+			}
+		}
 
 		_setHightlightFields(hitJSONObject, searchHit, blueprintsAttributes);
 
@@ -152,7 +215,7 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 	}
 
 	private void _executeHitContributors(
-		JSONObject resultJSONObject, Document document,
+		JSONObject hitJSONObject, Document document,
 		ResultBuilder resultBuilder, BlueprintsAttributes blueprintsAttributes,
 		ResourceBundle resourceBundle) {
 
@@ -164,7 +227,7 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 			HitContributor hitContributor = value.getServiceComponent();
 
 			hitContributor.contribute(
-				resultJSONObject, document, resultBuilder, blueprintsAttributes,
+				hitJSONObject, document, resultBuilder, blueprintsAttributes,
 				resourceBundle);
 		}
 	}
@@ -220,13 +283,11 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 			return jsonArray;
 		}
 
+		List<String> resultFields = _getResultFields(blueprintsAttributes);
+
 		for (SearchHit searchHit : searchHitsList) {
 			try {
-				JSONObject hitJSONObject = JSONUtil.put(
-					"id", searchHit.getId()
-				).put(
-					"score", searchHit.getScore()
-				);
+				JSONObject hitJSONObject = _jsonFactory.createJSONObject();
 
 				if (!Validator.isBlank(searchHit.getExplanation())) {
 					hitJSONObject.put(
@@ -246,8 +307,8 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 
 				if (_includeResult(blueprintsAttributes)) {
 					_addResultFields(
-						hitJSONObject, searchHit, blueprintsAttributes,
-						resourceBundle);
+						hitJSONObject, searchHit, resultFields,
+						blueprintsAttributes, resourceBundle);
 				}
 
 				jsonArray.put(hitJSONObject);
@@ -261,6 +322,29 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 		}
 
 		return jsonArray;
+	}
+
+	private List<String> _getResultFields(
+		BlueprintsAttributes blueprintsAttributes) {
+
+		Optional<Object> optional = blueprintsAttributes.getAttributeOptional(
+			ResponseAttributeKeys.RESULT_FIELDS);
+
+		if (!optional.isPresent()) {
+			return new ArrayList<>();
+		}
+
+		return (List<String>)optional.get();
+	}
+
+	private String _getType(
+			ResultBuilder resultBuilder, Document document,
+			ResourceBundle resourceBundle)
+		throws Exception {
+
+		return _language.get(
+			resourceBundle,
+			StringUtil.toLowerCase(resultBuilder.getType(document)));
 	}
 
 	private boolean _includeDocument(
@@ -303,31 +387,8 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 		return GetterUtil.getBoolean(includeOptional.get());
 	}
 
-	private void _setAdditionalFields(
-			JSONObject hitJSONObject, Document document,
-			BlueprintsAttributes blueprintsAttributes)
-		throws Exception {
-
-		Optional<Object> additionalFieldsOptional =
-			blueprintsAttributes.getAttributeOptional(
-				ResponseAttributeKeys.ADDITIONAL_RESULT_FIELDS);
-
-		if (!additionalFieldsOptional.isPresent()) {
-			return;
-		}
-
-		List<String> additionalFields =
-			(List<String>)additionalFieldsOptional.get();
-
-		Stream<String> stream = additionalFields.stream();
-
-		stream.forEach(
-			fieldName -> hitJSONObject.put(
-				fieldName, document.getValue(fieldName)));
-	}
-
 	private void _setHightlightFields(
-		JSONObject resultJSONObject, SearchHit searchHit,
+		JSONObject hitJSONObject, SearchHit searchHit,
 		BlueprintsAttributes blueprintsAttributes) {
 
 		Map<String, HighlightField> highlightFieldsMap =
@@ -339,7 +400,7 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 
 		Optional<Object> descriptionMaxLengthOptional =
 			blueprintsAttributes.getAttributeOptional(
-				ResponseAttributeKeys.DESCRIPTION_MAX_LENGTH);
+				ResponseAttributeKeys.SUMMARY_MAX_LENGTH);
 
 		int descriptionMaxLength = GetterUtil.getInteger(
 			descriptionMaxLengthOptional.orElse(700));
@@ -372,7 +433,7 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 				String cleanedText = ResultUtil.stripHTML(
 					sb.toString(), descriptionMaxLength);
 
-				resultJSONObject.put(key + "_highlight", cleanedText);
+				hitJSONObject.put(key + "_highlight", cleanedText);
 			}
 			catch (IllegalStateException illegalStateException) {
 				_log.error(
@@ -389,49 +450,8 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 		}
 	}
 
-	private void _setThumbnail(
-			JSONObject resultJSONObject, ResultBuilder resultBuilder,
-			Document document, BlueprintsAttributes blueprintsAttributes)
+	private void _setUserPortrait(JSONObject hitJSONObject, Document document)
 		throws Exception {
-
-		Optional<Object> includeThumbnailOptional =
-			blueprintsAttributes.getAttributeOptional(
-				ResponseAttributeKeys.INCLUDE_RESULT_THUMBNAIL);
-
-		if (!includeThumbnailOptional.isPresent() ||
-			!GetterUtil.getBoolean(includeThumbnailOptional.get())) {
-
-			return;
-		}
-
-		resultJSONObject.put(
-			"imageSrc",
-			resultBuilder.getThumbnail(document, blueprintsAttributes));
-	}
-
-	private void _setType(
-		JSONObject resultJSONObject, String type,
-		ResourceBundle resourceBundle) {
-
-		resultJSONObject.put(
-			"type",
-			_language.get(resourceBundle, StringUtil.toLowerCase(type)));
-	}
-
-	private void _setUserPortrait(
-			JSONObject resultJSONObject, Document document,
-			BlueprintsAttributes blueprintsAttributes)
-		throws Exception {
-
-		Optional<Object> includeUserPortraitOptional =
-			blueprintsAttributes.getAttributeOptional(
-				ResponseAttributeKeys.INCLUDE_RESULT_USER_PORTRAIT);
-
-		if (!includeUserPortraitOptional.isPresent() ||
-			!GetterUtil.getBoolean(includeUserPortraitOptional.get())) {
-
-			return;
-		}
 
 		try {
 			long userId = document.getLong(Field.USER_ID);
@@ -444,7 +464,7 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 					user.getUserUuid());
 
 				if (userPortraitUrl != null) {
-					resultJSONObject.put("userPortraitUrl", userPortraitUrl);
+					hitJSONObject.put("b_authorPortraitUrl", userPortraitUrl);
 				}
 			}
 
@@ -456,12 +476,9 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 
 			String lastNameInitials = lastName.substring(0, 1);
 
-			resultJSONObject.put(
-				"userInitials",
-				StringUtil.toUpperCase(firstNameInitials + lastNameInitials)
-			).put(
-				"userName", user.getFullName()
-			);
+			hitJSONObject.put(
+				"b_authorInitials",
+				StringUtil.toUpperCase(firstNameInitials + lastNameInitials));
 		}
 		catch (PortalException portalException) {
 			String name = document.getString(Field.USER_NAME);
@@ -472,8 +489,8 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 
 			String lastNameInitials = nameParts[1].substring(0, 1);
 
-			resultJSONObject.put(
-				"userInitials",
+			hitJSONObject.put(
+				"b_userInitials",
 				StringUtil.toUpperCase(firstNameInitials + lastNameInitials));
 
 			if (_log.isWarnEnabled()) {

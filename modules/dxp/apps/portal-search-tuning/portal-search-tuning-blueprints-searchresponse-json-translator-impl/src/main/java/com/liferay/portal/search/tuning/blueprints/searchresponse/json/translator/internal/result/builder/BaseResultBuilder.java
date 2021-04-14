@@ -211,7 +211,7 @@ public abstract class BaseResultBuilder implements ResultBuilder {
 
 		Optional<Object> descriptionMaxLengthOptional =
 			blueprintsAttributes.getAttributeOptional(
-				ResponseAttributeKeys.DESCRIPTION_MAX_LENGTH);
+				ResponseAttributeKeys.SUMMARY_MAX_LENGTH);
 
 		return GetterUtil.getInteger(descriptionMaxLengthOptional.orElse(700));
 	}

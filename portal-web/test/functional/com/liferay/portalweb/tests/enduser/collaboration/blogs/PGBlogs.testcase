@@ -675,12 +675,12 @@ definition {
 			layoutName = "Search Page");
 
 		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
+			entryContent = "Unique Content",
 			entryTitle = "Blogs Entry Title");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		for (var searchTerm : list "Blogs,Entry,Content,Blogs Entry Content") {
+		for (var searchTerm : list "Unique,Content,Unique Content") {
 			Navigator.gotoPage(pageName = "Search Page");
 
 			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");

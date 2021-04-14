@@ -235,12 +235,37 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6105. EditMoneyOrderPaymentMethod"
-	@ignore = "true"
 	@priority = "3"
 	test EditMoneyOrderPaymentMethod {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6105 EditMoneyOrderPaymentMethod
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+        
+		CommerceNavigator.gotoPortlet(
+            category = "Store Management",
+            portlet = "Channels");
+        
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+        
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "Money Order",
+			table = "Payment Methods");
+		
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "Money Order");
+
+		Type(
+			locator1 = "TextInput#DESCRIPTION",
+			value1 = "Test");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for COMMERCE-6276. EditNotificationTemplate"

@@ -14,10 +14,9 @@
 
 package com.liferay.segments.web.internal.field.customizer;
 
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,16 +27,10 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.roles.item.selector.account.role.AccountRoleItemSelectorCriterion;
-import com.liferay.roles.item.selector.depot.role.DepotRoleItemSelectorCriterion;
-import com.liferay.roles.item.selector.organization.role.OrganizationRoleItemSelectorCriterion;
-import com.liferay.roles.item.selector.provider.role.ProviderRoleItemSelectorCriterion;
 import com.liferay.roles.item.selector.regular.role.RegularRoleItemSelectorCriterion;
-import com.liferay.roles.item.selector.site.role.SiteRoleItemSelectorCriterion;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -54,12 +47,13 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"segments.field.customizer.entity.name=User",
-		"segments.field.customizer.key=" + RoleSegmentsFieldCustomizer.KEY,
+		"segments.field.customizer.key=" + RegularRoleSegmentsFieldCustomizer.KEY,
 		"segments.field.customizer.priority:Integer=50"
 	},
 	service = SegmentsFieldCustomizer.class
 )
-public class RoleSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
+public class RegularRoleSegmentsFieldCustomizer
+	extends BaseSegmentsFieldCustomizer {
 
 	public static final String KEY = "role";
 
@@ -120,9 +114,10 @@ public class RoleSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 					_portal.getLocale(portletRequest), Role.class.getName()),
 				PortletURLBuilder.create(
 					_itemSelector.getItemSelectorURL(
-						RequestBackedPortletURLFactoryUtil.create(portletRequest),
-						"selectEntity",
-						regularRoleItemSelectorCriterion)).buildString(),
+						RequestBackedPortletURLFactoryUtil.create(
+							portletRequest),
+						"selectEntity", regularRoleItemSelectorCriterion)
+				).buildString(),
 				true);
 		}
 		catch (Exception exception) {
@@ -145,7 +140,7 @@ public class RoleSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RoleSegmentsFieldCustomizer.class);
+		RegularRoleSegmentsFieldCustomizer.class);
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
 		"roleIds");

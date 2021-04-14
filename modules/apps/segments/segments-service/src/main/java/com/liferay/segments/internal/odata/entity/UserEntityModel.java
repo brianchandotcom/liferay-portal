@@ -71,6 +71,9 @@ public class UserEntityModel implements EntityModel {
 			new IdEntityField(
 				"userGroupIds", locale -> "userGroupIds", String::valueOf),
 			new IdEntityField(
+				"userGroupRoleIds", locale -> "userGroupRoleIds",
+				String::valueOf),
+			new IdEntityField(
 				"userId", locale -> Field.USER_ID, String::valueOf),
 			new StringEntityField("emailAddress", locale -> "emailAddress"),
 			new StringEntityField(

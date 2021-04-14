@@ -17,7 +17,6 @@ package com.liferay.portlet.exportimport.service.http;
 import com.liferay.exportimport.kernel.service.StagingServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.rmi.RemoteException;
 
@@ -84,11 +83,12 @@ public class StagingServiceSoap {
 
 	public static void enableLocalStaging(
 			long groupId, boolean branchingPublic, boolean branchingPrivate,
-			ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
-			StagingServiceUtil.enableLocalStaging(groupId, branchingPublic, branchingPrivate, serviceContext);
+			StagingServiceUtil.enableLocalStaging(
+				groupId, branchingPublic, branchingPrivate, serviceContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

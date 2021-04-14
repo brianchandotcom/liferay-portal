@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
@@ -130,16 +129,18 @@ public class StagingServiceHttp {
 
 	public static void enableLocalStaging(
 			HttpPrincipal httpPrincipal, long groupId, boolean branchingPublic,
-			boolean branchingPrivate, ServiceContext serviceContext)
+			boolean branchingPrivate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "enableLocalStaging",
-				_enableLocalStagingParameterTypes6);
+				_enableLocalStagingParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, branchingPublic, branchingPrivate, serviceContext);
+				methodKey, groupId, branchingPublic, branchingPrivate,
+				serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -173,7 +174,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "hasRemoteLayout",
-				_hasRemoteLayoutParameterTypes2);
+				_hasRemoteLayoutParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, uuid, groupId, privateLayout);
@@ -214,7 +215,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "propagateExportImportLifecycleEvent",
-				_propagateExportImportLifecycleEventParameterTypes3);
+				_propagateExportImportLifecycleEventParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, code, processFlag, processId, arguments);
@@ -253,7 +254,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "publishStagingRequest",
-				_publishStagingRequestParameterTypes4);
+				_publishStagingRequestParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, stagingRequestId, exportImportConfiguration);
@@ -295,7 +296,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "updateStagingRequest",
-				_updateStagingRequestParameterTypes5);
+				_updateStagingRequestParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, stagingRequestId, fileName, bytes);
@@ -330,23 +331,24 @@ public class StagingServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _createStagingRequestParameterTypes1 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _enableLocalStagingParameterTypes6 =
+	private static final Class<?>[] _enableLocalStagingParameterTypes2 =
 		new Class[] {
-			long.class, boolean.class, boolean.class, ServiceContext.class
+			long.class, boolean.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _hasRemoteLayoutParameterTypes2 =
+	private static final Class<?>[] _hasRemoteLayoutParameterTypes3 =
 		new Class[] {String.class, long.class, boolean.class};
 	private static final Class<?>[]
-		_propagateExportImportLifecycleEventParameterTypes3 = new Class[] {
+		_propagateExportImportLifecycleEventParameterTypes4 = new Class[] {
 			int.class, int.class, String.class, java.util.List.class
 		};
-	private static final Class<?>[] _publishStagingRequestParameterTypes4 =
+	private static final Class<?>[] _publishStagingRequestParameterTypes5 =
 		new Class[] {
 			long.class,
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
 				class
 		};
-	private static final Class<?>[] _updateStagingRequestParameterTypes5 =
+	private static final Class<?>[] _updateStagingRequestParameterTypes6 =
 		new Class[] {long.class, String.class, byte[].class};
 
 }

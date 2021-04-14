@@ -15,7 +15,7 @@
 package com.liferay.exportimport.kernel.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class StagingServiceUtil {
 
 	public static void enableLocalStaging(
 			long groupId, boolean branchingPublic, boolean branchingPrivate,
-			ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		getService().enableLocalStaging(

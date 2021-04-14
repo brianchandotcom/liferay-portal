@@ -61,8 +61,9 @@ public interface StagingService extends BaseService {
 	public long createStagingRequest(long groupId, String checksum)
 		throws PortalException;
 
-	public void enableLocalStaging(long groupId, boolean branchingPublic,
-			boolean branchingPrivate, ServiceContext serviceContext)
+	public void enableLocalStaging(
+			long groupId, boolean branchingPublic, boolean branchingPrivate,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

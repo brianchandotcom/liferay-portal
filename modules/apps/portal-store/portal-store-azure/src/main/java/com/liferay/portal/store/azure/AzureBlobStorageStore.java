@@ -43,9 +43,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.store.azure.internal.configuration.AzureBlobStorageStoreConfiguration;
 import com.liferay.portal.store.azure.internal.FullPathsMapper;
 import com.liferay.portal.store.azure.internal.LiferayToAzurePathsMapper;
+import com.liferay.portal.store.azure.internal.configuration.AzureBlobStorageStoreConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +71,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Josef Sustacek
  */
 @Component(
-	configurationPid = AzureBlobStorageStoreConfiguration.ID,
+	configurationPid = "com.liferay.portal.store.azure.internal.configuration.AzureBlobStorageStoreConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = "store.type=com.liferay.portal.store.azure.AzureBlobStorageStore",
 	service = Store.class

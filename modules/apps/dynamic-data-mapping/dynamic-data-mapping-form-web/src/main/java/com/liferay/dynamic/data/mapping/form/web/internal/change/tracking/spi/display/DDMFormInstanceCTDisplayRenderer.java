@@ -1,0 +1,177 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.dynamic.data.mapping.form.web.internal.change.tracking.spi.display;
+
+import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil;
+import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Cheryl Tang
+ */
+@Component(immediate = true, service = CTDisplayRenderer.class)
+public class DDMFormInstanceCTDisplayRenderer
+	extends BaseCTDisplayRenderer<DDMFormInstance> {
+
+	@Override
+	public String getContent(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			liferayPortletRequest);
+
+		Fields fields = (Fields)serviceContext.getAttribute(
+			Fields.class.getName() + ddmFormInstance.getStructureId());
+
+		ddmFormFieldRenderingContext.setFields(fields);
+
+		ddmFormFieldRenderingContext.setHttpServletRequest(
+			liferayPortletRequest.getHttpServletRequest());
+		ddmFormFieldRenderingContext.setHttpServletResponse(
+			liferayPortletResponse.getHttpServletResponse());
+		ddmFormFieldRenderingContext.setLocale(
+			liferayPortletRequest.getLocale());
+		ddmFormFieldRenderingContext.setMode(
+			ParamUtil.getString(liferayPortletRequest, "mode"));
+		ddmFormFieldRenderingContext.setNamespace(
+			ParamUtil.getString(liferayPortletRequest, "namespace"));
+		ddmFormFieldRenderingContext.setPortletNamespace(
+			liferayPortletResponse.getNamespace());
+		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);
+		ddmFormFieldRenderingContext.setReturnFullContext(true);
+		ddmFormFieldRenderingContext.setViewMode(true);
+
+		return DDMFormRendererUtil.render(
+			ddmFormInstance.getDDMForm(), ddmFormFieldRenderingContext);
+	}
+
+	@Override
+	public String getEditURL(
+			HttpServletRequest httpServletRequest,
+			DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(ddmFormInstance.getGroupId());
+
+		if (group.isCompany()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			group = themeDisplay.getScopeGroup();
+		}
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, group,
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/admin/edit_form_instance.jsp"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setBackURL(
+			ParamUtil.getString(httpServletRequest, "backURL")
+		).setParameter(
+			"ddmStructureId", ddmFormInstance.getStructureId()
+		).setParameter(
+			"formInstanceId", ddmFormInstance.getFormInstanceId()
+		).setParameter(
+			"groupId", ddmFormInstance.getGroupId()
+		).buildString();
+	}
+
+	@Override
+	public Class<DDMFormInstance> getModelClass() {
+		return DDMFormInstance.class;
+	}
+
+	@Override
+	public String getPreviousContent(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			DDMFormInstance currentModel, DDMFormInstance previousModel)
+		throws PortalException {
+
+		return getContent(
+			liferayPortletRequest, liferayPortletResponse, previousModel);
+	}
+
+	@Override
+	public String getTitle(Locale locale, DDMFormInstance ddmFormInstance) {
+		return ddmFormInstance.getName(locale);
+	}
+
+	@Override
+	public boolean hasContent() {
+		return true;
+	}
+
+	@Override
+	protected void buildDisplay(
+		DisplayBuilder<DDMFormInstance> displayBuilder) {
+
+		DDMFormInstance ddmFormInstance = displayBuilder.getModel();
+
+		displayBuilder.display(
+			"name", ddmFormInstance.getName(displayBuilder.getLocale())
+		).display(
+			"description",
+			ddmFormInstance.getDescription(displayBuilder.getLocale())
+		).display(
+			"version", ddmFormInstance.getVersion()
+		).display(
+			"modified-date", ddmFormInstance.getModifiedDate()
+		);
+	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
+
+}

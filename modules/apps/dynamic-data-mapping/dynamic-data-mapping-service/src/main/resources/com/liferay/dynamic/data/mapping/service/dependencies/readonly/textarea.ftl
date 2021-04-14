@@ -1,22 +1,30 @@
 <#include "../init.ftl">
 
-<@liferay_aui["field-wrapper"]
-	cssClass="form-builder-field"
-	data=data
->
-	<div class="form-group">
-		<@liferay_aui.input
-			cssClass=cssClass
-			dir=requestedLanguageDir
-			helpMessage=escape(fieldStructure.tip)
-			label=escape(label)
-			name=namespacedFieldName
-			readonly=readonly
-			type="textarea"
-			value=fieldValue
-		>
-		</@liferay_aui.input>
-	</div>
+<style type="text/css">
+	pre.lfr-ddm-readonly-textarea {
+		font-style: inherit;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+	}
+</style>
 
-	${fieldStructure.children}
-</@>
+<div class="field-wrapper-content lfr-forms-field-wrapper">
+	<#if hasFieldValue || showEmptyFieldLabel>
+		<label>
+			<@liferay_ui.message key=escape(label) />
+		</label>
+	</#if>
+
+	<#if hasFieldValue>
+		<#if !disabled>
+			<@liferay_aui.input
+				name=namespacedFieldName
+				type="hidden"
+				value=fieldValue
+			/>
+		</#if>
+
+		<pre class="lfr-ddm-readonly-textarea">${fieldValue}</pre>
+	</#if>
+</div>

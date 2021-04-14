@@ -208,4 +208,94 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98553. Can edit created HTML lfr-editable fragment."
+	@priority = "4"
+	test EditInlineContentOfHTMLFragmentWithOldTag {
+		task ("Add a new fragment with the following codes") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+	<lfr-editable class="component-html" id="element-html" type="html">
+
+		<h1>HTML Example</h1>
+
+		<p class="mb-0">
+			A paragraph is a <strong>self-contained</strong> unit of a discourse in
+			writing dealing with a particular point or <em>idea</em>. Paragraphs are
+			usually an expected part of formal writing, used to organize longer
+			prose.
+		</p>
+	</lfr-editable>
+</div>
+		''';
+
+			var cssSnippet = '''
+.component-html img {
+	max-width: 100%;
+}
+		''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.typeCssEditor(content = "${cssSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add a new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Edit the inline content of HTML fragment") {
+			var htmlSnippet = '''
+<h1>Edit HTML Title</h1>
+
+<p class="mb-0">
+	A paragraph is a <strong>self-contained</strong> unit of a discourse in
+	writing dealing with a particular point or <em>idea</em>. Paragraphs are
+	usually an expected part of formal writing, used to organize longer
+	prose.
+</p>
+		''';
+
+			PageEditor.editFragmentHTML(
+				content = "${htmlSnippet}",
+				contributed = "false",
+				editableId = "element-html",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("View edited inline content in edit mode") {
+			AssertTextEquals.assertPartialText(
+				id = "element-html",
+				key_fragmentName = "Fragment Name",
+				locator1 = "Fragment#EDITABLE_FIELD",
+				value1 = "Edit HTML Title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View edited inline content in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Edit HTML Title");
+		}
+	}
+
 }

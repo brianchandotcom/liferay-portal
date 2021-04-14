@@ -1291,8 +1291,6 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = "10000");
-
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",

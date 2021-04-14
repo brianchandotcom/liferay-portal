@@ -933,7 +933,9 @@ definition {
 			value1 = "Blogs Entry Abstract Description");
 	}
 
-	@description = "This is a usecase for LPS-66970"
+	@description = "This is a usecase for LPS-66970. It checks that both the old and new blog URLs lead to the current entry."
+	@priority = "5"
+	@refactordone
 	test ViewBlogEntryViaEditedCustomURL {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

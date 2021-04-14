@@ -32,6 +32,8 @@ public class JSONSerializerImpl implements JSONSerializer {
 
 	public JSONSerializerImpl() {
 		_jsonSerializer = new JsonSerializer();
+
+		_jsonSerializer.strictStringEncoding(true);
 	}
 
 	@Override

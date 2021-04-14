@@ -390,19 +390,42 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				<then>
 					<property name="commerce.license.product.name" value="Liferay Commerce Subscription Development" />
 				</then>
-				<else>
-					<loadfile
-						property="commerce.license.content"
-						srcfile="${liferay.home}/osgi/modules/${commerce.license.file}"
-					/>
+				<elseif>
+					<available file="${liferay.home}/deploy/${commerce.license.file}" />
+					<then>
+						<loadfile
+							property="commerce.license.content"
+							srcfile="${liferay.home}/deploy/${commerce.license.file}"
+						/>
 
-					<propertyregex
-						casesensitive="false"
-						input="${commerce.license.content}"
-						property="commerce.license.product.name"
-						regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
-						select="\1"
-					/>
+						<propertyregex
+							casesensitive="false"
+							input="${commerce.license.content}"
+							property="commerce.license.product.name"
+							regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
+							select="\1"
+						/>
+					</then>
+				</elseif>
+				<elseif>
+					<available file="${liferay.home}/osgi/modules/${commerce.license.file}" />
+					<then>
+						<loadfile
+							property="commerce.license.content"
+							srcfile="${liferay.home}/osgi/modules/${commerce.license.file}"
+						/>
+
+						<propertyregex
+							casesensitive="false"
+							input="${commerce.license.content}"
+							property="commerce.license.product.name"
+							regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
+							select="\1"
+						/>
+					</then>
+				</elseif>
+				<else>
+					<echo> Failed to find either file </echo>
 				</else>
 			</if>
 		</sequential>
@@ -2646,7 +2669,10 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 			<if>
 				<equals arg1="${commerce.enabled}" arg2="false" />
 				<then>
-					<delete failonerror="false" file="${liferay.home}/deploy/portal-commerce-license.xml" verbose="true" />
+					<move
+						file="${liferay.home}/deploy/portal-commerce-license.xml"
+						tofile="${liferay.home}/portal-commerce-license.xml"
+					/>
 				</then>
 				<elseif>
 					<isset property="commerce.license.file" />
@@ -6881,6 +6907,18 @@ virtualHostname="localhost"
 					src="${test.commerce.license.url}"
 				/>
 			</then>
+			<elseif>
+				<available file="${liferay.home}/portal-commerce-license.xml" />
+				<then>
+					<move
+						file="${liferay.home}/portal-commerce-license.xml"
+						tofile="${liferay.home}/deploy/portal-commerce-license.xml"
+					/>
+				</then>
+			</elseif>
+			<else>
+				<echo message="No commerce XML license found to deploy" />
+			</else>
 		</if>
 	</target>
 

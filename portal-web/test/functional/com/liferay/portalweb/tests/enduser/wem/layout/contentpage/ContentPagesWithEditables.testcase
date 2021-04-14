@@ -208,6 +208,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98553. Can edit contributed HTML type fragment."
+	@priority = "4"
+	test EditInlineContentOfHTMLFragment {
+		task ("Add a HTML fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+		}
+
+		task ("Edit the inline content of HTML fragment") {
+			var htmlSnippet = '''
+<h1>Edit HTML Title</h1>
+
+<p class="mb-0">
+	A paragraph is a <strong>self-contained</strong> unit of a discourse in
+	writing dealing with a particular point or <em>idea</em>. Paragraphs are
+	usually an expected part of formal writing, used to organize longer
+	prose.
+</p>
+		''';
+
+			PageEditor.editFragmentHTML(
+				content = "${htmlSnippet}",
+				editableId = "element-html",
+				fragmentName = "HTML");
+		}
+
+		task ("View edited inline content in edit mode") {
+			AssertTextEquals.assertPartialText(
+				id = "element-html",
+				key_fragmentName = "HTML",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				value1 = "Edit HTML Title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View edited inline content in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Edit HTML Title");
+		}
+	}
+
 	@description = "This is a test for LPS-98553. Can edit created HTML lfr-editable fragment."
 	@priority = "4"
 	test EditInlineContentOfHTMLFragmentWithOldTag {

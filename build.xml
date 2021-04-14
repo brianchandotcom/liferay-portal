@@ -512,7 +512,7 @@ message.
 				>
 					<fileset
 						dir="lib/development"
-						includes="activation.jar,jms.jar,jta.jar,mail.jar,persistence.jar"
+						includes="activation.jar,jms.jar,jta.jar,mail.jar"
 					/>
 				</copy>
 

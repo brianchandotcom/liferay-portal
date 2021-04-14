@@ -90,7 +90,6 @@
 	<classpathentry kind="lib" path="lib/development/objenesis.jar"/>
 	<classpathentry kind="lib" path="lib/development/osgi-annotation-versioning.jar"/>
 	<classpathentry kind="lib" path="lib/development/p6spy.jar"/>
-	<classpathentry kind="lib" path="lib/development/persistence.jar"/>
 	<classpathentry kind="lib" path="lib/development/portletmvc4spring-test.jar"/>
 	<classpathentry kind="lib" path="lib/development/postgresql.jar"/>
 	<classpathentry kind="lib" path="lib/development/powermock-api-mockito.jar"/>
@@ -249,6 +248,7 @@
 	<classpathentry kind="lib" path="lib/portal/odmg.jar"/>
 	<classpathentry kind="lib" path="lib/portal/oro.jar"/>
 	<classpathentry kind="lib" path="lib/portal/pdfbox.jar"/>
+	<classpathentry kind="lib" path="lib/portal/persistence.jar"/>
 	<classpathentry kind="lib" path="lib/portal/poi.jar"/>
 	<classpathentry kind="lib" path="lib/portal/poi-ooxml.jar"/>
 	<classpathentry kind="lib" path="lib/portal/poi-ooxml-schemas.jar"/>

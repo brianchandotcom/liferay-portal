@@ -52,7 +52,6 @@
 /development/ojdbc6.jar
 /development/osgi-annotation-versioning.jar
 /development/p6spy.jar
-/development/persistence.jar
 /development/portletmvc4spring-test.jar
 /development/postgresql.jar
 /development/powermock-api-mockito.jar
@@ -217,6 +216,7 @@
 /portal/odmg.jar
 /portal/oro.jar
 /portal/pdfbox.jar
+/portal/persistence.jar
 /portal/poi-ooxml.jar
 /portal/poi-ooxml-schemas.jar
 /portal/poi-scratchpad.jar

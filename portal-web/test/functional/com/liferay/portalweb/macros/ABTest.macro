@@ -9,6 +9,10 @@ definition {
 	macro createABTest {
 		Click(locator1 = "ABTest#AB_TEST_BUTTON");
 
+		if (IsElementNotPresent(locator1 = "ABTest#CREATE_TEST_BUTTON")) {
+			Click(locator1 = "ABTest#AB_TEST_BUTTON");
+		}
+
 		Click(locator1 = "ABTest#CREATE_TEST_BUTTON");
 
 		Click(locator1 = "ABTest#AB_TEST_TITLE_FIELD");
@@ -73,6 +77,12 @@ definition {
 	}
 
 	macro terminateTest {
+		if (IsElementNotPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
+			User.firstLoginPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
 		ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
 
 		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to terminate this test?");

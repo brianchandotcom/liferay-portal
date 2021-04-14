@@ -49,11 +49,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Refresh();
-
-		Click(locator1 = "ABTest#AB_TEST_BUTTON");
-
 		AnalyticsCloud.teardownAnalyticsCloud();
+
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -75,14 +73,11 @@ definition {
 
 		ABTest.checkAnalyticsCloudInfo();
 
-		if (IsElementNotPresent(locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE")) {
-			SelectWindow(locator1 = "title=Analytics Cloud");
+		SelectWindow(locator1 = "name=undefined");
 
-			AnalyticsCloud.loginAnalyticsCloud(
-				emailAddress = "test@liferay.com",
-				password = "test");
-		}
-		SelectWindow(locator1 = "title=Tests - Analytics Cloud");
+		AnalyticsCloud.loginAnalyticsCloud(
+			emailAddress = "test@liferay.com",
+			password = "test");
 
 		AssertTextEquals(
 			ABtestTitle = "AB test title",
@@ -90,16 +85,6 @@ definition {
 			value1 = "AB test title");
 
 		SelectWindow(locator1 = "title=Content Page - Test Site Name - Liferay DXP");
-
-		Refresh();
-
-		if (IsElementNotPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
-			User.firstLoginPG();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		Refresh();
 
 		ABTest.terminateTest();
 	}
@@ -131,14 +116,11 @@ definition {
 
 		ABTest.checkAnalyticsCloudInfo();
 
-		if (IsElementNotPresent(locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE")) {
-			SelectWindow(locator1 = "title=Analytics Cloud");
+		SelectWindow(locator1 = "name=undefined");
 
-			AnalyticsCloud.loginAnalyticsCloud(
-				emailAddress = "test@liferay.com",
-				password = "test");
-		}
-		SelectWindow(locator1 = "title=Tests - Analytics Cloud");
+		AnalyticsCloud.loginAnalyticsCloud(
+			emailAddress = "test@liferay.com",
+			password = "test");
 
 		AssertTextEquals(
 			ABtestTitle = "AB test title",
@@ -146,16 +128,6 @@ definition {
 			value1 = "AB test title");
 
 		SelectWindow(locator1 = "title=Content Page - Test Site Name - Liferay DXP");
-
-		Refresh();
-
-		if (IsElementNotPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
-			User.firstLoginPG();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		Refresh();
 
 		ABTest.terminateTest();
 	}

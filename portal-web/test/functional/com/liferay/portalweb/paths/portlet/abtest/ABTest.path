@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CREATE_VARIANT_BUTTON</td>
-	<td>//*[contains(@class,'mb-3 btn btn-secondary') and contains(text(),'Create Variant')]</td>
+	<td>//*[contains(@class,'btn btn-secondary') and contains(text(),'Create Variant')]</td>
 	<td></td>
 </tr>
 <tr>

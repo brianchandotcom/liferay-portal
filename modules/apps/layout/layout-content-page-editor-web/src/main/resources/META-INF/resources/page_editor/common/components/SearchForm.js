@@ -19,13 +19,13 @@ import React, {useRef, useState} from 'react';
 
 let nextInputId = 0;
 
-export default function SearchForm({onChange}) {
+export default function SearchForm({className, onChange}) {
 	const id = `pageEditorSearchFormInput${nextInputId++}`;
 	const onChangeDebounce = useRef(debounce((value) => onChange(value), 100));
 	const [searchValue, setSearchValue] = useState('');
 
 	return (
-		<ClayForm.Group className="mb-3" role="search">
+		<ClayForm.Group className={className} role="search">
 			<label className="sr-only" htmlFor={id}>
 				{Liferay.Language.get('search-form')}
 			</label>

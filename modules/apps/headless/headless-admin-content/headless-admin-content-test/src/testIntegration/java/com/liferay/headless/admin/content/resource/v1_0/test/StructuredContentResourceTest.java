@@ -74,6 +74,27 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
+	public void testDeleteStructuredContentVersion() throws Exception {
+		StructuredContent structuredContent = _postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+
+		Page<StructuredContent> structuredContentsVersionsPage =
+			structuredContentResource.getStructuredContentsVersionsPage(
+				structuredContent.getId());
+
+		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
+
+		structuredContentResource.deleteStructuredContentVersion(
+			structuredContent.getId(), 1.0D);
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentVersionHttpResponse(
+				structuredContent.getId(), 1.0D));
+	}
+
+	@Override
+	@Test
 	public void testGetStructuredContentsVersionsPage() throws Exception {
 		StructuredContent structuredContent = _postSiteStructuredContent(
 			testGroup.getGroupId(), randomStructuredContent());
@@ -92,6 +113,19 @@ public class StructuredContentResourceTest
 			structuredContentResource.getStructuredContentsVersionsPage(id);
 
 		Assert.assertEquals(2L, structuredContentsVersionsPage.getTotalCount());
+	}
+
+	@Override
+	@Test
+	public void testGetStructuredContentVersion() throws Exception {
+		StructuredContent structuredContent = _postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+
+		StructuredContent structuredContentVersion =
+			structuredContentResource.getStructuredContentVersion(
+				structuredContent.getId(), 1.0D);
+
+		assertEquals(structuredContent, structuredContentVersion);
 	}
 
 	@Override

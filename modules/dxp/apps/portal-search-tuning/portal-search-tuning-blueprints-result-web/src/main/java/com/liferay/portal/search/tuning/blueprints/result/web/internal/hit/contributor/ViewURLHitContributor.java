@@ -14,11 +14,14 @@
 
 package com.liferay.portal.search.tuning.blueprints.result.web.internal.hit.contributor;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -79,7 +82,7 @@ public class ViewURLHitContributor implements HitContributor {
 		}
 
 		hitJSONObject.put(
-			"viewURL",
+			"b_viewURL",
 			getViewURL(
 				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse),
@@ -122,6 +125,20 @@ public class ViewURLHitContributor implements HitContributor {
 
 			return StringPool.BLANK;
 		}
+	}
+
+	private Long _getAssetEntryId(String entryClassName, long entryClassPK) {
+		try {
+			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+				entryClassName, entryClassPK);
+
+			return assetEntry.getEntryId();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException.getMessage(), portalException);
+		}
+
+		return null;
 	}
 
 	private long _getClassNameId(String className) {
@@ -241,8 +258,7 @@ public class ViewURLHitContributor implements HitContributor {
 	@SuppressWarnings("deprecation")
 	private PortletURL _getViewContentURL(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, Document document,
-			JSONObject hitJSONObject)
+			LiferayPortletResponse liferayPortletResponse, Document document)
 		throws PortletModeException, WindowStateException {
 
 		PortletURL viewContentURL = liferayPortletResponse.createRenderURL(
@@ -254,7 +270,11 @@ public class ViewURLHitContributor implements HitContributor {
 		viewContentURL.setPortletMode(PortletMode.VIEW);
 		viewContentURL.setWindowState(WindowState.MAXIMIZED);
 
-		long assetEntryId = hitJSONObject.getLong("assetEntryId");
+		String entryClassName = document.getString(Field.ENTRY_CLASS_NAME);
+
+		long entryClassPK = document.getLong(Field.ENTRY_CLASS_PK);
+
+		long assetEntryId = _getAssetEntryId(entryClassName, entryClassPK);
 
 		if (assetEntryId == 0) {
 			return viewContentURL;
@@ -262,10 +282,9 @@ public class ViewURLHitContributor implements HitContributor {
 
 		viewContentURL.setParameter(
 			"assetEntryId", String.valueOf(assetEntryId));
+		viewContentURL.setParameter("entryClassName", entryClassName);
 		viewContentURL.setParameter(
-			"entryClassName", document.getString(Field.ENTRY_CLASS_NAME));
-		viewContentURL.setParameter(
-			"entryClassPK", document.getString(Field.ENTRY_CLASS_PK));
+			"entryClassPK", String.valueOf(entryClassPK));
 
 		return viewContentURL;
 	}
@@ -314,6 +333,9 @@ public class ViewURLHitContributor implements HitContributor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewURLHitContributor.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private Http _http;

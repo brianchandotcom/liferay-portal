@@ -46,6 +46,7 @@ import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translato
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintLocalService;
 import com.liferay.portal.search.tuning.blueprints.util.attributes.BlueprintsAttributesHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
@@ -158,7 +159,13 @@ public class PreviewBlueprintMVCResourceCommand extends BaseMVCResourceCommand {
 			ResponseAttributeKeys.INCLUDE_DOCUMENT, true);
 
 		blueprintsAttributesBuilder.addAttribute(
+			ResponseAttributeKeys.INCLUDE_REQUEST_STRING, true);
+
+		blueprintsAttributesBuilder.addAttribute(
 			ResponseAttributeKeys.INCLUDE_RESULT, true);
+
+		blueprintsAttributesBuilder.addAttribute(
+			ResponseAttributeKeys.RESULT_FIELDS, _getResultFields());
 
 		return blueprintsAttributesBuilder.build();
 	}
@@ -169,6 +176,22 @@ public class PreviewBlueprintMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
+	}
+
+	private List<String> _getResultFields() {
+		List<String> resultFields = new ArrayList<>();
+
+		resultFields.add("id");
+		resultFields.add("score");
+		resultFields.add("b_assetEntryId");
+		resultFields.add("b_author");
+		resultFields.add("b_created");
+		resultFields.add("b_modified");
+		resultFields.add("b_summary");
+		resultFields.add("b_title");
+		resultFields.add("b_type");
+
+		return resultFields;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

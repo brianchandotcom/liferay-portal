@@ -20,8 +20,15 @@ import React, {useState} from 'react';
 import CodeMirrorEditor from '../shared/CodeMirrorEditor';
 import PreviewModal from '../shared/PreviewModal';
 
-const RESULTS_DEFAULT_KEYS = ['type', 'description', 'date', 'userName'];
-const RESULTS_HIDE_KEYS = ['explanation'];
+const RESULTS_DEFAULT_KEYS = [
+	'b_type',
+	'b_summary',
+	'b_created',
+	'b_modified',
+	'b_author',
+	'b_assetEntryId',
+];
+const RESULTS_HIDE_KEYS = ['explanation', 'document', 'b_viewURL'];
 
 function ResultListItem({item}) {
 	const [collapse, setCollapse] = useState(true);
@@ -42,7 +49,7 @@ function ResultListItem({item}) {
 	);
 
 	return (
-		<ClayList.Item flex key={item.title}>
+		<ClayList.Item flex key={item.b_title}>
 			<ClayList.ItemField>
 				<PreviewModal
 					body={
@@ -64,8 +71,8 @@ function ResultListItem({item}) {
 
 			<ClayList.ItemField expand>
 				<ClayList.ItemTitle>
-					<ClayLink href={item.viewURL} target="_blank">
-						{item.title}
+					<ClayLink href={item.b_viewURL} target="_blank">
+						{item.b_title}
 						<ClayIcon className="shortcut-icon" symbol="shortcut" />
 					</ClayLink>
 				</ClayList.ItemTitle>

@@ -58,7 +58,7 @@ String displayStyle = viewFlatUsersDisplayContext.getDisplayStyle();
 			escapedModel="<%= true %>"
 			keyProperty="userId"
 			modelVar="user2"
-			rowIdProperty="screenName"
+			rowIdProperty="userId"
 		>
 			<liferay-portlet:renderURL varImpl="rowURL">
 				<portlet:param name="p_u_i_d" value="<%= String.valueOf(user2.getUserId()) %>" />

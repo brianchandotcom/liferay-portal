@@ -137,7 +137,8 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getTitle() {
-		return BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry);
+		return HtmlUtil.extractText(
+			BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry));
 	}
 
 	@Override

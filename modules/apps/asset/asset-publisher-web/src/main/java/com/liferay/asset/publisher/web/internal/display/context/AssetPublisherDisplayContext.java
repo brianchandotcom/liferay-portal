@@ -40,6 +40,7 @@ import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.util.AssetHelper;
@@ -220,7 +221,9 @@ public class AssetPublisherDisplayContext {
 
 		String selectionStyle = getSelectionStyle();
 
-		if (selectionStyle.equals("dynamic")) {
+		if (selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
 			_allAssetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 				_portletPreferences);
 		}
@@ -246,7 +249,9 @@ public class AssetPublisherDisplayContext {
 
 		String selectionStyle = getSelectionStyle();
 
-		if (selectionStyle.equals("dynamic")) {
+		if (selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
 			_allAssetTagNames = _assetPublisherHelper.getAssetTagNames(
 				_portletPreferences);
 		}
@@ -280,7 +285,9 @@ public class AssetPublisherDisplayContext {
 
 		String selectionStyle = getSelectionStyle();
 
-		if (selectionStyle.equals("dynamic")) {
+		if (selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
 			_allKeywords = _assetPublisherHelper.getKeywords(
 				_portletPreferences);
 		}
@@ -1184,7 +1191,8 @@ public class AssetPublisherDisplayContext {
 		}
 
 		_selectionStyle = GetterUtil.getString(
-			_portletPreferences.getValue("selectionStyle", null), "dynamic");
+			_portletPreferences.getValue("selectionStyle", null),
+			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
 
 		return _selectionStyle;
 	}
@@ -1544,7 +1552,10 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isSelectionStyleAssetList() {
-		if (Objects.equals(getSelectionStyle(), "asset-list")) {
+		if (Objects.equals(
+				getSelectionStyle(),
+				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST)) {
+
 			return true;
 		}
 
@@ -1552,7 +1563,11 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isSelectionStyleAssetListProvider() {
-		if (Objects.equals(getSelectionStyle(), "asset-list-provider")) {
+		if (Objects.equals(
+				getSelectionStyle(),
+				AssetPublisherSelectionStyleConstants.
+					TYPE_ASSET_LIST_PROVIDER)) {
+
 			return true;
 		}
 
@@ -1560,7 +1575,10 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isSelectionStyleDynamic() {
-		if (Objects.equals(getSelectionStyle(), "dynamic")) {
+		if (Objects.equals(
+				getSelectionStyle(),
+				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
 			return true;
 		}
 
@@ -1577,7 +1595,10 @@ public class AssetPublisherDisplayContext {
 			return true;
 		}
 
-		if (Objects.equals(getSelectionStyle(), "manual")) {
+		if (Objects.equals(
+				getSelectionStyle(),
+				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
+
 			return true;
 		}
 

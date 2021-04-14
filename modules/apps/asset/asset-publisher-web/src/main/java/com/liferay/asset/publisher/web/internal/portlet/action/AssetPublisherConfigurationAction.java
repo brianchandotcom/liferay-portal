@@ -27,6 +27,7 @@ import com.liferay.asset.publisher.util.AssetQueryRule;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
@@ -241,10 +242,13 @@ public class AssetPublisherConfigurationAction
 					actionRequest, "selectionStyle");
 
 				if (Validator.isNull(selectionStyle)) {
-					selectionStyle = "dynamic";
+					selectionStyle =
+						AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC;
 				}
 
-				if (selectionStyle.equals("dynamic")) {
+				if (selectionStyle.equals(
+						AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
 					updateQueryLogic(actionRequest, preferences);
 				}
 
@@ -623,7 +627,8 @@ public class AssetPublisherConfigurationAction
 
 		preferences.setValue("selectionStyle", selectionStyle);
 
-		if (selectionStyle.equals("manual") ||
+		if (selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_MANUAL) ||
 			selectionStyle.equals("view-count")) {
 
 			preferences.setValue("enableRss", Boolean.FALSE.toString());
@@ -796,7 +801,9 @@ public class AssetPublisherConfigurationAction
 		String selectionStyle = getParameter(actionRequest, "selectionStyle");
 
 		if (Validator.isNull(selectionStyle)) {
-			setPreference(actionRequest, "selectionStyle", "dynamic");
+			setPreference(
+				actionRequest, "selectionStyle",
+				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
 		}
 	}
 

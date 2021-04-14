@@ -52,6 +52,7 @@ page import="com.liferay.asset.publisher.constants.AssetPublisherPortletKeys" %>
 page import="com.liferay.asset.publisher.constants.AssetPublisherWebKeys" %><%@
 page import="com.liferay.asset.publisher.util.AssetEntryResult" %><%@
 page import="com.liferay.asset.publisher.util.AssetPublisherHelper" %><%@
+page import="com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants" %><%@
 page import="com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.internal.display.context.AssetPublisherViewContentDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.internal.display.context.ItemSelectorViewDisplayContext" %><%@

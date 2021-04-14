@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringBundler;
@@ -72,9 +73,12 @@ public class AssetRSSHelper {
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
 		String selectionStyle = portletPreferences.getValue(
-			"selectionStyle", "dynamic");
+			"selectionStyle",
+			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
 
-		if (!selectionStyle.equals("dynamic")) {
+		if (!selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
 			return new byte[0];
 		}
 

@@ -32,6 +32,7 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -322,7 +323,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		throws Exception {
 
 		String selectionStyle = GetterUtil.getString(
-			portletPreferences.getValue("selectionStyle", null), "manual");
+			portletPreferences.getValue("selectionStyle", null),
+			AssetPublisherSelectionStyleConstants.TYPE_MANUAL);
 
 		long assetListEntryId = GetterUtil.getLong(
 			portletPreferences.getValue("assetListEntryId", null));
@@ -665,9 +667,13 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			portletPreferences.getValue(
 				"anyAssetType", Boolean.TRUE.toString()));
 		String selectionStyle = portletPreferences.getValue(
-			"selectionStyle", "dynamic");
+			"selectionStyle",
+			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
 
-		if (anyAssetType || selectionStyle.equals("manual")) {
+		if (anyAssetType ||
+			selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
+
 			return availableClassNameIds;
 		}
 

@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -63,11 +64,15 @@ public abstract class BaseConfigurationFormNavigatorEntry
 				themeDisplay.getLayout(), portletDisplay.getPortletResource());
 
 		return GetterUtil.getString(
-			portletSetup.getValue("selectionStyle", null), "dynamic");
+			portletSetup.getValue("selectionStyle", null),
+			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
 	}
 
 	protected boolean isAssetListSelection() {
-		if (Objects.equals(getSelectionStyle(), "asset-list")) {
+		if (Objects.equals(
+				getSelectionStyle(),
+				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST)) {
+
 			return true;
 		}
 
@@ -75,7 +80,10 @@ public abstract class BaseConfigurationFormNavigatorEntry
 	}
 
 	protected boolean isDynamicAssetSelection() {
-		if (Objects.equals(getSelectionStyle(), "dynamic")) {
+		if (Objects.equals(
+				getSelectionStyle(),
+				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
 			return true;
 		}
 
@@ -83,7 +91,10 @@ public abstract class BaseConfigurationFormNavigatorEntry
 	}
 
 	protected boolean isManualSelection() {
-		if (Objects.equals(getSelectionStyle(), "manual")) {
+		if (Objects.equals(
+				getSelectionStyle(),
+				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
+
 			return true;
 		}
 

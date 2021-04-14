@@ -20,6 +20,7 @@ import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -129,7 +130,8 @@ public class AssetPublisherPortletLayoutListener
 				layout, portletId);
 
 		String selectionStyle = portletPreferences.getValue(
-			"selectionStyle", "dynamic");
+			"selectionStyle",
+			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
 
 		long assetListEntryId = GetterUtil.getLong(
 			portletPreferences.getValue("assetListEntryId", null));
@@ -137,21 +139,29 @@ public class AssetPublisherPortletLayoutListener
 		String infoListProviderKey = portletPreferences.getValue(
 			"infoListProviderKey", StringPool.BLANK);
 
-		if (Objects.equals(selectionStyle, "asset-list") &&
+		if (Objects.equals(
+				selectionStyle,
+				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST) &&
 			(assetListEntryId > 0)) {
 
 			_addAssetListEntryUsage(
 				_portal.getClassNameId(AssetListEntry.class),
 				String.valueOf(assetListEntryId), plid, portletId);
 		}
-		else if (Objects.equals(selectionStyle, "asset-list-provider") &&
+		else if (Objects.equals(
+					selectionStyle,
+					AssetPublisherSelectionStyleConstants.
+						TYPE_ASSET_LIST_PROVIDER) &&
 				 Validator.isNotNull(infoListProviderKey)) {
 
 			_addAssetListEntryUsage(
 				_portal.getClassNameId(InfoListProvider.class),
 				infoListProviderKey, plid, portletId);
 		}
-		else if (Objects.equals(selectionStyle, "manual")) {
+		else if (Objects.equals(
+					selectionStyle,
+					AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
+
 			_deleteLayoutClassedModelUsages(layout, portletId);
 
 			_addLayoutClassedModelUsages(plid, portletId, portletPreferences);
@@ -160,7 +170,10 @@ public class AssetPublisherPortletLayoutListener
 			_deleteAssetListEntryUsage(plid, portletId);
 		}
 
-		if (!Objects.equals(selectionStyle, "manual")) {
+		if (!Objects.equals(
+				selectionStyle,
+				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
+
 			_deleteLayoutClassedModelUsages(layout, portletId);
 		}
 	}

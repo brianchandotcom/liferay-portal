@@ -28,6 +28,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -217,9 +218,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			portletDataContext.getPlid());
 
 		String selectionStyle = portletPreferences.getValue(
-			"selectionStyle", "dynamic");
+			"selectionStyle",
+			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
 
-		if (selectionStyle.equals("dynamic")) {
+		if (selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
 			if (!_assetPublisherWebConfiguration.dynamicExportEnabled()) {
 				return;
 			}
@@ -723,7 +727,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			"selectionStyle", null);
 
 		if (Validator.isNotNull(selectionStyle) &&
-			selectionStyle.equals("manual")) {
+			selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
 
 			portletPreferences.reset("anyAssetType");
 

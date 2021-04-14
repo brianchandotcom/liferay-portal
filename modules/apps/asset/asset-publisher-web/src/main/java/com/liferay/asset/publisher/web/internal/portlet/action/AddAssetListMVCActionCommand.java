@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.handler.AssetListExceptionRequestHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -84,10 +85,16 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			"selectionStyle", "dynamic");
 
 		try {
-			if (Objects.equals(selectionStyle, "dynamic")) {
+			if (Objects.equals(
+					selectionStyle,
+					AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
 				_saveDynamicAssetList(actionRequest, title, portletPreferences);
 			}
-			else if (Objects.equals(selectionStyle, "manual")) {
+			else if (Objects.equals(
+						selectionStyle,
+						AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
+
 				_saveManualAssetList(actionRequest, title, portletPreferences);
 			}
 

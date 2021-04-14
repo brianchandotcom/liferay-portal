@@ -847,8 +847,6 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -860,14 +858,9 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editUserSiteCP(
-			siteName = "${siteName}",
-			userScreenName = "usersn");
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 
@@ -885,9 +878,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 

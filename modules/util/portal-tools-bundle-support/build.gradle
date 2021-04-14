@@ -33,7 +33,7 @@ dependencies {
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
-	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.0"
+	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.1"
 	testCompile group: "com.sun.net.httpserver", name: "http", version: "20070405"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 	testCompile group: "org.littleshoot", name: "littleproxy", version: "1.1.1"

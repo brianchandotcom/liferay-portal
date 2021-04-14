@@ -46,7 +46,7 @@ dependencies {
 	parentThemes project(":apps:frontend-theme:frontend-theme-unstyled")
 
 	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
-	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.0"
+	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.1"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 
 	testThemes project(":apps:frontend-theme:frontend-theme-admin")

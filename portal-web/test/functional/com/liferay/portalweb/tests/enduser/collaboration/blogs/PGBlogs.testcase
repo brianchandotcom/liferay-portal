@@ -54,9 +54,10 @@ definition {
 		}
 	}
 
+	@description = "This checks that a Blog cannot be published if the content field is null."
 	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntryContentNull {
+	@refactordone
+	test CannotPublishWithoutContent {
 		Blogs.addWithInvalidContent(
 			entryInvalidContent = "",
 			entryTitle = "Blogs Entry Title");
@@ -66,9 +67,10 @@ definition {
 		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that a blog entry that is scheduled is in a pre-publish status in the UI."
 	@priority = "4"
 	@refactordone
-	test AddScheduledBlogsEntry {
+	test CanScheduleEntry {
 		BlogsNavigator.openToAddEntry(
 			siteURLKey = "guest",
 			layoutName = "Blogs Page");
@@ -92,9 +94,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that a string that is over 255 characters in the title will be trimmed to 255."
 	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntryTitle256Characters {
+	@refactordone
+	test ShouldTrimTitleTo255CharactersWhenOver {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||XX");
@@ -112,7 +115,7 @@ definition {
 	@description = "This checks that characters will not be escaped in the blog entry title."
 	@priority = "4"
 	@refactordone
-	test AddBlogsEntryWithoutEscapingCharacters {
+	test CanAddTitleWithoutEscapingCharacters {
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
@@ -126,9 +129,10 @@ definition {
 			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
 	}
 
+	@description = "This checks that a Blog cannot be published if the title field is null."
 	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntryTitleNull {
+	@refactordone
+	test CannotPublishWithoutTitle {
 		Blogs.addWithInvalidTitle(
 			entryContent = "Blogs Entry Content",
 			entryInvalidTitle = "");
@@ -138,11 +142,10 @@ definition {
 		BlogsEntry.viewNoPG(entryTitle = "");
 	}
 
+	@description = "This checks that Blogs added and scoped to a page will not be seen in other pages."
 	@priority = "4"
 	@refactordone
-	// The JSON API doesn't seem to support adding a blog entry to a specific page, but this could be investigated further to optimize this setup.
-	test AddBlogsEntryWithSamePageScope {
-
+	test CannotViewBlogEntryScopedToAnotherPage {
 		task ("Set up a blog widget on another page scoped to that page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
@@ -214,7 +217,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	@uitest
-	test AddBlogsEntryWithSubtitle {
+	test CanAddEntryWithSubtitle {
 		property testray.component.names = "WYSIWYG";
 
 		Blogs.addEntry(
@@ -232,9 +235,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that a blog entry with a trackback URL can be added."
 	@priority = "4"
 	@refactorneeded
-	test AddBlogsEntryWithTrackbackURL {
+	test CanAddEntryWithTrackbackURL {
 		property custom.properties = "blogs.trackback.enabled=true";
 
 		JSONBlog.addEntry(
@@ -257,10 +261,10 @@ definition {
 			entryTitle2 = "Blogs Entry2 Title");
 	}
 
-	@description = "This is usecase 3 for LPS-69240"
+	@description = "This is a use case for LPS-69240. It checks that a blog entry with custom URL can be added and also that the automatic URL is generated properly in the UI."
 	@priority = "4"
-	@refactorneeded
-	test AddCustomURL {
+	@refactordone
+	test CanAddEntryWithCustomURL {
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
@@ -297,10 +301,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This is usecase 4 for LPS-69240"
+	@description = "This this a use case for LPS-69240. It checks that a blog entry with a URL that duplicates an existing one cannot be published."
 	@priority = "4"
-	@refactorneeded
-	test AddDuplicateCustomURL {
+	@refactordone
+	test CannotAddDuplicateCustomURL {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
@@ -334,10 +338,10 @@ definition {
 			value1 = "The URL title is already in use. Please enter a unique URL title.");
 	}
 
-	@description = "This is usecase 2 for LPS-69240"
+	@description = "This is a use case for LPS-69240. It checks that when blog entries are duplicated their custom URL's are unique."
 	@priority = "4"
-	@refactorneeded
-	test AssertDuplicateAutomaticURLNormalizes {
+	@refactordone
+	test ShouldHaveUniqueURLForDuplicateEntry {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
@@ -361,10 +365,10 @@ definition {
 			value1 = "blogs-entry-title-1");
 	}
 
-	@description = "These are usecases 6-8 for LPS-69240"
+	@description = "This is a use case for LPS-69240. It checks that the custom URL can be remembered after changing to auto."
 	@priority = "4"
 	@refactordone
-	test CanSaveCustomURLAfterSwitchingBackFromAuto {
+	test CanRememberCustomURLAfterSwitchingBackFromAuto {
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
@@ -401,9 +405,10 @@ definition {
 			value1 = "custom-url");
 	}
 
+	@description = "This checks that blog entries can be deleted through the UI."
 	@priority = "5"
-	@refactorneeded
-	test DeleteBlogsEntries {
+	@refactordone
+	test CanDeleteMultipleEntriesSequentially {
 		for (var entryCount : list "1,2") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry${entryCount} Content",
@@ -428,9 +433,10 @@ definition {
 		}
 	}
 
+	@description = "This checks that a comment can be deleted from a blog entry."
 	@priority = "4"
-	@refactorneeded
-	test DeleteBlogsEntryComment {
+	@refactordone
+	test CanDeleteComment {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -450,9 +456,11 @@ definition {
 		Comments.delete(entryComment = "Blogs Entry Comment");
 	}
 
+	@description = "This checks that the title and content fields of a blog entry can be edited."
 	@priority = "5"
-	@refactorneeded
-	test EditBlogsEntry {
+	@refactordone
+	@uitest
+	test CanEditEntry {
 		property portal.acceptance = "true";
 
 		JSONBlog.addEntry(
@@ -478,9 +486,10 @@ definition {
 			entryTitle = "Blogs Entry Title Edit");
 	}
 
+	@description = "This checks that a comment can be edited in a blog entry."
 	@priority = "5"
-	@refactorneeded
-	test EditBlogsEntryComment {
+	@refactordone
+	test CanEditComment {
 		property portal.acceptance = "true";
 
 		JSONBlog.addEntry(
@@ -509,9 +518,10 @@ definition {
 			userFullName = "Test Test (You)");
 	}
 
+	@description = "This checks that multiple comments can be edited in a blog entry."
 	@priority = "4"
-	@refactorneeded
-	test EditBlogsEntryComments {
+	@refactordone
+	test CanEditMultipleComments {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -549,10 +559,10 @@ definition {
 			entryCommentEdit = "2nd Blog Comment Edit");
 	}
 
-	@description = "This is a usecase for LPS-75241"
+	@description = "This is a usecase for LPS-75241. It checks that an embedded video can be added to a blog."
 	@priority = "5"
-	@refactorneeded
-	test EmbedVideo {
+	@refactordone
+	test CanAddEntryWithEmbeddedVideo {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
@@ -576,8 +586,8 @@ definition {
 
 	@description = "This is a usecase for LPS-83229. This is the only small image test for blogs."
 	@priority = "5"
-	@refactorneeded
-	test RemoveSmallImage {
+	@refactordone
+	test CanRemoveSmallImageFromEntry {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
@@ -621,9 +631,10 @@ definition {
 			value1 = "Select File");
 	}
 
+	@description = "This checks that a blog entry can be manually saved as a draft."
 	@priority = "5"
-	@refactorneeded
-	test SaveBlogsEntryDraft {
+	@refactordone
+	test CanManuallySaveEntryAsDraft {
 		property portal.acceptance = "true";
 
 		Blogs.addDraft(
@@ -643,9 +654,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that a blog entry can be automatically saved as a draft."
 	@priority = "5"
-	@refactorneeded
-	test SaveBlogsEntryDraftAuto {
+	@refactordone
+	test CanAutomaticallySaveEntryAsDraft {
 		Blogs.addDraftViaAutoSave(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
@@ -667,9 +679,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that a blog entry can be searched for by its content."
 	@priority = "4"
-	@refactorneeded
-	test SearchBlogsEntryContent {
+	@refactordone
+	test CanSearchForEntryByContent {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Search Page");
@@ -692,9 +705,10 @@ definition {
 		}
 	}
 
+	@description = "This checks that exact content search returns an entry when it includes the entire phrase being queried."	
 	@priority = "4"
-	@refactorneeded
-	test SearchBlogsEntryContentQuotes {
+	@refactordone
+	test CanSearchForExactStringInContent {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Search Page");
@@ -725,9 +739,10 @@ definition {
 		}
 	}
 
+	@description = "This checks that a blog entry can be searched for by its title."
 	@priority = "4"
-	@refactorneeded
-	test SearchBlogsEntryTitle {
+	@refactordone
+	test CanSearchForEntryByTitle {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Search Page");
@@ -750,9 +765,10 @@ definition {
 		}
 	}
 
+	@description = "This checks that exact title search returns an entry when it includes the entire phrase being queried."
 	@priority = "4"
-	@refactorneeded
-	test SearchBlogsEntryTitleQuotes {
+	@refactordone
+	test CanSearchForExactStringInTitle {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Search Page");
@@ -783,9 +799,10 @@ definition {
 		}
 	}
 
+	@description = "This checks that a blog comment can be subscribed to."
 	@priority = "3"
-	@refactorneeded
-	test SubscribeToBlogsEntryComment {
+	@refactordone
+	test CanSubscribeToComment {
 		property test.name.skip.portal.instance = "PGBlogs#SubscribeToBlogsEntryComment";
 
 		JSONBlog.addEntry(
@@ -802,9 +819,10 @@ definition {
 		Comments.viewSubscribedPG();
 	}
 
+	@description = "This checks that an administrator will receive a notification when a blog entry is flagged."
 	@priority = "4"
-	@refactorneeded
-	test UserFlagsEntryAndAdminViewsNotificationInMockMock {
+	@refactordone
+	test CanViewNotificationForFlaggedEntry {
 		property test.smtp.server.enabled = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -842,8 +860,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test UserSubscribeToBlogsAndViewEntryEmails {
+	@refactordone
+	test CanViewEmailNotificationsAfterAddingAndUpdatingEntry {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
 
@@ -908,8 +926,8 @@ definition {
 
 	@description = "This test covers LPS-106613. It ensures that the custom abstract field cannot be reset to empty after typing in the content field."
 	@priority = "3"
-	@refactorneeded
-	test ViewAbstractDescriptionWithEntryContent {
+	@refactordone
+	test AbstractDescriptionPersistsAfterTypingInContentField {
 		property test.name.skip.portal.instance = "PGBlogs#ViewAbstractDescriptionWithEntryContent";
 
 		BlogsNavigator.openToAddEntry(
@@ -974,9 +992,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that a guest cannot comment on an entry when permissions are removed."
 	@priority = "4"
-	@refactorneeded
-	test ViewBlogsEntryCommentAsGuest {
+	@refactordone
+	test CannotCommentAsGuestAfterRemovingPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=&quot;com.liferay.saml.addon.keep.alive.web,com.liferay.saml.api,com.liferay.saml.impl,com.liferay.saml.opensaml.integration,com.liferay.saml.persistence.api,com.liferay.saml.persistence.service,com.liferay.saml.web,saml-hook&quot;";
 
@@ -1050,9 +1069,10 @@ definition {
 		}
 	}
 
+	@description = "This checks that a user without permissions cannot view a draft entry from an admin."
 	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryDraftNoAsUser {
+	@refactordone
+	test CannotViewDraftWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Blogs.addDraft(
@@ -1084,8 +1104,8 @@ definition {
 
 	@description = "Basic test that ensures reading time displays when enabled."
 	@priority = "5"
-	@refactorneeded
-	test ViewBlogsEntryReadingTime {
+	@refactordone
+	test CanViewReadingTime {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryReadingTime";
 
@@ -1129,9 +1149,10 @@ definition {
 			siteName = "${siteName}");
 	}
 
+	@description = "This checks that the view count for a blog can be displayed once enabled."
 	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryViewCount {
+	@refactordone
+	test CanDisplayViewCountForEntry {
 		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryViewCount";
 
 		Portlet.gotoPortletOptions(
@@ -1155,9 +1176,10 @@ definition {
 			pageName = "Blogs Page");
 	}
 
+	@description = "This checks that an entry with an abstract template can be displayed."
 	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryWithAbstractDisplayTemplate {
+	@refactordone
+	test CanViewBlogWithAbstractDisplay {
 		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryWithAbstractDisplayTemplate";
 
 		task ("Add a blog entry with custom abstract") {
@@ -1199,9 +1221,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that the full content of an entry can be displayed."
 	@priority = "4"
-	@refactorneeded
-	test ViewBlogsEntryWithFullContentDisplayTemplate {
+	@refactordone
+	test CanViewBlogWithFullContentDisplay {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1226,9 +1249,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that an entry cannot be viewed by a guest once permissions are removed."
 	@priority = "4"
-	@refactorneeded
-	test ViewBlogsEntryWithGuestPermissionsRemoved {
+	@refactordone
+	test CannotViewEntryAsGuestWhenPermissionsAreRemoved {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
@@ -1254,9 +1278,10 @@ definition {
 			entryTitle = "Blogs Entry1 Title");
 	}
 
+	@description = "This checks that the title of an entry can be displayed."
 	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryWithTitleDisplayTemplate {
+	@refactordone
+	test CanViewBlogWithTitleDisplay {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1278,9 +1303,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that a cover image can be uploaded and published in a blog"
 	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryWithUploadedCoverImage {
+	@refactordone
+	test CanUploadAndPublishCoverImage {
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
 			entryContent = "Blogs Entry Content",
@@ -1301,9 +1327,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that an entry can be edited in card view"
 	@priority = "4"
-	@refactorneeded
-	test ViewEntriesUsingCardADT {
+	@refactordone
+	test CanEditEntryInCardView {
 		ApplicationDisplayTemplates.selectPortletADT(
 			portletName = "Blogs",
 			templateName = "Card");
@@ -1331,7 +1358,7 @@ definition {
 	@description = "This is a usecase for LPS-82025"
 	@priority = "5"
 	@refactorneeded
-	test ViewUpdatedFriendlyURL {
+	test CanUpdateFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
 		BlogsNavigator.openToAddEntry(

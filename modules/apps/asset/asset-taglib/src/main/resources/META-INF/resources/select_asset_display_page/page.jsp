@@ -42,6 +42,7 @@
 				displayType="secondary"
 				icon="view"
 				id='<%= liferayPortletResponse.getNamespace() + "previewDefaultDisplayPageButton" %>'
+				type="button"
 			/>
 		</div>
 	</c:if>
@@ -64,6 +65,7 @@
 					displayType="secondary"
 					icon="view"
 					id='<%= liferayPortletResponse.getNamespace() + "previewSpecificDisplayPageButton" %>'
+					type="button"
 				/>
 			</div>
 		</c:if>

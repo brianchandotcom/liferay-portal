@@ -13,13 +13,48 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 
 import TranslateActionBar from './components/TranslateActionBar';
 import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
 import TranslateHeader from './components/TranslateHeader';
+
+const reducer = (state, action) => {
+	switch (action.type) {
+		case 'changeField':
+			return {
+				...state,
+				fields: {
+					...state.fields,
+					...action.payload,
+				},
+			};
+		default:
+			return state;
+	}
+};
+
+const getInfoFields = (infoFieldSetEntries = []) => {
+	const sourceFields = [];
+	const targetFields = {};
+
+	infoFieldSetEntries.forEach(({fields}) => {
+		fields.forEach(({id, sourceContent, targetContent}) => {
+			sourceFields.push({[id]: sourceContent});
+			targetFields[id] = targetContent;
+		});
+	});
+
+	return {
+		sourceFields,
+		targetFields,
+	};
+};
 
 const Translate = ({
 	aditionalFields,
@@ -41,13 +76,50 @@ const Translate = ({
 	updateTranslationPortletURL,
 	workflowActions,
 }) => {
+	const isMounted = useIsMounted();
+
 	const [formHasChanges, setFormHasChanges] = useState(false);
 	const [workflowAction, setWorkflowAction] = useState(
 		workflowActions.PUBLISH
 	);
 
+	const {sourceFields, targetFields} = getInfoFields(infoFieldSetEntries);
+	const [state, dispatch] = useReducer(reducer, {fields: targetFields});
+
 	const handleOnSaveDraft = () => {
 		setWorkflowAction(workflowActions.SAVE_DRAFT);
+	};
+
+	const handleOnChangeField = ({content, id}) => {
+		setFormHasChanges(true);
+		dispatch({
+			payload: {[id]: content},
+			type: 'changeField',
+		});
+	};
+
+	const getAutoTranslateFields = () => {
+		fetch(getAutoTranslateURL, {
+			body: JSON.stringify({
+				fields: sourceFields,
+				sourceLanguageId,
+				targetLanguageId,
+			}),
+			method: 'POST',
+		})
+			.then((response) => response.json())
+			.then(({fields}) => {
+				if (isMounted()) {
+					fields.forEach((field) => {
+						const [id, content] = Object.entries(field)[0];
+
+						handleOnChangeField({
+							content,
+							id,
+						});
+					});
+				}
+			});
 	};
 
 	return (
@@ -97,10 +169,25 @@ const Translate = ({
 								sourceLanguageIdTitle={sourceLanguageIdTitle}
 								targetLanguageIdTitle={targetLanguageIdTitle}
 							/>
+
+							{autoTranslateButtonVisible && (
+								<p>
+									<ClayButton
+										displayType="secondary"
+										onClick={getAutoTranslateFields}
+										small
+										type="button"
+									>
+										{Liferay.Language.get('auto-translate')}
+									</ClayButton>
+								</p>
+							)}
+
 							<TranslateFieldSetEntries
 								infoFieldSetEntries={infoFieldSetEntries}
-								onChange={() => setFormHasChanges(true)}
+								onChange={handleOnChangeField}
 								portletNamespace={portletNamespace}
+								targetFieldsContent={state.fields}
 							/>
 						</>
 					)}

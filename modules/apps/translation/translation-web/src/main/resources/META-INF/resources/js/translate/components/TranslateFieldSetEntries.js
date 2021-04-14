@@ -15,7 +15,7 @@
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React, {useState} from 'react';
+import React from 'react';
 
 const noop = () => {};
 
@@ -28,44 +28,39 @@ const TranslateFieldEditor = ({
 	targetContent,
 	targetContentDir,
 	onChange = noop,
-}) => {
-	const [value, setValue] = useState(targetContent);
-
-	return (
-		<ClayLayout.Row>
-			<ClayLayout.Col md={6}>
-				<ClayForm.Group>
-					<label className="control-label">{label}</label>
-					<div
-						className="translation-editor-preview"
-						dangerouslySetInnerHTML={{__html: sourceContent}}
-						dir={sourceContentDir}
-					/>
-				</ClayForm.Group>
-			</ClayLayout.Col>
-			<ClayLayout.Col md={6}>
-				<ClayForm.Group>
-					<label className="control-label">{label}</label>
-					<ClassicEditor
-						data={targetContent}
-						editorConfig={{
-							...editorConfiguration.editorConfig,
-							contentsLangDirection: targetContentDir,
-						}}
-						name={id}
-						onChange={(data) => {
-							if (value !== data.trim()) {
-								setValue(data);
-								onChange(data);
-							}
-						}}
-					/>
-					<input defaultValue={value} name={id} type="hidden" />
-				</ClayForm.Group>
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-	);
-};
+}) => (
+	<ClayLayout.Row>
+		<ClayLayout.Col md={6}>
+			<ClayForm.Group>
+				<label className="control-label">{label}</label>
+				<div
+					className="translation-editor-preview"
+					dangerouslySetInnerHTML={{__html: sourceContent}}
+					dir={sourceContentDir}
+				/>
+			</ClayForm.Group>
+		</ClayLayout.Col>
+		<ClayLayout.Col md={6}>
+			<ClayForm.Group>
+				<label className="control-label">{label}</label>
+				<ClassicEditor
+					data={targetContent}
+					editorConfig={{
+						...editorConfiguration.editorConfig,
+						contentsLangDirection: targetContentDir,
+					}}
+					name={id}
+					onChange={(data) => {
+						if (targetContent !== data.trim()) {
+							onChange(data);
+						}
+					}}
+				/>
+				<input defaultValue={targetContent} name={id} type="hidden" />
+			</ClayForm.Group>
+		</ClayLayout.Col>
+	</ClayLayout.Row>
+);
 
 const TranslateFieldInput = ({
 	id,
@@ -76,52 +71,47 @@ const TranslateFieldInput = ({
 	targetContent,
 	targetContentDir,
 	onChange = noop,
-}) => {
-	const [value, setValue] = useState(targetContent);
-
-	return (
-		<ClayLayout.Row>
-			<ClayLayout.Col md={6}>
-				<ClayForm.Group>
-					<label className="control-label">{label}</label>
-					<ClayInput
-						component={multiline ? 'textarea' : undefined}
-						defaultValue={sourceContent}
-						dir={sourceContentDir}
-						readOnly
-						type="text"
-					/>
-				</ClayForm.Group>
-			</ClayLayout.Col>
-			<ClayLayout.Col md={6}>
-				<ClayForm.Group>
-					<label className="control-label" htmlFor={id}>
-						{label}
-					</label>
-					<ClayInput
-						component={multiline ? 'textarea' : undefined}
-						dir={targetContentDir}
-						id={id}
-						name={id}
-						onChange={(event) => {
-							const data = event.target.value;
-
-							setValue(data);
-							onChange(data);
-						}}
-						type="text"
-						value={value}
-					/>
-				</ClayForm.Group>
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-	);
-};
+}) => (
+	<ClayLayout.Row>
+		<ClayLayout.Col md={6}>
+			<ClayForm.Group>
+				<label className="control-label">{label}</label>
+				<ClayInput
+					component={multiline ? 'textarea' : undefined}
+					defaultValue={sourceContent}
+					dir={sourceContentDir}
+					readOnly
+					type="text"
+				/>
+			</ClayForm.Group>
+		</ClayLayout.Col>
+		<ClayLayout.Col md={6}>
+			<ClayForm.Group>
+				<label className="control-label" htmlFor={id}>
+					{label}
+				</label>
+				<ClayInput
+					component={multiline ? 'textarea' : undefined}
+					dir={targetContentDir}
+					id={id}
+					name={id}
+					onChange={(event) => {
+						const data = event.target.value;
+						onChange(data);
+					}}
+					type="text"
+					value={targetContent}
+				/>
+			</ClayForm.Group>
+		</ClayLayout.Col>
+	</ClayLayout.Row>
+);
 
 const TranslateFieldSetEntries = ({
 	infoFieldSetEntries,
 	onChange,
 	portletNamespace,
+	targetFieldsContent,
 }) =>
 	infoFieldSetEntries.map(({fields, legend}) => (
 		<React.Fragment key={legend}>
@@ -137,7 +127,10 @@ const TranslateFieldSetEntries = ({
 				const fieldProps = {
 					...field,
 					id: `${portletNamespace}${field.id}`,
-					onChange,
+					onChange: (content) => {
+						onChange({content, id: field.id});
+					},
+					targetContent: targetFieldsContent[field.id],
 				};
 
 				return field.html ? (

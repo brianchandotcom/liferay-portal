@@ -22,7 +22,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				if (
 					confirm(
 						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-entries'
+							'staging-are-you-sure-you-want-to-delete-the-selected-entries'
 						)
 					)
 				) {

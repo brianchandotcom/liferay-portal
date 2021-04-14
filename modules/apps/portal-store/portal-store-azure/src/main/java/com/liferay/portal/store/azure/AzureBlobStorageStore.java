@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.store.azure.configuration.AzureBlobStorageStoreConfiguration;
+import com.liferay.portal.store.azure.internal.configuration.AzureBlobStorageStoreConfiguration;
 import com.liferay.portal.store.azure.internal.FullPathsMapper;
 import com.liferay.portal.store.azure.internal.LiferayToAzurePathsMapper;
 

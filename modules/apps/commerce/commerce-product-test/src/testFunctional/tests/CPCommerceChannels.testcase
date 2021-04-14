@@ -361,12 +361,42 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6101. UseSearchBar"
-	@ignore = "true"
 	@priority = "3"
 	test UseSearchBar {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6101 UseSearchBar
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Test Channel",
+			channelType = "Site");
+
+		Click(locator1 = "Icon#BACK");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Minium",
+			channelType = "Site");
+			
+		Click(locator1 = "Icon#BACK");
+
+		CommerceNavigator.searchEntry(entryName = "Test Channel");
+
+		AssertElementPresent(
+			key_nameChannel = "Test Channel",
+			locator1 = "CommerceEntry#CHECK_FIRST_ELEMENT_SEARCHED");
+
+		CommerceNavigator.searchEntry(entryName = "1111");
+
+		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+
 	}
 
 	@description = "This is a test for COMMERCE-6266. VerifyNotificationQueue"

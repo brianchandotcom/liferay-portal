@@ -66,7 +66,7 @@ public class EditCommerceOrderMVCRenderCommand implements MVCRenderCommand {
 					commerceOrder);
 			}
 
-			return "/pending_orders/edit_order.jsp";
+			return "/pending_orders/edit_commerce_order.jsp";
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchOrderException ||

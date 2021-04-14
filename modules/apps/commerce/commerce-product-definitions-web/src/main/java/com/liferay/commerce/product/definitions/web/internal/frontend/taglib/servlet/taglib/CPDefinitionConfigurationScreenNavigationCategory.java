@@ -143,7 +143,7 @@ public class CPDefinitionConfigurationScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/edit_definition_configuration.jsp");
+			"/edit_cp_definition_configuration.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -126,7 +126,7 @@ public class CPDefinitionVisibilityScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/edit_definition_visibility.jsp");
+			"/edit_cp_definition_visibility.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

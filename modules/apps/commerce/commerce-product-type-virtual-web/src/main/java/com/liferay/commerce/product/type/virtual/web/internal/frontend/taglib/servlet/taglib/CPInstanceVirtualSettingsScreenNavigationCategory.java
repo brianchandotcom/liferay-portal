@@ -126,7 +126,7 @@ public class CPInstanceVirtualSettingsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/edit_instance_virtual_setting.jsp");
+			"/edit_cp_instance_virtual_setting.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

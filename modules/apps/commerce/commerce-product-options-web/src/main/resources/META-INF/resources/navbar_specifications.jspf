@@ -15,7 +15,7 @@
 --%>
 
 <liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_SPECIFICATION_OPTIONS %>" varImpl="viewProductSpecificationOptionsURL">
-	<portlet:param name="mvcPath" value="/view_specification_options.jsp" />
+	<portlet:param name="mvcPath" value="/view_cp_specification_options.jsp" />
 	<portlet:param name="specificationNavbarItemKey" value="specification-labels" />
 </liferay-portlet:renderURL>
 

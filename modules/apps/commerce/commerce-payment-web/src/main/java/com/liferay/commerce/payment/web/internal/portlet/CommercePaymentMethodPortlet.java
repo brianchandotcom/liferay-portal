@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true",
 		"javax.portlet.display-name=Payment Methods",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/edit_payment_method.jsp",
+		"javax.portlet.init-param.view-template=/edit_commerce_payment_method.jsp",
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PAYMENT_METHODS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"

@@ -67,7 +67,7 @@ public class ViewCommerceOrderDetailsMVCRenderCommand
 					commerceOrder);
 			}
 
-			return "/placed_orders/view_order_details.jsp";
+			return "/placed_orders/view_commerce_order_details.jsp";
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchOrderException ||

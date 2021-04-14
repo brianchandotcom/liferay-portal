@@ -113,7 +113,7 @@ public class CPDefinitionCPTypeVirtualScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/edit_definition_virtual_setting.jsp");
+			"/edit_cp_definition_virtual_setting.jsp");
 	}
 
 	@Reference

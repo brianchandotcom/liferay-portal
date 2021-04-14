@@ -30,13 +30,13 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Click(
-			navItem = "Configuration",
-			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS");
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+			navItem = "Configuration");
 
 		Select(
-				key_fieldLabel = "Environment",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${key_value}");
+			key_fieldLabel = "Environment",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${key_value}");
 
 		Button.clickSave();
 

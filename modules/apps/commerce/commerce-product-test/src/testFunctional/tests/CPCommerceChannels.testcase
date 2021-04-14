@@ -233,12 +233,12 @@ definition {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
-            category = "Store Management",
-            portlet = "Channels");
+			category = "Store Management",
+			portlet = "Channels");
 
-        CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-        CommerceEntry.clickTableEntryEditButton(
+		CommerceEntry.clickTableEntryEditButton(
 			entryName = "Mercanet",
 			table = "Payment Methods");
 
@@ -256,7 +256,7 @@ definition {
 
 		Button.clickSave();
 
-        Alert.viewSuccessMessage();
+		Alert.viewSuccessMessage();
 
 		Click(locator1 = "Icon#CLOSE");
 
@@ -267,7 +267,7 @@ definition {
 			paymentMethod = "Mercanet");
 
 		Refresh();
-		
+
 		CommerceChannels.assertMercanetConfigurationEnvironment(
 			key_value = "Simulation",
 			paymentMethod = "Mercanet");

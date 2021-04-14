@@ -367,6 +367,36 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		jspWriter.write("layoutReportsPanelId\">");
 		jspWriter.write(
 			"<div class=\"sidebar sidebar-light sidenav-menu sidebar-sm\">");
+		jspWriter.write("<div class=\"sidebar-header\">");
+		jspWriter.write("<div class=\"autofit-row autofit-row-center\">");
+
+		jspWriter.write("<div class=\"autofit-col autofit-col-expand\">");
+		jspWriter.write("<h1 class=\"sr-only\">");
+		jspWriter.write(
+			_html.escape(_language.get(resourceBundle, "page-audit")));
+		jspWriter.write("</h1><span>");
+		jspWriter.write(
+			_html.escape(_language.get(resourceBundle, "page-audit")));
+		jspWriter.write("</span></div>");
+
+		jspWriter.write("<div class=\"autofit-col\">");
+
+		IconTag iconTag = new IconTag();
+
+		iconTag.setCssClass("icon-monospaced sidenav-close");
+		iconTag.setImage("times");
+		iconTag.setMarkupView("lexicon");
+		iconTag.setUrl("javascript:;");
+
+		jspWriter.write(iconTag.doTagAsString(pageContext));
+
+		jspWriter.write("</div></div></div>");
+
+		jspWriter.write("<div class=\"p-3 sidebar-body\">");
+
+		jspWriter.write(
+			"<span aria-hidden=\"true\" class=\"loading-animation " +
+				"loading-animation-sm\"></span>");
 
 		try {
 			_reactRenderer.renderReact(
@@ -387,7 +417,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			throw new IOException(exception);
 		}
 
-		jspWriter.write("</div></div>");
+		jspWriter.write("</div></div></div>");
 	}
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(

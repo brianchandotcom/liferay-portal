@@ -1558,7 +1558,9 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${editableId}");
 
-		var content = TestCase.getFileContent(fileName = "${fileName}");
+		if (isSet(fileName)) {
+			var content = TestCase.getFileContent(fileName = "${fileName}");
+		}
 
 		Type.typeAceEditorNoError(
 			locator1 = "Fragment#EDITABLE_HTML_FRAGMENT_FIELD",

@@ -47,7 +47,7 @@ const TranslateFieldEditor = ({
 				<ClayForm.Group>
 					<label className="control-label">{label}</label>
 					<ClassicEditor
-						contents={targetContent}
+						data={targetContent}
 						editorConfig={{
 							...editorConfiguration.editorConfig,
 							contentsLangDirection: targetContentDir,

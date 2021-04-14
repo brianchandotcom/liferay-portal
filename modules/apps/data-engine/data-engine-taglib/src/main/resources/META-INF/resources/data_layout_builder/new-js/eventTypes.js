@@ -16,6 +16,13 @@ const SIDEBAR = {
 	FIELD: {BLUR: 'sidebar_field_blur'},
 };
 
+const RULE = {
+	ADD: 'rule_add',
+	CHANGE: 'rule_change',
+	DELETE: 'rule_delete',
+};
+
 export const EVENT_TYPES = {
+	RULE,
 	SIDEBAR,
 };

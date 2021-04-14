@@ -399,12 +399,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#BLOGS_ENTRY_URL",
 			value1 = "custom-url");
-
-		Type(
-			locator1 = "TextInput#BLOGS_ENTRY_URL",
-			value1 = "custom-url-2");
-
-		PortletEntry.publish();
 	}
 
 	@description = "This is usecase 5 for LPS-69240"

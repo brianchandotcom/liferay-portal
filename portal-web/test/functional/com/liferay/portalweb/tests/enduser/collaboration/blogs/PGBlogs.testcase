@@ -405,9 +405,7 @@ definition {
 	@refactorneeded
 	test DeleteBlogsEntries {
 		for (var entryCount : list "1,2") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			Blogs.addEntry(
+			JSONBlog.addEntry(
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title");
 		}

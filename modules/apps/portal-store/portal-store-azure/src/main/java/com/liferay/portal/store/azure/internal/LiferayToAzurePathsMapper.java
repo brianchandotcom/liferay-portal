@@ -8,6 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+
 package com.liferay.portal.store.azure.internal;
 
 import com.liferay.petra.string.StringPool;
@@ -30,6 +31,7 @@ public interface LiferayToAzurePathsMapper {
 
 	// Looks like all Liferay stores assume the delimiter is always a forward slash,
 	// but just in case, make this a constant.
+
 	String PATH_DELIMITER = StringPool.SLASH;
 
 	/**
@@ -40,7 +42,9 @@ public interface LiferayToAzurePathsMapper {
 	 * @param versionLabel
 	 * @return
 	 */
-	String toAzureBlobName(long companyId, long repositoryId, String fileName, String versionLabel);
+	String toAzureBlobName(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel);
 
 	/**
 	 * Translates a Liferay dirName into a Blobs' prefix in Azure Storage.
@@ -49,7 +53,8 @@ public interface LiferayToAzurePathsMapper {
 	 * @param dirName
 	 * @return
 	 */
-	String toAzureBlobsPrefix(long companyId, long repositoryId, String dirName);
+	String toAzureBlobsPrefix(
+		long companyId, long repositoryId, String dirName);
 
 	/**
 	 * Translates the Azure Blob path into a Liferay fileName.
@@ -58,7 +63,8 @@ public interface LiferayToAzurePathsMapper {
 	 * @param azureBlobName
 	 * @return
 	 */
-	String toLiferayFileName(long companyId, long repositoryId, String azureBlobName);
+	String toLiferayFileName(
+		long companyId, long repositoryId, String azureBlobName);
 
 	/**
 	 * Translates the Azure Blobs' prefix into a Liferay dirName.
@@ -67,6 +73,7 @@ public interface LiferayToAzurePathsMapper {
 	 * @param azureBlobsPrefix
 	 * @return
 	 */
-	String toLiferayDirName(long companyId, long repositoryId, String azureBlobsPrefix);
+	String toLiferayDirName(
+		long companyId, long repositoryId, String azureBlobsPrefix);
 
 }

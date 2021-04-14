@@ -8,16 +8,18 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+
 package com.liferay.portal.store.azure.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Objects;
 import java.util.Optional;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * This mapper uses the same mapping as the impl in the <code>S3Store</code>:
@@ -32,7 +34,7 @@ import java.util.Optional;
  * <pre>
  *		${companyId}/${repositoryId}/{$dirName}
  * </pre>
- * 
+ *
  * @author Josef Sustacek
  */
 @Component(
@@ -44,18 +46,22 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 
 	public static final String IMPL_TYPE = "full-path";
 
+	public static final Log _log = LogFactoryUtil.getLog(FullPathsMapper.class);
+
 	@Override
+
 	// Transform
 	// 		${fileName} + ${versionLabel}
 	// to
 	// 		${companyId}/${repositoryId}/${fileName}/${versionLabel}
+
 	public String toAzureBlobName(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
 		Objects.requireNonNull(fileName);
 		Objects.requireNonNull(versionLabel);
-		
+
 		String blobName = toFullAzurePath(
 			companyId, repositoryId, fileName, Optional.of(versionLabel));
 
@@ -70,19 +76,23 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 	}
 
 	@Override
+
 	// Transform
 	// 		${dirName}
 	// to
 	// 		${companyId}/${repositoryId}/${dirName}/
+
 	public String toAzureBlobsPrefix(
 		long companyId, long repositoryId, String dirName) {
 
 		Objects.requireNonNull(dirName);
 
-		String dirPath = toFullAzurePath(companyId, repositoryId, dirName, Optional.empty());
+		String dirPath = toFullAzurePath(
+			companyId, repositoryId, dirName, Optional.empty());
 
 		// append the path delimiter, to make sure we don't match a file which has
 		// a name being a prefix of some other file, e.g:
+
 		//	some-dir/
 		//		- file-1.pdf/1.0
 		//		- file-1.pdf-other.pdf/2.0
@@ -102,60 +112,12 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 	}
 
 	@Override
-	// Transform
-	// 		${companyId}/${repositoryId}/${fileName}/${versionLabel}
-	// to
-	// 		${fileName}
-	public String toLiferayFileName(
-		long companyId, long repositoryId, String azureBlobName) {
 
-		Objects.requireNonNull(azureBlobName);
-
-		String rootPrefix =
-			toFullAzurePath(companyId, repositoryId, StringPool.BLANK, Optional.empty())
-			+ PATH_DELIMITER;
-
-		if (!azureBlobName.startsWith(rootPrefix)) {
-			throw new IllegalArgumentException(
-				String.format(
-					"It looks like blob '%s' does not belong to company: %s " +
-						"and repository: %s (does not begin with '%s')",
-					azureBlobName, companyId, repositoryId, rootPrefix));
-		}
-
-		// drop the root part "${companyId}/${repositoryId}/"
-		String fileNamePathWithVersion = azureBlobName.substring(rootPrefix.length());
-
-		// TODO there might be invalid files, directly in the "root", ignore them?
-		if (fileNamePathWithVersion.isEmpty() || !fileNamePathWithVersion.contains(PATH_DELIMITER)) {
-			throw new IllegalArgumentException(
-				String.format(
-					"The blob '%s' does not conform to the pattern ${companyId}/${repositoryId}/${fileName}/${versionLabel} -- " +
-						"missing the '/${versionLabel}' part. Delete the blob in Azure to " +
-						"fix this (there should be no blobs directly under ${companyId}/${repositoryId}, " +
-						"only \"sub-directories\").",
-					azureBlobName));
-		}
-
-		// drop the version part ("/{versionLabel}")
-		String fileName = fileNamePathWithVersion.substring(
-			0, fileNamePathWithVersion.lastIndexOf(PATH_DELIMITER));
-
-		if (_log.isTraceEnabled()) {
-			_log.trace(
-				String.format(
-					"Converted blob name to Liferay fileName: %s -> %s",
-					azureBlobName, fileName));
-		}
-
-		return fileName;
-	}
-
-	@Override
 	// Transform
 	// 		${companyId}/${repositoryId}/${dirName}/
 	// to
 	// 		${dirName}
+
 	public String toLiferayDirName(
 		long companyId, long repositoryId, String azureBlobsPrefix) {
 
@@ -167,21 +129,26 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		}
 
 		String rootBlobPathWithDelimiter =
-			toFullAzurePath(companyId, repositoryId, StringPool.BLANK, Optional.empty())
-			+ PATH_DELIMITER;
+			toFullAzurePath(
+				companyId, repositoryId, StringPool.BLANK, Optional.empty()) +
+					PATH_DELIMITER;
 
 		if (!azureBlobsPrefix.startsWith(rootBlobPathWithDelimiter)) {
 			throw new IllegalArgumentException(
 				String.format(
 					"It looks like blobs prefix '%s' does not belong to company: %s " +
 						"and repository: %s (the blobs prefix does not begin with '%s')",
-					azureBlobsPrefix, companyId, repositoryId, rootBlobPathWithDelimiter));
+					azureBlobsPrefix, companyId, repositoryId,
+					rootBlobPathWithDelimiter));
 		}
 
 		// drop the root part
-		String dirName = azureBlobsPrefix.substring(rootBlobPathWithDelimiter.length());
+
+		String dirName = azureBlobsPrefix.substring(
+			rootBlobPathWithDelimiter.length());
 
 		// drop the delimiter at the end, if any
+
 		if (!dirName.isEmpty() && dirName.endsWith(PATH_DELIMITER)) {
 			dirName = dirName.substring(0, dirName.length() - 1);
 		}
@@ -213,7 +180,8 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 	 * @return
 	 */
 	String toFullAzurePath(
-		long companyId, long repositoryId, String liferayPath, Optional<String> versionLabel) {
+		long companyId, long repositoryId, String liferayPath,
+		Optional<String> versionLabel) {
 
 		Objects.requireNonNull(liferayPath);
 		Objects.requireNonNull(versionLabel);
@@ -221,27 +189,42 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		// TODO normalize the 'liferayPath' somehow more, like escape special characters etc.?
 
 		String pathNoDelimitersBegin =
-			liferayPath.startsWith(PATH_DELIMITER) ? liferayPath.substring(1) : liferayPath;
+			liferayPath.startsWith(PATH_DELIMITER) ? liferayPath.substring(1) :
+				liferayPath;
 
-		String pathNoDelimitersBeginOrEnd = pathNoDelimitersBegin.endsWith(PATH_DELIMITER)
-			? pathNoDelimitersBegin.substring(0, pathNoDelimitersBegin.length() - 1) :
-			pathNoDelimitersBegin;
+		String pathNoDelimitersBeginOrEnd =
+			pathNoDelimitersBegin.endsWith(PATH_DELIMITER) ?
+				pathNoDelimitersBegin.substring(
+					0, pathNoDelimitersBegin.length() - 1) :
+						pathNoDelimitersBegin;
 
-		StringBundler fullPath = new StringBundler(7)
-			.append(companyId)
-			.append(PATH_DELIMITER)
-			.append(repositoryId);
+		StringBundler fullPath = new StringBundler(
+			7
+		).append(
+			companyId
+		).append(
+			PATH_DELIMITER
+		).append(
+			repositoryId
+		);
 
 		if (!pathNoDelimitersBeginOrEnd.isEmpty()) {
-			fullPath
-				.append(PATH_DELIMITER)
-				.append(pathNoDelimitersBeginOrEnd);
+			fullPath.append(
+				PATH_DELIMITER
+			).append(
+				pathNoDelimitersBeginOrEnd
+			);
 		}
 
-		if (versionLabel.isPresent() && !versionLabel.get().isEmpty()) {
-			fullPath
-				.append(PATH_DELIMITER)
-				.append(versionLabel.get());
+		if (versionLabel.isPresent() &&
+			!versionLabel.get(
+			).isEmpty()) {
+
+			fullPath.append(
+				PATH_DELIMITER
+			).append(
+				versionLabel.get()
+			);
 		}
 
 		String fullPathString = fullPath.toString();
@@ -256,5 +239,63 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		return fullPathString;
 	}
 
-	public static final Log _log = LogFactoryUtil.getLog(FullPathsMapper.class);
+	@Override
+
+	// Transform
+	// 		${companyId}/${repositoryId}/${fileName}/${versionLabel}
+	// to
+	// 		${fileName}
+
+	public String toLiferayFileName(
+		long companyId, long repositoryId, String azureBlobName) {
+
+		Objects.requireNonNull(azureBlobName);
+
+		String rootPrefix =
+			toFullAzurePath(
+				companyId, repositoryId, StringPool.BLANK, Optional.empty()) +
+					PATH_DELIMITER;
+
+		if (!azureBlobName.startsWith(rootPrefix)) {
+			throw new IllegalArgumentException(
+				String.format(
+					"It looks like blob '%s' does not belong to company: %s " +
+						"and repository: %s (does not begin with '%s')",
+					azureBlobName, companyId, repositoryId, rootPrefix));
+		}
+
+		// drop the root part "${companyId}/${repositoryId}/"
+
+		String fileNamePathWithVersion = azureBlobName.substring(
+			rootPrefix.length());
+
+		// TODO there might be invalid files, directly in the "root", ignore them?
+
+		if (fileNamePathWithVersion.isEmpty() ||
+			!fileNamePathWithVersion.contains(PATH_DELIMITER)) {
+
+			throw new IllegalArgumentException(
+				String.format(
+					"The blob '%s' does not conform to the pattern ${companyId}/${repositoryId}/${fileName}/${versionLabel} -- " +
+						"missing the '/${versionLabel}' part. Delete the blob in Azure to " +
+							"fix this (there should be no blobs directly under ${companyId}/${repositoryId}, " +
+								"only \"sub-directories\").",
+					azureBlobName));
+		}
+
+		// drop the version part ("/{versionLabel}")
+
+		String fileName = fileNamePathWithVersion.substring(
+			0, fileNamePathWithVersion.lastIndexOf(PATH_DELIMITER));
+
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				String.format(
+					"Converted blob name to Liferay fileName: %s -> %s",
+					azureBlobName, fileName));
+		}
+
+		return fileName;
+	}
+
 }

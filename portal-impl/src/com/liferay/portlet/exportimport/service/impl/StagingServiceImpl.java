@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -114,7 +113,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Group liveGroup = GroupLocalServiceUtil.getGroup(groupId);
+		Group liveGroup = groupLocalService.getGroup(groupId);
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);

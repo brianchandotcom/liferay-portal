@@ -57,8 +57,8 @@ export default function Results({
 							<ClaySticker displayType="secondary" size="md">
 								<ClayIcon
 									symbol={
-										item.type && ICON_MAP[item.type]
-											? ICON_MAP[item.type]
+										item.b_type && ICON_MAP[item.b_type]
+											? ICON_MAP[item.b_type]
 											: ICON_MAP.DEFAULT
 									}
 								/>
@@ -66,14 +66,14 @@ export default function Results({
 						</ClayList.ItemField>
 						<ClayList.ItemField expand>
 							<ClayList.ItemTitle>
-								{item.viewURL ? (
+								{item.b_viewURL ? (
 									<a
 										dangerouslySetInnerHTML={{
 											__html: item.title_highlight
 												? item.title_highlight
-												: item.title,
+												: item.b_title,
 										}}
-										href={item.viewURL}
+										href={item.b_viewURL}
 										rel="noopener noreferrer"
 										target="_blank"
 									/>
@@ -82,42 +82,44 @@ export default function Results({
 										dangerouslySetInnerHTML={{
 											__html: item.title_highlight
 												? item.title_highlight
-												: item.title,
+												: item.b_title,
 										}}
 									/>
 								)}
 							</ClayList.ItemTitle>
 
-							{(item.type || item.author || item.created) && (
+							{(item.b_type ||
+								item.b_author ||
+								item.b_created) && (
 								<ClayList.ItemText
 									className="result-subtext"
 									subtext
 								>
-									{item.type && (
+									{item.b_type && (
 										<span>
-											<strong>{item.type}</strong>
+											<strong>{item.b_type}</strong>
 										</span>
 									)}
 
-									{item.author && (
+									{item.b_author && (
 										<span>
 											{Liferay.Language.get('by')}{' '}
-											{item.author}
+											{item.b_author}
 										</span>
 									)}
 
-									{item.created && (
+									{item.b_created && (
 										<span>
 											{Liferay.Language.get('on')}{' '}
-											{item.created}
+											{item.b_created}
 										</span>
 									)}
 								</ClayList.ItemText>
 							)}
 
-							{item.summary && (
+							{item.b_summary && (
 								<ClayList.ItemText>
-									{item.summary}
+									{item.b_summary}
 								</ClayList.ItemText>
 							)}
 						</ClayList.ItemField>

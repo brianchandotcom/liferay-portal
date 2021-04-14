@@ -404,7 +404,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteBlogsEntries {
-		for (var entryCount : list "1,2,3") {
+		for (var entryCount : list "1,2") {
 			Navigator.gotoPage(pageName = "Blogs Page");
 
 			Blogs.addEntry(
@@ -412,7 +412,7 @@ definition {
 				entryTitle = "Blogs Entry${entryCount} Title");
 		}
 
-		for (var entryCount : list "3,2,1") {
+		for (var entryCount : list "2,1") {
 			Navigator.gotoPage(pageName = "Blogs Page");
 
 			BlogsEntry.moveToRecycleBinPG(
@@ -423,7 +423,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		for (var entryCount : list "1,2,3") {
+		for (var entryCount : list "1,2") {
 			BlogsEntry.viewNoPG(
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title");

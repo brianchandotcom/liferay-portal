@@ -3,7 +3,7 @@ Bundle-SymbolicName: ${package}.service
 Bundle-Version: ${version}
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
-#if ((${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}) && (${dependencyInjector} == "ds"))
+#if ((${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")} || ${liferayVersion.startsWith("7.4")}) && (${dependencyInjector} == "ds"))
 -dsannotations-options: inherit
 #end
 #if (${buildType} != "gradle")

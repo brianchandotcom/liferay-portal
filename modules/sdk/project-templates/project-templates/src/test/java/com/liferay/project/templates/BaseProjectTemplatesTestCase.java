@@ -850,11 +850,9 @@ public interface BaseProjectTemplatesTestCase {
 				sb.append("\n\t\tmaven {\n\t\t\turl file(\"" + m2tmpPath);
 				sb.append("\").toURI()\n\t\t}\n\t\tmaven {\n\t\t\t");
 				sb.append("credentials {\n\t\t\t\tusername \"");
-				sb.append(
-					System.getProperty("build.repository.private.username"));
+				sb.append(System.getProperty("repository.private.username"));
 				sb.append("\"\n\t\t\t\tpassword \"");
-				sb.append(
-					System.getProperty("build.repository.private.password"));
+				sb.append(System.getProperty("repository.private.password"));
 				sb.append("\"\n\t\t\t}\n\t\t\turl \"http://repository");
 				sb.append(".liferay.com/nexus/content/repositories/xanadu\"");
 				sb.append("\n\t\t}\n\t}\n\tconfigurations.all {\n\t\t");

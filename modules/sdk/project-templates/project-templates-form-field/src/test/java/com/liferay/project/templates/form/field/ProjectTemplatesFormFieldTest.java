@@ -422,20 +422,6 @@ public class ProjectTemplatesFormFieldTest
 		completeArgs.add("archetype:generate");
 		completeArgs.add("--batch-mode");
 
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			completeArgs.add("--settings");
-
-			String content = FileTestUtil.read(
-				BaseProjectTemplatesTestCase.class.getClassLoader(),
-				"com/liferay/project/templates/dependencies/settings.xml");
-
-			Path tempPath = Files.createTempFile("settings", "xml");
-
-			Files.write(tempPath, content.getBytes());
-
-			completeArgs.add(tempPath.toString());
-		}
-
 		String archetypeArtifactId =
 			"com.liferay.project.templates." + template.replace('-', '.');
 

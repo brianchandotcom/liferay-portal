@@ -1164,16 +1164,18 @@ public class UIItemsBuilder {
 	}
 
 	private String _getEditImageOnClickJavaScript() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(getNamespace());
-		sb.append("editWithImageEditor('");
+		sb.append("editWithImageEditor({fileEntryId: '");
+		sb.append(_fileEntry.getFileEntryId());
+		sb.append("', imageURL: '");
 		sb.append(
 			HtmlUtil.escapeJS(
 				_dlURLHelper.getPreviewURL(
 					_fileEntry, _fileVersion, _themeDisplay,
 					StringPool.BLANK)));
-		sb.append("');");
+		sb.append("'});");
 
 		return sb.toString();
 	}

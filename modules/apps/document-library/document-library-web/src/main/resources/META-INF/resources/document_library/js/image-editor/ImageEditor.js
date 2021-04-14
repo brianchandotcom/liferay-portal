@@ -51,7 +51,7 @@ const zoomSteps = [12.5, 25, 50, 100, 150, 200];
 
 const noop = () => {};
 
-export default ({imageSrc, onCancel = noop, onChange = noop}) => {
+export default ({imageSrc, onCancel = noop, onSave = noop}) => {
 	const ref = useRef();
 
 	const [currentZoom, setCurrentZoom] = useState(100);
@@ -72,7 +72,7 @@ export default ({imageSrc, onCancel = noop, onChange = noop}) => {
 	};
 
 	const handleSave = () => {
-		onChange(ref.current?.cropper?.getCroppedCanvas());
+		onSave(ref.current?.cropper?.getCroppedCanvas());
 	};
 
 	const handleZoomIn = () => {

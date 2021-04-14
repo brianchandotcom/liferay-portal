@@ -368,9 +368,22 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 			/>
 		</div>
 
+		<portlet:actionURL name="/document_library/edit_file_entry_image_editor" var="editImageURL" />
+
+		<%
+		Map<String, Object> editImageWithImageEditorProps = HashMapBuilder.<String, Object>put(
+			"editImageURL", editImageURL
+		).build();
+		%>
+
 		<div>
 			<react:component
 				module="document_library/js/image-editor/EditImageWithImageEditor"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"props", editImageWithImageEditorProps
+					).build()
+				%>'
 			/>
 		</div>
 

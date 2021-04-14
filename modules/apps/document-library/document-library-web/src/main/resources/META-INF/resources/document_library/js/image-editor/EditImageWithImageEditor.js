@@ -13,11 +13,15 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useEffect, useState} from 'react';
+import {postForm} from 'frontend-js-web';
+import React, {useEffect, useRef, useState} from 'react';
 
 import ImageEditor from './ImageEditor';
 
-export default ({portletNamespace}) => {
+export default ({editImageURL, portletNamespace}) => {
+	const fileEntryIdRef = useRef();
+	const formRef = useRef();
+
 	const [imageURL, setImageURL] = useState();
 	const [showModal, setShowModal] = useState();
 
@@ -25,18 +29,35 @@ export default ({portletNamespace}) => {
 		setShowModal(false);
 	};
 
-	const handleSaveButtonClick = () => {
-
-		// Here we send the image wherever we need to send it
-
+	const handleSaveButtonClick = (canvas) => {
+		canvas.toBlob((blob) => {
+			postForm(
+				formRef.current,
+				{
+					data: {
+						fileEntryId: fileEntryIdRef.current,
+						imageEditorFile: new File(
+							[blob],
+							fileEntryIdRef.current
+						),
+					},
+				},
+				editImageURL
+			);
+		});
 	};
 
-	const {observer, onClose} = useModal({
+	const {observer} = useModal({
 		onClose: handleOnClose,
 	});
 
 	useEffect(() => {
-		window[`${portletNamespace}editWithImageEditor`] = (imageURL) => {
+		window[`${portletNamespace}editWithImageEditor`] = ({
+			fileEntryId,
+			imageURL,
+		}) => {
+			fileEntryIdRef.current = fileEntryId;
+
 			setImageURL(imageURL);
 			setShowModal(true);
 		};
@@ -44,6 +65,11 @@ export default ({portletNamespace}) => {
 
 	return (
 		<>
+			<form ref={formRef}>
+				<input name="fileEntryId" type="hidden" />
+				<input name="imageEditorFile" type="hidden" />
+			</form>
+
 			{showModal && (
 				<ClayModal
 					className="image-editor-modal"

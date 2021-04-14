@@ -1,12 +1,5 @@
 definition {
 
-	macro assertEntry {
-		AssertElementPresent(
-			key_entryName = "${entryName}",
-			locator1 = "CommerceNavigation#ENTRY_NAME",
-			value1 = "${entryName}");
-	}
-
 	macro gotoCommercePortletNavItem {
 		AssertClick(
 			key_navItem = "${navItem}",

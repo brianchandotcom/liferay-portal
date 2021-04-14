@@ -1763,6 +1763,10 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "${dmDocumentTitle}");
 
+		if (isSet(dmDocumentDescriptionEdit)) {
+			PortletEntry.inputDescription(description = "${dmDocumentDescriptionEdit}");
+		}
+
 		AssertClick(
 			locator1 = "Button#SAVE_AND_CHECKIN",
 			value1 = "Save and Check In");
@@ -1781,7 +1785,9 @@ definition {
 					value1 = "${changeLog}");
 			}
 
-			PortletEntry.save();
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
 		}
 	}
 

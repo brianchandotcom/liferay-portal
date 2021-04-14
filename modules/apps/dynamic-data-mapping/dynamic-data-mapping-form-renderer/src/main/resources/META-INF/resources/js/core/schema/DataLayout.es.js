@@ -53,7 +53,12 @@ export class DataLayoutSchema extends Schema {
 	}
 
 	get dataRules() {
-		return this[SYMBOL_RAW].rules;
+		return this[SYMBOL_RAW].rules.map((rule) => ({
+			...rule,
+			name: {
+				en_US: rule.name,
+			},
+		}));
 	}
 
 	get dataLayoutFields() {

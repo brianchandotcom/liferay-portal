@@ -315,6 +315,8 @@ definition {
 
 		Portlet.addPG(portletName = "Documents and Media");
 
+		Navigator.gotoPage(pageName = "Test Page");
+
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "1",
 			columnNumberTo = "2",

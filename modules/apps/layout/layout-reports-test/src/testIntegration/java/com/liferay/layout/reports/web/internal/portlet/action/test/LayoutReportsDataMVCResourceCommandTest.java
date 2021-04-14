@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.reports.web.internal.display.context.test;
+package com.liferay.layout.reports.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -26,20 +26,20 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -51,20 +51,15 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portlet.test.MockLiferayPortletContext;
-import com.liferay.registry.ServiceRegistration;
+
+import java.io.ByteArrayOutputStream;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import javax.portlet.Portlet;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -76,12 +71,14 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Cristina González
+ * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class LayoutReportsDisplayContextTest {
+public class LayoutReportsDataMVCResourceCommandTest {
 
 	@ClassRule
 	@Rule
@@ -118,41 +115,41 @@ public class LayoutReportsDisplayContextTest {
 				Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
 				LocaleUtil.SPAIN);
 
-			Map<String, Object> data = ReflectionTestUtil.invoke(
-				_getLayoutReportsDisplayContext(layout), "getData",
-				new Class<?>[0]);
+			JSONObject jsonObject = _serveResource(layout);
 
-			Map<String, Object> context = (Map<String, Object>)data.get(
-				"context");
-
-			String assetsPath = (String)context.get("assetsPath");
+			String assetsPath = jsonObject.getString("assetsPath");
 
 			Assert.assertTrue(assetsPath.contains("assets"));
 
-			List<Map<String, Object>> canonicalURLs =
-				(List<Map<String, Object>>)context.get("canonicalURLs");
+			JSONArray canonicalURLsJSONArray = jsonObject.getJSONArray(
+				"canonicalURLs");
 
 			Assert.assertEquals(
-				String.valueOf(canonicalURLs), 2, canonicalURLs.size());
+				String.valueOf(canonicalURLsJSONArray), 2,
+				canonicalURLsJSONArray.length());
 
-			Map<String, Object> canonicalURL1 = canonicalURLs.get(0);
+			JSONObject canonicalURLJSONObject1 =
+				canonicalURLsJSONArray.getJSONObject(0);
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				canonicalURL1.get("languageId"));
+				canonicalURLJSONObject1.getString("languageId"));
 			Assert.assertEquals(
-				layout.getName(LocaleUtil.SPAIN), canonicalURL1.get("title"));
+				layout.getName(LocaleUtil.SPAIN),
+				canonicalURLJSONObject1.getString("title"));
 
-			Map<String, Object> canonicalURL2 = canonicalURLs.get(1);
+			JSONObject canonicalURLJSONObject2 =
+				canonicalURLsJSONArray.getJSONObject(1);
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
-				canonicalURL2.get("languageId"));
+				canonicalURLJSONObject2.getString("languageId"));
 
 			Assert.assertEquals(
-				layout.getName(LocaleUtil.BRAZIL), canonicalURL1.get("title"));
+				layout.getName(LocaleUtil.BRAZIL),
+				canonicalURLJSONObject1.getString("title"));
 
-			String configureGooglePageSpeedURL = (String)context.get(
+			String configureGooglePageSpeedURL = jsonObject.getString(
 				"configureGooglePageSpeedURL");
 
 			Assert.assertTrue(
@@ -160,9 +157,9 @@ public class LayoutReportsDisplayContextTest {
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				context.get("defaultLanguageId"));
+				jsonObject.getString("defaultLanguageId"));
 
-			Assert.assertTrue((Boolean)context.get("validConnection"));
+			Assert.assertTrue(jsonObject.getBoolean("validConnection"));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -198,14 +195,9 @@ public class LayoutReportsDisplayContextTest {
 
 			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
 
-			Map<String, Object> data = ReflectionTestUtil.invoke(
-				_getLayoutReportsDisplayContext(layout), "getData",
-				new Class<?>[0]);
+			JSONObject jsonObject = _serveResource(layout);
 
-			Map<String, Object> context = (Map<String, Object>)data.get(
-				"context");
-
-			Assert.assertTrue((Boolean)context.get("validConnection"));
+			Assert.assertTrue(jsonObject.getBoolean("validConnection"));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -220,11 +212,11 @@ public class LayoutReportsDisplayContextTest {
 			ServiceContextThreadLocal.getServiceContext();
 
 		Bundle bundle = FrameworkUtil.getBundle(
-			LayoutReportsDisplayContextTest.class);
+			LayoutReportsDataMVCResourceCommandTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		org.osgi.framework.ServiceRegistration<InfoItemFieldValuesProvider<?>>
+		ServiceRegistration<InfoItemFieldValuesProvider<?>>
 			infoItemFieldValuesProviderServiceRegistration =
 				bundleContext.registerService(
 					(Class<InfoItemFieldValuesProvider<?>>)
@@ -259,48 +251,46 @@ public class LayoutReportsDisplayContextTest {
 			InfoItemDetails infoItemDetails = new InfoItemDetails(
 				infoItemClassDetails, null);
 
-			Map<String, Object> data = ReflectionTestUtil.invoke(
-				_getLayoutReportsDisplayContext(
-					layout,
-					new ObjectValuePair[] {
-						new ObjectValuePair<>(
-							InfoDisplayWebKeys.INFO_ITEM_DETAILS,
-							infoItemDetails),
-						new ObjectValuePair<>(
-							InfoDisplayWebKeys.INFO_ITEM, new MockObject())
-					}),
-				"getData", new Class<?>[0]);
+			JSONObject jsonObject = _serveResource(
+				layout,
+				new ObjectValuePair[] {
+					new ObjectValuePair<>(
+						InfoDisplayWebKeys.INFO_ITEM_DETAILS, infoItemDetails),
+					new ObjectValuePair<>(
+						InfoDisplayWebKeys.INFO_ITEM, new MockObject())
+				});
 
-			Map<String, Object> context = (Map<String, Object>)data.get(
-				"context");
-
-			String assetsPath = (String)context.get("assetsPath");
+			String assetsPath = jsonObject.getString("assetsPath");
 
 			Assert.assertTrue(assetsPath.contains("assets"));
 
-			List<Map<String, Object>> canonicalURLs =
-				(List<Map<String, Object>>)context.get("canonicalURLs");
+			JSONArray canonicalURLsJSONArray = jsonObject.getJSONArray(
+				"canonicalURLs");
 
 			Assert.assertEquals(
-				String.valueOf(canonicalURLs), 2, canonicalURLs.size());
+				String.valueOf(canonicalURLsJSONArray), 2,
+				canonicalURLsJSONArray.length());
 
-			Map<String, Object> canonicalURL1 = canonicalURLs.get(0);
+			JSONObject canonicalURLJSONObject1 =
+				canonicalURLsJSONArray.getJSONObject(0);
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				canonicalURL1.get("languageId"));
+				canonicalURLJSONObject1.get("languageId"));
 			Assert.assertEquals(
-				"defaultMappedTitle", canonicalURL1.get("title"));
+				"defaultMappedTitle", canonicalURLJSONObject1.get("title"));
 
-			Map<String, Object> canonicalURL2 = canonicalURLs.get(1);
+			JSONObject canonicalURLJSONObject2 =
+				canonicalURLsJSONArray.getJSONObject(1);
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
-				canonicalURL2.get("languageId"));
+				canonicalURLJSONObject2.getString("languageId"));
 			Assert.assertEquals(
-				"defaultMappedTitle", canonicalURL2.get("title"));
+				"defaultMappedTitle",
+				canonicalURLJSONObject2.getString("title"));
 
-			String configureGooglePageSpeedURL = (String)context.get(
+			String configureGooglePageSpeedURL = jsonObject.getString(
 				"configureGooglePageSpeedURL");
 
 			Assert.assertTrue(
@@ -308,9 +298,9 @@ public class LayoutReportsDisplayContextTest {
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				context.get("defaultLanguageId"));
+				jsonObject.getString("defaultLanguageId"));
 
-			Assert.assertTrue((Boolean)context.get("validConnection"));
+			Assert.assertTrue(jsonObject.getBoolean("validConnection"));
 		}
 		finally {
 			infoItemFieldValuesProviderServiceRegistration.unregister();
@@ -338,14 +328,9 @@ public class LayoutReportsDisplayContextTest {
 
 			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
 
-			Map<String, Object> data = ReflectionTestUtil.invoke(
-				_getLayoutReportsDisplayContext(layout), "getData",
-				new Class<?>[0]);
+			JSONObject jsonObject = _serveResource(layout);
 
-			Map<String, Object> context = (Map<String, Object>)data.get(
-				"context");
-
-			Assert.assertFalse((Boolean)context.get("validConnection"));
+			Assert.assertFalse(jsonObject.getBoolean("validConnection"));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -354,31 +339,7 @@ public class LayoutReportsDisplayContextTest {
 		}
 	}
 
-	private Object _getLayoutReportsDisplayContext(
-			Layout layout, ObjectValuePair<String, Object>... objectValuePairs)
-		throws Exception {
-
-		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
-
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			_getMockLiferayPortletRenderRequest(layout);
-
-		for (ObjectValuePair<String, Object> objectValuePair :
-				objectValuePairs) {
-
-			mockLiferayPortletRenderRequest.setAttribute(
-				objectValuePair.getKey(), objectValuePair.getValue());
-		}
-
-		mvcPortlet.render(
-			mockLiferayPortletRenderRequest,
-			new MockLiferayPortletRenderResponse());
-
-		return mockLiferayPortletRenderRequest.getAttribute(
-			"LAYOUT_REPORTS_DISPLAY_CONTEXT");
-	}
-
-	private MockLiferayPortletRenderRequest _getMockLiferayPortletRenderRequest(
+	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
 			Layout layout)
 		throws Exception {
 
@@ -387,38 +348,23 @@ public class LayoutReportsDisplayContextTest {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			new MockLiferayPortletRenderRequest();
+		MockLiferayResourceRequest mockLiferayPortletRenderRequest =
+			new MockLiferayResourceRequest();
 
 		serviceContext.setRequest(
 			mockLiferayPortletRenderRequest.getHttpServletRequest());
 
-		mockLiferayPortletRenderRequest.setAttribute(
-			StringBundler.concat(
-				mockLiferayPortletRenderRequest.getPortletName(), "-",
-				WebKeys.CURRENT_PORTLET_URL),
-			new MockLiferayPortletURL());
-
-		String path = "/view.jsp";
-
-		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
-
-		mockLiferayPortletRenderRequest.setAttribute(
-			MVCRenderConstants.
-				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,
-			new MockLiferayPortletContext(path));
-
-		mockLiferayPortletRenderRequest.setAttribute(WebKeys.LAYOUT, layout);
+		mockLiferayPortletRenderRequest.setParameter(
+			"plid", String.valueOf(layout.getPlid()));
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
-		themeDisplay.setPlid(layout.getPlid());
 		themeDisplay.setRequest(
 			mockLiferayPortletRenderRequest.getHttpServletRequest());
+		themeDisplay.setScopeGroupId(layout.getGroupId());
 		themeDisplay.setSiteGroupId(layout.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
@@ -426,6 +372,34 @@ public class LayoutReportsDisplayContextTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return mockLiferayPortletRenderRequest;
+	}
+
+	private JSONObject _serveResource(
+			Layout layout, ObjectValuePair<String, Object>... objectValuePairs)
+		throws Exception {
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			_getMockLiferayResourceRequest(layout);
+
+		for (ObjectValuePair<String, Object> objectValuePair :
+				objectValuePairs) {
+
+			mockLiferayResourceRequest.setAttribute(
+				objectValuePair.getKey(), objectValuePair.getValue());
+		}
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		_layoutReportsDataMVCResourceCommand.serveResource(
+			mockLiferayResourceRequest, mockLiferayResourceResponse);
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			(ByteArrayOutputStream)
+				mockLiferayResourceResponse.getPortletOutputStream();
+
+		return JSONFactoryUtil.createJSONObject(
+			new String(byteArrayOutputStream.toByteArray()));
 	}
 
 	@Inject
@@ -440,10 +414,8 @@ public class LayoutReportsDisplayContextTest {
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	@Inject(
-		filter = "component.name=com.liferay.layout.reports.web.internal.portlet.LayoutReportsPortlet"
-	)
-	private Portlet _portlet;
+	@Inject(filter = "mvc.command.name=/layout_reports/data")
+	private MVCResourceCommand _layoutReportsDataMVCResourceCommand;
 
 	private static class MockInfoItemFieldValuesProvider
 		implements InfoItemFieldValuesProvider<MockObject> {

@@ -482,8 +482,12 @@ public class AccountResourceImpl
 			null, _getEmailAddress(account, commerceAccount),
 			GetterUtil.get(account.getTaxId(), commerceAccount.getTaxId()),
 			commerceAccount.isActive(),
-			account.getDefaultBillingAccountAddressId(),
-			account.getDefaultShippingAccountAddressId(),
+			GetterUtil.getLong(
+				account.getDefaultBillingAccountAddressId(),
+				commerceAccount.getDefaultBillingAddressId()),
+			GetterUtil.getLong(
+				account.getDefaultShippingAccountAddressId(),
+				commerceAccount.getDefaultShippingAddressId()),
 			account.getExternalReferenceCode(), serviceContext);
 
 		// Expando

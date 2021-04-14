@@ -75,6 +75,7 @@ definition {
 
 	@description = "Ensure that a user can add a category."
 	@priority = "4"
+	@uitest
 	test AddCategory {
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
@@ -499,6 +500,7 @@ definition {
 	}
 
 	@priority = "5"
+	@uitest
 	test DeleteCategory {
 		property portal.acceptance = "true";
 
@@ -515,6 +517,7 @@ definition {
 	}
 
 	@priority = "4"
+	@uitest
 	test DeleteCategoryByMenu {
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
@@ -614,6 +617,7 @@ definition {
 	}
 
 	@priority = "5"
+	@uitest
 	test DeleteVocabulary {
 		property portal.acceptance = "true";
 
@@ -621,11 +625,13 @@ definition {
 	}
 
 	@priority = "4"
+	@uitest
 	test DeleteVocabularyByMenu {
 		Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Name");
 	}
 
 	@priority = "5"
+	@uitest
 	test EditCategory {
 		property portal.acceptance = "true";
 
@@ -695,6 +701,7 @@ definition {
 	}
 
 	@priority = "5"
+	@uitest
 	test EditSubcategory {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -720,6 +727,7 @@ definition {
 	}
 
 	@priority = "5"
+	@uitest
 	test EditVocabulary {
 		property portal.acceptance = "true";
 

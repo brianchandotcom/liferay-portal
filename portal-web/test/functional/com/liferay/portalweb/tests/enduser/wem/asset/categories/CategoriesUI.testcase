@@ -28,6 +28,7 @@ definition {
 	}
 
 	@priority = "4"
+	@uitest
 	test AddSubcategory {
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 

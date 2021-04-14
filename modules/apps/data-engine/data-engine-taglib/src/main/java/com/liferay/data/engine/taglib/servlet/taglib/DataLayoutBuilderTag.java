@@ -146,6 +146,18 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		return ddmStructure.getDefaultLanguageId();
 	}
 
+	private String _getFieldsPluginEntryPoint() {
+		if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
+			return DataLayoutTaglibUtil.resolveModule(
+				"data-engine-taglib/data_layout_builder/new-js/plugins" +
+					"/fields-sidebar/index");
+		}
+
+		return DataLayoutTaglibUtil.resolveModule(
+			"data-engine-taglib/data_layout_builder/js/plugins/fields-sidebar" +
+				"/index.es");
+	}
+
 	private String[] _getLanguageIds(Set<Locale> locales) {
 		Stream<Locale> stream = locales.stream();
 
@@ -174,18 +186,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		}
 
 		return getModuleServletContext();
-	}
-
-	private String _getFieldsPluginEntryPoint() {
-		if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
-			return DataLayoutTaglibUtil.resolveModule(
-				"data-engine-taglib/data_layout_builder/new-js/plugins" +
-					"/fields-sidebar/index");
-		}
-
-		return DataLayoutTaglibUtil.resolveModule(
-			"data-engine-taglib/data_layout_builder/js/plugins/fields-sidebar" +
-				"/index.es");
 	}
 
 	private String _getRulesPluginEntryPoint() {

@@ -294,8 +294,6 @@ gradle.beforeProject {
 				jvmArgs "-XX:MaxMetaspaceSize=256m"
 				maxHeapSize = "1024m"
 
-				systemProperty "repository.private.username", System.properties["repository.private.username"]
-				systemProperty "repository.private.password", System.properties["repository.private.password"]
 				systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 				systemProperty "http.proxyPort", System.properties["http.proxyPort"]
 				systemProperty "maven.debug", System.properties["maven.debug"]
@@ -304,6 +302,8 @@ gradle.beforeProject {
 				systemProperty "nodejs.npm.ci.sass.binary.site", project.findProperty("nodejs.npm.ci.sass.binary.site")
 				systemProperty "project.templates.bom.version", project.findProperty("project.templates.bom.version")
 				systemProperty "project.templates.test.builds", project.findProperty("project.templates.test.builds")
+				systemProperty "repository.private.password", System.properties["repository.private.password"]
+				systemProperty "repository.private.username", System.properties["repository.private.username"]
 				systemProperty "repository.url", System.properties["repository.url"]
 				systemProperty "test.debug.bundle.diffs", System.properties["test.debug.bundle.diffs"]
 			}

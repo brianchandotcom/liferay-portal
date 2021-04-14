@@ -98,8 +98,7 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 		}
 		else {
 			writeGradlePropertiesInWorkspace(
-				workspaceProjectDir,
-				"liferay.workspace.product=portal-7.4");
+				workspaceProjectDir, "liferay.workspace.product=portal-7.4");
 		}
 
 		if (isBuildProjects()) {

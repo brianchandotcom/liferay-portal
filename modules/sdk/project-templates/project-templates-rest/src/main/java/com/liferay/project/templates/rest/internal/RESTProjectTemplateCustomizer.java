@@ -44,7 +44,6 @@ public class RESTProjectTemplateCustomizer
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 
 		if (!liferayVersion.startsWith("7.0")) {
-
 			String cxfConfig =
 				"com.liferay.portal.remote.cxf.common.configuration." +
 					"CXFEndpointPublisherConfiguration-cxf.properties";

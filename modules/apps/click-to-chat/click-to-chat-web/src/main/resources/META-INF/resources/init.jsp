@@ -29,8 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.click.to.chat.web.internal.constants.ClickToChatConstants" %><%@
 page import="com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
 <%@ page import="java.util.Objects" %>
 

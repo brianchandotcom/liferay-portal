@@ -30,5 +30,4 @@
 			smartsupp('email', '<%= user.getEmailAddress() %>');
 			smartsupp('name', '<%= user.getFirstName() %>');
 	</c:if>
-	
 </script>

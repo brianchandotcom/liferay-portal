@@ -25,6 +25,6 @@
 		email: "<%= user.getEmailAddress() %>",
 		name: "<%= user.getFirstName() %>"
 	};
-		
+
 	</script>
 </c:if>

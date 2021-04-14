@@ -198,9 +198,6 @@ public class DefaultWorkflowEngineImpl
 			executionContext.setKaleoTaskInstanceToken(
 				kaleoTimerInstanceToken.getKaleoTaskInstanceToken());
 
-			final KaleoNode currentKaleoNode =
-				kaleoInstanceToken.getCurrentKaleoNode();
-
 			_taskNodeExecutor.executeTimer(executionContext);
 
 			kaleoTimerInstanceToken =
@@ -222,7 +219,8 @@ public class DefaultWorkflowEngineImpl
 					@Override
 					public Void call() throws Exception {
 						_kaleoSignaler.signalExecute(
-							currentKaleoNode, executionContext);
+							kaleoInstanceToken.getCurrentKaleoNode(),
+							executionContext);
 
 						return null;
 					}

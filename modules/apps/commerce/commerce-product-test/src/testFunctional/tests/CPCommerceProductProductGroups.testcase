@@ -48,12 +48,47 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6065. AddAPreExistingProductGroup"
-	@ignore = "true"
 	@priority = "3"
 	test AddAPreExistingProductGroup {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6065 AddAPreExistingProductGroup
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Product Groups");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Type( 
+			key_fieldLabel="Name",
+			value1="PG1", 
+			locator1="TextInput#GENERIC_TEXT_INPUT");
+		
+		Button.click(button = "Submit");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Product Groups");
+
+		Type(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "PG1");
+
+		Click(
+			key_text = "Select",
+			locator1 = "Button#ANY");
+
+		Alert.viewSuccessMessage();
+
 	}
 
 	@description = "This is a test for COMMERCE-6068. EditAProductGroup"

@@ -103,8 +103,7 @@ public class ViewURLHitContributor implements HitContributor {
 			}
 
 			PortletURL viewContentURL = _getViewContentURL(
-				liferayPortletRequest, liferayPortletResponse, document,
-				hitJSONObject);
+				liferayPortletRequest, liferayPortletResponse, document);
 
 			if (!viewInContext) {
 				return viewContentURL.toString();

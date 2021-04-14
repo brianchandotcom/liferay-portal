@@ -138,7 +138,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5708. As a product specialist i want to update the quantity of a product inside a warehouse"
-	@ignore = "true"
 	@priority = "3"
 	test UpdateInventorySKUQuantity {
 		property portal.acceptance = "false";
@@ -158,9 +157,7 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if (IsElementNotPresent(locator1 = "CommerceEntry#WAREHOUSE_GEOLOCATION_SHOW")) {
-			Click(locator1 = "CommerceEntry#WAREHOUSE_GEOLOCATION");
-		}
+		Click(locator1 = "CommerceEntry#WAREHOUSE_GEOLOCATION");
 
 		Type(
 			key_fieldLabel = "Latitude",
@@ -212,7 +209,9 @@ definition {
 			locator1 = "CommerceEntry#INVENTORY_INPUT",
 			value1 = "50");
 
-		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
 
 		SelectFrame.selectFrameTop();
 

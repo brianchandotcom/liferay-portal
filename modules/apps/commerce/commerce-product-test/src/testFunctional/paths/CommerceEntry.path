@@ -598,16 +598,6 @@
 	<td></td> 
 </tr>
 <tr>
-	<td>INVENTORY_BUTTON</td>
-	<td>//table//tr[contains(.,'${key_inventoryName}')]//button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVENTORY_INPUT</td>
-	<td>//table//tr[contains(.,'${key_inventoryName}')]//input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MODAL_BUTTON_CLOSE</td>
 	<td>//div[contains(@class,'side-panel-iframe-header')]//button[contains(@class,'side-panel-iframe-close')]</td>
 	<td></td>
@@ -624,13 +614,19 @@
 </tr>
 <tr>
 	<td>ENTRY_SUBSCRIPTIONS</td>
-	<td>//h4[contains(text(), '${key_entryName}')]</td>
+	<td>//h4[contains(text(),'${key_entryName}')]</td>
 	<td></td>
 </tr>
+<tr>
 	<td>WAREHOUSE_GEOLOCATION</td>
-	<td>//div[contains(@id, 'geolocationTitle')]</td>
+	<td>//div[contains(@id,'geolocationTitle')]</td>
 	<td></td>
 </tr>  
+<tr>
+	<td>INVENTORY_INPUT</td>
+	<td>//table//tr[contains(.,'${key_inventoryName}')]//input</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

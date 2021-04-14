@@ -1633,32 +1633,6 @@ war.path=${app.server.portal.dir}/</echo>
 			</propertyfile>
 
 			<if>
-				<contains string="${env.CI_TEST_SUITE}" substring="poshi" />
-				<then>
-					<propertycopy from="test.poshi.runner.local.release[${env.CI_TEST_SUITE}]" name="test.poshi.runner.local.release" override="true" />
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${test.poshi.runner.local.release}" arg2="true" />
-				<then>
-					<if>
-						<not>
-							<available file="tools/sdk" />
-						</not>
-						<then>
-							<antcall inheritAll="false" target="setup-sdk" />
-
-							<antcall inheritAll="false" target="setup-yarn" />
-						</then>
-					</if>
-
-					<gradle-execute dir="${test.poshi.core.src.dir}" task="deploy" />
-					<gradle-execute dir="${test.poshi.runner.src.dir}" task="deploy" />
-				</then>
-			</if>
-
-			<if>
 				<isset property="env.JENKINS_HOME" />
 				<then>
 					<local name="poshi.java.jdk.opts" />
@@ -1686,7 +1660,6 @@ war.path=${app.server.portal.dir}/</echo>
 
 					<gradle-execute failonerror="@{failonerror}" gradlejvmargs="${poshi.gradle.jvm.args}" stacktrace="false" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
-						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
 						<env key="ANT_OPTS" value="${poshi.java.jdk.opts}" />
@@ -1696,7 +1669,6 @@ war.path=${app.server.portal.dir}/</echo>
 				<else>
 					<gradle-execute failonerror="@{failonerror}" stacktrace="false" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
-						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
 					</gradle-execute>

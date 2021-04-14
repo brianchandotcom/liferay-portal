@@ -51,6 +51,7 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 			dayValue="<%= startDateDay %>"
 			monthParam="startDateMonth"
 			monthValue="<%= startDateMonth %>"
+			name="startDate"
 			yearParam="startDateYear"
 			yearValue="<%= startDateYear %>"
 		/>
@@ -62,6 +63,7 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 			hourValue="<%= startDateHour %>"
 			minuteParam="startDateMinute"
 			minuteValue="<%= startDateMinute %>"
+			name="startDateTime"
 		/>
 	</aui:field-wrapper>
 
@@ -71,6 +73,7 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 			dayValue="<%= endDateDay %>"
 			monthParam="endDateMonth"
 			monthValue="<%= endDateMonth %>"
+			name="endDate"
 			yearParam="endDateYear"
 			yearValue="<%= endDateYear %>"
 		/>
@@ -82,6 +85,7 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 			hourValue="<%= endDateHour %>"
 			minuteParam="endDateMinute"
 			minuteValue="<%= endDateMinute %>"
+			name="endDateTime"
 		/>
 	</aui:field-wrapper>
 </liferay-ui:search-toggle>

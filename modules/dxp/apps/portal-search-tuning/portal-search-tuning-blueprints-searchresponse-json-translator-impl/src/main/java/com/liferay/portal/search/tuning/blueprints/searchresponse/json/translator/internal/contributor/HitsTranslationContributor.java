@@ -202,7 +202,7 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 					hitJSONObject.put("score", searchHit.getScore());
 				}
 				else {
-					hitJSONObject.put(fieldName, document.getValue(fieldName));
+					hitJSONObject.put(fieldName, document.getValues(fieldName));
 				}
 			}
 		}

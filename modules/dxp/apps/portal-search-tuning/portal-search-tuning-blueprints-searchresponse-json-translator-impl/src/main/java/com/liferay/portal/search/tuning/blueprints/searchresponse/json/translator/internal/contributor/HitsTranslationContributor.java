@@ -50,10 +50,12 @@ import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translato
 import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
@@ -115,14 +117,19 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 		hitJSONObject.put(
 			"assetEntryId", _getAssetEntryId(document)
 		).put(
-			"date", resultBuilder.getDate(document, blueprintsAttributes)
+			"author", resultBuilder.getAuthor(document, blueprintsAttributes)
 		).put(
-			"description",
-			resultBuilder.getDescription(document, blueprintsAttributes)
+			"created",
+			resultBuilder.getCreateDate(document, blueprintsAttributes)
 		).put(
 			"entryClassName", document.getString(Field.ENTRY_CLASS_NAME)
 		).put(
 			"entryClassPK", document.getString(Field.ENTRY_CLASS_PK)
+		).put(
+			"modified",
+			resultBuilder.getModificationDate(document, blueprintsAttributes)
+		).put(
+			"summary", resultBuilder.getSummary(document, blueprintsAttributes)
 		).put(
 			"title", resultBuilder.getTitle(document, blueprintsAttributes)
 		);
@@ -160,6 +167,27 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 				resultJSONObject, document, resultBuilder, blueprintsAttributes,
 				resourceBundle);
 		}
+	}
+
+	private Map<String, List<Object>> _formatDocument(Document document) {
+		Map<String, com.liferay.portal.search.document.Field> fields =
+			document.getFields();
+
+		Set<Map.Entry<String, com.liferay.portal.search.document.Field>>
+			entrySet = fields.entrySet();
+
+		Stream<Map.Entry<String, com.liferay.portal.search.document.Field>>
+			stream = entrySet.stream();
+
+		return stream.collect(
+			HashMap::new,
+			(map, entry) -> {
+				com.liferay.portal.search.document.Field field =
+					entry.getValue();
+
+				map.put(entry.getKey(), field.getValues());
+			},
+			HashMap::putAll);
 	}
 
 	private Long _getAssetEntryId(Document document) {
@@ -207,15 +235,13 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 
 				if (_includeDocument(blueprintsAttributes)) {
 					hitJSONObject.put(
-						"document",
-						_jsonFactory.looseSerialize(searchHit.getDocument()));
+						"document", _formatDocument(searchHit.getDocument()));
 				}
 
 				if (_includeHighlightFieldsMap(blueprintsAttributes)) {
 					hitJSONObject.put(
 						"highlightFieldsMap",
-						_jsonFactory.looseSerialize(
-							searchHit.getHighlightFieldsMap()));
+						searchHit.getHighlightFieldsMap());
 				}
 
 				if (_includeResult(blueprintsAttributes)) {

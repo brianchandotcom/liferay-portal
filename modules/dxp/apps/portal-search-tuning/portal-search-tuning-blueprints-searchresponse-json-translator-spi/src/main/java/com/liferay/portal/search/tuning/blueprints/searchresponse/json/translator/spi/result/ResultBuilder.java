@@ -22,11 +22,19 @@ import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttribut
  */
 public interface ResultBuilder {
 
-	public String getDate(
+	public String getAuthor(
 			Document document, BlueprintsAttributes blueprintsAttributes)
 		throws Exception;
 
-	public String getDescription(
+	public String getCreateDate(
+			Document document, BlueprintsAttributes blueprintsAttributes)
+		throws Exception;
+
+	public String getModificationDate(
+			Document document, BlueprintsAttributes blueprintsAttributes)
+		throws Exception;
+	
+	public String getSummary(
 			Document document, BlueprintsAttributes blueprintsAttributes)
 		throws Exception;
 

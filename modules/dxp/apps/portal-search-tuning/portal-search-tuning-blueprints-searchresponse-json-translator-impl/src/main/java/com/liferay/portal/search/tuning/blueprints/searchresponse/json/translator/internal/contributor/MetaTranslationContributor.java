@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.SearchTimeValue;
@@ -26,6 +28,7 @@ import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedPara
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.constants.JSONKeys;
+import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.constants.ResponseAttributeKeys;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.contributor.JSONTranslationContributor;
 
 import java.util.IllegalFormatException;
@@ -67,9 +70,29 @@ public class MetaTranslationContributor implements JSONTranslationContributor {
 
 		_setExecutionTime(jsonObject, searchResponse);
 
+		if (_includeRequestString(blueprintsAttributes)) {
+			_setRequestString(jsonObject, searchResponse);
+		}
+
+		_setResponseString(jsonObject, searchResponse);
+
 		_setShowingInsteadOf(jsonObject, blueprintsAttributes);
 
 		return jsonObject;
+	}
+
+	private boolean _includeRequestString(
+		BlueprintsAttributes blueprintsAttributes) {
+
+		Optional<Object> includeOptional =
+			blueprintsAttributes.getAttributeOptional(
+				ResponseAttributeKeys.INCLUDE_REQUEST_STRING);
+
+		if (!includeOptional.isPresent()) {
+			return false;
+		}
+
+		return GetterUtil.getBoolean(includeOptional.get());
 	}
 
 	private void _setExecutionTime(
@@ -85,6 +108,22 @@ public class MetaTranslationContributor implements JSONTranslationContributor {
 		catch (IllegalFormatException illegalFormatException) {
 			_log.error(
 				illegalFormatException.getMessage(), illegalFormatException);
+		}
+	}
+
+	private void _setRequestString(
+		JSONObject jsonObject, SearchResponse searchResponse) {
+
+		if (!Validator.isBlank(searchResponse.getRequestString())) {
+			jsonObject.put("requestString", searchResponse.getRequestString());
+		}
+	}
+
+	private void _setResponseString(
+		JSONObject jsonObject, SearchResponse searchResponse) {
+
+		if (!Validator.isBlank(searchResponse.getResponseString())) {
+			jsonObject.put("requestString", searchResponse.getResponseString());
 		}
 	}
 

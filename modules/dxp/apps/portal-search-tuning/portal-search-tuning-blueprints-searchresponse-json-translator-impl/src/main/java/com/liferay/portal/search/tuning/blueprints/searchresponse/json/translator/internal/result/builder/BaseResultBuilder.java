@@ -52,38 +52,32 @@ public abstract class BaseResultBuilder implements ResultBuilder {
 		"yyyyMMddHHmmss");
 
 	@Override
-	public String getDate(
+	public String getAuthor(
 			Document document, BlueprintsAttributes blueprintsAttributes)
 		throws Exception {
 
-		String dateString = "";
-
-		Locale locale = blueprintsAttributes.getLocale();
-
-		try {
-			String modified = document.getDate(Field.MODIFIED_DATE);
-
-			if (!Validator.isBlank(modified)) {
-				Date lastModified = INDEX_DATE_FORMAT.parse(modified);
-
-				DateFormat dateFormat = DateFormat.getDateInstance(
-					DateFormat.SHORT, locale);
-
-				dateString = dateFormat.format(lastModified);
-			}
-		}
-		catch (Exception exception) {
-			String fieldName = document.getString(
-				_buildLocalizedFieldName(Field.TITLE, locale));
-
-			_log.error("Error in parsing date for " + fieldName, exception);
-		}
-
-		return dateString;
+		return document.getString(Field.USER_NAME);
 	}
 
 	@Override
-	public String getDescription(
+	public String getCreateDate(
+			Document document, BlueprintsAttributes blueprintsAttributes)
+		throws Exception {
+
+		return _formatDate(
+			document, Field.CREATE_DATE, blueprintsAttributes.getLocale());
+	}
+
+	public String getModificationDate(
+			Document document, BlueprintsAttributes blueprintsAttributes)
+		throws Exception {
+
+		return _formatDate(
+			document, Field.MODIFIED_DATE, blueprintsAttributes.getLocale());
+	}
+
+	@Override
+	public String getSummary(
 			Document document, BlueprintsAttributes blueprintsAttributes)
 		throws Exception {
 
@@ -91,7 +85,7 @@ public abstract class BaseResultBuilder implements ResultBuilder {
 			document, Field.CONTENT, blueprintsAttributes.getLocale());
 
 		return ResultUtil.stripHTML(
-			description, getDescriptionMaxLength(blueprintsAttributes));
+			description, getSummaryMaxLength(blueprintsAttributes));
 	}
 
 	@Override
@@ -153,16 +147,6 @@ public abstract class BaseResultBuilder implements ResultBuilder {
 		return assetRendererFactory.getAssetRenderer(entryClassPK);
 	}
 
-	protected int getDescriptionMaxLength(
-		BlueprintsAttributes blueprintsAttributes) {
-
-		Optional<Object> descriptionMaxLengthOptional =
-			blueprintsAttributes.getAttributeOptional(
-				ResponseAttributeKeys.DESCRIPTION_MAX_LENGTH);
-
-		return GetterUtil.getInteger(descriptionMaxLengthOptional.orElse(700));
-	}
-
 	protected Indexer<Object> getIndexer(String className) {
 		return IndexerRegistryUtil.getIndexer(className);
 	}
@@ -222,6 +206,16 @@ public abstract class BaseResultBuilder implements ResultBuilder {
 		return value;
 	}
 
+	protected int getSummaryMaxLength(
+		BlueprintsAttributes blueprintsAttributes) {
+
+		Optional<Object> descriptionMaxLengthOptional =
+			blueprintsAttributes.getAttributeOptional(
+				ResponseAttributeKeys.DESCRIPTION_MAX_LENGTH);
+
+		return GetterUtil.getInteger(descriptionMaxLengthOptional.orElse(700));
+	}
+
 	protected boolean isViewInContext(
 		BlueprintsAttributes blueprintsAttributes) {
 
@@ -252,6 +246,35 @@ public abstract class BaseResultBuilder implements ResultBuilder {
 		sb.append(locale.toString());
 
 		return sb.toString();
+	}
+
+	private String _formatDate(Document document, String field, Locale locale) {
+		String dateString = "";
+
+		try {
+			String modified = document.getDate(Field.CREATE_DATE);
+
+			if (!Validator.isBlank(modified)) {
+				Date lastModified = INDEX_DATE_FORMAT.parse(modified);
+
+				DateFormat dateFormat = DateFormat.getDateInstance(
+					DateFormat.SHORT, locale);
+
+				dateString = dateFormat.format(lastModified);
+			}
+		}
+		catch (Exception exception) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Error in formatting ");
+			sb.append(field);
+			sb.append(" for entryClassPK ");
+			sb.append(document.getDate(Field.ENTRY_CLASS_PK));
+
+			_log.error(sb.toString(), exception);
+		}
+
+		return dateString;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

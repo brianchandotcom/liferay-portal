@@ -235,6 +235,8 @@ public class TranslateDisplayContext {
 				"targetLanguageId", getTargetLanguageId()
 			).build()
 		).put(
+			"autoTranslateButtonVisible", isAutoTranslateButtonVisible()
+		).put(
 			"getAutoTranslateURL", getAutoTranslateURL()
 		).put(
 			"infoFieldSetEntries", infoFieldSetEntries

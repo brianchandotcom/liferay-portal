@@ -597,8 +597,6 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.openURL();
-
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry with Small Image",
 			layoutName = "Blogs Page",
@@ -609,8 +607,6 @@ definition {
 		BlogsEntry.removeSmallImage(uploadFileName = "Document_1.jpg");
 
 		PortletEntry.publish();
-
-		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -986,8 +982,6 @@ definition {
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-
-		Navigator.openURL();
 
 		Navigator.openSpecificURL(url = "/web/guest/blogs-page/-/blogs/blogs-entry-title");
 

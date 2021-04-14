@@ -363,19 +363,16 @@ definition {
 
 	@description = "These are usecases 6-8 for LPS-69240"
 	@priority = "4"
-	@refactorneeded
-	test AssertInputBetweenStateChanges {
-		var entryContent = "Blogs Entry Content";
-		var entrySubtitle = "Blogs Entry Subtitle";
-		var entryTitle = "Blogs Entry Title";
-
+	@refactordone
+	test CanSaveCustomURLAfterSwitchingBackFromAuto {
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
-			entryContent = "${entryContent}",
-			entryTitle = "${entryTitle}");
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
 
 		Panel.expandPanel(panel = "Configuration");
 

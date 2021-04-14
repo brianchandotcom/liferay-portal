@@ -116,6 +116,21 @@ public interface DLFileEntryModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this document library file entry.
+	 *
+	 * @return the external reference code of this document library file entry
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this document library file entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this document library file entry
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the file entry ID of this document library file entry.
 	 *
 	 * @return the file entry ID of this document library file entry

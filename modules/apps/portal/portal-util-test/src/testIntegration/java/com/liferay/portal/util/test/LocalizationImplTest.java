@@ -200,6 +200,39 @@ public class LocalizationImplTest {
 	}
 
 	@Test
+	public void testGetLocalizationXmlFromPreferences() throws Exception {
+		PortletPreferences preferences = new PortletPreferencesImpl();
+		MockPortletRequest portletRequest = new MockPortletRequest();
+
+		LocalizationUtil.setPreferencesValue(
+			preferences, "test", _ENGLISH_LANGUAGE_ID, "changedValue");
+
+		String xml = LocalizationUtil.getLocalizationXmlFromPreferences(
+			preferences, portletRequest, "test", "testValue");
+
+		Assert.assertTrue(
+			"PortletPreferences not properly applied to XML",
+			xml.contains(
+				"<test language-id=\"" + _ENGLISH_LANGUAGE_ID +
+					"\">changedValue</test>"));
+	}
+
+	@Test
+	public void testGetLocalizationXmlFromPreferencesWithEmptyPreferences() {
+		PortletPreferences preferences = new PortletPreferencesImpl();
+		MockPortletRequest portletRequest = new MockPortletRequest();
+
+		String xml = LocalizationUtil.getLocalizationXmlFromPreferences(
+			preferences, portletRequest, "test", "testValue");
+
+		Assert.assertTrue(
+			"Default values not included in XML",
+			xml.contains(
+				"<test language-id=\"" + LocaleUtil.getDefault() +
+					"\">testValue</test>"));
+	}
+
+	@Test
 	public void testGetModifiedLocales() throws Exception {
 		String key = RandomTestUtil.randomString();
 

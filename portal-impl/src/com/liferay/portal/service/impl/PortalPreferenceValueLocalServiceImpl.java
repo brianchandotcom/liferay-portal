@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.internal.service.util.PortalPreferencesCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.PortalPreferenceValue;
 import com.liferay.portal.kernel.model.PortalPreferences;
@@ -37,12 +38,22 @@ public class PortalPreferenceValueLocalServiceImpl
 		PortalPreferenceValuePersistence portalPreferenceValuePersistence,
 		long portalPreferencesId, boolean useFinderCache) {
 
+		Map<PortalPreferenceKey, String[]> preferenceMap = null;
+
+		if (useFinderCache) {
+			preferenceMap = PortalPreferencesCacheUtil.get(portalPreferencesId);
+		}
+
+		if (preferenceMap != null) {
+			return preferenceMap;
+		}
+
 		Map<PortalPreferenceKey, List<PortalPreferenceValue>>
 			portalPreferenceValuesMap = getPortalPreferenceValuesMap(
 				portalPreferenceValuePersistence, portalPreferencesId,
 				useFinderCache);
 
-		Map<PortalPreferenceKey, String[]> preferenceMap = new HashMap<>();
+		preferenceMap = new HashMap<>();
 
 		for (Map.Entry<PortalPreferenceKey, List<PortalPreferenceValue>> entry :
 				portalPreferenceValuesMap.entrySet()) {
@@ -61,6 +72,8 @@ public class PortalPreferenceValueLocalServiceImpl
 
 			preferenceMap.put(entry.getKey(), values);
 		}
+
+		PortalPreferencesCacheUtil.put(portalPreferencesId, preferenceMap);
 
 		return preferenceMap;
 	}

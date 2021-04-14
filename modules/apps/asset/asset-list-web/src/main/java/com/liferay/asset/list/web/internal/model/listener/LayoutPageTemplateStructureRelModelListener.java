@@ -15,6 +15,7 @@
 package com.liferay.asset.list.web.internal.model.listener;
 
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -67,6 +68,17 @@ public class LayoutPageTemplateStructureRelModelListener
 	private void _addAssetListEntryUsage(
 		long classNameId, long groupId, String key,
 		long layoutPageTemplateStructureId, long plid) {
+
+		AssetListEntryUsage assetListEntryUsage =
+			_assetListEntryUsageLocalService.fetchAssetListEntryUsage(
+				groupId, classNameId,
+				String.valueOf(layoutPageTemplateStructureId),
+				_portal.getClassNameId(LayoutPageTemplateStructure.class), key,
+				plid);
+
+		if (assetListEntryUsage != null) {
+			return;
+		}
 
 		ServiceContext serviceContext = Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()

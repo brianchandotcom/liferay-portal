@@ -15,6 +15,7 @@
 package com.liferay.asset.list.web.internal.model.listener;
 
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
@@ -73,8 +74,17 @@ public class FragmentEntryLinkModelListener
 	}
 
 	private void _addAssetListEntryUsage(
-		long classNameId, long groupId, String key,
-		long layoutPageTemplateStructureId, long plid) {
+		long classNameId, long fragmentEntryLinkId, long groupId, String key,
+		long plid) {
+
+		AssetListEntryUsage assetListEntryUsage =
+			_assetListEntryUsageLocalService.fetchAssetListEntryUsage(
+				groupId, classNameId, String.valueOf(fragmentEntryLinkId),
+				_portal.getClassNameId(FragmentEntryLink.class), key, plid);
+
+		if (assetListEntryUsage != null) {
+			return;
+		}
 
 		ServiceContext serviceContext = Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()
@@ -85,7 +95,7 @@ public class FragmentEntryLinkModelListener
 		try {
 			_assetListEntryUsageLocalService.addAssetListEntryUsage(
 				serviceContext.getUserId(), groupId, classNameId,
-				String.valueOf(layoutPageTemplateStructureId),
+				String.valueOf(fragmentEntryLinkId),
 				_portal.getClassNameId(FragmentEntryLink.class), key, plid,
 				serviceContext);
 		}
@@ -143,18 +153,18 @@ public class FragmentEntryLinkModelListener
 			if (fieldValueJSONObject.has("key")) {
 				_addAssetListEntryUsage(
 					_portal.getClassNameId(InfoListProvider.class),
+					fragmentEntryLink.getFragmentEntryLinkId(),
 					fragmentEntryLink.getGroupId(),
 					fieldValueJSONObject.getString("key"),
-					fragmentEntryLink.getFragmentEntryLinkId(),
 					fragmentEntryLink.getPlid());
 			}
 
 			if (fieldValueJSONObject.has("classPK")) {
 				_addAssetListEntryUsage(
 					_portal.getClassNameId(AssetListEntry.class),
+					fragmentEntryLink.getFragmentEntryLinkId(),
 					fragmentEntryLink.getGroupId(),
 					fieldValueJSONObject.getString("classPK"),
-					fragmentEntryLink.getFragmentEntryLinkId(),
 					fragmentEntryLink.getPlid());
 			}
 		}

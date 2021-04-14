@@ -116,7 +116,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 		Group liveGroup = groupLocalService.getGroup(groupId);
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.UPDATE);
+			getPermissionChecker(), groupId, ActionKeys.MANAGE_STAGING);
 
 		stagingLocalService.enableLocalStaging(
 			getUserId(), liveGroup, branchingPublic, branchingPrivate,

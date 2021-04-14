@@ -1803,32 +1803,42 @@ definition {
 
 	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'; if not logged in as '${userEmailAddress}', then log out first"
 	macro firstLoginPG {
-		if (isSet(virtualHostsURL)) {
-			Navigator.openSpecificURL(url = "${virtualHostsURL}");
+		if (isSet(freeLogin)) {
+			if (isSet(virtualHostsURL)) {
+				Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
+			}
+			else {
+				Navigator.openURL(freeLogin = "true");
+			}
 		}
 		else {
-			Navigator.openURL();
-		}
+			if (isSet(virtualHostsURL)) {
+				Navigator.openSpecificURL(url = "${virtualHostsURL}");
+			}
+			else {
+				Navigator.openURL();
+			}
 
-		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
-			User.logoutPG(
-				nodePort = "${nodePort}",
-				specificURL = "${virtualHostsURL}");
+			if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
+				User.logoutPG(
+					nodePort = "${nodePort}",
+					specificURL = "${virtualHostsURL}");
 
-			User.loginPG(
-				specificURL = "${virtualHostsURL}",
-				userEmailAddress = "${userEmailAddress}");
-		}
-		else {
-			User.loginPG(
-				localization = "${localization}",
-				localizedAgree = "${localizedAgree}",
-				localizedAnswer = "${localizedAnswer}",
-				localizedSaveButton = "${localizedSaveButton}",
-				samlEnabled = "${samlEnabled}",
-				setupWizardEnabled = "${setupWizardEnabled}",
-				specificURL = "${virtualHostsURL}",
-				userEmailAddress = "${userEmailAddress}");
+				User.loginPG(
+					specificURL = "${virtualHostsURL}",
+					userEmailAddress = "${userEmailAddress}");
+			}
+			else {
+				User.loginPG(
+					localization = "${localization}",
+					localizedAgree = "${localizedAgree}",
+					localizedAnswer = "${localizedAnswer}",
+					localizedSaveButton = "${localizedSaveButton}",
+					samlEnabled = "${samlEnabled}",
+					setupWizardEnabled = "${setupWizardEnabled}",
+					specificURL = "${virtualHostsURL}",
+					userEmailAddress = "${userEmailAddress}");
+			}
 		}
 	}
 
@@ -2248,11 +2258,18 @@ definition {
 
 		UserBar.signOut();
 
-		User.loginPG(
-			authenticationMethod = "${authenticationMethod}",
-			nodePort = "${nodePort}",
-			userEmailAddress = "${userLoginEmailAddress}",
-			userScreenName = "${userScreenName}");
+		if (isSet(freeLogin)) {
+			Navigator.openURL(
+				freeLogin = "true",
+				userEmailAddress = "${userLoginEmailAddress}");
+		}
+		else {
+			User.loginPG(
+				authenticationMethod = "${authenticationMethod}",
+				nodePort = "${nodePort}",
+				userEmailAddress = "${userLoginEmailAddress}",
+				userScreenName = "${userScreenName}");
+		}
 	}
 
 	@description = "Log out of Liferay Portal."

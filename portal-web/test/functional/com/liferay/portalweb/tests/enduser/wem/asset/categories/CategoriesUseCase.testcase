@@ -1,14 +1,16 @@
 @component-name = "portal-categories"
 definition {
 
+	property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenLocation=&quot;REQUEST&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Categories";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance(freeLogin = "true");
 
-		User.firstLoginPG();
+		User.firstLoginPG(freeLogin = "true");
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
@@ -26,6 +28,7 @@ definition {
 
 	@priority = "4"
 	test AddCategorywithLocalization {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Categories,Localization";
 
 		JSONCategory.addVocabulary(
@@ -40,33 +43,25 @@ definition {
 			localizationName = "Kategorienamen",
 			vocabularyName = "Vocabulary Name");
 
-		User.openUsersAdmin(siteURLKey = "test-site-name");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.openUsersAdmin(siteURLKey = "test-site-name");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		User.openUsersAdmin(siteURLKey = "test-site-name");
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Site Administrator",
-			userScreenName = "usersn");
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "userea@liferay.com");
 
 		User.openUsersAdmin(siteURLKey = "test-site-name");
 
@@ -113,6 +108,7 @@ definition {
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
 		User.logoutAndLoginPG(
+			freeLogin = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
@@ -129,110 +125,78 @@ definition {
 
 	@priority = "4"
 	test AddCategorywithSiteRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Categories,Permissions,Roles";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 
-		User.openUsersAdmin();
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.openUsersAdmin();
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+		JSONRole.addSiteRole(
+			roleKey = "Category Role Name",
+			roleTitle = "Category Role Name");
 
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		for (var resourceActionIndex : list "ADD_VOCABULARY,ADD_CATEGORY") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.asset.categories",
+				roleTitle = "Category Role Name",
+				roleType = "site");
+		}
 
-		Role.openRolesAdmin();
-
-		RoleNavigator.gotoRoleType(roleType = "Site");
-
-		Role.add(roleTitle = "Category Role Name");
-
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site and Asset Library Administration",
-			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
-			permissionNavigationValue = "Categories",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.asset.kernel.model.AssetVocabulary",
 			roleTitle = "Category Role Name",
-			roleType = "Site");
+			roleType = "site");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX",
-			permissionDefinitionValue = "Add Category",
-			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
-			permissionNavigationValue = "Categories",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_CATEGORY",
+			resourceName = "com.liferay.asset.kernel.model.AssetCategory",
 			roleTitle = "Category Role Name",
-			roleType = "Site");
+			roleType = "site");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX",
-			permissionDefinitionValue = "Add Vocabulary",
-			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
-			permissionNavigationValue = "Categories",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
 			roleTitle = "Category Role Name",
-			roleType = "Site");
+			roleType = "site");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_VOCABULARY_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
-			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
-			permissionNavigationValue = "Categories",
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Category Role Name",
-			roleType = "Site");
-
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_ADD_CATEGORY_CHECKBOX",
-			permissionDefinitionValue = "Add Category",
-			permissionNavigationKey = "SITE_ADMIN_CATEGORIES",
-			permissionNavigationValue = "Categories",
-			roleTitle = "Category Role Name",
-			roleType = "Site");
-
-		User.openUsersAdmin();
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Category Role Name",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
+			freeLogin = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name");
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name",
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+		Category.addCP(
+			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
 		User.logoutAndLoginPG(
+			freeLogin = "true",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 	}
@@ -518,6 +482,7 @@ definition {
 
 	@priority = "4"
 	test DeletePartialCategory {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Categories,Permissions,Roles";
 
 		JSONCategory.addVocabulary(
@@ -529,27 +494,16 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		User.openUsersAdmin();
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.openUsersAdmin();
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONRole.addSiteRole(
 			roleKey = "Category Role Name",
@@ -603,13 +557,17 @@ definition {
 			roleTitle = "Category Role Name",
 			roleType = "site");
 
-		User.openUsersAdmin(siteURLKey = "test-site-name");
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
 
-		User.assignSiteRoleCP(
-			siteRoleName = "Category Role Name",
-			userScreenName = "usersn");
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
+			roleTitle = "Category Role Name",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
+			freeLogin = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 

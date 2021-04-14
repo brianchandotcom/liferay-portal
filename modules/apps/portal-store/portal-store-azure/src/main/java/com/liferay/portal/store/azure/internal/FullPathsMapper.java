@@ -22,41 +22,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
- * This mapper uses the same mapping as the impl in the <code>S3Store</code>:
- * Liferay/'s '${fileName}', having version named '${versionLabel}' (with
- * companyId + repositoryId always being known as well) translates to Azure Blob
- * with a name like:
- * <pre>
- * 		${companyId}/${repositoryId}/{$fileName}/${versionLabel}
- * </pre>
- * <p>
- * A <code>dirName</code> translates to:
- * <pre>
- *		${companyId}/${repositoryId}/{$dirName}
- * </pre>
- *
  * @author Josef Sustacek
  */
-@Component(
-	immediate = true,
-	property = LiferayToAzurePathsMapper.IMPL_TYPE_OSGI_PROPERTY + "=" + FullPathsMapper.IMPL_TYPE,
-	service = LiferayToAzurePathsMapper.class
-)
-public class FullPathsMapper implements LiferayToAzurePathsMapper {
+public class FullPathsMapper {
 
 	public static final String IMPL_TYPE = "full-path";
 
 	public static final Log _log = LogFactoryUtil.getLog(FullPathsMapper.class);
-
-	@Override
-
-	// Transform
-	// 		${fileName} + ${versionLabel}
-	// to
-	// 		${companyId}/${repositoryId}/${fileName}/${versionLabel}
 
 	public String toAzureBlobName(
 		long companyId, long repositoryId, String fileName,
@@ -78,13 +51,6 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		return blobName;
 	}
 
-	@Override
-
-	// Transform
-	// 		${dirName}
-	// to
-	// 		${companyId}/${repositoryId}/${dirName}/
-
 	public String toAzureBlobsPrefix(
 		long companyId, long repositoryId, String dirName) {
 
@@ -102,7 +68,7 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 
 		// without the slash at the end, "some-dir/file-1.pdf" would match both blobs
 
-		String dirPathEndingWithDelimiter = dirPath + PATH_DELIMITER;
+		String dirPathEndingWithDelimiter = dirPath + StringPool.SLASH;
 
 		if (_log.isTraceEnabled()) {
 			_log.trace(
@@ -114,27 +80,20 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		return dirPathEndingWithDelimiter;
 	}
 
-	@Override
-
-	// Transform
-	// 		${companyId}/${repositoryId}/${dirName}/
-	// to
-	// 		${dirName}
-
 	public String toLiferayDirName(
 		long companyId, long repositoryId, String azureBlobsPrefix) {
 
 		Objects.requireNonNull(azureBlobsPrefix);
 
-		if (!azureBlobsPrefix.endsWith(PATH_DELIMITER)) {
+		if (!azureBlobsPrefix.endsWith(StringPool.SLASH)) {
 			throw new IllegalArgumentException(
-				"'azureBlobsPrefix' must end with " + PATH_DELIMITER);
+				"'azureBlobsPrefix' must end with " + StringPool.SLASH);
 		}
 
 		String rootBlobPathWithDelimiter =
 			toFullAzurePath(
 				companyId, repositoryId, StringPool.BLANK, Optional.empty()) +
-					PATH_DELIMITER;
+					StringPool.SLASH;
 
 		if (!azureBlobsPrefix.startsWith(rootBlobPathWithDelimiter)) {
 			throw new IllegalArgumentException(
@@ -152,7 +111,7 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 
 		// drop the delimiter at the end, if any
 
-		if (!dirName.isEmpty() && dirName.endsWith(PATH_DELIMITER)) {
+		if (!dirName.isEmpty() && dirName.endsWith(StringPool.SLASH)) {
 			dirName = dirName.substring(0, dirName.length() - 1);
 		}
 
@@ -166,22 +125,6 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		return dirName;
 	}
 
-	/**
-	 * Returns the <code>liferayPath</code>, making sure that:
-	 * <ul>
-	 *     <li>it does not start with <code>/</code></li>
-	 *     <li>it does not end with <code>/</code></li>
-	 * </ul>
-	 * The <code>liferayPath</code> may denote either a file or a directory in Liferay.
-	 * When <code>versionLabel</code> is passed in (makes only sense for a file),
-	 * it's appended to the liferayPath.
-	 *
-	 * @param companyId
-	 * @param repositoryId
-	 * @param liferayPath
-	 * @param versionLabel
-	 * @return
-	 */
 	String toFullAzurePath(
 		long companyId, long repositoryId, String liferayPath,
 		Optional<String> versionLabel) {
@@ -192,11 +135,11 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		// TODO normalize the 'liferayPath' somehow more, like escape special characters etc.?
 
 		String pathNoDelimitersBegin =
-			liferayPath.startsWith(PATH_DELIMITER) ? liferayPath.substring(1) :
+			liferayPath.startsWith(StringPool.SLASH) ? liferayPath.substring(1) :
 				liferayPath;
 
 		String pathNoDelimitersBeginOrEnd =
-			pathNoDelimitersBegin.endsWith(PATH_DELIMITER) ?
+			pathNoDelimitersBegin.endsWith(StringPool.SLASH) ?
 				pathNoDelimitersBegin.substring(
 					0, pathNoDelimitersBegin.length() - 1) :
 						pathNoDelimitersBegin;
@@ -206,14 +149,14 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		).append(
 			companyId
 		).append(
-			PATH_DELIMITER
+			StringPool.SLASH
 		).append(
 			repositoryId
 		);
 
 		if (!pathNoDelimitersBeginOrEnd.isEmpty()) {
 			fullPath.append(
-				PATH_DELIMITER
+				StringPool.SLASH
 			).append(
 				pathNoDelimitersBeginOrEnd
 			);
@@ -224,7 +167,7 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 			).isEmpty()) {
 
 			fullPath.append(
-				PATH_DELIMITER
+				StringPool.SLASH
 			).append(
 				versionLabel.get()
 			);
@@ -242,13 +185,6 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		return fullPathString;
 	}
 
-	@Override
-
-	// Transform
-	// 		${companyId}/${repositoryId}/${fileName}/${versionLabel}
-	// to
-	// 		${fileName}
-
 	public String toLiferayFileName(
 		long companyId, long repositoryId, String azureBlobName) {
 
@@ -257,7 +193,7 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		String rootPrefix =
 			toFullAzurePath(
 				companyId, repositoryId, StringPool.BLANK, Optional.empty()) +
-					PATH_DELIMITER;
+					StringPool.SLASH;
 
 		if (!azureBlobName.startsWith(rootPrefix)) {
 			throw new IllegalArgumentException(
@@ -275,7 +211,7 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		// TODO there might be invalid files, directly in the "root", ignore them?
 
 		if (fileNamePathWithVersion.isEmpty() ||
-			!fileNamePathWithVersion.contains(PATH_DELIMITER)) {
+			!fileNamePathWithVersion.contains(StringPool.SLASH)) {
 
 			throw new IllegalArgumentException(
 				String.format(
@@ -289,7 +225,7 @@ public class FullPathsMapper implements LiferayToAzurePathsMapper {
 		// drop the version part ("/{versionLabel}")
 
 		String fileName = fileNamePathWithVersion.substring(
-			0, fileNamePathWithVersion.lastIndexOf(PATH_DELIMITER));
+			0, fileNamePathWithVersion.lastIndexOf(StringPool.SLASH));
 
 		if (_log.isTraceEnabled()) {
 			_log.trace(

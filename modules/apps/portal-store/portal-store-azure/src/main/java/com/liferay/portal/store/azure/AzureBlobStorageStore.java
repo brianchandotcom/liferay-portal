@@ -36,6 +36,7 @@ import com.azure.storage.common.Utility;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.azure.configuration.AzureBlobStorageStoreConfiguration;
 import com.liferay.portal.store.azure.internal.FullPathsMapper;
-import com.liferay.portal.store.azure.internal.LiferayToAzurePathsMapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +65,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Josef Sustacek
@@ -93,7 +92,7 @@ public class AzureBlobStorageStore implements Store {
 		Objects.requireNonNull(versionLabel, "'versionLabel' cannot be null");
 		Objects.requireNonNull(inputStream, "'inputStream' cannot be null");
 
-		String blobName = _liferayToAzurePathsMapper.toAzureBlobName(
+		String blobName = _fullPathsMapper.toAzureBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
@@ -153,7 +152,7 @@ public class AzureBlobStorageStore implements Store {
 
 		Objects.requireNonNull(dirName);
 
-		String blobsPrefix = _liferayToAzurePathsMapper.toAzureBlobsPrefix(
+		String blobsPrefix = _fullPathsMapper.toAzureBlobsPrefix(
 			companyId, repositoryId, dirName);
 
 		if (_log.isInfoEnabled()) {
@@ -254,7 +253,7 @@ public class AzureBlobStorageStore implements Store {
 		Objects.requireNonNull(fileName, "'fileName' cannot be null");
 		Objects.requireNonNull(versionLabel, "'versionLabel' cannot be null");
 
-		String blobName = _liferayToAzurePathsMapper.toAzureBlobName(
+		String blobName = _fullPathsMapper.toAzureBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		if (_log.isInfoEnabled()) {
@@ -300,7 +299,7 @@ public class AzureBlobStorageStore implements Store {
 				companyId, repositoryId, fileName);
 		}
 
-		String blobName = _liferayToAzurePathsMapper.toAzureBlobName(
+		String blobName = _fullPathsMapper.toAzureBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
@@ -332,7 +331,7 @@ public class AzureBlobStorageStore implements Store {
 
 		// "dirName" may be empty ~ "root"
 
-		String blobNamesPrefix = _liferayToAzurePathsMapper.toAzureBlobsPrefix(
+		String blobNamesPrefix = _fullPathsMapper.toAzureBlobsPrefix(
 			companyId, repositoryId, dirName);
 
 		if (_log.isDebugEnabled()) {
@@ -353,7 +352,7 @@ public class AzureBlobStorageStore implements Store {
 
 		Set<String> fileNames = blobItems.stream(
 		).map(
-			blobItem -> _liferayToAzurePathsMapper.toLiferayFileName(
+			blobItem -> _fullPathsMapper.toLiferayFileName(
 				companyId, repositoryId, blobItem.getName())
 		).collect(
 			Collectors.toCollection(() -> new LinkedHashSet<>())
@@ -378,7 +377,7 @@ public class AzureBlobStorageStore implements Store {
 				companyId, repositoryId, fileName);
 		}
 
-		String blobName = _liferayToAzurePathsMapper.toAzureBlobName(
+		String blobName = _fullPathsMapper.toAzureBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		if (_log.isDebugEnabled()) {
@@ -410,7 +409,7 @@ public class AzureBlobStorageStore implements Store {
 		// the blobs holding the versions of the file have paths like
 		// '${companyId}/${repositoryId}/<path ~ fileName>/<version>',
 
-		String blobsPrefix = _liferayToAzurePathsMapper.toAzureBlobsPrefix(
+		String blobsPrefix = _fullPathsMapper.toAzureBlobsPrefix(
 			companyId, repositoryId, fileName);
 
 		if (_log.isDebugEnabled()) {
@@ -424,7 +423,7 @@ public class AzureBlobStorageStore implements Store {
 
 		PagedIterable<BlobItem> blobItems =
 			_blobContainerClient.listBlobsByHierarchy(
-				LiferayToAzurePathsMapper.PATH_DELIMITER, opts, null);
+				StringPool.SLASH, opts, null);
 
 		// fetch all blobs under given directory; only take non-directories; drop the shared prefix
 
@@ -458,7 +457,7 @@ public class AzureBlobStorageStore implements Store {
 		// version may be null, meaning the first one should be returned...
 
 		if (Validator.isNull(versionLabel)) {
-			String blobsPrefix = _liferayToAzurePathsMapper.toAzureBlobsPrefix(
+			String blobsPrefix = _fullPathsMapper.toAzureBlobsPrefix(
 				companyId, repositoryId, fileName);
 
 			if (_log.isDebugEnabled()) {
@@ -479,7 +478,7 @@ public class AzureBlobStorageStore implements Store {
 			return false;
 		}
 
-		String blobName = _liferayToAzurePathsMapper.toAzureBlobName(
+		String blobName = _fullPathsMapper.toAzureBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		if (_log.isDebugEnabled()) {
@@ -613,12 +612,6 @@ public class AzureBlobStorageStore implements Store {
 	private static volatile AzureBlobStorageStoreConfiguration _configuration;
 
 	private BlobContainerClient _blobContainerClient;
-
-	// Use the full mapper by default, similar to how S3Store does it
-
-	@Reference(
-		target = "(" + LiferayToAzurePathsMapper.IMPL_TYPE_OSGI_PROPERTY + "=" + FullPathsMapper.IMPL_TYPE + ")"
-	)
-	private LiferayToAzurePathsMapper _liferayToAzurePathsMapper;
+	private final FullPathsMapper _fullPathsMapper = new FullPathsMapper();
 
 }

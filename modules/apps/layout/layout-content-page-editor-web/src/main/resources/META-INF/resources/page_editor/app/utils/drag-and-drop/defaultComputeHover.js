@@ -90,11 +90,17 @@ export default function defaultComputeHover({
 		const targetIsEmpty =
 			layoutDataRef.current.items[targetItem.itemId]?.children.length ===
 			0;
+		const allowedChild = checkAllowedChild(
+			sourceItem,
+			targetItem,
+			layoutDataRef
+		);
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
 			(targetIsEmpty || targetIsColumn || targetIsContainerFlex) &&
-			!targetIsFragment
+			!targetIsFragment &&
+			allowedChild
 		);
 	})();
 

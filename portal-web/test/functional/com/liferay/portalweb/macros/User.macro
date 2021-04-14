@@ -4,21 +4,9 @@ definition {
 	var userEmailAddress = "test@liferay.com";
 
 	macro _login {
-		AssertClick(
-			locator1 = "UserBar#USER_SIGN_IN",
-			value1 = "Sign In");
-
-		Type.typePause(
-			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "${userEmailAddress}");
-
-		Type.typePause(
-			locator1 = "TextInput#PASSWORD",
-			value1 = "${password}");
-
-		Click(locator1 = "Button#SIGN_IN");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
+		SignIn._signIn(
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
 	}
 
 	macro _signInLocalization {

@@ -363,12 +363,12 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
-    "/structured-contents/{structuredContentId}/versions":
+    "/structured-contents/{structuredContentId}":
         get:
             # @review
             description:
                 Retrieves all versions of a structured content via its ID.
-            operationId: getStructuredContentsVersionsPage
+            operationId: getStructuredContentsStructuredContentPage
             parameters:
                 - in: path
                   name: structuredContentId
@@ -396,3 +396,60 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
+    "/structured-contents/{structuredContentId}/by-version/{version}":
+        delete:
+            # @review
+            description:
+                Deletes a version of a structured content via its ID.
+            operationId: deleteStructuredContentByVersion
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: version
+                  required: true
+                  schema:
+                      format: double
+                      type: number
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: ["StructuredContent"]
+        get:
+            # @review
+            description:
+                Retrieves a version of a structured content
+            operationId: getStructuredContentByVersion
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: version
+                  required: true
+                  schema:
+                      format: double
+                      type: number
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                        application/xml:
+                            schema:
+                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                    description:
+                        ""
+            tags: [ "StructuredContent" ]

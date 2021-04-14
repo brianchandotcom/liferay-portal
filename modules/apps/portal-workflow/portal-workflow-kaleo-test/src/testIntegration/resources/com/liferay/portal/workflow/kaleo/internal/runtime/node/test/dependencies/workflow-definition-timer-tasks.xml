@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+
+<!--~
+~ Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+~
+~ This library is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU Lesser General Public License as published by the Free
+~ Software Foundation; either version 2.1 of the License, or (at your option)
+~ any later version.
+~
+~ This library is distributed in the hope that it will be useful, but WITHOUT
+~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+~ FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+~ details.
+-->
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.3.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.3.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_3_0.xsd"
+>
+	<name>Timer Tasks</name>
+	<version>1</version>
+	<state>
+		<name>StartNode</name>
+		<initial>true</initial>
+		<transitions>
+			<transition>
+				<name>connector17343</name>
+				<target>Timer Action</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>EndNode</name>
+		<actions>
+			<action>
+				<name>Approve</name>
+				<description>Approve</description>
+				<script>
+					<![CDATA[com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);]]>
+				</script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+	<task>
+		<name>Timer Action</name>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+					<auto-create>false</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<task-timers>
+			<task-timer>
+				<name>Timer</name>
+				<delay>
+					<duration>1</duration>
+					<scale>second</scale>
+				</delay>
+				<blocking>false</blocking>
+				<timer-actions>
+					<timer-action>
+						<name>Timer Action</name>
+						<script>
+							<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+						</script>
+						<script-language>groovy</script-language>
+					</timer-action>
+				</timer-actions>
+			</task-timer>
+		</task-timers>
+		<transitions>
+			<transition>
+				<name>connector22081</name>
+				<target>Timer Notification</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Timer Notification</name>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+					<auto-create>false</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<task-timers>
+			<task-timer>
+				<name>Timer</name>
+				<delay>
+					<duration>1</duration>
+					<scale>second</scale>
+				</delay>
+				<blocking>false</blocking>
+				<timer-actions>
+					<timer-notification>
+						<name>Timer</name>
+						<description>
+							<![CDATA[]]>
+						</description>
+						<template>
+							<![CDATA[Timer notification template]]>
+						</template>
+						<template-language>freemarker</template-language>
+						<notification-type>email</notification-type>
+						<recipients receptionType="to">
+							<user />
+						</recipients>
+					</timer-notification>
+				</timer-actions>
+			</task-timer>
+		</task-timers>
+		<transitions>
+			<transition>
+				<name>connector26121</name>
+				<target>Timer Reassignment</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Timer Reassignment</name>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+					<auto-create>false</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<task-timers>
+			<task-timer>
+				<name>Timer</name>
+				<delay>
+					<duration>1</duration>
+					<scale>second</scale>
+				</delay>
+				<blocking>false</blocking>
+				<timer-actions>
+					<reassignments>
+						<user>
+							<email-address>test@liferay.com</email-address>
+						</user>
+					</reassignments>
+				</timer-actions>
+			</task-timer>
+		</task-timers>
+		<transitions>
+			<transition>
+				<name>connector30784</name>
+				<target>EndNode</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>

@@ -1555,6 +1555,7 @@ definition {
 
 	macro editFragmentHTML {
 		PageEditor.gotoEditableFieldEdit(
+			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${editableId}");
 

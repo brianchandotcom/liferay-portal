@@ -1303,52 +1303,6 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test ViewBlogsPortletWithNoPermissions {
-		Portlet.gotoPortletOptions(
-			portletName = "Blogs",
-			portletOption = "Permissions");
-
-		BlogsConfiguration.selectConfigurationIFrame();
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Site Member");
-
-		for (var permissionDefinitionKeyValue : list "CONFIGURATION_PERMISSIONS_ADD_DISPLAY_TEMPLATE_CHECKBOX,CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX,CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX,CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX,CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX") {
-			Role.removePermissionPG(
-				permissionDefinitionKey = "${permissionDefinitionKeyValue}",
-				roleTitle = "Owner");
-		}
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Blogs",
-			portletOption = "Permissions");
-
-		BlogsConfiguration.selectConfigurationIFrame();
-
-		PermissionsInline.viewPermissionsRemoved(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest");
-
-		PermissionsInline.viewPermissionsRemoved(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Site Member");
-
-		for (var permissionDefinitionKeyValue : list "CONFIGURATION_PERMISSIONS_ADD_DISPLAY_TEMPLATE_CHECKBOX,CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX,CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX,CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX,CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX") {
-			PermissionsInline.viewPermissionsRemoved(
-				permissionDefinitionKey = "${permissionDefinitionKeyValue}",
-				roleTitle = "Owner");
-		}
-	}
-
-	@priority = "4"
-	@refactorneeded
 	test ViewEntriesUsingCardADT {
 		ApplicationDisplayTemplates.selectPortletADT(
 			portletName = "Blogs",

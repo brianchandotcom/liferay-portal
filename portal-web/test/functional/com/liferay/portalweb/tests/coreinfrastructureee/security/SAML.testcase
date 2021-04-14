@@ -287,7 +287,7 @@ definition {
 	@description = "This is a use case for LPS-39013."
 	@priority = "4"
 	test AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP {
-		property test.name.skip.portal.instance = "AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP";
+		property test.name.skip.portal.instance = "SAML#AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 

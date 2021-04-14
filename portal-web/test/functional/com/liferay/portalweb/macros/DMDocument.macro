@@ -244,9 +244,7 @@ definition {
 	}
 
 	macro addDMShortcutCP {
-		DMNavigator.gotoAddDocumentTypeCP(
-			contentPage = "${contentPage}",
-			dmDocumentTypeName = "Shortcut");
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Shortcut");
 
 		Click(locator1 = "DocumentsAndMediaAddShortcut#SELECT_DOCUMENT_BUTTON");
 

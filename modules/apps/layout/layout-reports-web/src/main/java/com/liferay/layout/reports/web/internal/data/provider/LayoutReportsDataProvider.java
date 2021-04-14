@@ -14,8 +14,12 @@
 
 package com.liferay.layout.reports.web.internal.data.provider;
 
+import com.liferay.layout.reports.web.internal.model.LayoutReportsIssue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Cristina González
@@ -24,6 +28,14 @@ public class LayoutReportsDataProvider {
 
 	public LayoutReportsDataProvider(String apiKey) {
 		_apiKey = apiKey;
+	}
+
+	public List<LayoutReportsIssue> getLayoutReportsIssues(String url)
+		throws LayoutReportsDataProviderException {
+
+		return Arrays.asList(
+			new LayoutReportsIssue("accessibility", 0),
+			new LayoutReportsIssue("seo", 0));
 	}
 
 	public boolean isValidConnection() {

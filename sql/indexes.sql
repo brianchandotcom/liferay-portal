@@ -110,6 +110,7 @@ create index IX_9D2F5B3B on DLFileEntry (custom2ImageId, ctCollectionId);
 create index IX_C0A6F645 on DLFileEntry (fileEntryTypeId, ctCollectionId);
 create index IX_F951AC2E on DLFileEntry (folderId, name[$COLUMN_LENGTH:255$], ctCollectionId);
 create index IX_60830094 on DLFileEntry (groupId, ctCollectionId);
+create index IX_273362A5 on DLFileEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_BAF654E5 on DLFileEntry (groupId, fileEntryTypeId);
 create index IX_95A2D1F1 on DLFileEntry (groupId, folderId, ctCollectionId);
 create index IX_D8883586 on DLFileEntry (groupId, folderId, fileEntryTypeId, ctCollectionId);

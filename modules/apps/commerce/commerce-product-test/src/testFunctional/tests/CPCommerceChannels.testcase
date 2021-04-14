@@ -226,12 +226,51 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6107. EditMercanetPaymentMethod"
-	@ignore = "true"
 	@priority = "3"
 	test EditMercanetPaymentMethod {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6107 EditMercanetPaymentMethod
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+            category = "Store Management",
+            portlet = "Channels");
+
+        CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+        CommerceEntry.clickTableEntryEditButton(
+			entryName = "Mercanet",
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "Mercanet");
+
+		Type(
+			locator1 = "TextInput#DESCRIPTION",
+			value1 = "Test");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickSave();
+
+        Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		CommerceChannels.assertMercanetConfigurationEnvironment(
+			key_value = "Test",
+			paymentMethod = "Mercanet");
+
+		Refresh();
+		
+		CommerceChannels.assertMercanetConfigurationEnvironment(
+			key_value = "Simulation",
+			paymentMethod = "Mercanet");
 	}
 
 	@description = "This is a test for COMMERCE-6105. EditMoneyOrderPaymentMethod"

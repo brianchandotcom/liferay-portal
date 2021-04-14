@@ -22,4 +22,27 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
+	macro assertMercanetConfigurationEnvironment {
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "${paymentMethod}",
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			navItem = "Configuration",
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS");
+
+		Select(
+				key_fieldLabel = "Environment",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${key_value}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+	}
+
 }

@@ -45,7 +45,8 @@ public class DLUIItemKeys {
 
 	public static final String EDIT = DLUIItemKeys.class.getName() + "#edit";
 
-	public static final String EDIT_IMAGE = DLUIItemKeys.class.getName() + "#edit-image";
+	public static final String EDIT_IMAGE =
+		DLUIItemKeys.class.getName() + "#edit-image";
 
 	public static final String MOVE = DLUIItemKeys.class.getName() + "#move";
 

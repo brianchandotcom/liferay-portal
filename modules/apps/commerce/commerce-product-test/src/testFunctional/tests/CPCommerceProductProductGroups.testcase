@@ -52,7 +52,6 @@ definition {
 	test AddAPreExistingProductGroup {
 		property portal.acceptance = "false";
 
-
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
 			portlet = "Product Groups");
@@ -61,11 +60,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
-		Type( 
-			key_fieldLabel="Name",
-			value1="PG1", 
-			locator1="TextInput#GENERIC_TEXT_INPUT");
-		
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "PG1");
+
 		Button.click(button = "Submit");
 
 		CommerceNavigator.gotoPortlet(
@@ -88,7 +87,6 @@ definition {
 			locator1 = "Button#ANY");
 
 		Alert.viewSuccessMessage();
-
 	}
 
 	@description = "This is a test for COMMERCE-6068. EditAProductGroup"

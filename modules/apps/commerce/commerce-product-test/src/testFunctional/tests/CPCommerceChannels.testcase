@@ -240,17 +240,17 @@ definition {
 		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-        
+
 		CommerceNavigator.gotoPortlet(
-            category = "Store Management",
-            portlet = "Channels");
-        
+			category = "Store Management",
+			portlet = "Channels");
+
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-        
+
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "Money Order",
 			table = "Payment Methods");
-		
+
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Type(

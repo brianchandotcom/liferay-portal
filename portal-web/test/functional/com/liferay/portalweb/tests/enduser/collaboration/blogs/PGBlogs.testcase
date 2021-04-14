@@ -401,44 +401,6 @@ definition {
 			value1 = "custom-url");
 	}
 
-	@description = "This is usecase 5 for LPS-69240"
-	@priority = "4"
-	@refactorneeded
-	test AssertValidationForCustomURL {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.addEntryContent(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Panel.expandPanel(panel = "Configuration");
-
-		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
-
-		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
-
-		Check(locator1 = "Radio#CUSTOM_URL");
-
-		Type(
-			locator1 = "TextInput#BLOGS_ENTRY_URL",
-			value1 = "blogs-entry-title");
-
-		Button.clickPublish();
-
-		AssertElementPresent(locator1 = "Message#ERROR");
-
-		AssertTextEquals(
-			locator1 = "TextInput#BLOGS_ENTRY_URL",
-			value1 = "blogs-entry-title");
-	}
-
 	@priority = "5"
 	@refactorneeded
 	test DeleteBlogsEntries {

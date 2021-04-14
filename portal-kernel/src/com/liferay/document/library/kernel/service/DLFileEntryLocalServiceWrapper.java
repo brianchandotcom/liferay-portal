@@ -411,6 +411,33 @@ public class DLFileEntryLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the document library file entry with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the document library file entry's external reference code
+	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchDLFileEntryByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return _dlFileEntryLocalService.fetchDLFileEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchDLFileEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public DLFileEntry fetchDLFileEntryByReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return _dlFileEntryLocalService.fetchDLFileEntryByReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the document library file entry matching the UUID and group.
 	 *
 	 * @param uuid the document library file entry's UUID
@@ -555,6 +582,23 @@ public class DLFileEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryLocalService.getDLFileEntry(fileEntryId);
+	}
+
+	/**
+	 * Returns the document library file entry with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the document library file entry's external reference code
+	 * @return the matching document library file entry
+	 * @throws PortalException if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry getDLFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryLocalService.getDLFileEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	/**

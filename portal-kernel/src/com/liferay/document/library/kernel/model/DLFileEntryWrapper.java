@@ -49,6 +49,7 @@ public class DLFileEntryWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -99,6 +100,13 @@ public class DLFileEntryWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
@@ -415,6 +423,16 @@ public class DLFileEntryWrapper
 	@Override
 	public String getExtension() {
 		return model.getExtension();
+	}
+
+	/**
+	 * Returns the external reference code of this document library file entry.
+	 *
+	 * @return the external reference code of this document library file entry
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -929,6 +947,16 @@ public class DLFileEntryWrapper
 	@Override
 	public void setExtension(String extension) {
 		model.setExtension(extension);
+	}
+
+	/**
+	 * Sets the external reference code of this document library file entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this document library file entry
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

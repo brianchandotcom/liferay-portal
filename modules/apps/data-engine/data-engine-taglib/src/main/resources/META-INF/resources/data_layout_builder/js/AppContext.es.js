@@ -428,11 +428,18 @@ const createReducer = (dataLayoutBuilder) => {
 			case SWITCH_SIDEBAR_PANEL: {
 				const {sidebarOpen, sidebarPanelId} = action.payload;
 
-				return {
-					...state,
-					sidebarOpen,
-					sidebarPanelId,
-				};
+				if ((sidebarOpen || sidebarOpen === false) && sidebarPanelId) {
+					return {
+						...state,
+						sidebarOpen,
+						sidebarPanelId,
+					};
+				}
+				else {
+					return {
+						...state,
+					};
+				}
 			}
 			case UPDATE_APP_PROPS: {
 				return {

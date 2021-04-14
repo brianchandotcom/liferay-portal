@@ -25,14 +25,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "file-storage")
 @Meta.OCD(
-	id = AzureBlobStorageStoreConfiguration.ID,
+	id = "com.liferay.portal.store.azure.configuration.AzureBlobStorageStoreConfiguration",
 	localization = "content/Language",
 	name = "azure-blob-storage-store-configuration-name"
 )
 public interface AzureBlobStorageStoreConfiguration {
-
-	String ID =
-		"com.liferay.portal.store.azure.configuration.AzureBlobStorageStoreConfiguration";
 
 	// Example values:
 

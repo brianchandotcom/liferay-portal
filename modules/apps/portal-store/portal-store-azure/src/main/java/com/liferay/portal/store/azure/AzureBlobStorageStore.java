@@ -71,7 +71,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Josef Sustacek
  */
 @Component(
-	configurationPid = AzureBlobStorageStoreConfiguration.ID,
+	configurationPid = "com.liferay.portal.store.azure.configuration.AzureBlobStorageStoreConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = "store.type=com.liferay.portal.store.azure.AzureBlobStorageStore",
 	service = Store.class

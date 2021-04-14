@@ -26,8 +26,6 @@ describe('HtmlScreen', () => {
 
 	beforeEach(() => {
 		Liferay.SPA = {};
-
-		jest.spyOn(console, 'log').mockImplementation(() => {});
 	});
 
 	it('gets title selector', () => {

@@ -15,7 +15,7 @@
 import {runScriptsInElement} from 'frontend-js-web';
 
 import Cacheable from '../cacheable/Cacheable';
-import {getUid, log} from '../util/utils';
+import {getUid} from '../util/utils';
 
 class Screen extends Cacheable {
 
@@ -54,9 +54,7 @@ class Screen extends Cacheable {
 	 * Fires when the screen is active. Allows a screen to perform any setup
 	 * that requires its DOM to be visible. Lifecycle.
 	 */
-	activate() {
-		log('Screen [' + this + '] activate');
-	}
+	activate() {}
 
 	/**
 	 * Gives the Screen a chance to cancel the navigation and stop itself from
@@ -65,9 +63,7 @@ class Screen extends Cacheable {
 	 * @return {boolean=|?Promise=} If returns or resolves to true,
 	 *     the current screen is locked and the next nagivation interrupted.
 	 */
-	beforeActivate() {
-		log('Screen [' + this + '] beforeActivate');
-	}
+	beforeActivate() {}
 
 	/**
 	 * Gives the Screen a chance to cancel the navigation and stop itself from
@@ -77,9 +73,7 @@ class Screen extends Cacheable {
 	 * @return {boolean=|?Promise=} If returns or resolves to true,
 	 *     the current screen is locked and the next nagivation interrupted.
 	 */
-	beforeDeactivate() {
-		log('Screen [' + this + '] beforeDeactivate');
-	}
+	beforeDeactivate() {}
 
 	/**
 	 * Gives the Screen a chance format the path before history update.
@@ -104,9 +98,7 @@ class Screen extends Cacheable {
 	 * deactivated, for example cancelling outstanding requests or stopping
 	 * timers. Lifecycle.
 	 */
-	deactivate() {
-		log('Screen [' + this + '] deactivate');
-	}
+	deactivate() {}
 
 	/**
 	 * Dispose a screen, either after it is deactivated (in the case of a
@@ -115,7 +107,6 @@ class Screen extends Cacheable {
 	 */
 	disposeInternal() {
 		super.disposeInternal();
-		log('Screen [' + this + '] dispose');
 	}
 
 	/**
@@ -154,8 +145,6 @@ class Screen extends Cacheable {
 	 *     navigation until it is resolved.
 	 */
 	flip(surfaces) {
-		log('Screen [' + this + '] flip');
-
 		var transitions = [];
 
 		Object.keys(surfaces).forEach((sId) => {
@@ -193,9 +182,7 @@ class Screen extends Cacheable {
 	 *     the content of the surface. If returns falsy values surface default
 	 *     content is restored.
 	 */
-	getSurfaceContent() {
-		log('Screen [' + this + '] getSurfaceContent');
-	}
+	getSurfaceContent() {}
 
 	/**
 	 * Gets the screen title.
@@ -215,8 +202,6 @@ class Screen extends Cacheable {
 	 *     until it is resolved. This is useful for loading async content.
 	 */
 	load() {
-		log('Screen [' + this + '] load');
-
 		return Promise.resolve();
 	}
 

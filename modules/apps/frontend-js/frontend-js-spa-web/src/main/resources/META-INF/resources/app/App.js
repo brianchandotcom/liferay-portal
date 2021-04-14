@@ -25,7 +25,6 @@ import {
 	getUrlPathWithoutHash,
 	getUrlPathWithoutHashAndSearch,
 	isCurrentBrowserPath,
-	log,
 	removePathTrailingSlash,
 	setReferrer,
 } from '../util/utils';
@@ -357,14 +356,10 @@ class App extends EventEmitter {
 			const path = getUrlPath(url);
 
 			if (!this.isLinkSameOrigin_(uri.host)) {
-				log('Offsite link clicked');
-
 				return false;
 			}
 
 			if (!this.isSameBasePath_(path)) {
-				log("Link clicked outside app's base path");
-
 				return false;
 			}
 
@@ -375,8 +370,6 @@ class App extends EventEmitter {
 			}
 
 			if (!this.findRoute(path)) {
-				log('No route for ' + path);
-
 				return false;
 			}
 
@@ -414,8 +407,6 @@ class App extends EventEmitter {
 	 */
 	createScreenInstance(path, route) {
 		if (!this.pendingNavigate && path === this.activePath) {
-			log('Already at destination, refresh navigation');
-
 			return this.activeScreen;
 		}
 		/* jshint newcap: false */
@@ -431,7 +422,6 @@ class App extends EventEmitter {
 			else {
 				screen = handler(route) || new Screen();
 			}
-			log('Create screen for [' + path + '] [' + screen + ']');
 		}
 
 		return screen;
@@ -471,8 +461,6 @@ class App extends EventEmitter {
 		if (!route) {
 			return Promise.reject(new Error('No route for ' + path));
 		}
-
-		log('Navigate to [' + path + ']');
 
 		this.stopPendingNavigate_();
 		this.isNavigationPending = true;
@@ -561,7 +549,6 @@ class App extends EventEmitter {
 		this.pendingNavigate = null;
 		Liferay.SPA.__capturedFormElement__ = null;
 		Liferay.SPA.__capturedFormButtonElement__ = null;
-		log('Navigation done');
 	}
 
 	/**
@@ -676,7 +663,6 @@ class App extends EventEmitter {
 	 * @protected
 	 */
 	handleNavigateError_(path, nextScreen, error) {
-		log('Navigation error for [' + nextScreen + '] (' + error.stack + ')');
 		this.emit('navigationError', {
 			error,
 			nextScreen,
@@ -1010,8 +996,6 @@ class App extends EventEmitter {
 				this.pendingNavigate.path === event.path ||
 				this.navigationStrategy === NavigationStrategy.SCHEDULE_LAST
 			) {
-				log('Waiting...');
-
 				return;
 			}
 		}
@@ -1052,10 +1036,6 @@ class App extends EventEmitter {
 			event.shiftKey ||
 			event.button
 		) {
-			log(
-				'Navigate aborted, invalid mouse button or modifier key pressed.'
-			);
-
 			return;
 		}
 		this.maybeNavigate_(event.delegateTarget.href, event);
@@ -1070,8 +1050,6 @@ class App extends EventEmitter {
 	onDocSubmitDelegate_(event) {
 		var form = event.delegateTarget;
 		if (form.method === 'get') {
-			log('GET method not supported');
-
 			return;
 		}
 		event.capturedFormElement = form;
@@ -1161,7 +1139,6 @@ class App extends EventEmitter {
 		}
 
 		if (state.senna) {
-			log('History navigation to [' + state.path + ']');
 			this.popstateScrollTop = state.scrollTop;
 			this.popstateScrollLeft = state.scrollLeft;
 			if (!this.nativeScrollRestorationSupported) {
@@ -1254,8 +1231,6 @@ class App extends EventEmitter {
 			return Promise.reject(new Error('No route for ' + path));
 		}
 
-		log('Prefetching [' + path + ']');
-
 		var nextScreen = this.createScreenInstance(path, route);
 
 		return nextScreen
@@ -1320,16 +1295,6 @@ class App extends EventEmitter {
 		Object.keys(surfaces).forEach((id) => {
 			var surfaceContent = nextScreen.getSurfaceContent(id, params);
 			surfaces[id].addContent(nextScreen.getId(), surfaceContent);
-			log(
-				'Screen [' +
-					nextScreen.getId() +
-					'] add content to surface ' +
-					'[' +
-					surfaces[id] +
-					'] [' +
-					(surfaceContent ? '...' : 'empty') +
-					']'
-			);
 		});
 	}
 

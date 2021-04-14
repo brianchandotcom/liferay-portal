@@ -52,7 +52,6 @@ describe('App', function () {
 
 		jest.resetAllMocks();
 
-		jest.spyOn(console, 'log').mockImplementation(() => {});
 		jest.spyOn(window, 'scrollTo').mockImplementation((top, left) => {
 			window.history.state.scrollTop = top;
 			window.history.state.scrollLeft = left;

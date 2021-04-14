@@ -166,17 +166,6 @@ export function isCurrentBrowserPath(url) {
 }
 
 /**
- * Logs the provided message in DEV environments
- * @param {String} message
- */
-export function log(message) {
-	if (process.env.NODE_ENV === 'development') {
-		// eslint-disable-next-line
-		console.log(message);
-	}
-}
-
-/**
  * Removes trailing slash in path.
  * @param {!string}
  * @return {string}

@@ -98,7 +98,9 @@ public class CopyBlueprintMVCActionCommand extends BaseMVCActionCommand {
 
 			List<String> errors = blueprintValidationException.getErrors();
 
-			errors.forEach(key -> SessionErrors.add(actionRequest, key));
+			errors.forEach(
+				key -> SessionErrors.add(
+					actionRequest, BlueprintsAdminWebKeys.ERROR, key));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException.getMessage(), portalException);

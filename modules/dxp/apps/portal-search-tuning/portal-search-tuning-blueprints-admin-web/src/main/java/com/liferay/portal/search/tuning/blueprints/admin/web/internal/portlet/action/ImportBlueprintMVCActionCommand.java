@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
+import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminWebKeys;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.handler.BlueprintExceptionRequestHandler;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
 import com.liferay.portal.search.tuning.blueprints.util.importer.BlueprintsImporter;
@@ -83,7 +85,9 @@ public class ImportBlueprintMVCActionCommand extends BaseMVCActionCommand {
 		catch (PortalException portalException) {
 			_log.error(portalException.getMessage(), portalException);
 
-			hideDefaultErrorMessage(actionRequest);
+			SessionErrors.add(
+				actionRequest, BlueprintsAdminWebKeys.ERROR,
+				portalException.getMessage());
 
 			_blueprintExceptionRequestHandler.handlePortalException(
 				actionRequest, actionResponse, portalException);

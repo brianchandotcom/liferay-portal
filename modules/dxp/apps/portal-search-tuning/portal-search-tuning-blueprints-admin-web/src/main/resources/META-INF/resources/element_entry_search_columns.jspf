@@ -25,11 +25,20 @@
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
-			<h4>
-				<aui:a href="<%= editEntryURL %>">
-					<%= entry.getTitle(locale) %>
-				</aui:a>
-			</h4>
+			<c:choose>
+				<c:when test="<%= ElementEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+					<h4>
+						<aui:a href="<%= editEntryURL %>">
+							<%= entry.getTitle(locale) %>
+						</aui:a>
+					</h4>
+				</c:when>
+				<c:otherwise>
+					<h4>
+						<%= entry.getTitle(locale) %>
+					</h4>
+				</c:otherwise>
+			</c:choose>
 
 			<h5 class="text-default text-truncate" title="<%= entry.getDescription(locale) %>">
 				<%= entry.getDescription(locale) %>
@@ -45,12 +54,23 @@
 		/>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-expand table-cell-minw-200 table-title"
-			href="<%= editEntryURL %>"
-			name="title"
-			value="<%= entry.getTitle(locale) %>"
-		/>
+		<c:choose>
+			<c:when test="<%= ElementEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
+					href="<%= editEntryURL %>"
+					name="title"
+					value="<%= entry.getTitle(locale) %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
+					name="title"
+					value="<%= entry.getTitle(locale) %>"
+				/>
+			</c:otherwise>
+		</c:choose>
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-200"

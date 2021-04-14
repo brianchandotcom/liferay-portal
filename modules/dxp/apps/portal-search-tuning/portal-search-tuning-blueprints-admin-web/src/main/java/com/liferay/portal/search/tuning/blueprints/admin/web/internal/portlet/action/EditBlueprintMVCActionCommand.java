@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
@@ -108,7 +109,9 @@ public class EditBlueprintMVCActionCommand extends BaseMVCActionCommand {
 		catch (PortalException portalException) {
 			_log.error(portalException.getMessage(), portalException);
 
-			hideDefaultErrorMessage(actionRequest);
+			SessionErrors.add(
+				actionRequest, BlueprintsAdminWebKeys.ERROR,
+				portalException.getMessage());
 
 			_blueprintExceptionRequestHandler.handlePortalException(
 				actionRequest, actionResponse, portalException);

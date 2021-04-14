@@ -30,11 +30,20 @@
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
-			<h4>
-				<aui:a href="<%= editEntryURL %>">
-					<%= entry.getTitle(locale) %>
-				</aui:a>
-			</h4>
+			<c:choose>
+				<c:when test="<%= BlueprintEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+					<h4>
+						<aui:a href="<%= editEntryURL %>">
+							<%= entry.getTitle(locale) %>
+						</aui:a>
+					</h4>
+				</c:when>
+				<c:otherwise>
+					<h4>
+						<%= entry.getTitle(locale) %>
+					</h4>
+				</c:otherwise>
+			</c:choose>
 
 			<h5 class="text-default text-truncate-inline" title="<%= entry.getDescription(locale) %>">
 				<%= (entry.getDescription(locale).length() > 300) ? entry.getDescription(locale).substring(0, 300).concat("...") : entry.getDescription(locale) %>
@@ -63,24 +72,46 @@
 		/>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-expand table-cell-minw-200 table-title"
-			href="<%= editEntryURL %>"
-			name="title"
-			value="<%= entry.getTitle(locale) %>"
-		/>
+		<c:choose>
+			<c:when test="<%= BlueprintEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
+					href="<%= editEntryURL %>"
+					name="title"
+					value="<%= entry.getTitle(locale) %>"
+				/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-expand table-cell-minw-200"
-			name="description"
-			value="<%= entry.getDescription(locale) %>"
-		/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200"
+					name="description"
+					value="<%= entry.getDescription(locale) %>"
+				/>
 
-		<liferay-ui:search-container-column-text
-			href="<%= editEntryURL %>"
-			name="id"
-			value="<%= String.valueOf(entry.getBlueprintId()) %>"
-		/>
+				<liferay-ui:search-container-column-text
+					href="<%= editEntryURL %>"
+					name="id"
+					value="<%= String.valueOf(entry.getBlueprintId()) %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
+					name="title"
+					value="<%= entry.getTitle(locale) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200"
+					name="description"
+					value="<%= entry.getDescription(locale) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="id"
+					value="<%= String.valueOf(entry.getBlueprintId()) %>"
+				/>
+			</c:otherwise>
+		</c:choose>
 
 		<liferay-ui:search-container-column-user
 			name="author"

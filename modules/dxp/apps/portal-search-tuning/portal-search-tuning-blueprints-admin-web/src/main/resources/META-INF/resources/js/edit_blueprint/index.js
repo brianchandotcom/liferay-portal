@@ -85,6 +85,8 @@ function EditBlueprintForm({
 	const validate = (values) => {
 		const errors = {};
 
+		// Validate the elements added to the query builder
+
 		const selectedQueryElementsArray = [];
 
 		values.selectedQueryElements.map(
@@ -116,7 +118,7 @@ function EditBlueprintForm({
 						});
 					});
 				}
-				else {
+				else if (!uiConfigurationJSON) {
 					const configValue =
 						uiConfigurationValues.elementTemplateJSON;
 
@@ -140,6 +142,8 @@ function EditBlueprintForm({
 		if (selectedQueryElementsArray.length > 0) {
 			errors.selectedQueryElements = selectedQueryElementsArray;
 		}
+
+		// Validate all JSON inputs on the settings tab
 
 		[
 			'advancedConfig',

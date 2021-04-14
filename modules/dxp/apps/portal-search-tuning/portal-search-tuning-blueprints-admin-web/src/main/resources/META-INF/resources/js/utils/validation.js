@@ -14,22 +14,19 @@ import {INPUT_TYPES} from './inputTypes';
 import {isDefined, sub} from './utils';
 
 export const validateBoost = (configValue, name, type) => {
-	if (name == 'boost') {
-		if (configValue < 0) {
-			return ERROR_MESSAGES.NEGATIVE_BOOST;
-		}
+	if (name == 'boost' && configValue < 0) {
+		return ERROR_MESSAGES.NEGATIVE_BOOST;
 	}
 
-	if (type === INPUT_TYPES.FIELD_MAPPING) {
-		if (configValue.boost < 0) {
-			return ERROR_MESSAGES.NEGATIVE_BOOST;
-		}
+	if (type === INPUT_TYPES.FIELD_MAPPING && configValue.boost < 0) {
+		return ERROR_MESSAGES.NEGATIVE_BOOST;
 	}
 
-	if (type === INPUT_TYPES.FIELD_MAPPING_LIST) {
-		if (configValue.some(({boost}) => boost < 0)) {
-			return ERROR_MESSAGES.NEGATIVE_BOOST;
-		}
+	if (
+		type === INPUT_TYPES.FIELD_MAPPING_LIST &&
+		configValue.some(({boost}) => boost < 0)
+	) {
+		return ERROR_MESSAGES.NEGATIVE_BOOST;
 	}
 };
 
@@ -51,16 +48,12 @@ export const validateNumberRange = (configValue, type, typeOptions) => {
 		return;
 	}
 
-	if (isDefined(typeOptions.min)) {
-		if (configValue < typeOptions.min) {
-			return sub(ERROR_MESSAGES.GREATER_THAN_X, [typeOptions.min]);
-		}
+	if (isDefined(typeOptions.min) && configValue < typeOptions.min) {
+		return sub(ERROR_MESSAGES.GREATER_THAN_X, [typeOptions.min]);
 	}
 
-	if (isDefined(typeOptions.max)) {
-		if (configValue > typeOptions.max) {
-			return sub(ERROR_MESSAGES.LESS_THAN_X, [typeOptions.max]);
-		}
+	if (isDefined(typeOptions.max) && configValue > typeOptions.max) {
+		return sub(ERROR_MESSAGES.LESS_THAN_X, [typeOptions.max]);
 	}
 };
 
@@ -77,15 +70,14 @@ export const validateRequired = (configValue, type, required = true) => {
 		return ERROR_MESSAGES.REQUIRED;
 	}
 
-	if (type === INPUT_TYPES.FIELD_MAPPING) {
-		if (!configValue.field) {
-			return ERROR_MESSAGES.REQUIRED;
-		}
+	if (type === INPUT_TYPES.FIELD_MAPPING && !configValue.field) {
+		return ERROR_MESSAGES.REQUIRED;
 	}
 
-	if (type === INPUT_TYPES.FIELD_MAPPING_LIST) {
-		if (configValue.every(({field}) => !field)) {
-			return ERROR_MESSAGES.REQUIRED;
-		}
+	if (
+		type === INPUT_TYPES.FIELD_MAPPING_LIST &&
+		configValue.every(({field}) => !field)
+	) {
+		return ERROR_MESSAGES.REQUIRED;
 	}
 };

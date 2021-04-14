@@ -23,6 +23,7 @@ import TranslateHeader from './components/TranslateHeader';
 
 const Translate = ({
 	aditionalFields,
+	getAutoTranslateURL,
 	infoFieldSetEntries,
 	portletNamespace,
 	publishButtonDisabled,
@@ -30,7 +31,9 @@ const Translate = ({
 	redirectURL,
 	saveButtonDisabled,
 	saveButtonLabel,
+	sourceLanguageId,
 	sourceLanguageIdTitle,
+	targetLanguageId,
 	targetLanguageIdTitle,
 	translateLanguagesSelectorData,
 	translationPermission,
@@ -107,6 +110,7 @@ const Translate = ({
 };
 
 Translate.propTypes = {
+	getAutoTranslateURL: PropTypes.string.isRequired,
 	infoFieldSetEntries: PropTypes.arrayOf(
 		PropTypes.shape({
 			fields: PropTypes.arrayOf(
@@ -126,7 +130,9 @@ Translate.propTypes = {
 		})
 	),
 	portletNamespace: PropTypes.string.isRequired,
+	sourceLanguageId: PropTypes.string.isRequired,
 	sourceLanguageIdTitle: PropTypes.string.isRequired,
+	targetLanguageId: PropTypes.string.isRequired,
 	targetLanguageIdTitle: PropTypes.string.isRequired,
 	translationPermission: PropTypes.bool.isRequired,
 	updateTranslationPortletURL: PropTypes.string.isRequired,

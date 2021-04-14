@@ -235,6 +235,8 @@ public class TranslateDisplayContext {
 				"targetLanguageId", getTargetLanguageId()
 			).build()
 		).put(
+			"getAutoTranslateURL", getAutoTranslateURL()
+		).put(
 			"infoFieldSetEntries", infoFieldSetEntries
 		).put(
 			"publishButtonDisabled", isPublishButtonDisabled()
@@ -249,7 +251,11 @@ public class TranslateDisplayContext {
 			"saveButtonLabel",
 			LanguageUtil.get(_httpServletRequest, getSaveButtonLabel())
 		).put(
+			"sourceLanguageId", getSourceLanguageId()
+		).put(
 			"sourceLanguageIdTitle", getLanguageIdTitle(getSourceLanguageId())
+		).put(
+			"targetLanguageId", getTargetLanguageId()
 		).put(
 			"targetLanguageIdTitle", getLanguageIdTitle(getTargetLanguageId())
 		).put(

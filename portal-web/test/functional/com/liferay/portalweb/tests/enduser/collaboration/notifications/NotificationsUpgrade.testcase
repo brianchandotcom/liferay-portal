@@ -10,7 +10,9 @@ definition {
 	setUp {
 		SignIn.signIn(userEmailAddress = "user@liferay.com");
 
-		Smoke.viewWelcomePage();
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest/home");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

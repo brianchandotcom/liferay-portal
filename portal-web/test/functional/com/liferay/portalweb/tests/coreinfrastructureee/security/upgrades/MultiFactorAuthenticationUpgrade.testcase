@@ -14,7 +14,9 @@ definition {
 	setUp {
 		Navigator.openURL();
 
-		Smoke.viewWelcomePage();
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest/home");
 	}
 
 	@priority = "5"

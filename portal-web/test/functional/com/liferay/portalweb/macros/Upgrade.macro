@@ -3291,10 +3291,9 @@ definition {
 
 		SignIn.signIn(userEmailAddress = "user@liferay.com");
 
-		Smoke.viewWelcomePage(
-			upgrade = "true",
-			userFirstName = "Userfn",
-			userLastName = "Userln");
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest/home");
 
 		Navigator.gotoPage(pageName = "Web Content");
 

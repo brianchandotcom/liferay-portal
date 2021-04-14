@@ -1290,7 +1290,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if ((boolean)canTransformURLMethod.invoke(
 					configurationFileInstaller, file)) {
 
-				transformURLMethod.invoke(configurationFileInstaller, file);
+				try {
+					transformURLMethod.invoke(configurationFileInstaller, file);
+				}
+				catch (Exception exception) {
+					_log.error("Problem installing " + file, exception);
+				}
 			}
 		}
 	}

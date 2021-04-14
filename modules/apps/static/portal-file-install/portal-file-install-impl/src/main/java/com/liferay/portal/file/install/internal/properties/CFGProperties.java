@@ -30,6 +30,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Matthew Tambara
@@ -59,9 +61,7 @@ public class CFGProperties implements ConfigurationProperties {
 
 			List<String> lines = new ArrayList<>();
 
-			String value = StringPool.BLANK;
-
-			String key = null;
+			StringBundler sb = new StringBundler();
 
 			while (line != null) {
 				lines.add(line);
@@ -74,26 +74,33 @@ public class CFGProperties implements ConfigurationProperties {
 					continue;
 				}
 
-				int index = line.indexOf(CharPool.EQUAL);
-
-				if (index == -1) {
-					value = value.concat(line.trim());
-				}
-				else {
-					key = line.substring(0, index);
-
-					String valueToken = line.substring(index + 1);
-
-					value = value.concat(valueToken);
-				}
-
 				if (line.endsWith(StringPool.BACK_SLASH)) {
-					value = value.substring(0, value.length() - 1);
+					String token = line.substring(0, line.length() - 1);
+
+					sb.append(token.trim());
 
 					line = unsyncBufferedReader.readLine();
 
 					continue;
 				}
+
+				sb.append(line.trim());
+
+				line = sb.toString();
+
+				Matcher matcher = _configPattern.matcher(line);
+
+				if (matcher.matches()) {
+					throw new IllegalArgumentException(
+						"Detected .config format in .cfg file in line: " +
+							line);
+				}
+
+				int index = line.indexOf(CharPool.EQUAL);
+
+				String key = line.substring(0, index);
+
+				String value = line.substring(index + 1);
 
 				_storage.put(
 					key.trim(),
@@ -101,9 +108,9 @@ public class CFGProperties implements ConfigurationProperties {
 						InterpolationUtil.substVars(value.trim()),
 						new ArrayList<>(lines)));
 
-				value = StringPool.BLANK;
-
 				lines.clear();
+
+				sb.setIndex(0);
 
 				line = unsyncBufferedReader.readLine();
 			}
@@ -197,6 +204,11 @@ public class CFGProperties implements ConfigurationProperties {
 
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
+
+	private static final Pattern _configPattern = Pattern.compile(
+		"(\\s*[0-9a-zA-Z-_\\.]+\\s*)=(\\s*[TILFDXSCBilfdxscb]?" +
+			"(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
+				"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*)");
 
 	private final Map<String, Map.Entry<String, List<String>>> _storage =
 		new LinkedHashMap<>();

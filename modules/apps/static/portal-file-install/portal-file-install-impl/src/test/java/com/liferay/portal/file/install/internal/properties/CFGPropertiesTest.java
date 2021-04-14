@@ -155,6 +155,20 @@ public class CFGPropertiesTest {
 		_assertSave(cfgProperties, line);
 	}
 
+	@Test
+	public void testLoadConfigFormat() throws IOException {
+		String line = "testKey1=T\"testValue1\"";
+
+		try {
+			_createCFGProperties(line);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Detected .config format in .cfg file in line: " + line,
+				illegalArgumentException.getMessage());
+		}
+	}
+
 	@NewEnv(type = NewEnv.Type.JVM)
 	@NewEnv.Environment(variables = "LIFERAY_FOO_ENV_VALUE=ENV_TEST_VALUE")
 	@Test

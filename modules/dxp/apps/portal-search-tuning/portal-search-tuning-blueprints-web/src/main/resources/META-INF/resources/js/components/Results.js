@@ -88,7 +88,7 @@ export default function Results({
 								)}
 							</ClayList.ItemTitle>
 
-							{(item.type || item.author || item.date) && (
+							{(item.type || item.author || item.created) && (
 								<ClayList.ItemText
 									className="result-subtext"
 									subtext
@@ -106,18 +106,18 @@ export default function Results({
 										</span>
 									)}
 
-									{item.date && (
+									{item.created && (
 										<span>
 											{Liferay.Language.get('on')}{' '}
-											{item.date}
+											{item.created}
 										</span>
 									)}
 								</ClayList.ItemText>
 							)}
 
-							{item.description && (
+							{item.summary && (
 								<ClayList.ItemText>
-									{item.description}
+									{item.summary}
 								</ClayList.ItemText>
 							)}
 						</ClayList.ItemField>

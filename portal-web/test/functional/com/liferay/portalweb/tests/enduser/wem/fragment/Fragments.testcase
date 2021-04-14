@@ -258,148 +258,6 @@ definition {
 		}
 	}
 
-	// Ignored until LPS-120693 implement
-
-	@description = "This is a test for LPS-106776, LPS-102959 and LPS-111657. Configure the Container and Grid elements."
-	@ignore = "true"
-	@priority = "5"
-	test ConfigureLayoutElements {
-		property portal.acceptance = "true";
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Add a Container") {
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add a Card fragment to Container") {
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Card",
-				navTab = "Fragments");
-		}
-
-		task ("Add a Heading below Card inside the Container") {
-			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
-				key_collectionName = "Basic Components",
-				key_fragmentName = "Heading",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Card')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
-				value1 = "");
-
-			AssertElementPresent(
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Heading')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-
-			PageEditor.waitForAutoSave();
-		}
-
-		task ("Configure the Container styles") {
-			PageEditor.viewContainerStyle(
-				contentDisplay = "block",
-				position = "1");
-
-			PageEditor.editLayoutContainer(
-				backgroundColor = "Warning",
-				borderColor = "Danger",
-				borderRadius = "Border Radius Large",
-				borderWidth = "5",
-				boxShadow = "Box Shadow Large",
-				contentDisplay = "Flex",
-				horizontalAlign = "Center",
-				marginBottom = "2",
-				marginLeft = "2",
-				marginRight = "2",
-				marginTop = "2",
-				opacity = "50",
-				paddingBottom = "2",
-				paddingLeft = "2",
-				paddingRight = "2",
-				paddingTop = "2",
-				panel = "Styles",
-				verticalAlign = "Center");
-		}
-
-		task ("View the Container styles") {
-			PageEditor.viewContainerStyle(
-				backgroundColor = "warning",
-				borderColor = "danger",
-				borderRadius = "border-radius-lg",
-				borderWidth = "5",
-				boxShadow = "box-shadow-lg",
-				contentDisplay = "flex",
-				dropShadow = "lg",
-				horizontalAlign = "center",
-				marginBottom = "2",
-				marginLeft = "2",
-				marginRight = "2",
-				marginTop = "2",
-				opacity = "0.5",
-				paddingBottom = "2",
-				paddingLeft = "2",
-				paddingRight = "2",
-				paddingTop = "2",
-				position = "1",
-				verticalAlign = "center");
-		}
-
-		task ("Duplicate the Container") {
-			PageEditor.gotoDuplicate(fragmentName = "Container");
-		}
-
-		task ("View the duplicate Container fragment") {
-			PageEditor.viewDuplicateFragment(fragmentName = "Container");
-		}
-
-		task ("Add a Grid below the Container") {
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Grid",
-				targetFragmentName = "Container");
-		}
-
-		task ("Configure the Grid") {
-			PageEditor.editLayoutGrid(
-				columnCount = "2",
-				panel = "General");
-
-			PageEditor.editLayoutGrid(
-				inverseOrder = "true",
-				layout = "1 Module per Row",
-				panel = "Styles",
-				verticalAlignment = "Bottom");
-		}
-
-		task ("View the Grid style") {
-			PageEditor.viewGridStyle(
-				columnCount = "2",
-				inverseOrder = "true",
-				layout = "12",
-				position = "1",
-				verticalAlignment = "Bottom");
-		}
-
-		task ("Duplicate the Gird") {
-			PageEditor.gotoDuplicate(fragmentName = "Grid");
-		}
-
-		task ("View the duplicate Grid fragment") {
-			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
-		}
-	}
-
 	@description = "This is a test for LPS-98241 and LPS-128667. Basic Component Button can be configured. Interact with layout selector of fragment."
 	@priority = "4"
 	test ConfigureBasicComponentButton {
@@ -987,6 +845,148 @@ definition {
 			PageEditor.viewDuplicateFragment(
 				fragmentName = "Spacer",
 				id = "Spacer");
+		}
+	}
+
+	// Ignored until LPS-120693 implement
+
+	@description = "This is a test for LPS-106776, LPS-102959 and LPS-111657. Configure the Container and Grid elements."
+	@ignore = "true"
+	@priority = "5"
+	test ConfigureLayoutElements {
+		property portal.acceptance = "true";
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Content Page Name",
+					type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+		}
+
+		task ("Add a Container") {
+			PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+		}
+
+		task ("Add a Card fragment to Container") {
+			PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Card",
+					navTab = "Fragments");
+		}
+
+		task ("Add a Heading below Card inside the Container") {
+			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Heading",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+					locator2 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Card')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+					value1 = "");
+
+			AssertElementPresent(
+					key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Heading')]",
+					key_position = "1",
+					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Configure the Container styles") {
+			PageEditor.viewContainerStyle(
+					contentDisplay = "block",
+					position = "1");
+
+			PageEditor.editLayoutContainer(
+					backgroundColor = "Warning",
+					borderColor = "Danger",
+					borderRadius = "Border Radius Large",
+					borderWidth = "5",
+					boxShadow = "Box Shadow Large",
+					contentDisplay = "Flex",
+					horizontalAlign = "Center",
+					marginBottom = "2",
+					marginLeft = "2",
+					marginRight = "2",
+					marginTop = "2",
+					opacity = "50",
+					paddingBottom = "2",
+					paddingLeft = "2",
+					paddingRight = "2",
+					paddingTop = "2",
+					panel = "Styles",
+					verticalAlign = "Center");
+		}
+
+		task ("View the Container styles") {
+			PageEditor.viewContainerStyle(
+					backgroundColor = "warning",
+					borderColor = "danger",
+					borderRadius = "border-radius-lg",
+					borderWidth = "5",
+					boxShadow = "box-shadow-lg",
+					contentDisplay = "flex",
+					dropShadow = "lg",
+					horizontalAlign = "center",
+					marginBottom = "2",
+					marginLeft = "2",
+					marginRight = "2",
+					marginTop = "2",
+					opacity = "0.5",
+					paddingBottom = "2",
+					paddingLeft = "2",
+					paddingRight = "2",
+					paddingTop = "2",
+					position = "1",
+					verticalAlign = "center");
+		}
+
+		task ("Duplicate the Container") {
+			PageEditor.gotoDuplicate(fragmentName = "Container");
+		}
+
+		task ("View the duplicate Container fragment") {
+			PageEditor.viewDuplicateFragment(fragmentName = "Container");
+		}
+
+		task ("Add a Grid below the Container") {
+			PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Grid",
+					targetFragmentName = "Container");
+		}
+
+		task ("Configure the Grid") {
+			PageEditor.editLayoutGrid(
+					columnCount = "2",
+					panel = "General");
+
+			PageEditor.editLayoutGrid(
+					inverseOrder = "true",
+					layout = "1 Module per Row",
+					panel = "Styles",
+					verticalAlignment = "Bottom");
+		}
+
+		task ("View the Grid style") {
+			PageEditor.viewGridStyle(
+					columnCount = "2",
+					inverseOrder = "true",
+					layout = "12",
+					position = "1",
+					verticalAlignment = "Bottom");
+		}
+
+		task ("Duplicate the Gird") {
+			PageEditor.gotoDuplicate(fragmentName = "Grid");
+		}
+
+		task ("View the duplicate Grid fragment") {
+			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
 		}
 	}
 

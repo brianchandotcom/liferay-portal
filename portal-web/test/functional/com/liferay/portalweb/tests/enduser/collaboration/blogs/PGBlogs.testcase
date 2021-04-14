@@ -1252,12 +1252,6 @@ definition {
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
-
-		User.firstLoginPG();
 	}
 
 	@priority = "3"
@@ -1407,8 +1401,6 @@ definition {
 			value1 = "custom-url-1");
 
 		PortletEntry.publish();
-
-		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

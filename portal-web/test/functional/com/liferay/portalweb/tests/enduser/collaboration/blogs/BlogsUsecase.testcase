@@ -801,41 +801,6 @@ definition {
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
 	}
 
-	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryWithCoverImageUploadedToDM {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			navTab = "Documents and Media",
-			uploadFileName = "Document_1.jpg");
-
-		Pause(locator1 = "1000");
-
-		Button.clickPublish();
-
-		Pause(locator1 = "10000");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
-	}
-
 	@priority = "4"
 	@refactorneeded
 	test ViewBlogsEntryWithDefaultAbstract {

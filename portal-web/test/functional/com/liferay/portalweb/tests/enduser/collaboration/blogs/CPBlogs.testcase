@@ -22,75 +22,6 @@ definition {
 		}
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test AddBlogsEntry {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
-		property testray.component.names = "WYSIWYG";
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntryContentNull {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addWithInvalidContent(
-			entryInvalidContent = "",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntryTitleEscapeCharacters {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = '''&amp; &lt; &gt; &quot; > <''');
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntryTitleNull {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addWithInvalidTitle(
-			entryContent = "Blogs Entry Content",
-			entryInvalidTitle = "");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsEntry.viewDefaultCP(entryTitle = "");
-	}
-
 	@description = "This is a use case for LPS-70143."
 	@priority = "4"
 	@refactorneeded
@@ -164,6 +95,98 @@ definition {
 		BlogsEntry.selectFormattingStyle(styleFormat = "Heading 2");
 
 		Button.clickPublish();
+	}
+
+	@description = "This checks that an entry can be added in the control panel."
+	@priority = "5"
+	@refactordone
+	@uitest
+	test CanAddEntryInAdmin {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property testray.component.names = "WYSIWYG";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This test covers LPS-126756. It ensures that a blog entry can be added with a static gif."
+	@priority = "5"
+	@refactordone
+	test CanAddEntryWithStaticGif {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "static",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "static.gif");
+
+		Button.clickPublish();
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "static");
+	}
+
+	@description = "This is the same case as PGBlogs#CanAddTitleWithoutEscapingCharacters, but due to LPS-130537 we should ensure both contexts are covered."
+	@priority = "4"
+	@refactordone
+	test CanAddTitleWithoutEscapingCharacters {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = '''&amp; &lt; &gt; &quot; > <''');
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
+	}
+
+	@description = "This checks that a blog entry can be automatically saved as a draft."
+	@priority = "5"
+	@refactordone
+	test CanAutomaticallySaveEntryAsDraft {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addDraftViaAutoSave(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(
+			entryStatus = "Draft",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@priority = "4"
@@ -256,9 +279,10 @@ definition {
 		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that blog entries can be deleted through the UI."
 	@priority = "5"
-	@refactorneeded
-	test DeleteBlogsEntries {
+	@refactordone
+	test CanDeleteMultipleEntriesSequentially {
 		property portal.acceptance = "true";
 
 		JSONBlog.addEntry(
@@ -284,41 +308,57 @@ definition {
 		}
 	}
 
+	@description = "This checks that a blog entry cannot be published if the custom abstracted is selected but empty."
 	@priority = "4"
 	@refactorneeded
-	test PublishBlogsEntryAutoDraft {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+	test CannotAddEntryWhenCustomAbstractSelectedButEmpty {
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
-		Blogs.addDraftViaAutoSave(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
+		BlogsEntry.addTitle(entryTitle = "Blogs Title");
 
-		PortletEntry.publish();
+		Panel.expandPanel(panel = "Configuration");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		Click(locator1 = "Radio#CUSTOM_ABSTRACT");
 
-		AssertElementNotPresent(
-			key_entryStatus = "Draft",
-			key_entryTitle = "Blogs Entry Title",
-			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE_2");
+		Button.clickPublish();
 
-		AssertVisible(
-			key_entryStatus = "Approved",
-			key_entryTitle = "Blogs Entry Title",
-			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE_2");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
+		Alert.viewRequiredField();
 	}
 
+	@description = "This checks that a blog entry without content cannot be added."
 	@priority = "4"
-	@refactorneeded
-	test PublishBlogsEntryDraft {
+	@refactordone
+	test CannotAddEntryWithEmptyContent {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithInvalidContent(
+			entryInvalidContent = "",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that a blog entry without a title cannot be added."
+	@priority = "4"
+	@refactordone
+	test CannotAddEntryWithEmptyTitle {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithInvalidTitle(
+			entryContent = "Blogs Entry Content",
+			entryInvalidTitle = "");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.viewDefaultCP(entryTitle = "");
+	}
+
+	@description = "This checks that a blog draft can be published."
+	@priority = "4"
+	@refactordone
+	test CanPublishDraft {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addDraft(
@@ -343,84 +383,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test SaveBlogsEntryDraftAuto {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addDraftViaAutoSave(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(
-			entryStatus = "Draft",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test SearchBlogsEntryContent {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Unique Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Blogs Entry Content",
-			entryTitle = "Unique Title");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Blogs",
-			entryTitle = "Unique Title");
-
-		BlogsEntry.searchNoCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Blogs1 Entry1 Content1",
-			entryTitle = "Unique Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test SearchBlogsEntryTitle {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Unique Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Unique Title",
-			entryTitle = "Unique Title");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Title",
-			entryTitle = "Unique Title");
-
-		BlogsEntry.searchNoCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Blogs1 Entry1 Title1",
-			entryTitle = "Unique Title");
-	}
-
+	@description = "This checks that a cover image can be saved as a draft."
 	@priority = "3"
 	@refactordone
 	test CanSaveCoverImageAsDraft {
@@ -455,34 +418,68 @@ definition {
 			uploadFileName = "Document_1");
 	}
 
-	@description = "This test covers LPS-126756. It ensures that a blog entry can be added with a static gif."
-	@priority = "5"
-	@refactorneeded
-	test ViewBlogsEntryWithStaticGif {
+	@description = "This checks that the content for a blogs entry can be searched in admin."
+	@priority = "4"
+	@refactordone
+	test CanSearchForContentInAdmin {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "static",
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			navTab = "Blog Images",
-			uploadFileName = "static.gif");
+			entryTitle = "Unique Title");
 
-		Button.clickPublish();
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		BlogsEntry.viewEntryCP(
+		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			uploadFileName = "static");
+			entrySearchTerm = "Blogs Entry Content",
+			entryTitle = "Unique Title");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs",
+			entryTitle = "Unique Title");
+
+		BlogsEntry.searchNoCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs1 Entry1 Content1",
+			entryTitle = "Unique Title");
 	}
 
+	@description = "This checks that the content for a blogs entry can be searched in admin."
+	@priority = "4"
+	@refactordone
+	test CanSearchForTitleInAdmin {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Unique Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Unique Title",
+			entryTitle = "Unique Title");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Title",
+			entryTitle = "Unique Title");
+
+		BlogsEntry.searchNoCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs1 Entry1 Title1",
+			entryTitle = "Unique Title");
+	}
+
+	@description = "This checks that the cover image details appear properly"
 	@priority = "3"
 	@refactorneeded
-	test ViewCoverImageDetails {
+	test CanViewCoverImageDetails {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(
@@ -513,22 +510,6 @@ definition {
 			lastModifiedBy = "Test Test",
 			uploadFileName = "Document_1.jpg",
 			versionNumber = "1.0");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewErrorMessageForNullCustomAbstract {
-		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Title");
-
-		Panel.expandPanel(panel = "Configuration");
-
-		Click(locator1 = "Radio#CUSTOM_ABSTRACT");
-
-		Button.clickPublish();
-
-		Alert.viewRequiredField();
 	}
 
 }

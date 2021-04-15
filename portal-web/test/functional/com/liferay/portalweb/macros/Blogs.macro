@@ -564,6 +564,8 @@ definition {
 	}
 
 	macro viewEntryTitle {
+		var key_entryTitle = "${entryTitle}";
+
 		LexiconList.viewListEntryTitleLink(listEntry = "${entryTitle}");
 	}
 

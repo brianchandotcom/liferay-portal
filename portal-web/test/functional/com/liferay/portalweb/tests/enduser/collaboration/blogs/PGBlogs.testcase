@@ -1092,7 +1092,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-
 	@description = "This checks that the title of an entry can be displayed."
 	@priority = "3"
 	@refactordone

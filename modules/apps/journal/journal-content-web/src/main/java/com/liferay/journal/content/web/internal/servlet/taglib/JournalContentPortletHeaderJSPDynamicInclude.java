@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -45,9 +48,16 @@ public class JournalContentPortletHeaderJSPDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		JournalContentDisplayContext journalContentDisplayContext =
 			(JournalContentDisplayContext)httpServletRequest.getAttribute(
-				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT +
+					portletDisplay.getId());
 
 		try {
 			if ((journalContentDisplayContext == null) ||

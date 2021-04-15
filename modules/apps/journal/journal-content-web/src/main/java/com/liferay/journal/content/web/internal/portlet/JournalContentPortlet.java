@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -114,9 +115,12 @@ public class JournalContentPortlet extends MVCPortlet {
 		JournalArticle article = null;
 		JournalArticleDisplay articleDisplay = null;
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		JournalContentDisplayContext journalContentDisplayContext =
 			(JournalContentDisplayContext)renderRequest.getAttribute(
-				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT +
+					portletDisplay.getId());
 
 		if (journalContentDisplayContext != null) {
 			try {

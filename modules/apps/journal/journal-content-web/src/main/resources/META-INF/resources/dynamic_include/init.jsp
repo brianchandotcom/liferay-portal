@@ -33,5 +33,5 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <liferay-theme:defineObjects />
 
 <%
-JournalContentDisplayContext journalContentDisplayContext = (JournalContentDisplayContext)request.getAttribute(JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
+JournalContentDisplayContext journalContentDisplayContext = (JournalContentDisplayContext)request.getAttribute(JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT + portletDisplay.getId());
 %>

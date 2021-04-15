@@ -109,17 +109,17 @@ public class JournalContentDisplayContext {
 				ddmTemplateModelResourcePermission)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		JournalContentDisplayContext journalContentDisplayContext =
 			(JournalContentDisplayContext)portletRequest.getAttribute(
-				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT +
+					portletDisplay.getId());
 
 		if (journalContentDisplayContext == null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 			JournalContentPortletInstanceConfiguration
 				journalContentPortletInstanceConfiguration =
 					portletDisplay.getPortletInstanceConfiguration(
@@ -131,7 +131,8 @@ public class JournalContentDisplayContext {
 				ddmStructureClassNameId, ddmTemplateModelResourcePermission);
 
 			portletRequest.setAttribute(
-				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT +
+					portletDisplay.getId(),
 				journalContentDisplayContext);
 		}
 

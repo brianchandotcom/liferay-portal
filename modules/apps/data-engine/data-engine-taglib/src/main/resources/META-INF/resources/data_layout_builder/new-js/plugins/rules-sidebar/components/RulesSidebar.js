@@ -27,15 +27,6 @@ import RuleEditorModal from '../../../components/rules/RuleEditorModal';
 import RuleList from '../../../components/rules/RuleList';
 import {EVENT_TYPES} from '../../../eventTypes';
 
-function normalizeRule(rule) {
-	const _rule = {...rule};
-
-	_rule['logical-operator'] = _rule['logicalOperator'];
-	delete _rule.logicalOperator;
-
-	return _rule;
-}
-
 const RulesSidebar = ({title}) => {
 	const {ruleSettings} = useConfig();
 	const dispatch = useForm();

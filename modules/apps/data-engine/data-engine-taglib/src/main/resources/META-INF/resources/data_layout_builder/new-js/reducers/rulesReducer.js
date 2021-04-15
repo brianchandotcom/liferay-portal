@@ -27,15 +27,7 @@ export default (state, action) => {
 			const {rules} = state;
 			const {loc, rule} = action.payload;
 
-			rules.splice(loc, 1, {
-				...rule,
-
-				// Compatibility with the Forms backend
-
-				'logical-operator': rule.logicalOperator,
-			});
-
-			delete rule.logicalOperator;
+			rules.splice(loc, 1, rule);
 
 			return {rules};
 		}

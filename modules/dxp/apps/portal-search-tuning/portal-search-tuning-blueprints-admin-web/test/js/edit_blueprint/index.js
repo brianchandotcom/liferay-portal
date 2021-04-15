@@ -62,6 +62,7 @@ function renderEditBlueprint(props) {
 				initialTitle: {
 					'en-US': 'Test Title',
 				},
+				queryElements: SELECTED_ELEMENTS,
 				redirectURL: '',
 				searchableAssetTypes: SEARCHABLE_ASSET_TYPES,
 				submitFormURL: '',

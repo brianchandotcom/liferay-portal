@@ -69,7 +69,7 @@ describe('PreviewSidebar', () => {
 		const {getByText} = renderPreviewSidebar();
 
 		SEARCH_RESULTS.hits.map((result) => {
-			getByText(result.title);
+			getByText(result.b_title);
 		});
 	});
 

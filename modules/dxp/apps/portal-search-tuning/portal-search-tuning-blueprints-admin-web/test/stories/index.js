@@ -103,6 +103,7 @@ const BLUEPRINT_FORM_PROPS = {
 	initialTitle: {
 		'en-US': 'Test Title',
 	},
+	queryElements: SELECTED_ELEMENTS,
 	redirectURL: '',
 	searchableAssetTypes: SEARCHABLE_ASSET_TYPES,
 	submitFormURL: '',

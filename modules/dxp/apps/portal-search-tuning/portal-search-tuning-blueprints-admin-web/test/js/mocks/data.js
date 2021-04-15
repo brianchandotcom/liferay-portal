@@ -160,18 +160,16 @@ export const mockSearchResults = (itemsPerPage = 10) => {
 
 	for (var i = 1; i <= itemsPerPage; i++) {
 		hits.push({
-			assetEntryId: i,
-			date: '2/1/21',
-			description:
+			b_assetEntryId: i,
+			b_author: 'Test Test',
+			b_created: '2/1/21',
+			b_summary:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-			entryClassName: 'com.liferay.journal.model.JournalArticle',
-			entryClassPK: `101${i}`,
+			b_title: `Article Number ${i}`,
+			b_type: 'Web Content Article',
+			b_viewURL: '',
 			id: `com.liferay.journal.model.JournalArticle_PORTLET_${i}`,
 			score: Math.random() * 100,
-			title: `Article Number ${i}`,
-			type: 'Web Content Article',
-			userName: 'Test Test',
-			viewURL: '',
 		});
 	}
 

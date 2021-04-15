@@ -118,34 +118,6 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteBlogsEntry {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.moveToRecycleBinCP(
-			assetType = "Blogs Entry",
-			entryTitle = "Blogs Entry Title");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.deleteCP(
-			assetName = "Blogs Entry Title",
-			assetType = "Blogs Entry");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.viewDefaultCP(assetName = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
 	test DeleteDraftBlogsEntry {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

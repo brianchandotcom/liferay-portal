@@ -15,15 +15,9 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
-
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 	}
 
 	tearDown {
@@ -37,741 +31,967 @@ definition {
 		}
 	}
 
+	@description = "Add categories."
 	@priority = "4"
 	test AddCategories {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+		task ("Add three categories") {
+			for (var n : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 2",
-			vocabularyName = "Vocabulary Name");
+		task ("View the three categories") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 3",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCP(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCP(
-			categoryName = "Category Name 2",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCP(
-			categoryName = "Category Name 3",
-			vocabularyName = "Vocabulary Name");
+			for (var n : list "1,2,3") {
+				Category.viewCP(
+					categoryName = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
 	}
 
-	@description = "Ensure that a user can add a category."
-	@priority = "4"
-	@uitest
-	test AddCategory {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCP(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-	}
-
+	@description = "Add properties in category."
 	@priority = "3"
 	test AddCategoryProperties {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("Add two properties in category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.viewCP(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+			Category.addPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Property",
+				propertiesValueField = "Category Property",
+				propertyNumber = "2");
+		}
 
-		Category.addPropertyCP(
-			categoryName = "Category Name 1",
-			propertiesKeyField = "Category Property",
-			propertiesValueField = "Category Property",
-			propertyNumber = "2");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCategoryPropertyCP(
-			categoryName = "Category Name 1",
-			propertiesKeyField = "Category Property",
-			propertiesValueField = "Category Property",
-			propertyNumber = "1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCategoryPropertyCP(
-			categoryName = "Category Name",
-			propertiesKeyField = "Category Property",
-			propertiesValueField = "Category Property",
-			propertyNumber = "2",
-			vocabularyName = "Vocabulary Name");
+		task ("View two properties of category") {
+			Category.viewCategoryPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Property",
+				propertiesValueField = "Category Property",
+				propertyNumber = "2",
+				vocabularyName = "Vocabulary Name");
+		}
 	}
 
+	@description = "Add a property in category."
 	@priority = "4"
 	test AddCategoryProperty {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.viewCP(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+		task ("Add a property in category") {
+			Category.addPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Property",
+				propertiesValueField = "Category Property",
+				propertyNumber = "0");
+		}
 
-		Category.addPropertyCP(
-			categoryName = "Category Name 1",
-			propertiesKeyField = "Category Property",
-			propertiesValueField = "Category Property",
-			propertyNumber = "0");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCategoryPropertyCP(
-			categoryName = "Category Name 1",
-			propertiesKeyField = "Category Property",
-			propertiesValueField = "Category Property",
-			propertyNumber = "0",
-			vocabularyName = "Vocabulary Name");
+		task ("View the property of category") {
+			Category.viewCategoryPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Property",
+				propertiesValueField = "Category Property",
+				propertyNumber = "0",
+				vocabularyName = "Vocabulary Name");
+		}
 	}
 
+	@description = "Add a category with Guest view permission."
 	@priority = "4"
-	test AddCategoryViewableByAnyone {
-		Category.addCategoryViewableByCP(
-			categoryName = "Category Name",
-			viewableBy = "Anyone (Guest Role)",
-			vocabularyName = "Vocabulary Name");
+	test AddCategoryWithGuestViewPermission {
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("View the category with Guest view permission") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.viewCategoryViewableByCP(
-			categoryName = "Category Name",
-			viewableBy = "Anyone (Guest Role)",
-			vocabularyName = "Vocabulary Name");
+			Category.viewCategoryViewableByCP(
+				categoryName = "Category Name",
+				viewableBy = "Anyone (Guest Role)",
+				vocabularyName = "Vocabulary Name");
+		}
 	}
 
+	@description = "Add a category with Owner view permission."
 	@priority = "4"
-	test AddCategoryViewableByOwner {
-		Category.addCategoryViewableByCP(
-			categoryName = "Category Name",
-			viewableBy = "Owner",
-			vocabularyName = "Vocabulary Name");
+	test AddCategoryWithOwnerViewPermission {
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("View the category with Owner view permission") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.viewCategoryViewableByCP(
-			categoryName = "Category Name",
-			viewableBy = "Owner",
-			vocabularyName = "Vocabulary Name");
+			Category.viewCategoryViewableByCP(
+				categoryName = "Category Name",
+				viewableBy = "Owner",
+				vocabularyName = "Vocabulary Name");
+		}
 	}
 
+	@description = "Add a category with Site Member view permission."
 	@priority = "4"
-	test AddCategoryViewableBySiteMembers {
-		Category.addCategoryViewableByCP(
-			categoryName = "Category Name",
-			viewableBy = "Site Members",
-			vocabularyName = "Vocabulary Name");
+	test AddCategoryWithSiteMemberViewPermission {
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("View the category with Site Member view permission") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.viewCategoryViewableByCP(
-			categoryName = "Category Name",
-			viewableBy = "Site Members",
-			vocabularyName = "Vocabulary Name");
+			Category.viewCategoryViewableByCP(
+				categoryName = "Category Name",
+				viewableBy = "Site Members",
+				vocabularyName = "Vocabulary Name");
+		}
 	}
 
+	@description = "Add subcategories."
 	@priority = "4"
 	test AddSubcategories {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+		task ("Add three categories") {
+			for (var n : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 2",
-			vocabularyName = "Vocabulary Name");
+		task ("Add one subcategory to each category") {
+			for (var n : list "1,2,3") {
+				JSONCategory.addSubcategory(
+					groupName = "Test Site Name",
+					parentCategoryName = "Category Name ${n}",
+					title = "Subcategory Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 3",
-			vocabularyName = "Vocabulary Name");
+		task ("View the subcategories") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		JSONCategory.addSubcategory(
-			groupName = "Test Site Name",
-			parentCategoryName = "Category Name 1",
-			title = "Subcategory Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		JSONCategory.addSubcategory(
-			groupName = "Test Site Name",
-			parentCategoryName = "Category Name 2",
-			title = "Subcategory Name 2",
-			vocabularyName = "Vocabulary Name");
-
-		JSONCategory.addSubcategory(
-			groupName = "Test Site Name",
-			parentCategoryName = "Category Name 3",
-			title = "Subcategory Name 3",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Subcategory.viewCP(
-			categoryName = "Category Name 1",
-			subcategoryName = "Subcategory Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Subcategory.viewCP(
-			categoryName = "Category Name 2",
-			subcategoryName = "Subcategory Name 2",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Subcategory.viewCP(
-			categoryName = "Category Name 3",
-			subcategoryName = "Subcategory Name 3",
-			vocabularyName = "Vocabulary Name");
+			for (var n : list "1,2,3") {
+				Subcategory.viewCP(
+					categoryName = "Category Name ${n}",
+					subcategoryName = "Subcategory Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
 	}
 
+	@description = "Add a property in subcategory."
+	@priority = "3"
+	test AddSubcategoryProperty {
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a subcategory") {
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a property in subcategory") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.addPropertyCP(
+				propertiesKeyField = "Subcategory Key",
+				propertiesValueField = "Subcategory Value",
+				subcategoryName = "Subcategory Name");
+		}
+
+		task ("View the subcategory property") {
+			Subcategory.viewCategoryPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Subcategory Key",
+				propertiesValueField = "Subcategory Value",
+				subcategoryName = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Add vocabularies."
 	@priority = "4"
 	test AddVocabularies {
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name 1");
+		task ("Add two vocabularies") {
+			for (var n : list "2,3") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "Vocabulary Name ${n}");
+			}
+		}
 
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name 2");
+		task ("View the new vocabularies") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name 3");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.viewCP(vocabularyName = "Vocabulary Name 1");
-
-		Vocabulary.viewCP(vocabularyName = "Vocabulary Name 2");
-
-		Vocabulary.viewCP(vocabularyName = "Vocabulary Name 3");
+			for (var name : list "Vocabulary Name,Vocabulary Name 2,Vocabulary Name 3") {
+				Vocabulary.viewCP(vocabularyName = "${name}");
+			}
+		}
 	}
 
-	@priority = "3"
-	test AddVocabularyAssetTypeAllAssetTypes {
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "All Asset Types",
-			vocabularyName = "Vocabulary Name 1");
-
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "All Asset Types",
-			vocabularyName = "Vocabulary Name 1");
-	}
-
-	@priority = "3"
-	test AddVocabularyAssetTypeBlogsEntry {
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "Blogs Entry",
-			vocabularyName = "Vocabulary Name 1");
-
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "Blogs Entry",
-			vocabularyName = "Vocabulary Name 1");
-	}
-
-	@priority = "3"
-	test AddVocabularyAssetTypeBookmarksEntry {
-		property portal.release = "false";
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "Bookmarks Entry",
-			vocabularyName = "Vocabulary Name 1");
-
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "Bookmarks Entry",
-			vocabularyName = "Vocabulary Name 1");
-	}
-
-	@priority = "3"
-	test AddVocabularyAssetTypeDocument {
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "Document",
-			vocabularyName = "Vocabulary Name 1");
-
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "Document",
-			vocabularyName = "Vocabulary Name 1");
-	}
-
-	@priority = "3"
-	test AddVocabularyAssetTypes {
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "Blogs Entry",
-			vocabularyName = "Vocabulary Name 1");
-
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "Blogs Entry",
-			vocabularyName = "Vocabulary Name 1");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "Web Content Article",
-			vocabularyName = "Vocabulary Name 2");
-
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "Web Content Article",
-			vocabularyName = "Vocabulary Name 2");
-	}
-
-	@priority = "3"
-	test AddVocabularyAssetTypeUser {
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "User",
-			vocabularyName = "Vocabulary Name 1");
-
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "User",
-			vocabularyName = "Vocabulary Name 1");
-	}
-
-	@priority = "3"
-	test AddVocabularyAssetTypeWebContent {
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "Web Content Article",
-			vocabularyName = "Vocabulary Name 1");
-
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "Web Content Article",
-			vocabularyName = "Vocabulary Name 1");
-	}
-
-	@priority = "3"
-	test AddVocabularyAssetTypeWikiPage {
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "Wiki Page",
-			vocabularyName = "Vocabulary Name 1");
-
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "Wiki Page",
-			vocabularyName = "Vocabulary Name 1");
-	}
-
+	@description = "Add a vocabulary disallow multiple categories."
 	@priority = "3"
 	test AddVocabularyDisallowMultipleCategories {
-		Vocabulary.addCP(
-			allowMultipleCategories = "false",
-			vocabularyName = "Vocabulary Name 2");
+		task ("Add a vocabulary disallow multiple categories") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Vocabulary.addCP(
+				allowMultipleCategories = "false",
+				vocabularyName = "Vocabulary Name 2");
+		}
 
-		Vocabulary.viewCP(
-			allowMultipleCategories = "false",
-			vocabularyName = "Vocabulary Name 2");
+		task ("View the new vocabulary disallow multiple categories") {
+			Vocabulary.viewCP(
+				allowMultipleCategories = "false",
+				vocabularyName = "Vocabulary Name 2");
+		}
 	}
 
+	@description = "Add a vocabulary for All Asset Types."
 	@priority = "3"
-	test AddVocabularyViewableByGuest {
-		Vocabulary.addViewableByCP(
-			viewableBy = "Anyone (Guest Role)",
-			vocabularyName = "Vocabulary Name 1");
+	test AddVocabularyForAllAssetTypes {
+		task ("View the new vocabulary for All Asset Types") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.viewVocabularyPermissionsCP(
-			viewableBy = "Anyone (Guest Role)",
-			vocabularyName = "Vocabulary Name 1");
+			Vocabulary.viewWithAssociatedAssetTypeCP(
+				vocabularyAssociatedAssetType = "All Asset Types",
+				vocabularyName = "Vocabulary Name");
+		}
 	}
 
+	@description = "Add a vocabulary for Blogs Entry."
 	@priority = "3"
-	test AddVocabularyViewableByOwner {
-		Vocabulary.addViewableByCP(
-			viewableBy = "Owner",
-			vocabularyName = "Vocabulary Name 1");
+	test AddVocabularyForBlogsEntry {
+		task ("Add a vocabulary for Blogs Entry") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Blogs Entry",
+				vocabularyName = "Vocabulary Name 1");
+		}
 
-		Vocabulary.viewVocabularyPermissionsCP(
-			viewableBy = "Owner",
-			vocabularyName = "Vocabulary Name 1");
+		task ("View the new vocabulary for Blogs Entry") {
+			Vocabulary.viewWithAssociatedAssetTypeCP(
+				vocabularyAssociatedAssetType = "Blogs Entry",
+				vocabularyName = "Vocabulary Name 1");
+		}
 	}
 
+	@description = "Add a vocabulary for Bookmarks Entry."
 	@priority = "3"
-	test AddVocabularyViewableBySiteMembers {
-		Vocabulary.addViewableByCP(
-			viewableBy = "Site Members",
-			vocabularyName = "Vocabulary Name 1");
+	test AddVocabularyForBookmarksEntry {
+		property portal.release = "false";
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("Add a vocabulary for Bookmarks Entry") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Vocabulary.viewVocabularyPermissionsCP(
-			viewableBy = "Site Members",
-			vocabularyName = "Vocabulary Name 1");
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Bookmarks Entry",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("View the new vocabulary for Bookmarks Entry") {
+			Vocabulary.viewWithAssociatedAssetTypeCP(
+				vocabularyAssociatedAssetType = "Bookmarks Entry",
+				vocabularyName = "Vocabulary Name 1");
+		}
 	}
 
+	@description = "Add a vocabulary for Document."
+	@priority = "3"
+	test AddVocabularyForDocument {
+		task ("Add a vocabulary for Document") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Document",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("View the new vocabulary for Document") {
+			Vocabulary.viewWithAssociatedAssetTypeCP(
+				vocabularyAssociatedAssetType = "Document",
+				vocabularyName = "Vocabulary Name 1");
+		}
+	}
+
+	@description = "Add a vocabulary for User."
+	@priority = "3"
+	test AddVocabularyForUser {
+		task ("Add a vocabulary for User") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "User",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("View the new vocabulary for User") {
+			Vocabulary.viewWithAssociatedAssetTypeCP(
+				vocabularyAssociatedAssetType = "User",
+				vocabularyName = "Vocabulary Name 1");
+		}
+	}
+
+	@description = "Add a vocabulary for Web Content Article."
+	@priority = "3"
+	test AddVocabularyForWebContentArticle {
+		task ("Add a vocabulary for Web Content Article") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Web Content Article",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("View the new vocabulary for Web Content Article") {
+			Vocabulary.viewWithAssociatedAssetTypeCP(
+				vocabularyAssociatedAssetType = "Web Content Article",
+				vocabularyName = "Vocabulary Name 1");
+		}
+	}
+
+	@description = "Add a vocabulary for Wiki Page."
+	@priority = "3"
+	test AddVocabularyForWikiPage {
+		task ("Add a vocabulary for Wiki Page") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Wiki Page",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("View the new vocabulary for Wiki Page") {
+			Vocabulary.viewWithAssociatedAssetTypeCP(
+				vocabularyAssociatedAssetType = "Wiki Page",
+				vocabularyName = "Vocabulary Name 1");
+		}
+	}
+
+	@description = "Add a vocabulary with Guest view permission."
+	@priority = "3"
+	test AddVocabularyWithGuestViewPermission {
+		task ("View the new vocabulary with Guest view permission") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.viewVocabularyPermissionsCP(
+				viewableBy = "Anyone (Guest Role)",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Add a vocabulary with Owner view permission."
+	@priority = "3"
+	test AddVocabularyWithOwnerViewPermission {
+		task ("View the new vocabulary with Owner view permission") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.viewVocabularyPermissionsCP(
+				viewableBy = "Owner",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Add a vocabulary with Site Member view permission."
+	@priority = "3"
+	test AddVocabularyWithSiteMemberViewPermission {
+		task ("View the new vocabulary with Site Member view permission") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.viewVocabularyPermissionsCP(
+				viewableBy = "Site Members",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Cancel a vocabulary creation."
+	@priority = "3"
+	test CancelVocabularyCreation {
+		task ("Cancel a vocabulary creation") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.gotoAddVocabulary();
+
+			PortletEntry.inputName(name = "Vocabulary Name Test Close");
+
+			Click(locator1 = "Button#CANCEL");
+		}
+
+		task ("View no vocabulary is created") {
+			AssertTextNotPresent(value1 = "Vocabulary Name Test Close");
+		}
+	}
+
+	@description = "Cannot add a category without title."
 	@priority = "3"
 	test CannotAddCategoryWithNullTitle {
-		Category.addWithNullTitleCP(vocabularyName = "Vocabulary Name");
+		task ("View cannot add a category without title") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addWithNullTitleCP(vocabularyName = "Vocabulary Name");
+		}
 	}
 
+	@description = "Cannot add a duplicate subcategory."
+	@priority = "3"
+	test CannotAddDuplicateSubCategory {
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a subcategory") {
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Cannot add a duplciate subcategory") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.addDuplicateCP(
+				categoryName = "Category Name",
+				subcategoryName = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Cannot add a vocabulary without title."
 	@priority = "3"
 	test CannotAddVocabularyWithNullTitle {
-		Vocabulary.addVocabularyWithNullTitle();
+		task ("View cannot add a vocabulary without title") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addVocabularyWithNullTitle();
+		}
 	}
 
+	@description = "This is a use case for LPS-107730. Can not store 256 character in name field, key field and value field of category."
+	@priority = "4"
+	test CannotType256CharactersInNameFieldKeyFieldAndValueField {
+		var actualText = "The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256";
+		var inputText = "The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.";
+		var modifiedText = "The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255";
+
+		task ("Can not store 256 characters in name field of category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputTitle(title = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${inputText}");
+
+			Button.clickSave();
+
+			AssertTextEquals(
+				key_alertMessage = "Please enter no more than 255 characters.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Please enter no more than 255 characters.");
+
+			PortletEntry.inputTitle(title = "${modifiedText}");
+
+			PortletEntry.save();
+		}
+
+		task ("Can not store 256 characters in key field and value field of category") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${modifiedText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextNotEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${actualText}");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextNotEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${actualText}");
+		}
+	}
+
+	@description = "Delete an associated asset type of vocabulary."
 	@priority = "3"
-	test DeleteAssociatedAssetTypeViaVocabulary {
-		Vocabulary.gotoAddVocabulary();
+	test DeleteAssociatedAssetTypeOfVocabulary {
+		task ("Add a vocabulary with two associated asset types") {
+			Vocabulary.gotoAddVocabulary();
 
-		PortletEntry.inputName(name = "Vocabulary Name 1");
+			PortletEntry.inputName(name = "Vocabulary Name 1");
 
-		Vocabulary.addAssociatedAssetType(
-			assetType = "Blogs Entry",
-			required = "true");
+			Vocabulary.addAssociatedAssetType(
+				assetType = "Blogs Entry",
+				required = "true");
 
-		Button.clickAddRow();
+			Button.clickAddRow();
 
-		Vocabulary.addAssociatedAssetType(
-			assetType = "Web Content Article",
-			required = "true",
-			rowNumber = "2");
+			Vocabulary.addAssociatedAssetType(
+				assetType = "Web Content Article",
+				required = "true",
+				rowNumber = "2");
 
-		Button.clickNoError(button = "Save");
+			Button.clickNoError(button = "Save");
 
-		AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary with public visibility?");
+			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary with public visibility?");
 
-		Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage();
+		}
 
-		Vocabulary.deleteAssociatedAssetTypeViaVocabularyCP(vocabularyName = "Vocabulary Name 1");
+		task ("Delete the second associated asset type") {
+			Vocabulary.deleteAssociatedAssetTypeViaVocabularyCP(vocabularyName = "Vocabulary Name 1");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("View only one associated asset type is shown") {
+			Vocabulary.viewWithAssociatedAssetTypeCP(
+				vocabularyAssociatedAssetType = "Blogs Entry",
+				vocabularyName = "Vocabulary Name 1");
 
-		Vocabulary.viewWithAssociatedAssetTypeCP(
-			vocabularyAssociatedAssetType = "Blogs Entry",
-			vocabularyName = "Vocabulary Name 1");
+			AssertElementNotPresent(
+				key_rowNumber = "2",
+				locator1 = "CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_N");
+		}
 	}
 
+	@description = "Delete all categories of vocabulary."
 	@priority = "4"
 	test DeleteCategories {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+		task ("Add three categories") {
+			for (var n : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 2",
-			vocabularyName = "Vocabulary Name");
+		task ("Delete all categories") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 3",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.deleteCategoriesCP(vocabularyName = "Vocabulary Name");
+			Category.deleteCategoriesCP(vocabularyName = "Vocabulary Name");
+		}
 	}
 
-	@priority = "5"
-	@uitest
-	test DeleteCategory {
-		property portal.acceptance = "true";
-
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.deleteByIconCP(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-	}
-
-	@priority = "4"
-	@uitest
-	test DeleteCategoryByMenu {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.deleteCategoryByMenuCP(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-	}
-
+	@description = "Delete the second category property."
 	@priority = "3"
-	test DeleteCategoryProperty2 {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+	test DeleteSecondCategoryProperty {
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("Add two properties in category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.viewCP(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+			Category.addPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Property",
+				propertiesValueField = "Category Property",
+				propertyNumber = "2");
+		}
 
-		Category.addPropertyCP(
-			categoryName = "Category Name 1",
-			propertiesKeyField = "Category Property",
-			propertiesValueField = "Category Property",
-			propertyNumber = "2");
+		task ("Delete the second category property") {
+			Category.deleteCategoryProperty2CP(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("View only one category property is shown") {
+			Category.viewCategoryPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Property",
+				propertiesValueField = "Category Property",
+				propertyNumber = "1",
+				vocabularyName = "Vocabulary Name");
 
-		Category.deleteCategoryProperty2CP(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+			var key_pathNumber = "1";
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			AssertElementNotPresent(locator1 = "Categories#CATEGORY_DETAILS_PROPERTY_KEY_2");
 
-		Category.viewCategoryPropertyCP(
-			categoryName = "Category Name 1",
-			propertiesKeyField = "Category Property",
-			propertiesValueField = "Category Property",
-			propertyNumber = "1",
-			vocabularyName = "Vocabulary Name");
-
-		var key_pathNumber = "1";
-
-		AssertElementNotPresent(locator1 = "Categories#CATEGORY_DETAILS_PROPERTY_KEY_2");
-
-		AssertElementNotPresent(locator1 = "Categories#CATEGORY_DETAILS_PROPERTY_VALUE_2");
+			AssertElementNotPresent(locator1 = "Categories#CATEGORY_DETAILS_PROPERTY_VALUE_2");
+		}
 	}
 
-	@priority = "3"
-	test DeleteSubcategoryViaIcon {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		JSONCategory.addSubcategory(
-			groupName = "Test Site Name",
-			parentCategoryName = "Category Name 1",
-			title = "Subcategory Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Subcategory.deleteViaIconCP(
-			categoryName = "Category Name 1",
-			subcategoryName = "Subcategory Name 1",
-			vocabularyName = "Vocabulary Name");
-	}
-
-	@priority = "5"
-	test DeleteSubcategoryViaMenu {
-		property portal.acceptance = "true";
-
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		JSONCategory.addSubcategory(
-			groupName = "Test Site Name",
-			parentCategoryName = "Category Name 1",
-			title = "Subcategory Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Subcategory.deleteViaMenuCP(
-			categoryName = "Category Name 1",
-			subcategoryName = "Subcategory Name 1",
-			vocabularyName = "Vocabulary Name");
-	}
-
-	@priority = "5"
-	@uitest
-	test DeleteVocabulary {
-		property portal.acceptance = "true";
-
-		Vocabulary.deleteByIconCP(vocabularyName = "Vocabulary Name");
-	}
-
-	@priority = "4"
-	@uitest
-	test DeleteVocabularyByMenu {
-		Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Name");
-	}
-
-	@priority = "5"
-	@uitest
-	test EditCategory {
-		property portal.acceptance = "true";
-
-		Category.addCP(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.editCP(
-			categoryName = "Category Name",
-			categoryNameEdit = "Category Name Edit",
-			vocabularyName = "Vocabulary Name");
-	}
-
+	@description = "Edit the category property."
 	@priority = "4"
 	test EditCategoryProperty {
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("Add a property in category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.viewCP(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
+			Category.addPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Key",
+				propertiesValueField = "Category Value",
+				propertyNumber = "1");
+		}
 
-		Category.addPropertyCP(
-			categoryName = "Category Name 1",
-			propertiesKeyField = "Category Key",
-			propertiesValueField = "Category Value",
-			propertyNumber = "1");
+		task ("Edit the category property") {
+			Category.editPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyFieldEdit = "Category Key Edit",
+				propertiesValueFieldEdit = "Category Value Edit",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCategoryPropertyCP(
-			categoryName = "Category Name 1",
-			propertiesKeyField = "Category Key",
-			propertiesValueField = "Category Value",
-			propertyNumber = "1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.editCP(
-			categoryName = "Category Name 1",
-			categoryNameEdit = "Category Name Edit",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.editPropertyCP(
-			categoryName = "Category Name Edit",
-			propertiesKeyFieldEdit = "Category Key Edit 1",
-			propertiesValueFieldEdit = "Category Value Edit 1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCategoryPropertyCP(
-			categoryName = "Category Name Edit",
-			propertiesKeyField = "Category Key Edit",
-			propertiesValueField = "Category Value Edit",
-			propertyNumber = "1",
-			vocabularyName = "Vocabulary Name");
+		task ("View the edited category property") {
+			Category.viewCategoryPropertyCP(
+				categoryName = "Category Name Edit",
+				propertiesKeyField = "Category Key Edit",
+				propertiesValueField = "Category Value Edit",
+				propertyNumber = "1",
+				vocabularyName = "Vocabulary Name");
+		}
 	}
 
-	@priority = "5"
-	@uitest
-	test EditSubcategory {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		JSONCategory.addSubcategory(
-			groupName = "Test Site Name",
-			parentCategoryName = "Category Name 1",
-			title = "Subcategory Name 1",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Subcategory.editCP(
-			categoryName = "Category Name 1",
-			subcategoryName = "Subcategory Name 1",
-			subcategoryNameEdit = "Subcategory Name 1 Edit",
-			vocabularyName = "Vocabulary Name");
-	}
-
-	@priority = "5"
-	@uitest
-	test EditVocabulary {
-		property portal.acceptance = "true";
-
-		Vocabulary.editCP(
-			vocabularyName = "Vocabulary Name",
-			vocabularyNameEdit = "Vocabulary Name Edit");
-	}
-
+	@description = "Move a category to another vocabulary."
 	@priority = "3"
-	test MoveCategoryViaEdit {
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name 2");
+	test MoveCategoryToAnotherVocabulary {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name 2");
+		}
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name",
-			vocabularyName = "Vocabulary Name");
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("Move the category to another vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.moveViaEditCP(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name",
-			vocabularyName2 = "Vocabulary Name 2");
+			Category.moveViaEditCP(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name",
+				vocabularyName2 = "Vocabulary Name 2");
+		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCP(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name 2");
+		task ("View the category is moved to another vocabulary") {
+			Category.viewCP(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name 2");
+		}
 	}
 
+	@description = "Move a subcategory to another category."
 	@priority = "3"
-	test ValidateClickingCloseButtonDoesNotSaveVocabulary {
-		Vocabulary.gotoAddVocabulary();
+	test MoveSubcategoryToAnotherCategory {
+		task ("Add two categories") {
+			for (var categoryName : list "dog,cat") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "${categoryName}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
 
-		PortletEntry.inputName(name = "Vocabulary Name Test Close");
+		task ("Add two subcategories to one category") {
+			for (var subcategoryName : list "bone,milk") {
+				JSONCategory.addSubcategory(
+					groupName = "Test Site Name",
+					parentCategoryName = "dog",
+					title = "${subcategoryName}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
 
-		Click(locator1 = "Button#CANCEL");
+		task ("Move one subcategory to another category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Subcategory.moveCP(
+				categoryName = "dog",
+				categoryNameMove = "cat",
+				subcategoryName = "milk",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		AssertTextNotPresent(value1 = "Vocabulary Name Test Close");
+		task ("View the subcategory is moved to another category") {
+			Subcategory.viewCP(
+				categoryName = "cat",
+				subcategoryName = "milk",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-107730. Can input 254 characters to name field, key field and value field of category."
+	@priority = "4"
+	test Type254CharactersIntoNameFieldKeyFieldAndValueField {
+		var inputText = "The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 25";
+
+		task ("Assert input 254 characters to name field of category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputTitle(title = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${inputText}");
+
+			PortletEntry.save();
+
+			AssertVisible(
+				key_tableEntry = "${inputText}",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+		}
+
+		task ("Assert input 254 characters to key field and value field of category") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${inputText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			PortletEntry.save();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${inputText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+		}
+	}
+
+	@description = "This is a use case for LPS-107730. Can input 255 characters to name field, key field and value field of category."
+	@priority = "5"
+	test Type255CharactersIntoNameFieldKeyFieldAndValueField {
+		property portal.acceptance = "true";
+
+		var inputText = "The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255";
+
+		task ("Assert input 255 characters to name field of category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputTitle(title = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${inputText}");
+
+			PortletEntry.save();
+
+			AssertVisible(
+				key_tableEntry = "${inputText}",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+		}
+
+		task ("Assert input 255 characters to key field and value field of category") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${inputText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			PortletEntry.save();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${inputText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+		}
+	}
+
+	@description = "View the breadcrumb with Flattened Tree."
+	@priority = "3"
+	test ViewBreadcrumbWithFlattenedTree {
+		property test.name.skip.portal.instance = "CategoriesUseCase#ViewBreadcrumbWithFlattenedTree";
+
+		task ("Select the Flattened Tree as Category Navigation Display Style") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Asset Categories Web",
+				configurationScope = "System Scope");
+
+			SystemSettings.configureDisplayStyle(displayStyle = "Flattened Tree");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a subcategory") {
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the breadcrumb in vocabulary and category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			Category.viewPath(
+				categoryName = "Category Name",
+				path = "Vocabulary Name &gt; Category Name");
+
+			Category.viewPath(
+				categoryName = "Subcategory Name",
+				path = "Vocabulary Name &gt; Category Name &gt; Subcategory Name");
+		}
+	}
+
+	@description = "View the navigation."
+	@priority = "3"
+	test ViewNavigation {
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a subcategory") {
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the navigation") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.viewNavigationCP(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 	}
 
 }

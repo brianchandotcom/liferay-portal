@@ -93,9 +93,7 @@ definition {
 
 		UserGroup.openUserGroupsAdmin();
 
-		LexiconEntry.viewNoEntryMenuItem(
-			menuItem = "Manage Pages",
-			rowEntry = "UG UserGroup Name");
+		LexiconEntry.viewNoEntryMenu(rowEntry = "UG UserGroup Name");
 
 		User.logoutPG();
 

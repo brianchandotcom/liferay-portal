@@ -105,6 +105,18 @@ definition {
 			titleMap = "${titleMap}");
 	}
 
+	@summary = "Delete a category"
+	macro deleteCategory {
+		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
+
+		var categoryId = JSONCategory.getCategoryId(
+			categoryName = "${categoryName}",
+			groupName = "${groupName}",
+			vocabularyName = "${vocabularyName}");
+
+		JSONCategoryAPI._deleteCategory(categoryId = "${categoryId}");
+	}
+
 	@summary = "Get the categoryId from any category by using categoryName, groupId, and vocabularyId"
 	macro getCategoryId {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");

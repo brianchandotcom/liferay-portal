@@ -887,9 +887,11 @@ definition {
 			groupName = "Guest",
 			layoutName = "Blogs Aggregator Page");
 
-		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
-
-		Portlet.addPG(portletName = "Blogs Aggregator");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Aggregator Page",
+			widgetName = "Blogs Aggregator");
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",

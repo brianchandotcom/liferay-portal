@@ -277,6 +277,40 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addDMShortcutPG {
+		DMNavigator.gotoAddDocumentTypePG(
+			contentPage = "${contentPage}",
+			dmDocumentTypeName = "Shortcut");
+
+		Click(locator1 = "DocumentsAndMediaAddShortcut#SELECT_DOCUMENT_BUTTON");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		AssertClick(
+			key_breadcrumbName = "Sites and Libraries",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "Sites and Libraries");
+
+		if (isSet(siteName)) {
+			LexiconCard.clickCardTitleLink(card = "${siteName}");
+		}
+
+		if (isSet(depotName)) {
+			AssertClick(
+				key_groupTab = "Asset Library",
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+				value1 = "Asset Library");
+
+			LexiconCard.clickCard(card = "${depotName}");
+		}
+
+		LexiconCard.clickCard(card = "${dmDocumentTitle}");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		PortletEntry.save();
+	}
+
 	macro addDocumentTypePG {
 		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
 
@@ -1831,6 +1865,35 @@ definition {
 		Click(
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "DDMField#COLOR_PICKER");
+	}
+
+	macro setRootFolder {
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
+
+		Panel.expandPanel(panel = "Folders Listing");
+
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+
+		SelectFrame(locator1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#SELECT_FOLDER");
+
+		AssertClick(
+			key_dmFolderName = "${dmRootFolderName}",
+			locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
+			value1 = "Select");
+
+		SelectFrame(locator1 = "relative=top");
+
+		SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
 	}
 
 	macro sharePG {

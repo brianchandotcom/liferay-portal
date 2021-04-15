@@ -126,11 +126,13 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+		// Workaround LPS-130666
+
+		/*Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
 		AssertElementNotPresent(
 			key_menuItem = "Create New Publication",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
+			locator1 = "MenuItem#ANY_MENU_ITEM");*/
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",

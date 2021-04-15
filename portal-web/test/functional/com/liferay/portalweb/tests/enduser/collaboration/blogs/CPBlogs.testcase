@@ -66,15 +66,15 @@ definition {
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = '''& < > " Escape Characters Entry''');
+			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		BlogsNavigator.gotoEntryCP(entryTitle = '''& < > " Escape Characters Entry''');
+		BlogsNavigator.gotoEntryCP(entryTitle = '''&amp; &lt; &gt; &quot; > <''');
 
 		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
-			entryTitle = '''& < > " Escape Characters Entry''');
+			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
 	}
 
 	@priority = "4"

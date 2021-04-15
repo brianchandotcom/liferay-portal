@@ -58,27 +58,7 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 				balloonToolbars.create({
 					buttons:
 						'Bold,Italic,Underline,RemoveFormat,Link,NumberedList,BulletedList,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,Anchor',
-					refresh(editor, path) {
-						const tags = new Set([
-							'h1',
-							'h2',
-							'h3',
-							'p',
-							'span',
-							'strong',
-							'li',
-						]);
-
-						let result = false;
-
-						tags.forEach((tag) => {
-							if (path.contains(tag)) {
-								result = true;
-							}
-						});
-
-						return result;
-					},
+					cssSelector: '*',
 				});
 
 				balloonToolbars.create({

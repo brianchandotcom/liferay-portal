@@ -130,7 +130,7 @@ function PreviewSidebar({
 				<ClayManagementToolbar.Item>
 					<ClayButton
 						aria-label={Liferay.Language.get('refresh')}
-						disabled={!value || loading}
+						disabled={loading}
 						displayType="secondary"
 						onClick={_handleFetch}
 						small

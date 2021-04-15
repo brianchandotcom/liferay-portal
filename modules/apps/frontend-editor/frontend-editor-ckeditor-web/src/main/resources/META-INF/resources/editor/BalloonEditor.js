@@ -13,13 +13,15 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {Editor} from './Editor';
 
 import '../css/main.scss';
 
 const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
+	const [cssClass, setCssClass] = useState('');
+
 	const defaultExtraPlugins = 'balloontoolbar,floatingspace';
 
 	const getConfig = () => {
@@ -34,8 +36,6 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 		};
 	};
 
-	let initialCssClass;
-
 	return (
 		<Editor
 			config={getConfig()}
@@ -43,12 +43,12 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 			onBeforeLoad={(CKEDITOR) => {
 				CKEDITOR.disableAutoInline = true;
 
-				initialCssClass = CKEDITOR.env.cssClass;
+				setCssClass(CKEDITOR.env.cssClass);
 
 				CKEDITOR.env.cssClass = `${CKEDITOR.env.cssClass} lfr-balloon-editor`;
 			}}
 			onDestroy={() => {
-				CKEDITOR.env.cssClass = initialCssClass;
+				CKEDITOR.env.cssClass = cssClass;
 			}}
 			onInstanceReady={(event) => {
 				const editor = event.editor;

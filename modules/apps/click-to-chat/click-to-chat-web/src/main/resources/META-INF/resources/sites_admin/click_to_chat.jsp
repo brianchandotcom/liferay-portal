@@ -154,11 +154,11 @@
 	}
 
 	function <portlet:namespace />setVisibleClickToChatProviderIdHelp(
-		name,
+		providerAccountId,
 		visible
 	) {
 		var clickToChatProviderIdHelp = document.getElementById(
-			'<portlet:namespace />' + name
+			'<portlet:namespace />' + providerAccountId
 		);
 
 		if (clickToChatProviderIdHelp) {

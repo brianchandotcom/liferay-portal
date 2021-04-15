@@ -90,7 +90,9 @@
 					_domReady: function (t) {
 						this.isDom ||
 							((this.isDom = !0),
-							this.events.trigger('LPT', 'DOM_READY', {t: t})),
+							this.events.trigger('LPT', 'DOM_READY', {
+								t: t,
+							})),
 							(this._timing[t] = new Date().getTime());
 					},
 					_load: function (t, e, i) {
@@ -121,7 +123,11 @@
 	lpTag.sdes = lpTag.sdes || [];
 	lpTag.sdes.push({
 		personal: {
-			contacts: [{email: '<%= user.getEmailAddress() %>'}],
+			contacts: [
+				{
+					email: '<%= user.getEmailAddress() %>',
+				},
+			],
 			firstname: '<%= user.getFirstName() %>',
 			lastname: '<%= user.getLastName() %>',
 		},

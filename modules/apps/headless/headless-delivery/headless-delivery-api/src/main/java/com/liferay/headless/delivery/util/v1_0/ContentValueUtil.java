@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.util.v1_0;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.io.StreamUtil;

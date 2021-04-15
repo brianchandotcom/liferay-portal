@@ -372,7 +372,7 @@ definition {
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Unique Title");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -381,27 +381,17 @@ definition {
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
 			entrySearchTerm = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Unique Title");
 
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
 			entrySearchTerm = "Blogs",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Entry",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Unique Title");
 
 		BlogsEntry.searchNoCP(
 			entryContent = "Blogs Entry Content",
 			entrySearchTerm = "Blogs1 Entry1 Content1",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Unique Title");
 	}
 
 	@priority = "4"
@@ -409,7 +399,7 @@ definition {
 	test SearchBlogsEntryTitle {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Unique Title");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -417,28 +407,18 @@ definition {
 
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Blogs Entry Title",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Blogs",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Entry",
-			entryTitle = "Blogs Entry Title");
+			entrySearchTerm = "Unique Title",
+			entryTitle = "Unique Title");
 
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
 			entrySearchTerm = "Title",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Unique Title");
 
 		BlogsEntry.searchNoCP(
 			entryContent = "Blogs Entry Content",
 			entrySearchTerm = "Blogs1 Entry1 Title1",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Unique Title");
 	}
 
 	@priority = "3"

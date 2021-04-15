@@ -502,12 +502,12 @@ definition {
 	test InstallViaUploadIsSuccessful {
 		property test.name.skip.portal.instance = "AppManagement#InstallUninstallApp";
 
-		var appName = "test-app-portlet";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
+
+		var appName = "test-app-portlet";
 
 		AppManager.uploadApp(
 			appName = "${appName}",

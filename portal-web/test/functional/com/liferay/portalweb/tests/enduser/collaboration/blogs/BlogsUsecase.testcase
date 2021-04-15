@@ -50,29 +50,39 @@ definition {
 		}
 	}
 
+	@description = "This checks that the default abstract (appends to 400 characters) can display properly in the UI."
 	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntryWithHTML {
-		JSONBlog.addEntry(
-			entryContent = "<b>Bold Type</b> <i>Italics</i>",
-			entrySubtitle = "Blogs Entry Subtitle",
+	@refactordone
+	test CanAddAbstractDisplayingFirst400Characters {
+		property test.name.skip.portal.instance = "BlogsUsecase#CanAddAbstractDisplayingFirst400Characters";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithDefaultAbstract(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects.",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryWithAbstractPG(
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryPG(
-			entryContentBold = "Bold Type",
-			entryContentItalics = "Italics",
-			entrySubtitle = "Blogs Entry Subtitle",
+			entryContent = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects.",
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This test checks that an inline image can be added to a blog."
 	@priority = "4"
 	@refactorneeded
-	test AddBlogsEntryWithInlineImage {
+	test CanAddEntryWithInlineImage {
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
@@ -96,9 +106,31 @@ definition {
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_1");
 	}
 
+	@description = "This test checks that HTML is rendered in the blog content field."
+	@priority = "4"
+	@refactordone
+	test CanAddHTMLToContentField {
+		JSONBlog.addEntry(
+			entryContent = "<b>Bold Type</b> <i>Italics</i>",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewEntryPG(
+			entryContentBold = "Bold Type",
+			entryContentItalics = "Italics",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This test checks that HTML is rendered in the blog content field."
 	@priority = "5"
-	@refactorneeded
-	test AddBlogsEntryWithSpecialCharacters {
+	@refactordone
+	test CanAddWithSpecialCharacters {
 		JSONBlog.addEntry(
 			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
 			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
@@ -112,6 +144,308 @@ definition {
 		BlogsEntry.viewPG(
 			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
 			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
+	}
+
+	@description = "This checks that a user can change the publish date for a scheduled entry to the present and publish it."
+	@priority = "4"
+	@refactordone
+	test CanChangeAScheduledEntryToThePresentAndPublish {
+		property test.name.skip.portal.instance = "BlogsUsecase#CanChangeAScheduledEntryToThePresentAndPublish";
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.editDisplayDateYear();
+
+		PortletEntry.publish();
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.editDisplayDate(displayTimeMinute = "00");
+
+		PortletEntry.publish();
+
+		PortletEntry.viewNoNavItemLink();
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This test covers LPS-127212 and LPS-128781. This ensures that a blog title can be imported to a site when a duplicate title already exists."
+	@priority = "4"
+	@refactordone
+	test CanImportBlogWhenDuplicateTitleExists {
+		JSONGroup.addGroup(groupName = "Target Site Name");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Target Site Name");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Target Site Name");
+
+		JSONGroup.addGroup(groupName = "Source Site Name");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Source Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "source-site-name");
+
+		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "target-site-name");
+
+		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "target-site-name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		for (var i : list "1,2,3") {
+			AssertTextEquals(
+				key_rowNumber = "${i}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_2",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
+	@description = "This checks that a blog entry with a comment can be imported with no data loss."
+	@priority = "4"
+	@refactordone
+	test CanImportEntryWithComment {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		Comments.addPG(entryComment = "Blogs Entry Comment");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.tearDownCP();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test");
+	}
+
+	@description = "This test covers LPS-102199. This ensures that the user can search for a pending blog entry."
+	@priority = "3"
+	@refactorneeded
+	test SearchForPendingBlogsEntry {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that a guest cannot view a blog entry in the AP when permissions are removed."
+	@priority = "4"
+	@refactordone
+	test CannotViewAsGuestInAPWhenPermissionsAreRemoved {
+		property test.name.skip.portal.instance = "BlogsUsecase#CannotViewAsGuestInAPWhenPermissionsAreRemoved";
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.removeViewPermissionsPG(
+			entryTitle = "Blogs Entry Title 2",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewNoEntryViaAPPG(
+			assetTitle = "Blogs Entry Title 2",
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2");
+	}
+
+	@description = "This checks that a custom blog abstracted can be viewed from the site page."
+	@priority = "4"
+	@refactordone
+	test CanViewCustomAbstractOnSitePage {
+		property test.name.skip.portal.instance = "BlogsUsecase#CanViewCustomAbstractOnSitePage";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithCustomAbstract(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryWithAbstractPG(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that a blog entry can be added, edited, saved as a draft and published via AP."
+	@priority = "4"
+	@refactordone
+	@uittest
+	test CanViewEntryInAP {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedViaAP";
+		// This is lengthy but we'll keep this as a UI test to validate blogs behavior when used with AP.
+
+		task ("Add a blog entry via AP") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Asset Publisher Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+
+			Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+			AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
+
+			Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+			Blogs.addViaAP(
+				entryContent = "Blogs Entry Content",
+				entrySubtitle = "Blogs Entry Subtitle",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Edit the blog entry via AP and save as draft") {		
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+			BlogsEntry.editEntryContent(
+				entryContent = "Blogs Entry Content",
+				entryContentEdit = "Blogs Entry Content Edit",
+				entrySubtitle = "",
+				entrySubtitleEdit = "Blogs Entry Subtitle Edit",
+				entryTitle = "Blogs Entry Title",
+				entryTitleEdit = "Blogs Entry Title Edit");
+
+			BlogsEntry.saveAsDraft();
+		}
+
+		task ("Check that the AP doesn't display the blog draft") {
+			Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+			BlogsEntry.viewNoEntryViaAPPG(
+				assetTitle = "Blogs Entry Title",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Publish the blog entry then view it in AP") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			Blogs.publishDraftCP(
+				entryContent = "Blogs Entry Content Edit",
+				entrySubtitle = "Blogs Entry Subtitle Edit",
+				entryTitle = "Blogs Entry Title Edit");
+
+			Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+			BlogsEntry.viewEntryViaAPPG(
+				assetTitle = "Blogs Entry Title Edit",
+				entryContent = "Blogs Entry Content Edit",
+				entryTitle = "Blogs Entry Title Edit");
+		}
 	}
 
 	@priority = "4"
@@ -303,274 +637,28 @@ definition {
 			entryTitle = "Blogs Entry6 Title");
 	}
 
-	@description = "This test covers LPS-127212 and LPS-128781. This ensures that can export and import blog entries into a site with existing entry with same title."
-	@priority = "3"
-	@refactorneeded
-	test ExportImportBlogsWithSameTitle {
-		JSONGroup.addGroup(groupName = "Target Site Name");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Target Site Name");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Target Site Name");
-
-		JSONGroup.addGroup(groupName = "Source Site Name");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Source Site Name");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "source-site-name");
-
-		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "target-site-name");
-
-		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "target-site-name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		for (var i : list "1,2,3") {
-			AssertTextEquals(
-				key_rowNumber = "${i}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_2",
-				value1 = "Blogs Entry Title");
-		}
-	}
-
+	@description = "This test covers LPS-128451. It ensures that a blog entry can be published normally with xss code injected title."
 	@priority = "4"
-	@refactorneeded
-	test ImportBlogsCommentLAR {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		Comments.addPG(entryComment = "Blogs Entry Comment");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.tearDownCP();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.viewPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		Comments.viewPG(
-			commentCount = "1",
-			entryComment = "Blogs Entry Comment",
-			userFullName = "Test Test");
-	}
-
-	@description = "This test covers LPS-102199. This ensures that the user can search for a pending blog entry."
-	@priority = "3"
-	@refactorneeded
-	test SearchForPendingBlogsEntry {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
+	@refactordone
+	test TitleWillNotExecuteXSS {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		Blogs.addWithWorkflow(
+		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsEntry.viewWithWorkflowCP(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewBlogsEntriesAsGuestViaAP {
-		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesAsGuestViaAP";
-
-		Portlet.deletePG(portletName = "Blogs");
-
-		Portlet.addPG(portletName = "Asset Publisher");
-
-		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2");
+			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
+			entryTitle = '''"><img src=xss onerror=alert(1)>''',
+			injectCode = "true");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsEntry.removeViewPermissionsPG(
-			entryTitle = "Blogs Entry Title 2",
-			roleTitle = "Guest");
-
-		User.logoutPG();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewEntryViaAPPG(
-			assetTitle = "Blogs Entry Title",
+		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewNoEntryViaAPPG(
-			assetTitle = "Blogs Entry Title 2",
-			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing {
-		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing";
-
-		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.addEntryContent(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Panel.expandPanel(panel = "Configuration");
-
-		BlogsEntry.editDisplayDateYear();
-
-		PortletEntry.publish();
-
-		Navigator.gotoNavItem(navItem = "Not Published (1)");
-
-		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
-
-		Panel.expandPanel(panel = "Configuration");
-
-		BlogsEntry.editDisplayDate(displayTimeMinute = "00");
-
-		PortletEntry.publish();
-
-		PortletEntry.viewNoNavItemLink();
+			entryTitle = '''"><img src=xss onerror=alert(1)>''');
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryAsPublishedViaAP {
-		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedViaAP";
-		// This is lengthy but we'll keep this as a UI test to validate blogs behavior when used with AP.
-
-		task ("Add a blog entry via AP") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Asset Publisher Page");
-
-			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
-				groupName = "Guest",
-				layoutName = "Asset Publisher Page",
-				widgetName = "Asset Publisher");
-
-			Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-			AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
-
-			Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-			Blogs.addViaAP(
-				entryContent = "Blogs Entry Content",
-				entrySubtitle = "Blogs Entry Subtitle",
-				entryTitle = "Blogs Entry Title");
-		}
-
-		task ("Edit the blog entry via AP and save as draft") {		
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
-
-			BlogsEntry.editEntryContent(
-				entryContent = "Blogs Entry Content",
-				entryContentEdit = "Blogs Entry Content Edit",
-				entrySubtitle = "",
-				entrySubtitleEdit = "Blogs Entry Subtitle Edit",
-				entryTitle = "Blogs Entry Title",
-				entryTitleEdit = "Blogs Entry Title Edit");
-
-			BlogsEntry.saveAsDraft();
-		}
-
-		task ("Check that the AP doesn't display the blog draft") {
-			Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-			BlogsEntry.viewNoEntryViaAPPG(
-				assetTitle = "Blogs Entry Title",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title");
-		}
-
-		task ("Publish the blog entry then view it in AP") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			Blogs.publishDraftCP(
-				entryContent = "Blogs Entry Content Edit",
-				entrySubtitle = "Blogs Entry Subtitle Edit",
-				entryTitle = "Blogs Entry Title Edit");
-
-			Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-			BlogsEntry.viewEntryViaAPPG(
-				assetTitle = "Blogs Entry Title Edit",
-				entryContent = "Blogs Entry Content Edit",
-				entryTitle = "Blogs Entry Title Edit");
-		}
+			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
+			entryTitle = '''"><img src=xss onerror=alert(1)>''');
 	}
 
 	@priority = "3"
@@ -979,30 +1067,6 @@ definition {
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This test covers LPS-128451. It ensures that a blog entry can be published normally with xss code injected title."
-	@priority = "4"
-	@refactorneeded
-	test ViewBlogsEntryWithXSSCodeInjectedTitle {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
-			entryTitle = '''"><img src=xss onerror=alert(1)>''',
-			injectCode = "true");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = '''"><img src=xss onerror=alert(1)>''');
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
-			entryTitle = '''"><img src=xss onerror=alert(1)>''');
 	}
 
 	@priority = "4"

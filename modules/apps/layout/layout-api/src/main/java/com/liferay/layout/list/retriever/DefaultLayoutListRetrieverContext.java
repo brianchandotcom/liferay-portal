@@ -39,6 +39,10 @@ public class DefaultLayoutListRetrieverContext
 		return Optional.ofNullable(_segmentsEntryIds);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Optional<long[]> getSegmentsExperienceIdsOptional() {
 		return Optional.ofNullable(_segmentsExperienceIds);
@@ -56,6 +60,10 @@ public class DefaultLayoutListRetrieverContext
 		_segmentsEntryIds = segmentsEntryIds;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setSegmentsExperienceIds(long[] segmentsExperienceIds) {
 		_segmentsExperienceIds = segmentsExperienceIds;
 	}

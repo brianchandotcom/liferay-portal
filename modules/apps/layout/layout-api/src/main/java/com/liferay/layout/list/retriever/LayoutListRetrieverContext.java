@@ -32,6 +32,10 @@ public interface LayoutListRetrieverContext {
 
 	public Optional<long[]> getSegmentsEntryIdsOptional();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public Optional<long[]> getSegmentsExperienceIdsOptional();
 
 }

@@ -341,10 +341,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
 			value1 = "7.45");
-
-
-
-			
 	}
 
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {

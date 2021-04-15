@@ -98,22 +98,14 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewMentionViaMessageBoardsThread {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Mentions.addMentionViaMessageBoardThread(
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "usersn",
 			threadSubject = "Thread Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.gotoCP(threadSubject = "Thread Subject");
 
@@ -125,21 +117,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewMentionViaMessageBoardsThreadReply {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.addCP(
 			threadBody = "Thread Body",
 			threadSubject = "Thread Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Mentions.addMentionViaMessageBoardsReply(
 			mentionsUserFullName = "userfn userln",
@@ -147,11 +131,7 @@ definition {
 			threadBody = "Thread Reply Body",
 			threadSubject = "Thread Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.gotoCP(threadSubject = "Thread Subject");
 
@@ -171,21 +151,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewMentionViaUpdatedMessageBoardsThread {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.addCP(
 			threadBody = "Thread Body",
 			threadSubject = "Thread Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Mentions.addMentionViaMessageBoardThreadEdit(
 			mentionsUserFullName = "userfn userln",
@@ -193,11 +165,7 @@ definition {
 			threadBody = "Thread Body Edit",
 			threadSubject = "Thread Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",

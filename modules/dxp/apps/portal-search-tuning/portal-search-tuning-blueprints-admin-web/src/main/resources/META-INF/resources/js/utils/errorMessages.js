@@ -22,5 +22,5 @@ export const ERROR_MESSAGES = {
 	NEGATIVE_BOOST: Liferay.Language.get(
 		'boost-must-be-greater-than-or-equal-to-0'
 	),
-	REQUIRED: Liferay.Language.get('required'),
+	REQUIRED: Liferay.Language.get('this-field-is-required'),
 };

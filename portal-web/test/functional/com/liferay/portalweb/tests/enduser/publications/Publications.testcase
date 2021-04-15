@@ -187,6 +187,35 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
+	@description = "Assert Non-privileged user cannot see Publications bar."
+	@priority = "5"
+	test AssertNonPrivilegedUserCannotSeePublicationsBar {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Power User",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+	}
+
 	@priority = "5"
 	test ConflictingPublicationsAutomaticallyResolved {
 		JSONWebcontent.addWebContent(

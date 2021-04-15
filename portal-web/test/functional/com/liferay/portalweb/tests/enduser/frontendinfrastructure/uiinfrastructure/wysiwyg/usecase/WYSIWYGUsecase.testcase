@@ -198,6 +198,34 @@ definition {
 	}
 
 	@priority = "4"
+	test CanAddHyperlinkToExistingText {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentTitle = "Test Web Content",
+			webContentContent = "Test Link");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		SelectFieldText(locator1 = "CKEditor#BODY");
+
+		SelectFrame(value1 = "relative=top");
+
+		CKEditor.addEntryExternalURL(
+			entryExternalURL = "/web/guest/home",
+			fieldLabel = "content"
+		);
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		AssertElementPresent(locator1 = "//a[normalize-space(text()) = 'Test Link' and contains(@href, '/web/guest/home')]");
+	}
+
+	@priority = "4"
 	test PreviewSourceContent {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

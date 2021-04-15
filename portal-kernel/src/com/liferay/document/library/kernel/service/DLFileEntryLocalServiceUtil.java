@@ -77,6 +77,24 @@ public class DLFileEntryLocalServiceUtil {
 			file, inputStream, size, serviceContext);
 	}
 
+	public static DLFileEntry addFileEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			long fileEntryTypeId,
+			Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+				ddmFormValuesMap,
+			java.io.File file, InputStream inputStream, long size,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFileEntry(
+			externalReferenceCode, userId, groupId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog,
+			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
+			serviceContext);
+	}
+
 	public static com.liferay.document.library.kernel.model.DLFileVersion
 			cancelCheckOut(long userId, long fileEntryId)
 		throws PortalException {
@@ -697,6 +715,14 @@ public class DLFileEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getFileEntry(groupId, folderId, title);
+	}
+
+	public static DLFileEntry getFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getFileEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	public static DLFileEntry getFileEntryByFileName(

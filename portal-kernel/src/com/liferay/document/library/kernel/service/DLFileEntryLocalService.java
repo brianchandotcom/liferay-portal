@@ -103,6 +103,15 @@ public interface DLFileEntryLocalService
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException;
 
+	public DLFileEntry addFileEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+			File file, InputStream inputStream, long size,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public DLFileVersion cancelCheckOut(long userId, long fileEntryId)
 		throws PortalException;
 
@@ -529,6 +538,11 @@ public interface DLFileEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntry getFileEntry(long groupId, long folderId, String title)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntry getFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

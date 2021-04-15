@@ -67,8 +67,16 @@ const normalizeEditableValues = (editable, languageId) => {
 	};
 };
 
+const normalizePageContents = (pageContents) =>
+	pageContents.reduce(
+		(acc, content) =>
+			acc[content.type]
+				? {...acc, [content.type]: [...acc[content.type], content]}
+				: {...acc, [content.type]: [content]},
+		{}
+	);
+
 export default function ContentsSidebar() {
-	const contents = [];
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
 	const pageContents = useSelector((state) => state.pageContents);
@@ -81,22 +89,17 @@ export default function ContentsSidebar() {
 		[fragmentEntryLinks, languageId]
 	);
 
-	if (pageContents.length) {
-		contents.push({
-			items: pageContents,
-			label: Liferay.Language.get('documents'),
-		});
-	}
+	const contents = normalizePageContents(pageContents);
 
-	if (inlineTextContents.length) {
-		contents.push({
-			items: inlineTextContents,
-			label: Liferay.Language.get('inline-text'),
-		});
-	}
+	const contentsWithInlineText = {
+		...contents,
+		...(inlineTextContents.length && {
+			[Liferay.Language.get('inline-text')]: inlineTextContents,
+		}),
+	};
 
-	const view = contents.length ? (
-		<PageContents pageContents={contents} />
+	const view = Object.keys(contentsWithInlineText).length ? (
+		<PageContents pageContents={contentsWithInlineText} />
 	) : (
 		<NoPageContents />
 	);

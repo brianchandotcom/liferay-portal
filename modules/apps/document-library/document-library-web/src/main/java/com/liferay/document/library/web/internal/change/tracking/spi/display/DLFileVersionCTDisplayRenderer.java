@@ -62,7 +62,7 @@ public class DLFileVersionCTDisplayRenderer
 		).display(
 			"size", dlFileVersion.getSize()
 		).display(
-			"download", _getDownloadLink(displayBuilder, dlFileVersion), false
+			"download", getDownloadLink(displayBuilder, dlFileVersion), false
 		);
 	}
 
@@ -104,12 +104,7 @@ public class DLFileVersionCTDisplayRenderer
 		return true;
 	}
 
-	@Override
-	protected void buildDisplay(DisplayBuilder<DLFileVersion> displayBuilder) {
-		buildDisplay(displayBuilder, displayBuilder.getModel());
-	}
-
-	private static String _getDownloadLink(
+	protected static String getDownloadLink(
 		DisplayBuilder<?> displayBuilder, DLFileVersion dlFileVersion) {
 
 		DisplayContext<?> displayContext = displayBuilder.getDisplayContext();
@@ -134,6 +129,11 @@ public class DLFileVersionCTDisplayRenderer
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
 		}
+	}
+
+	@Override
+	protected void buildDisplay(DisplayBuilder<DLFileVersion> displayBuilder) {
+		buildDisplay(displayBuilder, displayBuilder.getModel());
 	}
 
 }

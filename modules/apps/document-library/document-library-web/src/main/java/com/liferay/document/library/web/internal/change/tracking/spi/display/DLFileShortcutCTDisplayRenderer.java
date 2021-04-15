@@ -18,15 +18,20 @@ import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.InputStream;
 
 import java.util.Locale;
 
@@ -43,6 +48,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTDisplayRenderer.class)
 public class DLFileShortcutCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DLFileShortcut> {
+
+	@Override
+	public InputStream getDownloadInputStream(
+			DLFileShortcut dlFileShortcut, String version)
+		throws PortalException {
+
+		FileVersion fileVersion = dlFileShortcut.getFileVersion();
+
+		FileEntry fileEntry = fileVersion.getFileEntry();
+
+		return fileEntry.getContentStream(version);
+	}
 
 	@Override
 	public String getEditURL(
@@ -90,7 +107,9 @@ public class DLFileShortcutCTDisplayRenderer
 	}
 
 	@Override
-	protected void buildDisplay(DisplayBuilder<DLFileShortcut> displayBuilder) {
+	protected void buildDisplay(DisplayBuilder<DLFileShortcut> displayBuilder)
+		throws PortalException {
+
 		DLFileShortcut dlFileShortcut = displayBuilder.getModel();
 
 		displayBuilder.display(
@@ -115,8 +134,25 @@ public class DLFileShortcutCTDisplayRenderer
 
 				return folder.getName();
 			}
+		).display(
+			"download", _getDownloadLink(displayBuilder, dlFileShortcut), false
 		);
 	}
+
+	private String _getDownloadLink(
+			DisplayBuilder<?> displayBuilder, DLFileShortcut dlFileShortcut)
+		throws PortalException {
+
+		FileVersion fileVersion = dlFileShortcut.getFileVersion();
+
+		return DLFileVersionCTDisplayRenderer.getDownloadLink(
+			displayBuilder,
+			_dlFileVersionLocalService.getDLFileVersion(
+				fileVersion.getFileVersionId()));
+	}
+
+	@Reference
+	private DLFileVersionLocalService _dlFileVersionLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -25,6 +25,7 @@ import com.liferay.jenkins.results.parser.MultiPattern;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.RemoteGitBranch;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -51,6 +52,19 @@ import org.json.JSONObject;
  * @author Brian Wing Shun Chan
  */
 public class GitHubWebhookPayloadProcessor {
+
+	public static void main(String[] args) {
+		try {
+			GitHubWebhookPayloadProcessor gitHubWebhookPayloadProcessor =
+				new GitHubWebhookPayloadProcessor(
+					JenkinsResultsParserUtil.read(new File(args[0])));
+
+			gitHubWebhookPayloadProcessor.process();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
 
 	public GitHubWebhookPayloadProcessor(String payloadJSONSource) {
 		JenkinsResultsParserUtil.setBuildProperties(

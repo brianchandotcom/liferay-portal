@@ -156,6 +156,20 @@ renderResponse.setTitle(title);
 				</c:choose>
 			</liferay-frontend:fieldset>
 
+			<liferay-frontend:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="display-page"
+			>
+				<liferay-asset:select-asset-display-page
+					classNameId="<%= PortalUtil.getClassNameId(AssetCategory.class) %>"
+					classPK="<%= (category != null) ? category.getCategoryId() : 0 %>"
+					classTypeId="<%= 0 %>"
+					groupId="<%= scopeGroupId %>"
+					showViewInContextLink="<%= true %>"
+				/>
+			</liferay-frontend:fieldset>
+
 			<c:if test="<%= (category == null) && !assetCategoriesDisplayContext.isItemSelector() %>">
 				<liferay-frontend:fieldset
 					collapsed="<%= true %>"

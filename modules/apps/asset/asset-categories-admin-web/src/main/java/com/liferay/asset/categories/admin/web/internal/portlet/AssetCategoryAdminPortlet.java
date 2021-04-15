@@ -21,6 +21,7 @@ import com.liferay.asset.category.property.exception.CategoryPropertyKeyExceptio
 import com.liferay.asset.category.property.exception.CategoryPropertyValueException;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
@@ -173,13 +174,15 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		AssetCategory category = null;
+
 		if (categoryId <= 0) {
 
 			// Add category
 
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-			_assetCategoryService.addCategory(
+			category = _assetCategoryService.addCategory(
 				groupId, parentCategoryId, titleMap, descriptionMap,
 				vocabularyId, null, serviceContext);
 
@@ -203,7 +206,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			String[] categoryPropertiesArray = getCategoryProperties(
 				categoryProperties);
 
-			_assetCategoryService.updateCategory(
+			category = _assetCategoryService.updateCategory(
 				categoryId, parentCategoryId, titleMap, descriptionMap,
 				vocabularyId, categoryPropertiesArray, serviceContext);
 
@@ -216,6 +219,12 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 						HtmlUtil.escape(titleMap.get(themeDisplay.getLocale()))
 					}));
 		}
+
+		// Asset display page
+
+		_assetDisplayPageEntryFormProcessor.process(
+			AssetCategory.class.getName(), category.getCategoryId(),
+			actionRequest);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -491,6 +500,10 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;
+
+	@Reference
+	private AssetDisplayPageEntryFormProcessor
+		_assetDisplayPageEntryFormProcessor;
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;

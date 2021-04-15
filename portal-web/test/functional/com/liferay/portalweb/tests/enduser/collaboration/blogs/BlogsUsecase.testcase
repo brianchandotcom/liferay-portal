@@ -358,26 +358,7 @@ definition {
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
 
-		BlogsEntry.viewPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
 		Comments.addPG(entryComment = "Blogs Entry Comment");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		Comments.viewPG(
-			commentCount = "1",
-			entryComment = "Blogs Entry Comment",
-			userFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

@@ -531,15 +531,6 @@ definition {
 				entryTitle = "Blogs Entry Title");
 		}
 
-		task ("View the blog entry via AP") {
-			Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-			BlogsEntry.viewEntryViaAPPG(
-				assetTitle = "Blogs Entry Title",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title");
-		}
-
 		task ("Edit the blog entry via AP and save as draft") {		
 			Navigator.gotoPage(pageName = "Blogs Page");
 

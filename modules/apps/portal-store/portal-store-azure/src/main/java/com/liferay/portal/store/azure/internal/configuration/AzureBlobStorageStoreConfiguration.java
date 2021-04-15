@@ -29,14 +29,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AzureBlobStorageStoreConfiguration {
 
-	@Meta.AD(
-		description = "connection-string-help", name = "connection-string"
-	)
+	@Meta.AD(description = "connection-string-help", name = "connection-string")
 	public String connectionString();
 
-	@Meta.AD(
-		description = "container-name-help", name = "container-name",
-	)
+	@Meta.AD(description = "container-name-help", name = "container-name")
 	public String containerName();
 
 	@Meta.AD(

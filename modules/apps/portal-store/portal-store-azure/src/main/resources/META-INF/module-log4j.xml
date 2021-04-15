@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 	<category name="com.liferay.portal.store.azure">
 		<priority value="WARN" />
@@ -8,6 +9,7 @@
 	<!-- this has no effect on log messages from Azure SDK (made via slf4j), even
 	with 'azureLibs group: "org.apache.logging.log4j", name: "log4j-slf4j-impl", version: "2.14.1"'
 	 binding being used in build.gradle -->
+
 	<category name="com.azure">
 		<priority value="TRACE" />
 	</category>

@@ -344,7 +344,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			)}
 
 			{typeLabel && (
-				<p className="mb-2 page-editor__mapping-panel__type-label">
+				<p className="mb-2 mt-3 page-editor__mapping-panel__type-label">
 					<span className="mr-1">
 						{Liferay.Language.get('item-type')}:
 					</span>
@@ -380,7 +380,7 @@ function MappingFieldSelect({fieldSets, fieldType, onValueSelect, value}) {
 
 	return (
 		<ClayForm.Group
-			className={classNames({'has-warning': hasWarnings})}
+			className={classNames('mt-3', {'has-warning': hasWarnings})}
 			small
 		>
 			<label htmlFor="mappingSelectorFieldSelect">

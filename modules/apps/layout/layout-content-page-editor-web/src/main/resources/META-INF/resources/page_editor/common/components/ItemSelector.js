@@ -72,7 +72,7 @@ export default function ItemSelector({
 	);
 
 	return (
-		<ClayForm.Group small>
+		<ClayForm.Group className="mb-2" small>
 			<label htmlFor={itemSelectorInputId}>{label}</label>
 
 			<div className="d-flex">

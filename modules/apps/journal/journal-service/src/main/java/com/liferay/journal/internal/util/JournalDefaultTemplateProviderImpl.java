@@ -95,7 +95,7 @@ public class JournalDefaultTemplateProviderImpl
 
 	@Override
 	public boolean isCacheable() {
-		return true;
+		return false;
 	}
 
 }

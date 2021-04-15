@@ -789,6 +789,45 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."
+	@priority = "3"
+	@refactorneeded
+	test GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM {
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Adaptive Media",
+			configurationName = "Images",
+			configurationScope = "System Scope");
+
+		Click(
+			key_fieldValue = "image/gif",
+			locator1 = "DDMField#REMOVE_SPECIFIC_REPEATED_FIELD");
+
+		SystemSettings.saveConfiguration();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContentWithInlineImage(
+			entryContent = "Blogs Entry Content",
+			navTab = "Documents and Media",
+			uploadFileName = "static.gif");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewInlineImage(uploadFileName = "static.gif");
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test ImportAudioAndLimitPermissionsToSubfolder {

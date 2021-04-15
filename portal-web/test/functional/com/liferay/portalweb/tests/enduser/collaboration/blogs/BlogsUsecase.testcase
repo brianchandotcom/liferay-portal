@@ -346,7 +346,8 @@ definition {
 	@refactordone
 	@uittest
 	test CanViewEntryInAP {
-		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedViaAP";
+		property test.name.skip.portal.instance = "BlogsUsecase#CanViewEntryInAP";
+
 		// This is lengthy but we'll keep this as a UI test to validate blogs behavior when used with AP.
 
 		task ("Add a blog entry via AP") {

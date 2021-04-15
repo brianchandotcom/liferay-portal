@@ -58,7 +58,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test AbstractDescriptionCanPersistAfterTypingInContentField {
-		property test.name.skip.portal.instance = "PGBlogs#ViewAbstractDescriptionWithEntryContent";
+		property test.name.skip.portal.instance = "PGBlogs#AbstractDescriptionCanPersistAfterTypingInContentField";
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
@@ -238,7 +238,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanDisplayViewCountForEntry {
-		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryViewCount";
+		property test.name.skip.portal.instance = "PGBlogs#CanDisplayViewCountForEntry";
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
@@ -854,7 +854,7 @@ definition {
 		}
 	}
 
-	@description = "This checks that exact content search returns an entry when it includes the entire phrase being queried."	
+	@description = "This checks that exact content search returns an entry when it includes the entire phrase being queried."
 	@priority = "4"
 	@refactordone
 	test CanSearchForExactStringInContent {
@@ -926,7 +926,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanSubscribeToComment {
-		property test.name.skip.portal.instance = "PGBlogs#SubscribeToBlogsEntryComment";
+		property test.name.skip.portal.instance = "PGBlogs#CanSubscribeToComment";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1023,7 +1023,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanViewBlogWithAbstractDisplay {
-		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryWithAbstractDisplayTemplate";
+		property test.name.skip.portal.instance = "PGBlogs#CanViewBlogWithAbstractDisplay";
 
 		task ("Add a blog entry with custom abstract") {
 			JSONBlog.addEntry(
@@ -1227,7 +1227,7 @@ definition {
 	@refactordone
 	test CanViewReadingTime {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryReadingTime";
+		property test.name.skip.portal.instance = "PGBlogs#CanViewReadingTime";
 
 		BlogsConfiguration.enableReadingTime();
 

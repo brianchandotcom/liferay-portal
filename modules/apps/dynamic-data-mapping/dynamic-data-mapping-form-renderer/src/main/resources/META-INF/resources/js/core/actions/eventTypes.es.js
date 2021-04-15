@@ -36,6 +36,16 @@ const FIELD = {
 	REPEATED: 'field_repeated',
 };
 
+const DATA_DEFINITION = {
+	ADD: 'data_definition_add',
+	CHANGE: 'data_definition_change',
+	DELETE: 'data_definition_delete',
+};
+
+const DATA_LAYOUT = {
+	NAME: 'data_layout_name',
+};
+
 const DND = {
 	MOVE: 'field_move',
 	RESIZE: 'field_resize',
@@ -77,6 +87,8 @@ export const MAPPED_EVENT_TYPES = {
 
 export const EVENT_TYPES = {
 	...LEGACY_EVENTS,
+	DATA_DEFINITION,
+	DATA_LAYOUT,
 	DND,
 	FIELD,
 	FIELD_SET,

@@ -13,6 +13,8 @@
  */
 
 export {default as activePageReducer} from './activePageReducer.es';
+export {default as dataDefinitionReducer} from './dataDefinitionReducer.es';
+export {default as dataLayoutReducer} from './dataLayoutReducer.es';
 export {default as dragAndDropReducer} from './dragAndDropReducer.es';
 export {default as fieldEditableReducer} from './fieldEditableReducer.es';
 export {default as fieldReducer} from './fieldReducer.es';

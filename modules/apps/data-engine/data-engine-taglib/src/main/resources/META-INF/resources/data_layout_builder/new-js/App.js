@@ -19,6 +19,8 @@ import {
 	parseProps,
 } from 'dynamic-data-mapping-form-renderer';
 import {
+	dataDefinitionReducer,
+	dataLayoutReducer,
 	dragAndDropReducer,
 	fieldEditableReducer,
 	languageReducer,
@@ -58,6 +60,8 @@ const App = (props) => {
 					<FormProvider
 						initialState={INITIAL_STATE}
 						reducers={[
+							dataDefinitionReducer,
+							dataLayoutReducer,
 							dragAndDropReducer,
 							fieldEditableReducer,
 							languageReducer,

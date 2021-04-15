@@ -439,6 +439,12 @@
 	<td>//input[@id='baseCommercePriceListId']/../input[@placeholder='Type Here']</td>
 	<td></td>
 </tr>
+<!--CHANNEL-->
+<tr>
+    <td>PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS</td>
+    <td>//div[contains(@class,'side-panel')]//li[a[contains(text(),'${navItem}')]]</td>
+    <td></td>
+</tr>
 <!--OPTION-->
 <tr>
 	<td>ADD_RELATION_FIELD</td>

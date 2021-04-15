@@ -60,8 +60,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContentBold = "Bold Type",
@@ -88,8 +88,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -330,8 +330,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry1 Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -560,8 +560,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
@@ -569,15 +569,15 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -598,8 +598,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
@@ -607,8 +607,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -716,8 +716,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
@@ -744,8 +744,8 @@ definition {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing";
 
 		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -971,8 +971,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
@@ -1054,8 +1054,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry1 Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		AssertElementPresent(
 			key_uploadFileName = "Document_1",
@@ -1063,8 +1063,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry2 Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		AssertElementPresent(
 			key_uploadFileName = "Document_2",
@@ -1092,8 +1092,8 @@ definition {
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -1197,8 +1197,8 @@ definition {
 		Portlet.addPG(portletName = "Blogs Aggregator");
 
 		BlogsNavigator.openToAddEntry(
-			siteURLKey = "guest",
-			layoutName = "Blogs Page");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",

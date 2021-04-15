@@ -14,12 +14,9 @@
 
 package com.liferay.dataset.data;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Iván Zaera
  */
-@ProviderType
 public interface DatasetDataFilter {
 
 	public String getKeywords();

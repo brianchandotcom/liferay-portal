@@ -22,68 +22,6 @@ definition {
 		}
 	}
 
-	@description = "Ensure that a user can add multiple Blogs Entries."
-	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntries {
-		property testray.component.names = "Blogs";
-		property testray.main.component.name = "Blogs";
-
-		task ("Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			Blogs.addEntry(
-				entryContent = "Blogs Entry1 Content",
-				entryTitle = "Blogs Entry1 Title");
-		}
-
-		task ("Add a blogs entry called 'Blogs Entry2 Title' with content 'Blogs Entry2 Content'") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			Blogs.addEntry(
-				entryContent = "Blogs Entry2 Content",
-				entryTitle = "Blogs Entry2 Title");
-		}
-
-		task ("Add a blogs entry called 'Blogs Entry3 Title' with content 'Blogs Entry3 Content'") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			Blogs.addEntry(
-				entryContent = "Blogs Entry3 Content",
-				entryTitle = "Blogs Entry3 Title");
-		}
-
-		task ("Ensure blogs entry 'Blogs Entry1 Title' with content 'Blogs Entry1 Content' can be found") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry1 Title");
-
-			BlogsEntry.viewEntryCP(
-				entryContent = "Blogs Entry1 Content",
-				entryTitle = "Blogs Entry1 Title");
-		}
-
-		task ("Ensure blogs entry 'Blogs Entry2 Title' with content 'Blogs Entry2 Content' can be found") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry2 Title");
-
-			BlogsEntry.viewEntryCP(
-				entryContent = "Blogs Entry2 Content",
-				entryTitle = "Blogs Entry2 Title");
-		}
-
-		task ("Ensure blogs entry 'Blogs Entry3 Title' with content 'Blogs Entry3 Content' can be found") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry3 Title");
-
-			BlogsEntry.viewEntryCP(
-				entryContent = "Blogs Entry3 Content",
-				entryTitle = "Blogs Entry3 Title");
-		}
-	}
-
 	@priority = "5"
 	@refactorneeded
 	test AddBlogsEntry {

@@ -1,0 +1,23 @@
+configurations {
+	azure
+}
+
+dependencies {
+	azure group: "com.azure", name: "azure-identity"
+	azure group: "com.azure", name: "azure-storage-blob"
+	azure group: "com.azure", name: "azure-storage-blob-batch"
+	azure platform("com.azure:azure-sdk-bom:1.0.2")
+}
+
+configurations.azure.exclude group: "jakarta.xml.bind"
+
+dependencies {
+	compileInclude files(configurations.azure.resolvedConfiguration.files)
+
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":core:petra:petra-string")
+}

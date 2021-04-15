@@ -1,0 +1,47 @@
+{
+	"elementTemplateJSON": {
+		"category": "filter",
+		"clauses": [
+			{
+				"context": "query",
+				"occur": "filter",
+				"query": {
+					"query": {
+						"terms": {
+							"${configuration.field}": "${configuration.values}"
+						}
+					}
+				},
+				"type": "wrapper"
+			}
+		],
+		"conditions": [
+		],
+		"description": {
+			"en_US": "Filter results by one or multiple terms. At least one has to match"
+		},
+		"enabled": true,
+		"icon": "filter",
+		"title": {
+			"en_US": "Filter by Exact Terms Match"
+		}
+	},
+	"uiConfigurationJSON": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"label": "Field",
+						"name": "field",
+						"type": "fieldMapping"
+					},
+					{
+						"label": "Values",
+						"name": "values",
+						"type": "multiselect"
+					}
+				]
+			}
+		]
+	}
+}

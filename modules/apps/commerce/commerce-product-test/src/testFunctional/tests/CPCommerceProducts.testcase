@@ -345,28 +345,25 @@ definition {
 	@priority = "3"
 	test UseSkuSearchBarAndPagination {
 		property portal.acceptance = "false";
-		
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
-		
+
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		CommerceEntry.viewPaginationResults(results = "Showing 11 to 20 of 54");
-		
+
 		CommerceProducts.searchProduct(search = "MIN55861");
 
 		AssertElementPresent(
 			key_entryName = "MIN55861",
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-
 	}
-
 
 	@description = "This is a test for COMMERCE-5803. UseSortingByNameAndDate"
 	@ignore = "true"

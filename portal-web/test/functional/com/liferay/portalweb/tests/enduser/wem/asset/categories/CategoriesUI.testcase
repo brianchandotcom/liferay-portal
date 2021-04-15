@@ -27,258 +27,352 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@description = "Add a category."
+	@priority = "5"
+	@uitest
+	test AddCategory {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addCP(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the new category") {
+			Category.viewCP(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Add a subcategory."
+	@priority = "5"
 	@uitest
 	test AddSubcategory {
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
 
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-		Category.addCP(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Subcategory.addCP(
-			categoryName = "Category Name",
-			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Subcategory.viewCP(
-			categoryName = "Category Name",
-			subcategoryName = "Subcategory Name",
-			vocabularyName = "Vocabulary Name");
-	}
-
-	@description = "This is a use case for LPS-107730. Can not store 256 character in name field, key field and value field of category."
-	@priority = "4"
-	test CannotStore256CharactersInNameFieldKeyFieldAndValueField {
-		var actualText = "The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256";
-		var inputText = "The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.";
-		var modifiedText = "The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255";
-
-		task ("Can not store 256 characters in name field of category") {
+		task ("Add a subcategory") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-
-			Navigator.gotoNavNested(navNested = "Vocabulary Name");
-
-			LexiconEntry.gotoAdd();
-
-			PortletEntry.inputTitle(title = "${inputText}");
-
-			AssertTextEquals(
-				locator1 = "TextInput#TITLE",
-				value1 = "${inputText}");
-
-			Button.clickSave();
-
-			AssertTextEquals(
-				key_alertMessage = "Please enter no more than 255 characters.",
-				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-				value1 = "Please enter no more than 255 characters.");
-
-			PortletEntry.inputTitle(title = "${modifiedText}");
-
-			PortletEntry.save();
+			Subcategory.addCP(
+				categoryName = "Category Name",
+				subcategoryName = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
 		}
 
-		task ("Can not store 256 characters in key field and value field of category") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "${modifiedText}");
-
-			Navigator.gotoNavUnderline(navUnderline = "Properties");
-
-			Type(
-				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
-
-			AssertTextNotEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
-
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${actualText}");
-
-			Type(
-				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
-
-			AssertTextNotEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
-
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${actualText}");
+		task ("View the new subcategory") {
+			Subcategory.viewCP(
+				categoryName = "Category Name",
+				subcategoryName = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
 		}
 	}
 
-	@priority = "4"
-	test EditCategory {
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-
-		Category.addCP(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.editCP(
-			categoryName = "Category Name",
-			categoryNameEdit = "Category Name Edit",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Category.viewCP(
-			categoryName = "Category Name Edit",
-			vocabularyName = "Vocabulary Name");
-	}
-
-	@description = "This is a use case for LPS-107730. Can input 254 characters to name field, key field and value field of category."
-	@priority = "4"
-	test Input254CharactersIntoNameFieldKeyFieldAndValueField {
-		var inputText = "The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 25";
-
-		task ("Assert input 254 characters to name field of category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-
-			Navigator.gotoNavNested(navNested = "Vocabulary Name");
-
-			LexiconEntry.gotoAdd();
-
-			PortletEntry.inputTitle(title = "${inputText}");
-
-			AssertTextEquals(
-				locator1 = "TextInput#TITLE",
-				value1 = "${inputText}");
-
-			PortletEntry.save();
-
-			AssertVisible(
-				key_tableEntry = "${inputText}",
-				locator1 = "LexiconTable#TABLE_ENTRY");
-		}
-
-		task ("Assert input 254 characters to key field and value field of category") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "${inputText}");
-
-			Navigator.gotoNavUnderline(navUnderline = "Properties");
-
-			Type(
-				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
-
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
-
-			Type(
-				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
-
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
-
-			PortletEntry.save();
-
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "${inputText}");
-
-			Navigator.gotoNavUnderline(navUnderline = "Properties");
-
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
-
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
-		}
-	}
-
-	@description = "This is a use case for LPS-107730. Can input 255 characters to name field, key field and value field of category."
+	@description = "Add a vocabulary."
 	@priority = "5"
-	test Input255CharactersIntoNameFieldKeyFieldAndValueField {
+	@uitest
+	test AddVocabulary {
 		property portal.acceptance = "true";
 
-		var inputText = "The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255";
+		task ("Navigate to Categories admin in Test Site Name") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
-		task ("Assert input 255 characters to name field of category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-
-			Navigator.gotoNavNested(navNested = "Vocabulary Name");
-
-			LexiconEntry.gotoAdd();
-
-			PortletEntry.inputTitle(title = "${inputText}");
-
-			AssertTextEquals(
-				locator1 = "TextInput#TITLE",
-				value1 = "${inputText}");
-
-			PortletEntry.save();
-
-			AssertVisible(
-				key_tableEntry = "${inputText}",
-				locator1 = "LexiconTable#TABLE_ENTRY");
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				portlet = "Categories");
 		}
 
-		task ("Assert input 255 characters to key field and value field of category") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "${inputText}");
+		task ("Add a new vocabulary") {
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		}
 
-			Navigator.gotoNavUnderline(navUnderline = "Properties");
+		task ("View the new vocabulary") {
+			Vocabulary.viewCP(vocabularyName = "Vocabulary Name");
+		}
+	}
 
-			Type(
-				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+	@description = "Delete a category by icon."
+	@priority = "5"
+	@uitest
+	test DeleteCategoryByIcon {
+		property portal.acceptance = "true";
 
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
 
-			Type(
-				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+		task ("Delete the new category by icon") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-			PortletEntry.save();
+			Category.deleteByIconCP(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "${inputText}");
+	@description = "Delete a category by menu."
+	@priority = "4"
+	@uitest
+	test DeleteCategoryByMenu {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
 
-			Navigator.gotoNavUnderline(navUnderline = "Properties");
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+		task ("Delete the new category by menu") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-			AssertTextEquals(
-				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+			Category.deleteCategoryByMenuCP(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Delete a subcategory by icon."
+	@priority = "4"
+	@uitest
+	test DeleteSubcategoryByIcon {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a subcategory") {
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Delete the new subcategory by icon") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.deleteViaIconCP(
+				categoryName = "Category Name",
+				subcategoryName = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Delete a subcategory by menu."
+	@priority = "5"
+	@uitest
+	test DeleteSubcategoryByMenu {
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a subcategory") {
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Delete the new subcategory by menu") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.deleteViaMenuCP(
+				categoryName = "Category Name",
+				subcategoryName = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Delete a vocabulary by icon."
+	@priority = "5"
+	@uitest
+	test DeleteVocabularyByIcon {
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Delete the vocabulary by icon") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.deleteByIconCP(vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Delete a vocabulary by menu."
+	@priority = "4"
+	@uitest
+	test DeleteVocabularyByMenu {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Delete the vocabulary by menu") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Edit a category."
+	@priority = "5"
+	@uitest
+	test EditCategory {
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Edit the new category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.editCP(
+				categoryName = "Category Name",
+				categoryNameEdit = "Category Name Edit",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the edited category") {
+			Category.viewCP(
+				categoryName = "Category Name Edit",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Edit a subcategory."
+	@priority = "5"
+	@uitest
+	test EditSubcategory {
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a subcategory") {
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Edit the new subcategory") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.editCP(
+				categoryName = "Category Name",
+				subcategoryName = "Subcategory Name",
+				subcategoryNameEdit = "Subcategory Name Edit",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the edited subcategory") {
+			Subcategory.viewCP(
+				categoryName = "Category Name",
+				subcategoryName = "Subcategory Name Edit",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "Edit a vocabulary."
+	@priority = "5"
+	@uitest
+	test EditVocabulary {
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Edit the new vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.editCP(
+				vocabularyName = "Vocabulary Name",
+				vocabularyNameEdit = "Vocabulary Name Edit");
+		}
+
+		task ("View the edited vocabulary") {
+			Vocabulary.viewCP(vocabularyName = "Vocabulary Name Edit");
 		}
 	}
 

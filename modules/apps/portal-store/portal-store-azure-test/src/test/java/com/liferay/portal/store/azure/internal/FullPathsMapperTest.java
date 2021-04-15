@@ -56,26 +56,26 @@ public class FullPathsMapperTest {
 	public void toAzureBlobsPrefix() {
 		assertEquals(
 			"30000/10001/file 1.pdf/",
-			_sut.toAzureBlobsPrefix(30000, 10001, "file 1.pdf"));
+			_sut.toAzureBlobPrefix(30000, 10001, "file 1.pdf"));
 
 		assertEquals(
 			"30000/10001/dir/sub dir/",
-			_sut.toAzureBlobsPrefix(30000, 10001, "/dir/sub dir/"));
+			_sut.toAzureBlobPrefix(30000, 10001, "/dir/sub dir/"));
 
 		assertEquals(
 			"30000/10001/",
-			_sut.toAzureBlobsPrefix(30000, 10001, ""));
+			_sut.toAzureBlobPrefix(30000, 10001, ""));
 
 		// just in case
 		assertEquals(
 			"30000/10001/",
-			_sut.toAzureBlobsPrefix(30000, 10001, "/"));
+			_sut.toAzureBlobPrefix(30000, 10001, "/"));
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void toAzureBlobsPrefix_invalid1() {
-		_sut.toAzureBlobsPrefix(30000, 10001, null);
+		_sut.toAzureBlobPrefix(30000, 10001, null);
 	}
 
 	@Test

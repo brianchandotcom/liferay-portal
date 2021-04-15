@@ -1,50 +1,23 @@
-// a helper configuration to resolve the Azure SDK dependencies, based on their BOM
 configurations {
-	azureLibs
+	azure
 }
 
 dependencies {
-	azureLibs platform("com.azure:azure-sdk-bom:1.0.2")
-	azureLibs group: "com.azure", name: "azure-storage-blob"
-	azureLibs group: "com.azure", name: 'azure-storage-blob-batch'
-	azureLibs group: "com.azure", name: "azure-identity"
-
-	// TODO port classes from https://github.com/dnebing/slf4j-liferay into this
-	//  module to provide the bunding and get Azure SDK logs as any other Liferay logs?
-
-	// when no slf4j binding is found, Azure SDK will log into stdout, see AzureBlobStorageStore -> ... httpLoggingEnabled()
-	// I could not make any the standard binding work in portal
-//	azureLibs group: "org.apache.logging.log4j", name: "log4j-slf4j-impl", version: "2.14.1"
-//	azureLibs group: "org.slf4j", name: "slf4j-jdk14", version: "1.7.30"
+	azure group: "com.azure", name: "azure-identity"
+	azure group: "com.azure", name: "azure-storage-blob"
+	azure group: "com.azure", name: "azure-storage-blob-batch"
+	azure platform("com.azure:azure-sdk-bom:1.0.2")
 }
 
-// exclude libs provided by Liferay
-configurations.azureLibs.exclude group: "jakarta.xml.bind"
-
-def azureLibsWithTransitiveDependencies = configurations.azureLibs.resolvedConfiguration.files
-
-logger.info "The needed Azure SDK dependencies to be put into the 'compileInclude' configuration using a hack:"
-azureLibsWithTransitiveDependencies.each {
-	logger.info "  * ${it} (${it.class})"
-}
+configurations.azure.exclude group: "jakarta.xml.bind"
 
 dependencies {
-	// 'compileInclude' configuration is set to be NOT transitive:
-	// https://github.com/liferay/liferay-portal/blob/8c4f1616652d7686b8468647ab1b5155c72eceb4/modules/sdk/gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/LiferayOSGiDefaultsPlugin.java#L2335-L2337
-
-	// haven't found a way to override this for this project :-(
-	// cannot even use at least versions from the Azure SKD BOM, for the same reasons
-
-	// indirectly include all needed dependencies (including the transitive ones), to be bundled with the module
-	compileInclude files(azureLibsWithTransitiveDependencies)
+	compileInclude files(configurations.azure.resolvedConfiguration.files)
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-string")
-
-	// all tests are in sibling module - 'portal-store-azure-test'
 }

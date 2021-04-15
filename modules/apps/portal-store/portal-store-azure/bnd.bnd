@@ -1,25 +1,19 @@
 Bundle-Name: Liferay Portal Store Azure Blob Storage
 Bundle-SymbolicName: com.liferay.portal.store.azure
 Bundle-Version: 1.0.0
-
-# TODO There are lots of packages detected by BND, but not satisfied by
-# transitive dependencies of Azure SDK. Not sure if exluding these is okay or some
-# (or all) should be covered by providing selected package. Probably need to run
-# the complete live test in OSGi container to find out.
 Import-Package:\
-    !com.conversantmedia.util.concurrent,\
-    \
-    !com.fasterxml.jackson.dataformat.yaml,\
-    \
-	!com.google.crypto.tink.subtle,\
+	!com.conversantmedia.util.concurrent,\
 	\
+	!com.fasterxml.jackson.dataformat.yaml,\
+	\
+	!com.google.crypto.tink.subtle,\
 	!com.google.protobuf,\
 	!com.google.protobuf.nano,\
 	\
 	!com.jcraft.jzlib,\
-    \
-    !com.lmax.disruptor,\
-    !com.lmax.disruptor.dsl,\
+	\
+	!com.lmax.disruptor,\
+	!com.lmax.disruptor.dsl,\
 	\
 	!com.ning.compress,\
 	!com.ning.compress.lzf,\
@@ -40,12 +34,16 @@ Import-Package:\
 	!javax.annotation.meta,\
 	\
 	!kotlin,\
+	\
 	!kotlin.collections,\
+	\
 	!kotlin.jvm,\
 	!kotlin.jvm.functions,\
 	!kotlin.jvm.internal,\
 	!kotlin.jvm.internal.markers,\
+	\
 	!kotlin.reflect,\
+	\
 	!kotlin.sequences,\
 	\
 	!lzma.sdk,\
@@ -56,12 +54,10 @@ Import-Package:\
 	\
 	!net.shibboleth.utilities.java.support.xml,\
 	\
-    !org.apache.commons.compress.compressors,\
-    !org.apache.commons.compress.utils,\
-    !org.apache.commons.csv,\
-    \
-    !org.apache.kafka.clients.producer,\
-    \
+	!org.apache.commons.compress.compressors,\
+	!org.apache.commons.compress.utils,\
+	!org.apache.commons.csv,\
+	!org.apache.kafka.clients.producer,\
 	!org.apache.logging.log4j,\
 	!org.apache.logging.log4j.message,\
 	!org.apache.logging.log4j.spi,\
@@ -88,12 +84,12 @@ Import-Package:\
 	\
 	!org.eclipse.jetty.alpn,\
 	!org.eclipse.jetty.npn,\
-    \
-    !org.fusesource.jansi,\
+	\
+	!org.fusesource.jansi,\
 	\
 	!org.jboss.marshalling,\
-    \
-    !org.jctools.queues,\
+	\
+	!org.jctools.queues,\
 	\
 	!org.joda.time,\
 	\
@@ -109,24 +105,15 @@ Import-Package:\
 	!org.opensaml.xmlsec.signature,\
 	!org.opensaml.xmlsec.signature.support,\
 	\
-    !org.slf4j.ext,\
-    !org.slf4j.impl,\
-    \
-    !org.zeromq,\
-    \
+	!org.slf4j.ext,\
+	!org.slf4j.impl,\
+	\
+	!org.zeromq,\
+	\
 	!reactor.blockhound,\
 	!reactor.blockhound.integration,\
 	\
 	!sun.security.x509,\
+	\
 	*
-
-# https://github.com/bndtools/bnd/issues/2227
-# Some libs which are needed to be 'compileInclud'ed (used as direct dependencies
-# of Azure Java SDK) have files in META-INF/versions/X/.
-#
-# Workaround fix taken from:\
-#   * https://issues.apache.org/jira/browse/FELIX-5527
-#   * https://github.com/bndtools/bnd/issues/2227#issuecomment-491310275
-#   * https://bnd.bndtools.org/instructions/fixupmessages.html
--fixupmessages:\
-  "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

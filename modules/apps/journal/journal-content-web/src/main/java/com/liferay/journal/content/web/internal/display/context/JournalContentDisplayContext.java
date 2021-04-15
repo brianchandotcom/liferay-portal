@@ -139,17 +139,6 @@ public class JournalContentDisplayContext {
 		return journalContentDisplayContext;
 	}
 
-	public void clearCache() throws PortalException {
-		if (Validator.isNotNull(getArticleId())) {
-			JournalContent journalContent =
-				(JournalContent)_portletRequest.getAttribute(
-					JournalWebKeys.JOURNAL_CONTENT);
-
-			journalContent.clearCache(
-				getArticleGroupId(), getArticleId(), getDDMTemplateKey());
-		}
-	}
-
 	public JournalArticle getArticle() throws PortalException {
 		if (_article != null) {
 			return _article;

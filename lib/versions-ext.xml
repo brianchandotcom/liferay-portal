@@ -2236,7 +2236,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jstl-api.jar</file-name>
-				<version>1.2</version>
+				<version>1.2.2</version>
 				<project-name>JSTL</project-name>
 				<project-url>https://jstl.dev.java.net</project-url>
 				<licenses>
@@ -2248,7 +2248,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jstl-impl.jar</file-name>
-				<version>1.2</version>
+				<version>1.2.3</version>
 				<project-name>JSTL</project-name>
 				<project-url>https://jstl.dev.java.net</project-url>
 				<licenses>

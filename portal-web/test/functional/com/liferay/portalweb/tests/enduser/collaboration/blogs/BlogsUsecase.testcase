@@ -392,39 +392,6 @@ definition {
 			userFullName = "Test Test");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test RestoreBlogsEntry {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.moveToRecycleBinCP(
-			assetType = "Blogs Entry",
-			entryTitle = "Blogs Entry Title");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.restoreCP(
-			assetName = "Blogs Entry Title",
-			assetRestoreLocation = "Blogs",
-			assetType = "Blogs Entry");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.viewDefaultCP(assetName = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This test covers LPS-102199. This ensures that the user can search for a pending blog entry."
 	@priority = "3"
 	@refactorneeded

@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_TAX_CATEGORY</td>
+	<td>//label[text()='Shipping Tax Category']/..//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CODE_FIELD</td>
 	<td>//div/input[contains(@id,'regionCode')]</td>
 	<td></td>

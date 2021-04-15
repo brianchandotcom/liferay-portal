@@ -236,12 +236,130 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6102. CreateNewChannelCompileAll"
-	@ignore = "true"
 	@priority = "3"
 	test CreateNewChannelCompileAll {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6102 CreateNewChannelCompileAll
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "Minium Portal 2");
+
+		Select(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Euro");
+
+		Select(
+			key_title = "Commerce Site Type",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "B2X");
+
+		Select(
+			key_title = "Buyer Order Approval Workflow",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Single Approver (Version 1)");
+
+		Select(
+			key_title = "Seller Order Acceptance Workflow",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Single Approver (Version 1)");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Purchase Order Number",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Guest Checkout",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Type(
+			locator1 = "TextInput#NUMBER",
+			value1 = "1");
+
+		Type(
+			locator1 = "CommerceEntry#CHANGE_TAX_CATEGORY",
+			value1 = "Normal Product");
+
+		Select(
+			key_title = "Price Type",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Gross Price");
+
+		Select(
+			key_title = "Discounts Target Price Type",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Gross Price");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		
+		AssertElementPresent(
+            key_title = "Name",
+            locator1 = "TextInput#NAME",
+            value1 = "Minium Portal 2");
+
+		AssertElementPresent(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Euro");
+
+		AssertElementPresent(
+			key_title = "Commerce Site Type",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "B2X");
+
+		AssertElementPresent(
+			key_title = "Buyer Order Approval Workflow",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Single Approver (Version 1)");
+
+		AssertElementPresent(
+			key_title = "Seller Order Acceptance Workflow",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Single Approver (Version 1)");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "Purchase Order Number",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "Guest Checkout",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertElementPresent(
+			key_title = "Maximum Number of Open Orders per Account",
+			locator1 = "TextInput#NUMBER",
+			value = "1");
+
+		AssertElementPresent(
+			key_title = "Shipping Tax Category",
+			locator1 = "CommerceEntry#CHANGE_TAX_CATEGORY",
+			value = "Normal Product");
+
+		AssertElementPresent(
+			key_title = "Price Type",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Gross Price");
+
+		AssertElementPresent(
+			key_title = "Discounts Target Price Type",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Gross Price");
+		
+
+
+		
+
 	}
 
 	test CreateNewNotificationTemplate {

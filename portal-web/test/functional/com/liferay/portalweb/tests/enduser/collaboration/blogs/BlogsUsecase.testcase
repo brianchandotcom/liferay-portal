@@ -1034,20 +1034,8 @@ definition {
 
 		IFrame.closeFrame();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		for (var orgName : list "Organization1 Name,Organization2 Name,Organization3 Name") {
-			Organization.addCP(
-				orgName = "${orgName}",
-				orgType = "Organization");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+		for (var orgName : list "1, 2, 3") {
+			JSONOrganization.addOrganization(organizationName = "Organization${orgName} Name");
 		}
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();

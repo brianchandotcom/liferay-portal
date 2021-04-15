@@ -43,7 +43,6 @@ function renderCollection(itemConfig = {}) {
 			UPDATE: true,
 			UPDATE_LAYOUT_CONTENT: true,
 		},
-		segmentsExperienceId: 0,
 	};
 
 	const defaultConfig = {

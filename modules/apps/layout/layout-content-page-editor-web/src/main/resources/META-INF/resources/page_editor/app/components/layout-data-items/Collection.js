@@ -17,7 +17,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
 import selectLanguageId from '../../selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import CollectionService from '../../services/CollectionService';
 import {useDispatch, useSelector} from '../../store/index';
 import {CollectionItemContextProvider} from '../CollectionItemContext';
@@ -145,7 +144,6 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 	const dispatch = useDispatch();
 	const languageId = useSelector(selectLanguageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const [collection, setCollection] = useState(DEFAULT_COLLECTION);
 
@@ -157,7 +155,6 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				listItemStyle: collectionConfig.listItemStyle || null,
 				listStyle: collectionConfig.listStyle,
 				onNetworkStatus: dispatch,
-				segmentsExperienceId,
 				size: collectionConfig.numberOfItems,
 				templateKey: collectionConfig.templateKey || null,
 			})
@@ -182,7 +179,6 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		collectionConfig.templateKey,
 		dispatch,
 		languageId,
-		segmentsExperienceId,
 	]);
 
 	return (

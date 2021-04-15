@@ -30,7 +30,6 @@ export default {
 		listItemStyle,
 		listStyle,
 		onNetworkStatus,
-		segmentsExperienceId,
 		size,
 		templateKey,
 	}) {
@@ -42,7 +41,6 @@ export default {
 					layoutObjectReference: JSON.stringify(collection),
 					listItemStyle,
 					listStyle,
-					segmentsExperienceId,
 					size,
 					templateKey,
 				},

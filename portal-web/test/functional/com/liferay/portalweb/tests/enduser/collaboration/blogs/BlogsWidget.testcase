@@ -1,0 +1,135 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			Blogs.tearDownConfigurationDisplaySettingsPG(
+				pageName = "Blogs Page",
+				portletName = "Blogs");
+
+			Blogs.tearDownConfigurationScopePG(
+				pageName = "Blogs Page",
+				portletName = "Blogs");
+
+			Page.tearDownCP();
+
+			Site.tearDownCP();
+
+			Organization.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			ServerAdministration.tearDownMailServerSettings();
+		}
+	}
+
+	@description = "This checks that Blogs widgets are independently configured."
+	@priority = "4"
+	@refactordone
+	test ConfiguringWidgetWillNotAffectAnother {
+		task ("Add two pages each with a blog widget") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page 1");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Site Name",
+				layoutName = "Site Page 1",
+				widgetName = "Blogs");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page 2");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Site Name",
+				layoutName = "Site Page 2",
+				widgetName = "Blogs");
+
+			Navigator.gotoSitePage(
+				pageName = "Site Page 1",
+				siteName = "Site Name");
+		}
+
+		task ("Configure one of the blog widgets") {
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+			BlogsConfiguration.selectConfigurationIFrame();
+
+			BlogsConfiguration.selectMaximumItemstoDisplay(maximumItemsToDisplay = "60");
+
+			BlogsConfiguration.uncheckComments();
+
+			BlogsConfiguration.uncheckRelatedAssets();
+
+			Button.clickSave();
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+			BlogsConfiguration.selectConfigurationIFrame();
+
+			BlogsConfiguration.gotoRSS();
+
+			BlogsConfiguration.uncheckRSSSubscriptionCheckbox();
+
+			Button.clickSave();
+		}
+
+		task ("Check that the second blog widget did not inherit the configuration from the first widget") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page 2",
+				siteName = "Site Name");
+
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+			BlogsConfiguration.selectConfigurationIFrame();
+
+			BlogsConfiguration.viewDefaultConfiguration();
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+			BlogsConfiguration.selectConfigurationIFrame();
+
+			BlogsConfiguration.gotoRSS();
+
+			BlogsConfiguration.viewDefaultConfigurationRSS();
+		}
+	}
+}

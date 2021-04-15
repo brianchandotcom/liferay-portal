@@ -1008,7 +1008,11 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration {
-		Portlet.addPG(portletName = "Blogs Aggregator");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs Aggregator");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs Aggregator",

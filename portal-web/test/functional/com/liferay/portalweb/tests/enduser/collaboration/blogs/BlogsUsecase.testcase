@@ -981,49 +981,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryWithSpecialCharactersOnPrivateVirtualHost {
-		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesWithSpecialCharactersOnPublicAndPrivateVirtualHostPages";
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		Site.addVirtualHostsURLCP(
-			privatePageVirtualHostURL = "www.baker.com",
-			privateVirtualHosts = "true");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPrivatePage(pageName = "Private Blogs Page");
-
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080/group/guest");
-
-		User.loginPG(
-			password = "test",
-			specificURL = "http://www.baker.com:8080/group/guest",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080/private-blogs-page");
-
-		Portlet.addPG(portletName = "Blogs");
-
-		Blogs.addEntry(
-			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
-			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
-			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
-
-		BlogsEntry.viewPG(
-			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
-			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
-	}
-
 	@description = "This test covers LPS-128451. It ensures that a blog entry can be published normally with xss code injected title."
 	@priority = "4"
 	@refactorneeded

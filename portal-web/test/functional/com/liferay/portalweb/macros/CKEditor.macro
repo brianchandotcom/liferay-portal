@@ -49,6 +49,22 @@ definition {
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
 
+	macro addEntryExternalURLToExistingText {
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "CKEditor#FIELD_LABEL_IFRAME");
+
+		SelectFieldText(locator1 = "CKEditor#BODY");
+
+		SelectFrame(value1 = "relative=top");
+
+		CKEditor.addEntryExternalURL(
+			entryExternalURL = "${entryExternalURL}",
+			fieldLabel = "${fieldLabel}");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro addSourceContent {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 

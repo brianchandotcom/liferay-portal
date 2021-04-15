@@ -22,6 +22,8 @@ definition {
 		}
 		else {
 			Page.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -199,30 +201,29 @@ definition {
 
 	@priority = "4"
 	test CanAddHyperlinkToExistingText {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		WebContentNavigator.gotoAddCP();
+		JSONWebcontent.addWebContent(
+			content = "Test Link",
+			groupName = "Test Site Name",
+			title = "Test Web Content");
 
-		WebContent.addCP(
-			webContentTitle = "Test Web Content",
-			webContentContent = "Test Link");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+		WebContent.viewTitle(webContentTitle = "Test Web Content");
 
-		SelectFieldText(locator1 = "CKEditor#BODY");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test Web Content");
 
-		SelectFrame(value1 = "relative=top");
-
-		CKEditor.addEntryExternalURL(
+		CKEditor.addEntryExternalURLToExistingText(
 			entryExternalURL = "/web/guest/home",
-			fieldLabel = "content"
-		);
+			fieldLabel = "content");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-		AssertElementPresent(locator1 = "//a[normalize-space(text()) = 'Test Link' and contains(@href, '/web/guest/home')]");
+		AssertElementPresent(
+			key_href = "/web/guest/home",
+			key_text = "Test Link",
+			locator1 = "CKEditor#BODY_TEXT_HREF");
 	}
 
 	@priority = "4"

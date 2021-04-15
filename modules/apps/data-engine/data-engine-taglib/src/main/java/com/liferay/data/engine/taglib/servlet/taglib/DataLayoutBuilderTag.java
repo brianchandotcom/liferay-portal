@@ -146,18 +146,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		return ddmStructure.getDefaultLanguageId();
 	}
 
-	private String _getFieldsPluginEntryPoint() {
-		if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
-			return DataLayoutTaglibUtil.resolveModule(
-				"data-engine-taglib/data_layout_builder/new-js/plugins" +
-					"/fields-sidebar/index");
-		}
-
-		return DataLayoutTaglibUtil.resolveModule(
-			"data-engine-taglib/data_layout_builder/js/plugins/fields-sidebar" +
-				"/index.es");
-	}
-
 	private String[] _getLanguageIds(Set<Locale> locales) {
 		Stream<Locale> stream = locales.stream();
 
@@ -188,15 +176,15 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		return getModuleServletContext();
 	}
 
-	private String _getRulesPluginEntryPoint() {
+	private String _getPluginEntryPoint(String value) {
 		if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
 			return DataLayoutTaglibUtil.resolveModule(
-				"data-engine-taglib/data_layout_builder/new-js/plugins" +
-					"/rules-sidebar/index");
+				"data-engine-taglib/data_layout_builder/new-js/plugins/" +
+					value + "/index");
 		}
 
 		return DataLayoutTaglibUtil.resolveModule(
-			"data-engine-taglib/data_layout_builder/js/plugins/rules-sidebar" +
+			"data-engine-taglib/data_layout_builder/js/plugins/" + value +
 				"/index.es");
 	}
 
@@ -216,7 +204,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				).put(
 					"label", LanguageUtil.get(resourceBundle, "builder")
 				).put(
-					"pluginEntryPoint", _getFieldsPluginEntryPoint()
+					"pluginEntryPoint", _getPluginEntryPoint("fields-sidebar")
 				).put(
 					"sidebarPanelId", "fields"
 				).build()
@@ -236,7 +224,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				).put(
 					"label", LanguageUtil.get(resourceBundle, "rules")
 				).put(
-					"pluginEntryPoint", _getRulesPluginEntryPoint()
+					"pluginEntryPoint", _getPluginEntryPoint("rules-sidebar")
 				).put(
 					"sidebarPanelId", "rules"
 				).build());

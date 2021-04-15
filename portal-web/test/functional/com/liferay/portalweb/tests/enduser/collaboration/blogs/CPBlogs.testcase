@@ -143,26 +143,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddBlogsEntryWithSubtitle {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@priority = "5"
 	@refactorneeded
 	test AddBlogWithFormatting {

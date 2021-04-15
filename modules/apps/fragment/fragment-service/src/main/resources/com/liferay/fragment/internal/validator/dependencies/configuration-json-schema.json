@@ -141,7 +141,8 @@
 						"itemSelector",
 						"navigationMenuSelector",
 						"select",
-						"text"
+						"text",
+						"videoSelector"
 					],
 					"title": "The Type Schema",
 					"type": "string"

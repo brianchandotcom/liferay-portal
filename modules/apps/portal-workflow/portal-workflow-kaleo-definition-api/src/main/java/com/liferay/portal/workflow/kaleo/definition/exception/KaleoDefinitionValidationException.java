@@ -504,8 +504,8 @@ public class KaleoDefinitionValidationException extends WorkflowException {
 
 		public UnbalancedForkAndJoinNodes() {
 			super(
-				"Each fork node requires a join node. Make sure all forks and" +
-					"joins are properly paired");
+				"Each fork node requires a join node. Make sure all forks " +
+					"and joins are properly paired");
 		}
 
 	}

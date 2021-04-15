@@ -427,7 +427,7 @@ public class WorkflowDefinitionManagerTest {
 		String error = _assertInvalid(inputStream);
 
 		_assertEquals(
-			"Each fork node requires a join node. Make sure all forks and" +
+			"Each fork node requires a join node. Make sure all forks and " +
 				"joins are properly paired",
 			error);
 	}

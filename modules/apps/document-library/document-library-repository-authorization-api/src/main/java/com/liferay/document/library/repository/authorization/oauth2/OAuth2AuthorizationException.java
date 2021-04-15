@@ -127,7 +127,7 @@ public class OAuth2AuthorizationException extends AuthorizationException {
 		public UnsupportedResponseType(String description) {
 			super(
 				String.format(
-					"The authorization server does not support obtaining an" +
+					"The authorization server does not support obtaining an " +
 						"authorization code using this method: %s",
 					description));
 		}

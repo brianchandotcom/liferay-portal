@@ -220,8 +220,8 @@ public class CPDefinitionOptionRelLocalServiceTest {
 		).then(
 			"OV2 is returned"
 		).but(
-			"If all option values OV1, OV2, OV3 have set preselected to false" +
-				"null is returned"
+			"If all option values OV1, OV2, OV3 have set preselected to " +
+				"false, null is returned"
 		);
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(

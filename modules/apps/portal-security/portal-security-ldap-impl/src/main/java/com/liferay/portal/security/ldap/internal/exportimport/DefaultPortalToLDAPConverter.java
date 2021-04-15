@@ -19,12 +19,14 @@ import com.liferay.expando.kernel.util.ExpandoConverterUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
@@ -32,7 +34,9 @@ import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
+import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -589,14 +593,11 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			String ldapAttributeName = (String)entry.getValue();
 
 			try {
-				Object attributeValue = BeanPropertiesUtil.getObjectSilent(
-					object, fieldName);
+				Object attributeValue = _getAttributeValue(object, fieldName);
 
-				if (attributeValue != null) {
-					addModificationItem(
-						ldapAttributeName, attributeValue.toString(),
-						modifications);
-				}
+				addModificationItem(
+					ldapAttributeName, attributeValue.toString(),
+					modifications);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -728,6 +729,28 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		_passwordEncryptor = passwordEncryptor;
 	}
 
+	private Object _getAttributeValue(Object object, String fieldName)
+		throws PortalException {
+
+		boolean listTypeField = _listTypeFields.containsKey(fieldName);
+
+		if (listTypeField) {
+			fieldName = _listTypeFields.get(fieldName);
+		}
+
+		Object attributeValue = BeanPropertiesUtil.getObjectSilent(
+			object, fieldName);
+
+		if ((attributeValue != null) && listTypeField) {
+			ListType listType = _listTypeService.getListType(
+				(Long)attributeValue);
+
+			attributeValue = listType.getName();
+		}
+
+		return attributeValue;
+	}
+
 	private static final String _DEFAULT_DN = "cn";
 
 	private static final String _OBJECT_CLASS = "objectclass";
@@ -735,12 +758,23 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalToLDAPConverter.class);
 
+	private static final Map<String, String> _listTypeFields =
+		HashMapBuilder.put(
+			"prefix", "prefixId"
+		).put(
+			"suffix", "suffixId"
+		).build();
+
 	private ImageLocalService _imageLocalService;
 	private ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
 	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
 	private LDAPSettings _ldapSettings;
+
+	@Reference
+	private ListTypeService _listTypeService;
+
 	private PasswordEncryptor _passwordEncryptor;
 
 	@Reference

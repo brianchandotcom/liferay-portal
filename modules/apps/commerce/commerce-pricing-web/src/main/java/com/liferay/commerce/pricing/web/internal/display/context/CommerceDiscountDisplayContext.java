@@ -152,40 +152,31 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 				commerceDiscount.getLevel(),
 				CommerceDiscountConstants.LEVEL_L1)) {
 
-			return _getCommerceDiscountAmountFormatted(
-				commerceDiscount.isUsePercentage(),
-				commerceDiscount.getLevel1(), locale);
+			return _getCommerceDiscountAmount(commerceDiscount.getLevel1());
 		}
 
 		if (Objects.equals(
 				commerceDiscount.getLevel(),
 				CommerceDiscountConstants.LEVEL_L2)) {
 
-			return _getCommerceDiscountAmountFormatted(
-				commerceDiscount.isUsePercentage(),
-				commerceDiscount.getLevel2(), locale);
+			return _getCommerceDiscountAmount(commerceDiscount.getLevel2());
 		}
 
 		if (Objects.equals(
 				commerceDiscount.getLevel(),
 				CommerceDiscountConstants.LEVEL_L3)) {
 
-			return _getCommerceDiscountAmountFormatted(
-				commerceDiscount.isUsePercentage(),
-				commerceDiscount.getLevel3(), locale);
+			return _getCommerceDiscountAmount(commerceDiscount.getLevel3());
 		}
 
 		if (Objects.equals(
 				commerceDiscount.getLevel(),
 				CommerceDiscountConstants.LEVEL_L4)) {
 
-			return _getCommerceDiscountAmountFormatted(
-				commerceDiscount.isUsePercentage(),
-				commerceDiscount.getLevel4(), locale);
+			return _getCommerceDiscountAmount(commerceDiscount.getLevel4());
 		}
 
-		return _getCommerceDiscountAmountFormatted(
-			commerceDiscount.isUsePercentage(), BigDecimal.ZERO, locale);
+		return _getCommerceDiscountAmount(BigDecimal.ZERO);
 	}
 
 	public long getCommerceDiscountId() throws PortalException {
@@ -655,17 +646,11 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		return clayDataSetActionDropdownItems;
 	}
 
-	private String _getCommerceDiscountAmountFormatted(
-			boolean usePercentage, BigDecimal commerceDiscountAmount,
-			Locale locale)
-		throws PortalException {
+	private String _getCommerceDiscountAmount(
+		BigDecimal commerceDiscountAmount) {
 
 		if (commerceDiscountAmount == null) {
 			commerceDiscountAmount = BigDecimal.ZERO;
-		}
-
-		if (usePercentage) {
-			return getLocalizedPercentage(commerceDiscountAmount, locale);
 		}
 
 		return String.valueOf(round(commerceDiscountAmount));

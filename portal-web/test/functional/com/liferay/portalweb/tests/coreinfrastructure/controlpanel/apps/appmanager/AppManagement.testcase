@@ -497,7 +497,7 @@ definition {
 
 	@priority = "5"
 	test InstallViaUploadIsSuccessful {
-		property test.name.skip.portal.instance = "AppManagement#InstallUninstallApp";
+		property test.name.skip.portal.instance = "AppManagement#InstallViaUploadIsSuccessful";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

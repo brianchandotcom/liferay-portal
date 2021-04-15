@@ -447,8 +447,8 @@ public class AddContentPanelDisplayContext {
 		int deltaDefault = GetterUtil.getInteger(
 			SessionClicks.get(
 				_httpServletRequest,
-				"com.liferay.product.navigation.control.menu.web_" +
-					"addPanelNumItems",
+				"com.liferay.product.navigation.control.menu." +
+					"web_addPanelNumItems",
 				"10"));
 
 		_delta = ParamUtil.getInteger(

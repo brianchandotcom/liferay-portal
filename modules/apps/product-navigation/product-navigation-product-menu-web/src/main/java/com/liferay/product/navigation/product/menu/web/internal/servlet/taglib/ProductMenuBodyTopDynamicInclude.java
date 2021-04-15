@@ -101,8 +101,8 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 
 			String productMenuState = SessionClicks.get(
 				httpServletRequest,
-				"com.liferay.product.navigation.product.menu.web_" +
-					"productMenuState",
+				"com.liferay.product.navigation.product.menu." +
+					"web_productMenuState",
 				"closed");
 
 			if (Objects.equals(productMenuState, "open")) {

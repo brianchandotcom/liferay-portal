@@ -77,8 +77,8 @@ public class SegmentsContextVocabularyConfigurationScreen
 		try {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
-					"/edit_segments_context_vocabulary_" +
-						"configuration_factory.jsp");
+					"/edit_segments_context_vocabulary_configuration_factory." +
+						"jsp");
 
 			_setHttpServletRequestAttributes(httpServletRequest);
 

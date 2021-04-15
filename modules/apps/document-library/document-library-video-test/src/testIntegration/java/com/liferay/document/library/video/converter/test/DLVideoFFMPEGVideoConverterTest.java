@@ -210,8 +210,8 @@ public class DLVideoFFMPEGVideoConverterTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.document.library.video.internal." +
-						"configuration.DLVideoFFMPEGVideoConverter" +
-							"Configuration",
+						"configuration." +
+							"DLVideoFFMPEGVideoConverterConfiguration",
 					dictionary)) {
 
 			unsafeRunnable.run();

@@ -132,8 +132,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
-						"/fragment/delete_fragment_compositions_and_fragment_" +
-							"entries"
+						"/fragment" +
+							"/delete_fragment_compositions_and_fragment_entries"
 					).setRedirect(
 						themeDisplay.getURLCurrent()
 					).build();
@@ -148,8 +148,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 					liferayPortletResponse.createResourceURL();
 
 				exportFragmentCompositionsAndFragmentEntriesURL.setResourceID(
-					"/fragment/export_fragment_compositions_and_fragment_" +
-						"entries");
+					"/fragment" +
+						"/export_fragment_compositions_and_fragment_entries");
 
 				return exportFragmentCompositionsAndFragmentEntriesURL.
 					toString();

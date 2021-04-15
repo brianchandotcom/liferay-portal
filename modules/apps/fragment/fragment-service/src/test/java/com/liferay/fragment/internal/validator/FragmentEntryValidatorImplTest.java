@@ -535,8 +535,8 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration_valid_field_checkbox_defaultvalue_string_" +
-					"true.json"));
+				"configuration_valid_field_checkbox_defaultvalue_string_true." +
+					"json"));
 	}
 
 	@Test
@@ -605,8 +605,8 @@ public class FragmentEntryValidatorImplTest {
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
-				"configuration_valid_field_itemselector_typeoptions_" +
-					"required.json"));
+				"configuration_valid_field_itemselector_typeoptions_required." +
+					"json"));
 	}
 
 	@Test

@@ -233,8 +233,8 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		ManageLayoutProductNavigationControlMenuEntry.class,
-		"/META-INF/resources/control/menu/edit_layout_control_menu_entry_" +
-			"icon.tmpl");
+		"/META-INF/resources/control/menu" +
+			"/edit_layout_control_menu_entry_icon.tmpl");
 
 	@Reference
 	private Html _html;

@@ -341,14 +341,32 @@ definition {
 		// TODO COMMERCE-5805 UseSearchBarAndPagination
 	}
 
-	@description = "This is a test for COMMERCE-5801. UseSkuSearchBarAndPagination"
-	@ignore = "true"
+	@description = "This is a test for COMMERCE-5806. UseSkuSearchBarAndPagination"
 	@priority = "3"
 	test UseSkuSearchBarAndPagination {
 		property portal.acceptance = "false";
+		
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		// TODO COMMERCE-5801 UseSkuSearchBarAndPagination
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+		
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		CommerceEntry.viewPaginationResults(results = "Showing 11 to 20 of 54");
+		
+		CommerceProducts.searchProduct(search = "MIN55861");
+
+		AssertElementPresent(
+			key_entryName = "MIN55861",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
 	}
+
 
 	@description = "This is a test for COMMERCE-5803. UseSortingByNameAndDate"
 	@ignore = "true"

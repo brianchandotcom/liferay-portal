@@ -839,8 +839,9 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		updateDDMFields(
-			article, _formatContent(article, content, groupId, user));
+		content = _formatContent(article, content, groupId, user);
+
+		updateDDMFields(article, content);
 
 		updateDDMStructurePredefinedValues(classPK, content, serviceContext);
 
@@ -6182,8 +6183,9 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		updateDDMFields(
-			article, _formatContent(article, content, groupId, user));
+		content = _formatContent(article, content, groupId, user);
+
+		updateDDMFields(article, content);
 
 		updateDDMStructurePredefinedValues(
 			article.getClassPK(), content, serviceContext);

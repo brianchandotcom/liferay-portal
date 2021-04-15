@@ -100,6 +100,42 @@ public class PlusStatementCheck extends BaseStringConcatenationCheck {
 				rightHandOperandDetailAST, MSG_MOVE_LITERAL_STRING,
 				value2.substring(0, pos + 1));
 		}
+
+		checkStuff(rightHandOperandDetailAST, line1, line2, value1, value2);
+
+		/*
+		Pattern pattern1 = Pattern.compile("^(.*([ /\\.,]))?(\\w+)$");
+		Pattern pattern2 = Pattern.compile("^(\\w+)(([ /\\.,]).*)?$");
+
+		Matcher matcher1 = pattern1.matcher(value1);
+		Matcher matcher2 = pattern2.matcher(value2);
+
+		if (matcher1.find() && matcher2.find()) {
+			int x = getStringBreakPos(
+				value2, getMaxLineLength() - lineLength1);
+
+			if (x != -1) {
+				log(
+					rightHandOperandDetailAST, MSG_MOVE_LITERAL_STRING,
+					value2.substring(0, pos + 1));
+
+				return;
+			}
+
+			int lineLength2 = CommonUtil.lengthExpandedTabs(
+				line2, line2.length(), getTabWidth());
+
+			x = getLastStringBreakPos(value1);
+
+			if (x != -1) {
+				String s = value1.substring(x);
+
+				if ((lineLength2 + pos) <= getMaxLineLength()) {
+					log(leftHandOperandDetailAST, MSG_MOVE_LITERAL_STRING, s);
+				}
+			}
+		}
+		*/
 	}
 
 	private void _checkPlusOperator(DetailAST detailAST) {

@@ -161,6 +161,11 @@ public class AppendCheck extends BaseStringConcatenationCheck {
 					literalStringValue.substring(0, pos + 1));
 			}
 		}
+
+		checkStuff(
+			methodCallDetailAST, previousLine,
+			getLine(previousMethodCallDetailAST.getLineNo()),
+			previousLiteralStringValue, literalStringValue);
 	}
 
 	private void _checkPlusOperator(DetailAST parameterDetailAST) {

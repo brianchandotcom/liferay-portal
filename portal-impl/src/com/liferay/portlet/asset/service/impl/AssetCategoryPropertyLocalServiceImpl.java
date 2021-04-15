@@ -37,7 +37,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -45,7 +45,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 	public void deleteCategoryProperties(long entryId) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -53,7 +53,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 	public void deleteCategoryProperty(AssetCategoryProperty categoryProperty) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -63,7 +63,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -71,7 +71,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 	public List<AssetCategoryProperty> getCategoryProperties() {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -79,7 +79,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 	public List<AssetCategoryProperty> getCategoryProperties(long entryId) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -89,7 +89,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -100,7 +100,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -110,7 +110,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -121,7 +121,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
@@ -132,21 +132,21 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
 	protected boolean hasCategoryProperty(long categoryId, String key) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 
 	protected void validate(String key, String value) throws PortalException {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.asset.category.property.service.impl" +
+				"com.liferay.asset.category.property.service.impl." +
 					"AssetCategoryPropertyLocalServiceImpl");
 	}
 

@@ -105,11 +105,11 @@ public class HtmlImplTest {
 			"javascript%3aalert(&#39;hello&#39;);",
 			_htmlImpl.escapeHREF("javascript:alert('hello');"));
 		Assert.assertEquals(
-			"data%3atext/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaX" +
-				"B0Pg",
+			"data%3atext/html;base64," +
+				"PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg",
 			_htmlImpl.escapeHREF(
-				"data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaX" +
-					"B0Pg"));
+				"data:text/html;base64," +
+					"PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg"));
 		Assert.assertEquals(
 			"http://localhost:8080",
 			_htmlImpl.escapeHREF("http://localhost:8080"));

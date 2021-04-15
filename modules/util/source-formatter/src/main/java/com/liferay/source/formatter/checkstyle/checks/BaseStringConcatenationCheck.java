@@ -21,6 +21,7 @@ import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 /**
  * @author Hugo Huijser
@@ -70,6 +71,140 @@ public abstract class BaseStringConcatenationCheck extends BaseCheck {
 	protected int getMaxLineLength() {
 		return GetterUtil.getInteger(
 			getAttributeValue(CheckstyleUtil.MAX_LINE_LENGTH_KEY));
+	}
+
+	protected int getLastStringBreakPos(String s) {
+		int x = Math.max(
+			s.lastIndexOf(StringPool.DASH),
+			Math.max(
+				s.lastIndexOf(StringPool.PERIOD),
+				s.lastIndexOf(StringPool.SPACE)));
+
+		if (x == -1) {
+			return s.lastIndexOf(StringPool.SLASH);
+		}
+
+		return Math.max(x + 1, s.lastIndexOf(StringPool.SLASH));
+	}
+
+	protected int getStringBreakPos(String s, int i) {
+		int x = Math.max(
+			s.lastIndexOf(StringPool.DASH, i - 1),
+			Math.max(
+				s.lastIndexOf(StringPool.PERIOD, i - 1),
+				s.lastIndexOf(StringPool.SPACE, i - 1)));
+
+		int y = s.lastIndexOf(StringPool.SLASH, i);
+
+		if (y > 0) {
+			return Math.max(x, y - 1);
+		}
+
+		return x;
+	}
+
+	protected int getStringBreakPoss(String s, int i) {
+		int breakPos = -1;
+
+		int pos = s.lastIndexOf(StringPool.DASH, i - 1);
+
+		if (pos != -1) {
+			breakPos = pos;
+		}
+
+		pos = s.lastIndexOf(StringPool.PERIOD, i - 1);
+
+		if (pos > breakPos) {
+			breakPos = pos;
+		}
+
+		pos = s.lastIndexOf(StringPool.SLASH, i);
+
+		if ((pos > 0) && (pos > breakPos)) {
+			breakPos = pos - 1;
+		}
+
+		pos = s.lastIndexOf(StringPool.SPACE, i - 1);
+
+		if (pos > breakPos) {
+			breakPos = pos;
+		}
+
+		return breakPos;
+	}
+
+	protected void checkStuff(
+		DetailAST rightHandOperandDetailAST, String line1, String line2,
+		String value1, String value2) {
+
+		if (!value1.matches("^(.*([ /\\.,]))?(\\w+)$") ||
+			!value2.matches("^(\\w+)(([ /\\.,]).*)?$")) {
+
+			return;
+		}
+
+		int lineLength1 = CommonUtil.lengthExpandedTabs(
+			line1, line1.length(), getTabWidth());
+
+		int x = getStringBreakPos(value2, getMaxLineLength() - lineLength1);
+
+		if (x != -1) {
+			log(
+				rightHandOperandDetailAST, MSG_MOVE_LITERAL_STRING,
+				value2.substring(0, x + 1));
+
+			return;
+		}
+
+		int lineLength2 = CommonUtil.lengthExpandedTabs(
+			line2, line2.length(), getTabWidth());
+
+		x = getLastStringBreakPos(value1);
+
+		if (x != -1) {
+			String s = value1.substring(x);
+
+			if ((lineLength2 + s.length()) <= getMaxLineLength()) {
+				log(rightHandOperandDetailAST, MSG_MOVE_LITERAL_STRING, s);
+			}
+		}
+
+		/*
+		Pattern pattern1 = Pattern.compile("^(.*([ /\\.,]))?(\\w+)$");
+		Pattern pattern2 = Pattern.compile("^(\\w+)(([ /\\.,]).*)?$");
+
+		Matcher matcher1 = pattern1.matcher(value1);
+		Matcher matcher2 = pattern2.matcher(value2);
+
+		if (matcher1.find() && matcher2.find()) {
+			int lineLength1 = CommonUtil.lengthExpandedTabs(
+				line1, line1.length(), getTabWidth());
+
+			int x = getStringBreakPos(
+				value2, getMaxLineLength() - lineLength1);
+
+			if (x != -1) {
+				log(
+					rightHandOperandDetailAST, MSG_MOVE_LITERAL_STRING,
+					value2.substring(0, x + 1));
+
+				return;
+			}
+
+			int lineLength2 = CommonUtil.lengthExpandedTabs(
+				line2, line2.length(), getTabWidth());
+
+			x = getLastStringBreakPos(value1);
+
+			if (x != -1) {
+				String s = value1.substring(x);
+
+				if ((lineLength2 + s.length()) <= getMaxLineLength()) {
+					log(rightHandOperandDetailAST, MSG_MOVE_LITERAL_STRING, s);
+				}
+			}
+		}
+		*/
 	}
 
 	protected int getStringBreakPos(String s1, String s2, int i) {

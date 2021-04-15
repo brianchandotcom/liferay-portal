@@ -137,6 +137,11 @@ public class ConcatCheck extends BaseStringConcatenationCheck {
 				literalStringDetailAST2, MSG_MOVE_LITERAL_STRING,
 				literalStringValue2.substring(0, pos + 1));
 		}
+
+		checkStuff(
+			literalStringDetailAST2, line,
+			getLine(literalStringDetailAST1.getLineNo()), literalStringValue1,
+			literalStringValue2);
 	}
 
 }

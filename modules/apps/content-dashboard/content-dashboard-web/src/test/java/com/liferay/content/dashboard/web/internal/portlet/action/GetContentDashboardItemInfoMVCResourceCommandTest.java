@@ -295,7 +295,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			@Override
 			public List<Version> getVersions(Locale locale) {
 				return Collections.singletonList(
-					new Version("version", "style", 0.1));
+					new Version("version", "style", "0.1"));
 			}
 
 			@Override

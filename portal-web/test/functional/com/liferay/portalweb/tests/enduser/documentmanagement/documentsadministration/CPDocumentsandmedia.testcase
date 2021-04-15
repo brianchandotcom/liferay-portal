@@ -661,6 +661,40 @@ definition {
 			validateStorageQuota = "true");
 	}
 
+	@description = "This test covers LPS-101667. It makes sure that the file size can be displayed correctly in the different versions after editing the document file."
+	@priority = "3"
+	@refactorneeded
+	test FileSizeCanBeDisplayedCorrectlyInDifferentVersions {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_1.txt",
+			dmDocumentFileNameEdit = "Document_1.txt",
+			dmDocumentTitle = "Document_2",
+			dmDocumentTitleEdit = "Document_1");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
+
+		DMDocument.viewFileSizeByVersion(
+			dmDocumentSize = "30 KB",
+			dmDocumentVersionNumber = "1.0");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
+
+		DMDocument.viewFileSizeByVersion(
+			dmDocumentSize = "259 B",
+			dmDocumentVersionNumber = "2.0");
+	}
+
 	@description = "This test covers LPS-94820. This test ensures that only the last two checked in versions of a file are kept when the max version limit is set."
 	@priority = "4"
 	@refactorneeded

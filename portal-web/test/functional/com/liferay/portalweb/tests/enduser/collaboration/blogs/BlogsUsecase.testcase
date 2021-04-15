@@ -304,6 +304,64 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This test covers LPS-102033. It ensures that the comment only appears under the respective Blog Entry."
+	@priority = "3"
+	@refactorneeded
+	test CommentsAreViewableInAP {
+		JSONLayout.deletePublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Asset Publisher Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Comments");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Comments.addPG(entryComment = "Blogs Entry Title 2 Comment");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title 1",
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1");
+
+		Comments.viewNoPG(
+			entryComment = "Blogs Entry Title 2 Comment",
+			userFullName = "Test Test");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title 2",
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Title 2 Comment",
+			userFullName = "Test Test");
+	}
+
 	@priority = "4"
 	@refactorneeded
 	test DemoTrackbackURL {

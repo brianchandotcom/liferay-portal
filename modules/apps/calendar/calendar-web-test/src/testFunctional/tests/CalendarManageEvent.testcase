@@ -753,6 +753,8 @@ definition {
 	@priority = "5"
 	test ViewCalendarEventDetailViaMailLink {
 		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "CalendarManageEvent#ViewCalendarEventDetailViaMailLink";
+		property test.smtp.server.enabled = "true";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

@@ -422,64 +422,8 @@ definition {
 	}
 
 	@priority = "3"
-	@refactorneeded
-	test SearchBlogsImagesViaItemSelector {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			navTab = "Blog Images",
-			uploadFileName = "Document_1.jpg");
-
-		Button.clickPublish();
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			uploadFileName = "Document_1");
-
-		BlogsNavigator.gotoBrowseImage();
-
-		ItemSelector.searchBlogImages(imageFileName = "Document_1.jpg");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test SearchDMImagesViaItemSelector {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			navTab = "Documents and Media",
-			uploadFileName = "Document_1.jpg");
-
-		Button.clickPublish();
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			uploadFileName = "Document_1");
-
-		BlogsNavigator.gotoBrowseImage();
-
-		ItemSelector.searchDMImages(imageFileName = "Document_1.jpg");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryDraftWithCoverImage {
+	@refactordone
+	test CanSaveCoverImageAsDraft {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(

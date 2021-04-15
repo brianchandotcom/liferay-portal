@@ -13,12 +13,73 @@ definition {
 		Page.tearDownCP();
 	}
 
+	@description = "This test asserts that apps in App Management do not display in non default instances"
+	@priority = "4"
+	test AppManagementAppsAreNotInDefaultInstances {
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		Portlet.viewNoPortletsPresentCP(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		Portlet.viewNoPortletsPresentCP(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Purchased");
+
+		Portlet.viewNoPortletsPresentCP(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Store");
+
+		Portlet.viewNoPortletsPresentCP(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "License Manager");
+	}
+
 	@description = "This is a test for LPS-102506."
 	@ignore = "true"
 	@priority = "3"
-	test ActivateAppAfterUninstall {
+	test AppsCanBeActivatedAfterUninstalling {
 		// TODO LPS-102506 Unable to activate an app (lpkg) after uninstalling it via the app manager, waiting for fix
 
+	}
+
+	@priority = "4"
+	test AppShouldNotBeNestedWithinItself {
+		property test.name.skip.portal.instance = "AppManagement#AppShouldNotBeNestedWithinItself";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		var key_appName = "Independent Modules";
+
+		AssertClick(
+			locator1 = "AppManager#APP_NAME",
+			value1 = "Independent Modules");
+
+		Pause(locator1 = "3000");
+
+		AssertElementNotPresent(locator1 = "AppManager#APP_NAME");
 	}
 
 	@description = "This ensures that the Adaptive Media app in the app manager can be deactivated and reactivated."
@@ -438,7 +499,7 @@ definition {
 	}
 
 	@priority = "5"
-	test InstallViaUpload {
+	test InstallViaUploadIsSuccessful {
 		property test.name.skip.portal.instance = "AppManagement#InstallUninstallApp";
 
 		var appName = "test-app-portlet";
@@ -459,13 +520,13 @@ definition {
 
 	@description = "This test attempts to install an app by uploading a file that is invalid. Error message is asserted."
 	@priority = "5"
-	@refactored
+	@refactoredone
 	test InvalidFileShouldNotBeUploaded {
 	}
 
 	@priority = "5"
-	test UninstallApp {
-		property test.name.skip.portal.instance = "AppManagement#InstallUninstallApp";
+	test UninstallAppIsSuccessful {
+		property test.name.skip.portal.instance = "AppManagement#UninstallAppIsSuccessful";
 
 		var appName = "test-app-portlet";
 
@@ -493,26 +554,6 @@ definition {
 		AssertConsoleTextPresent(value1 = "STOPPED ${appName}");
 	}
 
-	@priority = "4"
-	test ViewBreadcrumbForNestedFolders {
-		property test.name.skip.portal.instance = "AppManagement#ViewIndependentModulesIsNotNestedWithinItself";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
-
-		var key_appName = "Independent Modules";
-
-		AssertClick(
-			locator1 = "AppManager#APP_NAME",
-			value1 = "Independent Modules");
-
-		Pause(locator1 = "3000");
-
-		AssertElementNotPresent(locator1 = "AppManager#APP_NAME");
-	}
-
 	@description = "This is a use case for LPS-99031."
 	@priority = "5"
 	test ViewLicenseManager {
@@ -528,47 +569,6 @@ definition {
 		LicenseManager.viewDefaultCP(tableTexts = "Server Info,Host Name,IP Addresses,Licenses Registered,Owner,Start Date");
 
 		AssertElementNotPresent(locator1 = "Portlet#HEADER_DUPLICATE");
-	}
-
-	@description = "This test asserts that apps in App Management do not display in non default instances"
-	@priority = "4"
-	test ViewNotInNonDefaultInstance {
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
-
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-		Portlet.viewNoPortletsPresentCP(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
-
-		Portlet.viewNoPortletsPresentCP(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Purchased");
-
-		Portlet.viewNoPortletsPresentCP(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Store");
-
-		Portlet.viewNoPortletsPresentCP(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "License Manager");
 	}
 
 }

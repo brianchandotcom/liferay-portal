@@ -273,40 +273,6 @@ definition {
 			userFullName = "Test Test");
 	}
 
-	@description = "This test covers LPS-102199. This ensures that the user can search for a pending blog entry."
-	@priority = "3"
-	@refactorneeded
-	test SearchForPendingBlogsEntry {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addWithWorkflow(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsEntry.viewWithWorkflowCP(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		BlogsEntry.searchCP(
-			entryContent = "Blogs Entry Content",
-			entrySearchTerm = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This checks that a guest cannot view a blog entry in the AP when permissions are removed."
 	@priority = "4"
 	@refactordone
@@ -406,7 +372,7 @@ definition {
 				entryTitle = "Blogs Entry Title");
 		}
 
-		task ("Edit the blog entry via AP and save as draft") {		
+		task ("Edit the blog entry via AP and save as draft") {
 			Navigator.gotoPage(pageName = "Blogs Page");
 
 			BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
@@ -635,6 +601,40 @@ definition {
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry6 Content",
 			entryTitle = "Blogs Entry6 Title");
+	}
+
+	@description = "This test covers LPS-102199. This ensures that the user can search for a pending blog entry."
+	@priority = "3"
+	@refactorneeded
+	test SearchForPendingBlogsEntry {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This test covers LPS-128451. It ensures that a blog entry can be published normally with xss code injected title."

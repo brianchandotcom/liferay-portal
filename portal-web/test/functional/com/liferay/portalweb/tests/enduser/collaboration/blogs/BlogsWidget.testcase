@@ -132,4 +132,5 @@ definition {
 			BlogsConfiguration.viewDefaultConfigurationRSS();
 		}
 	}
+
 }

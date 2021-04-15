@@ -284,7 +284,6 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-121443. It ensures that a blog entry can be published normally after saving automatically."
 	@priority = "4"
 	@refactorneeded
 	test PublishBlogsEntryAutoDraft {

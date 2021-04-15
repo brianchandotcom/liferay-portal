@@ -79,6 +79,274 @@ definition {
 		// TODO COMMERCE-6235 AddEditAndRemoveProductGroupFromPL Pending Implementation
 	}
 
+	@description = "This is a test for COMMERCE-6069. Price List Qualifier"
+	@priority = "3"
+	test AddPriceListQualifier {
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(
+			siteName = "Site1",
+			siteTemplateName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Site1");
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(
+			siteName = "Site2",
+			siteTemplateName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Site1");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Account1",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoSite(site = "Site1");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Account2",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			priceListCatalog = "Site1",
+			priceListCurrency = "USD",
+			priceListName = "pricelist1");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			priceListCatalog = "Site1",
+			priceListCurrency = "USD",
+			priceListName = "pricelist2");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoEntry(entryName = "pricelist1");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(
+			accountsEligibility = "Account1",
+			channelsEligibility = "Site1 Portal",
+			unpublish = "true");
+
+		CommerceEntry.viewEntryEligibility(
+			accountsEligibility = "Account1",
+			channelsEligibility = "Site1 Portal");
+
+		Button.clickPublish();
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceNavigator.gotoEntry(entryName = "pricelist2");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(
+			accountsEligibility = "Account2",
+			channelsEligibility = "Site2 Portal",
+			unpublish = "true");
+
+		CommerceEntry.viewEntryEligibility(
+			accountsEligibility = "Account2",
+			channelsEligibility = "Site2 Portal");
+
+		Button.clickPublish();
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceNavigator.gotoEntry(entryName = "pricelist1");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		Type(
+			key_title = "Add SKUs",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "MIN55861 ");
+
+		Pause(locator1 = "2000");
+
+		Button.clickSelect();
+
+		Refresh();
+
+		CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+		CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = "12.71");
+
+		Refresh();
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceNavigator.gotoEntry(entryName = "pricelist2");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		Type(
+			key_title = "Add SKUs",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "MIN55861 ");
+
+		Pause(locator1 = "2000");
+
+		Button.clickSelect();
+
+		Refresh();
+
+		CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+		CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = "7.45");
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Site1");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account1");
+
+		Refresh();
+
+		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Account1");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "12.71");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account2");
+
+		Refresh();
+
+		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Account2");
+
+		Refresh();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "24.00");
+
+		ApplicationsMenu.gotoSite(site = "Site2");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account1");
+
+		Refresh();
+
+		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Account1");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "24.00");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account2");
+
+		Refresh();
+
+		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Account2");
+
+		Refresh();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "7.45");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		CommerceNavigator.gotoEntry(entryName = "pricelist1");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		Click(
+			key_radioOption = "All Accounts",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Button.clickPublish();
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceNavigator.gotoEntry(entryName = "pricelist2");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		Click(
+			key_radioOption = "All Accounts",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Button.clickPublish();
+
+		Click(locator1 = "Icon#BACK");
+
+		ApplicationsMenu.gotoSite(site = "Site1");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account1");
+
+		Refresh();
+
+		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Account1");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "12.71");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account2");
+
+		Refresh();
+
+		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Account2");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "12.71");
+
+		ApplicationsMenu.gotoSite(site = "Site2");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account1");
+
+		Refresh();
+
+		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Account1");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "7.45");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account2");
+
+		Refresh();
+
+		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Account2");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "7.45");
+
+
+
+			
+	}
+
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";

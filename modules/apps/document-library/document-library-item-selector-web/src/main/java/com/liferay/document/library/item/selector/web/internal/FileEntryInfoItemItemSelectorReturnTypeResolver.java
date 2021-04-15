@@ -14,13 +14,25 @@
 
 package com.liferay.document.library.item.selector.web.internal;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,10 +70,76 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 		).put(
 			"classPK", String.valueOf(fileEntry.getFileEntryId())
 		).put(
+			"classTypeId", _getClassTypeId(fileEntry)
+		).put(
+			"subtype", _getSubtype(fileEntry, themeDisplay.getLocale())
+		).put(
 			"title", fileEntry.getTitle()
+		).put(
+			"type",
+			ResourceActionsUtil.getModelResource(
+				themeDisplay.getLocale(), DLFileEntry.class.getName())
 		);
 
 		return fileEntryJSONObject.toString();
+	}
+
+	private long _getClassTypeId(FileEntry fileEntry) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					_portal.getClassNameId(DLFileEntry.class));
+
+		if (assetRendererFactory == null) {
+			return 0;
+		}
+
+		try {
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(
+					fileEntry.getFileEntryId());
+
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+				DLFileEntryConstants.getClassName(),
+				assetRenderer.getClassPK());
+
+			return assetEntry.getClassTypeId();
+		}
+		catch (Exception exception) {
+			return 0;
+		}
+	}
+
+	private String _getSubtype(FileEntry fileEntry, Locale locale) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					_portal.getClassNameId(DLFileEntry.class));
+
+		if (assetRendererFactory == null) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(
+					fileEntry.getFileEntryId());
+
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+				DLFileEntryConstants.getClassName(),
+				assetRenderer.getClassPK());
+
+			ClassTypeReader classTypeReader =
+				assetRendererFactory.getClassTypeReader();
+
+			ClassType classType = classTypeReader.getClassType(
+				assetEntry.getClassTypeId(), locale);
+
+			return classType.getName();
+		}
+		catch (Exception exception) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Reference

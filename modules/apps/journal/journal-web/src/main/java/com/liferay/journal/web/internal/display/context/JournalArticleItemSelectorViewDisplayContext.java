@@ -14,7 +14,14 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -32,9 +39,11 @@ import com.liferay.journal.web.internal.item.selector.JournalArticleItemSelector
 import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.internal.util.JournalPortletUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -45,6 +54,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -67,6 +77,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
@@ -150,6 +161,46 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
+	}
+
+	public Map<String, Object> getJournalArticleContext(
+		JournalArticle journalArticle) {
+
+		return HashMapBuilder.<String, Object>put(
+			"returnType", InfoItemItemSelectorReturnType.class.getName()
+		).put(
+			"value",
+			() -> {
+				DDMStructure ddmStructure =
+					DDMStructureLocalServiceUtil.fetchStructure(
+						journalArticle.getGroupId(),
+						PortalUtil.getClassNameId(JournalArticle.class),
+						journalArticle.getDDMStructureKey(), true);
+
+				return JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					PortalUtil.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"classTypeId", _getClassTypeId(ddmStructure)
+				).put(
+					"subtype", _getSubtype(ddmStructure)
+				).put(
+					"title",
+					journalArticle.getTitle(_themeDisplay.getLocale(), true)
+				).put(
+					"titleMap", journalArticle.getTitleMap()
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						_themeDisplay.getLocale(),
+						JournalArticle.class.getName())
+				).toJSONString();
+			}
+		).build();
 	}
 
 	public String getKeywords() {
@@ -507,6 +558,14 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return searchContext;
 	}
 
+	private long _getClassTypeId(DDMStructure ddmStructure) {
+		if (ddmStructure == null) {
+			return 0;
+		}
+
+		return ddmStructure.getStructureId();
+	}
+
 	private JournalFolder _getFolder() {
 		if (_folder != null) {
 			return _folder;
@@ -612,6 +671,26 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			).buildString());
 
 		return breadcrumbEntry;
+	}
+
+	private String _getSubtype(DDMStructure ddmStructure)
+		throws PortalException {
+
+		if (ddmStructure == null) {
+			return StringPool.BLANK;
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
+
+		ClassType classType = classTypeReader.getClassType(
+			ddmStructure.getStructureId(), _themeDisplay.getLocale());
+
+		return classType.getName();
 	}
 
 	private String _getTitle(Locale locale) {

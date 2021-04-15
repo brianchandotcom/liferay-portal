@@ -105,7 +105,8 @@ public class CommerceSubscriptionDisplayContextHelper {
 
 		actionURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/commerce_subscription_entry/edit_commerce_subscription_entry");
+			"/commerce_subscription_content_web" +
+				"/edit_commerce_subscription_content");
 		actionURL.setParameter(Constants.CMD, cmd);
 		actionURL.setParameter(
 			"commerceSubscriptionEntryId",

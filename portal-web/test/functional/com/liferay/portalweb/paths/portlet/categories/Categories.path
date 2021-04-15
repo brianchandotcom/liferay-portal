@@ -78,7 +78,7 @@
 <!--OOTB_CATEGORIES-->
 <tr>
 	<td>LOCKED_VOCABULARY</td>
-	<td>//*[contains(@class,'lexicon-icon-lock')]</td>
+	<td>//a[contains(@class,'nav-link')][.//*[name()='svg'][contains(@class,'icon-lock')]]/span[normalize-space(text())='${key_vocabularyName}']</td>
 	<td></td>
 </tr>
 <tr>

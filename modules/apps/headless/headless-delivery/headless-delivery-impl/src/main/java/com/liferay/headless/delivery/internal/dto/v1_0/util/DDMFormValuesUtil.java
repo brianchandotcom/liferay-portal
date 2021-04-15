@@ -16,6 +16,9 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -23,6 +26,8 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.UnsafeFunction;
@@ -46,6 +51,29 @@ import javax.ws.rs.BadRequestException;
  * @author Víctor Galán
  */
 public class DDMFormValuesUtil {
+
+	public static String serializeContent(
+		DDMFormValuesSerializer jsonDDMFormValuesSerializer, DDMForm ddmForm,
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm) {
+			{
+				setAvailableLocales(ddmForm.getAvailableLocales());
+				setDDMFormFieldValues(ddmFormFieldValues);
+				setDefaultLocale(ddmForm.getDefaultLocale());
+			}
+		};
+
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				jsonDDMFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
 
 	public static DDMFormValues toDDMFormValues(
 		ContentField[] contentFields, DDMForm ddmForm,
@@ -77,6 +105,23 @@ public class DDMFormValuesUtil {
 				setDefaultLocale(ddmForm.getDefaultLocale());
 			}
 		};
+	}
+
+	public static void validateDDMFormValues(
+		DDMFormValuesValidator ddmFormValuesValidator,
+		DDMFormValues ddmFormValues) {
+
+		try {
+			ddmFormValuesValidator.validate(ddmFormValues);
+		}
+		catch (DDMFormValuesValidationException
+					ddmFormValuesValidationException) {
+
+			throw new BadRequestException(
+				"Validation error: " +
+					ddmFormValuesValidationException.getMessage(),
+				ddmFormValuesValidationException);
+		}
 	}
 
 	private static List<DDMFormFieldValue> _flattenDDMFormFieldValues(

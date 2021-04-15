@@ -13,12 +13,12 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
-import {fetch, objectToFormData} from 'frontend-js-web';
+import {fetch, navigate} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import ImageEditor from './ImageEditor';
 
-export default ({editImageURL, portletNamespace}) => {
+export default ({editImageURL, portletNamespace, redirectURL}) => {
 	const fileEntryIdRef = useRef();
 
 	const [imageURL, setImageURL] = useState();
@@ -30,7 +30,6 @@ export default ({editImageURL, portletNamespace}) => {
 
 	const handleSaveButtonClick = (canvas) => {
 		canvas.toBlob((blob) => {
-			debugger;
 			const formData = new FormData();
 
 			formData.append('fileEntryId', fileEntryIdRef.current);
@@ -40,10 +39,16 @@ export default ({editImageURL, portletNamespace}) => {
 				body: formData,
 				method: 'POST',
 			})
+				.then((response) => response.json())
+				.then((response) => {
+					if (response?.success) {
+						navigate(redirectURL);
+					}
+				});
 		});
 	};
 
-	const {observer} = useModal({
+	const {observer, onClose} = useModal({
 		onClose: handleOnClose,
 	});
 

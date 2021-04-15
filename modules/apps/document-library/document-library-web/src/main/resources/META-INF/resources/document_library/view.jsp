@@ -376,6 +376,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"editImageURL", editImageURL
+					).put(
+						"redirectURL", currentURL
 					).build()
 				%>'
 			/>

@@ -278,7 +278,7 @@ function EditElementForm({
 
 		formData.append(`${namespace}elementId`, elementId);
 		formData.append(`${namespace}redirect`, redirectURL);
-		formData.append(`${namespace}type`, type);
+		formData.append(`${namespace}elementType`, type);
 
 		return fetch(submitFormURL, {
 			body: formData,

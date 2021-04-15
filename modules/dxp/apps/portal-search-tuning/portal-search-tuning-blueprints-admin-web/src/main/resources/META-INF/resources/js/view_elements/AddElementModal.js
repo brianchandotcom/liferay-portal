@@ -123,7 +123,7 @@ const AddElementModal = ({
 						)}
 
 						<input
-							name={`${namespace}type`}
+							name={`${namespace}elementType`}
 							type="hidden"
 							value={type}
 						/>

@@ -339,8 +339,6 @@ definition {
 	macro assertNoPublishOption {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_entryTitle = "${entryTitle}";
-
 		Blogs.viewEntryTitle(entryTitle = "${entryTitle}");
 
 		Click(

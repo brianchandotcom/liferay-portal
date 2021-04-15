@@ -496,8 +496,6 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_entryTitle = "Blogs Entry Title";
-
 		Blogs.viewEntryTitle(entryTitle = "Blogs Entry Title");
 
 		AssertTextEquals(

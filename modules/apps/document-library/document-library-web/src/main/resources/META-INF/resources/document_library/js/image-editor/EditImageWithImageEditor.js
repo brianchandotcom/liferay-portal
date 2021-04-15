@@ -13,14 +13,13 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
-import {postForm} from 'frontend-js-web';
+import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import ImageEditor from './ImageEditor';
 
 export default ({editImageURL, portletNamespace}) => {
 	const fileEntryIdRef = useRef();
-	const formRef = useRef();
 
 	const [imageURL, setImageURL] = useState();
 	const [showModal, setShowModal] = useState();
@@ -31,19 +30,16 @@ export default ({editImageURL, portletNamespace}) => {
 
 	const handleSaveButtonClick = (canvas) => {
 		canvas.toBlob((blob) => {
-			postForm(
-				formRef.current,
-				{
-					data: {
-						fileEntryId: fileEntryIdRef.current,
-						imageEditorFile: new File(
-							[blob],
-							fileEntryIdRef.current
-						),
-					},
-				},
-				editImageURL
-			);
+			debugger;
+			const formData = new FormData();
+
+			formData.append('fileEntryId', fileEntryIdRef.current);
+			formData.append('imageBlob', blob, fileEntryIdRef.current);
+
+			fetch(editImageURL, {
+				body: formData,
+				method: 'POST',
+			})
 		});
 	};
 
@@ -65,11 +61,6 @@ export default ({editImageURL, portletNamespace}) => {
 
 	return (
 		<>
-			<form ref={formRef}>
-				<input name="fileEntryId" type="hidden" />
-				<input name="imageEditorFile" type="hidden" />
-			</form>
-
 			{showModal && (
 				<ClayModal
 					className="image-editor-modal"

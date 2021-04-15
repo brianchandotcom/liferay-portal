@@ -26,12 +26,16 @@ export default function addMappedInfoItem({
 	className,
 	classNameId,
 	classPK,
+	subtype,
 	title,
+	type,
 }) {
 	return {
 		className,
 		classNameId,
 		classPK,
+		itemSubtype: subtype,
+		itemType: type,
 		title,
 		type: ADD_MAPPED_INFO_ITEM,
 	};

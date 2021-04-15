@@ -211,31 +211,6 @@ definition {
 			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
 	}
 
-	@description = "This checks that a blog entry can be automatically saved as a draft."
-	@priority = "5"
-	@refactordone
-	test CanAutomaticallySaveEntryAsDraft {
-		Blogs.addDraftViaAutoSave(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
-
-		BlogsNavigator.gotoEntryCP(
-			entryStatus = "Draft",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This checks that a comment can be deleted from a blog entry."
 	@priority = "4"
 	@refactordone

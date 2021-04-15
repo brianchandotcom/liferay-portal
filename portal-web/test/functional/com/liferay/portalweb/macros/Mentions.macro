@@ -127,15 +127,32 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		if (isSet(multipleMentions)) {
+			for (var mentionsUserScreenName : list "${mentionsUserScreenNameList}") {
+				SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		Type.sendKeys(
-			locator1 = "CKEditor#BODY",
-			value1 = "@${mentionsUserScreenName}");
+				Type.sendKeys(
+					locator1 = "CKEditor#BODY",
+					value1 = " @${mentionsUserScreenName}");
 
-		SelectFrame.selectFrameTop();
+				SelectFrame.selectFrameTop();
 
-		Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
+				Click.clickNoMouseOver(
+					key_mentionsUserScreenName = "${mentionsUserScreenName}",
+					locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
+			}
+		}
+		else {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			Type.sendKeys(
+				locator1 = "CKEditor#BODY",
+				value1 = "@${mentionsUserScreenName}");
+
+			SelectFrame.selectFrameTop();
+
+			Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
+		}
 
 		PortletEntry.publish();
 	}

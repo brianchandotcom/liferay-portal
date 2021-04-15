@@ -82,8 +82,6 @@ definition {
 			navTab = "Upload Image",
 			uploadFileName = "Document_1.jpg");
 
-		Pause(locator1 = "3000");
-
 		PortletEntry.publish();
 
 		BlogsNavigator.openToBlogEntry(

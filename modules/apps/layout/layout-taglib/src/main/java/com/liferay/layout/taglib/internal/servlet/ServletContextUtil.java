@@ -27,6 +27,8 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.context.RequestContextMapper;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -105,6 +107,14 @@ public class ServletContextUtil {
 		getListObjectReferenceFactoryTracker() {
 
 		return _listObjectReferenceFactoryTracker;
+	}
+
+	public static RequestContextMapper getRequestContextMapper() {
+		return _requestContextMapper;
+	}
+
+	public static SegmentsEntryRetriever getSegmentsEntryRetriever() {
+		return _segmentsEntryRetriever;
 	}
 
 	public static ServletContext getServletContext() {
@@ -217,6 +227,20 @@ public class ServletContextUtil {
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
 	}
 
+	@Reference(unbind = "-")
+	protected void setRequestContextMapper(
+		RequestContextMapper requestContextMapper) {
+
+		_requestContextMapper = requestContextMapper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSegmentsEntryRetriever(
+		SegmentsEntryRetriever segmentsEntryRetriever) {
+
+		_segmentsEntryRetriever = segmentsEntryRetriever;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.taglib)",
 		unbind = "-"
@@ -241,6 +265,8 @@ public class ServletContextUtil {
 	private static LayoutListRetrieverTracker _layoutListRetrieverTracker;
 	private static ListObjectReferenceFactoryTracker
 		_listObjectReferenceFactoryTracker;
+	private static RequestContextMapper _requestContextMapper;
+	private static SegmentsEntryRetriever _segmentsEntryRetriever;
 	private static ServletContext _servletContext;
 
 }

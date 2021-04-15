@@ -47,7 +47,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				ServletContextUtil.getLayoutListRetrieverTracker(),
 				getLayoutStructure(),
 				ServletContextUtil.getListObjectReferenceFactoryTracker(),
-				getMainItemId(), getMode(), isShowPreview()));
+				getMainItemId(), getMode(),
+				ServletContextUtil.getRequestContextMapper(),
+				ServletContextUtil.getSegmentsEntryRetriever(),
+				isShowPreview()));
 
 		return super.doStartTag();
 	}

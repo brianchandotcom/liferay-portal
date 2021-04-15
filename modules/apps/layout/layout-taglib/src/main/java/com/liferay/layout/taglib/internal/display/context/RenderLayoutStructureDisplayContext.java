@@ -78,8 +78,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
@@ -113,7 +115,9 @@ public class RenderLayoutStructureDisplayContext {
 		LayoutListRetrieverTracker layoutListRetrieverTracker,
 		LayoutStructure layoutStructure,
 		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker,
-		String mainItemId, String mode, boolean showPreview) {
+		String mainItemId, String mode,
+		RequestContextMapper requestContextMapper,
+		SegmentsEntryRetriever segmentsEntryRetriever, boolean showPreview) {
 
 		_fieldValues = fieldValues;
 		_fragmentEntryProcessorHelper = fragmentEntryProcessorHelper;
@@ -128,6 +132,8 @@ public class RenderLayoutStructureDisplayContext {
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
 		_mainItemId = mainItemId;
 		_mode = mode;
+		_requestContextMapper = requestContextMapper;
+		_segmentsEntryRetriever = segmentsEntryRetriever;
 		_showPreview = showPreview;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -168,8 +174,8 @@ public class RenderLayoutStructureDisplayContext {
 
 		defaultLayoutListRetrieverContext.setAssetCategoryIds(
 			_getAssetCategoryIds());
-		defaultLayoutListRetrieverContext.setSegmentsExperienceIds(
-			_getSegmentsExperienceIds());
+		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+			_getSegmentsEntryIds());
 		defaultLayoutListRetrieverContext.setPagination(
 			Pagination.of(
 				collectionStyledLayoutStructureItem.getNumberOfItems(), 0));
@@ -1298,6 +1304,18 @@ public class RenderLayoutStructureDisplayContext {
 		return _previewVersion;
 	}
 
+	private long[] _getSegmentsEntryIds() {
+		if (_segmentsEntryIds != null) {
+			return _segmentsEntryIds;
+		}
+
+		_segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
+			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
+			_requestContextMapper.map(_httpServletRequest));
+
+		return _segmentsEntryIds;
+	}
+
 	private long[] _getSegmentsExperienceIds() {
 		if (_segmentsExperienceIds != null) {
 			return _segmentsExperienceIds;
@@ -1336,6 +1354,9 @@ public class RenderLayoutStructureDisplayContext {
 	private Long _previewClassPK;
 	private Integer _previewType;
 	private String _previewVersion;
+	private final RequestContextMapper _requestContextMapper;
+	private long[] _segmentsEntryIds;
+	private final SegmentsEntryRetriever _segmentsEntryRetriever;
 	private long[] _segmentsExperienceIds;
 	private final boolean _showPreview;
 	private final ThemeDisplay _themeDisplay;

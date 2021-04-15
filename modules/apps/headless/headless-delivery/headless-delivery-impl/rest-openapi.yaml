@@ -45,6 +45,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 aggregateRating:
@@ -68,6 +71,9 @@ components:
                         The blog post's author.
                     readOnly: true
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the blog post.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -150,6 +156,9 @@ components:
                     readOnly: true
                     type: integer
                 relatedContents:
+                    # @review
+                    description:
+                        A list of related contents to this blog post.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
@@ -176,8 +185,9 @@ components:
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
+                    # @review
                     description:
-                        A write-only field that adds a `TaxonomyCategory` to this resource.
+                        A write-only field that adds `TaxonomyCategory` instances to the blog post.
                     items:
                         format: int64
                         type: integer
@@ -297,6 +307,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 creator:
@@ -329,6 +342,9 @@ components:
                     readOnly: true
                     type: integer
                 parentCommentId:
+                    # @review
+                    description:
+                        the ID of the comment's parent, if it exists.
                     format: int64
                     type: integer
                 text:
@@ -346,9 +362,14 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 contentType:
+                    description:
+                        The type of content.
                     readOnly: true
                     type: string
                 contentUrl:
@@ -420,6 +441,8 @@ components:
                 title_i18n:
                     additionalProperties:
                         type: string
+                    description:
+                        The localized content's titles.
                     readOnly: true
                     type: object
         ContentField:
@@ -428,10 +451,15 @@ components:
                 (e.g., documents, geolocation, etc.).
             properties:
                 contentFieldValue:
-                    $ref: "#/components/schemas/ContentFieldValue"
+                    allOf:
+                        - $ref: "#/components/schemas/ContentFieldValue"
+                    description:
+                        The field's value.
                 contentFieldValue_i18n:
                     additionalProperties:
                         $ref: "#/components/schemas/ContentFieldValue"
+                    description:
+                        The localized field's values.
                     type: object
                 dataType:
                     description:
@@ -451,6 +479,8 @@ components:
                 label_i18n:
                     additionalProperties:
                         type: string
+                    description:
+                        The localized field's labels.
                     readOnly: true
                     type: object
                 name:
@@ -513,6 +543,8 @@ components:
                         A link to structured content on the server.
                     properties:
                         contentType:
+                            description:
+                                The type of content.
                             readOnly: true
                             type: string
                         embeddedStructuredContent:
@@ -520,7 +552,7 @@ components:
                                 - $ref: "#/components/schemas/StructuredContent"
                             # @review
                             description:
-                                optional field with the structured content, can be embedded with nestedFields
+                                Optional field with the structured content, can be embedded with nestedFields.
                             readOnly: true
                         id:
                             description:
@@ -560,6 +592,9 @@ components:
                 title_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized content's titles.
                     readOnly: true
                     type: object
         ContentStructure:
@@ -568,11 +603,14 @@ components:
                 available and the possible types and values.
             properties:
                 assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the content structure is scoped.
                     readOnly: true
                     type: string
                 availableLanguages:
                     description:
-                        The list of languages the structure has a translation for.
+                        The list of languages the content structure has a translation for.
                     items:
                         type: string
                     readOnly: true
@@ -610,6 +648,9 @@ components:
                 description_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized content structure's description.
                     readOnly: true
                     type: object
                 id:
@@ -626,6 +667,9 @@ components:
                 name_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized content structure's names.
                     readOnly: true
                     type: object
                 siteId:
@@ -657,6 +701,9 @@ components:
                 label_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The form field's labels.
                     readOnly: true
                     type: object
                 localizable:
@@ -693,6 +740,9 @@ components:
                             label_i18n:
                                 additionalProperties:
                                     type: string
+                                # @review
+                                description:
+                                    The localized option's labels.
                                 type: object
                             value:
                                 description:
@@ -709,6 +759,9 @@ components:
                 predefinedValue_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized form field's default values.
                     readOnly: true
                     type: object
                 repeatable:
@@ -728,61 +781,107 @@ components:
                     type: boolean
             type: object
         ContentTemplate:
+            # @review
+            description:
+                Represents a content template.
             properties:
                 actions:
                     additionalProperties:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the content template is scoped.
                     readOnly: true
                     type: string
                 availableLanguages:
+                    # @review
+                    description:
+                        The list of languages the content template has a translation for.
                     items:
                         type: string
                     readOnly: true
                     type: array
                 contentStructureId:
+                    # @review
+                    description:
+                        The ID of the `ContentStructure`.
                     format: int64
                     type: integer
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
+                    # @review
                     description:
                         The content template's creator.
                     readOnly: true
                 dateCreated:
+                    # @review
+                    description:
+                        The content template's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    # @review
+                    description:
+                        The last time the content template changed.
                     format: date-time
                     readOnly: true
                     type: string
                 description:
+                    # @review
+                    description:
+                        the content template's description.
                     type: string
                 description_i18n:
+                    # @review
                     additionalProperties:
                         type: string
+                    description:
+                        the localized content template's descriptions.
                     type: object
                 id:
+                    # @review
+                    description:
+                        The content template's ID.
                     readOnly: true
                     type: string
                 name:
+                    # @review
+                    description:
+                        the content template's name.
                     type: string
                 name_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        the localized content template's name.
                     type: object
                 programmingLanguage:
+                    # @review
+                    description:
+                        the content template's programming language.
                     type: string
                 siteId:
+                    # @review
+                    description:
+                        The ID of the site to which the content template is scoped.
                     format: int64
                     readOnly: true
                     type: integer
                 templateScript:
+                    # @review
+                    description:
+                        The content template's script.
                     type: string
             required:
                 - contentStructureId
@@ -841,7 +940,7 @@ components:
                 profileURL:
                     # @review
                     description:
-                        "A relative URL to the author's user profile. Optional field, can be embedded with nestedFields"
+                        A relative URL to the author's user profile. Optional field, can be embedded with nestedFields.
                     format: uri
                     readOnly: true
                     type: string
@@ -853,13 +952,13 @@ components:
             properties:
                 joinDate:
                     description:
-                        Join date of the author
+                        Join date of the author.
                     format: date-time
                     readOnly: true
                     type: string
                 lastPostDate:
                     description:
-                        Last post created by the author
+                        Last post created by the author.
                     format: date-time
                     readOnly: true
                     type: string
@@ -881,7 +980,10 @@ components:
                 geolocation, strings, etc.).
             properties:
                 customValue:
-                    $ref: "#/components/schemas/CustomValue"
+                    allOf:
+                        - $ref: "#/components/schemas/CustomValue"
+                    description:
+                        The field's value.
                 dataType:
                     description:
                         The field type (e.g., image, text, etc.).
@@ -892,29 +994,44 @@ components:
                         The field's internal name. This is valid for comparisons and unique in the structured content.
                     type: string
         CustomMetaTag:
+            # @review
             description:
-                ""
+                Represents a custom meta tag.
             properties:
                 key:
+                    # @review
+                    description:
+                        The custom metatag's key.
                     type: string
                 value:
+                    # @review
+                    description:
+                        The custom metatag's value
                     type: string
                 value_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized custom metatag's values.
                     type: object
             type: object
         CustomValue:
+            # @review
             description:
-                ""
+                Represents a custom value.
             properties:
                 data:
+                    # @review
                     description:
-                        The field's content for simple types.
+                        The field's content value for simple types.
                     type: object
                 data_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized field's content values for simple types.
                     type: object
                 geo:
                     allOf:
@@ -924,22 +1041,40 @@ components:
             type: object
         DisplayPageTemplate:
             description:
-                ""
+                Represents a Display Page template.
             properties:
                 contentSubtype:
+                    # @review
+                    description:
+                        The display page template's content subtype.
                     properties:
                         subtypeId:
+                            # @review
+                            description:
+                                The content subtype's ID.
                             format: int64
                             type: integer
                     type: object
                 contentType:
+                    # @review
+                    description:
+                        The type of content.
                     properties:
                         className:
+                            # @review
+                            description:
+                                The content type's class name.
                             type: string
                     type: object
                 key:
+                    # @review
+                    description:
+                        The display page template's key.
                     type: string
                 name:
+                    # @review
+                    description:
+                        The display page template's name.
                     type: string
             type: object
         Document:
@@ -952,6 +1087,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 adaptedImages:
@@ -967,8 +1105,8 @@ components:
                             contentValue:
                                 # @review
                                 description:
-                                    "optional field with the content of the image in Base64, can be embedded with
-                                    nestedFields"
+                                    Optional field with the content of the image in Base64, can be embedded with
+                                    nestedFields.
                                 readOnly: true
                                 type: string
                             height:
@@ -998,6 +1136,9 @@ components:
                         The document's average rating.
                     readOnly: true
                 assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the document is scoped.
                     readOnly: true
                     type: string
                 contentUrl:
@@ -1009,7 +1150,8 @@ components:
                 contentValue:
                     # @review
                     description:
-                        optional field with the content of the document in Base64, can be embedded with nestedFields
+                        The optional field with the content of the document in Base64, can be embedded with
+                        nestedFields.
                     readOnly: true
                     type: string
                 creator:
@@ -1019,6 +1161,9 @@ components:
                         The document's creator.
                     readOnly: true
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the document.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -1046,26 +1191,44 @@ components:
                 documentType:
                     properties:
                         availableLanguages:
+                            # @review
+                            description:
+                                The list of languages the document type has a translation for.
                             items:
                                 type: string
                             readOnly: true
                             type: array
                         contentFields:
+                            # @review
+                            description:
+                                The list of content fields the document type has.
                             items:
                                 $ref: "#/components/schemas/ContentField"
                             type: array
                         description:
+                            # @review
+                            description:
+                                The document type's description.
                             type: string
                         description_i18n:
                             additionalProperties:
                                 type: string
+                            # @review
+                            description:
+                                The localized document type's description.
                             readOnly: true
                             type: object
                         name:
+                            # @review
+                            description:
+                                The document type's name.
                             type: string
                         name_i18n:
                             additionalProperties:
                                 type: string
+                            # @review
+                            description:
+                                The localized document type's name.
                             readOnly: true
                             type: object
                     type: object
@@ -1097,6 +1260,9 @@ components:
                     readOnly: true
                     type: integer
                 relatedContents:
+                    # @review
+                    description:
+                        A list of related contents to this document.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
@@ -1123,6 +1289,7 @@ components:
                     readOnly: true
                     type: integer
                 taxonomyCategoryBriefs:
+                    # @review
                     description:
                         The categories associated with this document.
                     items:
@@ -1157,9 +1324,15 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the folder is scoped.
                     readOnly: true
                     type: string
                 creator:
@@ -1169,6 +1342,9 @@ components:
                         The folder's creator.
                     readOnly: true
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the folder.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -1209,6 +1385,9 @@ components:
                     readOnly: true
                     type: integer
                 parentDocumentFolderId:
+                    # @review
+                    description:
+                        The ID of the folder's parent, if it exists.
                     format: int64
                     type: integer
                 siteId:
@@ -1218,6 +1397,9 @@ components:
                     readOnly: true
                     type: integer
                 subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this folder.
                     readOnly: true
                     type: boolean
                 viewableBy:
@@ -1235,34 +1417,60 @@ components:
                 Represents a customized experience for a given page.
             properties:
                 key:
+                    # @review
                     description:
-                        the key of the experience
+                        the experience's key.
                     type: string
                 name:
+                    # @review
                     description:
-                        the name of the experience
+                        the experience's name.
                     type: string
                 name_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        the localized experience's names.
                     type: object
                 segments:
+                    # @review
+                    description:
+                        A list of segments the experience is used for.
                     items:
                         $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Segment"
                     type: array
             type: object
         Fragment:
+            # @review
+            description:
+                Represents a template made up of CSS, HTML, and JavaScript used to build Content Pages.
             properties:
                 collectionName:
+                    # @review
+                    description:
+                        The collection name this fragment belongs to.
                     type: string
                 key:
+                    # @review
+                    description:
+                        The fragment's key.
                     type: string
                 name:
+                    # @review
+                    description:
+                        The fragment's name.
                     type: string
             type: object
         FragmentField:
+            # @review
+            description:
+                Represents a fragment field.
             properties:
                 id:
+                    # @review
+                    description:
+                        The fragment field's ID.
                     type: string
                 value:
                     anyOf:
@@ -1270,11 +1478,21 @@ components:
                         - $ref: "#/components/schemas/FragmentFieldHTML"
                         - $ref: "#/components/schemas/FragmentFieldImage"
                         - $ref: "#/components/schemas/FragmentFieldText"
+                    # @review
+                    description:
+                        The fragment field's value.
             type: object
         FragmentFieldBackgroundImage:
+            # @review
+            description:
+                Represents a fragment field with a background image.
             properties:
                 backgroundFragmentImage:
-                    $ref: "#/components/schemas/FragmentImage"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentImage"
+                    # @review
+                    description:
+                        The fragment field's background image.
                 backgroundImage:
                     deprecated: true
                     description:
@@ -1293,51 +1511,104 @@ components:
                     type: object
             type: object
         FragmentFieldHTML:
+            # @review
+            description:
+                Represents a fragment field with HTML.
             properties:
                 html:
+                    # @review
+                    description:
+                        The fragment field's HTML. Can be inline or mapped to an external value.
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
                         - $ref: "#/components/schemas/FragmentMappedValue"
             type: object
         FragmentFieldImage:
+            # @review
+            description:
+                Represents a fragment field with an image.
             properties:
                 fragmentImage:
-                    $ref: "#/components/schemas/FragmentImage"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentImage"
+                    # @review
+                    description:
+                        The fragment field's image.
                 fragmentLink:
-                    $ref: "#/components/schemas/FragmentLink"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentLink"
+                    # @review
+                    description:
+                        A link to a fragment.
             type: object
         FragmentFieldText:
+            # @review
+            description:
+                Represents a fragment field with text.
             properties:
                 fragmentLink:
-                    $ref: "#/components/schemas/FragmentLink"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentLink"
+                    # @review
+                    description:
+                        A link to a fragment.
                 text:
+                    # @review
+                    description:
+                        The fragment field's text.
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
                         - $ref: "#/components/schemas/FragmentMappedValue"
             type: object
         FragmentImage:
+            # @review
+            description:
+                Represents a fragment image.
             properties:
                 description:
+                    # @review
+                    description:
+                        The fragment image's description.
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
                 fragmentImageClassPKReference:
-                    $ref: "#/components/schemas/FragmentImageClassPKReference"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentImageClassPKReference"
+                    # @review
+                    description:
+                        A reference to a fragment image class primary key.
                 title:
+                    # @review
+                    description:
+                        The fragment image's title.
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
                 url:
+                    # @review
+                    description:
+                        The fragment image's url. Can be inline or mapped to an external value.
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
                         - $ref: "#/components/schemas/FragmentMappedValue"
             type: object
         FragmentImageClassPKReference:
+            # @review
+            description:
+                Represents a reference to a fragment image class primary key.
             properties:
                 classPKReferences:
                     additionalProperties:
                         $ref: "#/components/schemas/ClassPKReference"
+                    # @review
+                    description:
+                        A map of class primary key references.
                     type: object
                 fragmentImageConfiguration:
-                    $ref: "#/components/schemas/FragmentImageConfiguration"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentImageConfiguration"
+                    # @review
+                    description:
+                        The fragment image's configuration.
             type: object
         FragmentImageConfiguration:
             # @review
@@ -1345,22 +1616,43 @@ components:
                 Represents the Adaptive Media fragment image configuration for different viewports.
             properties:
                 landscapeMobile:
+                    # @review
+                    description:
+                        The landscape mobile configuration of the fragment image.
                     type: string
                 portraitMobile:
+                    # @review
+                    description:
+                        The portrait mobile configuration of the fragment image.
                     type: string
                 tablet:
+                    # @review
+                    description:
+                        The tablet configuration of the fragment image.
                     type: string
             type: object
         FragmentInlineValue:
+            # @review
+            description:
+                Represents a fragment inline value.
             properties:
                 value:
+                    # @review
+                    description:
+                        The fragment's inline value.
                     type: string
                 value_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized fragment's inline values.
                     type: object
             type: object
         FragmentLink:
+            # @review
+            description:
+                Represents a fragment link.
             properties:
                 href:
                     deprecated: true
@@ -1372,26 +1664,47 @@ components:
                     enum: [Blank, Parent, Self, Top]
                     type: string
                 value:
-                    $ref: "#/components/schemas/FragmentLinkValue"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentLinkValue"
+                    # @review
+                    description:
+                        The fragment link's value.
                 value_i18n:
                     additionalProperties:
                         $ref: "#/components/schemas/FragmentLinkValue"
+                    # @review
+                    description:
+                        The localized fragment link's values.
                     type: object
         FragmentLinkValue:
+            # @review
+            description:
+                Represents a fragment link value.
             properties:
                 href:
+                    # @review
+                    description:
+                        The fragment link value's hypertext reference. Can be inline or mapped to an external value.
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
                         - $ref: "#/components/schemas/FragmentMappedValue"
                 target:
+                    # @review
+                    description:
+                        The fragment link value's target (blank, parent, self, top).
                     enum: [Blank, Parent, Self, Top]
                     type: string
         FragmentMappedValue:
+            # @review
             description:
-                ""
+                Represents a fragment mapped value.
             properties:
                 defaultFragmentInlineValue:
-                    $ref: "#/components/schemas/FragmentInlineValue"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                    # @review
+                    description:
+                        The default value of the fragment mapped value.
                 defaultValue:
                     deprecated: true
                     description:
@@ -1405,10 +1718,19 @@ components:
                             type: object
                     type: object
                 mapping:
+                    # @review
+                    description:
+                        The mapping of the fragment mapped value.
                     properties:
                         fieldKey:
+                            # @review
+                            description:
+                                The mapping's field key.
                             type: string
                         itemReference:
+                            # @review
+                            description:
+                                The mapping's item reference.
                             oneOf:
                                 - $ref: "#/components/schemas/ClassFieldReference"
                                 - $ref: "#/components/schemas/ClassPKReference"
@@ -1416,13 +1738,22 @@ components:
                     type: object
             type: object
         FragmentSettingsAllowed:
+            # @review
+            description:
+                Represents the settings of allowed fragments in a page dropzone.
             properties:
                 allowedFragments:
+                    # @review
+                    description:
+                        A list of allowed fragments.
                     items:
                         $ref: "#/components/schemas/Fragment"
                     type: array
             type: object
         FragmentSettingsUnallowed:
+            # @review
+            description:
+                Represents the settings of unallowed fragments in a page dropzone.
             properties:
                 unallowedFragments:
                     items:
@@ -1430,88 +1761,204 @@ components:
                     type: array
             type: object
         FragmentStyle:
+            # @review
             description:
-                ""
+                Represents a fragment style.
             properties:
                 backgroundColor:
+                    # @review
+                    description:
+                        The fragment's background color.
                     type: string
                 backgroundFragmentImage:
-                    $ref: "#/components/schemas/FragmentImage"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentImage"
+                    # @review
+                    description:
+                        The fragment's background image.
                 borderColor:
+                    # @review
+                    description:
+                        The fragment's border color.
                     type: string
                 borderRadius:
+                    # @review
+                    description:
+                        The fragment's background radius.
                     type: string
                 borderWidth:
+                    # @review
+                    description:
+                        The fragment's border width.
                     type: string
                 fontFamily:
+                    # @review
+                    description:
+                        The fragment's font family.
                     type: string
                 fontSize:
+                    # @review
+                    description:
+                        The fragment's font size.
                     type: string
                 fontWeight:
+                    # @review
+                    description:
+                        The fragment's font weight.
                     type: string
                 height:
+                    # @review
+                    description:
+                        The fragment's height.
                     type: string
                 marginBottom:
+                    # @review
+                    description:
+                        The fragment's margin bottom.
                     type: string
                 marginLeft:
+                    # @review
+                    description:
+                        The fragment's margin left.
                     type: string
                 marginRight:
+                    # @review
+                    description:
+                        The fragment's margin right.
                     type: string
                 marginTop:
+                    # @review
+                    description:
+                        The fragment's margin top.
                     type: string
                 maxHeight:
+                    # @review
+                    description:
+                        The fragment's max height.
                     type: string
                 maxWidth:
+                    # @review
+                    description:
+                        The fragment's max width.
                     type: string
                 minHeight:
+                    # @review
+                    description:
+                        The fragment's min height.
                     type: string
                 minWidth:
+                    # @review
+                    description:
+                        The fragment's min width.
                     type: string
                 opacity:
+                    # @review
+                    description:
+                        The fragment's opacity.
                     type: string
                 overflow:
+                    # @review
+                    description:
+                        The fragment's overflow behavior.
                     type: string
                 paddingBottom:
+                    # @review
+                    description:
+                        The fragment's padding bottom.
                     type: string
                 paddingLeft:
+                    # @review
+                    description:
+                        The fragment's padding left.
                     type: string
                 paddingRight:
+                    # @review
+                    description:
+                        The fragment's padding right.
                     type: string
                 paddingTop:
+                    # @review
+                    description:
+                        The fragment's padding top.
                     type: string
                 shadow:
+                    # @review
+                    description:
+                        The fragment's shadow effect.
                     type: string
                 textAlign:
+                    # @review
+                    description:
+                        The fragment's text align.
                     type: string
                 textColor:
+                    # @review
+                    description:
+                        The fragment's text color.
                     type: string
                 width:
+                    # @review
+                    description:
+                        The fragment's width.
                     type: string
             type: object
         FragmentViewport:
             additionalProperties: false
+            # @review
+            description:
+                Represents a fragment viewport.
             properties:
                 fragmentViewportStyle:
                     additionalProperties: false
+                    # @review
+                    description:
+                        The fragment's viewport style.
                     properties:
                         marginBottom:
+                            # @review
+                            description:
+                                The fragment viewport's margin bottom.
                             type: string
                         marginLeft:
+                            # @review
+                            description:
+                                The fragment viewport's margin left.
                             type: string
                         marginRight:
+                            # @review
+                            description:
+                                The fragment viewport's margin right.
                             type: string
                         marginTop:
+                            # @review
+                            description:
+                                The fragment viewport's margin top.
                             type: string
                         paddingBottom:
+                            # @review
+                            description:
+                                The fragment viewport's padding bottom.
                             type: string
                         paddingLeft:
+                            # @review
+                            description:
+                                The fragment viewport's padding left.
                             type: string
                         paddingRight:
+                            # @review
+                            description:
+                                The fragment viewport's padding right.
                             type: string
                         paddingTop:
+                            # @review
+                            description:
+                                The fragment viewport's padding top.
                             type: string
                     type: object
                 id:
+                    # @review
+                    description:
+                        The fragment viewport's ID.
                     type: string
             required:
                 - fragmentViewportStyle
@@ -1541,6 +1988,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 aggregateRating:
@@ -1560,6 +2010,9 @@ components:
                         The article's author.
                     readOnly: true
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the article.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -1615,13 +2068,15 @@ components:
                         The article's parent folder, if it exists.
                     properties:
                         folderId:
+                            # @review
                             description:
-                                The parent folder's ID.
+                                The folder's parent ID.
                             format: int64
                             type: integer
                         folderName:
+                            # @review
                             description:
-                                The parent folder's name.
+                                The folder's parent name.
                             type: string
                     readOnly: true
                     type: object
@@ -1632,6 +2087,9 @@ components:
                     type: integer
                     writeOnly: true
                 relatedContents:
+                    # @review
+                    description:
+                        A list of related contents to this article.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
@@ -1643,9 +2101,13 @@ components:
                     readOnly: true
                     type: integer
                 subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this article.
                     readOnly: true
                     type: boolean
                 taxonomyCategoryBriefs:
+                    # @review
                     description:
                         The categories associated with this article.
                     items:
@@ -1653,8 +2115,9 @@ components:
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
+                    # @review
                     description:
-                        A write-only field that adds taxonomy categories to this article.
+                        A write-only field that adds `TaxonomyCategory` instances to the article.
                     items:
                         format: int64
                         type: integer
@@ -1725,6 +2188,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 creator:
@@ -1734,6 +2200,9 @@ components:
                         The folder's creator.
                     readOnly: true
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the folder.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -1812,32 +2281,57 @@ components:
         Language:
             # @review
             description:
-                Describes a specific language in the platform
+                Describes a specific language in the platform.
             properties:
                 countryName:
+                    # @review
+                    description:
+                        The language's contry name.
                     type: string
                 countryName_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized language's country name values.
                     type: object
                 id:
+                    # @review
+                    description:
+                        The language's ID.
                     type: string
                 markedAsDefault:
+                    # @review
+                    description:
+                        A flag that indicates whether the language has benn marked as default language.
                     type: boolean
                 name:
+                    # @review
+                    description:
+                        The language's name.
                     type: string
                 name_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized language's name values.
                     type: object
             type: object
         MasterPage:
+            # @review
             description:
-                ""
+                Represents a page with common elements (header, footer, ...) used for all or several pages of a site.
             properties:
                 key:
+                    # @review
+                    description:
+                        The master page's key.
                     type: string
                 name:
+                    # @review
+                    description:
+                        The master page's name.
                     type: string
             type: object
         MessageBoardAttachment:
@@ -1892,6 +2386,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 aggregateRating:
@@ -1915,8 +2412,15 @@ components:
                         The message's author.
                     readOnly: true
                 creatorStatistics:
-                    $ref: "#/components/schemas/CreatorStatistics"
+                    allOf:
+                        - $ref: "#/components/schemas/CreatorStatistics"
+                    # @review
+                    description:
+                        The message's creator statistics (rank, join date, number of posts, ...)
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the blog post.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -1959,6 +2463,9 @@ components:
                         type: string
                     type: array
                 messageBoardSectionId:
+                    # @review
+                    description:
+                        The ID of the Message Board Section to which this message is scoped.
                     format: int64
                     type: integer
                 messageBoardThreadId:
@@ -1979,9 +2486,15 @@ components:
                     readOnly: true
                     type: integer
                 parentMessageBoardMessageId:
+                    # @review
+                    description:
+                        The ID of the message's parent, if it exists.
                     format: int64
                     type: integer
                 relatedContents:
+                    # @review
+                    description:
+                        A list of related contents to this message.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
@@ -1997,6 +2510,9 @@ components:
                     readOnly: true
                     type: integer
                 subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this message.
                     readOnly: true
                     type: boolean
                 viewableBy:
@@ -2015,6 +2531,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 creator:
@@ -2024,6 +2543,9 @@ components:
                         The section's creator.
                     readOnly: true
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the section.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -2060,6 +2582,9 @@ components:
                     readOnly: true
                     type: integer
                 parentMessageBoardSectionId:
+                    # @review
+                    description:
+                        The ID of the section parent's, if it exists.
                     format: int64
                     type: integer
                 siteId:
@@ -2069,6 +2594,9 @@ components:
                     readOnly: true
                     type: integer
                 subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this section.
                     readOnly: true
                     type: boolean
                 title:
@@ -2094,6 +2622,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 aggregateRating:
@@ -2113,8 +2644,15 @@ components:
                         The thread's creator.
                     readOnly: true
                 creatorStatistics:
-                    $ref: "#/components/schemas/CreatorStatistics"
+                    allOf:
+                        - $ref: "#/components/schemas/CreatorStatistics"
+                    # @review
+                    description:
+                        The thread's creator statistics (rank, join date, number of posts, ...)
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the thread.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -2164,6 +2702,9 @@ components:
                     readOnly: true
                     type: boolean
                 messageBoardSectionId:
+                    # @review
+                    description:
+                        The ID of the Message Board Section to which this message is scoped.
                     format: int64
                     type: integer
                 numberOfMessageBoardAttachments:
@@ -2177,11 +2718,17 @@ components:
                     readOnly: true
                     type: integer
                 relatedContents:
+                    # @review
+                    description:
+                        A list of related contents to this thread.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
                     type: array
                 seen:
+                    # @review
+                    description:
+                        A flag that indicates whether this thread has been seen.
                     type: boolean
                 showAsQuestion:
                     description:
@@ -2195,13 +2742,22 @@ components:
                     readOnly: true
                     type: integer
                 subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this thread.
                     type: boolean
                 taxonomyCategoryBriefs:
+                    # @review
+                    description:
+                        The categories associated with this thread.
                     items:
                         $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
+                    # @review
+                    description:
+                        A write-only field that adds `TaxonomyCategory` instances to the thread.
                     items:
                         format: int64
                         type: integer
@@ -2227,52 +2783,82 @@ components:
                 - headline
             type: object
         NavigationMenu:
+            # @review
             description:
-                ""
+                Represents a navigation menu.
             properties:
                 actions:
                     additionalProperties:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
+                    # @review
+                    description:
+                        The navigation menu's creator.
                     readOnly: true
                 dateCreated:
+                    # @review
+                    description:
+                        The navigation menu's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    # @review
+                    description:
+                        The last time the navigation menu changed.
                     format: date-time
                     readOnly: true
                     type: string
                 id:
+                    # @review
+                    description:
+                        The navigation menu's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 name:
+                    # @review
+                    description:
+                        The navigation menu's name.
                     type: string
                 navigationMenuItems:
+                    # @review
+                    description:
+                        The list of navigation menu items this navigation menu has.
                     items:
                         $ref: "#/components/schemas/NavigationMenuItem"
                     type: array
                 navigationType:
+                    # @review
+                    description:
+                        The navigation menu's type (primary, secondary, social).
                     enum: [Primary, Secondary, Social]
                     type: string
                 siteId:
+                    # @review
+                    description:
+                        The ID of the site to which this navigation menu is scoped.
                     format: int64
                     readOnly: true
                     type: integer
         NavigationMenuItem:
+            # @review
             description:
-                ""
+                Represents a navigation menu item.
             properties:
                 availableLanguages:
+                    # @review
                     description:
-                        The list of languages the structure has a translation for.
+                        The list of languages the navigation menu item has a translation for.
                     items:
                         type: string
                     readOnly: true
@@ -2280,81 +2866,143 @@ components:
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
+                     # @review
+                    description:
+                        The navigation menu item's creator.
                     readOnly: true
                 dateCreated:
+                    # @review
+                    description:
+                        The navigation menu item's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    # @review
+                    description:
+                        The last time the navigation menu item changed.
                     format: date-time
                     readOnly: true
                     type: string
                 id:
+                    # @review
+                    description:
+                        The navigation menu item's ID.
                     format: int64
                     type: integer
                 link:
                     # @review
                     description:
-                        A link to a page on the server.
+                        The link to a page on the server.
                     format: uri
                     type: string
                 link_i18n:
                     additionalProperties:
                         format: uri
                         type: string
+                    # @review
+                    description:
+                        The localized links to a page on the server.
                     type: object
                 name:
+                    # @review
+                    description:
+                        The navigation menu item's name.
                     type: string
                 name_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized navigation menu item's names.
                     type: object
                 navigationMenuItems:
+                    # @review
+                    description:
+                        The navigation menu items this navigation menu item has.
                     items:
                         $ref: "#/components/schemas/NavigationMenuItem"
                     type: array
                 parentNavigationMenuId:
+                    # @review
+                    description:
+                        The ID of the navigation menu item's parent.
                     format: int64
                     readOnly: true
                     type: integer
                 sitePageURL:
+                    # @review
+                    description:
+                        The navigation menu item's linked site page URL.
                     readOnly: true
                     type: string
                 type:
+                    # @review
+                    description:
+                        The navigation menu item's type.
                     readOnly: true
                     type: string
                 url:
+                    # @review
+                    description:
+                        The navigation menu item's linked URL.
                     type: string
                 useCustomName:
                     type: boolean
         OpenGraphSettings:
+            # @review
+            description:
+                Represents settings related with Open Graph protocol.
             properties:
                 description:
+                    # @review
+                    description:
+                        The Open Graph's description.
                     type: string
                 description_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized Open Graph's descriptions.
                     type: object
                 image:
-                    $ref: "#/components/schemas/ContentDocument"
+                    allOf:
+                        - $ref: "#/components/schemas/ContentDocument"
+                    # @review
+                    description:
+                        The Open Graph's image.
                 title:
+                    # @review
+                    description:
+                        The Open Graph's title.
                     type: string
                 title_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized Open Graph's titles.
                     type: object
             type: object
         PageCollectionDefinition:
+            # @review
             description:
-                ""
+                Represents a definition of a Page Collection.
             properties:
                 collectionConfig:
                     properties:
                         collectionReference:
+                            # @review
+                            description:
+                                The page collection's reference.
                             oneOf:
                                 - $ref: "#/components/schemas/ClassNameReference"
                                 - $ref: "#/components/schemas/ClassPKReference"
                         collectionType:
+                            # @review
+                            description:
+                                The page collection's type (Collection, CollectionProvider).
                             enum: [Collection, CollectionProvider]
                             type: string
                     required:
@@ -2362,30 +3010,59 @@ components:
                         - collectionType
                     type: object
                 fragmentStyle:
-                    $ref: "#/components/schemas/FragmentStyle"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of the page collection.
                 fragmentViewports:
+                    # @review
+                    description:
+                        The fragment viewports of the page collection.
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
                 listItemStyle:
+                    # @review
+                    description:
+                        The style of a list of items in the page collection.
                     type: string
                 listStyle:
+                    # @review
+                    description:
+                        The style of a list in the page collection.
                     type: string
                 numberOfColumns:
+                    # @review
+                    description:
+                        The number of columns in the page collection.
                     type: integer
                 numberOfItems:
+                    # @review
+                    description:
+                        The number of items in the page collection.
                     type: integer
                 templateKey:
+                    # @review
+                    description:
+                        The page collection's template key.
                     type: string
             type: object
         PageCollectionItemDefinition:
+            # @review
             description:
-                ""
+                Represents a definition of a Page Collection Item.
             properties:
                 collectionItemConfig:
+                    # @review
+                    description:
+                        The page collection item's configuration.
                     type: object
             type: object
         PageColumnDefinition:
+            # @review
+            description:
+                Represents a definition of a Page Column.
             properties:
                 columnViewportConfig:
                     deprecated: true
@@ -2415,33 +3092,60 @@ components:
                             type: object
                     type: object
                 columnViewports:
+                    # @review
+                    description:
+                        A list of column viewports of the page column definition.
                     items:
                         $ref: "#/components/schemas/ColumnViewport"
                     type: array
                 size:
+                    # @review
+                    description:
+                        The page column's size.
                     maximum: 12
                     minimum: 1
                     type: integer
             type: object
         PageDefinition:
+            # @review
             description:
-                ""
+                Represent a definition of a Page.
             properties:
                 pageElement:
-                    $ref: "#/components/schemas/PageElement"
+                    allOf:
+                        - $ref: "#/components/schemas/PageElement"
+                    # @review
+                    description:
+                        The page's page element.
                 settings:
-                    $ref: "#/components/schemas/Settings"
+                    allOf:
+                        - $ref: "#/components/schemas/Settings"
+                    # @review
+                    description:
+                        The page's settings.
             type: object
         PageDropZoneDefinition:
+            # @review
+            description:
+                Represent a definition of a Page drop zone.
             properties:
                 fragmentSettings:
+                    # @review
+                    description:
+                        The page drop zone's allowed or unallowed fragments.
                     oneOf:
                         - $ref: "#/components/schemas/FragmentSettingsAllowed"
                         - $ref: "#/components/schemas/FragmentSettingsUnallowed"
             type: object
         PageElement:
+            # @review
+            description:
+                Represents a Page element.
             properties:
                 definition:
+                    # @review
+                    description:
+                        The page element's definition.
                     oneOf:
                         - $ref: "#/components/schemas/PageCollectionDefinition"
                         - $ref: "#/components/schemas/PageCollectionItemDefinition"
@@ -2453,53 +3157,108 @@ components:
                         - $ref: "#/components/schemas/PageSectionDefinition"
                         - $ref: "#/components/schemas/PageWidgetInstanceDefinition"
                 pageElements:
+                    # @review
+                    description:
+                        A list of the page elements this page element has.
                     items:
                         $ref: "#/components/schemas/PageElement"
                     type: array
                 type:
+                    # @review
+                    description:
+                        The page element's type (collection, collection item,, column, drop zone, fragment, fragment
+                        drop zone, root, row, section or widget).
                     enum: [Collection, CollectionItem, Column, DropZone, Fragment, FragmentDropZone, Root, Row, Section,
                         Widget]
                     type: string
         PageFragmentInstanceDefinition:
+            # @review
+            description:
+                Represents a definition of a Page Fragment Instance.
             properties:
                 fragment:
-                    $ref: "#/components/schemas/Fragment"
+                    allOf:
+                        - $ref: "#/components/schemas/Fragment"
+                    # @review
+                    description:
+                        The fragment of the page fragment instance.
                 fragmentConfig:
                     additionalProperties:
                         type: object
+                    # @review
+                    description:
+                        The page fragment instance's configuration.
                     type: object
                 fragmentFields:
+                    # @review
+                    description:
+                        The fragment fields of the page fragment instance.
                     items:
                         $ref: "#/components/schemas/FragmentField"
                     type: array
                 fragmentStyle:
-                    $ref: "#/components/schemas/FragmentStyle"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of the page fragment instance.
                 fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of the page fragment instance.
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
                 widgetInstances:
+                    # @review
+                    description:
+                        A list of widget instances of the page fragment instance.
                     items:
                         $ref: "#/components/schemas/WidgetInstance"
                     type: array
             type: object
         PageRootDefinition:
+            # @review
+            description:
+                Represents a definition of a Root Page.
             type: object
         PageRowDefinition:
+            # @review
+            description:
+                Represents a definition of a Page row.
             properties:
                 fragmentStyle:
-                    $ref: "#/components/schemas/FragmentStyle"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of a Page row.
                 fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of a Page row.
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
                 gutters:
+                    # @review
+                    description:
+                        A flag that indicates whether the page row has gutters.
                     type: boolean
                 modulesPerRow:
+                    # @review
+                    description:
+                        The page row's modules per row.
                     type: integer
                 numberOfColumns:
+                    # @review
+                    description:
+                        The page row's number of columns.
                     type: integer
                 reverseOrder:
+                    # @review
+                    description:
+                        A flag that indicates whether the page row has reverse order.
                     type: boolean
                 rowViewportConfig:
                     deprecated: true
@@ -2535,19 +3294,32 @@ components:
                             type: object
                     type: object
                 rowViewports:
+                    # @review
+                    description:
+                        A list of viewports of the page row.
                     items:
                         $ref: "#/components/schemas/RowViewport"
                     type: array
                 verticalAlignment:
+                    # @review
+                    description:
+                        The vertical aligment property of the page row.
                     type: string
             type: object
         PageSectionDefinition:
+            # @review
+            description:
+                Represents a definition of a Page section.
             properties:
                 backgroundColor:
                     deprecated: true
                     type: string
                 backgroundFragmentImage:
-                    $ref: "#/components/schemas/FragmentImage"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentImage"
+                    # @review
+                    description:
+                        The background fragment image of the page section.
                 backgroundImage:
                     deprecated: true
                     description:
@@ -2565,14 +3337,28 @@ components:
                                 - $ref: "#/components/schemas/FragmentMappedValue"
                     type: object
                 fragmentLink:
-                    $ref: "#/components/schemas/FragmentLink"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentLink"
+                    # @review
+                    description:
+                        The fragment link of the page section.
                 fragmentStyle:
-                    $ref: "#/components/schemas/FragmentStyle"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of the page section.
                 fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of the page section.
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
                 layout:
+                    # @review
+                    description:
+                        the page section's layout.
                     properties:
                         align:
                             deprecated: true
@@ -2589,6 +3375,9 @@ components:
                             deprecated: true
                             type: integer
                         containerType:
+                            # @review
+                            description:
+                                The container's type (fixed or fluid).
                             enum: [Fixed, Fluid]
                             type: string
                         contentDisplay:
@@ -2634,56 +3423,100 @@ components:
                             enum: [Default, Large, None, Regular, Small]
                             type: string
                         widthType:
+                            # @review
+                            description:
+                                The width's type (fixed or fluid).
                             enum: [Fixed, Fluid]
                             type: string
                     type: object
             type: object
         PageSettings:
+            # @review
             description:
-                ""
+                Represents the settings of a Page.
             properties:
                 customMetaTags:
+                    # @review
+                    description:
+                        A list of custom metatags this page has.
                     items:
                         $ref: "#/components/schemas/CustomMetaTag"
                     type: array
                 hiddenFromNavigation:
+                    # @review
+                    description:
+                        A flag that indicates whether the page is hidden from navigation.
                     type: boolean
                 openGraphSettings:
-                    $ref: "#/components/schemas/OpenGraphSettings"
+                    allOf:
+                        - $ref: "#/components/schemas/OpenGraphSettings"
+                    # @review
+                    description:
+                        The page's Open Graph settings.
                 seoSettings:
-                    $ref: "#/components/schemas/SEOSettings"
+                    allOf:
+                        - $ref: "#/components/schemas/SEOSettings"
+                    # @review
+                    description:
+                        The page's SEO settings.
             type: object
         PageTemplate:
+            # @review
             description:
-                ""
+                Represents a Page template.
             properties:
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
+                    # @review
+                    description:
+                        The page template's creator.
                     readOnly: true
                 dateCreated:
+                    # @review
+                    description:
+                        The page template's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    # @review
+                    description:
+                        The last time the page template changed.
                     format: date-time
                     readOnly: true
                     type: string
                 id:
+                    # @review
+                    description:
+                        The page template's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 keywords:
+                    # @review
+                    description:
+                        A list of keywords describing the page template.
                     items:
                         type: string
                     type: array
                 name:
+                    # @review
+                    description:
+                        The page template's name.
                     type: string
                 pageDefinition:
-                    $ref: "#/components/schemas/PageDefinition"
+                    allOf:
+                        - $ref: "#/components/schemas/PageDefinition"
+                    # @review
+                    description:
+                        The page template's definition.
                 pageTemplateCollection:
                     allOf:
                         - $ref: "#/components/schemas/PageTemplateCollection"
+                    # @review
+                    description:
+                        The page template's collection.
                     readOnly: true
                 taxonomyCategoryBriefs:
                     description:
@@ -2693,6 +3526,9 @@ components:
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
+                    # @review
+                    description:
+                        A write-only field that adds `TaxonomyCategory` instances to the page template.
                     items:
                         format: int64
                         type: integer
@@ -2705,28 +3541,47 @@ components:
                     type: string
             type: object
         PageTemplateCollection:
+            # @review
             description:
-                ""
+                Represents a Page template collection.
             properties:
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
+                    # @review
+                    description:
+                        The page template collection's creator.
                     readOnly: true
                 dateCreated:
+                    # @review
+                    description:
+                        The page template collection's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    # @review
+                    description:
+                        The last time the page template collection changed.
                     format: date-time
                     readOnly: true
                     type: string
                 description:
+                    # @review
+                    description:
+                        The page template collection's description.
                     type: string
                 id:
+                    # @review
+                    description:
+                        The page template collection's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 name:
+                    # @review
+                    description:
+                        The page template collection's name.
                     type: string
                 uuid:
                     description:
@@ -2735,15 +3590,29 @@ components:
                     type: string
             type: object
         PageWidgetInstanceDefinition:
+            # @review
+            description:
+                Represents a definition of a Page Widget instance.
             properties:
                 fragmentStyle:
-                    $ref: "#/components/schemas/FragmentStyle"
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of the page widget instance.
                 fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of the page widget instance.
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
                 widgetInstance:
-                    $ref: "#/components/schemas/WidgetInstance"
+                    allOf:
+                        - $ref: "#/components/schemas/WidgetInstance"
+                    # @review
+                    description:
+                        The widget instance of the page widget instance.
             type: object
         Rating:
             description:
@@ -2755,6 +3624,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 bestRating:
@@ -2827,21 +3699,30 @@ components:
                 HTML.
             properties:
                 contentTemplateId:
+                    # @review
+                    description:
+                        The ID of the template or display page used to render the content.
                     readOnly: true
                     type: string
                 contentTemplateName:
+                    # @review
                     description:
                         The name of the template or display page used to render the content.
                     type: string
                 contentTemplateName_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized names of the template or display page used to render the content.
                     type: object
                 markedAsDefault:
+                    # @review
                     description:
-                        Specifies if the template or display page are marked as default to display the content
+                        Specifies if the template or display page are marked as default to display the content.
                     type: boolean
                 renderedContentURL:
+                    # @review
                     description:
                         An absolute URL to the rendered content.
                     format: uri
@@ -2849,46 +3730,74 @@ components:
                 renderedContentValue:
                     # @review
                     description:
-                        optional field with the rendered content, can be embedded with nestedFields
+                        Optional field with the rendered content, can be embedded with nestedFields.
                     type: string
             type: object
         RenderedPage:
+            # @review
             description:
                 A list of rendered pages, which results from using a page template and the appropriate viewport to
                 process the page and return HTML.
             properties:
                 masterPageId:
+                    # @review
+                    description:
+                        The ID of the master page used to render the content.
                     readOnly: true
                     type: string
                 masterPageName:
+                    # @review
                     description:
                         The name of the master page used to render the content.
                     type: string
                 pageTemplateId:
+                    # @review
+                    description:
+                        The ID of the template used to render the content.
                     readOnly: true
                     type: string
                 pageTemplateName:
+                    # @review
                     description:
                         The name of the template used to render the content.
                     type: string
                 renderedPageURL:
+                    # @review
                     description:
                         An absolute URL to the rendered page.
                     type: string
             type: object
         RowViewport:
             additionalProperties: false
+            # @review
+            description:
+                Represents a row viewport.
             properties:
                 id:
+                    # @review
+                    description:
+                        The row vieport's ID.
                     type: string
                 rowViewportDefinition:
                     additionalProperties: false
+                    # @review
+                    description:
+                        The definition of the row vieport.
                     properties:
                         modulesPerRow:
+                            # @review
+                            description:
+                                The number of modules per row.
                             type: integer
                         reverseOrder:
+                            # @review
+                            description:
+                                A flag that indicates whether the row viewport has reverse order.
                             type: boolean
                         verticalAlignment:
+                            # @review
+                            description:
+                                The vertical aligment property of the row viewport.
                             type: string
                     type: object
             required:
@@ -2896,64 +3805,122 @@ components:
                 - rowViewportDefinition
             type: object
         SEOSettings:
+            # @review
+            description:
+                Represents settings related with SEO.
             properties:
                 customCanonicalURL:
+                    # @review
+                    description:
+                        The canonical URL of the page, if it exists.
                     type: string
                 customCanonicalURL_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized canonical URL of the page, if it exists.
                     type: object
                 description:
                     type: string
+                    # @review
                     description:
-                        The page's description.
+                        The page's description to be used as summary for search engines.
                 description_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized descriptions of the page to be used as summary for search engines.
                     type: object
                 htmlTitle:
+                    # @review
                     description:
-                        The page's main title.
+                        The page's main title to be used by search engines.
                     type: string
                 htmlTitle_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized main titles of the page to be used by search engines.
                     type: object
                 robots:
+                    # @review
+                    description:
+                        A tag telling search engines if and how they should crawl the page.
                     type: string
                 robots_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        A localized tag telling search engines if and how they should crawl the page.
                     type: object
                 seoKeywords:
+                    # @review
+                    description:
+                        A list of target keywords of the page to be used by search engines.
                     type: string
                 seoKeywords_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        A list of localized target keywords of the page to be used by search engines.
                     type: object
             type: object
         Settings:
+            # @review
+            description:
+                Represents the settings of a page.
             properties:
                 colorSchemeName:
+                    # @review
+                    description:
+                        The page's color scheme name.
                     type: string
                 css:
+                    # @review
+                    description:
+                        The page's CSS.
                     type: string
                 javascript:
+                    # @review
+                    description:
+                        The page's JavaScript.
                     type: string
                 masterPage:
-                    $ref: "#/components/schemas/MasterPage"
-                styleBook:
+                    allOf:
+                        - $ref: "#/components/schemas/MasterPage"
+                    # @review
                     description:
-                        "Defines the StyleBook that is applied to the Page"
+                        The page's master page.
+                styleBook:
+                    # @review
+                    description:
+                        The StyleBook that is applied to the page.
                     properties:
                         key:
+                            # @review
+                            description:
+                                The stylebook's key.
                             type: string
                         name:
+                            # @review
+                            description:
+                                The stylebook's name.
                             type: string
                     type: object
                 themeName:
+                    # @review
+                    description:
+                        The page's theme name.
                     type: string
                 themeSettings:
+                    # @review
+                    description:
+                        The page's theme settings.
                     type: object
             type: object
         SitePage:
@@ -2966,44 +3933,56 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 aggregateRating:
-                    $ref: "#/components/schemas/AggregateRating"
+                    allOf:
+                        - $ref: "#/components/schemas/AggregateRating"
+                    # @review
+                    description:
+                        The page's average rating.
+                    readOnly: true
                 availableLanguages:
+                    # @review
                     description:
                         The list of languages the page has a translation for.
                     items:
-                        description:
-                            The list of languages the page has a translation for.
                         type: string
                     readOnly: true
                     type: array
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
+                    # @review
                     description:
                         The page's creator.
                     readOnly: true
                 customFields:
+                    # @review
                     description:
-                        Custom fields associated to the page.
+                        Custom fields associated with the page.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
                 dateCreated:
+                    # @review
                     description:
                         The page's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    # @review
                     description:
                         The last time any field of the page was changed.
                     format: date-time
                     readOnly: true
                     type: string
                 datePublished:
+                    # @review
                     description:
                         The page's most recent publication date.
                     format: date-time
@@ -3011,22 +3990,26 @@ components:
                 experience:
                     allOf:
                         - $ref: "#/components/schemas/Experience"
+                    # @review
                     description:
-                        Experience of the page that it's being retrived.
+                        Experience of the page that it's being retrieved.
                 friendlyUrlPath:
+                    # @review
                     description:
                         A relative URL to the page's rendered content.
                     type: string
                 friendlyUrlPath_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized relative URLs to the page's rendered content.
                     type: object
                 keywords:
+                    # @review
                     description:
-                        A list of keywords describing the structured content.
+                        A list of keywords describing the page.
                     items:
-                        description:
-                            A list of keywords describing the structured content.
                         type: string
                     type: array
                 pageDefinition:
@@ -3040,45 +4023,58 @@ components:
                 pageSettings:
                     allOf:
                         - $ref: "#/components/schemas/PageSettings"
+                    # @review
                     description:
-                        Settings of the page, such as SEO or OpenGraph
+                        Settings of the page, such as SEO or OpenGraph.
                 pageType:
+                    # @review
                     description:
-                        The type of the page
+                        The type of the page.
                     type: string
                 renderedPage:
                     allOf:
                         - $ref: "#/components/schemas/RenderedPage"
+                    # @review
                     description:
-                        Metadata of the page such as it's master page and template
+                        Metadata of the page such as it's master page and template.
                 siteId:
+                    # @review
                     description:
                         The ID of the site to which this page is scoped.
                     format: int64
                     readOnly: true
                     type: integer
                 taxonomyCategoryBriefs:
+                    # @review
                     description:
-                        The categories associated with this structured content.
+                        The categories associated with this page.
                     items:
                         $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
+                    # @review
+                    description:
+                        A write-only field that adds `TaxonomyCategory` instances to the page.
                     items:
                         format: int64
                         type: integer
                     type: array
                     writeOnly: true
                 title:
+                    # @review
                     description:
-                        the title of the page
+                        The page's title.
                     type: string
                 title_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized page's titles.
                     type: object
                 uuid:
+                    # @review
                     description:
                         A valid external identifier to reference this page.
                     readOnly: true
@@ -3103,6 +4099,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 aggregateRating:
@@ -3112,6 +4111,9 @@ components:
                         The structured content's average rating.
                     readOnly: true
                 assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the structure content is scoped.
                     readOnly: true
                     type: string
                 availableLanguages:
@@ -3139,6 +4141,9 @@ components:
                         The structured content's creator.
                     readOnly: true
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the structured content.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -3166,6 +4171,9 @@ components:
                 description_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized structured content's descriptions.
                     type: object
                 friendlyUrlPath:
                     description:
@@ -3174,6 +4182,9 @@ components:
                 friendlyUrlPath_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized relative URLs to the structured content's rendered content.
                     type: object
                 id:
                     description:
@@ -3199,6 +4210,9 @@ components:
                     readOnly: true
                     type: integer
                 relatedContents:
+                    # @review
+                    description:
+                        A list of related contents to this structured content.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
@@ -3218,9 +4232,14 @@ components:
                     readOnly: true
                     type: integer
                 subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this structured
+                        content.
                     readOnly: true
                     type: boolean
                 taxonomyCategoryBriefs:
+                    # @review
                     description:
                         The categories associated with this structured content.
                     items:
@@ -3228,8 +4247,9 @@ components:
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
+                    # @review
                     description:
-                        A write-only field to add a category to this structured content.
+                        A write-only field that adds `TaxonomyCategory` instances to the structured content.
                     items:
                         format: int64
                         type: integer
@@ -3242,6 +4262,9 @@ components:
                 title_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized structured content's main titles.
                     type: object
                 uuid:
                     description:
@@ -3266,9 +4289,15 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the folder is scoped.
                     readOnly: true
                     type: string
                 creator:
@@ -3278,6 +4307,9 @@ components:
                         The folder's creator.
                     readOnly: true
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the folder.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -3318,6 +4350,9 @@ components:
                     readOnly: true
                     type: integer
                 parentStructuredContentFolderId:
+                    # @review
+                    description:
+                        The ID of the folder's parent, if it exists.
                     format: int64
                     type: integer
                 siteId:
@@ -3327,6 +4362,9 @@ components:
                     readOnly: true
                     type: integer
                 subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this folder.
                     readOnly: true
                     type: boolean
                 viewableBy:
@@ -3360,27 +4398,48 @@ components:
                 taxonomyCategoryName_i18n:
                     additionalProperties:
                         type: string
+                    # @review
+                    description:
+                        The localized category's names.
                     readOnly: true
                     type: object
             type: object
         WidgetInstance:
+            # @review
+            description:
+                Represents a Widget Instance.
             properties:
                 widgetConfig:
                     additionalProperties:
                         type: object
                     type: object
                 widgetInstanceId:
+                    # @review
+                    description:
+                        The widget instance's ID.
                     type: string
                 widgetName:
+                    # @review
+                    description:
+                        The widget instance's name.
                     type: string
                 widgetPermissions:
+                    # @review
+                    description:
+                        The widget instance's permissions.
                     items:
                         properties:
                             actionKeys:
+                                # @review
+                                description:
+                                    The keys of the actions the role has permission for.
                                 items:
                                     type: string
                                 type: array
                             roleKey:
+                                # @review
+                                description:
+                                    The role's key.
                                 type: string
                         type: object
                     type: array
@@ -3395,6 +4454,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 creator:
@@ -3441,6 +4503,9 @@ components:
                     readOnly: true
                     type: integer
                 subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this wiki node.
                     readOnly: true
                     type: boolean
                 viewableBy:
@@ -3460,6 +4525,9 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
                 aggregateRating:
@@ -3479,6 +4547,9 @@ components:
                         The wiki page's creator.
                     readOnly: true
                 customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the wiki page.
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
@@ -3529,9 +4600,15 @@ components:
                     readOnly: true
                     type: integer
                 parentWikiPageId:
+                    # @review
+                    description:
+                        The ID of the wiki page's parent, if it exists.
                     format: int64
                     type: integer
                 relatedContents:
+                    # @review
+                    description:
+                        A list of related contents to this wiki page.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
@@ -3543,18 +4620,23 @@ components:
                     readOnly: true
                     type: integer
                 subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this wiki page.
                     readOnly: true
                     type: boolean
                 taxonomyCategoryBriefs:
+                    # @review
                     description:
-                        The categories associated with this blog post.
+                        The categories associated with this wiki page.
                     items:
                         $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
+                    # @review
                     description:
-                        A write-only field that adds a `TaxonomyCategory` to this resource.
+                        A write-only field that adds `TaxonomyCategory` instances to the wiki page.
                     items:
                         format: int64
                         type: integer
@@ -3583,7 +4665,7 @@ components:
                 contentValue:
                     # @review
                     description:
-                        optional field with the content of the document in Base64, can be embedded with nestedFields
+                        Optional field with the content of the document in Base64, can be embedded with nestedFields.
                     readOnly: true
                     type: string
                 encodingFormat:

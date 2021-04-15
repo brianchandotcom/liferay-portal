@@ -1018,11 +1018,7 @@ definition {
 			portletName = "Blogs Aggregator",
 			portletOption = "Configuration");
 
-		var key_portletName = "Blogs Aggregator";
-
-		AssertTextPresent(
-			locator1 = "Portlet#TITLE",
-			value1 = "Blogs Aggregator");
+		Portlet.viewTitle(portletName = "Blogs Aggregator");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

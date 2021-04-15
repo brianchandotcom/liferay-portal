@@ -1,0 +1,7 @@
+{
+	"fragmentEntryKey": "external-video",
+	"icon": "video",
+	"name": "external-video",
+	"thumbnail": "video.png",
+	"type": "component"
+}

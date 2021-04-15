@@ -498,7 +498,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.selectApp(appName = "Independent Modules");
+		var key_appName = "Independent Modules";
+
+		AssertClick(
+			locator1 = "AppManager#APP_NAME",
+			value1 = "Independent Modules");
 
 		Pause(locator1 = "3000");
 

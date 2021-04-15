@@ -14,18 +14,6 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
 	}
 
-	macro selectApp {
-		var key_appName = "${appName}";
-
-		while (IsElementNotPresent(locator1 = "AppManager#APP_NAME")) {
-			Click(locator1 = "Pagination#NEXT_LINK");
-		}
-
-		AssertClick(
-			locator1 = "AppManager#APP_NAME",
-			value1 = "${appName}");
-	}
-
 	macro uninstallApp {
 		LexiconEntry.openEntryMenu(rowEntry = "${appName}");
 

@@ -7,6 +7,7 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:application-list:application-list-api")
+	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
@@ -14,6 +15,7 @@ dependencies {
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:site:site-memberships-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
+	compileOnly project(":apps:users-admin:users-admin-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.base.ListTypeLocalServiceBaseImpl;
 
 import java.util.List;
@@ -63,6 +64,7 @@ public class ListTypeLocalServiceImpl extends ListTypeLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public void validate(long listTypeId, long classNameId, String type)
 		throws PortalException {
 
@@ -72,6 +74,7 @@ public class ListTypeLocalServiceImpl extends ListTypeLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public void validate(long listTypeId, String type) throws PortalException {
 		ListType listType = listTypePersistence.fetchByPrimaryKey(listTypeId);
 

@@ -949,6 +949,77 @@ definition {
 			videoShortcutTitle = "Test YouTube Video");
 	}
 
+	@description = "This test covers LPS-96564. It ensures that a private site cannot be viewed by a non-site member in calendar widget."
+	@priority = "4"
+	@refactorneeded
+	test PrivateSiteShouldNotBeViewableWithoutPermissionsInCalendar {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addBlankCP(
+			membershipType = "Private",
+			siteName = "Site A");
+
+		JSONGroup.addGroup(groupName = "Site X");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.gotoAddPage(userName = "userfn userln");
+
+		SitePages.addPrivatePage(pageName = "Private Test Page");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Private Test Page",
+			url = "${portalURL}/user/usersn/private-test-page");
+
+		Portlet.addPG(portletName = "Calendar");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Private Test Page",
+			url = "${portalURL}/user/usersn/private-test-page");
+
+		CalendarNavigator.gotoAddEvent();
+
+		Click(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Select Item",
+			locator1 = "IFrame#MODAL_ANY");
+
+		AssertClick(
+			key_breadcrumbName = "Sites and Libraries",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "Sites and Libraries");
+
+		LexiconCard.viewCardPresent(card = "Site X");
+
+		LexiconCard.viewCardNotPresent(card = "Site A");
+	}
+
 	@description = "This test covers LPS-119709. It ensures that the blog images can not filter by the everywhere and the current site."
 	@priority = "4"
 	@refactorneeded

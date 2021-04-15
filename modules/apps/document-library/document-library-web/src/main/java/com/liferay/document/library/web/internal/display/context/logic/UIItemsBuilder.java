@@ -528,6 +528,13 @@ public class UIItemsBuilder {
 	public void addEditImageItem(List<MenuItem> menuItems)
 		throws PortalException {
 
+		if ((_fileShortcut != null) ||
+			!_fileEntryDisplayContextHelper.
+				isCheckoutDocumentActionAvailable()) {
+
+			return;
+		}
+
 		if (!ArrayUtil.contains(
 				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
 				_fileVersion.getMimeType())) {

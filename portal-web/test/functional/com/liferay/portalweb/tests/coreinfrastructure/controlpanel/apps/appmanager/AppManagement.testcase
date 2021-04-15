@@ -16,10 +16,7 @@ definition {
 	@description = "This test asserts that apps in App Management do not display in non default instances"
 	@priority = "4"
 	test AppManagementAppsAreNotInDefaultInstances {
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",

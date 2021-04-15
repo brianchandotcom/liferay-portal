@@ -466,6 +466,7 @@ function EditElementForm({
 												) : (
 													<div className="empty-list-message">
 														<ClayEmptyState
+															description=""
 															title={Liferay.Language.get(
 																'no-predefined-variables-found'
 															)}

@@ -49,7 +49,7 @@ function ResultListItem({item}) {
 	);
 
 	return (
-		<ClayList.Item flex key={item.b_title}>
+		<ClayList.Item className="result-list-item" flex key={item.b_title}>
 			<ClayList.ItemField>
 				<PreviewModal
 					body={

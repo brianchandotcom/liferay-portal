@@ -204,7 +204,8 @@ function AddElementSidebar({
 					return elementTitle
 						.toLowerCase()
 						.includes(value.toLowerCase());
-				} else {
+				}
+				else {
 					return true;
 				}
 			});
@@ -217,7 +218,14 @@ function AddElementSidebar({
 	);
 
 	return (
-		<div className={getCN('sidebar', 'sidebar-light', {open: visible})}>
+		<div
+			className={getCN(
+				'add-element-sidebar',
+				'sidebar',
+				'sidebar-light',
+				{open: visible}
+			)}
+		>
 			<div className="sidebar-header">
 				<h4 className="component-title">
 					<span className="text-truncate-inline">
@@ -259,7 +267,7 @@ function AddElementSidebar({
 					</div>
 				) : (
 					<div className="empty-list-message">
-						<ClayEmptyState title={emptyMessage} />
+						<ClayEmptyState description="" title={emptyMessage} />
 					</div>
 				)
 			) : (

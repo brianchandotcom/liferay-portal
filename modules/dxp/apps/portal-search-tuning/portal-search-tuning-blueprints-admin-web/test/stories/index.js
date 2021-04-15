@@ -24,7 +24,7 @@ import ClayLayout from '@clayui/layout';
 
 import BlueprintForm from '../../src/main/resources/META-INF/resources/js/edit_blueprint';
 import AddElementSidebar from '../../src/main/resources/META-INF/resources/js/edit_blueprint/AddElementSidebar';
-import Preview from '../../src/main/resources/META-INF/resources/js/edit_blueprint/Preview';
+import PreviewSidebar from '../../src/main/resources/META-INF/resources/js/edit_blueprint/PreviewSidebar';
 import QueryBuilder from '../../src/main/resources/META-INF/resources/js/edit_blueprint/tabs/QueryBuilder';
 import SelectAssetTypes from '../../src/main/resources/META-INF/resources/js/edit_blueprint/tabs/SelectAssetTypes';
 import ElementForm from '../../src/main/resources/META-INF/resources/js/edit_element';
@@ -315,10 +315,10 @@ storiesOf('Components|AddElementSidebar', module)
 		/>
 	));
 
-storiesOf('Components|Preview', module)
+storiesOf('Components|PreviewSidebar', module)
 	.addDecorator(withBlueprintsClass)
-	.add('Preview', () => (
-		<Preview
+	.add('PreviewSidebar', () => (
+		<PreviewSidebar
 			loading={false}
 			onFetchResults={action('onFetchResults')}
 			results={mockSearchResults()}
@@ -326,7 +326,7 @@ storiesOf('Components|Preview', module)
 		/>
 	))
 	.add('Empty', () => (
-		<Preview
+		<PreviewSidebar
 			loading={false}
 			onFetchResults={action('onFetchResults')}
 			results={{
@@ -342,7 +342,7 @@ storiesOf('Components|Preview', module)
 		/>
 	))
 	.add('Error', () => (
-		<Preview
+		<PreviewSidebar
 			loading={false}
 			onFetchResults={action('onFetchResults')}
 			results={{

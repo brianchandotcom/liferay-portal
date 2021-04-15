@@ -9,29 +9,6 @@
 		transition: margin-right ease 0.2s;
 	}
 
-	.configuration-element {
-		margin-bottom: 1rem;
-		padding: 0;
-
-		.configuration-editor {
-			padding: 0 1.5rem 1rem;
-
-			.codemirror-editor-wrapper {
-				background-color: $secondaryHover;
-				border: 0.0625rem $mainLighten74 solid;
-				border-radius: 0.25rem;
-			}
-		}
-
-		.list-group {
-			margin: 0.5rem 0;
-
-			.list-group-item {
-				border: 0;
-			}
-		}
-	}
-
 	.configuration-header {
 		font-weight: bold;
 		margin-bottom: 1.25rem;

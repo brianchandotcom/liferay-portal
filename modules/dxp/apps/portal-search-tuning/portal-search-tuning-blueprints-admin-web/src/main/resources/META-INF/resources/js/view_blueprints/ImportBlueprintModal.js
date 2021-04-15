@@ -72,7 +72,11 @@ const ImportBlueprintModal = ({formSubmitURL}) => {
 	};
 
 	return (
-		<form className="import-form" onSubmit={_handleSubmit} ref={formRef}>
+		<form
+			className="import-blueprint-form"
+			onSubmit={_handleSubmit}
+			ref={formRef}
+		>
 			<ClayModal.Body>
 				{errorMessage && (
 					<ClayAlert

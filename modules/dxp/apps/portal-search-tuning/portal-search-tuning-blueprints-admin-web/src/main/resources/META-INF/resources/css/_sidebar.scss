@@ -1,241 +1,29 @@
 .sidebar {
-	background-color: $white;
-	display: flex;
-	flex-direction: column;
-	height: calc(100% - #{$controlMenuToolbarHeight} - #{$navigationBarHeight});
-	margin-top: $navigationBarHeight;
-	position: fixed;
-	right: 0;
-	transform: translateX(100%);
-	transition: transform ease 0.2s;
-	width: $sidebarWidth;
-	z-index: 972;
-
-	&.open {
-		transform: translateX(0);
+	&.add-element-sidebar,
+	&.preview-sidebar {
+		background-color: $white;
+		display: flex;
+		flex-direction: column;
+		height: calc(
+			100% - #{$controlMenuToolbarHeight} - #{$navigationBarHeight}
+		);
+		margin-top: $navigationBarHeight;
+		position: fixed;
+		right: 0;
+		transform: translateX(100%);
 		transition: transform ease 0.2s;
-	}
+		width: $sidebarWidth;
+		z-index: 972;
 
-	&.preview {
-		overflow-x: overlay;
-		width: $previewWidth;
-
-		.btn:focus {
-			box-shadow: unset;
-		}
-
-		.sidebar-search {
-			border-bottom: 0;
+		&.open {
+			transform: translateX(0);
+			transition: transform ease 0.2s;
 		}
 	}
 
 	.empty-list-message {
 		padding: 16px;
 		text-align: center;
-	}
-
-	.search-message {
-		color: $secondary;
-		margin: 0.5rem auto 1.5rem;
-		padding: 16px 0;
-		text-align: center;
-		width: 340px;
-	}
-
-	.component-text {
-		margin-right: 16px;
-	}
-
-	.preview-error-list {
-		margin: 0 16px;
-
-		.error-list-item {
-			code {
-				color: $danger;
-				display: block;
-				overflow: auto;
-
-				white-space: break-spaces;
-			}
-
-			.alert-footer {
-				margin-top: 0.5rem;
-			}
-
-			.autofit-col-expand > .autofit-section {
-				padding-right: 32px;
-			}
-
-			.collapse-button {
-				position: absolute;
-				right: 0;
-				top: -6px;
-			}
-
-			.message {
-				cursor: pointer;
-
-				.title {
-					font-weight: 600;
-				}
-
-				.title + .description {
-					padding-left: 4px;
-				}
-			}
-
-			.property {
-				font-size: 12px;
-				font-weight: 600;
-			}
-
-			.row {
-				padding: 0 12px;
-
-				> div {
-					border-bottom: 1px solid lighten($dangerL1, 15%);
-					padding-bottom: 2px;
-					padding-top: 2px;
-				}
-
-				&:last-child > div {
-					border-width: 0;
-				}
-
-				div:first-child {
-					padding-left: 0;
-				}
-
-				div:last-child {
-					padding-right: 0;
-				}
-			}
-
-			.scroll-button {
-				background-color: $errorL2;
-				padding-left: 8px;
-				position: absolute;
-				right: 40px;
-				top: -4px;
-				visibility: hidden;
-
-				button {
-					font-size: 12px;
-				}
-			}
-
-			&:hover {
-				.scroll-button {
-					visibility: visible;
-				}
-			}
-		}
-	}
-
-	.preview-results-list {
-		.list-group {
-			margin-bottom: 16px;
-
-			.list-group-item {
-				border-left: 0;
-				border-right: 0;
-				border-top-left-radius: 0;
-				border-top-right-radius: 0;
-
-				.score {
-					background-color: $infoL2;
-					color: $info;
-					font-size: 10px;
-					font-weight: 700;
-					padding: 4px;
-
-					&:hover {
-						background-color: #dfe6f6;
-					}
-				}
-
-				.row.justify-content-start {
-					padding: 0 12px;
-
-					& > div {
-						border-bottom: 1px solid #e6e6e6;
-						font-size: 12px;
-						padding: 2px 0;
-					}
-
-					&:last-child > div {
-						border-width: 0;
-					}
-				}
-			}
-
-			.list-group-title {
-				padding: 6px 0;
-			}
-		}
-
-		&.sidebar-body {
-			padding: 0;
-		}
-	}
-
-	.element-list {
-		overflow-y: scroll;
-		padding-bottom: 16px;
-
-		.list-group {
-			margin-bottom: 0;
-
-			.list-group-item {
-				border: 0;
-
-				&:hover {
-					background-color: $primaryL4;
-
-					.add-element-button,
-					.add-element-button-background {
-						opacity: 1;
-					}
-				}
-
-				.add-element-button {
-					opacity: 0;
-					position: absolute;
-					right: 0.5rem;
-					top: 50%;
-					transform: translateY(-50%);
-
-					// Show button if focused using keyboard
-
-					&:focus-visible {
-						opacity: 1;
-					}
-				}
-
-				.add-element-button-background {
-					background-color: $primaryL4;
-					height: 100%;
-					opacity: 0;
-					padding-left: 1rem;
-					position: absolute;
-					right: 0.5rem;
-					width: 72px;
-				}
-
-				.autofit-col:first-of-type {
-					padding-right: 0.5rem;
-				}
-
-				.sticker {
-					background-color: $lightBackground;
-					color: $mainLighten28;
-				}
-			}
-		}
-	}
-
-	.shortcut-icon {
-		padding-left: 4px;
 	}
 
 	.sidebar-header,

@@ -24,13 +24,13 @@ import React, {useState} from 'react';
 
 import SearchInput from '../shared/SearchInput';
 import useDidUpdateEffect from '../utils/useDidUpdateEffect';
-import {sub} from './../utils/utils';
+import {sub} from '../utils/utils';
 import ErrorListItem from './ErrorListItem';
 import ResultListItem from './ResultListItem';
 
 const DELTAS = [10, 20, 30, 50];
 
-function Preview({
+function PreviewSidebar({
 	loading,
 	onClose,
 	onFetchResults,
@@ -105,7 +105,7 @@ function Preview({
 
 				<ClayPaginationWithBasicItems
 					activePage={activePage}
-					alignmentPosition={Align.TopLeft}
+					alignmentPosition={Align.TopRight}
 					ellipsisBuffer={1}
 					onPageChange={setActivePage}
 					totalPages={Math.ceil(results.meta.totalHits / activeDelta)}
@@ -118,7 +118,7 @@ function Preview({
 		<ClayManagementToolbar>
 			<ClayManagementToolbar.ItemList>
 				<ClayManagementToolbar.Item>
-					<span className="component-text text-truncate-inline">
+					<span className="text-truncate-inline total-hits-label">
 						<span className="text-truncate">
 							{sub(Liferay.Language.get('x-results'), [
 								results.meta.totalHits.toLocaleString(),
@@ -144,7 +144,7 @@ function Preview({
 
 	return (
 		<div
-			className={getCN('sidebar', 'sidebar-light', 'preview', {
+			className={getCN('preview-sidebar', 'sidebar', 'sidebar-light', {
 				open: visible,
 			})}
 		>
@@ -203,7 +203,7 @@ function Preview({
 	);
 }
 
-Preview.propTypes = {
+PreviewSidebar.propTypes = {
 	loading: PropTypes.bool,
 	onClose: PropTypes.func,
 	onFetchResults: PropTypes.func,
@@ -211,4 +211,4 @@ Preview.propTypes = {
 	visible: PropTypes.bool,
 };
 
-export default React.memo(Preview);
+export default React.memo(PreviewSidebar);

@@ -36,7 +36,7 @@ import {
 	validateRequired,
 } from '../utils/validation';
 import AddElementSidebar from './AddElementSidebar';
-import Preview from './Preview';
+import PreviewSidebar from './PreviewSidebar';
 import QueryBuilder from './tabs/QueryBuilder';
 import Settings from './tabs/Settings';
 
@@ -115,7 +115,8 @@ function EditBlueprintForm({
 							}
 						});
 					});
-				} else {
+				}
+				else {
 					const configValue =
 						uiConfigurationValues.elementTemplateJSON;
 
@@ -229,7 +230,8 @@ function EditBlueprintForm({
 					),
 				})
 			);
-		} catch {
+		}
+		catch {
 			return;
 		}
 
@@ -251,7 +253,8 @@ function EditBlueprintForm({
 					responseContent.errors.forEach((message) =>
 						openErrorToast({message})
 					);
-				} else {
+				}
+				else {
 					navigate(redirectURL);
 				}
 			})
@@ -344,7 +347,8 @@ function EditBlueprintForm({
 					sort_configuration: JSON.parse(formik.values.sortConfig),
 				})
 			);
-		} catch {
+		}
+		catch {
 			return;
 		}
 
@@ -448,7 +452,7 @@ function EditBlueprintForm({
 			default:
 				return (
 					<>
-						<Preview
+						<PreviewSidebar
 							loading={previewInfo.loading}
 							onClose={() => setShowPreview(false)}
 							onFetchResults={_handleFetchPreviewSearch}

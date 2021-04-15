@@ -1,0 +1,36 @@
+.result-list-item {
+	border-left: 0;
+	border-right: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+
+	.row.justify-content-start {
+		padding: 0 12px;
+
+		& > div {
+			border-bottom: 1px solid #e6e6e6;
+			font-size: 12px;
+			padding: 2px 0;
+		}
+
+		&:last-child > div {
+			border-width: 0;
+		}
+	}
+
+	.shortcut-icon {
+		padding-left: 4px;
+	}
+
+	.score {
+		background-color: $infoL2;
+		color: $info;
+		font-size: 10px;
+		font-weight: 700;
+		padding: 4px;
+
+		&:hover {
+			background-color: #dfe6f6;
+		}
+	}
+}

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -169,6 +170,10 @@ public class BlogsEntryItemSelectorView
 
 		@Override
 		public String getPayload() {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			return JSONUtil.put(
 				"className", BlogsEntry.class.getName()
 			).put(
@@ -179,6 +184,10 @@ public class BlogsEntryItemSelectorView
 			).put(
 				"title",
 				BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry)
+			).put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					themeDisplay.getLocale(), BlogsEntry.class.getName())
 			).toString();
 		}
 

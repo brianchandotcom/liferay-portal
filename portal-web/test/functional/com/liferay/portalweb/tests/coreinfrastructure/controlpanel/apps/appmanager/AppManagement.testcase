@@ -74,8 +74,6 @@ definition {
 			locator1 = "AppManager#APP_NAME",
 			value1 = "Independent Modules");
 
-		Pause(locator1 = "3000");
-
 		AssertElementNotPresent(locator1 = "AppManager#APP_NAME");
 	}
 

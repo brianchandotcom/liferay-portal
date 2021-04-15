@@ -15,7 +15,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.2-b01"
-	compileOnly group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", version: "1.2.1"
+	compileOnly group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", version: "1.2.2"
 	compileOnly group: "org.glassfish", name: "javax.el", version: "3.0.1-b05"
 	compileOnly group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"
 	compileOnly group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"

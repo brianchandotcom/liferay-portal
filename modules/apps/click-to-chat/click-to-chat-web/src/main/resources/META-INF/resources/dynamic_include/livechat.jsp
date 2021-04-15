@@ -19,6 +19,7 @@
 <script>
 	window.__lc = window.__lc || {};
 	window.__lc.license = '<%= clickToChatChatProviderAccountId %>';
+
 	(function (n, t, c) {
 		function i(n) {
 			return e._h ? e._h.apply(null, n) : e._q.push(n);
@@ -56,13 +57,11 @@
 		};
 		!n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e);
 	})(window, document, [].slice);
-</script>
 
-<c:if test="<%= themeDisplay.isSignedIn() %>">
-	<script>
+	<c:if test="<%= themeDisplay.isSignedIn() %>">
 		window.onload = function () {
 			LiveChatWidget.call('set_customer_email', '<%= user.getEmailAddress() %>');
 			LiveChatWidget.call('set_customer_name', '<%= user.getScreenName() %>');
 		};
-	</script>
-</c:if>
+	</c:if>
+</script>

@@ -38,4 +38,6 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <liferay-theme:defineObjects />
 
+<portlet:defineObjects />
+
 <%@ include file="/init-ext.jsp" %>

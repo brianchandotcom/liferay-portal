@@ -44,12 +44,12 @@
 
 		boolean disabled = false;
 
-		if (Objects.equals(clickToChatConfiguration.siteSettingsStrategy(), "always-inherit")) {
+		if (Objects.equals(clickToChatConfiguration.siteSettingsStrategy(), "always-inherit") || Validator.isNull(clickToChatConfiguration.siteSettingsStrategy())) {
 			disabled = true;
 		}
 		%>
 
-		<aui:input checked="<%= clickToChatEnabled %>" disabled="<%= disabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "enable-click-to-chat") %>' labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--clickToChatEnabled--" onchange="onChangeEnableClickToChat(event)" type="toggle-switch" value="<%= clickToChatEnabled %>" />
+		<aui:input checked="<%= clickToChatEnabled %>" disabled="<%= disabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "enable-click-to-chat") %>' labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--clickToChatEnabled--" onchange='<%= liferayPortletResponse.getNamespace() + "onChangeEnableClickToChat(event);" %>' type="toggle-switch" value="<%= clickToChatEnabled %>" />
 	</div>
 </div>
 
@@ -60,7 +60,7 @@
 		String clickToChatChatProviderId = GetterUtil.getString(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_ID));
 		%>
 
-		<aui:select label="chat-provider" name="TypeSettingsProperties--clickToChatChatProviderId--" onchange="onChangeProvider(event)" value="<%= clickToChatChatProviderId %>">
+		<aui:select label="chat-provider" name="TypeSettingsProperties--clickToChatChatProviderId--" onchange='<%= liferayPortletResponse.getNamespace() + "onChangeClickToChatChatProviderId(event);" %>' value="<%= clickToChatChatProviderId %>">
 			<aui:option label="" value="" />
 
 			<%
@@ -89,7 +89,7 @@
 		for (String curClickToChatProviderId : ClickToChatConstants.CLICK_TO_CHAT_CHAT_PROVIDER_IDS) {
 		%>
 
-			<div class="chat-provider-link chat-provider-link-to-<%= curClickToChatProviderId %> hide mb-2">
+			<div id='<%= liferayPortletResponse.getNamespace() + curClickToChatProviderId %>' class='hide mb-2'">
 				<liferay-learn:message
 					key='<%= "chat-provider-account-id-help-" + curClickToChatProviderId %>'
 					resource="click-to-chat-web"
@@ -112,7 +112,7 @@
 		'<portlet:namespace />clickToChatChatProviderId'
 	);
 
-	var chatProviderAccountId = document.getElementById(
+	var clickToChatChatProviderAccountId = document.getElementById(
 		'<portlet:namespace />clickToChatChatProviderAccountId'
 	);
 
@@ -122,21 +122,23 @@
 
 	if (<%= disabled %> || !clickToChatEnabled.checked) {
 		Liferay.Util.toggleDisabled(clickToChatChatProviderId, true);
-		Liferay.Util.toggleDisabled(chatProviderAccountId, true);
+		Liferay.Util.toggleDisabled(clickToChatChatProviderAccountId, true);
 		Liferay.Util.toggleDisabled(clickToChatGuestUsersAllowed, true);
 	}
 
-	function hideContainers() {
-		const providers = document.querySelectorAll('.chat-provider-link');
+	function <portlet:namespace />hideContainers() {
+		var clickToChatProviderIdOptions = clickToChatChatProviderId.querySelectorAll(
+			'option'
+		);
 
-		providers.forEach((provider) => {
-			provider.classList.add('hide');
+		clickToChatProviderIdOptions.forEach((option) => {
+			<portlet:namespace />setVisibleClickToChatProviderIdHelp(option.value);
 		});
 	}
 
-	function onChangeEnableClickToChat() {
+	function <portlet:namespace />onChangeEnableClickToChat() {
 		Liferay.Util.toggleDisabled(
-			chatProviderAccountId,
+			clickToChatChatProviderAccountId,
 			!clickToChatEnabled.checked
 		);
 
@@ -151,19 +153,34 @@
 		);
 	}
 
-	function onChangeProvider(event) {
-		hideContainers();
+	function <portlet:namespace />setVisibleClickToChatProviderIdHelp(
+		providerAccountId,
+		visible
+	) {
+		var clickToChatProviderIdHelp = document.getElementById(
+			'<portlet:namespace />' + providerAccountId
+		);
 
-		showContainer(event.target.value);
-	}
+		if (clickToChatProviderIdHelp) {
+			if (visible) {
+				return clickToChatProviderIdHelp.classList.remove('hide');
+			}
 
-	function showContainer(name) {
-		const provider = document.querySelector('.chat-provider-link-to-' + name);
-
-		if (provider) {
-			provider.classList.remove('hide');
+			clickToChatProviderIdHelp.classList.add('hide');
 		}
 	}
 
-	showContainer('<%= clickToChatChatProviderId %>');
+	function <portlet:namespace />onChangeClickToChatChatProviderId(event) {
+		<portlet:namespace />hideContainers();
+
+		<portlet:namespace />setVisibleClickToChatProviderIdHelp(
+			event.target.value,
+			true
+		);
+	}
+
+	<portlet:namespace />setVisibleClickToChatProviderIdHelp(
+		'<%= clickToChatChatProviderId %>',
+		true
+	);
 </script>

@@ -195,50 +195,50 @@ definition {
 		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-        
+
 		CommerceNavigator.gotoPortlet(
-            category = "Store Management",
-            portlet = "Channels");
-        
+			category = "Store Management",
+			portlet = "Channels");
+
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-        
+
 		CommerceEntry.clickTableEntryEditButton(
-            entryName = "Authorize.Net",
-            table = "Payment Methods");
-        
+			entryName = "Authorize.Net",
+			table = "Payment Methods");
+
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-        
+
 		Type(
-            locator1 = "TextInput#NAME",
-            value1 = "Authorize.Net");
-        
+			locator1 = "TextInput#NAME",
+			value1 = "Authorize.Net");
+
 		Type(
-            locator1 = "TextInput#DESCRIPTION",
-            value1 = "Test");
-        
+			locator1 = "TextInput#DESCRIPTION",
+			value1 = "Test");
+
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
-        
+
 		Button.clickSave();
-        
+
 		Alert.viewSuccessMessage();
-        
+
 		Click(
-            navItem = "Configuration",
-            locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS");
-        
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+			navItem = "Configuration");
+
 		Select(
-            key_fieldLabel = "Environment",
-            locator1 = "Select#GENERIC_SELECT_FIELD",
-            value1 = "Sandbox");
-        
-		for (var key_value: list "Show Bank Account,Show Credit Card,Show Store Name,Require CAPTCHA,Require Card Code Verification") {
-            Check.checkToggleSwitch(
-                checkboxName = "${key_value}",
-                locator1 = "Checkbox#ANY_CHECKBOX");
-        }
-        
+			key_fieldLabel = "Environment",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Sandbox");
+
+		for (var key_value : list "Show Bank Account,Show Credit Card,Show Store Name,Require CAPTCHA,Require Card Code Verification") {
+			Check.checkToggleSwitch(
+				checkboxName = "${key_value}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
 		Button.clickSave();
-        
+
 		Alert.viewSuccessMessage();
 	}
 

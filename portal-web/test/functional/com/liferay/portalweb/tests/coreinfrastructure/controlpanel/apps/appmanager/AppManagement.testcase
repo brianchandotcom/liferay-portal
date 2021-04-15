@@ -30,25 +30,19 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-		Portlet.viewNoPortletsPresentCP(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		for (var portlet : list "App Manager,License Manager") {
+			Portlet.viewNoPortletsPresentCP(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "${portlet}");
+		}
 
-		Portlet.viewNoPortletsPresentCP(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Purchased");
-
-		Portlet.viewNoPortletsPresentCP(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Store");
-
-		Portlet.viewNoPortletsPresentCP(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "License Manager");
+		for (var portlet : list "Purchased,Store") {
+			Portlet.viewNoPortletsPresentCP(
+				category = "Marketplace",
+				panel = "Control Panel",
+				portlet = "${portlet}");
+		}
 	}
 
 	@description = "This is a test for LPS-102506."

@@ -75,6 +75,8 @@ definition {
 
 	@priority = "5"
 	test ConfigureDisplayTimeZone {
+		property portal.acceptance = "true";
+
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.editTimeZoneUTC();
@@ -267,7 +269,7 @@ definition {
 
 	@priority = "5"
 	test ViewCalendarTimeZoneDefaults {
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CalendarConfiguration#ViewCalendarTimeZoneDefaults";
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
@@ -330,6 +332,8 @@ definition {
 	@description = "This is a use case for LPS-51127."
 	@priority = "5"
 	test ViewWeekStartMonday {
+		property portal.acceptance = "true";
+
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Monday");

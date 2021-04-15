@@ -116,6 +116,8 @@ definition {
 	@description = "This is a use case for LPS-72846."
 	@priority = "5"
 	test ApproveMessageBoardsThreadPG {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

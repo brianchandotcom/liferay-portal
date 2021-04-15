@@ -144,6 +144,8 @@ definition {
 	@description = "This is a use case for LPS-74684."
 	@priority = "5"
 	test InviteUserViaUnpublishedEventAndViewNoResponse {
+		property portal.acceptance = "true";
+
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
@@ -227,7 +229,7 @@ definition {
 
 	@priority = "5"
 	test SchedulePublishToLiveWithEventAndResource {
-		property testray.component.names = "Training";
+		property portal.acceptance = "true";
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

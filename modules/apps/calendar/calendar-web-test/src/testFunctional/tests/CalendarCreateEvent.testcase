@@ -300,6 +300,8 @@ definition {
 	@description = "This is a use case for LPS-44540."
 	@priority = "5"
 	test AddEventTwiceViaMyCalendars {
+		property portal.acceptance = "true";
+
 		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Test Test");
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title1");
@@ -507,6 +509,8 @@ definition {
 
 	@priority = "5"
 	test AddRepeatingMonthly2Times {
+		property portal.acceptance = "true";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(

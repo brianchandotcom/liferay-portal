@@ -368,7 +368,7 @@ definition {
 	@description = "Apply filter for workload distribution for all assignees(LRQA-53632)"
 	@priority = "5"
 	test ApplyFilterForWorkloadDistribution {
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyFilterForWorkloadDistribution";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -751,6 +751,7 @@ definition {
 	@description = "LRQA-55451 Exceptions Check"
 	@priority = "5"
 	test BulkReassignWorkflowInstancesExceptions {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowModalExceptions";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1354,6 +1355,7 @@ definition {
 	@description = "LRQA-53628 Automate LPS-98517 [Dashboard] Filter items list by assignee name"
 	@priority = "5"
 	test FilterAllItemsListByAssigneeName {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#FilterAllItemsListByAssigneeName";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1518,7 +1520,7 @@ definition {
 	@description = "LRQA-53638 Automate LPS-100677: [Performance] Search for a step in all steps performance list and LRQA-53637 Automate LPS-100678: [Performance] Filter all step performance by completion period"
 	@priority = "5"
 	test SearchAndFilterOnPerformanceByStepPage {
-		property portal.upstream = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#SearchAndFilterOnPerformanceByStepPage";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1615,7 +1617,7 @@ definition {
 	@description = "LRQA-55450 [Performance] Search assignees in the performance of all assignees screen"
 	@priority = "5"
 	test SearchPerformanceOfAllAssignees {
-		property portal.upstream = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#SearchPerformanceOfAllAssignees";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1694,6 +1696,7 @@ definition {
 	@description = "LRQA-53647 Automate LPS-86638: [Reports] See a list of reports available for all running processes"
 	@priority = "5"
 	test SeeListOfReports {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#SeeListOfReports";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -2540,6 +2543,8 @@ definition {
 	@description = "LRQA-53639 - Automate LPS-100675"
 	@priority = "5"
 	test VerifyFilterTopStepPerformance {
+		property portal.acceptance = "true";
+
 		var key_testSLADefinitionDays = "0";
 		var key_testSLADefinitionHours = "00:01";
 		var key_testSLADefinitionDescription = "SLA Description";

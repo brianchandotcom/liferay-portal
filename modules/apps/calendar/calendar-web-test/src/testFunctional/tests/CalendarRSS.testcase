@@ -155,6 +155,8 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewSiteCalendarFeed {
+		property portal.acceptance = "true";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoPreviousDay();

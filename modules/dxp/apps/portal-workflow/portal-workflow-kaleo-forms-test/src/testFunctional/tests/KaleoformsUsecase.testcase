@@ -648,6 +648,7 @@ definition {
 
 	@priority = "5"
 	test AssignRolePermissionsApprovePG {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsApprovePG";
 
 		ApplicationsMenu.gotoPortlet(
@@ -979,6 +980,7 @@ definition {
 
 	@priority = "5"
 	test AssignRolePermissionsRejectPG {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsRejectPG";
 
 		ApplicationsMenu.gotoPortlet(
@@ -1767,6 +1769,8 @@ definition {
 
 	@priority = "5"
 	test CompleteProcessAndViewNotifications {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2103,7 +2107,6 @@ definition {
 	test CompleteProcessWithUploadedDefinition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithUploadedDefinition";
-		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -4085,6 +4088,8 @@ definition {
 
 	@priority = "5"
 	test ViewApprovedProcessRecords {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -5207,6 +5212,8 @@ definition {
 
 	@priority = "5"
 	test WithdrawProcess {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

@@ -178,6 +178,8 @@ definition {
 	@description = "LRQA-64780 - Automate LPS-127390: Filter and Order options in Reports Admin do not function properly"
 	@priority = "5"
 	test CheckFilterAndOrderOption {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

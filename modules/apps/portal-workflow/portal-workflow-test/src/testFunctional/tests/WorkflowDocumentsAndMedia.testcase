@@ -42,9 +42,8 @@ definition {
 
 	@priority = "5"
 	test ApproveInDMFolderCustomWorkflow {
-		property portal.release = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowDocumentsAndMedia#ApproveInDMFolderCustomWorkflow";
-		property testray.component.names = "Training";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -369,7 +368,7 @@ definition {
 	@priority = "5"
 	test SaveAsDraftAndViewCategories {
 		property custom.properties = "dl.file.entry.drafts.enabled=true";
-		property testray.component.names = "Training";
+		property portal.acceptance = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

@@ -233,6 +233,7 @@ definition {
 
 	@priority = "5"
 	test AddNewWorkflowDefinitionViaViewTab {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddNewWorkflowDefinitionViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(
@@ -545,8 +546,8 @@ definition {
 
 	@priority = "5"
 	test DeleteConnectors {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#DeleteConnectors";
-		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -646,7 +647,6 @@ definition {
 	test EditAssignmentsForTaskNodeKDCP {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#EditAssignmentsForTaskNodeKDCP";
-		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -679,6 +679,7 @@ definition {
 	@description = "This is a use case for LPS-71924."
 	@priority = "5"
 	test PublishDefaultWorkflowDefinition {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishDefaultWorkflowDefinition";
 
 		ApplicationsMenu.gotoPortlet(

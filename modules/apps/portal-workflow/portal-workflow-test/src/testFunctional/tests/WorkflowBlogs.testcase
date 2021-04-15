@@ -43,6 +43,8 @@ definition {
 
 	@priority = "5"
 	test ApproveBlogsEntryCP {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

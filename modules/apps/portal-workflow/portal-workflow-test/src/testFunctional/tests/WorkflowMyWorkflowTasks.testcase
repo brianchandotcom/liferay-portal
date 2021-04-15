@@ -273,6 +273,8 @@ definition {
 
 	@priority = "5"
 	test ResubmitTaskByDetails {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -511,6 +513,8 @@ definition {
 
 	@priority = "5"
 	test UpdateDueDateTaskByActions {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

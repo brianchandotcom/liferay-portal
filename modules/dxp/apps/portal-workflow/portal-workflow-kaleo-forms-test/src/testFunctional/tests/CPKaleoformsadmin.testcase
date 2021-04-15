@@ -685,6 +685,8 @@ definition {
 
 	@priority = "5"
 	test DeleteProcess {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1134,6 +1136,8 @@ definition {
 
 	@priority = "5"
 	test EditProcessForms {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1428,6 +1432,7 @@ definition {
 
 	@priority = "5"
 	test EditProcessNewWorkflowViaSourceTab {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditProcessNewWorkflowViaSourceTab";
 
 		Navigator.openURL();
@@ -1577,6 +1582,7 @@ definition {
 
 	@priority = "5"
 	test EditSingleApproverWorkflowViaSourceTabViaAddProcess {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditSingleApproverWorkflowViaSourceTabViaAddProcess";
 
 		Navigator.openURL();

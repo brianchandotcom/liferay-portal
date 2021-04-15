@@ -39,6 +39,8 @@ definition {
 
 	@priority = "5"
 	test WithdrawTaskAssignedToMeByActions {
+		property portal.acceptance = "true";
+
 		var webContentContent = "WC WebContent Content";
 		var webContentTitle = "WC WebContent Title";
 

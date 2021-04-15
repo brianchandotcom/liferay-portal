@@ -122,7 +122,7 @@ definition {
 	@description = "This is a use case for LPS-45062."
 	@priority = "5"
 	test ResizeAddedEventsViaEventBlock {
-		property portal.release = "false";
+		property portal.acceptance = "true";
 
 		CalendarNavigator.gotoView(viewType = "Day");
 

@@ -56,6 +56,8 @@ definition {
 
 	@priority = "5"
 	test ApprovePageCommentPG {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Page Comments Page");
 
 		PageComment.addWithWorkflowPG(

@@ -98,14 +98,14 @@ describe('EditBlueprint', () => {
 	});
 
 	it('adds additional query element from sidebar', () => {
-		const {container, getByLabelText} = renderEditBlueprint();
+		const {container, queryAllByLabelText} = renderEditBlueprint();
 
 		const elementCountBefore = container.querySelectorAll('.element')
 			.length;
 
-		fireEvent.mouseOver(container.querySelectorAll('.list-group-title')[1]);
+		fireEvent.mouseOver(queryAllByLabelText('add')[0]);
 
-		fireEvent.click(getByLabelText('add'));
+		fireEvent.click(queryAllByLabelText('add')[0]);
 
 		const elementCountAfter = container.querySelectorAll('.element').length;
 

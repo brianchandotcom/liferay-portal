@@ -16,7 +16,11 @@ import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {PagesVisitor, useFormState} from 'dynamic-data-mapping-form-renderer';
+import {
+	PagesVisitor,
+	useConfig,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 
@@ -51,18 +55,14 @@ function getFields(pages) {
 	return fields;
 }
 
-const RuleEditorModalContent = ({
-	functionsMetadata,
-	functionsURL,
-	onClick,
-	onClose,
-	pages,
-	rule,
-}) => {
+const RuleEditorModalContent = ({onClose, onSaveRule, rule}) => {
+	const {
+		ruleSettings: {functionsMetadata, functionsURL},
+	} = useConfig();
+	const {pages} = useFormState();
 	const [invalidRule, setInvalidRule] = useState(true);
-
 	const [ruleName, setRuleName] = useState(
-		rule?.name[themeDisplay.getDefaultLanguageId()]
+		rule?.name[themeDisplay.getDefaultLanguageId()] ?? ''
 	);
 
 	/**
@@ -142,14 +142,11 @@ const RuleEditorModalContent = ({
 						<ClayButton
 							disabled={invalidRule || !ruleName}
 							onClick={() => {
-								onClick({
-									dataRule: {
-										...ruleRef.current,
-										name: ruleName,
-									},
-									loc: rule?.ruleEditedIndex,
-									rule,
+								onSaveRule({
+									...ruleRef.current,
+									name: ruleName,
 								});
+
 								onClose();
 							}}
 						>
@@ -162,20 +159,12 @@ const RuleEditorModalContent = ({
 	);
 };
 
-export default ({
-	functionsMetadata,
-	functionsURL,
-	isVisible,
-	onClick,
-	onClose: onCloseFn,
-	rule,
-}) => {
-	const {pages} = useFormState();
+export default ({onClose: onCloseFn, onSaveRule, rule, showModal}) => {
 	const {observer, onClose} = useModal({
 		onClose: onCloseFn,
 	});
 
-	if (!isVisible) {
+	if (!showModal) {
 		return null;
 	}
 
@@ -186,11 +175,8 @@ export default ({
 			size="full-screen"
 		>
 			<RuleEditorModalContent
-				functionsMetadata={functionsMetadata}
-				functionsURL={functionsURL}
-				onClick={onClick}
 				onClose={onClose}
-				pages={pages}
+				onSaveRule={onSaveRule}
 				rule={rule}
 			/>
 		</ClayModal>

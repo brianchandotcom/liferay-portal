@@ -15,11 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {
-	useConfig,
-	useForm,
-	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+import {useForm, useFormState} from 'dynamic-data-mapping-form-renderer';
 import React, {useState} from 'react';
 
 import Sidebar from '../../../../js/components/sidebar/Sidebar.es';
@@ -28,37 +24,43 @@ import RuleList from '../../../components/rules/RuleList';
 import {EVENT_TYPES} from '../../../eventTypes';
 
 const RulesSidebar = ({title}) => {
-	const {ruleSettings} = useConfig();
 	const dispatch = useForm();
 	const {dataLayout} = useFormState({schema: ['dataLayout']});
-
-	const [rulesEditorState, setRulesEditorState] = useState({
-		isVisible: false,
-		rule: null,
-	});
 	const [keywords, setKeywords] = useState('');
+	const [loc, setLoc] = useState(-1);
+	const [showModal, setShowModal] = useState(false);
 
-	const toggleRulesEditorVisibility = (rule) => {
-		setRulesEditorState((prevState) => ({
-			isVisible: !prevState.isVisible,
-			rule: rule && normalizeRule(rule),
-		}));
+	const onAddRule = () => {
+		setLoc(-1);
+		setShowModal(true);
 	};
 
-	const handleClickChangeRule = ({dataRule, loc, rule}) => {
-		if (rule) {
+	const onDeleteRule = (loc) => {
+		dispatch({
+			payload: loc,
+			type: EVENT_TYPES.RULE.DELETE,
+		});
+	};
+
+	const onEditRule = (loc) => {
+		setLoc(loc);
+		setShowModal(true);
+	};
+
+	const onSaveRule = (rule) => {
+		if (loc <= -1) {
 			dispatch({
-				payload: {
-					loc,
-					rule: dataRule,
-				},
-				type: EVENT_TYPES.RULE.CHANGE,
+				payload: rule,
+				type: EVENT_TYPES.RULE.ADD,
 			});
 		}
 		else {
 			dispatch({
-				payload: dataRule,
-				type: EVENT_TYPES.RULE.ADD,
+				payload: {
+					loc,
+					rule,
+				},
+				type: EVENT_TYPES.RULE.CHANGE,
 			});
 		}
 	};
@@ -71,16 +73,14 @@ const RulesSidebar = ({title}) => {
 				<ClayLayout.ContentRow className="sidebar-section">
 					<ClayLayout.ContentCol expand>
 						<ClayForm onSubmit={(event) => event.preventDefault()}>
-							<Sidebar.SearchInput
-								onSearch={(keywords) => setKeywords(keywords)}
-							/>
+							<Sidebar.SearchInput onSearch={setKeywords} />
 						</ClayForm>
 					</ClayLayout.ContentCol>
 
 					<ClayLayout.ContentCol className="ml-2">
 						<ClayButtonWithIcon
 							displayType="primary"
-							onClick={() => toggleRulesEditorVisibility()}
+							onClick={onAddRule}
 							symbol="plus"
 						/>
 					</ClayLayout.ContentCol>
@@ -88,19 +88,19 @@ const RulesSidebar = ({title}) => {
 			</Sidebar.Header>
 			<Sidebar.Body>
 				<RuleList
-					dataRules={dataLayout.dataRules}
 					keywords={keywords}
-					toggleRulesEditorVisibility={toggleRulesEditorVisibility}
+					onAddRule={onAddRule}
+					onDeleteRule={onDeleteRule}
+					onEditRule={onEditRule}
+					rules={dataLayout.dataRules}
 				/>
 			</Sidebar.Body>
 
 			<RuleEditorModal
-				functionsMetadata={ruleSettings.functionsMetadata}
-				functionsURL={ruleSettings.functionsURL}
-				isVisible={rulesEditorState.isVisible}
-				onClick={handleClickChangeRule}
-				onClose={() => toggleRulesEditorVisibility()}
-				rule={rulesEditorState.rule}
+				onClose={() => setShowModal(false)}
+				onSaveRule={onSaveRule}
+				rule={dataLayout.dataRules?.[loc]}
+				showModal={showModal}
 			/>
 		</Sidebar>
 	);

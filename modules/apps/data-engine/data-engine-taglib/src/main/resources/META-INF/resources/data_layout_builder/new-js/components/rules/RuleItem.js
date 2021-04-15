@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
-import {useForm, useFormState} from 'dynamic-data-mapping-form-renderer';
+import {useFormState} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
 import DropDown from '../../../js/components/drop-down/DropDown.es';
@@ -27,7 +27,6 @@ import {
 	getOptionLabel,
 } from '../../../js/utils/dataDefinition.es';
 import {getLocalizedValue} from '../../../js/utils/lang.es';
-import {EVENT_TYPES} from '../../eventTypes';
 
 const ACTION_LABELS = {
 	autofill: Liferay.Language.get('autofill'),
@@ -58,15 +57,14 @@ const Text = ({capitalize = false, children = '', lowercase = false}) => (
 	</span>
 );
 
-export default function RuleItem({rule, toggleRulesEditorVisibility}) {
+export default function RuleItem({loc, onDeleteRule, onEditRule, rule}) {
 	const {actions, conditions, logicalOperator, name: ruleName} = rule;
-	const dispatch = useForm();
 	const {dataDefinition} = useFormState({schema: ['dataDefinition']});
 	const name = getLocalizedValue(dataDefinition.defaultLanguageId, ruleName);
 
 	const dropDownActions = [
 		{
-			action: () => toggleRulesEditorVisibility(rule),
+			action: () => onEditRule(loc),
 			name: Liferay.Language.get('edit'),
 		},
 		{
@@ -76,10 +74,7 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 				);
 
 				if (confirmed) {
-					dispatch({
-						payload: rule.ruleEditedIndex,
-						type: EVENT_TYPES.RULE.DELETE,
-					});
+					onDeleteRule(loc);
 				}
 			},
 			name: Liferay.Language.get('delete'),
@@ -108,7 +103,7 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 			>
 				<ClayButton
 					displayType="unstyled"
-					onClick={() => toggleRulesEditorVisibility(rule)}
+					onClick={() => onEditRule(loc)}
 				>
 					<Text capitalize>{Liferay.Language.get('if')}</Text>
 
@@ -145,7 +140,7 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 						};
 
 						return (
-							<>
+							<React.Fragment key={index}>
 								<Text lowercase>
 									{Liferay.Language.get('field')}
 								</Text>
@@ -169,12 +164,12 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 										{logicalOperator}
 									</ClayLabel>
 								)}
-							</>
+							</React.Fragment>
 						);
 					})}
 
 					{actions.map(({action, expression, target}, index) => (
-						<>
+						<React.Fragment key={index}>
 							<Text lowercase>
 								{ACTION_LABELS[action] || action}
 							</Text>
@@ -200,10 +195,11 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 									{Liferay.Language.get('and')}
 								</ClayLabel>
 							)}
-						</>
+						</React.Fragment>
 					))}
 				</ClayButton>
 			</ClayPanel>
+
 			<DropDown
 				actions={dropDownActions}
 				className="rule-list__options"

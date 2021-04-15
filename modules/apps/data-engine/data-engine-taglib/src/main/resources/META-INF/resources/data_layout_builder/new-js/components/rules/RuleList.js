@@ -19,24 +19,30 @@ import React from 'react';
 import EmptyState from '../../../js/components/empty-state/EmptyState.es';
 import RuleItem from './RuleItem';
 
-export default function ({dataRules, keywords, toggleRulesEditorVisibility}) {
-	const filteredDataRules = dataRules
-		.map((rule, index) => ({...rule, ruleEditedIndex: index}))
-		.filter(({name}) =>
+export default function ({
+	keywords,
+	onAddRule,
+	onDeleteRule,
+	onEditRule,
+	rules,
+}) {
+	const filteredRules = rules
+		.map((rule, index) => ({loc: index, rule}))
+		.filter(({rule: {name}}) =>
 			new RegExp(keywords, 'ig').test(
-				name[Liferay.ThemeDisplay.getLanguageId()]
+				name[themeDisplay.getDefaultLanguageId()]
 			)
 		);
 
 	return (
 		<>
-			{!filteredDataRules.length ? (
+			{!filteredRules.length ? (
 				<EmptyState
 					emptyState={{
 						button: () => (
 							<ClayButton
 								displayType="secondary"
-								onClick={() => toggleRulesEditorVisibility()}
+								onClick={onAddRule}
 							>
 								{Liferay.Language.get('create-new-rule')}
 							</ClayButton>
@@ -52,13 +58,14 @@ export default function ({dataRules, keywords, toggleRulesEditorVisibility}) {
 			) : (
 				<ClayLayout.ContentCol className="rule-list">
 					<hr />
-					{filteredDataRules.map((rule, index) => (
+
+					{filteredRules.map(({loc, rule}, index) => (
 						<RuleItem
 							key={index}
+							loc={loc}
+							onDeleteRule={onDeleteRule}
+							onEditRule={onEditRule}
 							rule={rule}
-							toggleRulesEditorVisibility={
-								toggleRulesEditorVisibility
-							}
 						/>
 					))}
 				</ClayLayout.ContentCol>

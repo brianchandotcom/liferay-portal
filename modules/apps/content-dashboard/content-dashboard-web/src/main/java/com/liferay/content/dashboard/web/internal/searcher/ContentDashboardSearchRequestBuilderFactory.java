@@ -15,12 +15,15 @@
 package com.liferay.content.dashboard.web.internal.searcher;
 
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.util.ContentDashboardSearchClassNameUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ContentDashboardSearchRequestBuilderFactory {
 
 	public SearchRequestBuilder builder(SearchContext searchContext) {
-		Collection<String> classNames =
-			_contentDashboardItemFactoryTracker.getClassNames();
+		Collection<String> classNames = _getClassNames();
 
 		return _searchRequestBuilderFactory.builder(
 			searchContext
@@ -45,6 +47,19 @@ public class ContentDashboardSearchRequestBuilderFactory {
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID
 		).highlightEnabled(
 			false
+		);
+	}
+
+	private Collection<String> _getClassNames() {
+		Collection<String> classNames =
+			_contentDashboardItemFactoryTracker.getClassNames();
+
+		Stream<String> stream = classNames.stream();
+
+		return stream.map(
+			ContentDashboardSearchClassNameUtil::getSearchClassName
+		).collect(
+			Collectors.toList()
 		);
 	}
 

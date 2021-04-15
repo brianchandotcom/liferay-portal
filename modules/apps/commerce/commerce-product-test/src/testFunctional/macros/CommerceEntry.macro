@@ -1078,4 +1078,45 @@ definition {
 		}
 	}
 
+	macro addTaxCategory{
+
+		Click(locator1 = "Button#PLUS");	
+
+		Type(
+			key_fieldLabel="External Reference Code",
+			value1="${keyReferenceCode}",
+			locator1="TextInput#GENERIC_TEXT_INPUT");
+
+		Type(
+			key_fieldLabel="Name",
+			value1="${keyName}",
+			locator1="CommerceEntry#NAME_FIELD");
+
+		Type(
+			key_fieldLabel="Description",
+			value1="${keyDescription}",
+			locator1="TextInput#GENERIC_TEXT_INPUT");
+		
+		Button.clickSave();
+		
+		CommerceNavigator.gotoEntry(entryName = "${keyName}");
+		
+		AssertTextEquals(
+			key_fieldLabel = "External Reference Code",
+			value1 = "${keyReferenceCode}",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT");
+		
+		AssertTextEquals(
+			key_fieldLabel = "Name",
+			value1 = "${keyName}",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT");
+		
+		AssertTextEquals(
+			key_fieldLabel = "Description",
+			value1 = "${keyDescription}",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT");
+		
+		Click(locator1 = "Button#BACK");
+	}
+
 }

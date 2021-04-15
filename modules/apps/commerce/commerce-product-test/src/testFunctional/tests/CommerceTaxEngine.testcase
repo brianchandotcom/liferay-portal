@@ -82,12 +82,45 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6263. Configure tax properties at channel level"
-	@ignore = "true"
 	@priority = "3"
 	test ConfigureChannelShippingTaxCategory {
 		property portal.acceptance = "false";
+		
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Tax Categories");
+			
+		CommerceEntry.addTaxCategory(
+			keyName = "Test",
+			keyReferenceCode = "Test Reference",
+			keyDescription = "Test Description");
+		
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+		
+		Click(locator1 = "Button#PLUS");
+		
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Test Channel",
+			channelType = "Site");
 
-		// TODO COMMERCE-6263 ConfigureChannelShippingTaxCategory Pending Implementation
+		Type(
+			key_fieldLabel = "Shipping Tax Category",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Channel");
+
+		AssertTextEquals(
+			key_fieldLabel = "Shipping Tax Category",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
 	}
 
 	@description = "This is a test for COMMERCE-6264. Add/update/delete tax category from UI"

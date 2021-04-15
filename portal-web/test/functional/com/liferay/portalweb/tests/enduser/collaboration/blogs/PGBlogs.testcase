@@ -259,34 +259,6 @@ definition {
 		Comments.delete(entryComment = "Blogs Entry Comment");
 	}
 
-	@description = "This checks that blog entries can be deleted through the UI."
-	@priority = "5"
-	@refactordone
-	test CanDeleteMultipleEntriesSequentially {
-		for (var entryCount : list "1,2") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-		}
-
-		for (var entryCount : list "2,1") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			BlogsEntry.moveToRecycleBinPG(
-				assetType = "Blogs Entry",
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-		}
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		for (var entryCount : list "1,2") {
-			BlogsEntry.viewNoPG(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-		}
-	}
-
 	@description = "This checks that the view count for a blog can be displayed once enabled."
 	@priority = "3"
 	@refactordone

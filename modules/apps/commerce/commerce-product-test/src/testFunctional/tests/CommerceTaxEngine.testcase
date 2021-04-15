@@ -85,22 +85,22 @@ definition {
 	@priority = "3"
 	test ConfigureChannelShippingTaxCategory {
 		property portal.acceptance = "false";
-		
+
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
 			portlet = "Tax Categories");
-			
+
 		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description",
 			keyName = "Test",
-			keyReferenceCode = "Test Reference",
-			keyDescription = "Test Description");
-		
+			keyReferenceCode = "Test Reference");
+
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
 			portlet = "Channels");
-		
+
 		Click(locator1 = "Button#PLUS");
-		
+
 		CommerceEntry.addNewChannelsEntry(
 			channelCurrency = "US Dollar",
 			channelName = "Test Channel",

@@ -382,6 +382,46 @@ definition {
 			optionValue = "${optionValue}");
 	}
 
+	macro addTaxCategory {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "External Reference Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyReferenceCode}");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${keyName}");
+
+		Type(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyDescription}");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoEntry(entryName = "${keyName}");
+
+		AssertTextEquals(
+			key_fieldLabel = "External Reference Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyReferenceCode}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyName}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyDescription}");
+
+		Click(locator1 = "Button#BACK");
+	}
+
 	macro checkImageName {
 		echo("number is: ${number} image is: ${image} uploadFileName is: ${uploadFileName}");
 		if ("${number}" != "") {
@@ -1076,47 +1116,6 @@ definition {
 				key_rowEntry = "${specificationLabelsEntry}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 		}
-	}
-
-	macro addTaxCategory{
-
-		Click(locator1 = "Button#PLUS");	
-
-		Type(
-			key_fieldLabel="External Reference Code",
-			value1="${keyReferenceCode}",
-			locator1="TextInput#GENERIC_TEXT_INPUT");
-
-		Type(
-			key_fieldLabel="Name",
-			value1="${keyName}",
-			locator1="CommerceEntry#NAME_FIELD");
-
-		Type(
-			key_fieldLabel="Description",
-			value1="${keyDescription}",
-			locator1="TextInput#GENERIC_TEXT_INPUT");
-		
-		Button.clickSave();
-		
-		CommerceNavigator.gotoEntry(entryName = "${keyName}");
-		
-		AssertTextEquals(
-			key_fieldLabel = "External Reference Code",
-			value1 = "${keyReferenceCode}",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT");
-		
-		AssertTextEquals(
-			key_fieldLabel = "Name",
-			value1 = "${keyName}",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT");
-		
-		AssertTextEquals(
-			key_fieldLabel = "Description",
-			value1 = "${keyDescription}",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT");
-		
-		Click(locator1 = "Button#BACK");
 	}
 
 }

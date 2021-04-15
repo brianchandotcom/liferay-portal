@@ -506,7 +506,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		AppManager.viewNoApp(appName = "Independent Modules");
+		AssertElementNotPresent(locator1 = "AppManager#APP_NAME");
 	}
 
 	@description = "This is a use case for LPS-99031."

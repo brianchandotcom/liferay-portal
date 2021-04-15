@@ -79,18 +79,6 @@ definition {
 		}
 	}
 
-	macro viewNoApp {
-		var key_appName = "${appName}";
-
-		AssertElementNotPresent(locator1 = "AppManager#APP_NAME");
-
-		while (IsElementPresent(locator1 = "Pagination#NEXT_LINK")) {
-			Click(locator1 = "Pagination#NEXT_LINK");
-
-			AssertElementNotPresent(locator1 = "AppManager#APP_NAME");
-		}
-	}
-
 	macro viewStatus {
 		var key_appName = "${appName}";
 		var key_appStatus = "${appStatus}";

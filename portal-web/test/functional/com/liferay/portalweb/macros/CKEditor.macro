@@ -34,10 +34,12 @@ definition {
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
 
-		Type(
-			key_text = "Display Text",
-			locator1 = "TextInput#ANY",
-			value1 = "${displayText}");
+		if (isSet(displayText)) {
+			Type(
+				key_text = "Display Text",
+				locator1 = "TextInput#ANY",
+				value1 = "${displayText}");
+		}
 
 		Type(
 			key_text = "URL",

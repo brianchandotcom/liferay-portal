@@ -30,6 +30,7 @@ definition {
 
 	@description = "When the user clicks on Save and Add a new one, the category is saved"
 	@priority = "5"
+	@uitest
 	test AddCategoryUsingSaveAndAddButton {
 		property portal.acceptance = "true";
 
@@ -48,6 +49,7 @@ definition {
 
 	@description = "When the site administrator (not Global) accesses to the Categories administration application, the existing Global vocabularies appear as locked and it's not possible to edit them"
 	@priority = "5"
+	@uitest
 	test GlobalCategoriesNotEditable {
 		property portal.acceptance = "true";
 

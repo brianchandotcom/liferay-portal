@@ -13,12 +13,22 @@
  */
 
 export default function itemSelectorValueToInfoItem(infoItem) {
-	const {className, classNameId, classPK, returnType, title} = infoItem;
+	const {
+		className,
+		classNameId,
+		classPK,
+		returnType,
+		subtype,
+		title,
+		type,
+	} = infoItem;
 
 	return {
 		className,
 		classNameId,
 		classPK,
+		itemSubtype: subtype,
+		itemType: type,
 		title,
 		type: returnType,
 	};

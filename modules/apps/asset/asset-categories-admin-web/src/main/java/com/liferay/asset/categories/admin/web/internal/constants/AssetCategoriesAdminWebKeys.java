@@ -22,4 +22,7 @@ public class AssetCategoriesAdminWebKeys {
 	public static final String ASSET_CATEGORIES_ADMIN_CONFIGURATION =
 		"ASSET_CATEGORIES_ADMIN_CONFIGURATION";
 
+	public static final String LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER =
+		"LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER";
+
 }

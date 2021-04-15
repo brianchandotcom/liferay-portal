@@ -20,6 +20,8 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 AssetCategory category = (AssetCategory)row.getObject();
+
+String displayPageURL = assetCategoriesDisplayContext.getDisplayPageURL(category);
 %>
 
 <liferay-ui:icon-menu
@@ -60,6 +62,13 @@ AssetCategory category = (AssetCategory)row.getObject();
 			id='<%= row.getRowId() + "moveCategory" %>'
 			message="move"
 			url="javascript:;"
+		/>
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(displayPageURL) %>">
+		<liferay-ui:icon
+			message="view-display-page"
+			url="<%= displayPageURL %>"
 		/>
 	</c:if>
 

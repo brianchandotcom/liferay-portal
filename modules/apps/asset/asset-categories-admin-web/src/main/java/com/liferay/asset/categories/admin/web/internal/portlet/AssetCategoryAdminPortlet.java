@@ -41,6 +41,7 @@ import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -347,6 +348,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AssetCategoriesAdminWebKeys.ASSET_CATEGORIES_ADMIN_CONFIGURATION,
 			_assetCategoriesAdminWebConfiguration);
+		renderRequest.setAttribute(
+			AssetCategoriesAdminWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER,
+			_layoutDisplayPageProviderTracker);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -507,6 +511,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private Portal _portal;

@@ -37,9 +37,9 @@ export default function PageContent({
 	classPK,
 	editableId,
 	icon,
-	name,
 	subtype,
 	title,
+	type,
 }) {
 	const [active, setActive] = useState(false);
 	const hoverItem = useHoverItem();
@@ -117,8 +117,8 @@ export default function PageContent({
 		>
 			<div
 				className={classNames('d-flex', {
-					'align-items-baseline': actions,
-					'align-items-center': !actions,
+					'align-items-baseline': type,
+					'align-items-center': !type,
 				})}
 			>
 				<ClayIcon
@@ -129,21 +129,27 @@ export default function PageContent({
 					symbol={icon || 'document-text'}
 				/>
 				<ClayLayout.ContentCol expand>
-					<span className="text-truncate">{title}</span>
+					<span
+						className={classNames('text-truncate', {
+							title: type,
+						})}
+					>
+						{title}
+					</span>
 
-					{name && (
+					{type && (
 						<span className="text-secondary">
-							{Liferay.Language.get('type')}: {name}
+							{Liferay.Language.get('type')}: {type}
 						</span>
 					)}
 					{subtype && (
-						<span className="text-secondary">
-							{Liferay.Language.get('subtype')}:
+						<span className="text-secondary text-truncate">
+							{Liferay.Language.get('subtype')}: {subtype}
 						</span>
 					)}
 				</ClayLayout.ContentCol>
 
-				{editURL || permissionsURL || viewUsagesURL ? (
+				{editURL || permissionsURL || viewUsagesURL || type ? (
 					<ClayDropDown
 						active={active}
 						onActiveChange={setActive}

@@ -21,6 +21,7 @@
 
 		&__page-content {
 			font-size: 0.75rem;
+			margin-bottom: 4px;
 			padding: 4px 0 4px 12px;
 
 			&:hover {
@@ -42,6 +43,14 @@
 			.lexicon-icon {
 				margin-top: 0;
 				min-width: 1rem;
+			}
+
+			.text-secondary:last-of-type {
+				margin-bottom: 4px;
+			}
+
+			.title {
+				font-weight: 600;
 			}
 		}
 

@@ -302,11 +302,10 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		
 		AssertElementPresent(
-            key_title = "Name",
-            locator1 = "TextInput#NAME",
-            value1 = "Minium Portal 2");
+			key_title = "Name",
+			locator1 = "TextInput#NAME",
+			value1 = "Minium Portal 2");
 
 		AssertElementPresent(
 			key_title = "Currency",
@@ -355,11 +354,6 @@ definition {
 			key_title = "Discounts Target Price Type",
 			locator1 = "CommerceEntry#CATALOGS_FORM",
 			value1 = "Gross Price");
-		
-
-
-		
-
 	}
 
 	test CreateNewNotificationTemplate {

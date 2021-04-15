@@ -64,6 +64,7 @@ export default function StructureTreeNode({node}) {
 			activationOrigin={isSelected ? activationOrigin : null}
 			isActive={node.activable && isSelected}
 			isHovered={node.id === fromControlsId(hoveredItemId)}
+			isMapped={node.mapped}
 			isSelected={isSelected}
 			node={node}
 		/>
@@ -91,6 +92,7 @@ function StructureTreeNodeContent({
 	activationOrigin,
 	isActive,
 	isHovered,
+	isMapped,
 	isSelected,
 	node,
 }) {
@@ -175,6 +177,7 @@ function StructureTreeNodeContent({
 					node.activable && node.itemType !== ITEM_TYPES.editable,
 				'page-editor__page-structure__tree-node--active': isActive,
 				'page-editor__page-structure__tree-node--hovered': isHovered,
+				'page-editor__page-structure__tree-node--mapped': isMapped,
 			})}
 			onMouseLeave={(event) => {
 				if (!isDraggingSource && isHovered) {
@@ -215,6 +218,7 @@ function StructureTreeNodeContent({
 				disabled={node.disabled}
 				icon={node.icon}
 				isActive={isActive}
+				isMapped={isMapped}
 				name={node.name}
 				ref={nodeRef}
 			/>
@@ -226,19 +230,25 @@ function StructureTreeNodeContent({
 	);
 }
 
-const NameLabel = React.forwardRef(({disabled, icon, isActive, name}, ref) => (
-	<div
-		className={classNames('page-editor__page-structure__tree-node__name', {
-			'page-editor__page-structure__tree-node__name--active': isActive,
-			'page-editor__page-structure__tree-node__name--disabled': disabled,
-		})}
-		ref={ref}
-	>
-		{icon && <ClayIcon symbol={icon || ''} />}
+const NameLabel = React.forwardRef(
+	({disabled, icon, isActive, isMapped, name}, ref) => (
+		<div
+			className={classNames(
+				'page-editor__page-structure__tree-node__name',
+				{
+					'page-editor__page-structure__tree-node__name--active': isActive,
+					'page-editor__page-structure__tree-node__name--disabled': disabled,
+					'page-editor__page-structure__tree-node__name--mapped': isMapped,
+				}
+			)}
+			ref={ref}
+		>
+			{icon && <ClayIcon symbol={icon || ''} />}
 
-		{name || Liferay.Language.get('element')}
-	</div>
-));
+			{name || Liferay.Language.get('element')}
+		</div>
+	)
+);
 
 const RemoveButton = ({node, visible}) => {
 	const dispatch = useDispatch();

@@ -520,23 +520,13 @@ definition {
 	test ViewErrorMessageForNullCustomAbstract {
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
+		BlogsEntry.addTitle(entryTitle = "Blogs Title");
+
 		Panel.expandPanel(panel = "Configuration");
 
 		Click(locator1 = "Radio#CUSTOM_ABSTRACT");
 
-		AssertClick.assertTextClickAt(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
-
-		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE_FIELD_HELPER",
-			value1 = "This field is required.");
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Title");
-
-		AssertClick.assertTextClickAt(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.clickPublish();
 
 		Alert.viewRequiredField();
 	}

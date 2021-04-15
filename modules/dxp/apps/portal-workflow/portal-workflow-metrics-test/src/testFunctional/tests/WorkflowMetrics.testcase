@@ -2677,11 +2677,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.uploadAppCP(
+		AppManager.uploadApp(
 			appName = "${appName}",
 			warFileName = "${warFileName}.jar");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Liferay Portal Workflow Metrics Calendar Sample",
 			appStatus = "Active",
 			searchTerm = "calendar");

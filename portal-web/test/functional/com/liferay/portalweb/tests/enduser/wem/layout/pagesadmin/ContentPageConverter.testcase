@@ -700,7 +700,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.uploadAppCP(
+		AppManager.uploadApp(
 			appName = "custom-layout-layouttpl",
 			warFileName = "custom-layout-layouttpl.war");
 
@@ -795,7 +795,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.uploadAppCP(
+		AppManager.uploadApp(
 			appName = "custom-layout-layouttpl",
 			warFileName = "custom-layout-layouttpl.war");
 
@@ -901,7 +901,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.uploadAppCP(
+		AppManager.uploadApp(
 			appName = "custom-layout-layouttpl",
 			warFileName = "custom-layout-layouttpl.war");
 

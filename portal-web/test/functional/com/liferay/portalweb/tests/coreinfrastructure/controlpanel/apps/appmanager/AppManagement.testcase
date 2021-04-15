@@ -32,23 +32,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Adaptive Media",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Adaptive Media");
+		AppManager.deactivateApp(appName = "Adaptive Media");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Adaptive Media",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Adaptive Media");
+		AppManager.activateApp(appName = "Adaptive Media");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Adaptive Media",
 			appStatus = "Active");
 	}
@@ -64,23 +64,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Asset Libraries",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Asset Libraries");
+		AppManager.deactivateApp(appName = "Asset Libraries");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Asset Libraries",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Asset Libraries");
+		AppManager.activateApp(appName = "Asset Libraries");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Asset Libraries",
 			appStatus = "Active");
 	}
@@ -96,23 +96,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Blogs",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Blogs");
+		AppManager.deactivateApp(appName = "Blogs");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Blogs",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Blogs");
+		AppManager.activateApp(appName = "Blogs");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Blogs",
 			appStatus = "Active");
 	}
@@ -128,23 +128,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Comment",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Comment");
+		AppManager.deactivateApp(appName = "Comment");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Comment",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Comment");
+		AppManager.activateApp(appName = "Comment");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Comment",
 			appStatus = "Active");
 	}
@@ -160,23 +160,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Document Library Opener",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Document Library Opener");
+		AppManager.deactivateApp(appName = "Document Library Opener");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Document Library Opener",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Document Library Opener");
+		AppManager.activateApp(appName = "Document Library Opener");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Document Library Opener",
 			appStatus = "Active");
 	}
@@ -192,23 +192,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Knowledge Base",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Knowledge Base");
+		AppManager.deactivateApp(appName = "Knowledge Base");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Knowledge Base",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Knowledge Base");
+		AppManager.activateApp(appName = "Knowledge Base");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Knowledge Base",
 			appStatus = "Active");
 	}
@@ -224,23 +224,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Message Boards",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Message Boards");
+		AppManager.deactivateApp(appName = "Message Boards");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Message Boards",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Message Boards");
+		AppManager.activateApp(appName = "Message Boards");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Message Boards",
 			appStatus = "Active");
 	}
@@ -256,23 +256,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Notifications",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Notifications");
+		AppManager.deactivateApp(appName = "Notifications");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Notifications",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Notifications");
+		AppManager.activateApp(appName = "Notifications");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Notifications",
 			appStatus = "Active");
 	}
@@ -288,23 +288,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Questions",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Questions");
+		AppManager.deactivateApp(appName = "Questions");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Questions",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Questions");
+		AppManager.activateApp(appName = "Questions");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Questions",
 			appStatus = "Active");
 	}
@@ -320,23 +320,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Ratings",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Ratings");
+		AppManager.deactivateApp(appName = "Ratings");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Ratings",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Ratings");
+		AppManager.activateApp(appName = "Ratings");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Ratings",
 			appStatus = "Active");
 	}
@@ -352,23 +352,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Sharing",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Sharing");
+		AppManager.deactivateApp(appName = "Sharing");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Sharing",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Sharing");
+		AppManager.activateApp(appName = "Sharing");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Sharing",
 			appStatus = "Active");
 	}
@@ -384,23 +384,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Translation",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Translation");
+		AppManager.deactivateApp(appName = "Translation");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Translation",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Translation");
+		AppManager.activateApp(appName = "Translation");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Translation",
 			appStatus = "Active");
 	}
@@ -416,23 +416,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Wiki",
 			appStatus = "Active");
 
-		AppManager.deactivateAppCP(appName = "Wiki");
+		AppManager.deactivateApp(appName = "Wiki");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Wiki",
 			appStatus = "Resolved");
 
-		AppManager.activateAppCP(appName = "Wiki");
+		AppManager.activateApp(appName = "Wiki");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Wiki",
 			appStatus = "Active");
 	}
@@ -448,13 +448,19 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.uploadAppCP(
+		AppManager.uploadApp(
 			appName = "${appName}",
 			warFileName = "${appName}-7.2.0.war");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "${appName}",
 			appStatus = "Active");
+	}
+
+	@description = "This test attempts to install an app by uploading a file that is invalid. Error message is asserted."
+	@priority = "5"
+	@refactored
+	test InvalidFileShouldNotBeUploaded {
 	}
 
 	@priority = "5"
@@ -468,17 +474,17 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.uploadAppCP(
+		AppManager.uploadApp(
 			appName = "${appName}",
 			warFileName = "${appName}-7.2.0.war");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "${appName}",
 			appStatus = "Active");
 
-		AppManager.uninstallAppCP(appName = "${appName}");
+		AppManager.uninstallApp(appName = "${appName}");
 
-		AppManager.viewUninstallAppCP(appName = "${appName}");
+		AppManager.viewUninstallApp(appName = "${appName}");
 
 		AssertConsoleTextPresent(value1 = "STOPPED ${appName}");
 	}
@@ -492,11 +498,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.selectAppCP(appName = "Independent Modules");
+		AppManager.selectApp(appName = "Independent Modules");
 
 		Pause(locator1 = "3000");
 
-		AppManager.viewNoAppCP(appName = "Independent Modules");
+		AppManager.viewNoApp(appName = "Independent Modules");
 	}
 
 	@description = "This is a use case for LPS-99031."

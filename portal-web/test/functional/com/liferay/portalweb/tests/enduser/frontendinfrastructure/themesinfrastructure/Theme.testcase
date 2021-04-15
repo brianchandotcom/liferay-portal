@@ -39,7 +39,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.uploadAppCP(
+		AppManager.uploadApp(
 			appName = "test-theme",
 			warFileName = "test-theme.war");
 
@@ -93,7 +93,7 @@ definition {
 
 		Search.searchCP(searchTerm = "${appName}");
 
-		AppManager.deactivateAppCP(appName = "${appName}");
+		AppManager.deactivateApp(appName = "${appName}");
 
 		AssertConsoleTextPresent(value1 = "STOPPED test-theme_1.0.0");
 
@@ -117,7 +117,7 @@ definition {
 
 		Search.searchCP(searchTerm = "${appName}");
 
-		AppManager.activateAppCP(appName = "${appName}");
+		AppManager.activateApp(appName = "${appName}");
 
 		Navigator.openSitePage(
 			pageName = "Theme Test Page",
@@ -196,7 +196,7 @@ definition {
 
 		Search.searchCP(searchTerm = "${appName}");
 
-		AppManager.uninstallAppCP(appName = "${appName}");
+		AppManager.uninstallApp(appName = "${appName}");
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle test-theme_1.0.0");
 

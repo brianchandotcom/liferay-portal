@@ -2301,12 +2301,12 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Liferay Drools",
 			appStatus = "Active",
 			searchTerm = "Drools");
 
-		AppManager.viewAppCP(
+		AppManager.viewApp(
 			appName = "Liferay Portal Rules Engine Drools",
 			appStatus = "Active",
 			searchTerm = "Drools");

@@ -212,7 +212,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		AppManager.uploadAppCP(
+		AppManager.uploadApp(
 			appName = "test-theme",
 			warFileName = "test-theme.war");
 

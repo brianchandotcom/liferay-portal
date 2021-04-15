@@ -19,6 +19,8 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeUtil;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemTypeChecker;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.search.BooleanClause;
@@ -90,6 +92,9 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 	private BooleanClause[] _getBooleanClauses() {
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
+		booleanQueryImpl.addExactTerm(
+			Field.ENTRY_CLASS_NAME, DDMStructure.class.getName());
+
 		BooleanFilter booleanFilter = new BooleanFilter();
 
 		TermsFilter classNameIdTermsFilter = new TermsFilter(
@@ -106,9 +111,21 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
+		BooleanQueryImpl dlBooleanQueryImpl = new BooleanQueryImpl();
+
+		dlBooleanQueryImpl.addExactTerm(
+			Field.ENTRY_CLASS_NAME, DLFileEntryType.class.getName());
+
+		BooleanQueryImpl finalBooleanQueryImpl = new BooleanQueryImpl();
+
+		finalBooleanQueryImpl.add(
+			booleanQueryImpl, BooleanClauseOccur.SHOULD.getName());
+		finalBooleanQueryImpl.add(
+			dlBooleanQueryImpl, BooleanClauseOccur.SHOULD.getName());
+
 		return new BooleanClause[] {
 			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+				finalBooleanQueryImpl, BooleanClauseOccur.MUST.getName())
 		};
 	}
 

@@ -36,8 +36,7 @@ public class PullRequestCommentPayload extends PullRequestPayload {
 	@Override
 	public PullRequest getPullRequest() {
 		if (pullRequest == null) {
-			pullRequest = new PullRequest(
-				get("issue/pull/pull_request/html_url"));
+			pullRequest = new PullRequest(get("issue/pull_request/html_url"));
 		}
 
 		return pullRequest;

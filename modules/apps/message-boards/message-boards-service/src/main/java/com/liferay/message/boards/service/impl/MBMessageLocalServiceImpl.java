@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.impl;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
+import com.liferay.comment.constants.CommentConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -2527,7 +2528,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return _configurationProvider.getConfiguration(
 			CommentGroupServiceConfiguration.class,
-			new GroupServiceSettingsLocator(groupId, MBConstants.SERVICE_NAME));
+			new GroupServiceSettingsLocator(
+				groupId, CommentConstants.SERVICE_NAME));
 	}
 
 	private long _getFileEntryMessageId(long fileEntryId)

@@ -21,6 +21,8 @@ import com.liferay.message.boards.model.MBDiscussion;
  */
 public class CommentConstants {
 
+	public static final String SERVICE_NAME = "com.liferay.comment";
+
 	public static Class<?> getDiscussionClass() {
 		return MBDiscussion.class;
 	}

@@ -15,7 +15,7 @@
 package com.liferay.comment.web.internal.configuration.definition;
 
 import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
-import com.liferay.message.boards.constants.MBConstants;
+import com.liferay.comment.constants.CommentConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +35,7 @@ public class CommentGroupServiceConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return MBConstants.SERVICE_NAME;
+		return CommentConstants.SERVICE_NAME;
 	}
 
 }

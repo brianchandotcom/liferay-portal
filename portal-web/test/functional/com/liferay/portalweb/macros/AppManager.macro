@@ -73,19 +73,12 @@ definition {
 			value1 = "${appName}");
 
 		if (isSet(appStatus)) {
-			AppManager.viewStatus(
-				appName = "${appName}",
-				appStatus = "${appStatus}");
+			var key_appStatus = "${appStatus}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "AppManager#APP_STATUS",
+				value1 = "${appStatus}");
 		}
-	}
-
-	macro viewStatus {
-		var key_appName = "${appName}";
-		var key_appStatus = "${appStatus}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "AppManager#APP_STATUS",
-			value1 = "${appStatus}");
 	}
 
 	macro viewUninstallApp {

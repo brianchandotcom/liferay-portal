@@ -4,7 +4,7 @@ definition {
 	macro _convertToXML {
 		Variables.assertDefined(parameterList = "${content}");
 
-		var contentXML = '''<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US">${content}</dynamic-content> </dynamic-element> </root> ''';
+		var contentXML = '''<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US"><![CDATA[<p>${content}</p>]]></dynamic-content> </dynamic-element> </root> ''';
 
 		return "${contentXML}";
 	}

@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>CREATE_TEST_BUTTON</td>
-	<td>//*[contains(@class, 'btn btn-secondary')]</td>
+	<td>//*[contains(@class, 'btn-secondary') and contains(text(),'Create Test')]</td>
 	<td></td>
 </tr>
 <tr>

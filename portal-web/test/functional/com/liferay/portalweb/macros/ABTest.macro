@@ -4,6 +4,17 @@ definition {
 		Click(locator1 = "ABTest#CONTROL_VARIANT");
 
 		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+
+		SelectWindow(locator1 = "name=undefined");
+
+		AnalyticsCloud.loginAnalyticsCloud(
+			emailAddress = "test@liferay.com",
+			password = "test");
+
+		AssertTextEquals(
+			ABtestTitle = "${ABtestTitle}",
+			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
+			value1 = "${ABtestTitle}");
 	}
 
 	macro createABTest {
@@ -51,12 +62,10 @@ definition {
 	}
 
 	macro runTest {
-		if (IsElementPresent(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON")) {
-			Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
-		}
+		ClickNoError(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
 
 		if (IsElementPresent(locator1 = "ABTest#RUN_TEST_BUTTON")) {
-			Click(locator1 = "ABTest#RUN_TEST_BUTTON");
+			ClickNoError(locator1 = "ABTest#RUN_TEST_BUTTON");
 
 			Click(locator1 = "ABTest#OK_BUTTON");
 		}
@@ -77,11 +86,7 @@ definition {
 	}
 
 	macro terminateTest {
-		if (IsElementNotPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
-			User.firstLoginPG();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
+		SelectWindow(locator1 = "name=undefined");
 
 		ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
 

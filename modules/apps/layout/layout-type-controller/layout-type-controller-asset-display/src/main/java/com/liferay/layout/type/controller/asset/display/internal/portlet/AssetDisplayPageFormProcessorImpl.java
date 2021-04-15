@@ -56,12 +56,7 @@ public class AssetDisplayPageFormProcessorImpl
 			portletRequest, "displayPageType",
 			AssetDisplayPageConstants.TYPE_DEFAULT);
 
-		long assetDisplayPageId = ParamUtil.getLong(
-			portletRequest, "assetDisplayPageId");
-
-		if ((displayPageType == AssetDisplayPageConstants.TYPE_DEFAULT) &&
-			(assetDisplayPageId == 0)) {
-
+		if (displayPageType == AssetDisplayPageConstants.TYPE_DEFAULT) {
 			if (assetDisplayPageEntry != null) {
 				_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
 					themeDisplay.getScopeGroupId(), classNameId, classPK);
@@ -69,6 +64,9 @@ public class AssetDisplayPageFormProcessorImpl
 
 			return;
 		}
+
+		long assetDisplayPageId = ParamUtil.getLong(
+			portletRequest, "assetDisplayPageId");
 
 		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
 			assetDisplayPageId = 0;

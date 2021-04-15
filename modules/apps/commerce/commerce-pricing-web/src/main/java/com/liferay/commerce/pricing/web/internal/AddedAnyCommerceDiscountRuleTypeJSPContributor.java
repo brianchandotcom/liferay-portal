@@ -60,7 +60,7 @@ public class AddedAnyCommerceDiscountRuleTypeJSPContributor
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/discount/rule/type/added_any/v2_0/view.jsp");
+			"/discount/rule/type/added_any.jsp");
 	}
 
 	@Reference

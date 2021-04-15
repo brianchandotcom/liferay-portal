@@ -269,23 +269,7 @@ definition {
 			entryContent = "Blogs Entry2 Content",
 			entryTitle = "Blogs Entry2 Title");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry3 Content",
-			entryTitle = "Blogs Entry3 Title");
-
-		for (var entryCount : list "1,2,3") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			BlogsNavigator.gotoEntryCP(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-
-			BlogsEntry.viewEntryCP(
-				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-		}
-
-		for (var entryCount : list "1,2,3") {
+		for (var entryCount : list "1,2") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			BlogsNavigator.moveToRecycleBinCP(
@@ -295,7 +279,7 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3") {
+		for (var entryCount : list "1,2") {
 			BlogsEntry.viewNoCP(entryTitle = "Blogs Entry${entryCount} Title");
 		}
 	}

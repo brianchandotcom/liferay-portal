@@ -132,6 +132,7 @@ function renderMappingSelector({mappedItem = {}, onMappingSelect = () => {}}) {
 			},
 		},
 		mappedInfoItems: [],
+		pageContents: [],
 		segmentsExperienceId: 0,
 	};
 

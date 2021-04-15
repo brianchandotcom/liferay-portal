@@ -26,7 +26,7 @@ dependencies {
 	compileInclude group: "org.antlr", name: "antlr4-runtime", version: "4.7.1"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.8"
 	compileInclude group: "org.hibernate.validator", name: "hibernate-validator", version: "6.1.5.Final"
-	compileInclude group: "org.javassist", name: "javassist", version: "3.23.1-GA"
+	compileInclude group: "org.javassist", name: "javassist", version: "3.27.0-GA"
 	compileInclude group: "org.reactivestreams", name: "reactive-streams", version: "1.0.2"
 	compileInclude group: "org.reflections", name: "reflections", version: "0.9.11"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.27"

@@ -133,9 +133,6 @@
 			"name": "com.liferay.sass.compiler.SassCompiler"
 		},
 		{
-			"name": "com.liferay.test.util.portal.util.PropsValuesReplacer"
-		},
-		{
 			"name": "java.io.BufferedInputStream"
 		},
 		{

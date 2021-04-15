@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -49,7 +51,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.test.util.portal.util.PropsValuesReplacer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -203,9 +204,9 @@ public class AMThumbnailsOSGiCommandsTest {
 	@Ignore
 	@Test
 	public void testMigrateOnlyProcessesImages() throws Exception {
-		try (PropsValuesReplacer propsValuesReplacer1 = new PropsValuesReplacer(
+		try (SafeClosable safeClosable1 = PropsValuesTestUtil.swap(
 				"DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT", 100);
-			PropsValuesReplacer propsValuesReplacer2 = new PropsValuesReplacer(
+			SafeClosable safeClosable2 = PropsValuesTestUtil.swap(
 				"DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH", 100)) {
 
 			FileEntry pdfFileEntry = _addPDFFileEntry();
@@ -222,9 +223,9 @@ public class AMThumbnailsOSGiCommandsTest {
 	public void testMigrateThrowsExceptionWhenNoValidConfiguration()
 		throws Exception {
 
-		try (PropsValuesReplacer propsValuesReplacer1 = new PropsValuesReplacer(
+		try (SafeClosable safeClosable1 = PropsValuesTestUtil.swap(
 				"DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT", 999);
-			PropsValuesReplacer propsValuesReplacer2 = new PropsValuesReplacer(
+			SafeClosable safeClosable2 = PropsValuesTestUtil.swap(
 				"DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT", 999)) {
 
 			_addPNGFileEntry();

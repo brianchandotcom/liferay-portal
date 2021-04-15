@@ -20,17 +20,18 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.subscription.test.util.BaseSubscriptionLocalizedContentTestCase;
-import com.liferay.test.util.portal.util.PropsValuesReplacer;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -53,7 +54,7 @@ public class MBSubscriptionLocalizedContentTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		try (PropsValuesReplacer propsValuesReplacer = new PropsValuesReplacer(
+		try (SafeClosable safeClosable = PropsValuesTestUtil.swap(
 				"MESSAGE_BOARDS_EMAIL_BULK", false)) {
 
 			ServiceContext serviceContext =
@@ -105,7 +106,7 @@ public class MBSubscriptionLocalizedContentTest
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		try (PropsValuesReplacer propsValuesReplacer = new PropsValuesReplacer(
+		try (SafeClosable safeClosable = PropsValuesTestUtil.swap(
 				"MESSAGE_BOARDS_EMAIL_BULK", false)) {
 
 			MBMessage message = MBMessageLocalServiceUtil.getMessage(

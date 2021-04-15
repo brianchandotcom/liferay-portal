@@ -750,7 +750,9 @@ export default ({
 		symbolLeft: 'cards2',
 	});
 
-	dropdownItems.push(createDropdownItem);
+	if (createDropdownItem) {
+		dropdownItems.push(createDropdownItem);
+	}
 
 	if (reviewDropdownItem) {
 		dropdownItems.push({type: 'divider'});

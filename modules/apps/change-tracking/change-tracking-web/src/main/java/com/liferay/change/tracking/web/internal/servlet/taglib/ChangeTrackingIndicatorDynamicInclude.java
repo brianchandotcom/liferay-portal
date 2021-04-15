@@ -22,6 +22,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -312,29 +313,36 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			}
 		}
 
-		PortletURL addURL = PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
+		if (CTPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				CTActionKeys.ADD_PUBLICATION)) {
+
+			PortletURL addURL = PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					httpServletRequest, themeDisplay.getScopeGroup(),
+					CTPortletKeys.PUBLICATIONS, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/change_tracking/add_ct_collection"
+			).build();
+
+			PortletURL redirectURL = _portal.getControlPanelPortletURL(
 				httpServletRequest, themeDisplay.getScopeGroup(),
-				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/change_tracking/add_ct_collection"
-		).build();
+				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
 
-		PortletURL redirectURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, themeDisplay.getScopeGroup(),
-			CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
+			addURL.setParameter("redirect", redirectURL.toString());
 
-		addURL.setParameter("redirect", redirectURL.toString());
-
-		data.put(
-			"createDropdownItem",
-			JSONUtil.put(
-				"href", addURL.toString()
-			).put(
-				"label", _language.get(resourceBundle, "create-new-publication")
-			).put(
-				"symbolLeft", "plus"
-			));
+			data.put(
+				"createDropdownItem",
+				JSONUtil.put(
+					"href", addURL.toString()
+				).put(
+					"label",
+					_language.get(resourceBundle, "create-new-publication")
+				).put(
+					"symbolLeft", "plus"
+				));
+		}
 
 		if (ctCollection != null) {
 			data.put(

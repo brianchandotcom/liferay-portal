@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.document.library.web.internal.util.FFImageEditorConfigurationUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -527,6 +528,10 @@ public class UIItemsBuilder {
 
 	public void addEditImageItem(List<MenuItem> menuItems)
 		throws PortalException {
+
+		if (!FFImageEditorConfigurationUtil.enabled()) {
+			return;
+		}
 
 		if ((_fileShortcut != null) ||
 			!_fileEntryDisplayContextHelper.

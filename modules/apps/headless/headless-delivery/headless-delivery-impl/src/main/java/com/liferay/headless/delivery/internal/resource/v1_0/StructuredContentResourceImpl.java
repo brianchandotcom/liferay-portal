@@ -16,9 +16,6 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -31,7 +28,6 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -42,12 +38,14 @@ import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormFieldUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DisplayPageRendererUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RenderedContentValueUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.StructuredContentUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
@@ -68,16 +66,12 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -89,7 +83,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -110,6 +103,7 @@ import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -123,7 +117,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -624,8 +617,8 @@ public class StructuredContentResourceImpl
 			StructuredContent structuredContent)
 		throws Exception {
 
-		DDMStructure ddmStructure = _checkDDMStructurePermission(
-			structuredContent);
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			structuredContent.getContentStructureId());
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
 			structuredContent.getDatePublished());
@@ -659,14 +652,15 @@ public class StructuredContentResourceImpl
 			_journalArticleService.addArticle(
 				siteId, parentStructuredContentFolderId, 0, 0, null, true,
 				titleMap, descriptionMap, friendlyUrlMap,
-				_createJournalArticleContent(
+				StructuredContentUtil.createJournalArticleContent(
+					_jsonDDMFormValuesSerializer, _ddm,
 					DDMFormValuesUtil.toDDMFormValues(
 						structuredContent.getContentFields(),
 						ddmStructure.getDDMForm(), _dlAppService, siteId,
 						_journalArticleService, _layoutLocalService,
 						contextAcceptLanguage.getPreferredLocale(),
 						_getRootDDMFormFields(ddmStructure)),
-					ddmStructure),
+					_ddmFormValuesValidator, ddmStructure, _journalConverter),
 				ddmStructure.getStructureKey(),
 				_getDDMTemplateKey(ddmStructure), null,
 				localDateTime.getMonthValue() - 1,
@@ -680,62 +674,6 @@ public class StructuredContentResourceImpl
 					_getExpandoBridgeAttributes(structuredContent), siteId,
 					contextHttpServletRequest,
 					structuredContent.getViewableByAsString())));
-	}
-
-	private DDMStructure _checkDDMStructurePermission(
-			StructuredContent structuredContent)
-		throws Exception {
-
-		try {
-			return _ddmStructureService.getStructure(
-				structuredContent.getContentStructureId());
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			throw new ForbiddenException(
-				"You do not have permission to create a structured content " +
-					"using the content structure ID " +
-						structuredContent.getContentStructureId(),
-				principalException);
-		}
-	}
-
-	private String _createJournalArticleContent(
-			DDMFormValues ddmFormValues, DDMStructure ddmStructure)
-		throws Exception {
-
-		_validateDDMFormValues(ddmFormValues);
-
-		Locale originalSiteDefaultLocale =
-			LocaleThreadLocal.getSiteDefaultLocale();
-
-		try {
-			LocaleThreadLocal.setSiteDefaultLocale(
-				LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId()));
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			DDMForm ddmForm = ddmStructure.getDDMForm();
-
-			serviceContext.setAttribute(
-				"ddmFormValues",
-				_toString(
-					new DDMFormValues(ddmForm) {
-						{
-							setAvailableLocales(ddmForm.getAvailableLocales());
-							setDDMFormFieldValues(
-								ddmFormValues.getDDMFormFieldValues());
-							setDefaultLocale(ddmForm.getDefaultLocale());
-						}
-					}));
-
-			return _journalConverter.getContent(
-				ddmStructure,
-				_ddm.getFields(ddmStructure.getStructureId(), serviceContext),
-				ddmStructure.getGroupId());
-		}
-		finally {
-			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
-		}
 	}
 
 	private UnsafeConsumer<BooleanQuery, Exception>
@@ -755,62 +693,6 @@ public class StructuredContentResourceImpl
 					BooleanClauseOccur.MUST);
 			}
 		};
-	}
-
-	private DDMFormField _getDDMFormField(
-		DDMStructure ddmStructure, String name) {
-
-		DDMFormField ddmFormField = _getDDMFormField(
-			ddmStructure.getDDMFormFields(true), name);
-
-		if (ddmFormField != null) {
-			return ddmFormField;
-		}
-
-		if (ddmStructure.getParentStructureId() != -1) {
-			try {
-				DDMStructure parentDDMStructure =
-					_ddmStructureService.getStructure(
-						ddmStructure.getParentStructureId());
-
-				ddmFormField = _getDDMFormField(
-					parentDDMStructure.getDDMFormFields(true), name);
-
-				if (ddmFormField != null) {
-					return ddmFormField;
-				}
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException, portalException);
-				}
-			}
-		}
-
-		return null;
-	}
-
-	private DDMFormField _getDDMFormField(
-		List<DDMFormField> ddmFormFields, String name) {
-
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (name.equals(ddmFormField.getName())) {
-				return ddmFormField;
-			}
-			else if (name.equals(ddmFormField.getFieldReference())) {
-				return ddmFormField;
-			}
-			else {
-				DDMFormField nestedDDMFormField = _getDDMFormField(
-					ddmFormField.getNestedDDMFormFields(), name);
-
-				if (nestedDDMFormField != null) {
-					return nestedDDMFormField;
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
@@ -837,9 +719,10 @@ public class StructuredContentResourceImpl
 	private List<DDMFormField> _getRootDDMFormFields(
 		DDMStructure ddmStructure) {
 
-		return transform(
+		return TransformUtil.transform(
 			ddmStructure.getRootFieldNames(),
-			fieldName -> _getDDMFormField(ddmStructure, fieldName));
+			fieldName -> DDMFormFieldUtil.getDDMFormField(
+				_ddmStructureService, ddmStructure, fieldName));
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
@@ -964,7 +847,11 @@ public class StructuredContentResourceImpl
 			_layoutLocalService, contextAcceptLanguage.getPreferredLocale(),
 			_getRootDDMFormFields(ddmStructure));
 
-		serviceContext.setAttribute("ddmFormValues", _toString(ddmFormValues));
+		serviceContext.setAttribute(
+			"ddmFormValues",
+			DDMFormValuesUtil.serializeContent(
+				_jsonDDMFormValuesSerializer, ddmStructure.getDDMForm(),
+				ddmFormValues.getDDMFormFieldValues()));
 
 		return _ddm.getFields(ddmStructure.getStructureId(), serviceContext);
 	}
@@ -995,7 +882,8 @@ public class StructuredContentResourceImpl
 
 			Value value = DDMValueUtil.toDDMValue(
 				contentField,
-				_getDDMFormField(ddmStructure, contentField.getName()),
+				DDMFormFieldUtil.getDDMFormField(
+					_ddmStructureService, ddmStructure, contentField.getName()),
 				_dlAppService, journalArticle.getGroupId(),
 				_journalArticleService, _layoutLocalService,
 				contextAcceptLanguage.getPreferredLocale());
@@ -1015,21 +903,10 @@ public class StructuredContentResourceImpl
 		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
-		_validateDDMFormValues(ddmFormValues);
+		DDMFormValuesUtil.validateDDMFormValues(
+			_ddmFormValuesValidator, ddmFormValues);
 
 		return fields;
-	}
-
-	private String _toString(DDMFormValues ddmFormValues) {
-		DDMFormValuesSerializerSerializeRequest.Builder builder =
-			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
-				ddmFormValues);
-
-		DDMFormValuesSerializerSerializeResponse
-			ddmFormValuesSerializerSerializeResponse =
-				_jsonDDMFormValuesSerializer.serialize(builder.build());
-
-		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
 	private StructuredContent _toStructuredContent(
@@ -1116,8 +993,8 @@ public class StructuredContentResourceImpl
 		}
 
 		for (ContentField contentField : contentFields) {
-			DDMFormField ddmFormField = _getDDMFormField(
-				ddmStructure, contentField.getName());
+			DDMFormField ddmFormField = DDMFormFieldUtil.getDDMFormField(
+				_ddmStructureService, ddmStructure, contentField.getName());
 
 			if (ddmFormField == null) {
 				throw new BadRequestException(
@@ -1131,23 +1008,6 @@ public class StructuredContentResourceImpl
 				contentField.getNestedContentFields(), ddmStructure);
 		}
 	}
-
-	private void _validateDDMFormValues(DDMFormValues ddmFormValues) {
-		try {
-			_ddmFormValuesValidator.validate(ddmFormValues);
-		}
-		catch (DDMFormValuesValidationException
-					ddmFormValuesValidationException) {
-
-			throw new BadRequestException(
-				"Validation error: " +
-					ddmFormValuesValidationException.getMessage(),
-				ddmFormValuesValidationException);
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		StructuredContentResourceImpl.class);
 
 	@Reference
 	private Aggregations _aggregations;

@@ -20,6 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.GenericUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -45,6 +46,10 @@ public class ContentDashboardItemActionProviderTracker {
 		List<ContentDashboardItemActionProvider>
 			contentDashboardItemActionProviders = _serviceTrackerMap.getService(
 				className);
+
+		if (ListUtil.isEmpty(contentDashboardItemActionProviders)) {
+			return Optional.empty();
+		}
 
 		Stream<ContentDashboardItemActionProvider> stream =
 			contentDashboardItemActionProviders.stream();

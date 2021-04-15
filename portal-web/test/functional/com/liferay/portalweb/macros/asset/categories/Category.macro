@@ -40,7 +40,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro AddCategoryWithSaveAndAddButton {
+	macro addCategoryWithSaveAndAddButton {
 		var key_categoryName = "${categoryName}";
 
 		var key_vocabularyName = "${vocabularyName}";

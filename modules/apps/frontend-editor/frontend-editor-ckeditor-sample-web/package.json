@@ -4,7 +4,7 @@
 		"react": "16.12.0",
 		"react-dom": "16.12.0"
 	},
-	"name": "frontend-editor-ckeditor-sample-web",
+	"name": "@liferay/frontend-editor-ckeditor-sample-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",

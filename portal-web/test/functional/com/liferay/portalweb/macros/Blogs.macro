@@ -174,9 +174,16 @@ definition {
 
 		BlogsNavigator.gotoSelectFile();
 
-		ItemSelector.uploadFile(
-			navTab = "${navTab}",
-			uploadFileName = "${uploadFileName}");
+		if (isSet(uploadedFileName)) {
+			ItemSelector.selectBlogImage(
+				imageFileName = "${uploadedFileName}",
+				navTab = "${navTab}");
+		}
+		else {
+			ItemSelector.uploadFile(
+				navTab = "${navTab}",
+				uploadFileName = "${uploadFileName}");
+		}
 
 		Pause(locator1 = "3000");
 

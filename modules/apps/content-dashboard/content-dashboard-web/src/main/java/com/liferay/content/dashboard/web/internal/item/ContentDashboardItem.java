@@ -77,7 +77,7 @@ public interface ContentDashboardItem<T> {
 
 	public static class Version {
 
-		public Version(String label, String style, double version) {
+		public Version(String label, String style, String version) {
 			_label = label;
 			_style = style;
 			_version = version;
@@ -91,7 +91,7 @@ public interface ContentDashboardItem<T> {
 			return _style;
 		}
 
-		public double getVersion() {
+		public String getVersion() {
 			return _version;
 		}
 
@@ -107,7 +107,7 @@ public interface ContentDashboardItem<T> {
 
 		private final String _label;
 		private final String _style;
-		private final double _version;
+		private final String _version;
 
 	}
 

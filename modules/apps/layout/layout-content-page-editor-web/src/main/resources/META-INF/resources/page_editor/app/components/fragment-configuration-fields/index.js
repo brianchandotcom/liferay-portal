@@ -22,6 +22,7 @@ import {ItemSelectorField} from './ItemSelectorField';
 import {NavigationMenuSelectorField} from './NavigationMenuSelectorField';
 import {SelectField} from './SelectField';
 import {TextField} from './TextField';
+import {VideoSelectorField} from './VideoSelectorField';
 
 export const FRAGMENT_CONFIGURATION_FIELDS = {
 	categoryTreeNodeSelector: CategoryTreeNodeSelectorField,
@@ -34,4 +35,5 @@ export const FRAGMENT_CONFIGURATION_FIELDS = {
 	navigationMenuSelector: NavigationMenuSelectorField,
 	select: SelectField,
 	text: TextField,
+	videoSelector: VideoSelectorField,
 };

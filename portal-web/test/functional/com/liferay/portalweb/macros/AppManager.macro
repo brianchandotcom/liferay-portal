@@ -81,12 +81,4 @@ definition {
 		}
 	}
 
-	macro viewUninstallApp {
-		Search.searchCP(searchTerm = "${appName}");
-
-		AssertElementNotPresent(
-			key_appName = "${appName}",
-			locator1 = "AppManager#APP_NAME");
-	}
-
 }

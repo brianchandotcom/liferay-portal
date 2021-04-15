@@ -484,7 +484,11 @@ definition {
 
 		AppManager.uninstallApp(appName = "${appName}");
 
-		AppManager.viewUninstallApp(appName = "${appName}");
+		Search.searchCP(searchTerm = "${appName}");
+
+		AssertElementNotPresent(
+			key_appName = "${appName}",
+			locator1 = "AppManager#APP_NAME");
 
 		AssertConsoleTextPresent(value1 = "STOPPED ${appName}");
 	}

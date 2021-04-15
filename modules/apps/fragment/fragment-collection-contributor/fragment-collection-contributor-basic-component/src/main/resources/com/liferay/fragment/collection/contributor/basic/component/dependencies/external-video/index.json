@@ -1,0 +1,53 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "Video",
+					"name": "video",
+					"type": "videoSelector"
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "Width",
+					"name": "videoWidth",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
+					"label": "Height",
+					"name": "videoHeight",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "flex-start",
+					"label": "Align",
+					"name": "align",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "left",
+								"value": "flex-start"
+							},
+							{
+								"label": "center",
+								"value": "center"
+							},
+							{
+								"label": "right",
+								"value": "flex-end"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

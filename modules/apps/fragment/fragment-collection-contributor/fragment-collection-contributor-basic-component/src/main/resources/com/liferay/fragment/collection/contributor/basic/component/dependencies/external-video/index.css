@@ -1,0 +1,50 @@
+.error-message {
+	height: 100%;
+	margin: 0;
+	width: 100%;
+}
+
+.error-message p {
+	margin: 0;
+}
+
+.video {
+	align-items: center;
+	background: #fafafa;
+	border-radius: 4px;
+	box-shadow: inset 0 0 0 1px #aaa;
+	display: flex;
+	justify-content: center;
+	position: relative;
+	width: 100%;
+}
+
+.video-container {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.video-container > * {
+	height: 100%;
+	width: 100%;
+}
+
+.video-mask {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.video-source {
+	height: 100%;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}

@@ -395,6 +395,43 @@ definition {
 			}
 		}
 
+		if (isSet(documentType)) {
+			Panel.expandPanel(panel = "Document Type");
+
+			if (isSet(currentDocumentType)) {
+				Click(
+					key_toggleButtonName = "${currentDocumentType}",
+					locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON");
+			}
+			else {
+				Click(
+					key_toggleButtonName = "Basic Document",
+					locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON");
+			}
+
+			Click(
+				key_menuItem = "${documentType}",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			Panel.expandPanel(panel = "Document Type");
+
+			AssertTextEquals.assertPartialText(
+				key_toggleButtonName = "${documentType}",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON",
+				value1 = "${documentType}");
+
+			if (isSet(dateValue)) {
+				if (!(isSet(dateFieldLabel))) {
+					var dateFieldLabel = "Date";
+				}
+
+				Type(
+					key_fieldFieldLabel = "${dateFieldLabel}",
+					locator1 = "WCEditWebContent#DATE_INPUT",
+					value1 = "${dateValue}");
+			}
+		}
+
 		if (isSet(viewableBy)) {
 			Select(
 				locator1 = "Select#PERMISSIONS",

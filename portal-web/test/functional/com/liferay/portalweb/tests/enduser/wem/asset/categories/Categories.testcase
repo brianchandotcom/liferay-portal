@@ -31,29 +31,6 @@ definition {
 		}
 	}
 
-	@description = "Add categories."
-	@priority = "4"
-	test AddCategories {
-		task ("Add three categories") {
-			for (var n : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Test Site Name",
-					title = "Category Name ${n}",
-					vocabularyName = "Vocabulary Name");
-			}
-		}
-
-		task ("View the three categories") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			for (var n : list "1,2,3") {
-				Category.viewCP(
-					categoryName = "Category Name ${n}",
-					vocabularyName = "Vocabulary Name");
-			}
-		}
-	}
-
 	@description = "Add properties in category."
 	@priority = "3"
 	test AddCategoryProperties {
@@ -174,40 +151,6 @@ definition {
 		}
 	}
 
-	@description = "Add subcategories."
-	@priority = "4"
-	test AddSubcategories {
-		task ("Add three categories") {
-			for (var n : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Test Site Name",
-					title = "Category Name ${n}",
-					vocabularyName = "Vocabulary Name");
-			}
-		}
-
-		task ("Add one subcategory to each category") {
-			for (var n : list "1,2,3") {
-				JSONCategory.addSubcategory(
-					groupName = "Test Site Name",
-					parentCategoryName = "Category Name ${n}",
-					title = "Subcategory Name ${n}",
-					vocabularyName = "Vocabulary Name");
-			}
-		}
-
-		task ("View the subcategories") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			for (var n : list "1,2,3") {
-				Subcategory.viewCP(
-					categoryName = "Category Name ${n}",
-					subcategoryName = "Subcategory Name ${n}",
-					vocabularyName = "Vocabulary Name");
-			}
-		}
-	}
-
 	@description = "Add a property in subcategory."
 	@priority = "3"
 	test AddSubcategoryProperty {
@@ -242,26 +185,6 @@ definition {
 				propertiesValueField = "Subcategory Value",
 				subcategoryName = "Subcategory Name",
 				vocabularyName = "Vocabulary Name");
-		}
-	}
-
-	@description = "Add vocabularies."
-	@priority = "4"
-	test AddVocabularies {
-		task ("Add two vocabularies") {
-			for (var n : list "2,3") {
-				JSONCategory.addVocabulary(
-					groupName = "Test Site Name",
-					title = "Vocabulary Name ${n}");
-			}
-		}
-
-		task ("View the new vocabularies") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			for (var name : list "Vocabulary Name,Vocabulary Name 2,Vocabulary Name 3") {
-				Vocabulary.viewCP(vocabularyName = "${name}");
-			}
 		}
 	}
 

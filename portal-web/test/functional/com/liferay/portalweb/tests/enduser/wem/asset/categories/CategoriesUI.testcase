@@ -27,69 +27,79 @@ definition {
 		}
 	}
 
-	@description = "Add a category."
+	@description = "Add three categories in a vocabulary."
 	@priority = "5"
 	@uitest
-	test AddCategory {
+	test AddCategories {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
 				title = "Vocabulary Name");
 		}
 
-		task ("Add a category") {
+		task ("Add three categories") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-			Category.addCP(
-				categoryName = "Category Name",
-				vocabularyName = "Vocabulary Name");
+			for (var n : list "1,2,3") {
+				Category.addCP(
+					categoryName = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
 		}
 
-		task ("View the new category") {
-			Category.viewCP(
-				categoryName = "Category Name",
-				vocabularyName = "Vocabulary Name");
+		task ("View the three categories") {
+			for (var n : list "1,2,3") {
+				Category.viewCP(
+					categoryName = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
 		}
 	}
 
-	@description = "Add a subcategory."
+	@description = "Add one subcategory in each category."
 	@priority = "5"
 	@uitest
-	test AddSubcategory {
+	test AddSubcategories {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
 				title = "Vocabulary Name");
 		}
 
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
+		task ("Add three categories") {
+			for (var n : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
 		}
 
-		task ("Add a subcategory") {
+		task ("Add one subcategory in each category") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-			Subcategory.addCP(
-				categoryName = "Category Name",
-				subcategoryName = "Subcategory Name",
-				vocabularyName = "Vocabulary Name");
+			for (var n : list "1,2,3") {
+				Subcategory.addCP(
+					categoryName = "Category Name ${n}",
+					subcategoryName = "Subcategory Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
 		}
 
-		task ("View the new subcategory") {
-			Subcategory.viewCP(
-				categoryName = "Category Name",
-				subcategoryName = "Subcategory Name",
-				vocabularyName = "Vocabulary Name");
+		task ("View the new subcategories") {
+			for (var n : list "1,2,3") {
+				Subcategory.viewCP(
+					categoryName = "Category Name ${n}",
+					subcategoryName = "Subcategory Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
 		}
 	}
 
-	@description = "Add a vocabulary."
+	@description = "Add three vocabularies in Categories admin."
 	@priority = "5"
 	@uitest
-	test AddVocabulary {
+	test AddVocabularies {
 		property portal.acceptance = "true";
 
 		task ("Navigate to Categories admin in Test Site Name") {
@@ -100,12 +110,16 @@ definition {
 				portlet = "Categories");
 		}
 
-		task ("Add a new vocabulary") {
-			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		task ("Add three vocabularies") {
+			for (var n : list "1,2,3") {
+				Vocabulary.addCP(vocabularyName = "Vocabulary Name ${n}");
+			}
 		}
 
-		task ("View the new vocabulary") {
-			Vocabulary.viewCP(vocabularyName = "Vocabulary Name");
+		task ("View the new vocabularies") {
+			for (var n : list "1,2,3") {
+				Vocabulary.viewCP(vocabularyName = "Vocabulary Name ${n}");
+			}
 		}
 	}
 

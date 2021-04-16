@@ -954,7 +954,10 @@
 										"defaultValue": 1,
 										"label": "Boost",
 										"name": "boost",
-										"type": "slider"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									}
 								]
 							}
@@ -1101,7 +1104,10 @@
 										"defaultValue": 1,
 										"label": "Boost",
 										"name": "boost",
-										"type": "slider"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									}
 								]
 							}
@@ -1233,7 +1239,10 @@
 										"defaultValue": 20,
 										"label": "Boost",
 										"name": "boost",
-										"type": "slider"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									}
 								]
 							}
@@ -1318,7 +1327,10 @@
 										"defaultValue": 10,
 										"label": "Boost",
 										"name": "boost",
-										"type": "slider"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									},
 									{
 										"defaultValue": 1.2,
@@ -1464,7 +1476,10 @@
 										"defaultValue": 30,
 										"label": "Boost",
 										"name": "boost",
-										"type": "slider"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									},
 									{
 										"defaultValue": 1.5,
@@ -1614,11 +1629,11 @@
 										"defaultValue": 0.5,
 										"label": "Decay",
 										"name": "decay",
-										"type": "number",
+										"type": "slider",
 										"typeOptions": {
 											"max": 0.99,
 											"min": 0.01,
-											"step": 0.1
+											"step": 0.01
 										}
 									},
 									{
@@ -1647,7 +1662,10 @@
 										"defaultValue": 2,
 										"label": "Boost",
 										"name": "boost",
-										"type": "slider"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									}
 								]
 							}
@@ -1729,7 +1747,10 @@
 										"defaultValue": 40,
 										"label": "Boost",
 										"name": "boost",
-										"type": "slider"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									}
 								]
 							}
@@ -1869,7 +1890,10 @@
 										"defaultValue": 10,
 										"label": "Boost",
 										"name": "boost",
-										"type": "slider"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									}
 								]
 							}
@@ -2034,7 +2058,10 @@
 										"defaultValue": 10,
 										"label": "Boost",
 										"name": "boost",
-										"type": "slider"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									}
 								]
 							}

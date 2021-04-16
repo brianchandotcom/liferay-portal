@@ -54,7 +54,7 @@
 								"defaultValue": 0.3,
 								"label": "Decay",
 								"name": "decay",
-								"type": "number",
+								"type": "slider",
 								"typeOptions": {
 									"max": 0.99,
 									"min": 0.01,
@@ -76,7 +76,10 @@
 								"defaultValue": 2,
 								"label": "Boost",
 								"name": "boost",
-								"type": "slider"
+								"type": "number",
+								"typeOptions": {
+									"min": 0
+								}
 							}
 						]
 					}

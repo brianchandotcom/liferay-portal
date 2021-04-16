@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -162,6 +163,10 @@ public class WorkflowTaskManagerImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		_companyAdminUser = UserTestUtil.addCompanyAdminUser(_company);
+
 		_configuration = _configurationAdmin.getConfiguration(
 			"com.liferay.portal.workflow.configuration." +
 				"WorkflowDefinitionConfiguration",
@@ -176,15 +181,13 @@ public class WorkflowTaskManagerImplTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+
 		ConfigurationTestUtil.deleteConfiguration(_configuration);
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_companyAdminUser = UserTestUtil.addCompanyAdminUser(_company);
-
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _companyAdminUser.getUserId(), 0);
 
@@ -1822,6 +1825,12 @@ public class WorkflowTaskManagerImplTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowTaskManagerImplTest.class);
 
+	private static Company _company;
+	private static User _companyAdminUser;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	private static Configuration _configuration;
 
 	@Inject
@@ -1831,11 +1840,6 @@ public class WorkflowTaskManagerImplTest {
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@DeleteAfterTestRun
-	private Company _company;
-
-	private User _companyAdminUser;
 
 	@Inject
 	private DDLRecordLocalService _ddlRecordLocalService;
@@ -1855,6 +1859,7 @@ public class WorkflowTaskManagerImplTest {
 	@Inject
 	private DLTrashService _dlTrashService;
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject

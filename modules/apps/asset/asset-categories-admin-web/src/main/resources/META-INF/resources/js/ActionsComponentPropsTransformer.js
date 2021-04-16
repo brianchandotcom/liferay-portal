@@ -28,7 +28,7 @@ const ACTIONS = {
 			buttonAddLabel: Liferay.Language.get('delete'),
 			multiple: true,
 			onSelect: (selectedItems) => {
-				if (selectedItems) {
+				if (selectedItems.length) {
 					if (
 						confirm(
 							Liferay.Language.get(
@@ -36,15 +36,17 @@ const ACTIONS = {
 							)
 						)
 					) {
-						selectedItems.forEach((item) => {
-							vocabulariesForm.appendChild(item.cloneNode(true));
-						});
+						const input = document.createElement('input');
+
+						input.name = `${portletNamespace}rowIds`;
+						input.value = selectedItems.map((item) => item.value);
+
+						vocabulariesForm.appendChild(input);
 
 						submitForm(vocabulariesForm, deleteVocabulariesURL);
 					}
 				}
 			},
-			selectEventName: `${portletNamespace}selectVocabularies`,
 			title: Liferay.Language.get('delete-vocabulary'),
 			url: viewVocabulariesURL,
 		});

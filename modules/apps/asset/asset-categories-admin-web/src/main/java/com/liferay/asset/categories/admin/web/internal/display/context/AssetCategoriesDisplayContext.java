@@ -495,18 +495,6 @@ public class AssetCategoriesDisplayContext {
 		).build();
 	}
 
-	public String getEventName() {
-		if (_eventName != null) {
-			return _eventName;
-		}
-
-		_eventName = ParamUtil.getString(
-			_httpServletRequest, "eventName",
-			_renderResponse.getNamespace() + "selectVocabularies");
-
-		return _eventName;
-	}
-
 	public String getGroupName() throws Exception {
 		Group group = GroupLocalServiceUtil.getGroup(
 			_themeDisplay.getScopeGroupId());
@@ -959,7 +947,6 @@ public class AssetCategoriesDisplayContext {
 	private AssetCategory _category;
 	private Long _categoryId;
 	private String _displayStyle;
-	private String _eventName;
 	private final HttpServletRequest _httpServletRequest;
 	private Map<String, List<AssetVocabulary>> _inheritedVocabularies;
 	private String _keywords;

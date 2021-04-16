@@ -255,6 +255,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String COMMIT_CACHE_TASK_NAME = "commitCache";
 
+	public static final String COMPILE_INCLUDE_PLATFORM_CONFIGURATION_NAME =
+		"compileIncludePlatform";
+
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	public static final String DEFAULT_REPOSITORY_URL =
@@ -368,6 +371,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureMavenConf2ScopeMappings(project);
 
 		_applyConfigScripts(project);
+
+		_addConfigurationCompileIncludePlatform(project);
 
 		_addDependenciesPmd(project);
 
@@ -551,6 +556,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					_addDependenciesCompileIncludePlatform(project);
+
 					_configureArtifacts(
 						project, jarJSDocTask, jarJSPsTask, jarJavadocTask,
 						jarSourcesTask, jarSourcesCommercialTask,
@@ -606,6 +613,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
+	private Configuration _addConfigurationCompileIncludePlatform(
+		Project project) {
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration compileIncludePlatformConfiguration =
+			configurationContainer.maybeCreate(
+				COMPILE_INCLUDE_PLATFORM_CONFIGURATION_NAME);
+
+		compileIncludePlatformConfiguration.setVisible(false);
+
+		return compileIncludePlatformConfiguration;
+	}
+
 	private Configuration _addConfigurationPortalTest(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);
@@ -628,6 +650,25 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		return configuration;
+	}
+
+	private void _addDependenciesCompileIncludePlatform(Project project) {
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration compileIncludePlatformConfiguration =
+			configurationContainer.findByName(
+				COMPILE_INCLUDE_PLATFORM_CONFIGURATION_NAME);
+
+		if (compileIncludePlatformConfiguration == null) {
+			return;
+		}
+
+		DependencyHandler dependencyHandler = project.getDependencies();
+
+		dependencyHandler.add(
+			LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME,
+			project.files(compileIncludePlatformConfiguration.resolve()));
 	}
 
 	private void _addDependenciesPmd(Project project) {

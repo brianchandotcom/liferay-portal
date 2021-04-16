@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERION_INPUT_FORM_CONTROL</td>
+	<td>//div[@class='criterion']//input[@placeholder='${key_criterion}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLOSE_MODAL</td>
 	<td>//button[@aria-label='close']</td>
 	<td></td>

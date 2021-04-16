@@ -68,11 +68,25 @@ definition {
 	}
 
 	macro fillProperty {
-		Click(locator1 = "Segmentation#PROPERTY_FIELD");
+		if (isSet(criterionKey)) {
+			Type(
+				key_criterion = "Key",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${criterionKey}");
 
-		Type(
+			Type(
+				key_criterion = "Value",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${criterionValue}");
+		}
+
+		else {
+			Click(locator1 = "Segmentation#PROPERTY_FIELD");
+
+			Type(
 			locator1 = "Segmentation#PROPERTY_FIELD",
 			value1 = "${PropertyField}");
+		}
 	}
 
 	macro fillTitle {

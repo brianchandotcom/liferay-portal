@@ -44,7 +44,9 @@ public class JavaStaticMethodCheck extends BaseJavaTermCheck {
 			return content;
 		}
 
-		if (javaTerm.isStatic() && javaTerm.isFinal()) {
+		if (javaTerm.isStatic() && javaTerm.isFinal() &&
+			isAttributeValue("checkFinal", absolutePath)) {
+
 			int x = content.indexOf("\t" + javaTerm.getAccessModifier());
 
 			if (x != -1) {

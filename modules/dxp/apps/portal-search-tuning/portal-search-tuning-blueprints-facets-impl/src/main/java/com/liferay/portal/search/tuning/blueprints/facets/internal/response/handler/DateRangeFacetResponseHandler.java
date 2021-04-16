@@ -24,10 +24,12 @@ import com.liferay.portal.search.aggregation.bucket.RangeAggregationResult;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsJSONResponseKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.internal.util.FacetConfigurationUtil;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.response.FacetResponseHandler;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -64,8 +66,20 @@ public class DateRangeFacetResponseHandler
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		List<String> excludeValues = FacetConfigurationUtil.getExcludeValues(
+			configurationJSONObject);
+
+		List<String> includeValues = FacetConfigurationUtil.getIncludeValues(
+			configurationJSONObject);
+
 		for (Bucket bucket : buckets) {
 			if (bucket.getDocCount() < frequencyThreshold) {
+				continue;
+			}
+
+			if (!FacetConfigurationUtil.includeValue(
+					bucket.getKey(), includeValues, excludeValues)) {
+
 				continue;
 			}
 
@@ -86,7 +100,7 @@ public class DateRangeFacetResponseHandler
 		return JSONUtil.put(
 			FacetsJSONResponseKeys.FREQUENCY, frequency
 		).put(
-			FacetsJSONResponseKeys.NAME, value
+			FacetsJSONResponseKeys.TERM_NAME, value
 		).put(
 			FacetsJSONResponseKeys.TEXT,
 			getText(value, frequency, resourceBundle)

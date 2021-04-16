@@ -37,6 +37,7 @@ import com.liferay.portal.search.tuning.blueprints.engine.spi.searchrequest.Sear
 import com.liferay.portal.search.tuning.blueprints.engine.util.BlueprintTemplateVariableParser;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintContributorKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.internal.util.FacetConfigurationUtil;
 import com.liferay.portal.search.tuning.blueprints.message.Message;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.message.Severity;
@@ -118,12 +119,9 @@ public class FacetsSearchRequestBodyContributor
 		String dateFormat = handlerParametersJSONObject.getString(
 			"date_format");
 
-		String aggregationName = _getAggregationName(configurationJSONObject);
-
-		String field = _getFieldName(configurationJSONObject);
-
 		DateRangeAggregation dateRangeAggregation = _aggregations.dateRange(
-			aggregationName, field);
+			FacetConfigurationUtil.getAggregationName(configurationJSONObject),
+			FacetConfigurationUtil.getFieldName(configurationJSONObject));
 
 		for (int i = 0; i < rangesJSONArray.length(); i++) {
 			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
@@ -181,8 +179,7 @@ public class FacetsSearchRequestBodyContributor
 		Messages messages, JSONObject configurationJSONObject) {
 
 		Optional<Parameter> parameterOptional = parameterData.getByNameOptional(
-			configurationJSONObject.getString(
-				FacetConfigurationKeys.PARAMETER_NAME.getJsonKey()));
+			FacetConfigurationUtil.getParameterName(configurationJSONObject));
 
 		if (!parameterOptional.isPresent()) {
 			return;
@@ -229,17 +226,33 @@ public class FacetsSearchRequestBodyContributor
 		SearchRequestBuilder searchRequestBuilder,
 		JSONObject configurationJSONObject) {
 
-		String aggregationName = _getAggregationName(configurationJSONObject);
-
-		String field = _getFieldName(configurationJSONObject);
+		TermsAggregation aggregation = _aggregations.terms(
+			FacetConfigurationUtil.getAggregationName(configurationJSONObject),
+			FacetConfigurationUtil.getFieldName(configurationJSONObject));
 
 		int size = configurationJSONObject.getInt(
 			FacetConfigurationKeys.SIZE.getJsonKey(), 50);
 
-		TermsAggregation aggregation = _aggregations.terms(
-			aggregationName, field);
-
 		aggregation.setSize(size);
+
+		if (configurationJSONObject.has(
+				FacetConfigurationKeys.SHARD_SIZE.getJsonKey())) {
+
+			int defaultShardSize = (int)Math.floor((size * 1.5) + 10);
+
+			aggregation.setShardSize(
+				configurationJSONObject.getInt(
+					FacetConfigurationKeys.SHARD_SIZE.getJsonKey(),
+					defaultShardSize));
+		}
+
+		if (configurationJSONObject.has(
+				FacetConfigurationKeys.MIN_DOC_COUNT.getJsonKey())) {
+
+			aggregation.setMinDocCount(
+				configurationJSONObject.getInt(
+					FacetConfigurationKeys.MIN_DOC_COUNT.getJsonKey()));
+		}
 
 		searchRequestBuilder.addAggregation(aggregation);
 	}
@@ -247,8 +260,6 @@ public class FacetsSearchRequestBodyContributor
 	private void _addTermsFacetFilter(
 		SearchRequestBuilder searchRequestBuilder, Messages messages,
 		JSONObject configurationJSONObject, Object value) {
-
-		String field = _getFieldName(configurationJSONObject);
 
 		Optional<FilterMode> filterModeOptional = _getFilterMode(
 			configurationJSONObject, messages);
@@ -265,7 +276,9 @@ public class FacetsSearchRequestBodyContributor
 		}
 
 		BooleanQuery query = _getTermFilterQuery(
-			operatorOptional.get(), field, value);
+			operatorOptional.get(),
+			FacetConfigurationUtil.getFieldName(configurationJSONObject),
+			value);
 
 		if (query.hasClauses()) {
 			if (FilterMode.PRE.equals(filterModeOptional.get())) {
@@ -325,23 +338,13 @@ public class FacetsSearchRequestBodyContributor
 		}
 	}
 
-	private String _getAggregationName(JSONObject configurationJSONObject) {
-		String aggregationName = configurationJSONObject.getString(
-			FacetConfigurationKeys.AGGREGATION_NAME.getJsonKey());
-
-		if (Validator.isBlank(aggregationName)) {
-			aggregationName = _getFieldName(configurationJSONObject);
-		}
-
-		return aggregationName;
-	}
-
 	private BooleanQuery _getDateRangeFilterQuery(
 		JSONObject configurationJSONObject, String value) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		String field = _getFieldName(configurationJSONObject);
+		String field = FacetConfigurationUtil.getFieldName(
+			configurationJSONObject);
 
 		JSONObject handlerParametersJSONObject =
 			configurationJSONObject.getJSONObject(
@@ -411,18 +414,6 @@ public class FacetsSearchRequestBodyContributor
 		}
 
 		return str;
-	}
-
-	private String _getFieldName(JSONObject configurationJSONObject) {
-		String field = configurationJSONObject.getString(
-			FacetConfigurationKeys.FIELD.getJsonKey());
-
-		if (Validator.isBlank(field)) {
-			field = configurationJSONObject.getString(
-				FacetConfigurationKeys.PARAMETER_NAME.getJsonKey());
-		}
-
-		return field;
 	}
 
 	private Optional<FilterMode> _getFilterMode(

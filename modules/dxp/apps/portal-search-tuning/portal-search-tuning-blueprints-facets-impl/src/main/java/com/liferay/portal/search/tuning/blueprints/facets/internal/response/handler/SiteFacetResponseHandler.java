@@ -63,7 +63,7 @@ public class SiteFacetResponseHandler
 		return JSONUtil.put(
 			FacetsJSONResponseKeys.FREQUENCY, frequency
 		).put(
-			FacetsJSONResponseKeys.NAME, name
+			FacetsJSONResponseKeys.TERM_NAME, name
 		).put(
 			FacetsJSONResponseKeys.TEXT, getText(name, frequency, null)
 		).put(

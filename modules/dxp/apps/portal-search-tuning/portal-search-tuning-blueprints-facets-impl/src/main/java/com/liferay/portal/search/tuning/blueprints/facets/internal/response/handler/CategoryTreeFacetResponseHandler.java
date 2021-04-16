@@ -32,6 +32,7 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsJSONResponseKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.internal.util.FacetConfigurationUtil;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.response.FacetResponseHandler;
 import com.liferay.portal.search.tuning.blueprints.message.Message;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
@@ -128,7 +129,8 @@ public class CategoryTreeFacetResponseHandler
 		try {
 			jsonArray = _getCategoriesJSONArray(
 				buckets, vocabularyId, frequencyThreshold,
-				blueprintsAttributes.getLocale(), messages);
+				blueprintsAttributes.getLocale(), messages,
+				configurationJSONObject);
 		}
 		catch (PortalException portalException) {
 			messages.addMessage(
@@ -242,7 +244,7 @@ public class CategoryTreeFacetResponseHandler
 		return JSONUtil.put(
 			FacetsJSONResponseKeys.FREQUENCY, frequency
 		).put(
-			FacetsJSONResponseKeys.NAME, name
+			FacetsJSONResponseKeys.TERM_NAME, name
 		).put(
 			FacetsJSONResponseKeys.TEXT, getText(name, frequency, null)
 		).put(
@@ -304,7 +306,8 @@ public class CategoryTreeFacetResponseHandler
 
 	private JSONArray _getCategoriesJSONArray(
 			Collection<Bucket> buckets, long vocabularyId,
-			long frequencyThreshold, Locale locale, Messages messages)
+			long frequencyThreshold, Locale locale, Messages messages,
+			JSONObject configurationJSONObject)
 		throws PortalException {
 
 		AssetVocabulary assetVocabulary =
@@ -314,10 +317,21 @@ public class CategoryTreeFacetResponseHandler
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		List<String> excludeValues = FacetConfigurationUtil.getExcludeValues(
+			configurationJSONObject);
+		List<String> includeValues = FacetConfigurationUtil.getIncludeValues(
+			configurationJSONObject);
+
 		for (Bucket bucket : buckets) {
 			long frequency = bucket.getDocCount();
 
 			if (frequency < frequencyThreshold) {
+				continue;
+			}
+
+			if (!FacetConfigurationUtil.includeValue(
+					bucket.getKey(), includeValues, excludeValues)) {
+
 				continue;
 			}
 
@@ -400,7 +414,7 @@ public class CategoryTreeFacetResponseHandler
 
 		jsonObject.put(FacetsJSONResponseKeys.FREQUENCY, frequency);
 
-		String name = jsonObject.getString(FacetsJSONResponseKeys.NAME);
+		String name = jsonObject.getString(FacetsJSONResponseKeys.TERM_NAME);
 
 		jsonObject.put(
 			FacetsJSONResponseKeys.TEXT, getText(name, frequency, null));

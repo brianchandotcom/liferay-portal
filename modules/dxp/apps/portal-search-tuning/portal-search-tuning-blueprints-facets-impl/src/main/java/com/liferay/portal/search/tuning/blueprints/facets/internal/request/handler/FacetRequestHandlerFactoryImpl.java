@@ -32,7 +32,10 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = FacetRequestHandlerFactory.class)
+@Component(
+	immediate = true, property = "type=internal",
+	service = FacetRequestHandlerFactory.class
+)
 public class FacetRequestHandlerFactoryImpl
 	implements FacetRequestHandlerFactory {
 

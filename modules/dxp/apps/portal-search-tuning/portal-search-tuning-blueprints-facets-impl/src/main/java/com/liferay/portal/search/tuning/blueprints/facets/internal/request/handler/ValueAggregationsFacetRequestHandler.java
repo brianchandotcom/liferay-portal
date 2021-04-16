@@ -24,6 +24,7 @@ import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttribut
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.Parameter;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.StringArrayParameter;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.internal.util.FacetConfigurationUtil;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.request.FacetRequestHandler;
 import com.liferay.portal.search.tuning.blueprints.message.Message;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
@@ -55,8 +56,8 @@ public class ValueAggregationsFacetRequestHandler
 			Optional.empty();
 		}
 
-		String parameterName = configurationJSONObject.getString(
-			FacetConfigurationKeys.PARAMETER_NAME.getJsonKey());
+		String parameterName = FacetConfigurationUtil.getParameterName(
+			configurationJSONObject);
 
 		Optional<Object> valueOptional =
 			blueprintsAttributes.getAttributeOptional(parameterName);

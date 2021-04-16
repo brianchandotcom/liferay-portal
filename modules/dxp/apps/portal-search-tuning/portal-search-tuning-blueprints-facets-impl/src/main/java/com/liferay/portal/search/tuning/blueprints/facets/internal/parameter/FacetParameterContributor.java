@@ -149,19 +149,19 @@ public class FacetParameterContributor implements ParameterContributor {
 		boolean valid = true;
 
 		if (configurationJSONObject.isNull(
-				FacetConfigurationKeys.PARAMETER_NAME.getJsonKey())) {
+				FacetConfigurationKeys.FIELD.getJsonKey())) {
 
 			messages.addMessage(
 				new Message.Builder().className(
 					getClass().getName()
 				).localizationKey(
-					"facets.error.undefined-parameter-name"
+					"facets.error.undefined-field"
 				).msg(
-					"Facet parameter name is not defined"
+					"Facet field is not defined"
 				).rootObject(
 					configurationJSONObject
 				).rootProperty(
-					FacetConfigurationKeys.PARAMETER_NAME.getJsonKey()
+					FacetConfigurationKeys.FIELD.getJsonKey()
 				).rootValue(
 					null
 				).severity(
@@ -180,7 +180,7 @@ public class FacetParameterContributor implements ParameterContributor {
 	@Reference
 	private BlueprintHelper _blueprintHelper;
 
-	@Reference
+	@Reference(target = "(type=internal)")
 	private FacetRequestHandlerFactory _facetRequestHandlerFactory;
 
 }

@@ -63,9 +63,7 @@ public class FolderFacetResponseHandler
 
 		Locale locale = blueprintsAttributes.getLocale();
 
-		String value = bucket.getKey();
-
-		long folderId = GetterUtil.getLong(value);
+		long folderId = GetterUtil.getLong(bucket.getKey());
 
 		Document document = _getDocument(folderId, blueprintsAttributes);
 
@@ -87,7 +85,7 @@ public class FolderFacetResponseHandler
 		).put(
 			FacetsJSONResponseKeys.GROUP_NAME, group.getName(locale, true)
 		).put(
-			FacetsJSONResponseKeys.NAME, name
+			FacetsJSONResponseKeys.TERM_NAME, name
 		).put(
 			FacetsJSONResponseKeys.TEXT, getText(name, frequency, null)
 		).put(

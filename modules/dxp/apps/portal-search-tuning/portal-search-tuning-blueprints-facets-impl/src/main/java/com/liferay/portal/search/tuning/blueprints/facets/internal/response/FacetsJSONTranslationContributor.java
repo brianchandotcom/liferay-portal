@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
@@ -26,6 +25,7 @@ import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigu
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintContributorKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsJSONResponseKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.internal.response.handler.FacetResponseHandlerFactory;
+import com.liferay.portal.search.tuning.blueprints.facets.internal.util.FacetConfigurationUtil;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.response.FacetResponseHandler;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
@@ -57,28 +57,17 @@ public class FacetsJSONTranslationContributor
 
 		responseJSONObject.put(
 			FacetsJSONResponseKeys.FACETS,
-			_getFacetsJSONArray(
+			_getFacetsJSONObject(
 				searchResponse, blueprint, blueprintsAttributes, resourceBundle,
 				messages));
 	}
 
-	private String _getAggregationName(JSONObject configurationJSONObject) {
-		String aggregationName = configurationJSONObject.getString(
-			FacetConfigurationKeys.AGGREGATION_NAME.getJsonKey());
-
-		if (Validator.isBlank(aggregationName)) {
-			aggregationName = _getFieldName(configurationJSONObject);
-		}
-
-		return aggregationName;
-	}
-
-	private JSONArray _getFacetsJSONArray(
+	private JSONObject _getFacetsJSONObject(
 		SearchResponse searchResponse, Blueprint blueprint,
 		BlueprintsAttributes blueprintsAttributes,
 		ResourceBundle resourceBundle, Messages messages) {
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		Optional<JSONArray> configurationJSONArrayOptional =
 			_blueprintHelper.getJSONArrayConfigurationOptional(
@@ -92,30 +81,18 @@ public class FacetsJSONTranslationContributor
 		if (aggregationResultsMap.isEmpty() ||
 			!configurationJSONArrayOptional.isPresent()) {
 
-			return jsonArray;
+			return jsonObject;
 		}
 
 		_processFacets(
-			jsonArray, aggregationResultsMap, blueprintsAttributes,
+			jsonObject, aggregationResultsMap, blueprintsAttributes,
 			resourceBundle, messages, configurationJSONArrayOptional.get());
 
-		return jsonArray;
-	}
-
-	private String _getFieldName(JSONObject configurationJSONObject) {
-		String field = configurationJSONObject.getString(
-			FacetConfigurationKeys.FIELD.getJsonKey());
-
-		if (Validator.isBlank(field)) {
-			field = configurationJSONObject.getString(
-				FacetConfigurationKeys.PARAMETER_NAME.getJsonKey());
-		}
-
-		return field;
+		return jsonObject;
 	}
 
 	private void _processFacets(
-		JSONArray jsonArray,
+		JSONObject jsonObject,
 		Map<String, AggregationResult> aggregationResultsMap,
 		BlueprintsAttributes blueprintsAttributes,
 		ResourceBundle resourceBundle, Messages messages,
@@ -135,7 +112,7 @@ public class FacetsJSONTranslationContributor
 			String responseHandlerName = configurationJSONObject.getString(
 				FacetConfigurationKeys.HANDLER.getJsonKey(), "default");
 
-			String aggregationName = _getAggregationName(
+			String aggregationName = FacetConfigurationUtil.getAggregationName(
 				configurationJSONObject);
 
 			for (Map.Entry<String, AggregationResult> entry :
@@ -159,7 +136,10 @@ public class FacetsJSONTranslationContributor
 						messages, configurationJSONObject);
 
 				if (resultOptional.isPresent()) {
-					jsonArray.put(resultOptional.get());
+					jsonObject.put(
+						FacetConfigurationUtil.getFacetName(
+							configurationJSONObject),
+						resultOptional.get());
 				}
 			}
 		}
@@ -168,7 +148,7 @@ public class FacetsJSONTranslationContributor
 	@Reference
 	private BlueprintHelper _blueprintHelper;
 
-	@Reference
+	@Reference(target = "(type=internal)")
 	private FacetResponseHandlerFactory _facetResponseHandlerFactory;
 
 	@Reference

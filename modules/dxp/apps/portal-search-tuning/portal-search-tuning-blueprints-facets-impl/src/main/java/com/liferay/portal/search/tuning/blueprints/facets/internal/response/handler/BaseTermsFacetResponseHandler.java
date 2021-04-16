@@ -31,12 +31,14 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsJSONResponseKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.internal.util.FacetConfigurationUtil;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.response.FacetResponseHandler;
 import com.liferay.portal.search.tuning.blueprints.message.Message;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.message.Severity;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -64,11 +66,22 @@ public abstract class BaseTermsFacetResponseHandler
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		List<String> excludeValues = FacetConfigurationUtil.getExcludeValues(
+			configurationJSONObject);
+		List<String> includeValues = FacetConfigurationUtil.getIncludeValues(
+			configurationJSONObject);
+
 		long frequencyThreshold = configurationJSONObject.getLong(
 			FacetConfigurationKeys.FREQUENCY_THRESHOLD.getJsonKey(), 1);
 
 		for (Bucket bucket : buckets) {
 			if (bucket.getDocCount() < frequencyThreshold) {
+				continue;
+			}
+
+			if (!FacetConfigurationUtil.includeValue(
+					bucket.getKey(), includeValues, excludeValues)) {
+
 				continue;
 			}
 
@@ -139,23 +152,19 @@ public abstract class BaseTermsFacetResponseHandler
 			return Optional.empty();
 		}
 
-		String handlerName = configurationJSONObject.getString(
-			FacetConfigurationKeys.HANDLER.getJsonKey(), "default");
-
-		String parameterName = configurationJSONObject.getString(
-			FacetConfigurationKeys.PARAMETER_NAME.getJsonKey());
-
-		String label = configurationJSONObject.getString(
-			FacetConfigurationKeys.LABEL.getJsonKey(), parameterName);
-
 		return Optional.of(
 			JSONUtil.put(
-				FacetsJSONResponseKeys.HANDER_NAME, handlerName
+				FacetsJSONResponseKeys.HANDLER_NAME,
+				configurationJSONObject.getString(
+					FacetConfigurationKeys.HANDLER.getJsonKey(), "default")
 			).put(
 				FacetsJSONResponseKeys.LABEL,
-				LanguageUtil.get(resourceBundle, label)
+				LanguageUtil.get(
+					resourceBundle,
+					FacetConfigurationUtil.getLabel(configurationJSONObject))
 			).put(
-				FacetsJSONResponseKeys.PARAMETER_NAME, parameterName
+				FacetsJSONResponseKeys.PARAMETER_NAME,
+				FacetConfigurationUtil.getParameterName(configurationJSONObject)
 			).put(
 				FacetsJSONResponseKeys.VALUES, jsonArray
 			));

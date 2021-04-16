@@ -25,13 +25,13 @@ public class FacetsJSONResponseKeys {
 
 	public static final String GROUP_NAME = "groupName";
 
-	public static final String HANDER_NAME = "handlerName";
+	public static final String HANDLER_NAME = "handlerName";
 
-	public static final String LABEL = "facetLabel";
-
-	public static final String NAME = "name";
+	public static final String LABEL = "label";
 
 	public static final String PARAMETER_NAME = "parameterName";
+
+	public static final String TERM_NAME = "term";
 
 	public static final String TEXT = "text";
 

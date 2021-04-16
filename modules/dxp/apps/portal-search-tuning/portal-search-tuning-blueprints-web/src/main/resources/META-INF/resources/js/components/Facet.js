@@ -51,7 +51,6 @@ function FacetInput({
 FacetInput.propTypes = {
 	facetLabel: PropTypes.string,
 	items: PropTypes.arrayOf(PropTypes.object),
-	label: PropTypes.string,
 	onItemsChange: PropTypes.func,
 	parameterName: PropTypes.string,
 	values: PropTypes.arrayOf(PropTypes.object),
@@ -60,14 +59,15 @@ FacetInput.propTypes = {
 export default function Facet({facets, onChange, selectedFacets}) {
 	return (
 		<div className="search-facets">
-			{facets.map((facet, index) => (
+			{Object.keys(facets).map((facet, index) => (
 				<FacetInput
-					items={selectedFacets[facet.parameterName]}
+					facetLabel={facets[facet].label}
+					items={selectedFacets[facets[facet].parameterName]}
 					key={index}
 					onItemsChange={(items) =>
-						onChange(facet.parameterName, items)
+						onChange(facets[facet].parameterName, items)
 					}
-					{...facet}
+					{...facets[facet]}
 				/>
 			))}
 		</div>

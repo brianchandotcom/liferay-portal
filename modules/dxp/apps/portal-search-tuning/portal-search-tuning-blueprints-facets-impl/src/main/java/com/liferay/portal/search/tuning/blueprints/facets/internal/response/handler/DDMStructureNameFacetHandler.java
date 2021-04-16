@@ -67,7 +67,7 @@ public class DDMStructureNameFacetHandler
 		).put(
 			FacetsJSONResponseKeys.GROUP_NAME, group.getName(locale, true)
 		).put(
-			FacetsJSONResponseKeys.NAME, name
+			FacetsJSONResponseKeys.TERM_NAME, name
 		).put(
 			FacetsJSONResponseKeys.TEXT, getText(name, frequency, null)
 		).put(

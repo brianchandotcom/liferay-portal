@@ -52,9 +52,7 @@ public class DocumentTypeFacetResponseHandler
 
 		long frequency = bucket.getDocCount();
 
-		String value = bucket.getKey();
-
-		long fileEntryTypeId = GetterUtil.getLong(value);
+		long fileEntryTypeId = GetterUtil.getLong(bucket.getKey());
 
 		DLFileEntryType dlFileEntryType =
 			_dLFileEntryTypeService.getFileEntryType(fileEntryTypeId);
@@ -68,7 +66,7 @@ public class DocumentTypeFacetResponseHandler
 		).put(
 			FacetsJSONResponseKeys.GROUP_NAME, group.getName(locale, true)
 		).put(
-			FacetsJSONResponseKeys.NAME, name
+			FacetsJSONResponseKeys.TERM_NAME, name
 		).put(
 			FacetsJSONResponseKeys.TEXT, getText(name, frequency, null)
 		).put(

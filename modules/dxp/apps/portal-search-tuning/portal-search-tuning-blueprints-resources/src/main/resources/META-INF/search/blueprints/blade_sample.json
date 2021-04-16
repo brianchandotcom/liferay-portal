@@ -25,12 +25,14 @@
 					"filter_mode": "pre",
 					"handler": "category",
 					"label": "category",
+					"name": "category",
 					"parameter_name": "category"
 				},
 				{
 					"field": "assetTagNames.raw",
 					"filter_mode": "pre",
 					"label": "tag",
+					"name": "tag",
 					"parameter_name": "tag"
 				},
 				{
@@ -43,6 +45,7 @@
 					},
 					"label": "Category Tree",
 					"multi_value_operator": "or",
+					"name": "category_tree",
 					"parameter_name": "item"
 				},
 				{
@@ -82,6 +85,7 @@
 					},
 					"label": "create-date",
 					"multi_value": "false",
+					"name": "create-date",
 					"parameter_name": "created"
 				},
 				{
@@ -89,6 +93,7 @@
 					"filter_mode": "pre",
 					"handler": "document_type",
 					"label": "document-type",
+					"name": "document-type",
 					"parameter_name": "documentType"
 				},
 				{
@@ -127,14 +132,16 @@
 							}
 						]
 					},
-					"label": "modified",
+					"modified": "",
 					"multi_value": "false",
+					"name": "modified",
 					"parameter_name": "modified"
 				},
 				{
 					"field": "userName",
 					"filter_mode": "pre",
 					"label": "user",
+					"name": "user",
 					"parameter_name": "user"
 				},
 				{
@@ -142,6 +149,7 @@
 					"filter_mode": "pre",
 					"handler": "folder",
 					"label": "folder",
+					"name": "folder",
 					"parameter_name": "folder"
 				},
 				{
@@ -149,17 +157,20 @@
 					"filter_mode": "pre",
 					"handler": "site",
 					"label": "site",
+					"name": "site",
 					"parameter_name": "site"
 				},
 				{
 					"field": "entryClassName",
 					"label": "type",
+					"name": "type",
 					"parameter_name": "type"
 				},
 				{
 					"field": "ddmStructureKey",
 					"handler": "ddm_structure_name",
 					"label": "web-content-type",
+					"name": "web-content-type",
 					"parameter_name": "web-content-type"
 				}
 			],

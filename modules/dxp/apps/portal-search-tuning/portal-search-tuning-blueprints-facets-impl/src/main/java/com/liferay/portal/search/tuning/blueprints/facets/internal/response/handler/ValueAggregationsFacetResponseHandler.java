@@ -28,6 +28,7 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsJSONResponseKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.internal.util.FacetConfigurationUtil;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.response.FacetResponseHandler;
 import com.liferay.portal.search.tuning.blueprints.message.Message;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
@@ -36,6 +37,7 @@ import com.liferay.portal.search.tuning.blueprints.message.Severity;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -77,8 +79,22 @@ public class ValueAggregationsFacetResponseHandler
 
 			Map<String, Integer> termsMap = new HashMap<>();
 
+			List<String> excludeValues =
+				FacetConfigurationUtil.getExcludeValues(
+					configurationJSONObject);
+
+			List<String> includeValues =
+				FacetConfigurationUtil.getIncludeValues(
+					configurationJSONObject);
+
 			for (Bucket bucket : termsAggregationResult.getBuckets()) {
 				if (Validator.isBlank(bucket.getKey())) {
+					continue;
+				}
+
+				if (!FacetConfigurationUtil.includeValue(
+						bucket.getKey(), includeValues, excludeValues)) {
+
 					continue;
 				}
 
@@ -167,7 +183,7 @@ public class ValueAggregationsFacetResponseHandler
 				JSONUtil.put(
 					FacetsJSONResponseKeys.FREQUENCY, frequency
 				).put(
-					FacetsJSONResponseKeys.NAME, value
+					FacetsJSONResponseKeys.TERM_NAME, value
 				).put(
 					FacetsJSONResponseKeys.TEXT,
 					getText(value, frequency, resourceBundle)

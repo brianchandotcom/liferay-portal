@@ -53,9 +53,7 @@ public class CategoryFacetResponseHandler
 
 		long frequency = bucket.getDocCount();
 
-		String value = bucket.getKey();
-
-		long assetCategoryId = GetterUtil.getLong(value);
+		long assetCategoryId = GetterUtil.getLong(bucket.getKey());
 
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.getAssetCategory(assetCategoryId);
@@ -69,7 +67,7 @@ public class CategoryFacetResponseHandler
 		).put(
 			FacetsJSONResponseKeys.GROUP_NAME, group.getName(locale, true)
 		).put(
-			FacetsJSONResponseKeys.NAME, name
+			FacetsJSONResponseKeys.TERM_NAME, name
 		).put(
 			FacetsJSONResponseKeys.TEXT, getText(name, frequency, null)
 		).put(

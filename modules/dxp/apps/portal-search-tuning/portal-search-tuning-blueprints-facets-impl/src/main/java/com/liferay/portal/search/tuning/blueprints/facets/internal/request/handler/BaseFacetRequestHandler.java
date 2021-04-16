@@ -22,6 +22,7 @@ import com.liferay.portal.search.tuning.blueprints.engine.parameter.Parameter;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.StringArrayParameter;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.StringParameter;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.internal.util.FacetConfigurationUtil;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.request.FacetRequestHandler;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 
@@ -37,8 +38,8 @@ public abstract class BaseFacetRequestHandler implements FacetRequestHandler {
 		BlueprintsAttributes blueprintsAttributes, Messages messages,
 		JSONObject configurationJSONObject) {
 
-		String parameterName = configurationJSONObject.getString(
-			FacetConfigurationKeys.PARAMETER_NAME.getJsonKey());
+		String parameterName = FacetConfigurationUtil.getParameterName(
+			configurationJSONObject);
 
 		Optional<Object> valueOptional =
 			blueprintsAttributes.getAttributeOptional(parameterName);

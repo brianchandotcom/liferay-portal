@@ -26,8 +26,6 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.UnsafeFunction;
@@ -105,23 +103,6 @@ public class DDMFormValuesUtil {
 				setDefaultLocale(ddmForm.getDefaultLocale());
 			}
 		};
-	}
-
-	public static void validateDDMFormValues(
-		DDMFormValuesValidator ddmFormValuesValidator,
-		DDMFormValues ddmFormValues) {
-
-		try {
-			ddmFormValuesValidator.validate(ddmFormValues);
-		}
-		catch (DDMFormValuesValidationException
-					ddmFormValuesValidationException) {
-
-			throw new BadRequestException(
-				"Validation error: " +
-					ddmFormValuesValidationException.getMessage(),
-				ddmFormValuesValidationException);
-		}
 	}
 
 	private static List<DDMFormFieldValue> _flattenDDMFormFieldValues(

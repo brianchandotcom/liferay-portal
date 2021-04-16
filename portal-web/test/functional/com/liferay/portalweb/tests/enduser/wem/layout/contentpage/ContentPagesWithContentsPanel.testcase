@@ -1,0 +1,224 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-102887. A user can access content in a web content display widget through content panel"
+	@priority = "5"
+	test AccessToWebContentEditorViaContentsPanel {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addWidget(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		Refresh();
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+			menuItem = "Edit",
+			rowEntry = "WC WebContent Title");
+
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+	}
+
+	@description = "This is a test for LPS-96794. Mapped Web Contents' state will appear in the sidebar in a Page Editor's edit mode."
+	@priority = "4"
+	test ViewMappedWebContentStatus {
+		for (var count : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content ${count}",
+				groupName = "Test Site Name",
+				title = "WebContent Title ${count}");
+		}
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			fragmentName = "Banner");
+
+		PageEditorEditableLink.gotoEditableFieldLink(
+			fragmentName = "Banner",
+			id = "link");
+
+		PageEditorEditableLink.mapURLToAsset(
+			entryTitle = "WebContent Title 1",
+			field = "Title",
+			navItem = "Web Content");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Banner",
+			id = "01-title");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WebContent Title 2",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Banner",
+			id = "02-subtitle");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WebContent Title 3",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		PageEditor.clickPublish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContent Title 2");
+
+		WebContent.editCP(
+			saveAsDraft = "true",
+			webContentContentEdit = "WC WebContent Content 2 Edit",
+			webContentTitle = "WebContent Title 2",
+			webContentTitleEdit = "WebContent Title 2 Edit");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.expireCP(webContentTitleList = "WebContent Title 3");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		AssertTextEquals(
+			key_listEntry = "WebContent Title 1",
+			locator1 = "LexiconList#LIST_ENTRY_INFO",
+			value1 = "Approved");
+
+		AssertTextEquals(
+			key_listEntry = "WebContent Title 2",
+			locator1 = "LexiconList#LIST_ENTRY_STATUS",
+			value1 = "draft");
+
+		AssertTextEquals(
+			key_listEntry = "WebContent Title 3",
+			locator1 = "LexiconList#LIST_ENTRY_INFO",
+			value1 = "expired");
+	}
+
+	@description = "This is a test for LPS-96794. In a Permission mode, the edit actions associated that will show a modal with the permission information. In an edit mode, the edit actions associated that will show a modal with the usages of the web content."
+	@priority = "4"
+	test ViewPermissionsAndUsageOfMappedWebContent {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WebContent Title",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "WebContent Title");
+
+		IFrame.selectPermissionsFrame();
+
+		Role.viewPermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			permissionFlagged = "true",
+			roleTitle = "Owner");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+			menuItem = "View Usages",
+			rowEntry = "WebContent Title");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			locator1 = "AssetLists#ASSET_LIST_USAGES",
+			usageAmount = "2",
+			usageType = "Pages");
+	}
+
+}

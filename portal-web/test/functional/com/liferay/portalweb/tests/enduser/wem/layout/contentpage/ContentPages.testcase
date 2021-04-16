@@ -316,40 +316,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102887. A user can access content in a web content display widget through content panel"
-	@priority = "5"
-	test CanAccessContentPanel {
-		property portal.acceptance = "true";
-
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page Name",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addWidget(portletName = "Web Content Display");
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		Refresh();
-
-		PageEditor.gotoTab(tabName = "Contents");
-
-		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC WebContent Title");
-
-		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
-	}
-
 	@description = "This is a test for LPS-107285. Can not duplicate Layout Elements with a widget that only allowed appear once in the page, there should be an error message shown."
 	@priority = "4"
 	test CannotDuplicateSectionWithOnlyAllowedAppearOnceWidget {

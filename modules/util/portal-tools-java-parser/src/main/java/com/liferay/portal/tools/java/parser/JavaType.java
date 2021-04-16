@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.java.parser;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 
 import java.util.List;
@@ -25,7 +26,14 @@ import java.util.List;
 public class JavaType extends BaseJavaTerm implements Comparable<JavaType> {
 
 	public JavaType(String name, int arrayDimension) {
+		this(name, null, arrayDimension);
+	}
+
+	public JavaType(
+		String name, List<JavaAnnotation> javaAnnotations, int arrayDimension) {
+
 		_name = new JavaSimpleValue(name);
+		_javaAnnotations = javaAnnotations;
 		_arrayDimension = arrayDimension;
 	}
 
@@ -89,6 +97,11 @@ public class JavaType extends BaseJavaTerm implements Comparable<JavaType> {
 
 		indent = "\t" + indent;
 
+		if (ListUtil.isNotEmpty(_javaAnnotations)) {
+			indent = append(
+				sb, _javaAnnotations, " ", indent, "", " ", maxLineLength);
+		}
+
 		if ((_genericJavaTypes == null) && (_lowerBoundJavaTypes == null) &&
 			(_upperBoundJavaTypes == null)) {
 
@@ -145,6 +158,7 @@ public class JavaType extends BaseJavaTerm implements Comparable<JavaType> {
 
 	private final int _arrayDimension;
 	private List<JavaType> _genericJavaTypes;
+	private final List<JavaAnnotation> _javaAnnotations;
 	private List<JavaType> _lowerBoundJavaTypes;
 	private final JavaSimpleValue _name;
 	private List<JavaType> _upperBoundJavaTypes;

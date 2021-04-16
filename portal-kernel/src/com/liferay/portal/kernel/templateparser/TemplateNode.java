@@ -141,6 +141,9 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		else if (type.equals("document_library") || type.equals("image")) {
 			return _getFileEntryData();
 		}
+		else if (type.equals("geolocation")) {
+			return _getGeolocationData();
+		}
 
 		return (String)get("data");
 	}
@@ -343,6 +346,41 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			return DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, true);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getGeolocationData() {
+		String data = (String)get("data");
+
+		if (Validator.isNull(data)) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
+
+			if (jsonObject.has("latitude") && jsonObject.has("longitude")) {
+				return data;
+			}
+
+			if (!jsonObject.has("lat") || !jsonObject.has("lng")) {
+				return data;
+			}
+
+			jsonObject.put(
+				"latitude", jsonObject.get("lat")
+			).put(
+				"longitude", jsonObject.get("lng")
+			);
+
+			return jsonObject.toJSONString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

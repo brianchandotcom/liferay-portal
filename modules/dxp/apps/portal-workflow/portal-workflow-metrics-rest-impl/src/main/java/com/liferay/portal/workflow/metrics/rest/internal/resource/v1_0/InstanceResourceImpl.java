@@ -34,6 +34,7 @@ import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.document.Document;
@@ -1020,8 +1021,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation instanceIdtermsAggregation = _aggregations.terms(
 			"instanceId", "instanceId");
 
-		instanceIdtermsAggregation.addChildAggregation(
-			_aggregations.topHits("topHits"));
+		TopHitsAggregation topHitsAggregation = _aggregations.topHits(
+			"topHits");
+
+		topHitsAggregation.addSortFields(
+			_sorts.field("remainingTime", SortOrder.ASC));
+
+		instanceIdtermsAggregation.addChildAggregation(topHitsAggregation);
 
 		searchSearchRequest.addAggregation(instanceIdtermsAggregation);
 

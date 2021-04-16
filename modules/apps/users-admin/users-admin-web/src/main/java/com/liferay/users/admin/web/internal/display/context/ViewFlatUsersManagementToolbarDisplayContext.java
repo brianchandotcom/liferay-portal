@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -214,7 +215,13 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"first-name", "last-name", "screen-name"};
+		String[] orderColumns = {"first-name", "last-name", "screen-name"};
+
+		if (searchContainer.isSearch()) {
+			orderColumns = ArrayUtil.append(orderColumns, "relevance");
+		}
+
+		return orderColumns;
 	}
 
 	@Override

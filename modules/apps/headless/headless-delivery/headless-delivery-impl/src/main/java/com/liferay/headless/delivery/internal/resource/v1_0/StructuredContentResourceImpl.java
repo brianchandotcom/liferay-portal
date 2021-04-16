@@ -909,8 +909,7 @@ public class StructuredContentResourceImpl
 		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
-		DDMFormValuesUtil.validateDDMFormValues(
-			_ddmFormValuesValidator, ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 
 		return fields;
 	}

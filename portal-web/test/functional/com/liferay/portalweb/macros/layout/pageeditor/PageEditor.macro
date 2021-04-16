@@ -1534,7 +1534,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
 
-		Segmentation.fillProperty(PropertyField = "liferay2");
+		Segmentation.fillProperty(propertyField = "liferay2");
 
 		Button.clickSave();
 

@@ -52,7 +52,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment usersn");
 
-		Segmentation.fillProperty(PropertyField = "usersn");
+		Segmentation.fillProperty(propertyField = "usersn");
 
 		Button.clickSave();
 
@@ -144,7 +144,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
 
-		Segmentation.fillProperty(PropertyField = "liferay");
+		Segmentation.fillProperty(propertyField = "liferay");
 
 		Button.clickSave();
 

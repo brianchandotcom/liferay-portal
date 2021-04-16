@@ -157,7 +157,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentBySessionBrowser Test");
 
-		Segmentation.fillProperty(PropertyField = "Chrome");
+		Segmentation.fillProperty(propertyField = "Chrome");
 
 		Button.clickSave();
 
@@ -201,7 +201,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceBrand Test");
 
-		Segmentation.fillProperty(PropertyField = "Apple");
+		Segmentation.fillProperty(propertyField = "Apple");
 
 		Button.clickSave();
 
@@ -222,7 +222,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceModel Test");
 
-		Segmentation.fillProperty(PropertyField = "ios");
+		Segmentation.fillProperty(propertyField = "ios");
 
 		Button.clickSave();
 
@@ -243,7 +243,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceScreenResolutionHeight Test");
 
-		Segmentation.fillProperty(ResolutionValue = "480");
+		Segmentation.fillProperty(resolutionValue = "480");
 
 		Button.clickSave();
 
@@ -264,7 +264,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceScreenResolutionWidth Test");
 
-		Segmentation.fillProperty(ResolutionValue = "320");
+		Segmentation.fillProperty(resolutionValue = "320");
 
 		Button.clickSave();
 
@@ -444,7 +444,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
 
-		Segmentation.fillProperty(PropertyField = "liferay");
+		Segmentation.fillProperty(propertyField = "liferay");
 
 		Button.clickSave();
 
@@ -462,7 +462,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
 
-		Segmentation.fillProperty(PropertyField = "liferay");
+		Segmentation.fillProperty(propertyField = "liferay");
 
 		Button.clickSave();
 
@@ -480,7 +480,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Contains");
 
-		Segmentation.fillProperty(PropertyField = "liferay");
+		Segmentation.fillProperty(propertyField = "liferay");
 
 		Button.clickSave();
 
@@ -498,7 +498,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Equals");
 
-		Segmentation.fillProperty(PropertyField = "liferay");
+		Segmentation.fillProperty(propertyField = "liferay");
 
 		Button.clickSave();
 
@@ -535,7 +535,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment test");
 
-		Segmentation.fillProperty(PropertyField = "test");
+		Segmentation.fillProperty(propertyField = "test");
 
 		Button.clickSave();
 
@@ -579,7 +579,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
 
-		Segmentation.fillProperty(PropertyField = "test");
+		Segmentation.fillProperty(propertyField = "test");
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",
@@ -587,7 +587,7 @@ definition {
 
 		Segmentation.viewMembers(memberName = "Test");
 
-		Segmentation.fillProperty(PropertyField = "liferay");
+		Segmentation.fillProperty(propertyField = "liferay");
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",

@@ -80,17 +80,17 @@ definition {
 				value1 = "${criterionValue}");
 		}
 
-		if (isSet(ResolutionValue)) {
+		if (isSet(resolutionValue)) {
 			Type(
 				key_criterion = "decimal-number",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-				value1 = "${ResolutionValue}");
+				value1 = "${resolutionValue}");
 		}
 
 		else {
 			Type(
 				locator1 = "Segmentation#PROPERTY_FIELD",
-				value1 = "${PropertyField}");
+				value1 = "${propertyField}");
 		}
 	}
 

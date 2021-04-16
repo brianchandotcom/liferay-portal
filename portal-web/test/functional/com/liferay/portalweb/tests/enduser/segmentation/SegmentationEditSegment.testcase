@@ -24,7 +24,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
 
-		Segmentation.fillProperty(PropertyField = "liferay");
+		Segmentation.fillProperty(propertyField = "liferay");
 
 		Button.clickSave();
 	}
@@ -132,7 +132,7 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Hostname");
 
-		Segmentation.fillProperty(PropertyField = "Liferay");
+		Segmentation.fillProperty(propertyField = "Liferay");
 
 		Button.clickSave();
 	}
@@ -155,7 +155,7 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "URL");
 
-		Segmentation.fillProperty(PropertyField = "www.liferay.com");
+		Segmentation.fillProperty(propertyField = "www.liferay.com");
 
 		Button.clickSave();
 	}

@@ -64,12 +64,7 @@ definition {
 		var defaultPortalURL = PropsUtil.get("default.portal.url");
 
 		if (isSet(freeLogin)) {
-			var portalInstanceName = StringUtil.replace("${defaultPortalURL}", "http://", "");
-			var portalInstanceName = StringUtil.replace("${portalInstanceName}", ":8080", "");
-
-			JSONUser.agreeToTermsAndAnswerReminderQuery(
-				portalInstanceName = "${portalInstanceName}",
-				userEmailAddress = "${userEmailAddress}");
+			JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "${userEmailAddress}");
 
 			Navigator.openSpecificURL(url = "${defaultPortalURL}/web/guest?SM_USER=${userEmailAddress}");
 		}

@@ -52,8 +52,6 @@ definition {
 			branchingPublic = "true",
 			groupName = "Guest");
 
-		Pause(locator1 = "3000");
-
 		Navigator.openStagingSiteURL(defaultSite = "true");
 
 		Theme.viewTestThemeBackgroundColor();
@@ -903,8 +901,6 @@ definition {
 			branchingPrivate = "true",
 			branchingPublic = "true",
 			groupName = "Guest");
-
-		Pause(locator1 = "3000");
 
 		Navigator.openStagingSiteURL(defaultSite = "true");
 

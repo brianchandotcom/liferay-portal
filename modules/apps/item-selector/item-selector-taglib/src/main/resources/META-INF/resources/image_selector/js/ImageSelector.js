@@ -53,21 +53,15 @@ const ImageSelector = ({
 }) => {
 	const [errorMessage, setErrorMessage] = useState('');
 	const [fileName, setFileName] = useState('');
+	const [image, setImage] = useState({
+		fileEntryId,
+		src: imageURL,
+	});
 	const [imageCropRegion, setImageCropRegion] = useState(
 		initialImageCropRegion
 	);
 	const [progressData, setProgressData] = useState();
 	const [progressValue, setProgressValue] = useState(0);
-
-	const [image, setImage] = useState({fileEntryId, src: imageURL});
-
-	useEffect(() => {
-		const isCoverImageSelector = paramName === 'coverImageFileEntry';
-
-		if (isCoverImageSelector) {
-			State.write(imageSelectorCoverImageAtom, image);
-		}
-	}, [image, paramName]);
 
 	const rootNodeRef = useRef(null);
 	const uploaderRef = useRef(null);
@@ -129,27 +123,6 @@ const ImageSelector = ({
 		}
 
 		return message;
-	};
-
-	const showImagePreview = (file) => {
-		const reader = new FileReader();
-
-		reader.addEventListener('loadend', () => {
-			if (progressValue < 100) {
-				setImage({
-					fileEntryId: '-1',
-					src: reader.result,
-				});
-			}
-		});
-
-		reader.readAsDataURL(file);
-	};
-
-	const stopProgress = () => {
-		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
-
-		setProgressValue(0);
 	};
 
 	const handleDeleteImageClick = () => {
@@ -254,6 +227,35 @@ const ImageSelector = ({
 			)
 		);
 	};
+
+	const showImagePreview = (file) => {
+		const reader = new FileReader();
+
+		reader.addEventListener('loadend', () => {
+			if (progressValue < 100) {
+				setImage({
+					fileEntryId: '-1',
+					src: reader.result,
+				});
+			}
+		});
+
+		reader.readAsDataURL(file);
+	};
+
+	const stopProgress = () => {
+		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
+
+		setProgressValue(0);
+	};
+
+	useEffect(() => {
+		const isCoverImageSelector = paramName === 'coverImageFileEntry';
+
+		if (isCoverImageSelector) {
+			State.write(imageSelectorCoverImageAtom, image);
+		}
+	}, [image, paramName]);
 
 	useEffect(() => {
 		AUI().use('uploader', (A) => {

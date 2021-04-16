@@ -21,20 +21,11 @@ import com.liferay.document.library.video.external.shortcut.DLVideoExternalShort
  *
  * <p>
  * Implement this interface to add support for custom external video providers.
- * The implementation should:
- * <ol>
- * <li>
- * Decide whether or not to process the URL (based on a regex for example).
- * </li>
- * <li>
- * Return <code>null</code> if the URL does not match to allow matching other
- * providers.
- * </li>
- * <li>
- * Fetch extra information from the external service and return a {@link
- * DLVideoExternalShortcut} with the video details.
- * </li>
- * </ol>
+ * The implementation should: <ol> <li> Decide whether or not to process the URL
+ * (based on a regex for example). </li> <li> Return <code>null</code> if the
+ * URL does not match to allow matching other providers. </li> <li> Fetch extra
+ * information from the external service and return a {@link
+ * DLVideoExternalShortcut} with the video details. </li> </ol>
  * </p>
  *
  * @author Alejandro Tardín

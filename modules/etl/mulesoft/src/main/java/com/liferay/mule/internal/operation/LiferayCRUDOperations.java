@@ -69,16 +69,15 @@ public class LiferayCRUDOperations {
 	@OutputResolver(output = DeleteEndpointOutputTypeResolver.class)
 	public Result<String, Void> delete(
 			@Connection LiferayConnection connection,
-			@MetadataKeyId(DeleteEndpointTypeKeysResolver.class)
-				String endpoint,
-			@DisplayName("Path Parameters") @NullSafe @Optional
-				Map<String, String> pathParams,
-			@DisplayName("Query Parameters") @NullSafe @Optional
-				MultiMap<String, String> queryParams,
+			@MetadataKeyId(DeleteEndpointTypeKeysResolver.class) String
+				endpoint,
+			@DisplayName("Path Parameters") @NullSafe @Optional Map
+				<String, String> pathParams,
+			@DisplayName("Query Parameters") @NullSafe @Optional MultiMap
+				<String, String> queryParams,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value")
-				int connectionTimeout,
+			@Summary("Socket connection timeout value") int connectionTimeout,
 			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
@@ -102,14 +101,13 @@ public class LiferayCRUDOperations {
 	public Result<String, Void> get(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(GetEndpointTypeKeysResolver.class) String endpoint,
-			@DisplayName("Path Parameters") @NullSafe @Optional
-				Map<String, String> pathParams,
-			@DisplayName("Query Parameters") @NullSafe @Optional
-				MultiMap<String, String> queryParams,
+			@DisplayName("Path Parameters") @NullSafe @Optional Map
+				<String, String> pathParams,
+			@DisplayName("Query Parameters") @NullSafe @Optional MultiMap
+				<String, String> queryParams,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value")
-				int connectionTimeout,
+			@Summary("Socket connection timeout value") int connectionTimeout,
 			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
@@ -136,14 +134,13 @@ public class LiferayCRUDOperations {
 			@Content @DisplayName("Record")
 			@TypeResolver(value = PatchEndpointInputTypeResolver.class)
 				InputStream inputStream,
-			@DisplayName("Path Parameters") @NullSafe @Optional
-				Map<String, String> pathParams,
-			@DisplayName("Query Parameters") @NullSafe @Optional
-				MultiMap<String, String> queryParams,
+			@DisplayName("Path Parameters") @NullSafe @Optional Map
+				<String, String> pathParams,
+			@DisplayName("Query Parameters") @NullSafe @Optional MultiMap
+				<String, String> queryParams,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value")
-				int connectionTimeout,
+			@Summary("Socket connection timeout value") int connectionTimeout,
 			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
@@ -170,14 +167,13 @@ public class LiferayCRUDOperations {
 			@Content @DisplayName("Record")
 			@TypeResolver(value = PostEndpointInputTypeResolver.class)
 				InputStream inputStream,
-			@DisplayName("Path Parameters") @NullSafe @Optional
-				Map<String, String> pathParams,
-			@DisplayName("Query Parameters") @NullSafe @Optional
-				MultiMap<String, String> queryParams,
+			@DisplayName("Path Parameters") @NullSafe @Optional Map
+				<String, String> pathParams,
+			@DisplayName("Query Parameters") @NullSafe @Optional MultiMap
+				<String, String> queryParams,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value")
-				int connectionTimeout,
+			@Summary("Socket connection timeout value") int connectionTimeout,
 			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")

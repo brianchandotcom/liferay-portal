@@ -104,8 +104,8 @@ public class ReplaceRegexTask extends DefaultTask {
 	}
 
 	public ReplaceRegexTask replaceOnlyIf(
-		@SuppressWarnings("unchecked")
-			Closure<Boolean>... replaceOnlyIfClosures) {
+		@SuppressWarnings("unchecked") Closure<Boolean>...
+			replaceOnlyIfClosures) {
 
 		return replaceOnlyIf(Arrays.asList(replaceOnlyIfClosures));
 	}
@@ -157,8 +157,8 @@ public class ReplaceRegexTask extends DefaultTask {
 	}
 
 	public void setReplaceOnlyIf(
-		@SuppressWarnings("unchecked")
-			Closure<Boolean>... replaceOnlyIfClosures) {
+		@SuppressWarnings("unchecked") Closure<Boolean>...
+			replaceOnlyIfClosures) {
 
 		setReplaceOnlyIf(Arrays.asList(replaceOnlyIfClosures));
 	}

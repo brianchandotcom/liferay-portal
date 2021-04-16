@@ -35,8 +35,8 @@ import javax.servlet.ServletContext;
 public class ServletContextProducer {
 
 	public void applicationScopedInitialized(
-		@Initialized(ApplicationScoped.class) @Observes
-			ServletContext servletContext) {
+		@Initialized(ApplicationScoped.class) @Observes ServletContext
+			servletContext) {
 
 		_servletContext = servletContext;
 	}

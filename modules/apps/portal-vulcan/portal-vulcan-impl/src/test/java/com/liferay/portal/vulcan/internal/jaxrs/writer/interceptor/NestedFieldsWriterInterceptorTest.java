@@ -717,8 +717,8 @@ public class NestedFieldsWriterInterceptorTest {
 		@Path("/products/{productExternalCode}/categories")
 		@Produces("application/*")
 		public List<Category> getCategories(
-			@NotNull @PathParam("productExternalCode")
-				String productExternalCode) {
+			@NotNull @PathParam("productExternalCode") String
+				productExternalCode) {
 
 			return Collections.emptyList();
 		}

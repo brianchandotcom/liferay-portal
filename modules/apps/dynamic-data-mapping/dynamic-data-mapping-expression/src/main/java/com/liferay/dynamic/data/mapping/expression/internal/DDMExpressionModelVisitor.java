@@ -142,8 +142,8 @@ public class DDMExpressionModelVisitor
 
 	@Override
 	public Expression visitGreaterThanOrEqualsExpression(
-		@NotNull
-			DDMExpressionParser.GreaterThanOrEqualsExpressionContext context) {
+		@NotNull DDMExpressionParser.GreaterThanOrEqualsExpressionContext
+			context) {
 
 		Expression l = visitChild(context, 0);
 		Expression r = visitChild(context, 2);
@@ -170,8 +170,8 @@ public class DDMExpressionModelVisitor
 
 	@Override
 	public Expression visitLessThanOrEqualsExpression(
-		@NotNull
-			DDMExpressionParser.LessThanOrEqualsExpressionContext context) {
+		@NotNull DDMExpressionParser.LessThanOrEqualsExpressionContext
+			context) {
 
 		Expression l = visitChild(context, 0);
 		Expression r = visitChild(context, 2);

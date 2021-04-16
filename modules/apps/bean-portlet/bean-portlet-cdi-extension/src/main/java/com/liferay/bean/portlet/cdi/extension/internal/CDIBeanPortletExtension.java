@@ -423,8 +423,8 @@ public class CDIBeanPortletExtension implements Extension {
 	}
 
 	public void step4ApplicationScopedInitializedSync(
-		@Initialized(ApplicationScoped.class) @Observes
-			ServletContext servletContext,
+		@Initialized(ApplicationScoped.class) @Observes ServletContext
+			servletContext,
 		BeanManager beanManager, Event<ServletContext> servletContextEvent) {
 
 		servletContextEvent.fireAsync(servletContext);

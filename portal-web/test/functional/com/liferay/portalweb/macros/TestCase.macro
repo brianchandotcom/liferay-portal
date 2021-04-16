@@ -78,14 +78,7 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (("${testPortalInstance}" == "true") && (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}")))) {
-			if (isSet(freeLogin)) {
-				SignIn.signInPortalInstanceSetUp(
-					freeLogin = "true",
-					userEmailAddress = "${userEmailAddress}");
-			}
-			else {
-				SignIn.signInPortalInstanceSetUp();
-			}
+			SignIn.signInPortalInstanceSetUp();
 		}
 	}
 

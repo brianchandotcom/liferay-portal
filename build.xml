@@ -601,6 +601,29 @@ message.
 		</DTDDoc>
 	</target>
 
+	<target name="generate-config-env-vars">
+		<pathconvert pathsep="," property="config.files">
+			<fileset
+				dir="modules"
+				excludes=""
+				includes="**/apps/**/configuration/*Configuration.java"
+			>
+			</fileset>
+		</pathconvert>
+
+		<java
+			classname="com.liferay.portal.tools.ConfigurationEnvBuilder"
+			classpathref="project.classpath"
+			dir="${project.dir}/modules"
+			fork="true"
+			newenvironment="true"
+			outputProperty="output"
+		>
+			<arg value="config.files=${config.files}" />
+			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
+		</java>
+	</target>
+
 	<target name="install-portal-snapshots">
 		<ant dir="portal-impl" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />

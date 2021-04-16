@@ -214,7 +214,19 @@ definition {
 	test AddSegmentBySessionDeviceModel {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130316 AddSegmentBySessionDeviceModel pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Device Model");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceModel Test");
+
+		Segmentation.fillProperty(PropertyField = "ios");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for LPS-130317."

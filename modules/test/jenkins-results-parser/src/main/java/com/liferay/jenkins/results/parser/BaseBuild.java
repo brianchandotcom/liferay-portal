@@ -3920,23 +3920,49 @@ public abstract class BaseBuild implements Build {
 
 		_testClassResults = new ConcurrentHashMap<>();
 
-		if ((testReportJSONObject == null) ||
-			!testReportJSONObject.has("suites")) {
-
+		if (testReportJSONObject == null) {
 			return;
 		}
 
-		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
+		List<JSONArray> suitesJSONArrays = new ArrayList<>();
 
-		for (int i = 0; i < suitesJSONArray.length(); i++) {
-			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
+		if (testReportJSONObject.has("suites")) {
+			suitesJSONArrays.add(testReportJSONObject.getJSONArray("suites"));
+		}
+		else if (testReportJSONObject.has("childReports")) {
+			JSONArray childReportsJSONArray = testReportJSONObject.getJSONArray(
+				"childReports");
 
-			TestClassResult testClassResult =
-				TestClassResultFactory.newTestClassResult(
-					this, suiteJSONObject);
+			for (int i = 0; i < childReportsJSONArray.length(); i++) {
+				JSONObject childReportJSONObject =
+					childReportsJSONArray.getJSONObject(i);
 
-			_testClassResults.put(
-				testClassResult.getClassName(), testClassResult);
+				if (!childReportJSONObject.has("result")) {
+					continue;
+				}
+
+				JSONObject resultJSONObject =
+					childReportJSONObject.getJSONObject("result");
+
+				if (!resultJSONObject.has("suites")) {
+					continue;
+				}
+
+				suitesJSONArrays.add(resultJSONObject.getJSONArray("suites"));
+			}
+		}
+
+		for (JSONArray suitesJSONArray : suitesJSONArrays) {
+			for (int i = 0; i < suitesJSONArray.length(); i++) {
+				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
+
+				TestClassResult testClassResult =
+					TestClassResultFactory.newTestClassResult(
+						this, suiteJSONObject);
+
+				_testClassResults.put(
+					testClassResult.getClassName(), testClassResult);
+			}
 		}
 	}
 

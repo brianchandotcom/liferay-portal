@@ -128,7 +128,7 @@ describe('The instance list item should', () => {
 		expect(instanceStatusIcon).toBeTruthy();
 	});
 
-	test('Be rendered with hr icon when the slaStatus is "Untracked"', () => {
+	test('Be rendered with hr icon and due date when the slaStatus is "Untracked"', () => {
 		const {container} = render(
 			<Table.Item {...instance} slaStatus="Untracked" />,
 			{
@@ -139,6 +139,139 @@ describe('The instance list item should', () => {
 		const instanceStatusIcon = container.querySelector('.lexicon-icon-hr');
 
 		expect(instanceStatusIcon).toBeTruthy();
+
+		const instanceStatus = container.querySelector('.due-date.text-info');
+
+		expect(instanceStatus).toBeTruthy();
+		expect(instanceStatus.innerHTML).toEqual('-');
+	});
+
+	test('Be rendered with due date success when the slaStatus is "OnTime" and slaResult status is "Running"', () => {
+		const slaResult = {
+			dateOverdue: '2021-04-16T12:44:25Z',
+			status: 'Running',
+		};
+
+		const {container, getByText} = render(
+			<Table.Item
+				{...instance}
+				slaResults={[slaResult]}
+				slaStatus="OnTime"
+			/>,
+			{
+				wrapper: ContainerMock,
+			}
+		);
+
+		const dueDateCol = container.querySelector('.due-date.text-success');
+
+		expect(dueDateCol).toBeTruthy();
+
+		const dueDateBadge = dueDateCol.querySelector('.due-date-badge');
+
+		expect(dueDateBadge).toBeTruthy();
+
+		const dateText = getByText('Apr 16');
+
+		expect(dateText).toBeTruthy();
+	});
+
+	test('Be rendered with due date danger when the slaStatus is "Overdue" and slaResult status is "Running"', () => {
+		const slaResult = {
+			dateOverdue: '2021-04-16T12:44:25Z',
+			status: 'Running',
+		};
+
+		const {container, getByText} = render(
+			<Table.Item
+				{...instance}
+				slaResults={[slaResult]}
+				slaStatus="Overdue"
+			/>,
+			{
+				wrapper: ContainerMock,
+			}
+		);
+
+		const dueDateCol = container.querySelector('.due-date.text-danger');
+
+		expect(dueDateCol).toBeTruthy();
+
+		const dueDateBadge = dueDateCol.querySelector('.due-date-badge');
+
+		expect(dueDateBadge).toBeTruthy();
+
+		const dateText = getByText('Apr 16');
+
+		expect(dateText).toBeTruthy();
+	});
+
+	test('Be rendered with due date when the year is not the current year', () => {
+		const slaResult = {
+			dateOverdue: '2020-04-16T12:44:25Z',
+			status: 'Running',
+		};
+
+		const {getByText} = render(
+			<Table.Item
+				{...instance}
+				slaResults={[slaResult]}
+				slaStatus="OnTime"
+			/>,
+			{
+				wrapper: ContainerMock,
+			}
+		);
+
+		const dateText = getByText('Apr 16, 2020');
+
+		expect(dateText).toBeTruthy();
+	});
+
+	test('Be rendered with due date when the status is "Stopped"', () => {
+		const slaResult = {
+			dateOverdue: '2021-04-16T12:44:25Z',
+			status: 'Stopped',
+		};
+
+		const {container} = render(
+			<Table.Item
+				{...instance}
+				slaResults={[slaResult]}
+				slaStatus="OnTime"
+			/>,
+			{
+				wrapper: ContainerMock,
+			}
+		);
+
+		const dueDateCol = container.querySelector('.due-date.text-info');
+
+		expect(dueDateCol).toBeTruthy();
+		expect(dueDateCol.innerHTML).toEqual('-');
+	});
+
+	test('Be rendered with due date when the status is "Paused"', () => {
+		const slaResult = {
+			dateOverdue: '2021-04-16T12:44:25Z',
+			status: 'Paused',
+		};
+
+		const {container} = render(
+			<Table.Item
+				{...instance}
+				slaResults={[slaResult]}
+				slaStatus="OnTime"
+			/>,
+			{
+				wrapper: ContainerMock,
+			}
+		);
+
+		const dueDateCol = container.querySelector('.due-date.text-info');
+
+		expect(dueDateCol).toBeTruthy();
+		expect(dueDateCol.innerHTML).toEqual('-');
 	});
 
 	test('Call setInstanceId with "1" as instance id param', () => {

@@ -3929,6 +3929,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-125860."
+	@ignore = "true"
 	@priority = "5"
 	test SubmitFormWithRequiredConfirmationTextField {
 		property portal.acceptance = "false";

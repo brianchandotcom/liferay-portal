@@ -870,7 +870,7 @@ definition {
 			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
 
 			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "Blogs Entry Title",
+				searchAssetTitle = "Entry Title",
 				searchAssetType = "Blogs Entry",
 				searchTerm = "${searchTerm}");
 		}

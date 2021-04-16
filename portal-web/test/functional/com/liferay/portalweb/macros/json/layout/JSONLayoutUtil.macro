@@ -38,6 +38,11 @@ definition {
 		else if ("${widgetName}" == "Blogs") {
 			var portletId = "com_liferay_blogs_web_portlet_BlogsPortlet";
 		}
+
+		else if ("${widgetName}" == "Blogs Aggregator") {
+			var portletId = "com_liferay_blogs_web_portlet_BlogsAggregatorPortlet";
+		}
+
 		else if ("${widgetName}" == "Bookmarks") {
 			var portletId = "com_liferay_bookmarks_web_portlet_BookmarksPortlet";
 		}

@@ -406,6 +406,7 @@ definition {
 		Blogs.viewEntryTitle(entryTitle = "Blogs Entry Title");
 
 		AssertTextEquals(
+			key_entryTitle = "Blogs Entry Title",
 			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_STATUS",
 			value1 = "Draft");
 

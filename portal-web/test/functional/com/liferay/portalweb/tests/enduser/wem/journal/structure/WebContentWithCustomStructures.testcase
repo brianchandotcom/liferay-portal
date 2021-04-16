@@ -2273,6 +2273,7 @@ definition {
 				row = "2",
 				webContentColor = "5F5F5F",
 				webContentDate = "11/11/2019",
+				webContentGrid = "true",
 				webContentLinkToPage = "Edited Test Page Name",
 				webContentMultipleSelection = "Option 2",
 				webContentNumeric = "8",
@@ -2288,8 +2289,11 @@ definition {
 
 		task ("Assert web content has been edited") {
 			WebContent.viewWithStructureCP(
+				column = "2",
+				row = "2",
 				webContentColor = "5F5F5F",
 				webContentDate = "11/11/2019",
+				webContentGrid = "true",
 				webContentLinkToPage = "Edited Test Page Name",
 				webContentMultipleSelection = "Option 2",
 				webContentNumeric = "8",

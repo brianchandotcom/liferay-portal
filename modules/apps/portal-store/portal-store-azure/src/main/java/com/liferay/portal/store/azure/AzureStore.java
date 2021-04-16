@@ -48,9 +48,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.azure.configuration.AzureStoreConfiguration;
-import com.liferay.portal.store.azure.internal.FullPathsMapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,6 +62,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
@@ -87,7 +88,7 @@ public class AzureStore implements Store {
 			String versionLabel, InputStream inputStream)
 		throws PortalException {
 
-		String blobName = _fullPathsMapper.toAzureBlobName(
+		String blobName = _getBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
@@ -117,7 +118,7 @@ public class AzureStore implements Store {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		String blobPrefix = _fullPathsMapper.toAzureBlobPrefix(
+		String blobPrefix = _getBlobPrefix(
 			companyId, repositoryId, dirName);
 
 		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
@@ -172,7 +173,7 @@ public class AzureStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		String blobName = _fullPathsMapper.toAzureBlobName(
+		String blobName = _getBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
@@ -194,7 +195,7 @@ public class AzureStore implements Store {
 				companyId, repositoryId, fileName);
 		}
 
-		String blobName = _fullPathsMapper.toAzureBlobName(
+		String blobName = _getBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
@@ -212,7 +213,7 @@ public class AzureStore implements Store {
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
-		String blobPrefix = _fullPathsMapper.toAzureBlobPrefix(
+		String blobPrefix = _getBlobPrefix(
 			companyId, repositoryId, dirName);
 
 		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
@@ -225,7 +226,7 @@ public class AzureStore implements Store {
 		Stream<BlobItem> stream = pagedIterable.stream();
 
 		return stream.map(
-			blobItem -> _fullPathsMapper.toLiferayFileName(
+			blobItem -> _getFileName(
 				companyId, repositoryId, blobItem.getName())
 		).toArray(
 			String[]::new
@@ -243,7 +244,7 @@ public class AzureStore implements Store {
 				companyId, repositoryId, fileName);
 		}
 
-		String blobName = _fullPathsMapper.toAzureBlobName(
+		String blobName = _getBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
@@ -263,7 +264,7 @@ public class AzureStore implements Store {
 	public String[] getFileVersions(
 		long companyId, long repositoryId, String fileName) {
 
-		String blobPrefix = _fullPathsMapper.toAzureBlobPrefix(
+		String blobPrefix = _getBlobPrefix(
 			companyId, repositoryId, fileName);
 
 		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
@@ -307,7 +308,7 @@ public class AzureStore implements Store {
 			return false;
 		}
 
-		String blobName = _fullPathsMapper.toAzureBlobName(
+		String blobName = _getBlobName(
 			companyId, repositoryId, fileName, versionLabel);
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(
@@ -403,11 +404,126 @@ public class AzureStore implements Store {
 		return fileVersions[0];
 	}
 
+	private String _getBlobName(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
+
+		return _toFullAzurePath(companyId, repositoryId, fileName, versionLabel);
+	}
+
+	private String _getBlobPrefix(
+		long companyId, long repositoryId, String dirName) {
+
+		String dirPath = _toFullAzurePath(
+			companyId, repositoryId, dirName, null);
+
+		return dirPath + StringPool.SLASH;
+	}
+
+	private String _toFullAzurePath(
+		long companyId, long repositoryId, String liferayPath,
+		String versionLabel) {
+
+		if (StringUtil.startsWith(liferayPath, StringPool.SLASH)) {
+			liferayPath = liferayPath.substring(1);
+		}
+
+		if (StringUtil.endsWith(liferayPath, StringPool.SLASH)) {
+			liferayPath = liferayPath.substring(0, liferayPath.length() - 1);
+		}
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(companyId);
+		sb.append(StringPool.SLASH);
+		sb.append(repositoryId);
+
+		if (!liferayPath.isEmpty()) {
+			sb.append(StringPool.SLASH);
+			sb.append(liferayPath);
+		}
+
+		if (Validator.isNotNull(versionLabel)) {
+			sb.append(StringPool.SLASH);
+			sb.append(versionLabel);
+		}
+
+		return sb.toString();
+	}
+
+	private String _toLiferayDirName(
+		long companyId, long repositoryId, String azureBlobsPrefix) {
+
+		if (!azureBlobsPrefix.endsWith(StringPool.SLASH)) {
+			throw new IllegalArgumentException(
+				StringPool.APOSTROPHE + azureBlobsPrefix + "' must end with /");
+		}
+
+		String rootBlobPathWithDelimiter =
+			_toFullAzurePath(companyId, repositoryId, StringPool.BLANK, null) +
+			StringPool.SLASH;
+
+		if (!azureBlobsPrefix.startsWith(rootBlobPathWithDelimiter)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"It looks like blobs prefix '", azureBlobsPrefix,
+					"' does not belong to company: ", companyId,
+					" and repository: ", repositoryId,
+					" (the blobs prefix does not begin with '",
+					rootBlobPathWithDelimiter, "')"));
+		}
+
+		String dirName = azureBlobsPrefix.substring(
+			rootBlobPathWithDelimiter.length());
+
+		if (StringUtil.endsWith(dirName, StringPool.SLASH)) {
+			return dirName.substring(0, dirName.length() - 1);
+		}
+
+		return dirName;
+	}
+
+	private String _getFileName(
+		long companyId, long repositoryId, String azureBlobName) {
+
+		Objects.requireNonNull(azureBlobName);
+
+		String rootPrefix =
+			_toFullAzurePath(companyId, repositoryId, StringPool.BLANK, null) +
+			StringPool.SLASH;
+
+		if (!azureBlobName.startsWith(rootPrefix)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"It looks like blob '", azureBlobName,
+					"' does not belong to company: ", companyId,
+					"and repository: ", repositoryId));
+		}
+
+		String fileNamePathWithVersion = azureBlobName.substring(
+			rootPrefix.length());
+
+		if (fileNamePathWithVersion.isEmpty() ||
+			!fileNamePathWithVersion.contains(StringPool.SLASH)) {
+
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"The blob '", azureBlobName, "' does not conform to the ",
+					"pattern ${companyId}/${repositoryId}/${fileName}",
+					"/${versionLabel} -- missing the '/${versionLabel}' part. ",
+					"Delete the blob in Azure to fix this (there should be no ",
+					"blobs directly under ${companyId}/${repositoryId}, only ",
+					"subfolders."));
+		}
+
+		return fileNamePathWithVersion.substring(
+			0, fileNamePathWithVersion.lastIndexOf(StringPool.SLASH));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(AzureStore.class);
 
 	private volatile AzureStoreConfiguration
 		_azureBlobStorageStoreConfiguration;
 	private BlobContainerClient _blobContainerClient;
-	private final FullPathsMapper _fullPathsMapper = new FullPathsMapper();
 
 }

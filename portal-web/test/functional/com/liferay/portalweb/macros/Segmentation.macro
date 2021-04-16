@@ -81,11 +81,9 @@ definition {
 		}
 
 		else {
-			Click(locator1 = "Segmentation#PROPERTY_FIELD");
-
 			Type(
-			locator1 = "Segmentation#PROPERTY_FIELD",
-			value1 = "${PropertyField}");
+				locator1 = "Segmentation#PROPERTY_FIELD",
+				value1 = "${PropertyField}");
 		}
 	}
 

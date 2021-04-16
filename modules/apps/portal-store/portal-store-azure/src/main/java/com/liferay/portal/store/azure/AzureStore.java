@@ -317,7 +317,7 @@ public class AzureStore implements Store {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_azureBlobStorageStoreConfiguration =
+		AzureStoreConfiguration azureStoreConfiguration =
 			ConfigurableUtil.createConfigurable(
 				AzureStoreConfiguration.class, properties);
 
@@ -325,12 +325,12 @@ public class AzureStore implements Store {
 			new BlobContainerClientBuilder();
 
 		blobContainerClientBuilder.connectionString(
-			_azureBlobStorageStoreConfiguration.connectionString());
+			azureStoreConfiguration.connectionString());
 
 		blobContainerClientBuilder.containerName(
-			_azureBlobStorageStoreConfiguration.containerName());
+			azureStoreConfiguration.containerName());
 
-		if (_azureBlobStorageStoreConfiguration.httpLoggingEnabled()) {
+		if (azureStoreConfiguration.httpLoggingEnabled()) {
 			HttpLogOptions defaultHttpLogOptions =
 				BlobServiceClientBuilder.getDefaultHttpLogOptions();
 
@@ -362,11 +362,9 @@ public class AzureStore implements Store {
 			);
 		}
 
-		if (Validator.isNotNull(
-				_azureBlobStorageStoreConfiguration.encryptionScope())) {
-
+		if (Validator.isNotNull(azureStoreConfiguration.encryptionScope())) {
 			blobContainerClientBuilder.encryptionScope(
-				_azureBlobStorageStoreConfiguration.encryptionScope());
+				azureStoreConfiguration.encryptionScope());
 		}
 
 		_blobContainerClient = blobContainerClientBuilder.buildClient();
@@ -488,8 +486,6 @@ public class AzureStore implements Store {
 
 	private static final Log _log = LogFactoryUtil.getLog(AzureStore.class);
 
-	private volatile AzureStoreConfiguration
-		_azureBlobStorageStoreConfiguration;
 	private BlobContainerClient _blobContainerClient;
 
 }

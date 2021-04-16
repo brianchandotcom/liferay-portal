@@ -170,7 +170,21 @@ definition {
 	test AddSegmentBySessionCookies {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130314 AddSegmentBySessionCookies pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Cookies");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionCookies Test");
+
+		Segmentation.fillProperty(
+			criterionKey = "GUEST_LANGUAGE_ID",
+			criterionValue = "en_US");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for LPS-130315."

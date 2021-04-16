@@ -52,6 +52,217 @@ definition {
 		}
 	}
 
+	@description = "This checks that a guest cannot view a blog entry in the AP when permissions are removed."
+	@priority = "4"
+	@refactorneeded
+	test CannotViewAsGuestInAPWhenPermissionsAreRemoved {
+		property test.name.skip.portal.instance = "BlogsWidget#CannotViewAsGuestInAPWhenPermissionsAreRemoved";
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.removeViewPermissionsPG(
+			entryTitle = "Blogs Entry Title 2",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewNoEntryViaAPPG(
+			assetTitle = "Blogs Entry Title 2",
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2");
+	}
+
+	@description = "This checks that an entry with an abstract template can be displayed."
+	@priority = "3"
+	@refactorneeded
+	test CanViewBlogWithAbstractDisplay {
+		property test.name.skip.portal.instance = "BlogsWidget#CanViewBlogWithAbstractDisplay";
+
+		task ("Add a blog entry with custom abstract") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+			Panel.expandPanel(panel = "Configuration");
+
+			BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
+
+			PortletEntry.publish();
+		}
+
+		task ("Configure widget to display abstract") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Blogs",
+				portletOption = "Configuration");
+
+			BlogsConfiguration.selectConfigurationIFrame();
+
+			BlogsConfiguration.selectDisplayTemplate(displayTemplate = "Abstract");
+
+			IFrame.saveConfiguration();
+		}
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewWithAbstractDisplayTemplatePG(
+			entryAbstract = "Blogs Entry Abstract Description",
+			entryAbstractDescription = "Blogs Entry Abstract Description",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that the full content of an entry can be displayed."
+	@priority = "4"
+	@refactordone
+	test CanViewBlogWithFullContentDisplay {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs",
+			portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsConfiguration.selectDisplayTemplate(displayTemplate = "Full Content");
+
+		IFrame.saveConfiguration();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "${entryContent}",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that the title of an entry can be displayed."
+	@priority = "3"
+	@refactordone
+	test CanViewBlogWithTitleDisplay {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs",
+			portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsConfiguration.selectDisplayTemplate(displayTemplate = "Title");
+
+		IFrame.saveConfiguration();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewWithTitleDisplayTemplatePG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that a blog entry can be added, edited, saved as a draft and published via AP."
+	@priority = "4"
+	@refactordone
+	@uittest
+	test CanViewEntryInAP {
+		property test.name.skip.portal.instance = "BlogsWidget#CanViewEntryInAP";
+
+		// This is lengthy but we'll keep this as a UI test to validate blogs behavior when used with AP.
+
+		task ("Add a blog entry via AP") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Asset Publisher Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+
+			Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+			AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
+
+			Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+			Blogs.addViaAP(
+				entryContent = "Blogs Entry Content",
+				entrySubtitle = "Blogs Entry Subtitle",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Edit the blog entry via AP and save as draft") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+			BlogsEntry.editEntryContent(
+				entryContent = "Blogs Entry Content",
+				entryContentEdit = "Blogs Entry Content Edit",
+				entrySubtitle = "",
+				entrySubtitleEdit = "Blogs Entry Subtitle Edit",
+				entryTitle = "Blogs Entry Title",
+				entryTitleEdit = "Blogs Entry Title Edit");
+
+			BlogsEntry.saveAsDraft();
+		}
+
+		task ("Check that the AP doesn't display the blog draft") {
+			Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+			BlogsEntry.viewNoEntryViaAPPG(
+				assetTitle = "Blogs Entry Title",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Publish the blog entry then view it in AP") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			Blogs.publishDraftCP(
+				entryContent = "Blogs Entry Content Edit",
+				entrySubtitle = "Blogs Entry Subtitle Edit",
+				entryTitle = "Blogs Entry Title Edit");
+
+			Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+			BlogsEntry.viewEntryViaAPPG(
+				assetTitle = "Blogs Entry Title Edit",
+				entryContent = "Blogs Entry Content Edit",
+				entryTitle = "Blogs Entry Title Edit");
+		}
+	}
+
 	@description = "This checks that Blogs widgets are independently configured."
 	@priority = "4"
 	@refactordone

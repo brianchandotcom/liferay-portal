@@ -17,7 +17,7 @@ const cookieBanner = fragmentElement.querySelector('.cookie-banner');
 
 const editMode = document.body.classList.contains('has-edit-mode-menu');
 
-function handleButtonClick(event) {
+function handleButtonClick() {
 	hideBanner();
 
 	localStorage.setItem('liferay.cookie.consent', 'accepted');

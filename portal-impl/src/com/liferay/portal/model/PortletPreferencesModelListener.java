@@ -134,7 +134,9 @@ public class PortletPreferencesModelListener
 					return;
 				}
 
-				if (_isNotifiedAssetEntryIdsModified(layout)) {
+				if (NotifiedAssetEntryThreadLocal.
+						isNotifiedAssetEntryIdsModified()) {
+
 					return;
 				}
 
@@ -149,14 +151,6 @@ public class PortletPreferencesModelListener
 			_log.error(
 				"Unable to update the layout's modified date", exception);
 		}
-	}
-
-	private boolean _isNotifiedAssetEntryIdsModified(Layout layout) {
-		if (!NotifiedAssetEntryThreadLocal.isNotifiedAssetEntryIdsModified()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

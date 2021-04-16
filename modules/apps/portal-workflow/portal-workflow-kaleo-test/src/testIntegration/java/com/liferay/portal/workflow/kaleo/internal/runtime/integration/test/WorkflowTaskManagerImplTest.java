@@ -123,6 +123,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.util.PortalInstances;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -147,6 +150,9 @@ import org.junit.runner.RunWith;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
+import org.springframework.core.io.FileSystemResourceLoader;
+import org.springframework.mock.web.MockServletContext;
+
 /**
  * @author Inácio Nery
  */
@@ -164,6 +170,13 @@ public class WorkflowTaskManagerImplTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+
+		File file = new File("portal-web/docroot");
+
+		MockServletContext mockServletContext = new MockServletContext(
+			"file:" + file.getAbsolutePath(), new FileSystemResourceLoader());
+
+		PortalInstances.initCompany(mockServletContext, _company.getWebId());
 
 		_companyAdminUser = UserTestUtil.addCompanyAdminUser(_company);
 

@@ -358,24 +358,6 @@ public class AssetBrowserDisplayContext {
 		return _typeSelection;
 	}
 
-	public boolean isLegacySingleSelection() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if (Objects.equals(
-				AssetBrowserPortletKeys.ASSET_BROWSER,
-				portletDisplay.getPortletName()) &&
-			!isMultipleSelection()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isMultipleSelection() {
 		if (_multipleSelection != null) {
 			return _multipleSelection;

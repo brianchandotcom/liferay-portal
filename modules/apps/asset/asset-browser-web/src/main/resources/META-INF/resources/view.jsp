@@ -259,14 +259,6 @@
 			});
 		</aui:script>
 	</c:when>
-	<c:when test="<%= assetBrowserDisplayContext.isLegacySingleSelection() %>">
-		<aui:script>
-			Liferay.Util.selectEntityHandler(
-				'#<portlet:namespace />selectAssetFm',
-				'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>'
-			);
-		</aui:script>
-	</c:when>
 	<c:otherwise>
 		<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 			var delegate = delegateModule.default;

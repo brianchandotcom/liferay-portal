@@ -2,14 +2,24 @@ definition {
 
 	@summary = "Activate local staging with or without page versioning"
 	macro enableLocalStaging {
-		Variables.assertDefined(parameterList = "${groupName},${branchingPublic},${branchingPrivate}");
+		Variables.assertDefined(parameterList = "${groupName}");
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		if (!(isSet(branchingPrivate))) {
+			var branchingPrivate = "false";
+		}
+
+		if (!(isSet(branchingPublic))) {
+			var branchingPublic = "false";
+		}
 
 		JSONStagingAPI._enableLocalStaging(
 			branchingPrivate = "${branchingPrivate}",
 			branchingPublic = "${branchingPublic}",
 			groupId = "${groupId}");
+
+		Pause(locator1 = "3000");
 	}
 
 }

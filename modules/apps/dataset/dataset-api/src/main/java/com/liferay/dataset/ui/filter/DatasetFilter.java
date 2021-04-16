@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.filter;
 
 /**
- * @author Iván Zaera
+ * @author IvÃ¡n Zaera
  */
 public interface DatasetFilter {
 

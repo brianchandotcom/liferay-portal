@@ -17,7 +17,7 @@ package com.liferay.dataset.ui.view;
 import java.util.List;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public interface DatasetViewContentRendererContextContributorRegistry {
 

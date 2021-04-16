@@ -19,7 +19,7 @@ import java.util.List;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 @ProviderType
 public interface DatasetDataProviderRegistry {

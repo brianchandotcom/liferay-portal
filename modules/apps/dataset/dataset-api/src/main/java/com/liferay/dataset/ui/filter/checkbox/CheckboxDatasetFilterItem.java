@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.filter.checkbox;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class CheckboxDatasetFilterItem {
 

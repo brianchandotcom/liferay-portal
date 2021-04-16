@@ -17,7 +17,7 @@ package com.liferay.dataset.data;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 @ProviderType
 public interface DatasetDataPagination {

@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.filter.radio;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class RadioDatasetFilterItem {
 

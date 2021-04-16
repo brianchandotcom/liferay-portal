@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.view.table.schema;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public interface TableDatasetViewSchemaBuilder {
 

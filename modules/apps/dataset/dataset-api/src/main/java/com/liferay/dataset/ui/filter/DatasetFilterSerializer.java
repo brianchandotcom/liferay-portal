@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import java.util.Locale;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public interface DatasetFilterSerializer {
 

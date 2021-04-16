@@ -23,7 +23,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public abstract class BaseTableDatasetView implements DatasetView {
 

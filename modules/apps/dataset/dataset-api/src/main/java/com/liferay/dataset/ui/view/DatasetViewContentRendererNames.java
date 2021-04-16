@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.view;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  * @author Alessio Antonio Rendina
  */
 public class DatasetViewContentRendererNames {

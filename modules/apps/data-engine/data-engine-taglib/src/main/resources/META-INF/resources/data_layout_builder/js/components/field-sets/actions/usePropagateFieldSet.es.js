@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button/lib/Button';
 import {Context as ClayModalContext} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
+import {useFormState} from 'dynamic-data-mapping-form-renderer';
 import React, {useContext} from 'react';
 
 import AppContext from '../../../AppContext.es';
@@ -56,228 +57,216 @@ const FieldListItems = ({items, name}) => {
 	});
 };
 
-export default () => {
-	const [{dataDefinition, dataLayout}] = useContext(AppContext);
-	const [{onClose}, dispatchModal] = useContext(ClayModalContext);
-
+const propagateFieldSet = ({dataDefinition, dataLayout, dispatch, onClose}) => {
 	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-	return ({fieldSet, isDeleteAction, modal, onPropagate}) => {
-		return getItem(
+	return async ({fieldSet, isDeleteAction, modal, onPropagate}) => {
+		const {items} = await getItem(
 			`/o/data-engine/v2.0/data-definitions/${fieldSet.id}/data-definition-field-links`
-		).then(({items: response}) => {
-			const items = response;
+		);
 
-			const dataDefinitionFieldSet = getDataDefinitionFieldSet(
-				dataDefinition.dataDefinitionFields,
-				fieldSet.id
+		const dataDefinitionFieldSet = getDataDefinitionFieldSet(
+			dataDefinition.dataDefinitionFields,
+			fieldSet.id
+		);
+
+		const fieldInDataLayout =
+			dataDefinitionFieldSet &&
+			containsField(
+				dataLayout.dataLayoutPages,
+				dataDefinitionFieldSet.name
 			);
 
-			const fieldInDataLayout =
-				dataDefinitionFieldSet &&
-				containsField(
-					dataLayout.dataLayoutPages,
-					dataDefinitionFieldSet.name
-				);
+		const item = items.find(
+			({dataDefinition: linkedDataDefinition}) =>
+				linkedDataDefinition.id === dataDefinition.id
+		);
 
-			const item = items.find(
-				({dataDefinition: linkedDataDefinition}) =>
-					linkedDataDefinition.id === dataDefinition.id
+		if (item) {
+			const {dataLayouts} = item;
+
+			const dataLayoutIndex = dataLayouts.findIndex(
+				({id}) => id === dataLayout.id
 			);
 
-			if (item) {
-				const {dataLayouts} = item;
-
-				const dataLayoutIndex = dataLayouts.findIndex(
-					({id}) => id === dataLayout.id
-				);
-
-				if (dataLayoutIndex === -1 && fieldInDataLayout) {
-					dataLayouts.push(dataLayout);
-				}
-				else if (dataLayoutIndex !== -1 && !fieldInDataLayout) {
-					dataLayouts.splice(dataLayoutIndex, 1);
-				}
+			if (dataLayoutIndex === -1 && fieldInDataLayout) {
+				dataLayouts.push(dataLayout);
 			}
-			else if (fieldInDataLayout) {
-				items.push({
-					dataDefinition,
-					dataLayouts: [dataLayout],
-					dataListViews: [],
-				});
+			else if (dataLayoutIndex !== -1 && !fieldInDataLayout) {
+				dataLayouts.splice(dataLayoutIndex, 1);
 			}
-
-			const dataLayouts = [];
-			const dataListViews = [];
-
-			items.forEach((item) => {
-				dataLayouts.push(...item.dataLayouts);
-				dataListViews.push(...item.dataListViews);
+		}
+		else if (fieldInDataLayout) {
+			items.push({
+				dataDefinition,
+				dataLayouts: [dataLayout],
+				dataListViews: [],
 			});
+		}
 
-			const isFieldSetUsed =
-				!!dataLayouts.length || !!dataListViews.length;
+		const dataLayouts = [];
+		const dataListViews = [];
 
-			if (!isDeleteAction && (!items.length || !isFieldSetUsed)) {
-				return onPropagate(fieldSet);
-			}
+		items.forEach((item) => {
+			dataLayouts.push(...item.dataLayouts);
+			dataListViews.push(...item.dataListViews);
+		});
 
-			return new Promise((resolve) => {
-				const {
-					actionMessage,
-					allowReferencedDataDefinitionDeletion,
-					fieldSetMessage,
-					headerMessage,
-					warningMessage,
-					...otherModalProps
-				} = modal;
+		const isFieldSetUsed = !!dataLayouts.length || !!dataListViews.length;
 
-				const payload = {
-					payload: {
-						body: (
+		if (!isDeleteAction && (!items.length || !isFieldSetUsed)) {
+			return onPropagate(fieldSet);
+		}
+
+		const {
+			actionMessage,
+			allowReferencedDataDefinitionDeletion,
+			fieldSetMessage,
+			headerMessage,
+			warningMessage,
+			...otherModalProps
+		} = modal;
+
+		const payload = {
+			payload: {
+				body: (
+					<>
+						{isFieldSetUsed && (
 							<>
-								{isFieldSetUsed && (
-									<>
-										{warningMessage && (
-											<ClayAlert displayType="warning">
-												<strong>
-													{Liferay.Language.get(
-														'warning'
-													)}
-													:
-												</strong>
+								{warningMessage && (
+									<ClayAlert displayType="warning">
+										<strong>
+											{Liferay.Language.get('warning')}:
+										</strong>
 
-												{warningMessage}
-											</ClayAlert>
-										)}
-
-										{fieldSetMessage && (
-											<p className="fieldset-message">
-												{fieldSetMessage}
-											</p>
-										)}
-									</>
+										{warningMessage}
+									</ClayAlert>
 								)}
 
-								{isDeleteAction && !isFieldSetUsed && (
-									<ClayPanel
-										className="remove-object-field-panel"
-										displayTitle={Liferay.Language.get(
-											'field'
-										)}
-										displayType="secondary"
-									>
-										<ClayPanel.Body>
-											{dataDefinitionFieldSet && (
-												<FieldInfo
-													label={Liferay.Language.get(
-														'name'
-													)}
-													value={
-														dataDefinitionFieldSet.name
-													}
-												/>
-											)}
-
-											<FieldInfo
-												label={Liferay.Language.get(
-													'label'
-												)}
-												value={
-													fieldSet.name[
-														defaultLanguageId
-													]
-												}
-											/>
-
-											<FieldInfo
-												label={Liferay.Language.get(
-													'value'
-												)}
-												value={Liferay.Language.get(
-													'fieldset'
-												)}
-											/>
-										</ClayPanel.Body>
-									</ClayPanel>
-								)}
-
-								{dataLayouts.length > 0 && (
-									<ClayPanel
-										className="remove-object-field-panel"
-										displayType="secondary"
-									>
-										<ClayPanel.Body>
-											<FieldListItems
-												items={items}
-												name="dataLayouts"
-											/>
-										</ClayPanel.Body>
-									</ClayPanel>
-								)}
-
-								{dataListViews.length > 0 && (
-									<ClayPanel
-										className="remove-object-field-panel"
-										displayTitle={Liferay.Language.get(
-											'table-views'
-										)}
-										displayType="secondary"
-									>
-										<ClayPanel.Body>
-											<FieldListItems
-												items={items}
-												name="dataListViews"
-											/>
-										</ClayPanel.Body>
-									</ClayPanel>
-								)}
-
-								{isDeleteAction && !isFieldSetUsed && (
-									<p className="remove-object-field-message">
-										{Liferay.Language.get(
-											'are-you-sure-you-want-to-delete-this-fieldset-it-will-be-deleted-immediately'
-										)}
+								{fieldSetMessage && (
+									<p className="fieldset-message">
+										{fieldSetMessage}
 									</p>
 								)}
 							</>
-						),
-						footer: [
-							<></>,
-							<></>,
-							<ClayButton.Group key={0} spaced>
-								<ClayButton
-									displayType="secondary"
-									key={1}
-									onClick={onClose}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
-								<ClayButton
-									disabled={
-										!allowReferencedDataDefinitionDeletion &&
-										!!items.length
-									}
-									key={2}
-									onClick={() => {
-										onPropagate(fieldSet);
+						)}
 
-										onClose();
-									}}
-								>
-									{actionMessage}
-								</ClayButton>
-							</ClayButton.Group>,
-						],
-						header: headerMessage,
-						size: 'md',
-						...otherModalProps,
-					},
-					type: 1,
-				};
+						{isDeleteAction && !isFieldSetUsed && (
+							<ClayPanel
+								className="remove-object-field-panel"
+								displayTitle={Liferay.Language.get('field')}
+								displayType="secondary"
+							>
+								<ClayPanel.Body>
+									{dataDefinitionFieldSet && (
+										<FieldInfo
+											label={Liferay.Language.get('name')}
+											value={dataDefinitionFieldSet.name}
+										/>
+									)}
 
-				resolve(dispatchModal(payload));
-			});
-		});
+									<FieldInfo
+										label={Liferay.Language.get('label')}
+										value={fieldSet.name[defaultLanguageId]}
+									/>
+
+									<FieldInfo
+										label={Liferay.Language.get('value')}
+										value={Liferay.Language.get('fieldset')}
+									/>
+								</ClayPanel.Body>
+							</ClayPanel>
+						)}
+
+						{dataLayouts.length > 0 && (
+							<ClayPanel
+								className="remove-object-field-panel"
+								displayType="secondary"
+							>
+								<ClayPanel.Body>
+									<FieldListItems
+										items={items}
+										name="dataLayouts"
+									/>
+								</ClayPanel.Body>
+							</ClayPanel>
+						)}
+
+						{dataListViews.length > 0 && (
+							<ClayPanel
+								className="remove-object-field-panel"
+								displayTitle={Liferay.Language.get(
+									'table-views'
+								)}
+								displayType="secondary"
+							>
+								<ClayPanel.Body>
+									<FieldListItems
+										items={items}
+										name="dataListViews"
+									/>
+								</ClayPanel.Body>
+							</ClayPanel>
+						)}
+
+						{isDeleteAction && !isFieldSetUsed && (
+							<p className="remove-object-field-message">
+								{Liferay.Language.get(
+									'are-you-sure-you-want-to-delete-this-fieldset-it-will-be-deleted-immediately'
+								)}
+							</p>
+						)}
+					</>
+				),
+				footer: [
+					<></>,
+					<></>,
+					<ClayButton.Group key={0} spaced>
+						<ClayButton
+							displayType="secondary"
+							key={1}
+							onClick={onClose}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+						<ClayButton
+							disabled={
+								!allowReferencedDataDefinitionDeletion &&
+								!!items.length
+							}
+							key={2}
+							onClick={() => {
+								onPropagate(fieldSet);
+
+								onClose();
+							}}
+						>
+							{actionMessage}
+						</ClayButton>
+					</ClayButton.Group>,
+				],
+				header: headerMessage,
+				size: 'md',
+				...otherModalProps,
+			},
+			type: 1,
+		};
+
+		return await dispatch(payload);
 	};
+};
+export function useNewPropagateFieldSet() {
+	const {dataDefinition, dataLayout} = useFormState({
+		schema: ['dataDefinition', 'dataLayout'],
+	});
+	const [{onClose}, dispatch] = useContext(ClayModalContext);
+
+	return propagateFieldSet({dataDefinition, dataLayout, dispatch, onClose});
+}
+
+export default () => {
+	const [{dataDefinition, dataLayout}] = useContext(AppContext);
+	const [{onClose}, dispatch] = useContext(ClayModalContext);
+
+	return propagateFieldSet({dataDefinition, dataLayout, dispatch, onClose});
 };

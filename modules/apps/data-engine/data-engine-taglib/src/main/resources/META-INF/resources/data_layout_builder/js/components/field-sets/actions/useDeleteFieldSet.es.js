@@ -12,9 +12,14 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {
+	PagesVisitor,
+	useForm,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import {useContext} from 'react';
 
+import {EVENT_TYPES} from '../../../../new-js/eventTypes';
 import AppContext from '../../../AppContext.es';
 import {
 	DELETE_DATA_DEFINITION_FIELD,
@@ -26,67 +31,102 @@ import {errorToast, successToast} from '../../../utils/toast.es';
 export default ({dataLayoutBuilder}) => {
 	const [{dataDefinition, fieldSets}, dispatch] = useContext(AppContext);
 
-	return (fieldSet) => {
-		const endpoint = '/o/data-engine/v2.0/data-definitions/';
+	const {
+		dispatch: layoutProviderDispatch,
+		state: {pages},
+	} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
 
-		const onError = () =>
-			errorToast(Liferay.Language.get('the-item-could-not-be-deleted'));
+	return (fieldSet) =>
+		deleteFieldSet({
+			dataDefinition,
+			dispatch,
+			fieldSet,
+			fieldSets,
+			layoutProviderDispatch,
+			pages,
+			updateFieldSetAction: UPDATE_FIELDSETS,
+		});
+};
 
-		const onSuccess = () => {
-			dispatch({
-				payload: {
-					fieldSets: fieldSets.filter(({id}) => id !== fieldSet.id),
-				},
-				type: UPDATE_FIELDSETS,
-			});
+export function useNewDeleteFieldSet() {
+	const {fieldSets, pages} = useFormState();
+	const dispatch = useForm();
+	const {dataDefinition} = useFormState({
+		schema: ['dataDefinition'],
+	});
 
-			successToast(
-				Liferay.Language.get('the-item-was-deleted-successfully')
-			);
+	return (fieldSet) =>
+		deleteFieldSet({
+			dataDefinition,
+			dispatch,
+			fieldSet,
+			fieldSets,
+			layoutProviderDispatch: dispatch,
+			pages,
+			updateFieldSetAction: EVENT_TYPES.FIELD_SET.UPDATE,
+		});
+}
 
-			return Promise.resolve();
-		};
+const deleteFieldSet = ({
+	dataDefinition,
+	dispatch,
+	fieldSet,
+	fieldSets,
+	layoutProviderDispatch,
+	pages,
+	updateFieldSetAction,
+}) => {
+	const endpoint = '/o/data-engine/v2.0/data-definitions/';
 
-		const deleteField = ({ok}) => {
-			if (!ok) {
-				return Promise.reject();
-			}
+	const onError = () =>
+		errorToast(Liferay.Language.get('the-item-could-not-be-deleted'));
 
-			const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-				({customProperties: {ddmStructureId}}) =>
-					ddmStructureId == fieldSet.id
-			);
+	const onSuccess = () => {
+		dispatch({
+			payload: {
+				fieldSets: fieldSets.filter(({id}) => id !== fieldSet.id),
+			},
+			type: updateFieldSetAction,
+		});
 
-			if (dataDefinitionField) {
-				const {
-					pages,
-				} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.state;
-				const visitor = new PagesVisitor(pages);
-				const fieldName = dataDefinitionField.name;
-				const event = {
-					activePage: 0,
-					fieldName,
-				};
-				if (visitor.containsField(fieldName, true)) {
-					dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
-						'fieldDeleted',
-						event
-					);
-				}
-				else {
-					dispatch({
-						payload: {fieldName},
-						type: DELETE_DATA_DEFINITION_FIELD,
-					});
-				}
-			}
+		successToast(Liferay.Language.get('the-item-was-deleted-successfully'));
 
-			return Promise.resolve();
-		};
-
-		return deleteItem(`${endpoint}${fieldSet.id}`)
-			.then(deleteField)
-			.then(onSuccess)
-			.catch(onError);
+		return Promise.resolve();
 	};
+
+	const deleteField = ({ok}) => {
+		if (!ok) {
+			return Promise.reject();
+		}
+
+		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
+			({customProperties: {ddmStructureId}}) =>
+				ddmStructureId == fieldSet.id
+		);
+
+		if (dataDefinitionField) {
+			const visitor = new PagesVisitor(pages);
+			const fieldName = dataDefinitionField.name;
+			const event = {
+				activePage: 0,
+				fieldName,
+			};
+			if (visitor.containsField(fieldName, true)) {
+				layoutProviderDispatch?.('fieldDeleted', event);
+			}
+			else {
+				dispatch({
+					payload: {fieldName},
+					type: DELETE_DATA_DEFINITION_FIELD,
+				});
+			}
+		}
+
+		return Promise.resolve();
+	};
+
+	return deleteItem(`${endpoint}${fieldSet.id}`)
+		.then(deleteField)
+		.then(onSuccess)
+		.catch(onError);
 };

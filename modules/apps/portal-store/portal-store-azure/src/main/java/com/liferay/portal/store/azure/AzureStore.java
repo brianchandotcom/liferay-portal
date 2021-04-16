@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.store.azure.configuration.AzureBlobStorageStoreConfiguration;
+import com.liferay.portal.store.azure.configuration.AzureStoreConfiguration;
 import com.liferay.portal.store.azure.internal.FullPathsMapper;
 
 import java.io.File;
@@ -74,12 +74,12 @@ import org.osgi.service.component.annotations.Modified;
  * @author Josef Sustacek
  */
 @Component(
-	configurationPid = "com.liferay.portal.store.azure.configuration.AzureBlobStorageStoreConfiguration",
+	configurationPid = "com.liferay.portal.store.azure.configuration.AzureStoreConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	property = "store.type=com.liferay.portal.store.azure.AzureBlobStorageStore",
+	property = "store.type=com.liferay.portal.store.azure.AzureStore",
 	service = Store.class
 )
-public class AzureBlobStorageStore implements Store {
+public class AzureStore implements Store {
 
 	@Override
 	public void addFile(
@@ -321,7 +321,7 @@ public class AzureBlobStorageStore implements Store {
 	protected void activate(Map<String, Object> properties) {
 		_azureBlobStorageStoreConfiguration =
 			ConfigurableUtil.createConfigurable(
-				AzureBlobStorageStoreConfiguration.class, properties);
+				AzureStoreConfiguration.class, properties);
 
 		BlobContainerClientBuilder blobContainerClientBuilder =
 			new BlobContainerClientBuilder();
@@ -403,10 +403,9 @@ public class AzureBlobStorageStore implements Store {
 		return fileVersions[0];
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AzureBlobStorageStore.class);
+	private static final Log _log = LogFactoryUtil.getLog(AzureStore.class);
 
-	private volatile AzureBlobStorageStoreConfiguration
+	private volatile AzureStoreConfiguration
 		_azureBlobStorageStoreConfiguration;
 	private BlobContainerClient _blobContainerClient;
 	private final FullPathsMapper _fullPathsMapper = new FullPathsMapper();

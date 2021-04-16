@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.store.azure.AzureBlobStorageStore;
+import com.liferay.portal.store.azure.AzureStore;
 import com.liferay.portal.store.azure.internal.FullPathsMapper;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
@@ -44,15 +44,15 @@ public class Fixtures {
 	 * @return
 	 * @throws IllegalAccessException
 	 */
-	public static Fixture<AzureBlobStorageStore> getAzureBlobStorageStore()
+	public static Fixture<AzureStore> getAzureBlobStorageStore()
 		throws IllegalAccessException {
 
 		// init our service under test + its dependencies set manually (OSGi will be used in container)
-		AzureBlobStorageStore sut = new AzureBlobStorageStore();
+		AzureStore sut = new AzureStore();
 
 		// simulate @Reference on the field
 		FieldUtils.getDeclaredField(
-				AzureBlobStorageStore.class, "_liferayToAzurePathsMapper", true)
+				AzureStore.class, "_liferayToAzurePathsMapper", true)
 			.set(sut, new FullPathsMapper());
 
 		Map<String, Object> sutProps =

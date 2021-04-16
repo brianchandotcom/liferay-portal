@@ -37,12 +37,12 @@ import static org.junit.Assert.*;
  *
  * @author Josef Sustacek
  */
-public class AzureBlobStorageStoreLiveTest {
+public class AzureStoreLiveTest {
 
 	@BeforeClass
 	public static void setUp() throws IllegalAccessException {
 
-		Fixtures.Fixture<AzureBlobStorageStore> fixture = Fixtures.getAzureBlobStorageStore();
+		Fixtures.Fixture<AzureStore> fixture = Fixtures.getAzureBlobStorageStore();
 
 		// init the admin client
 		String testsContainerName = fixture.getSutProps().get("containerName").toString();
@@ -535,7 +535,7 @@ public class AzureBlobStorageStoreLiveTest {
 	public static final long _DEFAULT_TIMEOUT_MS = 10000;
 	public static final String[] _EMPTY = new String[0];
 
-	private static AzureBlobStorageStore _sut;
+	private static AzureStore _sut;
 
 	/**
 	 * Client with admin privileges, to setup the storage account for tests +

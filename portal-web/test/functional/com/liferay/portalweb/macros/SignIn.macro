@@ -64,20 +64,18 @@ definition {
 		var defaultPortalURL = PropsUtil.get("default.portal.url");
 
 		if (isSet(freeLogin)) {
-			JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "${userEmailAddress}");
-
 			Navigator.openSpecificURL(url = "${defaultPortalURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
 			SignIn.signInSpecificURL(url = "${defaultPortalURL}");
+		}
 
-			if (IsElementPresent(locator1 = "Button#I_AGREE")) {
-				SignIn.agreeToTermsOfUse();
-			}
+		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
+			SignIn.agreeToTermsOfUse();
+		}
 
-			if (IsElementPresent(locator1 = "Select#QUESTION")) {
-				SignIn.setPasswordReminder();
-			}
+		if (IsElementPresent(locator1 = "Select#QUESTION")) {
+			SignIn.setPasswordReminder();
 		}
 
 		var portalURL = PropsUtil.get("portal.url");

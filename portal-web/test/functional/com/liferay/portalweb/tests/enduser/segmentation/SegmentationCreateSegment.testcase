@@ -235,7 +235,19 @@ definition {
 	test AddSegmentBySessionDeviceScreenResolutionHeight {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130317 AddSegmentBySessionDeviceScreenResolutionHeight pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Device Screen Resolution Height");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceScreenResolutionHeight Test");
+
+		Segmentation.fillProperty(ResolutionValue = "480");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for LPS-130318."

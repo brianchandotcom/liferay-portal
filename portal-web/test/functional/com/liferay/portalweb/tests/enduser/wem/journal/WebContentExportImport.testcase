@@ -677,101 +677,146 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-96545. This test \"Ensures that all the default values for an imported structure can be reset\" and \"Once the user has imported a structure by LAR (imported/exported), Validate if is possible to cancel the reset operation of the default values of all field of the Web Content Structure and the data that inputted is discarded\""
+	@description = "This is a test for LPS-96545. Cancel reset and reset the default values when edit default values in imported web content structure."
 	@priority = "4"
 	test ResetImportedStructureDefaultValues {
 		property test.name.skip.portal.instance = "WebContentExportImport#ResetImportedStructureDefaultValues";
-		property testray.component.names = "Web Content Administration";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		NavItem.gotoStructures();
+		task ("Add a web content structure with all fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+			NavItem.gotoStructures();
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.editFieldRequired(fieldFieldLabel = "Text");
+			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Rich Text,Color,Web Content");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
+		}
 
-		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(webContentText = "Enter Text Here");
+			WebContentTemplates.addCP(
+				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Rich Text,Color,Web Content",
+				templateName = "WC Template Name");
+		}
 
-		PortletEntry.save();
+		task ("Edit the default values of new structure") {
+			NavItem.gotoStructures();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
-		NavItem.gotoTemplates();
+			WebContent.addWithStructureCP(
+				column = "1",
+				row = "1",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "Enter Text Here",
+				webContentWebContent = "WC Title");
 
-		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateDescription = "WC Template Description",
-			templateFieldNames = "Text",
-			templateName = "WC Template Name");
+			PortletEntry.save();
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Export the web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		LAR.exportPortlet(larFileName = "WebContent_portlet2.lar");
+			LAR.exportPortlet(larFileName = "WebContentPortlet.lar");
+		}
 
-		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Import the web content in new site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			LAR.importPortlet(larFileName = "WebContentPortlet.lar");
+		}
 
-		LAR.importPortlet(larFileName = "WebContent_portlet2.lar");
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Site Name");
+		}
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Test Site Name");
+		task ("Edit the default values of imported web content structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			NavItem.gotoStructures();
 
-		NavItem.gotoStructures();
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
-		Search.searchCP(searchTerm = "WC Structure Name");
+			RelatedAssets.selectAsset(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry",
+				scopeSite = "Current Site");
+		}
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit Default Values",
-			rowEntry = "WC Structure Name");
+		task ("Cancel reset the default values") {
+			WebContentStructures.resetStructureDefaultValuesCP(
+				assetTitle = "Blogs Entry Title",
+				cancel = "true",
+				templateName = "WC Template Name");
 
-		RelatedAssets.selectAsset(
-			assetTitle = "Blogs Entry Title",
-			assetType = "Blogs Entry",
-			scopeSite = "Current Site");
+			WebContent.viewWithStructureCP(
+				column = "1",
+				predefinedValue = "true",
+				row = "1",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "Enter Text Here",
+				webContentWebContent = "WC Title");
+		}
 
-		SelectFrame(value1 = "relative=top");
+		task ("Reset the default values") {
+			WebContentStructures.resetStructureDefaultValuesCP(
+				assetTitle = "Blogs Entry Title",
+				templateName = "WC Template Name");
 
-		WebContentStructures.resetStructureDefaultValuesCP(
-			assetTitle = "Blogs Entry Title",
-			cancel = "true",
-			templateName = "WC Template Name");
+			WebContent.viewWithStructureCP(
+				column = "1",
+				predefinedValue = "true",
+				row = "1",
+				webContentColor = "000000",
+				webContentDate = "__/__/____",
+				webContentGrid = "false",
+				webContentNumeric = "",
+				webContentRichText = "",
+				webContentSelectFromList = "Choose an Option",
+				webContentText = "",
+				webContentWebContent = "");
 
-		AssertTextEquals.assertValue(
-			key_fieldFieldLabel = "Text",
-			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "Enter Text Here");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_fieldFieldLabel = "Single Selection",
+				key_optionValue = "Option 3",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
 
-		WebContentStructures.resetStructureDefaultValuesCP(
-			assetTitle = "Blogs Entry Title",
-			templateName = "WC Template Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-		Button.clickPublish();
-
-		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
-
-		Alert.viewErrorMessage(errorMessage = "Please enter a valid title for the default language: en-US");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_fieldFieldLabel = "Multiple Selection",
+				key_optionValue = "Option 1",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
+		}
 	}
 
 }

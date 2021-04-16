@@ -24,7 +24,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.tags.selector.web.internal.display.context.AssetTagsSelectorDisplayContext" %><%@
 page import="com.liferay.asset.tags.selector.web.internal.display.context.AssetTagsSelectorManagementToolbarDisplayContext" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 

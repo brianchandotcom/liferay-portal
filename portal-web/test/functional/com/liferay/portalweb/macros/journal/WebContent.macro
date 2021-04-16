@@ -2533,11 +2533,20 @@ definition {
 
 			var column = ${column} + 1;
 
-			AssertChecked.assertCheckedNotVisible(
-				key_column = "${column}",
-				key_fieldFieldLabel = "${webContentGridFieldLabel}",
-				key_row = "${row}",
-				locator1 = "WCEditWebContent#GRID_OPTION");
+			if ("${webContentGrid}" == "true") {
+				AssertChecked.assertCheckedNotVisible(
+					key_column = "${column}",
+					key_fieldFieldLabel = "${webContentGridFieldLabel}",
+					key_row = "${row}",
+					locator1 = "WCEditWebContent#GRID_OPTION");
+			}
+			else if ("${webContentGrid}" == "false") {
+				AssertNotChecked.assertNotCheckedNotVisible(
+					key_column = "${column}",
+					key_fieldFieldLabel = "${webContentGridFieldLabel}",
+					key_row = "${row}",
+					locator1 = "WCEditWebContent#GRID_OPTION");
+			}
 		}
 
 		if (isSet(webContentImage)) {

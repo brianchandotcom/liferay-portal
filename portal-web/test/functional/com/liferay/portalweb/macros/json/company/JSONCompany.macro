@@ -8,7 +8,9 @@ definition {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();
 		}
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \

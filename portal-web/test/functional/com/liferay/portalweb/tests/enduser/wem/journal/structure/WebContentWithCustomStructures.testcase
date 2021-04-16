@@ -1997,89 +1997,145 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This is a test for LPS-96545. This test \"Ensures that all the default values for a structure can be reset\" and \"Once the user has created a structure, Validate if is possible to cancel the reset operation of the default values of each kind of field of the Web Content Structure and the data that inputted is discarded\""
+	@description = "This is a test for LPS-96545. Cancel reset and reset the default values when edit default values in imported web content structure."
 	@priority = "4"
 	test ResetStructureDefaultValues {
-		property testray.component.names = "Web Content Administration";
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Test Site Name");
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
 
-		NavItem.gotoStructures();
+		task ("Add a web content structure with all fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+			NavItem.gotoStructures();
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.editFieldRequired(fieldFieldLabel = "Text");
+			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Link to Page");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
+		}
 
-		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(webContentText = "Enter Text Here");
+			WebContentTemplates.addCP(
+				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Link to Page",
+				templateName = "WC Template Name");
+		}
 
-		PortletEntry.save();
+		task ("Edit the default values of new structure") {
+			NavItem.gotoStructures();
 
-		NavItem.gotoTemplates();
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
-		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateDescription = "WC Template Description",
-			templateName = "WC Template Name");
+			WebContent.addWithStructureCP(
+				column = "1",
+				dmNavTab = "User Personal Folder",
+				navTab = "Web Content Images",
+				row = "1",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Test Page Name",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "Enter Text Here",
+				webContentUpload = "Document_1.jpg",
+				webContentWebContent = "WC Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			PortletEntry.save();
+		}
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		task ("Edit the default values of web content structure again") {
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			RelatedAssets.selectAsset(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry",
+				scopeSite = "Everywhere");
+		}
 
-		NavItem.gotoStructures();
+		task ("Cancel reset the default values") {
+			WebContentStructures.resetStructureDefaultValuesCP(
+				assetTitle = "Blogs Entry Title",
+				cancel = "true",
+				templateName = "WC Template Name");
 
-		Search.searchCP(searchTerm = "WC Structure Name");
+			WebContent.viewWithStructureCP(
+				column = "1",
+				predefinedValue = "true",
+				row = "1",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Test Page Name",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "Enter Text Here",
+				webContentUpload = "Document_1.jpg",
+				webContentWebContent = "WC Title");
+		}
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit Default Values",
-			rowEntry = "WC Structure Name");
+		task ("Reset the default values") {
+			WebContentStructures.resetStructureDefaultValuesCP(
+				assetTitle = "Blogs Entry Title",
+				templateName = "WC Template Name");
 
-		RelatedAssets.selectAsset(
-			assetTitle = "Blogs Entry Title",
-			assetType = "Blogs Entry",
-			scopeSite = "Everywhere");
+			WebContent.viewWithStructureCP(
+				column = "1",
+				predefinedValue = "true",
+				row = "1",
+				webContentColor = "000000",
+				webContentDate = "__/__/____",
+				webContentGrid = "false",
+				webContentLinkToPage = "",
+				webContentNumeric = "",
+				webContentRichText = "",
+				webContentSelectFromList = "Choose an Option",
+				webContentText = "",
+				webContentUpload = "",
+				webContentWebContent = "");
 
-		SelectFrame(value1 = "relative=top");
+			AssertTextEquals(
+				key_fieldFieldLabel = "Image",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "");
 
-		WebContentStructures.resetStructureDefaultValuesCP(
-			assetTitle = "Blogs Entry Title",
-			cancel = "true",
-			templateName = "WC Template Name");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_fieldFieldLabel = "Single Selection",
+				key_optionValue = "Option 3",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
 
-		AssertTextEquals.assertValue(
-			key_fieldFieldLabel = "Text",
-			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "Enter Text Here");
-
-		WebContentStructures.resetStructureDefaultValuesCP(
-			assetTitle = "Blogs Entry Title",
-			templateName = "WC Template Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-		Button.clickPublish();
-
-		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
-
-		Alert.viewErrorMessage(errorMessage = "Please enter a valid title for the default language: en-US");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_fieldFieldLabel = "Multiple Selection",
+				key_optionValue = "Option 1",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
+		}
 	}
 
 	@priority = "4"

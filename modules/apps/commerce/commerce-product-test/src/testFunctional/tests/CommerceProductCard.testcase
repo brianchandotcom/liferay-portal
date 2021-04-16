@@ -88,58 +88,57 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-        ApplicationsMenu.gotoSite(site = "Minium");
+		ApplicationsMenu.gotoSite(site = "Minium");
 
-        CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-        CommerceAcceleratorsInitializer.createNewAccountViaFront(
-            accountName = "Commerce Account",
-            adminEmailAddress = "test@liferay.com");
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
 
-        Click(
-            key_navUnderline = "Members",
-            locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
 
-        CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
-            emailAddress = "buyer@liferay.com",
-            role = "Buyer");
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
 
-        CommerceNavigator.gotoPortlet(
-            category = "Product Management",
-            portlet = "Products");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
 
-        CommerceNavigator.searchEntry(entryName = "U-Joint");
+		CommerceNavigator.searchEntry(entryName = "U-Joint");
 
-        CommerceNavigator.gotoEntry(entryName = "U-Joint");
+		CommerceNavigator.gotoEntry(entryName = "U-Joint");
 
-        CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-        CommerceNavigator.gotoEntry(entryName = "MIN55861");
+		CommerceNavigator.gotoEntry(entryName = "MIN55861");
 
-        SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-        Uncheck.uncheckToggleSwitch(
-            key_checkSetupName = "Purchasable",
-            locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH");
+		Uncheck.uncheckToggleSwitch(
+			key_checkSetupName = "Purchasable",
+			locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH");
 
-        Button.clickPublish();
+		Button.clickPublish();
 
 		SelectFrameTop(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-        ApplicationsMenu.gotoSite(site = "Minium");
+		ApplicationsMenu.gotoSite(site = "Minium");
 
-        CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-        CommerceAcceleratorsInitializer.createNewAccountViaFront(
-            accountName = "Test",
-            adminEmailAddress = "test@liferay.com");
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test",
+			adminEmailAddress = "test@liferay.com");
 
-        ApplicationsMenu.gotoSite(site = "Minium");
+		ApplicationsMenu.gotoSite(site = "Minium");
 
-        AssertNotChecked.assertNotCheckedNotVisible(
-           key_productName = "U-Joint",
-           locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
-		
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
 	}
 
 	@description = "COMMERCE-5860. As a buyer, I want to change the channel currency and view the product price with the changed currency"

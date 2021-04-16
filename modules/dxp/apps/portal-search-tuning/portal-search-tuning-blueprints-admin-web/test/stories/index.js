@@ -123,7 +123,7 @@ storiesOf('Pages|BlueprintForm', module)
 					query_configuration: SELECTED_ELEMENTS,
 				}),
 				searchResultsURL:
-					'https://run.mocky.io/v3/95b30f66-4522-418e-ba40-71eb1b5c1a03',
+					'https://run.mocky.io/v3/aa39bbc9-9cb1-4c16-a26d-9f1d046f55ef',
 			}}
 		/>
 	))
@@ -136,7 +136,7 @@ storiesOf('Pages|BlueprintForm', module)
 					query_configuration: [],
 				}),
 				searchResultsURL:
-					'https://run.mocky.io/v3/95b30f66-4522-418e-ba40-71eb1b5c1a03',
+					'https://run.mocky.io/v3/aa39bbc9-9cb1-4c16-a26d-9f1d046f55ef',
 			}}
 		/>
 	))
@@ -243,13 +243,12 @@ storiesOf('Components|Element', module)
 	.addDecorator(withContainer)
 	.add('JSONElement', () => (
 		<JSONElement
-			description={SELECTED_ELEMENTS[0].elementTemplateJSON.description}
-			disabled={false}
 			elementTemplateJSON={SELECTED_ELEMENTS[0].elementTemplateJSON}
-			icon={SELECTED_ELEMENTS[0].elementTemplateJSON.icon}
+			error={{}}
 			onDeleteElement={action('onDeleteElement')}
-			title={SELECTED_ELEMENTS[0].elementTemplateJSON.title}
-			updateJSON={() => {}}
+			setFieldTouched={() => {}}
+			setFieldValue={() => {}}
+			uiConfigurationValues={SELECTED_ELEMENTS[0].uiConfigurationValues}
 		/>
 	));
 

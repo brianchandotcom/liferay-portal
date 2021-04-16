@@ -117,7 +117,7 @@ function QueryBuilder({
 							onBlur={onBlur}
 							onChange={onChange}
 							onDeleteElement={onDeleteElement}
-							prefixedId={`${ELEMENT_PREFIX.QUERY}-${element.id}`}
+							prefixedId={`${ELEMENT_PREFIX.QUERY}-${index}`}
 							setFieldTouched={setFieldTouched}
 							setFieldValue={setFieldValue}
 							touched={touched[index]}
@@ -135,7 +135,7 @@ function QueryBuilder({
 							index={index}
 							key={element.id}
 							onDeleteElement={onDeleteElement}
-							prefixedId={`${ELEMENT_PREFIX.QUERY}-${element.id}`}
+							prefixedId={`${ELEMENT_PREFIX.QUERY}-${index}`}
 							setFieldTouched={setFieldTouched}
 							setFieldValue={setFieldValue}
 							touched={touched[index]}

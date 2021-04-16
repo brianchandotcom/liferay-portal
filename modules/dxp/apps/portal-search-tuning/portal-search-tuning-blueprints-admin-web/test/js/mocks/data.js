@@ -168,6 +168,7 @@ export const mockSearchResults = (itemsPerPage = 10) => {
 			b_title: `Article Number ${i}`,
 			b_type: 'Web Content Article',
 			b_viewURL: '',
+			document: {},
 			id: `com.liferay.journal.model.JournalArticle_PORTLET_${i}`,
 			score: Math.random() * 100,
 		});

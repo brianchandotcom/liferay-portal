@@ -26,24 +26,25 @@ const RESULTS_DEFAULT_KEYS = [
 	'b_created',
 	'b_modified',
 	'b_author',
-	'b_assetEntryId',
 ];
-const RESULTS_HIDE_KEYS = ['explanation', 'document', 'b_viewURL'];
+const RESULTS_SHOW_KEYS = ['b_assetEntryId', 'id'];
 
 function ResultListItem({item}) {
 	const [collapse, setCollapse] = useState(true);
 
-	const _renderListRow = (property) => (
-		<ClayLayout.Row justify="start" key={`${item.id}_${property}`}>
+	const _renderListRow = (property, value, id) => (
+		<ClayLayout.Row justify="start" key={`${id}_${property}`}>
 			<ClayLayout.Col className="semibold" size={4}>
-				{property}
+				{property.match(/b_[\w_]+/g) ? property.substring(2) : property}
 			</ClayLayout.Col>
 
 			<ClayLayout.Col
 				className={getCN({'text-truncate': collapse})}
 				size={8}
 			>
-				{item[property]}
+				{typeof value === 'object'
+					? JSON.stringify(value).replace(/[[\]]+/g, '')
+					: value}
 			</ClayLayout.Col>
 		</ClayLayout.Row>
 	);
@@ -78,22 +79,26 @@ function ResultListItem({item}) {
 				</ClayList.ItemTitle>
 
 				{RESULTS_DEFAULT_KEYS.map((property) =>
-					_renderListRow(property)
+					_renderListRow(property, item[property], item.id)
 				)}
 
-				{!collapse &&
-					Object.keys(item)
-						.sort()
-						.map((property) => {
-							if (
-								![
-									...RESULTS_DEFAULT_KEYS,
-									...RESULTS_HIDE_KEYS,
-								].includes(property)
-							) {
-								return _renderListRow(property);
-							}
-						})}
+				{!collapse && (
+					<>
+						{RESULTS_SHOW_KEYS.map((property) =>
+							_renderListRow(property, item[property], item.id)
+						)}
+
+						{Object.keys(item.document)
+							.sort()
+							.map((property) =>
+								_renderListRow(
+									property,
+									item.document[property],
+									item.id
+								)
+							)}
+					</>
+				)}
 			</ClayList.ItemField>
 
 			<ClayList.ItemField>

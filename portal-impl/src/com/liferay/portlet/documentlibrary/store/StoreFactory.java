@@ -146,6 +146,44 @@ public class StoreFactory {
 		_storeServiceTrackerMapHolder = new StoreServiceTrackerMapHolder();
 	private static boolean _warned;
 
+	private static class CTStoreFactoryServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<CTStoreFactory, ServiceTrackerMap<String, Store>> {
+
+		@Override
+		public ServiceTrackerMap<String, Store> addingService(
+			ServiceReference<CTStoreFactory> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			CTStoreFactory ctStoreFactory = registry.getService(
+				serviceReference);
+
+			return ServiceTrackerCollections.openSingleValueMap(
+				Store.class, "store.type",
+				new StoreTypeServiceTrackerCustomizer(ctStoreFactory));
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<CTStoreFactory> serviceReference,
+			ServiceTrackerMap<String, Store> serviceTrackerMap) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<CTStoreFactory> serviceReference,
+			ServiceTrackerMap<String, Store> serviceTrackerMap) {
+
+			serviceTrackerMap.close();
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+	}
+
 	private static class StoreServiceTrackerMapHolder {
 
 		public StoreServiceTrackerMapHolder() {
@@ -153,124 +191,7 @@ public class StoreFactory {
 
 			_serviceTracker = registry.trackServices(
 				CTStoreFactory.class,
-				new ServiceTrackerCustomizer
-					<CTStoreFactory, ServiceTrackerMap<String, Store>>() {
-
-					@Override
-					public ServiceTrackerMap<String, Store> addingService(
-						ServiceReference<CTStoreFactory> serviceReference) {
-
-						CTStoreFactory ctStoreFactory = registry.getService(
-							serviceReference);
-
-						return ServiceTrackerCollections.openSingleValueMap(
-							Store.class, "store.type",
-							new ServiceTrackerCustomizer<Store, Store>() {
-
-								@Override
-								public Store addingService(
-									ServiceReference<Store> serviceReference) {
-
-									String storeType = GetterUtil.getString(
-										serviceReference.getProperty(
-											"store.type"));
-
-									final Store store = _getStore(
-										serviceReference, storeType);
-
-									if (StringUtil.equals(
-											storeType,
-											PropsValues.DL_STORE_IMPL)) {
-
-										Map<String, Object> properties =
-											HashMapBuilder.<String, Object>put(
-												"dl.store.upgrade",
-												GetterUtil.getObject("true")
-											).build();
-
-										_serviceRegistration =
-											registry.registerService(
-												StoreFactory.class,
-												new StoreFactory() {
-
-													@Override
-													public Store getStore() {
-														return store;
-													}
-
-												},
-												properties);
-									}
-
-									return store;
-								}
-
-								@Override
-								public void modifiedService(
-									ServiceReference<Store> serviceReference,
-									Store service) {
-								}
-
-								@Override
-								public void removedService(
-									ServiceReference<Store> serviceReference,
-									Store service) {
-
-									String storeType = GetterUtil.getString(
-										serviceReference.getProperty(
-											"store.type"));
-
-									if (StringUtil.equals(
-											storeType,
-											PropsValues.DL_STORE_IMPL)) {
-
-										_serviceRegistration.unregister();
-									}
-
-									registry.ungetService(serviceReference);
-								}
-
-								private Store _getStore(
-									ServiceReference<Store> serviceReference,
-									String storeType) {
-
-									Store store = registry.getService(
-										serviceReference);
-
-									if (!GetterUtil.getBoolean(
-											serviceReference.getProperty(
-												"ct.aware"))) {
-
-										store = ctStoreFactory.createCTStore(
-											store, storeType);
-									}
-
-									return store;
-								}
-
-							});
-					}
-
-					@Override
-					public void modifiedService(
-						ServiceReference<CTStoreFactory> serviceReference,
-						ServiceTrackerMap<String, Store> serviceTrackerMap) {
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<CTStoreFactory> serviceReference,
-						ServiceTrackerMap<String, Store> serviceTrackerMap) {
-
-						serviceTrackerMap.close();
-
-						registry.ungetService(serviceReference);
-					}
-
-					private ServiceRegistration<StoreFactory>
-						_serviceRegistration;
-
-				});
+				new CTStoreFactoryServiceTrackerCustomizer());
 
 			_serviceTracker.open();
 		}
@@ -299,6 +220,88 @@ public class StoreFactory {
 
 		private final ServiceTracker
 			<CTStoreFactory, ServiceTrackerMap<String, Store>> _serviceTracker;
+
+	}
+
+	private static class StoreTypeServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Store, Store> {
+
+		public StoreTypeServiceTrackerCustomizer(
+			CTStoreFactory ctStoreFactory) {
+
+			_ctStoreFactory = ctStoreFactory;
+		}
+
+		@Override
+		public Store addingService(ServiceReference<Store> serviceReference) {
+			String storeType = GetterUtil.getString(
+				serviceReference.getProperty("store.type"));
+
+			final Store store = _getStore(serviceReference, storeType);
+
+			if (StringUtil.equals(storeType, PropsValues.DL_STORE_IMPL)) {
+				Map<String, Object> properties =
+					HashMapBuilder.<String, Object>put(
+						"dl.store.upgrade", GetterUtil.getObject("true")
+					).build();
+
+				Registry registry = RegistryUtil.getRegistry();
+
+				_serviceRegistration = registry.registerService(
+					StoreFactory.class,
+					new StoreFactory() {
+
+						@Override
+						public Store getStore() {
+							return store;
+						}
+
+					},
+					properties);
+			}
+
+			return store;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Store> serviceReference, Store service) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Store> serviceReference, Store service) {
+
+			String storeType = GetterUtil.getString(
+				serviceReference.getProperty("store.type"));
+
+			if (StringUtil.equals(storeType, PropsValues.DL_STORE_IMPL)) {
+				_serviceRegistration.unregister();
+			}
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+		private Store _getStore(
+			ServiceReference<Store> serviceReference, String storeType) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			Store store = registry.getService(serviceReference);
+
+			if (!GetterUtil.getBoolean(
+					serviceReference.getProperty("ct.aware"))) {
+
+				store = _ctStoreFactory.createCTStore(store, storeType);
+			}
+
+			return store;
+		}
+
+		private final CTStoreFactory _ctStoreFactory;
+		private ServiceRegistration<StoreFactory> _serviceRegistration;
 
 	}
 

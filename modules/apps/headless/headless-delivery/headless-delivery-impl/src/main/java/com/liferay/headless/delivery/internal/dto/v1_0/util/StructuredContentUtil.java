@@ -38,8 +38,7 @@ public class StructuredContentUtil {
 			DDMStructure ddmStructure, JournalConverter journalConverter)
 		throws Exception {
 
-		DDMFormValuesUtil.validateDDMFormValues(
-			ddmFormValuesValidator, ddmFormValues);
+		ddmFormValuesValidator.validate(ddmFormValues);
 
 		Locale originalSiteDefaultLocale =
 			LocaleThreadLocal.getSiteDefaultLocale();

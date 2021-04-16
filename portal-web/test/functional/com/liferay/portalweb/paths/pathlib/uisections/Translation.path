@@ -56,27 +56,27 @@
 </tr>
 <tr>
 	<td>BASE_LANGUAGE_CONTENT_FIELD</td>
-	<td>//div[contains(@class,'col-md-6') and contains(.,'${key_fieldName}')]//div[contains(.,'${key_content}') and not(@contenteditable='true')]</td>
+	<td>//div[contains(@class,'col-md-6') and contains(.,'${key_fieldName}')]//div[contains(.,'${key_content}') and not(@contenteditable)]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASE_LANGUAGE_FIELD</td>
-	<td>//div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}') and contains(@value,'${key_fieldValue}') and @readonly='readonly']</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//input[contains(@value,'${key_fieldValue}') and @readonly]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASE_LANGUAGE_TEXT_BOX_FIELD</td>
-	<td>//div[contains(@class,'form-group')]//textarea[contains(@name,'${key_fieldName}') and @readonly='readonly' and contains(text(),'${key_fieldValue}')]</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//textarea[contains(text(),'${key_fieldValue}') and @readonly]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TARGET_LANGUAGE_FIELD</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//input[contains(@value,'${key_fieldValue}') and (not(@readonly='readonly'))]</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//input[contains(@value,'${key_fieldValue}') and not(@readonly)]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TARGET_LANGUAGE_TEXT_BOX_FIELD</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//textarea[contains(text(),'${key_fieldValue}') and (not(@readonly='readonly'))]</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//textarea[contains(text(),'${key_fieldValue}') and not(@readonly)]</td>
 	<td></td>
 </tr>
 <tr>

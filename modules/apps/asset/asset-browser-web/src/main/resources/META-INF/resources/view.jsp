@@ -225,41 +225,7 @@
 </aui:form>
 
 <c:choose>
-	<c:when test="<%= assetBrowserDisplayContext.isMultipleSelection() %>">
-		<aui:script use="liferay-search-container">
-			var searchContainer = Liferay.SearchContainer.get(
-				'<portlet:namespace />selectAssetEntries'
-			);
-
-			searchContainer.on('rowToggled', (event) => {
-				var selectedItems = event.elements.allSelectedElements;
-
-				var arr = [];
-
-				selectedItems.each(function () {
-					var domElement = this.ancestor('tr');
-
-					if (domElement == null) {
-						domElement = this.ancestor('li');
-					}
-
-					if (domElement != null) {
-						var data = domElement.getDOM().dataset;
-
-						arr.push(data);
-					}
-				});
-
-				Liferay.Util.getOpener().Liferay.fire(
-					'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>',
-					{
-						data: arr,
-					}
-				);
-			});
-		</aui:script>
-	</c:when>
-	<c:otherwise>
+	<c:when test="<%= !assetBrowserDisplayContext.isMultipleSelection() %>">
 		<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 			var delegate = delegateModule.default;
 
@@ -287,7 +253,7 @@
 
 			Liferay.on('destroyPortlet', onDestroyPortlet);
 		</aui:script>
-	</c:otherwise>
+	</c:when>
 </c:choose>
 
 <%!

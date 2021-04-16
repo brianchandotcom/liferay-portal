@@ -70,14 +70,21 @@ definition {
 	macro fillProperty {
 		if (isSet(criterionKey)) {
 			Type(
-				key_criterion = "Key",
+				key_criterion = "key",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${criterionKey}");
 
 			Type(
-				key_criterion = "Value",
+				key_criterion = "value",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${criterionValue}");
+		}
+
+		if (isSet(ResolutionValue)) {
+			Type(
+				key_criterion = "decimal-number",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${ResolutionValue}");
 		}
 
 		else {

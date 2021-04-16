@@ -29,9 +29,9 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-101248. Cannot delete a web content template used in Content Display fragment."
+	@description = "This is a use case for LPS-101248. Delete a web content template used in Content Display fragment."
 	@priority = "2"
-	test CannotDeleteSelectedTemplate {
+	test DeleteSelectedTemplate {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -74,14 +74,12 @@ definition {
 				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 		}
 
-		task ("Assert cannot delete web content template") {
+		task ("View delete the web content template") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
-			WebContentTemplates.deleteCP(
-				templateName = "WC Template Name",
-				webContentHasReference = "true");
+			WebContentTemplates.deleteCP(templateName = "WC Template Name");
 		}
 	}
 

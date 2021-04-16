@@ -193,7 +193,19 @@ definition {
 	test AddSegmentBySessionDeviceBrand {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130315 AddSegmentBySessionDeviceBrand pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Device Brand");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceBrand Test");
+
+		Segmentation.fillProperty(PropertyField = "Apple");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for LPS-130316."

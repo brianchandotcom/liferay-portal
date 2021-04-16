@@ -159,14 +159,6 @@ definition {
 			userId = "${userId}");
 	}
 
-	macro agreeToTermsAndAnswerReminderQuery {
-		Variables.assertDefined(parameterList = "${userEmailAddress}");
-
-		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
-
-		JSONUserAPI._agreeToTermsAndAnswerReminderQuery(userId = "${userId}");
-	}
-
 	macro deleteUserByEmailAddress {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 

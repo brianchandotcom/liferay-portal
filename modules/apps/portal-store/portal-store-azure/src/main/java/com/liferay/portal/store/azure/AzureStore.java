@@ -118,8 +118,7 @@ public class AzureStore implements Store {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		String blobPrefix = _getBlobPrefix(
-			companyId, repositoryId, dirName);
+		String blobPrefix = _getBlobPrefix(companyId, repositoryId, dirName);
 
 		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
 
@@ -213,8 +212,7 @@ public class AzureStore implements Store {
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
-		String blobPrefix = _getBlobPrefix(
-			companyId, repositoryId, dirName);
+		String blobPrefix = _getBlobPrefix(companyId, repositoryId, dirName);
 
 		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
 
@@ -264,8 +262,7 @@ public class AzureStore implements Store {
 	public String[] getFileVersions(
 		long companyId, long repositoryId, String fileName) {
 
-		String blobPrefix = _getBlobPrefix(
-			companyId, repositoryId, fileName);
+		String blobPrefix = _getBlobPrefix(companyId, repositoryId, fileName);
 
 		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
 
@@ -408,7 +405,8 @@ public class AzureStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		return _toFullAzurePath(companyId, repositoryId, fileName, versionLabel);
+		return _toFullAzurePath(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	private String _getBlobPrefix(
@@ -418,6 +416,43 @@ public class AzureStore implements Store {
 			companyId, repositoryId, dirName, null);
 
 		return dirPath + StringPool.SLASH;
+	}
+
+	private String _getFileName(
+		long companyId, long repositoryId, String azureBlobName) {
+
+		Objects.requireNonNull(azureBlobName);
+
+		String rootPrefix =
+			_toFullAzurePath(companyId, repositoryId, StringPool.BLANK, null) +
+				StringPool.SLASH;
+
+		if (!azureBlobName.startsWith(rootPrefix)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"It looks like blob '", azureBlobName,
+					"' does not belong to company: ", companyId,
+					"and repository: ", repositoryId));
+		}
+
+		String fileNamePathWithVersion = azureBlobName.substring(
+			rootPrefix.length());
+
+		if (fileNamePathWithVersion.isEmpty() ||
+			!fileNamePathWithVersion.contains(StringPool.SLASH)) {
+
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"The blob '", azureBlobName, "' does not conform to the ",
+					"pattern ${companyId}/${repositoryId}/${fileName}",
+					"/${versionLabel} -- missing the '/${versionLabel}' part. ",
+					"Delete the blob in Azure to fix this (there should be no ",
+					"blobs directly under ${companyId}/${repositoryId}, only ",
+					"subfolders."));
+		}
+
+		return fileNamePathWithVersion.substring(
+			0, fileNamePathWithVersion.lastIndexOf(StringPool.SLASH));
 	}
 
 	private String _toFullAzurePath(
@@ -449,43 +484,6 @@ public class AzureStore implements Store {
 		}
 
 		return sb.toString();
-	}
-
-	private String _getFileName(
-		long companyId, long repositoryId, String azureBlobName) {
-
-		Objects.requireNonNull(azureBlobName);
-
-		String rootPrefix =
-			_toFullAzurePath(companyId, repositoryId, StringPool.BLANK, null) +
-			StringPool.SLASH;
-
-		if (!azureBlobName.startsWith(rootPrefix)) {
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"It looks like blob '", azureBlobName,
-					"' does not belong to company: ", companyId,
-					"and repository: ", repositoryId));
-		}
-
-		String fileNamePathWithVersion = azureBlobName.substring(
-			rootPrefix.length());
-
-		if (fileNamePathWithVersion.isEmpty() ||
-			!fileNamePathWithVersion.contains(StringPool.SLASH)) {
-
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"The blob '", azureBlobName, "' does not conform to the ",
-					"pattern ${companyId}/${repositoryId}/${fileName}",
-					"/${versionLabel} -- missing the '/${versionLabel}' part. ",
-					"Delete the blob in Azure to fix this (there should be no ",
-					"blobs directly under ${companyId}/${repositoryId}, only ",
-					"subfolders."));
-		}
-
-		return fileNamePathWithVersion.substring(
-			0, fileNamePathWithVersion.lastIndexOf(StringPool.SLASH));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AzureStore.class);

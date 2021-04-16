@@ -35,13 +35,11 @@ definition {
 
 	@priority = "5"
 	test ActivateStagingForSiteWithTheme {
-		property test.name.skip.portal.instance = "Theme#ActivateStagingForSiteWithTheme";
+		property test.name.skip.portal.instance = "StagingUsecase#ActivateStagingForSiteWithTheme";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 
 		WaitForConsoleTextPresent(value1 = "STARTED test-theme");
-
-		User.firstLoginPG();
 
 		Page.changeSinglePageTheme(themeName = "test-theme-7-4");
 
@@ -49,18 +47,16 @@ definition {
 
 		Button.clickPublish();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",
 			branchingPublic = "true",
-			groupName = "${siteName}");
+			groupName = "Guest");
+
+		Pause(locator1 = "3000");
 
 		Navigator.openStagingSiteURL(defaultSite = "true");
 
-		// Workaround for LPS-110206
-
-		//Theme.viewTestThemeBackgroundColor();
+		Theme.viewTestThemeBackgroundColor();
 
 		Navigator.openURL();
 
@@ -896,21 +892,18 @@ definition {
 
 	@priority = "5"
 	test PublishThemeFromStagedToLive {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "StagingUsecase#PublishThemeFromStagedToLive";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 
 		WaitForConsoleTextPresent(value1 = "STARTED test-theme");
 
-		User.firstLoginPG();
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",
 			branchingPublic = "true",
-			groupName = "${siteName}");
+			groupName = "Guest");
+
+		Pause(locator1 = "3000");
 
 		Navigator.openStagingSiteURL(defaultSite = "true");
 
@@ -920,9 +913,7 @@ definition {
 
 		Button.clickPublish();
 
-		// Workaround for LPS-110206
-
-		//Theme.viewTestThemeBackgroundColor();
+		Theme.viewTestThemeBackgroundColor();
 
 		Navigator.openURL();
 

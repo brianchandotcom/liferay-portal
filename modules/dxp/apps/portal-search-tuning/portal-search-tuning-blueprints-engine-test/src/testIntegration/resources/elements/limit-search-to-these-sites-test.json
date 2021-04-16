@@ -1,0 +1,43 @@
+{
+	"elementTemplateJSON": {
+		"category": "filter",
+		"clauses": [
+			{
+				"context": "query",
+				"occur": "filter",
+				"query": {
+					"query": {
+						"terms": {
+							"scopeGroupId": "${configuration.scope_group_ids}"
+						}
+					}
+				},
+				"type": "wrapper"
+			}
+		],
+		"conditions": [
+		],
+		"description": {
+			"en_US": "Limit search scope to the given sites"
+		},
+		"enabled": true,
+		"icon": "filter",
+		"title": {
+			"en_US": "Limit Search to These Sites"
+		}
+	},
+	"uiConfigurationJSON": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"helpText": "Add group IDs",
+						"label": "Group IDs",
+						"name": "scope_group_ids",
+						"type": "multiselect"
+					}
+				]
+			}
+		]
+	}
+}

@@ -32,10 +32,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface QueryPreProcessConfiguration {
 
-	@Meta.AD(
-		deflt = "license|path|properties|tag|treePath",
-		name = "field-name-patterns", required = false
-	)
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
+	@Meta.AD(deflt = "", name = "field-name-patterns", required = false)
 	public String[] fieldNamePatterns();
 
 }

@@ -55,7 +55,10 @@ export default {
 						defaultValue: 10,
 						label: 'Boost',
 						name: 'boost',
-						type: 'slider',
+						type: 'number',
+						typeOptions: {
+							min: 0,
+						},
 					},
 					{
 						defaultValue: 1.2,

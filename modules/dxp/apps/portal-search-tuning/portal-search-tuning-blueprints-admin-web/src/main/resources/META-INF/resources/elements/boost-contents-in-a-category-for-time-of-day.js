@@ -91,7 +91,10 @@ export default {
 						defaultValue: 20,
 						label: 'Boost',
 						name: 'boost',
-						type: 'slider',
+						type: 'number',
+						typeOptions: {
+							min: 0,
+						},
 					},
 				],
 			},

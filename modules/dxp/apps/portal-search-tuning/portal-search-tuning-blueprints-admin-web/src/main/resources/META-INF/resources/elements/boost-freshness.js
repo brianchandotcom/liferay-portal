@@ -58,11 +58,11 @@ export default {
 						defaultValue: 0.5,
 						label: 'Decay',
 						name: 'decay',
-						type: 'number',
+						type: 'slider',
 						typeOptions: {
 							max: 0.99,
 							min: 0.01,
-							step: 0.1,
+							step: 0.01,
 						},
 					},
 					{
@@ -91,7 +91,10 @@ export default {
 						defaultValue: 2,
 						label: 'Boost',
 						name: 'boost',
-						type: 'slider',
+						type: 'number',
+						typeOptions: {
+							min: 0,
+						},
 					},
 				],
 			},

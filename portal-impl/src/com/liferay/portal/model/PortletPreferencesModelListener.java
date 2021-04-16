@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -154,14 +153,6 @@ public class PortletPreferencesModelListener
 
 	private boolean _isNotifiedAssetEntryIdsModified(Layout layout) {
 		if (!NotifiedAssetEntryThreadLocal.isNotifiedAssetEntryIdsModified()) {
-			return false;
-		}
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		if (!layout.isLayoutPrototypeLinkActive() &&
-			!layoutSet.isLayoutSetPrototypeLinkActive()) {
-
 			return false;
 		}
 

@@ -363,6 +363,35 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
+    "/sites/{siteId}/structured-contents/draft":
+        # @review
+        post:
+            description:
+                Creates a draft of a structured content
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                    application/xml:
+                        schema:
+                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                    description:
+                        ""
+            tags: [ "StructuredContent" ]
     "/structured-contents/{structuredContentId}/by-version/{version}":
         delete:
             # @review

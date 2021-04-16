@@ -31,7 +31,7 @@ public class ClassNameTypeKeysResolver implements TypeKeysResolver {
 
 	@Override
 	public String getCategoryName() {
-		return "liferay-batch-export";
+		return "liferay-batch";
 	}
 
 	@Override

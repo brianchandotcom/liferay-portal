@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mule.internal.metadata.output;
+package com.liferay.mule.internal.metadata.input;
 
 import com.liferay.mule.internal.metadata.MetadataTypeBuilder;
 
@@ -20,13 +20,12 @@ import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
-import org.mule.runtime.api.metadata.resolving.OutputTypeResolver;
+import org.mule.runtime.api.metadata.resolving.InputTypeResolver;
 
 /**
  * @author Matija Petanjek
  */
-public class BatchExportOutputTypeResolver
-	implements OutputTypeResolver<String> {
+public class BatchImportInputTypeResolver implements InputTypeResolver<String> {
 
 	@Override
 	public String getCategoryName() {
@@ -34,7 +33,7 @@ public class BatchExportOutputTypeResolver
 	}
 
 	@Override
-	public MetadataType getOutputType(
+	public MetadataType getInputMetadata(
 			MetadataContext metadataContext, String className)
 		throws ConnectionException, MetadataResolvingException {
 

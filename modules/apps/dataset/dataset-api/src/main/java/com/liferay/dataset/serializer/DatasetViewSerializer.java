@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import java.util.Locale;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 public interface DatasetViewSerializer {
 

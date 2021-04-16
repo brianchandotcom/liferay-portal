@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 @ProviderType
 public interface DatasetDataFilterFactory {

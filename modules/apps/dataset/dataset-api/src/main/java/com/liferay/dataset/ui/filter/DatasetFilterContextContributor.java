@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 public interface DatasetFilterContextContributor {
 

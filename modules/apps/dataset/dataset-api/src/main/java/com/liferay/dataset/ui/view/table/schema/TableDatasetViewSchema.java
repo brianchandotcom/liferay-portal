@@ -17,7 +17,7 @@ package com.liferay.dataset.ui.view.table.schema;
 import java.util.Map;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 public class TableDatasetViewSchema {
 

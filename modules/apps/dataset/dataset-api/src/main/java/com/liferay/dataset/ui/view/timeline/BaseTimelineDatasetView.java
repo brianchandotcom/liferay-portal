@@ -18,7 +18,7 @@ import com.liferay.dataset.ui.view.DatasetView;
 import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 public abstract class BaseTimelineDatasetView implements DatasetView {
 

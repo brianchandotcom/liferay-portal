@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.filter.radio;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 public class RadioDatasetFilterItem {
 

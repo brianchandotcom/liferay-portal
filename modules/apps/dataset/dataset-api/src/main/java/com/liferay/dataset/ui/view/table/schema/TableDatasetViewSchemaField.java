@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.view.table.schema;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 public class TableDatasetViewSchemaField {
 

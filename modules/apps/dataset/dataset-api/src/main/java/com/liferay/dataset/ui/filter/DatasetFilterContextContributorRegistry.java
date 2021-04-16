@@ -17,7 +17,7 @@ package com.liferay.dataset.ui.filter;
 import java.util.List;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 public interface DatasetFilterContextContributorRegistry {
 

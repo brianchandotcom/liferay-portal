@@ -22,7 +22,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 public abstract class BaseAutocompleteDatasetFilter implements DatasetFilter {
 

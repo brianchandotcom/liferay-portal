@@ -17,7 +17,7 @@ package com.liferay.dataset.data;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Marco Leo
+ * @author Iván Zaera
  */
 @ProviderType
 public interface DatasetDataFilter {

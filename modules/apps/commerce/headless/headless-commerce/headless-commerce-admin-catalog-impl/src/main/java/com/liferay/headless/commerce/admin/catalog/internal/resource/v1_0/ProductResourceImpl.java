@@ -783,38 +783,41 @@ public class ProductResourceImpl
 
 		// Channels visibility
 
+		_cpDefinitionService.updateCPDefinitionChannelFilter(
+			cpDefinition.getCPDefinitionId(),
+			GetterUtil.getBoolean(product.getProductChannelFilter()));
+
 		_commerceChannelRelService.deleteCommerceChannelRels(
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
 		ProductChannel[] productChannels = product.getProductChannels();
 
-		if (productChannels == null) {
-			return cpDefinition;
-		}
+		if (productChannels != null) {
+			Stream<ProductChannel> stream = Arrays.stream(productChannels);
 
-		Stream<ProductChannel> stream = Arrays.stream(productChannels);
+			List<Long> channelIds = stream.map(
+				ProductChannel::getChannelId
+			).collect(
+				Collectors.toList()
+			);
 
-		List<Long> channelIds = stream.map(
-			ProductChannel::getChannelId
-		).collect(
-			Collectors.toList()
-		);
+			for (Long commerceChannelId : channelIds) {
+				if (commerceChannelId == null) {
+					continue;
+				}
 
-		for (long commerceChannelId : channelIds) {
-			if (commerceChannelId == 0) {
-				continue;
+				_commerceChannelRelService.addCommerceChannelRel(
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId(), commerceChannelId,
+					serviceContext);
 			}
-
-			_commerceChannelRelService.addCommerceChannelRel(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
-				commerceChannelId, serviceContext);
 		}
-
-		_cpDefinitionService.updateCPDefinitionChannelFilter(
-			cpDefinition.getCPDefinitionId(),
-			GetterUtil.getBoolean(product.getProductChannelFilter()));
 
 		// Account Groups visibility
+
+		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
+			cpDefinition.getCPDefinitionId(),
+			GetterUtil.getBoolean(product.getProductAccountGroupFilter()));
 
 		_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
@@ -822,32 +825,27 @@ public class ProductResourceImpl
 		ProductAccountGroup[] productAccountGroups =
 			product.getProductAccountGroups();
 
-		if (productAccountGroups == null) {
-			return cpDefinition;
-		}
+		if (productAccountGroups != null) {
+			Stream<ProductAccountGroup> productAccountGroupStream =
+				Arrays.stream(productAccountGroups);
 
-		Stream<ProductAccountGroup> productAccountGroupStream = Arrays.stream(
-			productAccountGroups);
+			List<Long> accountGroupIds = productAccountGroupStream.map(
+				ProductAccountGroup::getAccountGroupId
+			).collect(
+				Collectors.toList()
+			);
 
-		List<Long> accountGroupIds = productAccountGroupStream.map(
-			ProductAccountGroup::getAccountGroupId
-		).collect(
-			Collectors.toList()
-		);
+			for (Long accountGroupId : accountGroupIds) {
+				if (accountGroupId == null) {
+					continue;
+				}
 
-		for (long accountGroupId : accountGroupIds) {
-			if (accountGroupId == 0) {
-				continue;
+				_commerceAccountGroupRelService.addCommerceAccountGroupRel(
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId(), accountGroupId,
+					serviceContext);
 			}
-
-			_commerceAccountGroupRelService.addCommerceAccountGroupRel(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
-				accountGroupId, serviceContext);
 		}
-
-		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
-			cpDefinition.getCPDefinitionId(),
-			GetterUtil.getBoolean(product.getProductAccountGroupFilter()));
 
 		return cpDefinition;
 	}

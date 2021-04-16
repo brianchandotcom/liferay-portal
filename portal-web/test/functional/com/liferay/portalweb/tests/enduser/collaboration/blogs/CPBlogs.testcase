@@ -124,7 +124,7 @@ definition {
 
 	@description = "This test covers LPS-126756. It ensures that a blog entry can be added with a static gif."
 	@priority = "5"
-	@refactordone
+	@refactorneeded
 	test CanAddEntryWithStaticGif {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@priority = "4"
-	@refactordone
+	@refactorneeded
 	test CanChangeCoverImage {
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -246,7 +246,7 @@ definition {
 
 	@description = "This checks that a blog entry can saved as a draft and then deleted."
 	@priority = "4"
-	@refactordone
+	@refactorneeded
 	test CanDeleteDraft {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

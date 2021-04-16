@@ -121,7 +121,7 @@ definition {
 	}
 
 	@priority = "3"
-	@refactordone
+	@refactorneeded
 	test CanSearchForBlogsImages {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -150,7 +150,7 @@ definition {
 
 	@description = "This checks that a DM image can be search for in the blogs item selector."
 	@priority = "3"
-	@refactordone
+	@refactorneeded
 	test CanSearchForDMImages {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

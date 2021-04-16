@@ -170,7 +170,7 @@ definition {
 
 	@description = "This checks that a blog entry with a trackback URL can be added."
 	@priority = "4"
-	@refactordone
+	@refactorneeded
 	test CanAddEntryWithTrackbackURL {
 		property custom.properties = "blogs.trackback.enabled=true";
 
@@ -263,7 +263,7 @@ definition {
 
 	@description = "This checks that a comment can be edited in a blog entry."
 	@priority = "5"
-	@refactordone
+	@@refactorneeded
 	test CanEditComment {
 		property portal.acceptance = "true";
 
@@ -454,7 +454,7 @@ definition {
 
 	@description = "This checks that a guest cannot comment on an entry when permissions are removed."
 	@priority = "4"
-	@refactordone
+	@refactorneeded
 	test CannotCommentAsGuestAfterRemovingPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=&quot;com.liferay.saml.addon.keep.alive.web,com.liferay.saml.api,com.liferay.saml.impl,com.liferay.saml.opensaml.integration,com.liferay.saml.persistence.api,com.liferay.saml.persistence.service,com.liferay.saml.web,saml-hook&quot;";
@@ -940,7 +940,7 @@ definition {
 
 	@description = "This is a usecase for LPS-82025"
 	@priority = "5"
-	@refactordone
+	@refactorneeded
 	test CanUpdateFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -993,7 +993,7 @@ definition {
 
 	@description = "This checks that a cover image can be uploaded and published in a blog"
 	@priority = "3"
-	@refactordone
+	@refactorneeded
 	test CanUploadAndPublishCoverImage {
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",

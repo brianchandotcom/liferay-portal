@@ -22,6 +22,8 @@ import {
 import React, {useState} from 'react';
 
 import EmptyState from '../../../js/components/empty-state/EmptyState.es';
+import {useNewDeleteFieldSet} from '../../../js/components/field-sets/actions/useDeleteFieldSet.es';
+import {useNewPropagateFieldSet} from '../../../js/components/field-sets/actions/usePropagateFieldSet.es';
 import FieldType from '../../../js/components/field-types/FieldType.es';
 import {DRAG_FIELDSET_ADD} from '../../../js/drag-and-drop/dragTypes.es';
 import {getDataDefinitionFieldSet} from '../../../js/utils/dataConverter.es';
@@ -73,6 +75,10 @@ export default function FieldSetList({searchTerm}) {
 		}));
 	};
 
+	const deleteFieldSet = useNewDeleteFieldSet();
+
+	const propagateFieldSet = useNewPropagateFieldSet();
+
 	const onDoubleClick = ({fieldSet}) => {
 		dispatch({
 			payload: {
@@ -120,7 +126,34 @@ export default function FieldSetList({searchTerm}) {
 
 							return (
 								<FieldType
-									actions={[]}
+									actions={[
+										{
+											action: () =>
+												propagateFieldSet({
+													fieldSet,
+													isDeleteAction: true,
+													modal: {
+														actionMessage: Liferay.Language.get(
+															'delete'
+														),
+														fieldSetMessage: Liferay.Language.get(
+															'the-fieldset-will-be-deleted-permanently-from'
+														),
+														headerMessage: Liferay.Language.get(
+															'delete'
+														),
+														status: 'danger',
+														warningMessage: Liferay.Language.get(
+															'this-action-may-erase-data-permanently'
+														),
+													},
+													onPropagate: deleteFieldSet,
+												}),
+											name: Liferay.Language.get(
+												'delete'
+											),
+										},
+									]}
 									description={getPluralMessage(
 										Liferay.Language.get('x-field'),
 										Liferay.Language.get('x-fields'),

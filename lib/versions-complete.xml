@@ -505,9 +505,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!accessors-smart.jar</file-name>
-				<version>1.1</version>
+				<version>2.4.2</version>
 				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>http://www.minidev.net/</project-url>
+				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -540,9 +540,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!json-smart.jar</file-name>
-				<version>2.2.1</version>
+				<version>2.4.2</version>
 				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>http://www.minidev.net/</project-url>
+				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -1135,9 +1135,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!accessors-smart.jar</file-name>
-				<version>1.1</version>
+				<version>2.4.2</version>
 				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>http://www.minidev.net/</project-url>
+				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -1242,9 +1242,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!json-smart.jar</file-name>
-				<version>2.2.1</version>
+				<version>2.4.2</version>
 				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>http://www.minidev.net/</project-url>
+				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -1324,9 +1324,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.service.jar!accessors-smart.jar</file-name>
-				<version>1.1</version>
+				<version>2.4.2</version>
 				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>http://www.minidev.net/</project-url>
+				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -1395,9 +1395,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.service.jar!json-smart.jar</file-name>
-				<version>2.2.1</version>
+				<version>2.4.2</version>
 				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>http://www.minidev.net/</project-url>
+				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -3399,9 +3399,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!accessors-smart.jar</file-name>
-				<version>1.2</version>
+				<version>2.4.2</version>
 				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>http://www.minidev.net/</project-url>
+				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -3470,9 +3470,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!json-smart.jar</file-name>
-				<version>2.3</version>
+				<version>2.4.2</version>
 				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>http://www.minidev.net/</project-url>
+				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>

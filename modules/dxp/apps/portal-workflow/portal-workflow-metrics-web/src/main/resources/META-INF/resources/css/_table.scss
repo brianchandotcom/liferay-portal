@@ -8,6 +8,34 @@
 	}
 	td {
 		border-top: 1px solid #e7e7ed !important;
+
+		> .due-date {
+			.due-date-badge {
+				border-radius: 50%;
+				display: inline-block;
+				height: 8px;
+				margin-right: 8px;
+				width: 8px;
+			}
+
+			&.text-success {
+				.due-date-badge {
+					background-color: #5aca75;
+				}
+			}
+
+			&.text-danger {
+				.due-date-badge {
+					background-color: #da1414;
+				}
+			}
+
+			&.text-info {
+				.due-date-badge {
+					display: none;
+				}
+			}
+		}
 	}
 
 	td:last-child:not(.actions),

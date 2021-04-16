@@ -22,26 +22,40 @@ import {AppContext} from '../AppContext.es';
 import {InstanceListContext} from './InstanceListPageProvider.es';
 import {ModalContext} from './modal/ModalProvider.es';
 
-const getSLAStatusIcon = (slaStatus) => {
+const getSLAStatusIconInfo = (slaStatus) => {
 	const items = {
 		OnTime: {
 			bgColor: 'bg-success-light',
-			iconColor: 'text-success',
-			iconName: 'check-circle',
+			name: 'check-circle',
+			textColor: 'text-success',
 		},
 		Overdue: {
 			bgColor: 'bg-danger-light',
-			iconColor: 'text-danger',
-			iconName: 'exclamation-circle',
+			name: 'exclamation-circle',
+			textColor: 'text-danger',
 		},
 		Untracked: {
 			bgColor: 'bg-info-light',
-			iconColor: 'text-info',
-			iconName: 'hr',
+			name: 'hr',
+			textColor: 'text-info',
 		},
 	};
 
 	return items[slaStatus] || items.Untracked;
+};
+
+const getDueDateFormatted = (dateOverdue) => {
+	if (!dateOverdue) {
+		return '';
+	}
+
+	const sameYear = dateOverdue.split('-')[0] == new Date().getFullYear();
+
+	const format = sameYear
+		? Liferay.Language.get('mmm-dd')
+		: Liferay.Language.get('mmm-dd-yyyy');
+
+	return moment.utc(dateOverdue).format(format);
 };
 
 const Item = ({totalCount, ...instance}) => {
@@ -62,6 +76,7 @@ const Item = ({totalCount, ...instance}) => {
 		creator,
 		dateCreated,
 		id,
+		slaResults = [],
 		slaStatus,
 		taskNames = [Liferay.Language.get('not-available')],
 	} = instance;
@@ -73,7 +88,6 @@ const Item = ({totalCount, ...instance}) => {
 	const {reviewer} = assignees.find(({id}) => id === -1) || {};
 
 	const disableCheckbox = (!assignedToUser && !reviewer) || completed;
-	const slaStatusIcon = getSLAStatusIcon(slaStatus);
 
 	const formattedAssignees = !completed
 		? assigneeNames
@@ -92,23 +106,31 @@ const Item = ({totalCount, ...instance}) => {
 		setSelectedItems(updatedItems);
 	};
 
+	const [slaResult] = slaResults;
+
+	const dateOverdue = getDueDateFormatted(slaResult?.dateOverdue);
+	const slaRunning = slaResult?.status === 'Running';
+
+	const slaStatusIconInfo = getSLAStatusIconInfo(slaStatus);
+
 	return (
 		<ClayTable.Row className={checked ? 'table-active' : ''}>
 			<ClayTable.Cell>
 				<div className="table-first-element-group">
 					<ClayCheckbox
 						checked={checked}
+						className="mr-2"
 						disabled={disableCheckbox}
 						onChange={handleCheck}
 					/>
 
 					<span
-						className={`sticker sticker-sm ${slaStatusIcon.bgColor}`}
+						className={`sticker sticker-sm ${slaStatusIconInfo.bgColor}`}
 					>
 						<span className="inline-item">
 							<ClayIcon
-								className={slaStatusIcon.iconColor}
-								symbol={slaStatusIcon.iconName}
+								className={slaStatusIconInfo.textColor}
+								symbol={slaStatusIconInfo.name}
 							/>
 						</span>
 					</span>
@@ -127,6 +149,23 @@ const Item = ({totalCount, ...instance}) => {
 				>
 					<strong>{id}</strong>
 				</span>
+			</ClayTable.Cell>
+
+			<ClayTable.Cell>
+				<div
+					className={`due-date ${
+						slaRunning ? slaStatusIconInfo.textColor : 'text-info'
+					}`}
+				>
+					{!slaResult || !slaRunning ? (
+						'-'
+					) : (
+						<>
+							<span className="due-date-badge"></span>
+							{dateOverdue}
+						</>
+					)}
+				</div>
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>{`${assetType}: ${assetTitle}`}</ClayTable.Cell>

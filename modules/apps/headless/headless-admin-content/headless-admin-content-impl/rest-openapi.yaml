@@ -368,6 +368,7 @@ paths:
         post:
             description:
                 Creates a draft of a structured content
+            operationId: postSiteStructuredContentDraft
             parameters:
                 - in: path
                   name: siteId
@@ -387,6 +388,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                        application/xml:
                             schema:
                                 $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
                     description:

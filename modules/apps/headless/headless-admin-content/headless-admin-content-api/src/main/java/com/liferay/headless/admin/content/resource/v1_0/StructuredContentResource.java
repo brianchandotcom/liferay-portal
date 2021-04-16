@@ -56,6 +56,13 @@ public interface StructuredContentResource {
 				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
+			postSiteStructuredContentDraft(
+				Long siteId,
+				com.liferay.headless.delivery.dto.v1_0.StructuredContent
+					structuredContent)
+		throws Exception;
+
 	public void deleteStructuredContentByVersion(
 			Long structuredContentId, Double version)
 		throws Exception;

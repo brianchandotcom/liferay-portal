@@ -572,6 +572,27 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteStructuredContentDraft() throws Exception {
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			testPostSiteStructuredContentDraft_addStructuredContent(
+				randomStructuredContent);
+
+		assertEquals(randomStructuredContent, postStructuredContent);
+		assertValid(postStructuredContent);
+	}
+
+	protected StructuredContent
+			testPostSiteStructuredContentDraft_addStructuredContent(
+				StructuredContent structuredContent)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteStructuredContentByVersion() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent =

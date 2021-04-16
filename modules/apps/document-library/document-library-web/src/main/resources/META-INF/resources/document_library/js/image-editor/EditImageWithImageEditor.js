@@ -80,6 +80,7 @@ export default ({editImageURL, portletNamespace, redirectURL}) => {
 						{imageURL && (
 							<ImageEditor
 								imageSrc={imageURL}
+								onCancel={onClose}
 								onSave={handleSaveButtonClick}
 							/>
 						)}

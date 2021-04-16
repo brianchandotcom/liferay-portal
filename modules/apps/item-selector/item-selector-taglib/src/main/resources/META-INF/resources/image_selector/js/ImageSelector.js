@@ -13,7 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {useLiferayState} from '@liferay/frontend-js-react-web';
+import {State} from '@liferay/frontend-js-state-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
@@ -59,14 +59,15 @@ const ImageSelector = ({
 	const [progressData, setProgressData] = useState();
 	const [progressValue, setProgressValue] = useState(0);
 
-	const [image, setImage] = useLiferayState(imageSelectorCoverImageAtom);
+	const [image, setImage] = useState({fileEntryId, src: imageURL});
 
 	useEffect(() => {
-		setImage({
-			fileEntryId,
-			src: imageURL,
-		});
-	}, [fileEntryId, imageURL, setImage]);
+		const isCoverImageSelector = paramName === 'coverImageFileEntry';
+
+		if (isCoverImageSelector) {
+			State.write(imageSelectorCoverImageAtom, image);
+		}
+	}, [image, paramName]);
 
 	const rootNodeRef = useRef(null);
 	const uploaderRef = useRef(null);

@@ -592,6 +592,8 @@ definition {
 				var webContentImageFieldLabel = "Image";
 			}
 
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			AssertClick(
 				key_fieldFieldLabel = "${webContentImageFieldLabel}",
 				locator1 = "WCEditWebContent#SELECT_BUTTON",
@@ -634,6 +636,8 @@ definition {
 			if (!(isSet(webContentLinkToPageFieldLabel))) {
 				var webContentLinkToPageFieldLabel = "Link to Page";
 			}
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
 			AssertClick(
 				key_fieldFieldLabel = "${webContentLinkToPageFieldLabel}",
@@ -750,6 +754,8 @@ definition {
 				var webContentUploadFieldLabel = "Upload";
 			}
 
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			AssertClick(
 				key_fieldFieldLabel = "${webContentUploadFieldLabel}",
 				locator1 = "WCEditWebContent#SELECT_BUTTON",
@@ -785,6 +791,8 @@ definition {
 			if (!(isSet(webContentWebContentFieldLabel))) {
 				var webContentWebContentFieldLabel = "Web Content";
 			}
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
 			AssertClick(
 				key_fieldFieldLabel = "${webContentWebContentFieldLabel}",

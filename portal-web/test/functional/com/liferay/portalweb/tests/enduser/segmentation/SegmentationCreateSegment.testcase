@@ -149,7 +149,19 @@ definition {
 	test AddSegmentBySessionBrowser {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130313 AddSegmentBySessionBrowser pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Browser");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionBrowser Test");
+
+		Segmentation.fillProperty(PropertyField = "Chrome");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for LPS-130314."

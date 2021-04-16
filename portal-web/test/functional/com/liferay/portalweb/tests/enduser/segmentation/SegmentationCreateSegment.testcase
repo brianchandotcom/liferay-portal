@@ -256,7 +256,19 @@ definition {
 	test AddSegmentBySessionDeviceScreenResolutionWidth {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130318 AddSegmentBySessionDeviceScreenResolutionWidth pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Device Screen Resolution Width");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceScreenResolutionWidth Test");
+
+		Segmentation.fillProperty(ResolutionValue = "320");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for LPS-130319."

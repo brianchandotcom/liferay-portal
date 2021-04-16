@@ -216,6 +216,10 @@ public class TestHistoryMap
 		_minimumStatusChanges = minimumStatusChanges;
 	}
 
+	public void setMinimumTestDuration(long minimumTestDuration) {
+		_minimumTestDuration = minimumTestDuration;
+	}
+
 	public void writeDurationDataJavaScriptFile(
 			String filePath, String batchNameRegex)
 		throws IOException {
@@ -230,7 +234,9 @@ public class TestHistoryMap
 		for (TestHistory testHistory : values()) {
 			String batchName = testHistory.getBatchName();
 
-			if (batchName.matches(batchNameRegex)) {
+			if (batchName.matches(batchNameRegex) &&
+				(testHistory.getAverageDuration() > _minimumTestDuration)) {
+
 				durationDataJSONArray.put(testHistory.toDurationJSONArray());
 			}
 		}
@@ -289,6 +295,28 @@ public class TestHistoryMap
 
 			_testHistoryEntries.add(
 				new TestHistoryEntry(buildURL, duration, errorSnippet, status));
+		}
+
+		public long getAverageDuration() {
+			long count = 0;
+			long totalDuration = 0;
+
+			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
+				long duration = testHistoryEntry.getDuration();
+
+				if (duration > _MAXIMUM_TEST_DURATION) {
+					continue;
+				}
+
+				count++;
+				totalDuration = totalDuration + duration;
+			}
+
+			if (count == 0) {
+				return 0;
+			}
+
+			return totalDuration / count;
 		}
 
 		public String getBatchName() {
@@ -365,15 +393,7 @@ public class TestHistoryMap
 				statusesJSONArray.put(statusJSONArray);
 			}
 
-			jsonArray.put(statusesJSONArray);
-			jsonArray.put(durationJSONArray);
-
-			if (durationJSONArray.length() == 0) {
-				jsonArray.put(0);
-			}
-			else {
-				jsonArray.put(totalDuration / durationJSONArray.length());
-			}
+			jsonArray.put(getAverageDuration());
 
 			return jsonArray;
 		}
@@ -472,5 +492,6 @@ public class TestHistoryMap
 		"test[0-9-]+\\/[0-9]+\\/.+?\\/[0-9]+\\/(?<jobVariant>.+?)\\/.*");
 
 	private int _minimumStatusChanges = 3;
+	private long _minimumTestDuration = 60 * 1000;
 
 }

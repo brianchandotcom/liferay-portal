@@ -1,12 +1,7 @@
 definition {
 
 	macro getCompanyId {
-		if (isSet(portalInstanceName)) {
-			var portalInstanceName = "${portalInstanceName}";
-		}
-		else {
-			var portalInstanceName = JSONCompany.getPortalInstanceName();
-		}
+		var portalInstanceName = JSONCompany.getPortalInstanceName();
 
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();

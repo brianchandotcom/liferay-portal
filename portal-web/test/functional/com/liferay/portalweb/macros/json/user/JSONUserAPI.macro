@@ -3,7 +3,7 @@ definition {
 	macro _addUser {
 		Variables.assertDefined(parameterList = "${locale},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		var companyId = JSONCompany.getCompanyId();
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -69,7 +69,7 @@ definition {
 	macro _agreeToTermsAndAnswerReminderQuery {
 		Variables.assertDefined(parameterList = "${userId}");
 
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		var companyId = JSONCompany.getCompanyId();
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -158,7 +158,7 @@ definition {
 	macro _getUserIdByEmailAddress {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		var companyId = JSONCompany.getCompanyId();
 
 		var portalURL = JSONCompany.getPortalURL();
 

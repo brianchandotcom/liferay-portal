@@ -508,9 +508,32 @@ definition {
 	}
 
 	@description = "This test attempts to install an app by uploading a file that is invalid. Error message is asserted."
-	@priority = "5"
-	@refactoredone
+	@priority = "3"
 	test InvalidFileShouldNotBeUploaded {
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		var key_appName = "title.zip";
+
+		Click(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.click(menuItem = "Upload");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(locator1 = "TextInput#FILE");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "title.zip");
+
+		Button.clickInstall();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_1",
+			value1 = "Error:Please upload a file with a valid extension (JAR, LPKG, or WAR File).");
 	}
 
 	@priority = "5"

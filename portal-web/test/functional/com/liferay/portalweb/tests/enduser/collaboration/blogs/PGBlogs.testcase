@@ -178,6 +178,8 @@ definition {
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
 
+		Refresh();
+
 		BlogsEntry.addWithTrackbackURLPG(
 			entryContent = "Blogs Entry1 Content",
 			entryContent2 = "Blogs Entry2 Content",

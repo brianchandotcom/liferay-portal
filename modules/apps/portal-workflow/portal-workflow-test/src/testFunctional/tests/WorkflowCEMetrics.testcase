@@ -4,7 +4,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.run.environment = "CE";
-	property testray.main.component.name = "Workflow";
+	property testray.main.component.name = "Workflow Metrics";
 
 	setUp {
 		TestCase.setUpPortalInstance();

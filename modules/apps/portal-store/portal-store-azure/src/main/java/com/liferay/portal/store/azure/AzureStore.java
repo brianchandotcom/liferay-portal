@@ -451,38 +451,6 @@ public class AzureStore implements Store {
 		return sb.toString();
 	}
 
-	private String _toLiferayDirName(
-		long companyId, long repositoryId, String azureBlobsPrefix) {
-
-		if (!azureBlobsPrefix.endsWith(StringPool.SLASH)) {
-			throw new IllegalArgumentException(
-				StringPool.APOSTROPHE + azureBlobsPrefix + "' must end with /");
-		}
-
-		String rootBlobPathWithDelimiter =
-			_toFullAzurePath(companyId, repositoryId, StringPool.BLANK, null) +
-			StringPool.SLASH;
-
-		if (!azureBlobsPrefix.startsWith(rootBlobPathWithDelimiter)) {
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"It looks like blobs prefix '", azureBlobsPrefix,
-					"' does not belong to company: ", companyId,
-					" and repository: ", repositoryId,
-					" (the blobs prefix does not begin with '",
-					rootBlobPathWithDelimiter, "')"));
-		}
-
-		String dirName = azureBlobsPrefix.substring(
-			rootBlobPathWithDelimiter.length());
-
-		if (StringUtil.endsWith(dirName, StringPool.SLASH)) {
-			return dirName.substring(0, dirName.length() - 1);
-		}
-
-		return dirName;
-	}
-
 	private String _getFileName(
 		long companyId, long repositoryId, String azureBlobName) {
 

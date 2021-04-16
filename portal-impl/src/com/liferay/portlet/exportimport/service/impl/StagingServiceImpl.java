@@ -124,6 +124,25 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	}
 
 	@Override
+	public void enableRemoteStaging(
+			long groupId, boolean branchingPublic, boolean branchingPrivate,
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Group stagingGroup = groupLocalService.getGroup(groupId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.MANAGE_STAGING);
+
+		stagingLocalService.enableRemoteStaging(
+			getUserId(), stagingGroup, branchingPublic, branchingPrivate,
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId, serviceContext);
+	}
+
+	@Override
 	public boolean hasRemoteLayout(
 			String uuid, long groupId, boolean privateLayout)
 		throws PortalException {

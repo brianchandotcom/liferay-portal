@@ -50,7 +50,9 @@ definition {
 	macro setUserId {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
-		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONUserAPI._getUserIdByEmailAddress(
+			portalInstanceName = "${portalInstanceName}",
+			userEmailAddress = "${userEmailAddress}");
 
 		return "${userId}";
 	}

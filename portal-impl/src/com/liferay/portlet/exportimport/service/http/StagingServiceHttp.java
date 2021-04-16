@@ -166,6 +166,48 @@ public class StagingServiceHttp {
 		}
 	}
 
+	public static void enableRemoteStaging(
+			HttpPrincipal httpPrincipal, long groupId, boolean branchingPublic,
+			boolean branchingPrivate, String remoteAddress, int remotePort,
+			String remotePathContext, boolean secureConnection,
+			long remoteGroupId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				StagingServiceUtil.class, "enableRemoteStaging",
+				_enableRemoteStagingParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, branchingPublic, branchingPrivate,
+				remoteAddress, remotePort, remotePathContext, secureConnection,
+				remoteGroupId, serviceContext);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static boolean hasRemoteLayout(
 			HttpPrincipal httpPrincipal, String uuid, long groupId,
 			boolean privateLayout)
@@ -174,7 +216,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "hasRemoteLayout",
-				_hasRemoteLayoutParameterTypes3);
+				_hasRemoteLayoutParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, uuid, groupId, privateLayout);
@@ -215,7 +257,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "propagateExportImportLifecycleEvent",
-				_propagateExportImportLifecycleEventParameterTypes4);
+				_propagateExportImportLifecycleEventParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, code, processFlag, processId, arguments);
@@ -254,7 +296,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "publishStagingRequest",
-				_publishStagingRequestParameterTypes5);
+				_publishStagingRequestParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, stagingRequestId, exportImportConfiguration);
@@ -296,7 +338,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StagingServiceUtil.class, "updateStagingRequest",
-				_updateStagingRequestParameterTypes6);
+				_updateStagingRequestParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, stagingRequestId, fileName, bytes);
@@ -336,19 +378,25 @@ public class StagingServiceHttp {
 			long.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _hasRemoteLayoutParameterTypes3 =
+	private static final Class<?>[] _enableRemoteStagingParameterTypes3 =
+		new Class[] {
+			long.class, boolean.class, boolean.class, String.class, int.class,
+			String.class, boolean.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _hasRemoteLayoutParameterTypes4 =
 		new Class[] {String.class, long.class, boolean.class};
 	private static final Class<?>[]
-		_propagateExportImportLifecycleEventParameterTypes4 = new Class[] {
+		_propagateExportImportLifecycleEventParameterTypes5 = new Class[] {
 			int.class, int.class, String.class, java.util.List.class
 		};
-	private static final Class<?>[] _publishStagingRequestParameterTypes5 =
+	private static final Class<?>[] _publishStagingRequestParameterTypes6 =
 		new Class[] {
 			long.class,
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
 				class
 		};
-	private static final Class<?>[] _updateStagingRequestParameterTypes6 =
+	private static final Class<?>[] _updateStagingRequestParameterTypes7 =
 		new Class[] {long.class, String.class, byte[].class};
 
 }

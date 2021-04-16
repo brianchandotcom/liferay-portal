@@ -66,6 +66,13 @@ public interface StagingService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void enableRemoteStaging(
+			long groupId, boolean branchingPublic, boolean branchingPrivate,
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

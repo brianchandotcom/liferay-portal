@@ -54,6 +54,20 @@ public class StagingServiceWrapper
 			groupId, branchingPublic, branchingPrivate, serviceContext);
 	}
 
+	@Override
+	public void enableRemoteStaging(
+			long groupId, boolean branchingPublic, boolean branchingPrivate,
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_stagingService.enableRemoteStaging(
+			groupId, branchingPublic, branchingPrivate, remoteAddress,
+			remotePort, remotePathContext, secureConnection, remoteGroupId,
+			serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

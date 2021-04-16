@@ -97,6 +97,26 @@ public class StagingServiceSoap {
 		}
 	}
 
+	public static void enableRemoteStaging(
+			long groupId, boolean branchingPublic, boolean branchingPrivate,
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			StagingServiceUtil.enableRemoteStaging(
+				groupId, branchingPublic, branchingPrivate, remoteAddress,
+				remotePort, remotePathContext, secureConnection, remoteGroupId,
+				serviceContext);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static boolean hasRemoteLayout(
 			String uuid, long groupId, boolean privateLayout)
 		throws RemoteException {

@@ -211,7 +211,7 @@ definition {
 		}
 
 		if (isSet(webContentContent)) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_content = "${webContentContent}",
 				key_fieldName = "Content",
 				locator1 = "Translation#BASE_LANGUAGE_CONTENT_FIELD",
@@ -219,7 +219,7 @@ definition {
 		}
 
 		if (isSet(webContentDescription)) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_content = "${webContentDescription}",
 				key_fieldName = "Description",
 				locator1 = "Translation#BASE_LANGUAGE_CONTENT_FIELD",

@@ -300,7 +300,7 @@ definition {
 	@description = "This is a use case for LPS-44540."
 	@priority = "5"
 	test AddEventTwiceViaMyCalendars {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Test Test");
 

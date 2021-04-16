@@ -135,8 +135,13 @@ public class ConcatCheck extends BaseStringConcatenationCheck {
 		if (pos != -1) {
 			log(
 				literalStringDetailAST2, MSG_MOVE_LITERAL_STRING,
-				literalStringValue2.substring(0, pos + 1));
+				literalStringValue2.substring(0, pos + 1), "previous");
 		}
+
+		checkLiteralStringBreaks(
+			literalStringDetailAST2, line,
+			getLine(literalStringDetailAST1.getLineNo()), literalStringValue1,
+			literalStringValue2);
 	}
 
 }

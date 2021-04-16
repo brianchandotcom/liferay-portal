@@ -98,8 +98,11 @@ public class PlusStatementCheck extends BaseStringConcatenationCheck {
 		if (pos != -1) {
 			log(
 				rightHandOperandDetailAST, MSG_MOVE_LITERAL_STRING,
-				value2.substring(0, pos + 1));
+				value2.substring(0, pos + 1), "previous");
 		}
+
+		checkLiteralStringBreaks(
+			rightHandOperandDetailAST, line1, line2, value1, value2);
 	}
 
 	private void _checkPlusOperator(DetailAST detailAST) {

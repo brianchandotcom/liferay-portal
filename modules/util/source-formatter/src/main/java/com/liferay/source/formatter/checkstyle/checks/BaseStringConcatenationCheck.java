@@ -21,6 +21,7 @@ import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 /**
  * @author Hugo Huijser
@@ -45,6 +46,45 @@ public abstract class BaseStringConcatenationCheck extends BaseCheck {
 			log(
 				literalStringDetailAST, _MSG_COMBINE_STRING,
 				getStringValue(literalStringDetailAST), text);
+		}
+	}
+
+	protected void checkLiteralStringBreaks(
+		DetailAST rightHandOperandDetailAST, String line1, String line2,
+		String value1, String value2) {
+
+		if (!value1.matches("^(.*([ /\\.,]))?(\\w+)$") ||
+			!value2.matches("^(\\w+)(([ /\\.,]).*)?$")) {
+
+			return;
+		}
+
+		int lineLength1 = CommonUtil.lengthExpandedTabs(
+			line1, line1.length(), getTabWidth());
+
+		int x = _getStringBreakPos(value2, getMaxLineLength() - lineLength1);
+
+		if (x != -1) {
+			log(
+				rightHandOperandDetailAST, MSG_MOVE_LITERAL_STRING,
+				value2.substring(0, x + 1), "previous");
+
+			return;
+		}
+
+		x = _getLastStringBreakPos(value1);
+
+		if (x != -1) {
+			int lineLength2 = CommonUtil.lengthExpandedTabs(
+				line2, line2.length(), getTabWidth());
+
+			String s = value1.substring(x);
+
+			if ((lineLength2 + s.length()) <= getMaxLineLength()) {
+				log(
+					rightHandOperandDetailAST, MSG_MOVE_LITERAL_STRING, s,
+					"next");
+			}
 		}
 	}
 
@@ -115,6 +155,36 @@ public abstract class BaseStringConcatenationCheck extends BaseCheck {
 
 	protected static final String MSG_MOVE_LITERAL_STRING =
 		"literal.string.move";
+
+	private int _getLastStringBreakPos(String s) {
+		int x = Math.max(
+			s.lastIndexOf(StringPool.DASH),
+			Math.max(
+				s.lastIndexOf(StringPool.PERIOD),
+				s.lastIndexOf(StringPool.SPACE)));
+
+		if (x == -1) {
+			return s.lastIndexOf(StringPool.SLASH);
+		}
+
+		return Math.max(x + 1, s.lastIndexOf(StringPool.SLASH));
+	}
+
+	private int _getStringBreakPos(String s, int i) {
+		int x = Math.max(
+			s.lastIndexOf(StringPool.DASH, i - 1),
+			Math.max(
+				s.lastIndexOf(StringPool.PERIOD, i - 1),
+				s.lastIndexOf(StringPool.SPACE, i - 1)));
+
+		int y = s.lastIndexOf(StringPool.SLASH, i);
+
+		if (y > 0) {
+			return Math.max(x, y - 1);
+		}
+
+		return x;
+	}
 
 	private static final String _MSG_COMBINE_STRING = "string.combine";
 

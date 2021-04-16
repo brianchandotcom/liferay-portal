@@ -158,9 +158,14 @@ public class AppendCheck extends BaseStringConcatenationCheck {
 			if (pos != -1) {
 				log(
 					methodCallDetailAST, MSG_MOVE_LITERAL_STRING,
-					literalStringValue.substring(0, pos + 1));
+					literalStringValue.substring(0, pos + 1), "previous");
 			}
 		}
+
+		checkLiteralStringBreaks(
+			methodCallDetailAST, previousLine,
+			getLine(previousMethodCallDetailAST.getLineNo()),
+			previousLiteralStringValue, literalStringValue);
 	}
 
 	private void _checkPlusOperator(DetailAST parameterDetailAST) {

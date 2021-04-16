@@ -254,9 +254,6 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-
-
-		
 	}
 
 	test CreateProductBundleWithPriceTypeDynamic {

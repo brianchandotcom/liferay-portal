@@ -13,8 +13,8 @@
 	${r"<#if"} (${variableName} != "")>
 		${r"<#assign"} geolocationJSONObject = jsonFactoryUtil.createJSONObject(${variableName})>
 
-		${r"<#assign"} latitude = geolocationJSONObject.getDouble("latitude")>
-		${r"<#assign"} longitude = geolocationJSONObject.getDouble("longitude")>
+		${r"<#assign"} latitude = geolocationJSONObject.getDouble("lat")>
+		${r"<#assign"} longitude = geolocationJSONObject.getDouble("lng")>
 
 		${r"<@liferay_map"}["map-display"]
 			geolocation=true

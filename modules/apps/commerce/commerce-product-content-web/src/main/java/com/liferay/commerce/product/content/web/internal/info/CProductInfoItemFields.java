@@ -25,6 +25,16 @@ import com.liferay.info.localized.InfoLocalizedValue;
  */
 public interface CProductInfoItemFields {
 
+	public static final InfoField<ImageInfoFieldType> defaultImage =
+		InfoField.builder(
+		).infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"defaultImageURL"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				"com.liferay.asset.info.display.impl", "default-image")
+		).build();
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
 		InfoField.builder(
 		).infoFieldType(
@@ -35,19 +45,6 @@ public interface CProductInfoItemFields {
 			InfoLocalizedValue.localize(
 				CProductInfoItemFields.class, "description")
 		).build();
-
-	public static final InfoField<ImageInfoFieldType> defaultImage =
-		InfoField.builder(
-
-		).infoFieldType(
-			ImageInfoFieldType.INSTANCE
-		).name(
-			"defaultImageURL"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.asset.info.display.impl", "default-image")
-		).build();
-
 	public static final InfoField<URLInfoFieldType> displayPageUrlInfoField =
 		InfoField.builder(
 		).infoFieldType(
@@ -58,7 +55,6 @@ public interface CProductInfoItemFields {
 			InfoLocalizedValue.localize(
 				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
-
 	public static final InfoField<TextInfoFieldType> titleInfoField =
 		InfoField.builder(
 		).infoFieldType(

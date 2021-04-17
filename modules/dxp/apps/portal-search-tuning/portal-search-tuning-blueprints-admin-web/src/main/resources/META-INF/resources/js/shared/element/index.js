@@ -378,6 +378,20 @@ function Element({
 											>
 												{config.label}
 
+												{config.typeOptions &&
+													isDefined(
+														config.typeOptions
+															.required
+													) &&
+													!config.typeOptions
+														.required && (
+														<span className="optional-text">
+															{Liferay.Language.get(
+																'optional'
+															)}
+														</span>
+													)}
+
 												{config.helpText && (
 													<ClayTooltipProvider>
 														<ClaySticker
@@ -394,20 +408,6 @@ function Element({
 														</ClaySticker>
 													</ClayTooltipProvider>
 												)}
-
-												{config.typeOptions &&
-													isDefined(
-														config.typeOptions
-															.required
-													) &&
-													!config.typeOptions
-														.required && (
-														<span className="optional-text">
-															{Liferay.Language.get(
-																'optional'
-															)}
-														</span>
-													)}
 											</label>
 										</ClayList.ItemField>
 									)}

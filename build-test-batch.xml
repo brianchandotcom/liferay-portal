@@ -1688,14 +1688,18 @@ app.server.type=@{app.server.type}]]></echo>
 									<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
 								</gradle-execute>
 
+								<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
+
+								<unzip
+									dest="portal-impl/classes"
+									src="${test.app.server.lib.portal.dir}/portal-impl.jar"
+								/>
+
 								<ant dir="portal-test" inheritAll="false" target="jar" />
 
 								<local name="artifact.version" />
 
 								<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
-
-								<propertycopy from="app.server.${app.server.type}.lib.global.dir" name="test.app.server.lib.global.dir" />
-								<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
 
 								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
 								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
@@ -2926,7 +2930,6 @@ log.sanitizer.enabled=false</echo>
 
 							<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
 
-							<propertycopy from="app.server.${app.server.type}.lib.global.dir" name="test.app.server.lib.global.dir" />
 							<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
 
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />

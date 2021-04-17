@@ -47,7 +47,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + BlueprintsPortletKeys.BLUEPRINTS_ADMIN,
+	property = {
+		"javax.portlet.name=" + BlueprintsPortletKeys.BLUEPRINTS_ADMIN,
+		"path=" + BlueprintsAdminMVCCommandNames.VIEW_BLUEPRINTS,
+		"path=" + BlueprintsAdminMVCCommandNames.VIEW_ELEMENTS, "path=-"
+	},
 	service = PortletConfigurationIcon.class
 )
 public class ImportPortletConfigurationIcon

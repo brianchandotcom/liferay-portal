@@ -17,6 +17,7 @@ package com.liferay.commerce.product.constants;
 /**
  * @author Alessio Antonio Rendina
  * @author Ivica Cardic
+ * @author Gianmarco Brunialti Masera
  */
 public class CPContentContributorConstants {
 
@@ -28,12 +29,16 @@ public class CPContentContributorConstants {
 
 	public static final String AVAILABILITY_NAME = "availability";
 
+	public static final String BACK_ORDER_ALLOWED = "backOrderAllowed";
+
 	public static final String DELIVERY_SUBSCRIPTION_INFO =
 		"deliverySubscriptionInfo";
 
 	public static final String PRICE = "price";
 
 	public static final String PROMO_PRICE = "promoPrice";
+
+	public static final String PURCHASABLE = "purchasable";
 
 	public static final String STOCK_QUANTITY_NAME = "stockQuantity";
 

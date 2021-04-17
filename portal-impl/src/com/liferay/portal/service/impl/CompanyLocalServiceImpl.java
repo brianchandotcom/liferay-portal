@@ -2084,8 +2084,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	private void _updateGroupLanguageIds(
 		long companyId, String newLanguageIds, String oldLanguageIds) {
 
+		String[] oldLanguageIdsArray = StringUtil.split(oldLanguageIds);
+
+		if (ArrayUtil.isEmpty(oldLanguageIdsArray)) {
+			oldLanguageIdsArray = LocaleUtil.toLanguageIds(
+				LanguageUtil.getCompanyAvailableLocales(companyId));
+		}
+
 		List<String> removedLanguageIds = ListUtil.remove(
-			ListUtil.fromArray(StringUtil.split(oldLanguageIds)),
+			ListUtil.fromArray(oldLanguageIdsArray),
 			ListUtil.fromArray(StringUtil.split(newLanguageIds)));
 
 		if (ListUtil.isEmpty(removedLanguageIds)) {

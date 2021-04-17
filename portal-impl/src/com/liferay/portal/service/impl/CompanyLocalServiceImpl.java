@@ -20,6 +20,7 @@ import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.DBPartitionUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Organization;
@@ -74,7 +76,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -2090,48 +2091,51 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			return;
 		}
 
-		List<Group> groups = groupLocalService.getActiveGroups(companyId, true);
+		List<Group> groups = groupLocalService.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				GroupTable.INSTANCE
+			).from(
+				GroupTable.INSTANCE
+			).where(
+				GroupTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					GroupTable.INSTANCE.active.eq(true)
+				).and(
+					GroupTable.INSTANCE.site.eq(true)
+				).and(
+					GroupTable.INSTANCE.typeSettings.like(
+						"%inheritLocales=false%")
+				)
+			));
 
 		for (Group group : groups) {
-			if (group.isSite()) {
-				UnicodeProperties groupTypeSettingsUnicodeProperties =
-					group.getTypeSettingsProperties();
+			UnicodeProperties groupTypeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
 
-				boolean inheritLocales = GetterUtil.getBoolean(
-					groupTypeSettingsUnicodeProperties.getProperty(
-						"inheritLocales"),
-					true);
+			String[] groupLanguageIds = StringUtil.split(
+				groupTypeSettingsUnicodeProperties.getProperty(
+					PropsKeys.LOCALES));
 
-				if (inheritLocales) {
-					continue;
+			boolean updateLocales = false;
+
+			for (String removedLanguageId : removedLanguageIds) {
+				if (ArrayUtil.contains(groupLanguageIds, removedLanguageId)) {
+					groupLanguageIds = ArrayUtil.remove(
+						groupLanguageIds, removedLanguageId);
+
+					updateLocales = true;
 				}
+			}
 
-				String[] groupLanguageIds = StringUtil.split(
-					groupTypeSettingsUnicodeProperties.getProperty(
-						PropsKeys.LOCALES));
+			if (updateLocales) {
+				LanguageUtil.resetAvailableGroupLocales(group.getGroupId());
 
-				boolean updateLocales = false;
+				groupTypeSettingsUnicodeProperties.setProperty(
+					PropsKeys.LOCALES,
+					StringUtil.merge(groupLanguageIds, StringPool.COMMA));
 
-				for (String removedLanguageId : removedLanguageIds) {
-					if (ArrayUtil.contains(
-							groupLanguageIds, removedLanguageId)) {
-
-						groupLanguageIds = ArrayUtil.remove(
-							groupLanguageIds, removedLanguageId);
-
-						updateLocales = true;
-					}
-				}
-
-				if (updateLocales) {
-					LanguageUtil.resetAvailableGroupLocales(group.getGroupId());
-
-					groupTypeSettingsUnicodeProperties.setProperty(
-						PropsKeys.LOCALES,
-						StringUtil.merge(groupLanguageIds, StringPool.COMMA));
-
-					groupLocalService.updateGroup(group);
-				}
+				groupLocalService.updateGroup(group);
 			}
 		}
 	}

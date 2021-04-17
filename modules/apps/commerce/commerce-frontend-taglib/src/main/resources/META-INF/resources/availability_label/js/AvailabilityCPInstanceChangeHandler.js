@@ -29,8 +29,10 @@ export default function ({namespace}) {
 				'.label-item'
 			).innerHTML = availability;
 
-			componentElement.className = `label label-${
-				availabilityDisplayType || 'default'
+			componentElement.className = `label ${
+				availabilityDisplayType
+					? `label-${availabilityDisplayType}`
+					: 'invisible'
 			} m-0 ${elementClassName}`;
 		}
 	});

@@ -16,7 +16,7 @@
 
 <%@ include file="/availability_label/init.jsp" %>
 
-<span class="<%= Validator.isNull(label) ? "hide" + StringPool.SPACE : StringPool.BLANK %>label label-<%= labelType %> m-0 <%= namespace %>availability-label">
+<span class="<%= Validator.isNull(label) ? "invisible" + StringPool.SPACE : StringPool.BLANK %>label label-<%= labelType %> m-0 <%= namespace %>availability-label">
 	<span class="label-item label-item-expand"><%= label %></span>
 </span>
 

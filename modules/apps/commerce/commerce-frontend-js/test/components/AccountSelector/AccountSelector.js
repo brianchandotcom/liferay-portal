@@ -16,6 +16,7 @@ import '../../utils/polyfills';
 
 import '@testing-library/jest-dom/extend-expect';
 import {
+	act,
 	cleanup,
 	fireEvent,
 	render,
@@ -81,11 +82,13 @@ describe('AccountSelector', () => {
 		});
 
 		it('displays an account list', async () => {
-			fireEvent.click(
-				renderedComponent.baseElement.querySelector(
-					'.btn-account-selector'
-				)
-			);
+			await act(async () => {
+				fireEvent.click(
+					renderedComponent.baseElement.querySelector(
+						'.btn-account-selector'
+					)
+				);
+			});
 
 			await waitForElementToBeRemoved(() =>
 				renderedComponent.queryByText(/loading/i)
@@ -104,11 +107,13 @@ describe('AccountSelector', () => {
 		});
 
 		it('must update the remote selected account when an account item is clicked', async () => {
-			fireEvent.click(
-				renderedComponent.baseElement.querySelector(
-					'.btn-account-selector'
-				)
-			);
+			await act(async () => {
+				fireEvent.click(
+					renderedComponent.baseElement.querySelector(
+						'.btn-account-selector'
+					)
+				);
+			});
 
 			await waitForElementToBeRemoved(() =>
 				renderedComponent.queryByText(/loading/i)
@@ -124,13 +129,16 @@ describe('AccountSelector', () => {
 					expect(params.body.get('accountId')).toEqual(
 						accountTemplate.id.toString()
 					);
+
 					expect(url.searchParams.get('groupId')).toBeTruthy();
 
 					return 200;
 				}
 			);
 
-			fireEvent.click(accountsListItem.querySelector('button'));
+			await act(async () => {
+				fireEvent.click(accountsListItem.querySelector('button'));
+			});
 		});
 	});
 
@@ -177,11 +185,13 @@ describe('AccountSelector', () => {
 		});
 
 		it('displays an order list', async () => {
-			fireEvent.click(
-				renderedComponent.baseElement.querySelector(
-					'.btn-account-selector'
-				)
-			);
+			await act(async () => {
+				fireEvent.click(
+					renderedComponent.baseElement.querySelector(
+						'.btn-account-selector'
+					)
+				);
+			});
 
 			await waitForElementToBeRemoved(() =>
 				renderedComponent.queryByText(/loading/i)

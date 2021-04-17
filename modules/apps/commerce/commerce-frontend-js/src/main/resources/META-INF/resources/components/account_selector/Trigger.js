@@ -44,7 +44,7 @@ const Trigger = React.forwardRef(
 							</span>
 						</div>
 						<div className="d-flex">
-							{currentOrder.id ? (
+							{currentOrder?.id ? (
 								<>
 									<span className="order-id">
 										{currentOrder.id}

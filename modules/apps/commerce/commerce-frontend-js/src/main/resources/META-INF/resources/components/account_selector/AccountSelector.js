@@ -143,6 +143,9 @@ AccountSelector.propTypes = {
 
 AccountSelector.defaultProps = {
 	alignmentPosition: 3,
+	currentOrder: {
+		orderId: 0,
+	},
 	refreshPageOnAccountSelected: false,
 };
 

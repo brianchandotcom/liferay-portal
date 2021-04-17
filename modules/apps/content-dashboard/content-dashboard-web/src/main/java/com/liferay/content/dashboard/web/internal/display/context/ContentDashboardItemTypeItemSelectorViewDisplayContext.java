@@ -23,15 +23,9 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 public class ContentDashboardItemTypeItemSelectorViewDisplayContext {
 
 	public ContentDashboardItemTypeItemSelectorViewDisplayContext(
-		String itemSelectedEventName,
 		SearchContainer<? extends ContentDashboardItemType> searchContainer) {
 
-		_itemSelectedEventName = itemSelectedEventName;
 		_searchContainer = searchContainer;
-	}
-
-	public String getItemSelectedEventName() {
-		return _itemSelectedEventName;
 	}
 
 	public SearchContainer<? extends ContentDashboardItemType>
@@ -40,7 +34,6 @@ public class ContentDashboardItemTypeItemSelectorViewDisplayContext {
 		return _searchContainer;
 	}
 
-	private final String _itemSelectedEventName;
 	private final SearchContainer<? extends ContentDashboardItemType>
 		_searchContainer;
 

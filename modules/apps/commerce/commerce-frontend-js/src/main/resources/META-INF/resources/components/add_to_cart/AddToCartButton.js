@@ -95,9 +95,12 @@ function AddToCartButton({
 						inCart,
 					});
 
-					if (cpInstance.stockQuantity > 0) {
-						setDisabled(false);
-					}
+					const isPurchasable =
+						cpInstance.purchasable &&
+						(cpInstance.backOrderAllowed ||
+							cpInstance.stockQuantity > 0);
+
+					setDisabled(!isPurchasable);
 				}),
 		[activeOrder, CartResource, catalogItem]
 	);

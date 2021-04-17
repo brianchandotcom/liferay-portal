@@ -27,8 +27,13 @@ function WrapperWithQuantity({AddToCartButton, ...props}) {
 		settings.disabled || !cpInstance.accountId
 	);
 
-	const onCPInstanceChange = ({cpInstance}) =>
-		setDisabled(!cpInstance.stockQuantity > 0);
+	const onCPInstanceChange = ({cpInstance}) => {
+		const isPurchasable =
+			cpInstance.purchasable &&
+			(cpInstance.backOrderAllowed || cpInstance.stockQuantity > 0);
+
+		setDisabled(!isPurchasable);
+	};
 
 	useEffect(() => {
 		if (settings.namespace) {

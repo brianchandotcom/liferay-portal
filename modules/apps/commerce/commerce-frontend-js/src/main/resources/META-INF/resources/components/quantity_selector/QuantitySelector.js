@@ -89,7 +89,7 @@ function QuantitySelector({
 		disabled,
 		name,
 		onChange,
-		value: selectedQuantity,
+		value: selectedQuantity.toString(),
 	};
 
 	return (

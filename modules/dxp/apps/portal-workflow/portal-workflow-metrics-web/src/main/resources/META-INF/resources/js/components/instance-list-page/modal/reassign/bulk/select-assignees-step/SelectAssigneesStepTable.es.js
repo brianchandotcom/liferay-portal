@@ -19,7 +19,7 @@ import {ModalContext} from '../../../ModalProvider.es';
 const Item = ({
 	assetTitle,
 	assetType,
-	assignee: currentAssignee,
+	assignee,
 	data = {},
 	id,
 	instanceId,
@@ -52,8 +52,7 @@ const Item = ({
 				(task) => task.workflowTaskId !== currentTask.workflowTaskId
 			);
 			setDefaultValue('');
-		}
-		else if (!currentTask && newAssignee) {
+		} else if (!currentTask && newAssignee) {
 			workflowTasks.push({
 				assigneeId: newAssignee.id,
 				workflowTaskId: id,
@@ -92,9 +91,7 @@ const Item = ({
 			<ClayTable.Cell>{label}</ClayTable.Cell>
 
 			<ClayTable.Cell>
-				{currentAssignee
-					? currentAssignee.name
-					: Liferay.Language.get('unassigned')}
+				{assignee ? assignee.name : Liferay.Language.get('unassigned')}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>

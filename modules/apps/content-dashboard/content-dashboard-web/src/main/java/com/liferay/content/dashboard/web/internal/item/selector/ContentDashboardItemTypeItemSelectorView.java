@@ -14,7 +14,6 @@
 
 package com.liferay.content.dashboard.web.internal.item.selector;
 
-import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemTypeItemSelectorViewDisplayContext;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemTypeItemSelectorCriterion;
@@ -99,14 +98,10 @@ public class ContentDashboardItemTypeItemSelectorView
 			_contentDashboardItemTypeItemSelectorProvider.getSearchContainer(
 				portletRequest, portletResponse, portletURL);
 
-		String portletNamespace = _portal.getPortletNamespace(
-			ContentDashboardPortletKeys.CONTENT_DASHBOARD_ADMIN);
-
 		servletRequest.setAttribute(
 			ContentDashboardItemTypeItemSelectorViewDisplayContext.class.
 				getName(),
 			new ContentDashboardItemTypeItemSelectorViewDisplayContext(
-				portletNamespace + "selectedContentDashboardItemTypeItem",
 				searchContainer));
 
 		servletRequest.setAttribute(

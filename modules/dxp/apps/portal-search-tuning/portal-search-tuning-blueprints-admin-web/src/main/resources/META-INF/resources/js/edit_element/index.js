@@ -340,6 +340,10 @@ function EditElementForm({
 								</ClayToolbar.Item>
 
 								<ClayToolbar.Item>
+									<div className="tbar-divider" />
+								</ClayToolbar.Item>
+
+								<ClayToolbar.Item>
 									<ClayLink
 										displayType="secondary"
 										href={redirectURL}

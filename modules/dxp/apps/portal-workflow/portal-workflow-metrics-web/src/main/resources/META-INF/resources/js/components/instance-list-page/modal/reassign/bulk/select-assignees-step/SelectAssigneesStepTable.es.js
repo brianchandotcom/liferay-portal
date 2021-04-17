@@ -11,7 +11,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 
 import {Autocomplete} from '../../../../../../shared/components/autocomplete/Autocomplete.es';
 import {ModalContext} from '../../../ModalProvider.es';
@@ -30,55 +30,29 @@ const Item = ({
 
 	const {assigneeId} =
 		reassignedTasks.find(({workflowTaskId}) => workflowTaskId === id) || {};
-	const {workflowTaskAssignableUsers: users = []} = data;
 
+	const {workflowTaskAssignableUsers: users = []} = data;
 	const {assignableUsers = []} =
 		users.find(({workflowTaskId}) => workflowTaskId === id) || {};
 
 	const {name: assigneeName} =
 		assignableUsers.find((assignee) => assignee.id === assigneeId) || {};
 
-	const [defaultValue, setDefaultValue] = useState(assigneeName);
-
 	const handleSelect = (newAssignee) => {
-		let workflowTasks = reassignedTasks;
+		const filteredTasks = reassignedTasks.filter((task) => task.id !== id);
 
-		const currentTask = workflowTasks.find(
-			({workflowTaskId}) => workflowTaskId === id
-		);
-
-		if (currentTask && !newAssignee) {
-			workflowTasks = workflowTasks.filter(
-				(task) => task.workflowTaskId !== currentTask.workflowTaskId
-			);
-			setDefaultValue('');
-		} else if (!currentTask && newAssignee) {
-			workflowTasks.push({
+		if (newAssignee) {
+			filteredTasks.push({
 				assigneeId: newAssignee.id,
 				workflowTaskId: id,
 			});
-			setDefaultValue(newAssignee.name);
 		}
 
 		setBulkReassign((prevBulkReassign) => ({
 			...prevBulkReassign,
-			reassignedTasks: workflowTasks,
+			reassignedTasks: filteredTasks,
 		}));
 	};
-
-	useEffect(() => {
-		const {assigneeId} =
-			reassignedTasks.find(({workflowTaskId}) => workflowTaskId === id) ||
-			{};
-
-		const {name: assigneeName} =
-			assignableUsers.find((assignee) => assignee.id === assigneeId) ||
-			{};
-
-		setDefaultValue(assigneeName);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [reassignedTasks]);
 
 	return (
 		<ClayTable.Row>
@@ -96,7 +70,7 @@ const Item = ({
 
 			<ClayTable.Cell>
 				<Autocomplete
-					defaultValue={defaultValue}
+					defaultValue={assigneeName}
 					disabled={reassigning || useSameAssignee}
 					items={assignableUsers}
 					onSelect={handleSelect}

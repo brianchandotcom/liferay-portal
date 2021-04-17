@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
@@ -29,9 +30,10 @@ import java.util.Locale;
 public class CProductLayoutDisplayPageObjectProvider
 	implements LayoutDisplayPageObjectProvider<CProduct> {
 
-	public CProductLayoutDisplayPageObjectProvider(CProduct cProduct, long groupId) {
-		_cProduct = cProduct;
+	public CProductLayoutDisplayPageObjectProvider(
+		CProduct cProduct, long groupId) {
 
+		_cProduct = cProduct;
 		_groupId = groupId;
 
 		_cpDefinition =
@@ -56,7 +58,7 @@ public class CProductLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getDescription(Locale locale) {
-		return _cpDefinition.getDescription(locale.getLanguage());
+		return _cpDefinition.getDescription(LanguageUtil.getLanguageId(locale));
 	}
 
 	@Override
@@ -76,12 +78,12 @@ public class CProductLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _cpDefinition.getName(locale.getLanguage());
+		return _cpDefinition.getName(LanguageUtil.getLanguageId(locale));
 	}
 
 	@Override
 	public String getURLTitle(Locale locale) {
-		return String.valueOf(_cProduct.getCProductId());
+		return _cpDefinition.getURL(LanguageUtil.getLanguageId(locale));
 	}
 
 	private final CPDefinition _cpDefinition;

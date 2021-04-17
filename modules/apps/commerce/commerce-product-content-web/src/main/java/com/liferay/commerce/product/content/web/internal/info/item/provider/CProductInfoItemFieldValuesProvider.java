@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.commerce.product.content.web.internal.info.CProductInfoItemFields;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -28,23 +28,22 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
+ * @author Marco Leo
+ * @author Alec Sloan
  */
 @Component(
 	enabled = false, immediate = true,
-	property = Constants.SERVICE_RANKING + ":Integer=10",
 	service = InfoItemFieldValuesProvider.class
 )
 public class CProductInfoItemFieldValuesProvider
@@ -108,7 +107,9 @@ public class CProductInfoItemFieldValuesProvider
 				cProductInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CProductInfoItemFields.displayPageUrlInfoField,
-						_getDisplayPageURL(cProduct, themeDisplay)));
+						_cpDefinitionHelper.getFriendlyURL(
+							cProduct.getPublishedCPDefinitionId(),
+							themeDisplay)));
 			}
 		}
 		catch (PortalException portalException) {
@@ -116,14 +117,6 @@ public class CProductInfoItemFieldValuesProvider
 		}
 
 		return cProductInfoFieldValues;
-	}
-
-	private String _getDisplayPageURL(
-			CProduct cProduct, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			CProduct.class.getName(), cProduct.getCProductId(), themeDisplay);
 	}
 
 	private ThemeDisplay _getThemeDisplay() {
@@ -138,8 +131,7 @@ public class CProductInfoItemFieldValuesProvider
 	}
 
 	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
@@ -147,8 +139,5 @@ public class CProductInfoItemFieldValuesProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

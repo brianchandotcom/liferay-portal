@@ -1,0 +1,186 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages,Fragments";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-108339. Can add several Grid elements to Container."
+	@priority = "5"
+	test AddGridToContainer {
+		property portal.acceptance = "true";
+
+		task ("Assert add a Grid element to Container") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+		}
+
+		task ("Assert add second Grid element to the same Section") {
+			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
+				key_collectionName = "Layout Elements",
+				key_fragmentName = "Grid",
+				key_targetFragmentName = "Grid",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#EMPTY_NESTED_FRAGMENT_DROP_TARGET",
+				value1 = "");
+
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+	}
+
+	@description = "This is a test for LPS-108463. Assert no Container is outside when add a Grid element to content page template."
+	@priority = "4"
+	test AddGridWithoutContainerInContentPageTemplate {
+		property testray.main.component.name = "Fragments,Layout Page Templates";
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+		}
+
+		task ("Add a Grid to content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("View no Container is outside of Grid") {
+			AssertElementNotPresent(
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+	}
+
+	@description = "This is a test for LPS-108463. Assert no Container is outside when add a Grid element to display page template."
+	@priority = "4"
+	test AddGridWithoutContainerInDisplayPageTemplate {
+		property testray.main.component.name = "Display Pages,Fragments";
+
+		task ("Add a display page") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Grid to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("View no Container is outside of Grid") {
+			AssertElementNotPresent(
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+	}
+
+	@description = "This is a test for LPS-106776 and LPS-102959. Configure the Grid element."
+	@priority = "5"
+	test ConfigureGrid {
+		property portal.acceptance = "true";
+
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Configure the Grid") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+
+			PageEditor.editLayoutGrid(
+				inverseOrder = "true",
+				layout = "1 Module per Row",
+				panel = "Styles",
+				verticalAlignment = "Bottom");
+		}
+
+		task ("View the Grid style") {
+			PageEditor.viewGridStyle(
+				columnCount = "2",
+				inverseOrder = "true",
+				layout = "12",
+				position = "1",
+				verticalAlignment = "Bottom");
+		}
+
+		task ("Duplicate the Gird") {
+			PageEditor.gotoDuplicate(fragmentName = "Grid");
+		}
+
+		task ("View the duplicate Grid fragment") {
+			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
+		}
+	}
+
+}

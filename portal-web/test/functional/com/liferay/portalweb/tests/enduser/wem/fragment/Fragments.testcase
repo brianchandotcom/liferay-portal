@@ -156,49 +156,6 @@ definition {
 			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 	}
 
-	@description = "This is a test for LPS-108339. Can add a Row fragment to Container. Can add several Row fragments to Container."
-	@priority = "5"
-	test AddRowToSection {
-		property portal.acceptance = "true";
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Assert add a Row fragment to Container") {
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-
-			PageEditor.addElementToContainer(
-				collectionName = "Layout Elements",
-				fragmentName = "Grid",
-				navTab = "Fragments");
-		}
-
-		task ("Assert add second Row fragment to the same Section") {
-			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
-				key_collectionName = "Layout Elements",
-				key_fragmentName = "Grid",
-				key_targetFragmentName = "Grid",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#EMPTY_NESTED_FRAGMENT_DROP_TARGET",
-				value1 = "");
-
-			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-		}
-	}
-
 	@description = "This is a test for LPS-101330. A user should be able to add a video fragment and the video should play."
 	@priority = "5"
 	test ConfigureAndEditBasicComponentVideo {
@@ -850,7 +807,7 @@ definition {
 
 	// Ignored until LPS-120693 implement
 
-	@description = "This is a test for LPS-106776, LPS-102959 and LPS-111657. Configure the Container and Grid elements."
+	@description = "This is a test for LPS-106776 and LPS-111657. Configure the Container and Grid elements."
 	@ignore = "true"
 	@priority = "5"
 	test ConfigureLayoutElements {
@@ -951,42 +908,6 @@ definition {
 
 		task ("View the duplicate Container fragment") {
 			PageEditor.viewDuplicateFragment(fragmentName = "Container");
-		}
-
-		task ("Add a Grid below the Container") {
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Grid",
-				targetFragmentName = "Container");
-		}
-
-		task ("Configure the Grid") {
-			PageEditor.editLayoutGrid(
-				columnCount = "2",
-				panel = "General");
-
-			PageEditor.editLayoutGrid(
-				inverseOrder = "true",
-				layout = "1 Module per Row",
-				panel = "Styles",
-				verticalAlignment = "Bottom");
-		}
-
-		task ("View the Grid style") {
-			PageEditor.viewGridStyle(
-				columnCount = "2",
-				inverseOrder = "true",
-				layout = "12",
-				position = "1",
-				verticalAlignment = "Bottom");
-		}
-
-		task ("Duplicate the Gird") {
-			PageEditor.gotoDuplicate(fragmentName = "Grid");
-		}
-
-		task ("View the duplicate Grid fragment") {
-			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
 		}
 	}
 

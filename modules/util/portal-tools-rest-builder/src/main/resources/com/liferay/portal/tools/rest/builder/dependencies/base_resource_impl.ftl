@@ -93,11 +93,12 @@ public abstract class Base${schemaName}ResourceImpl
 	implements ${schemaName}Resource
 
 	<#assign
-		generateBatch = configYAML.generateBatch && freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)??
+		schemaType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)
+		generateBatch = configYAML.generateBatch && schemaType??
 	/>
 
 	<#if generateBatch>
-		, EntityModelResource, VulcanBatchEngineTaskItemDelegate<${schemaName}>
+		, EntityModelResource, VulcanBatchEngineTaskItemDelegate<${schemaType}>
 	</#if>
 
 	{
@@ -149,7 +150,7 @@ public abstract class Base${schemaName}ResourceImpl
 				Response.ResponseBuilder responseBuilder = Response.accepted();
 
 				return responseBuilder.entity(
-					vulcanBatchEngineImportTaskResource.deleteImportTask(${schemaName}.class.getName(), callbackURL, object)
+					vulcanBatchEngineImportTaskResource.deleteImportTask(${schemaType}.class.getName(), callbackURL, object)
 				).build();
 			<#elseif generateBatch && (stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "Batch") || stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + "Id" + schemaName + "Batch"))>
 				vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
@@ -161,7 +162,7 @@ public abstract class Base${schemaName}ResourceImpl
 				Response.ResponseBuilder responseBuilder = Response.accepted();
 
 				return responseBuilder.entity(
-					vulcanBatchEngineImportTaskResource.postImportTask(${schemaName}.class.getName(), callbackURL, null, object)
+					vulcanBatchEngineImportTaskResource.postImportTask(${schemaType}.class.getName(), callbackURL, null, object)
 				).build();
 			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Batch")>
 				vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
@@ -173,7 +174,7 @@ public abstract class Base${schemaName}ResourceImpl
 				Response.ResponseBuilder responseBuilder = Response.accepted();
 
 				return responseBuilder.entity(
-					vulcanBatchEngineImportTaskResource.putImportTask(${schemaName}.class.getName(), callbackURL, object)
+					vulcanBatchEngineImportTaskResource.putImportTask(${schemaType}.class.getName(), callbackURL, object)
 				).build();
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>
 				<#assign generateGetPermissionCheckerMethods = true />
@@ -241,9 +242,9 @@ public abstract class Base${schemaName}ResourceImpl
 				/>
 
 				<#if javaMethodSignature.methodName?contains("ByExternalReferenceCode")>
-					${schemaName} existing${schemaName} = get${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName});
+					${schemaType} existing${schemaName} = get${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName});
 				<#else>
-					${schemaName} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
+					${schemaType} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
 				</#if>
 
 				<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
@@ -272,9 +273,9 @@ public abstract class Base${schemaName}ResourceImpl
 	<#if generateBatch>
 		@Override
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		public void create(java.util.Collection<${schemaName}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
+		public void create(java.util.Collection<${schemaType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#if postBatchJavaMethodSignature??>
-				for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
+				for (${schemaType} ${schemaVarName} : ${schemaVarNames}) {
 					post${postBatchJavaMethodSignature.parentSchemaName!}${schemaName}(
 						<#list postBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
@@ -301,15 +302,15 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 
 		@Override
-		public void delete(java.util.Collection<${schemaName}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
+		public void delete(java.util.Collection<${schemaType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
 
 			<#if deleteBatchJavaMethodSignature?? && properties?keys?seq_contains("id")>
-				for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
+				for (${schemaType} ${schemaVarName} : ${schemaVarNames}) {
 					delete${schemaName}(${schemaVarName}.getId());
 				}
 			<#elseif deleteBatchJavaMethodSignature?? && properties?keys?seq_contains(schemaVarName + "Id")>
-				for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
+				for (${schemaType} ${schemaVarName} : ${schemaVarNames}) {
 					delete${schemaName}(${schemaVarName}.get${schemaName}Id());
 				}
 			</#if>
@@ -326,7 +327,7 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 
 		@Override
-		public Page<${schemaName}> read(Filter filter, Pagination pagination, Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
+		public Page<${schemaType}> read(Filter filter, Pagination pagination, Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
 			<#if getBatchJavaMethodSignature??>
 				return get${getBatchJavaMethodSignature.parentSchemaName!}${schemaName}sPage(
 					<#list getBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
@@ -382,9 +383,9 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 
 		@Override
-		public void update(java.util.Collection<${schemaName}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
+		public void update(java.util.Collection<${schemaType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#if putBatchJavaMethodSignature??>
-				for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
+				for (${schemaType} ${schemaVarName} : ${schemaVarNames}) {
 					put${schemaName}(
 						<#list putBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if stringUtil.equals(javaMethodParameter.parameterName, "flatten")>
@@ -515,7 +516,7 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	<#if generatePatchMethods>
-		protected void preparePatch(${schemaName} ${schemaVarName}, ${schemaName} existing${schemaVarName?cap_first}) {
+		protected void preparePatch(${schemaType} ${schemaVarName}, ${schemaType} existing${schemaVarName?cap_first}) {
 		}
 	</#if>
 

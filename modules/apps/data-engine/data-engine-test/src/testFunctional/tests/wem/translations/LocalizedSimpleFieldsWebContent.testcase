@@ -350,6 +350,148 @@ definition {
 			value1 = "测试");
 	}
 
+	@description = "This is a test for LRQA-66639. This test validates the creation, edition, deletion and persistence of fields into Web Contents."
+	@priority = "5"
+	test CreateEditAndDeleteLocalizedWebContent {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addFields(fieldNameList = "Text,Numeric,Date");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "04/01/2021",
+			webContentNumeric = "12",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "04/01/2021",
+			webContentNumeric = "12",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "12/04/2021",
+			webContentNumeric = "28",
+			webContentText = "This is a Text field - pt-BR",
+			webContentTitle = "Web Content Title - pt-BR");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "04/01/2021",
+			webContentNumeric = "12",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			skipGotoEditCP = "true",
+			webContentDate = "12/04/2021",
+			webContentLocaleFieldLabel = "pt-BR",
+			webContentNumeric = "28",
+			webContentText = "This is a Text field - pt-BR",
+			webContentTitle = "Web Content Title - pt-BR");
+
+		Navigator.gotoBack();
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text - pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "Date - pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numeric - pt-BR");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			skipGotoEditCP = "true",
+			webContentDate = "12/04/2021",
+			webContentDateFieldLabel = "Date - pt-BR",
+			webContentLocaleFieldLabel = "pt-BR",
+			webContentNumeric = "28",
+			webContentNumericFieldLabel = "Numeric - pt-BR",
+			webContentText = "This is a Text field - pt-BR",
+			webContentTextFieldLabel = "Text - pt-BR",
+			webContentTitle = "Web Content Title - pt-BR");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "04/20/2021",
+			webContentNumeric = "50",
+			webContentText = "This is a Text field - en-US",
+			webContentTitle = "Web Content Title - en-US");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "04/20/2021",
+			webContentNumeric = "50",
+			webContentText = "This is a Text field - en-US",
+			webContentTitle = "Web Content Title - en-US");
+
+		WebContent.viewWithStructureCP(
+			skipGotoEditCP = "true",
+			webContentDate = "12/04/2021",
+			webContentDateFieldLabel = "Date - pt-BR",
+			webContentLocaleFieldLabel = "pt-BR",
+			webContentNumeric = "28",
+			webContentNumericFieldLabel = "Numeric - pt-BR",
+			webContentText = "This is a Text field - pt-BR",
+			webContentTextFieldLabel = "Text - pt-BR",
+			webContentTitle = "Web Content Title - pt-BR");
+
+		Navigator.gotoBack();
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.deleteCP(structureName = "WC Structure Title");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "The structure cannot be deleted because it is required by one or more structure links.");
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "Web Content Title - en-US");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.deleteCP(structureName = "WC Structure Title");
+
+		AssertElementNotPresent(
+			key_ddlDataDefinitionName = "WC Structure Title",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK");
+	}
+
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@priority = "4"
 	test DefaultTitleDisplayedUponFirstlyTranslatingForAnotherLocale {

@@ -137,7 +137,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		resourceLocalService.deleteResource(
 			siteNavigationMenu.getCompanyId(),
-			SiteNavigationMenuItem.class.getName(),
+			SiteNavigationMenu.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			siteNavigationMenu.getSiteNavigationMenuId());
 

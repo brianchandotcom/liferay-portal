@@ -977,12 +977,11 @@ public class ResourceOpenAPIParser {
 					continue;
 				}
 
-				return javaDataTypeMap.get(
-					OpenAPIParserUtil.getReferenceName(schemaReference));
+				return returnType;
 			}
 		}
 
-		if (Get.class.isInstance(operation)) {
+		if (operation instanceof Get) {
 			return returnType;
 		}
 

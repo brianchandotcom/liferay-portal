@@ -114,7 +114,7 @@ definition {
 				categoryName = "Category Name",
 				groupName = "Global",
 				title = "Category Name Edit",
-				vocabularyName = "Vocabulary Name");
+				vocabularyName = "Topic");
 		}
 
 		task ("View the edited global category in normal site") {

@@ -636,7 +636,7 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Key Edit",
 				propertiesValueField = "Category Value Edit",
-				propertyNumber = "1",
+				propertyNumber = "0",
 				vocabularyName = "Vocabulary Name");
 		}
 	}
@@ -850,7 +850,7 @@ definition {
 	@description = "View the breadcrumb with Flattened Tree."
 	@priority = "3"
 	test ViewBreadcrumbWithFlattenedTree {
-		property test.name.skip.portal.instance = "CategoriesUseCase#ViewBreadcrumbWithFlattenedTree";
+		property test.name.skip.portal.instance = "Categories#ViewBreadcrumbWithFlattenedTree";
 
 		task ("Select the Flattened Tree as Category Navigation Display Style") {
 			ApplicationsMenu.gotoPortlet(

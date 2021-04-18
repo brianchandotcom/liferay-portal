@@ -151,7 +151,7 @@ definition {
 		}
 
 		task ("View the category is assigned to the web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "child-sitename");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC Content Title");
 
@@ -782,7 +782,9 @@ definition {
 		}
 
 		task ("Search localized category name") {
-			Search.searchCP(searchTerm = "Kategorienamen");
+			Search.searchPG(
+				portletName = "Suche",
+				searchTerm = "Kategorienamen");
 		}
 
 		task ("View the search results") {

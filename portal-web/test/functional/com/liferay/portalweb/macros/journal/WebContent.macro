@@ -2490,11 +2490,13 @@ definition {
 
 	macro viewWithStructureCP {
 		if (!(isSet(predefinedValue))) {
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+			if ("${skipGotoEditCP}" != "true") {
+				LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-			WebContentNavigator.gotoEditCP(
-				webContentTitle = "${webContentTitle}",
-				webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
+				WebContentNavigator.gotoEditCP(
+					webContentTitle = "${webContentTitle}",
+					webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
+			}
 
 			if (isSet(webContentLocaleFieldLabel)) {
 				PortletEntry.changeLocale(locale = "${webContentLocaleFieldLabel}");

@@ -172,6 +172,10 @@ definition {
 		task ("Add a property in subcategory") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoEntry(rowEntry = "Category Name");
+
 			Subcategory.addPropertyCP(
 				propertiesKeyField = "Subcategory Key",
 				propertiesValueField = "Subcategory Value",
@@ -499,6 +503,8 @@ definition {
 	@priority = "3"
 	test DeleteAssociatedAssetTypeOfVocabulary {
 		task ("Add a vocabulary with two associated asset types") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
 			Vocabulary.gotoAddVocabulary();
 
 			PortletEntry.inputName(name = "Vocabulary Name 1");
@@ -627,7 +633,7 @@ definition {
 
 		task ("View the edited category property") {
 			Category.viewCategoryPropertyCP(
-				categoryName = "Category Name Edit",
+				categoryName = "Category Name",
 				propertiesKeyField = "Category Key Edit",
 				propertiesValueField = "Category Value Edit",
 				propertyNumber = "1",

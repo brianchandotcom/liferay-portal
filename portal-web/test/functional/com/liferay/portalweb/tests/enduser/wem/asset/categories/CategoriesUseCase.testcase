@@ -119,8 +119,6 @@ definition {
 	@description = "Add a web content with a category from parent site."
 	@priority = "4"
 	test AddWebContentWithCategoryFromParentSite {
-		var parentSiteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -137,7 +135,7 @@ definition {
 		task ("Add a child site") {
 			JSONGroup.addChildSite(
 				groupName = "Child SiteName",
-				parentGroupName = "${parentSiteName}");
+				parentGroupName = "Test Site Name");
 		}
 
 		task ("Add a web content with category from parent site") {
@@ -784,7 +782,7 @@ definition {
 		}
 
 		task ("Search localized category name") {
-			SearchPortlets.searchWidget(searchTerm = "Kategorienamen");
+			Search.searchCP(searchTerm = "Kategorienamen");
 		}
 
 		task ("View the search results") {
@@ -916,7 +914,7 @@ definition {
 		}
 
 		task ("Search the web content by edited category") {
-			SearchPortlets.searchWidget(searchTerm = "Edited");
+			Search.searchCP(searchTerm = "Edited");
 		}
 
 		task ("View the web content is shown in search result") {

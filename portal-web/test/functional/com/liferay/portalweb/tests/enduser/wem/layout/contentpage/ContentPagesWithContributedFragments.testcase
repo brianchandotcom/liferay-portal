@@ -348,9 +348,13 @@ definition {
 				locator1 = "LexiconList#LIST_ENTRY_TITLE",
 				value1 = "Web Content Title");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "//div[contains(@class,'fragment_wc')]",
-				value1 = "Web Content Title Web Content Description Web Content Content");
+				value1 = "Web Content Title Web Content Description");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "//div[contains(@class,'fragment_wc')]",
+				value1 = "Web Content Content");
 		}
 	}
 

@@ -1,18 +1,14 @@
 configurations {
-	azure
+	compileIncludePlatform {
+		exclude group: "jakarta.xml.bind"
+	}
 }
 
 dependencies {
-	azure group: "com.azure", name: "azure-identity"
-	azure group: "com.azure", name: "azure-storage-blob"
-	azure group: "com.azure", name: "azure-storage-blob-batch"
-	azure platform("com.azure:azure-sdk-bom:1.0.2")
-}
-
-configurations.azure.exclude group: "jakarta.xml.bind"
-
-dependencies {
-	compileInclude files(configurations.azure.resolvedConfiguration.files)
+	compileIncludePlatform group: "com.azure", name: "azure-identity"
+	compileIncludePlatform group: "com.azure", name: "azure-storage-blob"
+	compileIncludePlatform group: "com.azure", name: "azure-storage-blob-batch"
+	compileIncludePlatform platform("com.azure:azure-sdk-bom:1.0.2")
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

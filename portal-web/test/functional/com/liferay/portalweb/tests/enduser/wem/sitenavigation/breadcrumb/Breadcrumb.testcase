@@ -1,14 +1,22 @@
 @component-name = "portal-breadcrumb"
 definition {
 
+	property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenLocation=&quot;REQUEST&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Breadcrumb";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance(freeLogin = "true");
 
-		User.firstLoginPG();
+		User.firstLoginPG(freeLogin = "true");
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
 	}
 
 	tearDown {
@@ -18,498 +26,449 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Page.tearDownCP();
-
-			Site.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
+	@description = "Add a widget template via Breadcrumb widget."
 	@priority = "4"
 	test AddADTViaBreadcrumb {
 		property testray.component.names = "Breadcrumb,Content and Appliation Templates";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Page Name");
+		task ("Add a Breadcrumb widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Breadcrumb");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Page Name",
-			widgetName = "Breadcrumb");
+		task ("Add a widget template via Breadcrumb widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoPage(pageName = "Page Name");
+			ApplicationDisplayTemplates.addPortletADTWithFieldEntry(
+				fieldName = "Breadcrumb Entry",
+				portletName = "Breadcrumb");
+		}
 
-		ApplicationDisplayTemplates.addPortletADTWithFieldEntry(
-			fieldName = "Breadcrumb Entry",
-			portletName = "Breadcrumb");
+		task ("Select the widget template in Breadcrumb widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoPage(pageName = "Page Name");
+			ApplicationDisplayTemplates.selectPortletADT(
+				portletName = "Breadcrumb",
+				templateName = "Breadcrumb Test ADT");
+		}
 
-		ApplicationDisplayTemplates.selectPortletADT(
-			portletName = "Breadcrumb",
-			templateName = "Breadcrumb Test ADT");
+		task ("View the selected widget template in Breadcrumb widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoPage(pageName = "Page Name");
+			Portlet.gotoPortletOptions(
+				portletName = "Breadcrumb",
+				portletOption = "Configuration");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Breadcrumb",
-			portletOption = "Configuration");
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		AssertElementPresent(locator1 = "Select#DISPLAY_TEMPLATE");
+			AssertElementPresent(locator1 = "Select#DISPLAY_TEMPLATE");
+		}
 	}
 
-	@priority = "3"
-	test ConfigureNoSave {
-		property test.name.skip.portal.instance = "Breadcrumb#ConfigureNoSave";
-		property testray.component.names = "Breadcrumb";
-
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Parent Page Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Child Page Name",
-			parentLayoutName = "Parent Page Name");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Child Page Name",
-			widgetName = "Breadcrumb");
-
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Site Name");
-
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Current Site,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb");
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Breadcrumb.viewConfigurationPreview(breadcrumbListNotVisible = "${siteName},Site Name,Parent Page Name,Child Page Name");
-
-		Breadcrumb.configureBreadcrumb(
-			checkSetupName = "Show Current Site,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb",
-			configureWithoutSave = "true");
-
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Site Name,Parent Page Name,Child Page Name");
-	}
-
+	@description = "Configure Show Application in Breadcrumb widget."
 	@priority = "4"
-	test DisableShowApplicationBreadcrumb {
-		property custom.properties = "default.layout.template.id=1_column";
-		property portal.upstream = "true";
-		property testray.component.names = "Breadcrumb";
+	test ConfigureShowApplication {
+		task ("Set up the layout of page to 1 column") {
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				layoutTemplate = "1 Column");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a Message Boards and a Breadcrumb to page") {
+			for (var portletName : list "Message Boards,Breadcrumb") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${portletName}");
+			}
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name");
+		task ("Add a message board category") {
+			JSONMBMessage.addCategory(
+				categoryName = "MB Category Name",
+				groupName = "Test Site Name",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Message Boards");
+		task ("Add a message board subcategory") {
+			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+				categoryName = "MB Category Name",
+				groupName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Subcategory Description",
+				categoryName = "MB Subcategory Name",
+				groupName = "Test Site Name",
+				parentCategoryId = "${parentCategoryId}",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		task ("Add a message board grandchild subcategory") {
+			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+				categoryName = "MB Subcategory Name",
+				groupName = "Test Site Name");
 
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Subcategory Subcategory Description",
+				categoryName = "MB Subcategory Subcategory Name",
+				groupName = "Test Site Name",
+				parentCategoryId = "${parentCategoryId}",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		MessageboardsCategory.addPG(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "MB Subcategory Name");
+		task ("View subcategory and grandchild subcategory in Message Boards widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
+			MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
-		MessageboardsCategory.gotoPG(
-			categoryName = "MB Category Name",
-			subCategoryEnabled = "true",
-			subCategoryName = "MB Subcategory Name");
+			MessageboardsCategory.viewPG(
+				categoryDescription = "MB Subcategory Description",
+				categoryName = "MB Subcategory Name",
+				threadCount = "0");
 
-		MessageboardsCategory.addPG(
-			categoryDescription = "MB Subcategory Subcategory Description",
-			categoryName = "MB Subcategory Subcategory Name");
+			MessageboardsCategory.viewPG(
+				categoryDescription = "MB Subcategory Subcategory Description",
+				categoryName = "MB Subcategory Subcategory Name",
+				threadCount = "0");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Breadcrumb");
+		task ("View displayed content in Breadcrumb widget") {
+			Breadcrumb.viewPG(breadcrumbListVisible = "Test Site Name,Test Page Name,MB Category Name,MB Subcategory Name,MB Subcategory Subcategory Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
+		task ("Disable Show Application in Breadcrumb") {
+			Portlet.gotoPortletOptions(
+				portletName = "Breadcrumb",
+				portletOption = "Configuration");
 
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+			Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Application Breadcrumb");
 
-		MessageboardsCategory.viewPG(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "MB Subcategory Name",
-			threadCount = "0");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Test Page Name");
 
-		MessageboardsCategory.viewPG(
-			categoryDescription = "MB Subcategory Subcategory Description",
-			categoryName = "MB Subcategory Subcategory Name",
-			threadCount = "0");
+			Breadcrumb.saveDisplayPreview();
+		}
 
-		Breadcrumb.viewPG(
-			breadcrumbListVisible = "Site Name,Page Name,MB Category Name,MB Subcategory Name,MB Subcategory Subcategory Name",
-			pathLocator = "EMBEDDED");
+		task ("View the displayed content in Breadcrumb widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
+			MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Breadcrumb",
-			portletOption = "Configuration");
+			MessageboardsCategory.viewPG(
+				categoryDescription = "MB Subcategory Description",
+				categoryName = "MB Subcategory Name",
+				threadCount = "0");
 
-		Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Application Breadcrumb");
+			MessageboardsCategory.viewPG(
+				categoryDescription = "MB Subcategory Subcategory Description",
+				categoryName = "MB Subcategory Subcategory Name",
+				threadCount = "0");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Site Name,Page Name");
+			Breadcrumb.viewSpecificPG(
+				breadcrumbListNotVisible = "MB Category Name,MB Subcategory Name,MB Subcategory Subcategory Name",
+				breadcrumbListVisible = "Test Site Name,Test Page Name");
+		}
 
-		Breadcrumb.saveDisplayPreview();
+		task ("Enable Show Application in Breadcrumb") {
+			Portlet.gotoPortletOptions(
+				portletName = "Breadcrumb",
+				portletOption = "Configuration");
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
+			Breadcrumb.configureBreadcrumb(checkSetupName = "Show Application Breadcrumb");
 
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Test Page Name");
 
-		MessageboardsCategory.viewPG(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "MB Subcategory Name",
-			threadCount = "0");
+			Breadcrumb.saveDisplayPreview();
+		}
 
-		MessageboardsCategory.viewPG(
-			categoryDescription = "MB Subcategory Subcategory Description",
-			categoryName = "MB Subcategory Subcategory Name",
-			threadCount = "0");
+		task ("View the displayed content in Breadcrumb widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Breadcrumb.viewSpecificPG(
-			breadcrumbListNotVisible = "MB Category Name,MB Subcategory Name,MB Subcategory Subcategory Name",
-			breadcrumbListVisible = "Site Name,Page Name",
-			pathLocator = "EMBEDDED");
+			MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Breadcrumb",
-			portletOption = "Configuration");
+			MessageboardsCategory.viewPG(
+				categoryDescription = "MB Subcategory Description",
+				categoryName = "MB Subcategory Name",
+				threadCount = "0");
 
-		Breadcrumb.configureBreadcrumb(checkSetupName = "Show Application Breadcrumb");
+			MessageboardsCategory.viewPG(
+				categoryDescription = "MB Subcategory Subcategory Description",
+				categoryName = "MB Subcategory Subcategory Name",
+				threadCount = "0");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Site Name,Page Name");
-
-		Breadcrumb.saveDisplayPreview();
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
-
-		MessageboardsCategory.viewPG(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "MB Subcategory Name",
-			threadCount = "0");
-
-		MessageboardsCategory.viewPG(
-			categoryDescription = "MB Subcategory Subcategory Description",
-			categoryName = "MB Subcategory Subcategory Name",
-			threadCount = "0");
-
-		Breadcrumb.viewPG(
-			breadcrumbListVisible = "Site Name,Page Name,MB Category Name,MB Subcategory Name,MB Subcategory Subcategory Name",
-			pathLocator = "EMBEDDED");
+			Breadcrumb.viewPG(breadcrumbListVisible = "Test Site Name,Test Page Name,MB Category Name,MB Subcategory Name,MB Subcategory Subcategory Name");
+		}
 	}
 
+	@description = "Configure Show Current Site in Breadcrumb widget."
 	@priority = "5"
-	test DisableShowCurrentSite {
+	test ConfigureShowCurrentSite {
 		property portal.acceptance = "true";
-		property testray.component.names = "Breadcrumb";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a Breadcrumb widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Breadcrumb");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Parent Page Name");
+		task ("Disable Show Current Site in Breadcrumb widget") {
+			Navigator.openSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Child Page Name",
-			parentLayoutName = "Parent Page Name");
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Child Page Name",
-			widgetName = "Breadcrumb");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Test Page Name");
 
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Site Name");
+			Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Current Site");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Page Name");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Site Name,Parent Page Name,Child Page Name");
+			Breadcrumb.saveDisplayPreview();
 
-		Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Current Site");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Page Name");
+		}
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Parent Page Name,Child Page Name");
+		task ("View displayed content in Breadcrumb widget") {
+			Navigator.openSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Breadcrumb.saveDisplayPreview();
+			Breadcrumb.viewPG(
+				breadcrumbListNotVisible = "Test Site Name",
+				breadcrumbListVisible = "Test Page Name");
+		}
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Parent Page Name,Child Page Name");
+		task ("Enable Show Current Site in Breadcrumb widget") {
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Site Name");
+			Breadcrumb.configureBreadcrumb(checkSetupName = "Show Current Site");
 
-		Breadcrumb.viewPG(
-			breadcrumbListNotVisible = "Site Name",
-			breadcrumbListVisible = "Parent Page Name,Child Page Name",
-			pathLocator = "PAGE");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Test Page Name");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+			Breadcrumb.saveDisplayPreview();
+		}
 
-		Breadcrumb.configureBreadcrumb(checkSetupName = "Show Current Site");
+		task ("View displayed content in Breadcrumb widget") {
+			Navigator.openSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Site Name,Parent Page Name,Child Page Name");
-
-		Breadcrumb.saveDisplayPreview();
-
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Site Name");
-
-		Breadcrumb.viewPG(
-			breadcrumbListVisible = "Site Name,Parent Page Name,Child Page Name",
-			pathLocator = "PAGE");
+			Breadcrumb.viewPG(breadcrumbListVisible = "Test Site Name,Test Page Name");
+		}
 	}
 
+	@description = "Disable Show Page in Breadcrumb widget."
 	@priority = "5"
 	test DisableShowPage {
 		property portal.acceptance = "true";
-		property portal.upstream = "true";
-		property testray.component.names = "Breadcrumb";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Child Page Name",
-			parentLayoutName = "Home");
+		task ("Add a Breadcrumb widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Breadcrumb");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Child Page Name",
-			widgetName = "Breadcrumb");
+		task ("View displayed content in Breadcrumb") {
+			Navigator.openSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Guest");
+			Breadcrumb.viewPG(breadcrumbListVisible = "Test Site Name,Test Page Name");
+		}
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+		task ("Disable Show Page") {
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Home,Child Page Name");
+			Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Page");
 
-		Breadcrumb.configureBreadcrumb(checkSetupName = "Show Guest Site");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			Breadcrumb.saveDisplayPreview();
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Home,Child Page Name");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name");
+		}
 
-		Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Page");
+		task ("View displayed content in Breadcrumb") {
+			Navigator.openSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName}");
-
-		Breadcrumb.saveDisplayPreview();
-
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Guest");
-
-		Breadcrumb.viewPG(
-			breadcrumbListNotVisible = "Home,Child Page Name",
-			breadcrumbListVisible = "${siteName}",
-			pathLocator = "PAGE");
+			Breadcrumb.viewPG(
+				breadcrumbListNotVisible = "Test Page Name",
+				breadcrumbListVisible = "Test Site Name");
+		}
 	}
 
+	@description = "Disable Show Parent Site in Breadcrumb widget."
 	@priority = "4"
 	test DisableShowParentSite {
-		property testray.component.names = "Breadcrumb";
+		task ("Add a child site") {
+			JSONGroup.addChildSite(
+				groupName = "Child SiteName",
+				parentGroupName = "Test Site Name");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a parent widget page in child site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Child SiteName",
+				layoutName = "Parent Page Name",
+				parentGroupName = "Test Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name");
+		task ("Add a child widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Child SiteName",
+				layoutName = "Child Page Name",
+				parentGroupName = "Test Site Name",
+				parentLayoutName = "Parent Page Name");
+		}
 
-		JSONGroup.addChildSite(
-			groupName = "Child SiteName",
-			parentGroupName = "Site Name");
+		task ("Add a Breadcrumb widget to child page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Child SiteName",
+				layoutName = "Child Page Name",
+				parentGroupName = "Test Site Name",
+				widgetName = "Breadcrumb");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Child SiteName",
-			layoutName = "Parent Page Name",
-			parentGroupName = "Site Name");
+		task ("Disable Show Parent Site") {
+			Navigator.openSitePage(
+				pageName = "Child Page Name",
+				siteName = "Child SiteName");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Child SiteName",
-			layoutName = "Child Page Name",
-			parentGroupName = "Site Name",
-			parentLayoutName = "Parent Page Name");
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Child SiteName",
-			layoutName = "Child Page Name",
-			parentGroupName = "Site Name",
-			widgetName = "Breadcrumb");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Child SiteName,Parent Page Name,Child Page Name");
 
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Child SiteName");
+			Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Parent Site");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Child SiteName,Parent Page Name,Child Page Name");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Site Name,Child SiteName,Parent Page Name,Child Page Name");
+			Breadcrumb.saveDisplayPreview();
 
-		Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Parent Site");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Child SiteName,Parent Page Name,Child Page Name");
+		}
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Child SiteName,Parent Page Name,Child Page Name");
+		task ("View displayed content in Breadcrumb widget") {
+			Navigator.openSitePage(
+				pageName = "Child Page Name",
+				siteName = "Child SiteName");
 
-		Breadcrumb.saveDisplayPreview();
-
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Child SiteName");
-
-		Breadcrumb.viewPG(
-			breadcrumbListNotVisible = "Site Name",
-			breadcrumbListVisible = "Child SiteName,Parent Page Name,Child Page Name",
-			pathLocator = "PAGE");
+			Breadcrumb.viewPG(
+				breadcrumbListNotVisible = "Test Site Name",
+				breadcrumbListVisible = "Child SiteName,Parent Page Name,Child Page Name");
+		}
 	}
 
-	@priority = "4"
-	test DisplayTemplateWithHorizontalStyle {
-		property testray.component.names = "Breadcrumb";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Child Page Name",
-			parentLayoutName = "Home");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Child Page Name",
-			widgetName = "Breadcrumb");
-
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Guest");
-
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		Breadcrumb.displayTemplatePreview(displayStyle = "Horizontal");
-
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Home,Child Page Name");
-
-		Breadcrumb.saveDisplayPreview();
-
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Guest");
-
-		Breadcrumb.viewPG(
-			breadcrumbListVisible = "Home,Child Page Name",
-			pathLocator = "PAGE");
-	}
-
-	@priority = "4"
-	test DisplayTemplateWithVerticalStyle {
-		property testray.component.names = "Breadcrumb";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Child Page Name",
-			parentLayoutName = "Home");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Child Page Name",
-			widgetName = "Breadcrumb");
-
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Guest");
-
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		Breadcrumb.displayTemplatePreview(displayStyle = "Vertical");
-
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Home,Child Page Name");
-
-		Breadcrumb.saveDisplayPreview();
-
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Guest");
-
-		Breadcrumb.viewPG(
-			breadcrumbListVisible = "Home,Child Page Name",
-			pathLocator = "PAGE");
-	}
-
+	@description = "Enable Show Guest Site in Breadcrumb widget."
 	@priority = "4"
 	test EnableShowGuestSite {
-		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Breadcrumb#EnableShowGuestSite";
-		property testray.component.names = "Breadcrumb";
+		task ("Add a Breadcrumb widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Breadcrumb");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Child Page Name",
-			parentLayoutName = "Home");
+		task ("Enable Show Guest Site") {
+			Navigator.openSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Child Page Name",
-			widgetName = "Breadcrumb");
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Guest");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Test Page Name");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Home,Child Page Name");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListNotVisible = "${siteName}");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			Breadcrumb.configureBreadcrumb(checkSetupName = "Show Guest Site");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListNotVisible = "${siteName}");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Test Site Name,Test Page Name");
 
-		Breadcrumb.configureBreadcrumb(checkSetupName = "Show Guest Site");
+			Breadcrumb.saveDisplayPreview();
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Home,Child Page Name");
+			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Test Site Name,Test Page Name");
+		}
 
-		Breadcrumb.saveDisplayPreview();
+		task ("View the displayed content in Breadcrumb widget") {
+			Navigator.openSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Home,Child Page Name");
+			Breadcrumb.viewPG(breadcrumbListVisible = "${siteName},Test Site Name,Test Page Name");
+		}
+	}
 
-		Navigator.openSitePage(
-			pageName = "Child Page Name",
-			siteName = "Guest");
+	@description = "View Breadcrumb when navigate to page via IP address."
+	@priority = "4"
+	test ViewBreadcrumbWhenNavigateToPageViaIPAddress {
+		property test.name.skip.portal.instance = "Breadcrumb#ViewBreadcrumbWhenNavigateToPageViaIPAddress";
 
-		Breadcrumb.viewPG(
-			breadcrumbListVisible = "${siteName},Home,Child Page Name",
-			pathLocator = "PAGE");
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Add a Breadcrumb widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Breadcrumb");
+		}
+
+		task ("Enable Show Guest Site") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+			Breadcrumb.configureBreadcrumb(checkSetupName = "Show Guest Site");
+		}
+
+		task ("Navigate to page via IP address") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Test Page Name",
+				url = "http://127.0.0.1:8080/web/test-site-name");
+
+			AssertLocation(value1 = "http://127.0.0.1:8080/web/test-site-name");
+		}
+
+		task ("View the displayed content in Breadcrumb") {
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+			Breadcrumb.viewPG(breadcrumbListVisible = "${siteName},Test Site Name,Test Page Name");
+
+			var key_URL = "${portalURL}";
+
+			AssertElementNotPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_PAGE_LINK");
+
+			var key_URL = "/web/guest";
+
+			AssertTextEquals(
+				locator1 = "BreadcrumbPortlet#BREADCRUMB_PAGE_LINK",
+				value1 = "${siteName}");
+		}
 	}
 
 }

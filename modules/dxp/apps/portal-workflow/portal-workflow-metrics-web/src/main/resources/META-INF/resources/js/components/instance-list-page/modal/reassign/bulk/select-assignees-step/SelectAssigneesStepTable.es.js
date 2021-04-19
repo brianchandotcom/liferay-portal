@@ -19,7 +19,7 @@ import {ModalContext} from '../../../ModalProvider.es';
 const Item = ({
 	assetTitle,
 	assetType,
-	assignee,
+	assignee: currentAssignee,
 	data = {},
 	id,
 	instanceId,
@@ -92,7 +92,9 @@ const Item = ({
 			<ClayTable.Cell>{label}</ClayTable.Cell>
 
 			<ClayTable.Cell>
-				{assignee ? assignee.name : Liferay.Language.get('unassigned')}
+				{currentAssignee
+					? currentAssignee.name
+					: Liferay.Language.get('unassigned')}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>

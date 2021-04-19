@@ -12,18 +12,48 @@
  * details.
  */
 
-import React from 'react';
+import classNames from 'classnames';
+import React, {useEffect, useState} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {useHoveredItemId, useHoveredItemType} from '../Controls';
 import Topper from '../Topper';
 import Collection from './Collection';
+import isHovered from './isHovered';
 
 const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
+	const [hovered, setHovered] = useState(false);
+	const hoveredItemType = useHoveredItemType();
+	const hoveredItemId = useHoveredItemId();
 	const [setRef, itemElement] = useSetRef(ref);
 
+	const isMapped =
+		item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+		'collection' in item.config;
+
+	useEffect(() => {
+		if (isMapped) {
+			setHovered(
+				isHovered({
+					editableValue: item.config.collection,
+					hoveredItemId,
+					hoveredItemType,
+				})
+			);
+		}
+	}, [isMapped, item, hoveredItemId, hoveredItemType]);
+
 	return (
-		<Topper item={item} itemElement={itemElement}>
+		<Topper
+			className={classNames({
+				'page-editor__topper--hovered': hovered,
+			})}
+			isMapped={isMapped}
+			item={item}
+			itemElement={itemElement}
+		>
 			<Collection item={item} ref={setRef}>
 				{children}
 			</Collection>

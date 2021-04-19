@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.wiki">
 	<namespace>Wiki</namespace>
-	<entity local-service="true" name="WikiNode" remote-service="true" trash-enabled="true" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="WikiNode" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 

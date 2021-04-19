@@ -7155,6 +7155,74 @@ public class WikiPageUtil {
 	}
 
 	/**
+	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching wiki page
+	 * @throws NoSuchPageException if a matching wiki page could not be found
+	 */
+	public static WikiPage findByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.wiki.exception.NoSuchPageException {
+
+		return getPersistence().findByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	public static WikiPage fetchByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().fetchByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	public static WikiPage fetchByG_ERC(
+		long groupId, String externalReferenceCode, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_ERC(
+			groupId, externalReferenceCode, useFinderCache);
+	}
+
+	/**
+	 * Removes the wiki page where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the wiki page that was removed
+	 */
+	public static WikiPage removeByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.wiki.exception.NoSuchPageException {
+
+		return getPersistence().removeByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching wiki pages
+	 */
+	public static int countByG_ERC(long groupId, String externalReferenceCode) {
+		return getPersistence().countByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Caches the wiki page in the entity cache if it is enabled.
 	 *
 	 * @param wikiPage the wiki page

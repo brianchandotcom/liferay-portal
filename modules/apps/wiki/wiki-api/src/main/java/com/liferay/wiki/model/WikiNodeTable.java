@@ -36,6 +36,10 @@ public class WikiNodeTable extends BaseTable<WikiNodeTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<WikiNodeTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<WikiNodeTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<WikiNodeTable, Long> nodeId = createColumn(
 		"nodeId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<WikiNodeTable, Long> groupId = createColumn(

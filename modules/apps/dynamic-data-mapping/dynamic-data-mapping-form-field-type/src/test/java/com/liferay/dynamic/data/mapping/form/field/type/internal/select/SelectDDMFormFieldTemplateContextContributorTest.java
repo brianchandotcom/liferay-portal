@@ -249,6 +249,8 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals("Label 3", optionMap.get("label"));
 		Assert.assertEquals("value 3", optionMap.get("value"));
 
+		Assert.assertEquals(true, parameters.get("showEmptyOption"));
+
 		List<String> value = (List<String>)parameters.get("value");
 
 		Assert.assertEquals(value.toString(), 1, value.size());
@@ -259,8 +261,9 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 	public void testGetParameters2() throws Exception {
 		DDMFormField ddmFormField = new DDMFormField("field", "select");
 
-		ddmFormField.setProperty("dataSourceType", "manual");
 		ddmFormField.setMultiple(true);
+		ddmFormField.setProperty("dataSourceType", "manual");
+		ddmFormField.setProperty("showEmptyOption", false);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
@@ -323,6 +326,8 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		Assert.assertTrue(
 			predefinedValueParameter.toString(),
 			predefinedValueParameter.contains("value 3"));
+
+		Assert.assertEquals(false, parameters.get("showEmptyOption"));
 	}
 
 	@Test

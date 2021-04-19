@@ -67,6 +67,20 @@ public class NumericDDMFormFieldTypeSettingsTest
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
+		DDMFormField confirmationErrorMessageDDMFormField =
+			ddmFormFieldsMap.get("confirmationErrorMessage");
+
+		Assert.assertNotNull(confirmationErrorMessageDDMFormField.getLabel());
+		Assert.assertNotNull(
+			confirmationErrorMessageDDMFormField.getPredefinedValue());
+
+		DDMFormField confirmationLabelDDMFormField = ddmFormFieldsMap.get(
+			"confirmationLabel");
+
+		Assert.assertNotNull(confirmationLabelDDMFormField.getLabel());
+		Assert.assertNotNull(
+			confirmationLabelDDMFormField.getPredefinedValue());
+
 		DDMFormField dataTypeDDMFormField = ddmFormFieldsMap.get("dataType");
 
 		Assert.assertNotNull(dataTypeDDMFormField);
@@ -80,12 +94,32 @@ public class NumericDDMFormFieldTypeSettingsTest
 			"integer",
 			predefinedValue.getString(predefinedValue.getDefaultLocale()));
 
+		DDMFormField directionDDMFormField = ddmFormFieldsMap.get("direction");
+
+		Assert.assertEquals(
+			"false", directionDDMFormField.getProperty("showEmptyOption"));
+
+		LocalizedValue directionPredefinedValue =
+			directionDDMFormField.getPredefinedValue();
+
+		Assert.assertEquals(
+			"[\"vertical\"]",
+			directionPredefinedValue.getString(
+				directionPredefinedValue.getDefaultLocale()));
+
 		DDMFormField placeholderDDMFormField = ddmFormFieldsMap.get(
 			"placeholder");
 
 		Assert.assertNotNull(placeholderDDMFormField);
 		Assert.assertEquals("string", placeholderDDMFormField.getDataType());
 		Assert.assertEquals("text", placeholderDDMFormField.getType());
+
+		DDMFormField requireConfirmationDDMFormField = ddmFormFieldsMap.get(
+			"requireConfirmation");
+
+		Assert.assertEquals(
+			"true",
+			requireConfirmationDDMFormField.getProperty("showAsSwitcher"));
 
 		DDMFormField tooltipDDMFormField = ddmFormFieldsMap.get("tooltip");
 

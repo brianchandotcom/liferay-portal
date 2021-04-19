@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
@@ -69,6 +70,20 @@ public class TextDDMFormFieldTypeSettingsTest
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
+		DDMFormField confirmationErrorMessageDDMFormField =
+			ddmFormFieldsMap.get("confirmationErrorMessage");
+
+		Assert.assertNotNull(confirmationErrorMessageDDMFormField.getLabel());
+		Assert.assertNotNull(
+			confirmationErrorMessageDDMFormField.getPredefinedValue());
+
+		DDMFormField confirmationLabelDDMFormField = ddmFormFieldsMap.get(
+			"confirmationLabel");
+
+		Assert.assertNotNull(confirmationLabelDDMFormField.getLabel());
+		Assert.assertNotNull(
+			confirmationLabelDDMFormField.getPredefinedValue());
+
 		DDMFormField dataSourceTypeDDMFormField = ddmFormFieldsMap.get(
 			"dataSourceType");
 
@@ -93,6 +108,19 @@ public class TextDDMFormFieldTypeSettingsTest
 			ddmDataProviderInstanceOutputDDMFormField.getLabel());
 		Assert.assertEquals(
 			"select", ddmDataProviderInstanceOutputDDMFormField.getType());
+
+		DDMFormField directionDDMFormField = ddmFormFieldsMap.get("direction");
+
+		Assert.assertEquals(
+			"false", directionDDMFormField.getProperty("showEmptyOption"));
+
+		LocalizedValue directionPredefinedValue =
+			directionDDMFormField.getPredefinedValue();
+
+		Assert.assertEquals(
+			"[\"vertical\"]",
+			directionPredefinedValue.getString(
+				directionPredefinedValue.getDefaultLocale()));
 
 		DDMFormField displayStyleDDMFormField = ddmFormFieldsMap.get(
 			"displayStyle");
@@ -142,6 +170,13 @@ public class TextDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(placeholderDDMFormField);
 		Assert.assertEquals("string", placeholderDDMFormField.getDataType());
 		Assert.assertEquals("text", placeholderDDMFormField.getType());
+
+		DDMFormField requireConfirmationDDMFormField = ddmFormFieldsMap.get(
+			"requireConfirmation");
+
+		Assert.assertEquals(
+			"true",
+			requireConfirmationDDMFormField.getProperty("showAsSwitcher"));
 
 		DDMFormField tooltipDDMFormField = ddmFormFieldsMap.get("tooltip");
 

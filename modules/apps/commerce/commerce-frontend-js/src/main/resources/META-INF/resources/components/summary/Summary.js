@@ -186,7 +186,7 @@ Summary.defaultProps = {
 			},
 			{
 				label: Liferay.Language.get('tax'),
-				value: jsonData.taxValueFormatted,
+				value: jsonData.taxAmountFormatted,
 			},
 			{
 				label: Liferay.Language.get('delivery'),

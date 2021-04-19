@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>CRITERION_INPUT_FORM_CONTROL</td>
-	<td>//div[@class='criterion']//input[contains(@data-testid, '${key_criterion}')]</td>
+	<td>//div[@class='criterion']//*[contains(@data-testid, '${key_criterion}')]</td>
 	<td></td>
 </tr>
 <tr>

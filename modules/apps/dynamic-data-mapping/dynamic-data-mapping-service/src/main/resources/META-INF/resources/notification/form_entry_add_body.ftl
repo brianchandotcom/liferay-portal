@@ -27,6 +27,7 @@
 		.field-value {
 			font-size: 16px;
 			margin: 0;
+			white-space: pre-line;
 		}
 
 		h1,

@@ -16,4 +16,25 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _enableRemoteStaging {
+		Variables.assertDefined(parameterList = "${groupId},${remoteGroupId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/staging/enable-remote-staging \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d branchingPublic=${branchingPublic} \
+				-d branchingPrivate=${branchingPrivate} \
+  				-d remoteAddress=localhost \
+  				-d remotePort=${remotePort} \
+  				-d remotePathContext= \
+  				-d secureConnection=false \
+  				-d remoteGroupId=${remoteGroupId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

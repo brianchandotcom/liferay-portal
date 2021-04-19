@@ -22,4 +22,26 @@ definition {
 		Pause(locator1 = "3000");
 	}
 
+	@summary = "Activate remote staging with or without page versioning with all content"
+	macro enableRemoteStaging {
+		Variables.assertDefined(parameterList = "${groupName},${remoteGroupId}");
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		if (!(isSet(branchingPrivate))) {
+			var branchingPrivate = "false";
+		}
+
+		if (!(isSet(branchingPublic))) {
+			var branchingPublic = "false";
+		}
+
+		JSONStagingAPI._enableRemoteStaging(
+			branchingPrivate = "${branchingPrivate}",
+			branchingPublic = "${branchingPublic}",
+			groupId = "${groupId}",
+			remoteGroupId = "${remoteGroupId}",
+			remotePort = "${remotePort}");
+	}
+
 }

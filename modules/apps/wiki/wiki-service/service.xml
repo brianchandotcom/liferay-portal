@@ -312,6 +312,7 @@
 	<exceptions>
 		<exception>DuplicateNodeName</exception>
 		<exception>DuplicatePage</exception>
+		<exception>DuplicateWikiNodeExternalReferenceCode</exception>
 		<exception>ImportFiles</exception>
 		<exception>NodeName</exception>
 		<exception>NoSuchNode</exception>

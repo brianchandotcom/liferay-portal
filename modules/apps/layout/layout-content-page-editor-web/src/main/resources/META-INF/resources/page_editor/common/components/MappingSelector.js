@@ -42,16 +42,12 @@ const UNMAPPED_OPTION = {
 	value: 'unmapped',
 };
 
-function loadFields({
-	dispatch,
-	fieldType,
-	selectedItem,
-	selectedMappingTypes,
-	selectedSourceType,
-}) {
+function loadMappingFields({dispatch, fieldType, item, sourceType}) {
 	let promise;
 
-	if (selectedSourceType === MAPPING_SOURCE_TYPES.structure) {
+	if (sourceType === MAPPING_SOURCE_TYPES.structure) {
+		const {selectedMappingTypes} = config;
+
 		promise = InfoItemService.getAvailableStructureMappingFields({
 			classNameId: selectedMappingTypes.type.id,
 			classTypeId: selectedMappingTypes.subtype.id,
@@ -60,14 +56,14 @@ function loadFields({
 		});
 	}
 	else if (
-		selectedSourceType === MAPPING_SOURCE_TYPES.content &&
-		selectedItem.classNameId &&
-		selectedItem.classPK &&
-		selectedItem.title
+		sourceType === MAPPING_SOURCE_TYPES.content &&
+		item.classNameId &&
+		item.classPK &&
+		item.title
 	) {
 		promise = InfoItemService.getAvailableInfoItemMappingFields({
-			classNameId: selectedItem.classNameId,
-			classPK: selectedItem.classPK,
+			classNameId: item.classNameId,
+			classPK: item.classPK,
 			fieldType,
 			onNetworkStatus: dispatch,
 		});
@@ -267,22 +263,12 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	}, [mappedItem, mappedInfoItems, setSelectedItem]);
 
 	useEffect(() => {
-		const data =
-			selectedSourceType === MAPPING_SOURCE_TYPES.structure
-				? {
-						dispatch,
-						fieldType,
-						selectedMappingTypes,
-						selectedSourceType,
-				  }
-				: {
-						dispatch,
-						fieldType,
-						selectedItem,
-						selectedSourceType,
-				  };
-
-		loadFields(data).then((newFieldSets) => {
+		loadMappingFields({
+			dispatch,
+			fieldType,
+			item: selectedItem,
+			sourceType: selectedSourceType,
+		}).then((newFieldSets) => {
 			setFieldSets(newFieldSets);
 		});
 	}, [

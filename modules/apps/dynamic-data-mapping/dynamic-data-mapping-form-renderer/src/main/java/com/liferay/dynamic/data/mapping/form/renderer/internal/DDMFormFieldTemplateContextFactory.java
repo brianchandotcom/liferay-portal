@@ -654,50 +654,51 @@ public class DDMFormFieldTemplateContextFactory {
 				errorMessageLocalizedValue.getString(_locale));
 		}
 
-		Map<String, Object> validation = HashMapBuilder.<String, Object>put(
-			"dataType",
-			GetterUtil.getString(
-				changedProperties.get("validationDataType"),
-				MapUtil.getString(changedProperties, "dataType"))
-		).put(
-			"errorMessage", errorMessage
-		).put(
-			"expression",
-			() -> {
-				DDMFormFieldValidationExpression
-					ddmFormFieldValidationExpression =
-						ddmFormFieldValidation.
-							getDDMFormFieldValidationExpression();
+		ddmFormFieldTemplateContext.put(
+			"validation",
+			HashMapBuilder.<String, Object>put(
+				"dataType",
+				GetterUtil.getString(
+					changedProperties.get("validationDataType"),
+					MapUtil.getString(changedProperties, "dataType"))
+			).put(
+				"errorMessage", errorMessage
+			).put(
+				"expression",
+				() -> {
+					DDMFormFieldValidationExpression
+						ddmFormFieldValidationExpression =
+							ddmFormFieldValidation.
+								getDDMFormFieldValidationExpression();
 
-				return HashMapBuilder.put(
-					"name",
-					GetterUtil.getString(
-						ddmFormFieldValidationExpression.getName())
-				).put(
-					"value",
-					GetterUtil.getString(
-						ddmFormFieldValidationExpression.getValue())
-				).build();
-			}
-		).put(
-			"fieldName",
-			GetterUtil.getString(changedProperties.get("validationFieldName"))
-		).put(
-			"parameter",
-			() -> {
-				LocalizedValue parameterLocalizedValue =
-					ddmFormFieldValidation.getParameterLocalizedValue();
-
-				if (parameterLocalizedValue != null) {
-					return GetterUtil.getString(
-						parameterLocalizedValue.getString(_locale));
+					return HashMapBuilder.put(
+						"name",
+						GetterUtil.getString(
+							ddmFormFieldValidationExpression.getName())
+					).put(
+						"value",
+						GetterUtil.getString(
+							ddmFormFieldValidationExpression.getValue())
+					).build();
 				}
+			).put(
+				"fieldName",
+				GetterUtil.getString(
+					changedProperties.get("validationFieldName"))
+			).put(
+				"parameter",
+				() -> {
+					LocalizedValue parameterLocalizedValue =
+						ddmFormFieldValidation.getParameterLocalizedValue();
 
-				return StringPool.BLANK;
-			}
-		).build();
+					if (parameterLocalizedValue != null) {
+						return GetterUtil.getString(
+							parameterLocalizedValue.getString(_locale));
+					}
 
-		ddmFormFieldTemplateContext.put("validation", validation);
+					return StringPool.BLANK;
+				}
+			).build());
 	}
 
 	protected void setDDMFormFieldTemplateContextValue(

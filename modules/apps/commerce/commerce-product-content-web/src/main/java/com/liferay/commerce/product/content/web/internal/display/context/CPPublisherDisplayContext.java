@@ -172,14 +172,12 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes =
+		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
 				"params", new LinkedHashMap<String, Object>()
-			).build();
-
-		searchContext.setAttributes(attributes);
+			).build());
 
 		searchContext.setCompanyId(cpContentRequestHelper.getCompanyId());
 

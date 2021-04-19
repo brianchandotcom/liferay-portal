@@ -63,7 +63,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -695,12 +694,11 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				subscriptionStatus);
 		}
 
-		LinkedHashMap<String, Object> params =
+		attributes.put(
+			"params",
 			LinkedHashMapBuilder.<String, Object>put(
 				"keywords", keywords
-			).build();
-
-		attributes.put("params", params);
+			).build());
 
 		searchContext.setAttributes(attributes);
 

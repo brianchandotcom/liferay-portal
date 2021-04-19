@@ -194,29 +194,28 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 		}
 
 		expectedMap.put("page", 3);
+		expectedMap.put(
+			"data",
+			LinkedHashMapBuilder.<String, Object>put(
+				"array",
+				() -> {
+					List<Integer> list = new ArrayList<>();
 
-		Map<String, Object> data = LinkedHashMapBuilder.<String, Object>put(
-			"array",
-			() -> {
-				List<Integer> list = new ArrayList<>();
+					list.add(9);
+					list.add(5);
+					list.add(7);
 
-				list.add(9);
-				list.add(5);
-				list.add(7);
-
-				return list;
-			}
-		).put(
-			"id", 2
-		).put(
-			"height", 8
-		).put(
-			"XXX2", "Welcome 3 to star"
-		).put(
-			"name", "life"
-		).build();
-
-		expectedMap.put("data", data);
+					return list;
+				}
+			).put(
+				"id", 2
+			).put(
+				"height", 8
+			).put(
+				"XXX2", "Welcome 3 to star"
+			).put(
+				"name", "life"
+			).build());
 
 		List<Map<String, Object>> resultList = new ArrayList<>();
 

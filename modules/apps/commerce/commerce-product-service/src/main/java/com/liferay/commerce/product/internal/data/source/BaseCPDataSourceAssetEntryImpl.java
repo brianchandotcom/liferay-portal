@@ -34,7 +34,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +60,7 @@ public abstract class BaseCPDataSourceAssetEntryImpl implements CPDataSource {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes =
+		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
@@ -71,9 +70,7 @@ public abstract class BaseCPDataSourceAssetEntryImpl implements CPDataSource {
 				LinkedHashMapBuilder.<String, Object>put(
 					"keywords", StringPool.STAR
 				).build()
-			).build();
-
-		searchContext.setAttributes(attributes);
+			).build());
 
 		searchContext.setCompanyId(portal.getCompanyId(httpServletRequest));
 

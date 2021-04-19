@@ -135,21 +135,19 @@ public class AssetPublisherPortletToolbarContributor
 		String title = LanguageUtil.get(
 			resourceBundle, "add-content-select-scope-and-type");
 
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
-			"id",
-			() -> {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
+		urlMenuItem.setData(
+			HashMapBuilder.<String, Object>put(
+				"id",
+				() -> {
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
 
-				return HtmlUtil.escape(portletDisplay.getNamespace()) +
-					"editAsset";
-			}
-		).put(
-			"title", title
-		).build();
-
-		urlMenuItem.setData(data);
-
+					return HtmlUtil.escape(portletDisplay.getNamespace()) +
+						"editAsset";
+				}
+			).put(
+				"title", title
+			).build());
 		urlMenuItem.setLabel(title);
 
 		urlMenuItem.setURL(

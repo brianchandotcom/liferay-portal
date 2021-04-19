@@ -2410,85 +2410,86 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_serviceOutputPath, "/model/", name, "Table.java"));
 
-		Map<String, Object> context = HashMapBuilder.<String, Object>put(
-			"apiPackagePath", _apiPackagePath
-		).put(
-			"author", _author
-		).put(
-			"changeTrackingEnabled", changeTrackingEnabled
-		).put(
-			"classDeprecated", classDeprecated
-		).put(
-			"classDeprecatedComment", classDeprecatedComment
-		).put(
-			"columns",
-			() -> {
-				List<Map<String, String>> columns = new ArrayList<>(
-					entityColumns.size());
+		String content = _processTemplate(
+			_TPL_MODEL_TABLE,
+			HashMapBuilder.<String, Object>put(
+				"apiPackagePath", _apiPackagePath
+			).put(
+				"author", _author
+			).put(
+				"changeTrackingEnabled", changeTrackingEnabled
+			).put(
+				"classDeprecated", classDeprecated
+			).put(
+				"classDeprecatedComment", classDeprecatedComment
+			).put(
+				"columns",
+				() -> {
+					List<Map<String, String>> columns = new ArrayList<>(
+						entityColumns.size());
 
-				for (EntityColumn entityColumn : entityColumns) {
-					String sqlType = getSqlType(
-						name, entityColumn.getName(), entityColumn.getType());
+					for (EntityColumn entityColumn : entityColumns) {
+						String sqlType = getSqlType(
+							name, entityColumn.getName(),
+							entityColumn.getType());
 
-					columns.add(
-						HashMapBuilder.put(
-							"dbName", entityColumn.getDBName()
-						).put(
-							"flag",
-							() -> {
-								if (entityColumn.isPrimary()) {
-									return "FLAG_PRIMARY";
+						columns.add(
+							HashMapBuilder.put(
+								"dbName", entityColumn.getDBName()
+							).put(
+								"flag",
+								() -> {
+									if (entityColumn.isPrimary()) {
+										return "FLAG_PRIMARY";
+									}
+
+									if (changeTrackingEnabled &&
+										Objects.equals(
+											entityColumn.getName(),
+											"ctCollectionId")) {
+
+										return "FLAG_PRIMARY";
+									}
+
+									if (Objects.equals(
+											entityColumn.getName(),
+											"mvccVersion")) {
+
+										return "FLAG_NULLITY";
+									}
+
+									return "FLAG_DEFAULT";
 								}
+							).put(
+								"javaType",
+								() -> {
+									if (entityColumn.isPrimitiveType()) {
+										return getPrimitiveObj(
+											entityColumn.getType());
+									}
 
-								if (changeTrackingEnabled &&
-									Objects.equals(
-										entityColumn.getName(),
-										"ctCollectionId")) {
+									if (Objects.equals("CLOB", sqlType)) {
+										return "Clob";
+									}
 
-									return "FLAG_PRIMARY";
+									return entityColumn.getGenericizedType();
 								}
+							).put(
+								"name", entityColumn.getName()
+							).put(
+								"sqlType", sqlType
+							).build());
+					}
 
-								if (Objects.equals(
-										entityColumn.getName(),
-										"mvccVersion")) {
-
-									return "FLAG_NULLITY";
-								}
-
-								return "FLAG_DEFAULT";
-							}
-						).put(
-							"javaType",
-							() -> {
-								if (entityColumn.isPrimitiveType()) {
-									return getPrimitiveObj(
-										entityColumn.getType());
-								}
-
-								if (Objects.equals("CLOB", sqlType)) {
-									return "Clob";
-								}
-
-								return entityColumn.getGenericizedType();
-							}
-						).put(
-							"name", entityColumn.getName()
-						).put(
-							"sqlType", sqlType
-						).build());
+					return columns;
 				}
-
-				return columns;
-			}
-		).put(
-			"modelNames", modelNames
-		).put(
-			"name", name
-		).put(
-			"table", tableName
-		).build();
-
-		String content = _processTemplate(_TPL_MODEL_TABLE, context);
+			).put(
+				"modelNames", modelNames
+			).put(
+				"name", name
+			).put(
+				"table", tableName
+			).build());
 
 		_write(modelTableFile, content, _modifiedFileNames);
 	}

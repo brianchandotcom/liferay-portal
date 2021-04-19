@@ -110,13 +110,13 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 							fragmentEntryLink.getEditableValues());
 			}
 
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"configuration", configurationJSONObject
-			).build();
-
 			printWriter.write(
 				_renderFragmentEntry(
-					fragmentEntryLink, data, httpServletRequest));
+					fragmentEntryLink,
+					HashMapBuilder.<String, Object>put(
+						"configuration", configurationJSONObject
+					).build(),
+					httpServletRequest));
 		}
 		catch (PortalException portalException) {
 			throw new IOException(portalException);

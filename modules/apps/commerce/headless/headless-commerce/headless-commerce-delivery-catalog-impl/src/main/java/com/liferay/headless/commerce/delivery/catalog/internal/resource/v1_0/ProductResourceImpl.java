@@ -56,7 +56,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -109,7 +108,7 @@ public class ProductResourceImpl
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
-		Map<String, Serializable> attributes =
+		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
@@ -118,9 +117,7 @@ public class ProductResourceImpl
 					_getAccountId(accountId, commerceChannel))
 			).put(
 				"commerceChannelGroupId", commerceChannel.getGroupId()
-			).build();
-
-		searchContext.setAttributes(attributes);
+			).build());
 
 		searchContext.setBooleanClauses(
 			new BooleanClause[] {

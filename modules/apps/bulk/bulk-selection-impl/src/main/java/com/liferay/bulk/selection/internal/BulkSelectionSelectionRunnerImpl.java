@@ -75,7 +75,10 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 		Class<? extends BulkSelectionAction> bulkSelectionActionClass =
 			bulkSelectionAction.getClass();
 
-		Map<String, Serializable> taskContextMap =
+		_backgroundTaskLocalService.addBackgroundTask(
+			user.getUserId(), CompanyConstants.SYSTEM,
+			bulkSelectionActionClass.getName(),
+			BulkSelectionBackgroundTaskExecutor.class.getName(),
 			HashMapBuilder.<String, Serializable>put(
 				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
 			).put(
@@ -100,12 +103,7 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 				BulkSelectionBackgroundTaskConstants.
 					BULK_SELECTION_PARAMETER_MAP,
 				new HashMap<>(bulkSelection.getParameterMap())
-			).build();
-
-		_backgroundTaskLocalService.addBackgroundTask(
-			user.getUserId(), CompanyConstants.SYSTEM,
-			bulkSelectionActionClass.getName(),
-			BulkSelectionBackgroundTaskExecutor.class.getName(), taskContextMap,
+			).build(),
 			new ServiceContext());
 	}
 

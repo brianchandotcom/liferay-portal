@@ -647,7 +647,7 @@ public class CPTestUtil {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes =
+		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, status
 			).put(
@@ -662,9 +662,7 @@ public class CPTestUtil {
 						return StringPool.STAR;
 					}
 				).build()
-			).build();
-
-		searchContext.setAttributes(attributes);
+			).build());
 
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setGroupIds(new long[] {group.getGroupId()});

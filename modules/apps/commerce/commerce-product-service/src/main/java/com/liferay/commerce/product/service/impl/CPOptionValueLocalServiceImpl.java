@@ -317,7 +317,7 @@ public class CPOptionValueLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes =
+		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				_FIELD_KEY, keywords
 			).put(
@@ -333,9 +333,7 @@ public class CPOptionValueLocalServiceImpl
 				LinkedHashMapBuilder.<String, Object>put(
 					"keywords", keywords
 				).build()
-			).build();
-
-		searchContext.setAttributes(attributes);
+			).build());
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);

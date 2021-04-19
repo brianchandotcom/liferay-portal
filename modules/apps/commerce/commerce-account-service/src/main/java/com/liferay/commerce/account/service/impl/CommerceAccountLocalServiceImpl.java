@@ -512,16 +512,16 @@ public class CommerceAccountLocalServiceImpl
 			int type, Boolean active)
 		throws PortalException {
 
-		LinkedHashMap<String, Object> params =
-			LinkedHashMapBuilder.<String, Object>put(
-				"type", CommerceAccountImpl.toAccountEntryType(type)
-			).put(
-				"status", () -> CommerceAccountImpl.toAccountEntryStatus(active)
-			).build();
-
 		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
 			accountEntryLocalService.searchAccountEntries(
-				companyId, keywords, params, QueryUtil.ALL_POS, 0, null, false);
+				companyId, keywords,
+				LinkedHashMapBuilder.<String, Object>put(
+					"type", CommerceAccountImpl.toAccountEntryType(type)
+				).put(
+					"status",
+					() -> CommerceAccountImpl.toAccountEntryStatus(active)
+				).build(),
+				QueryUtil.ALL_POS, 0, null, false);
 
 		return baseModelSearchResult.getLength();
 	}

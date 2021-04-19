@@ -76,11 +76,12 @@ public class LiferayBatchOperations {
 			@Optional @Summary("Comma-separated list") String fieldNames,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value") int connectionTimeout,
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
 			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
-				TimeUnit connectionTimeoutTimeUnit)
+			TimeUnit connectionTimeoutTimeUnit)
 		throws InterruptedException, IOException {
 
 		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(

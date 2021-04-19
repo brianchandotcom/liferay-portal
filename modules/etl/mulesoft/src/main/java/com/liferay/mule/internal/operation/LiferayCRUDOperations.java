@@ -77,11 +77,12 @@ public class LiferayCRUDOperations {
 				<String, String> queryParams,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value") int connectionTimeout,
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
 			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
-				TimeUnit connectionTimeoutTimeUnit)
+			TimeUnit connectionTimeoutTimeUnit)
 		throws ModuleException {
 
 		logEndpointParams(Method.DELETE, endpoint, pathParams, queryParams);
@@ -107,11 +108,12 @@ public class LiferayCRUDOperations {
 				<String, String> queryParams,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value") int connectionTimeout,
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
 			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
-				TimeUnit connectionTimeoutTimeUnit)
+			TimeUnit connectionTimeoutTimeUnit)
 		throws ModuleException {
 
 		logEndpointParams(Method.GET, endpoint, pathParams, queryParams);
@@ -133,18 +135,19 @@ public class LiferayCRUDOperations {
 			@MetadataKeyId(PatchEndpointTypeKeysResolver.class) String endpoint,
 			@Content @DisplayName("Record")
 			@TypeResolver(value = PatchEndpointInputTypeResolver.class)
-				InputStream inputStream,
+			InputStream inputStream,
 			@DisplayName("Path Parameters") @NullSafe @Optional Map
 				<String, String> pathParams,
 			@DisplayName("Query Parameters") @NullSafe @Optional MultiMap
 				<String, String> queryParams,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value") int connectionTimeout,
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
 			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
-				TimeUnit connectionTimeoutTimeUnit)
+			TimeUnit connectionTimeoutTimeUnit)
 		throws ModuleException {
 
 		logEndpointParams(Method.PATCH, endpoint, pathParams, queryParams);
@@ -166,18 +169,19 @@ public class LiferayCRUDOperations {
 			@MetadataKeyId(PostEndpointTypeKeysResolver.class) String endpoint,
 			@Content @DisplayName("Record")
 			@TypeResolver(value = PostEndpointInputTypeResolver.class)
-				InputStream inputStream,
+			InputStream inputStream,
 			@DisplayName("Path Parameters") @NullSafe @Optional Map
 				<String, String> pathParams,
 			@DisplayName("Query Parameters") @NullSafe @Optional MultiMap
 				<String, String> queryParams,
 			@ConfigOverride @DisplayName("Connection Timeout") @Optional
 			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value") int connectionTimeout,
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
 			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
-				TimeUnit connectionTimeoutTimeUnit)
+			TimeUnit connectionTimeoutTimeUnit)
 		throws ModuleException {
 
 		logEndpointParams(Method.POST, endpoint, pathParams, queryParams);

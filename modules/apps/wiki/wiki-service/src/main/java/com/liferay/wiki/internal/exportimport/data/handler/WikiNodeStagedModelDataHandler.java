@@ -142,7 +142,8 @@ public class WikiNodeStagedModelDataHandler
 				serviceContext.setUuid(node.getUuid());
 
 				importedNode = _wikiNodeLocalService.addNode(
-					userId, nodeName, node.getDescription(), serviceContext);
+					node.getExternalReferenceCode(), userId, nodeName,
+					node.getDescription(), serviceContext);
 			}
 			else {
 				String uuid = existingNode.getUuid();
@@ -174,7 +175,8 @@ public class WikiNodeStagedModelDataHandler
 				nodeName = getNodeName(portletDataContext, node, nodeName, 2);
 
 				importedNode = _wikiNodeLocalService.addNode(
-					userId, nodeName, node.getDescription(), serviceContext);
+					node.getExternalReferenceCode(), userId, nodeName,
+					node.getDescription(), serviceContext);
 			}
 		}
 

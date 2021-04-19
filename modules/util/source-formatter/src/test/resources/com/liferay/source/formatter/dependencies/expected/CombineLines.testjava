@@ -148,7 +148,7 @@ public class CombineLines extends SuperClass {
 
 		boolean b2 = StringUtil.contains(
 			test1,
-			"Hello WorldHello World Hello" +
+			"Hello WorldHello World Hello " +
 				"HelloWorldHelloWorldHelloWorldHelloWorld");
 
 		boolean b3 = StringUtil.merge(

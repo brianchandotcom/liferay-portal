@@ -189,7 +189,7 @@ public class CombineLines
 			listWithAVeryLongNameThatThereforeByNoMeansFitsOnTheSameLine) {
 
 		boolean b2 = StringUtil.contains(
-			test1, "Hello WorldHello World Hello" +
+			test1, "Hello WorldHello World Hello " +
 				"HelloWorldHelloWorldHelloWorldHelloWorld");
 
 		boolean b3 = StringUtil.merge(

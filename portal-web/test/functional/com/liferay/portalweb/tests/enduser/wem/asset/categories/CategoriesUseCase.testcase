@@ -782,9 +782,7 @@ definition {
 		}
 
 		task ("Search localized category name") {
-			Search.searchPG(
-				portletName = "Suche",
-				searchTerm = "Kategorienamen");
+			Search.searchCP(searchTerm = "Kategorienamen");
 		}
 
 		task ("View the search results") {

@@ -11,7 +11,7 @@ $productMenuWidth: 320px;
 	$component: &;
 
 	&-edit {
-		.languages-selector .autofit-col {
+		.languages-selector .autofit-col:not(:last-child) {
 			margin-right: 1em;
 		}
 	}

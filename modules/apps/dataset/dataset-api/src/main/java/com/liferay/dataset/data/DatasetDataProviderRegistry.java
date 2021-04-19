@@ -25,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DatasetDataProviderRegistry {
 
 	public DatasetDataProvider getDatasetDataProvider(
-		String datasetDataProviderKey);
+		String datasetDataProviderName);
 
 	public List<DatasetDataProvider> getDatasetDataProviders();
 

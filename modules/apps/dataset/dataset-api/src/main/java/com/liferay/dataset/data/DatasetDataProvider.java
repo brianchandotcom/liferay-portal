@@ -27,14 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 public interface DatasetDataProvider<T> {
 
 	public List<T> getItems(
-			HttpServletRequest httpServletRequest,
-			DatasetDataFilter datasetDataFilter,
+			HttpServletRequest httpServletRequest, String keywords,
 			DatasetDataPagination datasetDataPagination, Sort sort)
 		throws PortalException;
 
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest,
-			DatasetDataFilter datasetDataFilter)
+			HttpServletRequest httpServletRequest, String keywords)
 		throws PortalException;
 
 }

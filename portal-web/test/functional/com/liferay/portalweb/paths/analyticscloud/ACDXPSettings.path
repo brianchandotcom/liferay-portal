@@ -14,6 +14,18 @@
 	<td>//*[contains(@href, 'analytics-cloud-connection')]</td>
 	<td></td>
 </tr>
+<!-- ANALYTICS CLOUD CONNECTION SCREEN -->
+<tr>
+	<td>TOKEN_INPUT_FIELD</td>
+	<td>//input[contains(@id,'token')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECT_WITH_TOKEN_BUTTON</td>
+	<td>//button[contains(@id,'tokenButton')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

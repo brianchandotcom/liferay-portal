@@ -17,6 +17,7 @@ import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const Switcher = ({
 	checked: initialChecked,
@@ -29,8 +30,9 @@ const Switcher = ({
 	showMaximumRepetitionsInfo,
 	spritemap,
 	systemSettingsURL,
+	visible,
 }) => {
-	const [checked, setChecked] = useState(initialChecked);
+	const [checked, setChecked] = useSyncValue(initialChecked, true, visible);
 
 	return (
 		<>
@@ -136,6 +138,7 @@ const Main = ({
 	spritemap,
 	systemSettingsURL,
 	value,
+	visible,
 	...otherProps
 }) => {
 	const Toggle = showAsSwitcher ? Switcher : Checkbox;
@@ -147,6 +150,7 @@ const Main = ({
 			required={required}
 			showLabel={false}
 			spritemap={spritemap}
+			visible={visible}
 			{...otherProps}
 		>
 			<Toggle
@@ -160,6 +164,7 @@ const Main = ({
 				showMaximumRepetitionsInfo={showMaximumRepetitionsInfo}
 				spritemap={spritemap}
 				systemSettingsURL={systemSettingsURL}
+				visible={visible}
 			/>
 		</FieldBase>
 	);

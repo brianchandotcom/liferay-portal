@@ -128,6 +128,31 @@ definition {
 		return "${categoryId}";
 	}
 
+	@summary = "Get the categoryId by using categoryName and groupName"
+	macro getCategoryIdByName {
+		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbcategory/get-categories \
+			-u test@liferay.com:test \
+			-d groupId=${groupId}
+		''';
+
+		var categoryId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${categoryName}')]['categoryId']");
+		var categoryId = StringUtil.replace("${categoryId}", "[&quot;", "");
+		var categoryId = StringUtil.replace("${categoryId}", "&quot;]", "");
+
+		if ("${categoryId}" == "[]") {
+			fail("FAIL. Cannot find category.");
+		}
+
+		return "${categoryId}";
+	}
+
 	@summary = "This calls the JSON WS API to get the ID of a MB thread through the URL"
 	macro getmessageId {
 		var messageBoardsThreadURL = selenium.getLocation();

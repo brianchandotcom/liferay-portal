@@ -32,7 +32,7 @@ import itemSelectorValueToInfoItem from '../../app/utils/item-selector-value/ite
 import {useId} from '../../app/utils/useId';
 import ItemSelector from './ItemSelector';
 
-const MAPPING_SOURCE_TYPE_IDS = {
+const MAPPING_SOURCE_TYPES = {
 	content: 'content',
 	structure: 'structure',
 };
@@ -47,11 +47,11 @@ function loadFields({
 	fieldType,
 	selectedItem,
 	selectedMappingTypes,
-	selectedSourceTypeId,
+	selectedSourceType,
 }) {
 	let promise;
 
-	if (selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure) {
+	if (selectedSourceType === MAPPING_SOURCE_TYPES.structure) {
 		promise = InfoItemService.getAvailableStructureMappingFields({
 			classNameId: selectedMappingTypes.type.id,
 			classTypeId: selectedMappingTypes.subtype.id,
@@ -60,7 +60,7 @@ function loadFields({
 		});
 	}
 	else if (
-		selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content &&
+		selectedSourceType === MAPPING_SOURCE_TYPES.content &&
 		selectedItem.classNameId &&
 		selectedItem.classPK &&
 		selectedItem.title
@@ -197,12 +197,12 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 		setSubtypeLabel(subtype);
 	}, [selectedItem, pageContents]);
 
-	const [selectedSourceTypeId, setSelectedSourceTypeId] = useState(
+	const [selectedSourceType, setSelectedSourceType] = useState(
 		!isMappedToInfoItem(mappedItem) &&
 			(isMappedToStructure(mappedItem) ||
 				config.layoutType === LAYOUT_TYPES.display)
-			? MAPPING_SOURCE_TYPE_IDS.structure
-			: MAPPING_SOURCE_TYPE_IDS.content
+			? MAPPING_SOURCE_TYPES.structure
+			: MAPPING_SOURCE_TYPES.content
 	);
 
 	const onInfoItemSelect = (selectedInfoItem) => {
@@ -219,11 +219,11 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 		const data =
 			fieldValue === UNMAPPED_OPTION.value
 				? {}
-				: selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content
+				: selectedSourceType === MAPPING_SOURCE_TYPES.content
 				? {...selectedItem, fieldId: fieldValue}
 				: {mappedField: fieldValue};
 
-		if (selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
+		if (selectedSourceType === MAPPING_SOURCE_TYPES.content) {
 			const mappedInfoItem = mappedInfoItems.find(
 				(item) =>
 					item.classNameId === selectedItem.classNameId &&
@@ -268,18 +268,18 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 	useEffect(() => {
 		const data =
-			selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
+			selectedSourceType === MAPPING_SOURCE_TYPES.structure
 				? {
 						dispatch,
 						fieldType,
 						selectedMappingTypes,
-						selectedSourceTypeId,
+						selectedSourceType,
 				  }
 				: {
 						dispatch,
 						fieldType,
 						selectedItem,
-						selectedSourceTypeId,
+						selectedSourceType,
 				  };
 
 		loadFields(data).then((newFieldSets) => {
@@ -290,7 +290,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 		fieldType,
 		selectedItem,
 		selectedMappingTypes,
-		selectedSourceTypeId,
+		selectedSourceType,
 	]);
 
 	return (
@@ -306,7 +306,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 						className="pr-4 text-truncate"
 						id={mappingSelectorSourceSelectId}
 						onChange={(event) => {
-							setSelectedSourceTypeId(event.target.value);
+							setSelectedSourceType(event.target.value);
 
 							setSelectedItem({});
 
@@ -322,19 +322,19 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 										? selectedMappingTypes.subtype.label
 										: selectedMappingTypes.type.label
 								),
-								value: MAPPING_SOURCE_TYPE_IDS.structure,
+								value: MAPPING_SOURCE_TYPES.structure,
 							},
 							{
 								label: Liferay.Language.get('specific-content'),
-								value: MAPPING_SOURCE_TYPE_IDS.content,
+								value: MAPPING_SOURCE_TYPES.content,
 							},
 						]}
-						value={selectedSourceTypeId}
+						value={selectedSourceType}
 					/>
 				</ClayForm.Group>
 			)}
 
-			{selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content && (
+			{selectedSourceType === MAPPING_SOURCE_TYPES.content && (
 				<ItemSelector
 					label={Liferay.Language.get('content')}
 					onItemSelect={onInfoItemSelect}

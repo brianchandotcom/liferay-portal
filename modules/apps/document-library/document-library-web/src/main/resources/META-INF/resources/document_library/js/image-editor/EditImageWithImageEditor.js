@@ -62,6 +62,10 @@ export default ({editImageURL, portletNamespace, redirectURL}) => {
 			setImageURL(imageURL);
 			setShowModal(true);
 		};
+
+		return () => {
+			window[`${portletNamespace}editWithImageEditor`] = () => {};
+		};
 	}, [portletNamespace]);
 
 	return (

@@ -157,6 +157,21 @@ if (portletTitleBasedNavigation) {
 	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
 
+<div>
+	<portlet:actionURL name="/document_library/edit_file_entry_image_editor" var="editImageURL" />
+
+	<react:component
+		module="document_library/js/image-editor/EditImageWithImageEditor"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"editImageURL", editImageURL
+			).put(
+				"redirectURL", currentURL
+			).build()
+		%>'
+	/>
+</div>
+
 <portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
 	<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />

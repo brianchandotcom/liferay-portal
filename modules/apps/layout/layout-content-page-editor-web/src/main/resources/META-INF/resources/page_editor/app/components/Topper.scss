@@ -258,6 +258,12 @@
 		}
 	}
 
+	&--hovered {
+		&:after {
+			box-shadow: inset 0 0 0 1px $purple;
+		}
+	}
+
 	& > .page-editor__topper__content {
 		height: 100%;
 	}

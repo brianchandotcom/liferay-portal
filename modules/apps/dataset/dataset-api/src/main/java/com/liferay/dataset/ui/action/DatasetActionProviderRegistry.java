@@ -22,6 +22,6 @@ import java.util.List;
 public interface DatasetActionProviderRegistry {
 
 	public List<DatasetActionProvider> getDatasetActionProviders(
-		String datasetDataProviderKey);
+		String datasetDataProviderName);
 
 }

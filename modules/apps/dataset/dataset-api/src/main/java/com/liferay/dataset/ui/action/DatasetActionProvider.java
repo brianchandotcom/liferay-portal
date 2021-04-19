@@ -27,7 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface DatasetActionProvider {
 
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			HttpServletRequest httpServletRequest, long groupId,
+			Object datasetDataProviderItem)
 		throws PortalException;
 
 }

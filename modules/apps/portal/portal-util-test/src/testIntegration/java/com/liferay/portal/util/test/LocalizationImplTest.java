@@ -202,13 +202,12 @@ public class LocalizationImplTest {
 	@Test
 	public void testGetLocalizationXmlFromPreferences() throws Exception {
 		PortletPreferences preferences = new PortletPreferencesImpl();
-		MockPortletRequest portletRequest = new MockPortletRequest();
 
 		LocalizationUtil.setPreferencesValue(
 			preferences, "test", _ENGLISH_LANGUAGE_ID, "changedValue");
 
 		String xml = LocalizationUtil.getLocalizationXmlFromPreferences(
-			preferences, portletRequest, "test", "testValue");
+			preferences, new MockPortletRequest(), "test", "testValue");
 
 		Assert.assertTrue(
 			"PortletPreferences not properly applied to XML: " + xml,
@@ -220,10 +219,9 @@ public class LocalizationImplTest {
 	@Test
 	public void testGetLocalizationXmlFromPreferencesWithEmptyPreferences() {
 		PortletPreferences preferences = new PortletPreferencesImpl();
-		MockPortletRequest portletRequest = new MockPortletRequest();
 
 		String xml = LocalizationUtil.getLocalizationXmlFromPreferences(
-			preferences, portletRequest, "test", "testValue");
+			preferences, new MockPortletRequest(), "test", "testValue");
 
 		Assert.assertTrue(
 			"Default values not included in XML: " + xml,

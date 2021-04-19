@@ -13,7 +13,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
@@ -144,7 +143,9 @@ const Translate = ({
 			))}
 
 			<TranslateActionBar
+				autoTranslateButtonVisible={autoTranslateButtonVisible}
 				formHasChanges={formHasChanges}
+				getAutoTranslateFields={getAutoTranslateFields}
 				onSaveButtonClick={handleOnSaveDraft}
 				portletNamespace={portletNamespace}
 				publishButtonDisabled={publishButtonDisabled}
@@ -169,19 +170,6 @@ const Translate = ({
 								sourceLanguageIdTitle={sourceLanguageIdTitle}
 								targetLanguageIdTitle={targetLanguageIdTitle}
 							/>
-
-							{autoTranslateButtonVisible && (
-								<p>
-									<ClayButton
-										displayType="secondary"
-										onClick={getAutoTranslateFields}
-										small
-										type="button"
-									>
-										{Liferay.Language.get('auto-translate')}
-									</ClayButton>
-								</p>
-							)}
 
 							<TranslateFieldSetEntries
 								infoFieldSetEntries={infoFieldSetEntries}

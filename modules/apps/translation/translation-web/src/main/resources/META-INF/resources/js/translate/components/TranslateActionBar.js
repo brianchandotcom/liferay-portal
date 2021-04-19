@@ -15,12 +15,15 @@
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import classNames from 'classnames';
 import React from 'react';
 
 import TranslateLanguagesSelector from './TranslateLanguagesSelector';
 
 const TransLateActionBar = ({
+	autoTranslateButtonVisible,
 	formHasChanges,
+	getAutoTranslateFields,
 	onSaveButtonClick,
 	portletNamespace,
 	publishButtonDisabled,
@@ -33,13 +36,31 @@ const TransLateActionBar = ({
 	<nav className="component-tbar subnav-tbar-light tbar">
 		<ClayLayout.ContainerFluid view>
 			<ul className="tbar-nav">
-				<li className="tbar-item tbar-item-expand">
+				<li
+					className={classNames('tbar-item', {
+						'tbar-item-expand': !autoTranslateButtonVisible,
+					})}
+				>
 					<TranslateLanguagesSelector
 						{...translateLanguagesSelectorData}
 						formHasChanges={formHasChanges}
 						portletNamespace={portletNamespace}
 					/>
 				</li>
+				{autoTranslateButtonVisible && (
+					<li className="tbar-item tbar-item-expand text-left">
+						<div>
+							<ClayButton
+								displayType="secondary"
+								onClick={getAutoTranslateFields}
+								small
+								type="button"
+							>
+								{Liferay.Language.get('auto-translate')}
+							</ClayButton>
+						</div>
+					</li>
+				)}
 				<li className="tbar-item">
 					<div className="metadata-type-button-row tbar-section text-right">
 						<ClayButton.Group spaced>

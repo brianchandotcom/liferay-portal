@@ -191,7 +191,7 @@ function SelectCategory({
 }
 
 SelectCategory.propTypes = {
-	addCategoryURL: PropTypes.string.isRequired,
+	addCategoryURL: PropTypes.string,
 	moveCategory: PropTypes.bool,
 };
 

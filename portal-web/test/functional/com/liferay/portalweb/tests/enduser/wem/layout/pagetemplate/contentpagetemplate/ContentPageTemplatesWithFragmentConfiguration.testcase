@@ -97,17 +97,10 @@ definition {
 	@description = "This is a test for LPS-100545. An itemSelector fragment configuration can select an asset in a content page template"
 	@priority = "4"
 	test AddItemSelectorConfigurationFragmentToContentPageTemplate {
-		task ("Add a section fragment to the fragment collection via JSON") {
-			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "itemSelector_configuration.html");
-			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "itemSelector_configuration.json");
+		task ("Import test fragments from dependencies folder") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
-				fragmentStatus = "Approved",
-				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
-				name = "itemSelector Fragment Example");
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "display-collection-name.zip");
 		}
 
 		JSONWebcontent.addWebContent(
@@ -124,14 +117,26 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "itemSelector Fragment Example");
+			collectionName = "imported",
+			fragmentName = "Web Content");
 
-		PageEditor.editContentDisplay(
-			fragmentName = "itemSelector Fragment Example",
-			webcontent = "true",
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WebContent Title");
+		AssertElementPresent(
+			key_fragmentName = "Web Content",
+			key_messageIfo = "The selected content will be shown here.",
+			locator1 = "Fragment#MESSAGE_INFO");
+
+		task ("Open select popup") {
+			PageEditor.gotoSelectPanel(fragmentName = "Web Content");
+		}
+
+		Click(
+			key_listEntry = "WebContent Title",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE");
+
+		AssertVisible(
+			key_content = "WC WebContent Content",
+			key_fragmentClass = "wc",
+			locator1 = "Fragment#FRAGMENT");
 
 		PageEditor.clickPublish();
 
@@ -144,7 +149,7 @@ definition {
 		task ("Assert correct content is visible") {
 			AssertVisible(
 				key_content = "WC WebContent Content",
-				key_fragmentClass = "configuration",
+				key_fragmentClass = "wc",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}

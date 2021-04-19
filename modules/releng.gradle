@@ -224,14 +224,13 @@ lockBOMDependencyVersion {
 			String dependencyName = artifactURL.substring(z + 1, y)
 			String dependencyVersion = artifactURL.substring(y + 1, x)
 
-			if (relengFile.name != "artifact.properties") {
-				dependenciesMap.put(dependencyName, "com.liferay.portal:" + dependencyName + ":" + dependencyVersion)
-			}
-			else if (dependencyName.startsWith("com.liferay.commerce.") || dependencyName.startsWith("com.liferay.headless.commerce.")) {
-				dependenciesMap.put(dependencyName, "com.liferay.commerce:" + dependencyName + ":" + dependencyVersion)
-			}
-			else {
-				dependenciesMap.put(dependencyName, "com.liferay:" + dependencyName + ":" + dependencyVersion)
+			if (relengFile.name == "artifact.properties") {
+				if (dependencyName.startsWith("com.liferay.commerce.") || dependencyName.startsWith("com.liferay.headless.commerce.")) {
+					dependenciesMap.put(dependencyName, "com.liferay.commerce:" + dependencyName + ":" + dependencyVersion)
+				}
+				else {
+					dependenciesMap.put(dependencyName, "com.liferay:" + dependencyName + ":" + dependencyVersion)
+				}
 			}
 		}
 

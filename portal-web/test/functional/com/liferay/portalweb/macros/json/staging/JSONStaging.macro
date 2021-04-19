@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Activate local staging with or without page versioning"
+	@summary = "Activate local staging with or without page versioning with all content"
 	macro enableLocalStaging {
 		Variables.assertDefined(parameterList = "${groupName}");
 

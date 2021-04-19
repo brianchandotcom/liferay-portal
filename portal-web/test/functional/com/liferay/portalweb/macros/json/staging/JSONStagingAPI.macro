@@ -27,11 +27,11 @@ definition {
 				-d groupId=${groupId} \
 				-d branchingPublic=${branchingPublic} \
 				-d branchingPrivate=${branchingPrivate} \
-  				-d remoteAddress=localhost \
-  				-d remotePort=${remotePort} \
-  				-d remotePathContext= \
-  				-d secureConnection=false \
-  				-d remoteGroupId=${remoteGroupId}
+				-d remoteAddress=localhost \
+				-d remotePort=${remotePort} \
+				-d remotePathContext= \
+				-d secureConnection=false \
+				-d remoteGroupId=${remoteGroupId}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

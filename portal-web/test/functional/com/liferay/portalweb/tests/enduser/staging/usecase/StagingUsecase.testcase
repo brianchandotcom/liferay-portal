@@ -16,10 +16,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging Test Page");
 
-		JSONStaging.enableLocalStaging(
-			branchingPrivate = "false",
-			branchingPublic = "false",
-			groupName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 	}
 
 	tearDown {

@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view;
-
-import java.util.List;
+package com.liferay.dataset.ui.content.renderer;
 
 /**
  * @author Iván Zaera
+ * @author Alessio Antonio Rendina
  */
-public interface DatasetViewContentRendererContextContributorRegistry {
+public class DatasetContentRendererNames {
 
-	public List<DatasetViewContentRendererContextContributor>
-		getDatasetContentRendererContextContributors(
-			String datasetViewContentRendererName);
+	public static final String CARDS = "cards";
+
+	public static final String LIST = "list";
+
+	public static final String SELECTABLE_TABLE = "selectableTable";
+
+	public static final String TABLE = "table";
+
+	public static final String TIMELINE = "timeline";
 
 }

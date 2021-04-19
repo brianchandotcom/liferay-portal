@@ -12,22 +12,19 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view;
+package com.liferay.dataset.ui.content.renderer;
+
+import com.liferay.dataset.ui.display.DatasetDisplay;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Iván Zaera
- * @author Alessio Antonio Rendina
  */
-public class DatasetViewContentRendererNames {
+public interface DatasetContentRendererContextContributor {
 
-	public static final String CARDS = "cards";
-
-	public static final String LIST = "list";
-
-	public static final String SELECTABLE_TABLE = "selectableTable";
-
-	public static final String TABLE = "table";
-
-	public static final String TIMELINE = "timeline";
+	public Map<String, Object> getDatasetContentRendererContext(
+		DatasetDisplay datasetDisplay, Locale locale);
 
 }

@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view;
+package com.liferay.dataset.ui.content.renderer;
 
-import java.util.Locale;
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author Iván Zaera
  */
-public interface DatasetViewContentRendererContextContributor {
+public interface DatasetContentRendererContextContributorRegistry {
 
-	public Map<String, Object> getContentRendererContext(
-		DatasetView datasetView, Locale locale);
+	public List<DatasetContentRendererContextContributor>
+		getDatasetContentRendererContextContributors(
+			String datasetContentRendererName);
 
 }

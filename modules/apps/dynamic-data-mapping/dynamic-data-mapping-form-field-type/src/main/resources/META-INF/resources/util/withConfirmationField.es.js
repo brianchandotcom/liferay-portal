@@ -18,6 +18,22 @@ const getClassNameBasedOnDirection = (direction) => {
 	return direction?.includes('horizontal') ? 'col-md-6' : 'col-md-12';
 };
 
+const getConfirmationLabel = (confirmationLabel, label) => {
+	if (confirmationLabel && label) {
+		return [confirmationLabel, label].join(' ');
+	}
+
+	return confirmationLabel || label;
+};
+
+const getLabel = (confirmationLabel, label) => {
+	if (confirmationLabel && !label) {
+		return ' ';
+	}
+
+	return label;
+};
+
 export default (Component) => {
 	const Wrapper = ({requireConfirmation, ...otherProps}) => {
 		if (!requireConfirmation) {
@@ -43,14 +59,17 @@ export default (Component) => {
 		return (
 			<div className="row">
 				<div className={className}>
-					<Component {...otherProps} />
+					<Component
+						{...otherProps}
+						label={getLabel(confirmationLabel, label)}
+					/>
 				</div>
 				<div className={className}>
 					<Component
 						{...otherProps}
 						errorMessage={confirmationErrorMessage}
 						id={`${name}confirmationField`}
-						label={[confirmationLabel, label].join(' ')}
+						label={getConfirmationLabel(confirmationLabel, label)}
 						localizable={false}
 						localizedValue={{}}
 						name={`${name}confirmationField`}

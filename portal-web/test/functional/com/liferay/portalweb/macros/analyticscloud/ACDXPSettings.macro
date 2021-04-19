@@ -10,5 +10,23 @@ definition {
 		Click(locator1 = "//*[contains(@href, 'analytics-cloud-connection')]");
 
     }
+        
+    macro connectDXPtoAnalyticsCloud {
+
+		Click(locator1 = "//input[contains(@id,'token')]");
+
+		Paste(locator1 = "//input[contains(@id,'token')]");
+
+		Click(locator1 = "//button[contains(@id,'tokenButton')]");
+
+		Click(locator1 = "//*[contains(@class, 'nav-link') and contains(@href,'synced-sites')]");
+
+		Click(locator1 = "//*[contains(@href,'synced-sites') and contains(@class,'btn-primary')]");
+		
+		Click(locator1 = "//*[contains(@type, 'checkbox')]");
+
+		Click(locator1 = "//*[contains(@class, 'btn-primary') and contains(@id,'add')]");
+
+	}
 
 }

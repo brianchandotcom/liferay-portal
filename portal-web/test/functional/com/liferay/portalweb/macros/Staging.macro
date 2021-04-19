@@ -1045,6 +1045,27 @@ definition {
 			uncheckContent = "${uncheckContent}");
 	}
 
+	macro remoteStagingSetUpViaJson {
+		if (!(isSet(remotePort))) {
+			var remotePort = "8080";
+		}
+
+		JSONGroup.addGroup(
+			groupName = "Remote Site",
+			portalURL = "http://localhost:${remotePort}");
+
+		var remoteGroupId = JSONGroupSetter.setGroupId(
+			groupName = "Remote Site",
+			portalURL = "http://localhost:${remotePort}");
+
+		JSONStaging.enableRemoteStaging(
+			branchingPrivate = "${branchingPrivate}",
+			branchingPublic = "${branchingPublic}",
+			groupName = "${groupName}",
+			remoteGroupId = "${remoteGroupId}",
+			remotePort = "${remotePort}");
+	}
+
 	macro savePublishTemplate {
 		Button.clickSave();
 

@@ -150,7 +150,48 @@ definition {
 	test AssertProductNameIsTranslated {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5861 AssertProductNameIsTranslated pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "Shock Absorber");
+
+		CommerceNavigator.gotoEntry(entryName = "Shock Absorber");
+
+		PortletEntry.changeLocale(
+			fieldName = "Name",
+			locale = "es-ES");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "Amortiguador");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.addPortlet(portletName = "Language Selector");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "es_ES",
+			textIcon = "español-España");
+
+		AssertElementPresent(
+			key_productName = "Amortiguador",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en_US",
+			textIcon = "english-United States");
+			
+
+		AssertElementPresent(
+			key_productName = "Shock Absorber",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+
 	}
 
 	@description = "COMMERCE-6318. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"

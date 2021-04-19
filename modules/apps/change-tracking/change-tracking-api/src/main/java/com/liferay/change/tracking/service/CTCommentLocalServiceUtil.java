@@ -45,13 +45,6 @@ public class CTCommentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTCommentLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static CTComment addComment(
-			long ctCollectionId, long ctEntryId, long userId, String value)
-		throws PortalException {
-
-		return getService().addComment(
-			ctCollectionId, ctEntryId, userId, value);
-	}
 
 	/**
 	 * Adds the ct comment to the database. Also notifies the appropriate model listeners.
@@ -65,6 +58,14 @@ public class CTCommentLocalServiceUtil {
 	 */
 	public static CTComment addCTComment(CTComment ctComment) {
 		return getService().addCTComment(ctComment);
+	}
+
+	public static CTComment addCTComment(
+			long ctCollectionId, long ctEntryId, long userId, String value)
+		throws PortalException {
+
+		return getService().addCTComment(
+			ctCollectionId, ctEntryId, userId, value);
 	}
 
 	/**
@@ -85,10 +86,6 @@ public class CTCommentLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
-	}
-
-	public static CTComment deleteComment(long ctCommentId) {
-		return getService().deleteComment(ctCommentId);
 	}
 
 	/**
@@ -223,10 +220,10 @@ public class CTCommentLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static Map<Long, List<CTComment>> getCollectionComments(
+	public static Map<Long, List<CTComment>> getCTCollectionCTComments(
 		long ctCollectionId) {
 
-		return getService().getCollectionComments(ctCollectionId);
+		return getService().getCTCollectionCTComments(ctCollectionId);
 	}
 
 	/**
@@ -266,8 +263,8 @@ public class CTCommentLocalServiceUtil {
 		return getService().getCTCommentsCount();
 	}
 
-	public static List<CTComment> getEntryComments(long ctEntryId) {
-		return getService().getEntryComments(ctEntryId);
+	public static List<CTComment> getCTEntryCTComments(long ctEntryId) {
+		return getService().getCTEntryCTComments(ctEntryId);
 	}
 
 	public static
@@ -295,12 +292,6 @@ public class CTCommentLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static CTComment updateComment(long ctCommentId, String value)
-		throws PortalException {
-
-		return getService().updateComment(ctCommentId, value);
-	}
-
 	/**
 	 * Updates the ct comment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -313,6 +304,12 @@ public class CTCommentLocalServiceUtil {
 	 */
 	public static CTComment updateCTComment(CTComment ctComment) {
 		return getService().updateCTComment(ctComment);
+	}
+
+	public static CTComment updateCTComment(long ctCommentId, String value)
+		throws PortalException {
+
+		return getService().updateCTComment(ctCommentId, value);
 	}
 
 	public static CTCommentLocalService getService() {

@@ -62,9 +62,6 @@ public interface CTCommentLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTCommentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ct comment local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CTCommentLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public CTComment addComment(
-			long ctCollectionId, long ctEntryId, long userId, String value)
-		throws PortalException;
 
 	/**
 	 * Adds the ct comment to the database. Also notifies the appropriate model listeners.
@@ -78,6 +75,10 @@ public interface CTCommentLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CTComment addCTComment(CTComment ctComment);
+
+	public CTComment addCTComment(
+			long ctCollectionId, long ctEntryId, long userId, String value)
+		throws PortalException;
 
 	/**
 	 * Creates a new ct comment with the primary key. Does not add the ct comment to the database.
@@ -93,8 +94,6 @@ public interface CTCommentLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	public CTComment deleteComment(long ctCommentId);
 
 	/**
 	 * Deletes the ct comment from the database. Also notifies the appropriate model listeners.
@@ -206,7 +205,7 @@ public interface CTCommentLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, List<CTComment>> getCollectionComments(
+	public Map<Long, List<CTComment>> getCTCollectionCTComments(
 		long ctCollectionId);
 
 	/**
@@ -242,7 +241,7 @@ public interface CTCommentLocalService
 	public int getCTCommentsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTComment> getEntryComments(long ctEntryId);
+	public List<CTComment> getCTEntryCTComments(long ctEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -262,9 +261,6 @@ public interface CTCommentLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public CTComment updateComment(long ctCommentId, String value)
-		throws PortalException;
-
 	/**
 	 * Updates the ct comment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -277,5 +273,8 @@ public interface CTCommentLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CTComment updateCTComment(CTComment ctComment);
+
+	public CTComment updateCTComment(long ctCommentId, String value)
+		throws PortalException;
 
 }

@@ -32,15 +32,6 @@ public class CTCommentLocalServiceWrapper
 		_ctCommentLocalService = ctCommentLocalService;
 	}
 
-	@Override
-	public com.liferay.change.tracking.model.CTComment addComment(
-			long ctCollectionId, long ctEntryId, long userId, String value)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ctCommentLocalService.addComment(
-			ctCollectionId, ctEntryId, userId, value);
-	}
-
 	/**
 	 * Adds the ct comment to the database. Also notifies the appropriate model listeners.
 	 *
@@ -56,6 +47,15 @@ public class CTCommentLocalServiceWrapper
 		com.liferay.change.tracking.model.CTComment ctComment) {
 
 		return _ctCommentLocalService.addCTComment(ctComment);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTComment addCTComment(
+			long ctCollectionId, long ctEntryId, long userId, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCommentLocalService.addCTComment(
+			ctCollectionId, ctEntryId, userId, value);
 	}
 
 	/**
@@ -80,13 +80,6 @@ public class CTCommentLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCommentLocalService.createPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.change.tracking.model.CTComment deleteComment(
-		long ctCommentId) {
-
-		return _ctCommentLocalService.deleteComment(ctCommentId);
 	}
 
 	/**
@@ -248,9 +241,9 @@ public class CTCommentLocalServiceWrapper
 	@Override
 	public java.util.Map
 		<Long, java.util.List<com.liferay.change.tracking.model.CTComment>>
-			getCollectionComments(long ctCollectionId) {
+			getCTCollectionCTComments(long ctCollectionId) {
 
-		return _ctCommentLocalService.getCollectionComments(ctCollectionId);
+		return _ctCommentLocalService.getCTCollectionCTComments(ctCollectionId);
 	}
 
 	/**
@@ -298,9 +291,9 @@ public class CTCommentLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTComment>
-		getEntryComments(long ctEntryId) {
+		getCTEntryCTComments(long ctEntryId) {
 
-		return _ctCommentLocalService.getEntryComments(ctEntryId);
+		return _ctCommentLocalService.getCTEntryCTComments(ctEntryId);
 	}
 
 	@Override
@@ -331,14 +324,6 @@ public class CTCommentLocalServiceWrapper
 		return _ctCommentLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public com.liferay.change.tracking.model.CTComment updateComment(
-			long ctCommentId, String value)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ctCommentLocalService.updateComment(ctCommentId, value);
-	}
-
 	/**
 	 * Updates the ct comment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -354,6 +339,14 @@ public class CTCommentLocalServiceWrapper
 		com.liferay.change.tracking.model.CTComment ctComment) {
 
 		return _ctCommentLocalService.updateCTComment(ctComment);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTComment updateCTComment(
+			long ctCommentId, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCommentLocalService.updateCTComment(ctCommentId, value);
 	}
 
 	@Override

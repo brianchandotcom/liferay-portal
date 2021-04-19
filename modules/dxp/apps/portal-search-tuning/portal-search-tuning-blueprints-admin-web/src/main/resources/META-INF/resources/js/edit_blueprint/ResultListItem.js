@@ -20,6 +20,7 @@ import React, {useState} from 'react';
 import CodeMirrorEditor from '../shared/CodeMirrorEditor';
 import PreviewModal from '../shared/PreviewModal';
 
+const BLUEPRINT_FIELD_PREFIX = 'b_';
 const RESULTS_DEFAULT_KEYS = [
 	'b_type',
 	'b_summary',
@@ -29,13 +30,24 @@ const RESULTS_DEFAULT_KEYS = [
 ];
 const RESULTS_SHOW_KEYS = ['b_assetEntryId', 'id'];
 
+const blueprintFieldPrefixRegex = new RegExp(`^(${BLUEPRINT_FIELD_PREFIX})`);
+const bracketsRegex = new RegExp(/[[\]]/, 'g');
+
+function removeBlueprintFieldPrefix(value) {
+	return value.replace(blueprintFieldPrefixRegex, '');
+}
+
+function removeBrackets(value) {
+	return value.replace(bracketsRegex, '');
+}
+
 function ResultListItem({item}) {
 	const [collapse, setCollapse] = useState(true);
 
-	const _renderListRow = (property, value, id) => (
-		<ClayLayout.Row justify="start" key={`${id}_${property}`}>
+	const _renderListRow = (property, value) => (
+		<ClayLayout.Row justify="start" key={property}>
 			<ClayLayout.Col className="semibold" size={4}>
-				{property.match(/b_[\w_]+/g) ? property.substring(2) : property}
+				{removeBlueprintFieldPrefix(property)}
 			</ClayLayout.Col>
 
 			<ClayLayout.Col
@@ -43,7 +55,7 @@ function ResultListItem({item}) {
 				size={8}
 			>
 				{typeof value === 'object'
-					? JSON.stringify(value).replace(/[[\]]+/g, '')
+					? removeBrackets(JSON.stringify(value))
 					: value}
 			</ClayLayout.Col>
 		</ClayLayout.Row>
@@ -79,13 +91,13 @@ function ResultListItem({item}) {
 				</ClayList.ItemTitle>
 
 				{RESULTS_DEFAULT_KEYS.map((property) =>
-					_renderListRow(property, item[property], item.id)
+					_renderListRow(property, item[property])
 				)}
 
 				{!collapse && (
 					<>
 						{RESULTS_SHOW_KEYS.map((property) =>
-							_renderListRow(property, item[property], item.id)
+							_renderListRow(property, item[property])
 						)}
 
 						{Object.keys(item.document)
@@ -93,8 +105,7 @@ function ResultListItem({item}) {
 							.map((property) =>
 								_renderListRow(
 									property,
-									item.document[property],
-									item.id
+									item.document[property]
 								)
 							)}
 					</>

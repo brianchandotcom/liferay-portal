@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
@@ -25,8 +26,14 @@ export default function Sidebar() {
 		<div className="style-book-editor__sidebar">
 			<Toolbar />
 			<ThemeInformation />
-			{config.frontendTokenDefinition.frontendTokenCategories && (
+			{config.frontendTokenDefinition.frontendTokenCategories ? (
 				<SidebarContent />
+			) : (
+				<ClayAlert className="m-3" displayType="info">
+					{Liferay.Language.get(
+						'this-theme-does-not-include-token-definition'
+					)}
+				</ClayAlert>
 			)}
 		</div>
 	);

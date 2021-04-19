@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
@@ -121,11 +122,12 @@ public class EditFileEntryMVCActionCommandTest {
 			_editFileEntryMVCActionCommand, "_addMultipleFileEntries",
 			new Class<?>[] {
 				PortletConfig.class, ActionRequest.class, String.class,
-				List.class, List.class
+				List.class, List.class, ServiceContext.class
 			},
 			_getLiferayPortletConfig(),
 			_getMockLiferayPortletActionRequest(parameters),
-			tempFileEntry.getFileName(), new ArrayList<>(), new ArrayList<>());
+			tempFileEntry.getFileName(), new ArrayList<>(), new ArrayList<>(),
+			ServiceContextTestUtil.getServiceContext());
 
 		FileEntry fileName = _dlAppLocalService.getFileEntryByFileName(
 			_group.getGroupId(), folderId, "image.jpg");
@@ -177,11 +179,12 @@ public class EditFileEntryMVCActionCommandTest {
 				_editFileEntryMVCActionCommand, "_addMultipleFileEntries",
 				new Class<?>[] {
 					PortletConfig.class, ActionRequest.class, String.class,
-					List.class, List.class
+					List.class, List.class, ServiceContext.class
 				},
 				_getLiferayPortletConfig(),
 				_getMockLiferayPortletActionRequest(parameters),
-				selectedFileName, new ArrayList<>(), new ArrayList<>());
+				selectedFileName, new ArrayList<>(), new ArrayList<>(),
+				ServiceContextTestUtil.getServiceContext());
 		}
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntryByFileName(
@@ -240,11 +243,12 @@ public class EditFileEntryMVCActionCommandTest {
 				_editFileEntryMVCActionCommand, "_addMultipleFileEntries",
 				new Class<?>[] {
 					PortletConfig.class, ActionRequest.class, String.class,
-					List.class, List.class
+					List.class, List.class, ServiceContext.class
 				},
 				_getLiferayPortletConfig(),
 				_getMockLiferayPortletActionRequest(parameters),
-				selectedFileName, new ArrayList<>(), new ArrayList<>());
+				selectedFileName, new ArrayList<>(), new ArrayList<>(),
+				ServiceContextTestUtil.getServiceContext());
 		}
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntryByFileName(

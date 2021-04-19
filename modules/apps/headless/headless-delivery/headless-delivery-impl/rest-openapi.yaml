@@ -9288,6 +9288,7 @@ paths:
             # @review
             description:
                 Deletes the site's document by external reference code returns a 204 if the operation succeeds.
+            operationId: deleteSiteDocumentByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -9312,6 +9313,7 @@ paths:
             # @review
             description:
                 Retrieves the site's document by external reference code.
+            operationId: getSiteDocumentByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -9343,6 +9345,7 @@ paths:
                 replaces it if it not exists. Any missing fields are deleted, unless they are required. The request body
                 must be `multipart/form-data` with two parts, the file'sbytes (`file`), and an optional JSON string
                 (`document`) with the metadata.
+            operationId: putSiteDocumentByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode

@@ -128,6 +128,19 @@ public interface DocumentResource {
 			Object object)
 		throws Exception;
 
+	public void deleteSiteDocumentByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception;
+
+	public Document getSiteDocumentByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception;
+
+	public Document putSiteDocumentByExternalReferenceCode(
+			String externalReferenceCode, Long siteId,
+			MultipartBody multipartBody)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

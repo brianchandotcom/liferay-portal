@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ORMException;
@@ -166,7 +164,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @return the range of matching rows
 	 * @see    com.liferay.portal.kernel.dao.orm.QueryUtil#list(
 	 *         com.liferay.portal.kernel.dao.orm.Query,
-	 *         com.liferay.portal.kernel.dao.orm.Dialect, int, int)
+	 *         Dialect, int, int)
 	 */
 	public <V> List<V> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end);

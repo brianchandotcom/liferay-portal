@@ -124,11 +124,12 @@ public class SearchContainerTest {
 		buildSearchContainer(1);
 
 		int maxDelta = GetterUtil.getInteger(
-				PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_MAX_DELTA), 200);
+			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_MAX_DELTA), 200);
 
 		if (maxDelta <= 0) {
 			Assert.assertEquals(200, _searchContainer.MAX_DELTA);
-		} else {
+		}
+		else {
 			Assert.assertEquals(maxDelta, _searchContainer.MAX_DELTA);
 		}
 	}

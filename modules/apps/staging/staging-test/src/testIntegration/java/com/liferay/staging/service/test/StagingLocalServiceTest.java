@@ -31,11 +31,15 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.service.impl.LayoutRevisionLocalServiceImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -301,6 +305,161 @@ public class StagingLocalServiceTest {
 			List<PortletPreferences> portletPreferences =
 				PortletPreferencesLocalServiceUtil.getPortletPreferences(
 					layoutRevision.getPlid(), portletId);
+
+			Assert.assertFalse(
+				portletPreferences.toString(), portletPreferences.isEmpty());
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			String[] removePortletIdsArray =
+				(String[])serviceContext.getAttribute("removePortletIds");
+
+			Assert.assertArrayEquals(
+				new String[] {portletId}, removePortletIdsArray);
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group.getGroupId());
+		}
+	}
+
+	@Test
+	public void testPageVersioningPortletRemovalLayoutUpdate()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addLayout(group);
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		String portletId = PortletIdCodec.encode(
+			JournalPortletKeys.JOURNAL, PortletIdCodec.generateInstanceId());
+
+		PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletId);
+
+		unicodeProperties.setProperty("column-1", portletId);
+
+		layout.setTypeSettingsProperties(unicodeProperties);
+
+		_layoutLocalService.updateLayout(layout);
+
+		try {
+			StagingLocalServiceUtil.enableLocalStaging(
+				_user.getUserId(), group, true, true, new ServiceContext());
+
+			Group stagingGroup = group.getStagingGroup();
+
+			List<Layout> stagingLayouts = _layoutLocalService.getLayouts(
+				stagingGroup.getGroupId(), false);
+
+			Layout stagingLayout = stagingLayouts.get(0);
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			serviceContext.setCommand("delete");
+			serviceContext.setAttribute(
+				"removePortletIds", new String[] {portletId});
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			ThreadLocal<Long> layoutRevisionIdThreadLocal =
+				ReflectionTestUtil.getFieldValue(
+					LayoutRevisionLocalServiceImpl.class, "_layoutRevisionId");
+
+			layoutRevisionIdThreadLocal.set(0L);
+
+			UnicodeProperties updatedUnicodeProperties =
+				stagingLayout.getTypeSettingsProperties();
+
+			updatedUnicodeProperties.remove("column-1");
+
+			_layoutLocalService.updateLayout(
+				stagingGroup.getGroupId(), stagingLayout.isPrivateLayout(),
+				stagingLayout.getLayoutId(),
+				updatedUnicodeProperties.toString());
+
+			LayoutRevision lastLayoutRevision =
+				LayoutRevisionLocalServiceUtil.fetchLastLayoutRevision(
+					stagingLayout.getPlid(), false);
+
+			List<PortletPreferences> portletPreferences =
+				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+					lastLayoutRevision.getLayoutRevisionId(), portletId);
+
+			Assert.assertTrue(
+				portletPreferences.toString(), portletPreferences.isEmpty());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group.getGroupId());
+		}
+	}
+
+	@Test
+	public void testPageVersioningPortletRemovalLayoutUpdateNoContextParam()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addLayout(group);
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		String portletId = PortletIdCodec.encode(
+			JournalPortletKeys.JOURNAL, PortletIdCodec.generateInstanceId());
+
+		PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletId);
+
+		unicodeProperties.setProperty("column-1", portletId);
+
+		layout.setTypeSettingsProperties(unicodeProperties);
+
+		_layoutLocalService.updateLayout(layout);
+
+		try {
+			StagingLocalServiceUtil.enableLocalStaging(
+				_user.getUserId(), group, true, true, new ServiceContext());
+
+			Group stagingGroup = group.getStagingGroup();
+
+			List<Layout> stagingLayouts = _layoutLocalService.getLayouts(
+				stagingGroup.getGroupId(), false);
+
+			Layout stagingLayout = stagingLayouts.get(0);
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			serviceContext.setCommand("delete");
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			ThreadLocal<Long> layoutRevisionIdThreadLocal =
+				ReflectionTestUtil.getFieldValue(
+					LayoutRevisionLocalServiceImpl.class, "_layoutRevisionId");
+
+			layoutRevisionIdThreadLocal.set(0L);
+
+			UnicodeProperties updatedUnicodeProperties =
+				stagingLayout.getTypeSettingsProperties();
+
+			updatedUnicodeProperties.remove("column-1");
+
+			_layoutLocalService.updateLayout(
+				stagingGroup.getGroupId(), stagingLayout.isPrivateLayout(),
+				stagingLayout.getLayoutId(),
+				updatedUnicodeProperties.toString());
+
+			LayoutRevision lastLayoutRevision =
+				LayoutRevisionLocalServiceUtil.fetchLastLayoutRevision(
+					stagingLayout.getPlid(), false);
+
+			List<PortletPreferences> portletPreferences =
+				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+					lastLayoutRevision.getLayoutRevisionId(), portletId);
 
 			Assert.assertFalse(
 				portletPreferences.toString(), portletPreferences.isEmpty());

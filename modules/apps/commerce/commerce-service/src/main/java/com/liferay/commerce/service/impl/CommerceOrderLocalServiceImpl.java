@@ -241,6 +241,13 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setTotalWithTaxAmount(totalWithTaxAmount);
 		commerceOrder.setPaymentStatus(paymentStatus);
 
+		_setCommerceOrderShippingDiscountValue(commerceOrder, null, true);
+		_setCommerceOrderShippingDiscountValue(commerceOrder, null, false);
+		_setCommerceOrderSubtotalDiscountValue(commerceOrder, null, true);
+		_setCommerceOrderSubtotalDiscountValue(commerceOrder, null, false);
+		_setCommerceOrderTotalDiscountValue(commerceOrder, null, true);
+		_setCommerceOrderTotalDiscountValue(commerceOrder, null, false);
+
 		Date orderDate = PortalUtil.getDate(
 			orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
 			orderDateMinute, user.getTimeZone(), null);

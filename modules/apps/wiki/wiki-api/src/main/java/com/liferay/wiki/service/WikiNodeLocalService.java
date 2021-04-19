@@ -78,6 +78,12 @@ public interface WikiNodeLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public WikiNode addNode(
+			String externalReferenceCode, long userId, String name,
+			String description, ServiceContext serviceContext)
+		throws PortalException;
+
 	public void addNodeResources(
 			long nodeId, boolean addGroupPermissions,
 			boolean addGuestPermissions)

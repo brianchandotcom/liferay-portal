@@ -52,6 +52,17 @@ public class WikiNodeLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.wiki.model.WikiNode addNode(
+			String externalReferenceCode, long userId, String name,
+			String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _wikiNodeLocalService.addNode(
+			externalReferenceCode, userId, name, description, serviceContext);
+	}
+
+	@Override
 	public void addNodeResources(
 			long nodeId, boolean addGroupPermissions,
 			boolean addGuestPermissions)

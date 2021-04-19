@@ -40,6 +40,16 @@ public class WikiNodeServiceWrapper
 	}
 
 	@Override
+	public com.liferay.wiki.model.WikiNode addNode(
+			String externalReferenceCode, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _wikiNodeService.addNode(
+			externalReferenceCode, name, description, serviceContext);
+	}
+
+	@Override
 	public void deleteNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

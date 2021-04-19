@@ -85,12 +85,54 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6031. EditAnAttachment"
-	@ignore = "true"
 	@priority = "3"
 	test EditAnAttachment {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6031 EditAnAttachment
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields");
+
+		CustomFields.addCP(
+			customFieldName = "Custom Field",
+			customFieldType = "Text",
+			customInputDataType = "Text",
+			resourceName = "Commerce Product Attachment");
+
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+		CommerceProductImages.addAttachmentImages(imageTitles = "Black");
+
+		Click(
+			key_value = "Commerce_Black.jpg",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "Commerce_Black_Edit");
+
+		Type(
+			locator1 = "TextInput#CUSTOM_FIELD",
+			value1 = "Test");
+
+		Button.clickSaveAsDraft();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for COMMERCE-6027. EditAnImage"

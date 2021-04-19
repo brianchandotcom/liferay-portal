@@ -1,15 +1,6 @@
-configurations {
-	googleCloud
-}
-
 dependencies {
-	googleCloud platform("com.google.cloud:libraries-bom:20.0.0")
-
-	googleCloud group: "com.google.cloud", name: "google-cloud-translate"
-}
-
-dependencies {
-	compileInclude files(configurations.googleCloud.resolvedConfiguration.files)
+	compileIncludePlatform group: "com.google.cloud", name: "google-cloud-translate"
+	compileIncludePlatform platform("com.google.cloud:libraries-bom:20.0.0")
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

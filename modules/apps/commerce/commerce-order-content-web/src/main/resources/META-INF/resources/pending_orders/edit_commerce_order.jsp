@@ -206,8 +206,17 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 								</c:when>
 								<c:otherwise>
 									<c:if test="<%= billingCommerceAddress != null %>">
-										<%= billingCommerceAddress.getStreet1() %><br />
-										<%= billingCommerceAddress.getCity() + StringPool.SPACE + billingCommerceAddress.getZip() %>
+										<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %></p>
+
+										<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
+											<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet2()) %></p>
+										</c:if>
+
+										<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet3()) %>">
+											<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet3()) %></p>
+										</c:if>
+
+										<p><%= HtmlUtil.escape(billingCommerceAddress.getCity() + StringPool.SPACE + billingCommerceAddress.getZip()) %></p>
 									</c:if>
 								</c:otherwise>
 							</c:choose>
@@ -243,8 +252,17 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 								</c:when>
 								<c:otherwise>
 									<c:if test="<%= shippingCommerceAddress != null %>">
-										<%= shippingCommerceAddress.getStreet1() %><br />
-										<%= shippingCommerceAddress.getCity() + StringPool.SPACE + shippingCommerceAddress.getZip() %>
+										<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet1()) %></p>
+
+										<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet2()) %>">
+											<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet2()) %></p>
+										</c:if>
+
+										<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet3()) %>">
+											<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet3()) %></p>
+										</c:if>
+
+										<p><%= HtmlUtil.escape(shippingCommerceAddress.getCity() + StringPool.SPACE + shippingCommerceAddress.getZip()) %></p>
 									</c:if>
 								</c:otherwise>
 							</c:choose>

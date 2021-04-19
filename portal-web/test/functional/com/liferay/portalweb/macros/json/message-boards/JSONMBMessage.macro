@@ -10,13 +10,35 @@ definition {
 			var parentCategoryId = "0";
 		}
 
+		if (!(isSet(categoryDescription))) {
+			var categoryDescription = "";
+		}
+
+		if (isSet(groupName)) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGroupPermissions = "true",
+				addGuestPermissions = "true",
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				groupName = "${groupName}",
+				site = "${site}",
+				workflowAction = "${workflowAction}");
+		}
+		else {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGroupPermissions = "true",
+				addGuestPermissions = "true",
+				groupName = "Guest");
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/mb.mbcategory/add-category \
 			-u test@liferay.com:test \
 			-d userId=${userId} \
 			-d parentCategoryId=${parentCategoryId} \
 			-d name=${categoryName} \
-			-d description=${categoryDescription}
+			-d description=${categoryDescription} \
+			-d serviceContext=${serviceContext}
 		''';
 
 		echo("## Adding a 'Category' with the following info using JSONWS:");

@@ -29,6 +29,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-109590. Assert no Container element is outside when add a Grid element to content page. Can nest a Grid fragment or multiple Grid inside one module of another one."
+	@priority = "5"
+	test AddGridToColumnOfAnotherGrid {
+		property portal.acceptance = "true";
+
+		task ("Assert add Grid without Container") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+
+			AssertElementNotPresent(
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+
+		task ("Assert add the second Grid in module 1 of the first Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Layout Elements",
+				columnNumber = "1",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+		}
+
+		task ("Assert add the third Grid in module 1 of the first Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Layout Elements",
+				columnNumber = "1",
+				fragmentName = "Grid",
+				height = "Tall",
+				navTab = "Fragments",
+				targetFragmentName = "Grid");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-108339. Can add several Grid elements to Container."
 	@priority = "5"
 	test AddGridToContainer {
@@ -62,6 +107,60 @@ definition {
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+	}
+
+	@description = "This is a test for LPS-110708 and LPS-121112. Can add Grid element into a custom module of anthor one. Assert the height of empty row is greater than 20px after adding element to the resized module of another row."
+	@priority = "4"
+	test AddGridToCustomModuleOfAnotherGrid {
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Move the third module to the second row") {
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Grid",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			DragAndDrop.dragAndDrop(
+				key_position = "3",
+				locator1 = "PageEditor#GRID_COLUMN_RESIZER",
+				value1 = "530,0");
+
+			PageEditor.waitForAutoSave();
+
+			AssertVisible(locator1 = "PageEditor#GRID_COLUMN_FIRST_RESIZER");
+		}
+
+		task ("Add a Grid to the third module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Layout Elements",
+				columnNumber = "3",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "3",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+
+		task ("Assert the height of the first module is greater than 20px") {
+			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')]");
+			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
+
+			TestUtils.isGreaterThan(
+				actual = "${moduleHeight}",
+				expected = "20");
 		}
 	}
 
@@ -153,10 +252,18 @@ definition {
 				fragmentName = "Grid");
 		}
 
+		task ("View the Grid Styles") {
+			PageEditor.viewGridStyle(
+				columnCount = "3",
+				position = "1",
+				spaceBetweenColumns = "true");
+		}
+
 		task ("Configure the Grid") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panel = "General");
+				panel = "General",
+				spaceBetweenColumns = "false");
 
 			PageEditor.editLayoutGrid(
 				inverseOrder = "true",
@@ -165,12 +272,13 @@ definition {
 				verticalAlignment = "Bottom");
 		}
 
-		task ("View the Grid style") {
+		task ("View the Grid styles") {
 			PageEditor.viewGridStyle(
 				columnCount = "2",
 				inverseOrder = "true",
 				layout = "12",
 				position = "1",
+				spaceBetweenColumns = "false",
 				verticalAlignment = "Bottom");
 		}
 
@@ -180,6 +288,323 @@ definition {
 
 		task ("View the duplicate Grid fragment") {
 			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
+		}
+	}
+
+	@description = "This is a test for LPS-107285. Can duplicate the Grid in a Container."
+	@priority = "5"
+	test DuplicateGridInContainer {
+		property portal.acceptance = "true";
+
+		task ("Add a Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Grid into Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+		}
+
+		task ("Assert duplicate Grid in the Container") {
+			PageEditor.gotoDuplicate(fragmentName = "Grid");
+
+			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
+
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+	}
+
+	@description = "This is a test for LPS-107285. When the Grid fragment is duplicated, the components in each of modules should also be duplicated."
+	@priority = "4"
+	test DuplicateGridWithElements {
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Add a Web Content Display widget to module 1") {
+			PageEditor.gotoTab(tabName = "Widgets");
+
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				value1 = "Web Content Display");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_columnNumber = "1",
+				key_portletName = "Web Content Display",
+				key_position = "1",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator2 = "PageEditor#GRID_COLUMN",
+				value1 = "Web Content Display");
+
+			Pause(locator1 = "5000");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Web Content Display')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+
+			PageEditor.gotoTab(tabName = "Contents");
+		}
+
+		task ("Add a Heading fragment to module 2") {
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_columnNumber = "2",
+				key_fragmentName = "Heading",
+				key_position = "1",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#GRID_COLUMN",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+
+		task ("Add a Button fragment to module 3") {
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_columnNumber = "3",
+				key_fragmentName = "Button",
+				key_position = "1",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#GRID_COLUMN",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "3",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+
+		task ("Assert nested elements duplicated with Grid") {
+			PageEditor.gotoDuplicate(fragmentName = "Grid");
+
+			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Web Content Display')]",
+				key_position = "2",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_position = "2",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+
+			AssertElementPresent(
+				key_columnNumber = "3",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_position = "2",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+	}
+
+	@description = "This is a test for LPS-121078. Resize module of Grid."
+	@priority = "4"
+	test ResizeModuleOfGrid {
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Add a Heading fragment to the second module of Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "2",
+				fragmentName = "Heading",
+				navTab = "Fragments");
+		}
+
+		task ("Configure the Heading's style") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			PageEditor.configureFragment(
+				alignment = "Center",
+				textColor = "Success");
+
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+			PageEditor.configureFragment(headingLevel = "H2");
+		}
+
+		task ("View the Heading's style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				textColor = "success");
+		}
+
+		task ("Add a Button fragment above the Grid") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			DragAndDrop.javaScriptDragAndDropToUp(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				key_targetFragmentName = "Grid",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Configure the Button's style") {
+			PageEditor.gotoConfiguration(fragmentName = "Button");
+
+			PageEditor.configureFragment(type = "Link");
+
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			PageEditor.configureFragment(
+				alignment = "Center",
+				size = "Large");
+		}
+
+		task ("View the Button's style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+		}
+
+		task ("Resize the modules") {
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Grid",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			DragAndDrop.dragAndDrop(
+				key_position = "3",
+				locator1 = "PageEditor#GRID_COLUMN_RESIZER",
+				value1 = "100,0");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Assert the width of modules") {
+			PageEditor.viewGridStyle(
+				columnCount = "3",
+				position = "1");
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][1]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][2]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][3]");
+
+			var thirdModuleWidth = selenium.getElementWidth("xpath=(//div[contains(@class,'page-editor__col__border')])[3]");
+
+			TestUtils.assertNotEquals(
+				actual = "${thirdModuleWidth}",
+				expected = "0");
+		}
+
+		task ("View the Heading's style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				textColor = "success");
+		}
+
+		task ("View the Button's style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+		}
+
+		task ("Assert the width of modules in view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			for (var n : list "1,2,3") {
+				AssertElementPresent(locator1 = "//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col')][${n}]");
+			}
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'col-4')][1]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-4')][2]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-4')][3]");
+
+			var thirdModuleWidth = selenium.getElementWidth("//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col')][3]");
+
+			TestUtils.assertNotEquals(
+				actual = "${thirdModuleWidth}",
+				expected = "0");
+		}
+
+		task ("View the Heading's style in view mode") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "heading",
+				headingLevel = "h2");
+
+			AssertElementPresent(
+				key_fragmentName = "heading",
+				key_textColor = "var(--success)",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_alignment = "center",
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
+		}
+
+		task ("View the Button's style in view mode") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+
+			AssertElementPresent(
+				key_alignment = "center",
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
 		}
 	}
 

@@ -117,6 +117,23 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage addPage(
+			String externalReferenceCode, long nodeId, String title,
+			String content, String summary, boolean minorEdit, String format,
+			String parentTitle, String redirectTitle,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_wikiNodeModelResourcePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_PAGE);
+
+		return wikiPageLocalService.addPage(
+			externalReferenceCode, getUserId(), nodeId, title,
+			WikiPageConstants.VERSION_DEFAULT, content, summary, minorEdit,
+			format, true, parentTitle, redirectTitle, serviceContext);
+	}
+
+	@Override
 	public FileEntry addPageAttachment(
 			long nodeId, String title, String fileName, File file,
 			String mimeType)

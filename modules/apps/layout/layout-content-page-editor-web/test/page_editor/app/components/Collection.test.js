@@ -50,6 +50,8 @@ function renderCollection(itemConfig = {}) {
 		numberOfItems: 5,
 	};
 
+	const collectionItemChildren = [];
+
 	return render(
 		<DndProvider backend={HTML5Backend}>
 			<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
@@ -74,7 +76,9 @@ function renderCollection(itemConfig = {}) {
 								type: 'collection-item',
 							}}
 							layoutData={{}}
-						></CollectionItemWithControls>
+						>
+							{collectionItemChildren}
+						</CollectionItemWithControls>
 					</Collection>
 				</DragAndDropContextProvider>
 			</StoreAPIContextProvider>

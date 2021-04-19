@@ -185,13 +185,10 @@ definition {
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
 			textIcon = "english-United States");
-			
 
 		AssertElementPresent(
 			key_productName = "Shock Absorber",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
-
 	}
 
 	@description = "COMMERCE-6318. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"

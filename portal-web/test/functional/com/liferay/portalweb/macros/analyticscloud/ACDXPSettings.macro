@@ -1,3 +1,14 @@
 definition {
 
+    macro goToInstanceSettingsAC{
+
+   		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		Click(locator1 = "//*[contains(@href, 'analytics-cloud-connection')]");
+
+    }
+
 }

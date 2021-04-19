@@ -494,18 +494,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/jutf7.jar</file-name>
-				<version>1.0.0</version>
-				<project-name>jutf7</project-name>
-				<project-url>http://jutf7.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/mail.jar</file-name>
 				<version>1.6.6</version>
 				<project-name>JavaMail</project-name>

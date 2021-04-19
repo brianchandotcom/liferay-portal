@@ -282,16 +282,8 @@ public abstract class Base${schemaName}ResourceImpl
 							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 								${schemaVarName}
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, postBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
-								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
-									Integer.valueOf((String)
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
-									Long.valueOf((String)
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-									String.valueOf(
-								<#else>
-									null
-								</#if>
-								parameters.get("${postBatchJavaMethodSignature.parentSchemaName!?uncap_first}Id"))
+								<@castType type=javaMethodParameter.parameterType />
+								parameters.get("${postBatchJavaMethodSignature.parentSchemaName!?uncap_first}Id")
 							<#else>
 								null
 							</#if>
@@ -337,21 +329,8 @@ public abstract class Base${schemaName}ResourceImpl
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "filter") || stringUtil.equals(javaMethodParameter.parameterName, "pagination") || stringUtil.equals(javaMethodParameter.parameterName, "search") || stringUtil.equals(javaMethodParameter.parameterName, "sorts") || stringUtil.equals(javaMethodParameter.parameterName, "user")>
 							${javaMethodParameter.parameterName}
 						<#else>
-							<#if javaMethodParameter.parameterType?contains("java.lang.Boolean")>
-								(Boolean
-							<#elseif javaMethodParameter.parameterType?contains("java.lang.Integer")>
-								(Integer
-							<#elseif javaMethodParameter.parameterType?contains("java.lang.Long")>
-								(Long
-							<#elseif javaMethodParameter.parameterType?contains("java.util.Date")>
-								(java.util.Date
-							<#else>
-								(String
-							</#if>
-							<#if stringUtil.startsWith(javaMethodParameter.parameterType, "[L")>
-								[]
-							</#if>
-							) parameters.get("${javaMethodParameter.parameterName}")
+							<@castType type=javaMethodParameter.parameterType />
+							parameters.get("${javaMethodParameter.parameterName}")
 						</#if>
 						<#sep>, </#sep>
 					</#list>
@@ -401,23 +380,10 @@ public abstract class Base${schemaName}ResourceImpl
 								<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
 									(${schemaVarName}.get${schemaName}Id() != null) ? ${schemaVarName}.get${schemaName}Id() :
 								</#if>
-
-								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
-									(Integer)
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-									(String)
-								<#else>
-									(Long)
-								</#if>
+								<@castType type=javaMethodParameter.parameterType />
 								parameters.get("${schemaVarName}Id")
 							<#elseif putBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putBatchJavaMethodSignature.parentSchemaName?uncap_first + "Id")>
-								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
-									(Integer)
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-									(String)
-								<#else>
-									(Long)
-								</#if>
+								<@castType type=javaMethodParameter.parameterType />
 								parameters.get("${javaMethodSignature.parentSchemaName?uncap_first}Id")
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 								null
@@ -554,3 +520,25 @@ public abstract class Base${schemaName}ResourceImpl
 	</#if>
 
 }
+
+<#macro castType
+	type
+>
+	<#if type?contains("java.lang.Boolean")>
+		(Boolean
+	<#elseif type?contains("java.util.Date")>
+		(java.util.Date
+	<#elseif type?contains("java.lang.Double")>
+		(Double
+	<#elseif type?contains("java.lang.Integer")>
+		(Integer
+	<#elseif type?contains("java.lang.Long")>
+		(Long
+	<#elseif type?contains("java.lang.String")>
+		(String
+	</#if>
+	<#if stringUtil.startsWith(type, "[L")>
+		[]
+	</#if>
+	)
+</#macro>

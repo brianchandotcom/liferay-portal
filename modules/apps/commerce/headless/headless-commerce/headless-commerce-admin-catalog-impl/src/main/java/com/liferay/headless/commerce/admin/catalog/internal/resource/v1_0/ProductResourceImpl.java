@@ -89,6 +89,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,6 +115,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ProductResourceImpl
 	extends BaseProductResourceImpl implements EntityModelResource {
+
+	@Override
+	public void delete(
+			Collection<Product> products, Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (Product product : products) {
+			deleteProduct(product.getProductId());
+		}
+	}
 
 	@Override
 	public Response deleteProduct(Long id) throws Exception {

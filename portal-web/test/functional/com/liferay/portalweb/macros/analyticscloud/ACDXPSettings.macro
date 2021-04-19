@@ -7,17 +7,18 @@ definition {
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 
-		Click(locator1 = "//*[contains(@href, 'analytics-cloud-connection')]");
-
+		Click(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_DXP_OPTION");
     }
         
     macro connectDXPtoAnalyticsCloud {
 
-		Click(locator1 = "//input[contains(@id,'token')]");
+        ACDXPSettings.goToInstanceSettingsAC();
 
-		Paste(locator1 = "//input[contains(@id,'token')]");
+		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
 
-		Click(locator1 = "//button[contains(@id,'tokenButton')]");
+		Paste(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
+
+		Click(locator1 = "ACDXPSettings#CONNECT_WITH_TOKEN_BUTTON");
 
 		Click(locator1 = "//*[contains(@class, 'nav-link') and contains(@href,'synced-sites')]");
 

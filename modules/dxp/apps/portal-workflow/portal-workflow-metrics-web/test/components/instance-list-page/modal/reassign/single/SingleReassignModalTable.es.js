@@ -49,6 +49,8 @@ const ContainerMock = ({children}) => {
 	);
 };
 
+const setAssigneeId = jest.fn();
+
 describe('The SingleReassignModalTable component should', () => {
 	afterEach(cleanup);
 
@@ -78,8 +80,6 @@ describe('The SingleReassignModalTable component should', () => {
 		status: 'Completed',
 		taskNames: ['Update'],
 	};
-
-	const setAssigneeId = jest.fn();
 
 	test('Render with statuses Completed and Overdue', () => {
 		const {container} = render(
@@ -192,6 +192,7 @@ describe('The AssigneeInput component should', () => {
 					reassignedTasks={{
 						tasks: [{assigneeId: 20124, id: 39347}],
 					}}
+					setAssigneeId={setAssigneeId}
 					setReassignedTasks={setReassignMock}
 					taskId={39347}
 				/>
@@ -236,6 +237,7 @@ describe('The AssigneeInput component should', () => {
 			<MockRouter client={clientMock}>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{tasks: []}}
+					setAssigneeId={setAssigneeId}
 					setReassignedTasks={setReassignMock}
 					taskId={39347}
 				/>
@@ -260,6 +262,7 @@ describe('The AssigneeInput component should', () => {
 			<MockRouter client={clientMock}>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{tasks: [{assigneeId: 20124, id: 39347}]}}
+					setAssigneeId={setAssigneeId}
 					setReassignedTasks={setReassignMock}
 					taskId={39347}
 				/>

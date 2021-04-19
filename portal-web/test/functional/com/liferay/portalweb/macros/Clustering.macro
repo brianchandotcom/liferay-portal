@@ -231,4 +231,13 @@ definition {
 		}
 	}
 
+	@description = "This will wait 5 minutes for node at port ${nodePort} to shutdown"
+	macro waitForNodeShutdown {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "wait-for-server-shutdown -Dapp.server.port.number=${nodePort}");
+
+		Pause(locator1 = "30000");
+	}
+
 }

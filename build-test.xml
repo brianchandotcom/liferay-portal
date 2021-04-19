@@ -13917,4 +13917,20 @@ url=${short.hostname}:8080</echo>
 			</then>
 		</if>
 	</target>
+
+	<target name="wait-for-server-shutdown">
+		<sleep seconds="10" />
+
+		<waitfor checkevery="5" checkeveryunit="second" maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.shutdown.timeout">
+			<not>
+				<http url="http://localhost:${app.server.port.number}/web/guest" />
+			</not>
+		</waitfor>
+
+		<fail message="Server is still available at localhost:${app.server.port.number}">
+			<condition>
+				<isset property="app.server.shutdown.timeout" />
+			</condition>
+		</fail>
+	</target>
 </project>

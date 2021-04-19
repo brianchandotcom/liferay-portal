@@ -21,6 +21,50 @@ definition {
 
 	@ignore = "true"
 	@priority = "3"
+	test ExceedDoubleNodeLimit {
+		property app.server.bundles.size = "4";
+		property commerce.enabled = "false";
+		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+		property skip.start-app-server = "false";
+
+		for (var nodeNumber : list "8,9,10") {
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		Navigator.openSpecificURL(url = "http://localhost:12080");
+
+		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
+
+		Clustering.waitForNodeShutdown(nodePort = "12080");
+
+		Clustering.waitForNodeShutdown(nodePort = "11080");
+
+		Clustering.waitForNodeShutdown(nodePort = "10080");
+
+		// Wait for cluster to notify all nodes that they are no longer overloaded
+
+		Pause(locator1 = "60000");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	@ignore = "true"
+	@priority = "3"
 	test LimitCommerceToLessThanNodeLimit {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-virtual-cluster.xml";
@@ -108,24 +152,55 @@ definition {
 			deleteLiferayHome = "false",
 			nodePort = "9080");
 
+		// TODO Liferay console message assert on all 3 nodes
+
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "You have exceeded the maximum number of cluster nodes in cluster, overloaded nodes will be deactivated in 2 hours",
-			nodePort = "9080");
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
 
-		Pause(locator1 = "300000");
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080");
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
+
+		Clustering.waitForNodeShutdown(nodePort = "9080");
+
+		// Wait for cluster to notify all nodes that they are no longer overloaded
+
+		Pause(locator1 = "60000");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "8080");
 
-		Navigator.openSpecificURL(url = "http://localhost:10080");
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
 	@priority = "4"
@@ -188,11 +263,10 @@ definition {
 
 		CommerceLicense.viewCommerceAvailable();
 
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "You have exceeded the maximum number of cluster nodes in cluster, overloaded nodes will be deactivated in 2 hours",
-			nodePort = "9080");
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
 
-		Pause(locator1 = "300000");
+		Clustering.waitForNodeShutdown(nodePort = "9080");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -209,9 +283,10 @@ definition {
 		CommerceLicense.viewCommerceAvailable();
 	}
 
-	@priority = "5"
-	test ViewNodeLimit {
+	@priority = "4"
+	test LimitPreviouslyValidatedClusterNodesWithManualRecovery {
 		property commerce.enabled = "false";
+		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 
 		Clustering.startSpecificServer(
@@ -222,15 +297,95 @@ definition {
 			deleteLiferayHome = "true",
 			nodePort = "9080");
 
+		Clustering.viewClusterStatusInConsole();
+
+		User.firstLoginPG();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Clustering.shutdownSpecificServer(nodePort = "9080");
+
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			nodePort = "10080");
 
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		Navigator.openSpecificURL(url = "http://localhost:10080");
+
+		Page.assertNodePortPG(nodePort = "10080");
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "false",
+			nodePort = "9080");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
+
+		Clustering.waitForNodeShutdown(nodePort = "9080");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		Navigator.openSpecificURL(url = "http://localhost:10080");
+
+		Page.assertNodePortPG(nodePort = "10080");
+	}
+
+	@priority = "5"
+	test ViewNodeLimit {
+		property commerce.enabled = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+		property skip.start-app-server = "false";
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		// TODO Liferay console message assert on all 3 nodes
+
 		User.firstLoginPG();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		Clustering.viewClusterStatusInConsole();
 
 		Page.assertNodePortPG(nodePort = "8080");
+
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/logout");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
 
 		User.loginPG(
 			nodePort = "9080",
@@ -239,9 +394,8 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "You have exceeded the maximum number of cluster nodes in cluster, overloaded nodes will be deactivated in 2 hours",
-			nodePort = "10080");
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
 
 		User.loginPG(
 			nodePort = "10080",
@@ -250,13 +404,33 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "10080");
 
-		// TODO Assert message to Admin in the UI when node is scheduled to deactivate
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
 
-		Pause(locator1 = "300000");
+		Navigator.openSpecificURL(url = "http://localhost:10080/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "http://localhost:10080");
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes in cluster, please shutdown nodes to recover or register a new license.");
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		Clustering.waitForNodeShutdown(nodePort = "10080");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
 	@description = "Longer version of ViewNodeLimit that includes Commerce"
@@ -300,19 +474,12 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "You have exceeded the maximum number of cluster nodes in cluster, overloaded nodes will be deactivated in 2 hours",
-			nodePort = "10080");
-
 		Page.assertNodePortPG(nodePort = "10080");
 
-		// TODO Assert message to Admin in the UI when node is scheduled to deactivate
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
 
-		Pause(locator1 = "300000");
-
-		Navigator.openSpecificURL(url = "http://localhost:10080");
-
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes in cluster, please shutdown nodes to recover or register a new license.");
+		Clustering.waitForNodeShutdown(nodePort = "10080");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -327,6 +494,69 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		CommerceLicense.viewCommerceAvailable();
+	}
+
+	@priority = "5"
+	test ViewNodeLimitWithManualRecovery {
+		property commerce.enabled = "false";
+		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
+		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+		property skip.start-app-server = "false";
+
+		User.firstLoginPG();
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = "10080");
+
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+		Alert.viewErrorMessage(errorMessage = "Grace period");
+
+		takeScreenshot();
+
+		Pause(locator1 = "360000");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Alert.viewErrorMessage(errorMessage = "Grace period ended");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Alert.viewErrorMessage(errorMessage = "Grace period ended");
+
+		Navigator.openSpecificURL(url = "http://localhost:10080");
+
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes in cluster");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_2",
+			value1 = "This instance is not registered.");
 	}
 
 }

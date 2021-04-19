@@ -218,9 +218,10 @@ public class WikiPageStagedModelDataHandler
 
 			if (existingPage == null) {
 				importedPage = _wikiPageLocalService.addPage(
-					userId, nodeId, page.getTitle(), page.getVersion(),
-					page.getContent(), page.getSummary(), page.isMinorEdit(),
-					page.getFormat(), page.isHead(), page.getParentTitle(),
+					page.getExternalReferenceCode(), userId, nodeId,
+					page.getTitle(), page.getVersion(), page.getContent(),
+					page.getSummary(), page.isMinorEdit(), page.getFormat(),
+					page.isHead(), page.getParentTitle(),
 					page.getRedirectTitle(), serviceContext);
 
 				String pageResourceUuid = GetterUtil.getString(

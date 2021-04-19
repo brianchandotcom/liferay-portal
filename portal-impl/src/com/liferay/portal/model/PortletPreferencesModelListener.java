@@ -130,11 +130,8 @@ public class PortletPreferencesModelListener
 				Layout layout = LayoutLocalServiceUtil.fetchLayout(
 					portletPreferences.getPlid());
 
-				if (layout == null) {
-					return;
-				}
-
-				if (NotifiedAssetEntryThreadLocal.
+				if ((layout == null) ||
+					NotifiedAssetEntryThreadLocal.
 						isNotifiedAssetEntryIdsModified()) {
 
 					return;

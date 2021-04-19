@@ -1,4 +1,5 @@
 create index IX_B54332D6 on WikiNode (companyId, status);
+create index IX_7FF2268B on WikiNode (groupId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_920CD8B1 on WikiNode (groupId, name[$COLUMN_LENGTH:75$]);
 create index IX_23325358 on WikiNode (groupId, status);
 create index IX_E0E6D12C on WikiNode (uuid_[$COLUMN_LENGTH:75$], companyId);

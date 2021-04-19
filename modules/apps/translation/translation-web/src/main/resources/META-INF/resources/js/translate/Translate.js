@@ -32,7 +32,10 @@ const reducer = (state, action) => {
 					...state.fields,
 					...action.payload,
 				},
+				formHasChanges: true,
 			};
+		case 'UPDATE_FETCH_STATUS':
+			return {...state, fetchAutoTranslateStatus: action.payload};
 		default:
 			return state;
 	}
@@ -77,27 +80,39 @@ const Translate = ({
 }) => {
 	const isMounted = useIsMounted();
 
-	const [formHasChanges, setFormHasChanges] = useState(false);
 	const [workflowAction, setWorkflowAction] = useState(
 		workflowActions.PUBLISH
 	);
 
 	const {sourceFields, targetFields} = getInfoFields(infoFieldSetEntries);
-	const [state, dispatch] = useReducer(reducer, {fields: targetFields});
+	const [state, dispatch] = useReducer(reducer, {
+		fetchAutoTranslateStatus: {
+			message: '',
+			status: '',
+		},
+		fields: targetFields,
+		formHasChanges: false,
+	});
 
 	const handleOnSaveDraft = () => {
 		setWorkflowAction(workflowActions.SAVE_DRAFT);
 	};
 
 	const handleOnChangeField = ({content, id}) => {
-		setFormHasChanges(true);
 		dispatch({
 			payload: {[id]: content},
 			type: 'changeField',
 		});
 	};
 
-	const getAutoTranslateFields = () => {
+	const fetchAutoTranslateFields = () => {
+		dispatch({
+			payload: {
+				status: 'LOADING',
+			},
+			type: 'UPDATE_FETCH_STATUS',
+		});
+
 		fetch(getAutoTranslateURL, {
 			body: JSON.stringify({
 				fields: sourceFields,
@@ -107,7 +122,21 @@ const Translate = ({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({fields}) => {
+			.then(({error, fields}) => {
+				if (error) {
+					throw error;
+				}
+
+				dispatch({
+					payload: {
+						message: Liferay.Language.get(
+							'success-translations-received'
+						),
+						status: 'SUCCESS',
+					},
+					type: 'UPDATE_FETCH_STATUS',
+				});
+
 				if (isMounted()) {
 					fields.forEach((field) => {
 						const [id, content] = Object.entries(field)[0];
@@ -118,7 +147,22 @@ const Translate = ({
 						});
 					});
 				}
-			});
+			})
+			.catch(
+				({
+					message = Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+				}) => {
+					dispatch({
+						payload: {
+							message,
+							status: 'ERROR',
+						},
+						type: 'UPDATE_FETCH_STATUS',
+					});
+				}
+			);
 	};
 
 	return (
@@ -144,8 +188,9 @@ const Translate = ({
 
 			<TranslateActionBar
 				autoTranslateButtonVisible={autoTranslateButtonVisible}
-				formHasChanges={formHasChanges}
-				getAutoTranslateFields={getAutoTranslateFields}
+				fetchAutoTranslateFields={fetchAutoTranslateFields}
+				fetchAutoTranslateStatus={state.fetchAutoTranslateStatus}
+				formHasChanges={state.formHasChanges}
 				onSaveButtonClick={handleOnSaveDraft}
 				portletNamespace={portletNamespace}
 				publishButtonDisabled={publishButtonDisabled}

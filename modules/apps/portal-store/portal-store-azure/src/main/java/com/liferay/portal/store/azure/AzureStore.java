@@ -399,61 +399,7 @@ public class AzureStore implements Store {
 		return fileVersions[0];
 	}
 
-	private String _getBlobName(
-		long companyId, long repositoryId, String fileName,
-		String versionLabel) {
-
-		return _toFullAzurePath(
-			companyId, repositoryId, fileName, versionLabel);
-	}
-
-	private String _getBlobPrefix(
-		long companyId, long repositoryId, String dirName) {
-
-		String dirPath = _toFullAzurePath(
-			companyId, repositoryId, dirName, null);
-
-		return dirPath + StringPool.SLASH;
-	}
-
-	private String _getFileName(
-		long companyId, long repositoryId, String azureBlobName) {
-
-		Objects.requireNonNull(azureBlobName);
-
-		String rootPrefix =
-			_toFullAzurePath(companyId, repositoryId, StringPool.BLANK, null) +
-				StringPool.SLASH;
-
-		if (!azureBlobName.startsWith(rootPrefix)) {
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"It looks like blob '", azureBlobName,
-					"' does not belong to company: ", companyId,
-					"and repository: ", repositoryId));
-		}
-
-		String fileNamePathWithVersion = azureBlobName.substring(
-			rootPrefix.length());
-
-		if (fileNamePathWithVersion.isEmpty() ||
-			!fileNamePathWithVersion.contains(StringPool.SLASH)) {
-
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"The blob '", azureBlobName, "' does not conform to the ",
-					"pattern ${companyId}/${repositoryId}/${fileName}",
-					"/${versionLabel} -- missing the '/${versionLabel}' part. ",
-					"Delete the blob in Azure to fix this (there should be no ",
-					"blobs directly under ${companyId}/${repositoryId}, only ",
-					"subfolders."));
-		}
-
-		return fileNamePathWithVersion.substring(
-			0, fileNamePathWithVersion.lastIndexOf(StringPool.SLASH));
-	}
-
-	private String _toFullAzurePath(
+	private String _getAzurePath(
 		long companyId, long repositoryId, String liferayPath,
 		String versionLabel) {
 
@@ -482,6 +428,57 @@ public class AzureStore implements Store {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getBlobName(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
+
+		return _getAzurePath(companyId, repositoryId, fileName, versionLabel);
+	}
+
+	private String _getBlobPrefix(
+		long companyId, long repositoryId, String dirName) {
+
+		return _getAzurePath(companyId, repositoryId, dirName, null) +
+			StringPool.SLASH;
+	}
+
+	private String _getFileName(
+		long companyId, long repositoryId, String azureBlobName) {
+
+		Objects.requireNonNull(azureBlobName);
+
+		String rootPrefix =
+			_getAzurePath(companyId, repositoryId, StringPool.BLANK, null) +
+				StringPool.SLASH;
+
+		if (!azureBlobName.startsWith(rootPrefix)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"It looks like blob '", azureBlobName,
+					"' does not belong to company: ", companyId,
+					"and repository: ", repositoryId));
+		}
+
+		String fileNamePathWithVersion = azureBlobName.substring(
+			rootPrefix.length());
+
+		if (fileNamePathWithVersion.isEmpty() ||
+			!fileNamePathWithVersion.contains(StringPool.SLASH)) {
+
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"The blob '", azureBlobName, "' does not conform to the ",
+					"pattern ${companyId}/${repositoryId}/${fileName}",
+					"/${versionLabel} -- missing the '/${versionLabel}' part. ",
+					"Delete the blob in Azure to fix this (there should be no ",
+					"blobs directly under ${companyId}/${repositoryId}, only ",
+					"subfolders."));
+		}
+
+		return fileNamePathWithVersion.substring(
+			0, fileNamePathWithVersion.lastIndexOf(StringPool.SLASH));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AzureStore.class);

@@ -98,6 +98,21 @@ public interface WikiNodeModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this wiki node.
+	 *
+	 * @return the external reference code of this wiki node
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this wiki node.
+	 *
+	 * @param externalReferenceCode the external reference code of this wiki node
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the node ID of this wiki node.
 	 *
 	 * @return the node ID of this wiki node

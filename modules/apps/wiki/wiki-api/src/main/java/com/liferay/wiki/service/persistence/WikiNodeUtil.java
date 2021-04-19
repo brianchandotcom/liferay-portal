@@ -1452,6 +1452,74 @@ public class WikiNodeUtil {
 	}
 
 	/**
+	 * Returns the wiki node where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchNodeException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching wiki node
+	 * @throws NoSuchNodeException if a matching wiki node could not be found
+	 */
+	public static WikiNode findByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.wiki.exception.NoSuchNodeException {
+
+		return getPersistence().findByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the wiki node where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 */
+	public static WikiNode fetchByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().fetchByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the wiki node where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 */
+	public static WikiNode fetchByG_ERC(
+		long groupId, String externalReferenceCode, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_ERC(
+			groupId, externalReferenceCode, useFinderCache);
+	}
+
+	/**
+	 * Removes the wiki node where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the wiki node that was removed
+	 */
+	public static WikiNode removeByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.wiki.exception.NoSuchNodeException {
+
+		return getPersistence().removeByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of wiki nodes where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching wiki nodes
+	 */
+	public static int countByG_ERC(long groupId, String externalReferenceCode) {
+		return getPersistence().countByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Caches the wiki node in the entity cache if it is enabled.
 	 *
 	 * @param wikiNode the wiki node

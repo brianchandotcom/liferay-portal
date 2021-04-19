@@ -9,6 +9,24 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_DXP_OPTION");
     }
+
+    macro navToAnalyticsCloudConnectionMenu {
+
+        Click(locator1 = "//*[contains(@class, 'nav-link') and contains(@href,'connection')]");
+
+    }
+
+    macro navToSyncedSitesMenu {
+
+        Click(locator1 = "//*[contains(@class, 'nav-link') and contains(@href,'synced-sites')]");
+
+    }
+
+    macro navToSyncedContactDataMenu {
+
+        Click(locator1 = "//*[contains(@class, 'nav-link') and contains(@href,'contact')]");
+
+    }
         
     macro connectDXPtoAnalyticsCloud {
 

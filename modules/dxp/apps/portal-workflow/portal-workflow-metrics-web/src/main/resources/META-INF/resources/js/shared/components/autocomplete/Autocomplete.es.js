@@ -51,14 +51,10 @@ const Autocomplete = ({
 
 	const handleChange = useCallback(
 		({target: {value}}) => {
-			if (selected) {
-				onSelect();
-				setSelected(false);
-			}
-
+			onSelect();
+			setSelected(false);
 			setDropDownVisible(true);
 			setValue(value);
-			// eslint-disable-next-line react-hooks/exhaustive-deps
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[onSelect, selected]

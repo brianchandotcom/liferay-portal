@@ -62,6 +62,16 @@ public class WikiNodeLocalServiceUtil {
 		return getService().addNode(userId, name, description, serviceContext);
 	}
 
+	public static WikiNode addNode(
+			String externalReferenceCode, long userId, String name,
+			String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addNode(
+			externalReferenceCode, userId, name, description, serviceContext);
+	}
+
 	public static void addNodeResources(
 			long nodeId, boolean addGroupPermissions,
 			boolean addGuestPermissions)

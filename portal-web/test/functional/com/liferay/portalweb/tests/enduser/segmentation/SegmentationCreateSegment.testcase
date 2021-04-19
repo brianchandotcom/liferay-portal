@@ -265,15 +265,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@description = "This is a test for LPS-130319."
-	@ignore = "true"
-	@priority = "5"
-	test AddSegmentBySessionHostname {
-		property portal.acceptance = "false";
-
-		// TODO LPS-130319 AddSegmentBySessionHostname pending implementation. This test is already created as EditSegmentUserBySessionHostname, but if you are able to do it better, delete the test EditSegmentUserBySessionHostname.
-	}
-
 	@description = "This is a test for LPS-130351."
 	@ignore = "true"
 	@priority = "5"

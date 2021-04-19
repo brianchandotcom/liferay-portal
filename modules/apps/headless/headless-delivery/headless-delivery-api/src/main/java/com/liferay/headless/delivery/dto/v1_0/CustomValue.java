@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CustomValue")
+@GraphQLName(description = "Represents a custom value.", value = "CustomValue")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CustomValue")
 public class CustomValue implements Serializable {
@@ -53,7 +53,7 @@ public class CustomValue implements Serializable {
 		return ObjectMapperUtil.readValue(CustomValue.class, json);
 	}
 
-	@Schema(description = "The field's content for simple types.")
+	@Schema(description = "The field's content value for simple types.")
 	@Valid
 	public Object getData() {
 		return data;
@@ -76,11 +76,13 @@ public class CustomValue implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The field's content for simple types.")
+	@GraphQLField(description = "The field's content value for simple types.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object data;
 
-	@Schema
+	@Schema(
+		description = "The localized field's content values for simple types."
+	)
 	@Valid
 	public Map<String, String> getData_i18n() {
 		return data_i18n;
@@ -106,7 +108,9 @@ public class CustomValue implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The localized field's content values for simple types."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> data_i18n;
 

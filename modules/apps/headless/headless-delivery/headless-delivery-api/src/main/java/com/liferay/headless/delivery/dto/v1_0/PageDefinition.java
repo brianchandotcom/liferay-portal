@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageDefinition")
+@GraphQLName(
+	description = "Represent a definition of a Page.", value = "PageDefinition"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageDefinition")
 public class PageDefinition implements Serializable {
@@ -53,7 +55,7 @@ public class PageDefinition implements Serializable {
 		return ObjectMapperUtil.readValue(PageDefinition.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The page's page element.")
 	@Valid
 	public PageElement getPageElement() {
 		return pageElement;
@@ -78,11 +80,11 @@ public class PageDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's page element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageElement pageElement;
 
-	@Schema
+	@Schema(description = "The page's settings.")
 	@Valid
 	public Settings getSettings() {
 		return settings;
@@ -107,7 +109,7 @@ public class PageDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's settings.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Settings settings;
 

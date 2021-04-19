@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageCollectionDefinition")
+@GraphQLName(
+	description = "Represents a definition of a Page Collection.",
+	value = "PageCollectionDefinition"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageCollectionDefinition")
 public class PageCollectionDefinition implements Serializable {
@@ -83,7 +86,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CollectionConfig collectionConfig;
 
-	@Schema
+	@Schema(description = "The fragment style of the page collection.")
 	@Valid
 	public FragmentStyle getFragmentStyle() {
 		return fragmentStyle;
@@ -108,11 +111,11 @@ public class PageCollectionDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment style of the page collection.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
-	@Schema
+	@Schema(description = "The fragment viewports of the page collection.")
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
 		return fragmentViewports;
@@ -138,11 +141,15 @@ public class PageCollectionDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The fragment viewports of the page collection."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
-	@Schema
+	@Schema(
+		description = "The style of a list of items in the page collection."
+	)
 	public String getListItemStyle() {
 		return listItemStyle;
 	}
@@ -166,11 +173,13 @@ public class PageCollectionDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The style of a list of items in the page collection."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listItemStyle;
 
-	@Schema
+	@Schema(description = "The style of a list in the page collection.")
 	public String getListStyle() {
 		return listStyle;
 	}
@@ -194,11 +203,11 @@ public class PageCollectionDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The style of a list in the page collection.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listStyle;
 
-	@Schema
+	@Schema(description = "The number of columns in the page collection.")
 	public Integer getNumberOfColumns() {
 		return numberOfColumns;
 	}
@@ -222,11 +231,11 @@ public class PageCollectionDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The number of columns in the page collection.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
 
-	@Schema
+	@Schema(description = "The number of items in the page collection.")
 	public Integer getNumberOfItems() {
 		return numberOfItems;
 	}
@@ -250,11 +259,11 @@ public class PageCollectionDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The number of items in the page collection.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfItems;
 
-	@Schema
+	@Schema(description = "The page collection's template key.")
 	public String getTemplateKey() {
 		return templateKey;
 	}
@@ -278,7 +287,7 @@ public class PageCollectionDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page collection's template key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateKey;
 

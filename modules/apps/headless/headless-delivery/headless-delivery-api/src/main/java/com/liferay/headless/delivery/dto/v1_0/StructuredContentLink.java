@@ -56,7 +56,7 @@ public class StructuredContentLink implements Serializable {
 		return ObjectMapperUtil.readValue(StructuredContentLink.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The type of content.")
 	public String getContentType() {
 		return contentType;
 	}
@@ -80,12 +80,12 @@ public class StructuredContentLink implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The type of content.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
 	@Schema(
-		description = "optional field with the structured content, can be embedded with nestedFields"
+		description = "Optional field with the structured content, can be embedded with nestedFields."
 	)
 	@Valid
 	public StructuredContent getEmbeddedStructuredContent() {
@@ -116,7 +116,7 @@ public class StructuredContentLink implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "optional field with the structured content, can be embedded with nestedFields"
+		description = "Optional field with the structured content, can be embedded with nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected StructuredContent embeddedStructuredContent;

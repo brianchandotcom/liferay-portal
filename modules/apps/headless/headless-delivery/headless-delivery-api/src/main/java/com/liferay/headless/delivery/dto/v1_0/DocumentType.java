@@ -53,7 +53,9 @@ public class DocumentType implements Serializable {
 		return ObjectMapperUtil.readValue(DocumentType.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "The list of languages the document type has a translation for."
+	)
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}
@@ -77,11 +79,13 @@ public class DocumentType implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The list of languages the document type has a translation for."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
-	@Schema
+	@Schema(description = "The list of content fields the document type has.")
 	@Valid
 	public ContentField[] getContentFields() {
 		return contentFields;
@@ -106,11 +110,13 @@ public class DocumentType implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The list of content fields the document type has."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] contentFields;
 
-	@Schema
+	@Schema(description = "The document type's description.")
 	public String getDescription() {
 		return description;
 	}
@@ -134,11 +140,11 @@ public class DocumentType implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The document type's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	@Schema
+	@Schema(description = "The localized document type's description.")
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		return description_i18n;
@@ -164,11 +170,11 @@ public class DocumentType implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized document type's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> description_i18n;
 
-	@Schema
+	@Schema(description = "The document type's name.")
 	public String getName() {
 		return name;
 	}
@@ -190,11 +196,11 @@ public class DocumentType implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The document type's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema
+	@Schema(description = "The localized document type's name.")
 	@Valid
 	public Map<String, String> getName_i18n() {
 		return name_i18n;
@@ -220,7 +226,7 @@ public class DocumentType implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized document type's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> name_i18n;
 

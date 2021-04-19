@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentImage")
+@GraphQLName(
+	description = "Represents a fragment image.", value = "FragmentImage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentImage")
 public class FragmentImage implements Serializable {
@@ -53,7 +55,7 @@ public class FragmentImage implements Serializable {
 		return ObjectMapperUtil.readValue(FragmentImage.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The fragment image's description.")
 	@Valid
 	public Object getDescription() {
 		return description;
@@ -78,11 +80,11 @@ public class FragmentImage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment image's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object description;
 
-	@Schema
+	@Schema(description = "A reference to a fragment image class primary key.")
 	@Valid
 	public FragmentImageClassPKReference getFragmentImageClassPKReference() {
 		return fragmentImageClassPKReference;
@@ -111,11 +113,13 @@ public class FragmentImage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A reference to a fragment image class primary key."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImageClassPKReference fragmentImageClassPKReference;
 
-	@Schema
+	@Schema(description = "The fragment image's title.")
 	@Valid
 	public Object getTitle() {
 		return title;
@@ -140,11 +144,13 @@ public class FragmentImage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment image's title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object title;
 
-	@Schema
+	@Schema(
+		description = "The fragment image's url. Can be inline or mapped to an external value."
+	)
 	@Valid
 	public Object getUrl() {
 		return url;
@@ -167,7 +173,9 @@ public class FragmentImage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The fragment image's url. Can be inline or mapped to an external value."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object url;
 

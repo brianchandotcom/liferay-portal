@@ -57,7 +57,7 @@ public class Experience implements Serializable {
 		return ObjectMapperUtil.readValue(Experience.class, json);
 	}
 
-	@Schema(description = "the key of the experience")
+	@Schema(description = "the experience's key.")
 	public String getKey() {
 		return key;
 	}
@@ -79,11 +79,11 @@ public class Experience implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "the key of the experience")
+	@GraphQLField(description = "the experience's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
-	@Schema(description = "the name of the experience")
+	@Schema(description = "the experience's name.")
 	public String getName() {
 		return name;
 	}
@@ -105,11 +105,11 @@ public class Experience implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "the name of the experience")
+	@GraphQLField(description = "the experience's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema
+	@Schema(description = "the localized experience's names.")
 	@Valid
 	public Map<String, String> getName_i18n() {
 		return name_i18n;
@@ -135,11 +135,11 @@ public class Experience implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "the localized experience's names.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
-	@Schema
+	@Schema(description = "A list of segments the experience is used for.")
 	@Valid
 	public Segment[] getSegments() {
 		return segments;
@@ -164,7 +164,9 @@ public class Experience implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of segments the experience is used for."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Segment[] segments;
 

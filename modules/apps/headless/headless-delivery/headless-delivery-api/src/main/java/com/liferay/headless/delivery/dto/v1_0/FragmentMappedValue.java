@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentMappedValue")
+@GraphQLName(
+	description = "Represents a fragment mapped value.",
+	value = "FragmentMappedValue"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentMappedValue")
 public class FragmentMappedValue implements Serializable {
@@ -53,7 +56,7 @@ public class FragmentMappedValue implements Serializable {
 		return ObjectMapperUtil.readValue(FragmentMappedValue.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The default value of the fragment mapped value.")
 	@Valid
 	public FragmentInlineValue getDefaultFragmentInlineValue() {
 		return defaultFragmentInlineValue;
@@ -82,7 +85,9 @@ public class FragmentMappedValue implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The default value of the fragment mapped value."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentInlineValue defaultFragmentInlineValue;
 
@@ -121,7 +126,7 @@ public class FragmentMappedValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DefaultValue defaultValue;
 
-	@Schema
+	@Schema(description = "The mapping of the fragment mapped value.")
 	@Valid
 	public Mapping getMapping() {
 		return mapping;
@@ -146,7 +151,7 @@ public class FragmentMappedValue implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The mapping of the fragment mapped value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Mapping mapping;
 

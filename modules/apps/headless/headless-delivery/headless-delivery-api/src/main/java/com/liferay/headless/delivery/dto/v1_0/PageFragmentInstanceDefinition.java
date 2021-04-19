@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageFragmentInstanceDefinition")
+@GraphQLName(
+	description = "Represents a definition of a Page Fragment Instance.",
+	value = "PageFragmentInstanceDefinition"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageFragmentInstanceDefinition")
 public class PageFragmentInstanceDefinition implements Serializable {
@@ -54,7 +57,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 			PageFragmentInstanceDefinition.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The fragment of the page fragment instance.")
 	@Valid
 	public Fragment getFragment() {
 		return fragment;
@@ -79,11 +82,11 @@ public class PageFragmentInstanceDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment of the page fragment instance.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Fragment fragment;
 
-	@Schema
+	@Schema(description = "The page fragment instance's configuration.")
 	@Valid
 	public Map<String, Object> getFragmentConfig() {
 		return fragmentConfig;
@@ -109,11 +112,11 @@ public class PageFragmentInstanceDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page fragment instance's configuration.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> fragmentConfig;
 
-	@Schema
+	@Schema(description = "The fragment fields of the page fragment instance.")
 	@Valid
 	public FragmentField[] getFragmentFields() {
 		return fragmentFields;
@@ -139,11 +142,13 @@ public class PageFragmentInstanceDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The fragment fields of the page fragment instance."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentField[] fragmentFields;
 
-	@Schema
+	@Schema(description = "The fragment style of the page fragment instance.")
 	@Valid
 	public FragmentStyle getFragmentStyle() {
 		return fragmentStyle;
@@ -168,11 +173,15 @@ public class PageFragmentInstanceDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The fragment style of the page fragment instance."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
-	@Schema
+	@Schema(
+		description = "A list of fragment viewports of the page fragment instance."
+	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
 		return fragmentViewports;
@@ -198,11 +207,15 @@ public class PageFragmentInstanceDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of fragment viewports of the page fragment instance."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
-	@Schema
+	@Schema(
+		description = "A list of widget instances of the page fragment instance."
+	)
 	@Valid
 	public WidgetInstance[] getWidgetInstances() {
 		return widgetInstances;
@@ -228,7 +241,9 @@ public class PageFragmentInstanceDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of widget instances of the page fragment instance."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetInstance[] widgetInstances;
 

@@ -60,7 +60,9 @@ public class ContentStructure implements Serializable {
 		return ObjectMapperUtil.readValue(ContentStructure.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "The key of the asset library to which the content structure is scoped."
+	)
 	public String getAssetLibraryKey() {
 		return assetLibraryKey;
 	}
@@ -84,12 +86,14 @@ public class ContentStructure implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The key of the asset library to which the content structure is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
 	@Schema(
-		description = "The list of languages the structure has a translation for."
+		description = "The list of languages the content structure has a translation for."
 	)
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -115,7 +119,7 @@ public class ContentStructure implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The list of languages the structure has a translation for."
+		description = "The list of languages the content structure has a translation for."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
@@ -269,7 +273,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
-	@Schema
+	@Schema(description = "The localized content structure's description.")
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		return description_i18n;
@@ -295,7 +299,9 @@ public class ContentStructure implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The localized content structure's description."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> description_i18n;
 
@@ -351,7 +357,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
-	@Schema
+	@Schema(description = "The localized content structure's names.")
 	@Valid
 	public Map<String, String> getName_i18n() {
 		return name_i18n;
@@ -377,7 +383,7 @@ public class ContentStructure implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized content structure's names.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> name_i18n;
 

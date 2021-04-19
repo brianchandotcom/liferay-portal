@@ -50,7 +50,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("NavigationMenu")
+@GraphQLName(
+	description = "Represents a navigation menu.", value = "NavigationMenu"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NavigationMenu")
 public class NavigationMenu implements Serializable {
@@ -59,7 +61,9 @@ public class NavigationMenu implements Serializable {
 		return ObjectMapperUtil.readValue(NavigationMenu.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -85,11 +89,13 @@ public class NavigationMenu implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(description = "The navigation menu's creator.")
 	@Valid
 	public Creator getCreator() {
 		return creator;
@@ -114,11 +120,11 @@ public class NavigationMenu implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The navigation menu's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(description = "The navigation menu's creation date.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -142,11 +148,11 @@ public class NavigationMenu implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The navigation menu's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
-	@Schema
+	@Schema(description = "The last time the navigation menu changed.")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -170,11 +176,11 @@ public class NavigationMenu implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The last time the navigation menu changed.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
-	@Schema
+	@Schema(description = "The navigation menu's ID.")
 	public Long getId() {
 		return id;
 	}
@@ -196,11 +202,11 @@ public class NavigationMenu implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The navigation menu's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema
+	@Schema(description = "The navigation menu's name.")
 	public String getName() {
 		return name;
 	}
@@ -222,11 +228,13 @@ public class NavigationMenu implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The navigation menu's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema
+	@Schema(
+		description = "The list of navigation menu items this navigation menu has."
+	)
 	@Valid
 	public NavigationMenuItem[] getNavigationMenuItems() {
 		return navigationMenuItems;
@@ -254,11 +262,15 @@ public class NavigationMenu implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The list of navigation menu items this navigation menu has."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected NavigationMenuItem[] navigationMenuItems;
 
-	@Schema
+	@Schema(
+		description = "The navigation menu's type (primary, secondary, social)."
+	)
 	@Valid
 	public NavigationType getNavigationType() {
 		return navigationType;
@@ -293,11 +305,15 @@ public class NavigationMenu implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The navigation menu's type (primary, secondary, social)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected NavigationType navigationType;
 
-	@Schema
+	@Schema(
+		description = "The ID of the site to which this navigation menu is scoped."
+	)
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -321,7 +337,9 @@ public class NavigationMenu implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this navigation menu is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 

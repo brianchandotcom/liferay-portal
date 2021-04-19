@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageDropZoneDefinition")
+@GraphQLName(
+	description = "Represent a definition of a Page drop zone.",
+	value = "PageDropZoneDefinition"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageDropZoneDefinition")
 public class PageDropZoneDefinition implements Serializable {
@@ -53,7 +56,9 @@ public class PageDropZoneDefinition implements Serializable {
 		return ObjectMapperUtil.readValue(PageDropZoneDefinition.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "The page drop zone's allowed or unallowed fragments."
+	)
 	@Valid
 	public Object getFragmentSettings() {
 		return fragmentSettings;
@@ -78,7 +83,9 @@ public class PageDropZoneDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The page drop zone's allowed or unallowed fragments."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object fragmentSettings;
 

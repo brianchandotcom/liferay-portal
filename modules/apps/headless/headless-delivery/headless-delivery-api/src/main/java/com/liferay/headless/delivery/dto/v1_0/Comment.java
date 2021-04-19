@@ -60,7 +60,9 @@ public class Comment implements Serializable {
 		return ObjectMapperUtil.readValue(Comment.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -86,7 +88,9 @@ public class Comment implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -229,7 +233,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
-	@Schema
+	@Schema(description = "the ID of the comment's parent, if it exists.")
 	public Long getParentCommentId() {
 		return parentCommentId;
 	}
@@ -253,7 +257,7 @@ public class Comment implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "the ID of the comment's parent, if it exists.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentCommentId;
 

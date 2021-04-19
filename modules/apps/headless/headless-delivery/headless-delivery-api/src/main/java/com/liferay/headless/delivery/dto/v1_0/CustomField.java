@@ -56,7 +56,7 @@ public class CustomField implements Serializable {
 		return ObjectMapperUtil.readValue(CustomField.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The field's value.")
 	@Valid
 	public CustomValue getCustomValue() {
 		return customValue;
@@ -81,7 +81,7 @@ public class CustomField implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The field's value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomValue customValue;
 

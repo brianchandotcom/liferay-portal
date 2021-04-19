@@ -64,7 +64,9 @@ public class WikiPage implements Serializable {
 		return ObjectMapperUtil.readValue(WikiPage.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -90,7 +92,9 @@ public class WikiPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -181,7 +185,9 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(
+		description = "A list of the custom fields associated with the wiki page."
+	)
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -206,7 +212,9 @@ public class WikiPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the custom fields associated with the wiki page."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
@@ -472,7 +480,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfWikiPages;
 
-	@Schema
+	@Schema(description = "The ID of the wiki page's parent, if it exists.")
 	public Long getParentWikiPageId() {
 		return parentWikiPageId;
 	}
@@ -496,11 +504,13 @@ public class WikiPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the wiki page's parent, if it exists."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentWikiPageId;
 
-	@Schema
+	@Schema(description = "A list of related contents to this wiki page.")
 	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
@@ -526,7 +536,7 @@ public class WikiPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of related contents to this wiki page.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
@@ -562,7 +572,9 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
-	@Schema
+	@Schema(
+		description = "A flag that indicates whether the user making the requests is subscribed to this wiki page."
+	)
 	public Boolean getSubscribed() {
 		return subscribed;
 	}
@@ -586,11 +598,13 @@ public class WikiPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the user making the requests is subscribed to this wiki page."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
-	@Schema(description = "The categories associated with this blog post.")
+	@Schema(description = "The categories associated with this wiki page.")
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
 		return taxonomyCategoryBriefs;
@@ -619,13 +633,13 @@ public class WikiPage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The categories associated with this blog post."
+		description = "The categories associated with this wiki page."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
 	@Schema(
-		description = "A write-only field that adds a `TaxonomyCategory` to this resource."
+		description = "A write-only field that adds `TaxonomyCategory` instances to the wiki page."
 	)
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;
@@ -651,7 +665,7 @@ public class WikiPage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A write-only field that adds a `TaxonomyCategory` to this resource."
+		description = "A write-only field that adds `TaxonomyCategory` instances to the wiki page."
 	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;

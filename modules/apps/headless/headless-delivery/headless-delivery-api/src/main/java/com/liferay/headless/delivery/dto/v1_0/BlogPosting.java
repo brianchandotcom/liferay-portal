@@ -67,7 +67,9 @@ public class BlogPosting implements Serializable {
 		return ObjectMapperUtil.readValue(BlogPosting.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -93,7 +95,9 @@ public class BlogPosting implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -213,7 +217,9 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(
+		description = "A list of the custom fields associated with the blog post."
+	)
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -238,7 +244,9 @@ public class BlogPosting implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the custom fields associated with the blog post."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
@@ -556,7 +564,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
-	@Schema
+	@Schema(description = "A list of related contents to this blog post.")
 	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
@@ -582,7 +590,7 @@ public class BlogPosting implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of related contents to this blog post.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
@@ -687,7 +695,7 @@ public class BlogPosting implements Serializable {
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
 	@Schema(
-		description = "A write-only field that adds a `TaxonomyCategory` to this resource."
+		description = "A write-only field that adds `TaxonomyCategory` instances to the blog post."
 	)
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;
@@ -713,7 +721,7 @@ public class BlogPosting implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A write-only field that adds a `TaxonomyCategory` to this resource."
+		description = "A write-only field that adds `TaxonomyCategory` instances to the blog post."
 	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;

@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentInlineValue")
+@GraphQLName(
+	description = "Represents a fragment inline value.",
+	value = "FragmentInlineValue"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentInlineValue")
 public class FragmentInlineValue implements Serializable {
@@ -53,7 +56,7 @@ public class FragmentInlineValue implements Serializable {
 		return ObjectMapperUtil.readValue(FragmentInlineValue.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The fragment's inline value.")
 	public String getValue() {
 		return value;
 	}
@@ -77,11 +80,11 @@ public class FragmentInlineValue implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's inline value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
-	@Schema
+	@Schema(description = "The localized fragment's inline values.")
 	@Valid
 	public Map<String, String> getValue_i18n() {
 		return value_i18n;
@@ -107,7 +110,7 @@ public class FragmentInlineValue implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized fragment's inline values.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> value_i18n;
 

@@ -67,7 +67,9 @@ public class SitePage implements Serializable {
 		return ObjectMapperUtil.readValue(SitePage.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -93,11 +95,13 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(description = "The page's average rating.")
 	@Valid
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
@@ -123,8 +127,8 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(description = "The page's average rating.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
 	@Schema(
@@ -188,7 +192,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema(description = "Custom fields associated to the page.")
+	@Schema(description = "Custom fields associated with the page.")
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -213,7 +217,7 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "Custom fields associated to the page.")
+	@GraphQLField(description = "Custom fields associated with the page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
@@ -303,7 +307,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
-	@Schema(description = "Experience of the page that it's being retrived.")
+	@Schema(description = "Experience of the page that it's being retrieved.")
 	@Valid
 	public Experience getExperience() {
 		return experience;
@@ -329,7 +333,7 @@ public class SitePage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Experience of the page that it's being retrived."
+		description = "Experience of the page that it's being retrieved."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Experience experience;
@@ -364,7 +368,9 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
-	@Schema
+	@Schema(
+		description = "The localized relative URLs to the page's rendered content."
+	)
 	@Valid
 	public Map<String, String> getFriendlyUrlPath_i18n() {
 		return friendlyUrlPath_i18n;
@@ -392,13 +398,13 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The localized relative URLs to the page's rendered content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> friendlyUrlPath_i18n;
 
-	@Schema(
-		description = "A list of keywords describing the structured content."
-	)
+	@Schema(description = "A list of keywords describing the page.")
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -422,9 +428,7 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "A list of keywords describing the structured content."
-	)
+	@GraphQLField(description = "A list of keywords describing the page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
@@ -462,7 +466,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageDefinition pageDefinition;
 
-	@Schema(description = "Settings of the page, such as SEO or OpenGraph")
+	@Schema(description = "Settings of the page, such as SEO or OpenGraph.")
 	@Valid
 	public PageSettings getPageSettings() {
 		return pageSettings;
@@ -488,12 +492,12 @@ public class SitePage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Settings of the page, such as SEO or OpenGraph"
+		description = "Settings of the page, such as SEO or OpenGraph."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSettings pageSettings;
 
-	@Schema(description = "The type of the page")
+	@Schema(description = "The type of the page.")
 	public String getPageType() {
 		return pageType;
 	}
@@ -517,12 +521,12 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The type of the page")
+	@GraphQLField(description = "The type of the page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pageType;
 
 	@Schema(
-		description = "Metadata of the page such as it's master page and template"
+		description = "Metadata of the page such as it's master page and template."
 	)
 	@Valid
 	public RenderedPage getRenderedPage() {
@@ -549,7 +553,7 @@ public class SitePage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Metadata of the page such as it's master page and template"
+		description = "Metadata of the page such as it's master page and template."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RenderedPage renderedPage;
@@ -584,9 +588,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
-	@Schema(
-		description = "The categories associated with this structured content."
-	)
+	@Schema(description = "The categories associated with this page.")
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
 		return taxonomyCategoryBriefs;
@@ -614,13 +616,13 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "The categories associated with this structured content."
-	)
+	@GraphQLField(description = "The categories associated with this page.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
-	@Schema
+	@Schema(
+		description = "A write-only field that adds `TaxonomyCategory` instances to the page."
+	)
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;
 	}
@@ -644,11 +646,13 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only field that adds `TaxonomyCategory` instances to the page."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
-	@Schema(description = "the title of the page")
+	@Schema(description = "The page's title.")
 	public String getTitle() {
 		return title;
 	}
@@ -672,12 +676,12 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "the title of the page")
+	@GraphQLField(description = "The page's title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String title;
 
-	@Schema
+	@Schema(description = "The localized page's titles.")
 	@Valid
 	public Map<String, String> getTitle_i18n() {
 		return title_i18n;
@@ -703,7 +707,7 @@ public class SitePage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized page's titles.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 

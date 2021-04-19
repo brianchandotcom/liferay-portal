@@ -62,7 +62,9 @@ public class Document implements Serializable {
 		return ObjectMapperUtil.readValue(Document.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -88,7 +90,9 @@ public class Document implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -155,7 +159,9 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
-	@Schema
+	@Schema(
+		description = "The key of the asset library to which the document is scoped."
+	)
 	public String getAssetLibraryKey() {
 		return assetLibraryKey;
 	}
@@ -179,7 +185,9 @@ public class Document implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The key of the asset library to which the document is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
@@ -212,7 +220,7 @@ public class Document implements Serializable {
 	protected String contentUrl;
 
 	@Schema(
-		description = "optional field with the content of the document in Base64, can be embedded with nestedFields"
+		description = "The optional field with the content of the document in Base64, can be embedded with nestedFields."
 	)
 	public String getContentValue() {
 		return contentValue;
@@ -238,7 +246,7 @@ public class Document implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "optional field with the content of the document in Base64, can be embedded with nestedFields"
+		description = "The optional field with the content of the document in Base64, can be embedded with nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentValue;
@@ -272,7 +280,9 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(
+		description = "A list of the custom fields associated with the document."
+	)
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -297,7 +307,9 @@ public class Document implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the custom fields associated with the document."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
@@ -590,7 +602,7 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
-	@Schema
+	@Schema(description = "A list of related contents to this document.")
 	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
@@ -616,7 +628,7 @@ public class Document implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of related contents to this document.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 

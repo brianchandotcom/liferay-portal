@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentStyle")
+@GraphQLName(
+	description = "Represents a fragment style.", value = "FragmentStyle"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentStyle")
 public class FragmentStyle implements Serializable {
@@ -53,7 +55,7 @@ public class FragmentStyle implements Serializable {
 		return ObjectMapperUtil.readValue(FragmentStyle.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The fragment's background color.")
 	public String getBackgroundColor() {
 		return backgroundColor;
 	}
@@ -77,11 +79,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's background color.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String backgroundColor;
 
-	@Schema
+	@Schema(description = "The fragment's background image.")
 	@Valid
 	public FragmentImage getBackgroundFragmentImage() {
 		return backgroundFragmentImage;
@@ -110,11 +112,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's background image.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage backgroundFragmentImage;
 
-	@Schema
+	@Schema(description = "The fragment's border color.")
 	public String getBorderColor() {
 		return borderColor;
 	}
@@ -138,11 +140,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's border color.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String borderColor;
 
-	@Schema
+	@Schema(description = "The fragment's background radius.")
 	public String getBorderRadius() {
 		return borderRadius;
 	}
@@ -166,11 +168,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's background radius.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String borderRadius;
 
-	@Schema
+	@Schema(description = "The fragment's border width.")
 	public String getBorderWidth() {
 		return borderWidth;
 	}
@@ -194,11 +196,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's border width.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String borderWidth;
 
-	@Schema
+	@Schema(description = "The fragment's font family.")
 	public String getFontFamily() {
 		return fontFamily;
 	}
@@ -222,11 +224,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's font family.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fontFamily;
 
-	@Schema
+	@Schema(description = "The fragment's font size.")
 	public String getFontSize() {
 		return fontSize;
 	}
@@ -250,11 +252,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's font size.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fontSize;
 
-	@Schema
+	@Schema(description = "The fragment's font weight.")
 	public String getFontWeight() {
 		return fontWeight;
 	}
@@ -278,11 +280,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's font weight.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fontWeight;
 
-	@Schema
+	@Schema(description = "The fragment's height.")
 	public String getHeight() {
 		return height;
 	}
@@ -306,11 +308,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's height.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String height;
 
-	@Schema
+	@Schema(description = "The fragment's margin bottom.")
 	public String getMarginBottom() {
 		return marginBottom;
 	}
@@ -334,11 +336,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's margin bottom.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginBottom;
 
-	@Schema
+	@Schema(description = "The fragment's margin left.")
 	public String getMarginLeft() {
 		return marginLeft;
 	}
@@ -362,11 +364,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's margin left.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginLeft;
 
-	@Schema
+	@Schema(description = "The fragment's margin right.")
 	public String getMarginRight() {
 		return marginRight;
 	}
@@ -390,11 +392,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's margin right.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginRight;
 
-	@Schema
+	@Schema(description = "The fragment's margin top.")
 	public String getMarginTop() {
 		return marginTop;
 	}
@@ -418,11 +420,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's margin top.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginTop;
 
-	@Schema
+	@Schema(description = "The fragment's max height.")
 	public String getMaxHeight() {
 		return maxHeight;
 	}
@@ -446,11 +448,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's max height.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String maxHeight;
 
-	@Schema
+	@Schema(description = "The fragment's max width.")
 	public String getMaxWidth() {
 		return maxWidth;
 	}
@@ -474,11 +476,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's max width.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String maxWidth;
 
-	@Schema
+	@Schema(description = "The fragment's min height.")
 	public String getMinHeight() {
 		return minHeight;
 	}
@@ -502,11 +504,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's min height.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String minHeight;
 
-	@Schema
+	@Schema(description = "The fragment's min width.")
 	public String getMinWidth() {
 		return minWidth;
 	}
@@ -530,11 +532,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's min width.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String minWidth;
 
-	@Schema
+	@Schema(description = "The fragment's opacity.")
 	public String getOpacity() {
 		return opacity;
 	}
@@ -558,11 +560,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's opacity.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String opacity;
 
-	@Schema
+	@Schema(description = "The fragment's overflow behavior.")
 	public String getOverflow() {
 		return overflow;
 	}
@@ -586,11 +588,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's overflow behavior.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String overflow;
 
-	@Schema
+	@Schema(description = "The fragment's padding bottom.")
 	public String getPaddingBottom() {
 		return paddingBottom;
 	}
@@ -614,11 +616,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's padding bottom.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingBottom;
 
-	@Schema
+	@Schema(description = "The fragment's padding left.")
 	public String getPaddingLeft() {
 		return paddingLeft;
 	}
@@ -642,11 +644,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's padding left.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingLeft;
 
-	@Schema
+	@Schema(description = "The fragment's padding right.")
 	public String getPaddingRight() {
 		return paddingRight;
 	}
@@ -670,11 +672,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's padding right.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingRight;
 
-	@Schema
+	@Schema(description = "The fragment's padding top.")
 	public String getPaddingTop() {
 		return paddingTop;
 	}
@@ -698,11 +700,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's padding top.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingTop;
 
-	@Schema
+	@Schema(description = "The fragment's shadow effect.")
 	public String getShadow() {
 		return shadow;
 	}
@@ -726,11 +728,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's shadow effect.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shadow;
 
-	@Schema
+	@Schema(description = "The fragment's text align.")
 	public String getTextAlign() {
 		return textAlign;
 	}
@@ -754,11 +756,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's text align.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String textAlign;
 
-	@Schema
+	@Schema(description = "The fragment's text color.")
 	public String getTextColor() {
 		return textColor;
 	}
@@ -782,11 +784,11 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's text color.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String textColor;
 
-	@Schema
+	@Schema(description = "The fragment's width.")
 	public String getWidth() {
 		return width;
 	}
@@ -810,7 +812,7 @@ public class FragmentStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's width.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String width;
 

@@ -68,7 +68,9 @@ public class StructuredContent implements Serializable {
 		return ObjectMapperUtil.readValue(StructuredContent.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -94,7 +96,9 @@ public class StructuredContent implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -128,7 +132,9 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
-	@Schema
+	@Schema(
+		description = "The key of the asset library to which the structure content is scoped."
+	)
 	public String getAssetLibraryKey() {
 		return assetLibraryKey;
 	}
@@ -152,7 +158,9 @@ public class StructuredContent implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The key of the asset library to which the structure content is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
@@ -279,7 +287,9 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(
+		description = "A list of the custom fields associated with the structured content."
+	)
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -304,7 +314,9 @@ public class StructuredContent implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the custom fields associated with the structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
@@ -428,7 +440,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	@Schema
+	@Schema(description = "The localized structured content's descriptions.")
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		return description_i18n;
@@ -454,7 +466,9 @@ public class StructuredContent implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The localized structured content's descriptions."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
@@ -490,7 +504,9 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
-	@Schema
+	@Schema(
+		description = "The localized relative URLs to the structured content's rendered content."
+	)
 	@Valid
 	public Map<String, String> getFriendlyUrlPath_i18n() {
 		return friendlyUrlPath_i18n;
@@ -518,7 +534,9 @@ public class StructuredContent implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The localized relative URLs to the structured content's rendered content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> friendlyUrlPath_i18n;
 
@@ -642,7 +660,9 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
-	@Schema
+	@Schema(
+		description = "A list of related contents to this structured content."
+	)
 	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
@@ -668,7 +688,9 @@ public class StructuredContent implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of related contents to this structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
@@ -738,7 +760,9 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
-	@Schema
+	@Schema(
+		description = "A flag that indicates whether the user making the requests is subscribed to this structured content."
+	)
 	public Boolean getSubscribed() {
 		return subscribed;
 	}
@@ -762,7 +786,9 @@ public class StructuredContent implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the user making the requests is subscribed to this structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
@@ -803,7 +829,7 @@ public class StructuredContent implements Serializable {
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
 	@Schema(
-		description = "A write-only field to add a category to this structured content."
+		description = "A write-only field that adds `TaxonomyCategory` instances to the structured content."
 	)
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;
@@ -829,7 +855,7 @@ public class StructuredContent implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A write-only field to add a category to this structured content."
+		description = "A write-only field that adds `TaxonomyCategory` instances to the structured content."
 	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
@@ -863,7 +889,7 @@ public class StructuredContent implements Serializable {
 	@NotEmpty
 	protected String title;
 
-	@Schema
+	@Schema(description = "The localized structured content's main titles.")
 	@Valid
 	public Map<String, String> getTitle_i18n() {
 		return title_i18n;
@@ -889,7 +915,9 @@ public class StructuredContent implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The localized structured content's main titles."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 

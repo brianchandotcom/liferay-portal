@@ -148,7 +148,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
-	@Schema
+	@Schema(description = "The form field's labels.")
 	@Valid
 	public Map<String, String> getLabel_i18n() {
 		return label_i18n;
@@ -174,7 +174,7 @@ public class ContentStructureField implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The form field's labels.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> label_i18n;
 
@@ -362,7 +362,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String predefinedValue;
 
-	@Schema
+	@Schema(description = "The localized form field's default values.")
 	@Valid
 	public Map<String, String> getPredefinedValue_i18n() {
 		return predefinedValue_i18n;
@@ -390,7 +390,7 @@ public class ContentStructureField implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized form field's default values.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> predefinedValue_i18n;
 

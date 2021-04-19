@@ -67,7 +67,9 @@ public class KnowledgeBaseFolder implements Serializable {
 		return ObjectMapperUtil.readValue(KnowledgeBaseFolder.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -93,7 +95,9 @@ public class KnowledgeBaseFolder implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -126,7 +130,9 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(
+		description = "A list of the custom fields associated with the folder."
+	)
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -151,7 +157,9 @@ public class KnowledgeBaseFolder implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the custom fields associated with the folder."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 

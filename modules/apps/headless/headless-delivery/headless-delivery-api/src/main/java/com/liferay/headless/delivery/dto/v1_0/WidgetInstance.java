@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WidgetInstance")
+@GraphQLName(
+	description = "Represents a Widget Instance.", value = "WidgetInstance"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WidgetInstance")
 public class WidgetInstance implements Serializable {
@@ -83,7 +85,7 @@ public class WidgetInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> widgetConfig;
 
-	@Schema
+	@Schema(description = "The widget instance's ID.")
 	public String getWidgetInstanceId() {
 		return widgetInstanceId;
 	}
@@ -107,11 +109,11 @@ public class WidgetInstance implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The widget instance's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String widgetInstanceId;
 
-	@Schema
+	@Schema(description = "The widget instance's name.")
 	public String getWidgetName() {
 		return widgetName;
 	}
@@ -135,11 +137,11 @@ public class WidgetInstance implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The widget instance's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String widgetName;
 
-	@Schema
+	@Schema(description = "The widget instance's permissions.")
 	@Valid
 	public WidgetPermission[] getWidgetPermissions() {
 		return widgetPermissions;
@@ -165,7 +167,7 @@ public class WidgetInstance implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The widget instance's permissions.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetPermission[] widgetPermissions;
 

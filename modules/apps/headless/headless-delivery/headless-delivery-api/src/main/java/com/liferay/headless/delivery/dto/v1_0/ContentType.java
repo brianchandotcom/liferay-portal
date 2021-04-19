@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentType")
+@GraphQLName(description = "The type of content.", value = "ContentType")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentType")
 public class ContentType implements Serializable {
@@ -51,7 +51,7 @@ public class ContentType implements Serializable {
 		return ObjectMapperUtil.readValue(ContentType.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The content type's class name.")
 	public String getClassName() {
 		return className;
 	}
@@ -75,7 +75,7 @@ public class ContentType implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content type's class name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 

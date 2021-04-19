@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentSettingsAllowed")
+@GraphQLName(
+	description = "Represents the settings of allowed fragments in a page dropzone.",
+	value = "FragmentSettingsAllowed"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentSettingsAllowed")
 public class FragmentSettingsAllowed implements Serializable {
@@ -53,7 +56,7 @@ public class FragmentSettingsAllowed implements Serializable {
 		return ObjectMapperUtil.readValue(FragmentSettingsAllowed.class, json);
 	}
 
-	@Schema
+	@Schema(description = "A list of allowed fragments.")
 	@Valid
 	public Fragment[] getAllowedFragments() {
 		return allowedFragments;
@@ -78,7 +81,7 @@ public class FragmentSettingsAllowed implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of allowed fragments.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Fragment[] allowedFragments;
 

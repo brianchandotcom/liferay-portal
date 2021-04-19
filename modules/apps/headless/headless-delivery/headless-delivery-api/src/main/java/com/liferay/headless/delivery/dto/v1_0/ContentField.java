@@ -56,7 +56,7 @@ public class ContentField implements Serializable {
 		return ObjectMapperUtil.readValue(ContentField.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The field's value.")
 	@Valid
 	public ContentFieldValue getContentFieldValue() {
 		return contentFieldValue;
@@ -82,11 +82,11 @@ public class ContentField implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The field's value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentFieldValue contentFieldValue;
 
-	@Schema
+	@Schema(description = "The localized field's values.")
 	@Valid
 	public Map<String, ContentFieldValue> getContentFieldValue_i18n() {
 		return contentFieldValue_i18n;
@@ -114,7 +114,7 @@ public class ContentField implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized field's values.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ContentFieldValue> contentFieldValue_i18n;
 
@@ -206,7 +206,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
-	@Schema
+	@Schema(description = "The localized field's labels.")
 	@Valid
 	public Map<String, String> getLabel_i18n() {
 		return label_i18n;
@@ -232,7 +232,7 @@ public class ContentField implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized field's labels.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> label_i18n;
 

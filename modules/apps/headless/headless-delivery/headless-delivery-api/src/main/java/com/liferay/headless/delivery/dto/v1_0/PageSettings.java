@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageSettings")
+@GraphQLName(
+	description = "Represents the settings of a Page.", value = "PageSettings"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageSettings")
 public class PageSettings implements Serializable {
@@ -53,7 +55,7 @@ public class PageSettings implements Serializable {
 		return ObjectMapperUtil.readValue(PageSettings.class, json);
 	}
 
-	@Schema
+	@Schema(description = "A list of custom metatags this page has.")
 	@Valid
 	public CustomMetaTag[] getCustomMetaTags() {
 		return customMetaTags;
@@ -79,11 +81,13 @@ public class PageSettings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of custom metatags this page has.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomMetaTag[] customMetaTags;
 
-	@Schema
+	@Schema(
+		description = "A flag that indicates whether the page is hidden from navigation."
+	)
 	public Boolean getHiddenFromNavigation() {
 		return hiddenFromNavigation;
 	}
@@ -107,11 +111,13 @@ public class PageSettings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the page is hidden from navigation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hiddenFromNavigation;
 
-	@Schema
+	@Schema(description = "The page's Open Graph settings.")
 	@Valid
 	public OpenGraphSettings getOpenGraphSettings() {
 		return openGraphSettings;
@@ -137,11 +143,11 @@ public class PageSettings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's Open Graph settings.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OpenGraphSettings openGraphSettings;
 
-	@Schema
+	@Schema(description = "The page's SEO settings.")
 	@Valid
 	public SEOSettings getSeoSettings() {
 		return seoSettings;
@@ -166,7 +172,7 @@ public class PageSettings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's SEO settings.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SEOSettings seoSettings;
 

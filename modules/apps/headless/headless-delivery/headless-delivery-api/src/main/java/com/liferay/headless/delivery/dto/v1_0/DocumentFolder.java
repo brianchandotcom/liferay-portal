@@ -67,7 +67,9 @@ public class DocumentFolder implements Serializable {
 		return ObjectMapperUtil.readValue(DocumentFolder.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -93,11 +95,15 @@ public class DocumentFolder implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(
+		description = "The key of the asset library to which the folder is scoped."
+	)
 	public String getAssetLibraryKey() {
 		return assetLibraryKey;
 	}
@@ -121,7 +127,9 @@ public class DocumentFolder implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The key of the asset library to which the folder is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
@@ -154,7 +162,9 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(
+		description = "A list of the custom fields associated with the folder."
+	)
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -179,7 +189,9 @@ public class DocumentFolder implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the custom fields associated with the folder."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
@@ -378,7 +390,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfDocuments;
 
-	@Schema
+	@Schema(description = "The ID of the folder's parent, if it exists.")
 	public Long getParentDocumentFolderId() {
 		return parentDocumentFolderId;
 	}
@@ -402,7 +414,7 @@ public class DocumentFolder implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The ID of the folder's parent, if it exists.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentDocumentFolderId;
 
@@ -436,7 +448,9 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
-	@Schema
+	@Schema(
+		description = "A flag that indicates whether the user making the requests is subscribed to this folder."
+	)
 	public Boolean getSubscribed() {
 		return subscribed;
 	}
@@ -460,7 +474,9 @@ public class DocumentFolder implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the user making the requests is subscribed to this folder."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 

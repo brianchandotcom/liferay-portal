@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentViewportStyle")
+@GraphQLName(
+	description = "The fragment's viewport style.",
+	value = "FragmentViewportStyle"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentViewportStyle")
 public class FragmentViewportStyle implements Serializable {
@@ -51,7 +54,7 @@ public class FragmentViewportStyle implements Serializable {
 		return ObjectMapperUtil.readValue(FragmentViewportStyle.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The fragment viewport's margin bottom.")
 	public String getMarginBottom() {
 		return marginBottom;
 	}
@@ -75,11 +78,11 @@ public class FragmentViewportStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment viewport's margin bottom.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginBottom;
 
-	@Schema
+	@Schema(description = "The fragment viewport's margin left.")
 	public String getMarginLeft() {
 		return marginLeft;
 	}
@@ -103,11 +106,11 @@ public class FragmentViewportStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment viewport's margin left.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginLeft;
 
-	@Schema
+	@Schema(description = "The fragment viewport's margin right.")
 	public String getMarginRight() {
 		return marginRight;
 	}
@@ -131,11 +134,11 @@ public class FragmentViewportStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment viewport's margin right.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginRight;
 
-	@Schema
+	@Schema(description = "The fragment viewport's margin top.")
 	public String getMarginTop() {
 		return marginTop;
 	}
@@ -159,11 +162,11 @@ public class FragmentViewportStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment viewport's margin top.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginTop;
 
-	@Schema
+	@Schema(description = "The fragment viewport's padding bottom.")
 	public String getPaddingBottom() {
 		return paddingBottom;
 	}
@@ -187,11 +190,11 @@ public class FragmentViewportStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment viewport's padding bottom.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingBottom;
 
-	@Schema
+	@Schema(description = "The fragment viewport's padding left.")
 	public String getPaddingLeft() {
 		return paddingLeft;
 	}
@@ -215,11 +218,11 @@ public class FragmentViewportStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment viewport's padding left.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingLeft;
 
-	@Schema
+	@Schema(description = "The fragment viewport's padding right.")
 	public String getPaddingRight() {
 		return paddingRight;
 	}
@@ -243,11 +246,11 @@ public class FragmentViewportStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment viewport's padding right.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingRight;
 
-	@Schema
+	@Schema(description = "The fragment viewport's padding top.")
 	public String getPaddingTop() {
 		return paddingTop;
 	}
@@ -271,7 +274,7 @@ public class FragmentViewportStyle implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment viewport's padding top.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingTop;
 

@@ -50,9 +50,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentTemplate")
+@GraphQLName(
+	description = "Represents a content template.", value = "ContentTemplate"
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"contentStructureId", "name"})
+@Schema(
+	description = "Represents a content template.",
+	requiredProperties = {"contentStructureId", "name"}
+)
 @XmlRootElement(name = "ContentTemplate")
 public class ContentTemplate implements Serializable {
 
@@ -60,7 +65,9 @@ public class ContentTemplate implements Serializable {
 		return ObjectMapperUtil.readValue(ContentTemplate.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -86,11 +93,15 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(
+		description = "The key of the asset library to which the content template is scoped."
+	)
 	public String getAssetLibraryKey() {
 		return assetLibraryKey;
 	}
@@ -114,11 +125,15 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The key of the asset library to which the content template is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
-	@Schema
+	@Schema(
+		description = "The list of languages the content template has a translation for."
+	)
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}
@@ -142,11 +157,13 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The list of languages the content template has a translation for."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
-	@Schema
+	@Schema(description = "The ID of the `ContentStructure`.")
 	public Long getContentStructureId() {
 		return contentStructureId;
 	}
@@ -170,7 +187,7 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The ID of the `ContentStructure`.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long contentStructureId;
@@ -204,7 +221,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(description = "The content template's creation date.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -228,11 +245,11 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content template's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
-	@Schema
+	@Schema(description = "The last time the content template changed.")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -256,11 +273,11 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The last time the content template changed.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
-	@Schema
+	@Schema(description = "the content template's description.")
 	public String getDescription() {
 		return description;
 	}
@@ -284,11 +301,11 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "the content template's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	@Schema
+	@Schema(description = "the localized content template's descriptions.")
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		return description_i18n;
@@ -314,11 +331,13 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "the localized content template's descriptions."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
-	@Schema
+	@Schema(description = "The content template's ID.")
 	public String getId() {
 		return id;
 	}
@@ -340,11 +359,11 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content template's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
 
-	@Schema
+	@Schema(description = "the content template's name.")
 	public String getName() {
 		return name;
 	}
@@ -366,12 +385,12 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "the content template's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
 
-	@Schema
+	@Schema(description = "the localized content template's name.")
 	@Valid
 	public Map<String, String> getName_i18n() {
 		return name_i18n;
@@ -397,11 +416,11 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "the localized content template's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
-	@Schema
+	@Schema(description = "the content template's programming language.")
 	public String getProgrammingLanguage() {
 		return programmingLanguage;
 	}
@@ -425,11 +444,13 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "the content template's programming language.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String programmingLanguage;
 
-	@Schema
+	@Schema(
+		description = "The ID of the site to which the content template is scoped."
+	)
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -453,11 +474,13 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which the content template is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
-	@Schema
+	@Schema(description = "The content template's script.")
 	public String getTemplateScript() {
 		return templateScript;
 	}
@@ -481,7 +504,7 @@ public class ContentTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content template's script.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateScript;
 

@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Fragment")
+@GraphQLName(
+	description = "Represents a template made up of CSS, HTML, and JavaScript used to build Content Pages.",
+	value = "Fragment"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Fragment")
 public class Fragment implements Serializable {
@@ -51,7 +54,7 @@ public class Fragment implements Serializable {
 		return ObjectMapperUtil.readValue(Fragment.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The collection name this fragment belongs to.")
 	public String getCollectionName() {
 		return collectionName;
 	}
@@ -75,11 +78,11 @@ public class Fragment implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The collection name this fragment belongs to.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String collectionName;
 
-	@Schema
+	@Schema(description = "The fragment's key.")
 	public String getKey() {
 		return key;
 	}
@@ -101,11 +104,11 @@ public class Fragment implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
-	@Schema
+	@Schema(description = "The fragment's name.")
 	public String getName() {
 		return name;
 	}
@@ -127,7 +130,7 @@ public class Fragment implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 

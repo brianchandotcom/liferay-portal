@@ -148,7 +148,7 @@ public class TaxonomyCategoryBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String taxonomyCategoryName;
 
-	@Schema
+	@Schema(description = "The localized category's names.")
 	@Valid
 	public Map<String, String> getTaxonomyCategoryName_i18n() {
 		return taxonomyCategoryName_i18n;
@@ -177,7 +177,7 @@ public class TaxonomyCategoryBrief implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized category's names.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> taxonomyCategoryName_i18n;
 

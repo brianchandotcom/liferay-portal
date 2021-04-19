@@ -46,9 +46,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentViewport")
+@GraphQLName(
+	description = "Represents a fragment viewport.", value = "FragmentViewport"
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"fragmentViewportStyle", "id"})
+@Schema(
+	description = "Represents a fragment viewport.",
+	requiredProperties = {"fragmentViewportStyle", "id"}
+)
 @XmlRootElement(name = "FragmentViewport")
 public class FragmentViewport implements Serializable {
 
@@ -56,7 +61,7 @@ public class FragmentViewport implements Serializable {
 		return ObjectMapperUtil.readValue(FragmentViewport.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The fragment's viewport style.")
 	@Valid
 	public FragmentViewportStyle getFragmentViewportStyle() {
 		return fragmentViewportStyle;
@@ -84,12 +89,12 @@ public class FragmentViewport implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment's viewport style.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected FragmentViewportStyle fragmentViewportStyle;
 
-	@Schema
+	@Schema(description = "The fragment viewport's ID.")
 	public String getId() {
 		return id;
 	}
@@ -111,7 +116,7 @@ public class FragmentViewport implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment viewport's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String id;

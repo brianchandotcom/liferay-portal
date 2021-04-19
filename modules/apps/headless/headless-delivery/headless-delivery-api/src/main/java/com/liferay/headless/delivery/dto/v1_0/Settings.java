@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Settings")
+@GraphQLName(
+	description = "Represents the settings of a page.", value = "Settings"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Settings")
 public class Settings implements Serializable {
@@ -53,7 +55,7 @@ public class Settings implements Serializable {
 		return ObjectMapperUtil.readValue(Settings.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The page's color scheme name.")
 	public String getColorSchemeName() {
 		return colorSchemeName;
 	}
@@ -77,11 +79,11 @@ public class Settings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's color scheme name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String colorSchemeName;
 
-	@Schema
+	@Schema(description = "The page's CSS.")
 	public String getCss() {
 		return css;
 	}
@@ -103,11 +105,11 @@ public class Settings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's CSS.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String css;
 
-	@Schema
+	@Schema(description = "The page's JavaScript.")
 	public String getJavascript() {
 		return javascript;
 	}
@@ -131,11 +133,11 @@ public class Settings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's JavaScript.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String javascript;
 
-	@Schema
+	@Schema(description = "The page's master page.")
 	@Valid
 	public MasterPage getMasterPage() {
 		return masterPage;
@@ -160,11 +162,11 @@ public class Settings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's master page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MasterPage masterPage;
 
-	@Schema(description = "Defines the StyleBook that is applied to the Page")
+	@Schema(description = "The StyleBook that is applied to the page.")
 	@Valid
 	public StyleBook getStyleBook() {
 		return styleBook;
@@ -189,13 +191,11 @@ public class Settings implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "Defines the StyleBook that is applied to the Page"
-	)
+	@GraphQLField(description = "The StyleBook that is applied to the page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StyleBook styleBook;
 
-	@Schema
+	@Schema(description = "The page's theme name.")
 	public String getThemeName() {
 		return themeName;
 	}
@@ -219,11 +219,11 @@ public class Settings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's theme name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String themeName;
 
-	@Schema
+	@Schema(description = "The page's theme settings.")
 	@Valid
 	public Object getThemeSettings() {
 		return themeSettings;
@@ -248,7 +248,7 @@ public class Settings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page's theme settings.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object themeSettings;
 

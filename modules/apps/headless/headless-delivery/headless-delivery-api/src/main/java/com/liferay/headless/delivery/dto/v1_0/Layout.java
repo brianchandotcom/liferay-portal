@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Layout")
+@GraphQLName(description = "the page section's layout.", value = "Layout")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Layout")
 public class Layout implements Serializable {
@@ -189,7 +189,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer borderWidth;
 
-	@Schema
+	@Schema(description = "The container's type (fixed or fluid).")
 	@Valid
 	public ContainerType getContainerType() {
 		return containerType;
@@ -223,7 +223,7 @@ public class Layout implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The container's type (fixed or fluid).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContainerType containerType;
 
@@ -635,7 +635,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Shadow shadow;
 
-	@Schema
+	@Schema(description = "The width's type (fixed or fluid).")
 	@Valid
 	public WidthType getWidthType() {
 		return widthType;
@@ -669,7 +669,7 @@ public class Layout implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The width's type (fixed or fluid).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidthType widthType;
 

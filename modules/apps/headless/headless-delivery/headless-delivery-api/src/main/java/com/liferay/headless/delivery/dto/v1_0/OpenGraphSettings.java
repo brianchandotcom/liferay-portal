@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("OpenGraphSettings")
+@GraphQLName(
+	description = "Represents settings related with Open Graph protocol.",
+	value = "OpenGraphSettings"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OpenGraphSettings")
 public class OpenGraphSettings implements Serializable {
@@ -53,7 +56,7 @@ public class OpenGraphSettings implements Serializable {
 		return ObjectMapperUtil.readValue(OpenGraphSettings.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The Open Graph's description.")
 	public String getDescription() {
 		return description;
 	}
@@ -77,11 +80,11 @@ public class OpenGraphSettings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The Open Graph's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	@Schema
+	@Schema(description = "The localized Open Graph's descriptions.")
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		return description_i18n;
@@ -107,11 +110,11 @@ public class OpenGraphSettings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized Open Graph's descriptions.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
-	@Schema
+	@Schema(description = "The Open Graph's image.")
 	@Valid
 	public ContentDocument getImage() {
 		return image;
@@ -136,11 +139,11 @@ public class OpenGraphSettings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The Open Graph's image.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument image;
 
-	@Schema
+	@Schema(description = "The Open Graph's title.")
 	public String getTitle() {
 		return title;
 	}
@@ -164,11 +167,11 @@ public class OpenGraphSettings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The Open Graph's title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
-	@Schema
+	@Schema(description = "The localized Open Graph's titles.")
 	@Valid
 	public Map<String, String> getTitle_i18n() {
 		return title_i18n;
@@ -194,7 +197,7 @@ public class OpenGraphSettings implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized Open Graph's titles.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 

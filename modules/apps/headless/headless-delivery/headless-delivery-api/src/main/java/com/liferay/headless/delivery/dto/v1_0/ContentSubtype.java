@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentSubtype")
+@GraphQLName(
+	description = "The display page template's content subtype.",
+	value = "ContentSubtype"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentSubtype")
 public class ContentSubtype implements Serializable {
@@ -51,7 +54,7 @@ public class ContentSubtype implements Serializable {
 		return ObjectMapperUtil.readValue(ContentSubtype.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The content subtype's ID.")
 	public Long getSubtypeId() {
 		return subtypeId;
 	}
@@ -75,7 +78,7 @@ public class ContentSubtype implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content subtype's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long subtypeId;
 

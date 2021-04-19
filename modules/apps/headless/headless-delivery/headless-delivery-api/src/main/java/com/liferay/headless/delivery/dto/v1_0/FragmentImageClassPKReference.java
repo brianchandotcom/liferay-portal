@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentImageClassPKReference")
+@GraphQLName(
+	description = "Represents a reference to a fragment image class primary key.",
+	value = "FragmentImageClassPKReference"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentImageClassPKReference")
 public class FragmentImageClassPKReference implements Serializable {
@@ -54,7 +57,7 @@ public class FragmentImageClassPKReference implements Serializable {
 			FragmentImageClassPKReference.class, json);
 	}
 
-	@Schema
+	@Schema(description = "A map of class primary key references.")
 	@Valid
 	public Map<String, ClassPKReference> getClassPKReferences() {
 		return classPKReferences;
@@ -82,11 +85,11 @@ public class FragmentImageClassPKReference implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A map of class primary key references.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ClassPKReference> classPKReferences;
 
-	@Schema
+	@Schema(description = "The fragment image's configuration.")
 	@Valid
 	public FragmentImageConfiguration getFragmentImageConfiguration() {
 		return fragmentImageConfiguration;
@@ -115,7 +118,7 @@ public class FragmentImageClassPKReference implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The fragment image's configuration.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImageConfiguration fragmentImageConfiguration;
 

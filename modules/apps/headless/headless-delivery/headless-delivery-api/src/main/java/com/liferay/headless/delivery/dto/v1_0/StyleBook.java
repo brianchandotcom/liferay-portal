@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "Defines the StyleBook that is applied to the Page",
+	description = "The StyleBook that is applied to the page.",
 	value = "StyleBook"
 )
 @JsonFilter("Liferay.Vulcan")
@@ -54,7 +54,7 @@ public class StyleBook implements Serializable {
 		return ObjectMapperUtil.readValue(StyleBook.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The stylebook's key.")
 	public String getKey() {
 		return key;
 	}
@@ -76,11 +76,11 @@ public class StyleBook implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The stylebook's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
-	@Schema
+	@Schema(description = "The stylebook's name.")
 	public String getName() {
 		return name;
 	}
@@ -102,7 +102,7 @@ public class StyleBook implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The stylebook's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 

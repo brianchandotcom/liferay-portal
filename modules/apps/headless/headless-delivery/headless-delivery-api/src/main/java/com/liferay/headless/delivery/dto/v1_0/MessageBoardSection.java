@@ -67,7 +67,9 @@ public class MessageBoardSection implements Serializable {
 		return ObjectMapperUtil.readValue(MessageBoardSection.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -93,7 +95,9 @@ public class MessageBoardSection implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -126,7 +130,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(
+		description = "A list of the custom fields associated with the section."
+	)
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -151,7 +157,9 @@ public class MessageBoardSection implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the custom fields associated with the section."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
@@ -333,7 +341,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardThreads;
 
-	@Schema
+	@Schema(description = "The ID of the section parent's, if it exists.")
 	public Long getParentMessageBoardSectionId() {
 		return parentMessageBoardSectionId;
 	}
@@ -361,7 +369,7 @@ public class MessageBoardSection implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The ID of the section parent's, if it exists.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentMessageBoardSectionId;
 
@@ -395,7 +403,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
-	@Schema
+	@Schema(
+		description = "A flag that indicates whether the user making the requests is subscribed to this section."
+	)
 	public Boolean getSubscribed() {
 		return subscribed;
 	}
@@ -419,7 +429,9 @@ public class MessageBoardSection implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the user making the requests is subscribed to this section."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 

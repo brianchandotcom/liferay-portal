@@ -83,7 +83,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
-	@Schema
+	@Schema(description = "The localized option's labels.")
 	@Valid
 	public Map<String, String> getLabel_i18n() {
 		return label_i18n;
@@ -109,7 +109,7 @@ public class Option implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The localized option's labels.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label_i18n;
 

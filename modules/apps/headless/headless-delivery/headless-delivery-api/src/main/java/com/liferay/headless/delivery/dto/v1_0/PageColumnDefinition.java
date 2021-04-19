@@ -46,7 +46,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageColumnDefinition")
+@GraphQLName(
+	description = "Represents a definition of a Page Column.",
+	value = "PageColumnDefinition"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageColumnDefinition")
 public class PageColumnDefinition implements Serializable {
@@ -93,7 +96,9 @@ public class PageColumnDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ColumnViewportConfig columnViewportConfig;
 
-	@Schema
+	@Schema(
+		description = "A list of column viewports of the page column definition."
+	)
 	@Valid
 	public ColumnViewport[] getColumnViewports() {
 		return columnViewports;
@@ -119,13 +124,15 @@ public class PageColumnDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of column viewports of the page column definition."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ColumnViewport[] columnViewports;
 
 	@DecimalMax("12")
 	@DecimalMin("1")
-	@Schema
+	@Schema(description = "The page column's size.")
 	public Integer getSize() {
 		return size;
 	}
@@ -147,7 +154,7 @@ public class PageColumnDefinition implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The page column's size.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
 

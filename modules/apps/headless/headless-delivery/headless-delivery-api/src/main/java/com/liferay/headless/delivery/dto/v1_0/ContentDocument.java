@@ -56,7 +56,9 @@ public class ContentDocument implements Serializable {
 		return ObjectMapperUtil.readValue(ContentDocument.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -82,11 +84,13 @@ public class ContentDocument implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(description = "The type of content.")
 	public String getContentType() {
 		return contentType;
 	}
@@ -110,7 +114,7 @@ public class ContentDocument implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The type of content.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 

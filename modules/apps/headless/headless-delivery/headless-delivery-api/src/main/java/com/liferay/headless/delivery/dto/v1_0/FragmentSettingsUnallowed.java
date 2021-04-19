@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentSettingsUnallowed")
+@GraphQLName(
+	description = "Represents the settings of unallowed fragments in a page dropzone.",
+	value = "FragmentSettingsUnallowed"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentSettingsUnallowed")
 public class FragmentSettingsUnallowed implements Serializable {

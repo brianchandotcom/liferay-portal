@@ -55,7 +55,9 @@ public class FragmentImageConfiguration implements Serializable {
 			FragmentImageConfiguration.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "The landscape mobile configuration of the fragment image."
+	)
 	public String getLandscapeMobile() {
 		return landscapeMobile;
 	}
@@ -79,11 +81,15 @@ public class FragmentImageConfiguration implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The landscape mobile configuration of the fragment image."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String landscapeMobile;
 
-	@Schema
+	@Schema(
+		description = "The portrait mobile configuration of the fragment image."
+	)
 	public String getPortraitMobile() {
 		return portraitMobile;
 	}
@@ -107,11 +113,13 @@ public class FragmentImageConfiguration implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The portrait mobile configuration of the fragment image."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String portraitMobile;
 
-	@Schema
+	@Schema(description = "The tablet configuration of the fragment image.")
 	public String getTablet() {
 		return tablet;
 	}
@@ -135,7 +143,9 @@ public class FragmentImageConfiguration implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The tablet configuration of the fragment image."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String tablet;
 

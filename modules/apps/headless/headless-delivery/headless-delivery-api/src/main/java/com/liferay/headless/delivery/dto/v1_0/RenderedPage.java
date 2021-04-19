@@ -54,7 +54,9 @@ public class RenderedPage implements Serializable {
 		return ObjectMapperUtil.readValue(RenderedPage.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "The ID of the master page used to render the content."
+	)
 	public String getMasterPageId() {
 		return masterPageId;
 	}
@@ -78,7 +80,9 @@ public class RenderedPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the master page used to render the content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String masterPageId;
 
@@ -114,7 +118,7 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String masterPageName;
 
-	@Schema
+	@Schema(description = "The ID of the template used to render the content.")
 	public String getPageTemplateId() {
 		return pageTemplateId;
 	}
@@ -138,7 +142,9 @@ public class RenderedPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the template used to render the content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String pageTemplateId;
 

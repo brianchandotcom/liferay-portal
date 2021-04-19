@@ -249,7 +249,7 @@ public class Creator implements Serializable {
 	protected String name;
 
 	@Schema(
-		description = "A relative URL to the author's user profile. Optional field, can be embedded with nestedFields"
+		description = "A relative URL to the author's user profile. Optional field, can be embedded with nestedFields."
 	)
 	public String getProfileURL() {
 		return profileURL;
@@ -275,7 +275,7 @@ public class Creator implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A relative URL to the author's user profile. Optional field, can be embedded with nestedFields"
+		description = "A relative URL to the author's user profile. Optional field, can be embedded with nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;

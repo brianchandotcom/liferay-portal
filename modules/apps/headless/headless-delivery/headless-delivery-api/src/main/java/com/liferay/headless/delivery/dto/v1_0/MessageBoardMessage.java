@@ -62,7 +62,9 @@ public class MessageBoardMessage implements Serializable {
 		return ObjectMapperUtil.readValue(MessageBoardMessage.class, json);
 	}
 
-	@Schema
+	@Schema(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -88,7 +90,9 @@ public class MessageBoardMessage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Block of actions allowed by the user making the request."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -211,7 +215,9 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(
+		description = "The message's creator statistics (rank, join date, number of posts, ...)"
+	)
 	@Valid
 	public CreatorStatistics getCreatorStatistics() {
 		return creatorStatistics;
@@ -237,11 +243,15 @@ public class MessageBoardMessage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The message's creator statistics (rank, join date, number of posts, ...)"
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CreatorStatistics creatorStatistics;
 
-	@Schema
+	@Schema(
+		description = "A list of the custom fields associated with the blog post."
+	)
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -266,7 +276,9 @@ public class MessageBoardMessage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the custom fields associated with the blog post."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
@@ -500,7 +512,9 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
-	@Schema
+	@Schema(
+		description = "The ID of the Message Board Section to which this message is scoped."
+	)
 	public Long getMessageBoardSectionId() {
 		return messageBoardSectionId;
 	}
@@ -524,7 +538,9 @@ public class MessageBoardMessage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the Message Board Section to which this message is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long messageBoardSectionId;
 
@@ -624,7 +640,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardMessages;
 
-	@Schema
+	@Schema(description = "The ID of the message's parent, if it exists.")
 	public Long getParentMessageBoardMessageId() {
 		return parentMessageBoardMessageId;
 	}
@@ -652,11 +668,11 @@ public class MessageBoardMessage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The ID of the message's parent, if it exists.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentMessageBoardMessageId;
 
-	@Schema
+	@Schema(description = "A list of related contents to this message.")
 	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
@@ -682,7 +698,7 @@ public class MessageBoardMessage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of related contents to this message.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
@@ -748,7 +764,9 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
-	@Schema
+	@Schema(
+		description = "A flag that indicates whether the user making the requests is subscribed to this message."
+	)
 	public Boolean getSubscribed() {
 		return subscribed;
 	}
@@ -772,7 +790,9 @@ public class MessageBoardMessage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the user making the requests is subscribed to this message."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 

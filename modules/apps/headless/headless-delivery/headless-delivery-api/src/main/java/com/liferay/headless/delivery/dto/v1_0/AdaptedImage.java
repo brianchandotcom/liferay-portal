@@ -83,7 +83,7 @@ public class AdaptedImage implements Serializable {
 	protected String contentUrl;
 
 	@Schema(
-		description = "optional field with the content of the image in Base64, can be embedded with nestedFields"
+		description = "Optional field with the content of the image in Base64, can be embedded with nestedFields."
 	)
 	public String getContentValue() {
 		return contentValue;
@@ -109,7 +109,7 @@ public class AdaptedImage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "optional field with the content of the image in Base64, can be embedded with nestedFields"
+		description = "Optional field with the content of the image in Base64, can be embedded with nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentValue;

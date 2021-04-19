@@ -27,8 +27,6 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,11 +42,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,96 +56,36 @@ import org.osgi.service.component.annotations.Reference;
 	service = ExportImportContentProcessor.class
 )
 public class EditableValuesItemSelectorExportImportContentProcessor
-	implements ExportImportContentProcessor<JSONObject> {
+	extends BaseEditableValuesConfigurationExportImportContentProcessor {
 
 	@Override
-	public JSONObject replaceExportContentReferences(
+	protected String getConfigurationType() {
+		return "itemSelector";
+	}
+
+	@Override
+	protected FragmentEntryConfigurationParser
+		getFragmentEntryConfigurationParser() {
+
+		return _fragmentEntryConfigurationParser;
+	}
+
+	@Override
+	protected void replaceExportContentReferences(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableValuesJSONObject,
-			boolean exportReferencedContent, boolean escapeContent)
+			JSONObject configurationValueJSONObject,
+			boolean exportReferencedContent)
 		throws Exception {
 
-		List<FragmentConfigurationField> fragmentConfigurationFields =
-			_getItemSelectorFragmentConfigurationFields(
-				(FragmentEntryLink)stagedModel);
-
-		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
-			return editableValuesJSONObject;
-		}
-
-		JSONObject editableProcessorJSONObject =
-			editableValuesJSONObject.getJSONObject(
-				_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-		if (editableProcessorJSONObject == null) {
-			return editableValuesJSONObject;
-		}
-
-		for (FragmentConfigurationField fragmentConfigurationField :
-				fragmentConfigurationFields) {
-
-			JSONObject jsonObject = editableProcessorJSONObject.getJSONObject(
-				fragmentConfigurationField.getName());
-
-			_exportContentReferences(
-				portletDataContext, stagedModel, jsonObject,
-				exportReferencedContent);
-		}
-
-		return editableValuesJSONObject;
-	}
-
-	@Override
-	public JSONObject replaceImportContentReferences(
-		PortletDataContext portletDataContext, StagedModel stagedModel,
-		JSONObject editableValuesJSONObject) {
-
-		List<FragmentConfigurationField> fragmentConfigurationFields =
-			_getItemSelectorFragmentConfigurationFields(
-				(FragmentEntryLink)stagedModel);
-
-		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
-			return editableValuesJSONObject;
-		}
-
-		JSONObject editableProcessorJSONObject =
-			editableValuesJSONObject.getJSONObject(
-				_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-		if (editableProcessorJSONObject == null) {
-			return editableValuesJSONObject;
-		}
-
-		for (FragmentConfigurationField fragmentConfigurationField :
-				fragmentConfigurationFields) {
-
-			JSONObject jsonObject = editableProcessorJSONObject.getJSONObject(
-				fragmentConfigurationField.getName());
-
-			_replaceImportContentReferences(portletDataContext, jsonObject);
-		}
-
-		return editableValuesJSONObject;
-	}
-
-	@Override
-	public void validateContentReferences(long groupId, JSONObject jsonObject) {
-	}
-
-	private void _exportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableJSONObject, boolean exportReferencedContent)
-		throws Exception {
-
-		long classNameId = editableJSONObject.getLong("classNameId");
-		long classPK = editableJSONObject.getLong("classPK");
+		long classNameId = configurationValueJSONObject.getLong("classNameId");
+		long classPK = configurationValueJSONObject.getLong("classPK");
 
 		if ((classNameId == 0) || (classPK == 0)) {
 			return;
 		}
 
 		_exportDDMTemplateReference(
-			portletDataContext, stagedModel, editableJSONObject);
+			portletDataContext, stagedModel, configurationValueJSONObject);
 
 		// LPS-111037
 
@@ -188,7 +122,8 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 			return;
 		}
 
-		editableJSONObject.put("className", _portal.getClassName(classNameId));
+		configurationValueJSONObject.put(
+			"className", _portal.getClassName(classNameId));
 
 		if (exportReferencedContent) {
 			try {
@@ -235,66 +170,20 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 		}
 	}
 
-	private void _exportDDMTemplateReference(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableJSONObject)
-		throws Exception {
+	@Override
+	protected void replaceImportContentReferences(
+		PortletDataContext portletDataContext,
+		JSONObject configurationValueJSONObject) {
 
-		if (!editableJSONObject.has("template")) {
-			return;
-		}
-
-		JSONObject templateJSONObject = editableJSONObject.getJSONObject(
-			"template");
-
-		String ddmTemplateKey = templateJSONObject.getString("templateKey");
-
-		if (Validator.isNull(ddmTemplateKey)) {
-			return;
-		}
-
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			portletDataContext.getScopeGroupId(),
-			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
-
-		if (ddmTemplate != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, ddmTemplate,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-	}
-
-	private List<FragmentConfigurationField>
-		_getItemSelectorFragmentConfigurationFields(
-			FragmentEntryLink fragmentEntryLink) {
-
-		List<FragmentConfigurationField> fragmentConfigurationFields =
-			_fragmentEntryConfigurationParser.getFragmentConfigurationFields(
-				fragmentEntryLink.getConfiguration());
-
-		Stream<FragmentConfigurationField> stream =
-			fragmentConfigurationFields.stream();
-
-		return stream.filter(
-			fragmentConfigurationField -> Objects.equals(
-				fragmentConfigurationField.getType(), "itemSelector")
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	private void _replaceImportContentReferences(
-		PortletDataContext portletDataContext, JSONObject editableJSONObject) {
-
-		String className = editableJSONObject.getString("className");
+		String className = configurationValueJSONObject.getString("className");
 
 		if (Validator.isNull(className)) {
 			return;
 		}
 
-		if (editableJSONObject.has("template")) {
-			JSONObject templateJSONObject = editableJSONObject.getJSONObject(
-				"template");
+		if (configurationValueJSONObject.has("template")) {
+			JSONObject templateJSONObject =
+				configurationValueJSONObject.getJSONObject("template");
 
 			String ddmTemplateKey = templateJSONObject.getString("templateKey");
 
@@ -337,13 +226,13 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 			return;
 		}
 
-		long classPK = editableJSONObject.getLong("classPK");
+		long classPK = configurationValueJSONObject.getLong("classPK");
 
 		if (classPK == 0) {
 			return;
 		}
 
-		editableJSONObject.put(
+		configurationValueJSONObject.put(
 			"classNameId", _portal.getClassNameId(className));
 
 		Map<Long, Long> primaryKeys =
@@ -351,12 +240,37 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 
 		classPK = MapUtil.getLong(primaryKeys, classPK, classPK);
 
-		editableJSONObject.put("classPK", classPK);
+		configurationValueJSONObject.put("classPK", classPK);
 	}
 
-	private static final String _KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
-		"com.liferay.fragment.entry.processor.freemarker." +
-			"FreeMarkerFragmentEntryProcessor";
+	private void _exportDDMTemplateReference(
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			JSONObject configurationValueJSONObject)
+		throws Exception {
+
+		if (!configurationValueJSONObject.has("template")) {
+			return;
+		}
+
+		JSONObject templateJSONObject =
+			configurationValueJSONObject.getJSONObject("template");
+
+		String ddmTemplateKey = templateJSONObject.getString("templateKey");
+
+		if (Validator.isNull(ddmTemplateKey)) {
+			return;
+		}
+
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			portletDataContext.getScopeGroupId(),
+			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
+
+		if (ddmTemplate != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, ddmTemplate,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditableValuesItemSelectorExportImportContentProcessor.class);

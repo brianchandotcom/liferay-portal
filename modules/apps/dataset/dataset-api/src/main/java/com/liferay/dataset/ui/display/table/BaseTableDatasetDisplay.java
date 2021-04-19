@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view.table;
+package com.liferay.dataset.ui.display.table;
 
-import com.liferay.dataset.ui.view.DatasetView;
-import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
-import com.liferay.dataset.ui.view.table.schema.TableDatasetViewSchema;
+import com.liferay.dataset.ui.content.renderer.DatasetContentRendererNames;
+import com.liferay.dataset.ui.display.DatasetDisplay;
+import com.liferay.dataset.ui.display.table.schema.TableDatasetDisplaySchema;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -25,21 +25,21 @@ import java.util.ResourceBundle;
 /**
  * @author Iván Zaera
  */
-public abstract class BaseTableDatasetView implements DatasetView {
+public abstract class BaseTableDatasetDisplay implements DatasetDisplay {
 
 	@Override
-	public String getContentRendererName() {
-		return DatasetViewContentRendererNames.TABLE;
+	public String getDatasetContentRendererName() {
+		return DatasetContentRendererNames.TABLE;
 	}
 
 	@Override
 	public String getLabel() {
-		return DatasetViewContentRendererNames.TABLE;
+		return DatasetContentRendererNames.TABLE;
 	}
 
 	@Override
 	public String getName() {
-		return DatasetViewContentRendererNames.TABLE;
+		return DatasetContentRendererNames.TABLE;
 	}
 
 	public ResourceBundle getResourceBundle(Locale locale) {
@@ -47,11 +47,11 @@ public abstract class BaseTableDatasetView implements DatasetView {
 			"content.Language", locale, getClass());
 	}
 
-	public abstract TableDatasetViewSchema getTableDatasetViewSchema();
+	public abstract TableDatasetDisplaySchema getTableDatasetDisplaySchema();
 
 	@Override
 	public String getThumbnail() {
-		return DatasetViewContentRendererNames.TABLE;
+		return DatasetContentRendererNames.TABLE;
 	}
 
 }

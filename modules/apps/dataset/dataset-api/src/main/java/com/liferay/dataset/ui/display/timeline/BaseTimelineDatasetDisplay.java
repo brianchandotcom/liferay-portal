@@ -12,49 +12,38 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view.list;
+package com.liferay.dataset.ui.display.timeline;
 
-import com.liferay.dataset.ui.view.DatasetView;
-import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
-import com.liferay.petra.string.StringPool;
+import com.liferay.dataset.ui.content.renderer.DatasetContentRendererNames;
+import com.liferay.dataset.ui.display.DatasetDisplay;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Iván Zaera
  */
-public abstract class BaseListDatasetView implements DatasetView {
+public abstract class BaseTimelineDatasetDisplay implements DatasetDisplay {
 
 	@Override
-	public String getContentRendererName() {
-		return DatasetViewContentRendererNames.LIST;
+	public String getDatasetContentRendererName() {
+		return DatasetContentRendererNames.TIMELINE;
 	}
+
+	public abstract String getDate();
 
 	public abstract String getDescription();
 
-	public String getImage() {
-		return StringPool.BLANK;
-	}
-
 	@Override
 	public String getLabel() {
-		return DatasetViewContentRendererNames.LIST;
+		return DatasetContentRendererNames.TIMELINE;
 	}
 
 	@Override
 	public String getName() {
-		return DatasetViewContentRendererNames.LIST;
-	}
-
-	public String getSticker() {
-		return StringPool.BLANK;
-	}
-
-	public String getSymbol() {
-		return StringPool.BLANK;
+		return DatasetContentRendererNames.TIMELINE;
 	}
 
 	@Override
 	public String getThumbnail() {
-		return DatasetViewContentRendererNames.LIST;
+		return DatasetContentRendererNames.TIMELINE;
 	}
 
 	public abstract String getTitle();

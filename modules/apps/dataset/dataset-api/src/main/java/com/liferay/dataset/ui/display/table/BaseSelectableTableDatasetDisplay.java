@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view.table;
+package com.liferay.dataset.ui.display.table;
 
-import com.liferay.dataset.ui.view.DatasetView;
-import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
+import com.liferay.dataset.ui.content.renderer.DatasetContentRendererNames;
+import com.liferay.dataset.ui.display.DatasetDisplay;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
@@ -23,11 +23,12 @@ import java.util.Locale;
 /**
  * @author Alessio Antonio Rendina
  */
-public abstract class BaseSelectableTableDatasetView implements DatasetView {
+public abstract class BaseSelectableTableDatasetDisplay
+	implements DatasetDisplay {
 
 	@Override
-	public String getContentRendererName() {
-		return DatasetViewContentRendererNames.SELECTABLE_TABLE;
+	public String getDatasetContentRendererName() {
+		return DatasetContentRendererNames.SELECTABLE_TABLE;
 	}
 
 	public abstract String getFirstColumnLabel(Locale locale);
@@ -36,12 +37,12 @@ public abstract class BaseSelectableTableDatasetView implements DatasetView {
 
 	@Override
 	public String getLabel() {
-		return DatasetViewContentRendererNames.SELECTABLE_TABLE;
+		return DatasetContentRendererNames.SELECTABLE_TABLE;
 	}
 
 	@Override
 	public String getName() {
-		return DatasetViewContentRendererNames.SELECTABLE_TABLE;
+		return DatasetContentRendererNames.SELECTABLE_TABLE;
 	}
 
 	@Override

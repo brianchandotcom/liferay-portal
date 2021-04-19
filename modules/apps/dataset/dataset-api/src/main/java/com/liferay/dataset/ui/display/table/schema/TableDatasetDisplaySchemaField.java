@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view.table.schema;
+package com.liferay.dataset.ui.display.table.schema;
 
 /**
  * @author Iván Zaera
  */
-public class TableDatasetViewSchemaField {
+public class TableDatasetDisplaySchemaField {
 
 	public String getActionId() {
 		return _actionId;

@@ -12,13 +12,23 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view.table.schema;
+package com.liferay.dataset.ui.display;
 
 /**
  * @author Iván Zaera
  */
-public interface TableDatasetViewSchemaBuilderFactory {
+public interface DatasetDisplay {
 
-	public TableDatasetViewSchemaBuilder create();
+	public default String getDatasetContentRendererModuleURL() {
+		return null;
+	}
+
+	public String getDatasetContentRendererName();
+
+	public String getLabel();
+
+	public String getName();
+
+	public String getThumbnail();
 
 }

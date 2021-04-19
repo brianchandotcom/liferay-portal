@@ -12,27 +12,30 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view.table.schema;
+package com.liferay.dataset.ui.display.table.schema;
+
+import java.util.Map;
 
 /**
  * @author Iván Zaera
  */
-public interface TableDatasetViewSchemaBuilder {
+public class TableDatasetDisplaySchema {
 
-	public TableDatasetViewSchemaField addTableDatasetViewSchemaField(
-		String fieldName);
+	public Map<String, TableDatasetDisplaySchemaField>
+		getTableDatasetDisplaySchemaFieldsMap() {
 
-	public TableDatasetViewSchemaField addTableDatasetViewSchemaField(
-		String fieldName, String label);
+		return _tableDatasetDisplaySchemaFieldsMap;
+	}
 
-	public void addTableDatasetViewSchemaField(
-		TableDatasetViewSchemaField tableDatasetViewSchemaField);
+	public void setTableDatasetDisplaySchemaFieldsMap(
+		Map<String, TableDatasetDisplaySchemaField>
+			tableDatasetDisplaySchemaFieldsMap) {
 
-	public TableDatasetViewSchema build();
+		_tableDatasetDisplaySchemaFieldsMap =
+			tableDatasetDisplaySchemaFieldsMap;
+	}
 
-	public void removeTableDatasetViewSchemaField(String fieldName);
-
-	public void setTableDatasetViewSchema(
-		TableDatasetViewSchema tableDatasetViewSchema);
+	private Map<String, TableDatasetDisplaySchemaField>
+		_tableDatasetDisplaySchemaFieldsMap;
 
 }

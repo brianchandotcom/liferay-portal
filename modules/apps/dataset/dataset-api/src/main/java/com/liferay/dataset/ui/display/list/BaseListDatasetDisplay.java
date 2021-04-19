@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view.cards;
+package com.liferay.dataset.ui.display.list;
 
-import com.liferay.dataset.ui.view.DatasetView;
-import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
+import com.liferay.dataset.ui.content.renderer.DatasetContentRendererNames;
+import com.liferay.dataset.ui.display.DatasetDisplay;
 import com.liferay.petra.string.StringPool;
 
 /**
- * @author Bruno Basto
+ * @author Alessio Antonio Rendina
  */
-public abstract class BaseCardsDatasetView implements DatasetView {
+public abstract class BaseListDatasetDisplay implements DatasetDisplay {
 
 	@Override
-	public String getContentRendererName() {
-		return DatasetViewContentRendererNames.CARDS;
+	public String getDatasetContentRendererName() {
+		return DatasetContentRendererNames.LIST;
 	}
 
 	public abstract String getDescription();
@@ -36,16 +36,12 @@ public abstract class BaseCardsDatasetView implements DatasetView {
 
 	@Override
 	public String getLabel() {
-		return DatasetViewContentRendererNames.CARDS;
-	}
-
-	public String getLink() {
-		return StringPool.BLANK;
+		return DatasetContentRendererNames.LIST;
 	}
 
 	@Override
 	public String getName() {
-		return DatasetViewContentRendererNames.CARDS;
+		return DatasetContentRendererNames.LIST;
 	}
 
 	public String getSticker() {
@@ -58,7 +54,7 @@ public abstract class BaseCardsDatasetView implements DatasetView {
 
 	@Override
 	public String getThumbnail() {
-		return "cards2";
+		return DatasetContentRendererNames.LIST;
 	}
 
 	public abstract String getTitle();

@@ -12,38 +12,53 @@
  * details.
  */
 
-package com.liferay.dataset.ui.view.timeline;
+package com.liferay.dataset.ui.display.cards;
 
-import com.liferay.dataset.ui.view.DatasetView;
-import com.liferay.dataset.ui.view.DatasetViewContentRendererNames;
+import com.liferay.dataset.ui.content.renderer.DatasetContentRendererNames;
+import com.liferay.dataset.ui.display.DatasetDisplay;
+import com.liferay.petra.string.StringPool;
 
 /**
- * @author Iván Zaera
+ * @author Bruno Basto
  */
-public abstract class BaseTimelineDatasetView implements DatasetView {
+public abstract class BaseCardsDatasetDisplay implements DatasetDisplay {
 
 	@Override
-	public String getContentRendererName() {
-		return DatasetViewContentRendererNames.TIMELINE;
+	public String getDatasetContentRendererName() {
+		return DatasetContentRendererNames.CARDS;
 	}
-
-	public abstract String getDate();
 
 	public abstract String getDescription();
 
+	public String getImage() {
+		return StringPool.BLANK;
+	}
+
 	@Override
 	public String getLabel() {
-		return DatasetViewContentRendererNames.TIMELINE;
+		return DatasetContentRendererNames.CARDS;
+	}
+
+	public String getLink() {
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getName() {
-		return DatasetViewContentRendererNames.TIMELINE;
+		return DatasetContentRendererNames.CARDS;
+	}
+
+	public String getSticker() {
+		return StringPool.BLANK;
+	}
+
+	public String getSymbol() {
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getThumbnail() {
-		return DatasetViewContentRendererNames.TIMELINE;
+		return "cards2";
 	}
 
 	public abstract String getTitle();

@@ -1294,19 +1294,28 @@ public interface BaseProjectTemplatesTestCase {
 
 		if (liferayVersion.startsWith("7.0")) {
 			writeGradlePropertiesInWorkspace(
-				gradleWorkspaceDir, "liferay.workspace.product=portal-7.0-ga7");
+				gradleWorkspaceDir,
+				"liferay.workspace.target.platform.version=7.0.6-2");
 		}
 		else if (liferayVersion.startsWith("7.1")) {
 			writeGradlePropertiesInWorkspace(
-				gradleWorkspaceDir, "liferay.workspace.product=portal-7.1-ga4");
+				gradleWorkspaceDir,
+				"liferay.workspace.target.platform.version=7.1.3-1");
 		}
 		else if (liferayVersion.startsWith("7.2")) {
 			writeGradlePropertiesInWorkspace(
-				gradleWorkspaceDir, "liferay.workspace.product=portal-7.2-ga2");
+				gradleWorkspaceDir,
+				"liferay.workspace.target.platform.version=7.2.1-1");
 		}
 		else if (liferayVersion.startsWith("7.3")) {
 			writeGradlePropertiesInWorkspace(
-				gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga6");
+				gradleWorkspaceDir,
+				"liferay.workspace.target.platform.version=7.3.6");
+		}
+		else {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.target.platform.version=7.4.0");
 		}
 
 		File modulesDir = new File(gradleWorkspaceDir, "modules");

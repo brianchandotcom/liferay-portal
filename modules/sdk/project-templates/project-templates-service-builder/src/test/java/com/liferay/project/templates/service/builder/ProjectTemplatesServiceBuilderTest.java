@@ -242,7 +242,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		writeGradlePropertiesInWorkspace(
 			gradleWorkspaceDir,
-			"liferay.workspace.target.platform.version=7.3.6");
+			"liferay.workspace.target.platform.version=7.4.0");
 
 		File modulesDir = new File(gradleWorkspaceDir, "modules");
 

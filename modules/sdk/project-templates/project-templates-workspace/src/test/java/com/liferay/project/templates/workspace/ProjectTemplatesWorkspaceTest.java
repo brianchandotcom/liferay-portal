@@ -101,8 +101,7 @@ public class ProjectTemplatesWorkspaceTest
 	@Test
 	public void testBuildTemplateWorkspaceDXPProductKey() throws Exception {
 		File workspaceProjectDir = buildWorkspace(
-			temporaryFolder, "gradle", "foows", getDefaultLiferayVersion(),
-			mavenExecutor);
+			temporaryFolder, getDefaultLiferayVersion());
 
 		writeGradlePropertiesInWorkspace(
 			workspaceProjectDir, "liferay.workspace.product=dxp-7.3-ga1");

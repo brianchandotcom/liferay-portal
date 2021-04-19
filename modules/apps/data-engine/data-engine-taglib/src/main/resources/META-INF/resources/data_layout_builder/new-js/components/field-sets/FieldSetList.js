@@ -15,11 +15,12 @@
 import ClayButton from '@clayui/button';
 import {
 	EVENT_TYPES,
+	PagesVisitor,
 	useConfig,
 	useForm,
 	useFormState,
 } from 'dynamic-data-mapping-form-renderer';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import EmptyState from '../../../js/components/empty-state/EmptyState.es';
 import {useNewDeleteFieldSet} from '../../../js/components/field-sets/actions/useDeleteFieldSet.es';
@@ -53,6 +54,7 @@ export default function FieldSetList({searchTerm}) {
 	const [modalState, setModalState] = useState({
 		isVisible: false,
 	});
+	const [fieldSetsInUse, setFieldSetsInUse] = useState(new Set());
 
 	const {
 		activePage,
@@ -64,13 +66,24 @@ export default function FieldSetList({searchTerm}) {
 	} = useFormState();
 
 	const {allowInvalidAvailableLocalesForProperty, fieldTypes} = useConfig();
-
 	const dispatch = useForm();
 
 	const filteredFieldsets = getFilteredFieldsets(fieldSets, searchTerm);
 
-	const toggleFieldSet = () => {
+	useEffect(() => {
+		const fieldsInuse = new Set();
+
+		new PagesVisitor(pages).mapFields((field) => {
+			if (field.type === 'fieldset') {
+				fieldsInuse.add(field.ddmStructureId);
+			}
+		});
+		setFieldSetsInUse(fieldsInuse);
+	}, [pages]);
+
+	const toggleFieldSet = (fieldSet) => {
 		setModalState(({isVisible}) => ({
+			fieldSet,
 			isVisible: !isVisible,
 		}));
 	};
@@ -129,6 +142,11 @@ export default function FieldSetList({searchTerm}) {
 									actions={[
 										{
 											action: () =>
+												toggleFieldSet(fieldSet),
+											name: Liferay.Language.get('edit'),
+										},
+										{
+											action: () =>
 												propagateFieldSet({
 													fieldSet,
 													isDeleteAction: true,
@@ -159,6 +177,7 @@ export default function FieldSetList({searchTerm}) {
 										Liferay.Language.get('x-fields'),
 										fieldSet.dataDefinitionFields.length
 									)}
+									disabled={fieldSetsInUse.has(fieldSet.id)}
 									dragType={DRAG_FIELDSET_ADD}
 									fieldSet={fieldSet}
 									icon="forms"

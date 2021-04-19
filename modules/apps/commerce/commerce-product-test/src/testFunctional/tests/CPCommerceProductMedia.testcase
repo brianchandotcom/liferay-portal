@@ -100,7 +100,6 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "Commerce Product Attachment");
 
-
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -121,7 +120,7 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-		
+
 		Type(
 			locator1 = "TextInput#TITLE",
 			value1 = "Commerce_Black_Edit");

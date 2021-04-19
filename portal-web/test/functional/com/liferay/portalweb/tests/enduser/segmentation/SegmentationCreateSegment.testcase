@@ -271,7 +271,22 @@ definition {
 	test AddSegmentBySessionLanguage {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130351 AddSegmentBySessionLanguage pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Language");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionLanguage Test");
+
+		Select(
+			key_criterion = "options",
+			locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+			value1 = "Spanish (Spain)");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for LPS-130320."

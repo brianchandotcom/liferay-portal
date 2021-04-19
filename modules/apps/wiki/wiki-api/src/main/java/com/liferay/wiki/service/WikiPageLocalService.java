@@ -93,6 +93,13 @@ public interface WikiPageLocalService
 			String summary, boolean minorEdit, ServiceContext serviceContext)
 		throws PortalException;
 
+	public WikiPage addPage(
+			String externalReferenceCode, long userId, long nodeId,
+			String title, double version, String content, String summary,
+			boolean minorEdit, String format, boolean head, String parentTitle,
+			String redirectTitle, ServiceContext serviceContext)
+		throws PortalException;
+
 	public FileEntry addPageAttachment(
 			long userId, long nodeId, String title, String fileName, File file,
 			String mimeType)

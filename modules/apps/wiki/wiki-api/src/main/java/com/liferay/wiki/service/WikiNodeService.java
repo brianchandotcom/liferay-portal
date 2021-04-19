@@ -60,6 +60,11 @@ public interface WikiNodeService extends BaseService {
 			String name, String description, ServiceContext serviceContext)
 		throws PortalException;
 
+	public WikiNode addNode(
+			String externalReferenceCode, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteNode(long nodeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

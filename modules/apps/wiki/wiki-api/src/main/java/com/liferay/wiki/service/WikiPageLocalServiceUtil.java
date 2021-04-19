@@ -68,6 +68,20 @@ public class WikiPageLocalServiceUtil {
 			userId, nodeId, title, content, summary, minorEdit, serviceContext);
 	}
 
+	public static WikiPage addPage(
+			String externalReferenceCode, long userId, long nodeId,
+			String title, double version, String content, String summary,
+			boolean minorEdit, String format, boolean head, String parentTitle,
+			String redirectTitle,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addPage(
+			externalReferenceCode, userId, nodeId, title, version, content,
+			summary, minorEdit, format, head, parentTitle, redirectTitle,
+			serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			addPageAttachment(
 				long userId, long nodeId, String title, String fileName,

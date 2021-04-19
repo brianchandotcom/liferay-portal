@@ -50,6 +50,15 @@ public class WikiNodeServiceUtil {
 		return getService().addNode(name, description, serviceContext);
 	}
 
+	public static WikiNode addNode(
+			String externalReferenceCode, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addNode(
+			externalReferenceCode, name, description, serviceContext);
+	}
+
 	public static void deleteNode(long nodeId) throws PortalException {
 		getService().deleteNode(nodeId);
 	}

@@ -171,6 +171,8 @@ message.
 	</target>
 
 	<target name="bom-all">
+		<setup-sdk />
+
 		<gradle-execute setupbinariescache="false" task="lockBOMDependencyVersion">
 			<arg value="--build-file=${project.dir}/modules/releng.gradle" />
 		</gradle-execute>

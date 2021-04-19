@@ -15,6 +15,7 @@
 package com.liferay.dispatch.talend.web.internal.process;
 
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
+import com.liferay.petra.process.PathHolder;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -26,6 +27,8 @@ import com.liferay.portal.util.PortalClassPathUtil;
 import java.io.File;
 
 import java.net.URL;
+
+import java.nio.file.Path;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
@@ -129,7 +132,8 @@ public class TalendProcess {
 				PortalClassPathUtil.getPortalProcessConfig();
 
 			processConfigBuilder.setBootstrapClassPath(
-				portalProcessConfig.getBootstrapClassPath());
+				_getBootstrapClassPath(
+					portalProcessConfig.getBootstrapClassPathHolders()));
 			processConfigBuilder.setProcessLogConsumer(
 				portalProcessConfig.getProcessLogConsumer());
 			processConfigBuilder.setReactClassLoader(
@@ -145,7 +149,50 @@ public class TalendProcess {
 			return processConfigBuilder.build();
 		}
 
+		private String _getBootstrapClassPath(PathHolder[] pathHolders) {
+			StringBundler sb = new StringBundler();
+
+			for (PathHolder pathHolder : pathHolders) {
+				Path path = pathHolder.getPath();
+
+				if (!_isRequired(path.getFileName())) {
+					continue;
+				}
+
+				sb.append(path);
+				sb.append(File.pathSeparatorChar);
+			}
+
+			String classPath = sb.toString();
+
+			return classPath.substring(0, classPath.length() - 1);
+		}
+
+		private boolean _isRequired(Path path) {
+			String pathString = path.toString();
+
+			for (String artifact : _requiredPetraArtifacts) {
+				if (pathString.contains(artifact)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		private static final String _BUNDLE_FILE_PATH;
+
+		private static final List<String> _requiredPetraArtifacts =
+			new ArrayList<String>() {
+				{
+					add("petra.concurrent");
+					add("petra.io");
+					add("petra.lang");
+					add("petra.process");
+					add("petra.reflect");
+					add("petra.string");
+				}
+			};
 
 		static {
 			ProtectionDomain protectionDomain =

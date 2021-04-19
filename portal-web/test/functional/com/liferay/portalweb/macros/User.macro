@@ -1389,6 +1389,8 @@ definition {
 	}
 
 	macro editPasswordCP {
+		JSONUserAPI._disablePasswordChangeRequired();
+
 		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 
 		if (!(isSet(newPassword))) {

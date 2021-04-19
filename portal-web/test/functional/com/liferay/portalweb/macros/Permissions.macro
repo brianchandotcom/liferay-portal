@@ -273,6 +273,8 @@ definition {
 	}
 
 	macro setUpRegRolePG {
+		JSONUserAPI._disablePasswordChangeRequired();	
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "${pageName}");

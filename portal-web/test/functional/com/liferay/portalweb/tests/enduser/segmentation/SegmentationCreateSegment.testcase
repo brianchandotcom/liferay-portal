@@ -144,7 +144,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130313."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionBrowser {
 		property portal.acceptance = "false";
@@ -165,7 +164,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130314."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionCookies {
 		property portal.acceptance = "false";
@@ -188,7 +186,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130315."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionDeviceBrand {
 		property portal.acceptance = "false";
@@ -209,7 +206,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130316."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionDeviceModel {
 		property portal.acceptance = "false";
@@ -230,7 +226,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130317."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionDeviceScreenResolutionHeight {
 		property portal.acceptance = "false";
@@ -251,7 +246,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130318."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionDeviceScreenResolutionWidth {
 		property portal.acceptance = "false";

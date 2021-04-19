@@ -4,14 +4,15 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.dataset.data,\
 	com.liferay.dataset.ui.action,\
+	com.liferay.dataset.ui.content.renderer,\
+	com.liferay.dataset.ui.display,\
+	com.liferay.dataset.ui.display.cards,\
+	com.liferay.dataset.ui.display.list,\
+	com.liferay.dataset.ui.display.table,\
+	com.liferay.dataset.ui.display.table.schema,\
+	com.liferay.dataset.ui.display.timeline,\
 	com.liferay.dataset.ui.filter,\
 	com.liferay.dataset.ui.filter.autocomplete,\
 	com.liferay.dataset.ui.filter.checkbox,\
 	com.liferay.dataset.ui.filter.date,\
-	com.liferay.dataset.ui.filter.radio,\
-	com.liferay.dataset.ui.view,\
-	com.liferay.dataset.ui.view.cards,\
-	com.liferay.dataset.ui.view.list,\
-	com.liferay.dataset.ui.view.table,\
-	com.liferay.dataset.ui.view.table.schema,\
-	com.liferay.dataset.ui.view.timeline
+	com.liferay.dataset.ui.filter.radio

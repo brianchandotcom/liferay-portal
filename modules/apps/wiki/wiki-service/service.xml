@@ -310,6 +310,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DuplicateNodeExternalReferenceCode</exception>
 		<exception>DuplicateNodeName</exception>
 		<exception>DuplicatePage</exception>
 		<exception>ImportFiles</exception>

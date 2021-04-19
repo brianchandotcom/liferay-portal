@@ -73,6 +73,10 @@ public class SelectDDMFormFieldTemplateContextContributor
 			"dataSourceType", ddmFormField.getDataSourceType()
 		).put(
 			"multiple", getMultiple(ddmFormField, ddmFormFieldRenderingContext)
+		).put(
+			"showEmptyOption",
+			GetterUtil.getBoolean(
+				ddmFormField.getProperty("showEmptyOption"), true)
 		).build();
 
 		DDMFormFieldOptions ddmFormFieldOptions =

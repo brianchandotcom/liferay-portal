@@ -113,7 +113,8 @@ public interface NumericDDMFormFieldTypeSettings
 	@DDMFormField(
 		label = "%direction", optionLabels = {"%horizontal", "%vertical"},
 		optionValues = {"horizontal", "vertical"},
-		predefinedValue = "[\"vertical\"]", type = "select"
+		predefinedValue = "[\"vertical\"]",
+		properties = "showEmptyOption=false", type = "select"
 	)
 	public String direction();
 

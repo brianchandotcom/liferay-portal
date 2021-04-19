@@ -1182,9 +1182,7 @@ definition {
 	@description = "This is a use case for LPS-82689."
 	@priority = "3"
 	test StagingPublishAssetPublisherConfiguredTagsFilter {
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Tags");
+		Tag.openTagsAdmin(siteURLKey = "site-name-staging");
 
 		Tag.addCP(tagName = "tag1");
 
@@ -1221,13 +1219,7 @@ definition {
 			webContentContent = "Web Content With Tag1",
 			webContentTitle = "Web Content Title 1");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Tags");
+		Tag.openTagsAdmin(siteURLKey = "site-name-staging");
 
 		Tag.addCP(tagName = "tag2");
 

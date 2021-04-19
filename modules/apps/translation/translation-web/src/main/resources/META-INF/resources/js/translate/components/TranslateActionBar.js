@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -48,8 +49,8 @@ const TransLateActionBar = ({
 					/>
 				</li>
 				{autoTranslateButtonVisible && (
-					<li className="tbar-item tbar-item-expand text-left">
-						<div>
+					<>
+						<li className="tbar-item">
 							<ClayButton
 								displayType="secondary"
 								onClick={getAutoTranslateFields}
@@ -58,8 +59,20 @@ const TransLateActionBar = ({
 							>
 								{Liferay.Language.get('auto-translate')}
 							</ClayButton>
-						</div>
-					</li>
+						</li>
+						<li className="tbar-item tbar-item-expand">
+							<div className="text-left">
+								<span className="inline-item inline-item-before">
+									<ClayLoadingIndicator small />
+								</span>
+								<span className="inline-item">
+									{Liferay.Language.get(
+										'requesting-translation'
+									)}
+								</span>
+							</div>
+						</li>
+					</>
 				)}
 				<li className="tbar-item">
 					<div className="metadata-type-button-row tbar-section text-right">

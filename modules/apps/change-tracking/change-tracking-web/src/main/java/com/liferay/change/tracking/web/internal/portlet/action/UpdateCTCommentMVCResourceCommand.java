@@ -54,7 +54,7 @@ public class UpdateCTCommentMVCResourceCommand
 		long commentId = ParamUtil.getLong(resourceRequest, "commentId");
 
 		if (commentId > 0) {
-			ctComment = ctCommentLocalService.updateComment(commentId, value);
+			ctComment = ctCommentLocalService.updateCTComment(commentId, value);
 		}
 		else {
 			long ctCollectionId = ParamUtil.getLong(
@@ -64,7 +64,7 @@ public class UpdateCTCommentMVCResourceCommand
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			ctComment = ctCommentLocalService.addComment(
+			ctComment = ctCommentLocalService.addCTComment(
 				ctCollectionId, ctEntryId, themeDisplay.getUserId(), value);
 		}
 

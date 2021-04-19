@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 public class CTCommentLocalServiceImpl extends CTCommentLocalServiceBaseImpl {
 
 	@Override
-	public CTComment addComment(
+	public CTComment addCTComment(
 			long ctCollectionId, long ctEntryId, long userId, String value)
 		throws PortalException {
 
@@ -57,7 +57,7 @@ public class CTCommentLocalServiceImpl extends CTCommentLocalServiceBaseImpl {
 	}
 
 	@Override
-	public CTComment deleteComment(long ctCommentId) {
+	public CTComment deleteCTComment(long ctCommentId) {
 		CTComment ctComment = ctCommentPersistence.fetchByPrimaryKey(
 			ctCommentId);
 
@@ -69,7 +69,7 @@ public class CTCommentLocalServiceImpl extends CTCommentLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Map<Long, List<CTComment>> getCollectionComments(
+	public Map<Long, List<CTComment>> getCTCollectionCTComments(
 		long ctCollectionId) {
 
 		Map<Long, List<CTComment>> collectionCommentsMap = new HashMap<>();
@@ -87,12 +87,12 @@ public class CTCommentLocalServiceImpl extends CTCommentLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<CTComment> getEntryComments(long ctEntryId) {
+	public List<CTComment> getCTEntryCTComments(long ctEntryId) {
 		return ctCommentPersistence.findByCTEntryId(ctEntryId);
 	}
 
 	@Override
-	public CTComment updateComment(long ctCommentId, String value)
+	public CTComment updateCTComment(long ctCommentId, String value)
 		throws PortalException {
 
 		CTComment ctComment = ctCommentPersistence.findByPrimaryKey(

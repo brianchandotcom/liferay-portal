@@ -45,7 +45,7 @@ public class DeleteCTCommentMVCResourceCommand
 
 		long commentId = ParamUtil.getLong(resourceRequest, "commentId");
 
-		ctCommentLocalService.deleteComment(commentId);
+		ctCommentLocalService.deleteCTComment(commentId);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

@@ -81,7 +81,7 @@ public class GetCTCommentsMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, "ctCollectionId");
 
 		Map<Long, List<CTComment>> ctCommentsMap =
-			ctCommentLocalService.getCollectionComments(ctCollectionId);
+			ctCommentLocalService.getCTCollectionCTComments(ctCollectionId);
 
 		long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");
 

@@ -21,7 +21,7 @@ import com.liferay.petra.string.StringPool;
 import java.util.Locale;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Iván Zaera
  */
 public abstract class BaseSelectableTableDatasetDisplay
 	implements DatasetDisplay {

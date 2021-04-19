@@ -18,7 +18,7 @@ import com.liferay.dataset.ui.filter.DatasetFilter;
 import com.liferay.dataset.ui.filter.DatasetFilterTypes;
 
 /**
- * @author Luca Pellizzon
+ * @author Iván Zaera
  */
 public abstract class BaseDateRangeDatasetFilter implements DatasetFilter {
 

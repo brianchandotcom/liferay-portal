@@ -16,7 +16,6 @@ package com.liferay.dataset.ui.content.renderer;
 
 /**
  * @author Iván Zaera
- * @author Alessio Antonio Rendina
  */
 public class DatasetContentRendererNames {
 

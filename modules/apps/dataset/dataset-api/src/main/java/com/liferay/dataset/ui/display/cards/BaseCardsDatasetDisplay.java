@@ -19,7 +19,7 @@ import com.liferay.dataset.ui.display.DatasetDisplay;
 import com.liferay.petra.string.StringPool;
 
 /**
- * @author Bruno Basto
+ * @author Iván Zaera
  */
 public abstract class BaseCardsDatasetDisplay implements DatasetDisplay {
 

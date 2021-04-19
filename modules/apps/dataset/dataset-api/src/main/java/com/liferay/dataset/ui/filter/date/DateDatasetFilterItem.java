@@ -15,7 +15,7 @@
 package com.liferay.dataset.ui.filter.date;
 
 /**
- * @author Luca Pellizzon
+ * @author Iván Zaera
  */
 public class DateDatasetFilterItem {
 

@@ -52,9 +52,7 @@ definition {
 	@description = "Validate if the user can edit a segment with Properties Country and Region"
 	@priority = "5"
 	test EditSegmentUserByOrganizationCountryAndRegion {
-		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation.editSegment();
-		}
+		Segmentation.editSegment(entry = "EditSegment Test");
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserByCountryAndRegion Test");
 
@@ -91,9 +89,7 @@ definition {
 			portlet = "Segments",
 			site = "Guest");
 
-		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation.editSegment();
-		}
+		Segmentation.editSegment(entry = "EditSegment Test");
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserByOrganizationTag Test");
 
@@ -123,9 +119,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 
-		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation.editSegment();
-		}
+		Segmentation.editSegment(entry = "EditSegment Test");
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserBySessionURL Test");
 
@@ -162,9 +156,7 @@ definition {
 			portlet = "Segments",
 			site = "Guest");
 
-		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation.editSegment();
-		}
+		Segmentation.editSegment(entry = "EditSegment Test");
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserByUserTag Test");
 
@@ -189,9 +181,7 @@ definition {
 	@description = "Validate if the user can edit a segment with Properties User and Email Segment with Contains to Equals Option"
 	@priority = "5"
 	test EditSegmentUserEmailAddressContainsToEquals {
-		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation.editSegment();
-		}
+		Segmentation.editSegment(entry = "EditSegment Test");
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserEmailAddressContainsToEquals Test");
 

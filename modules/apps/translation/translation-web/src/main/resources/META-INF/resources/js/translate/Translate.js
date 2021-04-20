@@ -22,10 +22,16 @@ import React, {useReducer, useState} from 'react';
 import TranslateActionBar from './components/TranslateActionBar';
 import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
 import TranslateHeader from './components/TranslateHeader';
+import {FETCH_STATUS} from './constants';
+
+const ACTION_TYPES = {
+	UPDATE_FETCH_STATUS: 'UPDATE_FETCH_STATUS',
+	UPDATE_FIELD: 'UPDATE_FIELD',
+};
 
 const reducer = (state, action) => {
 	switch (action.type) {
-		case 'changeField':
+		case ACTION_TYPES.UPDATE_FIELD:
 			return {
 				...state,
 				fields: {
@@ -34,7 +40,7 @@ const reducer = (state, action) => {
 				},
 				formHasChanges: true,
 			};
-		case 'UPDATE_FETCH_STATUS':
+		case ACTION_TYPES.UPDATE_FETCH_STATUS:
 			return {...state, fetchAutoTranslateStatus: action.payload};
 		default:
 			return state;
@@ -101,16 +107,16 @@ const Translate = ({
 	const handleOnChangeField = ({content, id}) => {
 		dispatch({
 			payload: {[id]: content},
-			type: 'changeField',
+			type: ACTION_TYPES.UPDATE_FIELD,
 		});
 	};
 
 	const fetchAutoTranslateFields = () => {
 		dispatch({
 			payload: {
-				status: 'LOADING',
+				status: FETCH_STATUS.LOADING,
 			},
-			type: 'UPDATE_FETCH_STATUS',
+			type: ACTION_TYPES.UPDATE_FETCH_STATUS,
 		});
 
 		fetch(getAutoTranslateURL, {
@@ -132,9 +138,9 @@ const Translate = ({
 						message: Liferay.Language.get(
 							'success-translations-received'
 						),
-						status: 'SUCCESS',
+						status: FETCH_STATUS.SUCCESS,
 					},
-					type: 'UPDATE_FETCH_STATUS',
+					type: ACTION_TYPES.UPDATE_FETCH_STATUS,
 				});
 
 				if (isMounted()) {
@@ -157,9 +163,9 @@ const Translate = ({
 					dispatch({
 						payload: {
 							message,
-							status: 'ERROR',
+							status: FETCH_STATUS.ERROR,
 						},
-						type: 'UPDATE_FETCH_STATUS',
+						type: ACTION_TYPES.UPDATE_FETCH_STATUS,
 					});
 				}
 			);

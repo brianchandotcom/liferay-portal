@@ -40,7 +40,7 @@ definition {
 		}
 
 		else if ("${widgetName}" == "Blogs Aggregator") {
-			var portletId = "com_liferay_blogs_web_portlet_BlogsAggregatorPortlet";
+			var portletId = "com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
 		}
 
 		else if ("${widgetName}" == "Bookmarks") {

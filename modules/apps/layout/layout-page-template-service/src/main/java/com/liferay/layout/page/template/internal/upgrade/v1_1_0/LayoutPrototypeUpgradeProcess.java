@@ -32,9 +32,9 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -83,7 +83,6 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-				Date createDate = layoutPrototype.getCreateDate();
 				String nameXML = layoutPrototype.getName();
 
 				Company company = _companyLocalService.getCompany(
@@ -116,8 +115,12 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 				ps.setLong(4, layoutPrototype.getCompanyId());
 				ps.setLong(5, layoutPrototype.getUserId());
 				ps.setString(6, layoutPrototype.getUserName());
-				ps.setDate(7, new java.sql.Date(createDate.getTime()));
-				ps.setDate(8, new java.sql.Date(createDate.getTime()));
+
+				Date now = new Date(System.currentTimeMillis());
+
+				ps.setDate(7, now);
+				ps.setDate(8, now);
+
 				ps.setLong(9, 0);
 				ps.setString(10, name);
 				ps.setInt(

@@ -25,7 +25,62 @@
 	<td>//button[contains(@id,'tokenButton')]</td>
 	<td></td>
 </tr>
-
+<!-- NAVIGATION SIDEBAR ITEMS -->
+<tr>
+	<td>AC_CONNECTION_NAV_SIDEBAR</td>
+	<td>//*[contains(@class, 'nav-link') and contains(@href,'connection')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNCED_SITES_NAV_SIDEBAR</td>
+	<td>//*[contains(@class, 'nav-link') and contains(@href,'synced-sites')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNCED_CONTACT_DATA_NAV_SIDEBAR</td>
+	<td>//*[contains(@class, 'nav-link') and contains(@href,'contact')]</td>
+	<td></td>
+</tr>
+<!-- SYNCS SITES TO PROPERTY SCREEN -->
+<tr>
+	<td>AVAILABLE_PROPERTY_NAME</td>
+	<td>//td[contains(., '${key_AvailablePropertyName}')]</td>
+	<td></td>
+</tr>
+<!-- GENERIC CHECKBOX -->
+<tr>
+	<td>AC_GENERIC_CHECKBOX</td>
+	<td>//*[contains(@type, 'checkbox')]</td>
+	<td></td>
+</tr>
+<!-- GENERIC ADD OR CONFIRMATION BUTTON -->
+<tr>
+	<td>AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON</td>
+	<td>//*[contains(@class, 'btn-primary')]</td>
+	<td></td>
+</tr>
+<!-- NEW PROPERTY SCREEN -->
+<tr>
+	<td>COMBINATED_PROPERTY_OPTION</td>
+	<td>//*[contains(@value, 'combined')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTIPLE_PROPERTY_OPTION</td>
+	<td>//*[contains(@value, 'multiple')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTY_NAME_CHECKBOX</td>
+	<td>//td[contains(., '${key_propertyName}')]//preceding-sibling::td</td>
+	<td></td>
+</tr>
+<!-- SYNC CONTACT DATA SCREEN -->
+<tr>
+	<td>SYNC_CONTACTS_OPTION</td>
+	<td>//fieldset//*[contains(@href, 'synced-contact-data')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

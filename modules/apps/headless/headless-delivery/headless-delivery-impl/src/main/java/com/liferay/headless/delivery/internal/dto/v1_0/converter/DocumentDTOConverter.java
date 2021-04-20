@@ -143,6 +143,7 @@ public class DocumentDTOConverter
 				documentType = _toDocumentType(
 					dtoConverterContext, fileVersion);
 				encodingFormat = fileEntry.getMimeType();
+				externalReferenceCode = fileEntry.getExternalReferenceCode();
 				fileExtension = fileEntry.getExtension();
 				id = fileEntry.getFileEntryId();
 				keywords = ListUtil.toArray(

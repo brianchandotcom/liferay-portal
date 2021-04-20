@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.wiki.exception.DuplicatePageException;
+import com.liferay.wiki.exception.DuplicatePageExternalReferenceCodeException;
 import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.model.WikiNode;
@@ -124,6 +125,43 @@ public class WikiPageLocalServiceTest {
 		Assert.assertTrue(ListUtil.isNull(categories));
 	}
 
+	@Test(expected = DuplicatePageExternalReferenceCodeException.class)
+	public void testAddPageWithExistingExternalReferenceCode()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPage wikiPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			serviceContext);
+
+		WikiPageLocalServiceUtil.addPage(
+			wikiPage.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			_node.getNodeId(), RandomTestUtil.randomString(),
+			WorkflowConstants.ACTION_PUBLISH, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false, "creole", true,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+	}
+
+	@Test
+	public void testAddPageWithExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		WikiPage wikiPage = WikiPageLocalServiceUtil.addPage(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_node.getNodeId(), RandomTestUtil.randomString(),
+			WorkflowConstants.ACTION_PUBLISH, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false, "creole", true,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			externalReferenceCode, wikiPage.getExternalReferenceCode());
+	}
+
 	@Test
 	public void testAddPageWithInvalidTitle() throws Exception {
 		char[] invalidCharacters = "\\[]|:;%<>".toCharArray();
@@ -157,6 +195,18 @@ public class WikiPageLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals("ChildPage 1", page.getTitle());
+	}
+
+	@Test
+	public void testAddPageWithoutExternalReferenceCode() throws Exception {
+		WikiPage wikiPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			wikiPage.getExternalReferenceCode(),
+			String.valueOf(wikiPage.getPageId()));
 	}
 
 	@Test(expected = AssetCategoryTestException.class)

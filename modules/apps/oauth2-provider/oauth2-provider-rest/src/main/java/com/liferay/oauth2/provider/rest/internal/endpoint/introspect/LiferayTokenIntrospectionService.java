@@ -113,6 +113,25 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 		).build();
 	}
 
+	@Override
+	protected Client authenticateClientIfNeeded(
+		MultivaluedMap<String, String> params) {
+
+		String clientId = params.getFirst("client_id");
+
+		if ((clientId != null) && clientId.isEmpty()) {
+			reportInvalidClient();
+		}
+
+		String clientSecret = params.getFirst("client_secret");
+
+		if ((clientSecret != null) && clientSecret.isEmpty()) {
+			params.remove("client_secret");
+		}
+
+		return super.authenticateClientIfNeeded(params);
+	}
+
 	protected boolean clientsMatch(Client client1, Client client2) {
 		if (!Objects.equals(client1.getClientId(), client2.getClientId())) {
 			return false;

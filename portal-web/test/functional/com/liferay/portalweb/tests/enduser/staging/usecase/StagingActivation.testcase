@@ -11,8 +11,6 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Site Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 	}
 
 	tearDown {
@@ -68,10 +66,9 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "StagingActivation#CheckPublicationSummaryRemote";
 
-		Staging.remoteStagingSetUp(
-			remotePort = "9080",
-			remoteStaging = "true",
-			siteName = "Site Name");
+		Staging.remoteStagingSetUpViaJson(
+			groupName = "Site Name",
+			remotePort = "9080");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

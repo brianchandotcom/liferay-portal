@@ -1,0 +1,82 @@
+@component-name = "portal-staging"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Staging";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page");
+
+		Staging.remoteStagingSetUpViaJson(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name",
+			remotePort = "9080");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@priority = "3"
+	test PublishWCViaRemoteStaging {
+		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property test.name.skip.portal.instance = "RemoteStagingWithVersioning#PublishWCViaRemoteStaging";
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging Test Page",
+			siteName = "Remote Site");
+
+		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		WebContent.viewNoEditWCViaWCD(webContentContent = "Web Content Content");
+	}
+
+}

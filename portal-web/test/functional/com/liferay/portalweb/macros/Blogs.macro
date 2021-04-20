@@ -439,6 +439,24 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro editEntryViaSearchResultDetails {
+		MouseOver(
+			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
+			value1 = "${searchAssetTitle}");
+
+		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		BlogsEntry.editEntryContent(
+			entryContent = "${entryContent}",
+			entryContentEdit = "${entryContentEdit}",
+			entrySubtitle = "${entrySubtitle}",
+			entrySubtitleEdit = "${entrySubtitleEdit}",
+			entryTitle = "${entryTitle}",
+			entryTitleEdit = "${entryTitleEdit}");
+
+		PortletEntry.publish();
+	}
+
 	macro enableSocialBookmarkSites {
 		Navigator.gotoPage(pageName = "Blogs Page");
 

@@ -316,7 +316,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130351."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionLanguage {
 		property portal.acceptance = "false";
@@ -340,7 +339,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130320."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionLastSignInDate {
 		property portal.acceptance = "false";

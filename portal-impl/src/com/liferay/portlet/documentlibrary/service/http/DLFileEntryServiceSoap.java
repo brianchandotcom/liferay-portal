@@ -225,6 +225,26 @@ public class DLFileEntryServiceSoap {
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntrySoap
+			fetchFileEntryByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.document.library.kernel.model.DLFileEntry returnValue =
+				DLFileEntryServiceUtil.fetchFileEntryByExternalReferenceCode(
+					groupId, externalReferenceCode);
+
+			return com.liferay.document.library.kernel.model.DLFileEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntrySoap
 			fetchFileEntryByImageId(long imageId)
 		throws RemoteException {
 
@@ -478,6 +498,26 @@ public class DLFileEntryServiceSoap {
 		try {
 			com.liferay.document.library.kernel.model.DLFileEntry returnValue =
 				DLFileEntryServiceUtil.getFileEntry(groupId, folderId, title);
+
+			return com.liferay.document.library.kernel.model.DLFileEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntrySoap
+			getFileEntryByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.document.library.kernel.model.DLFileEntry returnValue =
+				DLFileEntryServiceUtil.getFileEntryByExternalReferenceCode(
+					groupId, externalReferenceCode);
 
 			return com.liferay.document.library.kernel.model.DLFileEntrySoap.
 				toSoapModel(returnValue);

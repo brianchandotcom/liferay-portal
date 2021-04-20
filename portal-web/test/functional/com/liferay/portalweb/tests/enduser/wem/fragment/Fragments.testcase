@@ -805,10 +805,7 @@ definition {
 		}
 	}
 
-	// Ignored until LPS-120693 implement
-
 	@description = "This is a test for LPS-106776 and LPS-111657. Configure the Container and Grid elements."
-	@ignore = "true"
 	@priority = "5"
 	test ConfigureLayoutElements {
 		property portal.acceptance = "true";
@@ -830,42 +827,62 @@ definition {
 				fragmentName = "Container");
 		}
 
-		task ("Add a Card fragment to Container") {
+		task ("Add a Heading fragment to Container") {
 			PageEditor.addElementToContainer(
 				collectionName = "Basic Components",
-				fragmentName = "Card",
+				fragmentName = "Heading",
 				navTab = "Fragments");
 		}
 
-		task ("Add a Heading below Card inside the Container") {
-			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
-				key_collectionName = "Basic Components",
-				key_fragmentName = "Heading",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Card')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
-				value1 = "");
+		task ("Add a Card below the Container") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card",
+				targetFragmentName = "Container");
+		}
+
+		task ("Move the Card to the top of Heading inside the Container via Selection Panel") {
+			PageEditor.gotoTab(tabName = "Selection");
+
+			Pause(locator1 = "3000");
+
+			Click(
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+			DragAndDrop.javaScriptDragAndDropToUp(
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Card')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
+
+			Pause(locator1 = "3000");
 
 			AssertElementPresent(
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Heading')]",
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Card')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
 
-			PageEditor.waitForAutoSave();
+		task ("View the Container styles") {
+			AssertElementNotPresent(
+				key_contentDisplay = "",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
+
+			PageEditor.viewContainerStyle(
+				containerWidth = "Fluid",
+				position = "1");
 		}
 
 		task ("Configure the Container styles") {
-			PageEditor.viewContainerStyle(
-				contentDisplay = "block",
-				position = "1");
-
 			PageEditor.editLayoutContainer(
+				alignItems = "Center",
 				backgroundColor = "Warning",
 				borderColor = "Danger",
 				borderRadius = "Border Radius Large",
 				borderWidth = "5",
 				boxShadow = "Box Shadow Large",
-				contentDisplay = "Flex",
-				horizontalAlign = "Center",
+				contentDisplay = "Flex Row",
+				justifyContent = "Center",
 				marginBottom = "2",
 				marginLeft = "2",
 				marginRight = "2",
@@ -875,20 +892,20 @@ definition {
 				paddingLeft = "2",
 				paddingRight = "2",
 				paddingTop = "2",
-				panel = "Styles",
-				verticalAlign = "Center");
+				panel = "Styles");
 		}
 
 		task ("View the Container styles") {
 			PageEditor.viewContainerStyle(
+				alignItems = "center",
 				backgroundColor = "warning",
 				borderColor = "danger",
 				borderRadius = "border-radius-lg",
 				borderWidth = "5",
 				boxShadow = "box-shadow-lg",
-				contentDisplay = "flex",
+				contentDisplay = "row",
 				dropShadow = "lg",
-				horizontalAlign = "center",
+				justifyContent = "center",
 				marginBottom = "2",
 				marginLeft = "2",
 				marginRight = "2",
@@ -898,8 +915,7 @@ definition {
 				paddingLeft = "2",
 				paddingRight = "2",
 				paddingTop = "2",
-				position = "1",
-				verticalAlign = "center");
+				position = "1");
 		}
 
 		task ("Duplicate the Container") {

@@ -14,7 +14,9 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
@@ -335,6 +337,14 @@ public class ProductResourceImpl
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commerceCatalog.getGroupId());
 
+		String[] assetTagNames = new String[0];
+
+		if (product.getTags() != null) {
+			assetTagNames = product.getTags();
+		}
+
+		serviceContext.setAssetTagNames(assetTagNames);
+
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
 
@@ -516,6 +526,19 @@ public class ProductResourceImpl
 		}
 
 		return new ProductTaxConfiguration();
+	}
+
+	private String[] _getTags(CPDefinition cpDefinition) {
+		List<AssetTag> assetEntryAssetTags = _assetTagService.getTags(
+			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
+
+		Stream<AssetTag> stream = assetEntryAssetTags.stream();
+
+		return stream.map(
+			AssetTag::getName
+		).toArray(
+			String[]::new
+		);
 	}
 
 	private Product _toProduct(Long cpDefinitionId) throws Exception {
@@ -758,6 +781,14 @@ public class ProductResourceImpl
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			cpDefinition.getGroupId());
 
+		String[] assetTags = product.getTags();
+
+		if (product.getTags() == null) {
+			assetTags = _getTags(cpDefinition);
+		}
+
+		serviceContext.setAssetTagNames(assetTags);
+
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
 
@@ -844,6 +875,9 @@ public class ProductResourceImpl
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetTagService _assetTagService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

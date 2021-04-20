@@ -227,9 +227,6 @@ public class FileEntryInfoItemFormProvider
 									_getStructureFieldSetNameInfoLocalizedValue(
 										ddmStructureId)));
 
-						consumer.accept(
-							_ddmTemplateInfoItemFieldSetProvider.
-								getInfoItemFieldSet(ddmStructureId));
 					}
 				}
 			).infoFieldSetEntry(

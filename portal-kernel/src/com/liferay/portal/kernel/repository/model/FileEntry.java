@@ -81,6 +81,8 @@ public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 
 	public String getDescription();
 
+	public Date getExpirationDate();
+
 	public String getExtension();
 
 	public long getFileEntryId();
@@ -156,6 +158,8 @@ public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 		Class<T> capabilityClass);
 
 	public long getRepositoryId();
+
+	public Date getReviewDate();
 
 	public long getSize();
 

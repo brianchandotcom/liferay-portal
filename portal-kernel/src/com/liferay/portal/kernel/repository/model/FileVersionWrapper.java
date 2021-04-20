@@ -105,6 +105,11 @@ public class FileVersionWrapper
 	}
 
 	@Override
+	public Date getExpirationDate() {
+		return _fileVersion.getExpirationDate();
+	}
+
+	@Override
 	public String getExtension() {
 		return _fileVersion.getExtension();
 	}
@@ -187,6 +192,11 @@ public class FileVersionWrapper
 	@Override
 	public long getRepositoryId() {
 		return _fileVersion.getRepositoryId();
+	}
+
+	@Override
+	public Date getReviewDate() {
+		return _fileVersion.getReviewDate();
 	}
 
 	@Override

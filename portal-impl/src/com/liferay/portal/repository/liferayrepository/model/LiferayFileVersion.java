@@ -132,6 +132,11 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	}
 
 	@Override
+	public Date getExpirationDate() {
+		return _dlFileVersion.getExpirationDate();
+	}
+
+	@Override
 	public String getExtension() {
 		return _dlFileVersion.getExtension();
 	}
@@ -214,6 +219,11 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	@Override
 	public long getRepositoryId() {
 		return _dlFileVersion.getRepositoryId();
+	}
+
+	@Override
+	public Date getReviewDate() {
+		return _dlFileVersion.getReviewDate();
 	}
 
 	@Override

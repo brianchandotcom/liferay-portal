@@ -127,17 +127,21 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This test checks that blog entry can be added with specific charaters."
+	@description = "This test checks that blog entry can be added with special charaters."
 	@priority = "5"
 	@refactordone
 	test CanAddWithSpecialCharacters {
-		JSONBlog.addEntry(
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
 			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
 			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+		PortletEntry.publish();
 
-		Refresh();
+		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',

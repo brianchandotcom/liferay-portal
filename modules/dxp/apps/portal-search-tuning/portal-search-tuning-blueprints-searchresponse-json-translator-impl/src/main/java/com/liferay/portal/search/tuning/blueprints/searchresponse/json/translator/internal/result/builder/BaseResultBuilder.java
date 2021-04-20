@@ -257,8 +257,8 @@ public abstract class BaseResultBuilder implements ResultBuilder {
 			if (!Validator.isBlank(modified)) {
 				Date lastModified = INDEX_DATE_FORMAT.parse(modified);
 
-				DateFormat dateFormat = DateFormat.getDateInstance(
-					DateFormat.SHORT, locale);
+				DateFormat dateFormat = DateFormat.getDateTimeInstance(
+					DateFormat.SHORT, DateFormat.SHORT, locale);
 
 				dateString = dateFormat.format(lastModified);
 			}

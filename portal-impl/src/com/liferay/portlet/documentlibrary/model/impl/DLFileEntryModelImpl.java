@@ -96,6 +96,7 @@ public class DLFileEntryModelImpl
 		{"largeImageId", Types.BIGINT}, {"custom1ImageId", Types.BIGINT},
 		{"custom2ImageId", Types.BIGINT},
 		{"manualCheckInRequired", Types.BOOLEAN},
+		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
@@ -133,11 +134,13 @@ public class DLFileEntryModelImpl
 		TABLE_COLUMNS_MAP.put("custom1ImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("custom2ImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("manualCheckInRequired", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("reviewDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null,primary key (fileEntryId, ctCollectionId))";
+		"create table DLFileEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,primary key (fileEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 
@@ -306,6 +309,8 @@ public class DLFileEntryModelImpl
 		model.setCustom1ImageId(soapModel.getCustom1ImageId());
 		model.setCustom2ImageId(soapModel.getCustom2ImageId());
 		model.setManualCheckInRequired(soapModel.isManualCheckInRequired());
+		model.setExpirationDate(soapModel.getExpirationDate());
+		model.setReviewDate(soapModel.getReviewDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -590,6 +595,15 @@ public class DLFileEntryModelImpl
 			"manualCheckInRequired",
 			(BiConsumer<DLFileEntry, Boolean>)
 				DLFileEntry::setManualCheckInRequired);
+		attributeGetterFunctions.put(
+			"expirationDate", DLFileEntry::getExpirationDate);
+		attributeSetterBiConsumers.put(
+			"expirationDate",
+			(BiConsumer<DLFileEntry, Date>)DLFileEntry::setExpirationDate);
+		attributeGetterFunctions.put("reviewDate", DLFileEntry::getReviewDate);
+		attributeSetterBiConsumers.put(
+			"reviewDate",
+			(BiConsumer<DLFileEntry, Date>)DLFileEntry::setReviewDate);
 		attributeGetterFunctions.put(
 			"lastPublishDate", DLFileEntry::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -1300,6 +1314,36 @@ public class DLFileEntryModelImpl
 
 	@JSON
 	@Override
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_expirationDate = expirationDate;
+	}
+
+	@JSON
+	@Override
+	public Date getReviewDate() {
+		return _reviewDate;
+	}
+
+	@Override
+	public void setReviewDate(Date reviewDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_reviewDate = reviewDate;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -1556,6 +1600,8 @@ public class DLFileEntryModelImpl
 		dlFileEntryImpl.setCustom1ImageId(getCustom1ImageId());
 		dlFileEntryImpl.setCustom2ImageId(getCustom2ImageId());
 		dlFileEntryImpl.setManualCheckInRequired(isManualCheckInRequired());
+		dlFileEntryImpl.setExpirationDate(getExpirationDate());
+		dlFileEntryImpl.setReviewDate(getReviewDate());
 		dlFileEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		dlFileEntryImpl.resetOriginalValues();
@@ -1789,6 +1835,24 @@ public class DLFileEntryModelImpl
 
 		dlFileEntryCacheModel.manualCheckInRequired = isManualCheckInRequired();
 
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			dlFileEntryCacheModel.expirationDate = expirationDate.getTime();
+		}
+		else {
+			dlFileEntryCacheModel.expirationDate = Long.MIN_VALUE;
+		}
+
+		Date reviewDate = getReviewDate();
+
+		if (reviewDate != null) {
+			dlFileEntryCacheModel.reviewDate = reviewDate.getTime();
+		}
+		else {
+			dlFileEntryCacheModel.reviewDate = Long.MIN_VALUE;
+		}
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1902,6 +1966,8 @@ public class DLFileEntryModelImpl
 	private long _custom1ImageId;
 	private long _custom2ImageId;
 	private boolean _manualCheckInRequired;
+	private Date _expirationDate;
+	private Date _reviewDate;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1964,6 +2030,8 @@ public class DLFileEntryModelImpl
 		_columnOriginalValues.put("custom2ImageId", _custom2ImageId);
 		_columnOriginalValues.put(
 			"manualCheckInRequired", _manualCheckInRequired);
+		_columnOriginalValues.put("expirationDate", _expirationDate);
+		_columnOriginalValues.put("reviewDate", _reviewDate);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
@@ -2049,7 +2117,11 @@ public class DLFileEntryModelImpl
 
 		columnBitmasks.put("manualCheckInRequired", 536870912L);
 
-		columnBitmasks.put("lastPublishDate", 1073741824L);
+		columnBitmasks.put("expirationDate", 1073741824L);
+
+		columnBitmasks.put("reviewDate", 2147483648L);
+
+		columnBitmasks.put("lastPublishDate", 4294967296L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

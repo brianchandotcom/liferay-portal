@@ -77,7 +77,7 @@ public class DLFileVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(65);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -129,6 +129,10 @@ public class DLFileVersionCacheModel
 		sb.append(size);
 		sb.append(", checksum=");
 		sb.append(checksum);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
+		sb.append(", reviewDate=");
+		sb.append(reviewDate);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -262,6 +266,20 @@ public class DLFileVersionCacheModel
 			dlFileVersionImpl.setChecksum(checksum);
 		}
 
+		if (expirationDate == Long.MIN_VALUE) {
+			dlFileVersionImpl.setExpirationDate(null);
+		}
+		else {
+			dlFileVersionImpl.setExpirationDate(new Date(expirationDate));
+		}
+
+		if (reviewDate == Long.MIN_VALUE) {
+			dlFileVersionImpl.setReviewDate(null);
+		}
+		else {
+			dlFileVersionImpl.setReviewDate(new Date(reviewDate));
+		}
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			dlFileVersionImpl.setLastPublishDate(null);
 		}
@@ -330,6 +348,8 @@ public class DLFileVersionCacheModel
 
 		size = objectInput.readLong();
 		checksum = objectInput.readUTF();
+		expirationDate = objectInput.readLong();
+		reviewDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -450,6 +470,8 @@ public class DLFileVersionCacheModel
 			objectOutput.writeUTF(checksum);
 		}
 
+		objectOutput.writeLong(expirationDate);
+		objectOutput.writeLong(reviewDate);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -491,6 +513,8 @@ public class DLFileVersionCacheModel
 	public String version;
 	public long size;
 	public String checksum;
+	public long expirationDate;
+	public long reviewDate;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

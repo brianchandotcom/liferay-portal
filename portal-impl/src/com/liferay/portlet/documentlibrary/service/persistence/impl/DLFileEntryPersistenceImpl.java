@@ -15512,6 +15512,8 @@ public class DLFileEntryPersistenceImpl
 		ctStrictColumnNames.add("custom1ImageId");
 		ctStrictColumnNames.add("custom2ImageId");
 		ctStrictColumnNames.add("manualCheckInRequired");
+		ctStrictColumnNames.add("expirationDate");
+		ctStrictColumnNames.add("reviewDate");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(

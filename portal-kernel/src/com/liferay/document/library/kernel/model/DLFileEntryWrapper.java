@@ -76,6 +76,8 @@ public class DLFileEntryWrapper
 		attributes.put("custom1ImageId", getCustom1ImageId());
 		attributes.put("custom2ImageId", getCustom2ImageId());
 		attributes.put("manualCheckInRequired", isManualCheckInRequired());
+		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("reviewDate", getReviewDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -264,6 +266,18 @@ public class DLFileEntryWrapper
 			setManualCheckInRequired(manualCheckInRequired);
 		}
 
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
+		Date reviewDate = (Date)attributes.get("reviewDate");
+
+		if (reviewDate != null) {
+			setReviewDate(reviewDate);
+		}
+
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
 
 		if (lastPublishDate != null) {
@@ -405,6 +419,16 @@ public class DLFileEntryWrapper
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return model.getExpandoBridge();
+	}
+
+	/**
+	 * Returns the expiration date of this document library file entry.
+	 *
+	 * @return the expiration date of this document library file entry
+	 */
+	@Override
+	public Date getExpirationDate() {
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -640,6 +664,16 @@ public class DLFileEntryWrapper
 	@Override
 	public long getRepositoryId() {
 		return model.getRepositoryId();
+	}
+
+	/**
+	 * Returns the review date of this document library file entry.
+	 *
+	 * @return the review date of this document library file entry
+	 */
+	@Override
+	public Date getReviewDate() {
+		return model.getReviewDate();
 	}
 
 	/**
@@ -922,6 +956,16 @@ public class DLFileEntryWrapper
 	}
 
 	/**
+	 * Sets the expiration date of this document library file entry.
+	 *
+	 * @param expirationDate the expiration date of this document library file entry
+	 */
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		model.setExpirationDate(expirationDate);
+	}
+
+	/**
 	 * Sets the extension of this document library file entry.
 	 *
 	 * @param extension the extension of this document library file entry
@@ -1087,6 +1131,16 @@ public class DLFileEntryWrapper
 	@Override
 	public void setRepositoryId(long repositoryId) {
 		model.setRepositoryId(repositoryId);
+	}
+
+	/**
+	 * Sets the review date of this document library file entry.
+	 *
+	 * @param reviewDate the review date of this document library file entry
+	 */
+	@Override
+	public void setReviewDate(Date reviewDate) {
+		model.setReviewDate(reviewDate);
 	}
 
 	/**

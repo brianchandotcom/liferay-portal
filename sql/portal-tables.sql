@@ -342,6 +342,8 @@ create table DLFileEntry (
 	custom1ImageId LONG,
 	custom2ImageId LONG,
 	manualCheckInRequired BOOLEAN,
+	expirationDate DATE null,
+	reviewDate DATE null,
 	lastPublishDate DATE null,
 	primary key (fileEntryId, ctCollectionId)
 );
@@ -438,6 +440,8 @@ create table DLFileVersion (
 	version VARCHAR(75) null,
 	size_ LONG,
 	checksum VARCHAR(75) null,
+	expirationDate DATE null,
+	reviewDate DATE null,
 	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,

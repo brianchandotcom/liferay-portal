@@ -1048,7 +1048,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		for (var orgName : list "1, 2, 3") {
+		for (var orgName : list "1,2,3") {
 			JSONOrganization.addOrganization(organizationName = "Organization${orgName} Name");
 		}
 

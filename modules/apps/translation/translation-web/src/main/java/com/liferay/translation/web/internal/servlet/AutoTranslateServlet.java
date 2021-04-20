@@ -15,12 +15,16 @@
 package com.liferay.translation.web.internal.servlet;
 
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.translation.translator.JSONTranslatorPacket;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
@@ -31,7 +35,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,11 +59,9 @@ public class AutoTranslateServlet extends HttpServlet {
 	protected void doPost(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
+		throws IOException {
 
 		try {
-			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
 			String content = StreamUtil.toString(
 				httpServletRequest.getInputStream());
 
@@ -68,13 +69,19 @@ public class AutoTranslateServlet extends HttpServlet {
 				new JSONTranslatorPacket(
 					JSONFactoryUtil.createJSONObject(content)));
 
-			ServletResponseUtil.write(
+			_writeJSON(
 				httpServletResponse, _toJSON(translatedTranslatorPacket));
-
-			httpServletResponse.flushBuffer();
 		}
-		catch (JSONException jsonException) {
-			throw new ServletException(jsonException);
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			_writeJSON(
+				httpServletResponse,
+				StringBundler.concat(
+					"{\"error\": {\"message\": \"",
+					StringUtil.replace(
+						exception.getMessage(), CharPool.QUOTE, "\\\""),
+					"\"}}"));
 		}
 	}
 
@@ -97,6 +104,20 @@ public class AutoTranslateServlet extends HttpServlet {
 			"targetLanguageId", translatorPacket.getTargetLanguageId()
 		).toString();
 	}
+
+	private void _writeJSON(
+			HttpServletResponse httpServletResponse, String json)
+		throws IOException {
+
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+		ServletResponseUtil.write(httpServletResponse, json);
+
+		httpServletResponse.flushBuffer();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AutoTranslateServlet.class);
 
 	@Reference
 	private Translator _translator;

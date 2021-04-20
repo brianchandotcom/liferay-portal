@@ -27,7 +27,7 @@ String defaultLanguageId = cpDefinitionsDisplayContext.getCatalogDefaultLanguage
 
 String productTypeName = BeanParamUtil.getString(cpDefinition, request, "productTypeName");
 
-String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRODUCT_URL;
+String friendlyURLBase = themeDisplay.getPortalURL() + cpDefinitionsDisplayContext.getProductURLSeparator();
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 

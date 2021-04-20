@@ -240,7 +240,7 @@ definition {
 
 		Portlet.addPG(
 			defaultURL = "false",
-			portletName = "Hello Velocity");
+			portletName = "Navigation Menu");
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page2 Name",
@@ -259,7 +259,7 @@ definition {
 			pageName = "Page1 Name",
 			siteName = "Site Name");
 
-		PermissionsInline.gotoConfigurationPG(portletName = "Hello Velocity");
+		PermissionsInline.gotoConfigurationPG(portletName = "Navigation Menu");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
@@ -282,13 +282,13 @@ definition {
 
 		Portlet.addPG(
 			defaultURL = "false",
-			portletName = "Hello Velocity");
+			portletName = "Navigation Menu");
 
 		Navigator.gotoSitePage(
 			pageName = "Page1 Name",
 			siteName = "Site Name");
 
-		PermissionsInline.gotoConfigurationPG(portletName = "Hello Velocity");
+		PermissionsInline.gotoConfigurationPG(portletName = "Navigation Menu");
 
 		Role.viewPermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",

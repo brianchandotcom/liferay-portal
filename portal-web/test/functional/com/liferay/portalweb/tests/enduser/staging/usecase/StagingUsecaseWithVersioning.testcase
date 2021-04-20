@@ -161,7 +161,7 @@ definition {
 			pageName = "Staging Test Page 2",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Hello Velocity");
+		Portlet.addPG(portletName = "Navigation Menu");
 
 		Staging.gotoPublishToLive(pleaseDoNotMarkAsReady = "true");
 
@@ -184,12 +184,12 @@ definition {
 		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
 
 		Portlet.gotoPortletOptions(
-			portletName = "Hello Velocity",
+			portletName = "Navigation Menu",
 			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Hello Velocity");
+		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Navigation Menu");
 
 		PortletEntry.save();
 
@@ -197,7 +197,7 @@ definition {
 			pageName = "Staging Test Page 2",
 			siteName = "Site Name");
 
-		Portlet.viewSpecificPG(portletName = "Hello Velocity Custom");
+		Portlet.viewSpecificPG(portletName = "Navigation Menu Custom");
 
 		Staging.gotoPublishToLive(pleaseDoNotMarkAsReady = "true");
 
@@ -207,7 +207,7 @@ definition {
 			pageName = "Staging Test Page 2",
 			siteName = "Site Name");
 
-		Portlet.viewNoSpecificPG(portletName = "Hello Velocity Custom");
+		Portlet.viewNoSpecificPG(portletName = "Navigation Menu Custom");
 	}
 
 	@priority = "3"

@@ -781,21 +781,21 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page Name");
 
-		Portlet.addPG(portletName = "Hello Velocity");
+		Portlet.addPG(portletName = "Navigation Menu");
 
 		Portlet.gotoPortletOptions(
-			portletName = "Hello Velocity",
+			portletName = "Navigation Menu",
 			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Hello Velocity");
+		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Navigation Menu");
 
 		PortletEntry.save();
 
 		IFrame.closeFrame();
 
-		LAR.exportPortlet(larFileName = "HelloWorld.lar");
+		LAR.exportPortlet(larFileName = "NavigationMenu.lar");
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -807,15 +807,15 @@ definition {
 			pageName = "Test Site Page",
 			siteName = "Test Site Name");
 
-		Portlet.addPG(portletName = "Hello Velocity");
+		Portlet.addPG(portletName = "Navigation Menu");
 
-		LAR.importPortlet(larFileName = "HelloWorld.lar");
+		LAR.importPortlet(larFileName = "NavigationMenu.lar");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Site Page",
 			siteName = "Test Site Name");
 
-		Portlet.viewTitle(portletName = "Hello Velocity Custom");
+		Portlet.viewTitle(portletName = "Navigation Menu Custom");
 	}
 
 	@priority = "3"

@@ -382,7 +382,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		Navigator.gotoPage(pageName = "Test Widget Page");
 
-		Portlet.addPG(portletName = "Hello Velocity");
+		Portlet.addPG(portletName = "Navigation Menu");
 
 		var portalURL = PropsUtil.get("portal.url");
 

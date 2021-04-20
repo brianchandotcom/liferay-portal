@@ -58,7 +58,7 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet" />''';
+		var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet" />''';
 
 		WebContentTemplates.inputScript(templateScript = "${templateScript}");
 
@@ -81,8 +81,8 @@ definition {
 			webContentTitle = "WC Title");
 
 		Portlet.viewBody(
-			portletBody = "Hello Velocity",
-			portletName = "Hello Velocity");
+			portletBody = "Navigation Menu",
+			portletName = "Navigation Menu");
 	}
 
 	@description = "This is a use case for LPS-52248."

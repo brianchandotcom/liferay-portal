@@ -133,7 +133,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page",
-			widgetName = "Hello Velocity");
+			widgetName = "Navigation Menu");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
@@ -145,7 +145,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 
-		Portlet.viewTitle(portletName = "Hello Velocity");
+		Portlet.viewTitle(portletName = "Navigation Menu");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/test-site-name");
 
@@ -153,7 +153,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 
-		Portlet.viewTitle(portletName = "Hello Velocity");
+		Portlet.viewTitle(portletName = "Navigation Menu");
 	}
 
 	@priority = "4"

@@ -102,7 +102,7 @@ definition {
 			pageName = "Staging Page Versioning",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Hello Velocity");
+		Portlet.addPG(portletName = "Navigation Menu");
 
 		Staging.markAsReadyForPublication();
 
@@ -116,7 +116,7 @@ definition {
 			pageName = "Staging Page Versioning",
 			siteName = "Site Name");
 
-		Portlet.viewSpecificPG(portletName = "Hello Velocity");
+		Portlet.viewSpecificPG(portletName = "Navigation Menu");
 	}
 
 	@priority = "5"

@@ -70,9 +70,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
-		Portlet.addPG(portletName = "Hello Velocity");
+		Portlet.addPG(portletName = "Navigation Menu");
 
-		Portlet.gotoPortletOptions(portletName = "Hello Velocity");
+		Portlet.gotoPortletOptions(portletName = "Navigation Menu");
 
 		Theme.viewMaxPortletOption();
 
@@ -80,13 +80,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
-			value1 = "Hello Velocity");
+			value1 = "Navigation Menu");
 
 		AssertTextNotPresent(
 			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "Hello Velocity");
+			value1 = "Navigation Menu");
 
-		Portlet.gotoPortletOptions(portletName = "Hello Velocity");
+		Portlet.gotoPortletOptions(portletName = "Navigation Menu");
 
 		Theme.viewRestorePortlet();
 	}

@@ -130,7 +130,7 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "Hello Velocity");
+			value1 = "Navigation Menu");
 
 		// Refresh step is a workaround for LPS-91762
 

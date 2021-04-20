@@ -209,7 +209,7 @@ definition {
 			pageName = "Web Content Page",
 			url = "http://www.able.com:8080");
 
-		Portlet.addPG(portletName = "Hello Velocity");
+		Portlet.addPG(portletName = "Navigation Menu");
 
 		User.logoutPG();
 

@@ -463,12 +463,12 @@ definition {
 			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
-			videoShortcutTitle = "Test YouTube Video Name",
+			videoShortcutTitle = "Test YouTube Video Shortened URL",
 			videoURL = "https://youtu.be/HOdbzGCI5ME");
 
 		VideoShortcut.viewPG(
 			videoShortcutDescription = "Video Shortcut Description",
-			videoShortcutTitle = "Test YouTube Video Name");
+			videoShortcutTitle = "Test YouTube Video Shortened URL");
 	}
 
 	@description = "This ensures that a video shortcut can be added with YouTube."
@@ -483,12 +483,12 @@ definition {
 			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
-			videoShortcutTitle = "Test YouTube Video Name",
+			videoShortcutTitle = "Test YouTube Video Adding",
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		VideoShortcut.viewPG(
 			videoShortcutDescription = "Video Shortcut Description",
-			videoShortcutTitle = "Test YouTube Video Name");
+			videoShortcutTitle = "Test YouTube Video Adding");
 	}
 
 	@description = "This test ensures that a YouTube video added via item selector can be embedded when adding a WC."

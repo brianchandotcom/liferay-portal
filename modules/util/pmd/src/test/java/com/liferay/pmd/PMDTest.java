@@ -56,12 +56,6 @@ public class PMDTest extends AutoBalanceTestCase {
 	@Before
 	public void setUp() throws IOException {
 		try (FileReader fileReader = new FileReader(
-				new File(_PROJECT_DIR, "/tools/sdk/build.properties"))) {
-
-			_buildProperties.load(fileReader);
-		}
-
-		try (FileReader fileReader = new FileReader(
 				new File(_PROJECT_DIR, "build.properties"))) {
 
 			_buildProperties.load(fileReader);

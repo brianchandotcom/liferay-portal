@@ -21,6 +21,33 @@ definition {
 			value1 = "${propertyOption}");
 	}
 
+	macro changeCriterionInputDate {
+		Click(
+			key_criterion = "date",
+			locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL");
+
+		KeyPress(
+			key_criterion = "date",
+			locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+			value1 = "\BACK_SPACE");
+
+		RobotType(locator1 = "${year}");
+
+		KeyPress(
+			key_criterion = "date",
+			locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+			value1 = "\RIGHT");
+
+		RobotType(locator1 = "${month}");
+
+		KeyPress(
+			key_criterion = "date",
+			locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+			value1 = "\RIGHT");
+
+		RobotType(locator1 = "${day}");
+	}
+
 	macro changeCriterionInputEmailAddress {
 		var key_criterionInputOption = "${criterionInputOption}";
 

@@ -366,12 +366,30 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130321."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionLocalDate {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130321 AddSegmentBySessionLocalDate pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Local Date");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionLocalDate Test");
+
+		Segmentation.changeCriterionInputDate(
+			day = "31",
+			month = "03",
+			year = "2021");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionLastSignInDate Test");
+
+		Segmentation.viewSegment(date = "2021-03-31");
 	}
 
 	@description = "This is a test for LPS-130322."

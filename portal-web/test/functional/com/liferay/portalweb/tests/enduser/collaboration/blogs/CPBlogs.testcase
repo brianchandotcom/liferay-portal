@@ -97,6 +97,37 @@ definition {
 		Button.clickPublish();
 	}
 
+	@description = "This test covers LPS-108029. It ensures that a blog entry can be edited from the search result."
+	@priority = "4"
+	@refactorneeded
+	test BlogEntryCanBeEditedFromSearchResult {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Blogs Entry Title");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Blogs Entry Title");
+
+		Blogs.editEntryViaSearchResultDetails(
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title",
+			entryTitleEdit = "Blogs Entry Title Edit",
+			searchAssetTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title Edit");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title Edit");
+	}
+
 	@description = "This checks that an entry can be added in the control panel."
 	@priority = "5"
 	@refactordone

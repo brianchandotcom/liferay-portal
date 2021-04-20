@@ -140,16 +140,6 @@ const Translate = ({
 					throw error;
 				}
 
-				dispatch({
-					payload: {
-						message: Liferay.Language.get(
-							'success-translations-received'
-						),
-						status: FETCH_STATUS.SUCCESS,
-					},
-					type: ACTION_TYPES.UPDATE_FETCH_STATUS,
-				});
-
 				if (isMounted()) {
 					dispatch({
 						payload: fields.reduce((acc, field) => {
@@ -159,6 +149,16 @@ const Translate = ({
 						}, {}),
 						type: ACTION_TYPES.UPDATE_FIELDS_BULK,
 					});
+
+					dispatch({
+						payload: {
+							message: Liferay.Language.get(
+								'success-translations-received'
+							),
+							status: FETCH_STATUS.SUCCESS,
+						},
+						type: ACTION_TYPES.UPDATE_FETCH_STATUS,
+					});
 				}
 			})
 			.catch(
@@ -167,13 +167,15 @@ const Translate = ({
 						'an-unexpected-error-occurred'
 					),
 				}) => {
-					dispatch({
-						payload: {
-							message,
-							status: FETCH_STATUS.ERROR,
-						},
-						type: ACTION_TYPES.UPDATE_FETCH_STATUS,
-					});
+					if (isMounted()) {
+						dispatch({
+							payload: {
+								message,
+								status: FETCH_STATUS.ERROR,
+							},
+							type: ACTION_TYPES.UPDATE_FETCH_STATUS,
+						});
+					}
 				}
 			);
 	};

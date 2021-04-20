@@ -200,7 +200,7 @@ public class FileEntryInfoItemFormProvider
 		);
 
 		List<InfoFieldSet> infoFieldSets = _getMetadataInfoFieldSets(
-			fileEntryTypeId);
+			ddmStructureId, fileEntryTypeId);
 
 		infoFieldSets.forEach(builder::infoFieldSetEntry);
 
@@ -279,7 +279,9 @@ public class FileEntryInfoItemFormProvider
 		}
 	}
 
-	private List<InfoFieldSet> _getMetadataInfoFieldSets(long fileEntryTypeId) {
+	private List<InfoFieldSet> _getMetadataInfoFieldSets(
+		long ddmStructureId, long fileEntryTypeId) {
+
 		try {
 			DLFileEntryType fileEntryType =
 				_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
@@ -292,6 +294,10 @@ public class FileEntryInfoItemFormProvider
 
 			for (com.liferay.dynamic.data.mapping.kernel.DDMStructure
 					ddmStructure : ddmStructures) {
+
+				if (ddmStructure.getStructureId() == ddmStructureId) {
+					continue;
+				}
 
 				infoFieldSets.add(
 					_ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(

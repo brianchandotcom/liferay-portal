@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {Align} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
@@ -174,6 +175,19 @@ function PreviewSidebar({
 					<SearchInput onChange={setValue} onEnter={_handleFetch} />
 				</div>
 			</nav>
+
+			{results.warnings &&
+				results.warnings.length &&
+				results.warnings.map((warning, idx) => (
+					<ClayAlert
+						displayType="warning"
+						key={idx}
+						title={Liferay.Language.get('warning')}
+						variant="stripe"
+					>
+						{warning.msg}
+					</ClayAlert>
+				))}
 
 			{results.meta &&
 				(!results.errors || !results.errors.length) &&

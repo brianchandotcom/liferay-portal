@@ -145,7 +145,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5861. As a buyer, I want to view the product name with the correct localization"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductNameIsTranslated {
 		property portal.acceptance = "false";
@@ -189,6 +188,7 @@ definition {
 		AssertElementPresent(
 			key_productName = "Shock Absorber",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			
 	}
 
 	@description = "COMMERCE-6318. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"

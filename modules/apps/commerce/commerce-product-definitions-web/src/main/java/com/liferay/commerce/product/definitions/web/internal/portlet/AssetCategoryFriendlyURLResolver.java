@@ -18,10 +18,10 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -66,8 +67,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
-		String urlTitle = friendlyURL.substring(
-			CPConstants.SEPARATOR_ASSET_CATEGORY_URL.length());
+		String urlTitle = friendlyURL.substring(_getURLSeparatorLength());
 
 		urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
 
@@ -149,8 +149,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
-		String urlTitle = friendlyURL.substring(
-			CPConstants.SEPARATOR_ASSET_CATEGORY_URL.length());
+		String urlTitle = friendlyURL.substring(_getURLSeparatorLength());
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
@@ -183,7 +182,8 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Override
 	public String getURLSeparator() {
-		return CPConstants.SEPARATOR_ASSET_CATEGORY_URL;
+		return _cpFriendlyURL.getAssetCategoryURLSeparator(
+			CompanyThreadLocal.getCompanyId());
 	}
 
 	protected Layout getAssetCategoryLayout(
@@ -207,6 +207,12 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 			cpDisplayLayout.getLayoutUuid(), groupId, privateLayout);
 	}
 
+	private int _getURLSeparatorLength() {
+		String urlSeparator = getURLSeparator();
+
+		return urlSeparator.length();
+	}
+
 	@Reference
 	private AssetCategoryService _assetCategoryService;
 
@@ -215,6 +221,9 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Reference
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
+
+	@Reference
+	private CPFriendlyURL _cpFriendlyURL;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

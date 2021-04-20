@@ -30,6 +30,7 @@ import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -82,7 +83,8 @@ public class CPDefinitionsDisplayContext
 		CommerceAccountGroupRelService commerceAccountGroupRelService,
 		CommerceCatalogService commerceCatalogService,
 		CommerceChannelRelService commerceChannelRelService,
-		CPDefinitionService cpDefinitionService, ItemSelector itemSelector) {
+		CPDefinitionService cpDefinitionService, CPFriendlyURL cpFriendlyURL,
+		ItemSelector itemSelector) {
 
 		super(actionHelper, httpServletRequest);
 
@@ -90,6 +92,7 @@ public class CPDefinitionsDisplayContext
 		_commerceCatalogService = commerceCatalogService;
 		_commerceChannelRelService = commerceChannelRelService;
 		_cpDefinitionService = cpDefinitionService;
+		_cpFriendlyURL = cpFriendlyURL;
 		_itemSelector = itemSelector;
 	}
 
@@ -406,6 +409,11 @@ public class CPDefinitionsDisplayContext
 		return headerActionModels;
 	}
 
+	public String getProductURLSeparator() {
+		return _cpFriendlyURL.getProductURLSeparator(
+			cpRequestHelper.getCompanyId());
+	}
+
 	public String getUrlTitleMapAsXML() throws PortalException {
 		long cpDefinitionId = getCPDefinitionId();
 
@@ -443,6 +451,7 @@ public class CPDefinitionsDisplayContext
 	private final CommerceCatalogService _commerceCatalogService;
 	private final CommerceChannelRelService _commerceChannelRelService;
 	private final CPDefinitionService _cpDefinitionService;
+	private final CPFriendlyURL _cpFriendlyURL;
 	private final ItemSelector _itemSelector;
 
 }

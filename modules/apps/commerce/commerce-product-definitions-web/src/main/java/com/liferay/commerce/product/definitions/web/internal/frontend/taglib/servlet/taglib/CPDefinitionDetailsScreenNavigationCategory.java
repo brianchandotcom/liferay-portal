@@ -22,6 +22,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -87,7 +88,7 @@ public class CPDefinitionDetailsScreenNavigationCategory
 				_actionHelper, httpServletRequest,
 				_commerceAccountGroupRelService, _commerceCatalogService,
 				_commerceChannelRelService, _cpDefinitionService,
-				_itemSelector);
+				_cpFriendlyURL, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
@@ -111,6 +112,9 @@ public class CPDefinitionDetailsScreenNavigationCategory
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPFriendlyURL _cpFriendlyURL;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -27,6 +26,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -80,8 +81,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		long classNameId = _portal.getClassNameId(CProduct.class);
 
-		String urlTitle = friendlyURL.substring(
-			CPConstants.SEPARATOR_PRODUCT_URL.length());
+		String urlTitle = friendlyURL.substring(_getURLSeparatorLength());
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
@@ -179,8 +179,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
-		String urlTitle = friendlyURL.substring(
-			CPConstants.SEPARATOR_PRODUCT_URL.length());
+		String urlTitle = friendlyURL.substring(_getURLSeparatorLength());
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
@@ -214,7 +213,8 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Override
 	public String getURLSeparator() {
-		return CPConstants.SEPARATOR_PRODUCT_URL;
+		return _cpFriendlyURL.getProductURLSeparator(
+			CompanyThreadLocal.getCompanyId());
 	}
 
 	protected Layout getProductLayout(
@@ -327,6 +327,12 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		return LayoutConstants.DEFAULT_PLID;
 	}
 
+	private int _getURLSeparatorLength() {
+		String urlSeparator = getURLSeparator();
+
+		return urlSeparator.length();
+	}
+
 	private boolean _hasNonstaticPortletId(
 		LayoutTypePortlet layoutTypePortlet, String portletId) {
 
@@ -370,6 +376,9 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPFriendlyURL _cpFriendlyURL;
 
 	@Reference
 	private CProductLocalService _cProductLocalService;

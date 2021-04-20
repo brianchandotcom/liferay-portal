@@ -23,6 +23,7 @@ import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -63,7 +64,7 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 					_actionHelper, _portal.getHttpServletRequest(renderRequest),
 					_commerceAccountGroupRelService, _commerceCatalogService,
 					_commerceChannelRelService, _cpDefinitionService,
-					_itemSelector);
+					_cpFriendlyURL, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
@@ -107,6 +108,9 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPFriendlyURL _cpFriendlyURL;
 
 	@Reference
 	private ItemSelector _itemSelector;

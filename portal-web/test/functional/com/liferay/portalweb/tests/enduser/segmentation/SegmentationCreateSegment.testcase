@@ -161,6 +161,10 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionBrowser Test");
+
+		Segmentation.viewSegment(propertyField = "Chrome");
 	}
 
 	@description = "This is a test for LPS-130314."
@@ -183,6 +187,12 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionCookies Test");
+
+		Segmentation.viewSegment(
+			criterionKey = "GUEST_LANGUAGE_ID",
+			criterionValue = "en_US");
 	}
 
 	@description = "This is a test for LPS-130315."
@@ -203,6 +213,10 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionDeviceBrand Test");
+
+		Segmentation.viewSegment(propertyField = "Apple");
 	}
 
 	@description = "This is a test for LPS-130316."
@@ -223,6 +237,10 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionDeviceModel Test");
+
+		Segmentation.viewSegment(propertyField = "ios");
 	}
 
 	@description = "This is a test for LPS-130317."
@@ -243,6 +261,10 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionDeviceScreenResolutionHeight Test");
+
+		Segmentation.viewSegment(resolutionValue = "480.00");
 	}
 
 	@description = "This is a test for LPS-130318."
@@ -263,6 +285,34 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionDeviceScreenResolutionWidth Test");
+
+		Segmentation.viewSegment(resolutionValue = "320.00");
+	}
+
+	@description = "This is a test for LPS-130319."
+	@priority = "5"
+	test AddSegmentBySessionHostname {
+		property portal.acceptance = "false";
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Hostname");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionHostname Test");
+
+		Segmentation.fillProperty(propertyField = "localhost");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionHostname Test");
+
+		Segmentation.viewSegment(propertyField = "localhost");
 	}
 
 	@description = "This is a test for LPS-130351."
@@ -311,6 +361,10 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionLastSignInDate Test");
+
+		Segmentation.viewSegment(date = "2021-03-31");
 	}
 
 	@description = "This is a test for LPS-130321."

@@ -117,26 +117,6 @@ definition {
 		User.deleteCP();
 	}
 
-	@description = "Validate if the user can edit a segment with Properties Session Hostname"
-	@priority = "5"
-	test EditSegmentUserBySessionHostname {
-		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation.editSegment();
-		}
-
-		Segmentation.fillTitle(titleField = "EditSegmentUserBySessionHostname Test");
-
-		Segmentation.deleteProperties();
-
-		Segmentation.selectSession();
-
-		Segmentation.addProperties(propertyOption = "Hostname");
-
-		Segmentation.fillProperty(propertyField = "Liferay");
-
-		Button.clickSave();
-	}
-
 	@description = "Validate if the user can edit a segment with Properties Session URL"
 	@priority = "5"
 	test EditSegmentUserBySessionURL {

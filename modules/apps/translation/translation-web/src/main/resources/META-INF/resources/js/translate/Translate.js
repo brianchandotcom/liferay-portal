@@ -27,6 +27,7 @@ import {FETCH_STATUS} from './constants';
 const ACTION_TYPES = {
 	UPDATE_FETCH_STATUS: 'UPDATE_FETCH_STATUS',
 	UPDATE_FIELD: 'UPDATE_FIELD',
+	UPDATE_FIELDS_BULK: 'UPDATE_FIELDS_BULK',
 };
 
 const reducer = (state, action) => {
@@ -38,6 +39,12 @@ const reducer = (state, action) => {
 					...state.fields,
 					...action.payload,
 				},
+				formHasChanges: true,
+			};
+		case ACTION_TYPES.UPDATE_FIELDS_BULK:
+			return {
+				...state,
+				fields: action.payload,
 				formHasChanges: true,
 			};
 		case ACTION_TYPES.UPDATE_FETCH_STATUS:
@@ -144,13 +151,13 @@ const Translate = ({
 				});
 
 				if (isMounted()) {
-					fields.forEach((field) => {
-						const [id, content] = Object.entries(field)[0];
+					dispatch({
+						payload: fields.reduce((acc, field) => {
+							const [id, content] = Object.entries(field)[0];
 
-						handleOnChangeField({
-							content,
-							id,
-						});
+							return {...acc, [id]: content};
+						}, {}),
+						type: ACTION_TYPES.UPDATE_FIELDS_BULK,
 					});
 				}
 			})

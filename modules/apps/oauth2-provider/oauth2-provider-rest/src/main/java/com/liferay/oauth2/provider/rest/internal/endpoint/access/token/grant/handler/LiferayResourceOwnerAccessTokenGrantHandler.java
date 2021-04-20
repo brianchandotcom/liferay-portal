@@ -35,6 +35,8 @@ import org.apache.cxf.rs.security.oauth2.provider.AccessTokenGrantHandler;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Tomas Polesovsky
@@ -102,16 +104,50 @@ public class LiferayResourceOwnerAccessTokenGrantHandler
 			allowResourceOwnerPasswordCredentialsGrant();
 	}
 
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setLiferayOAuthDataProvider(
+		LiferayOAuthDataProvider liferayOAuthDataProvider) {
+
+		_liferayOAuthDataProvider = liferayOAuthDataProvider;
+
+		if (_resourceOwnerGrantHandler != null) {
+			_resourceOwnerGrantHandler.setDataProvider(
+				_liferayOAuthDataProvider);
+		}
+	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setResourceOwnerLoginHandler(
+		ResourceOwnerLoginHandler resourceOwnerLoginHandler) {
+
+		_resourceOwnerLoginHandler = resourceOwnerLoginHandler;
+
+		if (_resourceOwnerGrantHandler != null) {
+			_resourceOwnerGrantHandler.setLoginHandler(
+				_resourceOwnerLoginHandler);
+		}
+	}
+
+	protected void unsetLiferayOAuthDataProvider(
+		LiferayOAuthDataProvider liferayOAuthDataProvider) {
+	}
+
+	protected void unsetResourceOwnerLoginHandler(
+		ResourceOwnerLoginHandler resourceOwnerLoginHandler) {
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayResourceOwnerAccessTokenGrantHandler.class);
 
-	@Reference
-	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
-
+	private volatile LiferayOAuthDataProvider _liferayOAuthDataProvider;
 	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
 	private ResourceOwnerGrantHandler _resourceOwnerGrantHandler;
-
-	@Reference
-	private ResourceOwnerLoginHandler _resourceOwnerLoginHandler;
+	private volatile ResourceOwnerLoginHandler _resourceOwnerLoginHandler;
 
 }

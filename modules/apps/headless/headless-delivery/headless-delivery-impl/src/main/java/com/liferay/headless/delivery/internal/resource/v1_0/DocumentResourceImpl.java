@@ -20,7 +20,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
@@ -127,6 +129,17 @@ public class DocumentResourceImpl
 	}
 
 	@Override
+	public void deleteSiteDocumentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
+			siteId, externalReferenceCode);
+
+		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+	}
+
+	@Override
 	public Page<Document> getAssetLibraryDocumentsPage(
 			Long assetLibraryId, Boolean flatten, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
@@ -227,6 +240,16 @@ public class DocumentResourceImpl
 	}
 
 	@Override
+	public Document getSiteDocumentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		return _toDocument(
+			_dlAppService.getFileEntryByExternalReferenceCode(
+				siteId, externalReferenceCode));
+	}
+
+	@Override
 	public Page<Document> getSiteDocumentsPage(
 			Long siteId, Boolean flatten, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
@@ -316,8 +339,8 @@ public class DocumentResourceImpl
 		Folder folder = _dlAppService.getFolder(documentFolderId);
 
 		return _addDocument(
-			folder.getRepositoryId(), documentFolderId, folder.getGroupId(),
-			multipartBody);
+			documentFolderId, null, folder.getGroupId(), multipartBody,
+			folder.getRepositoryId());
 	}
 
 	@Override
@@ -334,60 +357,16 @@ public class DocumentResourceImpl
 	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)
 		throws Exception {
 
-		return _addDocument(siteId, 0L, siteId, multipartBody);
+		return _addDocument(0L, null, siteId, multipartBody, siteId);
 	}
 
 	@Override
 	public Document putDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception {
 
-		Optional<Document> documentOptional =
-			multipartBody.getValueAsInstanceOptional(
-				"document", Document.class);
+		FileEntry fileEntry = _dlAppService.getFileEntry(documentId);
 
-		if ((multipartBody.getBinaryFile("file") == null) &&
-			!documentOptional.isPresent()) {
-
-			throw new BadRequestException("No document or file found in body");
-		}
-
-		FileEntry existingFileEntry = _dlAppService.getFileEntry(documentId);
-
-		BinaryFile binaryFile = Optional.ofNullable(
-			multipartBody.getBinaryFile("file")
-		).orElse(
-			new BinaryFile(
-				existingFileEntry.getMimeType(),
-				existingFileEntry.getFileName(),
-				existingFileEntry.getContentStream(),
-				existingFileEntry.getSize())
-		);
-
-		existingFileEntry = _moveDocument(
-			documentId, documentOptional, existingFileEntry);
-
-		return _toDocument(
-			_dlAppService.updateFileEntry(
-				documentId, binaryFile.getFileName(),
-				binaryFile.getContentType(),
-				documentOptional.map(
-					Document::getTitle
-				).orElse(
-					existingFileEntry.getTitle()
-				),
-				documentOptional.map(
-					Document::getDescription
-				).orElse(
-					null
-				),
-				null, DLVersionNumberIncrease.AUTOMATIC,
-				binaryFile.getInputStream(), binaryFile.getSize(),
-				existingFileEntry.getExpirationDate(),
-				existingFileEntry.getReviewDate(),
-				_getServiceContext(
-					() -> new Long[0], () -> new String[0],
-					existingFileEntry.getFolderId(), documentOptional,
-					existingFileEntry.getGroupId())));
+		return _updateDocument(documentId, fileEntry, multipartBody);
 	}
 
 	@Override
@@ -401,6 +380,24 @@ public class DocumentResourceImpl
 	}
 
 	@Override
+	public Document putSiteDocumentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			MultipartBody multipartBody)
+		throws Exception {
+
+		FileEntry fileEntry =
+			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		if (fileEntry == null) {
+			return _addDocument(
+				0L, externalReferenceCode, siteId, multipartBody, siteId);
+		}
+
+		return _updateDocument(
+			fileEntry.getFileEntryId(), fileEntry, multipartBody);
+	}
+
 	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
 		FileEntry fileEntry = _dlAppService.getFileEntry((Long)id);
 
@@ -418,8 +415,8 @@ public class DocumentResourceImpl
 	}
 
 	private Document _addDocument(
-			Long repositoryId, long documentFolderId, Long groupId,
-			MultipartBody multipartBody)
+			long documentFolderId, String externalReferenceCode, Long groupId,
+			MultipartBody multipartBody, Long repositoryId)
 		throws Exception {
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
@@ -432,10 +429,18 @@ public class DocumentResourceImpl
 			multipartBody.getValueAsInstanceOptional(
 				"document", Document.class);
 
+		if (externalReferenceCode == null) {
+			externalReferenceCode = documentOptional.map(
+				Document::getExternalReferenceCode
+			).orElse(
+				null
+			);
+		}
+
 		return _toDocument(
 			_dlAppService.addFileEntry(
-				null, repositoryId, documentFolderId, binaryFile.getFileName(),
-				binaryFile.getContentType(),
+				externalReferenceCode, repositoryId, documentFolderId,
+				binaryFile.getFileName(), binaryFile.getContentType(),
 				documentOptional.map(
 					Document::getTitle
 				).orElse(
@@ -761,6 +766,53 @@ public class DocumentResourceImpl
 				contextUser));
 	}
 
+	private Document _updateDocument(
+			long documentId, FileEntry fileEntry, MultipartBody multipartBody)
+		throws Exception {
+
+		Optional<Document> documentOptional =
+			multipartBody.getValueAsInstanceOptional(
+				"document", Document.class);
+
+		if ((multipartBody.getBinaryFile("file") == null) &&
+			!documentOptional.isPresent()) {
+
+			throw new BadRequestException("No document or file found in body");
+		}
+
+		BinaryFile binaryFile = Optional.ofNullable(
+			multipartBody.getBinaryFile("file")
+		).orElse(
+			new BinaryFile(
+				fileEntry.getMimeType(), fileEntry.getFileName(),
+				fileEntry.getContentStream(), fileEntry.getSize())
+		);
+
+		fileEntry = _moveDocument(documentId, documentOptional, fileEntry);
+
+		return _toDocument(
+			_dlAppService.updateFileEntry(
+				documentId, binaryFile.getFileName(),
+				binaryFile.getContentType(),
+				documentOptional.map(
+					Document::getTitle
+				).orElse(
+					fileEntry.getTitle()
+				),
+				documentOptional.map(
+					Document::getDescription
+				).orElse(
+					null
+				),
+				null, DLVersionNumberIncrease.AUTOMATIC,
+				binaryFile.getInputStream(), binaryFile.getSize(),
+				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+				_getServiceContext(
+					() -> new Long[0], () -> new String[0],
+					fileEntry.getFolderId(), documentOptional,
+					fileEntry.getGroupId())));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentResourceImpl.class);
 
@@ -783,7 +835,13 @@ public class DocumentResourceImpl
 	private DDMStructureService _ddmStructureService;
 
 	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

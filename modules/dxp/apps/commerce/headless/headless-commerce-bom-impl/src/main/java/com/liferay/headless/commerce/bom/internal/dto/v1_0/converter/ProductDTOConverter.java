@@ -14,10 +14,10 @@
 
 package com.liferay.headless.commerce.bom.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.headless.commerce.bom.dto.v1_0.Product;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -62,10 +62,17 @@ public class ProductDTOConverter implements DTOConverter<CPInstance, Product> {
 				String cpDefinitionURL = cpDefinition.getURL(
 					LocaleUtil.toLanguageId(dtoConverterContext.getLocale()));
 
-				url = CPConstants.SEPARATOR_PRODUCT_URL + cpDefinitionURL;
+				String productURLSeparator =
+					_cpFriendlyURL.getProductURLSeparator(
+						cpInstance.getCompanyId());
+
+				url = productURLSeparator + cpDefinitionURL;
 			}
 		};
 	}
+
+	@Reference
+	private CPFriendlyURL _cpFriendlyURL;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

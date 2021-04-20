@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {addMappedInfoItem} from '../../app/actions/index';
+import {addMappedInfoItem, addMappingFields} from '../../app/actions/index';
 import {useCollectionConfig} from '../../app/components/CollectionItemContext';
 import {EDITABLE_TYPES} from '../../app/config/constants/editableTypes';
 import {LAYOUT_TYPES} from '../../app/config/constants/layoutTypes';
@@ -28,6 +28,7 @@ import {useDispatch, useSelector} from '../../app/store/index';
 import isMapped from '../../app/utils/editable-value/isMapped';
 import isMappedToInfoItem from '../../app/utils/editable-value/isMappedToInfoItem';
 import isMappedToStructure from '../../app/utils/editable-value/isMappedToStructure';
+import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
 import itemSelectorValueToInfoItem from '../../app/utils/item-selector-value/itemSelectorValueToInfoItem';
 import {useId} from '../../app/utils/useId';
 import ItemSelector from './ItemSelector';
@@ -168,6 +169,7 @@ export default function MappingSelectorWrapper({
 function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const dispatch = useDispatch();
 	const mappedInfoItems = useSelector((state) => state.mappedInfoItems);
+	const mappingFields = useSelector((state) => state.mappingFields);
 	const pageContents = useSelector((state) => state.pageContents);
 	const mappingSelectorSourceSelectId = useId();
 
@@ -263,17 +265,52 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	}, [mappedItem, mappedInfoItems, setSelectedItem]);
 
 	useEffect(() => {
-		loadMappingFields({
-			dispatch,
-			fieldType,
-			item: selectedItem,
-			sourceType: selectedSourceType,
-		}).then((newFields) => {
-			setItemFields(newFields);
-		});
+		if (
+			selectedSourceType === MAPPING_SOURCE_TYPES.content &&
+			!selectedItem.classNameId
+		) {
+			setItemFields(null);
+		}
+		else {
+			const infoItem =
+				mappedInfoItems.find(
+					({classNameId, classPK}) =>
+						selectedItem.classNameId === classNameId &&
+						selectedItem.classPK === classPK
+				) || selectedItem;
+
+			const key =
+				selectedSourceType === MAPPING_SOURCE_TYPES.content
+					? getMappingFieldsKey(
+							infoItem.classNameId,
+							infoItem.classTypeId
+					  )
+					: getMappingFieldsKey(
+							selectedMappingTypes.type.id,
+							selectedMappingTypes.subtype.id || 0
+					  );
+
+			const fields = mappingFields[key];
+
+			if (fields) {
+				setItemFields(fields);
+			}
+			else {
+				loadMappingFields({
+					dispatch,
+					fieldType,
+					item: selectedItem,
+					sourceType: selectedSourceType,
+				}).then((newFields) => {
+					dispatch(addMappingFields({fields: newFields, key}));
+				});
+			}
+		}
 	}, [
 		dispatch,
 		fieldType,
+		mappedInfoItems,
+		mappingFields,
 		selectedItem,
 		selectedMappingTypes,
 		selectedSourceType,

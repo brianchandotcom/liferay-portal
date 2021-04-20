@@ -47,6 +47,7 @@ import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -195,16 +196,20 @@ public class BookmarksEntryIndexerReindexTest {
 
 		_bookmarksFixture.createBookmarksEntry(folderId);
 
-		String searchTerm = _user.getFullName();
+		List<String> searchTerms = new ArrayList<>(2);
 
-		searchAndAssertLength(searchTerm, 2);
+		for (BookmarksEntry bookmark : _bookmarksEntries) {
+			searchTerms.add(bookmark.getName());
+		}
+
+		searchAndAssertLength(searchTerms.toString(), 2);
 
 		deleteDocument(
 			bookmarksEntry.getCompanyId(), uidFactory.getUID(bookmarksEntry));
 
 		reindexAllIndexerModels();
 
-		searchAndAssertLength(searchTerm, 2);
+		searchAndAssertLength(searchTerms.toString(), 2);
 	}
 
 	protected static final Class<?> MODEL_INDEXER_CLASS = BookmarksEntry.class;

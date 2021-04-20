@@ -1883,21 +1883,21 @@ definition {
 
 				Pause(locator1 = "3000");
 
-				if ("${contentDisplay}" == "Flex") {
-					if (isSet(horizontalAlign)) {
+				if ("${contentDisplay}" != "Block") {
+					if (isSet(alignItems)) {
 						Select(
-							key_fieldLabel = "Horizontal Align",
+							key_fieldLabel = "Align Items",
 							locator1 = "Select#GENERIC_SELECT_FIELD",
-							value1 = "${horizontalAlign}");
+							value1 = "${alignItems}");
 
 						Pause(locator1 = "3000");
 					}
 
-					if (isSet(verticalAlign)) {
+					if (isSet(justifyContent)) {
 						Select(
-							key_fieldLabel = "Vertical Align",
+							key_fieldLabel = "Justify Content",
 							locator1 = "Select#GENERIC_SELECT_FIELD",
-							value1 = "${verticalAlign}");
+							value1 = "${justifyContent}");
 
 						Pause(locator1 = "3000");
 					}
@@ -2736,6 +2736,13 @@ definition {
 	}
 
 	macro viewContainerStyle {
+		if (isSet(alignItems)) {
+			AssertElementPresent(
+				key_alignItems = "${alignItems}",
+				key_position = "${position}",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_ALIGN_ITEMS");
+		}
+
 		if (isSet(backgroundColor)) {
 			AssertElementPresent(
 				key_paletteItem = "${backgroundColor}",
@@ -2810,11 +2817,11 @@ definition {
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 		}
 
-		if (isSet(horizontalAlign)) {
+		if (isSet(justifyContent)) {
 			AssertElementPresent(
-				key_horizontalAlign = "${horizontalAlign}",
+				key_justifyContent = "${justifyContent}",
 				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_HORIZONTAL_ALIGN");
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_JUSTIFY_CONTENT");
 		}
 
 		if (isSet(marginBottom)) {
@@ -2878,13 +2885,6 @@ definition {
 				key_paddingTop = "${paddingTop}",
 				key_position = "${position}",
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_TOP");
-		}
-
-		if (isSet(verticalAlign)) {
-			AssertElementPresent(
-				key_position = "${position}",
-				key_verticalAlign = "${verticalAlign}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_VERTICAL_ALIGN");
 		}
 	}
 

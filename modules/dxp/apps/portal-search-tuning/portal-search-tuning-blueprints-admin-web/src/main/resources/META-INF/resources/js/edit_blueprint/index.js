@@ -98,52 +98,54 @@ function EditBlueprintForm({
 				},
 				index
 			) => {
-				if (elementTemplateJSON.enabled) {
-					const configErrors = {};
+				if (!elementTemplateJSON.enabled) {
+					return;
+				}
 
-					if (uiConfigurationJSON && uiConfigurationJSON.fieldSets) {
-						uiConfigurationJSON.fieldSets.map(({fields = []}) => {
-							fields.map(({name, type, typeOptions = {}}) => {
-								const configValue = uiConfigurationValues[name];
+				const configErrors = {};
 
-								const configError =
-									validateRequired(
-										configValue,
-										type,
-										typeOptions.required
-									) ||
-									validateBoost(configValue, name, type) ||
-									validateNumberRange(
-										configValue,
-										type,
-										typeOptions
-									) ||
-									validateJSON(configValue, type);
+				if (uiConfigurationJSON && uiConfigurationJSON.fieldSets) {
+					uiConfigurationJSON.fieldSets.map(({fields = []}) => {
+						fields.map(({name, type, typeOptions = {}}) => {
+							const configValue = uiConfigurationValues[name];
 
-								if (configError) {
-									configErrors[name] = configError;
-								}
-							});
+							const configError =
+								validateRequired(
+									configValue,
+									type,
+									typeOptions.required
+								) ||
+								validateBoost(configValue, name, type) ||
+								validateNumberRange(
+									configValue,
+									type,
+									typeOptions
+								) ||
+								validateJSON(configValue, type);
+
+							if (configError) {
+								configErrors[name] = configError;
+							}
 						});
-					}
-					else if (!uiConfigurationJSON) {
-						const configValue =
-							uiConfigurationValues.elementTemplateJSON;
+					});
+				}
+				else if (!uiConfigurationJSON) {
+					const configValue =
+						uiConfigurationValues.elementTemplateJSON;
 
-						const configError =
-							validateRequired(configValue, INPUT_TYPES.JSON) ||
-							validateJSON(configValue, INPUT_TYPES.JSON);
+					const configError =
+						validateRequired(configValue, INPUT_TYPES.JSON) ||
+						validateJSON(configValue, INPUT_TYPES.JSON);
 
-						if (configError) {
-							configErrors.elementTemplateJSON = configError;
-						}
+					if (configError) {
+						configErrors.elementTemplateJSON = configError;
 					}
+				}
 
-					if (Object.keys(configErrors).length > 0) {
-						selectedQueryElementsArray[index] = {
-							uiConfigurationValues: configErrors,
-						};
-					}
+				if (Object.keys(configErrors).length > 0) {
+					selectedQueryElementsArray[index] = {
+						uiConfigurationValues: configErrors,
+					};
 				}
 			}
 		);
@@ -359,27 +361,21 @@ function EditBlueprintForm({
 		})
 			.then((response) => response.json())
 			.then((responseContent) => {
-				if (formik.isValid) {
-					setPreviewInfo({
-						loading: false,
-						results: responseContent,
-					});
-				}
-				else {
-					setPreviewInfo({
-						loading: false,
-						results: {
-							...responseContent,
-							warnings: [
-								{
-									msg: Liferay.Language.get(
-										'the-configuration-has-missing-or-invalid-values'
-									),
-								},
-							],
-						},
-					});
-				}
+				setPreviewInfo({
+					loading: false,
+					results: {
+						...responseContent,
+						warnings: !formik.isValid
+							? [
+									{
+										msg: Liferay.Language.get(
+											'the-configuration-has-missing-or-invalid-values'
+										),
+									},
+							  ]
+							: [],
+					},
+				});
 			})
 			.catch(() => {
 				setTimeout(() => {

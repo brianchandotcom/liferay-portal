@@ -177,11 +177,11 @@ function PreviewSidebar({
 			</nav>
 
 			{results.warnings &&
-				results.warnings.length &&
-				results.warnings.map((warning, idx) => (
+				!!results.warnings.length &&
+				results.warnings.map((warning, index) => (
 					<ClayAlert
 						displayType="warning"
-						key={idx}
+						key={index}
 						title={Liferay.Language.get('warning')}
 						variant="stripe"
 					>

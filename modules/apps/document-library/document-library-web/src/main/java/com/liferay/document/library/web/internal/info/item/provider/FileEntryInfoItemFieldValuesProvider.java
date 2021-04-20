@@ -18,10 +18,16 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.info.item.FileEntryInfoItemFields;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFieldValuesProvider;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
@@ -35,12 +41,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,13 +112,35 @@ public class FileEntryInfoItemFieldValuesProvider
 
 		if (fileEntry.getModel() instanceof DLFileEntry) {
 			try {
-				DLFileEntryDDMFormValuesReader dlFileEntryDDMFormValuesReader =
-					new DLFileEntryDDMFormValuesReader(
-						fileEntry, fileEntry.getFileVersion());
+				List<InfoFieldValue<Object>> infoFieldValues =
+					new ArrayList<>();
 
-				return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
-					fileEntry,
-					dlFileEntryDDMFormValuesReader.getDDMFormValues());
+				DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+				DLFileEntryType dlFileEntryType =
+					_dlFileEntryTypeLocalService.getFileEntryType(
+						dlFileEntry.getFileEntryTypeId());
+
+				List<DDMStructure> ddmStructures =
+					dlFileEntryType.getDDMStructures();
+
+				for (DDMStructure ddmStructure : ddmStructures) {
+					FileVersion fileVersion = fileEntry.getFileVersion();
+
+					DLFileEntryMetadata dlFileEntryMetadata =
+						_dlFileEntryMetadataLocalService.getFileEntryMetadata(
+							ddmStructure.getStructureId(),
+							fileVersion.getFileVersionId());
+
+					infoFieldValues.addAll(
+						_ddmFormValuesInfoFieldValuesProvider.
+							getInfoFieldValues(
+								fileEntry,
+								StorageEngineManagerUtil.getDDMFormValues(
+									dlFileEntryMetadata.getDDMStorageId())));
+				}
+
+				return infoFieldValues;
 			}
 			catch (PortalException portalException) {
 				throw new RuntimeException(portalException);
@@ -292,6 +320,12 @@ public class FileEntryInfoItemFieldValuesProvider
 	@Reference
 	private DDMFormValuesInfoFieldValuesProvider
 		_ddmFormValuesInfoFieldValuesProvider;
+
+	@Reference
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

@@ -1026,6 +1026,8 @@ definition {
 			layoutName = "Blogs Page",
 			widgetName = "Blogs Aggregator");
 
+		Navigator.gotoPage(pageName = "Blogs Page");
+
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs Aggregator",
 			portletOption = "Configuration");
@@ -1049,6 +1051,8 @@ definition {
 		for (var orgName : list "1, 2, 3") {
 			JSONOrganization.addOrganization(organizationName = "Organization${orgName} Name");
 		}
+
+		User.openUsersAdmin();
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 

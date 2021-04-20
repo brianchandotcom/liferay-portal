@@ -79,6 +79,7 @@ definition {
 
 	@description = "Configure Show Application in Breadcrumb widget."
 	@priority = "4"
+	@uitest
 	test ConfigureShowApplication {
 		task ("Set up the layout of page to 1 column") {
 			JSONLayout.updateLayoutTemplateOfPublicLayout(
@@ -220,6 +221,7 @@ definition {
 
 	@description = "Configure Show Current Site in Breadcrumb widget."
 	@priority = "5"
+	@uitest
 	test ConfigureShowCurrentSite {
 		property portal.acceptance = "true";
 
@@ -279,6 +281,7 @@ definition {
 
 	@description = "Disable Show Page in Breadcrumb widget."
 	@priority = "5"
+	@uitest
 	test DisableShowPage {
 		property portal.acceptance = "true";
 
@@ -322,6 +325,7 @@ definition {
 
 	@description = "Disable Show Parent Site in Breadcrumb widget."
 	@priority = "4"
+	@uitest
 	test DisableShowParentSite {
 		task ("Add a child site") {
 			JSONGroup.addChildSite(
@@ -383,6 +387,7 @@ definition {
 
 	@description = "Enable Show Guest Site in Breadcrumb widget."
 	@priority = "4"
+	@uitest
 	test EnableShowGuestSite {
 		task ("Add a Breadcrumb widget to page") {
 			JSONLayout.addWidgetToPublicLayout(

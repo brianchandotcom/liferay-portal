@@ -26,6 +26,7 @@ definition {
 
 	@description = "This is a use case for LPS-127446. Assert the Product Menu is shown correctly."
 	@priority = "5"
+	@uitest
 	test ViewProductMenuStyles {
 		property portal.acceptance = "true";
 
@@ -83,6 +84,7 @@ definition {
 
 	@description = "This is a use case for LPS-119114. Test the Product Menu works on Mobile Device."
 	@priority = "3"
+	@uitest
 	test ViewProductMenuWorkOnMobileDevice {
 		task ("Select Mobile Device in simulation menu") {
 			MobileDevice.previewPG(deviceType = "smartphone");

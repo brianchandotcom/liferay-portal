@@ -16,6 +16,7 @@ package com.liferay.commerce.product.asset.categories.web.internal.frontend.tagl
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -117,6 +118,10 @@ public class CategoryCPFriendlyURLScreenNavigationCategory
 		}
 
 		httpServletRequest.setAttribute("assetCategory", assetCategory);
+		httpServletRequest.setAttribute(
+			"assetCategoryURLSeparator",
+			_cpFriendlyURL.getAssetCategoryURLSeparator(
+				_portal.getCompanyId(httpServletRequest)));
 		httpServletRequest.setAttribute("titleMapAsXML", titleMapAsXML);
 
 		_jspRenderer.renderJSP(
@@ -129,6 +134,9 @@ public class CategoryCPFriendlyURLScreenNavigationCategory
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;
+
+	@Reference
+	private CPFriendlyURL _cpFriendlyURL;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

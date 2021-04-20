@@ -33,6 +33,7 @@ public class LiferayResponseErrorProvider implements ErrorTypeProvider {
 
 		errors.add(LiferayError.BAD_REQUEST);
 		errors.add(LiferayError.BATCH_EXPORT_FAILED);
+		errors.add(LiferayError.BATCH_IMPORT_FAILED);
 		errors.add(LiferayError.CONNECTION_TIMEOUT);
 		errors.add(LiferayError.EXECUTION);
 		errors.add(LiferayError.INVALID_OAS_DOCUMENT);

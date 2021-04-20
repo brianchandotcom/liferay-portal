@@ -25,7 +25,7 @@ import org.mule.runtime.extension.api.error.MuleErrors;
 public enum LiferayError implements ErrorTypeDefinition<LiferayError> {
 
 	BAD_REQUEST(MuleErrors.CONNECTIVITY, 400), BATCH_EXPORT_FAILED,
-	CONNECTION_TIMEOUT(MuleErrors.CONNECTIVITY), EXECUTION,
+	BATCH_IMPORT_FAILED, CONNECTION_TIMEOUT(MuleErrors.CONNECTIVITY), EXECUTION,
 	INVALID_OAS_DOCUMENT(EXECUTION),
 	NOT_ACCEPTABLE(MuleErrors.CONNECTIVITY, 406),
 	NOT_ALLOWED(MuleErrors.CONNECTIVITY, 405),

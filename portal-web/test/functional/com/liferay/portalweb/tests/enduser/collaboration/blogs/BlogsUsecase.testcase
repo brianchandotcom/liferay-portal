@@ -168,6 +168,8 @@ definition {
 
 		PortletEntry.publish();
 
+		Navigator.gotoPage(pageName = "Blogs Page");
+
 		Navigator.gotoNavItem(navItem = "Not Published (1)");
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
@@ -943,6 +945,8 @@ definition {
 
 		PortletEntry.publish();
 
+		Navigator.gotoPage(pageName = "Blogs Page");
+
 		Navigator.gotoNavItem(navItem = "Not Published (1)");
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
@@ -951,7 +955,7 @@ definition {
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
 

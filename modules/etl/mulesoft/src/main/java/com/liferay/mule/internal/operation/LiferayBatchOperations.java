@@ -20,8 +20,10 @@ import com.liferay.mule.internal.connection.LiferayConnection;
 import com.liferay.mule.internal.error.LiferayError;
 import com.liferay.mule.internal.error.LiferayResponseValidator;
 import com.liferay.mule.internal.error.provider.LiferayResponseErrorProvider;
+import com.liferay.mule.internal.metadata.input.BatchImportInputTypeResolver;
 import com.liferay.mule.internal.metadata.key.ClassNameTypeKeysResolver;
 import com.liferay.mule.internal.metadata.output.BatchExportOutputTypeResolver;
+import com.liferay.mule.internal.util.IOUtil;
 import com.liferay.mule.internal.util.JsonNodeReader;
 
 import java.io.IOException;
@@ -29,16 +31,22 @@ import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
 
 import org.mule.runtime.api.util.MultiMap;
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
+import org.mule.runtime.extension.api.annotation.metadata.TypeResolver;
 import org.mule.runtime.extension.api.annotation.param.ConfigOverride;
 import org.mule.runtime.extension.api.annotation.param.Connection;
+import org.mule.runtime.extension.api.annotation.param.Content;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
+import org.mule.runtime.extension.api.annotation.param.NullSafe;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
@@ -56,8 +64,29 @@ public class LiferayBatchOperations {
 
 	@DisplayName("Batch - Import Records - Create")
 	@MediaType(MediaType.APPLICATION_JSON)
-	public Result<String, Void> executeCreateImportTask() {
-		return null;
+	public void executeCreateImportTask(
+			@Connection LiferayConnection connection,
+			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,
+			@NullSafe @Optional Map<String, String> fieldNameMappings,
+			@Content @DisplayName("Records")
+			@TypeResolver(value = BatchImportInputTypeResolver.class)
+			InputStream inputStream,
+			@ConfigOverride @DisplayName("Connection Timeout") @Optional
+			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
+			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
+			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
+			@Summary("Time unit to be used in the timeout configurations")
+			TimeUnit connectionTimeoutTimeUnit)
+		throws IOException {
+
+		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
+			connectionTimeout);
+
+		submitImportTask(
+			connection, inputStream, className, fieldNameMappings,
+			connectionTimeoutMillis);
 	}
 
 	@DisplayName("Batch - Import Records - Delete")
@@ -195,6 +224,47 @@ public class LiferayBatchOperations {
 			"/headless-batch-engine",
 			"/v1.0/export-task/{className}/{contentType}", null, pathParams,
 			queryParams, "application/json", connectionTimeout);
+
+		JsonNode payloadJsonNode = jsonNodeReader.fromHttpResponse(
+			httpResponse);
+
+		JsonNode idJsonNode = payloadJsonNode.get("id");
+
+		return String.valueOf(idJsonNode.longValue());
+	}
+
+	private String submitImportTask(
+			LiferayConnection connection, InputStream inputStream,
+			String className, Map<String, String> fieldNameMappings,
+			long connectionTimeout)
+		throws IOException {
+
+		Map<String, String> pathParams = new HashMap<>();
+
+		pathParams.put("className", className);
+
+		MultiMap<String, String> queryParams = new MultiMap<>();
+
+		if (!fieldNameMappings.isEmpty()) {
+			Set<Map.Entry<String, String>> fieldNameMappingsEntries =
+				fieldNameMappings.entrySet();
+
+			Stream<Map.Entry<String, String>> fieldNameMappingsStream =
+				fieldNameMappingsEntries.stream();
+
+			queryParams.put(
+				"fieldNameMappings",
+				fieldNameMappingsStream.map(
+					entry -> entry.getKey() + "=" + entry.getValue()
+				).collect(
+					Collectors.joining(",")
+				));
+		}
+
+		HttpResponse httpResponse = connection.post(
+			"/headless-batch-engine", "/v1.0/import-task/{className}",
+			IOUtil.getBytes(inputStream), pathParams, queryParams,
+			connectionTimeout);
 
 		JsonNode payloadJsonNode = jsonNodeReader.fromHttpResponse(
 			httpResponse);

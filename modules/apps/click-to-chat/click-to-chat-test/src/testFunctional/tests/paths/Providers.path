@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>Providers</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Providers</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CHAT_PROVIDERS_HIDE</td>
+	<td>//div[contains(@class, 'position-relative row')]//div[contains(@data-field-name, 'chatProviderId')]/div[contains(@class, 'hide')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_JIVOCHAT</td>
+	<td>//div[contains(@id,'jivo-iframe-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_LIVEPERSON</td>
+	<td>//div[contains(@id,'LPMcontainer')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

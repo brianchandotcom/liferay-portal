@@ -73,6 +73,11 @@ public class ExtRepositoryFileVersionAdapter
 	}
 
 	@Override
+	public Date getExpirationDate() {
+		return null;
+	}
+
+	@Override
 	public String getExtension() {
 		return _extRepositoryFileEntryAdapter.getExtension();
 	}
@@ -132,6 +137,11 @@ public class ExtRepositoryFileVersionAdapter
 	@Override
 	public Date getModifiedDate() {
 		return getCreateDate();
+	}
+
+	@Override
+	public Date getReviewDate() {
+		return null;
 	}
 
 	@Override

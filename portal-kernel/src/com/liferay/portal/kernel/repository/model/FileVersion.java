@@ -42,6 +42,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 	@Override
 	public ExpandoBridge getExpandoBridge();
 
+	public Date getExpirationDate();
+
 	public String getExtension();
 
 	public String getExtraSettings();
@@ -62,6 +64,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 	public String getMimeType();
 
 	public long getRepositoryId();
+
+	public Date getReviewDate();
 
 	public long getSize();
 

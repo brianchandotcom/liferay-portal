@@ -138,6 +138,11 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	@Override
+	public Date getExpirationDate() {
+		return null;
+	}
+
+	@Override
 	public String getExtension() {
 		return FileUtil.getExtension(getTitle());
 	}
@@ -262,6 +267,11 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	@Override
 	public long getRepositoryId() {
 		return _cmisRepository.getRepositoryId();
+	}
+
+	@Override
+	public Date getReviewDate() {
+		return null;
 	}
 
 	@Override

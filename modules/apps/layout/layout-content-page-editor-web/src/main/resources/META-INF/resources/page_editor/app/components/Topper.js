@@ -45,10 +45,6 @@ import {useEditableProcessorUniqueId} from './fragment-content/EditableProcessor
 
 const TOPPER_BAR_HEIGHT = 24;
 
-const itemIsMappedCollection = (item) =>
-	item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
-	'collection' in item.config;
-
 const TopperListItem = React.forwardRef(
 	({children, className, expand, ...props}, ref) => (
 		<li
@@ -103,6 +99,7 @@ function TopperContent({
 	className,
 	isActive,
 	isHovered,
+	isMapped,
 	item,
 	itemElement,
 	style,
@@ -177,7 +174,7 @@ function TopperContent({
 				dragged: isDraggingSource,
 				hovered: isHovered,
 				'not-droppable': !!notDroppableMessage,
-				'page-editor__topper--mapped': itemIsMappedCollection(item),
+				'page-editor__topper--mapped': isMapped,
 			})}
 			onClick={(event) => {
 				event.stopPropagation();
@@ -213,7 +210,7 @@ function TopperContent({
 		>
 			<TopperLabel
 				isActive={isActive}
-				item={item}
+				isMapped={isMapped}
 				itemElement={itemElement}
 			>
 				<ul className="tbar-nav">
@@ -317,7 +314,7 @@ class TopperErrorBoundary extends React.Component {
 	}
 }
 
-function TopperLabel({children, isActive, item, itemElement}) {
+function TopperLabel({children, isActive, isMapped, itemElement}) {
 	const [isInset, setIsInset] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 
@@ -357,9 +354,7 @@ function TopperLabel({children, isActive, item, itemElement}) {
 		<div
 			className={classNames('page-editor__topper__bar', 'tbar', {
 				'page-editor__topper__bar--inset': isInset,
-				'page-editor__topper__bar--mapped': itemIsMappedCollection(
-					item
-				),
+				'page-editor__topper__bar--mapped': isMapped,
 			})}
 		>
 			{children}
@@ -369,6 +364,6 @@ function TopperLabel({children, isActive, item, itemElement}) {
 
 TopperLabel.propTypes = {
 	isActive: PropTypes.bool,
-	item: getLayoutDataItemPropTypes().isRequired,
+	isMapped: PropTypes.bool,
 	itemElement: PropTypes.object,
 };

@@ -13,11 +13,7 @@ import {ERROR_MESSAGES} from './errorMessages';
 import {INPUT_TYPES} from './inputTypes';
 import {isDefined, sub} from './utils';
 
-export const validateBoost = (configValue, name, type) => {
-	if (name == 'boost' && configValue < 0) {
-		return ERROR_MESSAGES.NEGATIVE_BOOST;
-	}
-
+export const validateBoost = (configValue, type) => {
 	if (type === INPUT_TYPES.FIELD_MAPPING && configValue.boost < 0) {
 		return ERROR_MESSAGES.NEGATIVE_BOOST;
 	}

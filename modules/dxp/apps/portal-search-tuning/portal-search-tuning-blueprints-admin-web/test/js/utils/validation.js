@@ -20,18 +20,6 @@ import {
 
 describe('validation', () => {
 	describe('validateBoost', () => {
-		it('returns error message for negative number', () => {
-			expect(validateBoost(-1, 'boost', INPUT_TYPES.NUMBER)).toEqual(
-				ERROR_MESSAGES.NEGATIVE_BOOST
-			);
-		});
-
-		it('returns error message for negative value in slider', () => {
-			expect(validateBoost(-1, 'boost', INPUT_TYPES.SLIDER)).toEqual(
-				ERROR_MESSAGES.NEGATIVE_BOOST
-			);
-		});
-
 		it('returns error message for negative value in field mapping', () => {
 			expect(
 				validateBoost(
@@ -40,7 +28,6 @@ describe('validation', () => {
 						field: 'localized_title',
 						locale: '${context.language_id}',
 					},
-					'field',
 					INPUT_TYPES.FIELD_MAPPING
 				)
 			).toEqual(ERROR_MESSAGES.NEGATIVE_BOOST);
@@ -61,28 +48,9 @@ describe('validation', () => {
 							locale: '${context.language_id}',
 						},
 					],
-					'fields',
 					INPUT_TYPES.FIELD_MAPPING_LIST
 				)
 			).toEqual(ERROR_MESSAGES.NEGATIVE_BOOST);
-		});
-
-		it('returns undefined for zero boost', () => {
-			expect(
-				validateBoost(0, 'boost', INPUT_TYPES.NUMBER)
-			).toBeUndefined();
-		});
-
-		it('returns undefined for positive boost', () => {
-			expect(
-				validateBoost(1, 'boost', INPUT_TYPES.NUMBER)
-			).toBeUndefined();
-		});
-
-		it('returns undefined for non-boost name', () => {
-			expect(
-				validateBoost(-1, 'notBoost', INPUT_TYPES.NUMBER)
-			).toBeUndefined();
 		});
 
 		it('returns undefined for non-negative boost in field mapping', () => {
@@ -93,7 +61,6 @@ describe('validation', () => {
 						field: 'localized_title',
 						locale: '${context.language_id}',
 					},
-					'field',
 					INPUT_TYPES.FIELD_MAPPING
 				)
 			).toBeUndefined();
@@ -114,7 +81,6 @@ describe('validation', () => {
 							locale: '${context.language_id}',
 						},
 					],
-					'field',
 					INPUT_TYPES.FIELD_MAPPING
 				)
 			).toBeUndefined();
@@ -127,7 +93,6 @@ describe('validation', () => {
 						field: 'localized_title',
 						locale: '${context.language_id}',
 					},
-					'field',
 					INPUT_TYPES.FIELD_MAPPING
 				)
 			).toBeUndefined();
@@ -146,7 +111,6 @@ describe('validation', () => {
 							locale: '${context.language_id}',
 						},
 					],
-					'field',
 					INPUT_TYPES.FIELD_MAPPING
 				)
 			).toBeUndefined();

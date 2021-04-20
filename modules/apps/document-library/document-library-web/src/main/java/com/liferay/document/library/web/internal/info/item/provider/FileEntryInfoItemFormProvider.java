@@ -21,10 +21,10 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.web.internal.info.item.FileEntryInfoItemFields;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
-import com.liferay.dynamic.data.mapping.info.item.provider.DDMTemplateInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
@@ -41,7 +41,10 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -65,9 +68,9 @@ public class FileEntryInfoItemFormProvider
 	public InfoForm getInfoForm() {
 		try {
 			return _getInfoForm(
-				0,
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-					DLFileEntryConstants.getClassName()));
+					DLFileEntryConstants.getClassName()),
+				0, 0);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
@@ -77,12 +80,14 @@ public class FileEntryInfoItemFormProvider
 	@Override
 	public InfoForm getInfoForm(FileEntry fileEntry) {
 		long ddmStructureId = 0;
+		long fileEntryTypeId = 0;
 
 		if (fileEntry.getModel() instanceof DLFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-			DDMStructure ddmStructure = _fetchDDMStructure(
-				dlFileEntry.getFileEntryTypeId());
+			fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+
+			DDMStructure ddmStructure = _fetchDDMStructure(fileEntryTypeId);
 
 			if (ddmStructure != null) {
 				ddmStructureId = ddmStructure.getStructureId();
@@ -91,11 +96,11 @@ public class FileEntryInfoItemFormProvider
 
 		try {
 			return _getInfoForm(
-				ddmStructureId,
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 					_assetEntryLocalService.getEntry(
 						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId())));
+						fileEntry.getFileEntryId())),
+				ddmStructureId, fileEntryTypeId);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
@@ -122,10 +127,10 @@ public class FileEntryInfoItemFormProvider
 		}
 
 		return _getInfoForm(
-			ddmStructureId,
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				DLFileEntryConstants.getClassName(),
-				GetterUtil.getLong(formVariationKey), groupId));
+				GetterUtil.getLong(formVariationKey), groupId),
+			ddmStructureId, GetterUtil.getLong(formVariationKey));
 	}
 
 	private DDMStructure _fetchDDMStructure(long fileEntryTypeId) {
@@ -176,6 +181,32 @@ public class FileEntryInfoItemFormProvider
 		).build();
 	}
 
+	private InfoFieldSet _getFileEntryTypeInfoFieldSet(
+			long ddmStructureId, long fileEntryTypeId)
+		throws NoSuchStructureException {
+
+		InfoFieldSet infoFieldSet =
+			_ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(
+				ddmStructureId,
+				_getStructureFieldSetNameInfoLocalizedValue(ddmStructureId));
+
+		InfoFieldSet.Builder builder = InfoFieldSet.builder(
+		).name(
+			infoFieldSet.getName()
+		).labelInfoLocalizedValue(
+			infoFieldSet.getLabelInfoLocalizedValue()
+		).infoFieldSetEntries(
+			infoFieldSet.getInfoFieldSetEntries()
+		);
+
+		List<InfoFieldSet> infoFieldSets = _getMetadataInfoFieldSets(
+			fileEntryTypeId);
+
+		infoFieldSets.forEach(builder::infoFieldSetEntry);
+
+		return builder.build();
+	}
+
 	private InfoFieldSet _getFileInformationFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
@@ -196,7 +227,8 @@ public class FileEntryInfoItemFormProvider
 	}
 
 	private InfoForm _getInfoForm(
-			long ddmStructureId, InfoFieldSet assetEntryInfoFieldSet)
+			InfoFieldSet assetEntryInfoFieldSet, long ddmStructureId,
+			long fileEntryTypeId)
 		throws NoSuchFormVariationException {
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
@@ -221,12 +253,8 @@ public class FileEntryInfoItemFormProvider
 				consumer -> {
 					if (ddmStructureId != 0) {
 						consumer.accept(
-							_ddmStructureInfoItemFieldSetProvider.
-								getInfoItemFieldSet(
-									ddmStructureId,
-									_getStructureFieldSetNameInfoLocalizedValue(
-										ddmStructureId)));
-
+							_getFileEntryTypeInfoFieldSet(
+								ddmStructureId, fileEntryTypeId));
 					}
 				}
 			).infoFieldSetEntry(
@@ -248,6 +276,32 @@ public class FileEntryInfoItemFormProvider
 		catch (NoSuchStructureException noSuchStructureException) {
 			throw new NoSuchFormVariationException(
 				String.valueOf(ddmStructureId), noSuchStructureException);
+		}
+	}
+
+	private List<InfoFieldSet> _getMetadataInfoFieldSets(long fileEntryTypeId) {
+		try {
+			DLFileEntryType fileEntryType =
+				_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
+
+			List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
+				ddmStructures = fileEntryType.getDDMStructures();
+
+			List<InfoFieldSet> infoFieldSets = new ArrayList<>(
+				ddmStructures.size());
+
+			for (com.liferay.dynamic.data.mapping.kernel.DDMStructure
+					ddmStructure : ddmStructures) {
+
+				infoFieldSets.add(
+					_ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(
+						ddmStructure.getStructureId()));
+			}
+
+			return infoFieldSets;
+		}
+		catch (Exception exception) {
+			return Collections.emptyList();
 		}
 	}
 
@@ -290,11 +344,10 @@ public class FileEntryInfoItemFormProvider
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
-	private DDMTemplateInfoItemFieldSetProvider
-		_ddmTemplateInfoItemFieldSetProvider;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Reference
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;

@@ -806,8 +806,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 		for (MessageBoardThread messageBoardThread : messageBoardThreads) {
 			postSiteMessageBoardThread(
-				Long.valueOf((String)parameters.get("siteId")),
-				messageBoardThread);
+				(Long)parameters.get("siteId"), messageBoardThread);
 		}
 	}
 

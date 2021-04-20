@@ -419,8 +419,7 @@ public abstract class BaseWikiPageResourceImpl
 		throws Exception {
 
 		for (WikiPage wikiPage : wikiPages) {
-			postWikiNodeWikiPage(
-				Long.valueOf((String)parameters.get("wikiNodeId")), wikiPage);
+			postWikiNodeWikiPage((Long)parameters.get("wikiNodeId"), wikiPage);
 		}
 	}
 

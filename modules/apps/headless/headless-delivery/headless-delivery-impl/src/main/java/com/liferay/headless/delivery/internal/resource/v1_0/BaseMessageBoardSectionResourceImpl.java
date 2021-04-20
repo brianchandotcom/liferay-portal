@@ -550,8 +550,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 		for (MessageBoardSection messageBoardSection : messageBoardSections) {
 			postSiteMessageBoardSection(
-				Long.valueOf((String)parameters.get("siteId")),
-				messageBoardSection);
+				(Long)parameters.get("siteId"), messageBoardSection);
 		}
 	}
 

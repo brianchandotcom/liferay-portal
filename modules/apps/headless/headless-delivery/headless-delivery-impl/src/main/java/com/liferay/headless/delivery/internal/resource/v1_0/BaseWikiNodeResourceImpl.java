@@ -366,8 +366,7 @@ public abstract class BaseWikiNodeResourceImpl
 		throws Exception {
 
 		for (WikiNode wikiNode : wikiNodes) {
-			postSiteWikiNode(
-				Long.valueOf((String)parameters.get("siteId")), wikiNode);
+			postSiteWikiNode((Long)parameters.get("siteId"), wikiNode);
 		}
 	}
 

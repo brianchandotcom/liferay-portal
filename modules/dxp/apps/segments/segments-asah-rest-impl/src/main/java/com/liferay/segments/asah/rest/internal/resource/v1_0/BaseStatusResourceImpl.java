@@ -149,8 +149,7 @@ public abstract class BaseStatusResourceImpl
 		throws Exception {
 
 		for (Status status : statuses) {
-			postExperimentStatus(
-				Long.valueOf((String)parameters.get("experimentId")), status);
+			postExperimentStatus((Long)parameters.get("experimentId"), status);
 		}
 	}
 

@@ -291,8 +291,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 				knowledgeBaseAttachments) {
 
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				Long.valueOf((String)parameters.get("knowledgeBaseArticleId")),
-				null);
+				(Long)parameters.get("knowledgeBaseArticleId"), null);
 		}
 	}
 

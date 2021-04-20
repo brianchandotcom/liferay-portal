@@ -625,7 +625,7 @@ public abstract class BaseDocumentFolderResourceImpl
 
 		for (DocumentFolder documentFolder : documentFolders) {
 			postSiteDocumentFolder(
-				Long.valueOf((String)parameters.get("siteId")), documentFolder);
+				(Long)parameters.get("siteId"), documentFolder);
 		}
 	}
 

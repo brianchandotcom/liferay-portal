@@ -191,8 +191,7 @@ public abstract class BaseNodeResourceImpl
 		throws Exception {
 
 		for (Node node : nodes) {
-			postProcessNode(
-				Long.valueOf((String)parameters.get("processId")), node);
+			postProcessNode((Long)parameters.get("processId"), node);
 		}
 	}
 

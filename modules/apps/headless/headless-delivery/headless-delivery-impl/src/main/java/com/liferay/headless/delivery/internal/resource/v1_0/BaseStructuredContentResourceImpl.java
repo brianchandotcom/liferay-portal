@@ -1137,8 +1137,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 		for (StructuredContent structuredContent : structuredContents) {
 			postSiteStructuredContent(
-				Long.valueOf((String)parameters.get("siteId")),
-				structuredContent);
+				(Long)parameters.get("siteId"), structuredContent);
 		}
 	}
 

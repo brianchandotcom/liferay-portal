@@ -282,8 +282,7 @@ public abstract class BaseFormRecordResourceImpl
 		throws Exception {
 
 		for (FormRecord formRecord : formRecords) {
-			postFormFormRecord(
-				Long.valueOf((String)parameters.get("formId")), formRecord);
+			postFormFormRecord((Long)parameters.get("formId"), formRecord);
 		}
 	}
 

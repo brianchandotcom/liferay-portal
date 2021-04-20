@@ -299,8 +299,7 @@ public abstract class BaseInstanceResourceImpl
 		throws Exception {
 
 		for (Instance instance : instances) {
-			postProcessInstance(
-				Long.valueOf((String)parameters.get("processId")), instance);
+			postProcessInstance((Long)parameters.get("processId"), instance);
 		}
 	}
 

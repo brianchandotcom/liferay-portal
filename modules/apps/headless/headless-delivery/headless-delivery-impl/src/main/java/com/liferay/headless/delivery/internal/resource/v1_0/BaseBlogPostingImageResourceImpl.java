@@ -269,8 +269,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 		throws Exception {
 
 		for (BlogPostingImage blogPostingImage : blogPostingImages) {
-			postSiteBlogPostingImage(
-				Long.valueOf((String)parameters.get("siteId")), null);
+			postSiteBlogPostingImage((Long)parameters.get("siteId"), null);
 		}
 	}
 

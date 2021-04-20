@@ -876,7 +876,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 		for (MessageBoardMessage messageBoardMessage : messageBoardMessages) {
 			postMessageBoardThreadMessageBoardMessage(
-				Long.valueOf((String)parameters.get("messageBoardThreadId")),
+				(Long)parameters.get("messageBoardThreadId"),
 				messageBoardMessage);
 		}
 	}

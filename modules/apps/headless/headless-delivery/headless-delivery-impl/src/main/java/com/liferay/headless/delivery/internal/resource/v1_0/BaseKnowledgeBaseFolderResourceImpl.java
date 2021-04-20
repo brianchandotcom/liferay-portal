@@ -484,8 +484,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 
 		for (KnowledgeBaseFolder knowledgeBaseFolder : knowledgeBaseFolders) {
 			postSiteKnowledgeBaseFolder(
-				Long.valueOf((String)parameters.get("siteId")),
-				knowledgeBaseFolder);
+				(Long)parameters.get("siteId"), knowledgeBaseFolder);
 		}
 	}
 

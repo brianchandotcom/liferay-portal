@@ -442,8 +442,7 @@ public abstract class BaseKeywordResourceImpl
 		throws Exception {
 
 		for (Keyword keyword : keywords) {
-			postSiteKeyword(
-				Long.valueOf((String)parameters.get("siteId")), keyword);
+			postSiteKeyword((Long)parameters.get("siteId"), keyword);
 		}
 	}
 

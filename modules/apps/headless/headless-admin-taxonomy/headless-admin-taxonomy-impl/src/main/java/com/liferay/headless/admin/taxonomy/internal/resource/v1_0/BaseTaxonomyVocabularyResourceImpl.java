@@ -526,8 +526,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 
 		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
 			postSiteTaxonomyVocabulary(
-				Long.valueOf((String)parameters.get("siteId")),
-				taxonomyVocabulary);
+				(Long)parameters.get("siteId"), taxonomyVocabulary);
 		}
 	}
 

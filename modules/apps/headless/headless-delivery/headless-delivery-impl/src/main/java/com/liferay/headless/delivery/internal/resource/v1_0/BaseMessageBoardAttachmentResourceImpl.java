@@ -393,8 +393,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 				messageBoardAttachments) {
 
 			postMessageBoardMessageMessageBoardAttachment(
-				Long.valueOf((String)parameters.get("messageBoardMessageId")),
-				null);
+				(Long)parameters.get("messageBoardMessageId"), null);
 		}
 	}
 

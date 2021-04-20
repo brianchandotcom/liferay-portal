@@ -678,8 +678,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 				structuredContentFolders) {
 
 			postSiteStructuredContentFolder(
-				Long.valueOf((String)parameters.get("siteId")),
-				structuredContentFolder);
+				(Long)parameters.get("siteId"), structuredContentFolder);
 		}
 	}
 

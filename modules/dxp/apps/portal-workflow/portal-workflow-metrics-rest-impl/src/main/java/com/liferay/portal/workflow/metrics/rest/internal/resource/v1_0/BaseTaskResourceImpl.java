@@ -293,8 +293,7 @@ public abstract class BaseTaskResourceImpl
 		throws Exception {
 
 		for (Task task : tasks) {
-			postProcessTask(
-				Long.valueOf((String)parameters.get("processId")), task);
+			postProcessTask((Long)parameters.get("processId"), task);
 		}
 	}
 

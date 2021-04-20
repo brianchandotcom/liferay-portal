@@ -320,7 +320,7 @@ public abstract class BaseNavigationMenuResourceImpl
 
 		for (NavigationMenu navigationMenu : navigationMenus) {
 			postSiteNavigationMenu(
-				Long.valueOf((String)parameters.get("siteId")), navigationMenu);
+				(Long)parameters.get("siteId"), navigationMenu);
 		}
 	}
 

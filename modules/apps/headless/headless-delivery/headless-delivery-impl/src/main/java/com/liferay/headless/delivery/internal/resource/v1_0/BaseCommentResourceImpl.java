@@ -594,7 +594,7 @@ public abstract class BaseCommentResourceImpl
 
 		for (Comment comment : comments) {
 			postBlogPostingComment(
-				Long.valueOf((String)parameters.get("blogPostingId")), comment);
+				(Long)parameters.get("blogPostingId"), comment);
 		}
 	}
 

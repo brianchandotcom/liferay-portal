@@ -315,8 +315,7 @@ public abstract class BaseSLAResourceImpl
 		throws Exception {
 
 		for (SLA sla : slas) {
-			postProcessSLA(
-				Long.valueOf((String)parameters.get("processId")), sla);
+			postProcessSLA((Long)parameters.get("processId"), sla);
 		}
 	}
 

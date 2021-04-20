@@ -34,6 +34,7 @@ import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuE
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.helper.ProductNavigationProductMenuHelper;
+import com.liferay.taglib.aui.IconTag;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -48,6 +49,7 @@ import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -134,6 +136,29 @@ public class ProductMenuProductNavigationControlMenuEntry
 			}
 
 			values.put("dataURL", "data-url='" + portletURL.toString() + "'");
+		}
+
+		IconTag iconTag = new IconTag();
+
+		try {
+			iconTag.setCssClass("icon-monospaced icon-product-menu-closed");
+			iconTag.setImage("product-menu-closed");
+			iconTag.setMarkupView("lexicon");
+
+			values.put(
+				"closedIcon",
+				iconTag.doTagAsString(httpServletRequest, httpServletResponse));
+
+			iconTag.setCssClass("icon-monospaced icon-product-menu-open");
+			iconTag.setImage("product-menu-open");
+			iconTag.setMarkupView("lexicon");
+
+			values.put(
+				"openIcon",
+				iconTag.doTagAsString(httpServletRequest, httpServletResponse));
+		}
+		catch (JspException jspException) {
+			ReflectionUtil.throwException(jspException);
 		}
 
 		Writer writer = httpServletResponse.getWriter();

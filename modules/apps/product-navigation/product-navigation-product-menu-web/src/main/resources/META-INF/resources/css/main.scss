@@ -423,63 +423,28 @@ $product-menu-pages-administration-link-height: 72px;
 	}
 }
 
-// ---------- Icon animation ----------
-
-.toast-animation {
-	display: inline-block;
-	height: 18px;
-	margin: 8px 6px 0;
+.product-menu-toast-toggle {
+	height: 2em;
 	position: relative;
-	width: 20px;
+	width: 2em;
 
-	.pm {
-		border-left: 1px solid $gray-500;
-		border-radius: 1px;
-		height: 16px;
-		left: 0;
+	> .icon-monospaced {
 		position: absolute;
-		top: 0;
-		transition-delay: 0.2s;
 
-		@include transition(all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1));
-	}
+		&.icon-product-menu-open {
+			display: none;
 
-	.cn {
-		border: 1px solid $gray-500;
-		border-radius: 1px;
-		content: '';
-		height: 18px;
-		position: absolute;
-		right: 0;
-		top: -1px;
-		transition-delay: 0.2s;
-		width: 15px;
+			body.product-menu-open & {
+				display: block;
+			}
+		}
 
-		@include transition(all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1));
-	}
-}
+		&.icon-product-menu-closed {
+			display: block;
 
-.product-menu-toggle:focus,
-.product-menu-toggle:hover {
-	.pm {
-		border-left: 1px solid $white;
-	}
-
-	.cn {
-		border: 1px solid $white;
-	}
-}
-
-body.product-menu-open .toast-animation {
-	.pm {
-		border-left-width: 6px;
-		height: 18px;
-		left: 4px;
-		top: -1px;
-	}
-
-	.cn {
-		border-left-width: 9px;
-		width: 19px;
+			body.product-menu-open & {
+				display: none;
+			}
+		}
 	}
 }

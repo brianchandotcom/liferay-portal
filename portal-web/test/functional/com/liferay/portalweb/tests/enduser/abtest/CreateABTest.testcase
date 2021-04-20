@@ -49,6 +49,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		Navigator.openURL();
+
 		AnalyticsCloud.teardownAnalyticsCloud();
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
@@ -72,6 +74,10 @@ definition {
 		ABTest.runTest();
 
 		ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+
+		Navigator.openURL();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 		ABTest.terminateTest();
 	}
@@ -102,6 +108,10 @@ definition {
 		ABTest.runTest();
 
 		ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+
+		Navigator.openURL();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 		ABTest.terminateTest();
 	}

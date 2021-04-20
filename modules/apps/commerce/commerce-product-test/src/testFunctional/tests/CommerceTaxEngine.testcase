@@ -91,12 +91,30 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6264. Add/update/delete tax category from UI"
-	@ignore = "true"
 	@priority = "3"
 	test TaxCategoryLifecycle {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6263 TaxCategoryLifecycle Pending Implementation
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Tax Categories");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description",
+			keyName = "Test",
+			keyReferenceCode = "Test Reference");
+
+		CommerceNavigator.gotoEntry(entryName = "Test");
+
+		CommerceEntry.editTaxCategory(
+
+			keyDescription = "Test Description2",
+			keyName = "Test2",
+			keyReferenceCode = "Test Reference2");
+
+		CommerceEntry.deleteTaxCategory(keyName = "Test2");
+
+		
 	}
 
 }

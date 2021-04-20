@@ -382,6 +382,46 @@ definition {
 			optionValue = "${optionValue}");
 	}
 
+	macro addTaxCategory {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "External Reference Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyReferenceCode}");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${keyName}");
+
+		Type(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyDescription}");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoEntry(entryName = "${keyName}");
+
+		AssertTextEquals(
+			key_fieldLabel = "External Reference Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyReferenceCode}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyName}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyDescription}");
+
+		Click(locator1 = "Button#BACK");
+	}
+
 	macro checkImageName {
 		echo("number is: ${number} image is: ${image} uploadFileName is: ${uploadFileName}");
 		if ("${number}" != "") {
@@ -519,6 +559,20 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
+	macro deleteTaxCategory {
+		Click(
+			locator1 = "Icon#SVG_ELLIPSIS",
+			value1 = "${keyName}");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		AssertElementNotPresent(
+			key_value = "${keyName}",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT");
+	}
+
 	macro editEntryFullDescription {
 		CommerceEntry.addFullDescriptionViaAlloyEditor(entryFullDescription = "${newEntryFullDescription}");
 	}
@@ -533,6 +587,46 @@ definition {
 		Type(
 			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
 			value1 = "${newEntryShortDescription}");
+	}
+
+	macro editTaxCategory {
+		
+
+		Type(
+			key_fieldLabel = "External Reference Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyReferenceCode}");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${keyName}");
+
+		Type(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyDescription}");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoEntry(entryName = "${keyName}");
+
+		AssertTextEquals(
+			key_fieldLabel = "External Reference Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyReferenceCode}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyName}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyDescription}");
+
+		Click(locator1 = "Button#BACK");
 	}
 
 	macro gotoBreadcrumb {

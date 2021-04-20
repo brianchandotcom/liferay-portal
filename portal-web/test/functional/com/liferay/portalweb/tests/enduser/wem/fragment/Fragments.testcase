@@ -808,6 +808,8 @@ definition {
 	@description = "This is a test for LPS-106776 and LPS-111657. Configure the Container and Grid elements."
 	@priority = "5"
 	test ConfigureLayoutElements {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "containerItemFlexEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add a content page") {

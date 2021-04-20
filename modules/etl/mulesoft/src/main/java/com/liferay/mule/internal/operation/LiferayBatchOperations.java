@@ -54,19 +54,19 @@ import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 @Throws(LiferayResponseErrorProvider.class)
 public class LiferayBatchOperations {
 
-	@DisplayName("Batch - Import records - Create")
+	@DisplayName("Batch - Import Records - Create")
 	@MediaType(MediaType.APPLICATION_JSON)
 	public Result<String, Void> executeCreateImportTask() {
 		return null;
 	}
 
-	@DisplayName("Batch - Import records - Delete")
+	@DisplayName("Batch - Import Records - Delete")
 	@MediaType(MediaType.APPLICATION_JSON)
 	public Result<String, Void> executeDeleteImportTask() {
 		return null;
 	}
 
-	@DisplayName("Batch - Export records")
+	@DisplayName("Batch - Export Records")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = BatchExportOutputTypeResolver.class)
 	public Result<InputStream, Void> executeExportTask(
@@ -110,7 +110,7 @@ public class LiferayBatchOperations {
 				connection, exportTaskId, connectionTimeoutMillis));
 	}
 
-	@DisplayName("Batch - Import records - Update")
+	@DisplayName("Batch - Import Records - Update")
 	@MediaType(MediaType.APPLICATION_JSON)
 	public Result<String, Void> executeUpdateImportTask() {
 		return null;

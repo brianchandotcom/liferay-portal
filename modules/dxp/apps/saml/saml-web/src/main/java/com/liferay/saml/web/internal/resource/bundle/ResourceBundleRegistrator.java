@@ -15,6 +15,7 @@
 package com.liferay.saml.web.internal.resource.bundle;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -65,6 +66,9 @@ public class ResourceBundleRegistrator {
 			serviceRegistration.unregister();
 		}
 	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,

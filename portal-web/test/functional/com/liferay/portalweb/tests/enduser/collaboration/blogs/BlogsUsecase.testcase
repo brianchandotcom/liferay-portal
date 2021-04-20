@@ -127,7 +127,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This test checks that HTML is rendered in the blog content field."
+	@description = "This test checks that blog entry can be added with specific charaters."
 	@priority = "5"
 	@refactordone
 	test CanAddWithSpecialCharacters {
@@ -955,7 +955,7 @@ definition {
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
 

@@ -75,9 +75,11 @@ definition {
 	}
 
 	macro editSegment {
-		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
-			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Edit");
-		}
+		Click.waitForMenuToggleJSClick(
+			key_tableEntry = "${entry}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
 	macro enableAssingRolesBySegmentsCheckbox {
@@ -107,7 +109,7 @@ definition {
 				value1 = "${criterionValue}");
 		}
 
-		if (isSet(resolutionValue)) {
+		else if (isSet(resolutionValue)) {
 			Type(
 				key_criterion = "decimal-number",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
@@ -191,6 +193,40 @@ definition {
 		Click(locator1 = "Segmentation#CLOSE_MODAL");
 
 		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewSegment {
+		if (isSet(criterionKey)) {
+			AssertValue(
+				key_criterion = "key",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${criterionKey}");
+
+			AssertValue(
+				key_criterion = "value",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${criterionValue}");
+		}
+
+		else if (isSet(resolutionValue)) {
+			AssertValue(
+				key_criterion = "decimal-number",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${resolutionValue}");
+		}
+
+		else if (isSet(date)) {
+			AssertValue(
+				key_criterion = "date",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${date}");
+		}
+
+		else {
+			AssertValue(
+				locator1 = "Segmentation#PROPERTY_FIELD",
+				value1 = "${propertyField}");
+		}
 	}
 
 }

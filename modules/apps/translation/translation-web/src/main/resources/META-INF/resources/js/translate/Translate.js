@@ -17,7 +17,7 @@ import ClayLayout from '@clayui/layout';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useReducer, useState} from 'react';
+import React, {useMemo, useReducer, useState} from 'react';
 
 import TranslateActionBar from './components/TranslateActionBar';
 import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
@@ -97,7 +97,11 @@ const Translate = ({
 		workflowActions.PUBLISH
 	);
 
-	const {sourceFields, targetFields} = getInfoFields(infoFieldSetEntries);
+	const {sourceFields, targetFields} = useMemo(
+		() => getInfoFields(infoFieldSetEntries),
+		[infoFieldSetEntries]
+	);
+
 	const [state, dispatch] = useReducer(reducer, {
 		fetchAutoTranslateStatus: {
 			message: '',

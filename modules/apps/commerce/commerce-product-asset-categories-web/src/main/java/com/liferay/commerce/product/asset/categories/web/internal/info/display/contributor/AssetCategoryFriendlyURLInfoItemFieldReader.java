@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.asset.categories.web.internal.info.display.contributor;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.field.InfoField;
@@ -86,11 +86,13 @@ public class AssetCategoryFriendlyURLInfoItemFieldReader
 
 			return InfoLocalizedValue.function(
 				locale -> {
+					String assetCategoryURLSeparator =
+						_cpFriendlyURL.getAssetCategoryURLSeparator(
+							themeDisplay.getCompanyId());
 					String languageId = LocaleUtil.toLanguageId(locale);
 
-					return groupFriendlyURL +
-						CPConstants.SEPARATOR_ASSET_CATEGORY_URL +
-							friendlyURLEntry.getUrlTitle(languageId);
+					return groupFriendlyURL + assetCategoryURLSeparator +
+						friendlyURLEntry.getUrlTitle(languageId);
 				});
 		}
 		catch (PortalException portalException) {
@@ -115,6 +117,9 @@ public class AssetCategoryFriendlyURLInfoItemFieldReader
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetCategoryFriendlyURLInfoItemFieldReader.class);
+
+	@Reference
+	private CPFriendlyURL _cpFriendlyURL;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

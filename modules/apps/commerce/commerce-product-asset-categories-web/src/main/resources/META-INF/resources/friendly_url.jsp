@@ -18,10 +18,11 @@
 
 <%
 AssetCategory category = (AssetCategory)request.getAttribute("assetCategory");
+String assetCategoryURLSeparator = (String)request.getAttribute("assetCategoryURLSeparator");
 String titleMapAsXML = (String)request.getAttribute("titleMapAsXML");
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
-String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_ASSET_CATEGORY_URL;
+String friendlyURLBase = themeDisplay.getPortalURL() + assetCategoryURLSeparator;
 
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId");
 

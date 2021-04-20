@@ -71,6 +71,8 @@ public class DLFileVersionWrapper
 		attributes.put("version", getVersion());
 		attributes.put("size", getSize());
 		attributes.put("checksum", getChecksum());
+		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("reviewDate", getReviewDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -232,6 +234,18 @@ public class DLFileVersionWrapper
 			setChecksum(checksum);
 		}
 
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
+		Date reviewDate = (Date)attributes.get("reviewDate");
+
+		if (reviewDate != null) {
+			setReviewDate(reviewDate);
+		}
+
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
 
 		if (lastPublishDate != null) {
@@ -355,6 +369,16 @@ public class DLFileVersionWrapper
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return model.getExpandoBridge();
+	}
+
+	/**
+	 * Returns the expiration date of this document library file version.
+	 *
+	 * @return the expiration date of this document library file version
+	 */
+	@Override
+	public Date getExpirationDate() {
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -521,6 +545,16 @@ public class DLFileVersionWrapper
 	@Override
 	public long getRepositoryId() {
 		return model.getRepositoryId();
+	}
+
+	/**
+	 * Returns the review date of this document library file version.
+	 *
+	 * @return the review date of this document library file version
+	 */
+	@Override
+	public Date getReviewDate() {
+		return model.getReviewDate();
 	}
 
 	/**
@@ -799,6 +833,16 @@ public class DLFileVersionWrapper
 	}
 
 	/**
+	 * Sets the expiration date of this document library file version.
+	 *
+	 * @param expirationDate the expiration date of this document library file version
+	 */
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		model.setExpirationDate(expirationDate);
+	}
+
+	/**
 	 * Sets the extension of this document library file version.
 	 *
 	 * @param extension the extension of this document library file version
@@ -944,6 +988,16 @@ public class DLFileVersionWrapper
 	@Override
 	public void setRepositoryId(long repositoryId) {
 		model.setRepositoryId(repositoryId);
+	}
+
+	/**
+	 * Sets the review date of this document library file version.
+	 *
+	 * @param reviewDate the review date of this document library file version
+	 */
+	@Override
+	public void setReviewDate(Date reviewDate) {
+		model.setReviewDate(reviewDate);
 	}
 
 	/**

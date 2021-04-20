@@ -58,6 +58,8 @@ public class DLFileVersionSoap implements Serializable {
 		soapModel.setVersion(model.getVersion());
 		soapModel.setSize(model.getSize());
 		soapModel.setChecksum(model.getChecksum());
+		soapModel.setExpirationDate(model.getExpirationDate());
+		soapModel.setReviewDate(model.getReviewDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
@@ -316,6 +318,22 @@ public class DLFileVersionSoap implements Serializable {
 		_checksum = checksum;
 	}
 
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		_expirationDate = expirationDate;
+	}
+
+	public Date getReviewDate() {
+		return _reviewDate;
+	}
+
+	public void setReviewDate(Date reviewDate) {
+		_reviewDate = reviewDate;
+	}
+
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -381,6 +399,8 @@ public class DLFileVersionSoap implements Serializable {
 	private String _version;
 	private long _size;
 	private String _checksum;
+	private Date _expirationDate;
+	private Date _reviewDate;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;

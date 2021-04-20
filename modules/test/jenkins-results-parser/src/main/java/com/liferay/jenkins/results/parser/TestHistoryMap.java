@@ -393,6 +393,8 @@ public class TestHistoryMap
 				statusesJSONArray.put(statusJSONArray);
 			}
 
+			jsonArray.put(statusesJSONArray);
+			jsonArray.put(durationJSONArray);
 			jsonArray.put(getAverageDuration());
 
 			return jsonArray;

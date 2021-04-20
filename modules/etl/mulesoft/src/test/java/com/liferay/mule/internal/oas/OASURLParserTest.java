@@ -44,7 +44,7 @@ public class OASURLParserTest {
 		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals(
-			"headless-commerce-admin-catalog", oasURLParser.getJaxRSAppBase());
+			"/headless-commerce-admin-catalog", oasURLParser.getJaxRSAppBase());
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class OASURLParserTest {
 
 		Assert.assertEquals(
 			"http://localhost:8080/o/custom-jax-rs-app",
-			oasURLParser.getServerBaseURL("custom-jax-rs-app"));
+			oasURLParser.getServerBaseURL("/custom-jax-rs-app"));
 	}
 
 	@Test(expected = MalformedURLException.class)

@@ -82,14 +82,14 @@ public class OASURLParser {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getAuthorityWithScheme());
-		sb.append("/o/");
+		sb.append("/o");
 		sb.append(jaxRSAppBase);
 
 		return sb.toString();
 	}
 
 	private static final Pattern oasURLPattern = Pattern.compile(
-		"(.*)://(.+?)(:(\\d+))?/o/(.+)/v(.+)/openapi\\.(yaml|json)");
+		"(.*)://(.+?)(:(\\d+))?/o(/.+)/v(.+)/openapi\\.(yaml|json)");
 
 	private final String host;
 	private final String jaxRSAppBase;

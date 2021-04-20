@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -205,6 +206,22 @@ public class DDMFormInstanceFieldSettingsValidator {
 
 				@Override
 				public void accept(JSONObject jsonObject) {
+					evaluateDDMFormField(jsonObject);
+				}
+
+				protected void evaluateDDMFormField(JSONObject jsonObject) {
+					if (jsonObject.has("nestedFields")) {
+						JSONArray nestedFieldsJSONArray =
+							jsonObject.getJSONArray("nestedFields");
+
+						for (int i = 0; i < nestedFieldsJSONArray.length();
+							 i++) {
+
+							evaluateDDMFormField(
+								nestedFieldsJSONArray.getJSONObject(i));
+						}
+					}
+
 					DDMFormField ddmFormField = ddmFormFieldsMap.get(
 						jsonObject.getString("fieldName"));
 

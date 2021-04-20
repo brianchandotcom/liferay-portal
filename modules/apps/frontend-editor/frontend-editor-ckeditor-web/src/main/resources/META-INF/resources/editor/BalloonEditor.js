@@ -20,11 +20,30 @@ import {Editor} from './Editor';
 import '../css/main.scss';
 
 const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
+	const defaultExtraPlugins = 'balloontoolbar,floatingspace';
+
 	const [cssClass, setCssClass] = useState('');
+
+	const extraPlugins = config.extraPlugins ? `${config.extraPlugins},` : '';
+
+	const basicToolbars = {
+		toolbarImage: 'JustifyLeft,JustifyCenter,JustifyRight',
+		toolbarLink: 'Link,Unlink',
+		toolbarText:
+			'Bold,Italic,Underline,BulletedList,NumberedList,Link' +
+			'JustifyLeft,JustifyCenter,JustifyRight,RemoveFormat',
+	};
+
+	const editorConfig = {
+		...basicToolbars,
+		...config,
+		extraAllowedContent: '*',
+		extraPlugins: `${extraPlugins}${defaultExtraPlugins}`,
+	};
 
 	return (
 		<Editor
-			config={config}
+			config={editorConfig}
 			name={name}
 			onBeforeLoad={(CKEDITOR) => {
 				CKEDITOR.disableAutoInline = true;
@@ -39,23 +58,26 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 			onInstanceReady={(event) => {
 				const editor = event.editor;
 
-				const toolbars = config.toolbars;
+				const balloonToolbars = editor.balloonToolbars;
 
-				if (toolbars) {
-					const balloonToolbars = editor.balloonToolbars;
+				balloonToolbars.create({
+					buttons: editorConfig.toolbarText,
+					cssSelector: '*',
+				});
 
-					toolbars.forEach((toolbar) => {
-						if (toolbar.priority) {
-							toolbar = {
-								...toolbar,
-								priority:
-									window.CKEDITOR.plugins.balloontoolbar
-										.PRIORITY.HIGH,
-							};
-						}
-						balloonToolbars.create(toolbar);
-					});
-				}
+				balloonToolbars.create({
+					buttons: editorConfig.toolbarImage,
+					priority:
+						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
+					widgets: 'image,image2',
+				});
+
+				balloonToolbars.create({
+					buttons: editorConfig.toolbarLink,
+					cssSelector: 'a',
+					priority:
+						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
+				});
 
 				if (contents) {
 					editor.setData(contents);

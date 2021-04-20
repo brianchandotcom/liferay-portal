@@ -57,30 +57,23 @@ public class CKEditorBalloonEditorConfigContributor
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put("extraAllowedContent", Boolean.TRUE);
-
-		String balloonToolbarPlugins =
-			"balloontoolbar,floatingspace,stylescombo";
-
 		String extraPlugins = jsonObject.getString("extraPlugins");
 
 		if (Validator.isNotNull(extraPlugins)) {
-			extraPlugins += "," + balloonToolbarPlugins;
+			extraPlugins += ",stylescombo";
 		}
 		else {
-			extraPlugins = balloonToolbarPlugins;
+			extraPlugins = "stylescombo";
 		}
 
-		jsonObject.put("extraPlugins", extraPlugins);
-
-		JSONArray toolbarsJSONArray = JSONUtil.putAll(
-			getToolbarImageJSONObject(), getToolbarLinkJSONObject(),
-			getToolbarTextJSONObject());
-
 		jsonObject.put(
+			"extraPlugins", extraPlugins
+		).put(
 			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale())
 		).put(
-			"toolbars", toolbarsJSONArray
+			"toolbarImage", "JustifyLeft,JustifyCenter,JustifyRight,Link,Unlink"
+		).put(
+			"toolbarText", getToolbarText()
 		);
 	}
 
@@ -123,35 +116,9 @@ public class CKEditorBalloonEditorConfigContributor
 				LanguageUtil.get(resourceBundle, "computer-code"), "code"));
 	}
 
-	protected JSONObject getToolbarImageJSONObject() {
-		return JSONUtil.put(
-			"buttons", "JustifyLeft,JustifyCenter,JustifyRight,Link,Unlink"
-		).put(
-			"priority", Boolean.TRUE
-		).put(
-			"widgets", "image,image2"
-		);
-	}
-
-	protected JSONObject getToolbarLinkJSONObject() {
-		return JSONUtil.put(
-			"buttons", "Link,Unlink"
-		).put(
-			"cssSelector", "a"
-		).put(
-			"priority", Boolean.TRUE
-		);
-	}
-
-	protected JSONObject getToolbarTextJSONObject() {
-		return JSONUtil.put(
-			"buttons",
-			"Styles,Bold,Italic,Underline,BulletedList,NumberedList,Link," +
-				"JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock," +
-					"RemoveFormat"
-		).put(
-			"cssSelector", "cite,code,h1,h2,h3,p,pre,span,strong,li"
-		);
+	protected String getToolbarText() {
+		return "Styles,Bold,Italic,Underline,BulletedList,NumberedList,Link," +
+			"JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,RemoveFormat";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

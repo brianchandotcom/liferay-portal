@@ -61,6 +61,8 @@ definition {
 
 	@priority = "5"
 	test DeletePublication {
+		property portal.acceptance = "true";
+
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
 			publicationDescription = "Publication Description",

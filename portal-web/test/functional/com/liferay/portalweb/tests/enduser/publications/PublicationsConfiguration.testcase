@@ -44,6 +44,8 @@ definition {
 
 	@priority = "5"
 	test EnableDisablePublications {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",

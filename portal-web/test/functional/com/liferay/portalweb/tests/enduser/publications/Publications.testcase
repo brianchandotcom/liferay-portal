@@ -292,8 +292,10 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test ConflictingPublicationsNeedManualResolution {
+		property portal.acceptance = "true";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",
@@ -627,6 +629,8 @@ definition {
 
 	@priority = "5"
 	test RescheduleAndCancelScheduledPublication {
+		property portal.acceptance = "true";
+
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");
@@ -653,6 +657,8 @@ definition {
 
 	@priority = "5"
 	test RevertPublicationAndPublishNow {
+		property portal.acceptance = "true";
+
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");

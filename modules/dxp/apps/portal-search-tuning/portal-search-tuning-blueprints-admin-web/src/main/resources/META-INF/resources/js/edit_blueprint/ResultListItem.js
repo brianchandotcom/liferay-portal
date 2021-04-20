@@ -84,10 +84,18 @@ function ResultListItem({item}) {
 
 			<ClayList.ItemField expand>
 				<ClayList.ItemTitle>
-					<ClayLink href={item.b_viewURL} target="_blank">
-						{item.b_title}
-						<ClayIcon className="shortcut-icon" symbol="shortcut" />
-					</ClayLink>
+					{item.b_viewURL ? (
+						<ClayLink href={item.b_viewURL} target="_blank">
+							{item.b_title}
+
+							<ClayIcon
+								className="shortcut-icon"
+								symbol="shortcut"
+							/>
+						</ClayLink>
+					) : (
+						item.b_title
+					)}
 				</ClayList.ItemTitle>
 
 				{RESULTS_DEFAULT_KEYS.map((property) =>

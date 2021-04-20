@@ -61,6 +61,17 @@
     <td>//*[@class='form-control-inset']</td>
     <td></td>
 </tr>
+<!-- ADD DATA SOURCE SCREEN -->
+<tr>
+    <td>DXP_DATA_SOURCE_OPTION</td>
+    <td>//button[contains(@class,'data-source-item')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>TOKEN_INPUT_FIELD</td>
+    <td>//input</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

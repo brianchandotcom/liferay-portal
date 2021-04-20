@@ -12,19 +12,66 @@ definition {
 
     macro navToAnalyticsCloudConnectionMenu {
 
-        Click(locator1 = "//*[contains(@class, 'nav-link') and contains(@href,'connection')]");
+        Click(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR");
 
     }
 
     macro navToSyncedSitesMenu {
 
-        Click(locator1 = "//*[contains(@class, 'nav-link') and contains(@href,'synced-sites')]");
-
+        Click(locator1 = "ACDXPSettings#SYNCED_SITES_NAV_SIDEBAR");
     }
 
     macro navToSyncedContactDataMenu {
 
-        Click(locator1 = "//*[contains(@class, 'nav-link') and contains(@href,'contact')]");
+        Click(locator1 = "ACDXPSettings#SYNCED_CONTACT_DATA_NAV_SIDEBAR");
+
+    }
+
+    macro selectAvailableProperties {
+
+        var key_AvailablePropertyName = "${availablePropertyName}";
+
+        Click(locator1 = "ACDXPSettings#AVAILABLE_PROPERTY_NAME");
+
+        Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+    }
+
+    macro createCombinedProperties {
+
+        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+        Click(locator1 = "ACDXPSettings#COMBINATED_PROPERTY_OPTION");
+
+        Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+
+        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+    }
+
+    macro createMultipleProperties {
+
+        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+        Click(locator1 = "ACDXPSettings#MULTIPLE_PROPERTY_OPTION");
+
+        for (var propertyName : list "${propertyList}") {
+
+            key_propertyName = "${propertyName}";
+
+            Click(locator1 = "ACDXPSettings#PROPERTY_NAME_CHECKBOX");
+        }
+
+        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+    }
+
+    macro syncContactData {
+
+        Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+        Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+
+        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
     }
         
@@ -38,13 +85,13 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#CONNECT_WITH_TOKEN_BUTTON");
 
-		Click(locator1 = "//*[contains(@class, 'nav-link') and contains(@href,'synced-sites')]");
+		ACDXPSettings.navToSyncedSitesMenu();
 
-		Click(locator1 = "//*[contains(@href,'synced-sites') and contains(@class,'btn-primary')]");
-		
-		Click(locator1 = "//*[contains(@type, 'checkbox')]");
+        ACDXPSettings.createCombinedProperties();
 
-		Click(locator1 = "//*[contains(@class, 'btn-primary') and contains(@id,'add')]");
+        ACDXPSettings.navToSyncedContactDataMenu();
+
+        ACDXPSettings.syncContactData();
 
 	}
 

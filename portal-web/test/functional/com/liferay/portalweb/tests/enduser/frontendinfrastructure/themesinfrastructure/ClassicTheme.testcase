@@ -46,7 +46,7 @@ definition {
 
 		Theme.configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = "true");
 
-		Theme.configureLookAndFeelCustomCSS(cssText = '''body{background-color:#42f4c5}''');
+		Theme.configureLookAndFeelCustomCSS(cssText = '''body, #wrapper{background-color: #42f4c5;}''');
 
 		PortletEntry.save();
 
@@ -62,7 +62,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Classic Theme Page");
 
-		var htmlSourceText = '''body{background-color:#42f4c5}''';
+		var htmlSourceText = '''body, #wrapper{background-color: #42f4c5;}''';
 
 		AssertHTMLSourceTextPresent(value1 = "${htmlSourceText}");
 

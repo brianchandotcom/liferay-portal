@@ -107,6 +107,23 @@ public class NumericDDMFormFieldTypeSettingsTest
 			directionPredefinedValue.getString(
 				directionPredefinedValue.getDefaultLocale()));
 
+		DDMFormField inputMaskDDMFormField = ddmFormFieldsMap.get("inputMask");
+
+		Assert.assertEquals(
+			"true", inputMaskDDMFormField.getProperty("showAsSwitcher"));
+
+		DDMFormField inputMaskFormatDDMFormField = ddmFormFieldsMap.get(
+			"inputMaskFormat");
+
+		Assert.assertEquals(
+			"string", inputMaskFormatDDMFormField.getDataType());
+		Assert.assertEquals("text", inputMaskFormatDDMFormField.getType());
+		Assert.assertEquals(true, inputMaskFormatDDMFormField.isRequired());
+		Assert.assertNotNull(inputMaskFormatDDMFormField.getLabel());
+		Assert.assertNotNull(
+			inputMaskFormatDDMFormField.getProperty("placeholder"));
+		Assert.assertNotNull(inputMaskFormatDDMFormField.getTip());
+
 		DDMFormField placeholderDDMFormField = ddmFormFieldsMap.get(
 			"placeholder");
 

@@ -33,6 +33,7 @@ import canActivateEditable from '../../../../../app/utils/canActivateEditable';
 import {DragAndDropContextProvider} from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
 import isMapped from '../../../../../app/utils/editable-value/isMapped';
 import getLayoutDataItemLabel from '../../../../../app/utils/getLayoutDataItemLabel';
+import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
 import StructureTreeNode from './StructureTreeNode';
 
@@ -64,6 +65,8 @@ export default function PageStructureSidebar() {
 	);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
+	const mappedInfoItems = useSelector((state) => state.mappedInfoItems);
+	const mappingFields = useSelector((state) => state.mappingFields);
 	const masterLayoutData = useSelector(
 		(state) => state.masterLayout?.masterLayoutData
 	);
@@ -94,6 +97,8 @@ export default function PageStructureSidebar() {
 				fragmentEntryLinks,
 				isMasterPage,
 				layoutData,
+				mappedInfoItems,
+				mappingFields,
 				masterLayoutData,
 				onHoverNode,
 				selectedViewportSize,
@@ -108,6 +113,8 @@ export default function PageStructureSidebar() {
 			fragmentEntryLinks,
 			isMasterPage,
 			layoutData,
+			mappedInfoItems,
+			mappingFields,
 			masterLayoutData,
 			onHoverNode,
 			selectedViewportSize,
@@ -162,6 +169,8 @@ function visit(
 		fragmentEntryLinks,
 		isMasterPage,
 		layoutData,
+		mappedInfoItems,
+		mappingFields,
 		masterLayoutData,
 		onHoverNode,
 		selectedViewportSize,
@@ -203,6 +212,15 @@ function visit(
 				const type =
 					editableTypes[editableId] || EDITABLE_TYPES.backgroundImage;
 
+				const mappedFieldLabel = isMapped(editable)
+					? getMappedFieldLabel(
+							editable,
+							collectionConfig,
+							mappedInfoItems,
+							mappingFields
+					  )
+					: null;
+
 				children.push({
 					activable:
 						canUpdateEditables &&
@@ -216,7 +234,7 @@ function visit(
 					id: childId,
 					itemType: ITEM_TYPES.editable,
 					mapped: isMapped(editable),
-					name: editableId,
+					name: mappedFieldLabel || editableId,
 					onHoverNode,
 					parentId: item.parentId,
 					removable: false,
@@ -234,6 +252,8 @@ function visit(
 						fragmentEntryLinks,
 						isMasterPage,
 						layoutData,
+						mappedInfoItems,
+						mappingFields,
 						masterLayoutData,
 						onHoverNode,
 						selectedViewportSize,
@@ -271,6 +291,8 @@ function visit(
 						fragmentEntryLinks,
 						isMasterPage,
 						layoutData,
+						mappedInfoItems,
+						mappingFields,
 						masterLayoutData,
 						onHoverNode,
 						selectedViewportSize,
@@ -288,6 +310,8 @@ function visit(
 					fragmentEntryLinks,
 					isMasterPage,
 					layoutData,
+					mappedInfoItems,
+					mappingFields,
 					masterLayoutData,
 					onHoverNode,
 					selectedViewportSize,
@@ -328,4 +352,39 @@ function getDocumentFragment(content) {
 	div.innerHTML = content;
 
 	return fragment.appendChild(div);
+}
+
+function getMappedFieldLabel(editable, mappedInfoItems, mappingFields) {
+	const infoItem = mappedInfoItems.find(
+		({classNameId, classPK}) =>
+			editable.classNameId === classNameId && editable.classPK === classPK
+	);
+
+	const {selectedMappingTypes} = config;
+
+	if (!infoItem && !selectedMappingTypes) {
+		return null;
+	}
+
+	const key = editable.mappedField
+		? getMappingFieldsKey(
+				selectedMappingTypes.type.id,
+				selectedMappingTypes.subtype.id || 0
+		  )
+		: getMappingFieldsKey(infoItem.classNameId, infoItem.classTypeId);
+
+	const fields = mappingFields[key];
+
+	if (fields) {
+		const field = fields
+			.flatMap((fieldSet) => fieldSet.fields)
+			.find(
+				(field) =>
+					field.key === (editable.mappedField || editable.fieldId)
+			);
+
+		return field.label;
+	}
+
+	return null;
 }

@@ -107,14 +107,11 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Test");
 
 		CommerceEntry.editTaxCategory(
-
 			keyDescription = "Test Description2",
 			keyName = "Test2",
 			keyReferenceCode = "Test Reference2");
 
 		CommerceEntry.deleteTaxCategory(keyName = "Test2");
-
-		
 	}
 
 }

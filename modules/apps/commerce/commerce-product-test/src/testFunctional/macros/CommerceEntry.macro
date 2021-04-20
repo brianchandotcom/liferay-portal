@@ -590,8 +590,6 @@ definition {
 	}
 
 	macro editTaxCategory {
-		
-
 		Type(
 			key_fieldLabel = "External Reference Code",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",

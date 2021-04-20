@@ -295,7 +295,22 @@ definition {
 	test AddSegmentBySessionLastSignInDate {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130320 AddSegmentBySessionLastSignInDate pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Last Sign In Date");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionLastSignInDate Test");
+
+		Segmentation.changeCriterionInputDate(
+			day = "31",
+			month = "03",
+			year = "2021");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for LPS-130321."

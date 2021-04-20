@@ -16,7 +16,6 @@ package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
@@ -31,6 +30,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -252,8 +252,11 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		String currentSiteURL = _portal.getGroupFriendlyURL(
 			layout.getLayoutSet(), themeDisplay);
 
+		String urlSeparator = _cpFriendlyURL.getProductURLSeparator(
+			themeDisplay.getCompanyId());
+
 		String productFriendlyURL =
-			currentSiteURL + CPConstants.SEPARATOR_PRODUCT_URL +
+			currentSiteURL + urlSeparator +
 				friendlyURLEntry.getUrlTitle(themeDisplay.getLanguageId());
 
 		return _portal.addPreservedParameters(themeDisplay, productFriendlyURL);
@@ -312,6 +315,9 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPFriendlyURL _cpFriendlyURL;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

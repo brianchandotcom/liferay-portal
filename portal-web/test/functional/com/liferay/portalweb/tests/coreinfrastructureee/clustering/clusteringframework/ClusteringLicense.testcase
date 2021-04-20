@@ -26,6 +26,7 @@ definition {
 		property commerce.enabled = "false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property skip.start-app-server = "false";
+		property test.name.skip.portal.instance = "ClusteringLicense#ExceedDoubleNodeLimit";
 
 		for (var nodeNumber : list "8,9,10") {
 			User.loginPG(
@@ -69,6 +70,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-virtual-cluster.xml";
 		property dxp.license.file = "dxp-license-virtual-cluster-extra-node.xml";
+		property test.name.skip.portal.instance = "ClusteringLicense#LimitCommerceToLessThanNodeLimit";
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -111,6 +113,7 @@ definition {
 	test LimitPreviouslyValidatedClusterNodes {
 		property commerce.enabled = "false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+		property test.name.skip.portal.instance = "ClusteringLicense#LimitPreviouslyValidatedClusterNodes";
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -208,6 +211,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-virtual-cluster.xml";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+		property test.name.skip.portal.instance = "ClusteringLicense#LimitPreviouslyValidatedClusterNodesWithCommerce";
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -288,6 +292,7 @@ definition {
 		property commerce.enabled = "false";
 		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+		property test.name.skip.portal.instance = "ClusteringLicense#LimitPreviouslyValidatedClusterNodesWithManualRecovery";
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -354,6 +359,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property skip.start-app-server = "false";
+		property test.name.skip.portal.instance = "ClusteringLicense#ViewNodeLimit";
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
@@ -439,6 +445,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-virtual-cluster.xml";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+		property test.name.skip.portal.instance = "ClusteringLicense#ViewNodeLimitWithCommerce";
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -502,6 +509,7 @@ definition {
 		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property skip.start-app-server = "false";
+		property test.name.skip.portal.instance = "ClusteringLicense#ViewNodeLimitWithManualRecovery";
 
 		User.firstLoginPG();
 

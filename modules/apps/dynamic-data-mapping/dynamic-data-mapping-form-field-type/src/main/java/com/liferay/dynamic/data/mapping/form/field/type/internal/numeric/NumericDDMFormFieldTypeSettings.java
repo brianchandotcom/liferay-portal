@@ -126,7 +126,10 @@ public interface NumericDDMFormFieldTypeSettings
 	)
 	public String direction();
 
-	@DDMFormField(label = "%input-mask", properties = "showAsSwitcher=true")
+	@DDMFormField(
+		label = "%input-mask", properties = "showAsSwitcher=true",
+		visibilityExpression = "FALSE"
+	)
 	public boolean inputMask();
 
 	@DDMFormField(

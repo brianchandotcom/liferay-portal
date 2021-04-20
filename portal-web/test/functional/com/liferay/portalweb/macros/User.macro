@@ -1807,6 +1807,15 @@ definition {
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 
+		//TODO Remove below macro after password reminder gets completely cleaned out with JSON 
+
+		User.resetPassword(
+			resetPassword = "${resetPassword}",
+			setupWizardEnabled = "${setupWizardEnabled}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
+
+		User.answerPasswordReminder();
+
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();

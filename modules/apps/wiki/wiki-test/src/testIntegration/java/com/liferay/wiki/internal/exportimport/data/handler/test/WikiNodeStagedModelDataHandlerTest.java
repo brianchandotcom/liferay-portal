@@ -86,6 +86,9 @@ public class WikiNodeStagedModelDataHandlerTest
 		WikiNode node = (WikiNode)stagedModel;
 		WikiNode importedNode = (WikiNode)importedStagedModel;
 
+		Assert.assertEquals(
+			node.getExternalReferenceCode(),
+			importedNode.getExternalReferenceCode());
 		Assert.assertEquals(node.getName(), importedNode.getName());
 		Assert.assertEquals(
 			node.getDescription(), importedNode.getDescription());

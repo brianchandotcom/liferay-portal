@@ -628,12 +628,12 @@
 </tr>
 <tr>
 	<td>CONTAINER_CONFIGURATION_CONTENT_DISPLAY</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'d-${key_contentDisplay}')]</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'flex-${key_contentDisplay}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTAINER_CONFIGURATION_HORIZONTAL_ALIGN</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'justify-content-${key_horizontalAlign}')]</td>
+	<td>CONTAINER_CONFIGURATION_JUSTIFY_CONTENT</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'justify-content-${key_justifyContent}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -682,8 +682,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTAINER_CONFIGURATION_VERTICAL_ALIGN</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'align-items-${key_verticalAlign}')]</td>
+	<td>CONTAINER_CONFIGURATION_ALIGN_ITEMS</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'align-items-${key_alignItems}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product API
 Bundle-SymbolicName: com.liferay.commerce.product.api
-Bundle-Version: 30.1.0
+Bundle-Version: 31.0.0
 Export-Package:\
 	com.liferay.commerce.product.catalog,\
 	com.liferay.commerce.product.channel,\
@@ -21,6 +21,7 @@ Export-Package:\
 	com.liferay.commerce.product.servlet.taglib.ui,\
 	com.liferay.commerce.product.servlet.taglib.ui.constants,\
 	com.liferay.commerce.product.type,\
+	com.liferay.commerce.product.url,\
 	com.liferay.commerce.product.util,\
 	com.liferay.commerce.product.util.comparator
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

@@ -2897,6 +2897,13 @@ log.sanitizer.enabled=false</echo>
 								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
 							</gradle-execute>
 
+							<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
+
+							<unzip
+								dest="portal-impl/classes"
+								src="${test.app.server.lib.portal.dir}/portal-impl.jar"
+							/>
+
 							<parallel failonany="true" threadcount="${parallel.thread.count}">
 								<ant dir="portal-test" inheritAll="false" target="jar" />
 								<ant dir="support-tomcat" inheritAll="false" target="compile" />
@@ -2909,8 +2916,6 @@ log.sanitizer.enabled=false</echo>
 
 								<ant dir="util-slf4j" inheritAll="false" target="compile" />
 							</parallel>
-
-							<ant dir="portal-impl" inheritAll="false" target="compile" />
 
 							<copy
 								file="${project.dir}/portal-test/portal-test.jar"
@@ -2929,8 +2934,6 @@ log.sanitizer.enabled=false</echo>
 							<local name="artifact.version" />
 
 							<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
-
-							<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
 
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />

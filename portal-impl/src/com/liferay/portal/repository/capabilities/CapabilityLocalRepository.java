@@ -56,16 +56,9 @@ public class CapabilityLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LocalRepository localRepository = getRepository();
-
-		FileEntry fileEntry = localRepository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, file, serviceContext);
-
-		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
-
-		return fileEntry;
+		return addFileEntry(
+			null, userId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, file, serviceContext);
 	}
 
 	@Override
@@ -75,11 +68,44 @@ public class CapabilityLocalRepository
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFileEntry(
+			null, userId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, inputStream, size, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		LocalRepository localRepository = getRepository();
 
 		FileEntry fileEntry = localRepository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, inputStream, size, serviceContext);
+			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, file, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
+
+		return fileEntry;
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream inputStream,
+			long size, ServiceContext serviceContext)
+		throws PortalException {
+
+		LocalRepository localRepository = getRepository();
+
+		FileEntry fileEntry = localRepository.addFileEntry(
+			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, inputStream, size, serviceContext);
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
@@ -245,6 +271,15 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public FileEntry fetchFileEntryByExternalReferenceCode(
+		String externalReferenceCode)
+		throws PortalException {
+
+		return getRepository().fetchFileEntryByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, int status, int start, int end,
 			OrderByComparator<FileEntry> orderByComparator)
@@ -321,6 +356,15 @@ public class CapabilityLocalRepository
 		throws PortalException {
 
 		return getRepository().getFileEntry(folderId, title);
+	}
+
+	@Override
+	public FileEntry getFileEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		return getRepository().getFileEntryByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	@Override

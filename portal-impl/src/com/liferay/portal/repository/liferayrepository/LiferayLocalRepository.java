@@ -61,6 +61,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Alexander Chow
@@ -100,6 +101,31 @@ public class LiferayLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFileEntry(
+			null, userId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, file, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			InputStream inputStream, long size, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			null, userId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, inputStream, size, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		long fileEntryTypeId = ParamUtil.getLong(
 			serviceContext, "fileEntryTypeId",
 			getDefaultFileEntryTypeId(serviceContext, folderId));
@@ -114,9 +140,9 @@ public class LiferayLocalRepository
 		}
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
-			userId, getGroupId(), getRepositoryId(), toFolderId(folderId),
-			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, ddmFormValuesMap, file, null, size,
+			externalReferenceCode, userId, getGroupId(), getRepositoryId(),
+			toFolderId(folderId), sourceFileName, mimeType, title, description,
+			changeLog, fileEntryTypeId, ddmFormValuesMap, file, null, size,
 			serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
@@ -124,9 +150,10 @@ public class LiferayLocalRepository
 
 	@Override
 	public FileEntry addFileEntry(
-			long userId, long folderId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			InputStream inputStream, long size, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream inputStream,
+			long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
@@ -137,10 +164,10 @@ public class LiferayLocalRepository
 			serviceContext, fileEntryTypeId);
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
-			userId, getGroupId(), getRepositoryId(), toFolderId(folderId),
-			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, ddmFormValuesMap, null, inputStream, size,
-			serviceContext);
+			externalReferenceCode, userId, getGroupId(), getRepositoryId(),
+			toFolderId(folderId), sourceFileName, mimeType, title, description,
+			changeLog, fileEntryTypeId, ddmFormValuesMap, null, inputStream,
+			size, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -242,6 +269,21 @@ public class LiferayLocalRepository
 		if (dlFolder != null) {
 			dlFolderLocalService.deleteFolder(folderId);
 		}
+	}
+
+	@Override
+	public FileEntry fetchFileEntryByExternalReferenceCode(
+		String externalReferenceCode) throws PortalException {
+
+		DLFileEntry dlFileEntry =
+			dlFileEntryService.fetchFileEntryByExternalReferenceCode(
+				getGroupId(), externalReferenceCode);
+
+		if (dlFileEntry != null) {
+			return new LiferayFileEntry(dlFileEntry);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -372,6 +414,18 @@ public class LiferayLocalRepository
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 			getGroupId(), toFolderId(folderId), title);
+
+		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	@Override
+	public FileEntry getFileEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry =
+			dlFileEntryLocalService.getFileEntryByExternalReferenceCode(
+				getGroupId(), externalReferenceCode);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

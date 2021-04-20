@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.document.library.kernel.exception.DuplicateFileEntryExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
@@ -165,6 +166,22 @@ public class DLFileEntryLocalServiceImpl
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFileEntry(
+			null, userId, groupId, repositoryId, folderId, sourceFileName,
+			mimeType, title, description, changeLog, fileEntryTypeId,
+			ddmFormValuesMap, file, inputStream, size, serviceContext);
+	}
+
+	@Override
+	public DLFileEntry addFileEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+			File file, InputStream inputStream, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		if (Validator.isNull(title)) {
 			throw new FileNameException(
 				StringBundler.concat(
@@ -208,9 +225,16 @@ public class DLFileEntryLocalServiceImpl
 
 		long fileEntryId = counterLocalService.increment();
 
+		if (externalReferenceCode == null) {
+			externalReferenceCode = String.valueOf(fileEntryId);
+		}
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.create(fileEntryId);
 
 		dlFileEntry.setUuid(serviceContext.getUuid());
+		dlFileEntry.setExternalReferenceCode(externalReferenceCode);
 		dlFileEntry.setGroupId(groupId);
 		dlFileEntry.setCompanyId(user.getCompanyId());
 		dlFileEntry.setUserId(user.getUserId());
@@ -1185,6 +1209,15 @@ public class DLFileEntryLocalServiceImpl
 				"No DLFileEntry exists with the key {groupId=", groupId,
 				", folderId=", folderId, ", title=", title,
 				StringPool.CLOSE_CURLY_BRACE));
+	}
+
+	@Override
+	public DLFileEntry getFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return dlFileEntryPersistence.findByG_ERC(
+			groupId, externalReferenceCode);
 	}
 
 	@Override
@@ -2868,6 +2901,21 @@ public class DLFileEntryLocalServiceImpl
 		// Latest file version
 
 		removeFileVersion(dlFileEntry, latestDLFileVersion);
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (dlFileEntry != null) {
+			throw new DuplicateFileEntryExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate file entry external reference code ",
+					externalReferenceCode, " in group ", groupId));
+		}
 	}
 
 	private void _validateFolder(long groupId, long folderId, String title)

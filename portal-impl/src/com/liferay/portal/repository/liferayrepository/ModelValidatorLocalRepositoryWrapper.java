@@ -49,6 +49,31 @@ public class ModelValidatorLocalRepositoryWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFileEntry(
+			null, userId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, file, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			InputStream inputStream, long size, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			null, userId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, inputStream, size, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		FileContentReference fileContentReference =
 			FileContentReference.fromFile(
 				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
@@ -57,15 +82,16 @@ public class ModelValidatorLocalRepositoryWrapper
 		_modelValidator.validate(fileContentReference);
 
 		return super.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, file, serviceContext);
+			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, file, serviceContext);
 	}
 
 	@Override
 	public FileEntry addFileEntry(
-			long userId, long folderId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			InputStream inputStream, long size, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream inputStream,
+			long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		FileContentReference fileContentReference =
@@ -76,8 +102,8 @@ public class ModelValidatorLocalRepositoryWrapper
 		_modelValidator.validate(fileContentReference);
 
 		return super.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, inputStream, size, serviceContext);
+			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, inputStream, size, serviceContext);
 	}
 
 	@Override

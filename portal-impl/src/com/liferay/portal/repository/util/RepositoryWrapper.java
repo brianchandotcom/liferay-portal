@@ -52,9 +52,9 @@ public class RepositoryWrapper implements Repository {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _repository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, file, serviceContext);
+		return addFileEntry(
+			null, userId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, file, serviceContext);
 	}
 
 	@Override
@@ -64,9 +64,35 @@ public class RepositoryWrapper implements Repository {
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFileEntry(
+			null, userId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, inputStream, size, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		return _repository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, inputStream, size, serviceContext);
+			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, file, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream inputStream,
+			long size, ServiceContext serviceContext)
+		throws PortalException {
+
+		return _repository.addFileEntry(
+			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, inputStream, size, serviceContext);
 	}
 
 	@Override
@@ -196,6 +222,15 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
+	public FileEntry fetchFileEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		return _repository.fetchFileEntryByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	@Override
 	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
 		return _repository.getCapability(capabilityClass);
 	}
@@ -320,6 +355,15 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.getFileEntry(folderId, title);
+	}
+
+	@Override
+	public FileEntry getFileEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		return _repository.getFileEntryByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	@Override

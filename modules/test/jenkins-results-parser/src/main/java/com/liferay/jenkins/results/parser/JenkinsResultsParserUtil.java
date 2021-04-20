@@ -2339,7 +2339,12 @@ public class JenkinsResultsParserUtil {
 
 			String output = readInputStream(process.getInputStream());
 
-			return Long.parseLong(output.replaceAll("(?s)(\\d+).*", "$1"));
+			try {
+				return Long.parseLong(output.replaceAll("(?s)(\\d+).*", "$1"));
+			}
+			catch (NumberFormatException numberFormatException) {
+				return null;
+			}
 		}
 		catch (IOException | TimeoutException exception) {
 			return null;

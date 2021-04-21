@@ -215,9 +215,7 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
-
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",

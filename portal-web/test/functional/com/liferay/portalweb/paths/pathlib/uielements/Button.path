@@ -355,7 +355,7 @@
 </tr>
 <tr>
 	<td>I_AGREE_LOCALIZED</td>
-	<td>//button[contains(.,'${key_localizedAgree}')]</td>
+	<td>//button[contains(.,"${key_localizedAgree}")]</td>
 	<td></td>
 </tr>
 <tr>

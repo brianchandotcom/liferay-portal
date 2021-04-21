@@ -671,6 +671,16 @@ definition {
 			locator1 = "WCEditWebContent#REPEATED_FIELD");
 	}
 
+	macro assertFieldsGroup {
+		for (var fieldFieldLabel : list "${fieldsLabelList}") {
+			AssertElementPresent(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldGroupDepth = "${fieldGroupDepth}",
+				key_fieldGroupLabel = "${fieldGroupLabel}",
+				locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_FIELD_WITH_DEPTH");
+		}
+	}
+
 	macro assertNonLocalizableField {
 		AssertElementPresent(
 			key_fieldName = "${fieldFieldName}",

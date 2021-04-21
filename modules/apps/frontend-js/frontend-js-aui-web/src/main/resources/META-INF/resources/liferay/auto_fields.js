@@ -167,7 +167,7 @@ AUI.add(
 
 						trigger.placeAfter(list);
 
-						list.append(palette.cloneNode(true));
+						list.append(palette);
 					}
 
 					if (instance.url) {

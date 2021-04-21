@@ -230,9 +230,11 @@ definition {
 	macro _getSiteIdByGroupKey {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		var companyId = JSONCompany.getCompanyId();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
-		var portalURL = JSONCompany.getPortalURL();
+		var companyId = JSONCompany.getCompanyId(portalURL = "${portalURL}");
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/get-group \

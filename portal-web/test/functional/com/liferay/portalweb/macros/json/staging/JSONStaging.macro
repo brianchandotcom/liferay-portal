@@ -4,7 +4,7 @@ definition {
 	macro enableLocalStaging {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
 		if (!(isSet(branchingPrivate))) {
 			var branchingPrivate = "false";
@@ -26,7 +26,7 @@ definition {
 	macro enableRemoteStaging {
 		Variables.assertDefined(parameterList = "${groupName},${remoteGroupId}");
 
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
 		if (!(isSet(branchingPrivate))) {
 			var branchingPrivate = "false";

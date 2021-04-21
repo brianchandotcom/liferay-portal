@@ -310,7 +310,103 @@ definition {
 	test AddNewExperienceSessionLanguageSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130334 AddNewExperienceSessionLanguageSegment pending implementation
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Segments");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Language");
+
+		Segmentation.fillTitle(titleField = "Session Language Segment");
+
+		Click(
+			key_criterionInputOption = "Spanish (Spain)",
+			locator1 = "Segmentation#CRITERION_INPUT_OPTION");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Text in English");
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addExperienceWithLanguage(
+			experienceName = "NewLanguageExperience",
+			language = "Spanish",
+			segmentName = "Session Language Segment");
+
+		Refresh();
+
+		PageEditor.changeExperienceLanguage(
+			language = "es-ES",
+			newExperience = "NewLanguageExperience");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Texto en Español");
+
+		PageEditor.prioritizeExperience(experienceName = "NewLanguageExperience");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editDisplaySettingsCP(
+			languageName = "español (España)",
+			userScreenName = "usersn1");
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Text in english");
+
+		User.logoutAndLoginPG(
+			freeLogin = "true",
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
+
+		Navigator.gotoSitePage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Texto en Español");
+
+		User.logoutAndLoginPG(
+			freeLogin = "true",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 	}
 
 	@description = "This is a test for LPS-130335."

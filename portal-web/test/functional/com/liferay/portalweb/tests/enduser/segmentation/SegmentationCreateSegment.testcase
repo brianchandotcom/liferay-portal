@@ -336,6 +336,12 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionLanguage Test");
+
+		Segmentation.viewSegment(
+			key_criterion = "options",
+			propertyField = "es_ES");
 	}
 
 	@description = "This is a test for LPS-130320."

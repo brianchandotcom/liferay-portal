@@ -303,6 +303,12 @@ definition {
 				value1 = "${date}");
 		}
 
+		else if ("${key_criterion}" == "options") {
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${propertyField}");
+		}
+
 		else {
 			AssertValue(
 				locator1 = "Segmentation#PROPERTY_FIELD",

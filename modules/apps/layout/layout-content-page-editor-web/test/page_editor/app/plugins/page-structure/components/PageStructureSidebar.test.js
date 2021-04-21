@@ -61,14 +61,22 @@ const renderComponent = ({
 						fragmentEntryLinks: {
 							'001': {
 								content:
-									'<div>001<span data-lfr-editable-id="05-editable">editable</span></div>',
+									'<div>001<span data-lfr-editable-id="05-editable">editable</span><span data-lfr-editable-id="06-editable">editable</span></div>',
 								editableTypes: {
 									'05-editable': 'text',
+									'06-editable': 'text',
 								},
 								editableValues: {
 									[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
 										'05-editable': {
 											defaultValue: 'defaultValue',
+										},
+										'06-editable': {
+											classNameId: 'itemClassNameId',
+											classPK: 'itemClassPK',
+											classTypeId: 'itemClassTypeId',
+											defaultValue: 'defaultValue',
+											fieldId: 'text-field-1',
 										},
 									},
 								},
@@ -129,6 +137,28 @@ const renderComponent = ({
 
 							rootItems: {main: '00-main'},
 							version: 1,
+						},
+
+						mappedInfoItems: [
+							{
+								classNameId: 'itemClassNameId',
+								classPK: 'itemClassPK',
+								classTypeId: 'itemClassTypeId',
+							},
+						],
+
+						mappingFields: {
+							'itemClassNameId-itemClassTypeId': [
+								{
+									fields: [
+										{
+											key: 'text-field-1',
+											label: 'Text Field 1',
+											type: 'text',
+										},
+									],
+								},
+							],
 						},
 
 						masterLayout: {
@@ -318,5 +348,14 @@ describe('PageStructureSidebar', () => {
 		expect(queryByLabelText('remove-x-container')).toBe(null);
 		expect(queryByLabelText('remove-x-grid')).toBe(null);
 		expect(queryByLabelText('remove-x-Fragment 1')).toBe(null);
+	});
+
+	it('uses field label for mapped editables', () => {
+		const {getByText} = renderComponent({
+			activeItemId: '04-fragment',
+			rootItemChildren: ['04-fragment'],
+		});
+
+		expect(getByText('Text Field 1')).toBeInTheDocument();
 	});
 });

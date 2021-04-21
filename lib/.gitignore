@@ -32,13 +32,11 @@
 /development/jasper.jar
 /development/jaxb-api.jar
 /development/jbi_rt.jar
-/development/jms.jar
 /development/jndi.jar
 /development/jsch.jar
 /development/jserrorcollector.jar
 /development/jsonassert.jar
 /development/jsp-api.jar
-/development/jta.jar
 /development/junit.jar
 /development/mail.jar
 /development/mariadb.jar

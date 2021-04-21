@@ -395,18 +395,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/jms.jar</file-name>
-				<version>1.1</version>
-				<project-name>Java Message Services</project-name>
-				<project-url>http://java.sun.com/products/jms</project-url>
-				<licenses>
-					<license>
-						<license-name>Common Development and Distribution License 1.0</license-name>
-						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/jndi.jar</file-name>
 				<version>1.2.1</version>
 				<project-name>Java Naming and Directory Interface</project-name>
@@ -465,21 +453,6 @@
 						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
 					</license>
 				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jta.jar</file-name>
-				<version>1.1</version>
-				<project-name>Java Transaction</project-name>
-				<project-url>http://java.sun.com/products/jta</project-url>
-				<licenses>
-					<license>
-						<license-name>Common Development and Distribution License 1.0</license-name>
-						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See LPS-27200.
-				</comments>
 			</library>
 			<library>
 				<file-name>lib/development/junit.jar</file-name>

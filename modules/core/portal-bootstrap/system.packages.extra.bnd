@@ -119,8 +119,6 @@ Export-Package:\
 	\
 	java_cup.runtime.*;version='2.7.1',\
 	\
-	javax.jms.*;version='1.1',\
-	\
 	javax.jws;version='1.1',\
 	javax.jws.soap;version='1.1',\
 	\
@@ -319,7 +317,6 @@ Provide-Capability:\
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
 	@../../../lib/development/activation.jar,\
-	@../../../lib/development/jms.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/servlet-api.jar,\
 	@../../../lib/portal/ant.jar,\

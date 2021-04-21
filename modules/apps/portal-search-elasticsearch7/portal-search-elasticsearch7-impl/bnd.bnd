@@ -47,6 +47,8 @@ Import-Package:\
 	\
 	!javassist.*,\
 	\
+	!javax.jms.*,\
+	\
 	!jline.*,\
 	\
 	!joptsimple.*,\

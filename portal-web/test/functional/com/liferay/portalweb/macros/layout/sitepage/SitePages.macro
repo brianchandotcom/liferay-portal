@@ -381,11 +381,7 @@ definition {
 	}
 
 	macro deletePage {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "chrome") {
-			MetalComponent.waitForLayout();
-		}
+		WaitForPageLoad();
 
 		Click(
 			key_pageName = "${pageName}",
@@ -452,11 +448,7 @@ definition {
 
 	@summary = "Go to the pageMenuItem of a Site Page. Parent pages hierarchy is required to navigate to child pages."
 	macro gotoPageMenuItem {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "chrome") {
-			MetalComponent.waitForLayout();
-		}
+		WaitForPageLoad();
 
 		if (isSet(parentPagesHierarchy)) {
 			for (var parentPage : list "${parentPagesHierarchy}") {
@@ -493,11 +485,7 @@ definition {
 	}
 
 	macro togglePrivacy {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "chrome") {
-			MetalComponent.waitForLayout();
-		}
+		WaitForPageLoad();
 
 		if (IsElementNotPresent(locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH", key_breadcrumbName = "${privacy}")) {
 			Click(

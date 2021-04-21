@@ -265,7 +265,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForLayout();
+			WaitForPageLoad();
 
 			Click(
 				key_pageName = "Test Content Page Name",
@@ -308,7 +308,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForLayout();
+			WaitForPageLoad();
 
 			Click(
 				key_pageName = "Test Content Page Name",
@@ -334,7 +334,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForLayout();
+			WaitForPageLoad();
 
 			Click(
 				key_pageName = "Test Content Page Name",
@@ -364,7 +364,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForLayout();
+			WaitForPageLoad();
 
 			Click(
 				key_pageName = "Test Content Page Name",
@@ -392,7 +392,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForLayout();
+			WaitForPageLoad();
 
 			Click(
 				key_pageName = "Test Content Page Name",
@@ -427,7 +427,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForLayout();
+			WaitForPageLoad();
 
 			Click(
 				key_pageName = "Test Content Page Name",
@@ -454,7 +454,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForLayout();
+			WaitForPageLoad();
 
 			Click(
 				key_pageName = "Test Content Page Name",
@@ -489,7 +489,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			MetalComponent.waitForLayout();
+			WaitForPageLoad();
 
 			Click(
 				key_pageName = "Test Content Page Name",

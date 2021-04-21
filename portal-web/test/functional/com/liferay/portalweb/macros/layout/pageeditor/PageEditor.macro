@@ -753,11 +753,7 @@ definition {
 	}
 
 	macro clickDiscardDraft {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "chrome") {
-			MetalComponent.waitForLayout();
-		}
+		WaitForPageLoad();
 
 		Click(
 			key_pageName = "${pageName}",

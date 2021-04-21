@@ -1,0 +1,250 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.message.boards.web.internal.change.tracking.spi.display;
+
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
+import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.util.MBUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Cheryl Tang
+ */
+@Component(immediate = true, service = CTDisplayRenderer.class)
+public class MBMessageCTDisplayRenderer
+	extends BaseCTDisplayRenderer<MBMessage> {
+
+	@Override
+	public String getContent(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, MBMessage mbMessage)
+		throws Exception {
+
+		if (mbMessage.isFormatBBCode()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return MBUtil.getBBCodeHTML(
+				mbMessage.getBody(false), themeDisplay.getPathThemeImages());
+		}
+
+		return mbMessage.getBody(false);
+	}
+
+	@Override
+	public String getEditURL(
+			HttpServletRequest httpServletRequest, MBMessage mbMessage)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(mbMessage.getGroupId());
+
+		if (group.isCompany()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			group = themeDisplay.getScopeGroup();
+		}
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/message_boards/edit_message"
+		).setParameter(
+			"messageId", mbMessage.getMessageId()
+		).buildString();
+	}
+
+	@Override
+	public Class<MBMessage> getModelClass() {
+		return MBMessage.class;
+	}
+
+	@Override
+	public String getPreviousContent(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			MBMessage currentMBMessage, MBMessage previousMBMessage)
+		throws Exception {
+
+		return getContent(
+			liferayPortletRequest, liferayPortletResponse, previousMBMessage);
+	}
+
+	@Override
+	public String getTitle(Locale locale, MBMessage mbMessage) {
+		return mbMessage.getSubject();
+	}
+
+	@Override
+	public boolean hasContent() {
+		return true;
+	}
+
+	@Override
+	protected void buildDisplay(DisplayBuilder<MBMessage> displayBuilder)
+		throws PortalException {
+
+		MBMessage mbMessage = displayBuilder.getModel();
+
+		displayBuilder.display(
+			"subject", mbMessage.getSubject()
+		).display(
+			"created-by",
+			() -> {
+				String userName = mbMessage.getUserName();
+
+				if (Validator.isNotNull(userName)) {
+					return userName;
+				}
+
+				return null;
+			}
+		).display(
+			"create-date", mbMessage.getCreateDate()
+		).display(
+			"last-modified", mbMessage.getModifiedDate()
+		).display(
+			"answer", mbMessage.isAnswer()
+		).display(
+			"number-of-attachments", mbMessage.getAttachmentsFileEntriesCount()
+		).display(
+			"attachments",
+			_getAttachmentLinksAsHtmlList(displayBuilder, mbMessage), false
+		);
+	}
+
+	private String _createLinkTagAsString(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			AssetRendererFactory<?> assetRendererFactory, FileEntry fileEntry)
+		throws PortalException {
+
+		LinkTag linkTag = new LinkTag();
+
+		linkTag.setDisplayType("primary");
+		linkTag.setHref(
+			PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY),
+				fileEntry, StringPool.BLANK));
+
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
+			fileEntry.getFileEntryId());
+
+		linkTag.setIcon(assetRenderer.getIconCssClass());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(fileEntry.getTitle());
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(
+			LanguageUtil.formatStorageSize(
+				fileEntry.getSize(), httpServletRequest.getLocale()));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		linkTag.setLabel(sb.toString());
+
+		linkTag.setSmall(true);
+
+		try {
+			return linkTag.doTagAsString(
+				httpServletRequest, httpServletResponse);
+		}
+		catch (JspException jspException) {
+			return ReflectionUtil.throwException(jspException);
+		}
+	}
+
+	private String _getAttachmentLinksAsHtmlList(
+			DisplayBuilder<MBMessage> displayBuilder, MBMessage mbMessage)
+		throws PortalException {
+
+		if (mbMessage.getAttachmentsFileEntriesCount() == 0) {
+			return null;
+		}
+
+		DisplayContext<MBMessage> displayContext =
+			displayBuilder.getDisplayContext();
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				DLFileEntry.class.getName());
+
+		StringBundler sb = new StringBundler(
+			2 + (mbMessage.getAttachmentsFileEntriesCount() * 3));
+
+		sb.append("<ul>");
+
+		for (FileEntry fileEntry : mbMessage.getAttachmentsFileEntries()) {
+			sb.append("<li>");
+			sb.append(
+				_createLinkTagAsString(
+					displayContext.getHttpServletRequest(),
+					displayContext.getHttpServletResponse(),
+					assetRendererFactory, fileEntry));
+			sb.append("</li>");
+		}
+
+		sb.append("</ul>");
+
+		return sb.toString();
+	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
+
+}

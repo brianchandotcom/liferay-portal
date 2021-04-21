@@ -33,6 +33,7 @@ definition {
 
 	@description = "Add a widget template in staging site."
 	@priority = "4"
+	@uitest
 	test AddWidgetTemplateInStagingSite {
 		task ("Add a widget templates in staging site") {
 			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");

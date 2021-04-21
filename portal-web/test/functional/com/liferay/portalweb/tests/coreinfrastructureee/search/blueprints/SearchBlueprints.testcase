@@ -406,4 +406,57 @@ definition {
 		SearchBlueprints.viewBlueprintsSpecificOrder(blueprintsList = "Blueprint 3,Blueprint 2,Blueprint 1");
 	}
 
+	test ViewBlueprintsAssetDetails {
+		JSONBlog.addEntry(
+			entryContent = "banana, red apple, blueberry!",
+			entryTitle = "Liferay Blogs Entry Apple");
+
+		JSONWebcontent.addWebContent(
+			content = "red apple, citrus-orange",
+			groupName = "Guest",
+			title = "Web Content Article Apple");
+
+		SearchBlueprints.addBlueprint(name = "My Blueprint");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "My Blueprint");
+
+		Click(locator1 = "Button#PREVIEW");
+
+		SearchBlueprints.searchBlueprintsPreview(searchTerm = "Apple");
+
+		Click(
+			key_searchAssetTitle = "Liferay Blogs Entry Apple",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SelectWindow(locator1 = "title=View Result - ${siteName}");
+
+		AssertTextEquals(
+			locator1 = "Portlet#H4_COMPONENT_TITLE",
+			value1 = "Liferay Blogs Entry Apple");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+			value1 = "banana, red apple, blueberry!");
+
+		Close.closeAndSelectWindow(locator1 = "title=Edit Blueprint - ${siteName}");
+
+		Click(
+			key_searchAssetTitle = "Web Content Article Apple",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+
+		SelectWindow(locator1 = "title=View Result - ${siteName}");
+
+		AssertTextEquals(
+			locator1 = "Portlet#H4_COMPONENT_TITLE",
+			value1 = "Web Content Article Apple");
+
+		AssertTextEquals(
+			locator1 = "WCD#WEB_CONTENT_CONTENT",
+			value1 = "red apple, citrus-orange");
+	}
+
 }

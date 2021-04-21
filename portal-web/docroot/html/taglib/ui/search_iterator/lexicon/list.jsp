@@ -276,7 +276,14 @@ if (fixedHeader) {
 					}
 				%>
 
-					<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(rowIdProperty) %>">
+							<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" id="<portlet:namespace /><%= id %>_<%= row.getRowId() %>" <%= AUIUtil.buildData(data) %>>
+						</c:when>
+						<c:otherwise>
+							<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
+						</c:otherwise>
+					</c:choose>
 
 						<%
 						for (int j = 0; j < entries.size(); j++) {

@@ -10,6 +10,7 @@ $toolbarDesktopHeight: 56px;
 	display: flex;
 	height: calc(100vh - #{$controlMenuDesktopHeight});
 	left: 0;
+	overflow: hidden;
 	position: absolute;
 	top: 0;
 	width: 100%;

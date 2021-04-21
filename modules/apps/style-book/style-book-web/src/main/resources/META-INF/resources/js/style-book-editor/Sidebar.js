@@ -25,23 +25,26 @@ export default function Sidebar() {
 	return (
 		<div className="style-book-editor__sidebar">
 			<Toolbar />
-			<ThemeInformation />
-			{config.frontendTokenDefinition.frontendTokenCategories ? (
-				<SidebarContent />
-			) : (
-				<ClayAlert className="m-3" displayType="info">
-					{Liferay.Language.get(
-						'this-theme-does-not-include-a-token-definition'
-					)}
-				</ClayAlert>
-			)}
+			<div className="style-book-editor__sidebar-content">
+				<ThemeInformation />
+
+				{config.frontendTokenDefinition.frontendTokenCategories ? (
+					<FrontendTokenCategories />
+				) : (
+					<ClayAlert className="m-3" displayType="info">
+						{Liferay.Language.get(
+							'this-theme-does-not-include-a-token-definition'
+						)}
+					</ClayAlert>
+				)}
+			</div>
 		</div>
 	);
 }
 
 function ThemeInformation() {
 	return (
-		<div className="pb-0 pt-3 px-3">
+		<div className="pb-3">
 			<p className="small text-secondary">
 				{Liferay.Language.get(
 					'this-token-definition-belongs-to-the-theme-set-for-public-pages'
@@ -57,7 +60,7 @@ function ThemeInformation() {
 	);
 }
 
-function SidebarContent() {
+function FrontendTokenCategories() {
 	const frontendTokenCategories =
 		config.frontendTokenDefinition.frontendTokenCategories;
 	const [active, setActive] = useState(false);
@@ -66,7 +69,7 @@ function SidebarContent() {
 	);
 
 	return (
-		<div className="style-book-editor__sidebar-content">
+		<>
 			{selectedCategory && (
 				<ClayDropDown
 					active={active}
@@ -113,6 +116,6 @@ function SidebarContent() {
 					/>
 				)
 			)}
-		</div>
+		</>
 	);
 }

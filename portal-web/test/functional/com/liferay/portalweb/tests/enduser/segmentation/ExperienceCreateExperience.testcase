@@ -364,7 +364,89 @@ definition {
 	test AddNewExperienceSessionBrowserSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130327 AddNewExperienceSessionBrowserSegment pending implementation
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Segments");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Browser");
+
+		Segmentation.fillTitle(titleField = "Session Browser Segment");
+
+		Segmentation.fillProperty(propertyField = "Chrome");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.viewFragmentStyle(
+			fragmentName = "Heading",
+			headingLevel = "h1");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Default");
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addExperience(
+			experienceName = "NewBrowserExperience",
+			segmentName = "Session Browser Segment");
+
+		Refresh();
+
+		PageEditor.changeExperience(newExperience = "NewBrowserExperience");
+
+		PageEditor.viewFragmentStyle(
+			fragmentName = "Heading",
+			headingLevel = "h1");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Chrome Browser Heading");
+
+		PageEditor.prioritizeExperience(experienceName = "NewBrowserExperience");
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		Navigator.gotoSitePage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "Chrome Browser Heading");
+		}
+
+		else {
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "Default");
+		}
 	}
 
 	@description = "This is a test for LPS-130328."

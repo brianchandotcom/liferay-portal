@@ -26,6 +26,7 @@ import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Status;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -92,6 +93,12 @@ public class ProductDTOConverter
 				active = !cpDefinition.isInactive();
 				catalogId = _getCommerceCatalogId(cpDefinition);
 				createDate = cpDefinition.getCreateDate();
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId(),
+					cpDefinition.getCompanyId(),
+					dtoConverterContext.getLocale());
 				description = LanguageUtils.getLanguageIdMap(
 					cpDefinition.getDescriptionMap());
 				displayDate = cpDefinition.getDisplayDate();

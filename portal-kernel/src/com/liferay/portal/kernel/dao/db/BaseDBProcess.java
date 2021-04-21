@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.db;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -162,6 +163,14 @@ public abstract class BaseDBProcess implements DBProcess {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		return dbInspector.hasTable(tableName, true);
+	}
+
+	protected void doProcess(UnsafeConsumer<Long, Exception> unsafeConsumer)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		db.doProcess(unsafeConsumer);
 	}
 
 	protected boolean hasColumn(String tableName, String columnName)

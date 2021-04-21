@@ -15,10 +15,12 @@
 package com.liferay.portal.dao.db;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -141,6 +143,12 @@ public abstract class BaseDB implements DB {
 	@Override
 	public void buildSQLFile(String sqlDir, String fileName)
 		throws IOException {
+	}
+
+	public void doProcess(UnsafeConsumer<Long, Exception> unsafeConsumer)
+		throws Exception {
+
+		DBPartitionUtil.forEachCompanyId(unsafeConsumer);
 	}
 
 	@Override

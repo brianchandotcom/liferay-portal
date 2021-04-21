@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.db;
 
+import com.liferay.petra.function.UnsafeConsumer;
+
 import java.io.IOException;
 
 import java.sql.Connection;
@@ -70,6 +72,9 @@ public interface DB {
 	 */
 	@Deprecated
 	public void buildSQLFile(String sqlDir, String fileName) throws IOException;
+
+	public void doProcess(UnsafeConsumer<Long, Exception> unsafeConsumer)
+		throws Exception;
 
 	public DBType getDBType();
 

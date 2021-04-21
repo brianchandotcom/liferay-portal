@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 import com.liferay.portal.util.PortalInstances;
@@ -37,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -196,10 +196,10 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);
 
-	private class AddResourcesCallable implements Callable<Void> {
+	private class AddResourcesCallable extends UpgradeCallable<Void> {
 
 		@Override
-		public Void call() throws Exception {
+		public Void doCall() throws Exception {
 			if (_log.isInfoEnabled() && ((_cur % 100) == 0)) {
 				_log.info(
 					StringBundler.concat(
@@ -256,10 +256,10 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	}
 
-	private class VerifyResourcedModelCallable implements Callable<Void> {
+	private class VerifyResourcedModelCallable extends UpgradeCallable<Void> {
 
 		@Override
-		public Void call() throws Exception {
+		public Void doCall() throws Exception {
 			_verifyResourcedModel(_role, _verifiableResourcedModel);
 
 			return null;

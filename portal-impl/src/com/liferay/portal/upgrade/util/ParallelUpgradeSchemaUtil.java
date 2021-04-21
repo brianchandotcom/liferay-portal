@@ -17,12 +17,12 @@ package com.liferay.portal.upgrade.util;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DBProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -73,10 +73,10 @@ public class ParallelUpgradeSchemaUtil {
 			PortalExecutorManager.class, ParallelUpgradeSchemaUtil.class,
 			"_portalExecutorManager", true);
 
-	private static class CallableSQLExecutor implements Callable<Void> {
+	private static class CallableSQLExecutor extends UpgradeCallable<Void> {
 
 		@Override
-		public Void call() throws Exception {
+		public Void doCall() throws Exception {
 			try (LoggingTimer loggingTimer = new LoggingTimer(_sqlFileName)) {
 				_dbProcess.runSQLTemplate(_sqlFileName, false);
 			}

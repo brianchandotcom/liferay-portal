@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,7 +30,6 @@ import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -98,7 +98,7 @@ public class AssetEntryAssetCategoryRelUpgradeProcess extends UpgradeProcess {
 		AssetEntryAssetCategoryRelUpgradeProcess.class);
 
 	private class InsertAssetEntryAssetCategoryRelCallable
-		implements Callable<Boolean> {
+		extends UpgradeCallable<Boolean> {
 
 		public InsertAssetEntryAssetCategoryRelCallable(
 			long assetEntryId, long assetCategoryId) {
@@ -108,7 +108,7 @@ public class AssetEntryAssetCategoryRelUpgradeProcess extends UpgradeProcess {
 		}
 
 		@Override
-		public Boolean call() throws Exception {
+		public Boolean doCall() throws Exception {
 			try (Connection connection = DataAccess.getConnection()) {
 				StringBundler sb = new StringBundler(9);
 

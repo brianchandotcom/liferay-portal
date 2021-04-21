@@ -156,6 +156,31 @@ definition {
 		Portlet.viewTitle(portletName = "IFrame");
 	}
 
+	@priority = "3"
+	test LocaleNotAppendedToAlternateDefaultLocaleURL {
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.addVirtualHostsURLCP(
+			publicPageVirtualHostURL = "www.able.com",
+			publicVirtualHosts = "true");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080/site-page");
+
+		AssertElementPresent(locator1 = "//link[@hreflang='x-default'][@href='http://www.able.com:8080']");
+		AssertElementPresent(locator1 = "//link[@hreflang='en-US'][@href='http://www.able.com:8080']");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		AssertElementPresent(locator1 = "//link[@hreflang='x-default'][@href='http://www.able.com:8080']");
+		AssertElementPresent(locator1 = "//link[@hreflang='en-US'][@href='http://www.able.com:8080']");
+	}
+
 	@priority = "4"
 	test PrependFriendlyURLStyle {
 		property custom.properties = "locale.prepend.friendly.url.style=3";

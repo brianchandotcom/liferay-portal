@@ -14,8 +14,14 @@
 
 package com.liferay.portal.search.tuning.blueprints.test;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -23,15 +29,19 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.test.util.DocumentsAssert;
@@ -45,6 +55,7 @@ import com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced.
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced.SourceConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.framework.FrameworkConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter.ParameterConfigurationKeys;
+import com.liferay.portal.search.tuning.blueprints.engine.cache.JSONDataProviderCache;
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.engine.exception.BlueprintsEngineException;
 import com.liferay.portal.search.tuning.blueprints.engine.util.BlueprintsEngineHelper;
@@ -53,7 +64,12 @@ import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -90,6 +106,41 @@ public abstract class BaseBlueprintsTestCase {
 		return blueprintService.addCompanyBlueprint(
 			titleMap, descriptionMap, configuration, selectedElements,
 			serviceContext);
+	}
+
+	protected void addExpandoColumn(int indexType, String... columns)
+		throws Exception {
+
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			group.getCompanyId(),
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			"CUSTOM_FIELDS");
+
+		if (expandoTable == null) {
+			expandoTable = _expandoTableLocalService.addTable(
+				group.getCompanyId(),
+				_classNameLocalService.getClassNameId(JournalArticle.class),
+				"CUSTOM_FIELDS");
+
+			_expandoTables.add(expandoTable);
+		}
+
+		for (String column : columns) {
+			ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+				expandoTable, column, indexType);
+
+			_expandoColumns.add(expandoColumn);
+
+			UnicodeProperties unicodeProperties =
+				expandoColumn.getTypeSettingsProperties();
+
+			unicodeProperties.setProperty(
+				ExpandoColumnConstants.INDEX_TYPE, String.valueOf(indexType));
+
+			expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+			_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+		}
 	}
 
 	protected Blueprint addGroupBlueprint(
@@ -309,6 +360,30 @@ public abstract class BaseBlueprintsTestCase {
 			true);
 	}
 
+	protected String getGeolocationValue(double latitude, double longitude) {
+		return StringBundler.concat(
+			"{\"latitude\":", String.valueOf(latitude), ", \"longitude\":",
+			String.valueOf(longitude), "}");
+	}
+
+	protected ConfigurationTemporarySwapper
+			getIPStackConfigurationTemporarySwapper(
+				String apiKey, String isEnabled, String ip)
+		throws Exception {
+
+		return new ConfigurationTemporarySwapper(
+			"com.liferay.portal.search.tuning.blueprints.ipstack.internal." +
+				"configuration.IPStackConfiguration",
+			_toDictionary(
+				HashMapBuilder.put(
+					"apiKey", apiKey
+				).put(
+					"isEnabled", isEnabled
+				).put(
+					"testIpAddress", ip
+				).build()));
+	}
+
 	protected JSONObject getParameterConfiguration() {
 		return JSONUtil.put(null, null);
 	}
@@ -321,6 +396,20 @@ public abstract class BaseBlueprintsTestCase {
 		TimeZone timeZone = user.getTimeZone();
 
 		return timeZone.getID();
+	}
+
+	protected void setupJsonDataProviderCache(
+		String ipAddress, String city, double latitude, double longitude) {
+
+		_jsonDataProviderCache.put(
+			ipAddress,
+			JSONUtil.put(
+				"city", city
+			).put(
+				"latitude", latitude
+			).put(
+				"longitude", longitude
+			));
 	}
 
 	protected JournalArticle updateJournalArticle(
@@ -365,5 +454,27 @@ public abstract class BaseBlueprintsTestCase {
 			blueprint, getBlueprintsAttributes(ipAddress, keywords),
 			new Messages());
 	}
+
+	private Dictionary<String, Object> _toDictionary(Map<String, String> map) {
+		return new HashMapDictionary<>(new HashMap<String, Object>(map));
+	}
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@DeleteAfterTestRun
+	private List<ExpandoColumn> _expandoColumns = new ArrayList<>();
+
+	@Inject
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@DeleteAfterTestRun
+	private List<ExpandoTable> _expandoTables = new ArrayList<>();
+
+	@Inject
+	private JSONDataProviderCache _jsonDataProviderCache;
 
 }

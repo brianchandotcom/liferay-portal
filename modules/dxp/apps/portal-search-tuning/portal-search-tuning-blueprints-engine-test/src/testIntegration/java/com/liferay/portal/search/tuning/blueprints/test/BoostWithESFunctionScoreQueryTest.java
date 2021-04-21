@@ -17,10 +17,12 @@ package com.liferay.portal.search.tuning.blueprints.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.tuning.blueprints.constants.json.keys.framework.FrameworkConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -36,7 +38,8 @@ import org.junit.runner.RunWith;
  * @author Wade Cao
  */
 @RunWith(Arquillian.class)
-public class BoostProximityTest extends BaseBlueprintsTestCase {
+public class BoostWithESFunctionScoreQueryTest
+	extends BaseQueryElementsTestCase {
 
 	@ClassRule
 	@Rule
@@ -46,9 +49,7 @@ public class BoostProximityTest extends BaseBlueprintsTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testExpandoKeywordCustomFieldsLocationGeolocation()
-		throws Exception {
-
+	public void testSearchWithPasteESQueryMust() throws Exception {
 		addExpandoColumn(
 			ExpandoColumnConstants.GEOLOCATION, _EXPANDO_COLUMN_GEOLOCATION);
 
@@ -70,46 +71,70 @@ public class BoostProximityTest extends BaseBlueprintsTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""),
-			getConfigurationString(_getQueryElementJSONObject(100)),
-			_getSelectedElementString(100));
-
-		assertSearch(blueprint, null, "[branch sf, branch la]", "branch", null);
+			getConfigurationString(
+				getFunctionalScoreQueryElementJSONObject("64.01", "-117.42")),
+			getSelectedElementString(
+				getPasteESQueryJSONObject(100, "must", "64.01", "-117.42")));
 
 		setupJsonDataProviderCache(
-			"34.94.32.239", "Los Angeles CA", 24.03, -107.44);
+			_IP_ADDRESS[1], "Palo Alto, CA", 64.01, -117.42);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				getIPStackConfigurationTemporarySwapper(
-					"2345", "true", "34.94.32.239")) {
+					"2345", "true", _IP_ADDRESS[1])) {
 
 			assertSearch(
-				blueprint, null, "[branch la, branch sf]", "34.94.32.239",
+				blueprint, null, "[branch sf, branch la]", _IP_ADDRESS[1],
 				"branch", null);
 		}
 
 		setupJsonDataProviderCache(
-			"64.225.32.6", "Palo Alto, CA", 64.01, -117.42);
+			_IP_ADDRESS[0], "Los Angeles CA", 24.03, -107.44);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				getIPStackConfigurationTemporarySwapper(
-					"2345", "true", "64.225.32.6")) {
+					"2345", "true", _IP_ADDRESS[0])) {
 
 			assertSearch(
-				blueprint, null, "[branch sf, branch la]", "64.225.32.6",
-				"branch", null);
+				blueprint,
+				getConfigurationString(
+					getFunctionalScoreQueryElementJSONObject(
+						"24.03", "-107.44")),
+				"[branch la, branch sf]", _IP_ADDRESS[0], "branch",
+				getSelectedElementString(
+					getPasteESQueryJSONObject(
+						100, "must", "24.03", "-107.44")));
 		}
 	}
 
-	private JSONObject _getQueryElementJSONObject(int boost) {
+	@Override
+	protected JSONObject getFrameworkConfiguration() {
+		JSONArray fieldsJSONArray = createJSONArray();
+
 		return JSONUtil.put(
-			"category", "boost"
+			FrameworkConfigurationKeys.APPLY_INDEXER_CLAUSES.getJsonKey(), true
+		).put(
+			"searchable_asset_types",
+			fieldsJSONArray.put(
+				"com.liferay.wiki.model.WikiPage"
+			).put(
+				"com.liferay.journal.model.JournalArticle"
+			)
+		);
+	}
+
+	protected JSONObject getFunctionalScoreQueryElementJSONObject(
+		String lat, String lon) {
+
+		return JSONUtil.put(
+			"category", "custom"
 		).put(
 			"clauses",
 			createJSONArray().put(
 				JSONUtil.put(
 					"context", "query"
 				).put(
-					"occur", "should"
+					"occur", "must"
 				).put(
 					"query",
 					JSONUtil.put(
@@ -117,23 +142,23 @@ public class BoostProximityTest extends BaseBlueprintsTestCase {
 						JSONUtil.put(
 							"function_score",
 							JSONUtil.put(
-								"boost", boost
+								"boost", 100
 							).put(
 								"gauss",
 								JSONUtil.put(
-									"expando__custom_fields__location_" +
-										"geolocation",
+									"expando__custom_fields__" +
+										"location_geolocation",
 									JSONUtil.put(
 										"decay", 0.3
 									).put(
 										"origin",
 										JSONUtil.put(
-											"lat", "${ipstack.latitude}"
+											"lat", lat
 										).put(
-											"lon", "${ipstack.longitude}"
+											"lon", lon
 										)
 									).put(
-										"scale", "100km"
+										"scale", "1000km"
 									))
 							)))
 				).put(
@@ -145,45 +170,50 @@ public class BoostProximityTest extends BaseBlueprintsTestCase {
 			"description",
 			JSONUtil.put(
 				"en_US",
-				"Boost contents tagged close to my location with a Gaussian " +
-					"function")
+				"Paste any Elasticsearch query body in the element as is")
 		).put(
 			"enabled", true
 		).put(
-			"icon", "thumbs-up"
+			"icon", "custom-field"
 		).put(
-			"title", JSONUtil.put("en_US", "Boost Proximity")
+			"title", JSONUtil.put("en_US", "Paste any Elasticsearch query")
 		);
 	}
 
-	private String _getSelectedElementString(int boost) throws Exception {
-		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject(
-			"/elements/boost-proximity-test.json");
+	@Override
+	protected JSONObject getPasteESQueryUIConfigValuesJSONObject(
+		int boost, String occur, String... queryValues) {
 
 		return JSONUtil.put(
-			"query_configuration",
-			createJSONArray().put(
+			"occur", occur
+		).put(
+			"query",
+			JSONUtil.put(
+				"function_score",
 				JSONUtil.put(
-					"elementTemplateJSON",
-					elementTemplateJSONObject.get("elementTemplateJSON")
-				).put(
-					"uiConfigurationJSON",
-					elementTemplateJSONObject.get("uiConfigurationJSON")
-				).put(
-					"uiConfigurationValues",
+					"",
 					JSONUtil.put(
-						"boost", boost
-					).put(
-						"decay", 0.3
-					).put(
-						"field", "expando__custom_fields__location_geolocation"
-					).put(
-						"scale", 100
-					)
+						"expando__custom_fields__location_geolocation",
+						JSONUtil.put(
+							"decay", 0.3
+						).put(
+							"origin",
+							JSONUtil.put(
+								"lat", queryValues[0]
+							).put(
+								"lon", queryValues[1]
+							)
+						).put(
+							"scale", "1000km"
+						))
+				).put(
+					"boost", boost
 				))
-		).toString();
+		);
 	}
 
 	private static final String _EXPANDO_COLUMN_GEOLOCATION = "location";
+
+	private static final String[] _IP_ADDRESS = {"34.94.32.240", "64.225.32.7"};
 
 }

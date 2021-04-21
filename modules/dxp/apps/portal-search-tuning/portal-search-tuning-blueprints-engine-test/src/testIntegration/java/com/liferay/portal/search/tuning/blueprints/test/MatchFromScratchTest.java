@@ -15,8 +15,6 @@
 package com.liferay.portal.search.tuning.blueprints.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
@@ -55,9 +53,7 @@ public class MatchFromScratchTest extends BaseQueryElementsTestCase {
 			getMultiMatchQueryElementJSONObject(1, "or"));
 
 		String selectedElementString = getSelectedElementString(
-			getPasteESQueryJSONObject(
-				200, "must", "orange county",
-				_getElementOutputJSONObject(200, "must", "orange county")),
+			getPasteESQueryJSONObject(200, "must", "orange county"),
 			getTextMatchOverMultipleFieldJSONObject(1, 2, 1, "or"));
 
 		Blueprint blueprint = addCompanyBlueprint(
@@ -74,58 +70,12 @@ public class MatchFromScratchTest extends BaseQueryElementsTestCase {
 			getMultiMatchQueryElementJSONObject(1, "or"));
 
 		selectedElementString = getSelectedElementString(
-			getPasteESQueryJSONObject(
-				200, "must", "los angeles",
-				_getElementOutputJSONObject(200, "must", "los angeles")),
+			getPasteESQueryJSONObject(200, "must", "los angeles"),
 			getTextMatchOverMultipleFieldJSONObject(1, 2, 1, "or"));
 
 		assertSearchIgnoreRelevance(
 			blueprint, configurationString, "[cafe rio, starbucks cafe]",
 			"cafe", selectedElementString);
-	}
-
-	private JSONObject _getElementOutputJSONObject(
-		int boost, String occur, String queryValue) {
-
-		return JSONUtil.put(
-			"category", "custom"
-		).put(
-			"clauses",
-			createJSONArray().put(
-				JSONUtil.put(
-					"context", "query"
-				).put(
-					"occur", occur
-				).put(
-					"query",
-					JSONUtil.put(
-						"query",
-						JSONUtil.put(
-							"match",
-							JSONUtil.put(
-								"content_en_US",
-								JSONUtil.put(
-									"boost", boost
-								).put(
-									"query", queryValue
-								))))
-				).put(
-					"type", "wrapper"
-				))
-		).put(
-			"conditions", createJSONArray()
-		).put(
-			"description",
-			JSONUtil.put(
-				"en_US",
-				"Paste any Elasticsearch query body in the element as is")
-		).put(
-			"enabled", true
-		).put(
-			"icon", "custom-field"
-		).put(
-			"title", JSONUtil.put("en_US", "Paste any Elasticsearch query")
-		);
 	}
 
 }

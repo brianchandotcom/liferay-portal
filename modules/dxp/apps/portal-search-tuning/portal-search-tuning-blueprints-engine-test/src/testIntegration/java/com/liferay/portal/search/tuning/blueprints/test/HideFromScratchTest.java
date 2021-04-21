@@ -54,7 +54,7 @@ public class HideFromScratchTest extends BaseQueryElementsTestCase {
 			getHideHiddenContentsElementJSONObject());
 
 		String selectedElementString = getSelectedElementString(
-			getPasteESQueryJSONObject(200, "must_not", "los angeles", null),
+			getPasteESQueryJSONObject(200, "must_not", "los angeles"),
 			getTextMatchOverMultipleFieldJSONObject(1, 1, 2, "or"),
 			getHideHiddenContentsJSONObject());
 

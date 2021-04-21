@@ -179,14 +179,13 @@ public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 	}
 
 	protected JSONObject getPasteESQueryJSONObject(
-			int boost, String occur, String queryValue,
-			JSONObject elementOutputJSONObject)
+			int boost, String occur, String... queryValues)
 		throws Exception {
 
 		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject(
 			"/elements/paste-an-elasticsearch-query-test.json");
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"elementTemplateJSON",
 			elementTemplateJSONObject.get("elementTemplateJSON")
 		).put(
@@ -194,19 +193,12 @@ public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 			elementTemplateJSONObject.get("uiConfigurationJSON")
 		).put(
 			"uiConfigurationValues",
-			getPasteESQueryUIConfigValuesJSONObject(
-				boost, "must_not", "los angeles")
+			getPasteESQueryUIConfigValuesJSONObject(boost, occur, queryValues)
 		);
-
-		if (elementOutputJSONObject != null) {
-			return jsonObject.put("elementOutput", elementOutputJSONObject);
-		}
-
-		return jsonObject;
 	}
 
 	protected JSONObject getPasteESQueryUIConfigValuesJSONObject(
-		int boost, String occur, String queryValue) {
+		int boost, String occur, String... queryValues) {
 
 		return JSONUtil.put(
 			"occur", occur
@@ -219,7 +211,7 @@ public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 					JSONUtil.put(
 						"boost", boost
 					).put(
-						"query", queryValue
+						"query", queryValues[0]
 					)))
 		);
 	}

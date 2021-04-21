@@ -24,7 +24,6 @@ import com.liferay.mule.internal.error.provider.LiferayResponseErrorProvider;
 import com.liferay.mule.internal.metadata.input.BatchImportInputTypeResolver;
 import com.liferay.mule.internal.metadata.key.ClassNameTypeKeysResolver;
 import com.liferay.mule.internal.metadata.output.BatchExportOutputTypeResolver;
-import com.liferay.mule.internal.util.IOUtil;
 import com.liferay.mule.internal.util.JsonNodeReader;
 
 import java.io.IOException;
@@ -39,6 +38,7 @@ import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
 
 import org.mule.runtime.api.util.MultiMap;
+import org.mule.runtime.core.api.util.IOUtils;
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
@@ -131,7 +131,7 @@ public class LiferayBatchOperations {
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
 			TimeUnit connectionTimeoutTimeUnit)
-		throws InterruptedException, IOException {
+		throws InterruptedException {
 
 		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
 			connectionTimeout);
@@ -160,7 +160,7 @@ public class LiferayBatchOperations {
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
 			TimeUnit connectionTimeoutTimeUnit)
-		throws InterruptedException, IOException {
+		throws InterruptedException {
 
 		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
 			connectionTimeout);
@@ -188,7 +188,7 @@ public class LiferayBatchOperations {
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
 			TimeUnit connectionTimeoutTimeUnit)
-		throws InterruptedException, IOException {
+		throws InterruptedException {
 
 		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
 			connectionTimeout);
@@ -363,10 +363,8 @@ public class LiferayBatchOperations {
 	}
 
 	private String submitImportCreateTask(
-			LiferayConnection connection, InputStream inputStream,
-			String className, Map<String, String> fieldNameMappings,
-			long connectionTimeout)
-		throws IOException {
+		LiferayConnection connection, InputStream inputStream, String className,
+		Map<String, String> fieldNameMappings, long connectionTimeout) {
 
 		Map<String, String> pathParams = new HashMap<>();
 
@@ -394,7 +392,7 @@ public class LiferayBatchOperations {
 
 		HttpResponse httpResponse = connection.post(
 			builder.bytes(
-				IOUtil.getBytes(inputStream)
+				IOUtils.toByteArray(inputStream)
 			).connectionTimeout(
 				connectionTimeout
 			).contentType(
@@ -418,9 +416,8 @@ public class LiferayBatchOperations {
 	}
 
 	private String submitImportDeleteTask(
-			LiferayConnection connection, InputStream inputStream,
-			String className, long connectionTimeout)
-		throws IOException {
+		LiferayConnection connection, InputStream inputStream, String className,
+		long connectionTimeout) {
 
 		Map<String, String> pathParams = new HashMap<>();
 
@@ -430,7 +427,7 @@ public class LiferayBatchOperations {
 
 		HttpResponse httpResponse = connection.delete(
 			builder.bytes(
-				IOUtil.getBytes(inputStream)
+				IOUtils.toByteArray(inputStream)
 			).connectionTimeout(
 				connectionTimeout
 			).contentType(
@@ -452,9 +449,8 @@ public class LiferayBatchOperations {
 	}
 
 	private String submitImportUpdateTask(
-			LiferayConnection connection, InputStream inputStream,
-			String className, long connectionTimeout)
-		throws IOException {
+		LiferayConnection connection, InputStream inputStream, String className,
+		long connectionTimeout) {
 
 		Map<String, String> pathParams = new HashMap<>();
 
@@ -464,7 +460,7 @@ public class LiferayBatchOperations {
 
 		HttpResponse httpResponse = connection.put(
 			builder.bytes(
-				IOUtil.getBytes(inputStream)
+				IOUtils.toByteArray(inputStream)
 			).connectionTimeout(
 				connectionTimeout
 			).contentType(

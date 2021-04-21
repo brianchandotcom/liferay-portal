@@ -79,7 +79,6 @@
 	<td>//div[contains(@class,'search-total-label')]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>BLUEPRINTS_SEARCH_BAR</td>
 	<td>//div[contains(@class,'Blueprints')]//input[contains(@placeholder,'Search')]</td>

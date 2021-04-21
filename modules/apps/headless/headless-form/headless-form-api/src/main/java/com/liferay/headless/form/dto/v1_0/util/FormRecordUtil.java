@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.form.internal.dto.v1_0.util;
+package com.liferay.headless.form.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;

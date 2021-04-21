@@ -24,6 +24,8 @@ import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -86,8 +88,17 @@ public class CustomUserAttributesAssetEntryQueryProcessor
 		for (String customUserAttributeName : customUserAttributeNames) {
 			ExpandoBridge userCustomAttributes = user.getExpandoBridge();
 
-			Serializable userCustomFieldValue =
-				userCustomAttributes.getAttribute(customUserAttributeName);
+			Serializable userCustomFieldValue = null;
+
+			try {
+				userCustomFieldValue = userCustomAttributes.getAttribute(
+					customUserAttributeName);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
 
 			if (userCustomFieldValue == null) {
 				continue;
@@ -116,6 +127,9 @@ public class CustomUserAttributesAssetEntryQueryProcessor
 
 		assetEntryQuery.setAllCategoryIds(allCategoryIdsList.getArray());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CustomUserAttributesAssetEntryQueryProcessor.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

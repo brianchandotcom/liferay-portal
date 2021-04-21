@@ -405,7 +405,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 	}
 
 	private boolean _hasChainStyle(
-		DetailAST methodCallDetailAST, String... methodNames) {
+		DetailAST methodCallDetailAST, String... methodNameRegexArray) {
 
 		int startLineNumber = getStartLineNumber(methodCallDetailAST);
 
@@ -415,8 +415,8 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 			return false;
 		}
 
-		for (String methodName : methodNames) {
-			if (!line.endsWith("." + methodName + "(")) {
+		for (String methodNameRegex : methodNameRegexArray) {
+			if (!line.matches(".*[\\.>]" + methodNameRegex + "\\(")) {
 				continue;
 			}
 

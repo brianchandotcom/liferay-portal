@@ -28,6 +28,7 @@ describe('useUndo', () => {
 		Actions.ADD_FRAGMENT_COMPOSITION,
 		Actions.ADD_FRAGMENT_ENTRY_LINK_COMMENT,
 		Actions.ADD_MAPPED_INFO_ITEM,
+		Actions.ADD_MAPPING_FIELDS,
 		Actions.ADD_UNDO_ACTION,
 		Actions.ADD_REDO_ACTION,
 		Actions.ADD_USED_WIDGET,

@@ -102,13 +102,16 @@ export const DisplayPagePreviewItemSelector = ({dark = false}) => {
 				{recentPreviewItemList.map((recentPreviewItem) => (
 					<ClayDropDown.Item
 						aria-selected={previewItem === recentPreviewItem}
+						className="page-editor__display-page-preview-item-selector-dropdown-item"
 						key={recentPreviewItem.label}
 						onClick={() => selectItem(recentPreviewItem)}
 						symbolRight={
 							previewItem === recentPreviewItem ? 'check' : ''
 						}
 					>
-						{recentPreviewItem.label}
+						<span className="page-editor__display-page-preview-item-selector-dropdown-item-label">
+							{recentPreviewItem.label}
+						</span>
 					</ClayDropDown.Item>
 				))}
 			</ClayDropDown.ItemList>

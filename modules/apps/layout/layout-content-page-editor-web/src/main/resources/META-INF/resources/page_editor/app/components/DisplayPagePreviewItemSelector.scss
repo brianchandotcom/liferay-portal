@@ -8,4 +8,17 @@
 	&-input {
 		width: 20ch;
 	}
+
+	&-dropdown-item {
+		display: flex;
+
+		&-label {
+			flex-grow: 1;
+		}
+
+		.dropdown-item-indicator-end {
+			margin-top: 0.2em;
+			position: static;
+		}
+	}
 }

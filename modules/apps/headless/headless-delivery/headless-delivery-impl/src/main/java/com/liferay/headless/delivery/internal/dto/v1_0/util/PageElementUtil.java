@@ -22,6 +22,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Jürgen Kappler
@@ -33,7 +34,8 @@ public class PageElementUtil {
 		long groupId, LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem,
 		LayoutStructureItemMapperTracker layoutStructureItemMapperTracker,
-		boolean saveInlineContent, boolean saveMappingConfiguration) {
+		boolean acceptAllLanguages, Locale locale, boolean saveInlineContent,
+		boolean saveMappingConfiguration) {
 
 		List<PageElement> pageElements = new ArrayList<>();
 
@@ -50,21 +52,22 @@ public class PageElementUtil {
 				pageElements.add(
 					_toPageElement(
 						groupId, childLayoutStructureItem,
-						layoutStructureItemMapperTracker, saveInlineContent,
-						saveMappingConfiguration));
+						layoutStructureItemMapperTracker, acceptAllLanguages,
+						locale, saveInlineContent, saveMappingConfiguration));
 			}
 			else {
 				pageElements.add(
 					toPageElement(
 						groupId, layoutStructure, childLayoutStructureItem,
-						layoutStructureItemMapperTracker, saveInlineContent,
-						saveMappingConfiguration));
+						layoutStructureItemMapperTracker, acceptAllLanguages,
+						locale, saveInlineContent, saveMappingConfiguration));
 			}
 		}
 
 		PageElement pageElement = _toPageElement(
 			groupId, layoutStructureItem, layoutStructureItemMapperTracker,
-			saveInlineContent, saveMappingConfiguration);
+			acceptAllLanguages, locale, saveInlineContent,
+			saveMappingConfiguration);
 
 		if ((pageElement != null) && !pageElements.isEmpty()) {
 			pageElement.setPageElements(
@@ -77,7 +80,8 @@ public class PageElementUtil {
 	private static PageElement _toPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
 		LayoutStructureItemMapperTracker layoutStructureItemMapperTracker,
-		boolean saveInlineContent, boolean saveMappingConfiguration) {
+		boolean acceptAllLanguages, Locale locale, boolean saveInlineContent,
+		boolean saveMappingConfiguration) {
 
 		Class<?> clazz = layoutStructureItem.getClass();
 
@@ -90,8 +94,8 @@ public class PageElementUtil {
 		}
 
 		return layoutStructureItemMapper.getPageElement(
-			groupId, layoutStructureItem, saveInlineContent,
-			saveMappingConfiguration);
+			groupId, layoutStructureItem, acceptAllLanguages, locale,
+			saveInlineContent, saveMappingConfiguration);
 	}
 
 }

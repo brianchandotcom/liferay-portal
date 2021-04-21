@@ -24,7 +24,10 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,6 +48,17 @@ public class FragmentLayoutStructureItemMapper
 	public PageElement getPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
+
+		return getPageElement(
+			groupId, layoutStructureItem, false, LocaleUtil.getDefault(),
+			saveInlineContent, saveMappingConfiguration);
+	}
+
+	@Override
+	public PageElement getPageElement(
+		long groupId, LayoutStructureItem layoutStructureItem,
+		boolean acceptAllLanguages, Locale locale, boolean saveInlineContent,
+		boolean saveMappingConfiguration) {
 
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
 			(FragmentStyledLayoutStructureItem)layoutStructureItem;
@@ -84,7 +98,8 @@ public class FragmentLayoutStructureItemMapper
 										"styles"),
 									saveMappingConfiguration),
 								getFragmentViewPorts(itemConfigJSONObject),
-								saveInlineContent, saveMappingConfiguration);
+								acceptAllLanguages, locale, saveInlineContent,
+								saveMappingConfiguration);
 					type = Type.FRAGMENT;
 				}
 			};

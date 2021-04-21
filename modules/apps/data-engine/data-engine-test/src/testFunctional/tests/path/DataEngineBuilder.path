@@ -92,7 +92,6 @@
 	<td>PANEL_COLLAPSE_BUTTON</td>
 	<td>//div[contains(@class,'collapsable-panel')]//button[contains(@class,'collapse-icon')]</td>
 	<td></td>
-
 </tr>
 <tr>
 	<td>WEB_CONTENT_TEXT_FIELD</td>
@@ -102,6 +101,11 @@
 <tr>
 	<td>WEB_CONTENT_NUMERIC_FIELD</td>
 	<td>//input[(@class='form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_GROUP_FIELD_WITH_DEPTH</td>
+	<td>//div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][contains(@class, 'ddm-label')][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}] | //div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][not(contains(@class, 'ddm-label'))][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth} + 1]</td>
 	<td></td>
 </tr>
 </tbody>

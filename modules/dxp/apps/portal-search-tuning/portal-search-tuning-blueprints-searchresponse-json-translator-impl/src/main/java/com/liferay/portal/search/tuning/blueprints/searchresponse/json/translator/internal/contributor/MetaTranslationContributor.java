@@ -96,20 +96,25 @@ public class MetaTranslationContributor implements JSONTranslationContributor {
 	}
 
 	private void _setExecutionTime(
-		JSONObject jsonObject, SearchResponse searchResponse) {
+			JSONObject jsonObject, SearchResponse searchResponse) {
 
-		SearchTimeValue searchTimeValue = searchResponse.getSearchTimeValue();
+			SearchTimeValue searchTimeValue = searchResponse.getSearchTimeValue();
 
-		try {
-			jsonObject.put(
-				JSONKeys.EXECUTION_TIME,
-				String.format("%.3f", searchTimeValue.getDuration() / 1000F));
+			if (searchTimeValue == null) {
+				return;
+			}
+			
+			try {
+				jsonObject.put(
+					JSONKeys.EXECUTION_TIME,
+					String.format("%.3f", searchTimeValue.getDuration() / 1000F));
+			}
+			catch (IllegalFormatException illegalFormatException) {
+				_log.error(
+					illegalFormatException.getMessage(), illegalFormatException);
+			}
 		}
-		catch (IllegalFormatException illegalFormatException) {
-			_log.error(
-				illegalFormatException.getMessage(), illegalFormatException);
-		}
-	}
+
 
 	private void _setRequestString(
 		JSONObject jsonObject, SearchResponse searchResponse) {

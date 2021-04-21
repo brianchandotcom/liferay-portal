@@ -185,7 +185,7 @@
 </tr>
 <tr>
 	<td>EMAIL_ADDRESS</td>
-	<td>//div[label[contains(.,'Email Address')]]/input[@type='text'] | //div[label[contains(.,'Dirección de correo')]]/input[@type='text'] | //div[label[contains(.,'メールアドレス')]]/input[@type='text'] | //div[label[contains(.,'邮箱地址')]]/input[@type='text'] | //div[contains(.,'E-Mail-Adresse')]/input[@type='text']</td>
+	<td>//div[label[contains(.,'Email Address')]]/input[@type='text'] | //div[label[contains(.,'Dirección de correo')]]/input[@type='text'] | //div[label[contains(.,'メールアドレス')]]/input[@type='text'] | //div[label[contains(.,'邮箱地址')]]/input[@type='text'] | //div[contains(.,'E-Mail-Adresse')]/input[@type='text'] |	//div[label[contains(.,'Indirizzo Email')]]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

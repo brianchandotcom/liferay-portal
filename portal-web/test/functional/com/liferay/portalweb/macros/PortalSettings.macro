@@ -113,14 +113,6 @@ definition {
 	}
 
 	macro configureCurrentLanguagesCP {
-		if (isSet(defaultPortalLanguage)) {
-			var defaultPortalLanguage = "${defaultPortalLanguage}";
-
-			Select(
-				locator1 = "Select#DEFAULT_LANGUAGE",
-				value1 = "${defaultPortalLanguage}");
-		}
-
 		if (isSet(currentPortalLanguages)) {
 			while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
 				AddSelection(
@@ -143,6 +135,14 @@ definition {
 					locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
 					value1 = "${currentPortalLanguage}");
 			}
+		}
+
+		if (isSet(defaultPortalLanguage)) {
+			var defaultPortalLanguage = "${defaultPortalLanguage}";
+
+			Select(
+				locator1 = "Select#DEFAULT_LANGUAGE",
+				value1 = "${defaultPortalLanguage}");
 		}
 
 		if ("${failExpected}" == "true") {

@@ -1068,8 +1068,6 @@ definition {
 	@description = "This is a test for LPS-100540. Global fragments can be propagated to all pages of a site or sites that use the fragments"
 	@priority = "5"
 	test PropagateGlobalFragmentChanges {
-		property osgi.module.configuration.file.names = "com.liferay.fragment.web.internal.configuration.FragmentGlobalPanelAppConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add a fragment collection in Global site") {

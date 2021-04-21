@@ -411,12 +411,31 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130323."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionRequestParameters {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130323 AddSegmentBySessionRequestParameters pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Request Parameters");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionRequestParameters Test");
+
+		Segmentation.fillProperty(
+			criterionKey = "languageId",
+			criterionValue = "en_US");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionRequestParameters Test");
+
+		Segmentation.viewSegment(
+			criterionKey = "languageId",
+			criterionValue = "en_US");
 	}
 
 	@description = "This is a test for LPS-130324."

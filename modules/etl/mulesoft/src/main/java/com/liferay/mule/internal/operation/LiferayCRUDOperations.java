@@ -17,6 +17,7 @@ package com.liferay.mule.internal.operation;
 import static org.mule.runtime.http.api.HttpConstants.Method;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
+import com.liferay.mule.internal.connection.ResourceContext;
 import com.liferay.mule.internal.error.LiferayResponseValidator;
 import com.liferay.mule.internal.error.provider.LiferayResponseErrorProvider;
 import com.liferay.mule.internal.metadata.input.PatchEndpointInputTypeResolver;
@@ -87,9 +88,18 @@ public class LiferayCRUDOperations {
 
 		logEndpointParams(Method.DELETE, endpoint, pathParams, queryParams);
 
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
 		HttpResponse httpResponse = connection.delete(
-			endpoint, pathParams, queryParams,
-			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
+			builder.connectionTimeout(
+				connectionTimeoutTimeUnit.toMillis(connectionTimeout)
+			).endpoint(
+				endpoint
+			).pathParams(
+				pathParams
+			).queryParams(
+				queryParams
+			).build());
 
 		liferayResponseValidator.validate(httpResponse);
 
@@ -118,9 +128,18 @@ public class LiferayCRUDOperations {
 
 		logEndpointParams(Method.GET, endpoint, pathParams, queryParams);
 
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
 		HttpResponse httpResponse = connection.get(
-			endpoint, pathParams, queryParams,
-			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
+			builder.connectionTimeout(
+				connectionTimeoutTimeUnit.toMillis(connectionTimeout)
+			).endpoint(
+				endpoint
+			).pathParams(
+				pathParams
+			).queryParams(
+				queryParams
+			).build());
 
 		liferayResponseValidator.validate(httpResponse);
 
@@ -152,9 +171,20 @@ public class LiferayCRUDOperations {
 
 		logEndpointParams(Method.PATCH, endpoint, pathParams, queryParams);
 
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
 		HttpResponse httpResponse = connection.patch(
-			endpoint, inputStream, pathParams, queryParams,
-			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
+			builder.connectionTimeout(
+				connectionTimeoutTimeUnit.toMillis(connectionTimeout)
+			).endpoint(
+				endpoint
+			).inputStream(
+				inputStream
+			).pathParams(
+				pathParams
+			).queryParams(
+				queryParams
+			).build());
 
 		liferayResponseValidator.validate(httpResponse);
 
@@ -186,9 +216,20 @@ public class LiferayCRUDOperations {
 
 		logEndpointParams(Method.POST, endpoint, pathParams, queryParams);
 
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
 		HttpResponse httpResponse = connection.post(
-			endpoint, inputStream, pathParams, queryParams,
-			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
+			builder.connectionTimeout(
+				connectionTimeoutTimeUnit.toMillis(connectionTimeout)
+			).endpoint(
+				endpoint
+			).inputStream(
+				inputStream
+			).pathParams(
+				pathParams
+			).queryParams(
+				queryParams
+			).build());
 
 		liferayResponseValidator.validate(httpResponse);
 

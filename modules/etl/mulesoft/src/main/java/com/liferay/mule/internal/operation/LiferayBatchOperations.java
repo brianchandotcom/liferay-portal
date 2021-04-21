@@ -17,6 +17,7 @@ package com.liferay.mule.internal.operation;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
+import com.liferay.mule.internal.connection.ResourceContext;
 import com.liferay.mule.internal.error.LiferayError;
 import com.liferay.mule.internal.error.LiferayResponseValidator;
 import com.liferay.mule.internal.error.provider.LiferayResponseErrorProvider;
@@ -153,10 +154,18 @@ public class LiferayBatchOperations {
 
 		pathParams.put("exportTaskId", exportTaskId);
 
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
 		HttpResponse httpResponse = connection.get(
-			"/headless-batch-engine",
-			"/v1.0/export-task/{exportTaskId}/content", pathParams,
-			new MultiMap<>(), "application/json", connectionTimeout);
+			builder.connectionTimeout(
+				connectionTimeout
+			).endpoint(
+				"/v1.0/export-task/{exportTaskId}/content"
+			).jaxRSAppBase(
+				"/headless-batch-engine"
+			).pathParams(
+				pathParams
+			).build());
 
 		liferayResponseValidator.validate(httpResponse);
 
@@ -185,10 +194,18 @@ public class LiferayBatchOperations {
 
 		pathParams.put("exportTaskId", exportTaskId);
 
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
 		HttpResponse httpResponse = connection.get(
-			"/headless-batch-engine", "/v1.0/export-task/{exportTaskId}",
-			pathParams, new MultiMap<>(), "application/json",
-			connectionTimeout);
+			builder.connectionTimeout(
+				connectionTimeout
+			).endpoint(
+				"/v1.0/export-task/{exportTaskId}"
+			).jaxRSAppBase(
+				"/headless-batch-engine"
+			).pathParams(
+				pathParams
+			).build());
 
 		liferayResponseValidator.validate(httpResponse);
 
@@ -220,10 +237,20 @@ public class LiferayBatchOperations {
 			queryParams.put("siteId", siteId);
 		}
 
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
 		HttpResponse httpResponse = connection.post(
-			"/headless-batch-engine",
-			"/v1.0/export-task/{className}/{contentType}", null, pathParams,
-			queryParams, "application/json", connectionTimeout);
+			builder.connectionTimeout(
+				connectionTimeout
+			).endpoint(
+				"/v1.0/export-task/{className}/{contentType}"
+			).jaxRSAppBase(
+				"/headless-batch-engine"
+			).pathParams(
+				pathParams
+			).queryParams(
+				queryParams
+			).build());
 
 		JsonNode payloadJsonNode = jsonNodeReader.fromHttpResponse(
 			httpResponse);
@@ -261,10 +288,22 @@ public class LiferayBatchOperations {
 				));
 		}
 
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
 		HttpResponse httpResponse = connection.post(
-			"/headless-batch-engine", "/v1.0/import-task/{className}",
-			IOUtil.getBytes(inputStream), pathParams, queryParams,
-			connectionTimeout);
+			builder.bytes(
+				IOUtil.getBytes(inputStream)
+			).connectionTimeout(
+				connectionTimeout
+			).endpoint(
+				"/v1.0/import-task/{className}"
+			).jaxRSAppBase(
+				"/headless-batch-engine"
+			).pathParams(
+				pathParams
+			).queryParams(
+				queryParams
+			).build());
 
 		JsonNode payloadJsonNode = jsonNodeReader.fromHttpResponse(
 			httpResponse);

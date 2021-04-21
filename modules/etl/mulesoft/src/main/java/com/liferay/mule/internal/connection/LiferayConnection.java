@@ -73,50 +73,26 @@ public final class LiferayConnection {
 			proxyConfig);
 	}
 
-	public HttpResponse delete(
-			String endpoint, Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, long connectionTimeout)
-		throws ModuleException {
-
-		return delete(
-			oasURLParser.getJaxRSAppBase(), endpoint, pathParams, queryParams,
-			"application/json", connectionTimeout);
-	}
-
-	public HttpResponse delete(
-			String jaxRSAppBase, String endpoint,
-			Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, String contentType,
-			long connectionTimeout)
+	public HttpResponse delete(ResourceContext resourceContext)
 		throws ModuleException {
 
 		return send(
-			HttpConstants.Method.DELETE,
-			oasURLParser.getServerBaseURL(jaxRSAppBase), endpoint, null, null,
-			pathParams, queryParams, contentType, connectionTimeout);
+			HttpConstants.Method.DELETE, resourceContext.getJaxRSAppBase(),
+			resourceContext.getEndpoint(), resourceContext.getPathParams(),
+			resourceContext.getQueryParams(), resourceContext.getContentType(),
+			resourceContext.getConnectionTimeout(),
+			resourceContext.getInputStream(), resourceContext.getBytes());
 	}
 
-	public HttpResponse get(
-			String endpoint, Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, long connectionTimeout)
-		throws ModuleException {
-
-		return get(
-			oasURLParser.getJaxRSAppBase(), endpoint, pathParams, queryParams,
-			"application/json", connectionTimeout);
-	}
-
-	public HttpResponse get(
-			String jaxRSAppBase, String endpoint,
-			Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, String contentType,
-			long connectionTimeout)
+	public HttpResponse get(ResourceContext resourceContext)
 		throws ModuleException {
 
 		return send(
-			HttpConstants.Method.GET,
-			oasURLParser.getServerBaseURL(jaxRSAppBase), endpoint, null, null,
-			pathParams, queryParams, contentType, connectionTimeout);
+			HttpConstants.Method.GET, resourceContext.getJaxRSAppBase(),
+			resourceContext.getEndpoint(), resourceContext.getPathParams(),
+			resourceContext.getQueryParams(), resourceContext.getContentType(),
+			resourceContext.getConnectionTimeout(),
+			resourceContext.getInputStream(), resourceContext.getBytes());
 	}
 
 	public HttpResponse getOpenAPISpecHttpResponse()
@@ -133,62 +109,26 @@ public final class LiferayConnection {
 		httpClient.stop();
 	}
 
-	public HttpResponse patch(
-			String endpoint, InputStream inputStream,
-			Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, long connectionTimeout)
-		throws ModuleException {
-
-		return patch(
-			oasURLParser.getJaxRSAppBase(), endpoint, inputStream, pathParams,
-			queryParams, "application/json", connectionTimeout);
-	}
-
-	public HttpResponse patch(
-			String jaxRSAppBase, String endpoint, InputStream inputStream,
-			Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, String contentType,
-			long connectionTimeout)
+	public HttpResponse patch(ResourceContext resourceContext)
 		throws ModuleException {
 
 		return send(
-			HttpConstants.Method.PATCH,
-			oasURLParser.getServerBaseURL(jaxRSAppBase), endpoint, inputStream,
-			null, pathParams, queryParams, contentType, connectionTimeout);
+			HttpConstants.Method.PATCH, resourceContext.getJaxRSAppBase(),
+			resourceContext.getEndpoint(), resourceContext.getPathParams(),
+			resourceContext.getQueryParams(), resourceContext.getContentType(),
+			resourceContext.getConnectionTimeout(),
+			resourceContext.getInputStream(), resourceContext.getBytes());
 	}
 
-	public HttpResponse post(
-			String endpoint, InputStream inputStream,
-			Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, long connectionTimeout)
-		throws ModuleException {
-
-		return post(
-			oasURLParser.getJaxRSAppBase(), endpoint, inputStream, pathParams,
-			queryParams, "application/json", connectionTimeout);
-	}
-
-	public HttpResponse post(
-		String jaxRSAppBase, String endpoint, byte[] bytes,
-		Map<String, String> pathParams, MultiMap<String, String> queryParams,
-		long connectionTimeout) {
-
-		return send(
-			HttpConstants.Method.POST, jaxRSAppBase, endpoint, null, bytes,
-			pathParams, queryParams, "multipart/form-data", connectionTimeout);
-	}
-
-	public HttpResponse post(
-			String jaxRSAppBase, String endpoint, InputStream inputStream,
-			Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, String contentType,
-			long connectionTimeout)
+	public HttpResponse post(ResourceContext resourceContext)
 		throws ModuleException {
 
 		return send(
-			HttpConstants.Method.POST,
-			oasURLParser.getServerBaseURL(jaxRSAppBase), endpoint, inputStream,
-			null, pathParams, queryParams, contentType, connectionTimeout);
+			HttpConstants.Method.POST, resourceContext.getJaxRSAppBase(),
+			resourceContext.getEndpoint(), resourceContext.getPathParams(),
+			resourceContext.getQueryParams(), resourceContext.getContentType(),
+			resourceContext.getConnectionTimeout(),
+			resourceContext.getInputStream(), resourceContext.getBytes());
 	}
 
 	private LiferayConnection(
@@ -311,14 +251,19 @@ public final class LiferayConnection {
 	}
 
 	private HttpResponse send(
-			HttpConstants.Method method, String basePath, String endpoint,
-			InputStream inputStream, byte[] bytes,
+			HttpConstants.Method method, String jaxRSAppBase, String endpoint,
 			Map<String, String> pathParams,
 			MultiMap<String, String> queryParams, String contentType,
-			long connectionTimeout)
+			long connectionTimeout, InputStream inputStream, byte[] bytes)
 		throws ModuleException {
 
-		String uri = basePath + resolvePathParams(endpoint, pathParams);
+		if (jaxRSAppBase == null) {
+			jaxRSAppBase = oasURLParser.getJaxRSAppBase();
+		}
+
+		String uri =
+			oasURLParser.getServerBaseURL(jaxRSAppBase) +
+				resolvePathParams(endpoint, pathParams);
 
 		HttpRequest httpRequest = getHttpRequest(
 			method, uri, queryParams, contentType, inputStream, bytes);

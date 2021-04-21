@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.upgrade.UpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
@@ -32,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * @author Brian Wing Shun Chan
@@ -129,10 +129,10 @@ public class VerifyUUID extends VerifyProcess {
 		}
 	}
 
-	private class VerifyUUIDCallable implements Callable<Void> {
+	private class VerifyUUIDCallable extends UpgradeCallable<Void> {
 
 		@Override
-		public Void call() throws Exception {
+		public Void doCall() throws Exception {
 			verifyUUID(_verifiableUUIDModel);
 
 			return null;

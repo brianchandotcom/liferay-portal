@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -37,7 +38,6 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -139,7 +139,7 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 		_journalArticleImageUpgradeHelper;
 	private final PortletFileRepository _portletFileRepository;
 
-	private class SaveImageFileEntryCallable implements Callable<Boolean> {
+	private class SaveImageFileEntryCallable extends UpgradeCallable<Boolean> {
 
 		public SaveImageFileEntryCallable(
 			long articleImageId, long folderId, long groupId,
@@ -153,7 +153,7 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 		}
 
 		@Override
-		public Boolean call() throws Exception {
+		public Boolean doCall() throws Exception {
 			String fileName = String.valueOf(_articleImageId);
 
 			FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(

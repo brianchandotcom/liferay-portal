@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.upgrade.UpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,7 +41,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -214,7 +214,7 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 	private final Map<Long, Map<String, String>> _uuidsMaps = new HashMap<>();
 
 	private class SaveAssetDisplayPageEntryCallable
-		implements Callable<Boolean> {
+		extends UpgradeCallable<Boolean> {
 
 		public SaveAssetDisplayPageEntryCallable(
 			long groupId, long userId, long classNameId, long classPK,
@@ -228,7 +228,7 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 		}
 
 		@Override
-		public Boolean call() throws Exception {
+		public Boolean doCall() throws Exception {
 			try {
 				ServiceContext serviceContext = new ServiceContext();
 

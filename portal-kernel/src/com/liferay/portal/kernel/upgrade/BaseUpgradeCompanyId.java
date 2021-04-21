@@ -71,7 +71,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 
 	protected abstract TableUpdater[] getTableUpdaters();
 
-	protected class TableUpdater implements Callable<Void> {
+	protected class TableUpdater extends UpgradeCallable<Void> {
 
 		public TableUpdater(
 			String tableName, String foreignTableName, String columnName) {
@@ -94,7 +94,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 		}
 
 		@Override
-		public final Void call() throws Exception {
+		public final Void doCall() throws Exception {
 			try (LoggingTimer loggingTimer = new LoggingTimer(_tableName);
 				Connection connection = DataAccess.getConnection()) {
 

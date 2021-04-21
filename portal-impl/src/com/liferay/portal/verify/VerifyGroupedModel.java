@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.verify.model.VerifiableGroupedModel;
 
@@ -199,10 +200,10 @@ public class VerifyGroupedModel extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyGroupedModel.class);
 
-	private class VerifiableGroupedModelCallable implements Callable<Void> {
+	private class VerifiableGroupedModelCallable extends UpgradeCallable<Void> {
 
 		@Override
-		public Void call() throws Exception {
+		public Void doCall() throws Exception {
 			verifyGroupedModel(_verifiableGroupedModel);
 
 			return null;

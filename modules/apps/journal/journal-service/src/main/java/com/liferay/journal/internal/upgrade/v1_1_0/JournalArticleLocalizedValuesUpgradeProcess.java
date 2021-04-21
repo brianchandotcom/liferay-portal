@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -42,7 +43,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -276,7 +276,8 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 	private final CounterLocalService _counterLocalService;
 	private final Map<Long, Locale> _defaultSiteLocales = new HashMap<>();
 
-	private class UpdateDefaultLanguageCallable implements Callable<Boolean> {
+	private class UpdateDefaultLanguageCallable
+		extends UpgradeCallable<Boolean> {
 
 		public UpdateDefaultLanguageCallable(
 			long id, String xml, Locale defaultSiteLocale) {
@@ -290,7 +291,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 		}
 
 		@Override
-		public Boolean call() throws Exception {
+		public Boolean doCall() throws Exception {
 			try {
 				StringBundler sb = new StringBundler(4);
 
@@ -319,7 +320,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 	}
 
 	private class UpdateJournalArticleLocalizedFieldsCallable
-		implements Callable<Boolean> {
+		extends UpgradeCallable<Boolean> {
 
 		public UpdateJournalArticleLocalizedFieldsCallable(
 				long id, long companyId, String title, String description,
@@ -335,7 +336,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 		}
 
 		@Override
-		public Boolean call() throws Exception {
+		public Boolean doCall() throws Exception {
 			Map<Locale, String> titleMap = _getLocalizationMap(
 				_title, _defaultLanguageId);
 			Map<Locale, String> descriptionMap = _getLocalizationMap(

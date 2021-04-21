@@ -22,7 +22,7 @@ import {deepEqual} from '../utils/checkDeepEqual';
  * @property {object} data
  */
 
-const MAX_RECENT_ITEMS = 10;
+const MAX_RECENT_ITEMS = 100;
 
 const SelectedItemStateContext = React.createContext({
 

@@ -115,7 +115,7 @@
 </tr>
 <tr>
     <td>METRICS_ALL_ITEMS_TABLE_ROW</td>
-    <td>//tr[${key_rowNumber}]//td[3]</td>
+    <td>//tr[${key_rowNumber}]//td[4]</td>
     <td></td>
 </tr>
 <tr>

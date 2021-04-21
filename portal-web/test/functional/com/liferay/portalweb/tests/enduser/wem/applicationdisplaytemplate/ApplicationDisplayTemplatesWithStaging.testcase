@@ -1,0 +1,163 @@
+@component-name = "portal-wcm"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenLocation=&quot;REQUEST&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content and Application Templates,Staging";
+
+	setUp {
+		TestCase.setUpPortalInstance(freeLogin = "true");
+
+		User.firstLoginPG(freeLogin = "true");
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "false",
+			branchingPublic = "false",
+			groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "Add a widget template in staging site."
+	@priority = "4"
+	test AddWidgetTemplateInStagingSite {
+		task ("Add a widget templates in staging site") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
+
+			ApplicationDisplayTemplates.addCP(
+				adtFile = "adt_asset_publisher_rich_summary.ftl",
+				adtType = "Asset Publisher");
+		}
+
+		task ("Publish to Live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("View the widget template in live site") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+			ApplicationDisplayTemplates.viewTemplate(adtType = "Asset Publisher");
+		}
+	}
+
+	@description = "View the widget template applied to Categories Navigation in staging and live site."
+	@priority = "3"
+	test ViewWidgetTemplateAppliedToCategoriesNavigationInStagingAndLiveSite {
+		property testray.component.names = "Categories,Content and Application Templates,Staging";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "ADT Test Page",
+				site = "false");
+		}
+
+		task ("Change the layout of page to 1 Column") {
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "ADT Test Page",
+				layoutTemplate = "1 Column",
+				site = "false");
+		}
+
+		task ("Add three vocabularies") {
+			for (var n : list "1,2,3") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name (Staging)",
+					site = "false",
+					title = "Vocabulary Name ${n}");
+			}
+		}
+
+		task ("Add a category to last two vocabularies") {
+			for (var n : list "2,3") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name (Staging)",
+					site = "false",
+					title = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name ${n}");
+			}
+		}
+
+		task ("Add a Categories Navigation to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "ADT Test Page",
+				site = "false",
+				widgetName = "Categories Navigation");
+		}
+
+		task ("View the displayed content in Categories Navigation") {
+			Navigator.gotoStagedSitePage(
+				pageName = "ADT Test Page",
+				siteName = "Test Site Name");
+
+			CategoriesNavigationPortlet.viewDefaultPG(
+				categoryName = "Category Name 2",
+				vocabularyName = "Vocabulary Name 2");
+
+			CategoriesNavigationPortlet.viewDefaultPG(
+				categoryName = "Category Name 3",
+				vocabularyName = "Vocabulary Name 3");
+		}
+
+		task ("Add a widget template via Categories Navigation") {
+			ApplicationDisplayTemplates.addPG(
+				adtFile = "adt_categories_navigation_multi_column.ftl",
+				adtType = "Categories Navigation",
+				siteName = "Test Site Name");
+		}
+
+		task ("Select the widget template in Categories Navigation") {
+			Navigator.gotoStagedSitePage(
+				pageName = "ADT Test Page",
+				siteName = "Test Site Name");
+
+			ApplicationDisplayTemplates.selectPortletADT(templateName = "Categories Navigation Test ADT");
+		}
+
+		task ("View the widget template applied to Categories Navigation in staging site") {
+			Navigator.gotoStagedSitePage(
+				pageName = "ADT Test Page",
+				siteName = "Test Site Name");
+
+			CategoriesNavigationPortlet.viewCustomADTMultiColumnPG(
+				categoryNameList = "Null,Null,Category Name 2,Category Name 3",
+				columnList = "1,2,3,4",
+				vocabularyNameList = "Topic,Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3");
+		}
+
+		task ("Publish to Live") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("View the widget template applied to Categories Navigation in live site") {
+			Navigator.gotoSitePage(
+				pageName = "ADT Test Page",
+				siteName = "Test Site Name");
+
+			CategoriesNavigationPortlet.viewCustomADTMultiColumnPG(
+				categoryNameList = "Null,Null,Category Name 2,Category Name 3",
+				columnList = "1,2,3,4",
+				vocabularyNameList = "Topic,Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3");
+		}
+	}
+
+}

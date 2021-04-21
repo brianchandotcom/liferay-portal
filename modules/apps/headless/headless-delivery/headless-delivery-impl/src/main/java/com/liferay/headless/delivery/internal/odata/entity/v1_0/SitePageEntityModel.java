@@ -16,12 +16,9 @@ package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsMapFactory;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
 
@@ -39,11 +36,7 @@ public class SitePageEntityModel implements EntityModel {
 			new DateTimeEntityField(
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.MODIFIED_DATE),
-			new StringEntityField(
-				"title",
-				locale -> LocalizationUtil.getLocalizedName(
-					Field.TITLE, LocaleUtil.toLanguageId(locale))));
+				locale -> Field.MODIFIED_DATE));
 	}
 
 	@Override

@@ -66,11 +66,7 @@ definition {
 	}
 
 	macro gotoAddReport {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "chrome") {
-			MetalComponent.waitForReportsManagementBar();
-		}
+		WaitForPageLoad();
 
 		Click(locator1 = "Button#PLUS");
 	}

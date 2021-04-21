@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="" instance-id="U7joB2Rn" name="HeadlineFieldSet" type="fieldset">
+		<dynamic-element index-type="keyword" instance-id="lhoq" name="Headline" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Faculty Meet-and-Greet Brunch]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="tgwj" name="Background" type="image">
+			<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="xabl" name="LeadText" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[All faculty are invited to a Meet-and-Greet Brunch at Allen Café 11:00 A.M. Saturday, June 13. This brunch is intended to introduce new faculty members and promote inter-departmental unity.
+
+Brunch will be catered by the Provincetown chapter of the New England Culinary Institute.]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="cCHtJuGc" name="HeadlineFieldSet" type="fieldset">
+		<dynamic-element index-type="keyword" instance-id="lsuo" name="Headline" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[New Faculty and Staff Orientation]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="jmqf" name="Background" type="image">
+			<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="epkn" name="LeadText" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Attention all new faculty and staff: Orientation will be held Monday, June 8 at 8:00 A.M. New faculty should meet in Room 221 and new staff should meet in Room 139 of Adams Hall. A full schedule of orientation will be emailed to you in the coming weeks.]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="DhLtgh5v" name="HeadlineFieldSet" type="fieldset">
+		<dynamic-element index-type="keyword" instance-id="xpoq" name="Headline" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Vaccinations and Physical Check-Ups]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="tsvt" name="Background" type="image">
+			<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="cfww" name="LeadText" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Any members of faculty or staff planning to leave Earth are required to have up-to-date vaccinations. Please check with the Health Center on your status. In addition, each and every Earth departure requires a physical check-up. The Health Center is happy to give both vaccinations and physical check-ups free of charge.]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

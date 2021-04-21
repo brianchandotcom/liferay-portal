@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="whef" name="Headline" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[You're a part of the S.P.A.C.E. family]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="hkbr" name="Image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[{"alt":"","fileEntryId":"37816","groupId":"37276","name":"front page picture (1).jpg","resourcePrimKey":"37605","title":"front page picture (1).jpg","type":"journal","uuid":"cc56d2bf-6742-b121-3b6f-8679b8dc5ebd"}]]></dynamic-content>
+	</dynamic-element>
+</root>

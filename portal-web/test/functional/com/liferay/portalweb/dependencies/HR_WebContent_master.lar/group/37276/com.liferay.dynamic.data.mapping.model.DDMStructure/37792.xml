@@ -1,0 +1,593 @@
+<DDMStructure>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>258542b4-408e-7970-61cd-516d99c92f5c</__uuid>
+  <__structureId>37792</__structureId>
+  <__groupId>37276</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20125</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2016-06-09 22:33:39.857</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-06-09 22:33:39.857</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__parentStructureId>0</__parentStructureId>
+  <__classNameId>20131</__classNameId>
+  <__structureKey>32443</__structureKey>
+  <__version>1.0</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Landing Page Feature Section&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__definition>{&quot;definitionSchemaVersion&quot;:&quot;2.0&quot;,&quot;availableLanguageIds&quot;:[&quot;en_US&quot;],&quot;successPage&quot;:{&quot;body&quot;:{},&quot;title&quot;:{},&quot;enabled&quot;:false},&quot;defaultLanguageId&quot;:&quot;en_US&quot;,&quot;fields&quot;:[{&quot;ddmStructureLayoutId&quot;:&quot;&quot;,&quot;predefinedValue&quot;:{},&quot;ddmStructureId&quot;:&quot;&quot;,&quot;upgradedStructure&quot;:false,&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;type&quot;:&quot;fieldset&quot;,&quot;rows&quot;:&quot;[{\&quot;columns\&quot;:[{\&quot;size\&quot;:12,\&quot;fields\&quot;:[\&quot;Headline\&quot;]}]},{\&quot;columns\&quot;:[{\&quot;size\&quot;:12,\&quot;fields\&quot;:[\&quot;Background\&quot;]}]},{\&quot;columns\&quot;:[{\&quot;size\&quot;:12,\&quot;fields\&quot;:[\&quot;LeadText\&quot;]}]}]&quot;,&quot;collapsible&quot;:false,&quot;required&quot;:false,&quot;showLabel&quot;:false,&quot;nestedFields&quot;:[{&quot;autocomplete&quot;:false,&quot;ddmDataProviderInstanceId&quot;:&quot;[]&quot;,&quot;dataType&quot;:&quot;string&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;tooltip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Headline&quot;},&quot;type&quot;:&quot;text&quot;,&quot;required&quot;:false,&quot;showLabel&quot;:true,&quot;displayStyle&quot;:&quot;singleline&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;ddmDataProviderInstanceOutput&quot;:&quot;[]&quot;,&quot;repeatable&quot;:false,&quot;name&quot;:&quot;Headline&quot;,&quot;options&quot;:[{&quot;label&quot;:{&quot;en_US&quot;:&quot;Option&quot;},&quot;value&quot;:&quot;Option&quot;}],&quot;localizable&quot;:true,&quot;fieldReference&quot;:&quot;Headline&quot;,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;placeholder&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;dataSourceType&quot;:&quot;manual&quot;},{&quot;dataType&quot;:&quot;image&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Background&quot;},&quot;type&quot;:&quot;image&quot;,&quot;required&quot;:false,&quot;showLabel&quot;:true,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;repeatable&quot;:false,&quot;name&quot;:&quot;Background&quot;,&quot;localizable&quot;:true,&quot;fieldReference&quot;:&quot;Background&quot;,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;}},{&quot;autocomplete&quot;:false,&quot;ddmDataProviderInstanceId&quot;:&quot;[]&quot;,&quot;dataType&quot;:&quot;string&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;tooltip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Lead Text&quot;},&quot;type&quot;:&quot;text&quot;,&quot;required&quot;:false,&quot;showLabel&quot;:true,&quot;displayStyle&quot;:&quot;multiline&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;ddmDataProviderInstanceOutput&quot;:&quot;[]&quot;,&quot;repeatable&quot;:false,&quot;name&quot;:&quot;LeadText&quot;,&quot;options&quot;:[{&quot;label&quot;:{&quot;en_US&quot;:&quot;Option&quot;},&quot;value&quot;:&quot;Option&quot;}],&quot;localizable&quot;:true,&quot;fieldReference&quot;:&quot;LeadText&quot;,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;placeholder&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;dataSourceType&quot;:&quot;manual&quot;}],&quot;repeatable&quot;:true,&quot;name&quot;:&quot;HeadlineFieldSet&quot;,&quot;localizable&quot;:false,&quot;fieldReference&quot;:&quot;HeadlineFieldSet&quot;,&quot;tip&quot;:{}}]}</__definition>
+  <__storageType>default</__storageType>
+  <__type>0</__type>
+  <__columnBitmask>0</__columnBitmask>
+  <__className>com.liferay.journal.model.JournalArticle</__className>
+  <__ddmForm>
+    <__allowInvalidAvailableLocalesForProperty>false</__allowInvalidAvailableLocalesForProperty>
+    <__availableLocales>
+      <locale>en_US</locale>
+    </__availableLocales>
+    <__ddmFormFields>
+      <com.liferay.dynamic.data.mapping.model.DDMFormField>
+        <__ddmForm reference="../../.."/>
+        <__ddmFormFieldRules/>
+        <__nestedDDMFormFields>
+          <com.liferay.dynamic.data.mapping.model.DDMFormField>
+            <__ddmForm reference="../../../../.."/>
+            <__ddmFormFieldRules/>
+            <__nestedDDMFormFields/>
+            <__properties class="linked-hash-map">
+              <entry>
+                <string>name</string>
+                <string>Headline</string>
+              </entry>
+              <entry>
+                <string>type</string>
+                <string>text</string>
+              </entry>
+              <entry>
+                <string>options</string>
+                <com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__options class="linked-hash-map">
+                    <entry>
+                      <string>Option</string>
+                      <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                        <__defaultLocale reference="../../../../../../../../../../../__availableLocales/locale"/>
+                        <__values>
+                          <entry>
+                            <locale reference="../../../../../../../../../../../../../__availableLocales/locale"/>
+                            <string>Option</string>
+                          </entry>
+                        </__values>
+                      </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                    </entry>
+                  </__options>
+                  <__optionsReferences class="linked-hash-map">
+                    <entry>
+                      <string>Option</string>
+                      <string></string>
+                    </entry>
+                  </__optionsReferences>
+                </com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions>
+              </entry>
+              <entry>
+                <string>fieldReference</string>
+                <string>Headline</string>
+              </entry>
+              <entry>
+                <string>label</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string>Headline</string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>predefinedValue</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>style</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values/>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>dataType</string>
+                <string>string</string>
+              </entry>
+              <entry>
+                <string>readOnly</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>required</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>indexType</string>
+                <string>keyword</string>
+              </entry>
+              <entry>
+                <string>showLabel</string>
+                <boolean>true</boolean>
+              </entry>
+              <entry>
+                <string>repeatable</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>fieldNamespace</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>localizable</string>
+                <boolean>true</boolean>
+              </entry>
+              <entry>
+                <string>visibilityExpression</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>placeholder</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>tooltip</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>ddmDataProviderInstanceId</string>
+                <string>[]</string>
+              </entry>
+              <entry>
+                <string>ddmDataProviderInstanceOutput</string>
+                <string>[]</string>
+              </entry>
+              <entry>
+                <string>dataSourceType</string>
+                <string>manual</string>
+              </entry>
+              <entry>
+                <string>autocomplete</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>displayStyle</string>
+                <string>singleline</string>
+              </entry>
+            </__properties>
+          </com.liferay.dynamic.data.mapping.model.DDMFormField>
+          <com.liferay.dynamic.data.mapping.model.DDMFormField>
+            <__ddmForm reference="../../../../.."/>
+            <__ddmFormFieldRules/>
+            <__nestedDDMFormFields/>
+            <__properties class="linked-hash-map">
+              <entry>
+                <string>name</string>
+                <string>Background</string>
+              </entry>
+              <entry>
+                <string>type</string>
+                <string>image</string>
+              </entry>
+              <entry>
+                <string>options</string>
+                <com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__options class="linked-hash-map"/>
+                  <__optionsReferences class="linked-hash-map"/>
+                </com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions>
+              </entry>
+              <entry>
+                <string>fieldReference</string>
+                <string>Background</string>
+              </entry>
+              <entry>
+                <string>label</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string>Background</string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>predefinedValue</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>style</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values/>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>dataType</string>
+                <string>image</string>
+              </entry>
+              <entry>
+                <string>readOnly</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>required</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>indexType</string>
+                <string>keyword</string>
+              </entry>
+              <entry>
+                <string>showLabel</string>
+                <boolean>true</boolean>
+              </entry>
+              <entry>
+                <string>repeatable</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>fieldNamespace</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>localizable</string>
+                <boolean>true</boolean>
+              </entry>
+              <entry>
+                <string>visibilityExpression</string>
+                <string></string>
+              </entry>
+            </__properties>
+          </com.liferay.dynamic.data.mapping.model.DDMFormField>
+          <com.liferay.dynamic.data.mapping.model.DDMFormField>
+            <__ddmForm reference="../../../../.."/>
+            <__ddmFormFieldRules/>
+            <__nestedDDMFormFields/>
+            <__properties class="linked-hash-map">
+              <entry>
+                <string>name</string>
+                <string>LeadText</string>
+              </entry>
+              <entry>
+                <string>type</string>
+                <string>text</string>
+              </entry>
+              <entry>
+                <string>options</string>
+                <com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__options class="linked-hash-map">
+                    <entry>
+                      <string>Option</string>
+                      <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                        <__defaultLocale reference="../../../../../../../../../../../__availableLocales/locale"/>
+                        <__values>
+                          <entry>
+                            <locale reference="../../../../../../../../../../../../../__availableLocales/locale"/>
+                            <string>Option</string>
+                          </entry>
+                        </__values>
+                      </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                    </entry>
+                  </__options>
+                  <__optionsReferences class="linked-hash-map">
+                    <entry>
+                      <string>Option</string>
+                      <string></string>
+                    </entry>
+                  </__optionsReferences>
+                </com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions>
+              </entry>
+              <entry>
+                <string>fieldReference</string>
+                <string>LeadText</string>
+              </entry>
+              <entry>
+                <string>label</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string>Lead Text</string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>predefinedValue</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>style</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values/>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>dataType</string>
+                <string>string</string>
+              </entry>
+              <entry>
+                <string>readOnly</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>required</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>indexType</string>
+                <string>keyword</string>
+              </entry>
+              <entry>
+                <string>showLabel</string>
+                <boolean>true</boolean>
+              </entry>
+              <entry>
+                <string>repeatable</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>fieldNamespace</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>localizable</string>
+                <boolean>true</boolean>
+              </entry>
+              <entry>
+                <string>visibilityExpression</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>placeholder</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>tooltip</string>
+                <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+                  <__defaultLocale reference="../../../../../../../../__availableLocales/locale"/>
+                  <__values>
+                    <entry>
+                      <locale reference="../../../../../../../../../../__availableLocales/locale"/>
+                      <string></string>
+                    </entry>
+                  </__values>
+                </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              </entry>
+              <entry>
+                <string>ddmDataProviderInstanceId</string>
+                <string>[]</string>
+              </entry>
+              <entry>
+                <string>ddmDataProviderInstanceOutput</string>
+                <string>[]</string>
+              </entry>
+              <entry>
+                <string>dataSourceType</string>
+                <string>manual</string>
+              </entry>
+              <entry>
+                <string>autocomplete</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>displayStyle</string>
+                <string>multiline</string>
+              </entry>
+            </__properties>
+          </com.liferay.dynamic.data.mapping.model.DDMFormField>
+        </__nestedDDMFormFields>
+        <__properties class="linked-hash-map">
+          <entry>
+            <string>name</string>
+            <string>HeadlineFieldSet</string>
+          </entry>
+          <entry>
+            <string>type</string>
+            <string>fieldset</string>
+          </entry>
+          <entry>
+            <string>options</string>
+            <com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions>
+              <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
+              <__options class="linked-hash-map"/>
+              <__optionsReferences class="linked-hash-map"/>
+            </com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions>
+          </entry>
+          <entry>
+            <string>fieldReference</string>
+            <string>HeadlineFieldSet</string>
+          </entry>
+          <entry>
+            <string>label</string>
+            <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
+              <__values>
+                <entry>
+                  <locale reference="../../../../../../../../__availableLocales/locale"/>
+                  <string></string>
+                </entry>
+              </__values>
+            </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+          </entry>
+          <entry>
+            <string>predefinedValue</string>
+            <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
+              <__values/>
+            </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+          </entry>
+          <entry>
+            <string>style</string>
+            <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
+              <__values/>
+            </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+          </entry>
+          <entry>
+            <string>tip</string>
+            <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
+              <__values/>
+            </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+          </entry>
+          <entry>
+            <string>readOnly</string>
+            <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>required</string>
+            <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>showLabel</string>
+            <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>repeatable</string>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <string>localizable</string>
+            <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>rows</string>
+            <string>[{&quot;columns&quot;:[{&quot;size&quot;:12,&quot;fields&quot;:[&quot;Headline&quot;]}]},{&quot;columns&quot;:[{&quot;size&quot;:12,&quot;fields&quot;:[&quot;Background&quot;]}]},{&quot;columns&quot;:[{&quot;size&quot;:12,&quot;fields&quot;:[&quot;LeadText&quot;]}]}]</string>
+          </entry>
+          <entry>
+            <string>ddmStructureLayoutId</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>ddmStructureId</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>upgradedStructure</string>
+            <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>collapsible</string>
+            <boolean>false</boolean>
+          </entry>
+        </__properties>
+      </com.liferay.dynamic.data.mapping.model.DDMFormField>
+    </__ddmFormFields>
+    <__ddmFormRules/>
+    <__ddmFormSuccessPageSettings>
+      <__body>
+        <__defaultLocale reference="../../../__availableLocales/locale"/>
+        <__values/>
+      </__body>
+      <__enabled>false</__enabled>
+      <__title>
+        <__defaultLocale reference="../../../__availableLocales/locale"/>
+        <__values/>
+      </__title>
+    </__ddmFormSuccessPageSettings>
+    <__defaultLocale reference="../__availableLocales/locale"/>
+    <__definitionSchemaVersion>2.0</__definitionSchemaVersion>
+  </__ddmForm>
+</DDMStructure>

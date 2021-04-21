@@ -1,0 +1,45 @@
+<DDMTemplate>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>b9f3b5e3-af89-aac1-76e5-6bf29ba51bb4</__uuid>
+  <__templateId>37801</__templateId>
+  <__groupId>37276</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20125</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2016-06-10 05:51:33.116</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-06-10 06:03:15.888</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>30601</__classNameId>
+  <__classPK>37795</__classPK>
+  <__resourceClassNameId>20131</__resourceClassNameId>
+  <__templateKey>32711</__templateKey>
+  <__version>1.0</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Banner&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__type>display</__type>
+  <__mode></__mode>
+  <__language>ftl</__language>
+  <__script>&lt;div class=&quot;figure figure-rounded&quot;&gt;
+&lt;#if Image.getData()?? &amp;&amp; Image.getData() != &quot;&quot;&gt;
+ &lt;div class=&quot;crop-img-middle&quot; style=&quot;height: 400px&quot;&gt;
+    	&lt;img alt=&quot;${Image.getAttribute(&quot;alt&quot;)}&quot; src=&quot;${Image.getData()}&quot; 
+	    class=&quot;img-responsive&quot; style=&quot;width:100%&quot; /&gt;
+&lt;/div&gt;
+&lt;/#if&gt;
+    &lt;div class=&quot;figcaption-bottom&quot;&gt;
+
+                &lt;h1&gt;${Headline.getData()}&lt;/h1&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</__script>
+  <__cacheable>false</__cacheable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>37802</__smallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__columnBitmask>0</__columnBitmask>
+</DDMTemplate>

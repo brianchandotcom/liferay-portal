@@ -161,7 +161,7 @@ definition {
 			pageName = "Staging Test Page 2",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Navigation Menu");
+		Portlet.addPG(portletName = "IFrame");
 
 		Staging.gotoPublishToLive(pleaseDoNotMarkAsReady = "true");
 
@@ -184,12 +184,12 @@ definition {
 		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
 
 		Portlet.gotoPortletOptions(
-			portletName = "Navigation Menu",
+			portletName = "IFrame",
 			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Navigation Menu");
+		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "IFrame");
 
 		PortletEntry.save();
 
@@ -197,7 +197,7 @@ definition {
 			pageName = "Staging Test Page 2",
 			siteName = "Site Name");
 
-		Portlet.viewSpecificPG(portletName = "Navigation Menu Custom");
+		Portlet.viewSpecificPG(portletName = "IFrame Custom");
 
 		Staging.gotoPublishToLive(pleaseDoNotMarkAsReady = "true");
 
@@ -207,7 +207,7 @@ definition {
 			pageName = "Staging Test Page 2",
 			siteName = "Site Name");
 
-		Portlet.viewNoSpecificPG(portletName = "Navigation Menu Custom");
+		Portlet.viewNoSpecificPG(portletName = "IFrame Custom");
 	}
 
 	@priority = "3"

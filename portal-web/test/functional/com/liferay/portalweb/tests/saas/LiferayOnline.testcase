@@ -54,8 +54,8 @@ definition {
 		SitePages.addPublicPage(pageName = "Test Page3");
 
 		var pageName = "Test Page1";
-		var portletBody = "Test Page1";
-		var portletName = "Navigation Menu";
+		var portletBody = "Please configure this portlet to make it visible to all users.";
+		var portletName = "IFrame";
 
 		task ("Add a '${portletName}' portlet to the page named '${pageName}'") {
 			Navigator.gotoSpecificURLPage(

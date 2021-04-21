@@ -382,7 +382,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		Navigator.gotoPage(pageName = "Test Widget Page");
 
-		Portlet.addPG(portletName = "Navigation Menu");
+		Portlet.addPG(portletName = "IFrame");
 
 		var portalURL = PropsUtil.get("portal.url");
 

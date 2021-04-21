@@ -196,11 +196,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		Portlet.addPG(portletName = "Navigation Menu");
+		Portlet.addPG(portletName = "IFrame");
 
-		task ("Assert the 'Configuration' iframe of the Navigation Menu portlet") {
+		task ("Assert the 'Configuration' iframe of the IFrame portlet") {
 			Portlet.gotoPortletOptions(
-				portletName = "Navigation Menu",
+				portletName = "IFrame",
 				portletOption = "Configuration");
 
 			IFrame.selectConfigurationFrame();
@@ -215,9 +215,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		task ("Assert the 'Look and Feel' iframe of the Navigation Menu portlet") {
+		task ("Assert the 'Look and Feel' iframe of the IFrame portlet") {
 			Portlet.gotoPortletOptions(
-				portletName = "Navigation Menu",
+				portletName = "IFrame",
 				portletOption = "Look and Feel Configuration");
 
 			IFrame.selectConfigurationFrame();
@@ -234,19 +234,19 @@ definition {
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "1",
 			columnNumberTo = "2",
-			portletName = "Navigation Menu");
+			portletName = "IFrame");
 
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "2",
 			columnNumberTo = "1",
-			portletName = "Navigation Menu");
+			portletName = "IFrame");
 
-		task ("Removes Navigation Menu Portlet on Test Page") {
+		task ("Removes IFrame Portlet on Test Page") {
 			Navigator.gotoPage(pageName = "Test Page");
 
-			Portlet.deletePG(portletName = "Navigation Menu");
+			Portlet.deletePG(portletName = "IFrame");
 
-			Portlet.viewNoSpecificPG(portletName = "Navigation Menu");
+			Portlet.viewNoSpecificPG(portletName = "IFrame");
 		}
 	}
 
@@ -307,7 +307,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		Portlet.addPG(portletName = "Navigation Menu");
+		Portlet.addPG(portletName = "IFrame");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -318,7 +318,7 @@ definition {
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "1",
 			columnNumberTo = "2",
-			portletName = "Navigation Menu");
+			portletName = "IFrame");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -336,10 +336,10 @@ definition {
 		takeScreenshot();
 
 		MouseOver(
-			key_portletTitleName = "Navigation Menu",
+			key_portletTitleName = "IFrame",
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE");
 
-		Portlet.assertPortletHeader(portletName = "SiteNavigationMenuPortlet");
+		Portlet.assertPortletHeader(portletName = "IFramePortlet");
 
 		takeScreenshot();
 

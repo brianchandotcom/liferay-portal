@@ -240,7 +240,7 @@ definition {
 
 		Portlet.addPG(
 			defaultURL = "false",
-			portletName = "Navigation Menu");
+			portletName = "IFrame");
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page2 Name",
@@ -259,7 +259,7 @@ definition {
 			pageName = "Page1 Name",
 			siteName = "Site Name");
 
-		PermissionsInline.gotoConfigurationPG(portletName = "Navigation Menu");
+		PermissionsInline.gotoConfigurationPG(portletName = "IFrame");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
@@ -282,13 +282,13 @@ definition {
 
 		Portlet.addPG(
 			defaultURL = "false",
-			portletName = "Navigation Menu");
+			portletName = "IFrame");
 
 		Navigator.gotoSitePage(
 			pageName = "Page1 Name",
 			siteName = "Site Name");
 
-		PermissionsInline.gotoConfigurationPG(portletName = "Navigation Menu");
+		PermissionsInline.gotoConfigurationPG(portletName = "IFrame");
 
 		Role.viewPermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",

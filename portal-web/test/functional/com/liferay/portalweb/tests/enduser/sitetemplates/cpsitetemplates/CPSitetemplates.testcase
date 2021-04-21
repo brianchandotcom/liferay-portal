@@ -71,7 +71,7 @@ definition {
 
 		ContentPages.clickPencil();
 
-		PageEditor.addWidget(portletName = "Navigation Menu");
+		PageEditor.addWidget(portletName = "IFrame");
 
 		PageEditor.clickPublish();
 
@@ -81,7 +81,7 @@ definition {
 			Refresh();
 		}
 
-		Portlet.viewPortletPresentPG(portletContent = "Navigation Menu");
+		Portlet.viewPortletPresentPG(portletContent = "Please configure this portlet to make it visible to all users.");
 	}
 
 	@priority = "4"
@@ -133,7 +133,7 @@ definition {
 
 		ContentPages.clickPencil();
 
-		PageEditor.addWidget(portletName = "Navigation Menu");
+		PageEditor.addWidget(portletName = "IFrame");
 
 		PageEditor.clickPublish();
 
@@ -151,7 +151,7 @@ definition {
 
 		Refresh();
 
-		Portlet.viewPortletPresentPG(portletContent = "Navigation Menu");
+		Portlet.viewPortletPresentPG(portletContent = "Please configure this portlet to make it visible to all users.");
 
 		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
@@ -166,7 +166,7 @@ definition {
 
 		PageEditor.addWidget(
 			portletName = "Asset Publisher",
-			targetFragmentName = "Navigation Menu");
+			targetFragmentName = "IFrame");
 
 		PageEditor.clickPublish();
 

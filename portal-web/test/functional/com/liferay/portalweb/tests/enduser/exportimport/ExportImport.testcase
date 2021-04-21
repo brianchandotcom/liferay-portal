@@ -781,21 +781,21 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page Name");
 
-		Portlet.addPG(portletName = "Navigation Menu");
+		Portlet.addPG(portletName = "IFrame");
 
 		Portlet.gotoPortletOptions(
-			portletName = "Navigation Menu",
+			portletName = "IFrame",
 			portletOption = "Look and Feel Configuration");
 
 		IFrame.selectConfigurationFrame();
 
-		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Navigation Menu");
+		Portlet.configureCustomTitleViaLookandfeelPG(portletName = "IFrame");
 
 		PortletEntry.save();
 
 		IFrame.closeFrame();
 
-		LAR.exportPortlet(larFileName = "NavigationMenu.lar");
+		LAR.exportPortlet(larFileName = "IFrame.lar");
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -807,15 +807,15 @@ definition {
 			pageName = "Test Site Page",
 			siteName = "Test Site Name");
 
-		Portlet.addPG(portletName = "Navigation Menu");
+		Portlet.addPG(portletName = "IFrame");
 
-		LAR.importPortlet(larFileName = "NavigationMenu.lar");
+		LAR.importPortlet(larFileName = "IFrame.lar");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Site Page",
 			siteName = "Test Site Name");
 
-		Portlet.viewTitle(portletName = "Navigation Menu Custom");
+		Portlet.viewTitle(portletName = "IFrame Custom");
 	}
 
 	@priority = "3"

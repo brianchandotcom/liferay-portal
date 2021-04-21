@@ -162,7 +162,16 @@ function renderMappingSelector({
 				},
 			},
 		},
-		mappedInfoItems: [],
+		mappedInfoItems: [
+			{
+				classNameId: 'mappedItemClassNameId',
+				classPK: 'mappedItemClassPK',
+				classTypeId: 'mappedItemClassTypeId',
+				itemSubtype: 'Mapped Item Subtype',
+				itemType: 'Mapped Item Type',
+				title: 'mappedItemTitle',
+			},
+		],
 		mappingFields,
 		pageContents: [],
 		segmentsExperienceId: 0,
@@ -377,6 +386,27 @@ describe('MappingSelector', () => {
 				document.body,
 				'no-fields-are-available-for-x-editable-text'
 			)
+		).toBeInTheDocument();
+	});
+
+	it('shows type and subtype label when some item is mapped', async () => {
+		config.layoutType = LAYOUT_TYPES.content;
+
+		await act(async () => {
+			renderMappingSelector({
+				mappedItem: {
+					classNameId: 'mappedItemClassNameId',
+					classPK: 'mappedItemClassPK',
+				},
+			});
+		});
+
+		expect(
+			getByText(document.body, 'Mapped Item Type')
+		).toBeInTheDocument();
+
+		expect(
+			getByText(document.body, 'Mapped Item Subtype')
 		).toBeInTheDocument();
 	});
 });

@@ -53,6 +53,28 @@ public class PagingTranslationContributor
 			JSONKeys.PAGINATION, _getPagingJSONObject(searchResponse));
 	}
 
+	private int _getFrom(SearchResponse searchResponse) {
+		SearchRequest searchRequest = searchResponse.getRequest();
+
+		if (searchRequest.getFrom() != null) {
+			return searchRequest.getFrom();
+		}
+
+		return searchResponse.withSearchContextGet(
+			searchContext -> searchContext.getStart());
+	}
+
+	private int _getPageSize(SearchResponse searchResponse) {
+		SearchRequest searchRequest = searchResponse.getRequest();
+
+		if (searchRequest.getSize() != null) {
+			return searchRequest.getSize();
+		}
+
+		return searchResponse.withSearchContextGet(
+			searchContext -> searchContext.getEnd() - searchContext.getStart());
+	}
+
 	private JSONObject _getPagingJSONObject(SearchResponse searchResponse) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -65,11 +87,11 @@ public class PagingTranslationContributor
 				return jsonObject;
 			}
 
-			SearchRequest searchRequest = searchResponse.getRequest();
+			int from = _getFrom(searchResponse);
 
-			int pageSize = searchRequest.getSize();
+			int pageSize = _getPageSize(searchResponse);
 
-			int start = _getStart(totalHits, pageSize, searchRequest.getFrom());
+			int start = _getStart(totalHits, pageSize, from);
 
 			jsonObject.put(
 				JSONKeys.ACTIVE_PAGE,

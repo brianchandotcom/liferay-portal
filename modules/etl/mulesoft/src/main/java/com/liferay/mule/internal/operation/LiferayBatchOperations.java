@@ -85,37 +85,40 @@ public class LiferayBatchOperations {
 		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
 			connectionTimeout);
 
-		String importTaskId = submitImportTask(
+		String importTaskId = submitImportCreateTask(
 			connection, inputStream, className, fieldNameMappings,
 			connectionTimeoutMillis);
 
-		while (true) {
-			JsonNode importTaskJsonNode = getImportTaskJsonNode(
-				connection, importTaskId, connectionTimeoutMillis);
-
-			String importTaskStatus = importTaskJsonNode.get(
-				"executeStatus"
-			).asText();
-
-			if (importTaskStatus.equalsIgnoreCase("completed")) {
-				break;
-			}
-			else if (importTaskStatus.equalsIgnoreCase("failed")) {
-				throw new ModuleException(
-					importTaskJsonNode.get(
-						"errorMessage"
-					).asText(),
-					LiferayError.BATCH_IMPORT_FAILED);
-			}
-
-			Thread.sleep(1000);
-		}
+		checkImportTaskExecutionResult(
+			connection, importTaskId, connectionTimeoutMillis);
 	}
 
 	@DisplayName("Batch - Import Records - Delete")
 	@MediaType(MediaType.APPLICATION_JSON)
-	public Result<String, Void> executeDeleteImportTask() {
-		return null;
+	public void executeDeleteImportTask(
+			@Connection LiferayConnection connection,
+			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,
+			@Content @DisplayName("Records")
+			@TypeResolver(value = BatchImportInputTypeResolver.class)
+			InputStream inputStream,
+			@ConfigOverride @DisplayName("Connection Timeout") @Optional
+			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
+			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
+			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
+			@Summary("Time unit to be used in the timeout configurations")
+			TimeUnit connectionTimeoutTimeUnit)
+		throws InterruptedException, IOException {
+
+		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
+			connectionTimeout);
+
+		String importTaskId = submitImportDeleteTask(
+			connection, inputStream, className, connectionTimeoutMillis);
+
+		checkImportTaskExecutionResult(
+			connection, importTaskId, connectionTimeoutMillis);
 	}
 
 	@DisplayName("Batch - Export Records")
@@ -175,30 +178,32 @@ public class LiferayBatchOperations {
 		return null;
 	}
 
-	private JsonNode getImportTaskJsonNode(
-		LiferayConnection connection, String importTaskId,
-		long connectionTimeout) {
+	private void checkImportTaskExecutionResult(
+			LiferayConnection connection, String importTaskId,
+			long connectionTimeoutMillis)
+		throws InterruptedException {
 
-		Map<String, String> pathParams = new HashMap<>();
+		while (true) {
+			JsonNode importTaskJsonNode = getImportTaskJsonNode(
+				connection, importTaskId, connectionTimeoutMillis);
 
-		pathParams.put("importTaskId", importTaskId);
+			String importTaskStatus = importTaskJsonNode.get(
+				"executeStatus"
+			).asText();
 
-		ResourceContext.Builder builder = new ResourceContext.Builder();
+			if (importTaskStatus.equalsIgnoreCase("completed")) {
+				break;
+			}
+			else if (importTaskStatus.equalsIgnoreCase("failed")) {
+				throw new ModuleException(
+					importTaskJsonNode.get(
+						"errorMessage"
+					).asText(),
+					LiferayError.BATCH_IMPORT_FAILED);
+			}
 
-		HttpResponse httpResponse = connection.get(
-			builder.connectionTimeout(
-				connectionTimeout
-			).endpoint(
-				"/v1.0/import-task/{importTaskId}"
-			).jaxRSAppBase(
-				"/headless-batch-engine"
-			).pathParams(
-				pathParams
-			).build());
-
-		liferayResponseValidator.validate(httpResponse);
-
-		return jsonNodeReader.fromHttpResponse(httpResponse);
+			Thread.sleep(1000);
+		}
 	}
 
 	private ZipInputStream getExportTaskContentZipInputStream(
@@ -267,6 +272,32 @@ public class LiferayBatchOperations {
 		).build();
 	}
 
+	private JsonNode getImportTaskJsonNode(
+		LiferayConnection connection, String importTaskId,
+		long connectionTimeout) {
+
+		Map<String, String> pathParams = new HashMap<>();
+
+		pathParams.put("importTaskId", importTaskId);
+
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
+		HttpResponse httpResponse = connection.get(
+			builder.connectionTimeout(
+				connectionTimeout
+			).endpoint(
+				"/v1.0/import-task/{importTaskId}"
+			).jaxRSAppBase(
+				"/headless-batch-engine"
+			).pathParams(
+				pathParams
+			).build());
+
+		liferayResponseValidator.validate(httpResponse);
+
+		return jsonNodeReader.fromHttpResponse(httpResponse);
+	}
+
 	private String submitExportTask(
 		String className, LiferayConnection connection, String fieldNames,
 		String siteId, long connectionTimeout) {
@@ -309,7 +340,7 @@ public class LiferayBatchOperations {
 		return String.valueOf(idJsonNode.longValue());
 	}
 
-	private String submitImportTask(
+	private String submitImportCreateTask(
 			LiferayConnection connection, InputStream inputStream,
 			String className, Map<String, String> fieldNameMappings,
 			long connectionTimeout)
@@ -344,6 +375,8 @@ public class LiferayBatchOperations {
 				IOUtil.getBytes(inputStream)
 			).connectionTimeout(
 				connectionTimeout
+			).contentType(
+				"multipart/form-data"
 			).endpoint(
 				"/v1.0/import-task/{className}"
 			).jaxRSAppBase(
@@ -352,6 +385,40 @@ public class LiferayBatchOperations {
 				pathParams
 			).queryParams(
 				queryParams
+			).build());
+
+		JsonNode payloadJsonNode = jsonNodeReader.fromHttpResponse(
+			httpResponse);
+
+		JsonNode idJsonNode = payloadJsonNode.get("id");
+
+		return String.valueOf(idJsonNode.longValue());
+	}
+
+	private String submitImportDeleteTask(
+			LiferayConnection connection, InputStream inputStream,
+			String className, long connectionTimeout)
+		throws IOException {
+
+		Map<String, String> pathParams = new HashMap<>();
+
+		pathParams.put("className", className);
+
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
+		HttpResponse httpResponse = connection.delete(
+			builder.bytes(
+				IOUtil.getBytes(inputStream)
+			).connectionTimeout(
+				connectionTimeout
+			).contentType(
+				"multipart/form-data"
+			).endpoint(
+				"/v1.0/import-task/{className}"
+			).jaxRSAppBase(
+				"/headless-batch-engine"
+			).pathParams(
+				pathParams
 			).build());
 
 		JsonNode payloadJsonNode = jsonNodeReader.fromHttpResponse(

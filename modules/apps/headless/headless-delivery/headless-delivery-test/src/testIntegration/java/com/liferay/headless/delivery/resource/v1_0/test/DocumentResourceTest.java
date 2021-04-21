@@ -43,7 +43,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,14 +51,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class DocumentResourceTest extends BaseDocumentResourceTestCase {
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		testGroup = testDepotEntry.getGroup();
-	}
 
 	@Override
 	@Test
@@ -117,6 +108,42 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 			Arrays.asList(document1, document2),
 			Arrays.asList(
 				DocumentSerDes.toDTOs(documentsJSONObject.getString("items"))));
+	}
+
+	@Override
+	@Test
+	public void testPutSiteDocumentByExternalReferenceCode() throws Exception {
+
+		// Update
+
+		super.testPutSiteDocumentByExternalReferenceCode();
+
+		// Add
+
+		Document randomDocument = randomDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document putDocument =
+			documentResource.putSiteDocumentByExternalReferenceCode(
+				randomDocument.getExternalReferenceCode(),
+				testGroup.getGroupId(), randomDocument, multipartFiles);
+
+		assertEquals(randomDocument, putDocument);
+		assertValid(putDocument);
+
+		Document getDocument =
+			documentResource.getSiteDocumentByExternalReferenceCode(
+				putDocument.getExternalReferenceCode(), testGroup.getGroupId());
+
+		assertEquals(randomDocument, getDocument);
+		assertValid(getDocument);
+
+		assertValid(getDocument, multipartFiles);
+
+		Assert.assertEquals(
+			randomDocument.getExternalReferenceCode(),
+			getDocument.getExternalReferenceCode());
 	}
 
 	@Override

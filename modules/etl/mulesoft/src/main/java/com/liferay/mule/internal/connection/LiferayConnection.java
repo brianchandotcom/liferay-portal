@@ -131,6 +131,17 @@ public final class LiferayConnection {
 			resourceContext.getInputStream(), resourceContext.getBytes());
 	}
 
+	public HttpResponse put(ResourceContext resourceContext)
+		throws ModuleException {
+
+		return send(
+			HttpConstants.Method.PUT, resourceContext.getJaxRSAppBase(),
+			resourceContext.getEndpoint(), resourceContext.getPathParams(),
+			resourceContext.getQueryParams(), resourceContext.getContentType(),
+			resourceContext.getConnectionTimeout(),
+			resourceContext.getInputStream(), resourceContext.getBytes());
+	}
+
 	private LiferayConnection(
 			HttpService httpService, String openApiSpecPath,
 			BasicAuthentication basicAuthentication, ProxyConfig proxyConfig)

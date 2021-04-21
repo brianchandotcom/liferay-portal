@@ -63,64 +63,6 @@ import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 @Throws(LiferayResponseErrorProvider.class)
 public class LiferayBatchOperations {
 
-	@DisplayName("Batch - Import Records - Create")
-	@MediaType(MediaType.APPLICATION_JSON)
-	public void executeCreateImportTask(
-			@Connection LiferayConnection connection,
-			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,
-			@NullSafe @Optional Map<String, String> fieldNameMappings,
-			@Content @DisplayName("Records")
-			@TypeResolver(value = BatchImportInputTypeResolver.class)
-			InputStream inputStream,
-			@ConfigOverride @DisplayName("Connection Timeout") @Optional
-			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value")
-			int connectionTimeout,
-			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
-			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
-			@Summary("Time unit to be used in the timeout configurations")
-			TimeUnit connectionTimeoutTimeUnit)
-		throws InterruptedException, IOException {
-
-		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
-			connectionTimeout);
-
-		String importTaskId = submitImportCreateTask(
-			connection, inputStream, className, fieldNameMappings,
-			connectionTimeoutMillis);
-
-		checkImportTaskExecutionResult(
-			connection, importTaskId, connectionTimeoutMillis);
-	}
-
-	@DisplayName("Batch - Import Records - Delete")
-	@MediaType(MediaType.APPLICATION_JSON)
-	public void executeDeleteImportTask(
-			@Connection LiferayConnection connection,
-			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,
-			@Content @DisplayName("Records")
-			@TypeResolver(value = BatchImportInputTypeResolver.class)
-			InputStream inputStream,
-			@ConfigOverride @DisplayName("Connection Timeout") @Optional
-			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-			@Summary("Socket connection timeout value")
-			int connectionTimeout,
-			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
-			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
-			@Summary("Time unit to be used in the timeout configurations")
-			TimeUnit connectionTimeoutTimeUnit)
-		throws InterruptedException, IOException {
-
-		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
-			connectionTimeout);
-
-		String importTaskId = submitImportDeleteTask(
-			connection, inputStream, className, connectionTimeoutMillis);
-
-		checkImportTaskExecutionResult(
-			connection, importTaskId, connectionTimeoutMillis);
-	}
-
 	@DisplayName("Batch - Export Records")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = BatchExportOutputTypeResolver.class)
@@ -172,10 +114,90 @@ public class LiferayBatchOperations {
 				connection, exportTaskId, connectionTimeoutMillis));
 	}
 
+	@DisplayName("Batch - Import Records - Create")
+	@MediaType(MediaType.APPLICATION_JSON)
+	public void executeImportCreateTask(
+			@Connection LiferayConnection connection,
+			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,
+			@NullSafe @Optional Map<String, String> fieldNameMappings,
+			@Content @DisplayName("Records")
+			@TypeResolver(value = BatchImportInputTypeResolver.class)
+			InputStream inputStream,
+			@ConfigOverride @DisplayName("Connection Timeout") @Optional
+			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
+			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
+			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
+			@Summary("Time unit to be used in the timeout configurations")
+			TimeUnit connectionTimeoutTimeUnit)
+		throws InterruptedException, IOException {
+
+		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
+			connectionTimeout);
+
+		String importTaskId = submitImportCreateTask(
+			connection, inputStream, className, fieldNameMappings,
+			connectionTimeoutMillis);
+
+		checkImportTaskExecutionResult(
+			connection, importTaskId, connectionTimeoutMillis);
+	}
+
+	@DisplayName("Batch - Import Records - Delete")
+	@MediaType(MediaType.APPLICATION_JSON)
+	public void executeImportDeleteTask(
+			@Connection LiferayConnection connection,
+			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,
+			@Content @DisplayName("Records")
+			@TypeResolver(value = BatchImportInputTypeResolver.class)
+			InputStream inputStream,
+			@ConfigOverride @DisplayName("Connection Timeout") @Optional
+			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
+			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
+			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
+			@Summary("Time unit to be used in the timeout configurations")
+			TimeUnit connectionTimeoutTimeUnit)
+		throws InterruptedException, IOException {
+
+		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
+			connectionTimeout);
+
+		String importTaskId = submitImportDeleteTask(
+			connection, inputStream, className, connectionTimeoutMillis);
+
+		checkImportTaskExecutionResult(
+			connection, importTaskId, connectionTimeoutMillis);
+	}
+
 	@DisplayName("Batch - Import Records - Update")
 	@MediaType(MediaType.APPLICATION_JSON)
-	public Result<String, Void> executeUpdateImportTask() {
-		return null;
+	public void executeImportUpdateTask(
+			@Connection LiferayConnection connection,
+			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,
+			@Content @DisplayName("Records")
+			@TypeResolver(value = BatchImportInputTypeResolver.class)
+			InputStream inputStream,
+			@ConfigOverride @DisplayName("Connection Timeout") @Optional
+			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
+			@Summary("Socket connection timeout value")
+			int connectionTimeout,
+			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
+			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
+			@Summary("Time unit to be used in the timeout configurations")
+			TimeUnit connectionTimeoutTimeUnit)
+		throws InterruptedException, IOException {
+
+		long connectionTimeoutMillis = connectionTimeoutTimeUnit.toMillis(
+			connectionTimeout);
+
+		String importTaskId = submitImportUpdateTask(
+			connection, inputStream, className, connectionTimeoutMillis);
+
+		checkImportTaskExecutionResult(
+			connection, importTaskId, connectionTimeoutMillis);
 	}
 
 	private void checkImportTaskExecutionResult(
@@ -407,6 +429,40 @@ public class LiferayBatchOperations {
 		ResourceContext.Builder builder = new ResourceContext.Builder();
 
 		HttpResponse httpResponse = connection.delete(
+			builder.bytes(
+				IOUtil.getBytes(inputStream)
+			).connectionTimeout(
+				connectionTimeout
+			).contentType(
+				"multipart/form-data"
+			).endpoint(
+				"/v1.0/import-task/{className}"
+			).jaxRSAppBase(
+				"/headless-batch-engine"
+			).pathParams(
+				pathParams
+			).build());
+
+		JsonNode payloadJsonNode = jsonNodeReader.fromHttpResponse(
+			httpResponse);
+
+		JsonNode idJsonNode = payloadJsonNode.get("id");
+
+		return String.valueOf(idJsonNode.longValue());
+	}
+
+	private String submitImportUpdateTask(
+			LiferayConnection connection, InputStream inputStream,
+			String className, long connectionTimeout)
+		throws IOException {
+
+		Map<String, String> pathParams = new HashMap<>();
+
+		pathParams.put("className", className);
+
+		ResourceContext.Builder builder = new ResourceContext.Builder();
+
+		HttpResponse httpResponse = connection.put(
 			builder.bytes(
 				IOUtil.getBytes(inputStream)
 			).connectionTimeout(

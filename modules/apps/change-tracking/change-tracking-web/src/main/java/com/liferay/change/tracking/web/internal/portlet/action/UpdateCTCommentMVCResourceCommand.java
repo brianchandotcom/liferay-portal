@@ -51,10 +51,11 @@ public class UpdateCTCommentMVCResourceCommand
 
 		CTComment ctComment = null;
 
-		long commentId = ParamUtil.getLong(resourceRequest, "commentId");
+		long ctCommentId = ParamUtil.getLong(resourceRequest, "ctCommentId");
 
-		if (commentId > 0) {
-			ctComment = ctCommentLocalService.updateCTComment(commentId, value);
+		if (ctCommentId > 0) {
+			ctComment = ctCommentLocalService.updateCTComment(
+				ctCommentId, value);
 		}
 		else {
 			long ctCollectionId = ParamUtil.getLong(

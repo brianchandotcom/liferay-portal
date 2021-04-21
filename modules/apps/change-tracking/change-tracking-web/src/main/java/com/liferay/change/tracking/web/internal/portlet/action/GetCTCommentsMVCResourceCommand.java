@@ -100,11 +100,11 @@ public class GetCTCommentsMVCResourceCommand extends BaseMVCResourceCommand {
 
 			commentsJSONArray.put(
 				JSONUtil.put(
-					"commentId", ctComment.getCtCommentId()
-				).put(
 					"createDate", dateFormatDateTime.format(createDate)
 				).put(
 					"createTime", createDate.getTime()
+				).put(
+					"ctCommentId", ctComment.getCtCommentId()
 				).put(
 					"timeDescription",
 					language.format(

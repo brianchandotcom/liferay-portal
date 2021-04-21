@@ -145,7 +145,7 @@ const CTComments = ({
 		return fetchData.userInfo[userId.toString()].userName;
 	};
 
-	const handleDelete = (commentId) => {
+	const handleDelete = (ctCommentId) => {
 		if (
 			!confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
@@ -157,7 +157,7 @@ const CTComments = ({
 		AUI().use('liferay-portlet-url', () => {
 			const portletURL = Liferay.PortletURL.createURL(deleteCommentURL);
 
-			portletURL.setParameter('commentId', commentId.toString());
+			portletURL.setParameter('ctCommentId', ctCommentId.toString());
 
 			fetch(portletURL.toString())
 				.then((response) => response.json())
@@ -251,11 +251,11 @@ const CTComments = ({
 		});
 	};
 
-	const handleUpdate = (commentId, newValue) => {
+	const handleUpdate = (ctCommentId, newValue) => {
 		AUI().use('liferay-portlet-url', () => {
 			const portletURL = Liferay.PortletURL.createURL(updateCommentURL);
 
-			portletURL.setParameter('commentId', commentId);
+			portletURL.setParameter('ctCommentId', ctCommentId);
 			portletURL.setParameter('value', newValue);
 
 			fetch(portletURL.toString())
@@ -342,24 +342,24 @@ const CTComments = ({
 			const dropdownItems = [
 				{
 					label: Liferay.Language.get('edit'),
-					onClick: () => setEditing(comment.commentId),
+					onClick: () => setEditing(comment.ctCommentId),
 					symbolLeft: 'pencil',
 				},
 				{
 					label: Liferay.Language.get('delete'),
-					onClick: () => handleDelete(comment.commentId),
+					onClick: () => handleDelete(comment.ctCommentId),
 					symbolLeft: 'times-circle',
 				},
 			];
 
 			let commentBody = <pre>{comment.value}</pre>;
 
-			if (editing === comment.commentId) {
+			if (editing === comment.ctCommentId) {
 				commentBody = (
 					<CTEditComment
 						handleCancel={() => setEditing(0)}
 						handleSave={(saveValue) =>
-							handleUpdate(comment.commentId, saveValue)
+							handleUpdate(comment.ctCommentId, saveValue)
 						}
 						initialValue={comment.value}
 					/>
@@ -372,7 +372,7 @@ const CTComments = ({
 						!loading &&
 						fetchData.updatedCommentId &&
 						fetchData.updatedCommentId.toString() ===
-							comment.commentId.toString()
+							comment.ctCommentId.toString()
 							? ' publications-fade-in'
 							: ''
 					}`}
@@ -392,7 +392,7 @@ const CTComments = ({
 									{comment.timeDescription}
 								</div>
 							</div>
-							{editing !== comment.commentId && (
+							{editing !== comment.ctCommentId && (
 								<div className="autofit-col">
 									<ClayDropDownWithItems
 										alignmentPosition={Align.BottomLeft}

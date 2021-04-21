@@ -43,9 +43,9 @@ public class DeleteCTCommentMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long commentId = ParamUtil.getLong(resourceRequest, "commentId");
+		long ctCommentId = ParamUtil.getLong(resourceRequest, "ctCommentId");
 
-		ctCommentLocalService.deleteCTComment(commentId);
+		ctCommentLocalService.deleteCTComment(ctCommentId);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

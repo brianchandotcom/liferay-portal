@@ -14,6 +14,8 @@
 
 package com.liferay.portal.db.partition;
 
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.util.ConnectionWrapper;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -97,6 +100,25 @@ public class DBPartitionUtil {
 		}
 
 		return true;
+	}
+
+	public static void forEachCompanyId(
+			UnsafeConsumer<Long, Exception> unsafeConsumer)
+		throws Exception {
+
+		if (!_DATABASE_PARTITION_ENABLED) {
+			unsafeConsumer.accept(null);
+
+			return;
+		}
+
+		for (Long companyId : PortalInstances.getCompanyIdsBySQL()) {
+			try (SafeClosable safeClosable =
+					CompanyThreadLocal.setWithSafeClosable(companyId)) {
+
+				unsafeConsumer.accept(companyId);
+			}
+		}
 	}
 
 	public static boolean removeDBPartition(long companyId)

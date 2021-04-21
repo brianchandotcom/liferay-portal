@@ -111,6 +111,43 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutSiteDocumentByExternalReferenceCode() throws Exception {
+
+		// Update
+
+		super.testPutSiteDocumentByExternalReferenceCode();
+
+		// Add
+
+		Document randomDocument = randomDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document putDocument =
+			documentResource.putSiteDocumentByExternalReferenceCode(
+				testGroup.getGroupId(),
+				randomDocument.getExternalReferenceCode(), randomDocument,
+				multipartFiles);
+
+		assertEquals(randomDocument, putDocument);
+		assertValid(putDocument);
+
+		Document getDocument =
+			documentResource.getSiteDocumentByExternalReferenceCode(
+				testGroup.getGroupId(), putDocument.getExternalReferenceCode());
+
+		assertEquals(randomDocument, getDocument);
+		assertValid(getDocument);
+
+		assertValid(getDocument, multipartFiles);
+
+		Assert.assertEquals(
+			randomDocument.getExternalReferenceCode(),
+			getDocument.getExternalReferenceCode());
+	}
+
+	@Override
 	protected void assertValid(
 			Document document, Map<String, File> multipartFiles)
 		throws Exception {

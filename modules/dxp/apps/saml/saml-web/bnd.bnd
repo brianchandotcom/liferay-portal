@@ -10,10 +10,9 @@ Provide-Capability:\
 		aggregate=saml-web;\
 		bundle.symbolic.name=com.liferay.saml.web;\
 		resource.bundle.aggregate:String="(&(bundle.symbolic.name=com.liferay.saml.web)(!(aggregate=*))),(bundle.symbolic.name=com.liferay.saml.api),(bundle.symbolic.name=com.liferay.saml.lang)";\
-		resource.bundle.base.name="content.Language"
+		resource.bundle.base.name="content.Language";\
+		service.ranking="0"
 Require-Capability:\
 	liferay.resource.bundle;\
-		filter:="(bundle.symbolic.name=com.liferay.saml.api)",\
-	liferay.resource.bundle;\
-		filter:="(bundle.symbolic.name=com.liferay.saml.lang)"
+		filter:="(bundle.symbolic.name=com.liferay.saml.api)"
 Web-ContextPath: /saml-web

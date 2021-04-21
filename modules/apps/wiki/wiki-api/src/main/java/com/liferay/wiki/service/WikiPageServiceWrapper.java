@@ -55,6 +55,19 @@ public class WikiPageServiceWrapper
 	}
 
 	@Override
+	public com.liferay.wiki.model.WikiPage addPage(
+			String externalReferenceCode, long nodeId, String title,
+			String content, String summary, boolean minorEdit, String format,
+			String parentTitle, String redirectTitle,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _wikiPageService.addPage(
+			externalReferenceCode, nodeId, title, content, summary, minorEdit,
+			format, parentTitle, redirectTitle, serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry
 			addPageAttachment(
 				long nodeId, String title, String fileName, java.io.File file,

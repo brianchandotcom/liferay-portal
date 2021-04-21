@@ -71,6 +71,13 @@ public interface WikiPageService extends BaseService {
 			String redirectTitle, ServiceContext serviceContext)
 		throws PortalException;
 
+	public WikiPage addPage(
+			String externalReferenceCode, long nodeId, String title,
+			String content, String summary, boolean minorEdit, String format,
+			String parentTitle, String redirectTitle,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public FileEntry addPageAttachment(
 			long nodeId, String title, String fileName, File file,
 			String mimeType)

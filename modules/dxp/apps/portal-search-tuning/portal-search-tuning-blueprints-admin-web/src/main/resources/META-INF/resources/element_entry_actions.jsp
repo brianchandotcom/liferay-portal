@@ -58,6 +58,16 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		/>
 	</c:if>
 
+	<portlet:resourceURL id="<%= BlueprintsAdminMVCCommandNames.EXPORT_ELEMENT %>" var="exportEntryURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="<%= BlueprintsAdminWebKeys.ELEMENT_ID %>" value="<%= String.valueOf(elementId) %>" />
+	</portlet:resourceURL>
+
+	<liferay-ui:icon
+		message="export"
+		url="<%= exportEntryURL %>"
+	/>
+
 	<c:if test="<%= BlueprintsAdminPermission.contains(permissionChecker, companyGroupId, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Element.class.getName() %>"
@@ -76,16 +86,6 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 			useDialog="<%= true %>"
 		/>
 	</c:if>
-
-	<portlet:resourceURL id="<%= BlueprintsAdminMVCCommandNames.EXPORT_ELEMENT %>" var="exportEntryURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="<%= BlueprintsAdminWebKeys.ELEMENT_ID %>" value="<%= String.valueOf(elementId) %>" />
-	</portlet:resourceURL>
-
-	<liferay-ui:icon
-		message="export"
-		url="<%= exportEntryURL %>"
-	/>
 
 	<c:if test="<%= ElementEntryPermission.contains(permissionChecker, element, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="<%= BlueprintsAdminMVCCommandNames.DELETE_ELEMENT %>" var="deleteEntryURL">

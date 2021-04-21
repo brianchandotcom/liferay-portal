@@ -51,10 +51,6 @@
 
 			<%
 			Date modified = entry.getModifiedDate();
-
-			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modified.getTime(), true);
-
-			String userName = (themeDisplay.getDefaultUserId() == entry.getUserId()) ? "system" : entry.getUserName();
 			%>
 
 			<h5 class="text-default text-truncate">
@@ -62,7 +58,10 @@
 					<liferay-ui:message arguments="<%= String.valueOf(entry.getBlueprintId()) %>" key="id-x" />
 				</span>
 				<span class="id-text">
-					<liferay-ui:message arguments="<%= new String[] {userName, modifiedDateDescription} %>" key="modified-by-x-x-ago" />
+					<liferay-ui:message arguments='<%= (themeDisplay.getDefaultUserId() == entry.getUserId()) ? "system" : entry.getUserName() %>' key="created-by-x" />
+				</span>
+				<span class="id-text">
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modified.getTime(), true) %>" key="modified-x-ago" />
 				</span>
 			</h5>
 		</liferay-ui:search-container-column-text>

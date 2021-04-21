@@ -33,10 +33,37 @@ import InfoItemService from '../../../../../../src/main/resources/META-INF/resou
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import MappingSelector from '../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/MappingSelector';
 
+const defaultMappingFields = {
+	'InfoItemClassNameId-infoItemClassTypeId': [
+		{
+			fields: [
+				{key: 'unmapped', label: 'unmapped'},
+				{
+					key: 'text-field-1',
+					label: 'Text Field 1',
+					type: 'text',
+				},
+			],
+		},
+	],
+	'mappingType-mappingSubtype': [
+		{
+			fields: [
+				{
+					key: 'structure-field-1',
+					label: 'Structure Field 1',
+					type: 'text',
+				},
+			],
+		},
+	],
+};
+
 const infoItem = {
 	className: 'InfoItemClassName',
 	classNameId: 'InfoItemClassNameId',
 	classPK: 'infoItemClassPK',
+	classTypeId: 'infoItemClassTypeId',
 	title: 'Info Item',
 };
 
@@ -54,11 +81,11 @@ jest.mock(
 			layoutType: '0',
 			selectedMappingTypes: {
 				subtype: {
-					id: '0',
+					id: 'mappingSubtype',
 					label: 'mappingSubtype',
 				},
 				type: {
-					id: '1',
+					id: 'mappingType',
 					label: 'mappingType',
 				},
 			},
@@ -118,7 +145,11 @@ jest.mock(
 	})
 );
 
-function renderMappingSelector({mappedItem = {}, onMappingSelect = () => {}}) {
+function renderMappingSelector({
+	mappedItem = {},
+	mappingFields = defaultMappingFields,
+	onMappingSelect = () => {},
+}) {
 	const state = {
 		fragmentEntryLinks: {
 			0: {
@@ -132,6 +163,7 @@ function renderMappingSelector({mappedItem = {}, onMappingSelect = () => {}}) {
 			},
 		},
 		mappedInfoItems: [],
+		mappingFields,
 		pageContents: [],
 		segmentsExperienceId: 0,
 	};
@@ -226,6 +258,7 @@ describe('MappingSelector', () => {
 			className: 'InfoItemClassName',
 			classNameId: 'InfoItemClassNameId',
 			classPK: 'infoItemClassPK',
+			classTypeId: 'infoItemClassTypeId',
 			fieldId: 'text-field-1',
 			title: 'Info Item',
 		});
@@ -330,6 +363,9 @@ describe('MappingSelector', () => {
 		await act(async () => {
 			renderMappingSelector({
 				mappedItem: infoItem,
+				mappingFields: {
+					'InfoItemClassNameId-infoItemClassTypeId': [],
+				},
 			});
 		});
 

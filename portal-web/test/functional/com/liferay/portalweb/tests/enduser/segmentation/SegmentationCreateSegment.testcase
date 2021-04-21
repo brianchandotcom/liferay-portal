@@ -387,12 +387,27 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130322."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionReferrerURL {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130322 AddSegmentBySessionReferrerURL pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Referrer URL");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionReferrerURL Test");
+
+		Segmentation.fillProperty(propertyField = "http://localhost:8080");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionReferrerURL Test");
+
+		Segmentation.viewSegment(propertyField = "http://localhost:8080");
 	}
 
 	@description = "This is a test for LPS-130323."

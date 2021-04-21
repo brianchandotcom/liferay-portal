@@ -5,7 +5,7 @@
 		"portletPreferences": {
 			"displayDepth": "0",
 			"displayStyle": {
-				"FileName": "MINIUM_SITE_NAVIGATION.ftl",
+				"FileName": "minium_site_navigation.ftl",
 				"Name": "Minium Site Navigation",
 				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},
@@ -24,7 +24,7 @@
 		"portletPreferences": {
 			"displayDepth": "0",
 			"displayStyle": {
-				"FileName": "MINIUM_SUB_SITE_NAVIGATION.ftl",
+				"FileName": "minium_sub_site_navigation.ftl",
 				"Name": "Minium Sub Site Navigation",
 				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},

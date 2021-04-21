@@ -214,7 +214,7 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "Segmentation#MEMBER_NAME_LISTED",
-			value1 = "Test Test");
+			value1 = "${memberName}");
 
 		SelectFrame(value1 = "relative=top");
 

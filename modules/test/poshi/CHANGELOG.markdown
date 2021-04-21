@@ -1,5 +1,23 @@
 # Poshi Runner Change Log
 
+## 1.0.299
+
+### Other
+
+* [LRCI-2114](https://issues.liferay.com/browse/LRCI-2114) - Investigate why there are so many missing results
+
+### Runner
+
+* [POSHI-158](https://issues.liferay.com/browse/POSHI-158) - Create a printout of total pause duration that a test uses
+
+### Validation
+
+* [POSHI-153](https://issues.liferay.com/browse/POSHI-153) - Add validation rule to disallow duplicate test file names
+
+### WebDriver
+
+* [POSHI-154](https://issues.liferay.com/browse/POSHI-154) - Add RemoteDriver for all browsers
+
 ## 1.0.296
 
 ### Other

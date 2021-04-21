@@ -1,12 +1,38 @@
+@import 'atlas-variables';
+
 .page-editor__display-page-preview-item-selector {
+	&-label-wrapper {
+		&::after {
+			border-left: solid $secondary-l2 thin;
+			content: '';
+			display: block;
+			height: 24px;
+			margin-left: 8px;
+		}
+
+		&-dark::after {
+			border-left-color: $secondary;
+		}
+	}
+
 	&-label {
 		font-size: 0.875rem;
 		font-weight: 600;
 		padding-right: 8px;
 	}
 
-	&-input {
-		width: 20ch;
+	&-button {
+		&.btn.btn-dark,
+		&.btn.btn-secondary {
+			background-color: transparent;
+			border-color: transparent;
+			box-sizing: border-box;
+			width: 224px;
+		}
+
+		&.btn.btn-secondary {
+			background-color: $light-l1;
+		}
 	}
 
 	&-dropdown-item {

@@ -59,7 +59,12 @@ export const DisplayPagePreviewItemSelector = ({dark = false}) => {
 			role="listbox"
 			trigger={
 				<p
-					className="align-items-center d-flex flex-row mb-0 w-100"
+					className={classNames(
+						'align-items-center d-flex flex-row mb-0 page-editor__display-page-preview-item-selector-label-wrapper w-100',
+						{
+							'page-editor__display-page-preview-item-selector-label-wrapper-dark': dark,
+						}
+					)}
 					id={selectLabelId}
 					role="label"
 				>
@@ -73,12 +78,12 @@ export const DisplayPagePreviewItemSelector = ({dark = false}) => {
 					</strong>
 					<button
 						className={classNames(
-							'align-items-center btn btn-sm d-flex',
+							'align-items-center btn btn-sm d-flex page-editor__display-page-preview-item-selector-button',
 							dark ? 'btn-dark' : 'btn-secondary'
 						)}
 						type="button"
 					>
-						<span className="flex-grow-1 overflow-hidden page-editor__display-page-preview-item-selector-input text-left text-truncate">
+						<span className="flex-grow-1 overflow-hidden text-left text-truncate">
 							{previewItem ? previewItem.label : NO_ITEM_LABEL}
 						</span>
 						<ClayIcon

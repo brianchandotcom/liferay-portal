@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.5.1",
+		"@clayui/alert": "3.26.0",
 		"@clayui/autocomplete": "3.25.1",
 		"@clayui/badge": "3.2.0",
 		"@clayui/button": "3.6.0",

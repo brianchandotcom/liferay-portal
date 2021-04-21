@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -70,15 +71,13 @@ public class LayoutsTreeDisplayContext {
 	public String getAddChildCollectionURLTemplate() throws Exception {
 		return StringBundler.concat(
 			getAddCollectionLayoutURL(), StringPool.AMPERSAND,
-			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES),
-			"selPlid={plid}");
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE, "selPlid={plid}");
 	}
 
 	public String getAddChildURLTemplate() throws Exception {
 		return StringBundler.concat(
 			getAddLayoutURL(), StringPool.AMPERSAND,
-			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES),
-			"selPlid={plid}");
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE, "selPlid={plid}");
 	}
 
 	public String getAddCollectionLayoutURL() throws Exception {
@@ -200,8 +199,7 @@ public class LayoutsTreeDisplayContext {
 	public String getConfigureLayoutURLTemplate() throws Exception {
 		return StringBundler.concat(
 			getConfigureLayoutURL(), StringPool.AMPERSAND,
-			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES),
-			"selPlid={plid}");
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE, "selPlid={plid}");
 	}
 
 	public long getGroupId() {

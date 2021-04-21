@@ -111,8 +111,8 @@ definition {
 		}
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT",
 			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT",
 			value1 = "${productName}");
 
 		AssertTextEquals(

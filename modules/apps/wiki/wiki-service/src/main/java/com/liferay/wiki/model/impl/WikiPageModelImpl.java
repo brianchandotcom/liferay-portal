@@ -81,18 +81,18 @@ public class WikiPageModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"pageId", Types.BIGINT}, {"resourcePrimKey", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"nodeId", Types.BIGINT}, {"title", Types.VARCHAR},
-		{"version", Types.DOUBLE}, {"minorEdit", Types.BOOLEAN},
-		{"content", Types.CLOB}, {"summary", Types.VARCHAR},
-		{"format", Types.VARCHAR}, {"head", Types.BOOLEAN},
-		{"parentTitle", Types.VARCHAR}, {"redirectTitle", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"externalReferenceCode", Types.VARCHAR}, {"pageId", Types.BIGINT},
+		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"nodeId", Types.BIGINT},
+		{"title", Types.VARCHAR}, {"version", Types.DOUBLE},
+		{"minorEdit", Types.BOOLEAN}, {"content", Types.CLOB},
+		{"summary", Types.VARCHAR}, {"format", Types.VARCHAR},
+		{"head", Types.BOOLEAN}, {"parentTitle", Types.VARCHAR},
+		{"redirectTitle", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -101,6 +101,7 @@ public class WikiPageModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -127,7 +128,7 @@ public class WikiPageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WikiPage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,pageId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,nodeId LONG,title VARCHAR(255) null,version DOUBLE,minorEdit BOOLEAN,content TEXT null,summary STRING null,format VARCHAR(75) null,head BOOLEAN,parentTitle VARCHAR(255) null,redirectTitle VARCHAR(255) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table WikiPage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,pageId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,nodeId LONG,title VARCHAR(255) null,version DOUBLE,minorEdit BOOLEAN,content TEXT null,summary STRING null,format VARCHAR(75) null,head BOOLEAN,parentTitle VARCHAR(255) null,redirectTitle VARCHAR(255) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table WikiPage";
 
@@ -153,73 +154,79 @@ public class WikiPageModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FORMAT_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long FORMAT_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long HEAD_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NODEID_COLUMN_BITMASK = 16L;
+	public static final long HEAD_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PARENTTITLE_COLUMN_BITMASK = 32L;
+	public static final long NODEID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long REDIRECTTITLE_COLUMN_BITMASK = 64L;
+	public static final long PARENTTITLE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 128L;
+	public static final long REDIRECTTITLE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 256L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TITLE_COLUMN_BITMASK = 512L;
+	public static final long STATUS_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 1024L;
+	public static final long TITLE_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2048L;
+	public static final long USERID_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 4096L;
+	public static final long UUID_COLUMN_BITMASK = 4096L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long VERSION_COLUMN_BITMASK = 8192L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -252,6 +259,7 @@ public class WikiPageModelImpl
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setPageId(soapModel.getPageId());
 		model.setResourcePrimKey(soapModel.getResourcePrimKey());
 		model.setGroupId(soapModel.getGroupId());
@@ -431,6 +439,11 @@ public class WikiPageModelImpl
 		attributeGetterFunctions.put("uuid", WikiPage::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<WikiPage, String>)WikiPage::setUuid);
+		attributeGetterFunctions.put(
+			"externalReferenceCode", WikiPage::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<WikiPage, String>)WikiPage::setExternalReferenceCode);
 		attributeGetterFunctions.put("pageId", WikiPage::getPageId);
 		attributeSetterBiConsumers.put(
 			"pageId", (BiConsumer<WikiPage, Long>)WikiPage::setPageId);
@@ -561,6 +574,35 @@ public class WikiPageModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1429,6 +1471,7 @@ public class WikiPageModelImpl
 
 		wikiPageImpl.setMvccVersion(getMvccVersion());
 		wikiPageImpl.setUuid(getUuid());
+		wikiPageImpl.setExternalReferenceCode(getExternalReferenceCode());
 		wikiPageImpl.setPageId(getPageId());
 		wikiPageImpl.setResourcePrimKey(getResourcePrimKey());
 		wikiPageImpl.setGroupId(getGroupId());
@@ -1567,6 +1610,16 @@ public class WikiPageModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			wikiPageCacheModel.uuid = null;
+		}
+
+		wikiPageCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = wikiPageCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			wikiPageCacheModel.externalReferenceCode = null;
 		}
 
 		wikiPageCacheModel.pageId = getPageId();
@@ -1766,6 +1819,7 @@ public class WikiPageModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _pageId;
 	private long _resourcePrimKey;
 	private long _groupId;
@@ -1822,6 +1876,8 @@ public class WikiPageModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("pageId", _pageId);
 		_columnOriginalValues.put("resourcePrimKey", _resourcePrimKey);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1872,51 +1928,53 @@ public class WikiPageModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("pageId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("resourcePrimKey", 8L);
+		columnBitmasks.put("pageId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("resourcePrimKey", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("nodeId", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("title", 2048L);
+		columnBitmasks.put("nodeId", 2048L);
 
-		columnBitmasks.put("version", 4096L);
+		columnBitmasks.put("title", 4096L);
 
-		columnBitmasks.put("minorEdit", 8192L);
+		columnBitmasks.put("version", 8192L);
 
-		columnBitmasks.put("content", 16384L);
+		columnBitmasks.put("minorEdit", 16384L);
 
-		columnBitmasks.put("summary", 32768L);
+		columnBitmasks.put("content", 32768L);
 
-		columnBitmasks.put("format", 65536L);
+		columnBitmasks.put("summary", 65536L);
 
-		columnBitmasks.put("head", 131072L);
+		columnBitmasks.put("format", 131072L);
 
-		columnBitmasks.put("parentTitle", 262144L);
+		columnBitmasks.put("head", 262144L);
 
-		columnBitmasks.put("redirectTitle", 524288L);
+		columnBitmasks.put("parentTitle", 524288L);
 
-		columnBitmasks.put("lastPublishDate", 1048576L);
+		columnBitmasks.put("redirectTitle", 1048576L);
 
-		columnBitmasks.put("status", 2097152L);
+		columnBitmasks.put("lastPublishDate", 2097152L);
 
-		columnBitmasks.put("statusByUserId", 4194304L);
+		columnBitmasks.put("status", 4194304L);
 
-		columnBitmasks.put("statusByUserName", 8388608L);
+		columnBitmasks.put("statusByUserId", 8388608L);
 
-		columnBitmasks.put("statusDate", 16777216L);
+		columnBitmasks.put("statusByUserName", 16777216L);
+
+		columnBitmasks.put("statusDate", 33554432L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

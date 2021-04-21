@@ -76,12 +76,14 @@ public class WikiPageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", pageId=");
 		sb.append(pageId);
 		sb.append(", resourcePrimKey=");
@@ -144,6 +146,13 @@ public class WikiPageCacheModel
 		}
 		else {
 			wikiPageImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			wikiPageImpl.setExternalReferenceCode("");
+		}
+		else {
+			wikiPageImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		wikiPageImpl.setPageId(pageId);
@@ -257,6 +266,7 @@ public class WikiPageCacheModel
 
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		pageId = objectInput.readLong();
 
@@ -302,6 +312,13 @@ public class WikiPageCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(pageId);
@@ -392,6 +409,7 @@ public class WikiPageCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long pageId;
 	public long resourcePrimKey;
 	public long groupId;

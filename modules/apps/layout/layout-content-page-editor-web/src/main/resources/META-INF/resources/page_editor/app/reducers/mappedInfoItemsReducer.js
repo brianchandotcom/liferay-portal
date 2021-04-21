@@ -28,6 +28,7 @@ export default function mappedInfoItemsReducer(
 					className: action.className,
 					classNameId: action.classNameId,
 					classPK: action.classPK,
+					classTypeId: action.classTypeId,
 					subtype: action.itemSubtype,
 					title: action.title,
 					type: action.itemType,

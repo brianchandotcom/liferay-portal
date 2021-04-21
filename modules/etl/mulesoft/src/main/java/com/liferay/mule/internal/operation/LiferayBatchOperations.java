@@ -115,7 +115,6 @@ public class LiferayBatchOperations {
 	}
 
 	@DisplayName("Batch - Import Records - Create")
-	@MediaType(MediaType.APPLICATION_JSON)
 	public void executeImportCreateTask(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,
@@ -145,7 +144,6 @@ public class LiferayBatchOperations {
 	}
 
 	@DisplayName("Batch - Import Records - Delete")
-	@MediaType(MediaType.APPLICATION_JSON)
 	public void executeImportDeleteTask(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,
@@ -173,7 +171,6 @@ public class LiferayBatchOperations {
 	}
 
 	@DisplayName("Batch - Import Records - Update")
-	@MediaType(MediaType.APPLICATION_JSON)
 	public void executeImportUpdateTask(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(ClassNameTypeKeysResolver.class) String className,

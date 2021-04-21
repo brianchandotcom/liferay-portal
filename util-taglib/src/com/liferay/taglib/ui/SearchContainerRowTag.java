@@ -331,6 +331,8 @@ public class SearchContainerRowTag<R>
 					FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
 						String.valueOf(rowIdObject));
 			}
+
+			request.setAttribute("rowIdProperty", rowId);
 		}
 
 		_resultRow = new com.liferay.taglib.search.ResultRow(

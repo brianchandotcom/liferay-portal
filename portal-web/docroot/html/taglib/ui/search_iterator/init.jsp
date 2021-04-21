@@ -45,4 +45,6 @@ List resultRows = searchContainer.getResultRows();
 String summary = searchContainer.getSummary();
 
 JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
+
+String rowIdProperty = (String)request.getAttribute("rowIdProperty");
 %>

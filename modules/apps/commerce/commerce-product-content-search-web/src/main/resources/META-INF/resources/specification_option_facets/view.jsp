@@ -16,12 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<style>
-	.facet-checkbox-label {
-		display: block;
-	}
-</style>
-
 <%
 CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayContext = (CPSpecificationOptionFacetsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
@@ -67,7 +61,7 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 								<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= cpSpecificationOptionFacetsDisplayContext.getPaginationStartParameterName() %>" />
 
 								<aui:fieldset>
-								<ul class="asset-type list-unstyled">
+								<ul class="list-unstyled">
 
 									<%
 									int i = 0;
@@ -77,25 +71,27 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 									%>
 
 										<li class="facet-value">
-											<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= facet.getFieldName() + i %>">
-												<input
-													class="facet-term"
-													data-term-id="<%= HtmlUtil.escape(termCollector.getTerm()) %>"
-													id="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
-													name="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
-													onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-													type="checkbox"
-													<%= cpSpecificationOptionFacetsDisplayContext.isCPDefinitionSpecificationOptionValueSelected(facet.getFieldName(), termCollector.getTerm()) ? "checked" : "" %>
-												/>
+											<div class="custom-checkbox custom-control">
+												<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= facet.getFieldName() + i %>">
+													<input
+														class="custom-control-input facet-term"
+														data-term-id="<%= HtmlUtil.escape(termCollector.getTerm()) %>"
+														id="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
+														name="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
+														onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+														type="checkbox"
+														<%= cpSpecificationOptionFacetsDisplayContext.isCPDefinitionSpecificationOptionValueSelected(facet.getFieldName(), termCollector.getTerm()) ? "checked" : "" %>
+													/>
 
-												<span class="term-name">
-													<%= HtmlUtil.escape(termCollector.getTerm()) %>
-												</span>
+													<span class="custom-control-label term-name <%= cpSpecificationOptionFacetsDisplayContext.isCPDefinitionSpecificationOptionValueSelected(facet.getFieldName(), termCollector.getTerm()) ? "facet-term-selected" : "facet-term-unselected" %>">
+														<span class="custom-control-label-text"><%= HtmlUtil.escape(termCollector.getTerm()) %></span>
+													</span>
 
-												<small class="term-count">
-													(<%= termCollector.getFrequency() %>)
-												</small>
-											</label>
+													<small class="term-count">
+														(<%= termCollector.getFrequency() %>)
+													</small>
+												</label>
+											</div>
 										</li>
 
 									<%

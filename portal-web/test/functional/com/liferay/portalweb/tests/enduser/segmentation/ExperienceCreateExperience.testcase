@@ -360,7 +360,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130327."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionBrowserSegment {
 		property portal.acceptance = "false";

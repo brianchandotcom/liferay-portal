@@ -184,6 +184,7 @@ definition {
 	@priority = "4"
 	test PrependFriendlyURLStyle {
 		property custom.properties = "locale.prepend.friendly.url.style=3";
+		property test.name.skip.portal.instance = "Locale#PrependFriendlyURLStyle";
 
 		var portalURL = PropsUtil.get("portal.url");
 

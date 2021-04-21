@@ -657,6 +657,24 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro assertFieldNotPresent {
+		if (isSet(fieldFieldLabel)) {
+			AssertElementNotPresent(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+		}
+		else if (isSet(fieldsetLabel)) {
+			AssertElementNotPresent(
+				key_fieldsetLabel = "${fieldsetLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+		}
+		else if (isSet(fieldsGroupLabel)) {
+			AssertElementNotPresent(
+				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
+	}
+
 	macro assertFieldRepeated {
 		AssertElementPresent(
 			key_fieldName = "${fieldName}",

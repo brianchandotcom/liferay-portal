@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Category;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductChannel;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductOption;
@@ -169,6 +170,26 @@ public class ProductSerDes {
 			sb.append(liferayToJSONDateFormat.format(product.getCreateDate()));
 
 			sb.append("\"");
+		}
+
+		if (product.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < product.getCustomFields().length; i++) {
+				sb.append(String.valueOf(product.getCustomFields()[i]));
+
+				if ((i + 1) < product.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (product.getDefaultSku() != null) {
@@ -696,6 +717,13 @@ public class ProductSerDes {
 				liferayToJSONDateFormat.format(product.getCreateDate()));
 		}
 
+		if (product.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put("customFields", String.valueOf(product.getCustomFields()));
+		}
+
 		if (product.getDefaultSku() == null) {
 			map.put("defaultSku", null);
 		}
@@ -1036,6 +1064,18 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "createDate")) {
 				if (jsonParserFieldValue != null) {
 					product.setCreateDate(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					product.setCustomFields(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "defaultSku")) {

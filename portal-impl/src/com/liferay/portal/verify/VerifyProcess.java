@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -61,14 +62,24 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	public void verify() throws VerifyException {
 		long start = System.currentTimeMillis();
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Verifying " + ClassUtil.getClassName(this));
-		}
-
 		try (Connection con = DataAccess.getConnection()) {
 			connection = con;
 
-			doVerify();
+			doProcess(
+				companyId -> {
+					if (_log.isInfoEnabled()) {
+						String info =
+							"Verifying " + ClassUtil.getClassName(this);
+
+						if (Validator.isNotNull(companyId)) {
+							info += "#" + companyId;
+						}
+
+						_log.info(info);
+					}
+
+					doVerify();
+				});
 		}
 		catch (Exception exception) {
 			throw new VerifyException(exception);

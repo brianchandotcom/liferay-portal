@@ -164,12 +164,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePagePage.getTotalCount());
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSitePagesPageWithSortString() {
-	}
-
 	@Override
 	@Test
 	public void testGraphQLGetSiteSitePagesPage() throws Exception {

@@ -157,6 +157,98 @@ definition {
 	}
 
 	@priority = "4"
+	test PrependFriendlyURLStyle {
+		property custom.properties = "locale.prepend.friendly.url.style=3";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			widgetName = "Language Selector");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "es-ES",
+			textIcon = "español-España");
+
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/test-page");
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dupdate.properties.original=locale.prepend.friendly.url.style=3 -Dupdate.properties=locale.prepend.friendly.url.style=0");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "es-ES",
+			textIcon = "español-España");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page");
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dupdate.properties.original=locale.prepend.friendly.url.style=0-Dupdate.properties=locale.prepend.friendly.url.style=1");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "es-ES",
+			textIcon = "español-España");
+
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/test-page");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en-US",
+			textIcon = "english-United States");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page");
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dupdate.properties.original=locale.prepend.friendly.url.style=1 -Dupdate.properties=locale.prepend.friendly.url.style=2");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "es-ES",
+			textIcon = "español-España");
+
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/test-page");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en-US",
+			textIcon = "english-United States");
+
+		AssertLocation(value1 = "${portalURL}/en/web/test-site-name/test-page");
+	}
+
+	@priority = "4"
 	test RestrictAvailableLocales {
 		property custom.properties = "locales=ca_ES,zh_CN,nl_NL,en_AU,en_GB,en_US,fi_FI,fr_FR,de_DE,it_IT,iw_IL,hu_HU,ja_JP,pt_BR,es_ES";
 		property test.name.skip.portal.instance = "Locale#RestrictAvailableLocales";

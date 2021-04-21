@@ -104,6 +104,7 @@ import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.escape.WikiEscapeUtil;
 import com.liferay.wiki.exception.DuplicatePageException;
+import com.liferay.wiki.exception.DuplicatePageExternalReferenceCodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.PageTitleException;
@@ -188,6 +189,47 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addPage(
+			null, userId, nodeId, title, version, content, summary, minorEdit,
+			format, head, parentTitle, redirectTitle, serviceContext);
+	}
+
+	@Override
+	public WikiPage addPage(
+			long userId, long nodeId, String title, String content,
+			String summary, boolean minorEdit, ServiceContext serviceContext)
+		throws PortalException {
+
+		double version = WikiPageConstants.VERSION_DEFAULT;
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
+
+		WikiGroupServiceOverriddenConfiguration
+			wikiGroupServiceOverriddenConfiguration =
+				_configurationProvider.getConfiguration(
+					WikiGroupServiceOverriddenConfiguration.class,
+					new GroupServiceSettingsLocator(
+						node.getGroupId(), WikiConstants.SERVICE_NAME));
+
+		String format = wikiGroupServiceOverriddenConfiguration.defaultFormat();
+
+		boolean head = false;
+		String parentTitle = null;
+		String redirectTitle = null;
+
+		return addPage(
+			userId, nodeId, title, version, content, summary, minorEdit, format,
+			head, parentTitle, redirectTitle, serviceContext);
+	}
+
+	@Override
+	public WikiPage addPage(
+			String externalReferenceCode, long userId, long nodeId,
+			String title, double version, String content, String summary,
+			boolean minorEdit, String format, boolean head, String parentTitle,
+			String redirectTitle, ServiceContext serviceContext)
+		throws PortalException {
+
 		// Page
 
 		User user = userLocalService.getUser(userId);
@@ -195,6 +237,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		Date now = new Date();
 
 		long pageId = counterLocalService.increment();
+
+		if (externalReferenceCode == null) {
+			externalReferenceCode = String.valueOf(pageId);
+		}
+
+		_validateExternalReferenceCode(
+			externalReferenceCode, node.getGroupId());
 
 		content = SanitizerUtil.sanitize(
 			user.getCompanyId(), node.getGroupId(), userId,
@@ -212,6 +261,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage page = wikiPagePersistence.create(pageId);
 
 		page.setUuid(serviceContext.getUuid());
+		page.setExternalReferenceCode(externalReferenceCode);
 		page.setResourcePrimKey(resourcePrimKey);
 		page.setGroupId(node.getGroupId());
 		page.setCompanyId(user.getCompanyId());
@@ -263,34 +313,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Workflow
 
 		return _startWorkflowInstance(userId, page, serviceContext);
-	}
-
-	@Override
-	public WikiPage addPage(
-			long userId, long nodeId, String title, String content,
-			String summary, boolean minorEdit, ServiceContext serviceContext)
-		throws PortalException {
-
-		double version = WikiPageConstants.VERSION_DEFAULT;
-
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
-
-		WikiGroupServiceOverriddenConfiguration
-			wikiGroupServiceOverriddenConfiguration =
-				_configurationProvider.getConfiguration(
-					WikiGroupServiceOverriddenConfiguration.class,
-					new GroupServiceSettingsLocator(
-						node.getGroupId(), WikiConstants.SERVICE_NAME));
-
-		String format = wikiGroupServiceOverriddenConfiguration.defaultFormat();
-
-		boolean head = false;
-		String parentTitle = null;
-		String redirectTitle = null;
-
-		return addPage(
-			userId, nodeId, title, version, content, summary, minorEdit, format,
-			head, parentTitle, redirectTitle, serviceContext);
 	}
 
 	@Override
@@ -3365,6 +3387,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		_wikiPageTitleValidator.validate(title);
 
 		_validate(nodeId, content, format);
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		WikiPage wikiPage = wikiPagePersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (wikiPage != null) {
+			throw new DuplicatePageExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate WikiPage external reference code ",
+					externalReferenceCode, "in group ", groupId));
+		}
 	}
 
 	private static final String _OUTGOING_LINKS = "OUTGOING_LINKS";

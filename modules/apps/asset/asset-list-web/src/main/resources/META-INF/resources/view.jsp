@@ -150,8 +150,3 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 		</c:otherwise>
 	</c:choose>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= assetListManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
-/>

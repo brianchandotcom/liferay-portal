@@ -163,11 +163,6 @@ public class AssetListManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "assetListEntriesManagementToolbarDefaultEventHandler";
-	}
-
-	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 

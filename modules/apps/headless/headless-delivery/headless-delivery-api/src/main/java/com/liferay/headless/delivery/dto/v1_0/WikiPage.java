@@ -339,6 +339,34 @@ public class WikiPage implements Serializable {
 	@NotEmpty
 	protected String encodingFormat;
 
+	@Schema(description = "The wiki page's external reference code.")
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The wiki page's external reference code.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
 	@Schema(description = "The wiki page's main title.")
 	public String getHeadline() {
 		return headline;
@@ -421,6 +449,38 @@ public class WikiPage implements Serializable {
 	@GraphQLField(description = "A list of keywords describing the blog post.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
+
+	@Schema(
+		description = "The ID of the wiki node to which the wiki page belongs."
+	)
+	public Long getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	@JsonIgnore
+	public void setNodeId(
+		UnsafeSupplier<Long, Exception> nodeIdUnsafeSupplier) {
+
+		try {
+			nodeId = nodeIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The ID of the wiki node to which the wiki page belongs."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long nodeId;
 
 	@Schema(description = "The wiki page's number attachments.")
 	public Integer getNumberOfAttachments() {
@@ -862,6 +922,20 @@ public class WikiPage implements Serializable {
 			sb.append("\"");
 		}
 
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		if (headline != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -908,6 +982,16 @@ public class WikiPage implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (nodeId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nodeId\": ");
+
+			sb.append(nodeId);
 		}
 
 		if (numberOfAttachments != null) {

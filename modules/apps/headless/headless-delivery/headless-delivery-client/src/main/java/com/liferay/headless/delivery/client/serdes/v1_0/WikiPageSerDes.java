@@ -185,6 +185,20 @@ public class WikiPageSerDes {
 			sb.append("\"");
 		}
 
+		if (wikiPage.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(wikiPage.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (wikiPage.getHeadline() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -231,6 +245,16 @@ public class WikiPageSerDes {
 			}
 
 			sb.append("]");
+		}
+
+		if (wikiPage.getNodeId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nodeId\": ");
+
+			sb.append(wikiPage.getNodeId());
 		}
 
 		if (wikiPage.getNumberOfAttachments() != null) {
@@ -451,6 +475,15 @@ public class WikiPageSerDes {
 				"encodingFormat", String.valueOf(wikiPage.getEncodingFormat()));
 		}
 
+		if (wikiPage.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(wikiPage.getExternalReferenceCode()));
+		}
+
 		if (wikiPage.getHeadline() == null) {
 			map.put("headline", null);
 		}
@@ -470,6 +503,13 @@ public class WikiPageSerDes {
 		}
 		else {
 			map.put("keywords", String.valueOf(wikiPage.getKeywords()));
+		}
+
+		if (wikiPage.getNodeId() == null) {
+			map.put("nodeId", null);
+		}
+		else {
+			map.put("nodeId", String.valueOf(wikiPage.getNodeId()));
 		}
 
 		if (wikiPage.getNumberOfAttachments() == null) {
@@ -626,6 +666,14 @@ public class WikiPageSerDes {
 					wikiPage.setEncodingFormat((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					wikiPage.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "headline")) {
 				if (jsonParserFieldValue != null) {
 					wikiPage.setHeadline((String)jsonParserFieldValue);
@@ -640,6 +688,12 @@ public class WikiPageSerDes {
 				if (jsonParserFieldValue != null) {
 					wikiPage.setKeywords(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "nodeId")) {
+				if (jsonParserFieldValue != null) {
+					wikiPage.setNodeId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

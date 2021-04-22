@@ -227,6 +227,27 @@ public class WikiPage implements Cloneable, Serializable {
 
 	protected String encodingFormat;
 
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String externalReferenceCode;
+
 	public String getHeadline() {
 		return headline;
 	}
@@ -287,6 +308,27 @@ public class WikiPage implements Cloneable, Serializable {
 	}
 
 	protected String[] keywords;
+
+	public Long getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public void setNodeId(
+		UnsafeSupplier<Long, Exception> nodeIdUnsafeSupplier) {
+
+		try {
+			nodeId = nodeIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long nodeId;
 
 	public Integer getNumberOfAttachments() {
 		return numberOfAttachments;

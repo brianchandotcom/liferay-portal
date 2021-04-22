@@ -3436,6 +3436,41 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField(
+		description = "Deletes the wiki page by external reference code."
+	)
+	public boolean deleteSiteWikiPageByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource ->
+				wikiPageResource.deleteSiteWikiPageByExternalReferenceCode(
+					externalReferenceCode, Long.valueOf(siteKey)));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the wiki page with the given external reference code, or creates it if it not exists."
+	)
+	public WikiPage updateSiteWikiPageByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("wikiPage") WikiPage wikiPage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource ->
+				wikiPageResource.putSiteWikiPageByExternalReferenceCode(
+					externalReferenceCode, Long.valueOf(siteKey), wikiPage));
+	}
+
 	@GraphQLField(description = "Creates a new wiki page")
 	public WikiPage createWikiNodeWikiPage(
 			@GraphQLName("wikiNodeId") Long wikiNodeId,

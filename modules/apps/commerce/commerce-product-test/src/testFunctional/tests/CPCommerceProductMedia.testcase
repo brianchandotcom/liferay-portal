@@ -88,12 +88,61 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6028. AddAnImageToAnOption"
-	@ignore = "true"
 	@priority = "3"
 	test AddAnImageToAnOption {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnImageToAnOption";
 
-		// TODO COMMERCE-6028 AddAnImageToAnOption
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
+
+		CPCommerceCatalog.newOptionsEntry(
+			optionDescription = "Option Description",
+			optionFieldType = "Select from List",
+			optionName = "Color");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		for(var toggleLabel : list "Faceted Navigation,Required,SKU Contributor"){
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "${toggleLabel}",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		CPCommerceCatalog.addOptionValues(
+			optionEntryName = "Color",
+			optionValuesList = "Black:1");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "Color",
+			title = "Add Option");
+
+		Alert.viewSuccessMessage();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+		CommerceProductImages.addProductImages(
+			imageTitles = "Black",
+			optionValue = "Black",
+			validationImage = "true");
+
+		Alert.viewSuccessMessage();
+
+		
 	}
 
 	@description = "This is a test for COMMERCE-6031. EditAnAttachment"

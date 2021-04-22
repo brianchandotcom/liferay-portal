@@ -34,7 +34,7 @@ definition {
 		JSONOrganization.addOrganization(organizationName = "organization Name");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "Organization Name",
+			organizationName = "organization Name",
 			userEmailAddress = "userea2@liferay.com");
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -185,9 +185,63 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationDateModifiedSegment {
-		property portal.acceptance = "false";
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-130302 AddNewExperienceOrganizationDateModifiedSegment pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Date Modified");
+
+		Segmentation.fillTitle(titleField = "Org with Date Modified");
+
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Equals");
+
+		AssertTextEquals(
+			locator1 = "Segmentation#MEMBERS_MATCHED",
+			value1 = "1 Member");
+
+		Segmentation.viewMembers(memberName = "userfn2 userln2");
+
+		Button.clickSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "Experience For Org with Modified Date",
+			segmentName = "Org with Date Modified");
+
+		Button.clickPublish();
+
+		ContentPages.clickPencil();
+
+		PageEditor.changeExperience(newExperience = "Experience For Org with Modified Date");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Org users will see this heading");
+
+		PageEditor.prioritizeExperience(experienceName = "Experience For Org with Modified Date");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			freeLogin = "true",
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Org users will see this heading");
 	}
 
 	@description = "This is a test for LPS-130303."

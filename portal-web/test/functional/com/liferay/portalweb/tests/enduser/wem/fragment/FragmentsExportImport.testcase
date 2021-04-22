@@ -673,6 +673,107 @@ definition {
 			value1 = "Heading Example");
 	}
 
+	@description = "This is a test for LPS-98501. Export and Import a global fragment."
+	@priority = "4"
+	test ExportImportGlobalFragment {
+		task ("Add a fragment collection in Global site") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Global",
+				name = "Global Collection Name");
+		}
+
+		task ("Add a fragment in global fragment collection") {
+			var newLine = '''
+''';
+
+			var htmlSnippet = '''
+<${configuration.headingLevel} class="component-heading mb-0 text-break" data-lfr-editable-id="element-text" data-lfr-editable-type="text">
+	Heading Example
+</${configuration.headingLevel}>
+			''';
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "h1",
+					"label": "heading-level",
+					"name": "headingLevel",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "h1"
+							},
+							{
+								"value": "h2"
+							},
+							{
+								"value": "h3"
+							},
+							{
+								"value": "h4"
+							},
+							{
+								"value": "h5"
+							},
+							{
+								"value": "h6"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}
+			''';
+			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+
+			JSONFragment.addSection(
+				collectionName = "Global Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Global",
+				html = "${htmlSnippet}",
+				name = "Global Fragment Name");
+		}
+
+		task ("Export the global fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			FragmentsAdmin.exportFragment(
+				collectionName = "Global Collection Name",
+				fragmentName = "Global Fragment Name");
+		}
+
+		task ("Delete the global fragment") {
+			FragmentsAdmin.deleteEntry(entry = "Global Fragment Name");
+
+			FragmentsAdmin.viewEntryNotPresent(entry = "Global Fragment Name");
+		}
+
+		task ("Import the global fragment zip file") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+
+			FragmentsAdmin.importFragmentFromTempFolder();
+		}
+
+		task ("View the imported global fragment") {
+			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name");
+		}
+
+		task ("Delete the global fragment collection") {
+			JSONFragment.deleteFragmentCollection(
+				groupName = "Global",
+				name = "Global Collection Name");
+		}
+	}
+
 	@description = "This is a test case for LPS-120957. Export and Import multiple collections."
 	@priority = "4"
 	test ExportImportMultipleCollections {

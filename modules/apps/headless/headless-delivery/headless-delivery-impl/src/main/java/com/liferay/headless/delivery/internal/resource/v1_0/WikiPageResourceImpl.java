@@ -14,15 +14,12 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetLinkLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.WikiPageDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.WikiPageEntityModel;
@@ -40,7 +37,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,12 +48,11 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.constants.WikiPageConstants;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeService;
@@ -345,20 +340,60 @@ public class WikiPageResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private WikiPage _toWikiPage(com.liferay.wiki.model.WikiPage wikiPage)
+		throws Exception {
+
+		return _wikiPageDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.put(
+					"add-page",
+					addAction(
+						"UPDATE", wikiPage.getResourcePrimKey(),
+						"postWikiPageWikiPage", wikiPage.getUserId(),
+						"com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"delete",
+					addAction(
+						"DELETE", wikiPage.getResourcePrimKey(),
+						"deleteWikiPage", wikiPage.getUserId(),
+						"com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"get",
+					addAction(
+						"VIEW", wikiPage.getResourcePrimKey(), "getWikiPage",
+						wikiPage.getUserId(), "com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"replace",
+					addAction(
+						"UPDATE", wikiPage.getResourcePrimKey(), "putWikiPage",
+						wikiPage.getUserId(), "com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"subscribe",
+					addAction(
+						"SUBSCRIBE", wikiPage.getResourcePrimKey(),
+						"putWikiPageSubscribe", wikiPage.getUserId(),
+						"com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"unsubscribe",
+					addAction(
+						"SUBSCRIBE", wikiPage.getResourcePrimKey(),
+						"putWikiPageUnsubscribe", wikiPage.getUserId(),
+						"com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).build(),
+				_dtoConverterRegistry, wikiPage.getPageId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
+	}
+
 	@Reference
 	private Aggregations _aggregations;
-
-	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetLinkLocalService _assetLinkLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private DDMIndexer _ddmIndexer;
@@ -379,25 +414,19 @@ public class WikiPageResourceImpl
 	private Queries _queries;
 
 	@Reference
-	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Reference
 	private Sorts _sorts;
-
-	@Reference
-	private SubscriptionLocalService _subscriptionLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
 	@Reference
 	private WikiNodeService _wikiNodeService;
+
+	@Reference
+	private WikiPageDTOConverter _wikiPageDTOConverter;
 
 	@Reference
 	private WikiPageLocalService _wikiPageLocalService;

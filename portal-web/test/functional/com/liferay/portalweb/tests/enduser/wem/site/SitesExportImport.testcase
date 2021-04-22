@@ -120,6 +120,132 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
 
+	@description = "This is a test for LPS-98501. Export and import the whole site where a content page with a global fragment."
+	@priority = "4"
+	test ExportImportSiteWithGlobalFragmentInContentPage {
+		property testray.main.component.name = "Fragments,Site Administration";
+
+		task ("Add a fragment collection in Global site") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Global",
+				name = "Global Collection Name");
+		}
+
+		task ("Add a fragment in global fragment collection") {
+			var newLine = '''
+''';
+
+			var htmlSnippet = '''
+<${configuration.headingLevel} class="component-heading mb-0 text-break" data-lfr-editable-id="element-text" data-lfr-editable-type="text">
+	Heading Example
+</${configuration.headingLevel}>
+			''';
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "h1",
+					"label": "heading-level",
+					"name": "headingLevel",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "h1"
+							},
+							{
+								"value": "h2"
+							},
+							{
+								"value": "h3"
+							},
+							{
+								"value": "h4"
+							},
+							{
+								"value": "h5"
+							},
+							{
+								"value": "h6"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}
+			''';
+			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+
+			JSONFragment.addSection(
+				collectionName = "Global Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Global",
+				html = "${htmlSnippet}",
+				name = "Global Fragment Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a global fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Global Collection Name",
+				fragmentName = "Global Fragment Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Heading Example",
+				fragmentName = "Global Fragment Name",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Export the site") {
+			LAR.exportSiteCP(siteScopeName = "Test Site Name");
+
+			var key_larFileName = "${larFileName}";
+
+			var larFileName = LAR.getLarFileName();
+
+			LAR.downloadLar();
+		}
+
+		task ("Import the lar file to a new site") {
+			JSONGroup.addGroup(groupName = "New Site");
+
+			LAR.importSiteCP(
+				larFileName = "${larFileName}",
+				siteName = "New Site");
+		}
+
+		task ("View the global fragment shown in content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "New Site");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+		}
+	}
+
 	@description = "This is a test for LPS-122296. Can export and import a site containing a content page with a mapped image."
 	@priority = "5"
 	test ExportImportSiteWithMappedImage {

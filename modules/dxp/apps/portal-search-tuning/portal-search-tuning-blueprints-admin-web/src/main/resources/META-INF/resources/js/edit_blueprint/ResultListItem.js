@@ -29,6 +29,7 @@ const RESULTS_DEFAULT_KEYS = [
 	'b_author',
 ];
 const RESULTS_SHOW_KEYS = ['b_assetEntryId', 'id'];
+const TRUNCATE_LENGTH = 700;
 
 const blueprintFieldPrefixRegex = new RegExp(`^(${BLUEPRINT_FIELD_PREFIX})`);
 const bracketsQuotesRegex = new RegExp(/[[\]"]/, 'g');
@@ -42,7 +43,9 @@ function removeBrackets(value) {
 }
 
 function truncateString(value) {
-	return value.length > 700 ? value.substring(0, 700).concat('...') : value;
+	return value.length > TRUNCATE_LENGTH
+		? value.substring(0, TRUNCATE_LENGTH).concat('...')
+		: value;
 }
 
 function ResultListItem({item}) {

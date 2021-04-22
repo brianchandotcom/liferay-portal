@@ -68,4 +68,29 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	macro getBlogEntryId {
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d urlTitle=${entryTitle}
+		''';
+
+		var entryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${entryTitle}')]['entryId']");
+		var entryId = StringUtil.replace("${entryId}", "[&quot;", "");
+		var entryId = StringUtil.replace("${entryId}", "&quot;]", "");
+
+		return "${entryId}";
+
+		echo("## * Blogs ID: ${entryId}");
+	}
+
 }

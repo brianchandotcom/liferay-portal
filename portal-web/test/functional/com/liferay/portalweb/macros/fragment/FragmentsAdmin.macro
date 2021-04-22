@@ -116,6 +116,32 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro importFragmentFromTempFolder {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Import");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		var entriesZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "entries-*.zip");
+
+		UploadTempFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${entriesZipFileName}");
+
+		SelectFrameTop();
+
+		Button.clickImport();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Alert.viewSuccessMessage();
+
+		SelectFrameTop();
+
+		IFrame.closeFrame();
+	}
+
 	macro openFragmentsAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
 	}

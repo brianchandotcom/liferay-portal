@@ -48,18 +48,3 @@ UserGroupRolesDisplayContext userGroupRolesDisplayContext = new UserGroupRolesDi
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />userGroupGroupRoleRole'
-	);
-
-	searchContainer.on('rowToggled', (event) => {
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(userGroupRolesDisplayContext.getEventName()) %>',
-			{
-				data: event.elements.allSelectedElements.getDOMNodes(),
-			}
-		);
-	});
-</aui:script>

@@ -33,24 +33,26 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
-			onSelect(selectedItem) {
-				if (selectedItem) {
-					const form = document.getElementById(
+			onSelect(selectedItems) {
+				if (selectedItems.length) {
+					const addGroupOrganizationsFm = document.getElementById(
 						`${portletNamespace}addGroupOrganizationsFm`
 					);
 
-					if (!form) {
+					if (!addGroupOrganizationsFm) {
 						return;
 					}
 
-					selectedItem.forEach((item) => {
-						form.appendChild(item);
-					});
+					const input = document.createElement('input');
 
-					submitForm(form);
+					input.name = `${portletNamespace}rowIds`;
+					input.value = selectedItems.map((item) => item.value);
+
+					addGroupOrganizationsFm.appendChild(input);
+
+					submitForm(addGroupOrganizationsFm);
 				}
 			},
-			selectEventName: `${portletNamespace}selectOrganizations`,
 			title: Liferay.Util.sub(
 				Liferay.Language.get('assign-organizations-to-this-x'),
 				itemData?.groupTypeLabel

@@ -44,24 +44,28 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			if (action === 'selectUserGroup') {
 				openSelectionModal({
 					multiple: true,
-					onSelect(selectedItem) {
-						if (selectedItem) {
-							const form = document.getElementById(
+					onSelect: (selectedItems) => {
+						if (selectedItems.length) {
+							const addTeamUserGroupsFm = document.getElementById(
 								`${portletNamespace}addTeamUserGroupsFm`
 							);
 
-							if (!form) {
+							if (!addTeamUserGroupsFm) {
 								return;
 							}
 
-							selectedItem.forEach((item) => {
-								form.appendChild(item);
-							});
+							const input = document.createElement('input');
 
-							submitForm(form);
+							input.name = `${portletNamespace}rowIds`;
+							input.value = selectedItems.map(
+								(item) => item.value
+							);
+
+							addTeamUserGroupsFm.appendChild(input);
+
+							submitForm(addTeamUserGroupsFm);
 						}
 					},
-					selectEventName: `${portletNamespace}selectUserGroup`,
 					title: data?.title,
 					url: data?.selectUserGroupURL,
 				});

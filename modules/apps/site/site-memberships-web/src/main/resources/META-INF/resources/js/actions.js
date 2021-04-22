@@ -19,15 +19,22 @@ export const ACTIONS = {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
+			onSelect: (selectedItems) => {
+				if (selectedItems.length) {
 					const editUserGroupRoleFm = document.getElementById(
 						`${portletNamespace}editUserGroupRoleFm`
 					);
 
-					selectedItem.forEach((item) => {
-						editUserGroupRoleFm.append(item);
-					});
+					if (!editUserGroupRoleFm) {
+						return;
+					}
+
+					const input = document.createElement('input');
+
+					input.name = `${portletNamespace}rowIds`;
+					input.value = selectedItems.map((item) => item.value);
+
+					editUserGroupRoleFm.appendChild(input);
 
 					submitForm(
 						editUserGroupRoleFm,
@@ -35,7 +42,6 @@ export const ACTIONS = {
 					);
 				}
 			},
-			selectEventName: `${portletNamespace}selectUsersRoles`,
 			title: Liferay.Language.get('assign-roles'),
 			url: itemData.assignRolesURL,
 		});

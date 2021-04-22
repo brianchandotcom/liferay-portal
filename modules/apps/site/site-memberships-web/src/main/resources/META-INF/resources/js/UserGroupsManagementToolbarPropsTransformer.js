@@ -74,21 +74,24 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
-			onSelect(selectedItem) {
-				if (selectedItem) {
-					const form = document.getElementById(
+			onSelect(selectedItems) {
+				if (selectedItems.length) {
+					const addGroupUserGroupsFm = document.getElementById(
 						`${portletNamespace}addGroupUserGroupsFm`
 					);
 
-					if (!form) {
+					if (!addGroupUserGroupsFm) {
 						return;
 					}
 
-					selectedItem.forEach((item) => {
-						form.appendChild(item);
-					});
+					const input = document.createElement('input');
 
-					submitForm(form);
+					input.name = `${portletNamespace}rowIds`;
+					input.value = selectedItems.map((item) => item.value);
+
+					addGroupUserGroupsFm.appendChild(input);
+
+					submitForm(addGroupUserGroupsFm);
 				}
 			},
 			selectEventName: `${portletNamespace}selectUserGroups`,

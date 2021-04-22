@@ -44,24 +44,28 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			if (action === 'selectUser') {
 				openSelectionModal({
 					multiple: true,
-					onSelect(selectedItem) {
-						if (selectedItem) {
-							const form = document.getElementById(
+					onSelect: (selectedItems) => {
+						if (selectedItems.length) {
+							const addTeamUsersFm = document.getElementById(
 								`${portletNamespace}addTeamUsersFm`
 							);
 
-							if (!form) {
+							if (!addTeamUsersFm) {
 								return;
 							}
 
-							selectedItem.forEach((item) => {
-								form.appendChild(item);
-							});
+							const input = document.createElement('input');
 
-							submitForm(form);
+							input.name = `${portletNamespace}rowIds`;
+							input.value = selectedItems.map(
+								(item) => item.value
+							);
+
+							addTeamUsersFm.appendChild(input);
+
+							submitForm(addTeamUsersFm);
 						}
 					},
-					selectEventName: `${portletNamespace}selectUser`,
 					title: data?.title,
 					url: data?.selectUserURL,
 				});

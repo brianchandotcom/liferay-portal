@@ -51,26 +51,3 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />userGroups'
-	);
-
-	searchContainer.on('rowToggled', (event) => {
-		var result = {};
-
-		var data = event.elements.allSelectedElements.getDOMNodes();
-
-		if (data.length) {
-			result = {
-				data: data,
-			};
-		}
-
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(selectUserGroupsDisplayContext.getEventName()) %>',
-			result
-		);
-	});
-</aui:script>

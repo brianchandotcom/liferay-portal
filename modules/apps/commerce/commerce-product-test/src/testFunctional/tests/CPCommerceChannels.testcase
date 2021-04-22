@@ -60,6 +60,7 @@ definition {
 	@priority = "3"
 	test AddShippingOptionFlatRate {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannels#AddShippingOptionFlatRate";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -135,6 +136,7 @@ definition {
 	@priority = "3"
 	test AddShippingOptionVariableRate {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannels#AddShippingOptionVariableRate";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -289,6 +291,7 @@ definition {
 	@priority = "3"
 	test EditAuthorizePaymentMethod {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannels#EditAuthorizePaymentMethod";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -369,6 +372,7 @@ definition {
 	@priority = "3"
 	test EditMercanetPaymentMethod {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannels#EditMercanetPaymentMethod";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -417,6 +421,7 @@ definition {
 	@priority = "3"
 	test EditMoneyOrderPaymentMethod {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannels#EditMoneyOrderPaymentMethod";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -568,6 +573,7 @@ definition {
 	@priority = "3"
 	test UseSearchBar {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannels#UseSearchBar";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

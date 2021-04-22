@@ -92,22 +92,16 @@ public abstract class BasePortalInstanceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances' -d $'{"companyId": ___, "domain": ___, "portalInstanceId": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances' -d $'{"companyId": ___, "domain": ___, "portalInstanceId": ___, "portalInstanceInitializerKey": ___, "portalInstanceInitializerPayload": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds a new portal instance")
 	@Override
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.QUERY, name = "initializerKey")}
-	)
 	@Path("/portal-instances")
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PortalInstance")})
-	public PortalInstance postPortalInstance(
-			@Parameter(hidden = true) @QueryParam("initializerKey") String
-				initializerKey,
-			PortalInstance portalInstance)
+	public PortalInstance postPortalInstance(PortalInstance portalInstance)
 		throws Exception {
 
 		return new PortalInstance();
@@ -158,7 +152,7 @@ public abstract class BasePortalInstanceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}' -d $'{"companyId": ___, "domain": ___, "portalInstanceId": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}' -d $'{"companyId": ___, "domain": ___, "portalInstanceId": ___, "portalInstanceInitializerKey": ___, "portalInstanceInitializerPayload": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(

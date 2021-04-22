@@ -209,12 +209,65 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130306."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationOrganizationSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130306 AddNewExperienceOrganizationOrganizationSegment pending implementation
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Organization");
+
+		Segmentation.fillTitle(titleField = "Users In A Specific Org");
+
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+
+		Segmentation.assignOrganization(orgName = "organization Name");
+
+		Button.clickSave();
+
+		Button.clickSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "Experience For Users In A Specific Org",
+			segmentName = "Users In A Specific Org");
+
+		Button.clickPublish();
+
+		ContentPages.clickPencil();
+
+		PageEditor.changeExperience(newExperience = "Experience For Users In A Specific Org");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Org users will see this heading");
+
+		PageEditor.prioritizeExperience(experienceName = "Experience For Users In A Specific Org");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			freeLogin = "true",
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Org users will see this heading");
 	}
 
 	@description = "This is a test for LPS-130307."

@@ -129,4 +129,104 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98501. View global fragment resource is copied to collection in current site."
+	@priority = "4"
+	test ViewGlobalFragmentResourceCopiedToCollectionInNormalSite {
+		task ("Upload an image as fragment resource") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+
+			Navigator.gotoNavItem(navItem = "Resources");
+
+			FragmentsAdmin.addResource(resourceFile = "Document_1.jpg");
+		}
+
+		task ("Add a fragment in global fragment collection") {
+			var newLine = '''
+''';
+
+			var htmlSnippet = '''
+<div class="component-image overflow-hidden">
+	<img
+		alt="Responsive Image"
+		class="${configuration.imageSize}"
+		data-lfr-editable-id="image-square"
+		data-lfr-editable-type="image"
+		src="[resources:Document_1.jpg]"
+	/>
+</div>
+			''';
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "w-100",
+					"label": "image-size",
+					"name": "imageSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "fit",
+								"value": "w-100"
+							},
+							{
+								"label": "original-size",
+								"value": "w-0"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}
+			''';
+			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+
+			JSONFragment.addSection(
+				collectionName = "Global Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Global",
+				html = "${htmlSnippet}",
+				name = "Global Fragment Name");
+		}
+
+		task ("Add a fragment collection in normal site") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Navigate to Fragments admin in normal site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Copy the global fragment to collection in normal site") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Global Fragment Name",
+				item = "Copy To");
+
+			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
+		}
+
+		task ("View the copy of global fragment resource") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			Navigator.gotoNavItem(navItem = "Resources");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Document_1.jpg");
+		}
+	}
+
 }

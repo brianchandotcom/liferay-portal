@@ -5481,6 +5481,17 @@ war.path=${app.server.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="update-user-timezone">
+		<attribute default="UTC" name="time.zone" />
+		<sequential>
+			<replaceregexp
+				file="${app.server.dir}/bin/setenv.sh"
+				match="-Duser\.timezone=\w+"
+				replace="-Duser.timezone=@{time.zone}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="validate-installed-patch">
 		<attribute name="patch.file.zip.url" />
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
@@ -13050,6 +13061,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 						<print-file file.name="${liferay.home}/osgi/modules/com.liferay.simple.socks.proxy.SocksProxyConfiguration.cfg" />
 					</then>
 				</if>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="user.time.zone" />
+
+		<if>
+			<isset property="user.time.zone" />
+			<then>
+				<update-user-timezone time.zone="${user.time.zone}" />
 			</then>
 		</if>
 

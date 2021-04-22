@@ -1,0 +1,550 @@
+{
+	"definition": {
+		"backgroundColor": "",
+		"backgroundFragmentImage": {
+		},
+		"fragmentStyle": {
+			"backgroundColor": "",
+			"backgroundFragmentImage": {
+			},
+			"borderRadius": "",
+			"borderWidth": "0",
+			"fontFamily": "",
+			"fontSize": "",
+			"fontWeight": "",
+			"height": "",
+			"marginBottom": "",
+			"marginLeft": "",
+			"marginRight": "",
+			"marginTop": "0",
+			"maxHeight": "",
+			"maxWidth": "",
+			"minHeight": "",
+			"minWidth": "",
+			"opacity": "100",
+			"overflow": "",
+			"paddingBottom": "6",
+			"paddingLeft": "0",
+			"paddingRight": "0",
+			"paddingTop": "6",
+			"shadow": "",
+			"textAlign": "",
+			"width": ""
+		},
+		"fragmentViewports": [
+			{
+				"fragmentViewportStyle": {
+					"paddingBottom": "5",
+					"paddingTop": "5"
+				},
+				"id": "landscapeMobile"
+			},
+			{
+				"fragmentViewportStyle": {
+					"marginTop": "0",
+					"paddingBottom": "5",
+					"paddingTop": "5"
+				},
+				"id": "portraitMobile"
+			},
+			{
+				"fragmentViewportStyle": {
+					"marginTop": "0",
+					"paddingBottom": "6",
+					"paddingTop": "6"
+				},
+				"id": "tablet"
+			}
+		],
+		"layout": {
+			"borderWidth": 0,
+			"marginBottom": 0,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 0,
+			"opacity": 100,
+			"paddingBottom": 6,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 6,
+			"widthType": "Fluid"
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"backgroundColor": "",
+				"backgroundFragmentImage": {
+				},
+				"fragmentStyle": {
+					"backgroundColor": "",
+					"backgroundFragmentImage": {
+					},
+					"borderRadius": "",
+					"borderWidth": "0",
+					"fontFamily": "",
+					"fontSize": "",
+					"fontWeight": "",
+					"height": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"marginRight": "",
+					"marginTop": "",
+					"maxHeight": "",
+					"maxWidth": "",
+					"minHeight": "",
+					"minWidth": "",
+					"opacity": "100",
+					"overflow": "",
+					"paddingBottom": "",
+					"paddingLeft": "2",
+					"paddingRight": "2",
+					"paddingTop": "",
+					"shadow": "",
+					"textAlign": "",
+					"width": ""
+				},
+				"fragmentViewports": [
+					{
+						"fragmentViewportStyle": {
+							"paddingLeft": "3"
+						},
+						"id": "landscapeMobile"
+					},
+					{
+						"fragmentViewportStyle": {
+							"paddingLeft": "4",
+							"paddingRight": "4"
+						},
+						"id": "portraitMobile"
+					},
+					{
+						"fragmentViewportStyle": {
+							"marginLeft": "0",
+							"marginRight": "0",
+							"paddingLeft": "3",
+							"paddingRight": "3"
+						},
+						"id": "tablet"
+					}
+				],
+				"layout": {
+					"borderWidth": 0,
+					"marginBottom": 0,
+					"marginLeft": 0,
+					"marginRight": 0,
+					"marginTop": 0,
+					"opacity": 100,
+					"paddingBottom": 0,
+					"paddingTop": 0,
+					"widthType": "Fixed"
+				}
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragmentStyle": {
+							"backgroundFragmentImage": {
+							},
+							"borderRadius": "",
+							"borderWidth": "0",
+							"fontFamily": "",
+							"fontSize": "",
+							"fontWeight": "",
+							"height": "",
+							"marginBottom": "",
+							"marginLeft": "",
+							"marginRight": "",
+							"marginTop": "",
+							"maxHeight": "",
+							"maxWidth": "",
+							"minHeight": "",
+							"minWidth": "",
+							"opacity": "100",
+							"overflow": "",
+							"paddingBottom": "",
+							"paddingLeft": "0",
+							"paddingRight": "",
+							"paddingTop": "",
+							"shadow": "",
+							"textAlign": "",
+							"width": ""
+						},
+						"fragmentViewports": [
+							{
+								"fragmentViewportStyle": {
+									"paddingLeft": "0",
+									"paddingRight": "0"
+								},
+								"id": "tablet"
+							}
+						],
+						"gutters": true,
+						"modulesPerRow": 2,
+						"numberOfColumns": 2,
+						"reverseOrder": false,
+						"rowViewports": [
+							{
+								"id": "landscapeMobile",
+								"rowViewportDefinition": {
+								}
+							},
+							{
+								"id": "portraitMobile",
+								"rowViewportDefinition": {
+								}
+							},
+							{
+								"id": "tablet",
+								"rowViewportDefinition": {
+									"modulesPerRow": 1,
+									"reverseOrder": true
+								}
+							}
+						],
+						"verticalAlignment": "middle"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"columnViewports": [
+									{
+										"columnViewportDefinition": {
+										},
+										"id": "landscapeMobile"
+									},
+									{
+										"columnViewportDefinition": {
+										},
+										"id": "portraitMobile"
+									},
+									{
+										"columnViewportDefinition": {
+											"size": 12
+										},
+										"id": "tablet"
+									}
+								],
+								"size": 5
+							},
+							"pageElements": [
+								{
+									"definition": {
+										"fragment": {
+											"key": "BASIC_COMPONENT-heading"
+										},
+										"fragmentConfig": {
+											"headingLevel": "h1"
+										},
+										"fragmentFields": [
+											{
+												"id": "element-text",
+												"value": {
+													"fragmentLink": {
+														"value_i18n": {
+														}
+													},
+													"text": {
+														"value_i18n": {
+															"en_US": "Welcome to Liferay Portal"
+														}
+													}
+												}
+											}
+										],
+										"fragmentStyle": {
+											"backgroundFragmentImage": {
+											},
+											"borderRadius": "",
+											"borderWidth": "0",
+											"fontFamily": "",
+											"fontSize": "",
+											"fontWeight": "",
+											"height": "",
+											"marginBottom": "3",
+											"marginLeft": "",
+											"marginRight": "",
+											"marginTop": "0",
+											"maxHeight": "",
+											"maxWidth": "",
+											"minHeight": "",
+											"minWidth": "",
+											"opacity": "100",
+											"overflow": "",
+											"paddingBottom": "",
+											"paddingLeft": "",
+											"paddingRight": "",
+											"paddingTop": "",
+											"shadow": "",
+											"textAlign": "left",
+											"width": ""
+										},
+										"fragmentViewports": [
+											{
+												"fragmentViewportStyle": {
+													"marginTop": "2"
+												},
+												"id": "portraitMobile"
+											},
+											{
+												"fragmentViewportStyle": {
+													"marginBottom": "3"
+												},
+												"id": "tablet"
+											}
+										]
+									},
+									"type": "Fragment"
+								},
+								{
+									"definition": {
+										"fragment": {
+											"key": "BASIC_COMPONENT-paragraph"
+										},
+										"fragmentConfig": {
+										},
+										"fragmentFields": [
+											{
+												"id": "element-text",
+												"value": {
+													"fragmentLink": {
+														"value_i18n": {
+														}
+													},
+													"text": {
+														"value_i18n": {
+															"ar_SA": "${RELEASE_INFO}",
+															"bg_BG": "${RELEASE_INFO}",
+															"ca_AD": "${RELEASE_INFO}",
+															"cs_CZ": "${RELEASE_INFO}",
+															"da_DK": "${RELEASE_INFO}",
+															"de_DE": "${RELEASE_INFO}",
+															"el_GR": "${RELEASE_INFO}",
+															"en_AU": "${RELEASE_INFO}",
+															"en_GB": "${RELEASE_INFO}",
+															"en_US": "${RELEASE_INFO}",
+															"es_ES": "${RELEASE_INFO}",
+															"et_EE": "${RELEASE_INFO}",
+															"eu_ES": "${RELEASE_INFO}",
+															"fa_IR": "${RELEASE_INFO}",
+															"fi_FI": "${RELEASE_INFO}",
+															"fr_CA": "${RELEASE_INFO}",
+															"fr_FR": "${RELEASE_INFO}",
+															"gl_ES": "${RELEASE_INFO}",
+															"hi_IN": "${RELEASE_INFO}",
+															"hr_HR": "${RELEASE_INFO}",
+															"hu_HU": "${RELEASE_INFO}",
+															"in_ID": "${RELEASE_INFO}",
+															"it_IT": "${RELEASE_INFO}",
+															"iw_IL": "${RELEASE_INFO}",
+															"ja_JP": "${RELEASE_INFO}",
+															"kk_KZ": "${RELEASE_INFO}",
+															"ko_KR": "${RELEASE_INFO}",
+															"lo_LA": "${RELEASE_INFO}",
+															"lt_LT": "${RELEASE_INFO}",
+															"nb_NO": "${RELEASE_INFO}",
+															"nl_BE": "${RELEASE_INFO}",
+															"nl_NL": "${RELEASE_INFO}",
+															"pl_PL": "${RELEASE_INFO}",
+															"pt_BR": "${RELEASE_INFO}",
+															"pt_PT": "${RELEASE_INFO}",
+															"ro_RO": "${RELEASE_INFO}",
+															"ru_RU": "${RELEASE_INFO}",
+															"sk_SK": "${RELEASE_INFO}",
+															"sl_SI": "${RELEASE_INFO}",
+															"sr_RS": "${RELEASE_INFO}",
+															"sr_RS_latin": "${RELEASE_INFO}",
+															"sv_SE": "${RELEASE_INFO}",
+															"ta_IN": "${RELEASE_INFO}",
+															"th_TH": "${RELEASE_INFO}",
+															"tr_TR": "${RELEASE_INFO}",
+															"uk_UA": "${RELEASE_INFO}",
+															"vi_VN": "${RELEASE_INFO}",
+															"zh_CN": "${RELEASE_INFO}",
+															"zh_TW": "${RELEASE_INFO}"
+														}
+													}
+												}
+											}
+										],
+										"fragmentStyle": {
+											"backgroundFragmentImage": {
+											},
+											"borderRadius": "",
+											"borderWidth": "0",
+											"fontFamily": "",
+											"fontSize": "fontSizeBase",
+											"fontWeight": "",
+											"height": "",
+											"marginBottom": "0",
+											"marginLeft": "0",
+											"marginRight": "0",
+											"marginTop": "",
+											"maxHeight": "",
+											"maxWidth": "",
+											"minHeight": "",
+											"minWidth": "",
+											"opacity": "100",
+											"overflow": "",
+											"paddingBottom": "",
+											"paddingLeft": "",
+											"paddingRight": "",
+											"paddingTop": "",
+											"shadow": "",
+											"textAlign": "left",
+											"textColor": "gray600Color",
+											"width": ""
+										},
+										"fragmentViewports": [
+											{
+												"fragmentViewportStyle": {
+													"marginBottom": "4"
+												},
+												"id": "landscapeMobile"
+											},
+											{
+												"fragmentViewportStyle": {
+													"marginBottom": "4"
+												},
+												"id": "portraitMobile"
+											},
+											{
+												"fragmentViewportStyle": {
+													"marginBottom": "4",
+													"marginLeft": "0"
+												},
+												"id": "tablet"
+											}
+										]
+									},
+									"type": "Fragment"
+								}
+							],
+							"type": "Column"
+						},
+						{
+							"definition": {
+								"columnViewports": [
+									{
+										"columnViewportDefinition": {
+										},
+										"id": "landscapeMobile"
+									},
+									{
+										"columnViewportDefinition": {
+										},
+										"id": "portraitMobile"
+									},
+									{
+										"columnViewportDefinition": {
+											"size": 12
+										},
+										"id": "tablet"
+									}
+								],
+								"size": 7
+							},
+							"pageElements": [
+								{
+									"definition": {
+										"fragment": {
+											"key": "BASIC_COMPONENT-image"
+										},
+										"fragmentConfig": {
+											"imageSize": "w-100"
+										},
+										"fragmentFields": [
+											{
+												"id": "image-square",
+												"value": {
+													"fragmentImage": {
+														"description": {
+															"value_i18n": {
+																"en_US": ""
+															}
+														},
+														"fragmentImageClassPKReference": {
+															"classPKReferences": {
+																"en_US": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																}
+															},
+															"fragmentImageConfiguration": {
+																"landscapeMobile": "auto",
+																"portraitMobile": "auto",
+																"tablet": "auto"
+															}
+														}
+													},
+													"fragmentLink": {
+														"value_i18n": {
+														}
+													}
+												}
+											}
+										],
+										"fragmentStyle": {
+											"backgroundFragmentImage": {
+											},
+											"borderRadius": "",
+											"borderWidth": "0",
+											"fontFamily": "",
+											"fontSize": "",
+											"fontWeight": "",
+											"height": "",
+											"marginBottom": "",
+											"marginLeft": "0",
+											"marginRight": "",
+											"marginTop": "",
+											"maxHeight": "",
+											"maxWidth": "",
+											"minHeight": "",
+											"minWidth": "",
+											"opacity": "100",
+											"overflow": "",
+											"paddingBottom": "",
+											"paddingLeft": "",
+											"paddingRight": "",
+											"paddingTop": "",
+											"shadow": "",
+											"textAlign": "",
+											"width": ""
+										},
+										"fragmentViewports": [
+											{
+												"fragmentViewportStyle": {
+													"marginBottom": "5"
+												},
+												"id": "landscapeMobile"
+											},
+											{
+												"fragmentViewportStyle": {
+													"marginBottom": "4"
+												},
+												"id": "portraitMobile"
+											},
+											{
+												"fragmentViewportStyle": {
+													"marginBottom": "5",
+													"marginLeft": "0",
+													"marginRight": "0"
+												},
+												"id": "tablet"
+											}
+										]
+									},
+									"type": "Fragment"
+								}
+							],
+							"type": "Column"
+						}
+					],
+					"type": "Row"
+				}
+			],
+			"type": "Section"
+		}
+	],
+	"type": "Section"
+}

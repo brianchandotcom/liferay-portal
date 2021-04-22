@@ -33,10 +33,12 @@ import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelect
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
+import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -110,6 +112,14 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			"infoItemPreviewSelectorURL", _getInfoItemPreviewSelectorURL());
 		configContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 
+		Map<String, Object> stateContext =
+			(Map<String, Object>)editorContext.get("state");
+
+		stateContext.put(
+			"mappingFields",
+			_addDisplayPageMappingFields(
+				(JSONObject)stateContext.get("mappingFields")));
+
 		return editorContext;
 	}
 
@@ -122,6 +132,31 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	@Override
 	public boolean isWorkflowEnabled() {
 		return false;
+	}
+
+	private JSONObject _addDisplayPageMappingFields(
+			JSONObject mappingFieldsJSONObject)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
+
+		String key =
+			layoutPageTemplateEntry.getClassNameId() + StringPool.DASH +
+				layoutPageTemplateEntry.getClassTypeId();
+
+		if (!mappingFieldsJSONObject.has(key)) {
+			mappingFieldsJSONObject.put(
+				key,
+				MappingContentUtil.getMappingFieldsJSONArray(
+					StringPool.BLANK,
+					String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
+					themeDisplay.getScopeGroupId(), infoItemServiceTracker,
+					layoutPageTemplateEntry.getClassName(),
+					themeDisplay.getLocale()));
+		}
+
+		return mappingFieldsJSONObject;
 	}
 
 	private String _getInfoItemPreviewSelectorURL() {

@@ -25,6 +25,10 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			Navigator.openURL();
+
+			Site.tearDownCP();
 		}
 	}
 
@@ -92,11 +96,11 @@ definition {
 
 		LAR.downloadLar();
 
-		JSONGroup.addGroup(groupName = "New Site");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
-			siteName = "New Site");
+			siteName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -115,7 +119,7 @@ definition {
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
-			siteName = "New Site");
+			siteName = "Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
@@ -227,17 +231,17 @@ definition {
 		}
 
 		task ("Import the lar file to a new site") {
-			JSONGroup.addGroup(groupName = "New Site");
+			JSONGroup.addGroup(groupName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = "${larFileName}",
-				siteName = "New Site");
+				siteName = "Site Name");
 		}
 
 		task ("View the global fragment shown in content page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "New Site");
+				siteName = "Site Name");
 
 			AssertTextEquals(
 				key_fragmentName = "heading",
@@ -401,21 +405,21 @@ definition {
 		}
 
 		task ("Import the lar file to a new site") {
-			JSONGroup.addGroup(groupName = "New Site");
+			JSONGroup.addGroup(groupName = "Site Name");
 
 			LAR.importSiteCP(
 				larFileName = "${larFileName}",
-				siteName = "New Site");
+				siteName = "Site Name");
 		}
 
 		task ("Navigate to content page in new site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "New Site");
+				siteName = "Site Name");
 
 			Click(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "${baseURL}/web/new-site/test-content-page-name",
+				key_URL = "${baseURL}/web/site-name/test-content-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
@@ -424,7 +428,7 @@ definition {
 				locator1 = "ControlMenu#HEADING",
 				value1 = "Test Content Page Name");
 
-			AssertLocation.assertPartialLocation(value1 = "web/new-site/test-content-page-name");
+			AssertLocation.assertPartialLocation(value1 = "web/site-name/test-content-page-name");
 		}
 	}
 

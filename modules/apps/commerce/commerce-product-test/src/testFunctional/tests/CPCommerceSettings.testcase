@@ -75,8 +75,8 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertElementPresent(
-			locator1 = "CommerceNavigation#ANY_ENTRY_NAME",
-			key_entry = "Test Region");
+			key_entry = "Test Region",
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
 	}
 
 	test CreateNewMeasurementUnits {

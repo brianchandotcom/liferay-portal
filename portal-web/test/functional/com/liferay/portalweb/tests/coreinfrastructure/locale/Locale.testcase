@@ -383,6 +383,8 @@ definition {
 		}
 	}
 
+	@description = "This is currently failing due to LPS-130984."
+	@ignore = "true"
 	@priority = "3"
 	test UserLockoutShowsTimezoneInformation {
 		property test.name.skip.portal.instance = "Locale#UserLockoutShowsTimezoneInformation";

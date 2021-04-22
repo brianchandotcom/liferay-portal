@@ -41,6 +41,7 @@ definition {
 	@priority = "3"
 	test AddASKU {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductSKUs#AddASKU";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -88,6 +89,7 @@ definition {
 	@priority = "3"
 	test EditASKU {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductSKUs#EditASKU";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

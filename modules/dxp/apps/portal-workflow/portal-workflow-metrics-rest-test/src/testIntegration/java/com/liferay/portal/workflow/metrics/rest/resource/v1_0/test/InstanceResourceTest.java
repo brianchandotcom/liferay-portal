@@ -29,6 +29,7 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
@@ -113,7 +114,9 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"assetTitle", "assetType", "classPK", "processId"};
+		return new String[] {
+			"assetTitle", "assetType", "classPK", "processId", "slaResults"
+		};
 	}
 
 	@Override
@@ -145,6 +148,12 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		instance.setDateCompletion((Date)null);
 		instance.setProcessId(_process.getId());
 		instance.setProcessVersion(_process.getVersion());
+
+		instance.setSlaResults(
+			new SLAResult[] {
+				_createSLAResult(SLAResult.Status.RUNNING, true),
+				_createSLAResult(SLAResult.Status.RUNNING, false)
+			});
 
 		return instance;
 	}
@@ -183,6 +192,9 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 				testGroup.getCompanyId(), instance);
 		}
 
+		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
+			testGroup.getCompanyId(), instance, instance.getSlaResults());
+
 		_instances.add(instance);
 
 		return instance;
@@ -215,6 +227,28 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		return instance;
 	}
 
+	protected Instance testPostProcessInstance_addInstance(Instance instance)
+		throws Exception {
+
+		return testGetProcessInstancesPage_addInstance(
+			_process.getId(), instance);
+	}
+
+	private SLAResult _createSLAResult(
+		SLAResult.Status slaResultStatus, boolean overdue) {
+
+		return new SLAResult() {
+			{
+				dateOverdue = null;
+				id = RandomTestUtil.randomLong();
+				name = null;
+				onTime = !overdue;
+				remainingTime = overdue ? -1L : 1L;
+				status = slaResultStatus;
+			}
+		};
+	}
+
 	private void _deleteInstances() throws Exception {
 		for (Instance instance : _instances) {
 			_workflowMetricsRESTTestHelper.deleteInstance(
@@ -233,6 +267,11 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		_deleteInstances();
 
 		Instance instance1 = randomInstance();
+
+		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
+			testGroup.getCompanyId(), instance1,
+			_createSLAResult(SLAResult.Status.STOPPED, true),
+			_createSLAResult(SLAResult.Status.PAUSED, true));
 
 		instance1.setClassPK(_classPK);
 		instance1.setCompleted(true);

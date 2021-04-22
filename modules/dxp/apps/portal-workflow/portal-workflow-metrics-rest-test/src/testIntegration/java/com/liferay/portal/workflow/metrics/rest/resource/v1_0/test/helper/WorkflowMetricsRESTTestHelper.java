@@ -50,6 +50,7 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.NodeMetric;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.ProcessMetric;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
@@ -351,12 +352,34 @@ public class WorkflowMetricsRESTTestHelper {
 			Instance instance = addInstance(companyId, false, process.getId());
 
 			if (onTimeInstanceCount > 0) {
-				addSLAInstanceResult(companyId, instance, true);
+				addSLAInstanceResults(
+					companyId, instance,
+					new SLAResult() {
+						{
+							dateOverdue = null;
+							id = RandomTestUtil.randomLong();
+							name = null;
+							onTime = true;
+							remainingTime = 1L;
+							status = null;
+						}
+					});
 
 				onTimeInstanceCount--;
 			}
 			else if (overdueInstanceCount > 0) {
-				addSLAInstanceResult(companyId, instance, false);
+				addSLAInstanceResults(
+					companyId, instance,
+					new SLAResult() {
+						{
+							dateOverdue = null;
+							id = RandomTestUtil.randomLong();
+							name = null;
+							onTime = false;
+							remainingTime = -1L;
+							status = null;
+						}
+					});
 
 				overdueInstanceCount--;
 			}
@@ -392,26 +415,26 @@ public class WorkflowMetricsRESTTestHelper {
 		return addProcessMetric(companyId, processMetric);
 	}
 
-	public void addSLAInstanceResult(
-			long companyId, Instance instance, boolean onTime)
+	public void addSLAInstanceResults(
+			long companyId, Instance instance, SLAResult... slaResults)
 		throws Exception {
 
-		long slaDefinitionId = RandomTestUtil.randomLong();
+		for (SLAResult slaResult : slaResults) {
+			_invokeAddDocument(
+				_getIndexer(_CLASS_NAME_SLA_INSTANCE_RESULT_INDEXER),
+				_creatWorkflowMetricsSLAInstanceResultDocument(
+					companyId, instance, slaResult));
 
-		_invokeAddDocument(
-			_getIndexer(_CLASS_NAME_SLA_INSTANCE_RESULT_INDEXER),
-			_creatWorkflowMetricsSLAInstanceResultDocument(
-				companyId, Objects.nonNull(instance.getDateCompletion()),
-				instance.getId(), onTime, instance.getProcessId(),
-				slaDefinitionId));
-
-		_assertCount(
-			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
-				companyId),
-			"companyId", companyId, "deleted", false, "instanceCompleted",
-			Objects.nonNull(instance.getDateCompletion()), "instanceId",
-			instance.getId(), "onTime", onTime, "processId",
-			instance.getProcessId(), "slaDefinitionId", slaDefinitionId);
+			_assertCount(
+				_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+					companyId),
+				"companyId", companyId, "deleted", false, "instanceCompleted",
+				Objects.nonNull(instance.getDateCompletion()), "instanceId",
+				instance.getId(), "onTime", slaResult.getOnTime(), "processId",
+				instance.getProcessId(), "remainingTime",
+				slaResult.getRemainingTime(), "slaDefinitionId",
+				slaResult.getId());
+		}
 	}
 
 	public void addSLATaskResult(
@@ -784,8 +807,7 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _creatWorkflowMetricsSLAInstanceResultDocument(
-		long companyId, boolean instanceCompleted, long instanceId,
-		boolean onTime, long processId, long slaDefinitionId) {
+		long companyId, Instance instance, SLAResult slaResult) {
 
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
@@ -794,25 +816,36 @@ public class WorkflowMetricsRESTTestHelper {
 		).setValue(
 			"deleted", false
 		).setValue(
-			"elapsedTime", onTime ? 1000 : -1000
+			"elapsedTime", slaResult.getOnTime() ? 1000 : -1000
 		).setValue(
-			"instanceCompleted", instanceCompleted
+			"instanceCompleted", Objects.nonNull(instance.getDateCompletion())
 		).setValue(
-			"instanceId", instanceId
+			"instanceId", instance.getId()
 		).setValue(
-			"onTime", onTime
+			"onTime", slaResult.getOnTime()
 		).setValue(
-			"processId", processId
+			"processId", instance.getProcessId()
 		).setValue(
-			"slaDefinitionId", slaDefinitionId
+			"remainingTime", slaResult.getRemainingTime()
 		).setValue(
-			"status", "RUNNING"
-		).setString(
+			"slaDefinitionId", slaResult.getId()
+		);
+
+		if (slaResult.getStatus() != null) {
+			SLAResult.Status status = slaResult.getStatus();
+
+			documentBuilder.setValue("status", status.getValue());
+		}
+		else {
+			documentBuilder.setValue(
+				"status", SLAResult.Status.RUNNING.getValue());
+		}
+
+		documentBuilder.setString(
 			"uid",
 			_digest(
-				"WorkflowMetricsSLAInstanceResult", companyId, instanceId,
-				processId, slaDefinitionId)
-		);
+				"WorkflowMetricsSLAInstanceResult", companyId, instance.getId(),
+				instance.getProcessId(), slaResult.getId()));
 
 		return documentBuilder.build();
 	}

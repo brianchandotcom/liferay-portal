@@ -356,6 +356,60 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test UserLockoutShowsTimezoneInformation {
+		property test.name.skip.portal.instance = "Locale#UserLockoutShowsTimezoneInformation";
+		property user.time.zone = "UTC";
+
+		User.firstLoginPG();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Time Zone",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureTimeZone(timeZone = "(UTC +02:00) Central European Summer Time");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPoliciesNavigator.gotoPolicy(passwordPolicyName = "Default Password Policy");
+
+		PasswordPolicies.enableDefaultPasswordPolicyLockout();
+
+		PasswordPolicies.setLockoutDuration(duration = "5 Minutes");
+
+		User.logoutPG();
+
+		var count = "0";
+
+		while ("${count}" != "3") {
+			User._login(
+				password = "INCORRECT",
+				userEmailAddress = "userea@liferay.com");
+
+			var count = ${count} + 1;
+		}
+
+		task ("Assert Timezone is included with account lockout message.") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "This account is locked until");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "CEST.");
+		}
+	}
+
 	@priority = "4"
 	test VerifyFriendlyURLRedirectToEnableDefualtLocale {
 		property custom.properties = "locales.enabled=en_US,zh_CN,fr_FR${line.separator}locale.use.default.if.not.available=true";

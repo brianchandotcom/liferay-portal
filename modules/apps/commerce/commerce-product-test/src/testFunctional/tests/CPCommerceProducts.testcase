@@ -87,6 +87,7 @@ definition {
 	@priority = "3"
 	test AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProducts#AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -345,6 +346,7 @@ definition {
 	@priority = "3"
 	test CreateProductBundleWithPriceTypeStatic {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProducts#CreateProductBundleWithPriceTypeStatic";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -510,6 +512,7 @@ definition {
 	@priority = "3"
 	test EditAProduct {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProducts#EditAProduct";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -545,6 +548,7 @@ definition {
 	@priority = "3"
 	test EditSkuAndDelete {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProducts#EditSkuAndDelete";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -722,6 +726,7 @@ definition {
 	@priority = "3"
 	test UseSkuSearchBarAndPagination {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProducts#UseSkuSearchBarAndPagination";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -746,6 +751,7 @@ definition {
 	@priority = "3"
 	test UseSortingByNameAndDate {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProducts#UseSortingByNameAndDate";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

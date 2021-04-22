@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CODE_FIELD</td>
-	<td>//div/input[contains(@id,'code')]</td>
+	<td>//div/input[contains(@id,'regionCode')]</td>
 	<td></td>
 </tr>
 <tr>

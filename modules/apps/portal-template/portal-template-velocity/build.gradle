@@ -20,7 +20,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testCompile group: "org.apache.tika", name: "tika-core", version: "1.24.1"
+	testCompile group: "org.apache.tika", name: "tika-core", version: "1.26"
 	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-memory")

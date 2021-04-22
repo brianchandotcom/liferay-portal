@@ -41,6 +41,7 @@ definition {
 	@priority = "3"
 	test AddAnAttachment {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnAttachment";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -71,6 +72,7 @@ definition {
 
 	test AddAnImage {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnImage";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -100,6 +102,7 @@ definition {
 	@priority = "3"
 	test EditAnAttachment {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductMedia#EditAnAttachment";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

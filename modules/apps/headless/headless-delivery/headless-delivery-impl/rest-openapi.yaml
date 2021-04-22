@@ -4574,6 +4574,10 @@ components:
                     description:
                         The wiki page's media format (e.g., HTML, BBCode, etc.).
                     type: string
+                externalReferenceCode:
+                    description:
+                        The wiki page's external reference code.
+                    type: string
                 headline:
                     description:
                         The wiki page's main title.
@@ -4590,6 +4594,12 @@ components:
                     items:
                         type: string
                     type: array
+                nodeId:
+                    # @review
+                    description:
+                        The ID of the wiki node to which the wiki page belongs.
+                    format: int64
+                    type: integer
                 numberOfAttachments:
                     description:
                         The wiki page's number attachments.
@@ -11617,6 +11627,88 @@ paths:
                     description:
                         ""
             tags: ["WikiNode"]
+    "/sites/{siteId}/wiki-pages/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the wiki page by external reference code.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: ["WikiPage"]
+        get:
+            # @review
+            description:
+                Retrieves the wiki page by external reference code
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WikiPage"
+                    description:
+                        ""
+            tags: ["WikiPage"]
+        put:
+            # @review
+            description:
+                Updates the wiki page with the given external reference code, or creates it if it not exists.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WikiPage"
+                description:
+                    ""
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WikiPage"
+                    description:
+                        ""
+            tags: ["WikiPage"]
     "/structured-content-folder/{structuredContentFolderId}/permissions":
         get:
             operationId: getStructuredContentFolderPermissionsPage

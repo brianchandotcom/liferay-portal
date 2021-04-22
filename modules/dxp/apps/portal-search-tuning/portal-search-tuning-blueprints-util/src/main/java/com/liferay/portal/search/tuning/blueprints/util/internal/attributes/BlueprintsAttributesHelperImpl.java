@@ -30,7 +30,7 @@ import com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter.ParameterConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
-import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintContributorKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintKeys;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
 import com.liferay.portal.search.tuning.blueprints.util.BlueprintHelper;
@@ -170,8 +170,7 @@ public class BlueprintsAttributesHelperImpl
 		Optional<JSONArray> configurationJSONArrayOptional =
 			_blueprintHelper.getJSONArrayConfigurationOptional(
 				blueprint,
-				"JSONArray/" +
-					FacetsBlueprintContributorKeys.CONFIGURATION_SECTION);
+				"JSONArray/" + FacetsBlueprintKeys.CONFIGURATION_SECTION);
 
 		if (!configurationJSONArrayOptional.isPresent()) {
 			return;

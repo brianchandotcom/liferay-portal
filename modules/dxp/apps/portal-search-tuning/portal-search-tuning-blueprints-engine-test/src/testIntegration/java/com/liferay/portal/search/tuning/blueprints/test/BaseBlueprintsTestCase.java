@@ -59,7 +59,7 @@ import com.liferay.portal.search.tuning.blueprints.engine.cache.JSONDataProvider
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.engine.exception.BlueprintsEngineException;
 import com.liferay.portal.search.tuning.blueprints.engine.util.BlueprintsEngineHelper;
-import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintContributorKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintKeys;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 import com.liferay.portal.search.tuning.blueprints.service.BlueprintService;
@@ -309,7 +309,7 @@ public abstract class BaseBlueprintsTestCase {
 			BlueprintKeys.AGGREGATION_CONFIGURATION.getJsonKey(),
 			getAggregationConfiguration()
 		).put(
-			FacetsBlueprintContributorKeys.CONFIGURATION_SECTION,
+			FacetsBlueprintKeys.CONFIGURATION_SECTION,
 			getConfigurationSection()
 		).put(
 			BlueprintKeys.FRAMEWORK_CONFIGURATION.getJsonKey(),

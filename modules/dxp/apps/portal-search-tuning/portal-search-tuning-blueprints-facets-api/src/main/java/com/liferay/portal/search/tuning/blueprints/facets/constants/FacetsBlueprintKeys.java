@@ -17,7 +17,7 @@ package com.liferay.portal.search.tuning.blueprints.facets.constants;
 /**
  * @author Petteri Karttunen
  */
-public class FacetsBlueprintContributorKeys {
+public class FacetsBlueprintKeys {
 
 	public static final String CONFIGURATION_SECTION = "facet_configuration";
 

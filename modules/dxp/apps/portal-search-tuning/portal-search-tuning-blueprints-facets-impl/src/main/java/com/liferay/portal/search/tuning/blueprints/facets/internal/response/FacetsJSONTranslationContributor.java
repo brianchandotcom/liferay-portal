@@ -22,7 +22,7 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
-import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintContributorKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsJSONResponseKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.internal.response.handler.FacetResponseHandlerFactory;
 import com.liferay.portal.search.tuning.blueprints.facets.internal.util.FacetConfigurationUtil;
@@ -72,8 +72,7 @@ public class FacetsJSONTranslationContributor
 		Optional<JSONArray> configurationJSONArrayOptional =
 			_blueprintHelper.getJSONArrayConfigurationOptional(
 				blueprint,
-				"JSONArray/" +
-					FacetsBlueprintContributorKeys.CONFIGURATION_SECTION);
+				"JSONArray/" + FacetsBlueprintKeys.CONFIGURATION_SECTION);
 
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchResponse.getAggregationResultsMap();

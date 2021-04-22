@@ -24,7 +24,7 @@ import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterDat
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterDefinition;
 import com.liferay.portal.search.tuning.blueprints.engine.spi.parameter.ParameterContributor;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetConfigurationKeys;
-import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintContributorKeys;
+import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsBlueprintKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.internal.request.handler.FacetRequestHandlerFactory;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.request.FacetRequestHandler;
 import com.liferay.portal.search.tuning.blueprints.message.Message;
@@ -57,8 +57,7 @@ public class FacetParameterContributor implements ParameterContributor {
 		Optional<JSONArray> configurationJSONArrayOptional =
 			_blueprintHelper.getJSONArrayConfigurationOptional(
 				blueprint,
-				"JSONArray/" +
-					FacetsBlueprintContributorKeys.CONFIGURATION_SECTION);
+				"JSONArray/" + FacetsBlueprintKeys.CONFIGURATION_SECTION);
 
 		if (!configurationJSONArrayOptional.isPresent()) {
 			return;

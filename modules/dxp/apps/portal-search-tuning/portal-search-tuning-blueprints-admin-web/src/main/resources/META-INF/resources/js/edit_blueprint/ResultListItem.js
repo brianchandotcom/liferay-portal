@@ -31,14 +31,18 @@ const RESULTS_DEFAULT_KEYS = [
 const RESULTS_SHOW_KEYS = ['b_assetEntryId', 'id'];
 
 const blueprintFieldPrefixRegex = new RegExp(`^(${BLUEPRINT_FIELD_PREFIX})`);
-const bracketsRegex = new RegExp(/[[\]]/, 'g');
+const bracketsQuotesRegex = new RegExp(/[[\]"]/, 'g');
 
 function removeBlueprintFieldPrefix(value) {
 	return value.replace(blueprintFieldPrefixRegex, '');
 }
 
 function removeBrackets(value) {
-	return value.replace(bracketsRegex, '');
+	return value.replace(bracketsQuotesRegex, '');
+}
+
+function truncateString(value) {
+	return value.length > 700 ? value.substring(0, 700).concat('...') : value;
 }
 
 function ResultListItem({item}) {
@@ -54,9 +58,11 @@ function ResultListItem({item}) {
 				className={getCN({'text-truncate': collapse})}
 				size={8}
 			>
-				{typeof value === 'object'
-					? removeBrackets(JSON.stringify(value))
-					: value}
+				{truncateString(
+					typeof value === 'object'
+						? removeBrackets(JSON.stringify(value))
+						: value
+				)}
 			</ClayLayout.Col>
 		</ClayLayout.Row>
 	);

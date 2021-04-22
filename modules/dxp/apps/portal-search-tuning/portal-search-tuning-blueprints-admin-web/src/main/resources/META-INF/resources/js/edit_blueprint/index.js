@@ -385,7 +385,7 @@ function EditBlueprintForm({
 							errors: [
 								{
 									msg: Liferay.Language.get(
-										'the-json-is-invalid'
+										'an-unexpected-error-occurred'
 									),
 									severity: Liferay.Language.get('error'),
 								},

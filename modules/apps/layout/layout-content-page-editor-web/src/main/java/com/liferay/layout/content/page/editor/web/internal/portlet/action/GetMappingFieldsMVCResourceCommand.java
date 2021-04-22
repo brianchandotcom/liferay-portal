@@ -55,6 +55,9 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String fieldType = ParamUtil.getString(resourceRequest, "fieldType");
 		String classTypeId = ParamUtil.getString(
 			resourceRequest, "classTypeId");
@@ -63,18 +66,15 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 		try {
 			JSONArray mappingFieldsJSONArray =
 				MappingContentUtil.getMappingFieldsJSONArray(
-					fieldType, classTypeId, _infoItemServiceTracker,
-					_portal.getClassName(classNameId), resourceRequest);
+					fieldType, classTypeId, themeDisplay.getScopeGroupId(),
+					_infoItemServiceTracker, _portal.getClassName(classNameId),
+					themeDisplay.getLocale());
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, mappingFieldsJSONArray);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get mapping fields", exception);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,

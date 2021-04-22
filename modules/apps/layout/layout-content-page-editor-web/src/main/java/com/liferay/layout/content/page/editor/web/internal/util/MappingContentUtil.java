@@ -29,14 +29,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
-
-import javax.portlet.ResourceRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -44,9 +42,9 @@ import javax.portlet.ResourceRequest;
 public class MappingContentUtil {
 
 	public static JSONArray getMappingFieldsJSONArray(
-			String fieldType, String formVariationKey,
+			String fieldType, String formVariationKey, long groupId,
 			InfoItemServiceTracker infoItemServiceTracker, String itemClassName,
-			ResourceRequest resourceRequest)
+			Locale locale)
 		throws Exception {
 
 		// LPS-111037
@@ -71,9 +69,6 @@ public class MappingContentUtil {
 			return JSONFactoryUtil.createJSONArray();
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		JSONArray defaultFieldSetFieldsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
@@ -81,7 +76,7 @@ public class MappingContentUtil {
 			JSONUtil.put("fields", defaultFieldSetFieldsJSONArray));
 
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			formVariationKey, themeDisplay.getScopeGroupId());
+			formVariationKey, groupId);
 
 		for (InfoFieldSetEntry infoFieldSetEntry :
 				infoForm.getInfoFieldSetEntries()) {
@@ -96,8 +91,7 @@ public class MappingContentUtil {
 						JSONUtil.put(
 							"key", infoField.getName()
 						).put(
-							"label",
-							infoField.getLabel(themeDisplay.getLocale())
+							"label", infoField.getLabel(locale)
 						).put(
 							"type", infoFieldType.getName()
 						));
@@ -120,8 +114,7 @@ public class MappingContentUtil {
 						JSONUtil.put(
 							"key", infoField.getName()
 						).put(
-							"label",
-							infoField.getLabel(themeDisplay.getLocale())
+							"label", infoField.getLabel(locale)
 						).put(
 							"type", infoFieldType.getName()
 						));
@@ -132,8 +125,7 @@ public class MappingContentUtil {
 						JSONUtil.put(
 							"fields", fieldSetFieldsJSONArray
 						).put(
-							"label",
-							infoFieldSet.getLabel(themeDisplay.getLocale())
+							"label", infoFieldSet.getLabel(locale)
 						));
 				}
 			}
@@ -144,6 +136,10 @@ public class MappingContentUtil {
 
 	private static boolean _isFieldMappable(
 		InfoField infoField, String fieldType) {
+
+		if (Validator.isNull(fieldType)) {
+			return true;
+		}
 
 		boolean imageInfoFieldType =
 			infoField.getInfoFieldType() instanceof ImageInfoFieldType;

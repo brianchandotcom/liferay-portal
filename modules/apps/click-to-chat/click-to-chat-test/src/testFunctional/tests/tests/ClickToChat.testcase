@@ -1,0 +1,162 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Click To Chat";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@priority = "5"
+	test DisableJivoChat {
+		property osgi.module.configuration.file.names = "com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration.config";
+		property osgi.module.configurations = "chatProviderAccountId=&quot;${click.to.chat.jivochat.password}&quot;${line.separator}chatProviderId=&quot;jivochat&quot;${line.separator}enabled=&quot;true&quot;${line.separator}guestUsersAllowed=&quot;false&quot;${line.separator}siteSettingsStrategy=&quot;always-inherit&quot;";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		AssertElementNotPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+	}
+
+	@priority = "5"
+	test DisableLivePerson {
+		property osgi.module.configuration.file.names = "com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration.config";
+		property osgi.module.configurations = "chatProviderAccountId=&quot;${click.to.chat.liveperson.password}&quot;${line.separator}chatProviderId=&quot;liveperson&quot;${line.separator}enabled=&quot;true&quot;${line.separator}guestUsersAllowed=&quot;false&quot;${line.separator}siteSettingsStrategy=&quot;always-inherit&quot;";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		AssertElementNotPresent(locator1 = "Providers#CHAT_LIVEPERSON");
+	}
+
+	@priority = "5"
+	test EnableJivoChat {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		FormFields.selectSelectOption(
+			fieldName = "siteSettingsStrategy",
+			selectOption = "Always Inherit");
+
+		FormFields.selectSelectOption(
+			fieldName = "chatProviderId",
+			selectOption = "JivoChat");
+
+		FormFields.editText(
+			fieldName = "chatProviderAccountId",
+			fieldValue = "${click.to.chat.jivochat.password}");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+	}
+
+	@priority = "5"
+	test EnableLivePerson {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		FormFields.selectSelectOption(
+			fieldName = "siteSettingsStrategy",
+			selectOption = "Always Inherit");
+
+		FormFields.selectSelectOption(
+			fieldName = "chatProviderId",
+			selectOption = "Liveperson");
+
+		FormFields.editText(
+			fieldName = "chatProviderAccountId",
+			fieldValue = "${click.to.chat.liveperson.password}");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
+	}
+
+	@priority = "4"
+	test HideChatProvider {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		FormFields.selectSelectOption(
+			fieldName = "siteSettingsStrategy",
+			selectOption = "Always Override");
+
+		Navigator.openURL();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_PROVIDERS_HIDE");
+	}
+
+}

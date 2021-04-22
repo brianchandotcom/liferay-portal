@@ -242,22 +242,27 @@ public class DDMFormInstanceFieldSettingsValidator {
 							fieldDDMForm, ddmForm.getAvailableLocales(),
 							ddmForm.getDefaultLocale());
 
-					DDMFormEvaluatorEvaluateResponse
-						ddmFormEvaluatorEvaluateResponse = doEvaluate(
-							portletRequest, fieldDDMForm, fieldDDMFormValues,
-							ddmForm.getDefaultLocale());
+					for (Locale availableLocale :
+							ddmForm.getAvailableLocales()) {
 
-					Set<String> invalidDDMFormFields = getInvalidDDMFormFields(
-						fieldDDMForm, ddmFormEvaluatorEvaluateResponse,
-						fieldDDMForm.getDefaultLocale());
+						DDMFormEvaluatorEvaluateResponse
+							ddmFormEvaluatorEvaluateResponse = doEvaluate(
+								portletRequest, fieldDDMForm,
+								fieldDDMFormValues, availableLocale);
 
-					if (invalidDDMFormFields.isEmpty()) {
-						return;
+						Set<String> invalidDDMFormFields =
+							getInvalidDDMFormFields(
+								fieldDDMForm, ddmFormEvaluatorEvaluateResponse,
+								fieldDDMForm.getDefaultLocale());
+
+						if (!invalidDDMFormFields.isEmpty()) {
+							fieldNamePropertiesMap.put(
+								getFieldLabel(ddmFormField, availableLocale),
+								invalidDDMFormFields);
+
+							break;
+						}
 					}
-
-					fieldNamePropertiesMap.put(
-						getFieldLabel(ddmFormField, ddmForm.getDefaultLocale()),
-						invalidDDMFormFields);
 				}
 
 			});

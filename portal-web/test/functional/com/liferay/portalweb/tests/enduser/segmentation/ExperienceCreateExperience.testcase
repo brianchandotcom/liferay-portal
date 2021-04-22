@@ -182,7 +182,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130302."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationDateModifiedSegment {
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
@@ -424,7 +423,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130334."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionLanguageSegment {
 		property portal.acceptance = "false";
@@ -664,7 +662,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130293."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserDateModifiedSegment {
 		property portal.acceptance = "false";

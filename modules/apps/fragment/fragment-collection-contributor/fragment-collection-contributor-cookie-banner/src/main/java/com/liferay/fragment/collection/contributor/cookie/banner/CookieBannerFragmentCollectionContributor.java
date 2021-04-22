@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.collection.contributor.cookie.banners;
+package com.liferay.fragment.collection.contributor.cookie.banner;
 
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
@@ -26,15 +26,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	property = "fragment.collection.key=COOKIE_BANNERS",
+	property = "fragment.collection.key=COOKIE_BANNER",
 	service = FragmentCollectionContributor.class
 )
-public class CookieBannersFragmentCollectionContributor
+public class CookieBannerFragmentCollectionContributor
 	extends BaseFragmentCollectionContributor {
 
 	@Override
 	public String getFragmentCollectionKey() {
-		return "COOKIE_BANNERS";
+		return "COOKIE_BANNER";
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class CookieBannersFragmentCollectionContributor
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.fragment.collection.contributor.cookie.banners)"
+		target = "(osgi.web.symbolicname=com.liferay.fragment.collection.contributor.cookie.banner)"
 	)
 	private ServletContext _servletContext;
 

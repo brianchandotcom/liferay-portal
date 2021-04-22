@@ -19,6 +19,18 @@ components:
                     description:
                         public unique key (corresponds to company's webId field)
                     type: string
+                portalInstanceInitializerKey:
+                    description:
+                        optional portal initializer key for an portal instance initialization.
+                    type: string
+                    writeOnly: true
+                portalInstanceInitializerPayload:
+                    additionalProperties:
+                        type: string
+                    description:
+                        optional portal initializer payload(contains required data for a portal instance initializer).
+                    type: object
+                    writeOnly: true
                 virtualHost:
                     type: string
             type: object
@@ -66,12 +78,6 @@ paths:
             description:
                 Adds a new portal instance
             operationId: postPortalInstance
-            parameters:
-                - in: query
-                  name: initializerKey
-                  required: false
-                  schema:
-                      type: string
             requestBody:
                 content:
                     application/json:

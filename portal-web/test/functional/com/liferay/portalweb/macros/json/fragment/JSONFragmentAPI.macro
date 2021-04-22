@@ -36,9 +36,9 @@ definition {
 			-d groupId=${groupId} \
 			-d fragmentCollectionId=${collectionId} \
 			-d fragmentEntryKey= \
-			-d name=${name} \
+			-d <CURL_DATA[name=${name}]CURL_DATA> \
 			-d css= \
-			-d html=${html} \
+			-d <CURL_DATA[html=${html}]CURL_DATA> \
 			-d js= \
 			-d configuration=${configuration} \
 			-d previewFileEntryId=0 \

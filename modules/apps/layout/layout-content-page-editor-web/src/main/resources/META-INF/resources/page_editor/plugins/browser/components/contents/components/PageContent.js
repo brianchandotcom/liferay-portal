@@ -117,8 +117,8 @@ export default function PageContent({
 		>
 			<div
 				className={classNames('d-flex', {
-					'align-items-baseline': type,
-					'align-items-center': !type,
+					'align-items-baseline': subtype,
+					'align-items-center': !subtype,
 				})}
 			>
 				<ClayIcon
@@ -137,14 +137,9 @@ export default function PageContent({
 						{title}
 					</span>
 
-					{type && (
-						<span className="text-secondary">
-							{Liferay.Language.get('type')}: {type}
-						</span>
-					)}
 					{subtype && (
 						<span className="text-secondary text-truncate">
-							{Liferay.Language.get('subtype')}: {subtype}
+							{subtype}
 						</span>
 					)}
 				</ClayLayout.ContentCol>

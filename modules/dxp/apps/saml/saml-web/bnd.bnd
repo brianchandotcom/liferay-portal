@@ -16,3 +16,4 @@ Require-Capability:\
 	liferay.resource.bundle;\
 		filter:="(bundle.symbolic.name=com.liferay.saml.api)"
 Web-ContextPath: /saml-web
+-dsannotations-options: inherit

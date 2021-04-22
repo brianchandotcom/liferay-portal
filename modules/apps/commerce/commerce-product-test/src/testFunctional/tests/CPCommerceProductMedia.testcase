@@ -57,13 +57,72 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6032. AddAnAttachmentToAnOption"
-	@ignore = "true"
 	@priority = "3"
 	test AddAnAttachmentToAnOption {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6032 AddAnAttachmentToAnOption
 
+
+		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnAttachmentToAnOption"; 
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
+
+		CPCommerceCatalog.newOptionsEntry(
+			optionDescription = "Option Description",
+			optionFieldType = "Select from List",
+			optionName = "Color");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		CommerceEntry.viewOptionsEntry(
+			optionDescription = "Option Description",
+			optionName = "Color");
+
+		CPCommerceCatalog.addOptionValues(
+			optionEntryName = "Color",
+			optionValuesList = "Black:1");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "Color",
+			title = "Add Options");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+		CommerceProductImages.addAttachmentImages(imageTitles = "Black");
+
+		Click(
+			key_value = "Commerce_Black.jpg",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(locator1 = "CommerceEntry#PRODUCT_DETAIL_VIEW_OPTION");
+
+		Click(
+			key_dropdownItem = "Black",
+			key_fieldLabel = "Color",
+			locator1 = "TableViewBuilder#FILTER_DROPDOWN_ITEM");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for COMMERCE-6025. AddAnImage"
@@ -94,6 +153,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6028 AddAnImageToAnOption
+
 	}
 
 	@description = "This is a test for COMMERCE-6031. EditAnAttachment"

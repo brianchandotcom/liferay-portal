@@ -24,7 +24,7 @@ definition {
 			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
-		task ("Add user and set password"){
+		task ("Add user and set password") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
@@ -42,7 +42,7 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		task ("Add segment for the user created"){
+		task ("Add segment for the user created") {
 			ProductMenu.gotoSite(site = "Global");
 
 			ProductMenu.gotoPortlet(
@@ -60,7 +60,7 @@ definition {
 			Button.clickSave();
 		}
 
-		task("Add role and permissions"){
+		task ("Add role and permissions") {
 			JSONRole.addRegularRole(
 				roleKey = "Roles Regrole Name",
 				roleTitle = "Roles Regrole Name");
@@ -76,7 +76,7 @@ definition {
 				roleTitle = "Roles Regrole Name");
 		}
 
-		task("Assign the segment to the role created"){
+		task ("Assign the segment to the role created") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
@@ -112,7 +112,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#AssignSiteRolesOptionInSegmentsEditor";
 
-		task("Go to segments portlet and add segment in Test Site Name"){
+		task ("Go to segments portlet and add segment in Test Site Name") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
@@ -130,7 +130,7 @@ definition {
 			Button.clickSave();
 		}
 
-		task("Open segment's options and assert the option Assign site roles is disabled"){
+		task ("Open segment's options and assert the option Assign site roles is disabled") {
 			Segmentation.openSegmentOptions();
 
 			AssertElementPresent(
@@ -138,7 +138,7 @@ definition {
 				locator1 = "Dropdown#ANY_DISABLED");
 		}
 
-		task("Enable Assign roles by segment"){
+		task ("Enable Assign roles by segment") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -152,7 +152,7 @@ definition {
 			Segmentation.enableAssingRolesBySegmentsCheckbox();
 		}
 
-		task("Go to segments portlet"){
+		task ("Go to segments portlet") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
@@ -160,7 +160,7 @@ definition {
 				portlet = "Segments");
 		}
 
-		task("Open segment's options and assert the option Assign site roles is enabled"){
+		task ("Open segment's options and assert the option Assign site roles is enabled") {
 			Segmentation.openSegmentOptions();
 
 			AssertElementPresent(
@@ -176,7 +176,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisableAssignRolesBySegment";
 
-		task("Log out and login with the user assigned to the segment"){
+		task ("Log out and login with the user assigned to the segment") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -190,7 +190,7 @@ definition {
 			Segmentation.disableAssingRolesBySegmentsCheckbox();
 		}
 
-		task("Log out and login with the user assigned to the segment"){
+		task ("Log out and login with the user assigned to the segment") {
 			User.logoutPG();
 
 			User.loginUserPG(
@@ -198,7 +198,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task("Assert the role is not working"){
+		task ("Assert the role is not working") {
 			AssertElementNotPresent(locator1 = "ApplicationsMenu#PORTLET");
 		}
 	}
@@ -210,7 +210,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#EnableAssignRolesBySegment";
 
-		task("Enable Assign roles by segment"){
+		task ("Enable Assign roles by segment") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -224,7 +224,7 @@ definition {
 			Segmentation.enableAssingRolesBySegmentsCheckbox();
 		}
 
-		task("Log out and login with the user assigned to the segment"){
+		task ("Log out and login with the user assigned to the segment") {
 			User.logoutPG();
 
 			User.loginUserPG(
@@ -232,7 +232,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task("Assert the role is working"){
+		task ("Assert the role is working") {
 			ApplicationsMenuHelper.openApplicationsMenu();
 
 			ApplicationsMenu.gotoPanel(panel = "Applications");

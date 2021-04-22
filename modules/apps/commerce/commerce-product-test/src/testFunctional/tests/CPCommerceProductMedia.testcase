@@ -168,7 +168,6 @@ definition {
 	@priority = "3"
 	test RemoveAnImage {
 		property portal.acceptance = "false";
-
 		property test.name.skip.portal.instance = "CPCommerceProductMedia#RemoveAnImage";
 
 		CommerceNavigator.gotoPortlet(
@@ -193,7 +192,6 @@ definition {
 		MenuItem.click(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
-
 	}
 
 }

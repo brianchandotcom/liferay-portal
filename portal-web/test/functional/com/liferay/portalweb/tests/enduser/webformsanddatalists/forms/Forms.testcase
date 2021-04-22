@@ -35,10 +35,9 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test Add20Forms {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#Add20Forms";
 
 		Navigator.openURL();
@@ -69,10 +68,9 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test Add30Fields {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#Add30Fields";
 
 		Navigator.openURL();

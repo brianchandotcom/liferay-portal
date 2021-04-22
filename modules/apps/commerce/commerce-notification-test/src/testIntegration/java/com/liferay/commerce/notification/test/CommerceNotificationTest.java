@@ -32,7 +32,6 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -180,23 +179,6 @@ public class CommerceNotificationTest {
 				getCommerceNotificationQueueEntriesCount(_group.getGroupId());
 
 		Assert.assertEquals(1, commerceNotificationQueueEntriesCount);
-	}
-
-	@Test(expected = NoSuchUserException.class)
-	public void testNonexistingEmailAddressRecipient() throws Exception {
-		_commerceNotificationTemplate =
-			CommerceNotificationTestUtil.addNotificationTemplate(
-				"nonexisting@mail.com",
-				CommerceOrderConstants.ORDER_NOTIFICATION_PLACED,
-				_serviceContext);
-
-		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _group.getGroupId(),
-			_commerceCurrency.getCommerceCurrencyId());
-
-		_commerceNotificationHelper.sendNotifications(
-			_group.getGroupId(), _user.getUserId(),
-			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED, _commerceOrder);
 	}
 
 	@Test

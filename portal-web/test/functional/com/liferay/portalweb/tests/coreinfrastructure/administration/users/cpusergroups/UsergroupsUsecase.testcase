@@ -180,6 +180,48 @@ definition {
 		LAR.exportUserGroups(larFileName = "User_Group_Members.lar");
 	}
 
+	@priority = "3"
+	test PredefinedPagesCanBeAdded {
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG User Group Description",
+			userGroupName = "UG User Group");
+
+		JSONUserGroup.addLayout(
+			layoutName = "UG Public Page",
+			userGroupName = "UG User Group");
+
+		JSONUserGroup.addLayout(
+			layoutName = "UG Private Page",
+			privateLayout = "true",
+			userGroupName = "UG User Group");
+
+		UserGroup.openUserGroupsAdmin();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Go to Profile Pages",
+			rowEntry = "UG User Group");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SelectWindow(locator1 = "title=UG Public Page - UG User Group - ${siteName}");
+
+		Page.viewCurrentPage(pageName = "UG Public Page");
+
+		Navigator.closeWindow();
+
+		UserGroup.openUserGroupsAdmin();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Go to Dashboard Pages",
+			rowEntry = "UG User Group");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SelectWindow(locator1 = "title=UG Private Page - UG User Group - ${siteName}");
+
+		Page.viewCurrentPage(pageName = "UG Private Page");
+	}
+
 	@priority = "4"
 	test UserGroupRegularRolePermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

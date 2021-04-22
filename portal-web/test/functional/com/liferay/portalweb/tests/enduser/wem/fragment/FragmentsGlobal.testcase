@@ -129,6 +129,143 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-100540. The changes of global fragments can be propagated to all pages of a site or sites that use the fragments"
+	@priority = "5"
+	test PropagateGlobalFragmentChanges {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment in global fragment collection") {
+			var newLine = '''
+''';
+
+			var htmlSnippet = '''
+<${configuration.headingLevel} class="component-heading mb-0 text-break" data-lfr-editable-id="element-text" data-lfr-editable-type="text">
+	Heading Example
+</${configuration.headingLevel}>
+			''';
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "h1",
+					"label": "heading-level",
+					"name": "headingLevel",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "h1"
+							},
+							{
+								"value": "h2"
+							},
+							{
+								"value": "h3"
+							},
+							{
+								"value": "h4"
+							},
+							{
+								"value": "h5"
+							},
+							{
+								"value": "h6"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}
+			''';
+			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+
+			JSONFragment.addSection(
+				collectionName = "Global Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Global",
+				html = "${htmlSnippet}",
+				name = "Global Fragment Name");
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a global fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Global Collection Name",
+				fragmentName = "Global Fragment Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Heading Example",
+				fragmentName = "Global Fragment Name",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Edit the global fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Global Fragment Name",
+				item = "Edit");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
+
+			Button.clickPublish();
+		}
+
+		task ("Propagate the changes") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Global Fragment Name",
+				item = "View Site Usages");
+
+			var key_siteName = "Site Name";
+
+			Check(locator1 = "Fragment#FRAGMENT_SITE_USAGE_CHECKBOX");
+
+			Click.clickNoMouseOver(locator1 = "Button#PROPAGATE");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("View the changes propagated to normal site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			for (var button : list "Submit,Cancel") {
+				Button.viewPresent(button = "${button}");
+			}
+		}
+
+		task ("Delete the new site") {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
 	@description = "This is a test for LPS-98501. View global fragment resource is copied to collection in current site."
 	@priority = "4"
 	test ViewGlobalFragmentResourceCopiedToCollectionInNormalSite {

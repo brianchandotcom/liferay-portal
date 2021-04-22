@@ -753,20 +753,19 @@ definition {
 
 		PortletEntry.publish();
 
-		BlogsNavigator.openToBlogEntry(
+		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry with Small Image",
-			layoutName = "Blogs Page",
+			groupName = "Guest",
 			siteURLKey = "guest");
-
-		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry with Small Image");
 
 		BlogsEntry.removeSmallImage(uploadFileName = "Document_1.jpg");
 
 		PortletEntry.publish();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry with Small Image");
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry with Small Image",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		AssertElementNotPresent(
 			key_smallImage = "Document_1.jpg",
@@ -966,9 +965,10 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		Panel.expandPanel(panel = "Configuration");
 
@@ -1162,9 +1162,10 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		Panel.expandPanel(panel = "Configuration");
 
@@ -1207,9 +1208,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		Panel.expandPanel(panel = "Configuration");
 

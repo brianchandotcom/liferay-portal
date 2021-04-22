@@ -159,7 +159,6 @@ definition {
 	@priority = "3"
 	test RemoveAnAttachment {
 		property portal.acceptance = "false";
-
 		property test.name.skip.portal.instance = "CPCommerceProductMedia#RemoveAnAttachment";
 
 		CommerceNavigator.gotoPortlet(
@@ -182,7 +181,6 @@ definition {
 		MenuItem.click(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
-		
 	}
 
 	@description = "This is a test for COMMERCE-6026. RemoveAnImage"

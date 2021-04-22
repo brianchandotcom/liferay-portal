@@ -1,5 +1,46 @@
 definition {
 
+	@summary = "Add a public/private site page to an existing user group via userGroupName, privateLayout is false by default"
+	macro addLayout {
+		Variables.assertDefined(parameterList = "${userGroupName},${layoutName}");
+
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
+
+		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
+
+		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = "${userGroupName}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
+				-u test@liferay.com:test
+		''';
+
+		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${userGroupId}')]['groupId']");
+		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
+		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
+
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		var type = JSONLayoutSetter.setType(type = "${type}");
+
+		JSONLayoutAPI._addLayout(
+			friendlyURL = "${friendlyURL}",
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			parentLayoutId = "0",
+			privateLayout = "${privateLayout}",
+			serviceContext = "${serviceContext}",
+			type = "${type}");
+	}
+
 	@summary = "Add a user group"
 	macro addUserGroup {
 		Variables.assertDefined(parameterList = "${userGroupName}");

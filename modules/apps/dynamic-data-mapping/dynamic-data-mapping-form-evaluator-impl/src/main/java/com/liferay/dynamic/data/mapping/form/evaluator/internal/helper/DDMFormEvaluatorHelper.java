@@ -754,17 +754,10 @@ public class DDMFormEvaluatorHelper {
 						"{parameter}", localizedValueString));
 			}
 
-			GetFieldPropertyRequest.Builder builder =
-				GetFieldPropertyRequest.Builder.newBuilder(fieldName, "value");
-
-			builder.withInstanceId(fieldInstanceId);
-
-			GetFieldPropertyResponse getFieldPropertyResponse =
-				ddmFormEvaluatorDDMExpressionFieldAccessor.getFieldProperty(
-					builder.build());
-
 			ddmExpression.setVariable(
-				fieldName, getFieldPropertyResponse.getValue());
+				fieldName,
+				_getFieldPropertyResponseValue(
+					ddmFormEvaluatorFieldContextKey, "value"));
 
 			valid = ddmExpression.evaluate();
 		}

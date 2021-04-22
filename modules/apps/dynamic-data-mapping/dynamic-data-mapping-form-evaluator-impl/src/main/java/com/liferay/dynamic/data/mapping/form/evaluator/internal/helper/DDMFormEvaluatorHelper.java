@@ -68,6 +68,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -328,6 +330,20 @@ public class DDMFormEvaluatorHelper {
 		return getBooleanPropertyValue(ddmFormFieldContextKey, "visible", true);
 	}
 
+	protected boolean filterVisibleFieldsWithRegex(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		if (Validator.isNull(
+				_getFieldPropertyResponseValue(
+					ddmFormEvaluatorFieldContextKey, "regex"))) {
+
+			return false;
+		}
+
+		return getBooleanPropertyValue(
+			ddmFormEvaluatorFieldContextKey, "visible", true);
+	}
+
 	protected <K, V> void forEachEntry(
 		Map<K, V> map, Consumer<Map.Entry<K, V>> entryConsumer) {
 
@@ -491,6 +507,26 @@ public class DDMFormEvaluatorHelper {
 			ddmFormEvaluatorFieldContextKey, "readOnly", false);
 	}
 
+	protected boolean isFieldValueInvalid(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		Pattern pattern = Pattern.compile(
+			GetterUtil.getString(
+				_getFieldPropertyResponseValue(
+					ddmFormEvaluatorFieldContextKey, "regex")));
+
+		Matcher matcher = pattern.matcher(
+			GetterUtil.getString(
+				_getFieldPropertyResponseValue(
+					ddmFormEvaluatorFieldContextKey, "value")));
+
+		if (matcher.matches()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	protected boolean isFieldVisible(
 		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
 
@@ -564,6 +600,8 @@ public class DDMFormEvaluatorHelper {
 		validateFieldsWithConfirmationField();
 
 		validateFieldsWithDDMFormFieldValidation();
+
+		validateFieldsWithRegex();
 	}
 
 	protected void validateFieldsMarkedAsRequired() {
@@ -622,6 +660,24 @@ public class DDMFormEvaluatorHelper {
 		forEachEntry(
 			ddmFormFieldValidations,
 			this::validateFieldWithDDMFormFieldValidation);
+	}
+
+	protected void validateFieldsWithRegex() {
+		Set<Map.Entry<String, DDMFormField>> entrySet =
+			_ddmFormFieldsMap.entrySet();
+
+		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
+
+		stream.flatMap(
+			entry -> _getDDMFormEvaluatorFieldContextKey(entry.getKey())
+		).filter(
+			this::filterVisibleFieldsWithRegex
+		).filter(
+			this::isFieldValueInvalid
+		).forEach(
+			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
+				ddmFormEvaluatorFieldContextKey, StringPool.BLANK)
+		);
 	}
 
 	protected void validateFieldWithDDMFormFieldValidation(
@@ -766,6 +822,25 @@ public class DDMFormEvaluatorHelper {
 				name);
 
 		return ddmFormFieldContextKeySet.stream();
+	}
+
+	private Object _getFieldPropertyResponseValue(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey,
+		String propertyName) {
+
+		String fieldName = ddmFormEvaluatorFieldContextKey.getName();
+		String instanceId = ddmFormEvaluatorFieldContextKey.getInstanceId();
+
+		GetFieldPropertyRequest.Builder builder =
+			GetFieldPropertyRequest.Builder.newBuilder(fieldName, propertyName);
+
+		builder.withInstanceId(instanceId);
+
+		GetFieldPropertyResponse getFieldPropertyResponse =
+			ddmFormEvaluatorDDMExpressionFieldAccessor.getFieldProperty(
+				builder.build());
+
+		return getFieldPropertyResponse.getValue();
 	}
 
 	private boolean _isNumericField(DDMFormField ddmFormField) {

@@ -126,8 +126,9 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 				).put(
 					"mappingFields",
 					MappingContentUtil.getMappingFieldsJSONArray(
-						fieldType, itemSubtype, _infoItemServiceTracker,
-						itemType, resourceRequest)
+						fieldType, itemSubtype, themeDisplay.getScopeGroupId(),
+						_infoItemServiceTracker, itemType,
+						themeDisplay.getLocale())
 				));
 		}
 		catch (Exception exception) {

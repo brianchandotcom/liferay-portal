@@ -65,6 +65,7 @@ import com.liferay.layout.content.page.editor.web.internal.constants.ContentPage
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -137,6 +138,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -615,6 +617,8 @@ public class ContentPageEditorDisplayContext {
 				}
 			).put(
 				"mappedInfoItems", _getMappedInfoItems()
+			).put(
+				"mappingFields", _getMappingFieldsJSONObject()
 			).put(
 				"masterLayout", _getMasterLayoutJSONObject()
 			).put(
@@ -1829,6 +1833,33 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return mappedInfoItems;
+	}
+
+	private JSONObject _getMappingFieldsJSONObject() throws Exception {
+		Set<Map<String, Object>> mappedInfoItems = _getMappedInfoItems();
+
+		JSONObject mappingFieldsJSONObject = JSONFactoryUtil.createJSONObject();
+
+		for (Map<String, Object> mappedInfoItem : mappedInfoItems) {
+			long classNameId = MapUtil.getLong(mappedInfoItem, "classNameId");
+			long classTypeId = MapUtil.getLong(mappedInfoItem, "classTypeId");
+
+			String uniqueMappingFieldKey =
+				classNameId + StringPool.DASH + classTypeId;
+
+			if (mappingFieldsJSONObject.has(uniqueMappingFieldKey)) {
+				continue;
+			}
+
+			JSONArray jsonArray = MappingContentUtil.getMappingFieldsJSONArray(
+				StringPool.BLANK, String.valueOf(classTypeId),
+				themeDisplay.getScopeGroupId(), infoItemServiceTracker,
+				PortalUtil.getClassName(classNameId), themeDisplay.getLocale());
+
+			mappingFieldsJSONObject.put(uniqueMappingFieldKey, jsonArray);
+		}
+
+		return mappingFieldsJSONObject;
 	}
 
 	private JSONObject _getMasterLayoutJSONObject() {

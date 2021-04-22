@@ -136,4 +136,19 @@ definition {
 		}
 	}
 
+	@summary = "Delete a fragment collection."
+	macro deleteFragmentCollection {
+		Variables.assertDefined(parameterList = "${groupName},${name}");
+
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
+
+		var collectionId = JSONFragmentSetter.setCollectionId(
+			collectionName = "${name}",
+			groupId = "${groupId}");
+
+		JSONFragmentAPI._deleteCollection(collectionId = "${collectionId}");
+	}
+
 }

@@ -49,6 +49,21 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Directly calls the JSON WS API to delete a fragment collection"
+	macro _deleteCollection {
+		Variables.assertDefined(parameterList = "${collectionId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/fragment.fragmentcollection/delete-fragment-collection \
+			-u test@liferay.com:test \
+			-d fragmentCollectionId=${collectionId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Get the collectionId from a collection by using collectionName and groupId"
 	macro _getCollectionIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${collectionName}");

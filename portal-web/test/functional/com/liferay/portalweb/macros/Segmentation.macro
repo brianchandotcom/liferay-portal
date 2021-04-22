@@ -74,6 +74,22 @@ definition {
 		Click(locator1 = "Segmentation#DELETE_SEGMENT");
 	}
 
+	macro disableAssingRolesBySegmentsCheckbox {
+		if (IsChecked(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX")) {
+			Click.javaScriptClick(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
+
+			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
+		}
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Button#UPDATE");
+		}
+	}
+
 	macro editSegment {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = "${entry}",
@@ -83,7 +99,11 @@ definition {
 	}
 
 	macro enableAssingRolesBySegmentsCheckbox {
-		Click(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX")) {
+			Click.javaScriptClick(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
+
+			AssertChecked.assertCheckedNotVisible(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
+		}
 
 		if (IsElementPresent(locator1 = "Button#SAVE")) {
 			Click(locator1 = "Button#SAVE");
@@ -92,8 +112,6 @@ definition {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			Click(locator1 = "Button#UPDATE");
 		}
-
-		Pause(locator1 = "3000");
 	}
 
 	macro fillProperty {

@@ -8,78 +8,86 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		Navigator.openURL();
+		task ("Disable email verification for strangers") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
 
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		task ("Add user and set password"){
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+			User.editPasswordCP(
+				requirePasswordReset = "true",
+				userEmailAddress = "userea@liferay.com",
+				userScreenName = "usersn");
+		}
 
-		User.editPasswordCP(
-			requirePasswordReset = "true",
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		task ("Add segment for the user created"){
+			ProductMenu.gotoSite(site = "Global");
 
-		ApplicationsMenu.gotoSite(site = "Global");
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Segments");
+			LexiconEntry.gotoAdd();
 
-		LexiconEntry.gotoAdd();
+			Segmentation.addProperties(propertyOption = "Screen Name");
 
-		Segmentation.addProperties(propertyOption = "Screen Name");
+			Segmentation.fillTitle(titleField = "Segment usersn");
 
-		Segmentation.fillTitle(titleField = "Segment usersn");
+			Segmentation.fillProperty(propertyField = "usersn");
 
-		Segmentation.fillProperty(propertyField = "usersn");
+			Button.clickSave();
+		}
 
-		Button.clickSave();
+		task("Add role and permissions"){
+			JSONRole.addRegularRole(
+				roleKey = "Roles Regrole Name",
+				roleTitle = "Roles Regrole Name");
 
-		JSONRole.addRegularRole(
-			roleKey = "Role User Segments",
-			roleTitle = "Role User Segments");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
+				roleTitle = "Roles Regrole Name");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-			roleTitle = "Role User Segments");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Roles Regrole Name");
+		}
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
-			roleTitle = "Role User Segments");
+		task("Assign the segment to the role created"){
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+			RoleNavigator.gotoAssignees(roleTitle = "Roles Regrole Name");
 
-		RoleNavigator.gotoAssignees(roleTitle = "Role User Segments");
+			RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
 
-		RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
-
-		Role.addAssignees(assigneeName = "Segment usersn");
+			Role.addAssignees(assigneeName = "Segment usersn");
+		}
 	}
 
 	tearDown {
@@ -89,161 +97,151 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.logoutPG();
+			Role.tearDownCP();
 
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			JSONUser.tearDownNonAdminUsers();
 
-			ApplicationsMenu.gotoSite(site = "Global");
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+	@description = "LPS-122800: Validate if, with the option Enable Assign roles by segments disabled, the option Assign Site Roles is disabled"
+	@priority = "4"
+	@uitest
+	test AssignSiteRolesOptionInSegmentsEditor {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#AssignSiteRolesOptionInSegmentsEditor";
 
-			User.deactivateCP(userFirstName = "userfn");
-
-			User.deleteCP();
-
-			JSONRole.deleteRole(roleTitle = "Role User Segments");
-
-			Navigator.gotoPage(pageName = "Home");
+		task("Go to segments portlet and add segment in Test Site Name"){
+			Navigator.openSiteURL(siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
 				portlet = "Segments");
 
-			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-				Segmentation.tearDown();
-			}
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Screen Name");
+
+			Segmentation.fillTitle(titleField = "Segment usersn");
+
+			Segmentation.fillProperty(propertyField = "usersn");
+
+			Button.clickSave();
+		}
+
+		task("Open segment's options and assert the option Assign site roles is disabled"){
+			Segmentation.openSegmentOptions();
+
+			AssertElementPresent(
+				key_text = "",
+				locator1 = "Dropdown#ANY_DISABLED");
+		}
+
+		task("Enable Assign roles by segment"){
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
+
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
+
+		task("Go to segments portlet"){
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
+		}
+
+		task("Open segment's options and assert the option Assign site roles is enabled"){
+			Segmentation.openSegmentOptions();
+
+			AssertElementPresent(
+				key_text = "Assign Site Roles",
+				locator1 = "Dropdown#ANY_ENABLED");
 		}
 	}
 
-	@description = "Validate if, with the option Enable Assign roles by segments disabled, the option Assign Site Roles is disabled"
-	@priority = "5"
-	test AssignSiteRolesOptionDisabled {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#AssignSiteRolesOptionDisabled";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Segments");
-
-		if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation.tearDown();
-		}
-
-		LexiconEntry.gotoAdd();
-
-		Segmentation.addProperties(propertyOption = "Email Address");
-
-		Segmentation.fillTitle(titleField = "Segment Email Liferay");
-
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
-
-		Segmentation.fillProperty(propertyField = "liferay");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		Segmentation.openSegmentOptions();
-
-		AssertElementPresent(
-			key_text = "",
-			locator1 = "Dropdown#ANY_DISABLED");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Segments",
-			configurationName = "Segments Service",
-			configurationScope = "System Scope");
-
-		Segmentation.enableAssingRolesBySegmentsCheckbox();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Segments");
-
-		Segmentation.openSegmentOptions();
-
-		AssertElementPresent(
-			key_text = "Assign Site Roles",
-			locator1 = "Dropdown#ANY_ENABLED");
-	}
-
-	@description = "Validate if, with the option Enable Assign roles by segments disabled, the role is not working for the user"
-	@priority = "5"
+	@description = "LPS-121943: Validate if, with the option Enable Assign roles by segments disabled, the role is not working for the user"
+	@priority = "4"
+	@uitest
 	test DisableAssignRolesBySegment {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisableAssignRolesBySegment";
 
-		User.logoutPG();
+		task("Log out and login with the user assigned to the segment"){
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
 
-		AssertElementNotPresent(locator1 = "ApplicationsMenu#PORTLET");
+			Segmentation.disableAssingRolesBySegmentsCheckbox();
+		}
+
+		task("Log out and login with the user assigned to the segment"){
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task("Assert the role is not working"){
+			AssertElementNotPresent(locator1 = "ApplicationsMenu#PORTLET");
+		}
 	}
 
-	@description = "Validate if, with the option Enable Assign roles by segments enabled, the role is working for the user"
-	@priority = "5"
+	@description = "LPS-121943: Validate if, with the option Enable Assign roles by segments enabled, the role is working for the user."
+	@priority = "4"
+	@uitest
 	test EnableAssignRolesBySegment {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#EnableAssignRolesBySegment";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		task("Enable Assign roles by segment"){
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Segments",
-			configurationName = "Segments Service",
-			configurationScope = "System Scope");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
 
-		Segmentation.enableAssingRolesBySegmentsCheckbox();
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
 
-		User.logoutPG();
+		task("Log out and login with the user assigned to the segment"){
+			User.logoutPG();
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		ApplicationsMenuHelper.openApplicationsMenu();
+		task("Assert the role is working"){
+			ApplicationsMenuHelper.openApplicationsMenu();
 
-		ApplicationsMenu.gotoPanel(panel = "Applications");
+			ApplicationsMenu.gotoPanel(panel = "Applications");
 
-		AssertElementPresent(
-			key_category = "Content",
-			key_portlet = "Content Dashboard",
-			locator1 = "ApplicationsMenu#PORTLET");
-
-		User.logoutPG();
-
-		User.firstLoginPG();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Segments",
-			configurationName = "Segments Service",
-			configurationScope = "System Scope");
-
-		Segmentation.enableAssingRolesBySegmentsCheckbox();
+			AssertElementPresent(
+				key_category = "Content",
+				key_portlet = "Content Dashboard",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
 	}
 
 }

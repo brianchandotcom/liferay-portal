@@ -106,7 +106,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		for(var toggleLabel : list "Faceted Navigation,Required,SKU Contributor"){
+		for (var toggleLabel : list "Faceted Navigation,Required,SKU Contributor") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "${toggleLabel}",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -141,8 +141,6 @@ definition {
 			validationImage = "true");
 
 		Alert.viewSuccessMessage();
-
-		
 	}
 
 	@description = "This is a test for COMMERCE-6031. EditAnAttachment"

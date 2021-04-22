@@ -21,6 +21,20 @@ definition {
 			value1 = "${propertyOption}");
 	}
 
+	macro assignOrganization {
+		Click(locator1 = "Button#SELECT");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Check(
+			key_checkboxName = "${orgName}",
+			locator1 = "Checkbox#ENABLE_CHECKBOX");
+
+		IFrame.selectTopFrame();
+
+		Button.clickSelect();
+	}
+
 	macro changeCriterionInputDate {
 		Click(
 			key_criterion = "date",

@@ -34,6 +34,7 @@ import {
 	useHoverItem,
 	useHoveredItemId,
 	useHoveredItemType,
+	useHoveringOrigin,
 	useIsActive,
 	useIsHovered,
 	useSelectItem,
@@ -43,6 +44,7 @@ import {getEditableElement} from './getEditableElement';
 
 const EDITABLE_CLASS_NAMES = {
 	active: 'page-editor__editable--active',
+	contentHovered: 'page-editor__editable--content-hovered',
 	hovered: 'page-editor__editable--hovered',
 	mapped: 'page-editor__editable--mapped',
 	translated: 'page-editor__editable--translated',
@@ -60,9 +62,10 @@ function FragmentContentInteractionsFilter({
 	const activeItemType = useActiveItemType();
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
 	const hoveredItemType = useHoveredItemType();
+	const hoveringOrigin = useHoveringOrigin();
+	const hoverItem = useHoverItem();
 	const isActive = useIsActive();
 	const isHovered = useIsHovered();
 	const languageId = useSelector(selectLanguageId);
@@ -136,21 +139,32 @@ function FragmentContentInteractionsFilter({
 			if (editableValues) {
 				const editableValue = editableValues[editable.editableId] || {};
 
+				const editableId =
+					hoveredItemType === ITEM_TYPES.mappedContent
+						? `${editableValue.classNameId}-${editableValue.classPK}`
+						: editable.itemId;
+
 				const hovered =
-					(hoveredItemType === ITEM_TYPES.mappedContent &&
-						`${editableValue.classNameId}-${editableValue.classPK}` ===
-							hoveredItemId) ||
+					([
+						ITEM_TYPES.mappedContent,
+						ITEM_TYPES.inlineContent,
+					].includes(hoveredItemType) &&
+						hoveredItemId === editableId) ||
 					((siblingIds.some(isActive) || !canUpdatePageStructure) &&
 						isHovered(editable.itemId));
 
+				const hoveredClass =
+					hoveringOrigin === ITEM_ACTIVATION_ORIGINS.contents
+						? EDITABLE_CLASS_NAMES.contentHovered
+						: EDITABLE_CLASS_NAMES.hovered;
+
 				if (hovered) {
-					editable.element.classList.add(
-						EDITABLE_CLASS_NAMES.hovered
-					);
+					editable.element.classList.add(hoveredClass);
 				}
 				else {
 					editable.element.classList.remove(
-						EDITABLE_CLASS_NAMES.hovered
+						EDITABLE_CLASS_NAMES.hovered,
+						EDITABLE_CLASS_NAMES.contentHovered
 					);
 				}
 			}
@@ -166,6 +180,7 @@ function FragmentContentInteractionsFilter({
 		isHovered,
 		itemId,
 		siblingIds,
+		hoveringOrigin,
 	]);
 
 	useEffect(() => {

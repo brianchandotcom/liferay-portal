@@ -60,37 +60,51 @@ export default function PageContent({
 
 	useEffect(() => {
 		if (hoveredItemId) {
-			const [fragmentEntryLinkId, ...editableId] = hoveredItemId.split(
-				'-'
-			);
+			if (editableId) {
+				setIsHovered(editableId === hoveredItemId);
+			}
+			else {
+				const [
+					fragmentEntryLinkId,
+					...editableId
+				] = hoveredItemId.split('-');
 
-			if (fragmentEntryLinks[fragmentEntryLinkId]) {
-				const fragmentEntryLink =
-					fragmentEntryLinks[fragmentEntryLinkId];
+				if (fragmentEntryLinks[fragmentEntryLinkId]) {
+					const fragmentEntryLink =
+						fragmentEntryLinks[fragmentEntryLinkId];
 
-				const editableValue =
-					fragmentEntryLink.editableValues[
-						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-					];
+					const editableValue =
+						fragmentEntryLink.editableValues[
+							EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+						];
 
-				const editable = editableValue[editableId.join('-')];
+					const editable = editableValue[editableId.join('-')];
 
-				if (editable) {
-					setIsHovered(editable.classPK === classPK);
+					if (editable) {
+						setIsHovered(editable.classPK === classPK);
+					}
 				}
 			}
 		}
 		else {
 			setIsHovered(false);
 		}
-	}, [fragmentEntryLinks, hoveredItemId, classPK]);
+	}, [fragmentEntryLinks, hoveredItemId, classPK, editableId]);
 
 	const handleMouseOver = () => {
 		setIsHovered(true);
 
+		if (editableId) {
+			hoverItem(editableId, {
+				itemType: ITEM_TYPES.inlineContent,
+				origin: ITEM_ACTIVATION_ORIGINS.contents,
+			});
+		}
+
 		if (classNameId && classPK) {
 			hoverItem(`${classNameId}-${classPK}`, {
 				itemType: ITEM_TYPES.mappedContent,
+				origin: ITEM_ACTIVATION_ORIGINS.contents,
 			});
 		}
 	};

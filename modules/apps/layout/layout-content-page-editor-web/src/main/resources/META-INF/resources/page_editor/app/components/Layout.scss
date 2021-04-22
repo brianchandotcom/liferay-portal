@@ -168,16 +168,17 @@ $dashedBorderWidth: 2px;
 			box-shadow: inset 0 0 0 $editablesBorderWidth $primary-l1;
 		}
 
-		&--mapped {
-			box-shadow: inset 0 0 0 $editablesBorderWidth fade_out($purple, 0.7);
-
-			&.page-editor__editable--hovered:not(.page-editor__editable--active) {
-				box-shadow: none;
-				outline: $dashedBorderWidth dashed fade_out($purple, 0.5);
-				outline-offset: -$dashedBorderWidth;
-			}
+		&--content-hovered {
+			outline: $dashedBorderWidth dashed fade_out($purple, 0.5);
+			outline-offset: -$dashedBorderWidth;
 
 			&.page-editor__editable--active {
+				box-shadow: none;
+			}
+		}
+
+		&--mapped {
+			&.page-editor__editable &.page-editor__editable--active {
 				box-shadow: inset 0 0 0 $editablesBorderWidth $purple;
 			}
 		}

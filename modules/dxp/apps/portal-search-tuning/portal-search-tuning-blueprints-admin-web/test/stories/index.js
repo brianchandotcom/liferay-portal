@@ -195,10 +195,14 @@ storiesOf('Pages|ElementForm', module).add('default', () => (
 					categoryName: 'Context',
 					parameterDefinitions: [
 						{
+							className:
+								'com.liferay.portal.search.tuning.blueprints.engine.parameter.LongParameter',
 							description: 'Company ID',
 							variable: '${context.company_id}',
 						},
 						{
+							className:
+								'com.liferay.portal.search.tuning.blueprints.engine.parameter.LongParameter',
 							description: 'Scope Group ID',
 							variable: '${context.scope_group_id}',
 						},

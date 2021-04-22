@@ -42,6 +42,16 @@ import {
 	sub,
 } from '../utils/utils';
 
+const ELEMENT_CLASSNAME_SUFFIX = 'Parameter';
+
+const elementClassNameRegex = new RegExp(
+	`([\\w\\.]+\\.)(\\w+)(${ELEMENT_CLASSNAME_SUFFIX})`
+);
+
+function extractType(className = '') {
+	return className.split(elementClassNameRegex)[2];
+}
+
 function EditElementForm({
 	elementId,
 	initialConfigurationString,
@@ -579,7 +589,13 @@ function SidebarPanel({categoryName, handleClick, parameterDefinitions}) {
 								className="nav-link"
 								displayType="unstyled"
 								onClick={() => handleClick(entry.variable)}
-								title={entry.variable}
+								title={`${Liferay.Language.get(
+									'type'
+								)}: ${extractType(
+									entry.className
+								)}\n${Liferay.Language.get('variable')}: ${
+									entry.variable
+								}`}
 							>
 								{entry.description}
 							</ClayButton>

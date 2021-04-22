@@ -37,8 +37,8 @@ definition {
 
 	@priority = "4"
 	test Add20Forms {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Forms#Add20Forms";
 
 		Navigator.openURL();

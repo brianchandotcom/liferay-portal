@@ -132,7 +132,8 @@ public class MetadataGeneratorUtil {
 		SingleSignOnService singleSignOnService =
 			OpenSamlUtil.buildSingleSignOnService(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI,
-				portalURL + "/web/guest" + SamlCommandQueryConstants.WEB_SSO);
+				portalURL + PortalUtil.getPathMain() +
+					"/portal/saml/redirect/sso");
 
 		singleSignOnServices.add(singleSignOnService);
 
@@ -155,7 +156,8 @@ public class MetadataGeneratorUtil {
 		SingleLogoutService redirectSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI,
-				portalURL + "/web/guest" + SamlCommandQueryConstants.SLO);
+				portalURL + PortalUtil.getPathMain() +
+					"/portal/saml/redirect/slo");
 
 		singleLogoutServices.add(redirectSingleLogoutService);
 
@@ -247,7 +249,8 @@ public class MetadataGeneratorUtil {
 		SingleLogoutService redirectSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_REDIRECT_BINDING_URI,
-				portalURL + "/web/guest" + SamlCommandQueryConstants.SLO);
+				portalURL + PortalUtil.getPathMain() +
+					"/portal/saml/redirect/slo");
 
 		singleLogoutServices.add(redirectSingleLogoutService);
 

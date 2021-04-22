@@ -936,8 +936,6 @@ definition {
 	@description = "LRQA-53629 Automate LRQA-53629: Automate LPS-100679: [Performance] Change the order of the all steps performance list"
 	@priority = "5"
 	test ChangePerformanceByStepOrder {
-		property portal.acceptance = "true";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -2751,8 +2749,6 @@ definition {
 	@description = "LRQA-53650 Automate LPS-89015: [SLA] Verify the SLA Time Frame Start Pause Stop behaviour"
 	@priority = "5"
 	test VerifySLATimeFrameStartPauseStop {
-		property portal.acceptance = "true";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

@@ -229,8 +229,6 @@ definition {
 
 	@priority = "5"
 	test SchedulePublishToLiveWithEventAndResource {
-		property portal.acceptance = "true";
-
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(

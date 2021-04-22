@@ -42,7 +42,6 @@ definition {
 
 	@priority = "5"
 	test ApproveInDMFolderCustomWorkflow {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowDocumentsAndMedia#ApproveInDMFolderCustomWorkflow";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

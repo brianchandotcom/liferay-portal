@@ -648,7 +648,6 @@ definition {
 
 	@priority = "5"
 	test AssignRolePermissionsApprovePG {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsApprovePG";
 
 		ApplicationsMenu.gotoPortlet(
@@ -980,7 +979,6 @@ definition {
 
 	@priority = "5"
 	test AssignRolePermissionsRejectPG {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsRejectPG";
 
 		ApplicationsMenu.gotoPortlet(

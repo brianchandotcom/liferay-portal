@@ -1127,8 +1127,6 @@ definition {
 	@description = "This is a use case for LRQA-13519."
 	@priority = "5"
 	test ViewWorkflowSubmissionsFromDifferentUsers {
-		property portal.acceptance = "true";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ApplicationsMenu.gotoPortlet(

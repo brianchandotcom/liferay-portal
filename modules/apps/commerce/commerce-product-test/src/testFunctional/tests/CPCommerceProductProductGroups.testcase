@@ -51,6 +51,7 @@ definition {
 	@priority = "3"
 	test AddAPreExistingProductGroup {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductProductGroups#AddAPreExistingProductGroup";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",

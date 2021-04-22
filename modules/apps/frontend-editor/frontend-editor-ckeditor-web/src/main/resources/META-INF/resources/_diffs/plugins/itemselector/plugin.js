@@ -192,7 +192,24 @@
 		},
 
 		_getItemSrc(editor, selectedItem) {
-			var itemSrc = selectedItem.value;
+			var itemSrc;
+
+			try {
+				itemSrc = JSON.parse(selectedItem.value);
+			}
+			catch (error) {
+				itemSrc = selectedItem;
+			}
+
+			if (itemSrc.value && itemSrc.value.html) {
+				itemSrc = selectedItem.value.html;
+			}
+			else if (itemSrc.html) {
+				itemSrc = itemSrc.html;
+			}
+			else if (itemSrc.value) {
+				itemSrc = itemSrc.value;
+			}
 
 			if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE) {
 				try {

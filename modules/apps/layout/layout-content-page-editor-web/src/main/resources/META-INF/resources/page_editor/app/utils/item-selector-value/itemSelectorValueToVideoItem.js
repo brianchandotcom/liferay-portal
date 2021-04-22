@@ -14,8 +14,8 @@
 
 export default function itemSelectorValueToVideoItem(videoItem) {
 	return {
-		html: videoItem.value,
-		title: videoItem.value,
+		html: videoItem.html,
+		title: videoItem.title,
 		type: videoItem.returnType,
 	};
 }

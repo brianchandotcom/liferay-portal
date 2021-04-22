@@ -45,7 +45,10 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 				Liferay.Util.getOpener().Liferay.fire(eventName, {
 					data: {
 						returnType,
-						value: fields.HTML,
+						value: {
+							html: fields.HTML,
+							title: fields.TITLE || fields.URL,
+						},
 					},
 				});
 			}}

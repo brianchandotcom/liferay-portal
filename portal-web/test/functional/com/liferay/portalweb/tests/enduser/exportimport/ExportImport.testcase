@@ -1936,7 +1936,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
-			configurationName = "Export/Import",
+			configurationName = "Export/Import, Staging",
 			configurationScope = "Virtual Instance Scope");
 
 		SystemSettings.configureSystemSetting(

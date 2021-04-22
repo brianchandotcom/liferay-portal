@@ -16,6 +16,9 @@ package com.liferay.calendar.web.upgrade.v1_1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.User;
@@ -57,6 +60,11 @@ public class UpgradePortalPreferencesTest {
 				_user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER, "");
 
 		setUpUpgradePortalPreferences();
+
+		_portalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM,
+			"com.liferay.portal.internal.service.util." +
+				"PortalPreferencesCacheUtil");
 	}
 
 	@Test
@@ -185,6 +193,8 @@ public class UpgradePortalPreferencesTest {
 
 		EntityCacheUtil.clearCache(PortalPreferenceValueImpl.class);
 
+		_portalCache.removeAll();
+
 		return _portalPreferenceValueLocalService.getPortalPreferences(
 			_portalPreferences, true);
 	}
@@ -206,6 +216,8 @@ public class UpgradePortalPreferencesTest {
 	@Inject
 	private static PortalPreferenceValueLocalService
 		_portalPreferenceValueLocalService;
+
+	private PortalCache<?, ?> _portalCache;
 
 	@DeleteAfterTestRun
 	private PortalPreferences _portalPreferences;

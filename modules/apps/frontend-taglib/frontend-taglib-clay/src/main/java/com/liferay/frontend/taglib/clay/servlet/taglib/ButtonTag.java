@@ -51,6 +51,10 @@ public class ButtonTag extends BaseContainerTag {
 					title));
 		}
 
+		if (dynamicAttributes.get("type") == null) {
+			setDynamicAttribute(StringPool.BLANK, "type", "button");
+		}
+
 		return super.doStartTag();
 	}
 

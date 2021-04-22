@@ -150,8 +150,14 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation slaDefinitionIdTermsAggregation = _aggregations.terms(
 			"slaDefinitionId", "slaDefinitionId");
 
-		slaDefinitionIdTermsAggregation.addChildAggregation(
-			_aggregations.topHits("topHits"));
+		TopHitsAggregation topHitsAggregation = _aggregations.topHits(
+			"topHits");
+
+		topHitsAggregation.addSortFields(
+			_sorts.field("remainingTime", SortOrder.ASC));
+
+		slaDefinitionIdTermsAggregation.addChildAggregation(topHitsAggregation);
+
 		slaDefinitionIdTermsAggregation.setSize(10000);
 
 		TermsAggregation taskNameTermsAggregation = _aggregations.terms(

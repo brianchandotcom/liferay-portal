@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ADD_FIELD_TYPE</td>
-	<td>//*[contains(@class, 'criteria-sidebar-item-root') and contains(text(),'${key_propertyOption}')]</td>
+	<td>//*[contains(@class, 'criteria-sidebar-item-root') and (text()='${key_propertyOption}')]</td>
 	<td></td>
 </tr>
 <tr>

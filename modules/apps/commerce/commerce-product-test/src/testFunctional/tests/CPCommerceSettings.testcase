@@ -73,6 +73,10 @@ definition {
 		Button.clickSave();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertElementPresent(
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME",
+			key_entry = "Test Region");
 	}
 
 	test CreateNewMeasurementUnits {

@@ -145,10 +145,6 @@ public class DDMFormEvaluatorHelper {
 			}
 		);
 
-		verifyFieldsMarkedAsRequired();
-
-		verifyFieldsWithConfirmationField();
-
 		validateFields();
 
 		_localizeNumericDDMFormFieldValues();
@@ -306,7 +302,9 @@ public class DDMFormEvaluatorHelper {
 			nameVisibilityExpressionMap, this::evaluateVisibilityExpression);
 	}
 
-	protected boolean fieldsWithValidations(DDMFormField ddmFormField) {
+	protected boolean filterFieldsWithDDMFormFieldValidation(
+		DDMFormField ddmFormField) {
+
 		DDMFormFieldValidation ddmFormFieldValidation =
 			ddmFormField.getDDMFormFieldValidation();
 
@@ -560,7 +558,73 @@ public class DDMFormEvaluatorHelper {
 		value.addString(locale, String.valueOf(newValue));
 	}
 
-	protected void validateField(
+	protected void validateFields() {
+		validateFieldsMarkedAsRequired();
+
+		validateFieldsWithConfirmationField();
+
+		validateFieldsWithDDMFormFieldValidation();
+	}
+
+	protected void validateFieldsMarkedAsRequired() {
+		Set<Map.Entry<String, DDMFormField>> entrySet =
+			_ddmFormFieldsMap.entrySet();
+
+		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
+
+		stream.flatMap(
+			entry -> _getDDMFormEvaluatorFieldContextKey(entry.getKey())
+		).filter(
+			this::filterVisibleFieldsMarkedAsRequired
+		).filter(
+			this::isFieldEmpty
+		).forEach(
+			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
+				ddmFormEvaluatorFieldContextKey,
+				LanguageUtil.get(_resourceBundle, "this-field-is-required"))
+		);
+	}
+
+	protected void validateFieldsWithConfirmationField() {
+		Set<Map.Entry<String, DDMFormField>> entrySet =
+			_ddmFormFieldsMap.entrySet();
+
+		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
+
+		stream.flatMap(
+			entry -> _getDDMFormEvaluatorFieldContextKey(entry.getKey())
+		).filter(
+			this::isFieldWithConfirmationFieldAndVisible
+		).filter(
+			this::isConfirmationValueInvalid
+		).forEach(
+			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
+				ddmFormEvaluatorFieldContextKey, StringPool.BLANK)
+		);
+	}
+
+	protected void validateFieldsWithDDMFormFieldValidation() {
+		Collection<DDMFormField> ddmFormFields = _ddmFormFieldsMap.values();
+
+		Stream<DDMFormField> ddmFormFieldStream = ddmFormFields.stream();
+
+		Map<DDMFormEvaluatorFieldContextKey, DDMFormFieldValidation>
+			ddmFormFieldValidations = ddmFormFieldStream.filter(
+				this::filterFieldsWithDDMFormFieldValidation
+			).flatMap(
+				ddmFormField -> _getDDMFormEvaluatorFieldContextKey(
+					ddmFormField.getName())
+			).collect(
+				Collectors.toMap(
+					Function.identity(), this::getDDMFormFieldValidation)
+			);
+
+		forEachEntry(
+			ddmFormFieldValidations,
+			this::validateFieldWithDDMFormFieldValidation);
+	}
+
+	protected void validateFieldWithDDMFormFieldValidation(
 		Map.Entry<DDMFormEvaluatorFieldContextKey, DDMFormFieldValidation>
 			entry) {
 
@@ -680,62 +744,6 @@ public class DDMFormEvaluatorHelper {
 		}
 
 		ddmFormEvaluatorExpressionObserver.updateFieldProperty(builder.build());
-	}
-
-	protected void validateFields() {
-		Collection<DDMFormField> ddmFormFields = _ddmFormFieldsMap.values();
-
-		Stream<DDMFormField> ddmFormFieldStream = ddmFormFields.stream();
-
-		Map<DDMFormEvaluatorFieldContextKey, DDMFormFieldValidation>
-			ddmFormFieldValidations = ddmFormFieldStream.filter(
-				this::fieldsWithValidations
-			).flatMap(
-				ddmFormField -> _getDDMFormEvaluatorFieldContextKey(
-					ddmFormField.getName())
-			).collect(
-				Collectors.toMap(
-					Function.identity(), this::getDDMFormFieldValidation)
-			);
-
-		forEachEntry(ddmFormFieldValidations, this::validateField);
-	}
-
-	protected void verifyFieldsMarkedAsRequired() {
-		Set<Map.Entry<String, DDMFormField>> entrySet =
-			_ddmFormFieldsMap.entrySet();
-
-		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
-
-		stream.flatMap(
-			entry -> _getDDMFormEvaluatorFieldContextKey(entry.getKey())
-		).filter(
-			this::filterVisibleFieldsMarkedAsRequired
-		).filter(
-			this::isFieldEmpty
-		).forEach(
-			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
-				ddmFormEvaluatorFieldContextKey,
-				LanguageUtil.get(_resourceBundle, "this-field-is-required"))
-		);
-	}
-
-	protected void verifyFieldsWithConfirmationField() {
-		Set<Map.Entry<String, DDMFormField>> entrySet =
-			_ddmFormFieldsMap.entrySet();
-
-		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
-
-		stream.flatMap(
-			entry -> _getDDMFormEvaluatorFieldContextKey(entry.getKey())
-		).filter(
-			this::isFieldWithConfirmationFieldAndVisible
-		).filter(
-			this::isConfirmationValueInvalid
-		).forEach(
-			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
-				ddmFormEvaluatorFieldContextKey, StringPool.BLANK)
-		);
 	}
 
 	protected final DDMFormEvaluatorExpressionFieldAccessor

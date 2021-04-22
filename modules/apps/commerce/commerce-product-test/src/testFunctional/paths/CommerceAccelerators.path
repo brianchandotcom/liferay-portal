@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE</td>
+	<td>//p[@title='${key_productName}']//../..//select[(@class='form-control quantity-selector')]//option[@value='${key_optionValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_DISCOUNT</td>
 	<td>//div[contains(@class,'price')]//span[contains(@class,'price-value-discount')]</td>
 	<td></td>

@@ -191,12 +191,53 @@ definition {
 	}
 
 	@description = "COMMERCE-6318. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"
-	@ignore = "true"
 	@priority = "3"
 	test AssertQuantityCanBeSelectedUpToAMaximumQuantitySet {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6318 AssertQuantityCanBeSelectedUpToAMaximumQuantitySet pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.searchProduct(search = "U-Joint");
+
+		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Type(
+			key_fieldLabel = "Maximum Order Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "4");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD");
+
+		AssertElementPresent(
+			key_optionValue = "4",
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+
+		AssertElementNotPresent(
+			key_optionValue = "5",
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+			
 	}
 
 	@description = "COMMERCE-6161. As a buyer, I want to be able to select the quantity of a product starting from a minimum quantity, if set"

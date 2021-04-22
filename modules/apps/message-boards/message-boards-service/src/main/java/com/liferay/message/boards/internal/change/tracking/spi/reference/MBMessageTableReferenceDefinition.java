@@ -17,6 +17,7 @@ package com.liferay.message.boards.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageTable;
@@ -47,6 +48,28 @@ public class MBMessageTableReferenceDefinition
 			MBMessageTable.INSTANCE.messageId, MBMessage.class
 		).resourcePermissionReference(
 			MBMessageTable.INSTANCE.messageId, MBMessage.class
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				DLFileEntryTable.INSTANCE
+			).innerJoinON(
+				MBMessageTable.INSTANCE,
+				MBMessageTable.INSTANCE.companyId.eq(
+					DLFileEntryTable.INSTANCE.companyId
+				).and(
+					MBMessageTable.INSTANCE.groupId.eq(
+						DLFileEntryTable.INSTANCE.groupId)
+				).and(
+					MBMessageTable.INSTANCE.messageId.eq(
+						DLFileEntryTable.INSTANCE.classPK)
+				)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					DLFileEntryTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(MBMessage.class.getName())
+				)
+			)
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				WorkflowInstanceLinkTable.INSTANCE

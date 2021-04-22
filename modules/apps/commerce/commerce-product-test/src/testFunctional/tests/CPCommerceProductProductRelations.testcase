@@ -51,6 +51,7 @@ definition {
 	@priority = "3"
 	test EditAProductRelations {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductProductRelations#EditAProductRelations";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -94,6 +95,7 @@ definition {
 	@priority = "3"
 	test RemoveAProductRelations {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductProductRelations#RemoveAProductRelations";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

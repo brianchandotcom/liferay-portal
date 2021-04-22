@@ -13,6 +13,7 @@
  */
 
 export const ITEM_ACTIVATION_ORIGINS = {
+	contents: 'contents',
 	pageEditor: 'pageEditor',
 	sidebar: 'sidebar',
 };

@@ -14,6 +14,7 @@
 
 export const ITEM_TYPES = {
 	editable: 'editable',
+	inlineContent: 'inlineContent',
 	layoutDataItem: 'layoutDataItem',
 	mappedContent: 'mappedContent',
 };

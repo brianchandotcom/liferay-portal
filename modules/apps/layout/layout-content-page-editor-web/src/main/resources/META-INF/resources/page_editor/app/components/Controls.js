@@ -47,6 +47,7 @@ const reducer = (state, action) => {
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
 		nextState = {
 			...nextState,
+			activationOrigin: origin,
 			hoveredItemId: itemId,
 			hoveredItemType: itemType,
 		};
@@ -114,6 +115,8 @@ const useHoveredItemId = () =>
 
 const useHoveredItemType = () => useContext(HoverStateContext).hoveredItemType;
 
+const useHoveringOrigin = () => useContext(HoverStateContext).activationOrigin;
+
 const useHoverItem = () => {
 	const dispatch = useContext(HoverDispatchContext);
 	const toControlsId = useToControlsId();
@@ -121,13 +124,17 @@ const useHoverItem = () => {
 	return useCallback(
 		(
 			itemId,
-			{itemType = ITEM_TYPES.layoutDataItem} = {
+			{
+				itemType = ITEM_TYPES.layoutDataItem,
+				origin = ITEM_ACTIVATION_ORIGINS.pageEditor,
+			} = {
 				itemType: ITEM_TYPES.layoutDataItem,
 			}
 		) =>
 			dispatch({
 				itemId: toControlsId(itemId),
 				itemType,
+				origin,
 				type: HOVER_ITEM,
 			}),
 		[dispatch, toControlsId]
@@ -210,6 +217,7 @@ export {
 	useActiveItemType,
 	useHoveredItemId,
 	useHoveredItemType,
+	useHoveringOrigin,
 	useHoverItem,
 	useIsActive,
 	useIsHovered,

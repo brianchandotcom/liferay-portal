@@ -113,7 +113,6 @@ const Container = React.forwardRef(
 		};
 
 		style.backgroundColor = getFrontendTokenValue(backgroundColor);
-		style.border = `solid ${borderWidth}px`;
 		style.borderColor = getFrontendTokenValue(borderColor);
 		style.borderRadius = getFrontendTokenValue(borderRadius);
 		style.color = getFrontendTokenValue(textColor);
@@ -125,6 +124,11 @@ const Container = React.forwardRef(
 		style.minHeight = minHeight;
 		style.opacity = opacity ? opacity / 100 : null;
 		style.overflow = overflow;
+
+		if (borderWidth) {
+			style.borderWidth = `${borderWidth}px`;
+			style.borderStyle = 'solid';
+		}
 
 		if (!withinTopper) {
 			style.boxShadow = getFrontendTokenValue(shadow);

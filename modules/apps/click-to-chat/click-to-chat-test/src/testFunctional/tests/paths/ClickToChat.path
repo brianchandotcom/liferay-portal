@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>ClickToChat</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ClickToChat</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ENABLE_CLICKTOCHAT</td>
+	<td>//span[contains(.,'Enable Click to Chat')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_STRATEGY</td>
+	<td>//div[contains(@data-field-name,'siteSettingsStrategy')]/div[contains(@class,'form-builder-select-field')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_STRATEGY</td>
+	<td>//div[contains(@class,'ddm-select-dropdown')]//button[contains(.,'${settingStrategy}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_PROVIDER</td>
+	<td>//div[contains(@data-field-name,'chatProviderId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SET_PROVIDER</td>
+	<td>//div[contains(@class,'ddm-btn-full')]/ul[contains(@class,'list-unstyled')]/li[contains(.,'${settingProvider}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SET_TOKEN</td>
+	<td>//div[contains(@data-field-name, 'chatProviderAccountId')]/input[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Update')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERTICAL_ELLIPSIS</td>
+	<td>//div[contains(@class,'float-right')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTION_VERTICAL_ELLIPSIS</td>
+	<td>//div[contains(@class,'lfr-icon-menu-open')]//span[contains(.,'${action}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

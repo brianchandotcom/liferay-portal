@@ -1,0 +1,43 @@
+definition {
+
+    macro enableClickToChat {
+        Click(locator1 = "ClickToChat#ENABLE_CLICKTOCHAT");
+    }
+
+    macro chooseStrategy {
+        var key_settingStrategy = "${settingStrategy}";
+        Click(locator1 = "ClickToChat#SETTINGS_STRATEGY");
+
+		Click(locator1 = "ClickToChat#CHOOSE_STRATEGY");
+    }
+
+    macro setChatProvider {
+        var key_settingProvider = "${settingProvider}";
+        var key_settingToken = "${settingToken}";
+
+        Click(locator1 = "ClickToChat#CHAT_PROVIDER");
+
+		Click(locator1 = "ClickToChat#SET_PROVIDER");
+
+        Type(
+			locator1 = "ClickToChat#SET_TOKEN",
+			value1 = "${settingToken}");
+    }
+
+    macro save {
+        Click(locator1 = "ClickToChat#SAVE");
+    }
+
+    macro update {
+        Click(locator1 = "ClickToChat#UPDATE");
+    }
+
+    macro actionsClickToChat {
+        var key_action = "${action}";
+
+        Click(locator1 = "ClickToChat#VERTICAL_ELLIPSIS");
+
+        Click(locator1 = "ClickToChat#ACTION_VERTICAL_ELLIPSIS");        
+    }
+
+}

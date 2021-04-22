@@ -212,6 +212,8 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 		long userId = _portal.getUserId(actionRequest);
 
 		if (Validator.isNotNull(name)) {
+			name = StringUtil.trim(name);
+
 			nameMap.put(LocaleUtil.getDefault(), name);
 		}
 

@@ -115,8 +115,6 @@ definition {
 
 		UserGroup.openUserGroupsAdmin();
 
-		LexiconEntry.openEntryMenu(rowEntry = "UG UserGroup Name");
-
 		LexiconEntry.viewEntryMenuItem(
 			menuItem = "Manage Pages",
 			rowEntry = "UG UserGroup Name");

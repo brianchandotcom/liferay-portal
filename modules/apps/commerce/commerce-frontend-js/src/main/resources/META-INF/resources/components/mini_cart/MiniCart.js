@@ -81,7 +81,8 @@ function MiniCart({
 					let latestActionURLs, latestCartState;
 
 					setActionURLs((currentURLs) => {
-						const {checkoutURL, orderDetailURL} = currentURLs;
+						const {checkoutURL, siteDefaultURL} = currentURLs;
+
 						const {orderUUID} = model;
 
 						latestActionURLs =
@@ -89,8 +90,8 @@ function MiniCart({
 								? {
 										checkoutURL,
 										orderDetailURL: regenerateOrderDetailURL(
-											orderDetailURL,
-											orderUUID
+											orderUUID,
+											siteDefaultURL
 										),
 								  }
 								: currentURLs;
@@ -206,6 +207,7 @@ MiniCart.propTypes = {
 	cartActionURLs: PropTypes.shape({
 		checkoutURL: PropTypes.string,
 		orderDetailURL: PropTypes.string,
+		siteDefaultURL: PropTypes.string,
 	}).isRequired,
 	cartViews: PropTypes.shape({
 		[CART]: PropTypes.oneOfType([

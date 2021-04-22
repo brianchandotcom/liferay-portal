@@ -26,10 +26,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -51,26 +54,33 @@ public class MiniCartTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		CommerceContext commerceContext = (CommerceContext)request.getAttribute(
-			CommerceWebKeys.COMMERCE_CONTEXT);
+		HttpServletRequest httpServletRequest = getRequest();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNull(_spritemap)) {
 			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
 		}
 
+		_siteDefaultURL = _getSiteDefaultURL(themeDisplay);
+
 		try {
 			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 			if (commerceOrder != null) {
-				_itemsQuantity = _getItemsQuantity(commerceOrder, request);
+				_itemsQuantity = _getItemsQuantity(
+					commerceOrder, httpServletRequest);
 				_orderId = commerceOrder.getCommerceOrderId();
 
 				PortletURL commerceCartPortletURL =
 					_commerceOrderHttpHelper.getCommerceCartPortletURL(
-						request, commerceOrder);
+						httpServletRequest, commerceOrder);
 
 				if (commerceCartPortletURL != null) {
 					_orderDetailURL = String.valueOf(commerceCartPortletURL);
@@ -84,7 +94,8 @@ public class MiniCartTag extends IncludeTag {
 			_checkoutURL = StringPool.BLANK;
 
 			PortletURL commerceCheckoutPortletURL =
-				_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(request);
+				_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
+					httpServletRequest);
 
 			if (commerceCheckoutPortletURL != null) {
 				_checkoutURL = String.valueOf(commerceCheckoutPortletURL);
@@ -166,6 +177,7 @@ public class MiniCartTag extends IncludeTag {
 		_labels = new HashMap<>();
 		_orderDetailURL = null;
 		_orderId = 0;
+		_siteDefaultURL = StringPool.BLANK;
 		_spritemap = null;
 		_toggleable = true;
 		_views = new HashMap<>();
@@ -197,6 +209,8 @@ public class MiniCartTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:orderId", _orderId);
 		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:siteDefaultURL", _siteDefaultURL);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:spritemap", _spritemap);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:toggleable", _toggleable);
@@ -215,6 +229,15 @@ public class MiniCartTag extends IncludeTag {
 			commerceOrder.getCommerceOrderItems();
 
 		return commerceOrderItems.size();
+	}
+
+	private String _getSiteDefaultURL(ThemeDisplay themeDisplay) {
+		Layout layout = themeDisplay.getLayout();
+
+		Group group = layout.getGroup();
+
+		return HtmlUtil.escape(
+			group.getDisplayURL(themeDisplay, layout.isPrivateLayout()));
 	}
 
 	private boolean _isDisplayDiscountLevels() {
@@ -246,6 +269,7 @@ public class MiniCartTag extends IncludeTag {
 	private Map<String, String> _labels = new HashMap<>();
 	private String _orderDetailURL;
 	private long _orderId;
+	private String _siteDefaultURL = StringPool.BLANK;
 	private String _spritemap;
 	private boolean _toggleable = true;
 	private Map<String, String> _views = new HashMap<>();

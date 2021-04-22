@@ -23,6 +23,7 @@
 		cartActionURLs: {
 			checkoutURL: '<%= checkoutURL %>',
 			orderDetailURL: '<%= orderDetailURL %>',
+			siteDefaultURL: '<%= siteDefaultURL %>',
 		},
 		displayDiscountLevels: <%= displayDiscountLevels %>,
 		displayTotalItemsQuantity: <%= displayTotalItemsQuantity %>,

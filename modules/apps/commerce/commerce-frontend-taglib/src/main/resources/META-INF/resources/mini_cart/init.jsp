@@ -33,6 +33,7 @@ boolean displayDiscountLevels = (boolean)request.getAttribute("liferay-commerce:
 boolean displayTotalItemsQuantity = (boolean)request.getAttribute("liferay-commerce:cart:displayTotalItemsQuantity");
 String orderDetailURL = (String)request.getAttribute("liferay-commerce:cart:orderDetailURL");
 long orderId = (long)request.getAttribute("liferay-commerce:cart:orderId");
+String siteDefaultURL = (String)request.getAttribute("liferay-commerce:cart:siteDefaultURL");
 String spritemap = (String)request.getAttribute("liferay-commerce:cart:spritemap");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;

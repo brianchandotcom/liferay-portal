@@ -59,7 +59,7 @@ function AutocompleteItem({indexField, match = '', onClick}) {
  * }
  */
 function FieldRow({
-	boost = 0,
+	boost = 1,
 	disabled,
 	field,
 	id,

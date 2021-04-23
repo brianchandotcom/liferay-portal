@@ -601,7 +601,7 @@ definition {
 
 	@priority = "5"
 	test ImportLARsOnStagedSite {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Site Pages Administration,Training,Web Content Administration";
 
 		LAR.importSiteCP(

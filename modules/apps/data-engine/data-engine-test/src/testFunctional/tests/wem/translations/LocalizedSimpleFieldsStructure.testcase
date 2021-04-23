@@ -483,7 +483,7 @@ definition {
 	@description = "This test validates the creation and edition of localized fields as well as deletion of structure in different instance language"
 	@priority = "5"
 	test EditAndDeleteWithDifferentInstanceLanguage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

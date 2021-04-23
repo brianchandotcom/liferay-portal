@@ -717,12 +717,51 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6106. EditPaypalPaymentMethod"
-	@ignore = "true"
 	@priority = "3"
 	test EditPaypalPaymentMethod {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6106 EditPaypalPaymentMethod
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "PayPal",
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "TextInput#DESCRIPTION",
+			value1 = "Test");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+			navItem = "Configuration");
+
+		Select(
+			key_fieldLabel = "Mode",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Sandbox");
+
+		Type(
+			key_text = "Payment Attempts Max Count",
+			locator1 = "TextInput#ANY",
+			value1 = "1");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for COMMERCE-6274. EditProductDisplayPage"

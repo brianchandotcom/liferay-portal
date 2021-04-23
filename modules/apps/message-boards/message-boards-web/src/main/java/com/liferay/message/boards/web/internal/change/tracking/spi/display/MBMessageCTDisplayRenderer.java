@@ -99,6 +99,8 @@ public class MBMessageCTDisplayRenderer
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/message_boards/edit_message"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"messageId", mbMessage.getMessageId()
 		).buildString();

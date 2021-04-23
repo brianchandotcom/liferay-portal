@@ -64,6 +64,8 @@ public class MBThreadCTDisplayRenderer extends BaseCTDisplayRenderer<MBThread> {
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/message_boards/edit_message"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"messageId", mbThread.getRootMessageId()
 		).buildString();

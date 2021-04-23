@@ -14,13 +14,9 @@
 
 package com.liferay.message.boards.web.internal.change.tracking.spi.display;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
@@ -166,10 +162,8 @@ public class MBMessageCTDisplayRenderer
 	}
 
 	private String _createLinkTagAsString(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			AssetRendererFactory<?> assetRendererFactory, FileEntry fileEntry)
-		throws PortalException {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileEntry fileEntry) {
 
 		LinkTag linkTag = new LinkTag();
 
@@ -179,11 +173,7 @@ public class MBMessageCTDisplayRenderer
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY),
 				fileEntry, StringPool.BLANK));
-
-		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
-			fileEntry.getFileEntryId());
-
-		linkTag.setIcon(assetRenderer.getIconCssClass());
+		linkTag.setIcon(fileEntry.getIconCssClass());
 
 		linkTag.setLabel(
 			StringBundler.concat(
@@ -214,10 +204,6 @@ public class MBMessageCTDisplayRenderer
 		DisplayContext<MBMessage> displayContext =
 			displayBuilder.getDisplayContext();
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				DLFileEntry.class.getName());
-
 		StringBundler sb = new StringBundler(
 			2 + (mbMessage.getAttachmentsFileEntriesCount() * 3));
 
@@ -228,8 +214,7 @@ public class MBMessageCTDisplayRenderer
 			sb.append(
 				_createLinkTagAsString(
 					displayContext.getHttpServletRequest(),
-					displayContext.getHttpServletResponse(),
-					assetRendererFactory, fileEntry));
+					displayContext.getHttpServletResponse(), fileEntry));
 			sb.append("</li>");
 		}
 

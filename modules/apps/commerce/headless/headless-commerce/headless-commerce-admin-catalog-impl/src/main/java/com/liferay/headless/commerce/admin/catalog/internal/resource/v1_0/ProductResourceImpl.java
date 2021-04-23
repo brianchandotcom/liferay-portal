@@ -16,8 +16,10 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
@@ -25,6 +27,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
@@ -36,6 +39,7 @@ import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
@@ -71,6 +75,9 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -785,18 +792,45 @@ public class ProductResourceImpl
 
 		_cpDefinitionService.updateCPDefinitionChannelFilter(
 			cpDefinition.getCPDefinitionId(),
-			GetterUtil.getBoolean(product.getProductChannelFilter()));
-
-		_commerceChannelRelService.deleteCommerceChannelRels(
-			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+			GetterUtil.getBoolean(
+				product.getProductChannelFilter(),
+				cpDefinition.isChannelFilterEnabled()));
 
 		ProductChannel[] productChannels = product.getProductChannels();
 
 		if (productChannels != null) {
+			_commerceChannelRelService.deleteCommerceChannelRels(
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
 			Stream<ProductChannel> stream = Arrays.stream(productChannels);
 
 			List<Long> channelIds = stream.map(
-				ProductChannel::getChannelId
+				productChannel -> {
+					if (productChannel.getExternalReferenceCode() == null) {
+						return productChannel.getChannelId();
+					}
+
+					CommerceChannel commerceChannel = null;
+
+					try {
+						commerceChannel =
+							_commerceChannelService.
+								fetchByExternalReferenceCode(
+									productChannel.getExternalReferenceCode(),
+									contextCompany.getCompanyId());
+					}
+					catch (PortalException portalException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(portalException, portalException);
+						}
+					}
+
+					if (commerceChannel == null) {
+						return null;
+					}
+
+					return commerceChannel.getCommerceChannelId();
+				}
 			).collect(
 				Collectors.toList()
 			);
@@ -817,20 +851,50 @@ public class ProductResourceImpl
 
 		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
 			cpDefinition.getCPDefinitionId(),
-			GetterUtil.getBoolean(product.getProductAccountGroupFilter()));
-
-		_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
-			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+			GetterUtil.getBoolean(
+				product.getProductAccountGroupFilter(),
+				cpDefinition.isAccountGroupFilterEnabled()));
 
 		ProductAccountGroup[] productAccountGroups =
 			product.getProductAccountGroups();
 
 		if (productAccountGroups != null) {
+			_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
 			Stream<ProductAccountGroup> productAccountGroupStream =
 				Arrays.stream(productAccountGroups);
 
 			List<Long> accountGroupIds = productAccountGroupStream.map(
-				ProductAccountGroup::getAccountGroupId
+				productAccountGroup -> {
+					if (productAccountGroup.getExternalReferenceCode() ==
+							null) {
+
+						return productAccountGroup.getAccountGroupId();
+					}
+
+					CommerceAccountGroup commerceAccountGroup = null;
+
+					try {
+						commerceAccountGroup =
+							_commerceAccountGroupService.
+								fetchByExternalReferenceCode(
+									contextCompany.getCompanyId(),
+									productAccountGroup.
+										getExternalReferenceCode());
+					}
+					catch (PortalException portalException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(portalException, portalException);
+						}
+					}
+
+					if (commerceAccountGroup == null) {
+						return null;
+					}
+
+					return commerceAccountGroup.getCommerceAccountGroupId();
+				}
 			).collect(
 				Collectors.toList()
 			);
@@ -956,6 +1020,9 @@ public class ProductResourceImpl
 		return _updateNestedResources(product, cpDefinition, serviceContext);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProductResourceImpl.class);
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -969,10 +1036,16 @@ public class ProductResourceImpl
 	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
 
 	@Reference
+	private CommerceAccountGroupService _commerceAccountGroupService;
+
+	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Reference
 	private CommerceChannelRelService _commerceChannelRelService;
+
+	@Reference
+	private CommerceChannelService _commerceChannelService;
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;

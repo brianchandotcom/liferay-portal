@@ -181,7 +181,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _createInstancesBooleanQuery(
-			new Long[0], new Long[0], null, null, null, new Long[0], processId,
+			new Long[0], new Long[0], null, null, null, processId,
 			new String[0], null, new String[0]);
 
 		searchSearchRequest.setQuery(
@@ -399,8 +399,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private BooleanQuery _createInstancesBooleanQuery(
 		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
-		Date dateStart, Long[] instanceIds, long processId,
-		String[] slaStatuses, Long startInstanceId, String[] taskNames) {
+		Date dateStart, long processId, String[] slaStatuses,
+		Long startInstanceId, String[] taskNames) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -458,21 +458,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				_queries.dateRangeTerm(
 					"completionDate", true, true, _getDate(dateStart),
 					_getDate(dateEnd)));
-		}
-
-		if (ArrayUtil.isNotEmpty(instanceIds)) {
-			TermsQuery termsQuery = _queries.terms("instanceId");
-
-			termsQuery.addValues(
-				Stream.of(
-					instanceIds
-				).map(
-					String::valueOf
-				).toArray(
-					Object[]::new
-				));
-
-			booleanQuery.addMustQueryClauses(termsQuery);
 		}
 
 		if (startInstanceId != null) {
@@ -642,7 +627,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
 					assigneeIds, classPKs, completed, dateEnd, dateStart,
-					new Long[0], processId, slaStatuses, null, taskNames)));
+					processId, slaStatuses, null, taskNames)));
 
 		CountSearchResponse countSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(countSearchRequest);
@@ -669,8 +654,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
 					assigneeIds, classPKs, completed, dateEnd, dateStart,
-					new Long[0], processId, slaStatuses, startInstanceId,
-					taskNames)));
+					processId, slaStatuses, startInstanceId, taskNames)));
 
 		searchSearchRequest.setSize(1);
 		searchSearchRequest.setStart(9999);
@@ -713,8 +697,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
 					assigneeIds, classPKs, completed, dateEnd, dateStart,
-					new Long[0], processId, slaStatuses, startInstanceId,
-					taskNames)));
+					processId, slaStatuses, startInstanceId, taskNames)));
 
 		searchSearchRequest.setSize(pagination.getPageSize());
 		searchSearchRequest.setStart(pagination.getStartPosition());

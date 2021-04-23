@@ -1532,7 +1532,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test 2");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
 		Segmentation.fillProperty(propertyField = "liferay2");
 

@@ -22,7 +22,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "EditSegment Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
 		Segmentation.fillProperty(propertyField = "liferay");
 
@@ -185,7 +185,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserEmailAddressContainsToEquals Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Button.clickSave();
 	}

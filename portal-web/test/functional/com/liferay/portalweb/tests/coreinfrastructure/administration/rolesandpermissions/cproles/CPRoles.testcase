@@ -65,7 +65,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "RoleSegment Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
 		Segmentation.fillProperty(propertyField = "liferay");
 
@@ -124,7 +124,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "New RoleSegment Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
 		Segmentation.fillProperty(propertyField = "liferay");
 
@@ -322,7 +322,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Role Assignee Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
 		Segmentation.fillProperty(propertyField = "liferay");
 

@@ -510,7 +510,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentBySessionUserAgent Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
 		Segmentation.fillProperty(propertyField = "Chrome");
 
@@ -615,7 +615,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
 		Segmentation.fillProperty(propertyField = "liferay");
 
@@ -633,7 +633,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressEquals Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(propertyField = "liferay");
 
@@ -651,7 +651,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotContains Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Contains");
+		Segmentation.changeCriterionInput(criterionInputOption = "Not Contains");
 
 		Segmentation.fillProperty(propertyField = "liferay");
 
@@ -669,7 +669,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotEquals Test");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Not Equals");
 
 		Segmentation.fillProperty(propertyField = "liferay");
 
@@ -750,7 +750,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment View Members");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
 		Segmentation.fillProperty(propertyField = "test");
 

@@ -33,6 +33,15 @@ definition {
 		IFrame.selectTopFrame();
 
 		Click(locator1 = "Modal#SELECT_BUTTON");
+
+	macro changeCriterionInput {
+		var key_criterionInputOption = "${criterionInputOption}";
+
+		Click(locator1 = "Segmentation#CRITERION_INPUT");
+
+		Click(
+			locator1 = "Segmentation#CRITERION_INPUT_OPTION",
+			value1 = "${criterionInputOption}");
 	}
 
 	macro changeCriterionInputDate {
@@ -60,16 +69,6 @@ definition {
 			value1 = "\RIGHT");
 
 		RobotType(locator1 = "${day}");
-	}
-
-	macro changeCriterionInputEmailAddress {
-		var key_criterionInputOption = "${criterionInputOption}";
-
-		Click(locator1 = "Segmentation#CRITERION_INPUT");
-
-		Click(
-			locator1 = "Segmentation#CRITERION_INPUT_OPTION",
-			value1 = "${criterionInputOption}");
 	}
 
 	macro clickAssignSiteRolesOption {

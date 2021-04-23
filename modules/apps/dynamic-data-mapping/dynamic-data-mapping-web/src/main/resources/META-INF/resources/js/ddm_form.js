@@ -3419,10 +3419,7 @@ AUI.add(
 				_afterRenderTextHTMLField() {
 					var instance = this;
 
-					var container = instance.get('container');
-
-					container.placeAfter(instance.readOnlyText);
-					container.placeAfter(instance.readOnlyLabel);
+					instance.editorContainer.placeAfter(instance.readOnlyText);
 				},
 
 				getEditor() {
@@ -3444,15 +3441,20 @@ AUI.add(
 				initializer() {
 					var instance = this;
 
-					instance.readOnlyLabel = A.Node.create(
-						'<label class="control-label hide"></label>'
+					var editorComponentName =
+						instance.getInputName() + 'Editor';
+
+					instance.editorContainer = A.one(
+						'#' + editorComponentName + 'Container'
 					);
+
 					instance.readOnlyText = A.Node.create(
-						'<div class="hide"></div>'
+						'<div class="cke_editable hide"></div>'
 					);
 
 					instance.after({
-						render: instance._afterRenderTextHTMLField,
+						'liferay-ddm-field:render':
+								instance._afterRenderTextHTMLField,
 					});
 				},
 
@@ -3503,19 +3505,13 @@ AUI.add(
 				syncReadOnlyUI() {
 					var instance = this;
 
-					instance.readOnlyLabel.html(
-						instance.getLabelNode().getHTML()
-					);
-					instance.readOnlyText.html(
-						'<p>' + instance.getValue() + '</p>'
-					);
+					instance.readOnlyText.html(instance.getValue());
 
 					var readOnly = instance.getReadOnly();
 
-					instance.readOnlyLabel.toggle(readOnly);
 					instance.readOnlyText.toggle(readOnly);
 
-					instance.get('container').toggle(!readOnly);
+					instance.editorContainer.toggle(!readOnly);
 				},
 			},
 		});

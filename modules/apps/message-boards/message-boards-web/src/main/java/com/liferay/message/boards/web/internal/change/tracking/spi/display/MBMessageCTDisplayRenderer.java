@@ -26,11 +26,11 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -193,14 +193,14 @@ public class MBMessageCTDisplayRenderer
 
 			linkTag.setDisplayType("primary");
 			linkTag.setHref(
-				PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(
+				_portletFileRepository.getDownloadPortletFileEntryURL(
 					themeDisplay, fileEntry, StringPool.BLANK));
 			linkTag.setIcon(fileEntry.getIconCssClass());
 
 			linkTag.setLabel(
 				StringBundler.concat(
 					fileEntry.getTitle(), " (",
-					LanguageUtil.formatStorageSize(
+					_language.formatStorageSize(
 						fileEntry.getSize(), httpServletRequest.getLocale()),
 					")"));
 
@@ -227,6 +227,12 @@ public class MBMessageCTDisplayRenderer
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

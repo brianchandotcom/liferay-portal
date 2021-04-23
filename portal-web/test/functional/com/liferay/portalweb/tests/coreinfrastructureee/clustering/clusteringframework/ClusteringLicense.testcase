@@ -28,11 +28,14 @@ definition {
 		property skip.start-app-server = "false";
 		property test.name.skip.portal.instance = "ClusteringLicense#ExceedDoubleNodeLimit";
 
-		for (var nodeNumber : list "8,9,10") {
+		for (var nodeNumber : list "8,9,10,11") {
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
 				password = "test",
 				userEmailAddress = "test@liferay.com");
+
+			Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+			Alert.viewErrorMessage(errorMessage = "Grace period");
 		}
 
 		Navigator.openSpecificURL(url = "http://localhost:12080");
@@ -41,11 +44,13 @@ definition {
 
 		Clustering.waitForNodeShutdown(nodePort = "12080");
 
+		Pause(locator1 = "60000");
+
 		Clustering.waitForNodeShutdown(nodePort = "11080");
 
-		Clustering.waitForNodeShutdown(nodePort = "10080");
+		Pause(locator1 = "60000");
 
-		// Wait for cluster to notify all nodes that they are no longer overloaded
+		Clustering.waitForNodeShutdown(nodePort = "10080");
 
 		Pause(locator1 = "60000");
 
@@ -155,7 +160,11 @@ definition {
 			deleteLiferayHome = "false",
 			nodePort = "9080");
 
-		// TODO Liferay console message assert on all 3 nodes
+		for (var nodeNumber : list "8,9,10") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "You have exceeded the maximum number of cluster nodes",
+				nodePort = "${nodeNumber}080");
+		}
 
 		User.loginPG(
 			nodePort = "9080",
@@ -186,6 +195,16 @@ definition {
 		// Wait for cluster to notify all nodes that they are no longer overloaded
 
 		Pause(locator1 = "60000");
+
+		Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Shutting down current node as it is the latest one",
+				nodePort = "9080");
+
+		for (var nodeNumber : list "8,10") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Finished shutting down overloaded nodes",
+				nodePort = "${nodeNumber}080");
+		}
 
 		User.loginPG(
 			nodePort = "8080",
@@ -220,8 +239,6 @@ definition {
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			nodePort = "9080");
-
-		Clustering.viewClusterStatusInConsole();
 
 		User.firstLoginPG();
 
@@ -363,7 +380,11 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
-		// TODO Liferay console message assert on all 3 nodes
+		for (var nodeNumber : list "8,9,10") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "You have exceeded the maximum number of cluster nodes",
+				nodePort = "${nodeNumber}080");
+		}
 
 		User.firstLoginPG();
 
@@ -423,6 +444,16 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
 		Clustering.waitForNodeShutdown(nodePort = "10080");
+
+		Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Shutting down current node as it is the latest one",
+				nodePort = "10080");
+
+		for (var nodeNumber : list "8,9") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Finished shutting down overloaded nodes",
+				nodePort = "${nodeNumber}080");
+		}
 
 		User.loginPG(
 			nodePort = "8080",
@@ -511,9 +542,13 @@ definition {
 		property skip.start-app-server = "false";
 		property test.name.skip.portal.instance = "ClusteringLicense#ViewNodeLimitWithManualRecovery";
 
-		User.firstLoginPG();
+		for (var nodeNumber : list "8,9,10") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "You have exceeded the maximum number of cluster nodes",
+				nodePort = "${nodeNumber}080");
+		}
 
-		Clustering.viewClusterStatusInConsole();
+		User.firstLoginPG();
 
 		Page.assertNodePortPG(nodePort = "8080");
 

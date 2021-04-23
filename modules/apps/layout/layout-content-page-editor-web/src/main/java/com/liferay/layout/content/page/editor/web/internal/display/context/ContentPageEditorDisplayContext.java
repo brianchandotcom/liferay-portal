@@ -291,10 +291,6 @@ public class ContentPageEditorDisplayContext {
 					_resourceBundleLoader.loadResourceBundle(
 						themeDisplay.getLocale()))
 			).put(
-				"containerItemFlexEnabled",
-				_ffLayoutContentPageEditorConfiguration.
-					containerItemFlexEnabled()
-			).put(
 				"contentBrowsingEnabled",
 				_ffLayoutContentPageEditorConfiguration.contentBrowsingEnabled()
 			).put(

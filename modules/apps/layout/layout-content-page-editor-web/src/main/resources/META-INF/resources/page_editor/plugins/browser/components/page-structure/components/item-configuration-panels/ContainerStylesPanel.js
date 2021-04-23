@@ -136,36 +136,34 @@ export const ContainerStylesPanel = ({item}) => {
 						{Liferay.Language.get('custom-styles')}
 					</h1>
 
-					{config.containerItemFlexEnabled && (
-						<SelectField
-							field={{
-								label: Liferay.Language.get('content-display'),
-								name: 'contentDisplay',
-								typeOptions: {
-									validValues: CONTENT_DISPLAY_OPTIONS,
-								},
-							}}
-							onValueSelect={(name, value) => {
-								const itemConfig =
-									value === CONTAINER_DISPLAY_OPTIONS.block
-										? {
-												align: '',
-												justify: '',
-												[name]: '',
-										  }
-										: {[name]: value};
+					<SelectField
+						field={{
+							label: Liferay.Language.get('content-display'),
+							name: 'contentDisplay',
+							typeOptions: {
+								validValues: CONTENT_DISPLAY_OPTIONS,
+							},
+						}}
+						onValueSelect={(name, value) => {
+							const itemConfig =
+								value === CONTAINER_DISPLAY_OPTIONS.block
+									? {
+											align: '',
+											justify: '',
+											[name]: '',
+									  }
+									: {[name]: value};
 
-								dispatch(
-									updateItemConfig({
-										itemConfig,
-										itemId: item.itemId,
-										segmentsExperienceId,
-									})
-								);
-							}}
-							value={item.config.contentDisplay}
-						/>
-					)}
+							dispatch(
+								updateItemConfig({
+									itemConfig,
+									itemId: item.itemId,
+									segmentsExperienceId,
+								})
+							);
+						}}
+						value={item.config.contentDisplay}
+					/>
 
 					{flexOptionsVisible && (
 						<div className="d-flex justify-content-between">

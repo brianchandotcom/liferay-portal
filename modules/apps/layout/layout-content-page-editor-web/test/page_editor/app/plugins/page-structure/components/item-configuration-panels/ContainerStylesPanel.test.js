@@ -64,7 +64,6 @@ jest.mock(
 				tablet: {label: 'Tablet', sizeId: 'tablet'},
 			},
 			commonStyles: [],
-			containerItemFlexEnabled: true,
 			defaultSegmentsExperienceId: '0',
 			marginOptions: [],
 			paddingOptions: [],

@@ -78,8 +78,6 @@ export interface Config {
 		}>;
 	}>;
 
-	containerItemFlexEnabled: boolean;
-
 	contentBrowsingEnabled: boolean;
 
 	defaultEditorConfigurations: Record<

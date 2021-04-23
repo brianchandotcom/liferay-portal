@@ -31,9 +31,6 @@ public interface FFLayoutContentPageEditorConfiguration {
 	public boolean contentBrowsingEnabled();
 
 	@Meta.AD(deflt = "false", required = false)
-	public boolean containerItemFlexEnabled();
-
-	@Meta.AD(deflt = "false", required = false)
 	public boolean displayPageItemPreviewEnabled();
 
 	@Meta.AD(deflt = "false", required = false)

@@ -146,11 +146,9 @@ public class UsersDisplayContext {
 		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
 
 		if (Validator.isNull(_orderByType)) {
-			String defaultOrderByType = "asc";
-
 			_orderByType = _portalPreferences.getValue(
 				SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
-				"order-by-type", defaultOrderByType);
+				"order-by-type", "asc");
 		}
 		else {
 			_portalPreferences.setValue(

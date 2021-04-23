@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -60,6 +62,9 @@ public class UsersDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_httpServletRequest);
 	}
 
 	public String getDisplayStyle() {
@@ -117,8 +122,18 @@ public class UsersDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "first-name");
+		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
+
+		if (Validator.isNull(_orderByCol)) {
+			_orderByCol = _portalPreferences.getValue(
+				SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+				"order-by-col", "modified-date");
+		}
+		else {
+			_portalPreferences.setValue(
+				SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+				"order-by-col", _orderByCol);
+		}
 
 		return _orderByCol;
 	}
@@ -128,8 +143,20 @@ public class UsersDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
+
+		if (Validator.isNull(_orderByType)) {
+			String defaultOrderByType = "asc";
+
+			_orderByType = _portalPreferences.getValue(
+				SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+				"order-by-type", defaultOrderByType);
+		}
+		else {
+			_portalPreferences.setValue(
+				SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+				"order-by-type", _orderByType);
+		}
 
 		return _orderByType;
 	}
@@ -285,6 +312,7 @@ public class UsersDisplayContext {
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
+	private final PortalPreferences _portalPreferences;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Role _role;

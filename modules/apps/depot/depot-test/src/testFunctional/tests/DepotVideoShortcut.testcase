@@ -91,12 +91,6 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Shortened URL Depot Name");
 
-		JSONGroup.addGroup(groupName = "Test Shortened URL Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Shortened URL Site Name",
-			layoutName = "Test Shortened URL Page Name");
-
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Shortened URL Depot Name");
 
 		WebContentNavigator.gotoAddCP();
@@ -119,7 +113,9 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame(
+			key_title = "WC WebContent Title",
+			locator1 = "IFrame#MODAL_ANY");
 
 		AssertVisible(
 			key_service = "https://www.youtube.com",

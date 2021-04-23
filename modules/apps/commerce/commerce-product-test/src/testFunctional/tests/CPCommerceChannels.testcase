@@ -585,6 +585,12 @@ definition {
 		CommerceEntry.clickNoError(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+
+		AssertElementNotPresent(
+			key_entryName = "Standard",
+			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 	}
 
 	@description = "This is a test for COMMERCE-6112. RemoveShippingOptionVariableRate"

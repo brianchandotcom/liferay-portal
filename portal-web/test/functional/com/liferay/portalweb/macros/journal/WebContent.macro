@@ -1611,6 +1611,28 @@ definition {
 		MenuItem.click(menuItem = "${itemsPerPage}");
 	}
 
+	macro previewDisplayPageTemplate {
+		Panel.expandPanel(panel = "Display Page Template");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(
+			key_fieldsetName = "displayPageTemplate",
+			locator1 = "WC#PREVIEW_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextPresent(
+			locator1 = "IFrame#MODAL_BODY",
+			value1 = "${webContentContent}");
+
+		Pause(locator1 = "3000");
+
+		takeScreenshot();
+
+		IFrame.closeFrame();
+	}
+
 	macro publishViaWCD {
 		Button.clickPublish();
 

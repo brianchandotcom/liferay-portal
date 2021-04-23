@@ -156,12 +156,11 @@ public class MBMessageCTDisplayRenderer
 		).display(
 			"number-of-attachments", mbMessage.getAttachmentsFileEntriesCount()
 		).display(
-			"attachments",
-			_getAttachmentLinksAsHtmlList(displayBuilder, mbMessage), false
+			"attachments", _getAttachments(displayBuilder, mbMessage), false
 		);
 	}
 
-	private String _getAttachmentLinksAsHtmlList(
+	private String _getAttachments(
 			DisplayBuilder<MBMessage> displayBuilder, MBMessage mbMessage)
 		throws PortalException {
 

@@ -48,19 +48,14 @@ definition {
 
 		Pause(locator1 = "60000");
 
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		for (var nodeNumber : list "8,10") {
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-
-		User.loginPG(
-			nodePort = "10080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+		}
 	}
 
 	@ignore = "true"
@@ -86,31 +81,20 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
 
-		Clustering.waitForNodeShutdown(nodePort = "12080");
+		for (var nodeNumber : list "12,11,10") {
+			Clustering.waitForNodeShutdown(nodePort = "${nodeNumber}080");
 
-		Pause(locator1 = "60000");
+			Pause(locator1 = "60000");
+		}
 
-		Clustering.waitForNodeShutdown(nodePort = "11080");
+		for (var nodeNumber : list "8,9") {
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		Pause(locator1 = "60000");
-
-		Clustering.waitForNodeShutdown(nodePort = "10080");
-
-		Pause(locator1 = "60000");
-
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+		}
 	}
 
 	@ignore = "true"
@@ -172,8 +156,6 @@ definition {
 			deleteLiferayHome = "true",
 			nodePort = "9080");
 
-		Clustering.viewClusterStatusInConsole();
-
 		User.firstLoginPG();
 
 		User.loginPG(
@@ -192,13 +174,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080");
+		for (var nodeNumber : list "8,10") {
+			Navigator.openSpecificURL(url = "http://localhost:${nodeNumber}080");
 
-		Page.assertNodePortPG(nodePort = "8080");
-
-		Navigator.openSpecificURL(url = "http://localhost:10080");
-
-		Page.assertNodePortPG(nodePort = "10080");
+			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
+		}
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "false",
@@ -208,31 +188,15 @@ definition {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "You have exceeded the maximum number of cluster nodes",
 				nodePort = "${nodeNumber}080");
+
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+			Alert.viewErrorMessage(errorMessage = "Grace period");
 		}
-
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
-
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
-
-		User.loginPG(
-			nodePort = "10080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
 
 		Clustering.waitForNodeShutdown(nodePort = "9080");
 
@@ -241,32 +205,23 @@ definition {
 		Pause(locator1 = "60000");
 
 		Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "Shutting down current node as it is the latest one",
-				nodePort = "9080");
+			expectedText = "Shutting down current node as it is the latest one",
+			nodePort = "9080");
 
 		for (var nodeNumber : list "8,10") {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Finished shutting down overloaded nodes",
 				nodePort = "${nodeNumber}080");
+
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
 		}
-
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Page.assertNodePortPG(nodePort = "8080");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-
-		User.loginPG(
-			nodePort = "10080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Page.assertNodePortPG(nodePort = "10080");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
 	@priority = "4"
@@ -333,19 +288,14 @@ definition {
 
 		Clustering.waitForNodeShutdown(nodePort = "9080");
 
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		for (var nodeNumber : list "8,10") {
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		CommerceLicense.viewCommerceAvailable();
-
-		User.loginPG(
-			nodePort = "10080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		CommerceLicense.viewCommerceAvailable();
+			CommerceLicense.viewCommerceAvailable();
+		}
 	}
 
 	@priority = "4"
@@ -383,13 +333,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080");
+		for (var nodeNumber : list "8,10") {
+			Navigator.openSpecificURL(url = "http://localhost:${nodeNumber}080");
 
-		Page.assertNodePortPG(nodePort = "8080");
-
-		Navigator.openSpecificURL(url = "http://localhost:10080");
-
-		Page.assertNodePortPG(nodePort = "10080");
+			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
+		}
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "false",
@@ -408,10 +356,6 @@ definition {
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 
 		Page.assertNodePortPG(nodePort = "8080");
-
-		Navigator.openSpecificURL(url = "http://localhost:10080");
-
-		Page.assertNodePortPG(nodePort = "10080");
 	}
 
 	@priority = "5"
@@ -458,25 +402,17 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		for (var nodeNumber : list "9,10") {
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		Page.assertNodePortPG(nodePort = "9080");
+			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
 
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
-
-		User.loginPG(
-			nodePort = "10080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Page.assertNodePortPG(nodePort = "10080");
-
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
+			Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+			Alert.viewErrorMessage(errorMessage = "Grace period");
+		}
 
 		Navigator.openSpecificURL(url = "http://localhost:10080/c/portal/logout");
 
@@ -490,28 +426,21 @@ definition {
 		Clustering.waitForNodeShutdown(nodePort = "10080");
 
 		Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "Shutting down current node as it is the latest one",
-				nodePort = "10080");
+			expectedText = "Shutting down current node as it is the latest one",
+			nodePort = "10080");
 
 		for (var nodeNumber : list "8,9") {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Finished shutting down overloaded nodes",
 				nodePort = "${nodeNumber}080");
+
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
 		}
-
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
 	@description = "Longer version of ViewNodeLimit that includes Commerce"
@@ -563,19 +492,14 @@ definition {
 
 		Clustering.waitForNodeShutdown(nodePort = "10080");
 
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		for (var nodeNumber : list "8,9") {
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		CommerceLicense.viewCommerceAvailable();
-
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		CommerceLicense.viewCommerceAvailable();
+			CommerceLicense.viewCommerceAvailable();
+		}
 	}
 
 	@priority = "5"
@@ -590,52 +514,28 @@ definition {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "You have exceeded the maximum number of cluster nodes",
 				nodePort = "${nodeNumber}080");
+
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
+
+			Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
+			Alert.viewErrorMessage(errorMessage = "Grace period");
 		}
-
-		User.firstLoginPG();
-
-		Page.assertNodePortPG(nodePort = "8080");
-
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
-
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Page.assertNodePortPG(nodePort = "9080");
-
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
-
-		User.loginPG(
-			nodePort = "10080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Page.assertNodePortPG(nodePort = "10080");
-
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
-
-		takeScreenshot();
 
 		Pause(locator1 = "360000");
 
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		for (var nodeNumber : list "8,9") {
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		Alert.viewErrorMessage(errorMessage = "Grace period ended");
-
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Alert.viewErrorMessage(errorMessage = "Grace period ended");
+			Alert.viewErrorMessage(errorMessage = "Grace period ended");
+		}
 
 		Navigator.openSpecificURL(url = "http://localhost:10080");
 
@@ -649,19 +549,14 @@ definition {
 
 		Pause(locator1 = "60000");
 
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		for (var nodeNumber : list "8,9") {
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+		}
 	}
 
 }

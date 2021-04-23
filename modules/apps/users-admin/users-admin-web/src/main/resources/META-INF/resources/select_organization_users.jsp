@@ -32,8 +32,6 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUsers");
-
 SelectOrganizationUsersManagementToolbarDisplayContext selectOrganizationUsersManagementToolbarDisplayContext = new SelectOrganizationUsersManagementToolbarDisplayContext(request, renderRequest, renderResponse, organization, displayStyle);
 
 PortletURL portletURL = selectOrganizationUsersManagementToolbarDisplayContext.getPortletURL();
@@ -121,26 +119,3 @@ SearchContainer<User> userSearchContainer = selectOrganizationUsersManagementToo
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
-
-	searchContainer.on('rowToggled', (event) => {
-		var selectedItems = event.elements.allSelectedElements;
-
-		var result = {};
-
-		if (!selectedItems.isEmpty()) {
-			result = {
-				data: {
-					value: selectedItems.get('value').join(','),
-				},
-			};
-		}
-
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(eventName) %>',
-			result
-		);
-	});
-</aui:script>

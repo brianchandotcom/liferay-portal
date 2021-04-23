@@ -102,39 +102,3 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
-
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace /><%= HtmlUtil.escape(userItemSelectorViewDisplayContext.getSearchContainerId()) %>'
-	);
-
-	searchContainer.on('rowToggled', (event) => {
-		var allSelectedElements = event.elements.allSelectedElements;
-		var selectedData = [];
-
-		allSelectedElements.each(function () {
-			<c:choose>
-				<c:when test='<%= displayStyle.equals("list") %>'>
-					var row = this.ancestor('tr');
-				</c:when>
-				<c:otherwise>
-					var row = this.ancestor('li');
-				</c:otherwise>
-			</c:choose>
-
-			var data = row.getDOM().dataset;
-
-			selectedData.push({
-				id: data.id,
-				name: data.name,
-			});
-		});
-
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(userItemSelectorViewDisplayContext.getItemSelectedEventName()) %>',
-			{
-				data: selectedData,
-			}
-		);
-	});
-</aui:script>

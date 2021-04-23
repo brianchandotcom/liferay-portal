@@ -33,8 +33,8 @@ export const ACTIONS = {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
-			onSelect: (data) => {
-				if (data) {
+			onSelect: (selectedItems) => {
+				if (selectedItems?.length) {
 					const assignmentsRedirectURL = createRenderURL(
 						basePortletURL,
 						{
@@ -45,8 +45,10 @@ export const ACTIONS = {
 						}
 					);
 
+					const values = selectedItems.map((item) => item.value);
+
 					const editAssignmentURL = createActionURL(basePortletURL, {
-						addUserIds: data.value,
+						addUserIds: values.join(','),
 						assignmentsRedirect: assignmentsRedirectURL.toString(),
 						'javax.portlet.action':
 							'/users_admin/edit_organization_assignments',
@@ -64,7 +66,6 @@ export const ACTIONS = {
 					submitForm(form, editAssignmentURL.toString());
 				}
 			},
-			selectEventName: `${portletNamespace}selectUsers`,
 			title: Liferay.Language.get('assign-users'),
 			url: selectUsersURL.toString(),
 		});

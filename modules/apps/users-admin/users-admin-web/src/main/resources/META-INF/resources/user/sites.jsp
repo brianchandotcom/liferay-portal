@@ -155,70 +155,66 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					searchContainerData = searchContainerData.split(',');
 				}
 
-				Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							modal: true,
-						},
-
-						<%
-						String eventName = liferayPortletResponse.getNamespace() + "selectSite";
-						%>
-
-						id: '<%= eventName %>',
-						selectedData: searchContainerData,
-						title: '<liferay-ui:message arguments="site" key="select-x" />',
-
-						<%
-						PortletURL groupSelectorURL = PortletURLBuilder.create(
-							PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE)
-						).setParameter(
-							"eventName", eventName
-						).setParameter(
-							"filterManageableGroups", Boolean.FALSE.toString()
-						).setParameter(
-							"includeCurrentGroup", Boolean.FALSE.toString()
-						).setParameter(
-							"manualMembership", Boolean.TRUE.toString()
-						).setParameter(
-							"p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId())
-						).setWindowState(
-							LiferayWindowState.POP_UP
-						).build();
-						%>
-
-						uri: '<%= groupSelectorURL.toString() %>',
+				Util.openSelectionModal({
+					onSelect: (selectedItem) => {
+						if (selectedItem) {
+							const entityId = selectedItem.entityid;
+	
+							const rowColumns = [];
+	
+							rowColumns.push(selectedItem.entityname);
+							rowColumns.push('');
+							rowColumns.push(
+								'<a class="modify-link" data-rowId="' +
+									entityId +
+									'" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>'
+							);
+	
+							searchContainer.addRow(rowColumns, entityId);
+	
+							searchContainer.updateDataStore();
+	
+							addGroupIds.push(entityId);
+	
+							AArray.removeItem(deleteGroupIds, entityId);
+	
+							document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(
+								','
+							);
+							document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(
+								','
+							);
+						}
 					},
-					(event) => {
-						var entityId = event.entityid;
 
-						var rowColumns = [];
+					<%
+					String eventName = liferayPortletResponse.getNamespace() + "selectSite";
+					%>
 
-						rowColumns.push(event.entityname);
-						rowColumns.push('');
-						rowColumns.push(
-							'<a class="modify-link" data-rowId="' +
-								entityId +
-								'" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>'
-						);
+					selectEventName: '<%= eventName %>',
+					selectedData: [searchContainerData],
+					title: '<liferay-ui:message arguments="site" key="select-x" />',
 
-						searchContainer.addRow(rowColumns, entityId);
+					<%
+					PortletURL groupSelectorURL = PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE)
+					).setParameter(
+						"p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId())
+					).setParameter(
+						"filterManageableGroups", Boolean.FALSE.toString()
+					).setParameter(
+						"includeCurrentGroup", Boolean.FALSE.toString()
+					).setParameter(
+						"manualMembership", Boolean.TRUE.toString()
+					).setParameter(
+						"eventName", eventName
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).build();
+					%>
 
-						searchContainer.updateDataStore();
-
-						addGroupIds.push(entityId);
-
-						AArray.removeItem(deleteGroupIds, entityId);
-
-						document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(
-							','
-						);
-						document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(
-							','
-						);
-					}
-				);
+					url: '<%= groupSelectorURL.toString() %>',
+				});
 			}
 		);
 

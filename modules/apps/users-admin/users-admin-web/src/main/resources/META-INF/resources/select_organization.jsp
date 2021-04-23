@@ -18,7 +18,6 @@
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectOrganization");
 
 long selOrganizationId = ParamUtil.getLong(request, "organizationId");
 User selUser = PortalUtil.getSelectedUser(request);
@@ -134,11 +133,3 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectOrganizationFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>',
-		<%= selUser != null %>
-	);
-</aui:script>

@@ -339,6 +339,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		DirectoryProperty inputDirectoryProperty =
 			dockerBuildImage.getInputDir();
 
+		Property<Boolean> pull = dockerBuildImage.getPull();
+
+		pull.set(true);
+
 		inputDirectoryProperty.set(workspaceExtension.getDockerDir());
 
 		DockerRemoveImage dockerRemoveImage = GradleUtil.addTask(

@@ -1037,21 +1037,37 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		searchSearchRequest.addAggregation(instanceIdtermsAggregation);
 
-		Long[] instanceIds = Stream.of(
-			instancesMap.keySet()
-		).flatMap(
-			Set::stream
-		).toArray(
-			Long[]::new
-		);
-
 		searchSearchRequest.setIndexNames(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 
-		BooleanQuery booleanQuery = _createInstancesBooleanQuery(
-			new Long[0], new Long[0], null, null, null, instanceIds, processId,
-			new String[0], null, new String[0]);
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		BooleanQuery filterBooleanQuery = _queries.booleanQuery();
+
+		filterBooleanQuery.addMustNotQueryClauses(
+			_queries.term("instanceId", 0));
+
+		TermsQuery termsQuery = _queries.terms("instanceId");
+
+		termsQuery.addValues(
+			Stream.of(
+				instancesMap.keySet()
+			).flatMap(
+				Set::stream
+			).map(
+				String::valueOf
+			).toArray(
+				Object[]::new
+			));
+
+		filterBooleanQuery.addMustQueryClauses(
+			_queries.term("deleted", Boolean.FALSE),
+			_queries.term("processId", processId),
+			_queries.term("status", WorkflowMetricsSLAStatus.RUNNING.name()),
+			termsQuery);
+
+		booleanQuery.addFilterQueryClauses(filterBooleanQuery);
 
 		searchSearchRequest.setQuery(booleanQuery);
 

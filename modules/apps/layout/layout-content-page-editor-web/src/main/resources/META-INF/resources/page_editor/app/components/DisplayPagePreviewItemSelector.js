@@ -74,7 +74,7 @@ export const DisplayPagePreviewItemSelector = ({dark = false}) => {
 							{'text-secondary': !dark}
 						)}
 					>
-						{Liferay.Language.get('item')}:
+						{Liferay.Language.get('preview-with')}:
 					</strong>
 					<button
 						className={classNames(

@@ -9512,6 +9512,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-analytics-cloud-properties" />
 		<antcall target="prepare-selenium-app-server-properties" />
 		<antcall target="prepare-selenium-browser" />
+		<antcall target="prepare-selenium-click-to-chat-properties" />
 		<antcall target="prepare-selenium-database-properties" />
 		<antcall target="prepare-selenium-email-properties" />
 		<antcall target="prepare-selenium-facebook-properties" />
@@ -9813,6 +9814,26 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				<echo append="true" file="${test.ext.properties.file}">
 					selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
 					selenium.remote.driver.url=${selenium.remote.driver.url}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-click-to-chat-properties">
+		<if>
+			<isset property="click.to.chat.jivochat.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					click.to.chat.jivochat.password=${click.to.chat.jivochat.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="click.to.chat.liveperson.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					click.to.chat.liveperson.password=${click.to.chat.liveperson.password}
 				</echo>
 			</then>
 		</if>

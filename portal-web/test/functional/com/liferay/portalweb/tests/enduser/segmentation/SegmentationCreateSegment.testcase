@@ -474,12 +474,27 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130325."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionURL {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130325 AddSegmentBySessionURL pending implementation. This test is already created as EditSegmentUserBySessionURL, but if you are able to do it better, delete the test EditSegmentUserBySessionURL.
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "URL");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionURL Test");
+
+		Segmentation.fillProperty(propertyField = "http://localhost:8080");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionURL Test");
+
+		Segmentation.viewSegment(propertyField = "http://localhost:8080");
 	}
 
 	@description = "This is a test for LPS-130326."

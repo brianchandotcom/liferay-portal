@@ -143,6 +143,9 @@ public class PreviewBlueprintMVCResourceCommand extends BaseMVCResourceCommand {
 		blueprintsAttributesBuilder.addAttribute(
 			ReservedParameterNames.EXPLAIN.getKey(), true);
 
+		blueprintsAttributesBuilder.addAttribute(
+				ReservedParameterNames.INCLUDE_RESPONSE_STRING.getKey(), true);
+
 		return blueprintsAttributesBuilder.build();
 	}
 

@@ -49,6 +49,9 @@ export default function Translation({onSelectedLanguageClick, viewURLs}) {
 				<ClayDropDown
 					active={active}
 					hasLeftSymbols
+					menuElementAttrs={{
+						className: 'dropdown-menu__translation',
+					}}
 					onActiveChange={setActive}
 					trigger={
 						<ClayButton

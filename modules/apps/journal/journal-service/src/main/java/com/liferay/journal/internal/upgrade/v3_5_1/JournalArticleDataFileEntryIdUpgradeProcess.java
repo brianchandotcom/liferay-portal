@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.adaptive.media.web.internal.upgrade.v1_0_0;
+package com.liferay.journal.internal.upgrade.v3_5_1;
 
-import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -84,8 +82,7 @@ public class JournalArticleDataFileEntryIdUpgradeProcess
 				Matcher matcher = _dataFileEntryIdPattern.matcher(stringValue);
 
 				String upgradedStringValue = matcher.replaceAll(
-					AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID +
-						StringPool.EQUAL);
+					"data-fileentryid=");
 
 				if (!upgradedStringValue.equals(stringValue)) {
 					dynamicContentElement.clearContent();

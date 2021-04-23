@@ -15,6 +15,7 @@
 const FIELD_SET = {
 	ADD: 'fieldset_add',
 	UPDATE: 'fieldset_update',
+	UPDATE_LIST: 'fieldset_update_list',
 };
 
 const SIDEBAR = {

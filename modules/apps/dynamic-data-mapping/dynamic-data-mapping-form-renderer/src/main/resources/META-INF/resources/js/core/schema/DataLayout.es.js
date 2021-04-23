@@ -52,7 +52,7 @@ export class DataLayoutPageSchema extends Schema {
 
 	build() {
 		return {
-			dataLayoutRows: this.dataLayoutRows.map(row => row.build()),
+			dataLayoutRows: this.dataLayoutRows.map((row) => row.build()),
 			description: this.description,
 			title: this.title,
 		};
@@ -91,9 +91,9 @@ export class DataLayoutSchema extends Schema {
 
 	build() {
 		return {
-			dataRules: this.dataRules,
 			dataLayoutFields: this.dataLayoutFields,
 			dataLayoutPages: this.dataLayoutPages.map((page) => page.build()),
+			dataRules: this.dataRules,
 			name: this.name,
 		};
 	}

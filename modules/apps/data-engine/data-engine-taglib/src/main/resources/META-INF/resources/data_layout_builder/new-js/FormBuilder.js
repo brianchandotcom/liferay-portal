@@ -87,7 +87,7 @@ export const FormBuilder = () => {
 						payload: {
 							fieldSets: [...globalFieldSets, ...groupFieldSets],
 						},
-						type: EVENT_TYPES.FIELD_SET.UPDATE,
+						type: EVENT_TYPES.FIELD_SET.UPDATE_LIST,
 					});
 				}
 				catch (error) {

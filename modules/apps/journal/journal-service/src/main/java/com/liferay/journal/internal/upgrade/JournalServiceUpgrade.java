@@ -21,10 +21,12 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.content.compatibility.converter.JournalContentCompatibilityConverter;
 import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeHelper;
 import com.liferay.journal.internal.upgrade.v0_0_3.JournalArticleTypeUpgradeProcess;
@@ -57,7 +59,9 @@ import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalFolderTable;
 import com.liferay.journal.internal.upgrade.v3_3_0.StorageLinksUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v3_5_0.JournalArticleContentUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v3_5_1.JournalArticleDataFileEntryIdUpgradeProcess;
+import com.liferay.journal.internal.upgrade.v4_0_0.JournalArticleDDMFieldsUpgradeProcess;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -86,6 +90,7 @@ import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -285,6 +290,13 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"3.5.0", "3.5.1",
 			new JournalArticleDataFileEntryIdUpgradeProcess());
+
+		registry.register(
+			"3.5.1", "4.0.0",
+			new JournalArticleDDMFieldsUpgradeProcess(
+				_classNameLocalService, _ddmFieldLocalService,
+				_ddmStructureLocalService, _fieldsToDDMFormValuesConverter,
+				_journalConverter, _portal));
 	}
 
 	protected void deleteTempImages() throws Exception {
@@ -345,6 +357,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private CTStoreFactory _ctStoreFactory;
 
 	@Reference
+	private DDMFieldLocalService _ddmFieldLocalService;
+
+	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 
 	@Reference
@@ -355,6 +370,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -370,10 +388,16 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		_journalContentCompatibilityConverter;
 
 	@Reference
+	private JournalConverter _journalConverter;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

@@ -47,6 +47,7 @@ import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilt
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -119,6 +120,7 @@ public class DefaultSearchResultPermissionFilter
 	}
 
 	protected void filterHits(Hits hits, SearchContext searchContext) {
+		Map<String, Boolean> companyScopeViewPermissionsMap = new HashMap<>();
 		List<Document> docs = new ArrayList<>();
 		List<Document> excludeDocs = new ArrayList<>();
 		List<Float> scores = new ArrayList<>();
@@ -134,7 +136,7 @@ public class DefaultSearchResultPermissionFilter
 		for (int i = 0; i < documents.length; i++) {
 			if (_isIncludeDocument(
 					documents[i], _permissionChecker.getCompanyId(),
-					companyAdmin, status)) {
+					companyAdmin, status, companyScopeViewPermissionsMap)) {
 
 				docs.add(documents[i]);
 				scores.add(hits.score(i));
@@ -217,8 +219,20 @@ public class DefaultSearchResultPermissionFilter
 				PropsKeys.INDEX_PERMISSION_FILTER_SEARCH_AMPLIFICATION_FACTOR));
 	}
 
+	private Boolean _hasCompanyScopeViewPermission(String className) {
+		if (_permissionChecker.hasPermission(
+				null, className, _permissionChecker.getCompanyId(),
+				ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isIncludeDocument(
-		Document document, long companyId, boolean companyAdmin, int status) {
+		Document document, long companyId, boolean companyAdmin, int status,
+		Map<String, Boolean> companyScopeViewPermissionsMap) {
 
 		long entryCompanyId = GetterUtil.getLong(
 			document.get(Field.COMPANY_ID));
@@ -232,6 +246,14 @@ public class DefaultSearchResultPermissionFilter
 		}
 
 		String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
+
+		boolean hasCompanyScopeViewPermission =
+			companyScopeViewPermissionsMap.computeIfAbsent(
+				entryClassName, this::_hasCompanyScopeViewPermission);
+
+		if (hasCompanyScopeViewPermission) {
+			return true;
+		}
 
 		Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
 

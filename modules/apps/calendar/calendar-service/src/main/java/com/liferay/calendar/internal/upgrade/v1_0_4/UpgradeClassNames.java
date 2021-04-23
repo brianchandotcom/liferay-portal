@@ -68,6 +68,14 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 			runSQL(
 				"delete from Subscription where classNameId = " +
 					PortalUtil.getClassNameId(_CLASS_NAME_CAL_EVENT));
+
+			runSQL(
+				"delete from MBDiscussion where classNameId = " +
+					PortalUtil.getClassNameId(_CLASS_NAME_CAL_EVENT));
+
+			runSQL(
+				"delete from MBMessage where classNameId = " +
+					PortalUtil.getClassNameId(_CLASS_NAME_CAL_EVENT));
 		}
 		catch (Exception exception) {
 			throw new UpgradeException(exception);

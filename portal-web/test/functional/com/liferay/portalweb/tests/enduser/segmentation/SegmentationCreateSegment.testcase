@@ -498,12 +498,31 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130326."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionUserAgent {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130326 AddSegmentBySessionUserAgent pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "URL");
+
+		Segmentation.fillTitle(titleField = "AddSegmentBySessionUserAgent Test");
+
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(propertyField = "Chrome");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentBySessionUserAgent Test");
+
+		Segmentation.viewSegment(
+			criterionInputOption = "contains",
+			propertyField = "Chrome");
 	}
 
 	@description = "This is a test for LPS-130284."

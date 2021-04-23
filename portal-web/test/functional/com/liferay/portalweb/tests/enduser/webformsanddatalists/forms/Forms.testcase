@@ -4027,11 +4027,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-125860."
-	@ignore = "true"
 	@priority = "5"
 	test SubmitFormWithRequiredConfirmationTextField {
-		property portal.acceptance = "false";
-		property portal.upstream = "false";
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredConfirmationTextField";
 
 		Navigator.openURL();

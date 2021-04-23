@@ -59,7 +59,6 @@ const PreviewModal = ({observer}) => {
 		);
 
 		if (
-			config.displayPageItemPreviewEnabled &&
 			config.layoutType === LAYOUT_TYPES.display &&
 			displayPagePreviewItem
 		) {
@@ -160,8 +159,7 @@ const PreviewModal = ({observer}) => {
 					</div>
 
 					<div className="page-editor__preview-modal__part">
-						{config.displayPageItemPreviewEnabled &&
-						config.layoutType === LAYOUT_TYPES.display ? (
+						{config.layoutType === LAYOUT_TYPES.display ? (
 							<DisplayPagePreviewItemSelector />
 						) : null}
 					</div>

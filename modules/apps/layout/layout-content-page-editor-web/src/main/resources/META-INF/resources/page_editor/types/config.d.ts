@@ -98,7 +98,6 @@ export interface Config {
 	deleteSegmentsExperienceURL: string;
 	discardDraftRedirectURL: string;
 	discardDraftURL: string;
-	displayPageItemPreviewEnabled: boolean;
 	draft: boolean;
 	dropdownFragmentEnabled: boolean;
 	duplicateItemURL: string;

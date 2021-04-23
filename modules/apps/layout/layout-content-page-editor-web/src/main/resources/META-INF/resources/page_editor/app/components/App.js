@@ -42,7 +42,6 @@ const DEFAULT_SESSION_LENGTH = 60 * 1000;
 export default function App({state}) {
 	const displayPagePreviewItemSelectorWrapper = useMemo(
 		() =>
-			config.displayPageItemPreviewEnabled &&
 			config.layoutType === LAYOUT_TYPES.display &&
 			document.getElementById('infoItemSelectorContainer'),
 		[]

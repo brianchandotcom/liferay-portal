@@ -19,6 +19,7 @@ import com.liferay.asset.list.internal.upgrade.v1_4_0.AssetListEntryUsageUpgrade
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

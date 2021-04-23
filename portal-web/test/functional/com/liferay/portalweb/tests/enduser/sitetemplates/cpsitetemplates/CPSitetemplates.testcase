@@ -71,7 +71,7 @@ definition {
 
 		ContentPages.clickPencil();
 
-		PageEditor.addWidget(portletName = "IFrame");
+		PageEditor.addWidget(portletName = "Asset Publisher");
 
 		PageEditor.clickPublish();
 
@@ -81,7 +81,7 @@ definition {
 			Refresh();
 		}
 
-		Portlet.viewPortletPresentPG(portletContent = "Please configure this portlet to make it visible to all users.");
+		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
 	}
 
 	@priority = "4"
@@ -133,7 +133,7 @@ definition {
 
 		ContentPages.clickPencil();
 
-		PageEditor.addWidget(portletName = "IFrame");
+		PageEditor.addWidget(portletName = "Asset Publisher");
 
 		PageEditor.clickPublish();
 
@@ -151,7 +151,7 @@ definition {
 
 		Refresh();
 
-		Portlet.viewPortletPresentPG(portletContent = "Please configure this portlet to make it visible to all users.");
+		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
 
 		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
@@ -165,8 +165,8 @@ definition {
 		ContentPages.clickPencil();
 
 		PageEditor.addWidget(
-			portletName = "Asset Publisher",
-			targetFragmentName = "IFrame");
+			portletName = "Blogs",
+			targetFragmentName = "Asset Publisher");
 
 		PageEditor.clickPublish();
 
@@ -175,7 +175,7 @@ definition {
 		Refresh();
 
 		AssertElementNotPresent(
-			key_portletName = "AssetPublisher",
+			key_portletName = "Blogs",
 			locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
 	}
 

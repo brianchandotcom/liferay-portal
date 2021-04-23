@@ -185,17 +185,12 @@ public class MBMessageCTDisplayRenderer
 
 		linkTag.setIcon(assetRenderer.getIconCssClass());
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(fileEntry.getTitle());
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(
-			LanguageUtil.formatStorageSize(
-				fileEntry.getSize(), httpServletRequest.getLocale()));
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		linkTag.setLabel(sb.toString());
+		linkTag.setLabel(
+			StringBundler.concat(
+				fileEntry.getTitle(), " (",
+				LanguageUtil.formatStorageSize(
+					fileEntry.getSize(), httpServletRequest.getLocale()),
+				")"));
 
 		linkTag.setSmall(true);
 

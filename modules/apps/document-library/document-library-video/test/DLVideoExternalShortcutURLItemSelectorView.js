@@ -115,7 +115,10 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 					{
 						data: {
 							returnType: defaultProps.returnType,
-							value: responseFields.HTML,
+							value: {
+								html: responseFields.HTML,
+								title: responseFields.TITLE,
+							},
 						},
 					}
 				);

@@ -70,7 +70,8 @@ function EditElementForm({
 	const elementTemplateJSONRef = useRef();
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [expand, setExpand] = useState(false);
+	const [showSidebar, setShowSidebar] = useState(false);
+	const [expandAllVariables, setExpandAllVariables] = useState(false);
 
 	const [variables, setVariables] = useState(predefinedVariables);
 
@@ -95,7 +96,7 @@ function EditElementForm({
 		// Workaround to force a re-render so `elementTemplateJSONRef` will be
 		// defined when calling `_onVariableClick`
 
-		setExpand(true);
+		setShowSidebar(true);
 	}, []);
 
 	function _appendEntryLocale(entry, name, formData) {
@@ -121,7 +122,7 @@ function EditElementForm({
 				(category) => ({
 					...category,
 					parameterDefinitions: category.parameterDefinitions.filter(
-						({description}) =>
+						({description = ''}) =>
 							description
 								.toLowerCase()
 								.includes(value.toLowerCase())
@@ -134,6 +135,7 @@ function EditElementForm({
 			);
 
 			setVariables(filteredCategories);
+			setExpandAllVariables(!!value);
 		},
 		[predefinedVariables]
 	);
@@ -386,11 +388,11 @@ function EditElementForm({
 							<div className="element-header">
 								<ClayButton
 									borderless
-									className={expand && 'active'}
+									className={showSidebar && 'active'}
 									disabled={false}
 									displayType="secondary"
 									monospaced
-									onClick={() => setExpand(!expand)}
+									onClick={() => setShowSidebar(!showSidebar)}
 									small
 									title={Liferay.Language.get(
 										'predefined-variables'
@@ -429,7 +431,7 @@ function EditElementForm({
 							<ClayLayout.Row>
 								<ClayLayout.Col
 									className={getCN('json-section', {
-										hide: !expand,
+										hide: !showSidebar,
 									})}
 									size={3}
 								>
@@ -465,6 +467,9 @@ function EditElementForm({
 																categoryName={
 																	item.categoryName
 																}
+																expand={
+																	expandAllVariables
+																}
 																handleClick={
 																	_onVariableClick
 																}
@@ -494,7 +499,7 @@ function EditElementForm({
 
 								<ClayLayout.Col
 									className="json-section"
-									size={expand ? 9 : 12}
+									size={showSidebar ? 9 : 12}
 								>
 									<CodeMirrorEditor
 										onChange={(value) =>
@@ -564,24 +569,35 @@ EditElementForm.propTypes = {
 	type: PropTypes.number,
 };
 
-function SidebarPanel({categoryName, handleClick, parameterDefinitions}) {
-	const [expand, setExpand] = useState(false);
+function SidebarPanel({
+	categoryName,
+	expand,
+	handleClick,
+	parameterDefinitions,
+}) {
+	const [showList, setShowList] = useState(false);
+
+	useEffect(() => {
+		setShowList(expand);
+	}, [expand]);
 
 	return (
 		<div>
 			<ClayButton
 				className="panel-header sidebar-dt"
 				displayType="unstyled"
-				onClick={() => setExpand(!expand)}
+				onClick={() => setShowList(!showList)}
 			>
 				<span>{categoryName}</span>
 
 				<span className="sidebar-arrow">
-					<ClayIcon symbol={expand ? 'angle-down' : 'angle-right'} />
+					<ClayIcon
+						symbol={showList ? 'angle-down' : 'angle-right'}
+					/>
 				</span>
 			</ClayButton>
 
-			{expand &&
+			{showList &&
 				parameterDefinitions.map((entry) => (
 					<dd className="sidebar-dd" key={entry.variable}>
 						<ClayTooltipProvider>

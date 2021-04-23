@@ -48,4 +48,4 @@ definition {
 		Segmentation.viewSegment(date = "1992-05-23");
 	}
 
-} 
+}

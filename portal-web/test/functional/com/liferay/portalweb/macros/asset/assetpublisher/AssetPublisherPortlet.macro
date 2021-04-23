@@ -1051,6 +1051,25 @@ definition {
 			value1 = "${viewCount}");
 	}
 
+	macro viewConfigureAPDisplayTemplateFullContentBookmarksPG {
+		var key_assetTitle = "${assetTitle}";
+		var key_bookmarkName = "${bookmarkName}";
+
+		AssertElementNotPresent(locator1 = "Link#READ_MORE");
+
+		AssertVisible(
+			locator1 = "Link#VIEW_IN_CONTEXT",
+			value1 = "View in Context »");
+
+		AssertVisible(
+			key_text = "${url}",
+			locator1 = "Link#ANY");
+
+		AssertVisible(
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "${bookmarkDescription}");
+	}
+
 	macro viewConfigureAPDisplayTemplateTableBookmarksPG {
 		var key_assetTitle = "${assetTitle}";
 		var key_bookmarkName = "${bookmarkName}";

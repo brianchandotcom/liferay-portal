@@ -161,38 +161,6 @@ public class MBMessageCTDisplayRenderer
 		);
 	}
 
-	private String _createLinkTagAsString(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, FileEntry fileEntry) {
-
-		LinkTag linkTag = new LinkTag();
-
-		linkTag.setDisplayType("primary");
-		linkTag.setHref(
-			PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY),
-				fileEntry, StringPool.BLANK));
-		linkTag.setIcon(fileEntry.getIconCssClass());
-
-		linkTag.setLabel(
-			StringBundler.concat(
-				fileEntry.getTitle(), " (",
-				LanguageUtil.formatStorageSize(
-					fileEntry.getSize(), httpServletRequest.getLocale()),
-				")"));
-
-		linkTag.setSmall(true);
-
-		try {
-			return linkTag.doTagAsString(
-				httpServletRequest, httpServletResponse);
-		}
-		catch (JspException jspException) {
-			return ReflectionUtil.throwException(jspException);
-		}
-	}
-
 	private String _getAttachmentLinksAsHtmlList(
 			DisplayBuilder<MBMessage> displayBuilder, MBMessage mbMessage)
 		throws PortalException {
@@ -204,6 +172,15 @@ public class MBMessageCTDisplayRenderer
 		DisplayContext<MBMessage> displayContext =
 			displayBuilder.getDisplayContext();
 
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+		HttpServletResponse httpServletResponse =
+			displayContext.getHttpServletResponse();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		StringBundler sb = new StringBundler(
 			2 + (mbMessage.getAttachmentsFileEntriesCount() * 3));
 
@@ -211,10 +188,33 @@ public class MBMessageCTDisplayRenderer
 
 		for (FileEntry fileEntry : mbMessage.getAttachmentsFileEntries()) {
 			sb.append("<li>");
-			sb.append(
-				_createLinkTagAsString(
-					displayContext.getHttpServletRequest(),
-					displayContext.getHttpServletResponse(), fileEntry));
+
+			LinkTag linkTag = new LinkTag();
+
+			linkTag.setDisplayType("primary");
+			linkTag.setHref(
+				PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(
+					themeDisplay, fileEntry, StringPool.BLANK));
+			linkTag.setIcon(fileEntry.getIconCssClass());
+
+			linkTag.setLabel(
+				StringBundler.concat(
+					fileEntry.getTitle(), " (",
+					LanguageUtil.formatStorageSize(
+						fileEntry.getSize(), httpServletRequest.getLocale()),
+					")"));
+
+			linkTag.setSmall(true);
+
+			try {
+				sb.append(
+					linkTag.doTagAsString(
+						httpServletRequest, httpServletResponse));
+			}
+			catch (JspException jspException) {
+				ReflectionUtil.throwException(jspException);
+			}
+
 			sb.append("</li>");
 		}
 

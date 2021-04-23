@@ -19,6 +19,50 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test ClusterCanRecoverByShuttingDownAnyNodeWithManualRecovery {
+		property commerce.enabled = "false";
+		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
+		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+		property skip.start-app-server = "false";
+		property test.name.skip.portal.instance = "ClusteringLicense#ClusterCanRecoverByShuttingDownAnyNodeWithManualRecovery";
+
+		Pause(locator1 = "360000");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Alert.viewErrorMessage(errorMessage = "Grace period ended");
+
+		Navigator.openSpecificURL(url = "http://localhost:10080");
+
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes in cluster");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_2",
+			value1 = "This instance is not registered.");
+
+		Clustering.shutdownSpecificServer(nodePort = "9080");
+
+		Pause(locator1 = "60000");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
 	@ignore = "true"
 	@priority = "3"
 	test ExceedDoubleNodeLimit {
@@ -600,6 +644,24 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_2",
 			value1 = "This instance is not registered.");
+
+		Clustering.shutdownSpecificServer(nodePort = "10080");
+
+		Pause(locator1 = "60000");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
 }

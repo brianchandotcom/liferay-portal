@@ -181,7 +181,7 @@ public class MBMessageCTDisplayRenderer
 				WebKeys.THEME_DISPLAY);
 
 		StringBundler sb = new StringBundler(
-			2 + (mbMessage.getAttachmentsFileEntriesCount() * 3));
+			(3 * mbMessage.getAttachmentsFileEntriesCount()) + 2);
 
 		sb.append("<ul>");
 

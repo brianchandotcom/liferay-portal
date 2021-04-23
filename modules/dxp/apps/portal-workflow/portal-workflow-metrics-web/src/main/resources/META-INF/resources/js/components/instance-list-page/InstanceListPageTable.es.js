@@ -19,8 +19,8 @@ const Table = ({items, totalCount}) => {
 		<ClayTable>
 			<ClayTable.Head>
 				<ClayTable.Row>
-					<ClayTable.Cell headingCell style={{width: '7%'}} />
-					<ClayTable.Cell headingCell style={{width: '8%'}}>
+					<ClayTable.Cell headingCell style={{width: '5%'}} />
+					<ClayTable.Cell headingCell style={{width: '5%'}}>
 						{Liferay.Language.get('id')}
 					</ClayTable.Cell>
 
@@ -28,11 +28,11 @@ const Table = ({items, totalCount}) => {
 						{Liferay.Language.get('due-date')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '15%'}}>
+					<ClayTable.Cell headingCell style={{width: '14%'}}>
 						{Liferay.Language.get('item-subject')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '10%'}}>
+					<ClayTable.Cell headingCell style={{width: '14%'}}>
 						{Liferay.Language.get('process-step')}
 					</ClayTable.Cell>
 
@@ -43,7 +43,7 @@ const Table = ({items, totalCount}) => {
 					<ClayTable.Cell headingCell style={{width: '14%'}}>
 						{Liferay.Language.get('created-by')}
 					</ClayTable.Cell>
-					<ClayTable.Cell headingCell style={{width: '18%'}}>
+					<ClayTable.Cell headingCell style={{width: '15%'}}>
 						{Liferay.Language.get('creation-date')}
 					</ClayTable.Cell>
 

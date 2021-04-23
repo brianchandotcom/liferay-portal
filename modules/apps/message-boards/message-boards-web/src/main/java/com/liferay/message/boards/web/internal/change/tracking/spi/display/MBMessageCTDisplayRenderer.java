@@ -195,14 +195,12 @@ public class MBMessageCTDisplayRenderer
 				_portletFileRepository.getDownloadPortletFileEntryURL(
 					themeDisplay, fileEntry, StringPool.BLANK));
 			linkTag.setIcon(fileEntry.getIconCssClass());
-
 			linkTag.setLabel(
 				StringBundler.concat(
 					fileEntry.getTitle(), " (",
 					_language.formatStorageSize(
 						fileEntry.getSize(), httpServletRequest.getLocale()),
 					")"));
-
 			linkTag.setSmall(true);
 
 			try {

@@ -252,21 +252,21 @@ const propagateFieldSet = ({dataDefinition, dataLayout, dispatch, onClose}) => {
 			type: 1,
 		};
 
-		return await dispatch(payload);
+		dispatch(payload);
 	};
 };
-export function useNewPropagateFieldSet() {
+export function usePropagateFieldSet() {
+	const [{onClose}, dispatch] = useContext(ClayModalContext);
 	const {dataDefinition, dataLayout} = useFormState({
 		schema: ['dataDefinition', 'dataLayout'],
 	});
-	const [{onClose}, dispatch] = useContext(ClayModalContext);
 
 	return propagateFieldSet({dataDefinition, dataLayout, dispatch, onClose});
 }
 
 export default () => {
-	const [{dataDefinition, dataLayout}] = useContext(AppContext);
 	const [{onClose}, dispatch] = useContext(ClayModalContext);
+	const [{dataDefinition, dataLayout}] = useContext(AppContext);
 
 	return propagateFieldSet({dataDefinition, dataLayout, dispatch, onClose});
 };

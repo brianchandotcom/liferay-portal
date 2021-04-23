@@ -63,7 +63,7 @@ export function useNewDeleteFieldSet() {
 			fieldSets,
 			layoutProviderDispatch: dispatch,
 			pages,
-			updateFieldSetAction: EVENT_TYPES.FIELD_SET.UPDATE,
+			updateFieldSetAction: EVENT_TYPES.FIELD_SET.UPDATE_LIST,
 		});
 }
 

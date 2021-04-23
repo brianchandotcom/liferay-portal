@@ -20,6 +20,7 @@ import {
 	EVENT_TYPES as EVENT_TYPES_CORE,
 	FormProvider,
 	INITIAL_STATE,
+	PagesVisitor,
 	useConfig,
 	useForm,
 	useFormState,
@@ -31,15 +32,18 @@ import {
 	pagesStructureReducer,
 } from 'dynamic-data-mapping-form-renderer/js/core/reducers/index.es';
 import {pageReducer} from 'dynamic-data-mapping-form-renderer/js/custom/form/reducers/index.es';
-import {default as React, useCallback, useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import {default as React, useCallback, useEffect, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import getFieldsWithoutOptions from '../../../js/components/field-sets/actions/getFieldsWithoutOptions.es';
+import {usePropagateFieldSet} from '../../../js/components/field-sets/actions/usePropagateFieldSet.es';
 import TranslationManager from '../../../js/components/translation-manager/TranslationManager.es';
-import {addItem} from '../../../js/utils/client.es';
+import {addItem, updateItem} from '../../../js/utils/client.es';
+import {getFieldSetDDMForm} from '../../../js/utils/dataConverter.es';
 import {isDataLayoutEmpty} from '../../../js/utils/dataLayoutVisitor.es';
-import {normalizeDataDefinition} from '../../../js/utils/normalizers.es';
+import {normalizeDataLayout} from '../../../js/utils/normalizers.es';
 import {errorToast, successToast} from '../../../js/utils/toast.es';
 import {FormBuilder} from '../../FormBuilder';
 import {EVENT_TYPES} from '../../eventTypes';
@@ -56,58 +60,16 @@ const DEFAULT_DATA_LAYOUT = {
 	paginationMode: 'single-page',
 };
 
-const createFieldSet = async ({
-	allowInvalidAvailableLocalesForProperty,
-	contentType,
-	dataDefinition: {availableLanguageIds, dataDefinitionFields},
-	dataLayout: {dataLayoutPages},
-	defaultLanguageId,
-	name,
+const ModalContent = ({
+	fieldSet: fieldSetProp,
+	onClose,
+	onUpdate,
+	updateFieldSetList,
 }) => {
-	const dataDefinition = {
-		availableLanguageIds,
-		dataDefinitionFields,
-		name,
-	};
-
-	const fieldSet = {
-		...(allowInvalidAvailableLocalesForProperty
-			? dataDefinition
-			: normalizeDataDefinition(dataDefinition, defaultLanguageId)),
-		defaultDataLayout: {
-			dataLayoutPages,
-			name,
-		},
-		defaultLanguageId,
-	};
-
-	const fieldsWithoutOptions = getFieldsWithoutOptions(
-		dataDefinition.dataDefinitionFields,
-		defaultLanguageId
-	);
-
-	if (fieldsWithoutOptions.length) {
-		throw new Error(
-			Liferay.Util.sub(
-				Liferay.Language.get(
-					'at-least-one-option-should-be-set-for-field-x'
-				),
-				fieldsWithoutOptions[0].label[defaultLanguageId]
-			)
-		);
-	}
-
-	return await addItem(
-		`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}`,
-		fieldSet
-	);
-};
-
-const ModalContent = ({onClose}) => {
 	const dispatch = useForm();
-	const {contentType, dataDefinitionId} = useConfig();
+	const {contentType} = useConfig();
 	const {
-		allowInvalidAvailableLocalesForProperty,
+		dataDefinitionId,
 		defaultLanguageId,
 		editingLanguageId,
 	} = useFormState();
@@ -115,7 +77,7 @@ const ModalContent = ({onClose}) => {
 		schema: ['dataDefinition', 'dataLayout'],
 	});
 
-	const [name, setName] = useState({});
+	const [name, setName] = useState(dataDefinition.name ?? {});
 	const changeEditingLanguageId = (editingLanguageId) =>
 		dispatch({
 			payload: {editingLanguageId},
@@ -123,6 +85,13 @@ const ModalContent = ({onClose}) => {
 		});
 
 	const onSave = async () => {
+		const {
+			availableLanguageIds,
+			dataDefinitionFields,
+		} = dataDefinition.serialize();
+
+		const {dataLayoutPages} = dataLayout.serialize();
+
 		try {
 			if (!name[defaultLanguageId]) {
 				changeEditingLanguageId(defaultLanguageId);
@@ -131,18 +100,89 @@ const ModalContent = ({onClose}) => {
 				);
 			}
 
-			const dataDefinitionFieldSet = await createFieldSet({
-				allowInvalidAvailableLocalesForProperty,
-				contentType,
-				dataDefinition: dataDefinition.build(),
-				dataLayout: dataLayout.build(),
-				defaultLanguageId,
-				name,
-			});
+			const fieldsWithoutOptions = getFieldsWithoutOptions(
+				dataDefinitionFields,
+				defaultLanguageId
+			);
 
-			successToast(Liferay.Language.get('fieldset-saved'));
+			if (fieldsWithoutOptions.length) {
+				throw new Error(
+					Liferay.Util.sub(
+						Liferay.Language.get(
+							'at-least-one-option-should-be-set-for-field-x'
+						),
+						fieldsWithoutOptions[0].label[defaultLanguageId]
+					)
+				);
+			}
 
-			onClose(dataDefinitionFieldSet);
+			if (dataDefinitionId) {
+
+				// update fieldSet
+
+				const updatedFieldSet = {
+					...fieldSetProp,
+					availableLanguageIds,
+					dataDefinitionFields,
+					defaultDataLayout: normalizeDataLayout(
+						{
+							...fieldSetProp.defaultDataLayout,
+
+							dataLayoutPages: dataLayoutPages.map((page) => {
+								return {
+									...page,
+									description: {
+										[defaultLanguageId]: '',
+									},
+
+									title: {
+										[defaultLanguageId]: '',
+									},
+								};
+							}),
+
+							name,
+						},
+						defaultLanguageId
+					),
+					name,
+				};
+
+				const onPropagate = async () => {
+					const savedFieldset = await updateItem(
+						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`,
+						updatedFieldSet
+					);
+
+					updateFieldSetList({fieldSet: savedFieldset});
+					successToast(Liferay.Language.get('fieldset-saved'));
+				};
+
+				onClose();
+				onUpdate({onPropagate, updatedFieldSet});
+			}
+			else {
+
+				// create new fieldSet from scratch
+
+				const fieldSet = {
+					availableLanguageIds,
+					dataDefinitionFields,
+					defaultDataLayout: {
+						dataLayoutPages,
+						name,
+					},
+					name,
+				};
+
+				const updatedFieldSet = await addItem(
+					`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}`,
+					fieldSet
+				);
+				onClose();
+				updateFieldSetList({fieldSet: updatedFieldSet, isAdding: true});
+				successToast(Liferay.Language.get('fieldset-saved'));
+			}
 		}
 		catch ({message}) {
 			errorToast(message);
@@ -211,7 +251,10 @@ const ModalContent = ({onClose}) => {
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton displayType="secondary" onClick={onClose}>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => onClose()}
+						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 						<ClayButton
@@ -227,26 +270,156 @@ const ModalContent = ({onClose}) => {
 	);
 };
 
-export default ({isVisible, onClose: onCloseFn}) => {
-	const {observer, onClose} = useModal({onClose: onCloseFn});
+const FieldSetModal = ({fieldSet, isVisible, onClose: onCloseProp}) => {
+	const {observer, onClose} = useModal({onClose: onCloseProp});
 	const config = useConfig();
-	const {defaultLanguageId, fieldSets, sidebarPanels} = useFormState();
+	const {
+		allowInvalidAvailableLocalesForProperty,
+		defaultLanguageId,
+		fieldSets,
+		sidebarPanels,
+	} = useFormState();
 	const dispatch = useForm();
 
-	const closeAndUpdateFieldSetList = useCallback(
-		(fieldSet) => {
-			if (fieldSet) {
-				dispatch({
-					payload: {
-						fieldSets: [...fieldSets, fieldSet],
-					},
-					type: EVENT_TYPES.FIELD_SET.UPDATE,
-				});
-			}
-			onClose();
+	const updateFieldSetList = useCallback(
+		({fieldSet, isAdding = false}) => {
+			const newFieldSetList = isAdding
+				? [...fieldSets]
+				: fieldSets.filter(({id}) => id !== fieldSet.id);
+			newFieldSetList.push(fieldSet);
+			dispatch({
+				payload: {fieldSets: newFieldSetList},
+				type: EVENT_TYPES.FIELD_SET.UPDATE_LIST,
+			});
+			dispatch({
+				payload: {fieldSet},
+				type: EVENT_TYPES.FIELD_SET.UPDATE,
+			});
 		},
-		[dispatch, fieldSets, onClose]
+		[dispatch, fieldSets]
 	);
+
+	const [data, setData] = useState({
+		dataDefinition: DEFAULT_DATA_DEFINITION,
+		dataLayout: DEFAULT_DATA_LAYOUT,
+	});
+
+	const propagateFieldSet = usePropagateFieldSet();
+
+	const showPropagationModal = useCallback(
+		({onPropagate, updatedFieldSet}) => {
+			const modal = {
+				actionMessage: Liferay.Language.get('propagate'),
+				allowReferencedDataDefinitionDeletion: true,
+				fieldSetMessage: Liferay.Language.get(
+					'do-you-want-to-propagate-the-changes-to-other-objects-views-using-this-fieldset'
+				),
+				headerMessage: Liferay.Language.get('propagate-changes'),
+			};
+
+			const fieldNames = new Set(
+				updatedFieldSet.dataDefinitionFields.map(({name}) => name)
+			);
+
+			const hasRemovedAnyField = fieldSet.dataDefinitionFields.some(
+				({name}) => !fieldNames.has(name)
+			);
+
+			if (hasRemovedAnyField) {
+				modal.warningMessage = Liferay.Language.get(
+					'the-changes-include-the-deletion-of-fields-and-may-erase-the-data-collected-permanently'
+				);
+			}
+
+			return propagateFieldSet({fieldSet, modal, onPropagate});
+		},
+		[fieldSet, propagateFieldSet]
+	);
+
+	useEffect(() => {
+		if (fieldSet) {
+			const omit = (obj, props) => {
+				const result = {...obj};
+
+				props.forEach((prop) => {
+					delete result[prop];
+				});
+
+				return result;
+			};
+
+			const parseDataLayout = (dataLayout) => {
+				const {paginationMode, ...dataLayouts} = omit(dataLayout, [
+					'dataRules',
+					'dataLayoutPages',
+					'description',
+					'name',
+				]);
+
+				return {
+					dataLayout: dataLayouts,
+					paginationMode,
+				};
+			};
+
+			const parseDataDefinition = (dataDefinition) => {
+				const {
+					availableLanguageIds,
+					description,
+					name,
+					...dataDefinitions
+				} = omit(dataDefinition, [
+					'defaultLanguageId',
+					'defaultDataLayout',
+				]);
+
+				return {
+					availableLanguageIds,
+					dataDefinition: dataDefinitions,
+					description,
+					name,
+				};
+			};
+
+			const responseToJson = async (response) => {
+				if (response.ok) {
+					return await response.json();
+				}
+
+				throw response;
+			};
+
+			Promise.all([
+				fetch(
+					`${window.location.origin}/o/data-engine/v2.0/data-definitions/${fieldSet.id}`
+				).then(responseToJson),
+				fetch(
+					`${window.location.origin}/o/data-engine/v2.0/data-layouts/${fieldSet.defaultDataLayout.id}`
+				).then(responseToJson),
+			]).then(([dataDefinition, dataLayout]) => {
+				const ddmForm = getFieldSetDDMForm({
+					allowInvalidAvailableLocalesForProperty,
+					availableLanguageIds: fieldSet.availableLanguageIds,
+					editingLanguageId: fieldSet.defaultLanguageId,
+					fieldSet,
+					fieldTypes: config.fieldTypes,
+				});
+
+				new PagesVisitor(ddmForm.pages).mapFields((field) => {
+					field.label = field.label[fieldSet.defaultLanguageId];
+				});
+
+				setData({
+					...parseDataDefinition(dataDefinition),
+					...parseDataLayout(dataLayout),
+					dataDefinitionId: dataDefinition.id,
+					dataLayoutId: dataLayout.id,
+					name: dataDefinition.name,
+					pages: ddmForm.pages,
+				});
+			});
+		}
+	}, [allowInvalidAvailableLocalesForProperty, config.fieldTypes, fieldSet]);
 
 	return (
 		isVisible && (
@@ -273,17 +446,27 @@ export default ({isVisible, onClose: onCloseFn}) => {
 							sidebarReducer,
 						]}
 						value={{
-							availableLanguageIds: [defaultLanguageId],
-							dataDefinition: DEFAULT_DATA_DEFINITION,
-							dataLayout: DEFAULT_DATA_LAYOUT,
-							editingLanguageId: defaultLanguageId,
+							availableLanguageIds: fieldSet?.availableLanguageIds ?? [
+								defaultLanguageId,
+							],
+							...data,
+							editingLanguageId:
+								fieldSet?.defaultLanguageId ??
+								defaultLanguageId,
 							sidebarPanels,
 						}}
 					>
-						<ModalContent onClose={closeAndUpdateFieldSetList} />
+						<ModalContent
+							fieldSet={fieldSet}
+							onClose={onClose}
+							onUpdate={showPropagationModal}
+							updateFieldSetList={updateFieldSetList}
+						/>
 					</FormProvider>
 				</ConfigProvider>
 			</ClayModal>
 		)
 	);
 };
+
+export default FieldSetModal;

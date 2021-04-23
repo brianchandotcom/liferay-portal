@@ -24,7 +24,7 @@ import React, {useEffect, useState} from 'react';
 
 import EmptyState from '../../../js/components/empty-state/EmptyState.es';
 import {useNewDeleteFieldSet} from '../../../js/components/field-sets/actions/useDeleteFieldSet.es';
-import {useNewPropagateFieldSet} from '../../../js/components/field-sets/actions/usePropagateFieldSet.es';
+import {usePropagateFieldSet} from '../../../js/components/field-sets/actions/usePropagateFieldSet.es';
 import FieldType from '../../../js/components/field-types/FieldType.es';
 import {DRAG_FIELDSET_ADD} from '../../../js/drag-and-drop/dragTypes.es';
 import {getDataDefinitionFieldSet} from '../../../js/utils/dataConverter.es';
@@ -90,7 +90,7 @@ export default function FieldSetList({searchTerm}) {
 
 	const deleteFieldSet = useNewDeleteFieldSet();
 
-	const propagateFieldSet = useNewPropagateFieldSet();
+	const propagateFieldSet = usePropagateFieldSet();
 
 	const onDoubleClick = ({fieldSet}) => {
 		dispatch({
@@ -118,7 +118,7 @@ export default function FieldSetList({searchTerm}) {
 			block
 			className="add-fieldset"
 			displayType="secondary"
-			onClick={toggleFieldSet}
+			onClick={() => toggleFieldSet()}
 		>
 			{Liferay.Language.get('create-new-fieldset')}
 		</ClayButton>
@@ -208,7 +208,11 @@ export default function FieldSetList({searchTerm}) {
 				</div>
 			)}
 
-			<FieldSetModal onClose={() => toggleFieldSet()} {...modalState} />
+			<FieldSetModal
+				fieldSet={modalState.fieldSet}
+				isVisible={modalState.isVisible}
+				onClose={toggleFieldSet}
+			/>
 		</>
 	);
 }

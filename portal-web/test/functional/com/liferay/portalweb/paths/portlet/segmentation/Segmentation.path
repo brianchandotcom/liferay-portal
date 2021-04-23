@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//*[contains(@aria-label,'Search')]</td>
+	<td>//input[contains(@class,'form-control') and contains(@placeholder,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

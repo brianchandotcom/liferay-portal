@@ -1,0 +1,33 @@
+definition {
+
+	@summary = "Add a segment with a specific criteria"
+	macro addSegment {
+		Variables.assertDefined(parameterList = "${groupName},${segmentName},${fieldName},${operator}");
+
+		var descriptionMap = JSONSegmentsentrySetter.setDescriptionMap(description = "${description}");
+
+		var field = JSONSegmentsentrySetter.setField(fieldName = "${fieldName}");
+
+		var criteria = JSONSegmentsentrySetter.setCriteria(
+			date = "${date}",
+			field = "${field}",
+			operator = "${operator}",
+			text = "${text}");
+
+		var nameMap = JSONSegmentsentrySetter.setNameMap(name = "${segmentName}");
+
+		var serviceContext = JSONSegmentsentrySetter.setServiceContext(
+			groupName = "${groupName}",
+			site = "${site}",
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			workflowAction = "${workflowAction}");
+
+		JSONSegmentsentryAPI._addSegment(
+			criteria = "${criteria}",
+			descriptionMap = "${descriptionMap}",
+			nameMap = "${nameMap}",
+			serviceContext = "${serviceContext}");
+	}
+
+} 

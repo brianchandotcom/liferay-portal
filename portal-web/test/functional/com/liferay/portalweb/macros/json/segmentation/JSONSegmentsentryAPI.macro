@@ -1,0 +1,24 @@
+definition {
+
+	@summary = "Add a segment of via JSONWS"
+	macro _addSegment {
+		Variables.assertDefined(parameterList = "${criteria},${descriptionMap},${nameMap},${serviceContext}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/segments.segmentsentry/add-segments-entry \
+				-u test@liferay.com:test \
+				-d segmentsEntryKey= \
+				-d nameMap=${nameMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d active=true \
+				-d <CURL_DATA[criteria=${criteria}]CURL_DATA> \
+				-d type=com.liferay.portal.kernel.model.User \
+				-d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+} 

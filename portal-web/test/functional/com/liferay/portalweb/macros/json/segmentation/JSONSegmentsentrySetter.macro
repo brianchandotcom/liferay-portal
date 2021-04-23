@@ -1,0 +1,127 @@
+definition {
+
+	macro setCriteria {
+		Variables.assertDefined(parameterList = "${field},${operator}");
+
+		if ("${operator}" == "equals") {
+			if (isSet(date)) {
+				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} eq ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} eq ${date})"}}''';
+			}
+			else if (isSet(text)) {
+				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} eq %27${text}%27)","typeValue":"model"}},"filterStrings":{"model":"(${field} eq %27${text}%27)"}}''';
+			}
+		}
+		else if ("${operator}" == "not equals") {
+			if (isSet(date)) {
+				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"((not (${field} eq ${date})))","typeValue":"model"}},"filterStrings":{"model":"((not (${field} eq ${date})))"}}''';
+			}
+			else if (isSet(text)) {
+				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"((not (${field} eq %27${text}%27)))","typeValue":"model"}},"filterStrings":{"model":"((not (${field} eq %27${text}%27)))"}}''';
+			}
+		}
+		else if ("${operator}" == "contains") {
+			var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(contains(${field}, %27${text}%27))","typeValue":"model"}},"filterStrings":{"model":"(contains(${field}, %27${text}%27))"}}''';
+		}
+		else if ("${operator}" == "not contains") {
+			var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"((not (contains(${field}, %27${text}%27))))","typeValue":"model"}},"filterStrings":{"model":"((not (contains(${field}, %27${text}%27))))"}}''';
+		}
+
+		return "${criteria}";
+	}
+
+	macro setDescriptionMap {
+		if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		}
+		else {
+			var descriptionMap = "{}";
+		}
+
+		return "${descriptionMap}";
+	}
+
+	macro setField {
+		Variables.assertDefined(parameterList = "${fieldName}");
+
+		if ("${fieldName}" == "Date Modified") {
+			var field = "dateModified";
+		}
+		else if ("${fieldName}" == "Date of Birth") {
+			var field = "birthDate";
+		}
+		else if ("${fieldName}" == "Email Address") {
+			var field = "emailAddress";
+		}
+		else if ("${fieldName}" == "First Name") {
+			var field = "firstName";
+		}
+		else if ("${fieldName}" == "Job Title") {
+			var field = "jobTitle";
+		}
+		else if ("${fieldName}" == "Last Name") {
+			var field = "lastName";
+		}
+		else if ("${fieldName}" == "Name") {
+			var field = "userName";
+		}
+		else if ("${fieldName}" == "Regular Role") {
+			var field = "roleIds";
+		}
+		else if ("${fieldName}" == "Screen Name") {
+			var field = "screenName";
+		}
+		else if ("${fieldName}" == "Site") {
+			var field = "groupIds";
+		}
+		else if ("${fieldName}" == "Site and Organization Role") {
+			var field = "userGroupRoleIds";
+		}
+		else if ("${fieldName}" == "Tag") {
+			var field = "assetTagIds";
+		}
+		else if ("${fieldName}" == "Team") {
+			var field = "teamIds";
+		}
+		else if ("${fieldName}" == "User") {
+			var field = "userId";
+		}
+		else if ("${fieldName}" == "User Group") {
+			var field = "userGroupIds";
+		}
+
+		return "${field}";
+	}
+
+	macro setNameMap {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var nameMap = '''{"en_US":"${name}"}''';
+
+		return "${nameMap}";
+	}
+
+	macro setServiceContext {
+		if (isSet(groupName)) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGroupPermissions = "true",
+				addGuestPermissions = "true",
+				groupName = "${groupName}",
+				site = "${site}",
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
+		}
+		else {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGroupPermissions = "true",
+				addGuestPermissions = "true",
+				groupName = "Guest",
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
+		}
+
+		return "${serviceContext}";
+	}
+
+}

@@ -43,21 +43,12 @@ definition {
 		}
 
 		task ("Add segment for the user created") {
-			ProductMenu.gotoSite(site = "Global");
-
-			ProductMenu.gotoPortlet(
-				category = "People",
-				portlet = "Segments");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Screen Name");
-
-			Segmentation.fillTitle(titleField = "Segment usersn");
-
-			Segmentation.fillProperty(propertyField = "usersn");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Global",
+				operator = "contains",
+				segmentName = "Segment usersn",
+				text = "usersn");
 		}
 
 		task ("Add role and permissions") {
@@ -113,21 +104,12 @@ definition {
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#AssignSiteRolesOptionInSegmentsEditor";
 
 		task ("Go to segments portlet and add segment in Test Site Name") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "People",
-				portlet = "Segments");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Screen Name");
-
-			Segmentation.fillTitle(titleField = "Segment usersn");
-
-			Segmentation.fillProperty(propertyField = "usersn");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Segment usersn",
+				text = "usersn");
 		}
 
 		task ("Open segment's options and assert the option Assign site roles is disabled") {

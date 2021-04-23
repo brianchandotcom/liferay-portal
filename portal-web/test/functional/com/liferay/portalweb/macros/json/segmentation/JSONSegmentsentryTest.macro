@@ -1,0 +1,51 @@
+definition {
+
+	@summary = "Basic Smoke test for the JSON WS API macros"
+	macro runSmoke {
+		JSONSegmentsentry.addSegment(
+			fieldName = "Email Address",
+			groupName = "Test Site Name",
+			operator = "contains",
+			segmentName = "First Segment",
+			text = "liferay.com");
+
+		JSONSegmentsentry.addSegment(
+			fieldName = "Job Title",
+			groupName = "Test Site Name",
+			operator = "not contains",
+			segmentName = "Second Segment",
+			text = "QA");
+
+		JSONSegmentsentry.addSegment(
+			date = "1992-05-23",
+			fieldName = "Date of Birth",
+			groupName = "Test Site Name",
+			operator = "equals",
+			segmentName = "Third Segment");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		Segmentation.editSegment(entry = "First Segment");
+
+		takeScreenshot();
+
+		Segmentation.viewSegment(propertyField = "liferay.com");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		Segmentation.editSegment(entry = "Second Segment");
+
+		takeScreenshot();
+
+		Segmentation.viewSegment(propertyField = "QA");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		Segmentation.editSegment(entry = "Third Segment");
+
+		takeScreenshot();
+
+		Segmentation.viewSegment(date = "1992-05-23");
+	}
+
+} 

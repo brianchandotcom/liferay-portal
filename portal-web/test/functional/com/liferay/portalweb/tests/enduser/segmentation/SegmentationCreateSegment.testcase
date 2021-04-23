@@ -445,12 +445,32 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130324."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentBySessionSignedIn {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130324 AddSegmentBySessionSignedIn pending implementation
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Signed In");
+
+		Segmentation.fillTitle(titleField = "Signed In Test");
+
+		Select(
+			key_criterion = "options",
+			locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+			value1 = "FALSE");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "Signed In Test");
+
+		Segmentation.viewSegment(
+			key_criterion = "options",
+			propertyField = "false");
 	}
 
 	@description = "This is a test for LPS-130325."

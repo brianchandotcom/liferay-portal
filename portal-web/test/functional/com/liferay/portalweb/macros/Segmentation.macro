@@ -289,6 +289,12 @@ definition {
 				value1 = "${criterionValue}");
 		}
 
+		else if (isSet(criterionInputOption)) {
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT",
+				value1 = "${criterionInputOption}");
+		}
+
 		else if (isSet(resolutionValue)) {
 			AssertValue(
 				key_criterion = "decimal-number",

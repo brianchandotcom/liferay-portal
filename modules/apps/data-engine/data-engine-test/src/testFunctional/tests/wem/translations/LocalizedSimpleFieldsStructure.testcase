@@ -181,6 +181,8 @@ definition {
 	@description = "This test validates the creation and edition of localized fields as well as deletion of structure"
 	@priority = "5"
 	test CreateEditAndDeleteLocalizedStructure {
+		property portal.acceptance = "true";
+
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addFields(fieldNameList = "Text,Date,Numeric");
@@ -481,6 +483,8 @@ definition {
 	@description = "This test validates the creation and edition of localized fields as well as deletion of structure in different instance language"
 	@priority = "5"
 	test EditAndDeleteWithDifferentInstanceLanguage {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

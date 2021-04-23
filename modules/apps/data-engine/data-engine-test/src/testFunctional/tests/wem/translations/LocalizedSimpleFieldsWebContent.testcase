@@ -353,6 +353,8 @@ definition {
 	@description = "This is a test for LRQA-66639. This test validates the creation, edition, deletion and persistence of fields into Web Contents."
 	@priority = "5"
 	test CreateEditAndDeleteLocalizedWebContent {
+		property portal.acceptance = "true";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -631,6 +633,8 @@ definition {
 	@description = "This is a test for LRQA-66639. This test validates the creation, edition, deletion and persistence of fields into Web Contents in different instance language."
 	@priority = "5"
 	test LocalizedWebContentWithDifferentInstanceLanguage {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

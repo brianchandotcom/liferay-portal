@@ -51,7 +51,7 @@ function truncateString(value) {
 function ResultListItem({item}) {
 	const [collapse, setCollapse] = useState(true);
 
-	const _renderListRow = (property, value) => (
+	const _renderListRow = (property, value = '') => (
 		<ClayLayout.Row justify="start" key={property}>
 			<ClayLayout.Col className="semibold" size={4}>
 				{removeBlueprintFieldPrefix(property)}

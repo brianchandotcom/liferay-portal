@@ -163,6 +163,7 @@ export const mockSearchResults = (itemsPerPage = 10) => {
 			b_assetEntryId: i,
 			b_author: 'Test Test',
 			b_created: '2/1/21',
+			b_modified: '2/1/21',
 			b_summary:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 			b_title: `Article Number ${i}`,

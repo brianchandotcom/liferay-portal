@@ -206,8 +206,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			getAssetLibraryTaxonomyVocabularyPermissionsPage(
 				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
 					Long assetLibraryId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -233,8 +233,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public void putAssetLibraryTaxonomyVocabularyPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
-				Long assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
+				assetLibraryId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -365,10 +365,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteTaxonomyVocabularyPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -676,9 +676,9 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			getTaxonomyVocabularyPermissionsPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("taxonomyVocabularyId")
-					Long taxonomyVocabularyId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				Long taxonomyVocabularyId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -711,7 +711,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	public void putTaxonomyVocabularyPermission(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("taxonomyVocabularyId")
-				Long taxonomyVocabularyId,
+			Long taxonomyVocabularyId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 

@@ -139,8 +139,8 @@ public abstract class BaseContentStructureResourceImpl
 			getAssetLibraryContentStructurePermissionsPage(
 				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
 					Long assetLibraryId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -166,8 +166,8 @@ public abstract class BaseContentStructureResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "ContentStructure")})
 	public void putAssetLibraryContentStructurePermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
-				Long assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
+				assetLibraryId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -228,9 +228,9 @@ public abstract class BaseContentStructureResourceImpl
 			getContentStructurePermissionsPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("contentStructureId")
-					Long contentStructureId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				Long contentStructureId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -335,10 +335,10 @@ public abstract class BaseContentStructureResourceImpl
 	@Tags(value = {@Tag(name = "ContentStructure")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteContentStructurePermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);

@@ -432,9 +432,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			getTaxonomyCategoryPermissionsPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("taxonomyCategoryId")
-					String taxonomyCategoryId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				String taxonomyCategoryId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(

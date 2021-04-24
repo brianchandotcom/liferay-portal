@@ -2992,8 +2992,8 @@ public class Query {
 	 */
 	@GraphQLField
 	public StructuredContentFolderPage structuredContentFolderPermissions(
-			@GraphQLName("structuredContentFolderId")
-				Long structuredContentFolderId,
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
 			@GraphQLName("roleNames") String roleNames)
 		throws Exception {
 

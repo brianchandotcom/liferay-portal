@@ -3140,8 +3140,8 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean updateStructuredContentFolderPermission(
-			@GraphQLName("structuredContentFolderId")
-				Long structuredContentFolderId,
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
 			@GraphQLName("permissions")
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {

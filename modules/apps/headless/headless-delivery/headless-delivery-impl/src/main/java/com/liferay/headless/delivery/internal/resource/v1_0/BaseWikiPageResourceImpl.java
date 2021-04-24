@@ -399,10 +399,10 @@ public abstract class BaseWikiPageResourceImpl
 	@Tags(value = {@Tag(name = "WikiPage")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getWikiPagePermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("wikiPageId")
-					Long wikiPageId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
+					wikiPageId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(wikiPageId);
@@ -430,8 +430,8 @@ public abstract class BaseWikiPageResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "WikiPage")})
 	public void putWikiPagePermission(
-			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId")
-				Long wikiPageId,
+			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
+				wikiPageId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 

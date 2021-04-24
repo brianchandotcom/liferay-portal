@@ -214,8 +214,8 @@ public abstract class BaseDocumentResourceImpl
 			getAssetLibraryDocumentPermissionsPage(
 				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
 					Long assetLibraryId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -241,8 +241,8 @@ public abstract class BaseDocumentResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "Document")})
 	public void putAssetLibraryDocumentPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
-				Long assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
+				assetLibraryId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -650,10 +650,10 @@ public abstract class BaseDocumentResourceImpl
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getDocumentPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("documentId")
-					Long documentId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+					documentId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(documentId);
@@ -681,8 +681,8 @@ public abstract class BaseDocumentResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "Document")})
 	public void putDocumentPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("documentId")
-				Long documentId,
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -851,10 +851,10 @@ public abstract class BaseDocumentResourceImpl
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteDocumentPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);

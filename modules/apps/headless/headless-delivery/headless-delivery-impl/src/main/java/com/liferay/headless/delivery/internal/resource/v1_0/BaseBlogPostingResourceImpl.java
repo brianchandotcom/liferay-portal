@@ -449,8 +449,8 @@ public abstract class BaseBlogPostingResourceImpl
 			getBlogPostingPermissionsPage(
 				@NotNull @Parameter(hidden = true) @PathParam("blogPostingId")
 					Long blogPostingId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(blogPostingId);
@@ -478,8 +478,8 @@ public abstract class BaseBlogPostingResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public void putBlogPostingPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId")
-				Long blogPostingId,
+			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
+				blogPostingId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -643,10 +643,10 @@ public abstract class BaseBlogPostingResourceImpl
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteBlogPostingPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);

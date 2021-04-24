@@ -215,8 +215,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			getAssetLibraryStructuredContentFolderPermissionsPage(
 				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
 					Long assetLibraryId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -244,8 +244,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public void putAssetLibraryStructuredContentFolderPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
-				Long assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
+				assetLibraryId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -381,10 +381,10 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteStructuredContentFolderPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -449,9 +449,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			getStructuredContentFolderPermissionsPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("structuredContentFolderId")
-					Long structuredContentFolderId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				Long structuredContentFolderId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -487,7 +487,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	public void putStructuredContentFolderPermission(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("structuredContentFolderId")
-				Long structuredContentFolderId,
+			Long structuredContentFolderId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 

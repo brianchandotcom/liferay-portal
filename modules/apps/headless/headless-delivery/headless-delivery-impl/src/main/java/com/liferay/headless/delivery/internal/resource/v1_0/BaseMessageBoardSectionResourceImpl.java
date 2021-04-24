@@ -352,9 +352,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 			getMessageBoardSectionPermissionsPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("messageBoardSectionId")
-					Long messageBoardSectionId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				Long messageBoardSectionId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -387,7 +387,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	public void putMessageBoardSectionPermission(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardSectionId")
-				Long messageBoardSectionId,
+			Long messageBoardSectionId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -644,10 +644,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteMessageBoardSectionPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);

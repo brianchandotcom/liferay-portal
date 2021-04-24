@@ -210,8 +210,8 @@ public abstract class BaseDocumentFolderResourceImpl
 			getAssetLibraryDocumentFolderPermissionsPage(
 				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
 					Long assetLibraryId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -237,8 +237,8 @@ public abstract class BaseDocumentFolderResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "DocumentFolder")})
 	public void putAssetLibraryDocumentFolderPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
-				Long assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
+				assetLibraryId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -507,9 +507,9 @@ public abstract class BaseDocumentFolderResourceImpl
 			getDocumentFolderPermissionsPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("documentFolderId")
-					Long documentFolderId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				Long documentFolderId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -783,10 +783,10 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Tags(value = {@Tag(name = "DocumentFolder")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteDocumentFolderPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);

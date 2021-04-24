@@ -212,8 +212,8 @@ public abstract class BaseStructuredContentResourceImpl
 			getAssetLibraryStructuredContentPermissionsPage(
 				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
 					Long assetLibraryId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -239,8 +239,8 @@ public abstract class BaseStructuredContentResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public void putAssetLibraryStructuredContentPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
-				Long assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
+				assetLibraryId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 

@@ -204,10 +204,10 @@ public abstract class BaseWikiNodeResourceImpl
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteWikiNodePermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -410,10 +410,10 @@ public abstract class BaseWikiNodeResourceImpl
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getWikiNodePermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId")
-					Long wikiNodeId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
+					wikiNodeId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(wikiNodeId);
@@ -441,8 +441,8 @@ public abstract class BaseWikiNodeResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public void putWikiNodePermission(
-			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId")
-				Long wikiNodeId,
+			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
+				wikiNodeId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 

@@ -484,9 +484,9 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			getKnowledgeBaseArticlePermissionsPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("knowledgeBaseArticleId")
-					Long knowledgeBaseArticleId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				Long knowledgeBaseArticleId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -520,7 +520,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	public void putKnowledgeBaseArticlePermission(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("knowledgeBaseArticleId")
-				Long knowledgeBaseArticleId,
+			Long knowledgeBaseArticleId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -899,10 +899,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteKnowledgeBaseArticlePermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);

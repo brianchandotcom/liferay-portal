@@ -252,9 +252,9 @@ public abstract class BaseNavigationMenuResourceImpl
 			getNavigationMenuPermissionsPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("navigationMenuId")
-					Long navigationMenuId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				Long navigationMenuId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -411,10 +411,10 @@ public abstract class BaseNavigationMenuResourceImpl
 	@Tags(value = {@Tag(name = "NavigationMenu")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteNavigationMenuPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);

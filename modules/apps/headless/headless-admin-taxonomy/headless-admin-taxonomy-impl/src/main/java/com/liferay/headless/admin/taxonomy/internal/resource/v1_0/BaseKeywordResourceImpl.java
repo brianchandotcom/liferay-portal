@@ -205,8 +205,8 @@ public abstract class BaseKeywordResourceImpl
 			getAssetLibraryKeywordPermissionsPage(
 				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
 					Long assetLibraryId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -232,8 +232,8 @@ public abstract class BaseKeywordResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "Keyword")})
 	public void putAssetLibraryKeywordPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
-				Long assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
+				assetLibraryId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -433,10 +433,10 @@ public abstract class BaseKeywordResourceImpl
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getKeywordPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("keywordId")
-					Long keywordId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long
+					keywordId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(keywordId);
@@ -462,8 +462,8 @@ public abstract class BaseKeywordResourceImpl
 	@PUT
 	@Tags(value = {@Tag(name = "Keyword")})
 	public void putKeywordPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("keywordId")
-				Long keywordId,
+			@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long
+				keywordId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -596,10 +596,10 @@ public abstract class BaseKeywordResourceImpl
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteKeywordPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
-				@Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);

@@ -30,7 +30,7 @@ definition {
 
 	@priority = "4"
 	@uitest
-	test ActivateDeactivateRemoteStaging {
+	test ActivateDeactivateRemoteStagingInOnePortal {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -369,7 +369,7 @@ definition {
 
 	@priority = "4"
 	@uitest
-	test DeactivateStaging {
+	test DeactivateLocalStaging {
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");

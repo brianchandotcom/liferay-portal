@@ -30,7 +30,7 @@ definition {
 
 			JSONUser.tearDownNonAdminUsers();
 
-			Role.removeStagingAdminRole();
+			JSONRole.deleteRole(roleTitle = "Staging Admin");
 
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}

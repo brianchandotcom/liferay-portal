@@ -21,8 +21,6 @@ definition {
 			JSONUser.tearDownNonAdminUsers();
 
 			JSONOrganization.deleteOrganizationByName(organizationName = "Staging Organization Name");
-
-			Role.tearDownCP();
 		}
 	}
 

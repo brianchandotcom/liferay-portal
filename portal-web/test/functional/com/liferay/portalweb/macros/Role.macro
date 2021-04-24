@@ -480,25 +480,6 @@ definition {
 		AssertNotChecked(locator1 = "Permissions#${permissionDefinitionKey}");
 	}
 
-	macro removeStagingAdminRole {
-		var roleTitle = "Staging Admin";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		RoleNavigator.gotoRoleType(roleType = "Site");
-
-		Search.searchCP(searchTerm = "${roleTitle}");
-
-		var key_itemName = "${roleTitle}";
-
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "ListGroupItem#ITEM_NAME")) {
-			LexiconEntry.delete(rowEntry = "${roleTitle}");
-		}
-	}
-
 	macro tearDownCP {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

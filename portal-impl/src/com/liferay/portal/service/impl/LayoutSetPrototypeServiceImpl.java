@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.base.LayoutSetPrototypeServiceBaseImpl;
 
@@ -69,6 +71,33 @@ public class LayoutSetPrototypeServiceImpl
 		return layoutSetPrototypeLocalService.addLayoutSetPrototype(
 			user.getUserId(), user.getCompanyId(), nameMap, descriptionMap,
 			active, layoutsUpdateable, serviceContext);
+	}
+
+	@Override
+	public LayoutSetPrototype addLayoutSetPrototype(
+			String name, String description, boolean active,
+			boolean layoutsUpdateable, boolean readyForPropagation,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> nameMap = HashMapBuilder.put(
+			locale, name
+		).build();
+
+		Map<Locale, String> descriptionMap = HashMapBuilder.put(
+			locale, description
+		).build();
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(), ActionKeys.ADD_LAYOUT_PROTOTYPE);
+
+		User user = getUser();
+
+		return layoutSetPrototypeLocalService.addLayoutSetPrototype(
+			user.getUserId(), user.getCompanyId(), nameMap, descriptionMap,
+			active, layoutsUpdateable, readyForPropagation, serviceContext);
 	}
 
 	@Override

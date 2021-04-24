@@ -1,13 +1,9 @@
 definition {
 
 	macro activateStagingCP {
-		ProductMenuHelper.openProductMenu();
+		var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-			value1 = "${siteName}");
-
-		Pause(locator1 = "3000");
+		Staging.openStagingAdmin(siteURLKey = "${siteURLKey}");
 
 		if ("${remoteStaging}" == "true") {
 			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_REMOTE_LIVE");
@@ -16,16 +12,9 @@ definition {
 				locator1 = "SiteSettingsStaging#REMOTE_STAGING_IP",
 				value1 = "localhost");
 
-			if (isSet(remotePort)) {
-				Type(
-					locator1 = "SiteSettingsStaging#REMOTE_STAGING_PORT",
-					value1 = "${remotePort}");
-			}
-			else {
-				Type(
-					locator1 = "SiteSettingsStaging#REMOTE_STAGING_PORT",
-					value1 = "8080");
-			}
+			Type(
+				locator1 = "SiteSettingsStaging#REMOTE_STAGING_PORT",
+				value1 = "${remotePort}");
 
 			Paste(
 				locator1 = "SiteSettingsStaging#REMOTE_STAGING_SITE_ID",
@@ -975,64 +964,21 @@ definition {
 	}
 
 	macro remoteStagingSetUp {
-		if (isSet(remotePort)) {
-			User.loginPG(
-				nodePort = "${remotePort}",
-				password = "test",
-				userEmailAddress = "test@liferay.com");
-		}
-		else {
-			Navigator.openURL();
+		if (!(isSet(remotePort))) {
+			var remotePort = "8080";
 		}
 
-		if (isSet(enableXuggler)) {
-			ServerAdministration.openServerAdmin(baseURL = "http://localhost:${remotePort}");
+		JSONGroup.addGroup(
+			groupName = "Remote Site",
+			portalURL = "http://localhost:${remotePort}");
 
-			ServerAdministration.configureExternalServices(installXuggler = "true");
+		var siteID = JSONGroupSetter.setGroupId(
+			groupName = "Remote Site",
+			portalURL = "http://localhost:${remotePort}");
 
-			Clustering.shutdownSpecificServer(nodePort = "${remotePort}");
+		var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 
-			Clustering.startSpecificServer(
-				deleteLiferayHome = "true",
-				keepCachedAppServerData = "true",
-				nodePort = "${remotePort}");
-
-			ServerAdministration.openServerAdmin(baseURL = "http://localhost:${remotePort}");
-
-			ServerAdministration.configureExternalServices(enableXuggler = "true");
-		}
-
-		var siteID = "${siteID}";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Remote Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		var siteID = "siteID";
-
-		Copy(
-			locator1 = "SitesEditSite#SITE_ID",
-			value1 = "siteID");
-
-		if (isSet(remotePort)) {
-			User.loginPG(
-				nodePort = "8080",
-				password = "test",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		SitePages.openPagesAdmin(siteURLKey = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "${siteURLKey}");
 
 		Staging.activateStagingCP(
 			contentName = "${contentName}",

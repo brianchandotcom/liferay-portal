@@ -122,8 +122,8 @@ public abstract class BaseStructuredContentResourceImpl
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
 			postSiteStructuredContentDraft(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId")
-					Long siteId,
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
 				com.liferay.headless.delivery.dto.v1_0.StructuredContent
 					structuredContent)
 		throws Exception {

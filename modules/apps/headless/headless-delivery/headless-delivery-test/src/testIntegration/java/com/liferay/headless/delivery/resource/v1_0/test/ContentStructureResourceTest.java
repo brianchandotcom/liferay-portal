@@ -65,9 +65,7 @@ public class ContentStructureResourceTest
 
 		return _toContentStructure(
 			_addDDMStructure(
-				(assetLibraryId == irrelevantDepotEntry.getDepotEntryId()) ?
-					irrelevantDepotEntry.getGroup() : testDepotEntry.getGroup(),
-				contentStructure.getName()));
+				testDepotEntry.getGroup(), contentStructure.getName()));
 	}
 
 	@Override

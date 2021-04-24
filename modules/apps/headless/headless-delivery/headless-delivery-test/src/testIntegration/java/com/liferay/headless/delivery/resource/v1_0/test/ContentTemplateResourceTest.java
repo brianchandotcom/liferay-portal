@@ -72,9 +72,7 @@ public class ContentTemplateResourceTest
 				Long assetLibraryId, ContentTemplate contentTemplate)
 		throws Exception {
 
-		return _getContentTemplate(
-			(assetLibraryId == irrelevantDepotEntry.getDepotEntryId()) ?
-				irrelevantDepotEntry.getGroup() : testDepotEntry.getGroup());
+		return _getContentTemplate(testDepotEntry.getGroup());
 	}
 
 	@Override

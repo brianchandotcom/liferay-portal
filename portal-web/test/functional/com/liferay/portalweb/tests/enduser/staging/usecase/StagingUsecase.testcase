@@ -728,6 +728,13 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test ModifyInitalPageVariationSetup {
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.modifyVariation(enableOnPublicPages = "true");
+	}
+
 	@priority = "4"
 	test MoveToTheRecycleBinAndRestorePublishTemplate {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
@@ -1113,6 +1120,110 @@ definition {
 	}
 
 	@priority = "4"
+	test RemoveTagsFromPublishBlogAndDM {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.addTag(tagName = "stagingtag");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewTagPG(
+			entryTitle = "Blogs Entry Title",
+			tagName = "stagingtag");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			tagNameList = "stagingtag");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewTag(tagName = "stagingtag");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite(site = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewTagPG(
+			entryTitle = "Blogs Entry Title",
+			tagName = "stagingtag");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewTag(tagName = "stagingtag");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Tag.tearDownCP(
+			site = "Site Name",
+			stagingSite = "true");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite(site = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewNoTag(
+			entryTitle = "Blogs Entry Title",
+			tagName = "stagingtag");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewNoTag(tagName = "stagingtag");
+	}
+
+	@priority = "4"
 	test SearchPublishTemplate {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -1174,6 +1285,42 @@ definition {
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 		MenuItem.viewNotPresent(menuItem = "Publish to Live");
+	}
+
+	@description = "This test covers LPS-92578. It ensures that DM succeeds to publish to live when file exists in the recycle bin."
+	@priority = "4"
+	test SinglePublicationAfterDeleteDocument {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name-staging");
+
+		RecycleBin.viewCP(
+			assetName = "Document_2.jpg",
+			assetType = "Document",
+			deleteUser = "Test Test");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
 	@description = "This is a use case for LPS-82689."
@@ -1455,6 +1602,89 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
 	}
 
+	@description = "This is a use case for LPS-98473."
+	@priority = "3"
+	test SubscribeWebContentWithStaging {
+		JSONGroup.addGroup(groupName = "Test Site");
+
+		JSONRole.addRegularRole(
+			roleKey = "Web Content Subscriber Role",
+			roleTitle = "Web Content Subscriber Role");
+
+		for (var resourceActionIndex : list "VIEW,SUBSCRIBE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Web Content Subscriber Role");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "SUBSCRIBE",
+			resourceName = "com.liferay.journal.model.JournalFolder",
+			roleTitle = "Web Content Subscriber Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Web Content Subscriber Role");
+
+		User.openUsersAdmin();
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		Role.openRolesAdmin();
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Web Content Subscriber Role",
+			userEmailAddress = "userea@liferay.com");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Memberships");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Memberships");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site");
+
+		WebContent.subscribeToCurrentFolderCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContent.subscribeToCurrentFolderCP();
+	}
+
 	@priority = "5"
 	test TrashEntryReferencePublishing {
 		property portal.acceptance = "true";
@@ -1610,6 +1840,171 @@ definition {
 			dmDocumentTitle = "DM Document Title Edit");
 	}
 
+	@description = "This is a use case for LPS-96721."
+	@priority = "4"
+	test ViewPublishedContentWithSpecialCharsInDocumentTitle {
+		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "Staging#ViewPublishedContentWithSpecialCharsInDocumentTitle";
+
+		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.pdf",
+			dmDocumentTitle = '''example (“PDF”).pdf''');
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description",
+			structureName = "Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Upload",
+			fieldName = "Upload");
+
+		WebContentStructures.saveCP(structureName = "Structure Name");
+
+		WebContentStructures.viewCP(
+			structureDescription = "Structure Description",
+			structureName = "Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Structure Name",
+			templateDescription = "Template Description",
+			templateFieldNames = "Upload",
+			templateName = "Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
+
+		WebContent.addWithStructureCP(
+			dmDocumentTitle = '''example (“PDF”).pdf''',
+			dmNavTab = "Documents and Media",
+			structureName = "Structure Name",
+			templateName = "Template Name",
+			webContentTitle = "WC WebContent Title",
+			webContentUpload = '''example (“PDF”).pdf''');
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		var downloadURL = selenium.getAttribute("//div[contains(@class,'journal-content-article')]/a@href");
+		var stagingGroupId = StringUtil.extractLast("${downloadURL}", "documents/");
+		var stagingGroupId = StringUtil.extractFirst("${stagingGroupId}", "/");
+
+		echo("## * Staging GroupId: ${stagingGroupId}");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		var downloadURL = selenium.getAttribute("//div[contains(@class,'journal-content-article')]/a@href");
+		var liveGroupId = StringUtil.extractLast("${downloadURL}", "documents/");
+		var liveGroupId = StringUtil.extractFirst("${liveGroupId}", "/");
+
+		echo("## * Live GroupId: ${liveGroupId}");
+
+		if ("${liveGroupId}" == "${stagingGroupId}") {
+			fail("The groupID should be different in live site.");
+		}
+	}
+
+	@description = "This is a use case for LPS-87280."
+	@priority = "4"
+	test ViewPublishedWCWithApostropheInImageField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description",
+			structureName = "Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Image");
+
+		WebContentStructures.saveCP(structureName = "Structure Name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Structure Name",
+			templateDescription = "Template Description",
+			templateFieldNames = "Image",
+			templateName = "Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
+
+		WebContent.addWithStructureCP(
+			navTab = "Web Content Images",
+			structureName = "Structure Name",
+			templateName = "Template Name",
+			webContentImage = "Document_2.jpeg",
+			webContentImageDescription = "this image doesn't work",
+			webContentTitle = "WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WebContent Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WebContent Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WebContentDisplayPortlet.viewImageFieldViaWCD();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		AssertConsoleTextNotPresent(value1 = "Invalid XPath expression");
+
+		ProductMenu.gotoLiveSite(site = "Site Name");
+
+		WebContentDisplayPortlet.viewImageFieldViaWCD();
+	}
+
 	@description = "This is a use case for LPS-96664."
 	@priority = "3"
 	test ViewPublishTemplateDateRange {
@@ -1642,6 +2037,93 @@ definition {
 		Staging.viewDateRange(
 			dateRangeEndDate = '''10/12/2019''',
 			dateRangeStartDate = '''10/11/2019''');
+	}
+
+	@description = "This is a use case for LPS-76633."
+	@priority = "5"
+	test ViewSingleAssetPublication {
+		property portal.release = "false";
+		property test.name.skip.portal.instance = "Staging#ViewSingleAssetPublication";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Bookmarks");
+
+		Bookmark.addCP(
+			bookmarkDescription = "This is a test bookmark!",
+			bookmarkName = "Test Bookmark",
+			bookmarkURL = "https://www.liferay.com");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoStagingSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected web content?",
+			entry = "Web Content Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Bookmarks");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish to live?",
+			entry = "Test Bookmark");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected document?",
+			entry = "DM Document Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "Web Content Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Bookmarks");
+
+		Bookmark.viewBookmark(
+			bookmarkName = "Test Bookmark",
+			bookmarkURL = "https://www.liferay.com");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
 }

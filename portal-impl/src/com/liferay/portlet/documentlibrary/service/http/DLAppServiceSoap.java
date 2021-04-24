@@ -606,6 +606,34 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	 * Returns the file entry with the external reference code.
+	 *
+	 * @param groupId the primary key of the file entry's group
+	 * @param externalReferenceCode the file entry's external reference code
+	 * @return the file entry with the external reference code or null if it not exists
+	 * @review
+	 */
+	public static com.liferay.portal.kernel.repository.model.FileEntrySoap
+			fetchFileEntryByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.repository.model.FileEntry returnValue =
+				DLAppServiceUtil.fetchFileEntryByExternalReferenceCode(
+					groupId, externalReferenceCode);
+
+			return com.liferay.portal.kernel.repository.model.FileEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
 	 * Returns all the file entries in the folder.
 	 *
 	 * @param repositoryId the primary key of the file entry's repository
@@ -2689,34 +2717,6 @@ public class DLAppServiceSoap {
 				repositoryId, folderId, lockUuid);
 
 			return returnValue;
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	/**
-	 * Returns the file entry with the external reference code.
-	 *
-	 * @param groupId the primary key of the file entry's group
-	 * @param externalReferenceCode the file entry's external reference code
-	 * @return the file entry with the external reference code or null if it not exists
-	 * @review
-	 */
-	public static com.liferay.portal.kernel.repository.model.FileEntrySoap
-			fetchFileEntryByExternalReferenceCode(
-				long groupId, String externalReferenceCode)
-		throws RemoteException {
-
-		try {
-			com.liferay.portal.kernel.repository.model.FileEntry returnValue =
-				DLAppServiceUtil.fetchFileEntryByExternalReferenceCode(
-					groupId, externalReferenceCode);
-
-			return com.liferay.portal.kernel.repository.model.FileEntrySoap.
-				toSoapModel(returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

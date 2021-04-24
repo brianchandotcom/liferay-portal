@@ -1040,6 +1040,49 @@ public class DLAppServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			fetchFileEntryByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, long groupId,
+				String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLAppServiceUtil.class, "fetchFileEntryByExternalReferenceCode",
+				_fetchFileEntryByExternalReferenceCodeParameterTypes24);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, externalReferenceCode);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.repository.model.FileEntry)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
 				HttpPrincipal httpPrincipal, long repositoryId, long folderId)
@@ -1048,7 +1091,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntries",
-				_getFileEntriesParameterTypes24);
+				_getFileEntriesParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId);
@@ -1092,7 +1135,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntries",
-				_getFileEntriesParameterTypes25);
+				_getFileEntriesParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, start, end);
@@ -1139,7 +1182,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntries",
-				_getFileEntriesParameterTypes26);
+				_getFileEntriesParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, start, end,
@@ -1184,7 +1227,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntries",
-				_getFileEntriesParameterTypes27);
+				_getFileEntriesParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, fileEntryTypeId);
@@ -1228,7 +1271,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntries",
-				_getFileEntriesParameterTypes28);
+				_getFileEntriesParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, fileEntryTypeId, start, end);
@@ -1275,7 +1318,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntries",
-				_getFileEntriesParameterTypes29);
+				_getFileEntriesParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, fileEntryTypeId, start, end,
@@ -1320,7 +1363,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntries",
-				_getFileEntriesParameterTypes30);
+				_getFileEntriesParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, mimeTypes);
@@ -1367,7 +1410,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntries",
-				_getFileEntriesParameterTypes31);
+				_getFileEntriesParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, mimeTypes, start, end,
@@ -1411,7 +1454,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntriesAndFileShortcuts",
-				_getFileEntriesAndFileShortcutsParameterTypes32);
+				_getFileEntriesAndFileShortcutsParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status, start, end);
@@ -1452,7 +1495,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntriesAndFileShortcutsCount",
-				_getFileEntriesAndFileShortcutsCountParameterTypes33);
+				_getFileEntriesAndFileShortcutsCountParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status);
@@ -1493,7 +1536,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntriesAndFileShortcutsCount",
-				_getFileEntriesAndFileShortcutsCountParameterTypes34);
+				_getFileEntriesAndFileShortcutsCountParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status, mimeTypes);
@@ -1533,7 +1576,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntriesCount",
-				_getFileEntriesCountParameterTypes35);
+				_getFileEntriesCountParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId);
@@ -1574,7 +1617,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntriesCount",
-				_getFileEntriesCountParameterTypes36);
+				_getFileEntriesCountParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, fileEntryTypeId);
@@ -1615,7 +1658,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntriesCount",
-				_getFileEntriesCountParameterTypes37);
+				_getFileEntriesCountParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, mimeTypes);
@@ -1655,7 +1698,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntry",
-				_getFileEntryParameterTypes38);
+				_getFileEntryParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId);
@@ -1698,7 +1741,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntry",
-				_getFileEntryParameterTypes39);
+				_getFileEntryParameterTypes40);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderId, title);
@@ -1741,7 +1784,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntryByExternalReferenceCode",
-				_getFileEntryByExternalReferenceCodeParameterTypes40);
+				_getFileEntryByExternalReferenceCodeParameterTypes41);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, externalReferenceCode);
@@ -1784,7 +1827,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntryByFileName",
-				_getFileEntryByFileNameParameterTypes41);
+				_getFileEntryByFileNameParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderId, fileName);
@@ -1826,7 +1869,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileEntryByUuidAndGroupId",
-				_getFileEntryByUuidAndGroupIdParameterTypes42);
+				_getFileEntryByUuidAndGroupIdParameterTypes43);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, uuid, groupId);
@@ -1867,7 +1910,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileShortcut",
-				_getFileShortcutParameterTypes43);
+				_getFileShortcutParameterTypes44);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileShortcutId);
@@ -1908,7 +1951,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFileVersion",
-				_getFileVersionParameterTypes44);
+				_getFileVersionParameterTypes45);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileVersionId);
@@ -1949,7 +1992,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFolder",
-				_getFolderParameterTypes45);
+				_getFolderParameterTypes46);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId);
@@ -1990,7 +2033,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFolder",
-				_getFolderParameterTypes46);
+				_getFolderParameterTypes47);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, name);
@@ -2032,7 +2075,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFolders",
-				_getFoldersParameterTypes47);
+				_getFoldersParameterTypes48);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId);
@@ -2075,7 +2118,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFolders",
-				_getFoldersParameterTypes48);
+				_getFoldersParameterTypes49);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, includeMountFolders);
@@ -2119,7 +2162,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFolders",
-				_getFoldersParameterTypes49);
+				_getFoldersParameterTypes50);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, includeMountFolders,
@@ -2167,7 +2210,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFolders",
-				_getFoldersParameterTypes50);
+				_getFoldersParameterTypes51);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, includeMountFolders,
@@ -2215,7 +2258,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFolders",
-				_getFoldersParameterTypes51);
+				_getFoldersParameterTypes52);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, status,
@@ -2259,7 +2302,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFolders",
-				_getFoldersParameterTypes52);
+				_getFoldersParameterTypes53);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, start, end);
@@ -2305,7 +2348,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFolders",
-				_getFoldersParameterTypes53);
+				_getFoldersParameterTypes54);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, start, end,
@@ -2350,7 +2393,7 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcuts",
-				_getFoldersAndFileEntriesAndFileShortcutsParameterTypes54);
+				_getFoldersAndFileEntriesAndFileShortcutsParameterTypes55);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status, includeMountFolders,
@@ -2396,7 +2439,7 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcuts",
-				_getFoldersAndFileEntriesAndFileShortcutsParameterTypes55);
+				_getFoldersAndFileEntriesAndFileShortcutsParameterTypes56);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status, includeMountFolders,
@@ -2443,7 +2486,7 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcuts",
-				_getFoldersAndFileEntriesAndFileShortcutsParameterTypes56);
+				_getFoldersAndFileEntriesAndFileShortcutsParameterTypes57);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status, mimeTypes,
@@ -2491,7 +2534,7 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcuts",
-				_getFoldersAndFileEntriesAndFileShortcutsParameterTypes57);
+				_getFoldersAndFileEntriesAndFileShortcutsParameterTypes58);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status, mimeTypes,
@@ -2534,7 +2577,7 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcutsCount",
-				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes58);
+				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes59);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status, includeMountFolders);
@@ -2576,7 +2619,7 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcutsCount",
-				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes59);
+				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes60);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status, mimeTypes,
@@ -2620,7 +2663,7 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class,
 				"getFoldersAndFileEntriesAndFileShortcutsCount",
-				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes60);
+				_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes61);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, status, mimeTypes,
@@ -2661,7 +2704,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFoldersCount",
-				_getFoldersCountParameterTypes61);
+				_getFoldersCountParameterTypes62);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId);
@@ -2702,7 +2745,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFoldersCount",
-				_getFoldersCountParameterTypes62);
+				_getFoldersCountParameterTypes63);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, includeMountFolders);
@@ -2743,7 +2786,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFoldersCount",
-				_getFoldersCountParameterTypes63);
+				_getFoldersCountParameterTypes64);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, status,
@@ -2785,7 +2828,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getFoldersFileEntriesCount",
-				_getFoldersFileEntriesCountParameterTypes64);
+				_getFoldersFileEntriesCountParameterTypes65);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderIds, status);
@@ -2828,7 +2871,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getGroupFileEntries",
-				_getGroupFileEntriesParameterTypes65);
+				_getGroupFileEntriesParameterTypes66);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId, start, end);
@@ -2876,7 +2919,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getGroupFileEntries",
-				_getGroupFileEntriesParameterTypes66);
+				_getGroupFileEntriesParameterTypes67);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId, start, end, orderByComparator);
@@ -2921,7 +2964,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getGroupFileEntries",
-				_getGroupFileEntriesParameterTypes67);
+				_getGroupFileEntriesParameterTypes68);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId, rootFolderId, start, end);
@@ -2969,7 +3012,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getGroupFileEntries",
-				_getGroupFileEntriesParameterTypes68);
+				_getGroupFileEntriesParameterTypes69);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId, rootFolderId, start, end,
@@ -3019,7 +3062,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getGroupFileEntries",
-				_getGroupFileEntriesParameterTypes69);
+				_getGroupFileEntriesParameterTypes70);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId, rootFolderId, mimeTypes, status,
@@ -3062,7 +3105,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getGroupFileEntriesCount",
-				_getGroupFileEntriesCountParameterTypes70);
+				_getGroupFileEntriesCountParameterTypes71);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId);
@@ -3103,7 +3146,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getGroupFileEntriesCount",
-				_getGroupFileEntriesCountParameterTypes71);
+				_getGroupFileEntriesCountParameterTypes72);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId, rootFolderId);
@@ -3144,7 +3187,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getGroupFileEntriesCount",
-				_getGroupFileEntriesCountParameterTypes72);
+				_getGroupFileEntriesCountParameterTypes73);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId, rootFolderId, mimeTypes, status);
@@ -3186,7 +3229,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getMountFolders",
-				_getMountFoldersParameterTypes73);
+				_getMountFoldersParameterTypes74);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId);
@@ -3229,7 +3272,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getMountFolders",
-				_getMountFoldersParameterTypes74);
+				_getMountFoldersParameterTypes75);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, start, end);
@@ -3275,7 +3318,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getMountFolders",
-				_getMountFoldersParameterTypes75);
+				_getMountFoldersParameterTypes76);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, start, end,
@@ -3317,7 +3360,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getMountFoldersCount",
-				_getMountFoldersCountParameterTypes76);
+				_getMountFoldersCountParameterTypes77);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId);
@@ -3358,7 +3401,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getSubfolderIds",
-				_getSubfolderIdsParameterTypes77);
+				_getSubfolderIdsParameterTypes78);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderIds, folderId);
@@ -3394,7 +3437,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getSubfolderIds",
-				_getSubfolderIdsParameterTypes78);
+				_getSubfolderIdsParameterTypes79);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId);
@@ -3435,7 +3478,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getSubfolderIds",
-				_getSubfolderIdsParameterTypes79);
+				_getSubfolderIdsParameterTypes80);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, recurse);
@@ -3476,7 +3519,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "getTempFileNames",
-				_getTempFileNamesParameterTypes80);
+				_getTempFileNamesParameterTypes81);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderId, folderName);
@@ -3516,7 +3559,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "lockFolder",
-				_lockFolderParameterTypes81);
+				_lockFolderParameterTypes82);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId);
@@ -3557,7 +3600,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "lockFolder",
-				_lockFolderParameterTypes82);
+				_lockFolderParameterTypes83);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, owner, inheritable,
@@ -3600,7 +3643,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "moveFileEntry",
-				_moveFileEntryParameterTypes83);
+				_moveFileEntryParameterTypes84);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, newFolderId, serviceContext);
@@ -3642,7 +3685,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "moveFolder",
-				_moveFolderParameterTypes84);
+				_moveFolderParameterTypes85);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId, parentFolderId, serviceContext);
@@ -3683,7 +3726,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "refreshFileEntryLock",
-				_refreshFileEntryLockParameterTypes85);
+				_refreshFileEntryLockParameterTypes86);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, lockUuid, companyId, expirationTime);
@@ -3724,7 +3767,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "refreshFolderLock",
-				_refreshFolderLockParameterTypes86);
+				_refreshFolderLockParameterTypes87);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, lockUuid, companyId, expirationTime);
@@ -3765,7 +3808,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "revertFileEntry",
-				_revertFileEntryParameterTypes87);
+				_revertFileEntryParameterTypes88);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, version, serviceContext);
@@ -3801,7 +3844,7 @@ public class DLAppServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DLAppServiceUtil.class, "search", _searchParameterTypes88);
+				DLAppServiceUtil.class, "search", _searchParameterTypes89);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, creatorUserId, status, start, end);
@@ -3841,7 +3884,7 @@ public class DLAppServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DLAppServiceUtil.class, "search", _searchParameterTypes89);
+				DLAppServiceUtil.class, "search", _searchParameterTypes90);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, creatorUserId, folderId, mimeTypes,
@@ -3882,7 +3925,7 @@ public class DLAppServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DLAppServiceUtil.class, "search", _searchParameterTypes90);
+				DLAppServiceUtil.class, "search", _searchParameterTypes91);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, searchContext);
@@ -3923,7 +3966,7 @@ public class DLAppServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DLAppServiceUtil.class, "search", _searchParameterTypes91);
+				DLAppServiceUtil.class, "search", _searchParameterTypes92);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, searchContext, query);
@@ -3963,7 +4006,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "subscribeFileEntryType",
-				_subscribeFileEntryTypeParameterTypes92);
+				_subscribeFileEntryTypeParameterTypes93);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, fileEntryTypeId);
@@ -3999,7 +4042,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "subscribeFolder",
-				_subscribeFolderParameterTypes93);
+				_subscribeFolderParameterTypes94);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderId);
@@ -4036,7 +4079,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "unlockFolder",
-				_unlockFolderParameterTypes94);
+				_unlockFolderParameterTypes95);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, lockUuid);
@@ -4073,7 +4116,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "unlockFolder",
-				_unlockFolderParameterTypes95);
+				_unlockFolderParameterTypes96);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, parentFolderId, name, lockUuid);
@@ -4109,7 +4152,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "unsubscribeFileEntryType",
-				_unsubscribeFileEntryTypeParameterTypes96);
+				_unsubscribeFileEntryTypeParameterTypes97);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, fileEntryTypeId);
@@ -4145,7 +4188,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "unsubscribeFolder",
-				_unsubscribeFolderParameterTypes97);
+				_unsubscribeFolderParameterTypes98);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderId);
@@ -4188,7 +4231,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntry",
-				_updateFileEntryParameterTypes98);
+				_updateFileEntryParameterTypes99);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4238,7 +4281,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntry",
-				_updateFileEntryParameterTypes99);
+				_updateFileEntryParameterTypes100);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4288,7 +4331,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntry",
-				_updateFileEntryParameterTypes100);
+				_updateFileEntryParameterTypes101);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4338,7 +4381,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntryAndCheckIn",
-				_updateFileEntryAndCheckInParameterTypes101);
+				_updateFileEntryAndCheckInParameterTypes102);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4388,7 +4431,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntryAndCheckIn",
-				_updateFileEntryAndCheckInParameterTypes102);
+				_updateFileEntryAndCheckInParameterTypes103);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4434,7 +4477,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileShortcut",
-				_updateFileShortcutParameterTypes103);
+				_updateFileShortcutParameterTypes104);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileShortcutId, folderId, toFileEntryId,
@@ -4479,7 +4522,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFolder",
-				_updateFolderParameterTypes104);
+				_updateFolderParameterTypes105);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId, name, description, serviceContext);
@@ -4520,7 +4563,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "verifyFileEntryCheckOut",
-				_verifyFileEntryCheckOutParameterTypes105);
+				_verifyFileEntryCheckOutParameterTypes106);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, fileEntryId, lockUuid);
@@ -4561,7 +4604,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "verifyFileEntryLock",
-				_verifyFileEntryLockParameterTypes106);
+				_verifyFileEntryLockParameterTypes107);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, fileEntryId, lockUuid);
@@ -4602,7 +4645,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "verifyInheritableLock",
-				_verifyInheritableLockParameterTypes107);
+				_verifyInheritableLockParameterTypes108);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, lockUuid);
@@ -4625,49 +4668,6 @@ public class DLAppServiceHttp {
 			}
 
 			return ((Boolean)returnObj).booleanValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.portal.kernel.repository.model.FileEntry
-			fetchFileEntryByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long groupId,
-				String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				DLAppServiceUtil.class, "fetchFileEntryByExternalReferenceCode",
-				_fetchFileEntryByExternalReferenceCodeParameterTypes113);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, externalReferenceCode);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.portal.kernel.repository.model.FileEntry)
-				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -4772,246 +4772,250 @@ public class DLAppServiceHttp {
 		new Class[] {long.class, long.class, String.class};
 	private static final Class<?>[] _deleteTempFileEntryParameterTypes23 =
 		new Class[] {long.class, long.class, String.class, String.class};
-	private static final Class<?>[] _getFileEntriesParameterTypes24 =
-		new Class[] {long.class, long.class};
+	private static final Class<?>[]
+		_fetchFileEntryByExternalReferenceCodeParameterTypes24 = new Class[] {
+			long.class, String.class
+		};
 	private static final Class<?>[] _getFileEntriesParameterTypes25 =
-		new Class[] {long.class, long.class, int.class, int.class};
+		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getFileEntriesParameterTypes26 =
+		new Class[] {long.class, long.class, int.class, int.class};
+	private static final Class<?>[] _getFileEntriesParameterTypes27 =
 		new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getFileEntriesParameterTypes27 =
-		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _getFileEntriesParameterTypes28 =
-		new Class[] {long.class, long.class, long.class, int.class, int.class};
+		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _getFileEntriesParameterTypes29 =
+		new Class[] {long.class, long.class, long.class, int.class, int.class};
+	private static final Class<?>[] _getFileEntriesParameterTypes30 =
 		new Class[] {
 			long.class, long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getFileEntriesParameterTypes30 =
-		new Class[] {long.class, long.class, String[].class};
 	private static final Class<?>[] _getFileEntriesParameterTypes31 =
+		new Class[] {long.class, long.class, String[].class};
+	private static final Class<?>[] _getFileEntriesParameterTypes32 =
 		new Class[] {
 			long.class, long.class, String[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getFileEntriesAndFileShortcutsParameterTypes32 = new Class[] {
+		_getFileEntriesAndFileShortcutsParameterTypes33 = new Class[] {
 			long.class, long.class, int.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getFileEntriesAndFileShortcutsCountParameterTypes33 = new Class[] {
+		_getFileEntriesAndFileShortcutsCountParameterTypes34 = new Class[] {
 			long.class, long.class, int.class
 		};
 	private static final Class<?>[]
-		_getFileEntriesAndFileShortcutsCountParameterTypes34 = new Class[] {
+		_getFileEntriesAndFileShortcutsCountParameterTypes35 = new Class[] {
 			long.class, long.class, int.class, String[].class
 		};
-	private static final Class<?>[] _getFileEntriesCountParameterTypes35 =
-		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getFileEntriesCountParameterTypes36 =
-		new Class[] {long.class, long.class, long.class};
+		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getFileEntriesCountParameterTypes37 =
+		new Class[] {long.class, long.class, long.class};
+	private static final Class<?>[] _getFileEntriesCountParameterTypes38 =
 		new Class[] {long.class, long.class, String[].class};
-	private static final Class<?>[] _getFileEntryParameterTypes38 =
-		new Class[] {long.class};
 	private static final Class<?>[] _getFileEntryParameterTypes39 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getFileEntryParameterTypes40 =
 		new Class[] {long.class, long.class, String.class};
 	private static final Class<?>[]
-		_getFileEntryByExternalReferenceCodeParameterTypes40 = new Class[] {
+		_getFileEntryByExternalReferenceCodeParameterTypes41 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _getFileEntryByFileNameParameterTypes41 =
+	private static final Class<?>[] _getFileEntryByFileNameParameterTypes42 =
 		new Class[] {long.class, long.class, String.class};
 	private static final Class<?>[]
-		_getFileEntryByUuidAndGroupIdParameterTypes42 = new Class[] {
+		_getFileEntryByUuidAndGroupIdParameterTypes43 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _getFileShortcutParameterTypes43 =
+	private static final Class<?>[] _getFileShortcutParameterTypes44 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getFileVersionParameterTypes44 =
+	private static final Class<?>[] _getFileVersionParameterTypes45 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getFolderParameterTypes45 = new Class[] {
+	private static final Class<?>[] _getFolderParameterTypes46 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getFolderParameterTypes46 = new Class[] {
+	private static final Class<?>[] _getFolderParameterTypes47 = new Class[] {
 		long.class, long.class, String.class
 	};
-	private static final Class<?>[] _getFoldersParameterTypes47 = new Class[] {
+	private static final Class<?>[] _getFoldersParameterTypes48 = new Class[] {
 		long.class, long.class
 	};
-	private static final Class<?>[] _getFoldersParameterTypes48 = new Class[] {
+	private static final Class<?>[] _getFoldersParameterTypes49 = new Class[] {
 		long.class, long.class, boolean.class
 	};
-	private static final Class<?>[] _getFoldersParameterTypes49 = new Class[] {
+	private static final Class<?>[] _getFoldersParameterTypes50 = new Class[] {
 		long.class, long.class, boolean.class, int.class, int.class
 	};
-	private static final Class<?>[] _getFoldersParameterTypes50 = new Class[] {
+	private static final Class<?>[] _getFoldersParameterTypes51 = new Class[] {
 		long.class, long.class, boolean.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _getFoldersParameterTypes51 = new Class[] {
+	private static final Class<?>[] _getFoldersParameterTypes52 = new Class[] {
 		long.class, long.class, int.class, boolean.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _getFoldersParameterTypes52 = new Class[] {
+	private static final Class<?>[] _getFoldersParameterTypes53 = new Class[] {
 		long.class, long.class, int.class, int.class
 	};
-	private static final Class<?>[] _getFoldersParameterTypes53 = new Class[] {
+	private static final Class<?>[] _getFoldersParameterTypes54 = new Class[] {
 		long.class, long.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
 	private static final Class<?>[]
-		_getFoldersAndFileEntriesAndFileShortcutsParameterTypes54 =
+		_getFoldersAndFileEntriesAndFileShortcutsParameterTypes55 =
 			new Class[] {
 				long.class, long.class, int.class, boolean.class, int.class,
 				int.class
 			};
 	private static final Class<?>[]
-		_getFoldersAndFileEntriesAndFileShortcutsParameterTypes55 =
+		_getFoldersAndFileEntriesAndFileShortcutsParameterTypes56 =
 			new Class[] {
 				long.class, long.class, int.class, boolean.class, int.class,
 				int.class,
 				com.liferay.portal.kernel.util.OrderByComparator.class
 			};
 	private static final Class<?>[]
-		_getFoldersAndFileEntriesAndFileShortcutsParameterTypes56 =
+		_getFoldersAndFileEntriesAndFileShortcutsParameterTypes57 =
 			new Class[] {
 				long.class, long.class, int.class, String[].class,
 				boolean.class, boolean.class, int.class, int.class,
 				com.liferay.portal.kernel.util.OrderByComparator.class
 			};
 	private static final Class<?>[]
-		_getFoldersAndFileEntriesAndFileShortcutsParameterTypes57 =
+		_getFoldersAndFileEntriesAndFileShortcutsParameterTypes58 =
 			new Class[] {
 				long.class, long.class, int.class, String[].class,
 				boolean.class, int.class, int.class,
 				com.liferay.portal.kernel.util.OrderByComparator.class
 			};
 	private static final Class<?>[]
-		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes58 =
+		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes59 =
 			new Class[] {long.class, long.class, int.class, boolean.class};
 	private static final Class<?>[]
-		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes59 =
+		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes60 =
 			new Class[] {
 				long.class, long.class, int.class, String[].class, boolean.class
 			};
 	private static final Class<?>[]
-		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes60 =
+		_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes61 =
 			new Class[] {
 				long.class, long.class, int.class, String[].class,
 				boolean.class, boolean.class
 			};
-	private static final Class<?>[] _getFoldersCountParameterTypes61 =
-		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getFoldersCountParameterTypes62 =
-		new Class[] {long.class, long.class, boolean.class};
+		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getFoldersCountParameterTypes63 =
+		new Class[] {long.class, long.class, boolean.class};
+	private static final Class<?>[] _getFoldersCountParameterTypes64 =
 		new Class[] {long.class, long.class, int.class, boolean.class};
 	private static final Class<?>[]
-		_getFoldersFileEntriesCountParameterTypes64 = new Class[] {
+		_getFoldersFileEntriesCountParameterTypes65 = new Class[] {
 			long.class, java.util.List.class, int.class
 		};
-	private static final Class<?>[] _getGroupFileEntriesParameterTypes65 =
-		new Class[] {long.class, long.class, int.class, int.class};
 	private static final Class<?>[] _getGroupFileEntriesParameterTypes66 =
+		new Class[] {long.class, long.class, int.class, int.class};
+	private static final Class<?>[] _getGroupFileEntriesParameterTypes67 =
 		new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getGroupFileEntriesParameterTypes67 =
-		new Class[] {long.class, long.class, long.class, int.class, int.class};
 	private static final Class<?>[] _getGroupFileEntriesParameterTypes68 =
+		new Class[] {long.class, long.class, long.class, int.class, int.class};
+	private static final Class<?>[] _getGroupFileEntriesParameterTypes69 =
 		new Class[] {
 			long.class, long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getGroupFileEntriesParameterTypes69 =
+	private static final Class<?>[] _getGroupFileEntriesParameterTypes70 =
 		new Class[] {
 			long.class, long.class, long.class, String[].class, int.class,
 			int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getGroupFileEntriesCountParameterTypes70 =
-		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getGroupFileEntriesCountParameterTypes71 =
-		new Class[] {long.class, long.class, long.class};
+		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getGroupFileEntriesCountParameterTypes72 =
+		new Class[] {long.class, long.class, long.class};
+	private static final Class<?>[] _getGroupFileEntriesCountParameterTypes73 =
 		new Class[] {
 			long.class, long.class, long.class, String[].class, int.class
 		};
-	private static final Class<?>[] _getMountFoldersParameterTypes73 =
-		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getMountFoldersParameterTypes74 =
-		new Class[] {long.class, long.class, int.class, int.class};
+		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getMountFoldersParameterTypes75 =
+		new Class[] {long.class, long.class, int.class, int.class};
+	private static final Class<?>[] _getMountFoldersParameterTypes76 =
 		new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getMountFoldersCountParameterTypes76 =
+	private static final Class<?>[] _getMountFoldersCountParameterTypes77 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _getSubfolderIdsParameterTypes77 =
-		new Class[] {long.class, java.util.List.class, long.class};
 	private static final Class<?>[] _getSubfolderIdsParameterTypes78 =
-		new Class[] {long.class, long.class};
+		new Class[] {long.class, java.util.List.class, long.class};
 	private static final Class<?>[] _getSubfolderIdsParameterTypes79 =
+		new Class[] {long.class, long.class};
+	private static final Class<?>[] _getSubfolderIdsParameterTypes80 =
 		new Class[] {long.class, long.class, boolean.class};
-	private static final Class<?>[] _getTempFileNamesParameterTypes80 =
+	private static final Class<?>[] _getTempFileNamesParameterTypes81 =
 		new Class[] {long.class, long.class, String.class};
-	private static final Class<?>[] _lockFolderParameterTypes81 = new Class[] {
+	private static final Class<?>[] _lockFolderParameterTypes82 = new Class[] {
 		long.class, long.class
 	};
-	private static final Class<?>[] _lockFolderParameterTypes82 = new Class[] {
+	private static final Class<?>[] _lockFolderParameterTypes83 = new Class[] {
 		long.class, long.class, String.class, boolean.class, long.class
 	};
-	private static final Class<?>[] _moveFileEntryParameterTypes83 =
+	private static final Class<?>[] _moveFileEntryParameterTypes84 =
 		new Class[] {
 			long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _moveFolderParameterTypes84 = new Class[] {
+	private static final Class<?>[] _moveFolderParameterTypes85 = new Class[] {
 		long.class, long.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _refreshFileEntryLockParameterTypes85 =
+	private static final Class<?>[] _refreshFileEntryLockParameterTypes86 =
 		new Class[] {String.class, long.class, long.class};
-	private static final Class<?>[] _refreshFolderLockParameterTypes86 =
+	private static final Class<?>[] _refreshFolderLockParameterTypes87 =
 		new Class[] {String.class, long.class, long.class};
-	private static final Class<?>[] _revertFileEntryParameterTypes87 =
+	private static final Class<?>[] _revertFileEntryParameterTypes88 =
 		new Class[] {
 			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _searchParameterTypes88 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes89 = new Class[] {
 		long.class, long.class, int.class, int.class, int.class
 	};
-	private static final Class<?>[] _searchParameterTypes89 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes90 = new Class[] {
 		long.class, long.class, long.class, String[].class, int.class,
 		int.class, int.class
 	};
-	private static final Class<?>[] _searchParameterTypes90 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes91 = new Class[] {
 		long.class, com.liferay.portal.kernel.search.SearchContext.class
 	};
-	private static final Class<?>[] _searchParameterTypes91 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes92 = new Class[] {
 		long.class, com.liferay.portal.kernel.search.SearchContext.class,
 		com.liferay.portal.kernel.search.Query.class
 	};
-	private static final Class<?>[] _subscribeFileEntryTypeParameterTypes92 =
+	private static final Class<?>[] _subscribeFileEntryTypeParameterTypes93 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _subscribeFolderParameterTypes93 =
+	private static final Class<?>[] _subscribeFolderParameterTypes94 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _unlockFolderParameterTypes94 =
-		new Class[] {long.class, long.class, String.class};
 	private static final Class<?>[] _unlockFolderParameterTypes95 =
+		new Class[] {long.class, long.class, String.class};
+	private static final Class<?>[] _unlockFolderParameterTypes96 =
 		new Class[] {long.class, long.class, String.class, String.class};
-	private static final Class<?>[] _unsubscribeFileEntryTypeParameterTypes96 =
+	private static final Class<?>[] _unsubscribeFileEntryTypeParameterTypes97 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _unsubscribeFolderParameterTypes97 =
+	private static final Class<?>[] _unsubscribeFolderParameterTypes98 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateFileEntryParameterTypes98 =
+	private static final Class<?>[] _updateFileEntryParameterTypes99 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class,
@@ -5019,31 +5023,22 @@ public class DLAppServiceHttp {
 				class,
 			byte[].class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateFileEntryParameterTypes99 =
-		new Class[] {
-			long.class, String.class, String.class, String.class, String.class,
-			String.class,
-			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
-				class,
-			java.io.File.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
 	private static final Class<?>[] _updateFileEntryParameterTypes100 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
-			java.io.InputStream.class, long.class,
+			java.io.File.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[]
-		_updateFileEntryAndCheckInParameterTypes101 = new Class[] {
+	private static final Class<?>[] _updateFileEntryParameterTypes101 =
+		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
-			java.io.File.class,
+			java.io.InputStream.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -5052,28 +5047,33 @@ public class DLAppServiceHttp {
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
+			java.io.File.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[]
+		_updateFileEntryAndCheckInParameterTypes103 = new Class[] {
+			long.class, String.class, String.class, String.class, String.class,
+			String.class,
+			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
+				class,
 			java.io.InputStream.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateFileShortcutParameterTypes103 =
+	private static final Class<?>[] _updateFileShortcutParameterTypes104 =
 		new Class[] {
 			long.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateFolderParameterTypes104 =
+	private static final Class<?>[] _updateFolderParameterTypes105 =
 		new Class[] {
 			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes105 =
+	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes106 =
 		new Class[] {long.class, long.class, String.class};
-	private static final Class<?>[] _verifyFileEntryLockParameterTypes106 =
+	private static final Class<?>[] _verifyFileEntryLockParameterTypes107 =
 		new Class[] {long.class, long.class, String.class};
-	private static final Class<?>[] _verifyInheritableLockParameterTypes107 =
+	private static final Class<?>[] _verifyInheritableLockParameterTypes108 =
 		new Class[] {long.class, long.class, String.class};
-	private static final Class<?>[]
-		_fetchFileEntryByExternalReferenceCodeParameterTypes113 = new Class[] {
-			long.class, String.class
-		};
 
 }

@@ -331,7 +331,8 @@ public class LiferayRepository
 
 	@Override
 	public FileEntry fetchFileEntryByExternalReferenceCode(
-		String externalReferenceCode) throws PortalException {
+			String externalReferenceCode)
+		throws PortalException {
 
 		DLFileEntry dlFileEntry =
 			dlFileEntryService.fetchFileEntryByExternalReferenceCode(

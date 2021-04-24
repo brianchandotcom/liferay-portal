@@ -61,7 +61,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Alexander Chow
@@ -273,7 +272,8 @@ public class LiferayLocalRepository
 
 	@Override
 	public FileEntry fetchFileEntryByExternalReferenceCode(
-		String externalReferenceCode) throws PortalException {
+			String externalReferenceCode)
+		throws PortalException {
 
 		DLFileEntry dlFileEntry =
 			dlFileEntryService.fetchFileEntryByExternalReferenceCode(

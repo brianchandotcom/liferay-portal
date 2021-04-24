@@ -1000,6 +1000,26 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the file entry with the external reference code.
+	 *
+	 * @param groupId the primary key of the file entry's group
+	 * @param externalReferenceCode the file entry's external reference code
+	 * @return the file entry with the external reference code or null if it not exists
+	 *
+	 * @review
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FileEntry fetchFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		Repository repository = getRepository(groupId);
+
+		return repository.fetchFileEntryByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	/**
 	 * Returns all the file entries in the folder.
 	 *
 	 * @param  repositoryId the primary key of the file entry's repository
@@ -3357,26 +3377,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			throw portalException;
 		}
-	}
-
-	/**
-	 * Returns the file entry with the external reference code.
-	 *
-	 * @param groupId the primary key of the file entry's group
-	 * @param externalReferenceCode the file entry's external reference code
-	 * @return the file entry with the external reference code or null if it not exists
-	 *
-	 * @review
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FileEntry fetchFileEntryByExternalReferenceCode(
-		long groupId, String externalReferenceCode)
-		throws PortalException {
-
-		Repository repository = getRepository(groupId);
-
-		return repository.fetchFileEntryByExternalReferenceCode(
-			externalReferenceCode);
 	}
 
 	protected FileEntry fetchFileEntryByUuidAndRepositoryId(

@@ -144,6 +144,13 @@ public class LayoutSetPrototypeServiceImpl
 	}
 
 	@Override
+	public List<LayoutSetPrototype> getLayoutSetPrototypes(long companyId)
+		throws PortalException {
+
+		return layoutSetPrototypePersistence.findByCompanyId(companyId);
+	}
+
+	@Override
 	public List<LayoutSetPrototype> search(
 			long companyId, Boolean active,
 			OrderByComparator<LayoutSetPrototype> orderByComparator)

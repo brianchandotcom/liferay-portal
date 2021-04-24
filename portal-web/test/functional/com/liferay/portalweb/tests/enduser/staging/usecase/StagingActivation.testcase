@@ -30,9 +30,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging Test Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name-staging",
@@ -90,6 +88,7 @@ definition {
 	}
 
 	@priority = "4"
+	@uitest
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";
 

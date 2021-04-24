@@ -1252,8 +1252,8 @@ definition {
 			webContentTitle = "Web Content Title 2");
 	}
 
-	@description = "UI test for activating local staging"
 	@priority = "4"
+	@uitest
 	test StagingPublishChildSiteWithReference {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 

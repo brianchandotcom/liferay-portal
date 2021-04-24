@@ -47,9 +47,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 	}
 
 	@description = "This is a use case for LPS-88197."
@@ -73,9 +71,7 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		Staging.openStagingAdmin(siteURLKey = "global");
-
-		Staging.activateStagingCP(siteName = "Global");
+		JSONStaging.enableLocalStaging(groupName = "Global");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
@@ -105,11 +101,10 @@ definition {
 			defaultSiteLanguage = "English (United States)",
 			displaySettings = "Display Settings");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 	}
 
 	@description = "This is a use case for LPS-83147."
@@ -146,9 +141,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		AssertConsoleTextNotPresent(value1 = "DataIntegrityViolationException");
 
@@ -214,9 +207,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Content Page Name",
@@ -233,6 +224,7 @@ definition {
 
 	@description = "This is a use case for LPS-90127."
 	@priority = "3"
+	@uitest
 	test ConfigureDDMStructureViaAPWhenNotStagedAssets {
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -281,6 +273,7 @@ definition {
 
 	@description = "This is a use case for LPS-92039 and LPS-92636."
 	@priority = "3"
+	@uitest
 	test CreateWidgetTemplateWhenNotStagedADT {
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -337,9 +330,7 @@ definition {
 
 		Site.disableRecycleBinCP();
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -359,11 +350,10 @@ definition {
 	@description = "This is a use case for LPS-89546"
 	@priority = "3"
 	test EditPageCreatedBasedOnPageTemplateWithPageVersioning {
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name-staging");
 
@@ -399,6 +389,7 @@ definition {
 
 	@description = "This is a use case for LPS-100807."
 	@priority = "4"
+	@uitest
 	test EditWikiPageInLiveSiteWhenWikiNotStaged {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -507,9 +498,7 @@ definition {
 
 		JSONGroup.deleteGroupByName(groupName = "Site Name");
 
-		Staging.openStagingAdmin(siteURLKey = "site-b-name");
-
-		Staging.activateStagingCP(siteName = "Site B Name");
+		JSONStaging.enableLocalStaging(groupName = "Site B Name");
 	}
 
 	@priority = "5"
@@ -527,9 +516,7 @@ definition {
 
 	@priority = "3"
 	test ModifyInitalPageVariationSetup {
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -537,6 +524,7 @@ definition {
 	}
 
 	@priority = "5"
+	@uitest
 	test NotStagedAssets {
 		property portal.acceptance = "true";
 
@@ -573,9 +561,7 @@ definition {
 			layoutName = "Child Page",
 			parentLayoutName = "Staging Test Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -715,9 +701,7 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Search Results");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
@@ -791,9 +775,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
@@ -825,11 +807,10 @@ definition {
 	@description = "This is a use case for LPS-90924."
 	@priority = "3"
 	test PublishPageRevisionWithPortletSettingsChanges {
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -969,9 +950,7 @@ definition {
 
 		WebContent.addTagPGViaWCD(tagName = "tag name");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -1039,11 +1018,10 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging Test Page 3");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -1236,9 +1214,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Private Staging Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Staging.addPublishTemplate(
 			publishTemplateDescription = "Publish Template Description",
@@ -1251,6 +1227,7 @@ definition {
 
 	@description = "This is a use case for LPS-89981 and LPS-88298."
 	@priority = "5"
+	@uitest
 	test PublishVocabularyDeletionViaRemoteStagingOnGlobalSite {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -1357,9 +1334,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -1438,9 +1413,7 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -1504,9 +1477,7 @@ definition {
 
 	@priority = "4"
 	test RemoveTagsFromPublishBlogAndDM {
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -1613,9 +1584,7 @@ definition {
 	@description = "This test covers LPS-92578. It ensures that DM succeeds to publish to live when file exists in the recycle bin."
 	@priority = "4"
 	test SinglePublicationAfterDeleteDocument {
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1656,11 +1625,10 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -1689,11 +1657,10 @@ definition {
 
 	@priority = "4"
 	test StagingCopyFromLive {
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1775,11 +1742,10 @@ definition {
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -1879,11 +1845,10 @@ definition {
 			DMDocument.viewPG(dmDocumentTitle = "${dmDocumentTitle}");
 		}
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -1915,11 +1880,10 @@ definition {
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -2069,9 +2033,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page 3");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page 1",
@@ -2227,9 +2189,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -2259,9 +2219,7 @@ definition {
 	test SubscribeWebContentWithStaging {
 		JSONGroup.addGroup(groupName = "Test Site");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		JSONRole.addRegularRole(
 			roleKey = "Web Content Subscriber Role",
@@ -2369,9 +2327,7 @@ definition {
 			webContentContent = "Web Content Content2",
 			webContentTitle = "Web Content Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 	}
 
 	@priority = "4"
@@ -2416,11 +2372,10 @@ definition {
 			siteRoleName = "Site Administrator",
 			userScreenName = "usersn");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -2479,9 +2434,7 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -2543,9 +2496,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -2608,9 +2559,7 @@ definition {
 			pageName2 = "Test Page 1",
 			pageName3 = "Test Page 2");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
@@ -2639,11 +2588,10 @@ definition {
 			layoutName = "Child Page C",
 			parentLayoutName = "Staging Test Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
@@ -2776,9 +2724,7 @@ definition {
 			layoutName = "Staging Test Page",
 			widgetName = "Asset Publisher");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -2869,11 +2815,10 @@ definition {
 	test ViewPublishedContentAfterStagingUndo {
 		property portal.release = "false";
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -2922,9 +2867,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Staging#ViewPublishedContentWithSpecialCharsInDocumentTitle";
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
@@ -3020,9 +2963,7 @@ definition {
 	@description = "This is a use case for LPS-87280."
 	@priority = "4"
 	test ViewPublishedWCWithApostropheInImageField {
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -3097,9 +3038,7 @@ definition {
 			layoutName = "Staging Test Page",
 			widgetName = "Asset Publisher");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -3197,11 +3136,10 @@ definition {
 	@description = "This is a use case for LPS-98019."
 	@priority = "3"
 	test ViewSearchPageKeywordsParameterWithStaging {
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -3247,9 +3185,7 @@ definition {
 			siteName = "Global",
 			webContentTitle = "Document_2.jpg");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
@@ -3276,9 +3212,7 @@ definition {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "Staging#ViewSingleAssetPublication";
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -3364,11 +3298,10 @@ definition {
 	@description = "This is a use case for LPS-98894."
 	@priority = "4"
 	test ViewSummaryScreenWithDraftPage {
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 

@@ -82,11 +82,10 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Staging.openStagingAdmin(siteURLKey = "staging-organization-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Staging Organization Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Staging Organization Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",

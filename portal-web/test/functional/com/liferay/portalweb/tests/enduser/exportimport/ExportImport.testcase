@@ -255,9 +255,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -1273,6 +1271,7 @@ definition {
 
 	@description = "This is a use case for LPS-84204."
 	@priority = "4"
+	@uitest
 	test ExportImportWCDReferenceWhenNotStagedWebContent {
 		JSONGroup.addGroup(groupName = "Site Name A");
 
@@ -1742,9 +1741,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Page B");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -1909,9 +1906,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name B");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-b");
-
-		Staging.activateStagingCP(siteName = "Site Name B");
+		JSONStaging.enableLocalStaging(groupName = "Site Name B");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",

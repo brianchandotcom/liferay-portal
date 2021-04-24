@@ -16,11 +16,10 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging Test Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 	}

@@ -147,6 +147,16 @@ public class StructuredContentResourceTest
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
+	@Override
+	protected StructuredContent
+			testPostSiteStructuredContentDraft_addStructuredContent(
+				StructuredContent structuredContent)
+		throws Exception {
+
+		return _postSiteStructuredContent(
+			testGroup.getGroupId(), structuredContent);
+	}
+
 	private DDMStructure _addDDMStructure(Group group, String fileName)
 		throws Exception {
 
@@ -218,7 +228,10 @@ public class StructuredContentResourceTest
 			{
 				setContentStructureId(
 					structuredContent.getContentStructureId());
+				setDateCreated(structuredContent.getDateCreated());
+				setDateModified(structuredContent.getDateModified());
 				setId(structuredContent.getId());
+				setSiteId(structuredContent.getSiteId());
 				setTitle(structuredContent.getTitle());
 			}
 		};

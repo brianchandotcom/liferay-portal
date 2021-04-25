@@ -30,4 +30,7 @@ public interface ClickToChatWebKeys {
 	public static final String CLICK_TO_CHAT_GUEST_USERS_ALLOWED =
 		"CLICK_TO_CHAT_GUEST_USERS_ALLOWED";
 
+	public static final String CLICK_TO_CHAT_SITE_SETTINGS_STRATEGY =
+		"CLICK_TO_CHAT_SITE_SETTINGS_STRATEGY";
+
 }

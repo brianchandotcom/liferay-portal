@@ -11587,6 +11587,7 @@ paths:
             # @review
             description:
                 Deletes the site's wiki node by external reference code.
+            operationId: deleteSiteWikiNodeByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -11611,6 +11612,7 @@ paths:
             # @review
             description:
                 Retrieves the site's wiki node by external reference code.
+            operationId: getSiteWikiNodeByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -11639,6 +11641,7 @@ paths:
             # @review
             description:
                 Updates the site's wiki node with the given external reference code, or creates it if it not exists.
+            operationId: putSiteWikiNodeByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode

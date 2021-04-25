@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Headless Delivery API
 Bundle-SymbolicName: com.liferay.headless.delivery.api
+<<<<<<< HEAD
 Bundle-Version: 30.0.0
+=======
+Bundle-Version: 30.0.0
+>>>>>>> LPS-130838 buildREST
 Export-Package:\
 	com.liferay.headless.delivery.dto.v1_0,\
 	com.liferay.headless.delivery.resource.v1_0,\

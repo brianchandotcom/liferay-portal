@@ -160,43 +160,6 @@ public class WikiNodeResourceImpl
 		return com.liferay.wiki.model.WikiNode.class.getName();
 	}
 
-	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
-		throws Exception {
-
-		return new WikiNode() {
-			{
-				actions = HashMapBuilder.put(
-					"delete", addAction("DELETE", wikiNode, "deleteWikiNode")
-				).put(
-					"get", addAction("VIEW", wikiNode, "getWikiNode")
-				).put(
-					"replace", addAction("UPDATE", wikiNode, "putWikiNode")
-				).put(
-					"subscribe",
-					addAction("SUBSCRIBE", wikiNode, "putWikiNodeSubscribe")
-				).put(
-					"unsubscribe",
-					addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe")
-				).build();
-				creator = CreatorUtil.toCreator(
-					_portal, Optional.of(contextUriInfo),
-					_userLocalService.fetchUser(wikiNode.getUserId()));
-				dateCreated = wikiNode.getCreateDate();
-				dateModified = wikiNode.getModifiedDate();
-				description = wikiNode.getDescription();
-				id = wikiNode.getNodeId();
-				name = wikiNode.getName();
-				numberOfWikiPages = _wikiPageService.getPagesCount(
-					wikiNode.getGroupId(), wikiNode.getNodeId(), true);
-				siteId = wikiNode.getGroupId();
-				subscribed = _subscriptionLocalService.isSubscribed(
-					wikiNode.getCompanyId(), contextUser.getUserId(),
-					com.liferay.wiki.model.WikiNode.class.getName(),
-					wikiNode.getNodeId());
-			}
-		};
-	}
-
 	private static final EntityModel _entityModel = new WikiNodeEntityModel();
 
 	@Reference

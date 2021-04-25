@@ -123,6 +123,20 @@ public class WikiNodeSerDes {
 			sb.append("\"");
 		}
 
+		if (wikiNode.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(wikiNode.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (wikiNode.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -251,6 +265,15 @@ public class WikiNodeSerDes {
 			map.put("description", String.valueOf(wikiNode.getDescription()));
 		}
 
+		if (wikiNode.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(wikiNode.getExternalReferenceCode()));
+		}
+
 		if (wikiNode.getId() == null) {
 			map.put("id", null);
 		}
@@ -343,6 +366,14 @@ public class WikiNodeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					wikiNode.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					wikiNode.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

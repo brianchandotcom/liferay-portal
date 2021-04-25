@@ -64,6 +64,18 @@ public interface WikiNodeResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSiteWikiNodeByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception;
+
+	public WikiNode getSiteWikiNodeByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception;
+
+	public WikiNode putSiteWikiNodeByExternalReferenceCode(
+			String externalReferenceCode, Long siteId, WikiNode wikiNode)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteWikiNodePermissionsPage(Long siteId, String roleNames)
 		throws Exception;

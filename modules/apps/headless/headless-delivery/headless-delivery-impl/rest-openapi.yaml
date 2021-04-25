@@ -11596,6 +11596,7 @@ paths:
             # @review
             description:
                 Deletes the site's wiki node by external reference code.
+            operationId: deleteSiteWikiNodeByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -11620,6 +11621,7 @@ paths:
             # @review
             description:
                 Retrieves the site's wiki node by external reference code.
+            operationId: getSiteWikiNodeByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -11648,6 +11650,7 @@ paths:
             # @review
             description:
                 Updates the site's wiki node with the given external reference code, or creates it if it not exists.
+            operationId: putSiteWikiNodeByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -11726,6 +11729,7 @@ paths:
             # @review
             description:
                 Deletes the wiki page by external reference code.
+            operationId: deleteSiteWikiPageByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -11750,6 +11754,7 @@ paths:
             # @review
             description:
                 Retrieves the wiki page by external reference code
+            operationId: getSiteWikiPageByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -11768,6 +11773,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/WikiPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WikiPage"
                     description:
                         ""
             tags: [ "WikiPage" ]
@@ -11775,6 +11783,7 @@ paths:
             # @review
             description:
                 Updates the wiki page with the given external reference code, or creates it if it not exists.
+            operationId: putSiteWikiPageByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -11792,12 +11801,18 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/WikiPage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WikiPage"
                 description:
                     ""
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/WikiPage"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/WikiPage"
                     description:

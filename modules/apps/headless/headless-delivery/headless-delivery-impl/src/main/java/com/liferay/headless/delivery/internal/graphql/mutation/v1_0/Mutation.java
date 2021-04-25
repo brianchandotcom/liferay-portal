@@ -3451,6 +3451,41 @@ public class Mutation {
 				Long.valueOf(siteKey), callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Deletes the site's wiki node by external reference code."
+	)
+	public boolean deleteSiteWikiNodeByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource ->
+				wikiNodeResource.deleteSiteWikiNodeByExternalReferenceCode(
+					externalReferenceCode, Long.valueOf(siteKey)));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the site's wiki node with the given external reference code, or creates it if it not exists."
+	)
+	public WikiNode updateSiteWikiNodeByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("wikiNode") WikiNode wikiNode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource ->
+				wikiNodeResource.putSiteWikiNodeByExternalReferenceCode(
+					externalReferenceCode, Long.valueOf(siteKey), wikiNode));
+	}
+
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateSiteWikiNodePermission(
@@ -3573,6 +3608,41 @@ public class Mutation {
 				wikiNodeId));
 
 		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the wiki page by external reference code."
+	)
+	public boolean deleteSiteWikiPageByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource ->
+				wikiPageResource.deleteSiteWikiPageByExternalReferenceCode(
+					externalReferenceCode, Long.valueOf(siteKey)));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the wiki page with the given external reference code, or creates it if it not exists."
+	)
+	public WikiPage updateSiteWikiPageByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("wikiPage") WikiPage wikiPage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource ->
+				wikiPageResource.putSiteWikiPageByExternalReferenceCode(
+					externalReferenceCode, Long.valueOf(siteKey), wikiPage));
 	}
 
 	@GraphQLField(description = "Creates a new wiki page")

@@ -339,6 +339,34 @@ public class WikiPage implements Serializable {
 	@NotEmpty
 	protected String encodingFormat;
 
+	@Schema(description = "The wiki page's external reference code.")
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The wiki page's external reference code.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
 	@Schema(description = "The wiki page's main title.")
 	public String getHeadline() {
 		return headline;
@@ -712,6 +740,38 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@Schema(
+		description = "The ID of the wiki node to which the wiki page belongs."
+	)
+	public Long getWikiNodeId() {
+		return wikiNodeId;
+	}
+
+	public void setWikiNodeId(Long wikiNodeId) {
+		this.wikiNodeId = wikiNodeId;
+	}
+
+	@JsonIgnore
+	public void setWikiNodeId(
+		UnsafeSupplier<Long, Exception> wikiNodeIdUnsafeSupplier) {
+
+		try {
+			wikiNodeId = wikiNodeIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The ID of the wiki node to which the wiki page belongs."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long wikiNodeId;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -858,6 +918,20 @@ public class WikiPage implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(encodingFormat));
+
+			sb.append("\"");
+		}
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
 		}
@@ -1032,6 +1106,16 @@ public class WikiPage implements Serializable {
 			sb.append(viewableBy);
 
 			sb.append("\"");
+		}
+
+		if (wikiNodeId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"wikiNodeId\": ");
+
+			sb.append(wikiNodeId);
 		}
 
 		sb.append("}");

@@ -51,6 +51,18 @@ public interface WikiPageResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public void deleteSiteWikiPageByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception;
+
+	public WikiPage getSiteWikiPageByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception;
+
+	public WikiPage putSiteWikiPageByExternalReferenceCode(
+			String externalReferenceCode, Long siteId, WikiPage wikiPage)
+		throws Exception;
+
 	public Page<WikiPage> getWikiNodeWikiPagesPage(
 			Long wikiNodeId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,

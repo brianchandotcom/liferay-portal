@@ -193,6 +193,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 		WikiNode wikiNode = randomWikiNode();
 
 		wikiNode.setDescription(regex);
+		wikiNode.setExternalReferenceCode(regex);
 		wikiNode.setName(regex);
 
 		String json = WikiNodeSerDes.toJSON(wikiNode);
@@ -202,6 +203,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 		wikiNode = WikiNodeSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, wikiNode.getDescription());
+		Assert.assertEquals(regex, wikiNode.getExternalReferenceCode());
 		Assert.assertEquals(regex, wikiNode.getName());
 	}
 
@@ -546,6 +548,151 @@ public abstract class BaseWikiNodeResourceTestCase {
 		WikiNode wikiNode = testGraphQLWikiNode_addWikiNode(randomWikiNode);
 
 		Assert.assertTrue(equals(randomWikiNode, wikiNode));
+	}
+
+	@Test
+	public void testDeleteSiteWikiNodeByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiNode wikiNode =
+			testDeleteSiteWikiNodeByExternalReferenceCode_addWikiNode();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiNodeResource.
+				deleteSiteWikiNodeByExternalReferenceCodeHttpResponse(
+					wikiNode.getExternalReferenceCode(), wikiNode.getSiteId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			wikiNodeResource.getSiteWikiNodeByExternalReferenceCodeHttpResponse(
+				wikiNode.getExternalReferenceCode(), wikiNode.getSiteId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			wikiNodeResource.getSiteWikiNodeByExternalReferenceCodeHttpResponse(
+				wikiNode.getExternalReferenceCode(), wikiNode.getSiteId()));
+	}
+
+	protected WikiNode
+			testDeleteSiteWikiNodeByExternalReferenceCode_addWikiNode()
+		throws Exception {
+
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
+	}
+
+	@Test
+	public void testGetSiteWikiNodeByExternalReferenceCode() throws Exception {
+		WikiNode postWikiNode =
+			testGetSiteWikiNodeByExternalReferenceCode_addWikiNode();
+
+		WikiNode getWikiNode =
+			wikiNodeResource.getSiteWikiNodeByExternalReferenceCode(
+				postWikiNode.getExternalReferenceCode(),
+				postWikiNode.getSiteId());
+
+		assertEquals(postWikiNode, getWikiNode);
+		assertValid(getWikiNode);
+	}
+
+	protected WikiNode testGetSiteWikiNodeByExternalReferenceCode_addWikiNode()
+		throws Exception {
+
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
+	}
+
+	@Test
+	public void testGraphQLGetSiteWikiNodeByExternalReferenceCode()
+		throws Exception {
+
+		WikiNode wikiNode = testGraphQLWikiNode_addWikiNode();
+
+		Assert.assertTrue(
+			equals(
+				wikiNode,
+				WikiNodeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"wikiNodeByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												wikiNode.
+													getExternalReferenceCode() +
+														"\"");
+										put(
+											"siteKey",
+											"\"" + wikiNode.getSiteId() + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/wikiNodeByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteWikiNodeByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"wikiNodeByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutSiteWikiNodeByExternalReferenceCode() throws Exception {
+		WikiNode postWikiNode =
+			testPutSiteWikiNodeByExternalReferenceCode_addWikiNode();
+
+		WikiNode randomWikiNode = randomWikiNode();
+
+		WikiNode putWikiNode =
+			wikiNodeResource.putSiteWikiNodeByExternalReferenceCode(
+				postWikiNode.getExternalReferenceCode(),
+				postWikiNode.getSiteId(), randomWikiNode);
+
+		assertEquals(randomWikiNode, putWikiNode);
+		assertValid(putWikiNode);
+
+		WikiNode getWikiNode =
+			wikiNodeResource.getSiteWikiNodeByExternalReferenceCode(
+				putWikiNode.getExternalReferenceCode(),
+				putWikiNode.getSiteId());
+
+		assertEquals(randomWikiNode, getWikiNode);
+		assertValid(getWikiNode);
+	}
+
+	protected WikiNode testPutSiteWikiNodeByExternalReferenceCode_addWikiNode()
+		throws Exception {
+
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
 	}
 
 	@Test
@@ -1027,6 +1174,16 @@ public abstract class BaseWikiNodeResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (wikiNode.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (wikiNode.getName() == null) {
 					valid = false;
@@ -1203,6 +1360,19 @@ public abstract class BaseWikiNodeResourceTestCase {
 				if (!Objects.deepEquals(
 						wikiNode1.getDescription(),
 						wikiNode2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						wikiNode1.getExternalReferenceCode(),
+						wikiNode2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1436,6 +1606,14 @@ public abstract class BaseWikiNodeResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(wikiNode.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1516,6 +1694,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

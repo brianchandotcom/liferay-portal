@@ -24,4 +24,8 @@ public interface ClickToChatConstants {
 		"smartsupp", "tawkto", "tidio", "tolvnow", "zendesk"
 	};
 
+	public static final String[] CLICK_TO_CHAT_SITE_SETTINGS_STRATEGIES = {
+		"always-inherit", "always-override", "inherit-or-override"
+	};
+
 }

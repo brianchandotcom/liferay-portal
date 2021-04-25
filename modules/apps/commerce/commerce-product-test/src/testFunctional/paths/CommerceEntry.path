@@ -389,6 +389,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANNELS_GENERAL_ACTIVE_STATUS</td>
+	<td>//div[contains(text(),'${key_entryName}')]/following-sibling::div/span[contains(@class,'label-success')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANNELS_GENERAL_TAB_EDITS</td>
 	<td>//div[contains(text(),'${key_entryName}')]/following-sibling::div[contains(@class,'item-actions')]//a</td>
 	<td></td>

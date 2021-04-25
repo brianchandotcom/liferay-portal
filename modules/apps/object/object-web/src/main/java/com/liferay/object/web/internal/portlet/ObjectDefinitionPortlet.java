@@ -14,11 +14,43 @@
 
 package com.liferay.object.web.internal.portlet;
 
+import com.liferay.object.web.internal.display.context.ObjectDefinitionDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
 public class ObjectDefinitionPortlet extends MVCPortlet {
+
+	public ObjectDefinitionPortlet(Portal portal, String restContextPath) {
+		_portal = portal;
+		_restContextPath = restContextPath;
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new ObjectDefinitionDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_restContextPath));
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	private final Portal _portal;
+	private final String _restContextPath;
+
 }

@@ -23,6 +23,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -41,11 +42,22 @@ public class ObjectDefinitionTableClayDataSetDisplayView
 		ClayTableSchemaField clayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("id", "id");
 
-		clayTableSchemaField.setContentRenderer("actionLink");
-
 		for (ObjectField objectField : objectFields) {
+			clayTableSchemaField = new ClayTableSchemaField();
+
+			if (Objects.equals("Boolean", objectField.getType())) {
+				clayTableSchemaField.setContentRenderer("boolean");
+			}
+
+			clayTableSchemaField.setFieldName(objectField.getName());
+			clayTableSchemaField.setLabel(objectField.getName());
+
+			if (!Objects.equals("Boolean", objectField.getType())) {
+				clayTableSchemaField.setSortable(true);
+			}
+
 			clayTableSchemaBuilder.addClayTableSchemaField(
-				objectField.getDBColumnName(), objectField.getName());
+				clayTableSchemaField);
 		}
 
 		_clayTableSchema = clayTableSchemaBuilder.build();

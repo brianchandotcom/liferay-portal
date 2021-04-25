@@ -1635,6 +1635,115 @@ definition {
 		WebContentDisplayPortlet.viewRecycleBinMessage(webContentTitle = "Web Content Title 2");
 	}
 
+	@description = "This is a use case for LPS-89629."
+	@priority = "3"
+	@uitest
+	test StagingRemoteWithDynamicExportLimit {
+		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteWithDynamicExportLimit";
+
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Asset Publisher",
+			configurationScope = "System Scope");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Dynamic Export");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Manual Export");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Blogs Entry1 Content",
+			assetTitle = "Blogs Entry1 Title");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Blogs Entry2 Content",
+			assetTitle = "Blogs Entry2 Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Asset Publisher",
+			configurationScope = "System Scope");
+
+		SystemSettings.configureDynamicExportLimit(exportLimitNumber = "1");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.publishToRemoteUncheckContentViaCustomPublication(contentName = "Blogs");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging Test Page",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Blogs Entry2 Content",
+			assetTitle = "Blogs Entry2 Title");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "Blogs Entry1 Content",
+			assetTitle = "Blogs Entry1 Title");
+	}
+
 	@priority = "4"
 	test StagingWithPublishTemplate {
 		property test.name.skip.portal.instance = "Staging#StagingWithPublishTemplate";

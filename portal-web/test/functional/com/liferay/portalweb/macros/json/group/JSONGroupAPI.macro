@@ -179,6 +179,8 @@ definition {
 			fail("FAIL. Cannot find group.");
 		}
 
+		echo("## * GroupId: ${groupId}");
+
 		return "${groupId}";
 	}
 

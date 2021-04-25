@@ -15,15 +15,16 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-
-import java.util.Optional;
+import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.wiki.service.WikiPageService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luis Miguel Barcos
@@ -48,41 +49,37 @@ public class WikiNodeDTOConverter
 
 		return new WikiNode() {
 			{
-				actions = HashMapBuilder.put(
-					"delete",
-					addAction(ActionKeys.DELETE, wikiNode, "deleteWikiNode")
-				).put(
-					"get", addAction(ActionKeys.VIEW, wikiNode, "getWikiNode")
-				).put(
-					"replace",
-					addAction(ActionKeys.UPDATE, wikiNode, "putWikiNode")
-				).put(
-					"subscribe",
-					addAction(
-						ActionKeys.SUBSCRIBE, wikiNode, "putWikiNodeSubscribe")
-				).put(
-					"unsubscribe",
-					addAction(
-						ActionKeys.SUBSCRIBE, wikiNode,
-						"putWikiNodeUnsubscribe")
-				).build();
+				actions = dtoConverterContext.getActions();
 				creator = CreatorUtil.toCreator(
-					_portal, Optional.of(contextUriInfo),
+					_portal, dtoConverterContext.getUriInfoOptional(),
 					_userLocalService.fetchUser(wikiNode.getUserId()));
 				dateCreated = wikiNode.getCreateDate();
 				dateModified = wikiNode.getModifiedDate();
 				description = wikiNode.getDescription();
+				externalReferenceCode = wikiNode.getExternalReferenceCode();
 				id = wikiNode.getNodeId();
 				name = wikiNode.getName();
 				numberOfWikiPages = _wikiPageService.getPagesCount(
 					wikiNode.getGroupId(), wikiNode.getNodeId(), true);
 				siteId = wikiNode.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
-					wikiNode.getCompanyId(), contextUser.getUserId(),
+					wikiNode.getCompanyId(), dtoConverterContext.getUserId(),
 					com.liferay.wiki.model.WikiNode.class.getName(),
 					wikiNode.getNodeId());
 			}
 		};
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private WikiPageService _wikiPageService;
 
 }

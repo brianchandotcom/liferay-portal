@@ -135,11 +135,9 @@ definition {
 
 		Modal.save();
 
-		Site.openSitesAdmin();
-
-		Search.searchCP(searchTerm = "${siteName}");
-
-		LexiconTable.viewTableEntryTitle(tableEntry = "${siteName}");
+		AssertTextEquals(
+			locator1 = "SitesEditSite#DETAILS_NAME",
+			value1 = "${siteName}");
 	}
 
 	macro addSiteTemplateCP {

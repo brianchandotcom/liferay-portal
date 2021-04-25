@@ -41,8 +41,6 @@ import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageService;
 
-import java.util.Optional;
-
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -161,48 +159,6 @@ public class WikiNodeResourceImpl
 	@Override
 	protected String getPermissionCheckerResourceName(Object id) {
 		return com.liferay.wiki.model.WikiNode.class.getName();
-	}
-
-	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
-		throws Exception {
-
-		return new WikiNode() {
-			{
-				actions = HashMapBuilder.put(
-					"delete",
-					addAction(ActionKeys.DELETE, wikiNode, "deleteWikiNode")
-				).put(
-					"get", addAction(ActionKeys.VIEW, wikiNode, "getWikiNode")
-				).put(
-					"replace",
-					addAction(ActionKeys.UPDATE, wikiNode, "putWikiNode")
-				).put(
-					"subscribe",
-					addAction(
-						ActionKeys.SUBSCRIBE, wikiNode, "putWikiNodeSubscribe")
-				).put(
-					"unsubscribe",
-					addAction(
-						ActionKeys.SUBSCRIBE, wikiNode,
-						"putWikiNodeUnsubscribe")
-				).build();
-				creator = CreatorUtil.toCreator(
-					_portal, Optional.of(contextUriInfo),
-					_userLocalService.fetchUser(wikiNode.getUserId()));
-				dateCreated = wikiNode.getCreateDate();
-				dateModified = wikiNode.getModifiedDate();
-				description = wikiNode.getDescription();
-				id = wikiNode.getNodeId();
-				name = wikiNode.getName();
-				numberOfWikiPages = _wikiPageService.getPagesCount(
-					wikiNode.getGroupId(), wikiNode.getNodeId(), true);
-				siteId = wikiNode.getGroupId();
-				subscribed = _subscriptionLocalService.isSubscribed(
-					wikiNode.getCompanyId(), contextUser.getUserId(),
-					com.liferay.wiki.model.WikiNode.class.getName(),
-					wikiNode.getNodeId());
-			}
-		};
 	}
 
 	private static final EntityModel _entityModel = new WikiNodeEntityModel();

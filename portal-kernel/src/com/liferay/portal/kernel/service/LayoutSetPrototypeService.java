@@ -65,7 +65,16 @@ public interface LayoutSetPrototypeService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public LayoutSetPrototype addLayoutSetPrototype(
+			String name, String description, boolean active,
+			boolean layoutsUpdateable, boolean readyForPropagation,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
+		throws PortalException;
+
+	public void deleteNondefaultLayoutSetPrototypes(long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -74,6 +83,10 @@ public interface LayoutSetPrototypeService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSetPrototype getLayoutSetPrototype(long layoutSetPrototypeId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutSetPrototype> getLayoutSetPrototypes(long companyId)
 		throws PortalException;
 
 	/**

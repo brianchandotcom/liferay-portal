@@ -62,10 +62,27 @@ public class LayoutSetPrototypeServiceUtil {
 			nameMap, descriptionMap, active, layoutsUpdateable, serviceContext);
 	}
 
+	public static LayoutSetPrototype addLayoutSetPrototype(
+			String name, String description, boolean active,
+			boolean layoutsUpdateable, boolean readyForPropagation,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addLayoutSetPrototype(
+			name, description, active, layoutsUpdateable, readyForPropagation,
+			serviceContext);
+	}
+
 	public static void deleteLayoutSetPrototype(long layoutSetPrototypeId)
 		throws PortalException {
 
 		getService().deleteLayoutSetPrototype(layoutSetPrototypeId);
+	}
+
+	public static void deleteNondefaultLayoutSetPrototypes(long companyId)
+		throws PortalException {
+
+		getService().deleteNondefaultLayoutSetPrototypes(companyId);
 	}
 
 	public static LayoutSetPrototype fetchLayoutSetPrototype(
@@ -80,6 +97,13 @@ public class LayoutSetPrototypeServiceUtil {
 		throws PortalException {
 
 		return getService().getLayoutSetPrototype(layoutSetPrototypeId);
+	}
+
+	public static List<LayoutSetPrototype> getLayoutSetPrototypes(
+			long companyId)
+		throws PortalException {
+
+		return getService().getLayoutSetPrototypes(companyId);
 	}
 
 	/**

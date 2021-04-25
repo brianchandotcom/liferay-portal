@@ -129,12 +129,49 @@ public class LayoutSetPrototypeServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap
+			addLayoutSetPrototype(
+				String name, String description, boolean active,
+				boolean layoutsUpdateable, boolean readyForPropagation,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.LayoutSetPrototype returnValue =
+				LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(
+					name, description, active, layoutsUpdateable,
+					readyForPropagation, serviceContext);
+
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteLayoutSetPrototype(long layoutSetPrototypeId)
 		throws RemoteException {
 
 		try {
 			LayoutSetPrototypeServiceUtil.deleteLayoutSetPrototype(
 				layoutSetPrototypeId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteNondefaultLayoutSetPrototypes(long companyId)
+		throws RemoteException {
+
+		try {
+			LayoutSetPrototypeServiceUtil.deleteNondefaultLayoutSetPrototypes(
+				companyId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -173,6 +210,26 @@ public class LayoutSetPrototypeServiceSoap {
 
 			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.
 				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap[]
+			getLayoutSetPrototypes(long companyId)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.portal.kernel.model.LayoutSetPrototype>
+				returnValue =
+					LayoutSetPrototypeServiceUtil.getLayoutSetPrototypes(
+						companyId);
+
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.
+				toSoapModels(returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

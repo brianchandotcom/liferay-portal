@@ -55,6 +55,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPageConstants;
+import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -64,6 +65,7 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -81,6 +83,17 @@ public class WikiPageResourceImpl
 	extends BaseWikiPageResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteSiteWikiPageByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception {
+
+		com.liferay.wiki.model.WikiPage wikiPage =
+			_getWikiPageByExternalReferenceCode(externalReferenceCode, siteId);
+
+		_wikiPageService.deletePage(wikiPage.getNodeId(), wikiPage.getTitle());
+	}
+
+	@Override
 	public void deleteWikiPage(Long wikiPageId) throws Exception {
 		com.liferay.wiki.model.WikiPage wikiPage =
 			_wikiPageLocalService.getPageByPageId(wikiPageId);
@@ -96,6 +109,15 @@ public class WikiPageResourceImpl
 					com.liferay.wiki.model.WikiPage.class.getName()),
 				contextCompany.getCompanyId(), _expandoColumnLocalService,
 				_expandoTableLocalService));
+	}
+
+	@Override
+	public WikiPage getSiteWikiPageByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception {
+
+		return _toWikiPage(
+			_getWikiPageByExternalReferenceCode(externalReferenceCode, siteId));
 	}
 
 	@Override
@@ -243,6 +265,36 @@ public class WikiPageResourceImpl
 	}
 
 	@Override
+	public WikiPage putSiteWikiPageByExternalReferenceCode(
+			String externalReferenceCode, Long siteId, WikiPage wikiPage)
+		throws Exception {
+
+		com.liferay.wiki.model.WikiPage serviceBuilderWikiPage =
+			_wikiPageLocalService.fetchWikiPageByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		if (serviceBuilderWikiPage != null) {
+			return _updateWikiPage(serviceBuilderWikiPage, wikiPage);
+		}
+
+		if (wikiPage.getWikiNodeId() == null) {
+			throw new BadRequestException("WikiNode ID is null");
+		}
+
+		return _toWikiPage(
+			_wikiPageService.addPage(
+				externalReferenceCode, wikiPage.getWikiNodeId(),
+				wikiPage.getHeadline(), wikiPage.getContent(),
+				wikiPage.getDescription(), false, wikiPage.getEncodingFormat(),
+				null, null,
+				ServiceContextRequestUtil.createServiceContext(
+					wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
+					_getExpandoBridgeAttributes(wikiPage),
+					contextUser.getGroupId(), contextHttpServletRequest,
+					wikiPage.getViewableByAsString())));
+	}
+
+	@Override
 	public WikiPage putWikiPage(Long wikiPageId, WikiPage wikiPage)
 		throws Exception {
 
@@ -253,22 +305,7 @@ public class WikiPageResourceImpl
 			PermissionThreadLocal.getPermissionChecker(),
 			serviceBuilderWikiPage, ActionKeys.UPDATE);
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
-				_getExpandoBridgeAttributes(wikiPage),
-				serviceBuilderWikiPage.getGroupId(), contextHttpServletRequest,
-				wikiPage.getViewableByAsString());
-
-		serviceContext.setCommand("update");
-
-		return _toWikiPage(
-			_wikiPageService.updatePage(
-				serviceBuilderWikiPage.getNodeId(), wikiPage.getHeadline(),
-				serviceBuilderWikiPage.getVersion(), wikiPage.getContent(),
-				wikiPage.getDescription(), true, wikiPage.getEncodingFormat(),
-				serviceBuilderWikiPage.getParentTitle(),
-				serviceBuilderWikiPage.getRedirectTitle(), serviceContext));
+		return _updateWikiPage(serviceBuilderWikiPage, wikiPage);
 	}
 
 	@Override
@@ -324,6 +361,23 @@ public class WikiPageResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private com.liferay.wiki.model.WikiPage _getWikiPageByExternalReferenceCode(
+			String externalReferenceCode, long siteId)
+		throws Exception {
+
+		com.liferay.wiki.model.WikiPage wikiPage =
+			_wikiPageLocalService.fetchWikiPageByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		if (wikiPage == null) {
+			throw new NoSuchPageException(
+				"No wiki page exists with external reference code " +
+					externalReferenceCode);
+		}
+
+		return wikiPage;
+	}
+
 	private WikiPage _toWikiPage(com.liferay.wiki.model.WikiPage wikiPage)
 		throws Exception {
 
@@ -367,9 +421,32 @@ public class WikiPageResourceImpl
 						"putWikiPageUnsubscribe", wikiPage.getUserId(),
 						WikiPage.class.getName(), wikiPage.getGroupId())
 				).build(),
-				_dtoConverterRegistry, wikiPage.getPageId(),
+				_dtoConverterRegistry, wikiPage.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
+	}
+
+	private WikiPage _updateWikiPage(
+			com.liferay.wiki.model.WikiPage serviceBuilderWikiPage,
+			WikiPage wikiPage)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
+				_getExpandoBridgeAttributes(wikiPage),
+				serviceBuilderWikiPage.getGroupId(), contextHttpServletRequest,
+				wikiPage.getViewableByAsString());
+
+		serviceContext.setCommand("update");
+
+		return _toWikiPage(
+			_wikiPageService.updatePage(
+				serviceBuilderWikiPage.getNodeId(), wikiPage.getHeadline(),
+				serviceBuilderWikiPage.getVersion(), wikiPage.getContent(),
+				wikiPage.getDescription(), true, wikiPage.getEncodingFormat(),
+				serviceBuilderWikiPage.getParentTitle(),
+				serviceBuilderWikiPage.getRedirectTitle(), serviceContext));
 	}
 
 	@Reference

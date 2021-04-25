@@ -37,6 +37,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.wiki.constants.WikiConstants;
+import com.liferay.wiki.exception.NoSuchNodeException;
+import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -56,6 +58,17 @@ public class WikiNodeResourceImpl
 	extends BaseWikiNodeResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteSiteWikiNodeByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception {
+
+		com.liferay.wiki.model.WikiNode wikiNode =
+			_getWikiNodeByExternalReferenceCode(externalReferenceCode, siteId);
+
+		_wikiNodeService.deleteNode(wikiNode.getNodeId());
+	}
+
+	@Override
 	public void deleteWikiNode(Long wikiNodeId) throws Exception {
 		_wikiNodeService.deleteNode(wikiNodeId);
 	}
@@ -63,6 +76,17 @@ public class WikiNodeResourceImpl
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public WikiNode getSiteWikiNodeByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception {
+
+		com.liferay.wiki.model.WikiNode wikiNode =
+			_getWikiNodeByExternalReferenceCode(externalReferenceCode, siteId);
+
+		return _toWikiNode(wikiNode);
 	}
 
 	@Override
@@ -116,19 +140,35 @@ public class WikiNodeResourceImpl
 	}
 
 	@Override
+	public WikiNode putSiteWikiNodeByExternalReferenceCode(
+			String externalReferenceCode, Long siteId, WikiNode wikiNode)
+		throws Exception {
+
+		com.liferay.wiki.model.WikiNode serviceBuilderWikiNode =
+			_wikiNodeLocalService.fetchWikiNodeByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		if (serviceBuilderWikiNode == null) {
+			return _toWikiNode(
+				_wikiNodeService.addNode(
+					externalReferenceCode, wikiNode.getName(),
+					wikiNode.getDescription(),
+					ServiceContextRequestUtil.createServiceContext(
+						siteId, contextHttpServletRequest,
+						wikiNode.getViewableByAsString())));
+		}
+
+		return _updateWikiNode(serviceBuilderWikiNode, wikiNode);
+	}
+
+	@Override
 	public WikiNode putWikiNode(Long wikiNodeId, WikiNode wikiNode)
 		throws Exception {
 
 		com.liferay.wiki.model.WikiNode serviceBuilderWikiNode =
 			_wikiNodeService.getNode(wikiNodeId);
 
-		return _toWikiNode(
-			_wikiNodeService.updateNode(
-				wikiNodeId, wikiNode.getName(), wikiNode.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					serviceBuilderWikiNode.getGroupId(),
-					contextHttpServletRequest,
-					wikiNode.getViewableByAsString())));
+		return _updateWikiNode(serviceBuilderWikiNode, wikiNode);
 	}
 
 	@Override
@@ -157,6 +197,23 @@ public class WikiNodeResourceImpl
 	@Override
 	protected String getPermissionCheckerResourceName(Object id) {
 		return com.liferay.wiki.model.WikiNode.class.getName();
+	}
+
+	private com.liferay.wiki.model.WikiNode _getWikiNodeByExternalReferenceCode(
+			String externalReferenceCode, long siteId)
+		throws Exception {
+
+		com.liferay.wiki.model.WikiNode wikiNode =
+			_wikiNodeLocalService.fetchWikiNodeByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		if (wikiNode == null) {
+			throw new NoSuchNodeException(
+				"No wiki node exists with external reference code" +
+					externalReferenceCode);
+		}
+
+		return wikiNode;
 	}
 
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
@@ -189,6 +246,21 @@ public class WikiNodeResourceImpl
 			wikiNode);
 	}
 
+	private WikiNode _updateWikiNode(
+			com.liferay.wiki.model.WikiNode serviceBuilderWikiNode,
+			WikiNode wikiNode)
+		throws Exception {
+
+		return _toWikiNode(
+			_wikiNodeService.updateNode(
+				serviceBuilderWikiNode.getNodeId(), wikiNode.getName(),
+				wikiNode.getDescription(),
+				ServiceContextRequestUtil.createServiceContext(
+					serviceBuilderWikiNode.getGroupId(),
+					contextHttpServletRequest,
+					wikiNode.getViewableByAsString())));
+	}
+
 	private static final EntityModel _entityModel = new WikiNodeEntityModel();
 
 	@Reference
@@ -196,6 +268,9 @@ public class WikiNodeResourceImpl
 
 	@Reference
 	private WikiNodeDTOConverter _wikiNodeDTOConverter;
+
+	@Reference
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 	@Reference
 	private WikiNodeService _wikiNodeService;

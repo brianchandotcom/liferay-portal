@@ -16,7 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.WikiNodeDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.WikiNodeEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -25,21 +25,17 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.service.WikiNodeService;
-import com.liferay.wiki.service.WikiPageService;
-
-import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -160,21 +156,40 @@ public class WikiNodeResourceImpl
 		return com.liferay.wiki.model.WikiNode.class.getName();
 	}
 
+	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
+		throws Exception {
+
+		return _wikiNodeDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.put(
+					"delete", addAction("DELETE", wikiNode, "deleteWikiNode")
+				).put(
+					"get", addAction("VIEW", wikiNode, "getWikiNode")
+				).put(
+					"replace", addAction("UPDATE", wikiNode, "putWikiNode")
+				).put(
+					"subscribe",
+					addAction("SUBSCRIBE", wikiNode, "putWikiNodeSubscribe")
+				).put(
+					"unsubscribe",
+					addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe")
+				).build(),
+				_dtoConverterRegistry, wikiNode.getNodeId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			wikiNode);
+	}
+
 	private static final EntityModel _entityModel = new WikiNodeEntityModel();
 
 	@Reference
-	private Portal _portal;
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
-	private SubscriptionLocalService _subscriptionLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private WikiNodeDTOConverter _wikiNodeDTOConverter;
 
 	@Reference
 	private WikiNodeService _wikiNodeService;
-
-	@Reference
-	private WikiPageService _wikiPageService;
 
 }

@@ -671,13 +671,98 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6119. EditAvalaraTaxCalculation"
-	@ignore = "true"
 	@priority = "3"
 	test EditAvalaraTaxCalculation {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannels#EditAvalaraTaxCalculation";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586; COMMERCE-6588
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		Click(
+			key_entryName = "Avalara",
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Settings");
+
+		Type(
+			key_fieldLabel = "Account Number",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		Type(
+			key_fieldLabel = "License Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		Type(
+			key_fieldLabel = "Service URL",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		Type(
+			key_fieldLabel = "Company Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		Button.clickSave();
+
+		Refresh();
 
 		// TODO COMMERCE-6119 EditAvalaraTaxCalculation
 
+		Click(
+			key_entryName = "Avalara",
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Settings");
+
+		AssertTextEquals(
+			key_fieldLabel = "Account Number",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		AssertTextEquals(
+			key_fieldLabel = "License Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		AssertTextEquals(
+			key_fieldLabel = "Service URL",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		AssertTextEquals(
+			key_fieldLabel = "Company Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
 	}
 
 	@description = "This is a test for COMMERCE-6275. EditCategoryDisplayPage"

@@ -61,10 +61,6 @@ definition {
 			Modal.save();
 		}
 
-		Click(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
 		if ("${siteType}" == "Site Template") {
 			if ("${uncheckPropagation}" == "true") {
 				Panel.expandPanel(panel = "Pages");
@@ -119,11 +115,9 @@ definition {
 
 		PortletEntry.save();
 
-		Site.openSitesAdmin();
-
-		Search.searchCP(searchTerm = "${siteName}");
-
-		LexiconTable.viewTableEntryTitle(tableEntry = "${siteName}");
+		AssertTextEquals(
+			locator1 = "SitesEditSite#DETAILS_NAME",
+			value1 = "${siteName}");
 	}
 
 	macro addCustomCP {

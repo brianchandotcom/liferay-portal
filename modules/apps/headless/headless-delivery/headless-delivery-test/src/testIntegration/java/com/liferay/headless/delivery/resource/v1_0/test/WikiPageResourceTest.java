@@ -20,10 +20,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -55,6 +59,60 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutSiteWikiPageByExternalReferenceCode() throws Exception {
+
+		// Update
+
+		super.testPutSiteWikiPageByExternalReferenceCode();
+
+		// Add
+
+		WikiPage wikiPage = randomWikiPage();
+
+		wikiPage.setWikiNodeId(_wikiPage.getWikiNodeId());
+
+		WikiPage putWikiPage =
+			wikiPageResource.putSiteWikiPageByExternalReferenceCode(
+				wikiPage.getExternalReferenceCode(), testGroup.getGroupId(),
+				wikiPage);
+
+		assertEquals(wikiPage, putWikiPage);
+		assertValid(putWikiPage);
+
+		WikiPage getWikiPage =
+			wikiPageResource.getSiteWikiPageByExternalReferenceCode(
+				putWikiPage.getExternalReferenceCode(), testGroup.getGroupId());
+
+		assertEquals(wikiPage, getWikiPage);
+		assertValid(getWikiPage);
+
+		Assert.assertEquals(
+			wikiPage.getExternalReferenceCode(),
+			getWikiPage.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testPutSiteWikiPageWithoutNodeId() throws Exception {
+		WikiPage randomWikiPage = randomWikiPage();
+
+		randomWikiPage.setWikiNodeId((Long)null);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.ERROR)) {
+
+			assertHttpResponseStatusCode(
+				400,
+				wikiPageResource.
+					putSiteWikiPageByExternalReferenceCodeHttpResponse(
+						randomWikiPage.getExternalReferenceCode(),
+						testGroup.getGroupId(), randomWikiPage));
+		}
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"headline"};
 	}
@@ -69,7 +127,22 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 	}
 
 	@Override
+	protected WikiPage
+			testDeleteSiteWikiPageByExternalReferenceCode_addWikiPage()
+		throws Exception {
+
+		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
+	}
+
+	@Override
 	protected WikiPage testDeleteWikiPage_addWikiPage() throws Exception {
+		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
+	}
+
+	@Override
+	protected WikiPage testGetSiteWikiPageByExternalReferenceCode_addWikiPage()
+		throws Exception {
+
 		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
 	}
 
@@ -101,6 +174,13 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 
 	@Override
 	protected WikiPage testGraphQLWikiPage_addWikiPage() throws Exception {
+		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
+	}
+
+	@Override
+	protected WikiPage testPutSiteWikiPageByExternalReferenceCode_addWikiPage()
+		throws Exception {
+
 		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
 	}
 

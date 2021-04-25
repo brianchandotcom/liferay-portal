@@ -14,11 +14,11 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Asset Publisher Page");
+			layoutName = "Test Page Name");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Asset Publisher Page",
+			layoutName = "Test Page Name",
 			widgetName = "Asset Publisher");
 	}
 
@@ -33,12 +33,320 @@ definition {
 		}
 	}
 
+	@description = "Add multiple Asset Publisher to page."
+	@priority = "5"
+	@uitest
+	test AddAssetPublisherWidgetsToPage {
+		property portal.acceptance = "true";
+
+		task ("Add three Asset Publisher widgets to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var i = "0";
+
+			while ("${i}" != "3") {
+				Portlet.addPG(portletName = "Asset Publisher");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		task ("View the Asset Publisher widgets") {
+			Portlet.viewDuplicatePG(
+				portletName = "Asset Publisher",
+				totalPortletCount = "4");
+		}
+	}
+
+	@description = "This is a use case for LPS-47619 and LPS-67326. Add assets via Asset Publisher then add associated widgets to page."
+	@priority = "5"
+	@uitest
+	test AddAssetsViaAssetPublisherThenAddAssociatedWidgetsToPage {
+		property portal.acceptance = "true";
+
+		task ("Add a blogs entry via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Blogs.addViaAP(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+
+			BlogsEntry.viewEntryViaAPPG(
+				assetTitle = "Blogs Entry Title",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Add a calendar event via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			CalendarEvent.addPGViaAP(eventTitle = "Calendar Event Title");
+
+			CalendarEvent.viewViaAssetPublisher(
+				calendarName = "Test Site Name",
+				eventTitle = "Calendar Event Title");
+		}
+
+		task ("Add a document via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			DMDocument.addPGViaAPWithValidationPosition(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.doc",
+				dmDocumentTitle = "DM Document Title");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			DMDocument.viewPGViaAP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("Add a Data Definition entry") {
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "test-site-name");
+
+			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
+
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			DDLDataDefinition.save();
+		}
+
+		task ("Add a Dynamic Data Lists entry") {
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "test-site-name");
+
+			DDLList.addCP(ddlListName = "List Name");
+
+			DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+			DDLDataDefinition.save();
+		}
+
+		task ("Add a DDL Record entry via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			DDLRecord.addPGViaAP(
+				ddlRecordFieldData = "Text Field",
+				fieldName = "Text");
+
+			DDLRecord.viewPGViaAP(
+				ddlListName = "New Data Definition for List: List Name",
+				ddlRecordFieldData = "Text Field");
+		}
+
+		task ("Add a KBArticle via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			KBArticle.addPGViaAP(
+				kbArticleContent = "Knowledge Base Article Content",
+				kbArticleTitle = "Knowledge Base Article Title");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			KBArticle.viewPGViaAP(
+				kbArticleContent = "Knowledge Base Article Content",
+				kbArticleTitle = "Knowledge Base Article Title");
+		}
+
+		task ("Add a web content via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContent.addPGViaAP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC Webcontent Title");
+
+			WebContent.viewPGViaAP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC Webcontent Title");
+		}
+
+		task ("Add associated widgets to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var portletName : list "Blogs,Calendar,Documents and Media,Dynamic Data Lists Display,Knowledge Base Article,Web Content Display") {
+				Portlet.addPG(portletName = "${portletName}");
+			}
+		}
+	}
+
+	@description = "Add a bookmarks entry via Asset Publisher."
+	@priority = "4"
+	test AddBookmarksEntryViaAssetPublisher {
+		property portal.release = "false";
+		property testray.component.names = "Asset Publisher,Bookmarks";
+
+		task ("Add a bookmarks entry via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Bookmark.addBookmarkViaAP(
+				bookmarkDescription = "Test Bookmark Description",
+				bookmarkName = "Test Bookmark Name",
+				bookmarkURL = "https://www.liferay.com");
+		}
+
+		task ("View the bookmarks entry shown in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Bookmark.viewBookmarkViaAP(bookmarkName = "Test Bookmark Name");
+		}
+	}
+
+	@description = "Configure scope of Asset Publisher with multiple sites."
+	@priority = "5"
+	@uitest
+	test ConfigureScopeWithMultipleSites {
+		property portal.acceptance = "true";
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Add the new site to scope") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureAddSiteScopes(otherSite = "Site Name");
+		}
+
+		task ("View both sites in scope") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewMultipleSiteScopesAddDropdowns(
+				siteName1 = "Test Site Name",
+				siteName2 = "Site Name");
+		}
+	}
+
+	@description = "Configure the Select More Than One asset types."
+	@priority = "4"
+	test ConfigureSelectMoreThanOneAssetTypes {
+		property portal.release = "false";
+		property testray.component.names = "Asset Publisher,Bookmarks";
+
+		task ("Add a bookmarks entry") {
+			JSONBookmarks.addBookmarks(
+				description = "Test Bookmark Description",
+				groupName = "Test Site Name",
+				name = "Test Bookmark Name",
+				url = "https://www.liferay.com");
+		}
+
+		task ("Remove Bookmarks Entry from Asset Type") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureAPSelectMoreThanOnePG(selectContent = "Bookmarks Entry");
+		}
+
+		task ("View the bookmarks entry not shown in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewConfigureAPMoveToAvailablePG(assetTitle = "Test Bookmark Name");
+		}
+
+		task ("Add Bookmarks Entry back to Asset Type") {
+			AssetPublisherPortlet.configureAPSelectMoreThanOnePG(
+				moveSelected = "true",
+				selectContent = "Bookmarks Entry");
+		}
+
+		task ("View the bookmarks entry shown in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewConfigureAPMoveToSelectedPG(assetTitle = "Test Bookmark Name");
+		}
+	}
+
+	@description = "Enable Ratings in Asset Publisher."
+	@priority = "4"
+	@uitest
+	test EnableRatings {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Enable Ratings in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Ratings");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewDisplaySettings(displaySettings = "Ratings");
+		}
+
+		task ("Change the display template to Full Content") {
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Configuration");
+
+			AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Full Content");
+		}
+
+		task ("Rate the web content as 4") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Ratings.rateStar(ratingStarCount = "4");
+		}
+
+		task ("View the rate of web content") {
+			Ratings.viewRateStar(
+				averageRatingStarCount = "4.0",
+				ratingStarCount = "4");
+		}
+	}
+
 	@description = "This is a test for LPS-93357. The subscribe button can be enabled/disabled."
 	@priority = "3"
-	test enableDisableSubscribeButton {
+	@uitest
+	test EnableSubscribeButton {
 		task ("Assert the subscribe button is disabled by default") {
 			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			AssertElementNotPresent(locator1 = "Button#SUBSCRIBE");
@@ -50,19 +358,623 @@ definition {
 
 		task ("Assert the subscribe button displays") {
 			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			AssertElementPresent(locator1 = "Button#SUBSCRIBE");
 		}
 	}
 
+	@description = "Filter assets in Asset Publisher by tags."
+	@priority = "4"
+	test FilterAssetsByTags {
+		property testray.component.names = "Asset Publisher,Tags";
+
+		task ("Add a Tags Navigation to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Tags Navigation");
+		}
+
+		task ("Change the display template to Number in Tags Navigation") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			TagsNavigationPortlet.configureDisplayStylePG(displayTemplate = "Number");
+		}
+
+		task ("Configure Show Asset Count in Tags Navigation") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			TagsNavigationPortlet.configureFlaggableSettingsPG(showAssetCount = "true");
+		}
+
+		task ("Add a web content with tags") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "first tag,second tag",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a document with a tag") {
+			JSONDocument.addFileWithUploadedFile(
+				assetTagNames = "first tag",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+		}
+
+		task ("Filter assets by tags in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			TagsNavigationPortlet.clickTagView(
+				tagAssetCount = "first tag (2)",
+				tagName = "first tag");
+
+			AssetPublisherPortlet.viewTagFocusPG(assetTitleList = "DM Document Title,Web Content Title");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			TagsNavigationPortlet.clickTagView(
+				tagAssetCount = "second tag (1)",
+				tagName = "second tag");
+
+			AssetPublisherPortlet.viewTagFocusPG(
+				assetTitleList = "Web Content Title",
+				nonTaggedAsset = "DM Document Title");
+		}
+	}
+
+	@description = "Order web contents by modified date in Asset Publisher."
+	@priority = "3"
+	test OrderWebContentsByModifiedDate {
+		task ("Add three web contents") {
+			for (var n : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "WebContent Content ${n}",
+					groupName = "Test Site Name",
+					title = "WebContent Title ${n}");
+			}
+		}
+
+		task ("Configure order by modified date in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureAssetDisplayOrderPG(
+				fieldNameOrder = "Modified Date",
+				sortOrder = "Ascending");
+		}
+
+		task ("View the order of web contents") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "WebContent Title 1,WebContent Title 2,WebContent Title 3") {
+				AssetPublisherPortlet.viewDisplayOrderPG(
+					assetTitle = "${title}",
+					rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Modify the first web content") {
+			AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "WebContent Title 1");
+
+			WebContent.addCP(
+				webContentContent = "WebContent Content 1 Edit",
+				webContentTitle = "WebContent Title 1 Edit");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the order of web contents") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "WebContent Title 2,WebContent Title 3,WebContent Title 1 Edit") {
+				AssetPublisherPortlet.viewDisplayOrderPG(
+					assetTitle = "${title}",
+					rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "Order web contents by priority in Asset Publisher."
+	@priority = "4"
+	test OrderWebContentsByPriority {
+		task ("Add three web contents with different priority") {
+			for (var i : list "1,5,3") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoAddCP();
+
+				WebContent.addCP(
+					webContentContent = "WC WebContent Content",
+					webContentTitle = "WC Priority ${i} Title");
+
+				WebContent.addPriority(priority = "${i}");
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("View the order of web contents in Asset Publisher") {
+			var n = "1";
+
+			for (var title : list "WC Priority 3 Title,WC Priority 5 Title,WC Priority 1 Title") {
+				AssetPublisherPortlet.viewDisplayOrderPG(
+					assetTitle = "${title}",
+					rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Web Content Article as Asset Type") {
+			AssetPublisherPortlet.configureAssetTypePG(
+				assetSubtype = "Any",
+				selectedAsset = "Web Content Article");
+		}
+
+		task ("Configure order by priority with ascending direction") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureAssetDisplayOrderPG(
+				fieldNameOrder = "Priority",
+				sortOrder = "Ascending");
+		}
+
+		task ("View the order of web contents in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "WC Priority 1 Title,WC Priority 3 Title,WC Priority 5 Title") {
+				AssetPublisherPortlet.viewDisplayOrderPG(
+					assetTitle = "${title}",
+					rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Configure order by priority with descending direction") {
+			AssetPublisherPortlet.configureAssetDisplayOrderPG(
+				fieldNameOrder = "Priority",
+				sortOrder = "Descending");
+		}
+
+		task ("View the order of web contents in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "WC Priority 5 Title,WC Priority 3 Title,WC Priority 1 Title") {
+				AssetPublisherPortlet.viewDisplayOrderPG(
+					assetTitle = "${title}",
+					rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "Order web contents by publish date."
+	@priority = "3"
+	test OrderWebContentsByPublishDate {
+		task ("Add three web contents") {
+			for (var n : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "WebContent Content ${n}",
+					groupName = "Test Site Name",
+					title = "WebContent Title ${n}");
+
+				Pause(locator1 = "65000");
+			}
+		}
+
+		task ("Select the Web Content Article as Asset Type") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureAssetTypePG(
+				assetSubtype = "Any",
+				selectedAsset = "Web Content Article");
+		}
+
+		task ("Configure order by publish date") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureAssetDisplayOrderPG(
+				fieldNameOrder = "Publish Date",
+				sortOrder = "Ascending");
+		}
+
+		task ("View the order of web contents in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "WebContent Title 1,WebContent Title 2,WebContent Title 3") {
+				AssetPublisherPortlet.viewDisplayOrderPG(
+					assetTitle = "${title}",
+					rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "Restore configuration template in Asset Publisher."
+	@priority = "5"
+	test RestoreConfigurationTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Select the web content as manual selection") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureManualAssetSelectionPG();
+		}
+
+		task ("Save Current Configuration as Template") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.saveConfigurationTemplatePG(configurationName = "AP Manual Display");
+		}
+
+		task ("Remove the Asset Publisher from page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.deletePG(portletName = "Asset Publisher");
+		}
+
+		task ("Add an Asset Publisher to page") {
+			Portlet.addPG(portletName = "Asset Publisher");
+		}
+
+		task ("Restore the configuration template") {
+			AssetPublisherPortlet.restoreConfigurationTemplatePG(configurationName = "AP Manual Display");
+		}
+
+		task ("View the configuration template is retored") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewManualNoAssetsMessagePG();
+
+			AssetPublisherPortlet.viewRestoredSetupPG();
+		}
+	}
+
+	@description = "Search site in scope selector."
+	@priority = "4"
+	@uitest
+	test SearchSiteInScopeSelector {
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Search site in scope selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.assertSiteScopeSearch(siteName = "Site Name");
+		}
+	}
+
+	@description = "Select the Blogs Entry as asset type."
+	@priority = "4"
+	test SelectBlogsEntryAsAssetType {
+		task ("Select the Blogs Entry in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureSelectedPG(selectedAsset = "Blogs Entry");
+		}
+
+		task ("View the asset type is Blogs Entry") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewSelectedPG(
+				selectedAsset = "Blogs Entry",
+				selectedAssetConfiguration = "Blogs Entry");
+		}
+	}
+
+	@description = "Select the Bookmarks Entry as asset type."
+	@priority = "4"
+	test SelectBookmarksEntryAsAssetType {
+		property portal.release = "false";
+
+		task ("Select the Bookmarks Entry in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureSelectedPG(selectedAsset = "Bookmarks Entry");
+		}
+
+		task ("View the asset type is Bookmarks Entry") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewSelectedPG(
+				selectedAsset = "Bookmarks Entry",
+				selectedAssetConfiguration = "Bookmarks Entry");
+		}
+	}
+
+	@description = "Select the Document as asset type."
+	@priority = "4"
+	test SelectDocumentAsAssetType {
+		task ("Select the Document in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureSelectedPG(selectedAsset = "Document");
+		}
+
+		task ("View the asset type is Document") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewSelectedPG(
+				selectedAsset = "Basic Document",
+				selectedAssetConfiguration = "Document");
+		}
+	}
+
+	@description = "Select the Web Content Article as asset type."
+	@priority = "5"
+	test SelectWebContentArticleAsAssetType {
+		property portal.acceptance = "true";
+
+		task ("Select the Web Content Article in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureAssetTypePG(
+				assetSubtype = "Basic Web Content",
+				selectedAsset = "Web Content Article");
+		}
+
+		task ("View the asset type is Web Content Article") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewSelectedPG(
+				assetSubtypeConfiguration = "Basic Web Content",
+				selectedAsset = "Basic Web Content",
+				selectedAssetConfiguration = "Web Content Article");
+		}
+	}
+
+	@description = "View the barebone decorator in Asset Publisher."
+	@priority = "3"
+	@uitest
+	test ViewBareboneDecoratorInAssetPublisher {
+		task ("View Asset Publisher title") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.viewTitle(portletName = "Asset Publisher");
+		}
+
+		task ("Configure application decorators to barebone") {
+			Portlet.gotoPortletOptions(portletOption = "Look and Feel Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			Portlet.selectApplicationDecorator(decorator = "Barebone");
+
+			PortletEntry.save();
+		}
+
+		task ("View Asset Publisher title is hidden") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.viewNoSpecificPG(portletName = "Asset Publisher");
+		}
+	}
+
+	@description = "View bookmarks entry in Asset Publisher with different display templates."
+	@priority = "4"
+	test ViewBookmarksEntryInAssetPublisherWithDifferentDisplayTemplates {
+		property portal.release = "false";
+		property testray.component.names = "Asset Publisher,Bookmarks,Content and Display Templates";
+
+		task ("Add a bookmarks entry") {
+			JSONBookmarks.addBookmarks(
+				description = "Test Bookmark Description",
+				groupName = "Test Site Name",
+				name = "Test Bookmark Name",
+				url = "https://www.liferay.com");
+		}
+
+		task ("Change the display template to Full Content") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Configuration");
+
+			AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Full Content");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewConfigureAPDisplayTemplateFullContentBookmarksPG(
+				assetTitle = "Test Bookmark Name",
+				bookmarkDescription = "Test Bookmark Description",
+				bookmarkName = "Test Bookmark Name",
+				url = "https://www.liferay.com");
+		}
+
+		task ("Change the display template to Table") {
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Configuration");
+
+			AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Table");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewConfigureAPDisplayTemplateTableBookmarksPG(
+				assetTitle = "Test Bookmark Name",
+				bookmarkDescription = "Test Bookmark Description",
+				bookmarkName = "Test Bookmark Name");
+		}
+
+		task ("Change the display template to Title List") {
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Configuration");
+
+			AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Title List");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewConfigureAPDisplayTemplateTitleListBookmarksPG(
+				assetTitle = "Test Bookmark Name",
+				bookmarkDescription = "Test Bookmark Description",
+				bookmarkName = "Test Bookmark Name");
+		}
+	}
+
+	@description = "View the custom title of Asset Publisher."
+	@priority = "3"
+	@uitest
+	test ViewCustomTitleOfAssetPublisher {
+		task ("View Asset Publisher title") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.viewTitle(portletName = "Asset Publisher");
+		}
+
+		task ("Custom the Asset Publisher title") {
+			Portlet.gotoPortletOptions(portletOption = "Look and Feel Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			Portlet.configureCustomTitleViaLookandfeelPG(portletName = "Asset Publisher");
+
+			PortletEntry.save();
+		}
+
+		task ("View the custom title of Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.viewSpecificPG(portletName = "Asset Publisher Custom");
+		}
+	}
+
+	@description = "View the decorate decorator in Asset Publisher."
+	@priority = "3"
+	@uitest
+	test ViewDecorateDecoratorInAssetPublisher {
+		task ("View Asset Publisher title") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.viewTitle(portletName = "Asset Publisher");
+		}
+
+		task ("Configure application decorators to barebone") {
+			Portlet.gotoPortletOptions(portletOption = "Look and Feel Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			Portlet.selectApplicationDecorator(decorator = "Decorate");
+
+			PortletEntry.save();
+		}
+
+		task ("View the Asset Publisher title") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.viewSpecificPG(portletName = "Asset Publisher");
+		}
+	}
+
 	@description = "This is a test for LPS-86192. The default asset link behavior should be 'View in Context'."
 	@priority = "4"
+	@uitest
 	test ViewDefaultAssetLinkBehavior {
-		task ("## Navigate to Asset Publisher widget display settings.") {
+		task ("Navigate to Asset Publisher widget display settings") {
 			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.gotoConfigurationPG();
@@ -70,7 +982,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Display Settings");
 		}
 
-		task ("## Assert the default asset link behavior is 'View in Context'.") {
+		task ("View the default asset link behavior is View in Context") {
 			AssertSelectedLabel(
 				locator1 = "APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT",
 				value1 = "View in Context");

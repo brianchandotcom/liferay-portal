@@ -20,7 +20,9 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,6 +45,39 @@ public class WikiNodeResourceTest extends BaseWikiNodeResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutSiteWikiNodeByExternalReferenceCode() throws Exception {
+
+		// Update
+
+		super.testPutSiteWikiNodeByExternalReferenceCode();
+
+		// Add
+
+		com.liferay.headless.delivery.client.dto.v1_0.WikiNode wikiNode =
+			randomWikiNode();
+
+		com.liferay.headless.delivery.client.dto.v1_0.WikiNode putWikiNode =
+			wikiNodeResource.putSiteWikiNodeByExternalReferenceCode(
+				wikiNode.getExternalReferenceCode(), testGroup.getGroupId(),
+				wikiNode);
+
+		assertEquals(wikiNode, putWikiNode);
+		assertValid(putWikiNode);
+
+		com.liferay.headless.delivery.client.dto.v1_0.WikiNode getWikiPage =
+			wikiNodeResource.getSiteWikiNodeByExternalReferenceCode(
+				putWikiNode.getExternalReferenceCode(), testGroup.getGroupId());
+
+		assertEquals(wikiNode, getWikiPage);
+		assertValid(getWikiPage);
+
+		Assert.assertEquals(
+			wikiNode.getExternalReferenceCode(),
+			putWikiNode.getExternalReferenceCode());
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "name"};
 	}
@@ -50,6 +85,14 @@ public class WikiNodeResourceTest extends BaseWikiNodeResourceTestCase {
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {"creatorId"};
+	}
+
+	@Override
+	protected com.liferay.headless.delivery.client.dto.v1_0.WikiNode
+			testGraphQLWikiNode_addWikiNode()
+		throws Exception {
+
+		return testGetWikiNode_addWikiNode();
 	}
 
 }

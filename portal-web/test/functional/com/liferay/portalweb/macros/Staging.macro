@@ -1,11 +1,15 @@
 definition {
 
 	macro activateStagingCP {
-		var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
+		ProductMenuHelper.openProductMenu();
 
-		Staging.openStagingAdmin(siteURLKey = "${siteURLKey}");
+		AssertTextEquals.assertPartialText(
+			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+			value1 = "${siteName}");
 
-		if ("${remoteStaging}" == "true") {
+		Pause(locator1 = "3000");
+
+		if (isSet(remoteStaging)) {
 			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_REMOTE_LIVE");
 
 			Type(
@@ -16,11 +20,12 @@ definition {
 				locator1 = "SiteSettingsStaging#REMOTE_STAGING_PORT",
 				value1 = "${remotePort}");
 
-			Paste(
+			Type(
 				locator1 = "SiteSettingsStaging#REMOTE_STAGING_SITE_ID",
 				value1 = "${siteID}");
 		}
-		else {
+
+		if (!(isSet(remoteStaging))) {
 			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_LOCAL_LIVE");
 		}
 
@@ -30,34 +35,9 @@ definition {
 			Click(locator1 = "Checkbox#ENABLED_ON_PRIVATE_PAGES");
 		}
 
+		Click(locator1 = "SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX");
+
 		if (isSet(noContent)) {
-			Click(locator1 = "SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX");
-
-			Click(locator1 = "SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX");
-		}
-		else if (isSet(contentName)) {
-			Click(locator1 = "SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX");
-
-			Click(locator1 = "SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX");
-
-			Click(
-				key_contentName = "${contentName}",
-				locator1 = "SiteSettingsStaging#CONTENT_CHECKBOX");
-		}
-		else if (isSet(contentByContent)) {
-			for (var contentName : list "Documents and Media,Mobile Device Families,Web Content") {
-				var key_contentName = "${contentName}";
-
-				Click(locator1 = "SiteSettingsStaging#CONTENT_CHECKBOX");
-			}
-
-			for (var contentName : list "Widget Template,Blogs,Bookmarks,Calendar,Documents and Media,Forms,Knowledge Base,Message Boards,Mobile Device Families,Polls,Web Content,Wiki") {
-				var key_contentName = "${contentName}";
-
-				Click(locator1 = "SiteSettingsStaging#CONTENT_CHECKBOX");
-			}
-		}
-		else {
 			Click(locator1 = "SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX");
 		}
 
@@ -79,54 +59,12 @@ definition {
 				value1 = "The recycle bin of this site will be automatically emptied before turning on local staging. Make sure to manually restore anything you don't want to delete permanently before you continue.");
 		}
 
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${editActivateStaging}" == "true") {
-			Button.clickSave();
+		if (isSet(remoteStaging)) {
+			Staging.saveRemoteStagingConfiguration(siteName = "${siteName}");
 		}
 
-		else if ("${remoteStaging}" == "true") {
-			if ("${browserType}" == "safari") {
-				Button.click(button = "Save");
-			}
-
-			else {
-				AssertClickNoError(
-					locator1 = "Button#SAVE",
-					value1 = "Save");
-			}
-
-			AssertConfirm(value1 = "Are you sure you want to activate remote staging for ${siteName}?");
-
-			while (IsElementNotPresent(locator1 = "Message#SUCCESS")) {
-				Pause(locator1 = "1000");
-			}
-
-			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE")) {
-				Click(locator1 = "Button#CLOSE_MESSAGE");
-			}
-		}
-
-		else {
-			if ("${browserType}" == "safari") {
-				Button.click(button = "Save");
-			}
-
-			else {
-				AssertClickNoError(
-					locator1 = "Button#SAVE",
-					value1 = "Save");
-			}
-
-			AssertConfirm(value1 = "Are you sure you want to activate local staging for ${siteName}?");
-
-			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
-				Pause(locator1 = "1000");
-			}
-
-			AssertTextEquals(
-				locator1 = "Staging#PROCESS_RESULT",
-				value1 = "SUCCESSFUL");
+		if (!(isSet(remoteStaging))) {
+			Staging.saveLocalStagingConfiguration(siteName = "${siteName}");
 		}
 
 		AssertTextNotPresent(
@@ -136,8 +74,6 @@ definition {
 		AssertTextNotPresent(
 			locator1 = "Message#ERROR",
 			value1 = "Your request failed to complete.");
-
-		var browserType = PropsUtil.get("browser.type");
 
 		AssertElementPresent(locator1 = "Button#PLUS");
 
@@ -982,7 +918,6 @@ definition {
 
 		Staging.activateStagingCP(
 			contentName = "${contentName}",
-			editActivateStaging = "${editActivateStaging}",
 			pageVersioningEnabled = "${pageVersioningEnabled}",
 			remotePort = "${remotePort}",
 			remoteStaging = "true",
@@ -1012,6 +947,22 @@ definition {
 			remotePort = "${remotePort}");
 	}
 
+	macro saveLocalStagingConfiguration {
+		AssertClickNoError(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertConfirm(value1 = "Are you sure you want to activate local staging for ${siteName}?");
+
+		while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
+			Pause(locator1 = "1000");
+		}
+
+		AssertTextEquals(
+			locator1 = "Staging#PROCESS_RESULT",
+			value1 = "SUCCESSFUL");
+	}
+
 	macro savePublishTemplate {
 		Button.clickSave();
 
@@ -1024,6 +975,22 @@ definition {
 		AssertTextEquals(
 			locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_DESCRIPTION",
 			value1 = "${publishTemplateDescription}");
+	}
+
+	macro saveRemoteStagingConfiguration {
+		AssertClickNoError(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertConfirm(value1 = "Are you sure you want to activate remote staging for ${siteName}?");
+
+		while (IsElementNotPresent(locator1 = "Message#SUCCESS")) {
+			Pause(locator1 = "1000");
+		}
+
+		if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE")) {
+			Click(locator1 = "Button#CLOSE_MESSAGE");
+		}
 	}
 
 	macro schedulePublishToLivePG {

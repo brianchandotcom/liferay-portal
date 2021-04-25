@@ -4482,6 +4482,10 @@ components:
                     description:
                         The wiki node's description.
                     type: string
+                externalReferenceCode:
+                    description:
+                        The wiki node's external reference code.
+                    type: string
                 id:
                     description:
                         The wiki node's ID.
@@ -11578,6 +11582,97 @@ paths:
                     description:
                         ""
             tags: ["WikiNode"]
+    "/sites/{siteId}/wiki-nodes/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the site's wiki node by external reference code.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: [ "WikiNode" ]
+        get:
+            # @review
+            description:
+                Retrieves the site's wiki node by external reference code.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WikiNode"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WikiNode"
+                    description:
+                        ""
+            tags: [ "WikiNode" ]
+        put:
+            # @review
+            description:
+                Updates the site's wiki node with the given external reference code, or creates it if it not exists.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WikiNode"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WikiNode"
+                description:
+                    ""
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WikiNode"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WikiNode"
+                    description:
+                        ""
+            tags: [ "WikiNode" ]
     "/sites/{siteId}/wiki-nodes/permissions":
         get:
             operationId: getSiteWikiNodePermissionsPage

@@ -24,9 +24,7 @@ definition {
 	}
 
 	macro createABTest {
-		Click(locator1 = "ABTest#AB_TEST_BUTTON");
-
-		if (IsElementNotPresent(locator1 = "ABTest#CREATE_TEST_BUTTON")) {
+		while (IsElementNotPresent(locator1 = "ABTest#CREATE_TEST_BUTTON")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
 
@@ -92,9 +90,14 @@ definition {
 	}
 
 	macro terminateTest {
-		SelectWindow(locator1 = "title=Content Page - Test Site Name - Liferay DXP");
+		if (IsElementPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
+			ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
+		}
+		else {
+			Refresh();
 
-		ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
+			ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
+		}
 
 		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to terminate this test?");
 

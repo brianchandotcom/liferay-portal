@@ -15,6 +15,7 @@
 package com.liferay.fragment.service.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
@@ -557,7 +558,9 @@ public class FragmentEntryLocalServiceImpl
 				FragmentServiceConfiguration.class,
 				draftFragmentEntry.getCompanyId());
 
-		if (fragmentServiceConfiguration.propagateChanges()) {
+		if (fragmentServiceConfiguration.propagateChanges() &&
+			!ExportImportThreadLocal.isStagingInProcess()) {
+
 			_propagateChanges(
 				updatedPublishedFragmentEntry.getFragmentEntryId());
 		}
@@ -653,7 +656,9 @@ public class FragmentEntryLocalServiceImpl
 				FragmentServiceConfiguration.class,
 				fragmentEntry.getCompanyId());
 
-		if (fragmentServiceConfiguration.propagateChanges()) {
+		if (fragmentServiceConfiguration.propagateChanges() &&
+			!ExportImportThreadLocal.isStagingInProcess()) {
+
 			_propagateChanges(fragmentEntryId);
 		}
 

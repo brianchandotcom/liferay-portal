@@ -144,7 +144,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addFileEntry(String, long, long, String, String, String, String, String, byte[], ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry addFileEntry(
 			long repositoryId, long folderId, String sourceFileName,
@@ -187,7 +189,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addFileEntry(String, long, long, String, String, String, String, String, File, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry addFileEntry(
 			long repositoryId, long folderId, String sourceFileName,
@@ -231,7 +235,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addFileEntry(String, long, long, String, String, String, String, String, InputStream, long, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry addFileEntry(
 			long repositoryId, long folderId, String sourceFileName,

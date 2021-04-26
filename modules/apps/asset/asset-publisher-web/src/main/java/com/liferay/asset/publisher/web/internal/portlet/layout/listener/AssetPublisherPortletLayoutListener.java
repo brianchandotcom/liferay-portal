@@ -162,6 +162,7 @@ public class AssetPublisherPortletLayoutListener
 					selectionStyle,
 					AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
 
+			_deleteAssetListEntryUsage(plid, portletId);
 			_deleteLayoutClassedModelUsages(layout, portletId);
 
 			_addLayoutClassedModelUsages(plid, portletId, portletPreferences);

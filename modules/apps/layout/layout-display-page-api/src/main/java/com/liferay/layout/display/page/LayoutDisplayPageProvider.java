@@ -29,6 +29,17 @@ public interface LayoutDisplayPageProvider<T> {
 	public LayoutDisplayPageObjectProvider<T>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle);
 
+	public default LayoutDisplayPageObjectProvider<T>
+		getParentLayoutDisplayPageObjectProvider(
+			InfoItemReference infoItemReference) {
+
+		return null;
+	}
+
 	public String getURLSeparator();
+
+	public default boolean inheritable() {
+		return false;
+	}
 
 }

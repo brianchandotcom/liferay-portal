@@ -18,6 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayToolbar from '@clayui/toolbar';
 import Cropper from 'cropperjs';
 import React, {useEffect, useRef, useState} from 'react';
+import {fetch} from 'frontend-js-web';
 
 import 'cropperjs/dist/cropper.css';
 
@@ -51,7 +52,7 @@ const zoomSteps = [12.5, 25, 50, 100, 150, 200];
 
 const noop = () => {};
 
-export default ({imageSrc, onCancel = noop, onSave = noop}) => {
+export default ({imageId, imageSrc, onCancel = noop, onSave = noop, saveURL}) => {
 	const ref = useRef();
 
 	const [currentZoom, setCurrentZoom] = useState(100);
@@ -72,7 +73,23 @@ export default ({imageSrc, onCancel = noop, onSave = noop}) => {
 	};
 
 	const handleSave = () => {
-		onSave(ref.current?.cropper?.getCroppedCanvas());
+		const canvas = ref.current?.cropper?.getCroppedCanvas();
+
+		canvas.toBlob((blob) => {
+			const formData = new FormData();
+
+			formData.append('fileEntryId', imageId);
+			formData.append('imageBlob', blob, imageId);
+
+			fetch(saveURL, {
+				body: formData,
+				method: 'POST',
+			})
+				.then((response) => response.json())
+				.then((response) => {
+					onSave(response);
+				});
+		});
 	};
 
 	const handleZoomIn = () => {

@@ -11,8 +11,8 @@
 		"@liferay/frontend-js-react-web": "*",
 		"asset-taglib": "*",
 		"clipboard": "2.0.4",
-		"cropperjs": "^1.5.11",
 		"frontend-js-web": "*",
+		"item-selector-taglib": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0",
 		"react-dom": "16.12.0"

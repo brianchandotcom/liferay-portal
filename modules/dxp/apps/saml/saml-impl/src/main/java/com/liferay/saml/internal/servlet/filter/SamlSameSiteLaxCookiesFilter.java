@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlPortletKeys;
 
 import java.io.PrintWriter;
 
@@ -51,8 +52,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
 		"servlet-context-name=",
 		"servlet-filter-name=SAML SameSite Lax Support Filter",
-		"url-pattern=/c/portal/saml/acs", "url-pattern=/c/portal/saml/slo",
-		"url-pattern=/c/portal/saml/sso"
+		"url-pattern=/web/*"
 	},
 	service = Filter.class
 )
@@ -76,7 +76,24 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			return false;
 		}
 
-		return true;
+		String commandName = ParamUtil.getString(
+			httpServletRequest,
+			'_' + SamlPortletKeys.SAML + "_javax.portlet.action");
+
+		if (commandName.equals("/saml/assertion_consumer_service")) {
+			return true;
+		}
+
+		commandName = ParamUtil.getString(
+			httpServletRequest, "p_p_resource_id");
+
+		if (commandName.equals("/saml/web_sso") ||
+			commandName.equals("/saml/slo")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Activate
@@ -109,11 +126,15 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(7 + (5 * _PARAMS.length));
+		StringBundler sb = new StringBundler(11 + (5 * _PARAMS.length));
 
 		sb.append("<!DOCTYPE html>\n\n");
 		sb.append("<html><body onload=\"document.forms[0].submit()\">");
-		sb.append("<form action=\"?continue=true\" method=\"post\"");
+		sb.append("<form action=\"");
+		sb.append(httpServletRequest.getRequestURI());
+		sb.append('?');
+		sb.append(httpServletRequest.getQueryString());
+		sb.append("&continue=true\" method=\"post\"");
 		sb.append("name=\"fm\">");
 
 		for (String param : _PARAMS) {

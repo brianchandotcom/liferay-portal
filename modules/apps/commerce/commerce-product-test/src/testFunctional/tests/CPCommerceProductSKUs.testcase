@@ -78,70 +78,66 @@ definition {
 	@priority = "3"
 	test AddASKUWithSubscriptions {
 		property portal.acceptance = "false";
-
 		property test.name.skip.portal.instance = "CPCommerceProductSKUs#AddASKUWithSubscriptions";
 
-        CommerceNavigator.gotoPortlet(
-            category = "Product Management",
-            portlet = "Products");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
 
-        CPCommerceCatalog.newProductsEntry(
-            productCatalog = "Master",
-            productName = "Simple T-Shirt",
-            productType = "Simple");
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
 
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-        CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+		CommerceSKUs.addSKU(
+			noOption = "true",
+			optionValuesList = "BLACK:10.0");
 
-        CommerceSKUs.addSKU(
-            noOption = "true",
-            optionValuesList = "BLACK:10.0");
+		Click(
+			key_value = "BLACKSKU",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
-        Click(
-            key_value = "BLACKSKU",
-            locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		MenuItem.click(menuItem = "Edit");
 
-        MenuItem.click(menuItem = "Edit");
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-        SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		Click(
+			key_entry = "Subscriptions",
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
 
-        Click(
-            key_entry = "Subscriptions",
-            locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Override Subscription Settings",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-        Check.checkToggleSwitch(
-            key_toggleSwitchLabel = "Override Subscription Settings",
-            locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		AssertElementPresent.assertVisible(
+			key_entryName = "Payment Subscription",
+			locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
 
-        AssertElementPresent.assertVisible(
-            key_entryName = "Payment Subscription",
-            locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
+		AssertElementPresent.assertVisible(
+			key_entryName = "Delivery Subscription",
+			locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
 
-        AssertElementPresent.assertVisible(
-            key_entryName = "Delivery Subscription",
-            locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
+		Button.clickSave();
 
-        Button.clickSave();
+		AssertVisible(locator1 = "Message#SUCCESS");
 
-        AssertVisible(locator1 = "Message#SUCCESS");
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Override Subscription Settings",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-        Uncheck.uncheckToggleSwitch(
-            key_toggleSwitchLabel = "Override Subscription Settings",
-            locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		Button.clickSave();
 
-        Button.clickSave();
+		AssertVisible(locator1 = "Message#SUCCESS");
 
-        AssertVisible(locator1 = "Message#SUCCESS");
+		AssertNotVisible(
+			key_entryName = "Payment Subscription",
+			locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
 
-        AssertNotVisible(
-            key_entryName = "Payment Subscription",
-            locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
-
-        AssertNotVisible(
-            key_entryName = "Delivery Subscription",
-            locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
-			
-
+		AssertNotVisible(
+			key_entryName = "Delivery Subscription",
+			locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
 	}
 
 	@description = "This is a test for COMMERCE-6022. EditASKU"
@@ -228,6 +224,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6023. RemoveASKU
+
 	}
 
 }

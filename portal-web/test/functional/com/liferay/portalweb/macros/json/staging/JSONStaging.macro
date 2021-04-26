@@ -4,7 +4,15 @@ definition {
 	macro enableLocalStaging {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		var groupId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+		if (!(isSet(globalSite))) {
+			var groupId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+		}
+
+		if (isSet(globalSite)) {
+			var companyId = JSONCompany.getCompanyId();
+
+			var groupId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${companyId}");
+		}
 
 		if (!(isSet(branchingPrivate))) {
 			var branchingPrivate = "false";

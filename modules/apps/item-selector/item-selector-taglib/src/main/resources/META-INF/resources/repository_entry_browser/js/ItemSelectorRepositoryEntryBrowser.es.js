@@ -84,6 +84,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		const data = {
 			container,
 			currentIndex: index,
+			editImageURL: this.editImageURL,
 			handleSelectedItem: this._onItemSelected.bind(this),
 			headerTitle: this.closeCaption,
 			items,
@@ -518,6 +519,15 @@ ItemSelectorRepositoryEntryBrowser.STATE = {
 	 * @type {String}
 	 */
 	closeCaption: Config.string(),
+
+	/**
+	 * Endpoint to send the image edited in the Image Editor
+	 *
+	 * @instance
+	 * @memberof ItemSelectorRepositoryEntryBrowser
+	 * @type {String}
+	 */
+	editImageURL: Config.string(),
 
 	/**
 	 * Time to hide the alert messages.

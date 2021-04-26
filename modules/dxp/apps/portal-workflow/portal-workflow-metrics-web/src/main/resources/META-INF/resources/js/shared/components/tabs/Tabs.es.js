@@ -14,7 +14,7 @@ import React from 'react';
 
 const Tabs = ({currentTab, setCurrentTab, tabs = []}) => {
 	return (
-		<ClayTabs className="ml-3 pl-2">
+		<ClayTabs className="ml-3">
 			{tabs.map(({name, tabKey}, index) => (
 				<ClayTabs.Item
 					active={currentTab === tabKey}

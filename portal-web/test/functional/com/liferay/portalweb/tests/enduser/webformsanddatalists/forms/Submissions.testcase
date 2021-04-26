@@ -1,0 +1,161 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a Form with required fields can be partially filled out and submitted"
+	@ignore = "true"
+	@priority = "5"
+	test CanBePartiallyFilledWithRequiredFields {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131023 CanBePartiallyFilledWithRequiredFields pending implementation
+
+	}
+
+	@description = "Verify that a Form can be submitted"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeSubmitted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131018 CanBeSubmitted pending implementation
+	}
+
+	@description = "Verify that a Form can be submitted from the Forms Widget"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeSubmittedFromWidget {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131019 CanBeSubmittedFromWidget pending implementation
+	}
+
+	@description = "Verify that a Form that is partially filled out can be submitted"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeSubmittedWhilePartiallyFilled {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131020 CanBeSubmittedWhilePartiallyFilled pending implementation
+	}
+
+	@description = "Verify that a Form with multiple pages can be submitted"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeSubmittedWithMultiplePages {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131151 CanBeSubmittedWithMultiplePages pending implementation
+	}
+
+	@description = "Verify that a Form can redirect a user after being submitted"
+	@ignore = "true"
+	@priority = "5"
+	test CanRedirectUserAfterFormSubmission {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131026 CanRedirectUserAfterFormSubmission pending implementation
+	}
+
+	@description = "Verify that a Form can require user authentication before being accessed"
+	@ignore = "true"
+	@priority = "5"
+	test CanRequireUserAuthentication {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131024 CanRequireUserAuthentication pending implementation
+	}
+
+	@description = "Verify that a Form's Success Page can be restored"
+	@ignore = "true"
+	@priority = "5"
+	test DefaultSuccessPageCanBeRestored {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131035 DefaultSuccessPageCanBeRestored pending implementation
+	}
+
+	@description = "Verify that the Submit button's default value is restored if the Submit Button Label is left blank"
+	@ignore = "true"
+	@priority = "4"
+	test SubmitButtonRestoredToDefaultIfLeftBlank {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131032 SubmitButtonRestoredToDefaultIfLeftBlank pending implementation
+	}
+
+	@description = "Verify that a Form's Submit button's text can be customized"
+	@ignore = "true"
+	@priority = "5"
+	test SubmitButtonTextCanBeCustomized {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131028 SubmitButtonTextCanBeCustomized pending implementation
+	}
+
+	@description = "Verify that a Form's Submit button's text can be customized multiple times"
+	@ignore = "true"
+	@priority = "3"
+	test SubmitButtonTextCanBeCustomizedMultipleTimes {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131031 SubmitButtonTextCanBeCustomizedMultipleTimes pending implementation
+	}
+
+	@description = "Verify that a Form's Submit button's text can be customized with numbers"
+	@ignore = "true"
+	@priority = "3"
+	test SubmitButtonTextCanBeCustomizedWithNumbers {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131030 SubmitButtonTextCanBeCustomizedWithNumbers pending implementation
+	}
+
+	@description = "Verify that a Form's Submit button's text can be customized with special characters"
+	@ignore = "true"
+	@priority = "3"
+	test SubmitButtonTextCanBeCustomizedWithSpecialCharacters {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131029 SubmitButtonTextCanBeCustomizedWithSpecialCharacters pending implementation
+	}
+
+	@description = "Verify that a Form's Success Page can be deleted"
+	@ignore = "true"
+	@priority = "5"
+	test SuccessPageCanBeDeleted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131034 SuccessPageCanBeDeleted pending implementation
+	}
+
+}

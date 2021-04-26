@@ -32,6 +32,12 @@ public class WikiPageLocalServiceWrapper
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addPage(String, long, long, String, double, String, String, boolean,
+	 String, boolean, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.wiki.model.WikiPage addPage(
 			long userId, long nodeId, String title, double version,

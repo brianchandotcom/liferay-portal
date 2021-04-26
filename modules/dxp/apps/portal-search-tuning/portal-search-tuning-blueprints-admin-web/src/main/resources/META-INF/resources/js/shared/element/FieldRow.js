@@ -83,7 +83,9 @@ function FieldRow({
 
 	useEffect(() => {
 		setFilteredIndexFields(
-			indexFields.filter((indexField) => indexField.name.includes(field))
+			indexFields.filter((indexField) =>
+				indexField.name.toLowerCase().includes(field.toLowerCase())
+			)
 		);
 	}, [indexFields, field]);
 
@@ -152,16 +154,18 @@ function FieldRow({
 								onSetActive={setShowDropDown}
 							>
 								<ClayDropDown.ItemList className="blueprint-field-row-dropdown">
-									{filteredIndexFields.map((indexField) => (
-										<AutocompleteItem
-											indexField={indexField}
-											key={indexField.name}
-											match={field}
-											onClick={_handleAutocompleteItemClick(
-												indexField
-											)}
-										/>
-									))}
+									{filteredIndexFields.map(
+										(indexField, index) => (
+											<AutocompleteItem
+												indexField={indexField}
+												key={index}
+												match={field}
+												onClick={_handleAutocompleteItemClick(
+													indexField
+												)}
+											/>
+										)
+									)}
 								</ClayDropDown.ItemList>
 							</ClayAutocomplete.DropDown>
 						</ClayAutocomplete>

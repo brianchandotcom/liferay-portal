@@ -141,8 +141,10 @@ public class AzureStore implements Store {
 						_blobContainerClient.getBlobContainerName(),
 						blobItem.getName())));
 
-			blobBatchClient.submitBatchWithResponse(
-				blobBatch, false, null, Context.NONE);
+			if (!blobItems.isEmpty()) {
+				blobBatchClient.submitBatchWithResponse(
+					blobBatch, false, null, Context.NONE);
+			}
 
 			for (Response<Void> response : responses) {
 				if (response.getStatusCode() < 400) {

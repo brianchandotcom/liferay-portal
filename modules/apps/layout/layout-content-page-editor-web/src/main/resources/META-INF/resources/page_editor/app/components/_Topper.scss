@@ -257,11 +257,8 @@
 			box-shadow: inset 0 0 0 $borderWidth $purple;
 		}
 	}
-	&--hovered {
-		&:after {
-			box-shadow: none;
-		}
-
+	&--hovered:after {
+		box-shadow: none;
 		outline: $borderWidth dashed fade_out($purple, 0.5);
 		outline-offset: -$borderWidth;
 	}

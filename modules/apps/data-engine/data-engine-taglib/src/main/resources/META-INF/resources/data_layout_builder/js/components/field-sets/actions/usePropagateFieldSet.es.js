@@ -31,7 +31,7 @@ const getName = ({name = {}}) => {
 
 const FieldInfo = ({label, value}) => (
 	<div>
-		<label>{`${label}:`}</label>
+		<label className="use-propagate-field-set__field-info-label">{`${label}:`}</label>
 		<span>{value}</span>
 	</div>
 );
@@ -140,7 +140,7 @@ export default () => {
 									<>
 										{warningMessage && (
 											<ClayAlert displayType="warning">
-												<strong>
+												<strong className="use-propagate-field-set__warning">
 													{Liferay.Language.get(
 														'warning'
 													)}

@@ -1,0 +1,6 @@
+.use-propagate-field-set__field-info-label,
+.use-propagate-field-set__warning {
+    &:after {
+        content: "\00a0";
+    }
+}

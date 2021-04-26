@@ -50,6 +50,11 @@ public class ChangeTrackingServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.3.0", "2.4.0", new CTSchemaVersionUpgradeProcess());
+
+		registry.register(
+			"2.4.0", "2.5.0",
+			new com.liferay.change.tracking.internal.upgrade.v2_5_0.
+				SchemaUpgradeProcess());
 	}
 
 }

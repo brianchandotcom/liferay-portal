@@ -59,6 +59,10 @@ definition {
 			PortletEntry.inputName(name = "${siteName}");
 
 			Modal.save();
+
+			Click(
+				key_url = "site-configuration",
+				locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 		}
 
 		if ("${siteType}" == "Site Template") {
@@ -128,6 +132,10 @@ definition {
 		PortletEntry.inputName(name = "${siteName}");
 
 		Modal.save();
+
+		Click(
+			key_url = "site-configuration",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertTextEquals(
 			locator1 = "SitesEditSite#DETAILS_NAME",
@@ -716,6 +724,10 @@ definition {
 			category = "Configuration",
 			portlet = "Site Settings");
 
+		Click(
+			key_url = "site-configuration",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
 		AssertElementPresent(locator1 = "SitesEditSite#SITE_ID");
 
 		var siteId = selenium.getElementValue("SitesEditSite#SITE_ID");
@@ -885,6 +897,10 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Site Settings");
+
+		Click(
+			key_url = "site-configuration",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Pause(locator1 = "5000");
 

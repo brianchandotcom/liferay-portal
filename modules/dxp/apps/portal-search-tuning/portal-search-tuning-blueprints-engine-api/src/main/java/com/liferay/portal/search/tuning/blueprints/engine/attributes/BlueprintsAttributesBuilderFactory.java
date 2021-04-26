@@ -12,25 +12,19 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.attributes;
+package com.liferay.portal.search.tuning.blueprints.engine.attributes;
 
-import java.util.Locale;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Petteri Karttunen
  */
-public interface BlueprintsAttributesBuilder {
+@ProviderType
+public interface BlueprintsAttributesBuilderFactory {
 
-	public BlueprintsAttributesBuilder addAttribute(String key, Object value);
+	public BlueprintsAttributesBuilder builder();
 
-	public BlueprintsAttributes build();
-
-	public BlueprintsAttributesBuilder companyId(long companyId);
-
-	public BlueprintsAttributesBuilder keywords(String keywords);
-
-	public BlueprintsAttributesBuilder locale(Locale locale);
-
-	public BlueprintsAttributesBuilder userId(Long userId);
+	public BlueprintsAttributesBuilder builder(
+		BlueprintsAttributes blueprintsAttributes);
 
 }

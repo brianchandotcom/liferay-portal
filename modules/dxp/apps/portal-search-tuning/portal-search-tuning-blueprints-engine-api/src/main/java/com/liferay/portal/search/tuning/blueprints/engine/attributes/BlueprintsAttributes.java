@@ -12,19 +12,27 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.attributes;
+package com.liferay.portal.search.tuning.blueprints.engine.attributes;
 
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Petteri Karttunen
  */
-@ProviderType
-public interface BlueprintsAttributesBuilderFactory {
+public interface BlueprintsAttributes {
 
-	public BlueprintsAttributesBuilder builder();
+	public Optional<Object> getAttributeOptional(String key);
 
-	public BlueprintsAttributesBuilder builder(
-		BlueprintsAttributes blueprintsAttributes);
+	public Map<String, Object> getAttributes();
+
+	public Long getCompanyId();
+
+	public String getKeywords();
+
+	public Locale getLocale();
+
+	public Long getUserId();
 
 }

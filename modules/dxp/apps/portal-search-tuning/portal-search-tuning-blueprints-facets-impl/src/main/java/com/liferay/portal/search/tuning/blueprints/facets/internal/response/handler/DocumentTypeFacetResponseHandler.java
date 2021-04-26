@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.facets.constants.FacetsJSONResponseKeys;
 import com.liferay.portal.search.tuning.blueprints.facets.spi.response.FacetResponseHandler;
 

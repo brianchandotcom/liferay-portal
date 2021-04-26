@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.tuning.blueprints.util.attributes;
 
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilder;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributesBuilder;
 import com.liferay.portal.search.tuning.blueprints.model.Blueprint;
 
 import javax.portlet.PortletRequest;

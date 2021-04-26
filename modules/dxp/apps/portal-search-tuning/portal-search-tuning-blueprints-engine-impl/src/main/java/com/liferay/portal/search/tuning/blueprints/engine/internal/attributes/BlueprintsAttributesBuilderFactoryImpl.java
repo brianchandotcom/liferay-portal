@@ -12,11 +12,11 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.internal.attributes;
+package com.liferay.portal.search.tuning.blueprints.engine.internal.attributes;
 
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilder;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilderFactory;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributesBuilder;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributesBuilderFactory;
 
 import org.osgi.service.component.annotations.Component;
 

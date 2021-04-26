@@ -2,7 +2,6 @@ Bundle-Name: Liferay Portal Search Tuning Blueprints API
 Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portal.search.tuning.blueprints.attributes,\
 	com.liferay.portal.search.tuning.blueprints.comparator,\
 	com.liferay.portal.search.tuning.blueprints.constants,\
 	com.liferay.portal.search.tuning.blueprints.constants.json.keys,\

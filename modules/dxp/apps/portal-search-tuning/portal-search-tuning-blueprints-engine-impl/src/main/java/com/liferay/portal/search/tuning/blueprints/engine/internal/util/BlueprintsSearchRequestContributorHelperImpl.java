@@ -16,7 +16,7 @@ package com.liferay.portal.search.tuning.blueprints.engine.internal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.engine.exception.BlueprintsEngineException;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterData;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterDataCreator;

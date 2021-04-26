@@ -12,27 +12,25 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.attributes;
+package com.liferay.portal.search.tuning.blueprints.engine.attributes;
 
 import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Petteri Karttunen
  */
-public interface BlueprintsAttributes {
+public interface BlueprintsAttributesBuilder {
 
-	public Optional<Object> getAttributeOptional(String key);
+	public BlueprintsAttributesBuilder addAttribute(String key, Object value);
 
-	public Map<String, Object> getAttributes();
+	public BlueprintsAttributes build();
 
-	public Long getCompanyId();
+	public BlueprintsAttributesBuilder companyId(long companyId);
 
-	public String getKeywords();
+	public BlueprintsAttributesBuilder keywords(String keywords);
 
-	public Locale getLocale();
+	public BlueprintsAttributesBuilder locale(Locale locale);
 
-	public Long getUserId();
+	public BlueprintsAttributesBuilder userId(Long userId);
 
 }

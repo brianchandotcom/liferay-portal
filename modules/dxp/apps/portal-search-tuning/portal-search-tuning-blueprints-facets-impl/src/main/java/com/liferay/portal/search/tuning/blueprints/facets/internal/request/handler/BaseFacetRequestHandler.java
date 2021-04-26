@@ -17,7 +17,7 @@ package com.liferay.portal.search.tuning.blueprints.facets.internal.request.hand
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.Parameter;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.StringArrayParameter;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.StringParameter;

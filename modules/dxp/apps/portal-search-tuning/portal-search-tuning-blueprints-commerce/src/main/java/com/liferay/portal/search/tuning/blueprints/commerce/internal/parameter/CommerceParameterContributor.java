@@ -16,7 +16,7 @@ package com.liferay.portal.search.tuning.blueprints.commerce.internal.parameter;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.LongArrayParameter;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.LongParameter;

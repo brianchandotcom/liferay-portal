@@ -46,15 +46,15 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilder;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilderFactory;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.BlueprintKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced.AdvancedConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced.QueryProcessingConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced.SourceConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.framework.FrameworkConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter.ParameterConfigurationKeys;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributesBuilder;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributesBuilderFactory;
 import com.liferay.portal.search.tuning.blueprints.engine.cache.JSONDataProviderCache;
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.engine.exception.BlueprintsEngineException;
@@ -309,8 +309,7 @@ public abstract class BaseBlueprintsTestCase {
 			BlueprintKeys.AGGREGATION_CONFIGURATION.getJsonKey(),
 			getAggregationConfiguration()
 		).put(
-			FacetsBlueprintKeys.CONFIGURATION_SECTION,
-			getConfigurationSection()
+			FacetsBlueprintKeys.CONFIGURATION_SECTION, getConfigurationSection()
 		).put(
 			BlueprintKeys.FRAMEWORK_CONFIGURATION.getJsonKey(),
 			getFrameworkConfiguration()

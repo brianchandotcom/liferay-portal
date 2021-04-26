@@ -17,8 +17,8 @@ package com.liferay.portal.search.tuning.blueprints.engine.internal.parameter.bu
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter.CustomParameterConfigurationKeys;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.engine.internal.util.BlueprintValueUtil;
 import com.liferay.portal.search.tuning.blueprints.engine.internal.util.BlueprintsAttributesHelper;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.FloatParameter;

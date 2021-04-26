@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.engine.internal.util.BlueprintsAttributesHelper;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.DateParameter;

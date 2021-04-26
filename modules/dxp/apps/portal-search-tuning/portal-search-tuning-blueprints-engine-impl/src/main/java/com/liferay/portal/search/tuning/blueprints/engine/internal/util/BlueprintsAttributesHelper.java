@@ -15,7 +15,7 @@
 package com.liferay.portal.search.tuning.blueprints.engine.internal.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 
 import java.util.Optional;
 

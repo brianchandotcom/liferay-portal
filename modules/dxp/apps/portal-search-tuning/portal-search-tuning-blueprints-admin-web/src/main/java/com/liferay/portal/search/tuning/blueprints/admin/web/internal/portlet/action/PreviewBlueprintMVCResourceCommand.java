@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.constants.BlueprintsAdminMVCCommandNames;
 import com.liferay.portal.search.tuning.blueprints.admin.web.internal.util.BlueprintsAdminRequestUtil;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilder;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributesBuilderFactory;
 import com.liferay.portal.search.tuning.blueprints.constants.BlueprintsPortletKeys;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributesBuilder;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributesBuilderFactory;
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.engine.exception.BlueprintsEngineException;
 import com.liferay.portal.search.tuning.blueprints.engine.util.BlueprintsEngineHelper;
@@ -144,7 +144,7 @@ public class PreviewBlueprintMVCResourceCommand extends BaseMVCResourceCommand {
 			ReservedParameterNames.EXPLAIN.getKey(), true);
 
 		blueprintsAttributesBuilder.addAttribute(
-				ReservedParameterNames.INCLUDE_RESPONSE_STRING.getKey(), true);
+			ReservedParameterNames.INCLUDE_RESPONSE_STRING.getKey(), true);
 
 		return blueprintsAttributesBuilder.build();
 	}

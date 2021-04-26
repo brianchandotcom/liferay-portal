@@ -17,7 +17,7 @@ package com.liferay.portal.search.tuning.blueprints.ipstack.internal.parameter;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 import com.liferay.portal.search.tuning.blueprints.engine.constants.ReservedParameterNames;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.DoubleParameter;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterDataBuilder;

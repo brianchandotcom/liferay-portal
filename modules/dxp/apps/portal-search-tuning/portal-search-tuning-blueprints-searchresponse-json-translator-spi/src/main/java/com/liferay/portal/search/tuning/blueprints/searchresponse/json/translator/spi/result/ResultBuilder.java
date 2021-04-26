@@ -15,7 +15,7 @@
 package com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.result;
 
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 
 /**
  * @author Petteri Karttunen
@@ -33,7 +33,7 @@ public interface ResultBuilder {
 	public String getModificationDate(
 			Document document, BlueprintsAttributes blueprintsAttributes)
 		throws Exception;
-	
+
 	public String getSummary(
 			Document document, BlueprintsAttributes blueprintsAttributes)
 		throws Exception;

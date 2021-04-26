@@ -12,9 +12,9 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.internal.attributes;
+package com.liferay.portal.search.tuning.blueprints.engine.internal.attributes;
 
-import com.liferay.portal.search.tuning.blueprints.attributes.BlueprintsAttributes;
+import com.liferay.portal.search.tuning.blueprints.engine.attributes.BlueprintsAttributes;
 
 import java.util.Locale;
 import java.util.Map;

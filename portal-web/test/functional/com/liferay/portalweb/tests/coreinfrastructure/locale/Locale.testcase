@@ -135,7 +135,7 @@ definition {
 			layoutName = "Test Page",
 			widgetName = "IFrame");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain)",
@@ -485,7 +485,7 @@ definition {
 	test ViewDefaultEnabledLocales {
 		User.firstLoginPG();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 
 		Navigator.gotoNavTab(navTab = "Languages");
 
@@ -554,7 +554,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Spanish (Spain)",
@@ -583,11 +583,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Spanish (Spain)");
 
@@ -660,7 +656,7 @@ definition {
 			layoutName = "Test Page",
 			widgetName = "Asset Publisher");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Chinese (China),English (United States),Spanish (Spain)",

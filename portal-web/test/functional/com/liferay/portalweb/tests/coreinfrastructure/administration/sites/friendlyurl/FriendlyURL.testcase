@@ -103,7 +103,7 @@ definition {
 				widgetName = "Language Selector");
 		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "france-site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "france-site-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "French (France)");
 
@@ -113,7 +113,7 @@ definition {
 
 		PortletEntry.save();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "canada-site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "canada-site-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "French (Canada)");
 

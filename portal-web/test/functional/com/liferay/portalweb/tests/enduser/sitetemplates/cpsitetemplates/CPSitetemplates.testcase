@@ -636,11 +636,7 @@ definition {
 			siteType = "Site Template",
 			uncheckPropagation = "true");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		AssertAlertNotPresent();
 

@@ -1058,7 +1058,7 @@ definition {
 	test DefineTranslationForFieldSets {
 		property portal.acceptance = "true";
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Spanish (Spain)");
 
@@ -1091,7 +1091,7 @@ definition {
 		FormViewBuilder.validateLocalizationForFieldSet(symbolName = "es-ES");
 
 		Navigator.openURL();
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "English (United States)");
 	}
 

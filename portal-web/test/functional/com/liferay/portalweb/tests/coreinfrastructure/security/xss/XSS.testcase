@@ -106,11 +106,7 @@ definition {
 
 	@priority = "3"
 	test ViewGoogleAnalyticsID {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 
 		Site.editGoogleAnalyticsIDCP(googleAnalyticsID = '''']);alert(/googleAnalyticsId/);//''');
 
@@ -248,9 +244,7 @@ definition {
 	test ViewPiwik {
 		var portalURL = PropsUtil.get("portal.url");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 
 		Site.editPiwikCP(piwik = '''<script>alert(123);</script>''');
 

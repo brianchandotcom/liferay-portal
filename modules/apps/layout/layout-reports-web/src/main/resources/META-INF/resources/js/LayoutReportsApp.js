@@ -17,6 +17,8 @@ import React, {useEffect, useState} from 'react';
 
 import LayoutReports from './components/LayoutReports';
 
+import '../css/main.scss';
+
 export default function ({
 	isPanelStateOpen,
 	layoutReportsDataURL,

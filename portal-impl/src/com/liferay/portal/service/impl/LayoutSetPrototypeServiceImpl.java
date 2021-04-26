@@ -115,6 +115,9 @@ public class LayoutSetPrototypeServiceImpl
 	public void deleteNondefaultLayoutSetPrototypes(long companyId)
 		throws PortalException {
 
+		LayoutSetPrototypePermissionUtil.check(
+			getPermissionChecker(), 0, ActionKeys.DELETE);
+
 		layoutSetPrototypeLocalService.deleteNondefaultLayoutSetPrototypes(
 			companyId);
 	}

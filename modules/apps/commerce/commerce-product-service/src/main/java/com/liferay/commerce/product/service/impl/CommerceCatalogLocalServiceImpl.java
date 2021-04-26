@@ -229,7 +229,15 @@ public class CommerceCatalogLocalServiceImpl
 
 		// Group
 
-		groupLocalService.deleteGroup(commerceCatalog.getGroupId());
+		Group group = groupLocalService.fetchGroup(
+			commerceCatalog.getCompanyId(),
+			classNameLocalService.getClassNameId(
+				CommerceCatalog.class.getName()),
+			commerceCatalog.getCommerceCatalogId());
+
+		if (group != null) {
+			groupLocalService.deleteGroup(group);
+		}
 
 		return commerceCatalog;
 	}

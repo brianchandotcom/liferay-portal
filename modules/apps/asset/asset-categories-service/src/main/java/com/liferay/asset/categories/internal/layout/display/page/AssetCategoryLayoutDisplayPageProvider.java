@@ -82,8 +82,41 @@ public class AssetCategoryLayoutDisplayPageProvider
 	}
 
 	@Override
+	public LayoutDisplayPageObjectProvider<AssetCategory>
+		getParentLayoutDisplayPageObjectProvider(
+			InfoItemReference infoItemReference) {
+
+		AssetCategory assetCategory =
+			_assetCategoryLocalService.fetchAssetCategory(
+				infoItemReference.getClassPK());
+
+		if (assetCategory == null) {
+			return null;
+		}
+
+		AssetCategory parentCategory = assetCategory.getParentCategory();
+
+		if (parentCategory == null) {
+			return null;
+		}
+
+		try {
+			return new AssetCategoryLayoutDisplayPageObjectProvider(
+				parentCategory, _portal);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Override
 	public String getURLSeparator() {
 		return "/v/";
+	}
+
+	@Override
+	public boolean inheritable() {
+		return true;
 	}
 
 	@Reference

@@ -42,6 +42,10 @@ definition {
 				portlet = "Site Settings",
 				site = "${site}");
 
+			Click(
+				key_url = "site-configuration",
+				locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
 			Panel.expandPanel(panel = "Asset Auto Tagging");
 
 			Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
@@ -97,6 +101,10 @@ definition {
 				category = "Configuration",
 				portlet = "Site Settings",
 				site = "${site}");
+
+			Click(
+				key_url = "site-configuration",
+				locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 			Panel.expandPanel(panel = "Asset Auto Tagging");
 

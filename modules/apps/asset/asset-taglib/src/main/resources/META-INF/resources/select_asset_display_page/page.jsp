@@ -20,15 +20,15 @@
 
 <aui:input id="assetDisplayPageIdInput" ignoreRequestValue="<%= true %>" name="assetDisplayPageId" type="hidden" value="<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageId() %>" />
 
-<aui:select label="" name="displayPageType" title="display-page-template-type" value="<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageType() %>">
-	<aui:option label="default-display-page-template" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />
-	<aui:option label="specific-display-page-template" value="<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>" />
+<aui:select label="display-page-template" name="displayPageType" title="display-page-template-type" value="<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageType() %>">
+	<aui:option label="default" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />
+	<aui:option label="specific" value="<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>" />
 
 	<c:if test="<%= selectAssetDisplayPageDisplayContext.inheritableDisplayPageTemplate() %>">
-		<aui:option label="inherit-display-page-template" value="<%= AssetDisplayPageConstants.TYPE_INHERIT %>" />
+		<aui:option label="inherited" value="<%= AssetDisplayPageConstants.TYPE_INHERITED %>" />
 	</c:if>
 
-	<aui:option label="no-display-page-template" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
+	<aui:option label="none" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
 </aui:select>
 
 <div class="input-group <%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />defaultDisplayPageNameContainer">

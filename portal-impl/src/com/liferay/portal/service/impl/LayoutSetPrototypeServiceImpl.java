@@ -47,7 +47,7 @@ public class LayoutSetPrototypeServiceImpl
 		throws PortalException {
 
 		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.ADD_LAYOUT_PROTOTYPE);
+			getPermissionChecker(), ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
 
 		User user = getUser();
 
@@ -64,7 +64,7 @@ public class LayoutSetPrototypeServiceImpl
 		throws PortalException {
 
 		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.ADD_LAYOUT_PROTOTYPE);
+			getPermissionChecker(), ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
 
 		User user = getUser();
 
@@ -91,7 +91,7 @@ public class LayoutSetPrototypeServiceImpl
 		).build();
 
 		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.ADD_LAYOUT_PROTOTYPE);
+			getPermissionChecker(), ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
 
 		User user = getUser();
 

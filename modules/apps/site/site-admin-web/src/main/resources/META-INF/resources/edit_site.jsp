@@ -70,7 +70,8 @@ if (group != null) {
 <liferay-ui:success key='<%= ConfigurationAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
 
 <portlet:actionURL name="/site_admin/edit_group" var="editGroupURL">
-	<portlet:param name="mvcPath" value="/edit_site.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-general" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

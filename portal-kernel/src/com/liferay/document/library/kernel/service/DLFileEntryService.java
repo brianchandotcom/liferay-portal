@@ -65,6 +65,14 @@ public interface DLFileEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the document library file entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DLFileEntryServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFileEntry(String, long, long, long, String, String,
+	 String, String, String, long, Map, File, InputStream, long,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public DLFileEntry addFileEntry(
 			long groupId, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,

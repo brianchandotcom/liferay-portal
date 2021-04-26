@@ -51,6 +51,13 @@ public class DLFileEntryLocalServiceWrapper
 		return _dlFileEntryLocalService.addDLFileEntry(dlFileEntry);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFileEntry(String, long, long, long, long, String, String,
+	 String, String, String, long, Map, File, InputStream, long,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFileEntry addFileEntry(
 			long userId, long groupId, long repositoryId, long folderId,

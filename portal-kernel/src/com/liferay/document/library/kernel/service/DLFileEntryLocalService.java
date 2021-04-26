@@ -95,6 +95,13 @@ public interface DLFileEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntry addDLFileEntry(DLFileEntry dlFileEntry);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFileEntry(String, long, long, long, long, String, String,
+	 String, String, String, long, Map, File, InputStream, long,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public DLFileEntry addFileEntry(
 			long userId, long groupId, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,

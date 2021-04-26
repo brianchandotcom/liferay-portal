@@ -31,6 +31,13 @@ public class DLFileEntryServiceWrapper
 		_dlFileEntryService = dlFileEntryService;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFileEntry(String, long, long, long, String, String,
+	 String, String, String, long, Map, File, InputStream, long,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFileEntry addFileEntry(
 			long groupId, long repositoryId, long folderId,

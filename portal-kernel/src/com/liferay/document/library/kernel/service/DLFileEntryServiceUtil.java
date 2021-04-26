@@ -43,6 +43,14 @@ public class DLFileEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFileEntry(String, long, long, long, String, String,
+	 String, String, String, long, Map, File, InputStream, long,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static DLFileEntry addFileEntry(
 			long groupId, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,

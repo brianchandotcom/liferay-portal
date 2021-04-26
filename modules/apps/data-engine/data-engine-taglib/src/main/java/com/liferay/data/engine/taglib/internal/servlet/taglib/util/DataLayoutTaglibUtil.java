@@ -26,7 +26,6 @@ import com.liferay.data.engine.rest.dto.v2_0.util.DataDefinitionDDMFormUtil;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
-import com.liferay.data.engine.taglib.internal.configuration.FFDataEngineFormContextConfigurationActivator;
 import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
@@ -240,10 +239,6 @@ public class DataLayoutTaglibUtil {
 
 		return _dataLayoutTaglibUtil._getFieldTypesJSONArray(
 			httpServletRequest, scopes);
-	}
-
-	public static boolean isUsingNewFormProvider() {
-		return _dataLayoutTaglibUtil._isUsingNewFormProvider();
 	}
 
 	public static String renderDataLayout(
@@ -584,11 +579,6 @@ public class DataLayoutTaglibUtil {
 		return Validator.isNotNull(ddmFormFieldType.getModuleName());
 	}
 
-	private boolean _isUsingNewFormProvider() {
-		return _ffDataEngineFormContextConfigurationActivator.
-			isUsingNewFormProvider();
-	}
-
 	private String _resolveFieldTypeModule(String name) {
 		return _resolveModuleName(
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(name));
@@ -663,10 +653,6 @@ public class DataLayoutTaglibUtil {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private FFDataEngineFormContextConfigurationActivator
-		_ffDataEngineFormContextConfigurationActivator;
 
 	@Reference(target = "(ddm.form.deserializer.type=json)")
 	private DDMFormDeserializer _jsonDDMFormDeserializer;

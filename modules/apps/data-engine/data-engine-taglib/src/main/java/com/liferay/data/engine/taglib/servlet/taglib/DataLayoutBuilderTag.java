@@ -158,11 +158,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 	private String _getModule() {
 		if (Validator.isBlank(getModule())) {
-			if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
-				return "data_layout_builder/new-js/App";
-			}
-
-			return "data_layout_builder/js/App.es";
+			return "data_layout_builder/new-js/App";
 		}
 
 		return getModule();
@@ -177,15 +173,9 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	}
 
 	private String _getPluginEntryPoint(String value) {
-		if (DataLayoutTaglibUtil.isUsingNewFormProvider()) {
-			return DataLayoutTaglibUtil.resolveModule(
-				"data-engine-taglib/data_layout_builder/new-js/plugins/" +
-					value + "/index");
-		}
-
 		return DataLayoutTaglibUtil.resolveModule(
-			"data-engine-taglib/data_layout_builder/js/plugins/" + value +
-				"/index.es");
+			"data-engine-taglib/data_layout_builder/new-js/plugins/" + value +
+				"/index");
 	}
 
 	private Map<String, Object> _getSidebarPanels() {

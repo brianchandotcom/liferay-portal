@@ -24,27 +24,6 @@ definition {
 	}
 
 	@priority = "4"
-	test MemoryClusteredJobsOne {
-		property test.name.skip.portal.instance = "ClusteringScheduler#MemoryClusteredJobsOne";
-
-		Clustering.runGroovyScript(
-			nodePort = "8080",
-			scriptFile = "groovy-script-portal-scheduler-memory-clustered-1.groovy");
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Memory clustered job 1 is added");
-
-		Clustering.runGroovyScript(
-			nodePort = "9080",
-			scriptFile = "groovy-script-portal-scheduler-memory-clustered-2.groovy");
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Memory clustered job 2 is added");
-	}
-
-	@priority = "4"
 	test PersistentAndMemoryJobs {
 		property test.name.skip.portal.instance = "ClusteringScheduler#PersistentAndMemoryJobs";
 
@@ -79,6 +58,22 @@ definition {
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
 			value1 = "Memory job 2 is added");
+
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-portal-scheduler-memory-clustered-1.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "Memory clustered job 1 is added");
+
+		Clustering.runGroovyScript(
+			nodePort = "9080",
+			scriptFile = "groovy-script-portal-scheduler-memory-clustered-2.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "Memory clustered job 2 is added");
 	}
 
 }

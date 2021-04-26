@@ -181,6 +181,12 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addPage(String, long, long, String, double, String, String, boolean,
+	 * String, boolean, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public WikiPage addPage(
 			long userId, long nodeId, String title, double version,

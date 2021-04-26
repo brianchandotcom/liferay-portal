@@ -49,14 +49,10 @@ definition {
 		var portalURL = StringUtil.replace("${portalURL}", "http://", "");
 		var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
 
-		HeadlessPortalInstanceAPI.cleanAllPortalInstances();
-
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "liferay.com",
 			portalInstanceId = "${portalURL}",
 			virtualHost = "${portalURL}");
-
-		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "test@liferay.com");
 	}
 
 	macro signInSpecificURL {

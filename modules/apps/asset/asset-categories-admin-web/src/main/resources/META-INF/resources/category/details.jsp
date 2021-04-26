@@ -159,7 +159,7 @@ renderResponse.setTitle(title);
 			<liferay-frontend:fieldset
 				collapsed="<%= true %>"
 				collapsible="<%= true %>"
-				label="display-page-template"
+				label="display-page"
 			>
 				<liferay-asset:select-asset-display-page
 					classNameId="<%= PortalUtil.getClassNameId(AssetCategory.class) %>"

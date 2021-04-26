@@ -304,7 +304,7 @@ else {
 			id="dlFileEntryDisplayPagePanel"
 			markupView="lexicon"
 			persistState="<%= true %>"
-			title="display-page-template"
+			title="display-page"
 		>
 			<aui:fieldset>
 				<liferay-asset:select-asset-display-page

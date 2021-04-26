@@ -41,7 +41,7 @@ public class JournalDisplayPageFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "display-page-template";
+		return "display-page";
 	}
 
 	@Override

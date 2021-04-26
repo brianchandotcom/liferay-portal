@@ -350,12 +350,84 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130339."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionSignedInSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130339 AddNewExperienceSessionSignedInSegment pending implementation
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Segments");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectSession();
+
+		Segmentation.addProperties(propertyOption = "Signed In");
+
+		Segmentation.fillTitle(titleField = "Session Signed In Segment");
+
+		Select(
+			key_criterion = "options",
+			locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+			value1 = "FALSE");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.viewFragmentStyle(
+			fragmentName = "Heading",
+			headingLevel = "h1");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Default");
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addExperience(
+			experienceName = "NewSignedInExperience",
+			segmentName = "Session Signed In Segment");
+
+		Refresh();
+
+		PageEditor.changeExperience(newExperience = "NewSignedInExperience");
+
+		PageEditor.viewFragmentStyle(
+			fragmentName = "Heading",
+			headingLevel = "h1");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "No Signed In Heading");
+
+		PageEditor.prioritizeExperience(experienceName = "NewSignedInExperience");
+
+		Button.clickPublish();
+
+		User.logoutPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "No Signed In Heading");
 	}
 
 	@description = "This is a test for LPS-130340."

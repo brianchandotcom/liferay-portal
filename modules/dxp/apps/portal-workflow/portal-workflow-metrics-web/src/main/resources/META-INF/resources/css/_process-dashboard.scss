@@ -207,6 +207,12 @@ $c: '.workflow-process-dashboard';
 		font-weight: bold;
 	}
 
+	tr {
+		td:last-child {
+			width: 100px;
+		}
+	}
+
 	.workload-by-assignee-link {
 		color: #000;
 	}

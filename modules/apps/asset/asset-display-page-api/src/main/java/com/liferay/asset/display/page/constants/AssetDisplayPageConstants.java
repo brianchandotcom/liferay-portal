@@ -21,6 +21,8 @@ public class AssetDisplayPageConstants {
 
 	public static final int TYPE_DEFAULT = 1;
 
+	public static final int TYPE_INHERITED = 3;
+
 	public static final int TYPE_NONE = 0;
 
 	public static final int TYPE_SPECIFIC = 2;

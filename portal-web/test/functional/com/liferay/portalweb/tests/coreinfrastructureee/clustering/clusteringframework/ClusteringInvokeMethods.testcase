@@ -126,4 +126,45 @@ definition {
 			nodePort = "9080");
 	}
 
+	@priority = "4"
+	test InvokeMethodsOfModulesOnMaster {
+		property test.name.skip.portal.instance = "ClusteringInvokeMethods#InvokeMethodsOfModulesOnMaster";
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "portalInetSocketAddress=/127.0.0.1:9080",
+			nodePort = "8080");
+
+		Clustering.deployJarOnSpecificServer(
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
+			nodePort = "8080");
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
+			nodePort = "8080");
+
+		Clustering.deployJarOnSpecificServer(
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar",
+			nodePort = "9080");
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
+			nodePort = "9080");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "cluster-invoke-method -Dcluster.invoke.method=invoke-method-module-on-master");
+
+		Pause(locator1 = "10000");
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Result of invoke-method-module-on-master is :8080",
+			nodePort = "8080");
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Result of invoke-method-module-on-master is :8080",
+			nodePort = "9080");
+	}
+
 }

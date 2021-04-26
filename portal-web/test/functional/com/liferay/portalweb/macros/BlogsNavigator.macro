@@ -228,6 +228,7 @@ definition {
 
 	macro openToEditEntryInSite {
 		var entryId = JSONBlog.getBlogEntryId(
+			friendlyURL = "${friendlyURL}",
 			entryTitle = "${entryTitle}",
 			groupName = "${groupName}");
 

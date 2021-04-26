@@ -967,6 +967,7 @@ definition {
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
+			friendlyURL = "custom url 1",
 			groupName = "Guest",
 			siteURLKey = "guest");
 

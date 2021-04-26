@@ -77,12 +77,22 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		var curl = '''
-			${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
-			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
-			  -d urlTitle=${entryTitle}
-		''';
+		if (isSet(friendlyURL)) {
+			var curl = '''
+				${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
+			 	-u test@liferay.com:test \
+			 	-d groupId=${groupId} \
+			  	-d urlTitle=${friendlyURL}
+				''';
+		}
+		else {
+			var curl = '''
+				${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
+			  	-u test@liferay.com:test \
+			  	-d groupId=${groupId} \
+			  	-d urlTitle=${entryTitle}
+			''';
+		}
 
 		var entryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${entryTitle}')]['entryId']");
 		var entryId = StringUtil.replace("${entryId}", "[&quot;", "");

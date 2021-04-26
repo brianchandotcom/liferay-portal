@@ -335,9 +335,6 @@ definition {
 	@description = "This is a use case for LPS-120198. Export and import the whole site where a content page with fragment linked to page."
 	@priority = "4"
 	test ExportImportSiteWithMappedPage {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
-
 		task ("Add the first content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

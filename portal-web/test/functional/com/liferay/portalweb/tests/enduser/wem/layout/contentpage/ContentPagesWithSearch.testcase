@@ -258,8 +258,6 @@ definition {
 	@description = "This is a use case for LPS-120198. Search page in select page iframe."
 	@priority = "4"
 	test SearchPageWhenMapPageToFragment {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageWhenMapPageToFragment";
 
 		task ("Add a parent widget page") {

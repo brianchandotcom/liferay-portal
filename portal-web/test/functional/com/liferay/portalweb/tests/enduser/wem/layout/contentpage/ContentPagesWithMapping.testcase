@@ -726,9 +726,6 @@ definition {
 	@description = "This is a use case for LPS-120198. Link public and private pages to fragments."
 	@priority = "4"
 	test MapPageToImageFragment {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
-
 		task ("Add a public widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1793,9 +1790,6 @@ definition {
 	@description = "This is a use case for LPS-120198. The link information is still kept when the linked page is deleted."
 	@priority = "4"
 	test ViewMapInformationAfterDeleteMappedPage {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
-
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

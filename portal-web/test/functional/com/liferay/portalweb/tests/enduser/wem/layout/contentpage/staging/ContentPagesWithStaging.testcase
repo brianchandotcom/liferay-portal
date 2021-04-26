@@ -161,9 +161,6 @@ definition {
 	@description = "This is a test for LPS-120198. Link page to fragment works on Staging and Live site."
 	@priority = "4"
 	test MapPageToTextFragment {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
-
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name-staging",

@@ -218,9 +218,6 @@ definition {
 	@description = "This is a test for LPS-98241 and LPS-128667. Basic Component Button can be configured. Interact with layout selector of fragment."
 	@priority = "4"
 	test ConfigureBasicComponentButton {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
-
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

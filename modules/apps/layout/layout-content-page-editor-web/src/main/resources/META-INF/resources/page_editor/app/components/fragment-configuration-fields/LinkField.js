@@ -26,7 +26,6 @@ import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import {config} from '../../config/index';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import {useSelector} from '../../store/index';
 import isMapped from '../../utils/editable-value/isMapped';
@@ -143,16 +142,7 @@ export default function LinkField({field, onValueSelect, value}) {
 				<ClaySelectWithOption
 					id={sourceInputId}
 					onChange={handleSourceChange}
-					options={
-						config.layoutMappingEnabled
-							? SOURCE_OPTIONS
-							: SOURCE_OPTIONS.filter(
-									({value}) =>
-										value !==
-											SOURCE_OPTION_FROM_ITEM_DISPLAY_PAGE &&
-										value !== SOURCE_OPTION_FROM_LAYOUT
-							  )
-					}
+					options={SOURCE_OPTIONS}
 					value={source}
 				/>
 			</ClayForm.Group>

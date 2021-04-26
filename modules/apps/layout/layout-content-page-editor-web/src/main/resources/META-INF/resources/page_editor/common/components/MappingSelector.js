@@ -43,32 +43,28 @@ const UNMAPPED_OPTION = {
 	value: 'unmapped',
 };
 
-function loadMappingFields({dispatch, fieldType, item, sourceType}) {
-	let promise;
+function loadMappingFields({dispatch, item, sourceType}) {
+	let classNameId, classTypeId;
 
 	if (sourceType === MAPPING_SOURCE_TYPES.structure) {
 		const {selectedMappingTypes} = config;
 
-		promise = InfoItemService.getAvailableStructureMappingFields({
-			classNameId: selectedMappingTypes.type.id,
-			classTypeId: selectedMappingTypes.subtype.id,
-			fieldType,
-			onNetworkStatus: dispatch,
-		});
+		classNameId = selectedMappingTypes.type.id;
+		classTypeId = selectedMappingTypes.subtype.id;
 	}
 	else if (
 		sourceType === MAPPING_SOURCE_TYPES.content &&
-		item.classNameId &&
-		item.classPK &&
-		item.title
+		item.classNameId
 	) {
-		promise = InfoItemService.getAvailableInfoItemMappingFields({
-			classNameId: item.classNameId,
-			classPK: item.classPK,
-			fieldType,
-			onNetworkStatus: dispatch,
-		});
+		classNameId = item.classNameId;
+		classTypeId = item.classTypeId;
 	}
+
+	const promise = InfoItemService.getAvailableStructureMappingFields({
+		classNameId,
+		classTypeId,
+		onNetworkStatus: dispatch,
+	});
 
 	if (promise) {
 		return promise.then((response) => {
@@ -104,7 +100,6 @@ export default function MappingSelectorWrapper({
 		}
 
 		CollectionService.getCollectionMappingFields({
-			fieldType,
 			itemSubtype: collectionConfig.collection.itemSubtype || '',
 			itemType: collectionConfig.collection.itemType,
 			onNetworkStatus: () => {},
@@ -119,7 +114,7 @@ export default function MappingSelectorWrapper({
 					console.error(error);
 				}
 			});
-	}, [collectionConfig, fieldType]);
+	}, [collectionConfig]);
 
 	return collectionConfig ? (
 		<>
@@ -298,7 +293,6 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			else {
 				loadMappingFields({
 					dispatch,
-					fieldType,
 					item: selectedItem,
 					sourceType: selectedSourceType,
 				}).then((newFields) => {

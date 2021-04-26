@@ -150,6 +150,7 @@ const FieldTypeList = ({
 											...nestedFieldType,
 											disabled: fieldType.disabled,
 										}}
+										fieldTypes={filteredFieldTypes}
 										key={`${nestedFieldType.name}_${index}`}
 									/>
 								)
@@ -165,6 +166,7 @@ const FieldTypeList = ({
 				dataDefinition={dataDefinition}
 				deleteLabel={deleteLabel}
 				fieldType={fieldType}
+				fieldTypes={filteredFieldTypes}
 				key={index}
 				onClick={handleOnClick}
 				onDelete={onDelete}

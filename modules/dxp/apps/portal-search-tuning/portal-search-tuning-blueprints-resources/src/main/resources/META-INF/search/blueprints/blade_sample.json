@@ -2,20 +2,6 @@
 	"blueprint-payload": {
 		"configuration": {
 			"advanced_configuration": {
-				"highlighting": {
-					"enabled": "true",
-					"fields": [
-						{
-							"field": "title${context.language_id}"
-						},
-						{
-							"field": "content${context.language_id}"
-						}
-					],
-					"fragment_size": "50",
-					"require_field_match": "true",
-					"snippet_size": "10"
-				}
 			},
 			"aggregation_configuration": [
 			],
@@ -177,6 +163,20 @@
 			"framework_configuration": {
 				"apply_indexer_clauses": false
 			},
+			"highlight_configuration": {
+				"enabled": "true",
+				"fields": [
+					{
+						"field": "title${context.language_id}"
+					},
+					{
+						"field": "content${context.language_id}"
+					}
+				],
+				"fragment_size": "50",
+				"require_field_match": "true",
+				"snippet_size": "10"
+			},
 			"parameter_configuration": {
 				"custom": [
 				],
@@ -208,7 +208,8 @@
 											"localized_title${context.language_id}^2",
 											"content${context.language_id}^1",
 											"description${context.language_id}^1",
-											"name${context.language_id}^1"
+											"name${context.language_id}^1",
+											"title${context.language_id}^2"
 										],
 										"fuzziness": "AUTO",
 										"operator": "or",
@@ -718,7 +719,8 @@
 												"localized_title${context.language_id}^2",
 												"content${context.language_id}^1",
 												"description${context.language_id}^1",
-												"name${context.language_id}^1"
+												"name${context.language_id}^1",
+												"title${context.language_id}^1"
 											],
 											"fuzziness": "AUTO",
 											"operator": "or",
@@ -910,6 +912,12 @@
 								"boost": "1",
 								"field": "name",
 								"languageIdPosition": 4,
+								"locale": "${context.language_id}"
+							},
+							{
+								"boost": "1",
+								"field": "title",
+								"languageIdPosition": 5,
 								"locale": "${context.language_id}"
 							}
 						],

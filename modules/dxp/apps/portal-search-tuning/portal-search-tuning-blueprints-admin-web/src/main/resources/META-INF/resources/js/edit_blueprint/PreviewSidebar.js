@@ -23,6 +23,8 @@ import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import CodeMirrorEditor from '../shared/CodeMirrorEditor';
+import PreviewModal from '../shared/PreviewModal';
 import SearchInput from '../shared/SearchInput';
 import useDidUpdateEffect from '../utils/useDidUpdateEffect';
 import {sub} from '../utils/utils';
@@ -137,6 +139,31 @@ function PreviewSidebar({
 					>
 						{Liferay.Language.get('refresh')}
 					</ClayButton>
+				</ClayManagementToolbar.Item>
+			</ClayManagementToolbar.ItemList>
+
+			<ClayManagementToolbar.ItemList>
+				<ClayManagementToolbar.Item>
+					<PreviewModal
+						body={
+							<div className="json-modal">
+								<CodeMirrorEditor
+									readOnly
+									value={JSON.stringify(results, null, '\t')}
+								/>
+							</div>
+						}
+						size="lg"
+						title={Liferay.Language.get('raw-response')}
+					>
+						<ClayButton
+							className="raw-response"
+							disabled={loading}
+							displayType="unstyled"
+						>
+							{Liferay.Language.get('view-raw-response')}
+						</ClayButton>
+					</PreviewModal>
 				</ClayManagementToolbar.Item>
 			</ClayManagementToolbar.ItemList>
 		</ClayManagementToolbar>

@@ -71,7 +71,9 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		JSONStaging.enableLocalStaging(groupName = "Global");
+		JSONStaging.enableLocalStaging(
+			globalSite = "true",
+			groupName = "Global");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
@@ -1067,35 +1069,9 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#PublishVocabularyDeletionViaRemoteStagingOnGlobalSite";
 
-		User.logoutPG();
+		var companyId = JSONCompany.getCompanyId(portalURL = "http://localhost:9080");
 
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		SitePages.openPagesAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		var siteID = "siteID";
-
-		Copy(
-			locator1 = "SitesEditSite#SITE_ID",
-			value1 = "siteID");
-
-		User.logoutPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		var siteID = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${companyId}");
 
 		Staging.openStagingAdmin(siteURLKey = "global");
 

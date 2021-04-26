@@ -12,7 +12,9 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import React from 'react';
@@ -73,37 +75,47 @@ const TranslateFieldInput = ({
 	onChange = noop,
 }) => (
 	<ClayLayout.Row>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label">{label}</label>
-				<ClayInput
-					component={multiline ? 'textarea' : undefined}
-					defaultValue={sourceContent}
-					dir={sourceContentDir}
-					readOnly
-					type="text"
-				/>
-			</ClayForm.Group>
-		</ClayLayout.Col>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label" htmlFor={id}>
-					{label}
-				</label>
-				<ClayInput
-					component={multiline ? 'textarea' : undefined}
-					dir={targetContentDir}
-					id={id}
-					name={id}
-					onChange={(event) => {
-						const data = event.target.value;
-						onChange(data);
-					}}
-					type="text"
-					value={targetContent}
-				/>
-			</ClayForm.Group>
-		</ClayLayout.Col>
+		<ClayLayout.ContentCol expand>
+			<ClayLayout.Row>
+				<ClayLayout.Col md={6}>
+					<ClayForm.Group>
+						<label className="control-label">{label}</label>
+						<ClayInput
+							component={multiline ? 'textarea' : undefined}
+							defaultValue={sourceContent}
+							dir={sourceContentDir}
+							readOnly
+							type="text"
+						/>
+					</ClayForm.Group>
+				</ClayLayout.Col>
+				<ClayLayout.Col md={6}>
+					<ClayForm.Group>
+						<label className="control-label" htmlFor={id}>
+							{label}
+						</label>
+						<ClayInput
+							component={multiline ? 'textarea' : undefined}
+							dir={targetContentDir}
+							id={id}
+							name={id}
+							onChange={(event) => {
+								const data = event.target.value;
+								onChange(data);
+							}}
+							type="text"
+							value={targetContent}
+						/>
+					</ClayForm.Group>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+		</ClayLayout.ContentCol>
+		<ClayLayout.ContentCol className="align-self-top col-autotranslate-field">
+			<ClayButton displayType="secondary" monospaced>
+				<ClayIcon symbol="automatic-translate" />
+				<span className="sr-only">Auto translate {label} field</span>
+			</ClayButton>
+		</ClayLayout.ContentCol>
 	</ClayLayout.Row>
 );
 
@@ -115,7 +127,7 @@ const TranslateFieldSetEntries = ({
 }) =>
 	infoFieldSetEntries.map(({fields, legend}) => (
 		<React.Fragment key={legend}>
-			<ClayLayout.Row>
+			<ClayLayout.Row className="row-autotranslate-title">
 				<ClayLayout.Col md={6}>
 					<div className="fieldset-title">{legend}</div>
 				</ClayLayout.Col>

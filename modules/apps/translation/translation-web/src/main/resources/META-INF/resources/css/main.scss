@@ -106,6 +106,20 @@ $productMenuWidth: 320px;
 			}
 		}
 
+		.col-autotranslate-field {
+			margin-bottom: 1rem;
+			padding-left: 12px;
+			width: 100%;
+
+			@include media-breakpoint-up(md) {
+				margin-bottom: 0;
+				padding-left: 0.25rem;
+				padding-right: 0.75rem;
+				padding-top: 1.625rem;
+				width: auto;
+			}
+		}
+
 		.fieldset-title {
 			font-size: 0.875rem;
 			font-weight: 700;
@@ -115,6 +129,17 @@ $productMenuWidth: 320px;
 
 		.form-control[readonly] {
 			background-color: #fff;
+		}
+
+		.row .row {
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.row-autotranslate-title {
+			@include media-breakpoint-up(md) {
+				padding-right: 3.5rem;
+			}
 		}
 
 		.separator {

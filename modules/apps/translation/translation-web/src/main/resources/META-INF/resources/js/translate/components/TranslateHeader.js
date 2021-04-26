@@ -17,7 +17,7 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 const TranslateHeader = ({sourceLanguageIdTitle, targetLanguageIdTitle}) => (
-	<ClayLayout.Row>
+	<ClayLayout.Row className="row-autotranslate-title">
 		<ClayLayout.Col md={6}>
 			<ClayIcon symbol={sourceLanguageIdTitle.toLowerCase()} />
 			<span className="ml-1">{sourceLanguageIdTitle}</span>

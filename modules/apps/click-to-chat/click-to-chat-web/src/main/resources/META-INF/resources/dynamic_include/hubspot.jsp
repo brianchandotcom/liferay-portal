@@ -17,60 +17,65 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <%
-	String identificationToken = null;
-	Http.Response httpResponse = null;
+String identificationToken = null;
+Http.Response httpResponse = null;
 
-	String[] parts = clickToChatChatProviderAccountId.split(StringPool.SLASH);
+String[] parts = clickToChatChatProviderAccountId.split(StringPool.SLASH);
 
-	if (themeDisplay.isSignedIn() && (parts.length > 1)) {
-		try {
-			Http.Options options = new Http.Options();
+if (themeDisplay.isSignedIn() && (parts.length > 1)) {
+	try {
+		Http.Options options = new Http.Options();
 
-			options.addHeader(HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-			options.setBody(
-				JSONUtil.put(
-					"email", user.getEmailAddress()
-				).put(
-					"firstName", user.getFirstName()
-				).put(
-					"lastName", user.getLastName()
-				).toJSONString(),
-				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-			options.setLocation("https://api.hubspot.com/conversations/v3/visitor-identification/tokens/create?hapikey=" + parts[1]);
-			options.setPost(true);
+		options.addHeader(HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.setBody(
+			JSONUtil.put(
+				"email", user.getEmailAddress()
+			).put(
+				"firstName", user.getFirstName()
+			).put(
+				"lastName", user.getLastName()
+			).toJSONString(),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setLocation("https://api.hubspot.com/conversations/v3/visitor-identification/tokens/create?hapikey=" + parts[1]);
+		options.setPost(true);
 
-			String jsonResponse = HttpUtil.URLtoString(options);
+		String jsonResponse = HttpUtil.URLtoString(options);
 
-			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(jsonResponse);
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(jsonResponse);
 
-			httpResponse = options.getResponse();
+		httpResponse = options.getResponse();
 
-			identificationToken = responseJSONObject.getString("token");
-		}
-		catch (Exception exception) {
-			Log _log = LogFactoryUtil.getLog("com_liferay_click_to_chat_web.hubspot_jsp");
-			if (_log.isErrorEnabled()) {
-				_log.error(exception, exception);
-			}
+		identificationToken = responseJSONObject.getString("token");
+	}
+	catch (Exception exception) {
+		Log log = LogFactoryUtil.getLog("com_liferay_click_to_chat_web.hubspot_jsp");
+
+		if (log.isErrorEnabled()) {
+			log.error(exception, exception);
 		}
 	}
+}
 %>
 
 <script async defer id="hs-script-loader" src="//js-na1.hs-scripts.com/<%= parts[0] %>.js" type="text/javascript"></script>
 
 <c:choose>
-	<c:when test="<%= httpResponse == null || httpResponse.getResponseCode() >= 400 %>">
-		<%
-			String message = "your-request-failed-to-complete";
+	<c:when test="<%= (httpResponse == null) || (httpResponse.getResponseCode() >= 400) %>">
 
-			if (httpResponse == null) {
-				message = "invalid-chat-authentication";
-			} else if (httpResponse.getResponseCode() == 401) {
-				message = "not-authorized-chat-request";
-			} else if (httpResponse.getResponseCode() == 403) {
-				message = "no-access-chat-request";
-			}
+		<%
+		String message = "your-request-failed-to-complete";
+
+		if (httpResponse == null) {
+			message = "invalid-chat-authentication";
+		}
+		else if (httpResponse.getResponseCode() == 401) {
+			message = "not-authorized-chat-request";
+		}
+		else if (httpResponse.getResponseCode() == 403) {
+			message = "no-access-chat-request";
+		}
 		%>
+
 		<script>
 			Liferay.Util.openToast({
 				message: '<%= LanguageUtil.get(resourceBundle, message) %>',

@@ -499,6 +499,15 @@ public class ContentUtil {
 				continue;
 			}
 
+			if (ListUtil.exists(
+					layoutStructure.getDeletedLayoutStructureItems(),
+					deletedLayoutStructureItem ->
+						deletedLayoutStructureItem.containsItemId(
+							layoutStructureItem.getItemId()))) {
+
+				continue;
+			}
+
 			ContainerStyledLayoutStructureItem
 				containerStyledLayoutStructureItem =
 					(ContainerStyledLayoutStructureItem)layoutStructureItem;

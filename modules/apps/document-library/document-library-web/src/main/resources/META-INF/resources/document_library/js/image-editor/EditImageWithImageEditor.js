@@ -14,9 +14,8 @@
 
 import ClayModal, {useModal} from '@clayui/modal';
 import {navigate} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
-
 import {ImageEditor} from 'item-selector-taglib';
+import React, {useEffect, useRef, useState} from 'react';
 
 export default ({editImageURL, portletNamespace, redirectURL}) => {
 	const fileEntryIdRef = useRef();

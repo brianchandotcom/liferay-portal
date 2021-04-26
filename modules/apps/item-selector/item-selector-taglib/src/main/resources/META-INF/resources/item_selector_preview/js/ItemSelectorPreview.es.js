@@ -13,6 +13,7 @@
  */
 
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {ImageEditor} from 'item-selector-taglib';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
@@ -30,13 +31,17 @@ const KEY_CODE = {
 const ItemSelectorPreview = ({
 	container,
 	currentIndex = 0,
+	editImageURL,
 	handleSelectedItem,
 	headerTitle,
 	items,
 }) => {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
+	const [isEditing, setIsEditing] = useState();
 	const [itemList, setItemList] = useState(items);
 	const [reloadOnHide, setReloadOnHide] = useState(false);
+
+	const currentItem = itemList[currentItemIndex];
 
 	const infoButtonRef = React.createRef();
 
@@ -45,6 +50,35 @@ const ItemSelectorPreview = ({
 	const close = useCallback(() => {
 		ReactDOM.unmountComponentAtNode(container);
 	}, [container]);
+
+	const handleCancelEditing = () => {
+		setIsEditing(false);
+	};
+
+	const handleClickBack = () => {
+		close();
+
+		if (reloadOnHide) {
+			const frame = window.frameElement;
+
+			if (frame) {
+				frame.contentWindow.location.reload();
+			}
+		}
+	};
+
+	const handleClickDone = () => {
+
+		// LPS-120692
+
+		close();
+
+		handleSelectedItem(currentItem);
+	};
+
+	const handleClickEdit = () => {
+		setIsEditing(true);
+	};
 
 	const handleClickNext = useCallback(() => {
 		if (itemList.length > 1) {
@@ -93,7 +127,9 @@ const ItemSelectorPreview = ({
 		[close, handleClickNext, handleClickPrevious, isMounted]
 	);
 
-	const currentItem = itemList[currentItemIndex];
+	const handleSaveEditedImage = () => {
+		setIsEditing(false);
+	};
 
 	const updateItemList = (newItemList) => {
 		setItemList(newItemList);
@@ -147,50 +183,44 @@ const ItemSelectorPreview = ({
 		}
 	}, [infoButtonRef]);
 
-	const handleClickBack = () => {
-		close();
-
-		if (reloadOnHide) {
-			const frame = window.frameElement;
-
-			if (frame) {
-				frame.contentWindow.location.reload();
-			}
-		}
-	};
-
-	const handleClickDone = () => {
-
-		// LPS-120692
-
-		close();
-
-		handleSelectedItem(currentItem);
-	};
-
 	return (
 		<div className="fullscreen item-selector-preview">
 			<Header
 				disabledAddButton={!currentItem.url}
 				handleClickAdd={handleClickDone}
 				handleClickBack={handleClickBack}
+				handleClickEdit={handleClickEdit}
 				headerTitle={headerTitle}
 				infoButtonRef={infoButtonRef}
+				showEditIcon={true}
 				showInfoIcon={!!currentItem.metadata}
+				showNavbar={!isEditing}
 			/>
+			{isEditing ? (
+				<ImageEditor
+					imageId={currentItem.fileentryid}
+					imageSrc={currentItem.url}
+					onCancel={handleCancelEditing}
+					onSave={handleSaveEditedImage}
+					saveURL={editImageURL}
+				/>
+			) : (
+				<>
+					<Carousel
+						currentItem={currentItem}
+						handleClickNext={handleClickNext}
+						handleClickPrevious={handleClickPrevious}
+						showArrows={itemList.length > 1}
+					/>
 
-			<Carousel
-				currentItem={currentItem}
-				handleClickNext={handleClickNext}
-				handleClickPrevious={handleClickPrevious}
-				showArrows={itemList.length > 1}
-			/>
-
-			<Footer
-				currentIndex={currentItemIndex}
-				title={currentItem.title}
-				totalItems={itemList.length}
-			/>
+					<Footer
+						currentIndex={currentItemIndex}
+						title={currentItem.title}
+						totalItems={itemList.length}
+					/>
+				</>
+			)}
+			;
 		</div>
 	);
 };
@@ -198,6 +228,7 @@ const ItemSelectorPreview = ({
 ItemSelectorPreview.propTypes = {
 	container: PropTypes.instanceOf(Element).isRequired,
 	currentIndex: PropTypes.number,
+	editItemURL: PropTypes.string,
 	handleSelectedItem: PropTypes.func.isRequired,
 	headerTitle: PropTypes.string.isRequired,
 	items: PropTypes.arrayOf(

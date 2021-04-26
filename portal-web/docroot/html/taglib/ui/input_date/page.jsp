@@ -121,7 +121,7 @@ else {
 		<c:otherwise>
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(autoComplete) %>">
-					<aui:input autocomplete="<%= autoComplete %>" cssClass="<%= cssClass %>" disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(placeholderValue) %>" required="<%= required %>" title="" type="text" value="<%= dateString %>" wrappedField="<%= true %>">
+					<aui:input autocomplete="<%= autoComplete %>" cssClass="<%= cssClass %>" disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(placeholderValue) %>" required="<%= required %>" title="" type="text" useNamespace="<%= StringPool.BLANK.equals(namespace)?false:true %>" value="<%= dateString %>" wrappedField="<%= true %>">
 						<aui:validator errorMessage="please-enter-a-valid-date" name="custom">
 							function(val) {
 								return AUI().use('aui-datatype-date-parse').Parsers.date('<%= mask %>', val);
@@ -130,7 +130,7 @@ else {
 					</aui:input>
 				</c:when>
 				<c:otherwise>
-					<aui:input cssClass="<%= cssClass %>" disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(placeholderValue) %>" required="<%= required %>" title="" type="text" value="<%= dateString %>" wrappedField="<%= true %>">
+					<aui:input cssClass="<%= cssClass %>" disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(placeholderValue) %>" required="<%= required %>" title="" type="text" useNamespace="<%= StringPool.BLANK.equals(namespace)?false:true %>" value="<%= dateString %>" wrappedField="<%= true %>">
 						<aui:validator errorMessage="please-enter-a-valid-date" name="custom">
 							function(val) {
 								return AUI().use('aui-datatype-date-parse').Parsers.date('<%= mask %>', val);

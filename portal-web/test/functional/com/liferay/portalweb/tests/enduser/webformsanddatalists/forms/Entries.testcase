@@ -1,0 +1,161 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that Entries can be deleted"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeDeleted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131076 CanBeDeleted pending implementation
+
+	}
+
+	@description = "Verify that Entries can be edited"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131075 CanBeEdited pending implementation
+	}
+
+	@description = "Verify that a user can navigate to the correct metric by using the list on the right"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeNavigatedUsingNavigationList {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131084 CanBeNavigatedUsingNavigationList pending implementation
+	}
+
+	@description = "Verify that Entries can be viewed"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeViewed {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131074 CanBeViewed pending implementation
+	}
+
+	@description = "Verify that Entries for the Grid and Multiple Selection Fields display a Bar Graph in the Summary Tab"
+	@ignore = "true"
+	@priority = "5"
+	test DisplayBarGraphInSummaryTab {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131081 DisplayBarGraphInSummaryTab pending implementation
+	}
+
+	@description = "Verify that Entries Previews display the correct information"
+	@ignore = "true"
+	@priority = "5"
+	test DisplayCorrectInfoInPreviews {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131077 DisplayCorrectInfoInPreviews pending implementation
+	}
+
+	@description = "Verify that the correct number of Entries are displayed"
+	@ignore = "true"
+	@priority = "5"
+	test DisplayCorrectNumberOfEntries {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131083 DisplayCorrectNumberOfEntries pending implementation
+	}
+
+	@description = "Verify that Entries for the Color, Date and Text Fields display a Field List in the Summary Tab"
+	@ignore = "true"
+	@priority = "5"
+	test DisplayFieldListInSummaryTab {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131078 DisplayFieldListInSummaryTab pending implementation
+	}
+
+	@description = "Verify that Entries for the Paragraph, Rich Text, Separator, Image, and Upload Fields do not display any metrics in the Summary Tab"
+	@ignore = "true"
+	@priority = "5"
+	test DisplayNoMetricsInSummaryTab {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131082 DisplayNoMetricsInSummaryTab pending implementation
+	}
+
+	@description = "Verify that Entries for the Select From List and Single Selection Fields display a Pie Chart in the Summary Tab"
+	@ignore = "true"
+	@priority = "5"
+	test DisplayPieChartInSummaryTab {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131080 DisplayPieChartInSummaryTab pending implementation
+	}
+
+	@description = "Verify that Entries for the Numeric Field display a Field List, Average, Maximum Value, Minimum Value, and Sum in the Summary Tab"
+	@ignore = "true"
+	@priority = "5"
+	test DisplayStatisticsInSummaryTab {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131079 DisplayStatisticsInSummaryTab pending implementation
+	}
+
+	@description = "Verify that with Single Approver Workflow enabled and after the form entry was approved, the entry will have an approved label"
+	@ignore = "true"
+	@priority = "5"
+	test WorkflowApprovalChangesLabelToApproved {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131203 WorkflowApprovalChangesLabelToApproved pending implementation
+	}
+
+	@description = "Verify that with Single Approver Workflow enabled, the Submit button now reads "Submit for Publication""
+	@ignore = "true"
+	@priority = "5"
+	test WorkflowChangesSubmitButtonToSubmitForPublication {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131085 WorkflowChangesSubmitButtonToSubmitForPublication pending implementation
+	}
+
+	@description = "Verify that with Single Approver Workflow enabled and after the user Submit for Publication, the form entry will have a pending label"
+	@ignore = "true"
+	@priority = "5"
+	test WorkflowSubmissionChangesLabelToPending {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131202 WorkflowSubmissionChangesLabelToPending pending implementation
+	}
+
+}

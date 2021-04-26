@@ -8,6 +8,8 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
+		User.firstLoginPG();
+
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		task ("Disable email verification for strangers") {

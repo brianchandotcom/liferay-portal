@@ -17,7 +17,7 @@ package com.liferay.portal.search.tuning.blueprints.engine.internal.searchreques
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced.HighlightingConfigurationKeys;
+import com.liferay.portal.search.tuning.blueprints.constants.json.keys.highlight.HighlightingConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.engine.internal.util.HighlightHelper;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterData;
 import com.liferay.portal.search.tuning.blueprints.engine.spi.searchrequest.SearchRequestBodyContributor;
@@ -80,11 +80,11 @@ public class HighlightSearchRequestBodyContributor
 			return;
 		}
 
-		Optional<Highlight> optional = _highlightHelper.getHighlight(
-			configurationJSONObject, parameterData, messages);
+		Optional<Highlight> highlightOptional = _highlightHelper.getHighlight(
+			highlightJSONObjectOptional.get(), parameterData, messages);
 
-		if (optional.isPresent()) {
-			searchRequestBuilder.highlight(optional.get());
+		if (highlightOptional.isPresent()) {
+			searchRequestBuilder.highlight(highlightOptional.get());
 		}
 	}
 

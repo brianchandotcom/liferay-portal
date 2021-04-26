@@ -25,6 +25,7 @@ import React, {useState} from 'react';
 import {
 	DEFAULT_ADVANCED_CONFIGURATION,
 	DEFAULT_BASELINE_ELEMENTS,
+	DEFAULT_HIGHLIGHT_CONFIGURATION,
 	DEFAULT_PARAMETER_CONFIGURATION,
 	DEFAULT_SORT_CONFIGURATION,
 } from '../utils/data';
@@ -141,6 +142,7 @@ const AddBlueprintModal = ({
 						searchableAssetTypesString
 					),
 				},
+				highlight_configuration: DEFAULT_HIGHLIGHT_CONFIGURATION,
 				parameter_configuration: DEFAULT_PARAMETER_CONFIGURATION,
 				query_configuration:
 					framework === FRAMEWORK_TYPES.CUSTOM &&

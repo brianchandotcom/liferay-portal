@@ -190,9 +190,7 @@ public class BlueprintHelperImpl implements BlueprintHelper {
 
 		return BlueprintJSONUtil.getValueAsJSONObjectOptional(
 			_getBlueprintConfigurationJSONObject(blueprint),
-			"JSONObject/" + BlueprintKeys.ADVANCED_CONFIGURATION.getJsonKey(),
-			"JSONObject/" +
-				AdvancedConfigurationKeys.HIGHLIGHTING.getJsonKey());
+			"JSONObject/" + BlueprintKeys.HIGHLIGHT_CONFIGURATION.getJsonKey());
 	}
 
 	@Override

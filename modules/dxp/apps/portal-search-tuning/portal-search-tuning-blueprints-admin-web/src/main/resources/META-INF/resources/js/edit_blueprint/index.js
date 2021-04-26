@@ -160,6 +160,7 @@ function EditBlueprintForm({
 			'advancedConfig',
 			'aggregationConfig',
 			'facetConfig',
+			'highlightConfig',
 			'parameterConfig',
 			'sortConfig',
 		].map((configName) => {
@@ -215,6 +216,7 @@ function EditBlueprintForm({
 					),
 					facet_configuration: JSON.parse(values.facetConfig),
 					framework_configuration: values.frameworkConfig,
+					highlight_configuration: JSON.parse(values.highlightConfig),
 					parameter_configuration: JSON.parse(values.parameterConfig),
 					query_configuration: values.selectedQueryElements.map(
 						getElementOutput
@@ -296,6 +298,11 @@ function EditBlueprintForm({
 				'\t'
 			),
 			frameworkConfig: initialConfiguration['framework_configuration'],
+			highlightConfig: JSON.stringify(
+				initialConfiguration['highlight_configuration'],
+				null,
+				'\t'
+			),
 			parameterConfig: JSON.stringify(
 				initialConfiguration['parameter_configuration'],
 				null,
@@ -337,6 +344,9 @@ function EditBlueprintForm({
 					),
 					facet_configuration: JSON.parse(formik.values.facetConfig),
 					framework_configuration: formik.values.frameworkConfig,
+					highlight_configuration: JSON.parse(
+						formik.values.highlightConfig
+					),
 					parameter_configuration: JSON.parse(
 						formik.values.parameterConfig
 					),
@@ -452,6 +462,7 @@ function EditBlueprintForm({
 						aggregationConfig={formik.values.aggregationConfig}
 						errors={formik.errors}
 						facetConfig={formik.values.facetConfig}
+						highlightConfig={formik.values.highlightConfig}
 						parameterConfig={formik.values.parameterConfig}
 						setFieldTouched={formik.setFieldTouched}
 						setFieldValue={formik.setFieldValue}

@@ -63,24 +63,6 @@ export const CUSTOM_JSON_ELEMENT = {
 };
 
 export const DEFAULT_ADVANCED_CONFIGURATION = {
-	highlighting: {
-		enabled: true,
-		fields: [
-			{
-				field: 'title${context.language_id}',
-				fragment_size: 50,
-				number_of_fragments: 3,
-			},
-			{
-				field: 'content${context.language_id}',
-			},
-		],
-		fragment_size: 100,
-		number_of_fragments: 5,
-		post_tags: ['</liferay-hl>'],
-		pre_tags: ['<liferay-hl>'],
-		require_field_match: true,
-	},
 	query_processing: {
 		exclude_query_contributors: '',
 		exclude_query_post_processors: '',
@@ -104,6 +86,30 @@ export const DEFAULT_BASELINE_ELEMENTS = [
 ];
 
 export const DEFAULT_EDIT_ELEMENT = TEXT_MATCH_OVER_MULTIPLE_FIELDS;
+
+export const DEFAULT_HIGHLIGHT_CONFIGURATION = {
+	enabled: true,
+	fields: [
+		{
+			field: 'localized_title${context.language_id}',
+			fragment_size: 80,
+			number_of_fragments: 3,
+		},
+		{
+			field: 'title${context.language_id}',
+			fragment_size: 80,
+			number_of_fragments: 3,
+		},
+		{
+			field: 'content${context.language_id}',
+		},
+	],
+	fragment_size: 80,
+	number_of_fragments: 5,
+	post_tags: ['</liferay-hl>'],
+	pre_tags: ['<liferay-hl>'],
+	require_field_match: true,
+};
 
 export const DEFAULT_PARAMETER_CONFIGURATION = {};
 

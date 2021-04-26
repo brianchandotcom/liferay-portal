@@ -25,6 +25,7 @@ public enum BlueprintKeys {
 	ADVANCED_CONFIGURATION("advanced_configuration"),
 	AGGREGATION_CONFIGURATION("aggregation_configuration"),
 	FRAMEWORK_CONFIGURATION("framework_configuration"),
+	HIGHLIGHT_CONFIGURATION("highlight_configuration"),
 	PARAMETER_CONFIGURATION("parameter_configuration"),
 	QUERY_CONFIGURATION("query_configuration"),
 	SORT_CONFIGURATION("sort_configuration"),

@@ -150,6 +150,7 @@ export const INITIAL_CONFIGURATION = {
 		apply_indexer_clauses: false,
 		searchable_asset_types: SEARCHABLE_ASSET_TYPES,
 	},
+	highlight_configuration: {},
 	parameter_configuration: {},
 	query_configuration: [],
 	sort_configuration: {},

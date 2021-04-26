@@ -232,6 +232,14 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 		}
 	}
 
+	private int _findNthLastIndexOf(int nth, String c, String s) {
+		if (nth <= 0) {
+			return s.length();
+		}
+
+		return _findNthLastIndexOf(--nth, c, s.substring(0, s.lastIndexOf(c)));
+	}
+
 	private Map<String, List<Object>> _formatDocument(Document document) {
 		Map<String, com.liferay.portal.search.document.Field> fields =
 			document.getFields();
@@ -266,6 +274,30 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Resolve field name without language suffix
+	 *
+	 * @param key
+	 * @return
+	 */
+	private String _getHightlightFieldRoot(String key) {
+		if (key.contains("_")) {
+			int count = StringUtil.count(key, "_");
+
+			if (count == 1) {
+				return key;
+			}
+
+			int idx = _findNthLastIndexOf(2, "_", key);
+
+			if (idx == (key.length() - 6)) {
+				return key.substring(0, idx);
+			}
+		}
+
+		return key;
 	}
 
 	private JSONArray _getHitsJSONArray(
@@ -424,11 +456,7 @@ public class HitsTranslationContributor implements JSONTranslationContributor {
 					i++;
 				}
 
-				String key = entry.getKey();
-
-				if (key.contains("_")) {
-					key = key.substring(0, key.indexOf("_"));
-				}
+				String key = _getHightlightFieldRoot(entry.getKey());
 
 				String cleanedText = ResultUtil.stripHTML(
 					sb.toString(), descriptionMaxLength);

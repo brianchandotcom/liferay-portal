@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced;
+package com.liferay.portal.search.tuning.blueprints.constants.json.keys.highlight;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -25,7 +25,8 @@ public enum HighlightingConfigurationKeys {
 	ENABLED("enabled"), FIELD("field"), FIELDS("fields"),
 	FRAGMENT_OFFSET("fragment_offset"), FRAGMENT_SIZE("fragment_size"),
 	NUMBER_OF_FRAGMENTS("number_of_fragments"), POST_TAGS("post_tags"),
-	PRE_TAGS("pre_tags"), REQUIRE_FIELD_MATCH("require_field_match");
+	PRE_TAGS("pre_tags"), REQUIRE_FIELD_MATCH("require_field_match"),
+	TYPE("type");
 
 	public static final HighlightingConfigurationKeys findByJsonKey(
 		String jsonKey) {

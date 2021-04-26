@@ -21,7 +21,7 @@ import com.liferay.portal.search.highlight.FieldConfigBuilder;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.highlight.HighlightBuilder;
 import com.liferay.portal.search.highlight.Highlights;
-import com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced.HighlightingConfigurationKeys;
+import com.liferay.portal.search.tuning.blueprints.constants.json.keys.highlight.HighlightingConfigurationKeys;
 import com.liferay.portal.search.tuning.blueprints.engine.parameter.ParameterData;
 import com.liferay.portal.search.tuning.blueprints.message.Messages;
 
@@ -92,6 +92,14 @@ public class HighlightHelper {
 				highlightJSONObject.getBoolean(
 					HighlightingConfigurationKeys.REQUIRE_FIELD_MATCH.
 						getJsonKey()));
+		}
+
+		if (highlightJSONObject.has(
+				HighlightingConfigurationKeys.TYPE.getJsonKey())) {
+
+			highlightBuilder.highlighterType(
+				highlightJSONObject.getString(
+					HighlightingConfigurationKeys.TYPE.getJsonKey()));
 		}
 
 		if (highlightJSONObject.has(

@@ -21,6 +21,7 @@ function Settings({
 	aggregationConfig,
 	errors,
 	facetConfig,
+	highlightConfig,
 	parameterConfig,
 	setFieldTouched,
 	setFieldValue,
@@ -71,6 +72,14 @@ function Settings({
 					</label>
 
 					{_renderEditor('facetConfig', facetConfig)}
+				</ClayForm.Group>
+
+				<ClayForm.Group>
+					<label htmlFor="highlight-configuration">
+						{Liferay.Language.get('highlight-configuration')}
+					</label>
+
+					{_renderEditor('highlightConfig', highlightConfig)}
 				</ClayForm.Group>
 
 				<ClayForm.Group>

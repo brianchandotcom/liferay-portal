@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -148,7 +149,10 @@ public class LayoutSetPrototypeServiceImpl
 	public List<LayoutSetPrototype> getLayoutSetPrototypes(long companyId)
 		throws PortalException {
 
-		return layoutSetPrototypePersistence.findByCompanyId(companyId);
+		List<LayoutSetPrototype> layoutSetPrototypes =
+			layoutSetPrototypePersistence.findByCompanyId(companyId);
+
+		return filterLayoutSetPrototypes(layoutSetPrototypes);
 	}
 
 	@Override
@@ -157,25 +161,12 @@ public class LayoutSetPrototypeServiceImpl
 			OrderByComparator<LayoutSetPrototype> orderByComparator)
 		throws PortalException {
 
-		List<LayoutSetPrototype> filteredLayoutSetPrototypes =
-			new ArrayList<>();
-
 		List<LayoutSetPrototype> layoutSetPrototypes =
 			layoutSetPrototypeLocalService.search(
 				companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				orderByComparator);
 
-		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-			if (LayoutSetPrototypePermissionUtil.contains(
-					getPermissionChecker(),
-					layoutSetPrototype.getLayoutSetPrototypeId(),
-					ActionKeys.VIEW)) {
-
-				filteredLayoutSetPrototypes.add(layoutSetPrototype);
-			}
-		}
-
-		return filteredLayoutSetPrototypes;
+		return filterLayoutSetPrototypes(layoutSetPrototypes);
 	}
 
 	@Override
@@ -219,6 +210,28 @@ public class LayoutSetPrototypeServiceImpl
 
 		return layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 			layoutSetPrototypeId, settings);
+	}
+
+	protected List<LayoutSetPrototype> filterLayoutSetPrototypes(
+			List<LayoutSetPrototype> layoutSetPrototypes)
+		throws PortalException {
+
+		List<LayoutSetPrototype> filteredLayoutSetPrototypes =
+			new ArrayList<>();
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+			if (LayoutSetPrototypePermissionUtil.contains(
+					permissionChecker,
+					layoutSetPrototype.getLayoutSetPrototypeId(),
+					ActionKeys.VIEW)) {
+
+				filteredLayoutSetPrototypes.add(layoutSetPrototype);
+			}
+		}
+
+		return filteredLayoutSetPrototypes;
 	}
 
 }

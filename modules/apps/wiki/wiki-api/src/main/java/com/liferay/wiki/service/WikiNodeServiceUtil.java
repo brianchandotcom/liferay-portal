@@ -42,6 +42,12 @@ public class WikiNodeServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.wiki.service.impl.WikiNodeServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addNode(String, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	public static WikiNode addNode(
 			String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

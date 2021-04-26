@@ -54,6 +54,11 @@ public class WikiNodeLocalServiceUtil {
 		return getService().addDefaultNode(userId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addNode(String, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	public static WikiNode addNode(
 			long userId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

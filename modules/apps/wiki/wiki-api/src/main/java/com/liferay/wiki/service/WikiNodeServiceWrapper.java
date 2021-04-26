@@ -30,6 +30,11 @@ public class WikiNodeServiceWrapper
 		_wikiNodeService = wikiNodeService;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addNode(String, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.wiki.model.WikiNode addNode(
 			String name, String description,

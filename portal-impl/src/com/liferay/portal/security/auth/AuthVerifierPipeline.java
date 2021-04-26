@@ -395,24 +395,15 @@ public class AuthVerifierPipeline {
 			User user = UserLocalServiceUtil.fetchUser(
 				authVerifierResult.getUserId());
 
-			if ((user == null) || !user.isActive()) {
+			if ((user != null) && !user.isActive()) {
 				if (_log.isDebugEnabled()) {
 					Class<?> authVerifierClass = authVerifier.getClass();
 
-					if (user == null) {
-						_log.debug(
-							StringBundler.concat(
-								"Auth verifier ", authVerifierClass.getName(),
-								" returned null user",
-								authVerifierResult.getUserId()));
-					}
-					else {
-						_log.debug(
-							StringBundler.concat(
-								"Auth verifier ", authVerifierClass.getName(),
-								" returned inactive user",
-								authVerifierResult.getUserId()));
-					}
+					_log.debug(
+						StringBundler.concat(
+							"Auth verifier ", authVerifierClass.getName(),
+							" returned inactive user",
+							authVerifierResult.getUserId()));
 				}
 
 				return null;

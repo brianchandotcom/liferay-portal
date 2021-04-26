@@ -73,7 +73,7 @@
 		%>
 		<script>
 			Liferay.Util.openToast({
-				message: '<%= LanguageUtil.get(request, message) %>',
+				message: '<%= LanguageUtil.get(resourceBundle, message) %>',
 				type: 'danger',
 			});
 		</script>

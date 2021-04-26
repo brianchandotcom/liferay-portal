@@ -57,6 +57,9 @@ import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Matija Petanjek
  */
@@ -87,6 +90,8 @@ public class LiferayBatchOperations {
 		String exportTaskId = submitExportTask(
 			className, connection, fieldNames, siteId, connectionTimeoutMillis);
 
+		logger.info("Started batch export task with ID {}", exportTaskId);
+
 		try {
 			while (true) {
 				JsonNode exportTaskJsonNode = getExportTaskJsonNode(
@@ -100,6 +105,14 @@ public class LiferayBatchOperations {
 					break;
 				}
 				else if (exportTaskStatus.equalsIgnoreCase("failed")) {
+					String errorMessage = exportTaskJsonNode.get(
+						"errorMessage"
+					).asText();
+
+					logger.error(
+						"Batch export task with ID {} failed with message: {}",
+						exportTaskId, errorMessage);
+
 					throw new ModuleException(
 						exportTaskJsonNode.get(
 							"errorMessage"
@@ -145,6 +158,8 @@ public class LiferayBatchOperations {
 			connection, inputStream, className, fieldNameMappings,
 			connectionTimeoutMillis);
 
+		logger.debug("Started batch create task with ID {}", importTaskId);
+
 		checkImportTaskExecutionResult(
 			connection, importTaskId, connectionTimeoutMillis);
 	}
@@ -171,6 +186,8 @@ public class LiferayBatchOperations {
 
 		String importTaskId = submitImportDeleteTask(
 			connection, inputStream, className, connectionTimeoutMillis);
+
+		logger.debug("Started batch delete task with ID {}", importTaskId);
 
 		checkImportTaskExecutionResult(
 			connection, importTaskId, connectionTimeoutMillis);
@@ -199,6 +216,8 @@ public class LiferayBatchOperations {
 		String importTaskId = submitImportUpdateTask(
 			connection, inputStream, className, connectionTimeoutMillis);
 
+		logger.debug("Started batch update task with ID {}", importTaskId);
+
 		checkImportTaskExecutionResult(
 			connection, importTaskId, connectionTimeoutMillis);
 	}
@@ -221,11 +240,16 @@ public class LiferayBatchOperations {
 					break;
 				}
 				else if (importTaskStatus.equalsIgnoreCase("failed")) {
+					String errorMessage = importTaskJsonNode.get(
+						"errorMessage"
+					).asText();
+
+					logger.error(
+						"Batch import task with ID {} failed with message: {}",
+						importTaskId, errorMessage);
+
 					throw new ModuleException(
-						importTaskJsonNode.get(
-							"errorMessage"
-						).asText(),
-						LiferayError.BATCH_IMPORT_FAILED);
+						errorMessage, LiferayError.BATCH_IMPORT_FAILED);
 				}
 
 				Thread.sleep(1000);
@@ -510,6 +534,9 @@ public class LiferayBatchOperations {
 
 		return String.valueOf(idJsonNode.longValue());
 	}
+
+	private static final Logger logger = LoggerFactory.getLogger(
+		LiferayCRUDOperations.class);
 
 	private final JsonNodeReader jsonNodeReader = new JsonNodeReader();
 	private final LiferayResponseValidator liferayResponseValidator =

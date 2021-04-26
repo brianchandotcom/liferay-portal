@@ -1,0 +1,47 @@
+@component-name = "portal-clustering"
+definition {
+
+	property app.server.bundles.size = "1";
+	property cluster.enabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property remote.elasticsearch.enabled = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Clustering";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test MemoryClusteredJobsOne {
+		property test.name.skip.portal.instance = "ClusteringScheduler#MemoryClusteredJobsOne";
+
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-portal-scheduler-memory-clustered-1.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "Memory clustered job 1 is added");
+
+		Clustering.runGroovyScript(
+			nodePort = "9080",
+			scriptFile = "groovy-script-portal-scheduler-memory-clustered-2.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "Memory clustered job 2 is added");
+	}
+
+}

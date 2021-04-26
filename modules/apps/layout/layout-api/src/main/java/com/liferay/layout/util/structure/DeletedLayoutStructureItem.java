@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Víctor Galán
@@ -35,19 +37,28 @@ public class DeletedLayoutStructureItem {
 		return new DeletedLayoutStructureItem(
 			jsonObject.getString("itemId"),
 			JSONUtil.toStringList(jsonObject.getJSONArray("portletIds")),
-			jsonObject.getInt("position"));
+			jsonObject.getInt("position"),
+			JSONUtil.toStringSet(jsonObject.getJSONArray("childrenItemIds")));
 	}
 
 	public DeletedLayoutStructureItem(String itemId, List<String> portletIds) {
-		this(itemId, portletIds, 0);
+		this(itemId, portletIds, 0, Collections.emptySet());
 	}
 
 	public DeletedLayoutStructureItem(
 		String itemId, List<String> portletIds, int position) {
 
+		this(itemId, portletIds, position, Collections.emptySet());
+	}
+
+	public DeletedLayoutStructureItem(
+		String itemId, List<String> portletIds, int position,
+		Set<String> childrenItemIds) {
+
 		_itemId = itemId;
 		_portletIds = portletIds;
 		_position = position;
+		_childrenItemIds = childrenItemIds;
 	}
 
 	public boolean contains(String portletId) {
@@ -56,6 +67,22 @@ public class DeletedLayoutStructureItem {
 		}
 
 		return false;
+	}
+
+	public boolean containsItemId(String itemId) {
+		if (Objects.equals(itemId, _itemId)) {
+			return true;
+		}
+
+		if (_childrenItemIds.contains(itemId)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public Set<String> getChildrenItemIds() {
+		return _childrenItemIds;
 	}
 
 	public String getItemId() {
@@ -72,6 +99,8 @@ public class DeletedLayoutStructureItem {
 
 	public JSONObject toJSONObject() {
 		return JSONUtil.put(
+			"childrenItemIds", _childrenItemIds
+		).put(
 			"itemId", _itemId
 		).put(
 			"portletIds", _portletIds
@@ -80,6 +109,7 @@ public class DeletedLayoutStructureItem {
 		);
 	}
 
+	private final Set<String> _childrenItemIds;
 	private final String _itemId;
 	private final List<String> _portletIds;
 	private final int _position;

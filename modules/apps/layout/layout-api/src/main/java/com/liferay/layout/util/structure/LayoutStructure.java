@@ -31,10 +31,12 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Víctor Galán
@@ -457,11 +459,14 @@ public class LayoutStructure {
 
 			_deletedLayoutStructureItems.put(
 				itemId,
-				new DeletedLayoutStructureItem(itemId, portletIds, position));
+				new DeletedLayoutStructureItem(
+					itemId, portletIds, position, _getChildrenItemIds(itemId)));
 		}
 		else {
 			_deletedLayoutStructureItems.put(
-				itemId, new DeletedLayoutStructureItem(itemId, portletIds));
+				itemId,
+				new DeletedLayoutStructureItem(
+					itemId, portletIds, 0, _getChildrenItemIds(itemId)));
 		}
 	}
 
@@ -740,6 +745,20 @@ public class LayoutStructure {
 		}
 
 		return duplicatedLayoutStructureItems;
+	}
+
+	private Set<String> _getChildrenItemIds(String itemId) {
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+			itemId);
+
+		Set<String> childrenItemIds = new HashSet<>(
+			layoutStructureItem.getChildrenItemIds());
+
+		for (String childrenItemId : layoutStructureItem.getChildrenItemIds()) {
+			childrenItemIds.addAll(_getChildrenItemIds(childrenItemId));
+		}
+
+		return childrenItemIds;
 	}
 
 	private void _updateColumnSizes(

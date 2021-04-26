@@ -17,8 +17,6 @@ package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 
-import java.util.Locale;
-
 /**
  * @author Jürgen Kappler
  */
@@ -29,15 +27,5 @@ public interface LayoutStructureItemMapper {
 	public PageElement getPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration);
-
-	public default PageElement getPageElement(
-		long groupId, LayoutStructureItem layoutStructureItem,
-		boolean acceptAllLanguages, Locale locale, boolean saveInlineContent,
-		boolean saveMappingConfiguration) {
-
-		return getPageElement(
-			groupId, layoutStructureItem, saveInlineContent,
-			saveMappingConfiguration);
-	}
 
 }

@@ -76,9 +76,7 @@ public class PageElementDTOConverter
 
 		return PageElementUtil.toPageElement(
 			groupId, layoutStructure, layoutStructureItem,
-			_layoutStructureItemMapperTracker,
-			dtoConverterContext.isAcceptAllLanguages(),
-			dtoConverterContext.getLocale(), saveInlineContent,
+			_layoutStructureItemMapperTracker, saveInlineContent,
 			saveMappingConfiguration);
 	}
 

@@ -87,9 +87,7 @@ public class PageDefinitionDTOConverter
 				pageElement = PageElementUtil.toPageElement(
 					layout.getGroupId(), layoutStructure,
 					mainLayoutStructureItem, _layoutStructureItemMapperTracker,
-					dtoConverterContext.isAcceptAllLanguages(),
-					dtoConverterContext.getLocale(), saveInlineContent,
-					saveMappingConfiguration);
+					saveInlineContent, saveMappingConfiguration);
 				settings = _toSettings(layout);
 			}
 		};

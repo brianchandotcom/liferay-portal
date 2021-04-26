@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -91,8 +92,7 @@ public class PageFragmentInstanceDefinitionMapper {
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
 		FragmentStyle pageFragmentInstanceDefinitionFragmentStyle,
 		FragmentViewport[] pageFragmentInstanceDefinitionFragmentViewports,
-		boolean acceptAllLanguages, Locale locale, boolean saveInlineContent,
-		boolean saveMapping) {
+		boolean saveInlineContent, boolean saveMapping) {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
@@ -115,10 +115,9 @@ public class PageFragmentInstanceDefinitionMapper {
 						key = _getFragmentKey(fragmentEntry, rendererKey);
 					}
 				};
-				fragmentConfig = _getFragmentConfig(fragmentEntryLink, locale);
+				fragmentConfig = _getFragmentConfig(fragmentEntryLink);
 				fragmentFields = _getFragmentFields(
-					acceptAllLanguages, fragmentEntryLink, locale,
-					saveInlineContent, saveMapping);
+					fragmentEntryLink, saveInlineContent, saveMapping);
 				fragmentStyle = pageFragmentInstanceDefinitionFragmentStyle;
 				fragmentViewports =
 					pageFragmentInstanceDefinitionFragmentViewports;
@@ -140,8 +139,7 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private List<FragmentField> _getBackgroundImageFragmentFields(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale,
-		boolean saveMapping) {
+		JSONObject jsonObject, boolean saveMapping) {
 
 		List<FragmentField> fragmentFields = new ArrayList<>();
 
@@ -159,8 +157,7 @@ public class PageFragmentInstanceDefinitionMapper {
 					{
 						id = backgroundImageId;
 						value = _toFragmentFieldBackgroundImage(
-							acceptAllLanguages, imageJSONObject, locale,
-							localizedValues, saveMapping);
+							imageJSONObject, localizedValues, saveMapping);
 					}
 				});
 		}
@@ -169,7 +166,7 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private Map<String, Object> _getFragmentConfig(
-		FragmentEntryLink fragmentEntryLink, Locale locale) {
+		FragmentEntryLink fragmentEntryLink) {
 
 		try {
 			return new HashMap<String, Object>() {
@@ -178,7 +175,8 @@ public class PageFragmentInstanceDefinitionMapper {
 						_fragmentEntryConfigurationParser.
 							getConfigurationJSONObject(
 								fragmentEntryLink.getConfiguration(),
-								fragmentEntryLink.getEditableValues(), locale);
+								fragmentEntryLink.getEditableValues(),
+								new long[] {0L});
 
 					Set<String> keys = jsonObject.keySet();
 
@@ -231,14 +229,14 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private FragmentField[] _getFragmentFields(
-		boolean acceptAllLanguages, FragmentEntryLink fragmentEntryLink,
-		Locale locale, boolean saveInlineContent, boolean saveMapping) {
+		FragmentEntryLink fragmentEntryLink, boolean saveInlineContent,
+		boolean saveMapping) {
 
 		if (!saveInlineContent && !saveMapping) {
 			return new FragmentField[0];
 		}
 
-		JSONObject editableValuesJSONObject;
+		JSONObject editableValuesJSONObject = null;
 
 		try {
 			editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
@@ -250,11 +248,10 @@ public class PageFragmentInstanceDefinitionMapper {
 
 		List<FragmentField> fragmentFields = new ArrayList<>(
 			_getBackgroundImageFragmentFields(
-				acceptAllLanguages,
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.background.image." +
 						"BackgroundImageFragmentEntryProcessor"),
-				locale, saveMapping));
+				saveMapping));
 
 		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
 			"com.liferay.fragment.entry.processor.editable." +
@@ -266,9 +263,7 @@ public class PageFragmentInstanceDefinitionMapper {
 					fragmentEntryLink.getHtml());
 
 			fragmentFields.addAll(
-				_getTextFragmentFields(
-					acceptAllLanguages, editableTypes, jsonObject, locale,
-					saveMapping));
+				_getTextFragmentFields(editableTypes, jsonObject, saveMapping));
 		}
 
 		return fragmentFields.toArray(new FragmentField[0]);
@@ -297,8 +292,8 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private List<FragmentField> _getTextFragmentFields(
-		boolean acceptAllLanguages, Map<String, String> editableTypes,
-		JSONObject jsonObject, Locale locale, boolean saveMapping) {
+		Map<String, String> editableTypes, JSONObject jsonObject,
+		boolean saveMapping) {
 
 		List<FragmentField> fragmentFields = new ArrayList<>();
 
@@ -307,8 +302,7 @@ public class PageFragmentInstanceDefinitionMapper {
 		for (String textId : textIds) {
 			fragmentFields.add(
 				_toFragmentField(
-					acceptAllLanguages, editableTypes, jsonObject, locale,
-					saveMapping, textId));
+					editableTypes, jsonObject, saveMapping, textId));
 		}
 
 		return fragmentFields;
@@ -359,8 +353,7 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private FragmentInlineValue _toDefaultMappingValue(
-		JSONObject jsonObject, Locale locale,
-		Function<Object, String> transformerFunction) {
+		JSONObject jsonObject, Function<Object, String> transformerFunction) {
 
 		long classNameId = jsonObject.getLong("classNameId");
 
@@ -417,7 +410,8 @@ public class PageFragmentInstanceDefinitionMapper {
 				return null;
 			}
 
-			Object infoFieldValueValue = infoFieldValue.getValue(locale);
+			Object infoFieldValueValue = infoFieldValue.getValue(
+				LocaleUtil.getMostRelevantLocale());
 
 			if (transformerFunction != null) {
 				infoFieldValueValue = transformerFunction.apply(
@@ -446,7 +440,7 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private FragmentInlineValue _toDescriptionFragmentInlineValue(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale) {
+		JSONObject jsonObject) {
 
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");
 
@@ -460,12 +454,21 @@ public class PageFragmentInstanceDefinitionMapper {
 			return null;
 		}
 
-		if (acceptAllLanguages && JSONUtil.isValid(alt)) {
+		if (JSONUtil.isValid(alt)) {
 			JSONObject localizedJSONObject = configJSONObject.getJSONObject(
 				"alt");
 
-			return _toFragmentInlineValue(
-				acceptAllLanguages, localizedJSONObject, locale);
+			Map<String, String> localizedValues = new HashMap<>();
+
+			for (String key : localizedJSONObject.keySet()) {
+				localizedValues.put(key, localizedJSONObject.getString(key));
+			}
+
+			return new FragmentInlineValue() {
+				{
+					value_i18n = localizedValues;
+				}
+			};
 		}
 
 		return new FragmentInlineValue() {
@@ -476,9 +479,8 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private FragmentField _toFragmentField(
-		boolean acceptAllLanguages, Map<String, String> editableTypes,
-		JSONObject jsonObject, Locale locale, boolean saveMapping,
-		String textId) {
+		Map<String, String> editableTypes, JSONObject jsonObject,
+		boolean saveMapping, String textId) {
 
 		JSONObject textJSONObject = jsonObject.getJSONObject(textId);
 
@@ -493,35 +495,31 @@ public class PageFragmentInstanceDefinitionMapper {
 
 						if (Objects.equals(type, "html")) {
 							return _toFragmentFieldHTML(
-								acceptAllLanguages, textJSONObject, locale,
-								saveMapping);
+								textJSONObject, saveMapping);
 						}
 
 						if (Objects.equals(type, "image")) {
 							return _toFragmentFieldImage(
-								acceptAllLanguages, textJSONObject, locale,
-								saveMapping);
+								textJSONObject, saveMapping);
 						}
 
 						return _toFragmentFieldText(
-							acceptAllLanguages, textJSONObject, locale,
-							saveMapping);
+							textJSONObject, saveMapping);
 					});
 			}
 		};
 	}
 
 	private FragmentFieldBackgroundImage _toFragmentFieldBackgroundImage(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale,
-		Map<String, String> localizedValues, boolean saveMapping) {
+		JSONObject jsonObject, Map<String, String> localizedValues,
+		boolean saveMapping) {
 
 		return new FragmentFieldBackgroundImage() {
 			{
 				backgroundFragmentImage = new FragmentImage() {
 					{
 						title = _toTitleFragmentInlineValue(
-							acceptAllLanguages, jsonObject, locale,
-							localizedValues);
+							jsonObject, localizedValues);
 
 						setUrl(
 							() -> {
@@ -531,13 +529,16 @@ public class PageFragmentInstanceDefinitionMapper {
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
-											jsonObject, locale,
+											jsonObject,
 											_getImageURLTransformerFunction()),
 										jsonObject);
 								}
 
-								return _toFragmentInlineValue(
-									acceptAllLanguages, jsonObject, locale);
+								return new FragmentInlineValue() {
+									{
+										value_i18n = localizedValues;
+									}
+								};
 							});
 					}
 				};
@@ -546,20 +547,32 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private FragmentFieldHTML _toFragmentFieldHTML(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale,
-		boolean saveMapping) {
+		JSONObject jsonObject, boolean saveMapping) {
 
 		return new FragmentFieldHTML() {
 			{
-				html = _toHtml(
-					acceptAllLanguages, jsonObject, locale, saveMapping);
+				setHtml(
+					() -> {
+						if (FragmentMappedValueUtil.isSaveFragmentMappedValue(
+								jsonObject, saveMapping)) {
+
+							return _toFragmentMappedValue(
+								_toDefaultMappingValue(jsonObject, null),
+								jsonObject);
+						}
+
+						return new FragmentInlineValue() {
+							{
+								value_i18n = _toLocalizedValues(jsonObject);
+							}
+						};
+					});
 			}
 		};
 	}
 
 	private FragmentFieldImage _toFragmentFieldImage(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale,
-		boolean saveMapping) {
+		JSONObject jsonObject, boolean saveMapping) {
 
 		Map<String, JSONObject> localizedJSONObjects =
 			_toLocalizedValueJSONObjects(jsonObject);
@@ -570,10 +583,9 @@ public class PageFragmentInstanceDefinitionMapper {
 				fragmentImage = new FragmentImage() {
 					{
 						description = _toDescriptionFragmentInlineValue(
-							acceptAllLanguages, jsonObject, locale);
+							jsonObject);
 						title = _toTitleFragmentInlineValue(
-							acceptAllLanguages, jsonObject, locale,
-							localizedValues);
+							jsonObject, localizedValues);
 
 						setFragmentImageClassPKReference(
 							() -> {
@@ -597,30 +609,30 @@ public class PageFragmentInstanceDefinitionMapper {
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
-											jsonObject, locale,
+											jsonObject,
 											_getImageURLTransformerFunction()),
 										jsonObject);
 								}
 
-								return _toFragmentInlineValue(
-									acceptAllLanguages, jsonObject, locale);
+								return new FragmentInlineValue() {
+									{
+										value_i18n = localizedValues;
+									}
+								};
 							});
 					}
 				};
-				fragmentLink = _toFragmentLink(
-					acceptAllLanguages, jsonObject, locale, saveMapping);
+				fragmentLink = _toFragmentLink(jsonObject, saveMapping);
 			}
 		};
 	}
 
 	private FragmentFieldText _toFragmentFieldText(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale,
-		boolean saveMapping) {
+		JSONObject jsonObject, boolean saveMapping) {
 
 		return new FragmentFieldText() {
 			{
-				fragmentLink = _toFragmentLink(
-					acceptAllLanguages, jsonObject, locale, saveMapping);
+				fragmentLink = _toFragmentLink(jsonObject, saveMapping);
 
 				setText(
 					() -> {
@@ -628,8 +640,7 @@ public class PageFragmentInstanceDefinitionMapper {
 								jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
-								_toDefaultMappingValue(
-									jsonObject, locale, null),
+								_toDefaultMappingValue(jsonObject, null),
 								jsonObject);
 						}
 
@@ -640,8 +651,11 @@ public class PageFragmentInstanceDefinitionMapper {
 							return null;
 						}
 
-						return _toFragmentInlineValue(
-							acceptAllLanguages, jsonObject, locale);
+						return new FragmentInlineValue() {
+							{
+								value_i18n = localizedValues;
+							}
+						};
 					});
 			}
 		};
@@ -672,23 +686,8 @@ public class PageFragmentInstanceDefinitionMapper {
 		};
 	}
 
-	private FragmentInlineValue _toFragmentInlineValue(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale) {
-
-		return new FragmentInlineValue() {
-			{
-				value = jsonObject.getString(locale.toString());
-
-				if (acceptAllLanguages) {
-					value_i18n = _toLocalizedValues(jsonObject);
-				}
-			}
-		};
-	}
-
 	private FragmentLink _toFragmentLink(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale,
-		boolean saveMapping) {
+		JSONObject jsonObject, boolean saveMapping) {
 
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");
 
@@ -698,19 +697,15 @@ public class PageFragmentInstanceDefinitionMapper {
 
 		return new FragmentLink() {
 			{
-				value = _toFragmentLinkValue(
-					configJSONObject, locale, saveMapping);
-
-				if (acceptAllLanguages) {
-					value_i18n = _toLocalizedFragmentLinkValues(
-						configJSONObject, saveMapping);
-				}
+				value = _toFragmentLinkValue(configJSONObject, saveMapping);
+				value_i18n = _toLocalizedFragmentLinkValues(
+					configJSONObject, saveMapping);
 			}
 		};
 	}
 
 	private FragmentLinkValue _toFragmentLinkValue(
-		JSONObject configJSONObject, Locale locale, boolean saveMapping) {
+		JSONObject configJSONObject, boolean saveMapping) {
 
 		boolean saveFragmentMappedValue =
 			FragmentMappedValueUtil.isSaveFragmentMappedValue(
@@ -728,8 +723,7 @@ public class PageFragmentInstanceDefinitionMapper {
 					() -> {
 						if (saveFragmentMappedValue) {
 							return _toFragmentMappedValue(
-								_toDefaultMappingValue(
-									configJSONObject, locale, null),
+								_toDefaultMappingValue(configJSONObject, null),
 								configJSONObject);
 						}
 
@@ -780,20 +774,6 @@ public class PageFragmentInstanceDefinitionMapper {
 		};
 	}
 
-	private Object _toHtml(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale,
-		boolean saveMapping) {
-
-		if (FragmentMappedValueUtil.isSaveFragmentMappedValue(
-				jsonObject, saveMapping)) {
-
-			return _toFragmentMappedValue(
-				_toDefaultMappingValue(jsonObject, locale, null), jsonObject);
-		}
-
-		return _toFragmentInlineValue(acceptAllLanguages, jsonObject, locale);
-	}
-
 	private Map<String, FragmentLinkValue> _toLocalizedFragmentLinkValues(
 		JSONObject configJSONObject, boolean saveMapping) {
 
@@ -806,9 +786,7 @@ public class PageFragmentInstanceDefinitionMapper {
 				languageId);
 
 			FragmentLinkValue fragmentLinkValue = _toFragmentLinkValue(
-				localizedJSONObject,
-				Locale.forLanguageTag(languageId.replace("_", "-")),
-				saveMapping);
+				localizedJSONObject, saveMapping);
 
 			if (fragmentLinkValue == null) {
 				continue;
@@ -859,8 +837,7 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private FragmentInlineValue _toTitleFragmentInlineValue(
-		boolean acceptAllLanguages, JSONObject jsonObject, Locale locale,
-		Map<String, String> localizedValues) {
+		JSONObject jsonObject, Map<String, String> localizedValues) {
 
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");
 
@@ -876,7 +853,11 @@ public class PageFragmentInstanceDefinitionMapper {
 			return null;
 		}
 
-		return _toFragmentInlineValue(acceptAllLanguages, jsonObject, locale);
+		return new FragmentInlineValue() {
+			{
+				value = imageTitle;
+			}
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

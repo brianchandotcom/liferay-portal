@@ -118,12 +118,33 @@ definition {
 	}
 
 	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductCardShowsCustomImageIfSet {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5857 AssertProductCardShowsCustomImageIfSet pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Blue T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+		CommerceProductImages.addProductImages(
+			imageTitles = "Blue",
+			validationImage = "true");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		AssertElementPresent(
+			key_itemImage = "Commerce_Blue",
+			key_itemName = "Blue T-Shirt",
+			locator1 = "CommerceEntry#PRODUCT_CARD_CUSTOM_IMAGE");
 	}
 
 	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"

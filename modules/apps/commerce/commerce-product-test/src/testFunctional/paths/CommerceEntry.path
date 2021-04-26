@@ -504,6 +504,11 @@
 	<td>//h4[contains(.,'Images')]//..//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRODUCT_CARD_CUSTOM_IMAGE</td>
+	<td>//span[contains(text(),'${key_itemName}')]/../../../../../../..//div[contains(@class,'product-card')]//div[contains(@style,'${key_itemImage}')]</td>
+	<td></td>
+</tr>
 <!--ATTACHMENT-->
 <tr>
 	<td>ATTACHMENT_PLUS_BUTTON</td>

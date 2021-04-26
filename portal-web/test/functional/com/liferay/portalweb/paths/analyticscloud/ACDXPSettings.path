@@ -21,7 +21,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONNECT_WITH_TOKEN_BUTTON</td>
+	<td>CONNECT_DISCONNECT_BUTTON</td>
 	<td>//button[contains(@id,'tokenButton')]</td>
 	<td></td>
 </tr>

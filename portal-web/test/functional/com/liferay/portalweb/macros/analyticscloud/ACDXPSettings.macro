@@ -83,7 +83,7 @@ definition {
 
 		Paste(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
 
-		Click(locator1 = "ACDXPSettings#CONNECT_WITH_TOKEN_BUTTON");
+		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 
 		ACDXPSettings.navToSyncedSitesMenu();
 
@@ -94,5 +94,15 @@ definition {
         ACDXPSettings.syncContactData();
 
 	}
+
+    macro disconnectDXPFromAnalyticsCloud {
+
+        ACDXPSettings.goToInstanceSettingsAC();
+
+        ClickNoError(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+
+        AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to disconnect your Analytics Cloud workspace from this DXP instance?");
+
+    }
 
 }

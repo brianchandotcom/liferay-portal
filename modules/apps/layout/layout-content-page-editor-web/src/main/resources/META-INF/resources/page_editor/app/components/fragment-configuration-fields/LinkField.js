@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import CurrentLanguageFlag from '../../../common/components/CurrentLanguageFlag';
-import ItemSelector from '../../../common/components/ItemSelector';
 import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
@@ -32,14 +31,10 @@ import isMapped from '../../utils/editable-value/isMapped';
 import isMappedToLayout from '../../utils/editable-value/isMappedToLayout';
 import isMappedToStructure from '../../utils/editable-value/isMappedToStructure';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
-import itemSelectorValueToInfoItem from '../../utils/item-selector-value/itemSelectorValueToInfoItem';
 import {useId} from '../../utils/useId';
 import {useGetFieldValue} from '../CollectionItemContext';
 
-const DISPLAY_PAGE_URL_FIELD_ID = 'displayPageURL';
-
 const SOURCE_OPTION_FROM_CONTENT_FIELD = 'fromContentField';
-const SOURCE_OPTION_FROM_ITEM_DISPLAY_PAGE = 'fromItemDisplayPage';
 const SOURCE_OPTION_FROM_LAYOUT = 'fromLayout';
 const SOURCE_OPTION_MANUAL = 'manual';
 
@@ -51,10 +46,6 @@ const SOURCE_OPTIONS = [
 	{
 		label: Liferay.Language.get('page'),
 		value: SOURCE_OPTION_FROM_LAYOUT,
-	},
-	{
-		label: Liferay.Language.get('display-page'),
-		value: SOURCE_OPTION_FROM_ITEM_DISPLAY_PAGE,
 	},
 	{
 		label: Liferay.Language.get('mapped-url'),
@@ -208,20 +199,6 @@ export default function LinkField({field, onValueSelect, value}) {
 						</ClayForm.Group>
 					)}
 				</>
-			)}
-
-			{source === SOURCE_OPTION_FROM_ITEM_DISPLAY_PAGE && (
-				<ItemSelector
-					label={Liferay.Language.get('item')}
-					onItemSelect={(item) =>
-						handleChange({
-							...item,
-							fieldId: DISPLAY_PAGE_URL_FIELD_ID,
-						})
-					}
-					selectedItemTitle={nextValue?.title}
-					transformValueCallback={itemSelectorValueToInfoItem}
-				/>
 			)}
 
 			<ClayCheckbox

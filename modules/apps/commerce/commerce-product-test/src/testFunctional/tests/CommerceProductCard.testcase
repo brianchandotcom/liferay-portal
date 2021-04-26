@@ -145,6 +145,9 @@ definition {
 			key_itemImage = "Commerce_Blue",
 			key_itemName = "Blue T-Shirt",
 			locator1 = "CommerceEntry#PRODUCT_CARD_CUSTOM_IMAGE");
+
+
+			
 	}
 
 	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"

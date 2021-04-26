@@ -23,6 +23,11 @@
 <aui:select label="" name="displayPageType" title="display-page-template-type" value="<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageType() %>">
 	<aui:option label="default-display-page-template" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />
 	<aui:option label="specific-display-page-template" value="<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>" />
+
+	<c:if test="<%= selectAssetDisplayPageDisplayContext.inheritableDisplayPageTemplate() %>">
+		<aui:option label="inherit-display-page-template" value="<%= AssetDisplayPageConstants.TYPE_INHERIT %>" />
+	</c:if>
+
 	<aui:option label="no-display-page-template" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
 </aui:select>
 

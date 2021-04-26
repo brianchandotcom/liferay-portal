@@ -652,6 +652,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A primary key of the parent entry of the asset entry to select an asset display page for.</description>
+			<name>parentClassPK</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to allow page selection for the page's default Asset Publisher.</description>
 			<name>showPortletLayouts</name>
 			<required>false</required>

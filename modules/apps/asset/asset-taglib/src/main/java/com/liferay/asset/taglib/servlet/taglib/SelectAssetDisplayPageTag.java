@@ -45,6 +45,10 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 		return _groupId;
 	}
 
+	public long getParentClassPK() {
+		return _parentClassPK;
+	}
+
 	public boolean isShowPortletLayouts() {
 		return _showPortletLayouts;
 	}
@@ -80,6 +84,10 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setParentClassPK(long parentClassPK) {
+		_parentClassPK = parentClassPK;
+	}
+
 	public void setShowPortletLayouts(boolean showPortletLayouts) {
 		_showPortletLayouts = showPortletLayouts;
 	}
@@ -97,6 +105,7 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 		_classTypeId = 0;
 		_eventName = null;
 		_groupId = 0;
+		_parentClassPK = 0;
 		_showPortletLayouts = false;
 		_showViewInContextLink = true;
 	}
@@ -123,6 +132,9 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 			"liferay-asset:select-asset-display-page:groupId",
 			String.valueOf(_groupId));
 		httpServletRequest.setAttribute(
+			"liferay-asset:select-asset-display-page:parentClassPK",
+			String.valueOf(_parentClassPK));
+		httpServletRequest.setAttribute(
 			"liferay-asset:select-asset-display-page:showPortletLayouts",
 			String.valueOf(_showPortletLayouts));
 		httpServletRequest.setAttribute(
@@ -137,6 +149,7 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 	private long _classTypeId;
 	private String _eventName;
 	private long _groupId;
+	private long _parentClassPK;
 	private boolean _showPortletLayouts;
 	private boolean _showViewInContextLink = true;
 

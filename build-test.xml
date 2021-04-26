@@ -6457,6 +6457,15 @@ go</echo>
 		</gradle-execute>
 	</target>
 
+	<target name="cluster-invoke-method">
+		<if>
+			<isset property="cluster.invoke.method" />
+			<then>
+				<echo file="${liferay.home}/osgi/configs/com.liferay.cluster.test.module.configuration.ClusterTestConfiguration.config">clusterTestCommand="${cluster.invoke.method}"</echo>
+			</then>
+		</if>
+	</target>
+
 	<target name="copy-cluster-log">
 		<local name="log.dir" />
 

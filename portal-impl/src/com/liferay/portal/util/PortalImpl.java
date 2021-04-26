@@ -3605,7 +3605,10 @@ public class PortalImpl implements Portal {
 		HttpServletRequest originalHttpServletRequest =
 			getOriginalServletRequest(httpServletRequest);
 
-		if (originalHttpServletRequest.getPathInfo() == null) {
+		StringBuffer originRequestURL =
+			originalHttpServletRequest.getRequestURL();
+
+		if (originRequestURL.indexOf(_PUBLIC_GROUP_SERVLET_MAPPING) < 0) {
 			requestURI = originalHttpServletRequest.getRequestURI();
 		}
 
@@ -3674,7 +3677,9 @@ public class PortalImpl implements Portal {
 
 			String i18nPath = StringPool.SLASH + i18nPathLanguageId;
 
-			localizedFriendlyURL += i18nPath;
+			if (!requestURI.contains(i18nPath)) {
+				localizedFriendlyURL += i18nPath;
+			}
 		}
 
 		localizedFriendlyURL += requestURI;

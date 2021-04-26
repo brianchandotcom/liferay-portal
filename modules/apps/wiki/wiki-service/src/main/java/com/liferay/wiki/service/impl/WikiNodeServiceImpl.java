@@ -52,6 +52,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addNode(String, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public WikiNode addNode(
 			String name, String description, ServiceContext serviceContext)

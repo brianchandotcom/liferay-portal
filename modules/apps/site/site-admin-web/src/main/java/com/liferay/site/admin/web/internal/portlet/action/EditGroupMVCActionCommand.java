@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
@@ -38,9 +38,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -63,7 +60,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -84,40 +80,27 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
+public class EditGroupMVCActionCommand
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Callable<Group> groupCallable = new GroupCallable(actionRequest);
+		Group group = _updateGroup(actionRequest);
 
-		try {
-			Group group = TransactionInvokerUtil.invoke(
-				_transactionConfig, groupCallable);
+		PortletURL siteAdministrationURL = _getSiteAdministrationURL(
+			actionRequest, group);
 
-			PortletURL siteAdministrationURL = _getSiteAdministrationURL(
-				actionRequest, group);
+		siteAdministrationURL.setParameter(
+			"redirect", siteAdministrationURL.toString());
+		siteAdministrationURL.setParameter(
+			"historyKey",
+			ActionUtil.getHistoryKey(actionRequest, actionResponse));
 
-			siteAdministrationURL.setParameter(
-				"redirect", siteAdministrationURL.toString());
-			siteAdministrationURL.setParameter(
-				"historyKey",
-				ActionUtil.getHistoryKey(actionRequest, actionResponse));
-
-			actionRequest.setAttribute(
-				WebKeys.REDIRECT, siteAdministrationURL.toString());
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Throwable throwable) {
-			if (throwable instanceof Exception) {
-				throw (Exception)throwable;
-			}
-
-			throw new Exception(throwable);
-		}
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT, siteAdministrationURL.toString());
 	}
 
 	private PortletURL _getSiteAdministrationURL(
@@ -532,10 +515,6 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
 
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -556,20 +535,5 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	private class GroupCallable implements Callable<Group> {
-
-		@Override
-		public Group call() throws Exception {
-			return _updateGroup(_actionRequest);
-		}
-
-		private GroupCallable(ActionRequest actionRequest) {
-			_actionRequest = actionRequest;
-		}
-
-		private final ActionRequest _actionRequest;
-
-	}
 
 }

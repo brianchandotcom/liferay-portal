@@ -79,7 +79,11 @@ public class PostgreSQLJDBCUtil {
 
 		Connection connection = preparedStatement.getConnection();
 
-		connection.setAutoCommit(false);
+		boolean autoCommit = connection.getAutoCommit();
+
+		if (autoCommit) {
+			connection.setAutoCommit(false);
+		}
 
 		try {
 			PGConnection pgConnection = connection.unwrap(PGConnection.class);
@@ -100,7 +104,9 @@ public class PostgreSQLJDBCUtil {
 			preparedStatement.setLong(index, id);
 		}
 		finally {
-			connection.setAutoCommit(true);
+			if (autoCommit) {
+				connection.setAutoCommit(true);
+			}
 		}
 	}
 

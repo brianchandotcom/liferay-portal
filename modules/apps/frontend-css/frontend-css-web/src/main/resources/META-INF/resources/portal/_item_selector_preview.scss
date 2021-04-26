@@ -111,4 +111,8 @@ $infoPanelSidebarDDColor: $secondary-l1;
 			float: right;
 		}
 	}
+
+	.image-editor {
+		height: calc(100% - 3.5rem);
+	}
 }

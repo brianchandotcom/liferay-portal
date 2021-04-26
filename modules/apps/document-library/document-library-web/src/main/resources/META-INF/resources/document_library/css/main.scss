@@ -1,6 +1,6 @@
 @import 'atlas-variables';
 
-@import 'image_editor';
+@import 'image_editor_modal';
 
 @mixin file-icon($colorIndex, $color) {
 	[data-file-icon-color='#{$colorIndex}'] .lexicon-icon {

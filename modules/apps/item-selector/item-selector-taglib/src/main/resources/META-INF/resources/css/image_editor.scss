@@ -1,8 +1,9 @@
-.image-editor-modal {
-	.modal-body {
-		background-color: $dark;
-		padding: 0;
-	}
+@import 'atlas-variables';
+
+.image-editor {
+	background-color: $dark;
+	height: 100%;
+	position: relative;
 
 	.tbar {
 		background-color: $dark-d2;

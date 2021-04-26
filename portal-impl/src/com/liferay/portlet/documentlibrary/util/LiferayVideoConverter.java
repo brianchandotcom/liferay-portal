@@ -40,11 +40,12 @@ import java.io.File;
 import java.util.Properties;
 
 /**
- * @author Juan González
- * @author Sergio González
- * @author Brian Wing Shun Chan
- * @author Alexander Chow
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.document.library.kernel.util.VideoConverter}
+ * @author     Juan González
+ * @author     Sergio González
+ * @author     Brian Wing Shun Chan
+ * @author     Alexander Chow
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.document.library.kernel.util.VideoConverter}
  */
 @Deprecated
 public class LiferayVideoConverter extends LiferayConverter {

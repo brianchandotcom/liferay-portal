@@ -50,11 +50,12 @@ public class MatchFromScratchTest extends BaseQueryElementsTestCase {
 
 		String configurationString = getConfigurationString(
 			getMatchQueryElementJSONObject(200, "must", "orange county"),
-			getMultiMatchQueryElementJSONObject(1, "or"));
+			getMultiMatchQueryElementJSONObject(1, "AUTO", "or"));
 
 		String selectedElementString = getSelectedElementString(
 			getPasteESQueryJSONObject(200, "must", "orange county"),
-			getTextMatchOverMultipleFieldJSONObject(1, 2, 1, "or"));
+			getTextMatchOverMultipleFieldJSONObject(
+				1, 2, "AUTO", 1, "or", "best_fields"));
 
 		Blueprint blueprint = addCompanyBlueprint(
 			Collections.singletonMap(
@@ -67,11 +68,12 @@ public class MatchFromScratchTest extends BaseQueryElementsTestCase {
 
 		configurationString = getConfigurationString(
 			getMatchQueryElementJSONObject(200, "must", "los angeles"),
-			getMultiMatchQueryElementJSONObject(1, "or"));
+			getMultiMatchQueryElementJSONObject(1, "AUTO", "or"));
 
 		selectedElementString = getSelectedElementString(
 			getPasteESQueryJSONObject(200, "must", "los angeles"),
-			getTextMatchOverMultipleFieldJSONObject(1, 2, 1, "or"));
+			getTextMatchOverMultipleFieldJSONObject(
+				1, 2, "AUTO", 1, "or", "best_fields"));
 
 		assertSearchIgnoreRelevance(
 			blueprint, configurationString, "[cafe rio, starbucks cafe]",

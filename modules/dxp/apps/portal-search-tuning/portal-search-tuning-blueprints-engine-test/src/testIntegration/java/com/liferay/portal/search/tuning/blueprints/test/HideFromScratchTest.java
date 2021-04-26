@@ -50,12 +50,13 @@ public class HideFromScratchTest extends BaseQueryElementsTestCase {
 
 		String configurationString = getConfigurationString(
 			getMatchQueryElementJSONObject(200, "must_not", "los angeles"),
-			getMultiMatchQueryElementJSONObject(1, "or"),
+			getMultiMatchQueryElementJSONObject(1, "AUTO", "or"),
 			getHideHiddenContentsElementJSONObject());
 
 		String selectedElementString = getSelectedElementString(
 			getPasteESQueryJSONObject(200, "must_not", "los angeles"),
-			getTextMatchOverMultipleFieldJSONObject(1, 1, 2, "or"),
+			getTextMatchOverMultipleFieldJSONObject(
+				1, 1, "AUTO", 2, "or", "best_fields"),
 			getHideHiddenContentsJSONObject());
 
 		Blueprint blueprint = addCompanyBlueprint(
@@ -69,12 +70,13 @@ public class HideFromScratchTest extends BaseQueryElementsTestCase {
 
 		configurationString = getConfigurationString(
 			getMatchQueryElementJSONObject(200, "must_not", "orange county"),
-			getMultiMatchQueryElementJSONObject(1, "or"),
+			getMultiMatchQueryElementJSONObject(1, "AUTO", "or"),
 			getHideHiddenContentsElementJSONObject());
 
 		selectedElementString = getSelectedElementString(
 			getPasteESQueryJSONObject(200, "must_not", "orange county", null),
-			getTextMatchOverMultipleFieldJSONObject(1, 1, 2, "or"),
+			getTextMatchOverMultipleFieldJSONObject(
+				1, 1, "AUTO", 2, "or", "best_fields"),
 			getHideHiddenContentsJSONObject());
 
 		assertSearchIgnoreRelevance(

@@ -110,11 +110,11 @@ public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 	}
 
 	protected JSONObject getMultiMatchJSONObject(
-		int boost, String operator, String type) {
+		int boost, String fuzziness, String operator, String type) {
 
 		JSONArray fieldsJSONArray = createJSONArray();
 
-		return JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"boost", boost
 		).put(
 			"fields",
@@ -124,25 +124,29 @@ public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 				"content${context.language_id}^1"
 			)
 		).put(
-			"fuzziness", "AUTO"
-		).put(
 			"operator", operator
 		).put(
 			"query", "${keywords}"
 		).put(
 			"type", type
 		);
+
+		if (fuzziness != null) {
+			jsonObject.put("fuzziness", fuzziness);
+		}
+
+		return jsonObject;
 	}
 
 	protected JSONObject getMultiMatchQueryElementJSONObject(
-		int boost, String operator) {
+		int boost, String fuzziness, String operator) {
 
 		return getMultiMatchQueryElementJSONObject(
-			boost, operator, "best_fields");
+			boost, fuzziness, operator, "best_fields");
 	}
 
 	protected JSONObject getMultiMatchQueryElementJSONObject(
-		int boost, String operator, String type) {
+		int boost, String fuzziness, String operator, String type) {
 
 		return JSONUtil.put(
 			"category", "match"
@@ -159,7 +163,8 @@ public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 						"query",
 						JSONUtil.put(
 							"multi_match",
-							getMultiMatchJSONObject(boost, operator, type)))
+							getMultiMatchJSONObject(
+								boost, fuzziness, operator, type)))
 				).put(
 					"type", "wrapper"
 				))
@@ -231,17 +236,8 @@ public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 	}
 
 	protected JSONObject getTextMatchOverMultipleFieldJSONObject(
-			int boost, int contentBoost, int localizedTitleBoost,
-			String operator)
-		throws Exception {
-
-		return getTextMatchOverMultipleFieldJSONObject(
-			boost, contentBoost, localizedTitleBoost, operator, "best_fields");
-	}
-
-	protected JSONObject getTextMatchOverMultipleFieldJSONObject(
-			int boost, int contentBoost, int localizedTitleBoost,
-			String operator, String type)
+			int boost, int contentBoost, String fuzziness,
+			int localizedTitleBoost, String operator, String type)
 		throws Exception {
 
 		JSONObject elementTemplateJSONObject = getElementTemplateJSONObject(
@@ -256,24 +252,27 @@ public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 		).put(
 			"uiConfigurationValues",
 			getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
-				boost, contentBoost, localizedTitleBoost, operator, type)
+				boost, contentBoost, fuzziness, localizedTitleBoost, operator,
+				type)
 		);
 	}
 
 	protected JSONObject getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
-		int boost, int contentBoost, int localizedTitleBoost, String operator) {
+		int boost, int contentBoost, String fuzziness, int localizedTitleBoost,
+		String operator) {
 
 		return getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
-			boost, contentBoost, localizedTitleBoost, operator, "best_fields");
+			boost, contentBoost, fuzziness, localizedTitleBoost, operator,
+			"best_fields");
 	}
 
 	protected JSONObject getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
-		int boost, int contentBoost, int localizedTitleBoost, String operator,
-		String type) {
+		int boost, int contentBoost, String fuzziness, int localizedTitleBoost,
+		String operator, String type) {
 
 		JSONArray fieldsJSONArray = createJSONArray();
 
-		return JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"boost", boost
 		).put(
 			"fields",
@@ -295,12 +294,16 @@ public abstract class BaseQueryElementsTestCase extends BaseBlueprintsTestCase {
 				)
 			)
 		).put(
-			"fuzziness", "AUTO"
-		).put(
 			"operator", operator
 		).put(
 			"type", type
 		);
+
+		if (fuzziness != null) {
+			jsonObject.put("fuzziness", fuzziness);
+		}
+
+		return jsonObject;
 	}
 
 }

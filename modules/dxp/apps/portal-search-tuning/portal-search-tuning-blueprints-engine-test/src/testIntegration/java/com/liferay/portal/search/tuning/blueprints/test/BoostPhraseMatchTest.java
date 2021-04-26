@@ -54,10 +54,11 @@ public class BoostPhraseMatchTest extends BaseQueryElementsTestCase {
 				LocaleUtil.US, getClass().getName() + "Blueprint"),
 			Collections.singletonMap(LocaleUtil.US, ""),
 			getConfigurationString(
-				getMultiMatchQueryElementJSONObject(1, "or", "most_fields")),
+				getMultiMatchQueryElementJSONObject(
+					1, "AUTO", "or", "most_fields")),
 			getSelectedElementString(
 				getTextMatchOverMultipleFieldUIConfigValuesJSONObject(
-					2, 1, 1, "or", "most_fields")));
+					2, 1, "AUTO", 1, "or", "most_fields")));
 
 		assertSearch(
 			blueprint, null,
@@ -66,12 +67,12 @@ public class BoostPhraseMatchTest extends BaseQueryElementsTestCase {
 			"coca drink", null);
 
 		String configurationString = getConfigurationString(
-			getMultiMatchQueryElementJSONObject(1, "or", "most_fields"),
+			getMultiMatchQueryElementJSONObject(1, null, "or", "most_fields"),
 			getAllKeywordsMatchQueryElementJSONObject());
 
 		String selectedElementString = getSelectedElementString(
 			getTextMatchOverMultipleFieldJSONObject(
-				1, 1, 2, "or", "most_fields"),
+				1, 1, null, 2, "or", "most_fields"),
 			getAllKeywordsMatchMultipleFieldJSONObject(100, 1, 2, "phrase"));
 
 		assertSearch(
@@ -150,7 +151,8 @@ public class BoostPhraseMatchTest extends BaseQueryElementsTestCase {
 						"query",
 						JSONUtil.put(
 							"multi_match",
-							getMultiMatchJSONObject(100, "and", "phrase")))
+							getMultiMatchJSONObject(
+								100, null, "and", "phrase")))
 				).put(
 					"type", "wrapper"
 				))
@@ -170,28 +172,29 @@ public class BoostPhraseMatchTest extends BaseQueryElementsTestCase {
 		);
 	}
 
-	@Override
-	protected JSONObject getMultiMatchJSONObject(
-		int boost, String operator, String type) {
+	//	@Override
+	//	protected JSONObject getMultiMatchJSONObject(
+	//		int boost, String fuzziness, String operator, String type) {
+	//
+	//		JSONArray fieldsJSONArray = createJSONArray();
 
-		JSONArray fieldsJSONArray = createJSONArray();
-
-		return JSONUtil.put(
-			"boost", boost
-		).put(
-			"fields",
-			fieldsJSONArray.put(
-				"localized_title${context.language_id}^2"
-			).put(
-				"content${context.language_id}^1"
-			)
-		).put(
-			"operator", operator
-		).put(
-			"query", "${keywords}"
-		).put(
-			"type", type
-		);
-	}
+	//
+	//		return JSONUtil.put(
+	//			"boost", boost
+	//		).put(
+	//			"fields",
+	//			fieldsJSONArray.put(
+	//				"localized_title${context.language_id}^2"
+	//			).put(
+	//				"content${context.language_id}^1"
+	//			)
+	//		).put(
+	//			"operator", operator
+	//		).put(
+	//			"query", "${keywords}"
+	//		).put(
+	//			"type", type
+	//		);
+	//	}
 
 }

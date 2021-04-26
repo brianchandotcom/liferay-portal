@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.internal.configuration.ConfigurationUtil;
 
 import java.io.IOException;
@@ -167,57 +168,25 @@ public class InitialUpgradeExtender
 
 			DBManager dbManager = dbContext.getDBManager();
 
-			DB db = dbManager.getDB();
+			_db = dbManager.getDB();
 
-			String tablesSQL = _getSQLTemplateString("tables.sql");
-			String sequencesSQL = _getSQLTemplateString("sequences.sql");
-			String indexesSQL = _getSQLTemplateString("indexes.sql");
+			try {
+				_db.doProcess(
+					companyId -> {
+						if (_log.isInfoEnabled() &&
+							Validator.isNotNull(companyId)) {
 
-			try (Connection connection = _dataSource.getConnection()) {
-				if (tablesSQL != null) {
-					try {
-						db.runSQLTemplateString(connection, tablesSQL, true);
-					}
-					catch (Exception exception) {
-						throw new UpgradeException(
-							StringBundler.concat(
-								"Bundle ", _bundle,
-								" has invalid content in tables.sql:\n",
-								tablesSQL),
-							exception);
-					}
-				}
+							_log.info(
+								StringBundler.concat(
+									toString(), StringPool.SPACE,
+									_bundle.getSymbolicName(), "#", companyId));
+						}
 
-				if (sequencesSQL != null) {
-					try {
-						db.runSQLTemplateString(connection, sequencesSQL, true);
-					}
-					catch (Exception exception) {
-						throw new UpgradeException(
-							StringBundler.concat(
-								"Bundle ", _bundle,
-								" has invalid content in sequences.sql:\n",
-								sequencesSQL),
-							exception);
-					}
-				}
-
-				if (indexesSQL != null) {
-					try {
-						db.runSQLTemplateString(connection, indexesSQL, true);
-					}
-					catch (Exception exception) {
-						throw new UpgradeException(
-							StringBundler.concat(
-								"Bundle ", _bundle,
-								" has invalid content in indexes.sql:\n",
-								indexesSQL),
-							exception);
-					}
-				}
+						_upgrade();
+					});
 			}
-			catch (SQLException sqlException) {
-				throw new UpgradeException(sqlException);
+			catch (Exception exception) {
+				new UpgradeException(exception);
 			}
 		}
 
@@ -248,8 +217,63 @@ public class InitialUpgradeExtender
 			}
 		}
 
+		private void _upgrade() throws UpgradeException {
+			String tablesSQL = _getSQLTemplateString("tables.sql");
+			String sequencesSQL = _getSQLTemplateString("sequences.sql");
+			String indexesSQL = _getSQLTemplateString("indexes.sql");
+
+			try (Connection connection = _dataSource.getConnection()) {
+				if (tablesSQL != null) {
+					try {
+						_db.runSQLTemplateString(connection, tablesSQL, true);
+					}
+					catch (Exception exception) {
+						throw new UpgradeException(
+							StringBundler.concat(
+								"Bundle ", _bundle,
+								" has invalid content in tables.sql:\n",
+								tablesSQL),
+							exception);
+					}
+				}
+
+				if (sequencesSQL != null) {
+					try {
+						_db.runSQLTemplateString(
+							connection, sequencesSQL, true);
+					}
+					catch (Exception exception) {
+						throw new UpgradeException(
+							StringBundler.concat(
+								"Bundle ", _bundle,
+								" has invalid content in sequences.sql:\n",
+								sequencesSQL),
+							exception);
+					}
+				}
+
+				if (indexesSQL != null) {
+					try {
+						_db.runSQLTemplateString(connection, indexesSQL, true);
+					}
+					catch (Exception exception) {
+						throw new UpgradeException(
+							StringBundler.concat(
+								"Bundle ", _bundle,
+								" has invalid content in indexes.sql:\n",
+								indexesSQL),
+							exception);
+					}
+				}
+			}
+			catch (SQLException sqlException) {
+				throw new UpgradeException(sqlException);
+			}
+		}
+
 		private final Bundle _bundle;
 		private final DataSource _dataSource;
+		private DB _db;
 
 	}
 

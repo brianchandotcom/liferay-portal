@@ -36,7 +36,10 @@ export default class SelectEntityHandler {
 			Liferay.Util.getOpener().Liferay.fire(this.eventName, {
 				data: {
 					returnType: this.returnType,
-					value: {...button.dataset},
+					value: {
+						...button.dataset,
+						classPK: button.dataset.classPk,
+					},
 				},
 			});
 		}

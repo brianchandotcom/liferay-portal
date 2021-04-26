@@ -34,6 +34,9 @@ SelectAssetCategoryTreeNodeDisplayContext selectAssetCategoryTreeNodeDisplayCont
 			cssClass="asset-category-tree-node-selector"
 			data-category-tree-node-id="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeId() %>"
 			data-category-tree-node-type="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeType() %>"
+			data-class-name="<%= AssetCategory.class.getName() %>"
+			data-class-name-id="<%= PortalUtil.getClassNameId(AssetCategory.class.getName()) %>"
+			data-class-pk="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeId() %>"
 			data-title="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeName() %>"
 			displayType="primary"
 			label='<%= LanguageUtil.get(resourceBundle, "select-this-level") %>'

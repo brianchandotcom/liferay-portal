@@ -452,6 +452,188 @@ definition {
 			fieldGroupLabelList = "Copy of Numeric,Copy of Date");
 	}
 
+	@description = "This is a test for LRQA-66584. This test validates the duplication of field groups up to 2 levels"
+	@priority = "5"
+	test DuplicateTwoLevelFieldGroups {
+		property portal.acceptance = "true";
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text 1",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text 2",
+			fieldName = "Text",
+			targetFieldLabel = "Text 1");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Fields Group 1");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text 3",
+			fieldName = "Text",
+			targetFieldLabel = "Text 2");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Fields Group 2");
+
+		DataEngine.editFieldsGroupRepeatable(fieldsGroupLabel = "Fields Group 2");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		Pause(locator1 = "1000");
+
+		DataEngine.addRepeatableFieldsGroup(fieldsGroupLabel = "Fields Group 2");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field - 1",
+			webContentTextFieldLabel = "Text 1",
+			webContentTitle = "Web Content Title");
+
+		for (var index : list "1,2") {
+			for (var labelCount : list "2,3") {
+				WebContent.editFieldValue(
+					fieldFieldLabel = "Text ${labelCount}",
+					index = "${index}",
+					value = "This is a Text field - ${labelCount}");
+			}
+		}
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field - 1",
+			webContentTextFieldLabel = "Text 1",
+			webContentTitle = "Web Content Title");
+
+		for (var index : list "1,2") {
+			for (var labelCount : list "2,3") {
+				AssertTextEquals.assertValue(
+					index = "${index}",
+					key_fieldFieldLabel = "Text ${labelCount}",
+					locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+					value1 = "This is a Text field - ${labelCount}");
+			}
+		}
+
+		for (var index : list "1,2") {
+			for (var labelCount : list "2,3") {
+				WebContent.editFieldValue(
+					fieldFieldLabel = "Text ${labelCount}",
+					index = "${index}",
+					value = "This is a Text field - ${labelCount} edited");
+			}
+		}
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field - 1",
+			webContentTextFieldLabel = "Text 1",
+			webContentTitle = "Web Content Title");
+
+		for (var index : list "1,2") {
+			for (var labelCount : list "2,3") {
+				AssertTextEquals.assertValue(
+					index = "${index}",
+					key_fieldFieldLabel = "Text ${labelCount}",
+					locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+					value1 = "This is a Text field - ${labelCount} edited");
+			}
+		}
+
+		WebContent.removeDuplicatedFieldsGroup(index = "3");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		for (var labelCount : list "2,3") {
+			AssertElementNotPresent(
+				key_fieldFieldLabel = "Text ${labelCount}",
+				key_index = "2",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
+		}
+
+		Navigator.gotoBack();
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.editFieldsGroupRepeatable(fieldsGroupLabel = "Fields Group 1");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		Pause(locator1 = "1000");
+
+		DataEngine.addRepeatableFieldsGroup(fieldsGroupLabel = "Fields Group 1");
+
+		for (var labelCount : list "1,2,3") {
+			WebContent.editFieldValue(
+				fieldFieldLabel = "Text ${labelCount}",
+				index = "2",
+				value = "This is a Text field - ${labelCount}");
+		}
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field - 1",
+			webContentTextFieldLabel = "Text 1",
+			webContentTitle = "Web Content Title");
+
+		for (var labelCount : list "2,3") {
+			AssertTextEquals.assertValue(
+				index = "1",
+				key_fieldFieldLabel = "Text ${labelCount}",
+				locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+				value1 = "This is a Text field - ${labelCount} edited");
+		}
+
+		for (var labelCount : list "1,2,3") {
+			AssertTextEquals.assertValue(
+				index = "2",
+				key_fieldFieldLabel = "Text ${labelCount}",
+				locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+				value1 = "This is a Text field - ${labelCount}");
+		}
+
+		WebContent.removeDuplicatedFieldsGroup(index = "3");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field - 1",
+			webContentTextFieldLabel = "Text 1",
+			webContentTitle = "Web Content Title");
+
+		for (var labelCount : list "2,3") {
+			AssertTextEquals.assertValue(
+				index = "1",
+				key_fieldFieldLabel = "Text ${labelCount}",
+				locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+				value1 = "This is a Text field - ${labelCount} edited");
+		}
+
+		for (var labelCount : list "1,2,3") {
+			AssertElementNotPresent(
+				key_fieldFieldLabel = "Text ${labelCount}",
+				key_index = "2",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
+		}
+	}
+
 	@description = "This is a test for LPS-98077. Edit the label of the FieldGroup"
 	@priority = "4"
 	test EditFieldGroupLabel {

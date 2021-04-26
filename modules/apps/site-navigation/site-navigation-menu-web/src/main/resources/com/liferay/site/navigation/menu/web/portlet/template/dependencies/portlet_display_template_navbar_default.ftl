@@ -49,7 +49,7 @@
 					</#if>
 
 					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
-						<a aria-labelledby="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
 							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
 						</a>
 

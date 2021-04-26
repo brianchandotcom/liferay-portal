@@ -43,7 +43,7 @@
 							<div class="btn-group">
 						</#if>
 
-						<a aria-labelledby="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" class="${nav_item_css_class} btn btn-secondary" ${nav_item_href_link}><span>${navItem.getName()}</span></a>
+						<a class="${nav_item_css_class} btn btn-secondary" ${nav_item_href_link}><span>${navItem.getName()}</span></a>
 
 						<#if showChildrenNavItems>
 							<button aria-expanded="false" aria-haspopup="true" class="${nav_item_css_class} btn btn-secondary c-px-2 dropdown-toggle" data-toggle="liferay-dropdown" type="button">

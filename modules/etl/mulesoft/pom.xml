@@ -43,24 +43,24 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.22.0</version>
-					<configuration>
-						<excludes>
-							<exclude>**/LiferayCreateOperationTest.java</exclude>
-							<exclude>**/LiferayDeleteOperationTest.java</exclude>
-							<exclude>**/LiferayGetOperationTest.java</exclude>
-							<exclude>**/LiferayUpdateOperationTest.java</exclude>
-							<exclude>**/OAuth2CachedConnectionProviderTest.java</exclude>
-						</excludes>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+		<!--		<pluginManagement>-->
+		<!--			<plugins>-->
+		<!--				<plugin>-->
+		<!--					<groupId>org.apache.maven.plugins</groupId>-->
+		<!--					<artifactId>maven-surefire-plugin</artifactId>-->
+		<!--					<version>2.22.0</version>-->
+		<!--					<configuration>-->
+		<!--						<excludes>-->
+		<!--							<exclude>**/LiferayCreateOperationTest.java</exclude>-->
+		<!--							<exclude>**/LiferayDeleteOperationTest.java</exclude>-->
+		<!--							<exclude>**/LiferayGetOperationTest.java</exclude>-->
+		<!--							<exclude>**/LiferayUpdateOperationTest.java</exclude>-->
+		<!--							<exclude>**/OAuth2CachedConnectionProviderTest.java</exclude>-->
+		<!--						</excludes>-->
+		<!--					</configuration>-->
+		<!--				</plugin>-->
+		<!--			</plugins>-->
+		<!--		</pluginManagement>-->
 		<plugins>
 			<plugin>
 				<groupId>org.jacoco</groupId>

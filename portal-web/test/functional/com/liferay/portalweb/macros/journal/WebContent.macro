@@ -1232,6 +1232,14 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro editFieldValue {
+		Type(
+			index = "${index}",
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+			value1 = "${value}");
+	}
+
 	macro editFriendlyURL {
 		Panel.expandPanel(panel = "Friendly URL");
 

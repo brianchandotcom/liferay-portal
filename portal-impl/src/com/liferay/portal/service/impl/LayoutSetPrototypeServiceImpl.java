@@ -81,6 +81,9 @@ public class LayoutSetPrototypeServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		PortalPermissionUtil.check(
+			getPermissionChecker(), ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
+
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
@@ -90,9 +93,6 @@ public class LayoutSetPrototypeServiceImpl
 		Map<Locale, String> descriptionMap = HashMapBuilder.put(
 			locale, description
 		).build();
-
-		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
 
 		User user = getUser();
 

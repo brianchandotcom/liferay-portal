@@ -154,6 +154,75 @@ definition {
 			searchAssetType = "Blogs Entry");
 	}
 
+	@priority = "4"
+	test CanInvokeMethods {
+		property test.name.skip.portal.instance = "Clustering#CanInvokeMethods";
+
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-invoke-method.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "Result of invoke-method-portal is :9080");
+
+		Clustering.runGroovyScript(
+			nodePort = "9080",
+			scriptFile = "groovy-script-invoke-method.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "Result of invoke-method-portal is :8080");
+
+		for (var serverPort : list "8080,9080") {
+			Clustering.runGroovyScript(
+				nodePort = "${serverPort}",
+				scriptFile = "groovy-script-invoke-method-on-master.groovy");
+
+			AssertTextEquals(
+				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+				value1 = "Result of invoke-method-portal-on-master is :8080");
+		}
+
+		for (var serverPort : list "8080,9080") {
+			Clustering.deployJarOnSpecificServer(
+				liferayDependencyJars = "com.liferay.cluster.test.module.jar",
+				nodePort = "${serverPort}");
+		}
+
+		for (var method : list "invoke-method-module,invoke-method-portal") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "cluster-invoke-method -Dcluster.invoke.method=${method}");
+
+			Pause(locator1 = "10000");
+
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Result of ${method} is :9080",
+				nodePort = "8080");
+
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Result of ${method} is :8080",
+				nodePort = "9080");
+		}
+
+		for (var method : list "invoke-method-module-on-master,invoke-method-portal-on-master") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "cluster-invoke-method -Dcluster.invoke.method=${method}");
+
+			Pause(locator1 = "10000");
+
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Result of ${method} is :8080",
+				nodePort = "8080");
+
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Result of ${method} is :8080",
+				nodePort = "9080");
+		}
+	}
+
 	@priority = "5"
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";

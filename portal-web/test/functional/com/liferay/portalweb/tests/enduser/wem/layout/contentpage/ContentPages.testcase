@@ -217,38 +217,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-107285. Can not duplicate Layout Elements with a widget that only allowed appear once in the page, there should be an error message shown."
-	@priority = "4"
-	test CannotDuplicateSectionWithOnlyAllowedAppearOnceWidget {
-		task ("Add a content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Add a Container to page") {
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add the Language Selector into Container") {
-			PageEditor.addElementToContainer(
-				navTab = "Widgets",
-				portletName = "Language Selector");
-		}
-
-		task ("Assert alert message when duplicate Section") {
-			PageEditor.gotoDuplicate(fragmentName = "Container");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR",
-				value1 = "The layout could not be duplicated because it contains a widget (Language Selector) that can only appear once in the page.");
-
-			Pause(locator1 = "3000");
-		}
-	}
-
 	@description = "Users can only edit content pages in edit mode."
 	@priority = "5"
 	test CannotEditInViewMode {
@@ -278,94 +246,6 @@ definition {
 
 		task ("Assert the page cannot be edited by asserting the fragments side bar is not present") {
 			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
-		}
-	}
-
-	@description = "This is a test for LPS-91000, LPS-95002 and LPS-115224. User can edit number of columns a section has as well as padding options. The Fixed Width of Container should work in view mode."
-	@priority = "5"
-	test ChangeLayoutElementProperties {
-		property portal.acceptance = "true";
-
-		task ("Add a Container to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Assert the Container has Fluid, padding bottom 0, padding left 0, padding right 0 and padding top 0") {
-			PageEditor.viewContainerStyle(
-				containerWidth = "Fluid",
-				paddingBottom = "0",
-				paddingLeft = "0",
-				paddingRight = "0",
-				paddingTop = "0",
-				position = "1");
-		}
-
-		task ("Edit the Container's properties") {
-			PageEditor.editLayoutContainer(
-				backgroundColor = "Success",
-				containerWidth = "Fixed Width",
-				paddingBottom = "4",
-				paddingTop = "2",
-				panel = "Styles");
-		}
-
-		task ("Assert the Margin Left and Margin Right fields are disabled") {
-			AssertNotEditable(
-				key_borderBottom = "Margin",
-				key_fieldLabel = "Left",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD");
-
-			AssertNotEditable(
-				key_borderBottom = "Margin",
-				key_fieldLabel = "Right",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD");
-		}
-
-		task ("Assert the Container has Fixed Width, padding bottom 4 and padding top 2") {
-			PageEditor.viewContainerStyle(
-				backgroundColor = "success",
-				containerWidth = "Fixed Width",
-				paddingBottom = "4",
-				paddingTop = "2",
-				position = "1");
-		}
-
-		task ("Assert Fixed Width of Container works in view mode") {
-			PageEditor.clickPublish();
-
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			var screenWidth	= selenium.getElementWidth("//body");
-
-			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]");
-
-			TestUtils.assertNotEquals(
-				actual = "${containerWidth}",
-				expected = "${screenWidth}");
-
-			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]");
-
-			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]",
-				locator2 = "background-color",
-				value1 = "rgba(40, 125, 60, 1)");
-
-			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]",
-				locator2 = "max-width",
-				value1 = "${containerWidth}px");
-
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'container')][contains(@class,'ml-0')]");
-
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'container')][contains(@class,'mr-0')]");
 		}
 	}
 
@@ -666,40 +546,6 @@ definition {
 			key_fragmentName = "Button",
 			key_inFragmentName = "Fragment Name",
 			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
-	}
-
-	@description = "This is a test for LPS-107285. When duplicate the Section fragment with the Row fragment, the Row fragment should also be duplicated."
-	@priority = "5"
-	test DuplicateSectionWithRow {
-		property portal.acceptance = "true";
-
-		task ("Add a Container to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add a Row into Container") {
-			PageEditor.addElementToContainer(
-				collectionName = "Layout Elements",
-				fragmentName = "Grid",
-				navTab = "Fragments");
-		}
-
-		task ("Assert the nested Row is also duplicated with Container") {
-			PageEditor.gotoDuplicate(fragmentName = "Container");
-
-			PageEditor.viewDuplicateFragment(fragmentName = "Container");
-
-			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
-				key_position = "2",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-		}
 	}
 
 	@description = "Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872. This test has been extended to cover LPS-78726. Changes to content pages only appear after they are published."
@@ -1066,99 +912,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-107285. When the Container fragment is duplicated, the configuration of it and its components should also be duplicated."
-	@priority = "4"
-	test ViewConfigurationDuplicatedWhenDuplicateSectionWithHeading {
-		task ("Add a Container to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add a Heading fragment into Container") {
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				navTab = "Fragments");
-		}
-
-		task ("Configure the Container") {
-			PageEditor.editLayoutContainer(
-				backgroundColor = "Success",
-				panel = "Styles");
-
-			PageEditor.viewContainerStyle(
-				backgroundColor = "success",
-				position = "1");
-		}
-
-		task ("Configure the Heading") {
-			PageEditor.gotoStyle(fragmentName = "Heading");
-
-			PageEditor.configureFragment(textColor = "White");
-
-			PageEditor.viewFragmentStyle(
-				fragmentName = "heading",
-				textColor = "white");
-		}
-
-		task ("Assert configuration duplicated with Container and Heading") {
-			PageEditor.gotoDuplicate(fragmentName = "Container");
-
-			PageEditor.viewContainerStyle(
-				backgroundColor = "success",
-				position = "2");
-
-			AssertElementPresent(
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Heading')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'color: var(--white)')]",
-				key_position = "2",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-		}
-	}
-
-	@description = "This is a test for LPS-107285. When the Container fragment with Heading fragment is duplicated, the edited inline content should also be duplicated."
-	@priority = "4"
-	test ViewEditedInlineContentDuplicatedWhenDuplicateSectionWithHeading {
-		task ("Add a Container to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add a Heading fragment into Container") {
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				navTab = "Fragments");
-		}
-
-		task ("Edit inline content of Heading") {
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "New editable fragment text");
-		}
-
-		task ("Assert edited inline content duplicated with nested Heading") {
-			PageEditor.gotoDuplicate(fragmentName = "Container");
-
-			PageEditor.viewDuplicateFragment(fragmentName = "Container");
-
-			AssertVisible(
-				key_elementHeader = "//div[contains(.,'New editable fragment text') and contains(@id,'fragment-')]",
-				key_position = "2",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-		}
-	}
-
 	@description = "This is a test for LPS-81870. In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme."
 	@priority = "5"
 	test ViewEditModeHeaderFooterTheme {
@@ -1344,67 +1097,6 @@ definition {
 			AssertElementPresent(
 				key_fragmentName = "Blogs",
 				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
-		}
-	}
-
-	@description = "This is a test for LPS-107285. When the Section fragment with Heading fragment is duplicated, the mapped content should also be duplicated."
-	@priority = "4"
-	test ViewMappedContentDuplicatedWhenDuplicateSectionWithHeading {
-		task ("Add a Web Content Article") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WC WebContent Title");
-		}
-
-		task ("Add a Section to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add a Heading fragment into Section") {
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				navTab = "Fragments");
-		}
-
-		task ("Map content of Web Content to Heading") {
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Heading",
-				id = "text");
-
-			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "WC WebContent Title",
-				navItem = "Web Content");
-
-			Select(
-				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Basic Web Content");
-
-			SelectFrame(value1 = "relative=top");
-
-			PageEditor.waitForAutoSave();
-
-			AssertVisible(
-				key_text = "WC WebContent Content",
-				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
-		}
-
-		task ("Assert mapped content duplicated with nested Heading") {
-			PageEditor.gotoDuplicate(fragmentName = "Container");
-
-			PageEditor.viewDuplicateFragment(fragmentName = "Container");
-
-			AssertVisible(
-				key_elementHeader = "//div[contains(.,'WC WebContent Content') and contains(@id,'fragment-')]",
-				key_position = "2",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 

@@ -478,48 +478,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that images can be added to the fragment background via the file URL when mapping a document."
-	@priority = "5"
-	test MapDMImageToFragmentBackground {
-		property portal.acceptance = "true";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page Name",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Layout Elements",
-			fragmentName = "Container");
-
-		PageEditor.editLayoutContainer(
-			backgroundImage = "Mapping",
-			entryTitle = "Document_1.jpg",
-			fieldName = "File URL",
-			navItem = "Documents and Media",
-			paddingTop = "2",
-			panel = "Styles");
-
-		PageEditor.clickPublish();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		AssertElementPresent(
-			key_imageName = "Document_1.jpg",
-			locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
-	}
-
 	@description = "This is a test for LPS-121199. For web content mapped specific DPT, could check all checkboxes beside the web contents."
 	@priority = "3"
 	test MapSpecificDPTAndCheckAllUsages {

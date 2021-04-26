@@ -134,7 +134,7 @@ public class SelectSiteInitializerDisplayContext {
 
 		List<SiteInitializer> siteInitializers =
 			_siteInitializerRegistry.getSiteInitializers(
-				themeDisplay.getCompanyId());
+				themeDisplay.getCompanyId(), true);
 
 		for (SiteInitializer siteInitializer : siteInitializers) {
 			SiteInitializerItem siteInitializerItem = new SiteInitializerItem(

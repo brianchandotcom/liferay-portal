@@ -24,6 +24,11 @@ public class FreestyleBatchBuild extends BatchBuild {
 		timelineData.addTimelineData(this);
 	}
 
+	@Override
+	public String getJobVariant() {
+		return getParameterValue("RUN_ID");
+	}
+
 	protected FreestyleBatchBuild(String url) {
 		this(url, null);
 	}

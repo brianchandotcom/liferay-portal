@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.constants.json.keys.aggregation;
+package com.liferay.portal.search.tuning.blueprints.constants.json.keys.aggregation.bucket;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -22,23 +22,20 @@ import java.util.stream.Stream;
  */
 public enum TermsAggregationBodyConfigurationKeys {
 
-	AGGREGATIONS("aggregations"), COLLECT_MODE("collect_mode"),
-	EXCLUDE("exclude"), EXECUTION_HINT("execution_hint"), FACET("facet"),
-	FIELD("field"), ID("id"), INCLUDE("include"), LANG("lang"),
-	MIN_DOC_COUNT("min_doc_count"), MISSING("multi_value"), OPTIONS("options"),
-	ORDER("order"), PARAMS("params"), SCRIPT("script"),
-	SHARD_MIN_DOC_COUNT("shard_min_doc_count"), SHARD_SIZE("shard_size"),
-	SHOW_TERM_DOC_COUNT_ERROR("show_term_doc_count_error"), SIZE("size"),
-	SOURCE("source");
+	AGGS("aggs"), COLLECT_MODE("collect_mode"), EXCLUDE("exclude"),
+	EXECUTION_HINT("execution_hint"), FIELD("field"), INCLUDE("include"),
+	MIN_DOC_COUNT("min_doc_count"), MISSING("missing"), ORDER("order"),
+	SCRIPT("script"), SHARD_MIN_DOC_COUNT("shard_min_doc_count"),
+	SHARD_SIZE("shard_size"),
+	SHOW_TERM_DOC_COUNT_ERROR("show_term_doc_count_error"), SIZE("size");
 
 	public static final TermsAggregationBodyConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
-		Stream<TermsAggregationBodyConfigurationKeys>
-			termAggregationConfigurationKeysStream = Arrays.stream(
-				TermsAggregationBodyConfigurationKeys.values());
+		Stream<TermsAggregationBodyConfigurationKeys> stream = Arrays.stream(
+			TermsAggregationBodyConfigurationKeys.values());
 
-		return termAggregationConfigurationKeysStream.filter(
+		return stream.filter(
 			value -> value._jsonKey.equals(jsonKey)
 		).findFirst(
 		).orElse(

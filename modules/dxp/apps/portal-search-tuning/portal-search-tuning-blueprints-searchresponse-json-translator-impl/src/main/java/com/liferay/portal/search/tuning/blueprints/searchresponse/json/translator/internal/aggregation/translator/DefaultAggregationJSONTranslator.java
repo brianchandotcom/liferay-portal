@@ -20,11 +20,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.aggregation.AggregationResult;
-import com.liferay.portal.search.aggregation.bucket.Bucket;
-import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.aggregation.AggregationJSONTranslator;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,26 +31,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "name=terms",
+	immediate = true, property = "name=default",
 	service = AggregationJSONTranslator.class
 )
-public class TermsAggregationJSONTranslator
+public class DefaultAggregationJSONTranslator
 	implements AggregationJSONTranslator {
 
 	@Override
 	public Optional<JSONObject> translate(AggregationResult aggregationResult) {
-		TermsAggregationResult termsAggregationResult =
-			(TermsAggregationResult)aggregationResult;
-
-		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
-
-		if (buckets.isEmpty()) {
-			return Optional.empty();
-		}
-
 		try {
-			String json = _jsonFactory.looseSerialize(
-				termsAggregationResult, "buckets");
+			String json = _jsonFactory.looseSerializeDeep(aggregationResult);
 
 			return Optional.of(_jsonFactory.createJSONObject(json));
 		}
@@ -65,7 +52,7 @@ public class TermsAggregationJSONTranslator
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TermsAggregationJSONTranslator.class);
+		DefaultAggregationJSONTranslator.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;

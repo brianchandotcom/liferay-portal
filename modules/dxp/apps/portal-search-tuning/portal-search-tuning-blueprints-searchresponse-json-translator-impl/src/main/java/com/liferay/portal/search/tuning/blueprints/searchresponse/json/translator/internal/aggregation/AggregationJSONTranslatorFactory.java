@@ -21,9 +21,9 @@ import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translato
  */
 public interface AggregationJSONTranslatorFactory {
 
-	public AggregationJSONTranslator getBuilder(String type)
+	public AggregationJSONTranslator getTranslator(String name)
 		throws IllegalArgumentException;
 
-	public String[] getBuilderTypes();
+	public String[] getTranslatorNames();
 
 }

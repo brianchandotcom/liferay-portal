@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced;
+package com.liferay.portal.search.tuning.blueprints.constants.json.keys.aggregation.metric;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -20,20 +20,17 @@ import java.util.stream.Stream;
 /**
  * @author Petteri Karttunen
  */
-public enum QueryIndexingConfigurationKeys {
+public enum MaxAggregationBodyConfigurationKeys {
 
-	BLACKLIST("blacklist"), ENABLED("enabled"),
-	HITS_THRESHOLD("hits_threshold"),
-	QUERY_INDEX_CONFIGURATION_ID("query_index_configuration_id");
+	FIELD("field"), MISSING("missing"), SCRIPT("script");
 
-	public static final QueryIndexingConfigurationKeys findByJsonKey(
+	public static final MaxAggregationBodyConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
-		Stream<QueryIndexingConfigurationKeys>
-			queryIndexingConfigurationKeysStream = Arrays.stream(
-				QueryIndexingConfigurationKeys.values());
+		Stream<MaxAggregationBodyConfigurationKeys> stream = Arrays.stream(
+			MaxAggregationBodyConfigurationKeys.values());
 
-		return queryIndexingConfigurationKeysStream.filter(
+		return stream.filter(
 			value -> value._jsonKey.equals(jsonKey)
 		).findFirst(
 		).orElse(
@@ -45,7 +42,7 @@ public enum QueryIndexingConfigurationKeys {
 		return _jsonKey;
 	}
 
-	private QueryIndexingConfigurationKeys(String jsonKey) {
+	private MaxAggregationBodyConfigurationKeys(String jsonKey) {
 		_jsonKey = jsonKey;
 	}
 

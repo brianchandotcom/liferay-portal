@@ -37,6 +37,20 @@ public class BlueprintJSONUtil {
 		return Optional.of(stringArray);
 	}
 
+	public static double[] jsonArrayToDoubleArray(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new double[0];
+		}
+
+		double[] values = new double[jsonArray.length()];
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values[i] = jsonArray.getDouble(i);
+		}
+
+		return values;
+	}
+
 	public static String[] jsonArrayToStringArray(JSONArray jsonArray) {
 		if ((jsonArray == null) || (jsonArray.length() == 0)) {
 			return new String[0];

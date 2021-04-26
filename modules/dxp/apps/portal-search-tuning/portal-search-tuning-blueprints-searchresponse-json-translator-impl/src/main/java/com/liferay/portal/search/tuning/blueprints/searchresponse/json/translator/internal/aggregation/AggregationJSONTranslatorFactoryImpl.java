@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.internal.aggregation;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.tuning.blueprints.searchresponse.json.translator.spi.aggregation.AggregationJSONTranslator;
 import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReference;
 import com.liferay.portal.search.tuning.blueprints.util.component.ServiceComponentReferenceUtil;
@@ -34,22 +37,32 @@ public class AggregationJSONTranslatorFactoryImpl
 	implements AggregationJSONTranslatorFactory {
 
 	@Override
-	public AggregationJSONTranslator getBuilder(String type)
+	public AggregationJSONTranslator getTranslator(String name)
 		throws IllegalArgumentException {
 
 		ServiceComponentReference<AggregationJSONTranslator>
-			serviceComponentReference = _aggregationJSONTranslators.get(type);
+			serviceComponentReference = _aggregationJSONTranslators.get(name);
 
 		if (serviceComponentReference == null) {
-			throw new IllegalArgumentException(
-				"Unable to find aggregation JSON translator for " + type);
+			serviceComponentReference = _aggregationJSONTranslators.get(
+				"default");
+
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append("No registered handler for ");
+				sb.append(name);
+				sb.append(". Falling back to default");
+
+				_log.warn(sb.toString());
+			}
 		}
 
 		return serviceComponentReference.getServiceComponent();
 	}
 
 	@Override
-	public String[] getBuilderTypes() {
+	public String[] getTranslatorNames() {
 		return ServiceComponentReferenceUtil.getComponentKeys(
 			_aggregationJSONTranslators);
 	}
@@ -73,6 +86,9 @@ public class AggregationJSONTranslatorFactoryImpl
 		ServiceComponentReferenceUtil.removeFromMapByName(
 			_aggregationJSONTranslators, aggregationJSONTranslator, properties);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AggregationJSONTranslatorFactoryImpl.class);
 
 	private volatile Map
 		<String, ServiceComponentReference<AggregationJSONTranslator>>

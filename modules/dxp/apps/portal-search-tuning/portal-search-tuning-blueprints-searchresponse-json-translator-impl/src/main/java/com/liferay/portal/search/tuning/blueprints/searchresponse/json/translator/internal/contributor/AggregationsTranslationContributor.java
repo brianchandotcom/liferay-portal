@@ -105,7 +105,7 @@ public class AggregationsTranslationContributor
 
 				try {
 					AggregationJSONTranslator aggregationResponseBuilder =
-						_aggregationResponseBuilderFactory.getBuilder(type);
+						_aggregationResponseBuilderFactory.getTranslator(type);
 
 					Optional<JSONObject> aggregationJsonOptional =
 						aggregationResponseBuilder.translate(entry.getValue());

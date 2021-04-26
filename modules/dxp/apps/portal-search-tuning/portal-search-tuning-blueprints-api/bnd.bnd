@@ -8,6 +8,8 @@ Export-Package:\
 	com.liferay.portal.search.tuning.blueprints.constants.json.keys,\
 	com.liferay.portal.search.tuning.blueprints.constants.json.keys.advanced,\
 	com.liferay.portal.search.tuning.blueprints.constants.json.keys.aggregation,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys.aggregation.bucket,\
+	com.liferay.portal.search.tuning.blueprints.constants.json.keys.aggregation.metric,\
 	com.liferay.portal.search.tuning.blueprints.constants.json.keys.framework,\
 	com.liferay.portal.search.tuning.blueprints.constants.json.keys.parameter,\
 	com.liferay.portal.search.tuning.blueprints.constants.json.keys.query,\

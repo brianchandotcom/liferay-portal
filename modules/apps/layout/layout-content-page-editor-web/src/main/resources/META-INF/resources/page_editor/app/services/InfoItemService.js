@@ -18,33 +18,6 @@ import serviceFetch from './serviceFetch';
 export default {
 
 	/**
-	 * Get available info item mapping fields
-	 * @param {object} options
-	 * @param {string} options.classNameId Asset's className
-	 * @param {string} options.classPK Asset's classPK
-	 * @param {string} options.fieldType Type of field to which we are mapping
-	 * @param {function} options.onNetworkStatus
-	 */
-	getAvailableInfoItemMappingFields({
-		classNameId,
-		classPK,
-		fieldType,
-		onNetworkStatus,
-	}) {
-		return serviceFetch(
-			config.getInfoItemMappingFieldsURL,
-			{
-				body: {
-					classNameId,
-					classPK,
-					fieldType,
-				},
-			},
-			onNetworkStatus
-		);
-	},
-
-	/**
 	 * Get available list item renderers for the list style
 	 * @param {object} options
 	 * @param {string} options.itemSubtype itemSubtype
@@ -100,7 +73,6 @@ export default {
 	getAvailableStructureMappingFields({
 		classNameId,
 		classTypeId,
-		fieldType,
 		onNetworkStatus,
 	}) {
 		return serviceFetch(
@@ -109,7 +81,6 @@ export default {
 				body: {
 					classNameId,
 					classTypeId,
-					fieldType,
 				},
 			},
 			onNetworkStatus

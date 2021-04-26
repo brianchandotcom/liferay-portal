@@ -158,7 +158,10 @@ public class DLFileEntryLocalServiceImpl
 	extends DLFileEntryLocalServiceBaseImpl {
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addFileEntry(String, long, long, long, long, String, String, String, String, String, long, Map, File, InputStream, long, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFileEntry(String, long, long, long, long, String, String,
+	 *             String, String, String, long, Map, File, InputStream, long,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

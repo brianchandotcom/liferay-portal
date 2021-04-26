@@ -61,9 +61,10 @@ public class AdminUtil {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #updateUser(
-	 *             ActionRequest, long, String, String, String, String, String,
-	 *             String, String, String, String, String, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateUser(ActionRequest, long, String, String, String,
+	 *             String, String, String, String, String, String, String,
+	 *             String)}
 	 */
 	@Deprecated
 	public static User updateUser(
@@ -94,9 +95,10 @@ public class AdminUtil {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #updateUser(
-	 *             HttpServletRequest, long, String,  String, String, String,
-	 *             String, String, String, String, String, String, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateUser(HttpServletRequest, long, String,  String,
+	 *             String, String, String, String, String, String, String,
+	 *             String, String)}
 	 */
 	@Deprecated
 	public static User updateUser(

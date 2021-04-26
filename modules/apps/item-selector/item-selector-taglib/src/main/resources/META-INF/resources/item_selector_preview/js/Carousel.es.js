@@ -19,9 +19,7 @@ import React, {useState} from 'react';
 
 import PreviewImage from './PreviewImage.es';
 import PreviewVideo from './PreviewVideo.es';
-
-const STR_VIDEO_HTML_RETURN_TYPE =
-	'com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType';
+import {STR_VIDEO_HTML_RETURN_TYPE} from './constants';
 
 const Arrow = ({direction, handleClick}) => (
 	<div className={`pull-${direction}`}>

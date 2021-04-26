@@ -49,7 +49,7 @@ public class FieldMappingInfoProviderImpl implements FieldMappingInfoProvider {
 			return new ArrayList<>();
 		}
 
-		List<FieldInfo> fields = new ArrayList<>();
+		List<FieldInfo> fieldInfos = new ArrayList<>();
 
 		Set<String> fieldKeySet = mappingsJSONObject.keySet();
 
@@ -57,7 +57,7 @@ public class FieldMappingInfoProviderImpl implements FieldMappingInfoProvider {
 			JSONObject fieldJSONObject = mappingsJSONObject.getJSONObject(
 				fieldName);
 
-			fields.add(
+			fieldInfos.add(
 				new FieldInfo.FieldInfoBuilder().name(
 					fieldName
 				).type(
@@ -65,7 +65,7 @@ public class FieldMappingInfoProviderImpl implements FieldMappingInfoProvider {
 				).build());
 		}
 
-		return fields;
+		return fieldInfos;
 	}
 
 	@Override
@@ -78,15 +78,16 @@ public class FieldMappingInfoProviderImpl implements FieldMappingInfoProvider {
 
 		List<String> fieldNames = new ArrayList<>();
 
-		List<FieldInfo> fields = new ArrayList<>();
+		List<FieldInfo> fieldInfos = new ArrayList<>();
 
-		_addFields(fields, fieldNames, StringPool.BLANK, propertiesJSONObject);
+		_addFields(
+			fieldInfos, fieldNames, StringPool.BLANK, propertiesJSONObject);
 
-		return fields;
+		return fieldInfos;
 	}
 
 	private void _addField(
-		List<FieldInfo> fields, List<String> fieldNames, String fieldName,
+		List<FieldInfo> fieldInfos, List<String> fieldNames, String fieldName,
 		JSONObject fieldJSONObject) {
 
 		String languageId = _getLanguageId(fieldName);
@@ -99,8 +100,11 @@ public class FieldMappingInfoProviderImpl implements FieldMappingInfoProvider {
 			fieldName = StringUtil.removeSubstring(fieldName, languageId);
 		}
 
-		if (!fieldNames.contains(fieldName)) {
-			fields.add(
+		String trackingKey = fieldName.concat(
+			String.valueOf(languageIdPosition));
+
+		if (!fieldNames.contains(trackingKey)) {
+			fieldInfos.add(
 				new FieldInfo.FieldInfoBuilder().languageIdPosition(
 					languageIdPosition
 				).name(
@@ -109,12 +113,12 @@ public class FieldMappingInfoProviderImpl implements FieldMappingInfoProvider {
 					fieldJSONObject.getString("type")
 				).build());
 
-			fieldNames.add(fieldName);
+			fieldNames.add(trackingKey);
 		}
 	}
 
 	private void _addFields(
-		List<FieldInfo> fields, List<String> fieldNames, String parentPath,
+		List<FieldInfo> fieldInfos, List<String> fieldNames, String parentPath,
 		JSONObject propertiesJSONObject) {
 
 		Set<String> fieldKeySet = propertiesJSONObject.keySet();
@@ -129,11 +133,11 @@ public class FieldMappingInfoProviderImpl implements FieldMappingInfoProvider {
 
 			if (type.equals("nested")) {
 				_addFields(
-					fields, fieldNames, fieldPath,
+					fieldInfos, fieldNames, fieldPath,
 					fieldJSONObject.getJSONObject("properties"));
 			}
 			else {
-				_addField(fields, fieldNames, fieldPath, fieldJSONObject);
+				_addField(fieldInfos, fieldNames, fieldPath, fieldJSONObject);
 			}
 		}
 	}

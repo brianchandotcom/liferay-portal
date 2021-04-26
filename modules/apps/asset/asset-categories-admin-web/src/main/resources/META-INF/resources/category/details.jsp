@@ -159,13 +159,14 @@ renderResponse.setTitle(title);
 			<liferay-frontend:fieldset
 				collapsed="<%= true %>"
 				collapsible="<%= true %>"
-				label="display-page"
+				label="display-page-template"
 			>
 				<liferay-asset:select-asset-display-page
 					classNameId="<%= PortalUtil.getClassNameId(AssetCategory.class) %>"
 					classPK="<%= (category != null) ? category.getCategoryId() : 0 %>"
 					classTypeId="<%= 0 %>"
 					groupId="<%= scopeGroupId %>"
+					parentClassPK="<%= parentCategoryId %>"
 					showViewInContextLink="<%= true %>"
 				/>
 			</liferay-frontend:fieldset>

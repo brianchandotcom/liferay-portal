@@ -43,50 +43,46 @@ import java.util.Date;
 /**
  * @author Petteri Karttunen
  */
-public class EqualsVisitor implements ConditionEvaluationVisitor {
+public class EqualsVisitor
+	extends BaseEvaluationVisitor implements ConditionEvaluationVisitor {
 
 	public EqualsVisitor(JSONObject conditionJSONObject, boolean not) {
-		_conditionJSONObject = conditionJSONObject;
-		_not = not;
+		super(conditionJSONObject, not);
 	}
 
 	@Override
 	public boolean visit(BooleanParameter parameter)
 		throws ParameterEvaluationException {
 
-		Boolean value = _conditionJSONObject.getBoolean(
+		Boolean value = conditionJSONObject.getBoolean(
 			ConditionConfigurationKeys.VALUE.getJsonKey());
 
 		Boolean parameterValue = parameter.getValue();
 
-		boolean equals = false;
+		if (returnValue(
+				value.booleanValue() == parameterValue.booleanValue())) {
 
-		if (value.booleanValue() == parameterValue.booleanValue()) {
-			equals = true;
+			return true;
 		}
 
-		if (_not) {
-			return !equals;
-		}
-
-		return equals;
+		return false;
 	}
 
 	@Override
 	public boolean visit(DateParameter parameter)
 		throws ParameterEvaluationException {
 
-		String dateString = _conditionJSONObject.getString(
+		String dateString = conditionJSONObject.getString(
 			ConditionConfigurationKeys.VALUE.getJsonKey());
 
-		String dateFormatString = _conditionJSONObject.getString(
+		String dateFormatString = conditionJSONObject.getString(
 			ConditionConfigurationKeys.DATE_FORMAT.getJsonKey());
 
 		if (Validator.isNull(dateFormatString)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Clause condition date format missing [ " +
-						_conditionJSONObject + " ].");
+						conditionJSONObject + " ].");
 			}
 
 			throw new ParameterEvaluationException(
@@ -97,7 +93,7 @@ public class EqualsVisitor implements ConditionEvaluationVisitor {
 				).msg(
 					"Date format is not defined"
 				).rootObject(
-					_conditionJSONObject
+					conditionJSONObject
 				).rootProperty(
 					ConditionConfigurationKeys.DATE_FORMAT.getJsonKey()
 				).rootValue(
@@ -114,11 +110,7 @@ public class EqualsVisitor implements ConditionEvaluationVisitor {
 
 			Date parameterValue = parameter.getValue();
 
-			if (_not) {
-				return !parameterValue.equals(date);
-			}
-
-			return parameterValue.equals(date);
+			return returnValue(parameterValue.equals(date));
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -133,7 +125,7 @@ public class EqualsVisitor implements ConditionEvaluationVisitor {
 				).msg(
 					exception.getMessage()
 				).rootObject(
-					_conditionJSONObject
+					conditionJSONObject
 				).rootProperty(
 					ConditionConfigurationKeys.VALUE.getJsonKey()
 				).rootValue(
@@ -150,29 +142,21 @@ public class EqualsVisitor implements ConditionEvaluationVisitor {
 	public boolean visit(DoubleParameter parameter)
 		throws ParameterEvaluationException {
 
-		Double value = _conditionJSONObject.getDouble(
+		Double value = conditionJSONObject.getDouble(
 			ConditionConfigurationKeys.VALUE.getJsonKey());
 
-		if (_not) {
-			return !parameter.equalsTo(value);
-		}
-
-		return parameter.equalsTo(value);
+		return returnValue(parameter.equalsTo(value));
 	}
 
 	@Override
 	public boolean visit(FloatParameter parameter)
 		throws ParameterEvaluationException {
 
-		Float value = GetterUtil.getFloat(
-			_conditionJSONObject.get(
-				ConditionConfigurationKeys.VALUE.getJsonKey()));
-
-		if (_not) {
-			return !parameter.equalsTo(value);
-		}
-
-		return parameter.equalsTo(value);
+		return returnValue(
+			parameter.equalsTo(
+				GetterUtil.getFloat(
+					conditionJSONObject.get(
+						ConditionConfigurationKeys.VALUE.getJsonKey()))));
 	}
 
 	@Override
@@ -186,14 +170,10 @@ public class EqualsVisitor implements ConditionEvaluationVisitor {
 	public boolean visit(IntegerParameter parameter)
 		throws ParameterEvaluationException {
 
-		Integer value = _conditionJSONObject.getInt(
-			ConditionConfigurationKeys.VALUE.getJsonKey());
-
-		if (_not) {
-			return !parameter.equalsTo(value);
-		}
-
-		return parameter.equalsTo(value);
+		return returnValue(
+			parameter.equalsTo(
+				conditionJSONObject.getInt(
+					ConditionConfigurationKeys.VALUE.getJsonKey())));
 	}
 
 	@Override
@@ -207,14 +187,10 @@ public class EqualsVisitor implements ConditionEvaluationVisitor {
 	public boolean visit(LongParameter parameter)
 		throws ParameterEvaluationException {
 
-		Long value = _conditionJSONObject.getLong(
-			ConditionConfigurationKeys.VALUE.getJsonKey());
-
-		if (_not) {
-			return !parameter.equalsTo(value);
-		}
-
-		return parameter.equalsTo(value);
+		return returnValue(
+			parameter.equalsTo(
+				conditionJSONObject.getLong(
+					ConditionConfigurationKeys.VALUE.getJsonKey())));
 	}
 
 	@Override
@@ -228,21 +204,14 @@ public class EqualsVisitor implements ConditionEvaluationVisitor {
 	public boolean visit(StringParameter parameter)
 		throws ParameterEvaluationException {
 
-		String value = _conditionJSONObject.getString(
-			ConditionConfigurationKeys.VALUE.getJsonKey());
-
 		String parameterValue = parameter.getValue();
 
-		if (_not) {
-			return !parameterValue.equals(value);
-		}
-
-		return parameterValue.equals(value);
+		return returnValue(
+			parameterValue.equals(
+				conditionJSONObject.getString(
+					ConditionConfigurationKeys.VALUE.getJsonKey())));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(EqualsVisitor.class);
-
-	private final JSONObject _conditionJSONObject;
-	private final boolean _not;
 
 }

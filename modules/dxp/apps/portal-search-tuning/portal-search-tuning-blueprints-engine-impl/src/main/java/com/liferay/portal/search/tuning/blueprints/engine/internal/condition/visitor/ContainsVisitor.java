@@ -41,11 +41,11 @@ import java.util.stream.Stream;
 /**
  * @author Petteri Karttunen
  */
-public class ContainsVisitor implements ConditionEvaluationVisitor {
+public class ContainsVisitor
+	extends BaseEvaluationVisitor implements ConditionEvaluationVisitor {
 
 	public ContainsVisitor(JSONObject conditionJSONObject, boolean not) {
-		_conditionJSONObject = conditionJSONObject;
-		_not = not;
+		super(conditionJSONObject, not);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class ContainsVisitor implements ConditionEvaluationVisitor {
 	public boolean visit(IntegerArrayParameter parameter)
 		throws ParameterEvaluationException {
 
-		Object object = _conditionJSONObject.get(
+		Object object = conditionJSONObject.get(
 			ConditionConfigurationKeys.VALUE.getJsonKey());
 
 		Integer[] parameterValue = parameter.getValue();
@@ -114,11 +114,7 @@ public class ContainsVisitor implements ConditionEvaluationVisitor {
 					x -> x.longValue() == value.longValue());
 			}
 
-			if (_not) {
-				return !match;
-			}
-
-			return match;
+			return returnValue(match);
 		}
 		catch (NumberFormatException numberFormatException) {
 			_log.error(
@@ -134,7 +130,7 @@ public class ContainsVisitor implements ConditionEvaluationVisitor {
 				).msg(
 					numberFormatException.getMessage()
 				).rootObject(
-					_conditionJSONObject
+					conditionJSONObject
 				).rootProperty(
 					ConditionConfigurationKeys.VALUE.getJsonKey()
 				).rootValue(
@@ -158,7 +154,7 @@ public class ContainsVisitor implements ConditionEvaluationVisitor {
 	public boolean visit(LongArrayParameter parameter)
 		throws ParameterEvaluationException {
 
-		Object object = _conditionJSONObject.get(
+		Object object = conditionJSONObject.get(
 			ConditionConfigurationKeys.VALUE.getJsonKey());
 
 		Long[] parameterValue = parameter.getValue();
@@ -194,11 +190,7 @@ public class ContainsVisitor implements ConditionEvaluationVisitor {
 					x -> x.longValue() == value.longValue());
 			}
 
-			if (_not) {
-				return !match;
-			}
-
-			return match;
+			return returnValue(match);
 		}
 		catch (NumberFormatException numberFormatException) {
 			_log.error(
@@ -214,7 +206,7 @@ public class ContainsVisitor implements ConditionEvaluationVisitor {
 				).msg(
 					numberFormatException.getMessage()
 				).rootObject(
-					_conditionJSONObject
+					conditionJSONObject
 				).rootProperty(
 					ConditionConfigurationKeys.VALUE.getJsonKey()
 				).rootValue(
@@ -238,7 +230,7 @@ public class ContainsVisitor implements ConditionEvaluationVisitor {
 	public boolean visit(StringArrayParameter parameter)
 		throws ParameterEvaluationException {
 
-		Object object = _conditionJSONObject.get(
+		Object object = conditionJSONObject.get(
 			ConditionConfigurationKeys.VALUE.getJsonKey());
 
 		String[] parameterValue = parameter.getValue();
@@ -268,11 +260,7 @@ public class ContainsVisitor implements ConditionEvaluationVisitor {
 			match = stream.anyMatch(value::equals);
 		}
 
-		if (_not) {
-			return !match;
-		}
-
-		return match;
+		return returnValue(match);
 	}
 
 	@Override
@@ -284,8 +272,5 @@ public class ContainsVisitor implements ConditionEvaluationVisitor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContainsVisitor.class);
-
-	private final JSONObject _conditionJSONObject;
-	private final boolean _not;
 
 }

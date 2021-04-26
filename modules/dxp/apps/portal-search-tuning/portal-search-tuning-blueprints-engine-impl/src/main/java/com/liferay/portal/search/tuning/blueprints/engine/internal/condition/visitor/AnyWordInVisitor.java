@@ -34,11 +34,11 @@ import com.liferay.portal.search.tuning.blueprints.engine.parameter.StringParame
 /**
  * @author Petteri Karttunen
  */
-public class AnyWordInVisitor implements ConditionEvaluationVisitor {
+public class AnyWordInVisitor
+	extends BaseEvaluationVisitor implements ConditionEvaluationVisitor {
 
 	public AnyWordInVisitor(JSONObject conditionJSONObject, boolean not) {
-		_conditionJSONObject = conditionJSONObject;
-		_not = not;
+		super(conditionJSONObject, not);
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class AnyWordInVisitor implements ConditionEvaluationVisitor {
 		throws ParameterEvaluationException {
 
 		JSONArray jsonArray = BlueprintValueUtil.getConditionValueJSONArray(
-			_conditionJSONObject);
+			conditionJSONObject);
 
 		String parameterValue = StringUtil.toLowerCase(parameter.getValue());
 
@@ -125,14 +125,7 @@ public class AnyWordInVisitor implements ConditionEvaluationVisitor {
 			}
 		}
 
-		if (_not) {
-			return !match;
-		}
-
-		return match;
+		return returnValue(match);
 	}
-
-	private final JSONObject _conditionJSONObject;
-	private final boolean _not;
 
 }

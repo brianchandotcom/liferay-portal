@@ -34,11 +34,11 @@ import com.liferay.portal.search.tuning.blueprints.engine.parameter.StringParame
 /**
  * @author Petteri Karttunen
  */
-public class InVisitor implements ConditionEvaluationVisitor {
+public class InVisitor
+	extends BaseEvaluationVisitor implements ConditionEvaluationVisitor {
 
 	public InVisitor(JSONObject conditionJSONObject, boolean not) {
-		_conditionJSONObject = conditionJSONObject;
-		_not = not;
+		super(conditionJSONObject, not);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 		throws ParameterEvaluationException {
 
 		JSONArray jsonArray = BlueprintValueUtil.getConditionValueJSONArray(
-			_conditionJSONObject);
+			conditionJSONObject);
 
 		boolean match = false;
 
@@ -74,11 +74,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 			}
 		}
 
-		if (_not) {
-			return !match;
-		}
-
-		return match;
+		return returnValue(match);
 	}
 
 	@Override
@@ -86,7 +82,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 		throws ParameterEvaluationException {
 
 		JSONArray jsonArray = BlueprintValueUtil.getConditionValueJSONArray(
-			_conditionJSONObject);
+			conditionJSONObject);
 
 		boolean match = false;
 
@@ -100,11 +96,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 			}
 		}
 
-		if (_not) {
-			return !match;
-		}
-
-		return match;
+		return returnValue(match);
 	}
 
 	@Override
@@ -119,7 +111,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 		throws ParameterEvaluationException {
 
 		JSONArray jsonArray = BlueprintValueUtil.getConditionValueJSONArray(
-			_conditionJSONObject);
+			conditionJSONObject);
 
 		boolean match = false;
 
@@ -133,11 +125,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 			}
 		}
 
-		if (_not) {
-			return !match;
-		}
-
-		return match;
+		return returnValue(match);
 	}
 
 	@Override
@@ -152,7 +140,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 		throws ParameterEvaluationException {
 
 		JSONArray jsonArray = BlueprintValueUtil.getConditionValueJSONArray(
-			_conditionJSONObject);
+			conditionJSONObject);
 
 		boolean match = false;
 
@@ -166,11 +154,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 			}
 		}
 
-		if (_not) {
-			return !match;
-		}
-
-		return match;
+		return returnValue(match);
 	}
 
 	@Override
@@ -185,7 +169,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 		throws ParameterEvaluationException {
 
 		JSONArray jsonArray = BlueprintValueUtil.getConditionValueJSONArray(
-			_conditionJSONObject);
+			conditionJSONObject);
 
 		String parameterValue = parameter.getValue();
 
@@ -201,14 +185,7 @@ public class InVisitor implements ConditionEvaluationVisitor {
 			}
 		}
 
-		if (_not) {
-			return !match;
-		}
-
-		return match;
+		return returnValue(match);
 	}
-
-	private final JSONObject _conditionJSONObject;
-	private final boolean _not;
 
 }

@@ -27,10 +27,9 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		Staging.remoteStagingSetUp(
-			remotePort = "9080",
-			remoteStaging = "true",
-			siteName = "Site Name");
+		Staging.remoteStagingSetUpViaJson(
+			groupName = "Site Name",
+			remotePort = "9080");
 	}
 
 	tearDown {
@@ -128,6 +127,12 @@ definition {
 	test DocumentCanBeRepublishedAfterCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "RemoteStagingDM#DocumentCanBeRepublishedAfterCheckout";
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Staging DM Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",

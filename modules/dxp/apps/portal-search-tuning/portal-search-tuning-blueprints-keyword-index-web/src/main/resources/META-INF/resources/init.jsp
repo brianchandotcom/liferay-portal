@@ -44,8 +44,6 @@ page import="com.liferay.portal.search.tuning.blueprints.keyword.index.web.inter
 page import="com.liferay.portal.search.tuning.blueprints.keyword.index.web.internal.display.context.ViewReportedEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.portal.search.tuning.blueprints.keyword.index.web.internal.util.KeywordIndexUtil" %>
 
-<%@ page import="java.util.Date" %>
-
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />

@@ -275,7 +275,7 @@ definition {
 		}
 
 		task ("Set Default Portal Language to Portuguese") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+			Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
 
 			Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Portuguese (Brazil)");
 		}
@@ -695,7 +695,7 @@ definition {
 		}
 
 		task ("Set Default Portal Language to Portuguese") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+			Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
 
 			Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Portuguese (Brazil)");
 		}

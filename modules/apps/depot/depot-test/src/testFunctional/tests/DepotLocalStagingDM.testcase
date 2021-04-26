@@ -532,13 +532,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-staging");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -561,13 +555,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -591,13 +579,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-staging");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -613,13 +595,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1527,13 +1503,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-staging");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1556,13 +1526,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1570,13 +1534,7 @@ definition {
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-staging");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1600,13 +1558,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Panel.expandPanel(panel = "Open Graph");
 

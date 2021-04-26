@@ -2062,11 +2062,7 @@ definition {
 			saveButton = "Guardar",
 			successMessage = "Your request completed successfully.");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			defaultSiteLanguage = "Spanish (Spain)",

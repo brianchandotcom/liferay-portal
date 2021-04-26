@@ -1326,15 +1326,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		var siteID = "siteID";
-
-		Copy(
-			locator1 = "SitesEditSite#SITE_ID",
-			value1 = "siteID");
+		var siteID = Site.getSiteId();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

@@ -182,7 +182,7 @@ definition {
 			orgName = "Organization Name 1",
 			siteTemplateName = "Site Template Name 1");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
+		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name-1");
 
 		Site.manageMembershipOptions(
 			allowManualMembershipManagement = "true",
@@ -205,7 +205,7 @@ definition {
 			orgName = "Organization Name 2",
 			siteTemplateName = "Site Template Name 2");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-2");
+		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name-2");
 
 		Site.manageMembershipOptions(
 			allowManualMembershipManagement = "true",
@@ -406,7 +406,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 
 		Site.addVirtualHostsURLCP(
 			privatePageVirtualHostURL = "www.able.com",
@@ -485,7 +485,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.addVirtualHostsURLCP(
 			publicPageVirtualHostURL = "www.baker.com",
@@ -652,7 +652,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Site Page Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/liferay");
 
@@ -660,7 +660,7 @@ definition {
 
 		AssertLocation(value1 = "${portalURL}/web/liferay/site-page-name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "liferay");
+		Site.openSiteConfigurationAdmin(siteURLKey = "liferay");
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
 	}
@@ -686,7 +686,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site1 Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site1-name");
 
 		Site.selectPageType(
 			selectPublicPages = "true",
@@ -694,7 +694,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site2 Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site2-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site2-name");
 
 		Site.editCP(
 			siteName = "Site2 Name",
@@ -732,7 +732,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site1-name");
 
 		Site.inactivateCP(siteName = "Site1 Name");
 
@@ -1057,7 +1057,7 @@ definition {
 			teamDescription = '''<script>alert(123);</script>''',
 			teamName = '''<script>alert(123);</script>''');
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.assignDefaultSiteTeam(teamName = '''<script>alert(123);</script>''');
 

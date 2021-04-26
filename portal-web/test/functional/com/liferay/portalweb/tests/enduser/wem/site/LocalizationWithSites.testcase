@@ -30,7 +30,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		PortletEntry.inputLocalizedName(
 			language = "es_ES",
@@ -83,7 +83,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Language Test Page");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
@@ -295,11 +295,11 @@ definition {
 			groupName = "Site2 Name",
 			layoutName = "Site Page Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "English (United States)");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site2-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site2-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Spanish (Spain)");
 
@@ -362,7 +362,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		PortletEntry.inputLocalizedName(
 			language = "es_ES",
@@ -388,7 +388,7 @@ definition {
 			layoutName = "Site Page 1",
 			widgetName = "Web Content Display");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Spanish (Spain),German (Germany)",
@@ -522,7 +522,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
@@ -589,14 +589,14 @@ definition {
 			siteType = "Site Template",
 			uncheckPropagation = "true");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name-from-template");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-from-template");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
 			defaultSiteLanguage = "Spanish (Spain)",
 			displaySettings = "Display Settings");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name-from-template");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-from-template");
 
 		Site.viewSiteClonedFromSiteTemplateCP(
 			clonedFromTemplate = "true",
@@ -628,7 +628,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States)",
@@ -665,7 +665,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
@@ -677,7 +677,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Language Page");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
@@ -711,7 +711,7 @@ definition {
 
 		AssertLocation(value1 = "${portalURL}/web/guest");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.addVirtualHostsURLCP(
 			publicPageVirtualHostURL = "www.able.com",
@@ -747,7 +747,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Portuguese (Brazil),Spanish (Spain)",

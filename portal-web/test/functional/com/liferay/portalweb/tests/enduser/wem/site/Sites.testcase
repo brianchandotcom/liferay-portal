@@ -44,7 +44,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.inactivateCP(siteName = "Site Name");
 
@@ -99,7 +99,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.addVirtualHostsURLCP(
 			publicPageVirtualHostURL = "www.able.com",
@@ -158,7 +158,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Private Page");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "");
 
@@ -191,7 +191,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.editCP(
 			siteName = "Site Name",
@@ -218,7 +218,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "alpha");
 
@@ -250,7 +250,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.editFriendlyURLCP(
 			friendlyURLInvalid = "true",
@@ -283,7 +283,7 @@ definition {
 	test SiteCannotBeItsOwnParent {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.selectParentSite(
 			chooseButtonAvailable = "false",
@@ -308,7 +308,7 @@ definition {
 
 		Staging.viewStagingLocalLivePG();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.selectParentSite(
 			chooseButtonAvailable = "false",

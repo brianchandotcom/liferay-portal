@@ -72,13 +72,13 @@ definition {
 			organizationName = "Organization Name",
 			userEmailAddress = "test@liferay.com");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name");
 
 		Site.addVirtualHostsURLCP(
 			publicPageVirtualHostURL = "www.able.com",
 			publicVirtualHosts = "true");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name");
 
 		Site.addVirtualHostsURLCP(
 			privatePageVirtualHostURL = "www.baker.com",

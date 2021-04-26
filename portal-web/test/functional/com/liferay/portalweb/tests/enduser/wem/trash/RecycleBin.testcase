@@ -109,7 +109,7 @@ definition {
 
 	@priority = "3"
 	test DisableRecycleBin {
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		RecycleBin.disableRecycleBinViaSiteSettings();
 

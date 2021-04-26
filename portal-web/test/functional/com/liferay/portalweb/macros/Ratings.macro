@@ -2,10 +2,10 @@ definition {
 
 	macro configureRatingType {
 		if (isSet(siteName)) {
-			Site.openSiteSettingsAdmin(siteURLKey = "${siteName}");
+			Site.openSiteConfigurationAdmin(siteURLKey = "${siteName}");
 		}
 		else {
-			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+			Site.openSiteConfigurationAdmin(siteURLKey = "guest");
 		}
 
 		Navigator.gotoNavTab(navTab = "Social");

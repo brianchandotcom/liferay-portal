@@ -656,11 +656,7 @@ definition {
 			calendarName = "Site Name",
 			siteName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
 
 		Site.editCP(
 			siteName = "Site Name",

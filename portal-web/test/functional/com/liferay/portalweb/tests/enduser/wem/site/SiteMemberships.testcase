@@ -198,7 +198,7 @@ definition {
 			groupName = "Child SiteName",
 			parentGroupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "child-sitename");
+		Site.openSiteConfigurationAdmin(siteURLKey = "child-sitename");
 
 		Site.limitMembership(siteLimitMembership = "Yes");
 
@@ -318,7 +318,7 @@ definition {
 			userName = "Test Test",
 			userScreenName = "test");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
+		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name-1");
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 

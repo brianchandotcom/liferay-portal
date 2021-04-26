@@ -1051,6 +1051,8 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
 		Staging.addPublishTemplate(
 			publishTemplateDescription = "Publish Template Description",
 			publishTemplateName = "Publish Template Name");
@@ -1058,6 +1060,10 @@ definition {
 		Staging.configurePublishToLive(checkPrivatePages = "Private Staging Page");
 
 		Staging.configurePublishToLive(checkPublicPages = "Staging Test Page");
+
+		Staging.savePublishTemplate(
+			publishTemplateDescription = "Publish Template Description",
+			publishTemplateName = "Publish Template Name");
 	}
 
 	@description = "This is a use case for LPS-89981 and LPS-88298."
@@ -2041,7 +2047,7 @@ definition {
 		Staging.viewHistoryVersionPG(historyVersion = "${historyVersion}");
 	}
 
-	@description = "This is a use case for LPS-79092."
+	@description = "This is a use case for LPS-79092. Specific for Bookmarks"
 	@priority = "4"
 	test ViewLastPublishDateBehaviourAfterInitialPublication {
 		property portal.release = "false";
@@ -2052,7 +2058,9 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content Title");
 
-		JSONStaging.enableLocalStaging(groupName = "Site Name");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.activateStagingCP(siteName = "Site Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

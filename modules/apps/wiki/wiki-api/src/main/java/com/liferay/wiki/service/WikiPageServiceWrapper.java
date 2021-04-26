@@ -41,6 +41,12 @@ public class WikiPageServiceWrapper
 			nodeId, title, content, summary, minorEdit, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addPage(String, long, String, String, String, boolean, String, String,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.wiki.model.WikiPage addPage(
 			long nodeId, String title, String content, String summary,

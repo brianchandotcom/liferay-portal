@@ -63,6 +63,11 @@ import java.rmi.RemoteException;
 @Deprecated
 public class WikiNodeServiceSoap {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addNode(String, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.wiki.model.WikiNodeSoap addNode(
 			String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

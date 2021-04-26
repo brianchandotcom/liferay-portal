@@ -41,6 +41,11 @@ public class WikiNodeLocalServiceWrapper
 		return _wikiNodeLocalService.addDefaultNode(userId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addNode(String, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.wiki.model.WikiNode addNode(
 			long userId, String name, String description,

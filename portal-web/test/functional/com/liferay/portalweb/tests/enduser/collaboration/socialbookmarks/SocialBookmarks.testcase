@@ -30,39 +30,9 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test ChangeSocialBookmarkSitesForKBArticle {
-		property osgi.app.includes = "social-bookmarks,knowledge-base";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page",
-			widgetName = "Knowledge Base Display");
-
-		JSONKnowledgeBase.addkBArticle(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.configureKBSocialBookmarkSites(disableSocialBookmarkSites = "Twitter");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "Facebook,LinkedIn");
-
-		SocialBookmarks.viewBookmarksNotPresent(socialBookmarks = "Twitter");
-	}
-
 	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryWithSocialBookmarksSites {
+	@refactordone
+	test BlogsEntryWithSocialBookmarksAreViewableInSite {
 		property osgi.app.includes = "social-bookmarks";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -104,8 +74,8 @@ definition {
 	}
 
 	@priority = "3"
-	@refactorneeded
-	test ViewKBArticleWithAllSocialBookmarkSites {
+	@refactordone
+	test KBArticleWithAllSocialBookmarkAreViewableInSite {
 		property osgi.app.includes = "social-bookmarks,knowledge-base";
 
 		JSONLayout.addPublicLayout(
@@ -125,6 +95,36 @@ definition {
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "Twitter,Facebook,LinkedIn");
+	}
+
+	@priority = "4"
+	@refactordone
+	test KBArticleWithSocialBookmarkCanBeChangedInSite {
+		property osgi.app.includes = "social-bookmarks,knowledge-base";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
+
+		JSONKnowledgeBase.addkBArticle(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.configureKBSocialBookmarkSites(disableSocialBookmarkSites = "Twitter");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "Facebook,LinkedIn");
+
+		SocialBookmarks.viewBookmarksNotPresent(socialBookmarks = "Twitter");
 	}
 
 }

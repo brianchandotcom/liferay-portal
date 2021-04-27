@@ -107,7 +107,9 @@ definition {
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "French (France)");
 
-		Navigator.gotoNavTab(navTab = "General");
+		Click(
+			key_itemName = "General",
+			locator1 = "Panel#PANEL_NAV_ITEM_LINK");
 
 		PortletEntry.inputName(name = "France Site Name");
 
@@ -117,7 +119,9 @@ definition {
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "French (Canada)");
 
-		Navigator.gotoNavTab(navTab = "General");
+		Click(
+			key_itemName = "General",
+			locator1 = "Panel#PANEL_NAV_ITEM_LINK");
 
 		PortletEntry.inputName(name = "Canada Site Name");
 

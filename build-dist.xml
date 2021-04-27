@@ -3066,31 +3066,6 @@ plugins.includes=</echo>
 			basedir="${app.server.portal.dir}"
 			destfile="dist/liferay-portal-${lp.version}.war"
 		/>
-
-		<tstamp>
-			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-		</tstamp>
-
-		<!--
-		LPS-3408
-		-->
-
-		<copy
-			todir="${tstamp.value}/WEB-INF/lib"
-		>
-			<fileset
-				dir="lib/portal"
-				includes="ccpp.jar"
-			/>
-		</copy>
-
-		<zip
-			basedir="${tstamp.value}"
-			destfile="dist/liferay-portal-${lp.version}.war"
-			update="yes"
-		/>
-
-		<delete dir="${tstamp.value}" />
 	</target>
 
 	<target name="zip-portal-war-2.4-with-dependencies">

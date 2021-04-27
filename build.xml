@@ -487,30 +487,6 @@ message.
 				</if>
 
 				<copy
-					flatten="true"
-					todir="${app.server.lib.endorsed.dir}"
-				>
-					<fileset
-						dir="lib"
-						includes="${endorsed.libraries}"
-					/>
-				</copy>
-
-				<if>
-					<not>
-						<equals arg1="${app.server.lib.portal.dir}" arg2="${app.server.lib.global.dir}" />
-					</not>
-					<then>
-						<delete failonerror="false">
-							<fileset
-								dir="${app.server.lib.portal.dir}"
-								includes="ccpp.jar"
-							/>
-						</delete>
-					</then>
-				</if>
-
-				<copy
 					todir="${app.server.lib.global.dir}"
 				>
 					<fileset

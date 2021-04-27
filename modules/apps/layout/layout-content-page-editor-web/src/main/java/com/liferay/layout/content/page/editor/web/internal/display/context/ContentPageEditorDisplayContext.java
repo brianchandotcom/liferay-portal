@@ -1780,6 +1780,14 @@ public class ContentPageEditorDisplayContext {
 				ContentUtil.getMappedLayoutDisplayPageObjectProviders(
 					getGroupId(), themeDisplay.getPlid());
 
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.getMasterLayoutPlid() > 0) {
+			layoutDisplayPageObjectProviders.addAll(
+				ContentUtil.getMappedLayoutDisplayPageObjectProviders(
+					getGroupId(), layout.getMasterLayoutPlid()));
+		}
+
 		for (LayoutDisplayPageObjectProvider<?>
 				layoutDisplayPageObjectProvider :
 					layoutDisplayPageObjectProviders) {

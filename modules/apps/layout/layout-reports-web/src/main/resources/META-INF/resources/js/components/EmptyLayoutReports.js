@@ -14,12 +14,15 @@
 
 import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
-export default function EmptyLayoutReports({
-	assetsPath,
-	configureGooglePageSpeedURL,
-}) {
+import {StoreStateContext} from '../context/StoreContext';
+
+export default function EmptyLayoutReports() {
+	const {data} = useContext(StoreStateContext);
+
+	const {assetsPath, configureGooglePageSpeedURL} = data;
+
 	const defaultIllustration = `${assetsPath}/issues-default.svg`;
 
 	return (

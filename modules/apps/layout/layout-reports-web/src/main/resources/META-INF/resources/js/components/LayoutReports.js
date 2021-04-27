@@ -17,45 +17,11 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useReducer} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
+import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import BasicInformation from './BasicInformation';
 import EmptyLayoutReports from './EmptyLayoutReports';
-
-const initialState = {
-	data: null,
-	error: null,
-	loading: false,
-};
-
-const dataReducer = (state, action) => {
-	switch (action.type) {
-		case 'LOAD_DATA':
-			return {
-				...state,
-				loading: true,
-			};
-
-		case 'SET_ERROR':
-			return {
-				...state,
-				error: action.error,
-				loading: false,
-			};
-
-		case 'SET_DATA':
-			return {
-				data: {
-					...action.data,
-				},
-				error: action.data?.error,
-				loading: false,
-			};
-
-		default:
-			return initialState;
-	}
-};
 
 export default function LayoutReports({
 	eventTriggered,
@@ -64,7 +30,9 @@ export default function LayoutReports({
 }) {
 	const isMounted = useIsMounted();
 
-	const [state, dispatch] = useReducer(dataReducer, initialState);
+	const {data, error, loading} = useContext(StoreStateContext);
+
+	const dispatch = useContext(StoreDispatchContext);
 
 	const safeDispatch = useCallback(
 		(action) => {
@@ -72,7 +40,7 @@ export default function LayoutReports({
 				dispatch(action);
 			}
 		},
-		[isMounted]
+		[dispatch, isMounted]
 	);
 
 	const getData = useCallback(

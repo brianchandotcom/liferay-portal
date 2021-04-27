@@ -4910,7 +4910,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "ContentStructure" ]
+            tags: ["ContentStructure"]
         put:
             operationId: putAssetLibraryContentStructurePermission
             parameters:
@@ -4927,7 +4927,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "ContentStructure" ]
+            tags: ["ContentStructure"]
     "/asset-libraries/{assetLibraryId}/content-templates":
         get:
             operationId: getAssetLibraryContentTemplatesPage
@@ -5086,7 +5086,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "DocumentFolder" ]
+            tags: ["DocumentFolder"]
         put:
             operationId: putAssetLibraryDocumentFolderPermission
             parameters:
@@ -5103,7 +5103,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "DocumentFolder" ]
+            tags: ["DocumentFolder"]
     "/asset-libraries/{assetLibraryId}/documents":
         get:
             operationId: getAssetLibraryDocumentsPage
@@ -5213,7 +5213,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "Document" ]
+            tags: ["Document"]
         put:
             operationId: putAssetLibraryDocumentPermission
             parameters:
@@ -5230,7 +5230,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "Document" ]
+            tags: ["Document"]
     "/asset-libraries/{assetLibraryId}/languages":
         get:
             # @review
@@ -5259,7 +5259,7 @@ paths:
                                 type: array
                     description:
                         ""
-            tags: [ "Language" ]
+            tags: ["Language"]
     "/asset-libraries/{assetLibraryId}/structured-content-folders":
         get:
             operationId: getAssetLibraryStructuredContentFoldersPage
@@ -5366,7 +5366,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "StructuredContentFolder" ]
+            tags: ["StructuredContentFolder"]
         put:
             operationId: putAssetLibraryStructuredContentFolderPermission
             parameters:
@@ -5383,7 +5383,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "StructuredContentFolder" ]
+            tags: ["StructuredContentFolder"]
     "/asset-libraries/{assetLibraryId}/structured-contents":
         get:
             operationId: getAssetLibraryStructuredContentsPage
@@ -5498,7 +5498,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "StructuredContent" ]
+            tags: ["StructuredContent"]
         put:
             operationId: putAssetLibraryStructuredContentPermission
             parameters:
@@ -5515,7 +5515,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "StructuredContent" ]
+            tags: ["StructuredContent"]
     "/blog-posting-images/{blogPostingImageId}":
         delete:
             description:
@@ -6168,7 +6168,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "ContentStructure" ]
+            tags: ["ContentStructure"]
         put:
             operationId: putContentStructurePermission
             parameters:
@@ -6185,7 +6185,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "ContentStructure" ]
+            tags: ["ContentStructure"]
     "/content-structures/{contentStructureId}/structured-contents":
         get:
             description:
@@ -6466,7 +6466,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "DocumentFolder" ]
+            tags: ["DocumentFolder"]
         put:
             operationId: putDocumentFolderPermission
             parameters:
@@ -6483,7 +6483,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "DocumentFolder" ]
+            tags: ["DocumentFolder"]
     "/document-folders/{documentFolderId}/subscribe":
         put:
             operationId: putDocumentFolderSubscribe
@@ -6936,7 +6936,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "Document" ]
+            tags: ["Document"]
         put:
             operationId: putDocumentPermission
             parameters:
@@ -6953,7 +6953,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "Document" ]
+            tags: ["Document"]
     "/documents/{documentId}/rendered-content-by-display-page/{displayPageKey}":
         get:
             description:
@@ -7277,7 +7277,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "KnowledgeBaseArticle" ]
+            tags: ["KnowledgeBaseArticle"]
         put:
             operationId: putKnowledgeBaseArticlePermission
             parameters:
@@ -7294,7 +7294,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "KnowledgeBaseArticle" ]
+            tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}/subscribe":
         put:
             operationId: putKnowledgeBaseArticleSubscribe
@@ -7682,7 +7682,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "KnowledgeBaseFolder" ]
+            tags: ["KnowledgeBaseFolder"]
         put:
             operationId: putKnowledgeBaseFolderPermission
             parameters:
@@ -7699,7 +7699,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "KnowledgeBaseFolder" ]
+            tags: ["KnowledgeBaseFolder"]
     "/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders":
         get:
             description:
@@ -8107,7 +8107,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardMessage" ]
+            tags: ["MessageBoardMessage"]
         put:
             operationId: putMessageBoardMessagePermission
             parameters:
@@ -8124,7 +8124,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardMessage" ]
+            tags: ["MessageBoardMessage"]
     "/message-board-messages/{messageBoardMessageId}/subscribe":
         put:
             operationId: putMessageBoardMessageSubscribe
@@ -8463,7 +8463,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardSection" ]
+            tags: ["MessageBoardSection"]
         put:
             operationId: putMessageBoardSectionPermission
             parameters:
@@ -8480,7 +8480,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardSection" ]
+            tags: ["MessageBoardSection"]
     "/message-board-sections/{messageBoardSectionId}/subscribe":
         put:
             operationId: putMessageBoardSectionSubscribe
@@ -9032,7 +9032,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardThread" ]
+            tags: ["MessageBoardThread"]
         put:
             operationId: putMessageBoardThreadPermission
             parameters:
@@ -9049,7 +9049,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardThread" ]
+            tags: ["MessageBoardThread"]
     "/message-board-threads/{messageBoardThreadId}/subscribe":
         put:
             operationId: putMessageBoardThreadSubscribe
@@ -9184,7 +9184,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "NavigationMenu" ]
+            tags: ["NavigationMenu"]
         put:
             operationId: putNavigationMenuPermission
             parameters:
@@ -9201,7 +9201,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "NavigationMenu" ]
+            tags: ["NavigationMenu"]
     "/sites/{siteId}/blog-posting-images":
         get:
             description:
@@ -9397,7 +9397,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "BlogPosting" ]
+            tags: ["BlogPosting"]
         put:
             operationId: putSiteBlogPostingPermission
             parameters:
@@ -9414,7 +9414,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "BlogPosting" ]
+            tags: ["BlogPosting"]
     "/sites/{siteId}/blog-postings/subscribe":
         put:
             operationId: putSiteBlogPostingSubscribe
@@ -9660,7 +9660,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "ContentStructure" ]
+            tags: ["ContentStructure"]
         put:
             operationId: putSiteContentStructurePermission
             parameters:
@@ -9677,7 +9677,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "ContentStructure" ]
+            tags: ["ContentStructure"]
     "/sites/{siteId}/content-templates":
         get:
             operationId: getSiteContentTemplatesPage
@@ -9868,7 +9868,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "DocumentFolder" ]
+            tags: ["DocumentFolder"]
         put:
             operationId: putSiteDocumentFolderPermission
             parameters:
@@ -9885,7 +9885,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "DocumentFolder" ]
+            tags: ["DocumentFolder"]
     "/sites/{siteId}/documents":
         get:
             description:
@@ -10001,7 +10001,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "Document" ]
+            tags: ["Document"]
         put:
             operationId: putSiteDocumentPermission
             parameters:
@@ -10018,7 +10018,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "Document" ]
+            tags: ["Document"]
     "/sites/{siteId}/knowledge-base-articles":
         get:
             description:
@@ -10130,7 +10130,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "KnowledgeBaseArticle" ]
+            tags: ["KnowledgeBaseArticle"]
         put:
             operationId: putSiteKnowledgeBaseArticlePermission
             parameters:
@@ -10147,7 +10147,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "KnowledgeBaseArticle" ]
+            tags: ["KnowledgeBaseArticle"]
     "/sites/{siteId}/knowledge-base-articles/subscribe":
         put:
             operationId: putSiteKnowledgeBaseArticleSubscribe
@@ -10272,7 +10272,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "KnowledgeBaseFolder" ]
+            tags: ["KnowledgeBaseFolder"]
         put:
             operationId: putSiteKnowledgeBaseFolderPermission
             parameters:
@@ -10289,7 +10289,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "KnowledgeBaseFolder" ]
+            tags: ["KnowledgeBaseFolder"]
     "/sites/{siteId}/languages":
         get:
             # @review
@@ -10318,7 +10318,7 @@ paths:
                                 type: array
                     description:
                         ""
-            tags: [ "Language" ]
+            tags: ["Language"]
     "/sites/{siteId}/message-board-messages":
         # @review
         get:
@@ -10472,7 +10472,7 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description:
                         ""
-            tags: [ "MessageBoardMessage" ]
+            tags: ["MessageBoardMessage"]
     "/sites/{siteId}/message-board-messages/by-friendly-url-path/{friendlyUrlPath}":
         get:
             operationId: getSiteMessageBoardMessageByFriendlyUrlPath
@@ -10525,7 +10525,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardMessage" ]
+            tags: ["MessageBoardMessage"]
         put:
             operationId: putSiteMessageBoardMessagePermission
             parameters:
@@ -10542,7 +10542,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardMessage" ]
+            tags: ["MessageBoardMessage"]
     "/sites/{siteId}/message-board-sections":
         get:
             description:
@@ -10654,7 +10654,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardSection" ]
+            tags: ["MessageBoardSection"]
         put:
             operationId: putSiteMessageBoardSectionPermission
             parameters:
@@ -10671,7 +10671,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardSection" ]
+            tags: ["MessageBoardSection"]
     "/sites/{siteId}/message-board-threads":
         get:
             description:
@@ -10814,7 +10814,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardThread" ]
+            tags: ["MessageBoardThread"]
         put:
             operationId: putSiteMessageBoardThreadPermission
             parameters:
@@ -10831,7 +10831,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "MessageBoardThread" ]
+            tags: ["MessageBoardThread"]
     "/sites/{siteId}/navigation-menus":
         get:
             description:
@@ -10921,7 +10921,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "NavigationMenu" ]
+            tags: ["NavigationMenu"]
         put:
             operationId: putSiteNavigationMenuPermission
             parameters:
@@ -10938,7 +10938,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "NavigationMenu" ]
+            tags: ["NavigationMenu"]
     "/sites/{siteId}/site-pages":
         get:
             # @review
@@ -11065,7 +11065,7 @@ paths:
                                 type: array
                     description:
                         ""
-            tags: [ "SitePage" ]
+            tags: ["SitePage"]
     "/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences/{experienceKey}":
         get:
             # @review
@@ -11104,7 +11104,7 @@ paths:
                                 $ref: "#/components/schemas/SitePage"
                     description:
                         ""
-            tags: [ "SitePage" ]
+            tags: ["SitePage"]
     "/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences/{experienceKey}/rendered-page":
         get:
             description:
@@ -11135,7 +11135,7 @@ paths:
                                 type: string
                     description:
                         ""
-            tags: [ "SitePage" ]
+            tags: ["SitePage"]
     "/sites/{siteId}/site-pages/{friendlyUrlPath}/rendered-page":
         get:
             description:
@@ -11161,7 +11161,7 @@ paths:
                                 type: string
                     description:
                         ""
-            tags: [ "SitePage" ]
+            tags: ["SitePage"]
     "/sites/{siteId}/structured-content-folders":
         get:
             description:
@@ -11273,7 +11273,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "StructuredContentFolder" ]
+            tags: ["StructuredContentFolder"]
         put:
             operationId: putSiteStructuredContentFolderPermission
             parameters:
@@ -11290,7 +11290,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "StructuredContentFolder" ]
+            tags: ["StructuredContentFolder"]
     "/sites/{siteId}/structured-contents":
         get:
             description:
@@ -11599,7 +11599,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "WikiNode" ]
+            tags: ["WikiNode"]
         put:
             operationId: putSiteWikiNodePermission
             parameters:
@@ -11616,7 +11616,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "WikiNode" ]
+            tags: ["WikiNode"]
     "/structured-content-folder/{structuredContentFolderId}/permissions":
         get:
             operationId: getStructuredContentFolderPermissionsPage
@@ -11638,7 +11638,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "StructuredContentFolder" ]
+            tags: ["StructuredContentFolder"]
         put:
             operationId: putStructuredContentFolderPermission
             parameters:
@@ -11655,7 +11655,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "StructuredContentFolder" ]
+            tags: ["StructuredContentFolder"]
     "/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders":
         get:
             description:
@@ -12515,7 +12515,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "WikiNode" ]
+            tags: ["WikiNode"]
         put:
             operationId: putWikiNodePermission
             parameters:
@@ -12532,7 +12532,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "WikiNode" ]
+            tags: ["WikiNode"]
     "/wiki-nodes/{wikiNodeId}/subscribe":
         put:
             operationId: putWikiNodeSubscribe
@@ -12852,7 +12852,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "WikiPage" ]
+            tags: ["WikiPage"]
         put:
             operationId: putWikiPagePermission
             parameters:
@@ -12869,7 +12869,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: [ "WikiPage" ]
+            tags: ["WikiPage"]
     "/wiki-pages/{wikiPageId}/subscribe":
         put:
             operationId: putWikiPageSubscribe

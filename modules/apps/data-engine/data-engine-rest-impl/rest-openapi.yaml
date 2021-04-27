@@ -489,7 +489,7 @@ paths:
                                 $ref: "#/components/schemas/DataDefinition"
                     description:
                         ""
-            tags: [ "DataDefinition" ]
+            tags: ["DataDefinition"]
         put:
             operationId: putDataDefinition
             parameters:

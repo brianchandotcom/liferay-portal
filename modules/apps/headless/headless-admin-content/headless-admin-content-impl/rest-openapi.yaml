@@ -452,4 +452,4 @@ paths:
                                 $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
                     description:
                         ""
-            tags: [ "StructuredContent" ]
+            tags: ["StructuredContent"]

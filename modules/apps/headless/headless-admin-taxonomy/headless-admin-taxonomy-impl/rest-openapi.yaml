@@ -418,7 +418,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "Keyword" ]
+            tags: ["Keyword"]
         put:
             operationId: putAssetLibraryKeywordPermission
             parameters:
@@ -435,7 +435,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "Keyword" ]
+            tags: ["Keyword"]
     "/asset-libraries/{assetLibraryId}/taxonomy-vocabularies":
         get:
             operationId: getAssetLibraryTaxonomyVocabulariesPage
@@ -532,7 +532,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "TaxonomyVocabulary" ]
+            tags: ["TaxonomyVocabulary"]
         put:
             operationId: putAssetLibraryTaxonomyVocabularyPermission
             parameters:
@@ -549,7 +549,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "TaxonomyVocabulary" ]
+            tags: ["TaxonomyVocabulary"]
     "/keywords/ranked":
         get:
             operationId: getKeywordsRankedPage
@@ -683,7 +683,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "Keyword" ]
+            tags: ["Keyword"]
         put:
             operationId: putKeywordPermission
             parameters:
@@ -700,7 +700,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "Keyword" ]
+            tags: ["Keyword"]
     "/sites/{siteId}/keywords":
         get:
             description:
@@ -801,7 +801,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "Keyword" ]
+            tags: ["Keyword"]
         put:
             operationId: putSiteKeywordPermission
             parameters:
@@ -818,7 +818,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "Keyword" ]
+            tags: ["Keyword"]
     "/sites/{siteId}/taxonomy-vocabularies":
         get:
             description:
@@ -919,7 +919,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "TaxonomyVocabulary" ]
+            tags: ["TaxonomyVocabulary"]
         put:
             operationId: putSiteTaxonomyVocabularyPermission
             parameters:
@@ -936,7 +936,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "TaxonomyVocabulary" ]
+            tags: ["TaxonomyVocabulary"]
     "/taxonomy-categories/ranked":
         get:
             operationId: getTaxonomyCategoryRankedPage
@@ -1170,7 +1170,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "TaxonomyCategory" ]
+            tags: ["TaxonomyCategory"]
         put:
             operationId: putTaxonomyCategoryPermission
             parameters:
@@ -1186,7 +1186,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "TaxonomyCategory" ]
+            tags: ["TaxonomyCategory"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}":
         delete:
             description:
@@ -1314,7 +1314,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "TaxonomyVocabulary" ]
+            tags: ["TaxonomyVocabulary"]
         put:
             operationId: putTaxonomyVocabularyPermission
             parameters:
@@ -1331,7 +1331,7 @@ paths:
                         application/xml: { }
                     description:
                         ""
-            tags: [ "TaxonomyVocabulary" ]
+            tags: ["TaxonomyVocabulary"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories":
         get:
             description:

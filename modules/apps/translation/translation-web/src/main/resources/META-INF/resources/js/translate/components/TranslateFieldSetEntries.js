@@ -73,6 +73,7 @@ const TranslateFieldInput = ({
 	targetContent,
 	targetContentDir,
 	onChange = noop,
+	handleAutoTranslateClick = noop,
 }) => (
 	<ClayLayout.Row>
 		<ClayLayout.ContentCol expand>
@@ -111,7 +112,11 @@ const TranslateFieldInput = ({
 			</ClayLayout.Row>
 		</ClayLayout.ContentCol>
 		<ClayLayout.ContentCol className="align-self-top col-autotranslate-field">
-			<ClayButton displayType="secondary" monospaced>
+			<ClayButton
+				displayType="secondary"
+				monospaced
+				onClick={handleAutoTranslateClick}
+			>
 				<ClayIcon symbol="automatic-translate" />
 				<span className="sr-only">Auto translate {label} field</span>
 			</ClayButton>
@@ -120,6 +125,7 @@ const TranslateFieldInput = ({
 );
 
 const TranslateFieldSetEntries = ({
+	fetchAutoTranslateField,
 	infoFieldSetEntries,
 	onChange,
 	portletNamespace,
@@ -138,6 +144,8 @@ const TranslateFieldSetEntries = ({
 			{fields.map((field) => {
 				const fieldProps = {
 					...field,
+					handleAutoTranslateClick: () =>
+						fetchAutoTranslateField(field.id),
 					id: `${portletNamespace}${field.id}`,
 					onChange: (content) => {
 						onChange({content, id: field.id});

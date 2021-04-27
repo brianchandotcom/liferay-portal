@@ -122,7 +122,17 @@ const Translate = ({
 		});
 	};
 
-	const fetchAutoTranslateFields = () => {
+	const fetchAutoTranslate = ({fields}) =>
+		fetch(getAutoTranslateURL, {
+			body: JSON.stringify({
+				fields,
+				sourceLanguageId,
+				targetLanguageId,
+			}),
+			method: 'POST',
+		}).then((response) => response.json());
+
+	const fetchAutoTranslateFieldsBulk = () => {
 		dispatch({
 			payload: {
 				status: FETCH_STATUS.LOADING,
@@ -130,15 +140,7 @@ const Translate = ({
 			type: ACTION_TYPES.UPDATE_FETCH_STATUS,
 		});
 
-		fetch(getAutoTranslateURL, {
-			body: JSON.stringify({
-				fields: sourceFields,
-				sourceLanguageId,
-				targetLanguageId,
-			}),
-			method: 'POST',
-		})
-			.then((response) => response.json())
+		fetchAutoTranslate({fields: sourceFields})
 			.then(({error, fields}) => {
 				if (error) {
 					throw error;
@@ -184,6 +186,29 @@ const Translate = ({
 			);
 	};
 
+	const fetchAutoTranslateField = (fieldId) => {
+		fetchAutoTranslate({
+			fields: sourceFields.filter((field) => {
+				return Object.keys(field)[0] === fieldId;
+			}),
+		}).then(({error, fields}) => {
+			if (error) {
+				throw error;
+			}
+
+			if (isMounted()) {
+				dispatch({
+					payload: fields.reduce((acc, field) => {
+						const [id, content] = Object.entries(field)[0];
+
+						return {...acc, [id]: content};
+					}, {}),
+					type: ACTION_TYPES.UPDATE_FIELD,
+				});
+			}
+		});
+	};
+
 	return (
 		<form
 			action={updateTranslationPortletURL}
@@ -207,7 +232,7 @@ const Translate = ({
 
 			<TranslateActionBar
 				autoTranslateEnabled={autoTranslateEnabled}
-				fetchAutoTranslateFields={fetchAutoTranslateFields}
+				fetchAutoTranslateFields={fetchAutoTranslateFieldsBulk}
 				fetchAutoTranslateStatus={state.fetchAutoTranslateStatus}
 				formHasChanges={state.formHasChanges}
 				onSaveButtonClick={handleOnSaveDraft}
@@ -236,6 +261,9 @@ const Translate = ({
 							/>
 
 							<TranslateFieldSetEntries
+								fetchAutoTranslateField={
+									fetchAutoTranslateField
+								}
 								infoFieldSetEntries={infoFieldSetEntries}
 								onChange={handleOnChangeField}
 								portletNamespace={portletNamespace}

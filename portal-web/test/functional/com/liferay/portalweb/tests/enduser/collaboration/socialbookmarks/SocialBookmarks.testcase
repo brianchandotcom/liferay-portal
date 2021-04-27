@@ -2,13 +2,15 @@
 definition {
 
 	property custom.properties = "default.layout.template.id=1_column";
+	property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenLocation=&quot;REQUEST&quot;";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Social Bookmarks";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance(freeLogin = "true");
 
-		User.firstLoginPG();
+		User.firstLoginPG(freeLogin = "true");
 	}
 
 	tearDown {

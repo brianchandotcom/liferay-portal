@@ -1025,8 +1025,16 @@ public class TestrayImporter {
 					testrayCaseResult.getComponentName());
 				testcasePropertiesMap.put(
 					"testray.team.name", testrayCaseResult.getTeamName());
+
+				String testrayCaseName = testrayCaseResult.getName();
+
+				if (testrayCaseName.length() > 150) {
+					testrayCaseName = testrayCaseName.substring(0, 150);
+				}
+
 				testcasePropertiesMap.put(
-					"testray.testcase.name", testrayCaseResult.getName());
+					"testray.testcase.name", testrayCaseName);
+
 				testcasePropertiesMap.put(
 					"testray.testcase.priority",
 					String.valueOf(testrayCaseResult.getPriority()));

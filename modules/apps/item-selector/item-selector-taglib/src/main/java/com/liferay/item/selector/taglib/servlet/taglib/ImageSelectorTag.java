@@ -67,7 +67,8 @@ public class ImageSelectorTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getImageCropDirection()}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getImageCropDirection()}
 	 */
 	@Deprecated
 	public String getDraggableImage() {
@@ -111,7 +112,8 @@ public class ImageSelectorTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #setImageCropDirection()}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #setImageCropDirection()}
 	 */
 	@Deprecated
 	public void setDraggableImage(String draggableImage) {

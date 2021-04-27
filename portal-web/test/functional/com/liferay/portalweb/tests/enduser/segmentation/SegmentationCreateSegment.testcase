@@ -387,7 +387,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Segmentation.editSegment(entry = "AddSegmentBySessionLastSignInDate Test");
+		Segmentation.editSegment(entry = "AddSegmentBySessionLocalDate Test");
 
 		Segmentation.viewSegment(date = "2021-03-31");
 	}

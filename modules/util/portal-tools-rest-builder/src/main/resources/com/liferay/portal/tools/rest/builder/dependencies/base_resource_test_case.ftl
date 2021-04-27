@@ -1248,7 +1248,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									new Permission() {
 										{
 											setActionIds(new String[] {
-												<#if javaMethodSignature.methodName?contains("Site") || javaMethodSignature.methodName?contains("AssetLibrary")>
+												<#if javaMethodSignature.methodName?contains("AssetLibrary") || javaMethodSignature.methodName?contains("Site")>
 													"PERMISSIONS"
 												<#else>
 													"VIEW"

@@ -159,16 +159,6 @@ public class ObjectDefinitionLocalServiceImpl
 		_registerObjectDefinition(objectDefinition);
 	}
 
-	@Override
-	public void registerObjectDefinitions() {
-		List<ObjectDefinition> objectDefinitions =
-			objectDefinitionPersistence.findAll();
-
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			_registerObjectDefinition(objectDefinition);
-		}
-	}
-
 	@Clusterable
 	@Override
 	public void unregisterObjectDefinition(long objectDefinitionId) {

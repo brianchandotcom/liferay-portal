@@ -32,7 +32,23 @@ definition {
 	test AddProductToWishListFromProductCard {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5866 AddProductToWishListFromProductCard pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(
+			key_productName = "U-Joint",
+			locator1 = "CommerceEntry#PRODUCT_CARD_ADD_TO_WISH_LIST_BUTTON");
+
+		Click(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
+
+		Click(
+			key_menuItem = "My Lists",
+			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+			value1 = "U-Joint");
 
 	}
 

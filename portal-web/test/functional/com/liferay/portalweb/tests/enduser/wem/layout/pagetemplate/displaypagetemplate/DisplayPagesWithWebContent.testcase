@@ -923,7 +923,7 @@ definition {
 
 			Select(
 				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
-				value1 = "No Display Page Template");
+				value1 = "None");
 
 			PortletEntry.publish();
 		}

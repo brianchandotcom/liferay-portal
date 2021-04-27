@@ -102,6 +102,19 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 				return "/publications/view_publications.jsp";
 			}
+
+			ViewChangesDisplayContext viewChangesDisplayContext =
+				new ViewChangesDisplayContext(
+					activeCtCollectionId, _basePersistenceRegistry,
+					_ctClosureFactory, ctCollection, _ctConfiguration,
+					_ctDisplayRendererRegistry, _ctEntryLocalService,
+					_ctSchemaVersionLocalService, _groupLocalService, _language,
+					_portal, _publishScheduler, renderRequest, renderResponse,
+					_userLocalService);
+
+			renderRequest.setAttribute(
+				CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT,
+				viewChangesDisplayContext);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -110,18 +123,6 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 			return "/publications/view_publications.jsp";
 		}
-
-		ViewChangesDisplayContext viewChangesDisplayContext =
-			new ViewChangesDisplayContext(
-				activeCtCollectionId, _basePersistenceRegistry,
-				_ctClosureFactory, ctCollection, _ctConfiguration,
-				_ctDisplayRendererRegistry, _ctEntryLocalService,
-				_ctSchemaVersionLocalService, _groupLocalService, _language,
-				_portal, _publishScheduler, renderRequest, renderResponse,
-				_userLocalService);
-
-		renderRequest.setAttribute(
-			CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT, viewChangesDisplayContext);
 
 		return "/publications/view_changes.jsp";
 	}

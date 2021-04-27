@@ -70,8 +70,9 @@ public class MessageBoardMessageResourceTest
 		MessageBoardMessage putMessageBoardMessage =
 			messageBoardMessageResource.
 				putSiteMessageBoardMessageByExternalReferenceCode(
+					testGroup.getGroupId(),
 					randomMessageBoardMessage.getExternalReferenceCode(),
-					testGroup.getGroupId(), randomMessageBoardMessage);
+					randomMessageBoardMessage);
 
 		assertEquals(randomMessageBoardMessage, putMessageBoardMessage);
 		assertValid(putMessageBoardMessage);
@@ -79,8 +80,8 @@ public class MessageBoardMessageResourceTest
 		MessageBoardMessage getMessageBoardMessage =
 			messageBoardMessageResource.
 				getSiteMessageBoardMessageByExternalReferenceCode(
-					putMessageBoardMessage.getExternalReferenceCode(),
-					testGroup.getGroupId());
+					testGroup.getGroupId(),
+					putMessageBoardMessage.getExternalReferenceCode());
 
 		assertEquals(randomMessageBoardMessage, getMessageBoardMessage);
 		assertValid(getMessageBoardMessage);
@@ -108,8 +109,9 @@ public class MessageBoardMessageResourceTest
 				400,
 				messageBoardMessageResource.
 					putSiteMessageBoardMessageByExternalReferenceCodeHttpResponse(
+						testGroup.getGroupId(),
 						randomMessageBoardMessage.getExternalReferenceCode(),
-						testGroup.getGroupId(), randomMessageBoardMessage));
+						randomMessageBoardMessage));
 		}
 	}
 

@@ -556,18 +556,6 @@ definition {
 			locator1 = "CommerceEntry#PRODUCT_CARD_DEFAULT_IMAGE");
 	}
 
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		ClickNoError(
-			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME"
-		);
-
-		AssertElementPresent(
-			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceEntry#PRODUCT_CARD_DEFAULT_IMAGE");
-	}
-
 	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"
 	@priority = "3"
 	test AssertProductCardShowsCustomImageIfSet {
@@ -599,45 +587,29 @@ definition {
 	}
 
 	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"
-    @priority = "3"
-    test AssertProductIsAvailable {
-        property portal.acceptance = "false";
-        CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-        ApplicationsMenu.gotoSite(site = "Minium");
-        CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
-        AssertTextEquals(
-            key_productName = "abs-sensor",
-            locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL",
-            value1 = "Available");
+	@priority = "3"
+	test AssertProductIsAvailable {
+		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account",
-			adminEmailAddress = "test@liferay.com");
+		ApplicationsMenu.gotoSite(site = "Minium");
+		
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+		
+		AssertTextEquals(
+			key_productName = "abs-sensor",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL",
+			value1 = "Available");
 
-		Click(
-			key_navUnderline = "Members",
-			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+		ClickNoError(
+			key_productName = "ABS Sensor",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
-		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
-			emailAddress = "buyer@liferay.com",
-			role = "Buyer");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Minium",
-			productName = "Simple T-Shirt",
-			productType = "Simple");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
-		CommerceNavigator.gotoFrontStoreProductPage(productName = "Simple T-Shirt");
-
-		AssertElementPresent(locator1 = "CommerceEntry#DEFAULT_PRODUCT_IMAGE");
+		AssertElementPresent(
+			key_productName = "Simple T-Shirt",
+			locator1 = "CommerceEntry#PRODUCT_CARD_DEFAULT_IMAGE");
+	}
 	}
 
 	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"

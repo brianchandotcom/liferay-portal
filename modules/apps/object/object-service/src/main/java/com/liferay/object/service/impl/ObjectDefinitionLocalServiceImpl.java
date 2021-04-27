@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -85,7 +86,8 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setUserName(user.getFullName());
 		objectDefinition.setName(name);
 
-		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+		ObjectDefinition newObjectDefinition =
+			objectDefinitionPersistence.update(objectDefinition);
 
 		for (ObjectField objectField : objectFields) {
 			_objectFieldLocalService.addObjectField(
@@ -96,9 +98,15 @@ public class ObjectDefinitionLocalServiceImpl
 		objectFields = _objectFieldPersistence.findByObjectDefinitionId(
 			objectDefinitionId);
 
-		_createTable(objectDefinition, objectFields);
+		_createTable(newObjectDefinition, objectFields);
 
-		objectDefinitionLocalService.registerObjectDefinition(objectDefinition);
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				objectDefinitionLocalService.registerObjectDefinition(
+					newObjectDefinition);
+
+				return null;
+			});
 
 		return objectDefinition;
 	}

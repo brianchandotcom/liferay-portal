@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -71,6 +72,7 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -254,7 +256,13 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		portletURL.setParameter("checkoutStepName", checkoutStepName);
 		portletURL.setParameter("commerceOrderUuid", commerceOrder.getUuid());
-		portletURL.setParameter("p_p_state", "normal");
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.NORMAL);
+		}
+		catch (WindowStateException windowStateException) {
+			_log.error(windowStateException, windowStateException);
+		}
 
 		if (commerceOrder.getCommerceAccountId() ==
 				CommerceAccountConstants.ACCOUNT_ID_GUEST) {

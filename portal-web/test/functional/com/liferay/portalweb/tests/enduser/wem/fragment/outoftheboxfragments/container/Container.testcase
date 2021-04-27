@@ -152,7 +152,7 @@ definition {
 			PageEditor.clickPublish();
 
 			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
+				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
 			var screenWidth	= selenium.getElementWidth("//body");

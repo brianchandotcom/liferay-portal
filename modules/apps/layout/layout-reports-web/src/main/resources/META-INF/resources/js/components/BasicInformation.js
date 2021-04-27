@@ -35,7 +35,7 @@ export default function BasicInformation({canonicalURLs, defaultLanguageId}) {
 	};
 
 	return (
-		<ClayLayout.ContentRow>
+		<ClayLayout.ContentRow verticalAlign="center">
 			<ClayLayout.ContentCol>
 				<div className="inline-item-before">
 					<ClayLayout.ContentRow>

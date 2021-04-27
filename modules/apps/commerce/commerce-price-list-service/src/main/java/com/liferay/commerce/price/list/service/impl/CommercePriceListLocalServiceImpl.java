@@ -17,6 +17,7 @@ package com.liferay.commerce.price.list.service.impl;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.exception.CommerceBasePriceListCannotDeleteException;
 import com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException;
 import com.liferay.commerce.price.list.exception.CommercePriceListDisplayDateException;
 import com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException;
@@ -414,6 +415,46 @@ public class CommercePriceListLocalServiceImpl
 			CommercePriceList commercePriceList)
 		throws PortalException {
 
+		if (commercePriceList.isCatalogBasePriceList()) {
+			throw new CommerceBasePriceListCannotDeleteException();
+		}
+
+		return commercePriceListLocalService.forceDeleteCommercePriceList(
+			commercePriceList);
+	}
+
+	@Override
+	public CommercePriceList deleteCommercePriceList(long commercePriceListId)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			commercePriceListPersistence.findByPrimaryKey(commercePriceListId);
+
+		return commercePriceListLocalService.deleteCommercePriceList(
+			commercePriceList);
+	}
+
+	@Override
+	public void deleteCommercePriceLists(long companyId)
+		throws PortalException {
+
+		List<CommercePriceList> commercePriceLists =
+			commercePriceListLocalService.getCommercePriceLists(
+				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CommercePriceList commercePriceList : commercePriceLists) {
+			commercePriceListLocalService.forceDeleteCommercePriceList(
+				commercePriceList);
+		}
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommercePriceList forceDeleteCommercePriceList(
+			CommercePriceList commercePriceList)
+		throws PortalException {
+
 		// Commerce price entries
 
 		commercePriceEntryLocalService.deleteCommercePriceEntries(
@@ -475,31 +516,6 @@ public class CommercePriceListLocalServiceImpl
 		cleanPriceListCache(commercePriceList.getCompanyId());
 
 		return commercePriceList;
-	}
-
-	@Override
-	public CommercePriceList deleteCommercePriceList(long commercePriceListId)
-		throws PortalException {
-
-		CommercePriceList commercePriceList =
-			commercePriceListPersistence.findByPrimaryKey(commercePriceListId);
-
-		return commercePriceListLocalService.deleteCommercePriceList(
-			commercePriceList);
-	}
-
-	@Override
-	public void deleteCommercePriceLists(long companyId)
-		throws PortalException {
-
-		List<CommercePriceList> commercePriceLists =
-			commercePriceListLocalService.getCommercePriceLists(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CommercePriceList commercePriceList : commercePriceLists) {
-			commercePriceListLocalService.deleteCommercePriceList(
-				commercePriceList);
-		}
 	}
 
 	@Override

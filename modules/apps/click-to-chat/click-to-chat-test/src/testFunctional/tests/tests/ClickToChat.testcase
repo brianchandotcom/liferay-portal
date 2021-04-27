@@ -23,55 +23,7 @@ definition {
 	}
 
 	@priority = "5"
-	test DisableJivoChat {
-		property osgi.module.configuration.file.names = "com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration.config";
-		property osgi.module.configurations = "chatProviderAccountId=&quot;${click.to.chat.jivochat.password}&quot;${line.separator}chatProviderId=&quot;jivochat&quot;${line.separator}enabled=&quot;true&quot;${line.separator}guestUsersAllowed=&quot;false&quot;${line.separator}siteSettingsStrategy=&quot;always-inherit&quot;";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.disableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
-
-		Navigator.openURL();
-
-		AssertElementNotPresent(locator1 = "Providers#CHAT_JIVOCHAT");
-	}
-
-	@priority = "5"
-	test DisableLivePerson {
-		property osgi.module.configuration.file.names = "com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration.config";
-		property osgi.module.configurations = "chatProviderAccountId=&quot;${click.to.chat.liveperson.password}&quot;${line.separator}chatProviderId=&quot;liveperson&quot;${line.separator}enabled=&quot;true&quot;${line.separator}guestUsersAllowed=&quot;false&quot;${line.separator}siteSettingsStrategy=&quot;always-inherit&quot;";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.disableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
-
-		Navigator.openURL();
-
-		AssertElementNotPresent(locator1 = "Providers#CHAT_LIVEPERSON");
-	}
-
-	@priority = "5"
-	test EnableJivoChat {
+	test EnableAndDisableJivoChat {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -92,19 +44,29 @@ definition {
 			fieldName = "chatProviderId",
 			selectOption = "JivoChat");
 
+		var clickToChatJivochatPassword = PropsUtil.get("click.to.chat.jivochat.password");
+
 		FormFields.editText(
 			fieldName = "chatProviderAccountId",
-			fieldValue = "${click.to.chat.jivochat.password}");
+			fieldValue = "${clickToChatJivochatPassword}");
 
 		SystemSettings.saveConfiguration();
 
-		Navigator.openURL();
+		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementNotPresent(locator1 = "Providers#CHAT_JIVOCHAT");
 	}
 
 	@priority = "5"
-	test EnableLivePerson {
+	test EnableAndDisableLivePerson {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -125,15 +87,25 @@ definition {
 			fieldName = "chatProviderId",
 			selectOption = "Liveperson");
 
+		var clickToChatLivepersonPassword = PropsUtil.get("click.to.chat.liveperson.password");
+
 		FormFields.editText(
 			fieldName = "chatProviderAccountId",
-			fieldValue = "${click.to.chat.liveperson.password}");
+			fieldValue = "${clickToChatLivepersonPassword}");
 
 		SystemSettings.saveConfiguration();
 
-		Navigator.openURL();
+		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementNotPresent(locator1 = "Providers#CHAT_LIVEPERSON");
 	}
 
 	@priority = "4"

@@ -57,6 +57,20 @@ const LAYOUT_DATA_ITEM_TYPE_ICONS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: 'table',
 };
 
+function getCollectionAncestor(layoutData, itemId) {
+	const item = layoutData.items[itemId];
+
+	const parent = layoutData.items[item.parentId];
+
+	if (!parent) {
+		return null;
+	}
+
+	return parent.type === LAYOUT_DATA_ITEM_TYPES.collection
+		? parent
+		: getCollectionAncestor(layoutData, item.parentId);
+}
+
 export default function PageStructureSidebar() {
 	const activeItemId = useActiveItemId();
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
@@ -196,6 +210,15 @@ function visit(
 			...getAllEditables(documentFragment),
 			...getAllPortals(documentFragment),
 		].sort((a, b) => a.priority - b.priority);
+
+		const collectionAncestor = getCollectionAncestor(
+			layoutData,
+			item.itemId
+		);
+
+		const collectionConfig = collectionAncestor
+			? collectionAncestor.config.collection
+			: null;
 
 		const editableTypes = fragmentEntryLink.editableTypes;
 
@@ -354,7 +377,12 @@ function getDocumentFragment(content) {
 	return fragment.appendChild(div);
 }
 
-function getMappedFieldLabel(editable, mappedInfoItems, mappingFields) {
+function getMappedFieldLabel(
+	editable,
+	collectionConfig,
+	mappedInfoItems,
+	mappingFields
+) {
 	const infoItem = mappedInfoItems.find(
 		({classNameId, classPK}) =>
 			editable.classNameId === classNameId && editable.classPK === classPK
@@ -362,11 +390,16 @@ function getMappedFieldLabel(editable, mappedInfoItems, mappingFields) {
 
 	const {selectedMappingTypes} = config;
 
-	if (!infoItem && !selectedMappingTypes) {
+	if (!infoItem && !selectedMappingTypes && !collectionConfig) {
 		return null;
 	}
 
-	const key = editable.mappedField
+	const key = collectionConfig
+		? getMappingFieldsKey(
+				collectionConfig.classNameId,
+				collectionConfig.itemSubtype
+		  )
+		: editable.mappedField
 		? getMappingFieldsKey(
 				selectedMappingTypes.type.id,
 				selectedMappingTypes.subtype.id || 0
@@ -380,7 +413,10 @@ function getMappedFieldLabel(editable, mappedInfoItems, mappingFields) {
 			.flatMap((fieldSet) => fieldSet.fields)
 			.find(
 				(field) =>
-					field.key === (editable.mappedField || editable.fieldId)
+					field.key ===
+					(editable.mappedField ||
+						editable.fieldId ||
+						editable.collectionFieldId)
 			);
 
 		return field.label;

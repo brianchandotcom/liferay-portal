@@ -91,11 +91,29 @@ export default function MappingSelectorWrapper({
 		setCollectionItemSubtypeLabel,
 	] = useState('');
 	const [collectionItemTypeLabel, setCollectionItemTypeLabel] = useState('');
+	const mappingFields = useSelector((state) => state.mappingFields);
 
 	useEffect(() => {
 		if (!collectionConfig) {
 			setCollectionFields([]);
 
+			return;
+		}
+
+		const key = getMappingFieldsKey(
+			collectionConfig.collection.classNameId,
+			collectionConfig.collection.itemSubtype
+		);
+
+		const fields = mappingFields[key];
+
+		if (fields) {
+			setCollectionFields(fields);
+		}
+	}, [collectionConfig, mappingFields]);
+
+	useEffect(() => {
+		if (!collectionConfig) {
 			return;
 		}
 
@@ -105,7 +123,6 @@ export default function MappingSelectorWrapper({
 			onNetworkStatus: () => {},
 		})
 			.then((response) => {
-				setCollectionFields(response.mappingFields);
 				setCollectionItemSubtypeLabel(response.itemSubtypeLabel);
 				setCollectionItemTypeLabel(response.itemTypeLabel);
 			})
@@ -114,7 +131,7 @@ export default function MappingSelectorWrapper({
 					console.error(error);
 				}
 			});
-	}, [collectionConfig]);
+	});
 
 	return collectionConfig ? (
 		<>

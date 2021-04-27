@@ -637,6 +637,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTAINER_CONFIGURATION_HEIGHT</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@style,'height: ${key_height}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTAINER_CONFIGURATION_MARGIN_BOTTOM</td>
 	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'mb-${key_marginBottom}')]</td>
 	<td></td>

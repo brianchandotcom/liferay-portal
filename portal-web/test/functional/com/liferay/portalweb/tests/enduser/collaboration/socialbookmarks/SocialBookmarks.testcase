@@ -87,48 +87,42 @@ definition {
 	test ViewBlogsEntryWithSocialBookmarksSites {
 		property osgi.app.includes = "social-bookmarks";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.addPublicPage(
-			pageName = "Blogs Page",
-			sitePageType = "Widget Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Pause(locator1 = "3000");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blogs-entry-title");
 
 		SocialBookmarks.viewDefaultSharableBookmarks();
 
-		Blogs.disableSocialBookmarkSites(disableSocialBookmarkSites = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.disableSocialBookmarkSites(disableSocialBookmarkSites = "Facebook,LinkedIn,Twitter");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		SocialBookmarks.viewShareIconNotPresent();
 
-		Blogs.enableSocialBookmarkSites(enableSocialBookmarkSites = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
+		SocialBookmarks.viewNoBookmarkIcons(socialBookmarks = "Facebook,LinkedIn,Twitter");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+		Blogs.enableSocialBookmarkSites(enableSocialBookmarkSites = "Facebook,LinkedIn,Twitter");
 
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blogs-entry-title");
 
-		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
+		SocialBookmarks.viewDefaultSharableBookmarks();
 	}
 
 	@priority = "3"

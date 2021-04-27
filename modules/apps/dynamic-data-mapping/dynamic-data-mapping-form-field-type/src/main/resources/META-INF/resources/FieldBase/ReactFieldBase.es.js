@@ -80,6 +80,7 @@ const Popover = ({tooltip}) => {
 	return (
 		<ClayPopover
 			alignPosition="right-bottom"
+			data-testid="clayPopover"
 			disableScroll
 			header={Liferay.Language.get('input-mask-format')}
 			show={isPopoverVisible}

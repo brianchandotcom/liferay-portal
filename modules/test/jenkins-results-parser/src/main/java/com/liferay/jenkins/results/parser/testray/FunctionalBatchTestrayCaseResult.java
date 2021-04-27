@@ -420,12 +420,14 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 		String name = getName();
 
+		name = name.replace("#", "_");
+
 		TestrayAttachment testrayAttachment =
 			TestrayFactory.newTestrayAttachment(
 				this, "Poshi Report",
 				JenkinsResultsParserUtil.combine(
-					getAxisBuildURLPath(), "/", name.replace("#", "_"),
-					"/index.html.gz"));
+					getAxisBuildURLPath(), "/",
+					JenkinsResultsParserUtil.fixURL(name), "/index.html.gz"));
 
 		if (!testrayAttachment.exists()) {
 			return null;
@@ -441,12 +443,14 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 		String name = getName();
 
+		name = name.replace("#", "_");
+
 		TestrayAttachment testrayAttachment =
 			TestrayFactory.newTestrayAttachment(
 				this, "Poshi Summary",
 				JenkinsResultsParserUtil.combine(
-					getAxisBuildURLPath(), "/", name.replace("#", "_"),
-					"/summary.html.gz"));
+					getAxisBuildURLPath(), "/",
+					JenkinsResultsParserUtil.fixURL(name), "/summary.html.gz"));
 
 		if (!testrayAttachment.exists()) {
 			return null;

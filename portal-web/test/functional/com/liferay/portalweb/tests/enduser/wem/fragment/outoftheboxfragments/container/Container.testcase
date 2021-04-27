@@ -181,6 +181,87 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120693. Configure the Flex Column and Fluid Container styles."
+	@priority = "5"
+	test ConfigureFlexColumnAndFluidContainerStyles {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "containerItemFlexEnabled=&quot;true&quot;";
+
+		task ("Add a Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Button fragment to Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				navTab = "Fragments");
+		}
+
+		task ("Add a Image below the Container") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image",
+				targetFragmentName = "Container");
+		}
+
+		task ("Move the Image to the top of Button inside the Container via Selection Panel") {
+			PageEditor.gotoTab(tabName = "Selection");
+
+			Pause(locator1 = "3000");
+
+			Click(
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+			DragAndDrop.javaScriptDragAndDropToUp(
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Image')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Button')]//div[@role='button'][@draggable='true']");
+
+			Pause(locator1 = "3000");
+
+			AssertElementPresent(
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Image')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("View the Container styles") {
+			AssertElementNotPresent(
+				key_contentDisplay = "",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
+
+			PageEditor.viewContainerStyle(
+				containerWidth = "Fluid",
+				position = "1");
+		}
+
+		task ("Configure the Container styles") {
+			PageEditor.editLayoutContainer(
+				alignItems = "End",
+				contentDisplay = "Flex Column",
+				height = "1000px",
+				justifyContent = "Between",
+				panel = "Styles");
+		}
+
+		task ("View the Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "end",
+				contentDisplay = "column",
+				height = "1000px",
+				justifyContent = "between",
+				position = "1");
+		}
+	}
+
 	@description = "This is a test for LPS-106776, LPS-111657 and LPS-120693. Configure the Flex Row and Fluid Container styles."
 	@priority = "5"
 	test ConfigureFlexRowAndFluidContainerStyles {

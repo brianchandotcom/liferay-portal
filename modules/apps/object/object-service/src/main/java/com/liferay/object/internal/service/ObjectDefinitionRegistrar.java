@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -57,8 +58,13 @@ public class ObjectDefinitionRegistrar {
 
 		if (!objectDefinitions.isEmpty()) {
 			FutureTask<Void> futureTask = new FutureTask<>(
-				() -> objectDefinitions.forEach(
-					_objectDefinitionLocalService::registerObjectDefinition),
+				() -> {
+					ClusterInvokeThreadLocal.setEnabled(false);
+
+					objectDefinitions.forEach(
+						_objectDefinitionLocalService::
+							registerObjectDefinition);
+				},
 				null);
 
 			Thread thread = new Thread(

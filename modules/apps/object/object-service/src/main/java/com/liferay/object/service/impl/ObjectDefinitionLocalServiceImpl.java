@@ -156,7 +156,38 @@ public class ObjectDefinitionLocalServiceImpl
 	@Clusterable
 	@Override
 	public void registerObjectDefinition(ObjectDefinition objectDefinition) {
-		_registerObjectDefinition(objectDefinition);
+		_serviceRegistrationsMap.put(
+			objectDefinition.getObjectDefinitionId(),
+			new ServiceRegistration<?>[] {
+				_bundleContext.registerService(
+					PanelApp.class,
+					new ObjectDefinitionPanelApp(objectDefinition),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"panel.app.order:Integer", "300"
+					).put(
+						"panel.category.key",
+						PanelCategoryKeys.CONTROL_PANEL_USERS
+					).build()),
+				_bundleContext.registerService(
+					Portlet.class, new ObjectDefinitionPortlet(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"com.liferay.portlet.display-category",
+						"category.hidden"
+					).put(
+						"javax.portlet.display-name", objectDefinition.getName()
+					).put(
+						"javax.portlet.name", objectDefinition.getPortletId()
+					).put(
+						"javax.portlet.init-param.view-template", "/view.jsp"
+					).build()),
+				_bundleContext.registerService(
+					WorkflowHandler.class,
+					new ObjectEntryWorkflowHandler(
+						objectDefinition, _objectEntryLocalService),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"model.class.name", objectDefinition.getClassName()
+					).build())
+			});
 	}
 
 	@Clusterable
@@ -211,41 +242,6 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		runSQL(sql);
-	}
-
-	private void _registerObjectDefinition(ObjectDefinition objectDefinition) {
-		_serviceRegistrationsMap.put(
-			objectDefinition.getObjectDefinitionId(),
-			new ServiceRegistration<?>[] {
-				_bundleContext.registerService(
-					PanelApp.class,
-					new ObjectDefinitionPanelApp(objectDefinition),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"panel.app.order:Integer", "300"
-					).put(
-						"panel.category.key",
-						PanelCategoryKeys.CONTROL_PANEL_USERS
-					).build()),
-				_bundleContext.registerService(
-					Portlet.class, new ObjectDefinitionPortlet(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"com.liferay.portlet.display-category",
-						"category.hidden"
-					).put(
-						"javax.portlet.display-name", objectDefinition.getName()
-					).put(
-						"javax.portlet.name", objectDefinition.getPortletId()
-					).put(
-						"javax.portlet.init-param.view-template", "/view.jsp"
-					).build()),
-				_bundleContext.registerService(
-					WorkflowHandler.class,
-					new ObjectEntryWorkflowHandler(
-						objectDefinition, _objectEntryLocalService),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"model.class.name", objectDefinition.getClassName()
-					).build())
-			});
 	}
 
 	private void _validateName(long companyId, String name)

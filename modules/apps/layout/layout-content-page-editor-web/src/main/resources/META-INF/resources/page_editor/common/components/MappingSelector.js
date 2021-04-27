@@ -43,6 +43,29 @@ const UNMAPPED_OPTION = {
 	value: 'unmapped',
 };
 
+function filterFields(fields, fieldType) {
+	return fields.reduce((acc, fieldSet) => {
+		const newFields = fieldSet.fields.filter((field) =>
+			fieldType === EDITABLE_TYPES.image ||
+			fieldType === EDITABLE_TYPES.backgroundImage
+				? field.type === EDITABLE_TYPES.image
+				: field.type !== EDITABLE_TYPES.image
+		);
+
+		if (newFields.length) {
+			return [
+				...acc,
+				{
+					...fieldSet,
+					fields: newFields,
+				},
+			];
+		}
+
+		return acc;
+	}, []);
+}
+
 function loadMappingFields({dispatch, item, sourceType}) {
 	let classNameId, classTypeId;
 
@@ -108,9 +131,9 @@ export default function MappingSelectorWrapper({
 		const fields = mappingFields[key];
 
 		if (fields) {
-			setCollectionFields(fields);
+			setCollectionFields(filterFields(fields, fieldType));
 		}
-	}, [collectionConfig, mappingFields]);
+	}, [collectionConfig, mappingFields, fieldType]);
 
 	useEffect(() => {
 		if (!collectionConfig) {
@@ -305,7 +328,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			const fields = mappingFields[key];
 
 			if (fields) {
-				setItemFields(fields);
+				setItemFields(filterFields(fields, fieldType));
 			}
 			else {
 				loadMappingFields({

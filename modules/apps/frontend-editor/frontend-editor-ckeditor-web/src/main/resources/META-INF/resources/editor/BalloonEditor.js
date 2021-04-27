@@ -79,6 +79,16 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
 				});
 
+				if (editorConfig.toolbarVideo) {
+					balloonToolbars.create({
+						buttons: editorConfig.toolbarVideo,
+						cssSelector: 'div[data-widget="videoembed"]',
+						priority:
+							window.CKEDITOR.plugins.balloontoolbar.PRIORITY
+								.HIGH,
+					});
+				}
+
 				if (contents) {
 					editor.setData(contents);
 				}

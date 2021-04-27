@@ -74,6 +74,8 @@ public class CKEditorBalloonEditorConfigContributor
 			"toolbarImage", "JustifyLeft,JustifyCenter,JustifyRight,Link,Unlink"
 		).put(
 			"toolbarText", getToolbarText()
+		).put(
+			"toolbarVideo", "JustifyLeft,JustifyCenter,JustifyRight"
 		);
 	}
 

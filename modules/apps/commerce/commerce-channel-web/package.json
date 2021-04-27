@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
+	"name": "@liferay/commerce-channel-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
+	},
+	"version": "4.0.2"
+}

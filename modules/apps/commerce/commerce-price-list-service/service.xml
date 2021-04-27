@@ -397,6 +397,7 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<exceptions>
+		<exception>CommerceBasePriceListCannotDelete</exception>
 		<exception>CommercePriceEntryDisplayDate</exception>
 		<exception>CommercePriceEntryExpirationDate</exception>
 		<exception>CommercePriceListCurrency</exception>

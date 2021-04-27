@@ -262,7 +262,7 @@ public class StagingLocalServiceTest {
 	}
 
 	@Test
-	public void testPageVersioningPortletRemoval() throws Exception {
+	public void testBranchingLayoutPortletRemoval() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		Layout layout = LayoutTestUtil.addLayout(group);
@@ -324,7 +324,7 @@ public class StagingLocalServiceTest {
 	}
 
 	@Test
-	public void testPageVersioningPortletRemovalLayoutUpdate()
+	public void testBranchingLayoutPortletRemovalLayoutUpdate()
 		throws Exception {
 
 		Group group = GroupTestUtil.addGroup();
@@ -398,7 +398,7 @@ public class StagingLocalServiceTest {
 	}
 
 	@Test
-	public void testPageVersioningPortletRemovalLayoutUpdateNoContextParam()
+	public void testBranchingLayoutPortletRemovalLayoutUpdateNoContextParam()
 		throws Exception {
 
 		Group group = GroupTestUtil.addGroup();

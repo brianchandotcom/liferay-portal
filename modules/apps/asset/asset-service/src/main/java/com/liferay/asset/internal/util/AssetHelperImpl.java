@@ -545,6 +545,7 @@ public class AssetHelperImpl implements AssetHelper {
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(
 			ArrayUtil.clone(assetEntryQuery.getGroupIds()));
+		searchContext.setIncludeInternalAssetCategories(true);
 
 		if (Validator.isNull(assetEntryQuery.getKeywords())) {
 			QueryConfig queryConfig = searchContext.getQueryConfig();

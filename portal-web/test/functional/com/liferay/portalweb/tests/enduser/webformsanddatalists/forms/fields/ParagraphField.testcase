@@ -1,0 +1,260 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a Paragraph Field can be created"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeCreated {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131221 CanBeCreated pending implementation
+
+	}
+
+	@description = "Verify that a Paragraph Field can be deleted"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeDeleted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131223 CanBeDeleted pending implementation
+	}
+
+	@description = "Verify that a Paragraph Field can be duplicated"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeDuplicated {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131224 CanBeDuplicated pending implementation
+	}
+
+	@description = "Verify that a Paragraph Field can be edited"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131222 CanBeEdited pending implementation
+	}
+
+	@description = "Verify that a Form can be submitted with the Paragraph Field"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeSubmitted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131229 CanBeSubmitted pending implementation
+	}
+
+	@description = "Verify that a Table can be deleted in the Body Text"
+	@ignore = "true"
+	@priority = "4"
+	test CanDeleteATable {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131237 CanDeleteATable pending implementation
+	}
+
+	@description = "Verify that the Formatting Style can be changed using the predefined style options"
+	@ignore = "true"
+	@priority = "4"
+	test CanEditFormattingStyle {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131235 CanEditFormattingStyle pending implementation
+	}
+
+	@description = "Verify that a Form cannot be saved or published without adding anything in the Body Text"
+	@ignore = "true"
+	@priority = "5"
+	test CannotBeSavedOrPublishedWithoutBodyText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131228 CannotBeSavedOrPublishedWithoutBodyText pending implementation
+	}
+
+	@description = "Verify that a link to an Anchor in The Text can be added to the Body Text"
+	@ignore = "true"
+	@priority = "5"
+	test CanSupportALinkToAnAnchor {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131241 CanSupportALinkToAnAnchor pending implementation
+	}
+
+	@description = "Verify that a link to an Email can be added to the Body Text"
+	@ignore = "true"
+	@priority = "5"
+	test CanSupportALinkToAnEmail {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131242 CanSupportALinkToAnEmail pending implementation
+	}
+
+	@description = "Verify that a link to a Phone Number can be added to the Body Text"
+	@ignore = "true"
+	@priority = "5"
+	test CanSupportALinkToAPhoneNumber {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131243 CanSupportALinkToAPhoneNumber pending implementation
+	}
+
+	@description = "Verify that a link to a URL can be added to the Body Text"
+	@ignore = "true"
+	@priority = "5"
+	test CanSupportALinkToAURL {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131240 CanSupportALinkToAURL pending implementation
+	}
+
+	@description = "Verify that Bulleted Lists can be added to the Body Text"
+	@ignore = "true"
+	@priority = "5"
+	test CanSupportBulletedLists {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131239 CanSupportBulletedLists pending implementation
+	}
+
+	@description = "Verify that the Body Text supports HTML"
+	@ignore = "true"
+	@priority = "5"
+	test CanSupportHTML {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131247 CanSupportHTML pending implementation
+	}
+
+	@description = "Verify that an Image can be uploaded to the Body Text"
+	@ignore = "true"
+	@priority = "5"
+	test CanSupportImages {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131233 CanSupportImages pending implementation
+	}
+
+	@description = "Verify that Numbered Lists can be added to the Body Text"
+	@ignore = "true"
+	@priority = "5"
+	test CanSupportNumberedLists {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131238 CanSupportNumberedLists pending implementation
+	}
+
+	@description = "Verify that a Table can be created in the Body Text"
+	@ignore = "true"
+	@priority = "4"
+	test CanSupportTables {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131236 CanSupportTables pending implementation
+	}
+
+	@description = "Verify that a Video can be uploaded to the Body Text"
+	@ignore = "true"
+	@priority = "5"
+	test CanSupportVideos {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131234 CanSupportVideos pending implementation
+	}
+
+	@description = "Verify that inputs to the Body Text can be undone and redone"
+	@ignore = "true"
+	@priority = "5"
+	test CanUndoAndRedo {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131245 CanUndoAndRedo pending implementation
+	}
+
+	@description = "Verify that a link in a Paragraph Field can be unlinked"
+	@ignore = "true"
+	@priority = "5"
+	test CanUnlinkALink {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131244 CanUnlinkALink pending implementation
+	}
+
+	@description = "Verify that changes to a Field can be canceled"
+	@ignore = "true"
+	@priority = "5"
+	test ChangesCanBeCanceled {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131225 ChangesCanBeCanceled pending implementation
+	}
+
+	@description = "Verify that the Field Reference can be Edited"
+	@ignore = "true"
+	@priority = "5"
+	test FieldReferenceCanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131227 FieldReferenceCanBeEdited pending implementation
+	}
+
+	@description = "Verify that the Field Type can be changed"
+	@ignore = "true"
+	@priority = "5"
+	test FieldTypeCanBeChanged {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131232 FieldTypeCanBeChanged pending implementation
+	}
+
+	@description = "Verify that the Field Label can be edited"
+	@ignore = "true"
+	@priority = "5"
+	test LabelCanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131226 LabelCanBeEdited pending implementation
+	}
+
+	@description = "Verify that text in the Body Text can be Bolded, Italicized and Underlined"
+	@ignore = "true"
+	@priority = "5"
+	test TextCanBeBoldedItalicizedAndUnderlined {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131246 TextCanBeBoldedItalicizedAndUnderlined pending implementation
+	}
+
+}

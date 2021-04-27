@@ -1796,7 +1796,9 @@ definition {
 
 	@summary = "Log into Liferay using URL navigation"
 	macro firstLoginPG {
-		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "${userEmailAddress}");
+		JSONUser.agreeToTermsAndAnswerReminderQuery(
+			portalURL = "${virtualHostsURL}",
+			userEmailAddress = "${userEmailAddress}");
 
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
@@ -1916,7 +1918,9 @@ definition {
 
 	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'"
 	macro loginPG {
-		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "${userEmailAddress}");
+		JSONUser.agreeToTermsAndAnswerReminderQuery(
+			portalURL = "${virtualHostsURL}",
+			userEmailAddress = "${userEmailAddress}");
 
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
@@ -1927,7 +1931,7 @@ definition {
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 
-		//TODO Remove below macro after password reminder gets completely cleaned out with JSON 
+		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
 
 		User.resetPassword(
 			resetPassword = "${resetPassword}",

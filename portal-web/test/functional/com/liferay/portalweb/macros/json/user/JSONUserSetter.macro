@@ -31,6 +31,14 @@ definition {
 		return "${newPassword}";
 	}
 
+	macro setPortalInstanceName {
+		if (isSet(portalURL)) {
+			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${portalURL}");
+		}
+
+		return "${portalInstanceName}";
+	}
+
 	macro setRequireReset {
 		if (!(isSet(requireReset))) {
 			var requireReset = "true";
@@ -50,7 +58,9 @@ definition {
 	macro setUserId {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
-		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONUserAPI._getUserIdByEmailAddress(
+			portalInstanceName = "${portalInstanceName}",
+			userEmailAddress = "${userEmailAddress}");
 
 		return "${userId}";
 	}

@@ -162,9 +162,15 @@ definition {
 	macro agreeToTermsAndAnswerReminderQuery {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
-		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+		var portalInstanceName = JSONUserSetter.setPortalInstanceName(portalURL = "${portalURL}");
 
-		JSONUserAPI._agreeToTermsAndAnswerReminderQuery(userId = "${userId}");
+		var userId = JSONUserSetter.setUserId(
+			portalInstanceName = "${portalInstanceName}",
+			userEmailAddress = "${userEmailAddress}");
+
+		JSONUserAPI._agreeToTermsAndAnswerReminderQuery(
+			portalInstanceName = "${portalInstanceName}",
+			userId = "${userId}");
 	}
 
 	macro deleteUserByEmailAddress {

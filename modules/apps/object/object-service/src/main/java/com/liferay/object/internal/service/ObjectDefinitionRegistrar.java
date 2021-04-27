@@ -19,6 +19,8 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -32,6 +34,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.FutureTask;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -48,7 +51,26 @@ public class ObjectDefinitionRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
-		_objectDefinitionLocalService.registerObjectDefinitions();
+		List<ObjectDefinition> objectDefinitions =
+			_objectDefinitionLocalService.getObjectDefinitions(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (!objectDefinitions.isEmpty()) {
+			FutureTask<Void> futureTask = new FutureTask<>(
+				() -> objectDefinitions.forEach(
+					_objectDefinitionLocalService::registerObjectDefinition),
+				null);
+
+			Thread objectDefinitionRegistrarThread = new Thread(
+				futureTask,
+				ObjectDefinitionRegistrar.class.getName() + "-Registrar");
+
+			objectDefinitionRegistrarThread.setDaemon(true);
+
+			objectDefinitionRegistrarThread.start();
+
+			DependencyManagerSyncUtil.registerSyncFuture(futureTask);
+		}
 
 		if (false) {
 			_addSampleObjectDefinition();

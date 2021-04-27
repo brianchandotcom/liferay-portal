@@ -27,12 +27,16 @@ export default function previousPage({
 	viewMode,
 }) {
 	return (dispatch) => {
+
 		evaluate(null, {
+			activePage,
 			defaultLanguageId,
 			editingLanguageId,
 			groupId,
+			nextPage: activePage - 1,
 			pages,
 			portletNamespace,
+			previousPage: activePage,
 			rules,
 			viewMode,
 		}).then((evaluatedPages) => {

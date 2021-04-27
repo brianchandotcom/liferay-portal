@@ -123,8 +123,10 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 		defaultLanguageId,
 		editingLanguageId,
 		groupId,
+		nextPage,
 		pages,
 		portletNamespace,
+		previousPage,
 		viewMode,
 	} = evaluatorContext;
 
@@ -144,7 +146,9 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 			serializedFormContext: JSON.stringify({
 				...evaluatorContext,
 				groupId: groupId ? groupId : themeDisplay.getScopeGroupId(),
+				nextPage: nextPage ? nextPage : null,
 				portletNamespace,
+				previousPage: previousPage ? previousPage : null
 			}),
 			trigger: fieldName,
 		}),

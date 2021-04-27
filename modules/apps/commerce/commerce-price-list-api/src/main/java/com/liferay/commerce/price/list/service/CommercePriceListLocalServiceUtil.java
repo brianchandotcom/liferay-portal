@@ -520,6 +520,13 @@ public class CommercePriceListLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static CommercePriceList forceDeleteCommercePriceList(
+			CommercePriceList commercePriceList)
+		throws PortalException {
+
+		return getService().forceDeleteCommercePriceList(commercePriceList);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

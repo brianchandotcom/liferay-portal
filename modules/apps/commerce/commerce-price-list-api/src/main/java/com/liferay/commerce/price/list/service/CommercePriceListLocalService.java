@@ -390,6 +390,12 @@ public interface CommercePriceListLocalService
 	public CommercePriceList fetchCommercePriceListByUuidAndGroupId(
 		String uuid, long groupId);
 
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommercePriceList forceDeleteCommercePriceList(
+			CommercePriceList commercePriceList)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

@@ -16,12 +16,13 @@ package com.liferay.click.to.chat.web.internal.servlet.taglib;
 
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
 import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -66,8 +67,17 @@ public class ClickToChatTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			return;
 		}
 
-		ClickToChatConfiguration clickToChatConfiguration =
-			_getClickToChatConfiguration(themeDisplay.getCompanyId());
+		ClickToChatConfiguration clickToChatConfiguration = null;
+
+		try {
+			clickToChatConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					ClickToChatConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+		}
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
+		}
 
 		if (Objects.equals(
 				clickToChatConfiguration.siteSettingsStrategy(),
@@ -228,18 +238,6 @@ public class ClickToChatTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
-	}
-
-	private ClickToChatConfiguration _getClickToChatConfiguration(
-		long companyId) {
-
-		try {
-			return _configurationProvider.getCompanyConfiguration(
-				ClickToChatConfiguration.class, companyId);
-		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

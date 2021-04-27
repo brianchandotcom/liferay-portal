@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)request.getAttribute(ClickToChatConfiguration.class.getName());
+%>
+
 <div class="form-group row">
 	<div class="col-md-12">
 		<label class="control-label">
@@ -24,10 +28,6 @@
 			<liferay-ui:icon-help message="site-settings-strategy-description" />
 		</label>
 	</div>
-
-	<%
-	ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)request.getAttribute(ClickToChatConfiguration.class.getName());
-	%>
 
 	<c:if test="<%= Validator.isNotNull(clickToChatConfiguration.siteSettingsStrategy()) %>">
 		<div class="col-md-12">

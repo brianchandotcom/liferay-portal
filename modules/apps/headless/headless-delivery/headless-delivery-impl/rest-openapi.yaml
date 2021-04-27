@@ -4906,8 +4906,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "ContentStructure" ]
@@ -4923,8 +4923,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "ContentStructure" ]
@@ -5082,8 +5082,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "DocumentFolder" ]
@@ -5099,8 +5099,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "DocumentFolder" ]
@@ -5209,8 +5209,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "Document" ]
@@ -5226,8 +5226,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "Document" ]
@@ -5362,8 +5362,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "StructuredContentFolder" ]
@@ -5379,8 +5379,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "StructuredContentFolder" ]
@@ -5494,8 +5494,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "StructuredContent" ]
@@ -5511,8 +5511,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "StructuredContent" ]
@@ -6164,8 +6164,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "ContentStructure" ]
@@ -6181,8 +6181,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "ContentStructure" ]
@@ -6462,8 +6462,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "DocumentFolder" ]
@@ -6479,8 +6479,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "DocumentFolder" ]
@@ -6932,8 +6932,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "Document" ]
@@ -6949,8 +6949,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "Document" ]
@@ -7273,8 +7273,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "KnowledgeBaseArticle" ]
@@ -7290,8 +7290,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "KnowledgeBaseArticle" ]
@@ -7678,8 +7678,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "KnowledgeBaseFolder" ]
@@ -7695,8 +7695,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "KnowledgeBaseFolder" ]
@@ -8103,8 +8103,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardMessage" ]
@@ -8120,8 +8120,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardMessage" ]
@@ -8459,8 +8459,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardSection" ]
@@ -8476,8 +8476,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardSection" ]
@@ -9028,8 +9028,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardThread" ]
@@ -9045,8 +9045,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardThread" ]
@@ -9180,8 +9180,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "NavigationMenu" ]
@@ -9197,8 +9197,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "NavigationMenu" ]
@@ -9393,8 +9393,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "BlogPosting" ]
@@ -9410,8 +9410,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "BlogPosting" ]
@@ -9656,8 +9656,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "ContentStructure" ]
@@ -9673,8 +9673,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "ContentStructure" ]
@@ -9864,8 +9864,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "DocumentFolder" ]
@@ -9881,8 +9881,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "DocumentFolder" ]
@@ -9997,8 +9997,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "Document" ]
@@ -10014,8 +10014,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "Document" ]
@@ -10126,8 +10126,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "KnowledgeBaseArticle" ]
@@ -10143,8 +10143,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "KnowledgeBaseArticle" ]
@@ -10268,8 +10268,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "KnowledgeBaseFolder" ]
@@ -10285,8 +10285,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "KnowledgeBaseFolder" ]
@@ -10399,8 +10399,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardMessage"]
@@ -10521,8 +10521,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardMessage" ]
@@ -10538,8 +10538,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardMessage" ]
@@ -10650,8 +10650,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardSection" ]
@@ -10667,8 +10667,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardSection" ]
@@ -10810,8 +10810,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardThread" ]
@@ -10827,8 +10827,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "MessageBoardThread" ]
@@ -10917,8 +10917,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "NavigationMenu" ]
@@ -10934,8 +10934,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "NavigationMenu" ]
@@ -11269,8 +11269,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "StructuredContentFolder" ]
@@ -11286,8 +11286,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "StructuredContentFolder" ]
@@ -11595,8 +11595,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "WikiNode" ]
@@ -11612,8 +11612,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "WikiNode" ]
@@ -11634,8 +11634,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "StructuredContentFolder" ]
@@ -11651,8 +11651,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "StructuredContentFolder" ]
@@ -12511,8 +12511,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "WikiNode" ]
@@ -12528,8 +12528,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "WikiNode" ]
@@ -12848,8 +12848,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "WikiPage" ]
@@ -12865,8 +12865,8 @@ paths:
             responses:
                 204:
                     content:
-                        application/json: { }
-                        application/xml: { }
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: [ "WikiPage" ]

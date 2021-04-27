@@ -73,7 +73,7 @@ const getInfoFields = (infoFieldSetEntries = []) => {
 
 const Translate = ({
 	aditionalFields,
-	autoTranslateButtonVisible = false,
+	autoTranslateEnabled = false,
 	getAutoTranslateURL,
 	infoFieldSetEntries,
 	portletNamespace,
@@ -206,7 +206,7 @@ const Translate = ({
 			))}
 
 			<TranslateActionBar
-				autoTranslateButtonVisible={autoTranslateButtonVisible}
+				autoTranslateEnabled={autoTranslateEnabled}
 				fetchAutoTranslateFields={fetchAutoTranslateFields}
 				fetchAutoTranslateStatus={state.fetchAutoTranslateStatus}
 				formHasChanges={state.formHasChanges}
@@ -250,7 +250,7 @@ const Translate = ({
 };
 
 Translate.propTypes = {
-	autoTranslateButtonVisible: PropTypes.bool,
+	autoTranslateEnabled: PropTypes.bool,
 	getAutoTranslateURL: PropTypes.string.isRequired,
 	infoFieldSetEntries: PropTypes.arrayOf(
 		PropTypes.shape({

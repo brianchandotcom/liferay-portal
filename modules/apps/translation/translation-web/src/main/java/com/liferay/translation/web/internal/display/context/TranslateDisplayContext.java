@@ -233,7 +233,7 @@ public class TranslateDisplayContext {
 				"targetLanguageId", getTargetLanguageId()
 			).build()
 		).put(
-			"autoTranslateButtonVisible", isAutoTranslateButtonVisible()
+			"autoTranslateEnabled", isAutoTranslateEnabled()
 		).put(
 			"getAutoTranslateURL", getAutoTranslateURL()
 		).put(
@@ -403,7 +403,7 @@ public class TranslateDisplayContext {
 		return true;
 	}
 
-	public boolean isAutoTranslateButtonVisible() {
+	public boolean isAutoTranslateEnabled() {
 		if (_ffAutoTranslateConfiguration.enabled() &&
 			hasTranslationPermission()) {
 

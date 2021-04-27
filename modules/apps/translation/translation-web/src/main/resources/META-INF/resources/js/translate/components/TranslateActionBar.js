@@ -23,7 +23,7 @@ import React from 'react';
 import TranslateLanguagesSelector from './TranslateLanguagesSelector';
 
 const TransLateActionBar = ({
-	autoTranslateButtonVisible,
+	autoTranslateEnabled,
 	fetchAutoTranslateFields,
 	fetchAutoTranslateStatus,
 	formHasChanges,
@@ -45,7 +45,7 @@ const TransLateActionBar = ({
 				<ul className="tbar-nav">
 					<li
 						className={classNames('tbar-item', {
-							'tbar-item-expand': !autoTranslateButtonVisible,
+							'tbar-item-expand': !autoTranslateEnabled,
 						})}
 					>
 						<TranslateLanguagesSelector
@@ -54,7 +54,7 @@ const TransLateActionBar = ({
 							portletNamespace={portletNamespace}
 						/>
 					</li>
-					{autoTranslateButtonVisible && (
+					{autoTranslateEnabled && (
 						<>
 							<li className="tbar-item">
 								<ClayButton

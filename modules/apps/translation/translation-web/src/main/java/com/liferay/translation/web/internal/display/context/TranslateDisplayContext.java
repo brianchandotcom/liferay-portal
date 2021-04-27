@@ -448,17 +448,16 @@ public class TranslateDisplayContext {
 	}
 
 	private Map<String, Object> _getInfoFieldEditorConfig(String infoFieldId) {
-		Map<String, Object> inputEditorTaglibAttributes =
-			HashMapBuilder.<String, Object>put(
-				"liferay-ui:input-editor:allowBrowseDocuments", true
-			).put(
-				"liferay-ui:input-editor:name", infoFieldId
-			).build();
-
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				TranslationPortletKeys.TRANSLATION, "translateEditor",
-				"ckeditor", inputEditorTaglibAttributes, _themeDisplay,
+				"ckeditor",
+				HashMapBuilder.<String, Object>put(
+					"liferay-ui:input-editor:allowBrowseDocuments", true
+				).put(
+					"liferay-ui:input-editor:name", infoFieldId
+				).build(),
+				_themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest));
 
 		return editorConfiguration.getData();

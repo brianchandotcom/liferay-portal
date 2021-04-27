@@ -15,7 +15,10 @@
 package com.liferay.portlet.asset.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.BaseSearcher;
@@ -42,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -100,7 +104,8 @@ public class AssetSearcher extends BaseSearcher {
 			String fieldName, BooleanFilter queryBooleanFilter)
 		throws Exception {
 
-		long[] allCategoryIds = _assetEntryQuery.getAllCategoryIds();
+		long[] allCategoryIds = _filterCategoryIdsByVisibilityType(
+			_assetEntryQuery.getAllCategoryIds(), fieldName);
 
 		if (allCategoryIds.length == 0) {
 			return;
@@ -118,13 +123,6 @@ public class AssetSearcher extends BaseSearcher {
 		BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
 
 		for (long allCategoryId : filteredAllCategoryIds) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(allCategoryId);
-
-			if (assetCategory == null) {
-				continue;
-			}
-
 			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
@@ -219,7 +217,8 @@ public class AssetSearcher extends BaseSearcher {
 			String fieldName, BooleanFilter queryBooleanFilter)
 		throws Exception {
 
-		long[] anyCategoryIds = _assetEntryQuery.getAnyCategoryIds();
+		long[] anyCategoryIds = _filterCategoryIdsByVisibilityType(
+			_assetEntryQuery.getAnyCategoryIds(), fieldName);
 
 		if (anyCategoryIds.length == 0) {
 			return;
@@ -227,6 +226,9 @@ public class AssetSearcher extends BaseSearcher {
 
 		long[] filteredAnyCategoryIds = AssetUtil.filterCategoryIds(
 			PermissionThreadLocal.getPermissionChecker(), anyCategoryIds);
+
+		filteredAnyCategoryIds = _filterCategoryIdsByVisibilityType(
+			filteredAnyCategoryIds, fieldName);
 
 		if (filteredAnyCategoryIds.length == 0) {
 			addImpossibleTerm(queryBooleanFilter, fieldName);
@@ -237,13 +239,6 @@ public class AssetSearcher extends BaseSearcher {
 		TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
 
 		for (long anyCategoryId : filteredAnyCategoryIds) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(anyCategoryId);
-
-			if (assetCategory == null) {
-				continue;
-			}
-
 			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
@@ -389,23 +384,16 @@ public class AssetSearcher extends BaseSearcher {
 			String fieldName, BooleanFilter queryBooleanFilter)
 		throws Exception {
 
-		long[] notAllCategoryIds = _assetEntryQuery.getNotAllCategoryIds();
+		long[] filteredNotAllCategoryIds = _filterCategoryIdsByVisibilityType(
+			_assetEntryQuery.getNotAllCategoryIds(), fieldName);
 
-		if (notAllCategoryIds.length == 0) {
+		if (filteredNotAllCategoryIds.length == 0) {
 			return;
 		}
 
 		BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
 
-		for (long notAllCategoryId : notAllCategoryIds) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-					notAllCategoryId);
-
-			if (assetCategory == null) {
-				continue;
-			}
-
+		for (long notAllCategoryId : filteredNotAllCategoryIds) {
 			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
@@ -500,23 +488,16 @@ public class AssetSearcher extends BaseSearcher {
 			String fieldName, BooleanFilter queryBooleanFilter)
 		throws Exception {
 
-		long[] notAnyCategoryIds = _assetEntryQuery.getNotAnyCategoryIds();
+		long[] filteredNotAnyCategoryIds = _filterCategoryIdsByVisibilityType(
+			_assetEntryQuery.getNotAnyCategoryIds(), fieldName);
 
-		if (notAnyCategoryIds.length == 0) {
+		if (filteredNotAnyCategoryIds.length == 0) {
 			return;
 		}
 
 		TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
 
-		for (long notAnyCategoryId : notAnyCategoryIds) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-					notAnyCategoryId);
-
-			if (assetCategory == null) {
-				continue;
-			}
-
+		for (long notAnyCategoryId : filteredNotAnyCategoryIds) {
 			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
@@ -614,6 +595,48 @@ public class AssetSearcher extends BaseSearcher {
 		if (booleanFilter.hasClauses() && !showInvisible) {
 			fullQuery.setPreBooleanFilter(booleanFilter);
 		}
+	}
+
+	private long[] _filterCategoryIdsByVisibilityType(
+		long[] assetCategoryIds, String fieldName) {
+
+		List<Long> filteredCategoryIds = new ArrayList<>();
+
+		for (long assetCategoryId : assetCategoryIds) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					assetCategoryId);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+					assetCategory.getVocabularyId());
+
+			if (assetVocabulary == null) {
+				continue;
+			}
+
+			if ((assetVocabulary.getVisibilityType() ==
+					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) &&
+				Objects.equals(fieldName, Field.ASSET_CATEGORY_IDS)) {
+
+				continue;
+			}
+
+			if ((assetVocabulary.getVisibilityType() ==
+					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) &&
+				Objects.equals(fieldName, Field.ASSET_INTERNAL_CATEGORY_IDS)) {
+
+				continue;
+			}
+
+			filteredCategoryIds.add(assetCategoryId);
+		}
+
+		return ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[0]));
 	}
 
 	private AssetEntryQuery _assetEntryQuery;

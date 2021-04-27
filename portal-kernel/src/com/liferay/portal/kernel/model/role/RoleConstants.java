@@ -94,6 +94,8 @@ public class RoleConstants {
 
 	public static final int TYPE_PROVIDER = 4;
 
+	public static final int TYPE_PUBLICATION = 7;
+
 	public static final int TYPE_REGULAR = 1;
 
 	public static final String TYPE_REGULAR_LABEL = "regular";

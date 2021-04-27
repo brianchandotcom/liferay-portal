@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ClickToChatConfiguration clickToChatConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(ClickToChatConfiguration.class, themeDisplay.getCompanyId());
+ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)request.getAttribute(ClickToChatConfiguration.class.getName());
 %>
 
 <div class="row">
@@ -33,7 +33,7 @@ ClickToChatConfiguration clickToChatConfiguration = ConfigurationProviderUtil.ge
 
 <div class="form-group row">
 	<div class="col-md-12">
-		<aui:select label="site-settings-strategy" name="settings--clickToChatSiteSettingsStrategy--" onchange='<%= liferayPortletResponse.getNamespace() +  "onChangeClickToChatSiteSettingsStrategy(event);" %>' required="<%= true %>" value="<%= clickToChatConfiguration.siteSettingsStrategy() %>">
+		<aui:select label="site-settings-strategy" name="settings--clickToChatSiteSettingsStrategy--" onchange='<%= liferayPortletResponse.getNamespace() + "onChangeClickToChatSiteSettingsStrategy(event);" %>' required="<%= true %>" value="<%= clickToChatConfiguration.siteSettingsStrategy() %>">
 			<aui:option label="" value="" />
 
 			<%
@@ -54,7 +54,7 @@ ClickToChatConfiguration clickToChatConfiguration = ConfigurationProviderUtil.ge
 	</div>
 </div>
 
-<div class="row" id='<%= liferayPortletResponse.getNamespace() + "clickToChatDivProviderFields" %>'>
+<div class="row" id="<%= liferayPortletResponse.getNamespace() + "clickToChatDivProviderFields" %>">
 	<div class="col-md-6">
 
 		<%

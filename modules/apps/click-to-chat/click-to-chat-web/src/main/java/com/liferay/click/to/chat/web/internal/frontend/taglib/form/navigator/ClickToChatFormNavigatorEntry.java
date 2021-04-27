@@ -19,8 +19,8 @@ import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -88,8 +88,17 @@ public class ClickToChatFormNavigatorEntry
 		boolean enabled = false;
 		boolean guestUsersAllowed = false;
 
-		ClickToChatConfiguration clickToChatConfiguration =
-			_getClickToChatConfiguration(CompanyThreadLocal.getCompanyId());
+		ClickToChatConfiguration clickToChatConfiguration = null;
+
+		try {
+			clickToChatConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					ClickToChatConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+		}
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
+		}
 
 		httpServletRequest.setAttribute(
 			ClickToChatConfiguration.class.getName(), clickToChatConfiguration);
@@ -173,18 +182,6 @@ public class ClickToChatFormNavigatorEntry
 	@Override
 	protected String getJspPath() {
 		return "/sites_admin/click_to_chat.jsp";
-	}
-
-	private ClickToChatConfiguration _getClickToChatConfiguration(
-		long companyId) {
-
-		try {
-			return _configurationProvider.getCompanyConfiguration(
-				ClickToChatConfiguration.class, companyId);
-		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
 	}
 
 	private UnicodeProperties _getTypeSettingsUnicodeProperties(

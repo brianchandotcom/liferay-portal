@@ -188,3 +188,8 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 		true
 	);
 </script>
+
+No var outside function
+Repeat is OK
+Call the var *Element
+Everything inside function

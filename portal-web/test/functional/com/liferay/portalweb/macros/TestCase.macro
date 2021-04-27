@@ -77,8 +77,6 @@ definition {
 		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "test@liferay.com");
-
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances();
 
 		if (("${testPortalInstance}" == "true") && (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}")))) {

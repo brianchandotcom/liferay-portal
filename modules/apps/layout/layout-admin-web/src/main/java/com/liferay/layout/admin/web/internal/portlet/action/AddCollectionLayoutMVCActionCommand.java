@@ -170,7 +170,7 @@ public class AddCollectionLayoutMVCActionCommand
 		return layout;
 	}
 
-	private String _getCollectionLayoutDefinitionJSON(
+	private String _getCollectionPageElementJSON(
 		String className, String classPK) {
 
 		if (Validator.isNull(classPK)) {
@@ -193,14 +193,14 @@ public class AddCollectionLayoutMVCActionCommand
 			"COLLECTION_NAME", HtmlUtil.escape(assetListEntry.getTitle())
 		).build();
 
-		String collectionDefinition = StringUtil.read(
+		String collectionPageElementJSON = StringUtil.read(
 			AddCollectionLayoutMVCActionCommand.class,
-			"collection_definition.json");
+			"collection-page-element.json");
 
-		return StringUtil.replace(collectionDefinition, "${", "}", values);
+		return StringUtil.replace(collectionPageElementJSON, "${", "}", values);
 	}
 
-	private String _getCollectionProviderLayoutDefinition(String className) {
+	private String _getCollectionProviderPageElementJSON(String className) {
 		InfoListProvider<?> infoListProvider =
 			_infoListProviderTracker.getInfoListProvider(className);
 
@@ -215,35 +215,36 @@ public class AddCollectionLayoutMVCActionCommand
 			infoListProvider.getLabel(LocaleUtil.getDefault())
 		).build();
 
-		String collectionDefinition = StringUtil.read(
+		String collectionProviderPageElementJSON = StringUtil.read(
 			AddCollectionLayoutMVCActionCommand.class,
-			"collection_provider_definition.json");
+			"collection-provider-page-element.json");
 
-		return StringUtil.replace(collectionDefinition, "${", "}", values);
+		return StringUtil.replace(
+			collectionProviderPageElementJSON, "${", "}", values);
 	}
 
 	private void _updateLayoutPageTemplateData(
 			Layout layout, String collectionType, String collectionPK)
 		throws Exception {
 
-		String layoutDefinitionJSON = StringPool.BLANK;
+		String pageElementJSON = StringPool.BLANK;
 
 		if (Objects.equals(
 				collectionType,
 				InfoListItemSelectorReturnType.class.getName())) {
 
-			layoutDefinitionJSON = _getCollectionLayoutDefinitionJSON(
+			pageElementJSON = _getCollectionPageElementJSON(
 				collectionType, collectionPK);
 		}
 		else if (Objects.equals(
 					collectionType,
 					InfoListProviderItemSelectorReturnType.class.getName())) {
 
-			layoutDefinitionJSON = _getCollectionProviderLayoutDefinition(
+			pageElementJSON = _getCollectionProviderPageElementJSON(
 				collectionPK);
 		}
 
-		if (Validator.isNotNull(layoutDefinitionJSON)) {
+		if (Validator.isNotNull(pageElementJSON)) {
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
 				_layoutPageTemplateStructureLocalService.
 					fetchLayoutPageTemplateStructure(
@@ -255,7 +256,7 @@ public class AddCollectionLayoutMVCActionCommand
 
 			_layoutPageTemplatesImporter.importPageElement(
 				layout, layoutStructure, layoutStructure.getMainItemId(),
-				layoutDefinitionJSON, 0);
+				pageElementJSON, 0);
 		}
 	}
 

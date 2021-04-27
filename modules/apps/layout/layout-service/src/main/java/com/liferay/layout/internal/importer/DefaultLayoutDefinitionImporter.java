@@ -70,8 +70,11 @@ public class DefaultLayoutDefinitionImporter {
 			releaseInfo = StringUtil.replace(
 				releaseInfo, CharPool.OPEN_PARENTHESIS, "<br>(");
 
-			String layoutDefinitionJSON = StringUtil.replace(
-				_DEFAULT_LAYOUT_DEFINITION, "${", "}",
+			String pageElementJSON = StringUtil.replace(
+				StringUtil.read(
+					DefaultLayoutLayoutSetPrototypeLocalServiceWrapper.class,
+					"page-element.json"),
+				"${", "}",
 				HashMapBuilder.put(
 					"RELEASE_INFO", releaseInfo + "."
 				).put(
@@ -84,7 +87,7 @@ public class DefaultLayoutDefinitionImporter {
 
 			_layoutPageTemplatesImporter.importPageElement(
 				layout, layoutStructure, layoutStructure.getMainItemId(),
-				layoutDefinitionJSON, 0);
+				pageElementJSON, 0);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
@@ -123,10 +126,6 @@ public class DefaultLayoutDefinitionImporter {
 
 		return fileEntry.getFileEntryId();
 	}
-
-	private static final String _DEFAULT_LAYOUT_DEFINITION = StringUtil.read(
-		DefaultLayoutLayoutSetPrototypeLocalServiceWrapper.class,
-		"default-layout-definition.json");
 
 	private static final String _FILE_NAME_TREE_IMAGE = "tree.png";
 

@@ -87,6 +87,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,6 +119,29 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddsFileEntryWithExpirationDateReviewDate()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date expirationDate = new Date();
+		Date reviewDate = new Date();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			expirationDate, reviewDate, serviceContext);
+
+		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
+		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
+	}
+
+	@Test
 	public void testAddsFileEntryWithNoFileEntryType() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -137,6 +161,46 @@ public class DLFileEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			defaultFileEntryTypeId, dlFileEntry.getFileEntryTypeId());
+	}
+
+	@Test
+	public void testAddsFileEntryWithoutExpirationDate() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date reviewDate = new Date();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			null, reviewDate, serviceContext);
+
+		Assert.assertNull(dlFileEntry.getExpirationDate());
+		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
+	}
+
+	@Test
+	public void testAddsFileEntryWithoutReviewDate() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date expirationDate = new Date();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			expirationDate, null, serviceContext);
+
+		Assert.assertNull(dlFileEntry.getReviewDate());
+		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
 	}
 
 	@Test

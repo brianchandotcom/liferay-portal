@@ -262,6 +262,87 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120693. Configure the Flex Row and Fixed Width Container styles."
+	@priority = "5"
+	test ConfigureFlexRowAndFixedWidthContainerStyles {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "containerItemFlexEnabled=&quot;true&quot;";
+
+		task ("Add a Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Heading fragment to Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				navTab = "Fragments");
+		}
+
+		task ("Add a Banner Center below the Container") {
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center",
+				targetFragmentName = "Container");
+		}
+
+		task ("Move the Banner Center to the top of Heading inside the Container via Selection Panel") {
+			PageEditor.gotoTab(tabName = "Selection");
+
+			Pause(locator1 = "3000");
+
+			Click(
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+			DragAndDrop.javaScriptDragAndDropToUp(
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Banner Center')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
+
+			Pause(locator1 = "3000");
+
+			AssertElementPresent(
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Banner Center')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("View the Container styles") {
+			AssertElementNotPresent(
+				key_contentDisplay = "",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
+
+			PageEditor.viewContainerStyle(
+				containerWidth = "Fluid",
+				position = "1");
+		}
+
+		task ("Configure the Container styles") {
+			PageEditor.editLayoutContainer(
+				alignItems = "Start",
+				containerWidth = "Fixed Width",
+				contentDisplay = "Flex Row",
+				justifyContent = "End",
+				panel = "Styles");
+		}
+
+		task ("View the Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "start",
+				containerWidth = "Fixed Width",
+				contentDisplay = "row",
+				justifyContent = "end",
+				position = "1");
+		}
+	}
+
 	@description = "This is a test for LPS-106776, LPS-111657 and LPS-120693. Configure the Flex Row and Fluid Container styles."
 	@priority = "5"
 	test ConfigureFlexRowAndFluidContainerStyles {

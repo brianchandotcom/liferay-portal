@@ -522,6 +522,11 @@
 	<td>//div[contains(@class,'side-panel')]//li[a[contains(text(),'${navItem}')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRODUCT_CARD_LIST_PRICE</td>
+	<td>//p[@title='${key_productName}']//following-sibling::p[@class='card-text']//span[@class='price-value']</td>
+	<td></td>
+</tr>
 <!--OPTION-->
 <tr>
 	<td>ADD_RELATION_FIELD</td>

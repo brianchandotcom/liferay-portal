@@ -1260,8 +1260,16 @@ definition {
 	@priority = "3"
 	test ViewProductCardStartingPrice {
 		property portal.acceptance = "false";
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		// TODO COMMERCE-5865 ViewProductCardStartingPrice pending implementation
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		AssertTextEquals.assertPartialText(
+			key_productName = "Brake Fluid",
+			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+			value1 = "From $ 80.00");
 
 	}
 

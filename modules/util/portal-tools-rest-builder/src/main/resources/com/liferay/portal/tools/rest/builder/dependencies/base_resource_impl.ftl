@@ -183,7 +183,6 @@ public abstract class Base${schemaName}ResourceImpl
 					<#assign generateGetPermissionCheckerMethods = true />
 
 					String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
-
 					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
 
 					PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId, getPermissionCheckerGroupId(${schemaVarName}Id));

@@ -53,9 +53,8 @@ public class GCSStoreTest extends BaseStoreTestCase {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		String dlStoreImpl = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
-
 		String gcsStoreClassName = "com.liferay.portal.store.gcs.GCSStore";
+		String dlStoreImpl = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
 		Assume.assumeTrue(
 			StringBundler.concat(
@@ -72,17 +71,17 @@ public class GCSStoreTest extends BaseStoreTestCase {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("serviceAccountKey", "");
+		properties.put("aes256Key", "");
 		properties.put("bucketName", "test");
-		properties.put("maxRetryAttempts", "5");
+		properties.put("initialRPCTimeout", "120000");
 		properties.put("initialRetryDelay", "400");
+		properties.put("maxRPCTimeout", "600000");
+		properties.put("maxRetryAttempts", "5");
 		properties.put("maxRetryDelay", "10000");
 		properties.put("retryDelayMultiplier", "1.5");
-		properties.put("initialRPCTimeout", "120000");
-		properties.put("maxRPCTimeout", "600000");
-		properties.put("rpcTimeoutMultiplier", "1.0");
 		properties.put("retryJitter", "false");
-		properties.put("aes256Key", "");
+		properties.put("rpcTimeoutMultiplier", "1.0");
+		properties.put("serviceAccountKey", "");
 
 		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
 	}

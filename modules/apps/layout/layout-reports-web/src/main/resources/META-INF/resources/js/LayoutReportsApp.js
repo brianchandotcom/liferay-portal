@@ -16,6 +16,7 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
 import LayoutReports from './components/LayoutReports';
+import {StoreContextProvider} from './context/StoreContext';
 
 import '../css/main.scss';
 
@@ -69,10 +70,13 @@ export default function ({
 	);
 
 	return (
-		<LayoutReports
-			eventTriggered={eventTriggered}
-			isPanelStateOpen={isPanelStateOpen}
-			layoutReportsDataURL={layoutReportsDataURL}
-		/>
+		<StoreContextProvider>
+			<LayoutReports
+				eventTriggered={eventTriggered}
+				isPanelStateOpen={isPanelStateOpen}
+				layoutReportsDataURL={layoutReportsDataURL}
+				portletNamespace={portletNamespace}
+			/>
+		</StoreContextProvider>
 	);
 }

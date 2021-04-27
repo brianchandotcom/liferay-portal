@@ -1453,7 +1453,9 @@ definition {
 	}
 
 	macro viewSiteClonedFromSiteTemplateCP {
-		Navigator.gotoNavTab(navTab = "General");
+		Click(
+			key_itemName = "General",
+			locator1 = "Panel#PANEL_NAV_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Site Template");
 

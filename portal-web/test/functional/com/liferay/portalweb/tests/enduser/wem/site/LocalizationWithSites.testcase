@@ -683,7 +683,9 @@ definition {
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
 			defaultSiteLanguage = "English (United States)");
 
-		Navigator.gotoNavTab(navTab = "General");
+		Click(
+			key_itemName = "General",
+			locator1 = "Panel#PANEL_NAV_ITEM_LINK");
 
 		User.logoutPG();
 

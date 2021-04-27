@@ -93,9 +93,11 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-91000, LPS-95002 and LPS-115224. Configure the Fixed Width Container styles."
+	@description = "This is a test for LPS-91000, LPS-95002, LPS-115224 and LPS-120693. Configure the Flex Column and Fixed Width Container styles."
 	@priority = "5"
-	test ConfigureFixedWidthContainerStyles {
+	test ConfigureFlexColumnAndFixedWidthContainerStyles {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "containerItemFlexEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add a Container to page") {
@@ -108,7 +110,47 @@ definition {
 				fragmentName = "Container");
 		}
 
-		task ("Assert the Container has Fluid, padding bottom 0, padding left 0, padding right 0 and padding top 0") {
+		task ("Add a Paragraph fragment to Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				navTab = "Fragments");
+		}
+
+		task ("Add a Tabs below the Container") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs",
+				targetFragmentName = "Container");
+		}
+
+		task ("Move the Tabs to the top of Paragraph inside the Container via Selection Panel") {
+			PageEditor.gotoTab(tabName = "Selection");
+
+			Pause(locator1 = "3000");
+
+			Click(
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+			DragAndDrop.javaScriptDragAndDropToUp(
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Tabs')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Paragraph')]//div[@role='button'][@draggable='true']");
+
+			Pause(locator1 = "3000");
+
+			AssertElementPresent(
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Tabs')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("Assert the Container styles") {
+			AssertElementNotPresent(
+				key_contentDisplay = "",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
+
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
 				paddingBottom = "0",
@@ -118,10 +160,14 @@ definition {
 				position = "1");
 		}
 
-		task ("Edit the Container styles") {
+		task ("Configure the Container styles") {
 			PageEditor.editLayoutContainer(
+				alignItems = "Baseline",
 				backgroundColor = "Success",
 				containerWidth = "Fixed Width",
+				contentDisplay = "Flex Column",
+				height = "600px",
+				justifyContent = "Around",
 				paddingBottom = "4",
 				paddingTop = "2",
 				panel = "Styles");
@@ -139,10 +185,14 @@ definition {
 				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD");
 		}
 
-		task ("Assert the Container has Fixed Width, padding bottom 4 and padding top 2") {
+		task ("View the Container styles") {
 			PageEditor.viewContainerStyle(
+				alignItems = "baseline",
 				backgroundColor = "success",
 				containerWidth = "Fixed Width",
+				contentDisplay = "column",
+				height = "600px",
+				justifyContent = "around",
 				paddingBottom = "4",
 				paddingTop = "2",
 				position = "1");

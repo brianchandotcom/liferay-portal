@@ -2810,7 +2810,11 @@ log.sanitizer.enabled=false</echo>
 
 							<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />
 
-							<antcall inheritAll="false" target="start-app-server-preserve-liferay-home" />
+							<get-test-batch-app-server-start-executable-arg-line />
+
+							<antcall inheritAll="false" target="start-app-server-preserve-liferay-home">
+								<param name="app.server.start.executable.arg.line" value="${test.batch.app.server.start.executable.arg.line}" />
+							</antcall>
 
 							<deploy-release-dependency-modules-post-startup />
 

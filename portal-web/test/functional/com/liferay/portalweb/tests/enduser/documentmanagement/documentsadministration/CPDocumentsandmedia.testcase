@@ -58,6 +58,26 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This test covers LPS-130154. It ensures that the user can search for a document based on the content."
+	@priority = "4"
+	@refactorneeded
+	test CanSearchForDocumentBasedOnContent {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_5.txt");
+
+		AssertConsoleTextNotPresent(value1 = "WriteLimitReachedException");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "gJybWNXR76fTX0TlIu8mFP2dNVtTGdq");
+
+		DMDocument.viewSearchResultsCP(dmDocumentTitle = "Document_5.txt");
+	}
+
 	@description = "This test ensures that the document type of a published basic document can be changed."
 	@priority = "4"
 	@refactorneeded

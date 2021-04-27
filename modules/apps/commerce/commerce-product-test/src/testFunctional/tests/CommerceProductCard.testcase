@@ -55,12 +55,55 @@ definition {
 	}
 
 	@description = "COMMERCE-6160. As a buyer, I want to be able to select only the allowed quantities of a product, if set"
-	@ignore = "true"
 	@priority = "3"
 	test AssertOnlyAllowedQuantitiesAreSelectable {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6160 AssertOnlyAllowedQuantitiesAreSelectable pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		AssertElementPresent(
+			key_fieldLabel = "Allowed Order Quantities",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+		Type(
+			key_fieldLabel = "Allowed Order Quantities",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "1 4 5 7 11");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+
+		Click(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD");
+
+		for (var number : list "1,4,5,7,11") {
+                AssertElementPresent(
+                    key_productName = "U-Joint",
+                    key_optionValue = "${number}",
+                    locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+		}
+		
 	}
 
 	@description = "COMMERCE-6162. As a buyer, I want to be able to select the quantity of a product by multiple value, if set"

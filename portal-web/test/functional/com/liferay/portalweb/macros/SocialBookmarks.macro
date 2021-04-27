@@ -30,8 +30,14 @@ definition {
 
 	macro viewDefaultSharableBookmarks {
 		SocialBookmarks.viewBookmarkIcons(socialBookmarks = "Facebook,LinkedIn,Twitter");
+	}
 
-		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
+	macro viewNoBookmarkIcons {
+		for (var socialBookmark : list "${socialBookmarks}") {
+			AssertElementNotPresent(
+				key_socialBookmark = StringUtil.toLowerCase("${socialBookmark}"),
+				locator1 = "SocialBookmarks#SOCIAL_BOOKMARK_ICON");
+		}
 	}
 
 	macro viewShareIconNotPresent {

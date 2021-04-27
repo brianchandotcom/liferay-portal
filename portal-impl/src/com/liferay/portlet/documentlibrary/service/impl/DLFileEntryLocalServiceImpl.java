@@ -162,6 +162,141 @@ public class DLFileEntryLocalServiceImpl
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, long fileEntryTypeId,
 			Map<String, DDMFormValues> ddmFormValuesMap, File file,
+			InputStream inputStream, long size, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (Validator.isNull(title)) {
+			throw new FileNameException(
+				StringBundler.concat(
+					"Unable to add file entry with file name ", sourceFileName,
+					" because title is null"));
+		}
+
+		// File entry
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		folderId = DLFolderLocalServiceImpl.getFolderId(
+			dlFolderPersistence, user.getCompanyId(), folderId);
+
+		String name = String.valueOf(
+			counterLocalService.increment(DLFileEntry.class.getName()));
+
+		String extension = FileUtil.getExtension(sourceFileName);
+
+		String fileName = null;
+
+		if (Validator.isNotNull(sourceFileName)) {
+			fileName = DLUtil.getSanitizedFileName(
+				FileUtil.stripExtension(sourceFileName), extension);
+		}
+		else {
+			fileName = DLValidatorUtil.fixName(
+				DLUtil.getSanitizedFileName(title, extension));
+		}
+
+		if (fileEntryTypeId == -1) {
+			fileEntryTypeId =
+				dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
+		}
+
+		validateFileEntryTypeId(
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
+			fileEntryTypeId);
+
+		validateFile(groupId, folderId, 0, fileName, extension, title);
+
+		long fileEntryId = counterLocalService.increment();
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.create(fileEntryId);
+
+		dlFileEntry.setUuid(serviceContext.getUuid());
+		dlFileEntry.setGroupId(groupId);
+		dlFileEntry.setCompanyId(user.getCompanyId());
+		dlFileEntry.setUserId(user.getUserId());
+		dlFileEntry.setUserName(user.getFullName());
+
+		DLFolder repositoryDLFolder = null;
+
+		if (repositoryId != groupId) {
+			Repository repository = repositoryPersistence.findByPrimaryKey(
+				repositoryId);
+
+			repositoryDLFolder = dlFolderPersistence.findByPrimaryKey(
+				repository.getDlFolderId());
+		}
+
+		long classNameId = 0;
+		long classPK = 0;
+
+		if ((repositoryDLFolder != null) && repositoryDLFolder.isHidden()) {
+			classNameId = classNameLocalService.getClassNameId(
+				(String)serviceContext.getAttribute("className"));
+			classPK = ParamUtil.getLong(serviceContext, "classPK");
+		}
+
+		dlFileEntry.setClassNameId(classNameId);
+		dlFileEntry.setClassPK(classPK);
+		dlFileEntry.setRepositoryId(repositoryId);
+		dlFileEntry.setFolderId(folderId);
+		dlFileEntry.setTreePath(dlFileEntry.buildTreePath());
+		dlFileEntry.setName(name);
+		dlFileEntry.setFileName(fileName);
+		dlFileEntry.setExtension(extension);
+		dlFileEntry.setMimeType(mimeType);
+		dlFileEntry.setTitle(title);
+		dlFileEntry.setDescription(description);
+		dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
+		dlFileEntry.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
+		dlFileEntry.setSize(size);
+		dlFileEntry.setExpirationDate(expirationDate);
+		dlFileEntry.setReviewDate(reviewDate);
+
+		dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
+
+		// Resources
+
+		addFileEntryResources(dlFileEntry, serviceContext);
+
+		// File version
+
+		addFileVersion(
+			user, dlFileEntry, fileName, extension, mimeType, title,
+			description, changeLog, StringPool.BLANK, fileEntryTypeId,
+			ddmFormValuesMap, DLFileEntryConstants.VERSION_DEFAULT, size,
+			expirationDate, reviewDate, WorkflowConstants.STATUS_DRAFT,
+			serviceContext);
+
+		// Folder
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			dlFolderLocalService.updateLastPostDate(
+				dlFileEntry.getFolderId(), dlFileEntry.getModifiedDate());
+		}
+
+		// File
+
+		if (file != null) {
+			DLStoreUtil.addFile(
+				user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
+				false, file);
+		}
+		else {
+			DLStoreUtil.addFile(
+				user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
+				false, inputStream);
+		}
+
+		return dlFileEntry;
+	}
+
+	@Override
+	public DLFileEntry addFileEntry(
+			long userId, long groupId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, long fileEntryTypeId,
+			Map<String, DDMFormValues> ddmFormValuesMap, File file,
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -261,8 +396,8 @@ public class DLFileEntryLocalServiceImpl
 		addFileVersion(
 			user, dlFileEntry, fileName, extension, mimeType, title,
 			description, changeLog, StringPool.BLANK, fileEntryTypeId,
-			ddmFormValuesMap, DLFileEntryConstants.VERSION_DEFAULT, size,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			ddmFormValuesMap, DLFileEntryConstants.VERSION_DEFAULT, size, null,
+			null, WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		// Folder
 
@@ -2002,7 +2137,8 @@ public class DLFileEntryLocalServiceImpl
 			String extension, String mimeType, String title, String description,
 			String changeLog, String extraSettings, long fileEntryTypeId,
 			Map<String, DDMFormValues> ddmFormValuesMap, String version,
-			long size, int status, ServiceContext serviceContext)
+			long size, Date expirationDate, Date reviewDate, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long fileVersionId = counterLocalService.increment();
@@ -2033,6 +2169,8 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
+		dlFileVersion.setExpirationDate(expirationDate);
+		dlFileVersion.setReviewDate(reviewDate);
 		dlFileVersion.setStatus(status);
 		dlFileVersion.setStatusByUserId(user.getUserId());
 		dlFileVersion.setStatusByUserName(user.getFullName());
@@ -2695,8 +2833,10 @@ public class DLFileEntryLocalServiceImpl
 					oldDLFileVersion.getExtraSettings(),
 					oldDLFileVersion.getFileEntryTypeId(), null,
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-					oldDLFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
+					oldDLFileVersion.getSize(),
+					oldDLFileVersion.getExpirationDate(),
+					oldDLFileVersion.getReviewDate(),
+					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 				copyExpandoRowModifiedDate(
 					dlFileEntry.getCompanyId(), oldDLFileVersionId,

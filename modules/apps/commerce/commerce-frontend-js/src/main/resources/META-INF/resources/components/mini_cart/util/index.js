@@ -56,42 +56,36 @@ export function regenerateOrderDetailURL(orderUUID, siteDefaultURL) {
 	return orderDetailURL.toString();
 }
 
-export function summaryDataMapper(summary) {
-	return Object.keys(summary).reduce((values, key) => {
-		const summaryItem = {value: summary[key]};
-
-		switch (key) {
-			case 'itemsQuantity':
-				values.push({
-					label: Liferay.Language.get('quantity'),
-					...summaryItem,
-				});
-				break;
-			case 'subtotalFormatted':
-				values.push({
-					label: Liferay.Language.get('subtotal'),
-					...summaryItem,
-				});
-				break;
-			case 'totalDiscountValueFormatted':
-				values.push({
-					label: Liferay.Language.get('order-discount'),
-					...summaryItem,
-				});
-				break;
-			case 'totalFormatted':
-				values.push({
-					label: Liferay.Language.get('total'),
-					style: 'big',
-					...summaryItem,
-				});
-				break;
-			default:
-				break;
-		}
-
-		return values;
-	}, []);
+export function summaryDataMapper({
+	itemsQuantity,
+	subtotalDiscountValueFormatted,
+	subtotalFormatted,
+	totalDiscountValueFormatted,
+	totalFormatted,
+}) {
+	return [
+		{
+			label: Liferay.Language.get('quantity'),
+			value: itemsQuantity,
+		},
+		{
+			label: Liferay.Language.get('subtotal'),
+			value: subtotalFormatted,
+		},
+		{
+			label: Liferay.Language.get('subtotal-discount'),
+			value: subtotalDiscountValueFormatted,
+		},
+		{
+			label: Liferay.Language.get('order-discount'),
+			value: totalDiscountValueFormatted,
+		},
+		{
+			label: Liferay.Language.get('total'),
+			style: 'big',
+			value: totalFormatted,
+		},
+	];
 }
 
 export function hasErrors(cartItems) {

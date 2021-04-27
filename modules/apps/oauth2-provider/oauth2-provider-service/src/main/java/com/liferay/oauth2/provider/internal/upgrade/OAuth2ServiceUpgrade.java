@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.OAuth2ApplicationScop
 import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.util.OAuth2ApplicationScopeAliasesTable;
 import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.util.OAuth2ApplicationTable;
 import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.util.OAuth2ScopeGrantTable;
+import com.liferay.oauth2.provider.internal.upgrade.v3_2_0.OAuth2ApplicationFeatureUpgradeProcess;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -79,6 +80,9 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 			UpgradeStepFactory.addColumns(
 				OAuth2AuthorizationTable.class,
 				"rememberDeviceContent VARCHAR(75) null"));
+
+		registry.register(
+			"3.1.0", "3.2.0", new OAuth2ApplicationFeatureUpgradeProcess());
 	}
 
 	@Reference

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -83,6 +84,31 @@ public class DLPortletToolbarContributorHelper {
 		}
 
 		return folder;
+	}
+
+	public Boolean isShowActionsEnabled(
+		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletDisplayId = portletDisplay.getId();
+
+		if (!portletDisplayId.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			try {
+				DLPortletInstanceSettings dlPortletInstanceSettings =
+					DLPortletInstanceSettings.getInstance(
+						themeDisplay.getLayout(), portletDisplayId);
+
+				if (!dlPortletInstanceSettings.isShowActions()) {
+					return false;
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
+			}
+		}
+
+		return true;
 	}
 
 	@Reference(unbind = "-")

@@ -165,41 +165,41 @@ PortletURL portletURL = commerceAccountUserRelAdminDisplayContext.getPortletURL(
 			.addEventListener('click', (event) => {
 				event.preventDefault();
 
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-					eventName: 'usersSelectItem',
-					on: {
-						selectedItemChange: function (event) {
-							var <portlet:namespace />addUserIds = [];
+				Liferay.Util.openSelectionModal({
+					multiple: true,
+					onSelect: (selectedItems) => {
+						if (selectedItems?.length) {
+							const <portlet:namespace />addUserIds = [];
 
-							var selectedItems = event.newVal;
+							selectedItems.forEach((item) => {
+								<portlet:namespace />addUserIds.push(item.id);
+							});
 
-							if (selectedItems) {
-								A.Array.each(
-									selectedItems,
-									(item, index, selectedItems) => {
-										<portlet:namespace />addUserIds.push(item.id);
-									}
-								);
+							const userIdsInput = window.document.getElementById(
+								'<portlet:namespace />userIds'
+							)
 
-								window.document.querySelector(
-									'#<portlet:namespace />userIds'
-								).value = <portlet:namespace />addUserIds.join(',');
-
-								var addCommerceAccountUserRelFm = window.document.querySelector(
-									'#<portlet:namespace />addCommerceAccountUserRelFm'
-								);
-
-								submitForm(addCommerceAccountUserRelFm);
+							if (userIdsInput) {
+								userIdsInput.value = <portlet:namespace />addUserIds.join(',');
 							}
-						},
+
+							const addCommerceAccountUserRelFm = window.document.getElementById(
+								'<portlet:namespace />addCommerceAccountUserRelFm'
+							);
+
+							if (!addCommerceAccountUserRelFm) {
+								return;
+							}
+
+							submitForm(addCommerceAccountUserRelFm);
+						}
 					},
+					selectEventName: 'usersSelectItem',
 					title:
 						'<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceAccount.getName()) %>" key="add-new-entry-to-x" />',
 					url:
 						'<%= commerceAccountUserRelAdminDisplayContext.getItemSelectorUrl() %>',
 				});
-
-				itemSelectorDialog.open();
 			});
 	</aui:script>
 </c:if>

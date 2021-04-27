@@ -406,7 +406,8 @@ public class AuthVerifierPipeline {
 							authVerifierResult.getUserId()));
 				}
 
-				return null;
+				authVerifierResult.setState(
+					AuthVerifierResult.State.UNSUCCESSFUL);
 			}
 
 			Map<String, Object> settings = _mergeSettings(

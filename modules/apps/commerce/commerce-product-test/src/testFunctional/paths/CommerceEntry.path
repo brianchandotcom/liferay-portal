@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_ASSERT_WISH_LIST_HEART_FULL</td>
+	<td>//p[@title='${key_productName}']//../..//span[contains(@class,'wish-list-icon')]//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-heart-full')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANNEL_CHECKBOX</td>
 	<td>//input[contains(@id,'Channel') and (@type='checkbox')]</td>
 	<td></td>

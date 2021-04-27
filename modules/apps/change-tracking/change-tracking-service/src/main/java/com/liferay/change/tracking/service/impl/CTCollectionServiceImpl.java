@@ -40,14 +40,18 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.portal.kernel.model.UserGroupRoleTable;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -443,7 +447,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 		String[] keywordsArray = _customSQL.keywords(
 			keywords, true, WildcardMode.SURROUND);
 
-		return predicate.and(
+		predicate = predicate.and(
 			Predicate.withParentheses(
 				Predicate.or(
 					_customSQL.getKeywordsPredicate(
@@ -453,12 +457,44 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 					_customSQL.getKeywordsPredicate(
 						DSLFunctionFactoryUtil.lower(
 							CTCollectionTable.INSTANCE.description),
-						keywordsArray)))
-		).and(
+						keywordsArray))));
+
+		Predicate permissionWherePredicate =
 			_inlineSQLHelper.getPermissionWherePredicate(
-				CTCollection.class, CTCollectionTable.INSTANCE.ctCollectionId)
-		);
+				CTCollection.class, CTCollectionTable.INSTANCE.ctCollectionId);
+
+		if (permissionWherePredicate == null) {
+			return predicate;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return predicate.and(
+			Predicate.withParentheses(
+				permissionWherePredicate.or(
+					CTCollectionTable.INSTANCE.ctCollectionId.in(
+						DSLQueryFactoryUtil.selectDistinct(
+							GroupTable.INSTANCE.classPK
+						).from(
+							GroupTable.INSTANCE
+						).innerJoinON(
+							UserGroupRoleTable.INSTANCE,
+							UserGroupRoleTable.INSTANCE.groupId.eq(
+								GroupTable.INSTANCE.groupId
+							).and(
+								UserGroupRoleTable.INSTANCE.userId.eq(
+									permissionChecker.getUserId())
+							)
+						).where(
+							GroupTable.INSTANCE.classNameId.eq(
+								_classNameLocalService.getClassNameId(
+									CTCollection.class.getName()))
+						)))));
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CTAutoResolutionInfoPersistence _ctAutoResolutionInfoPersistence;

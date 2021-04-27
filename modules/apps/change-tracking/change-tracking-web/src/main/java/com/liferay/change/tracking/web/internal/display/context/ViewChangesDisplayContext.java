@@ -93,16 +93,18 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewChangesDisplayContext {
 
 	public ViewChangesDisplayContext(
-		long activeCTCollectionId,
-		BasePersistenceRegistry basePersistenceRegistry,
-		CTClosureFactory ctClosureFactory, CTCollection ctCollection,
-		CTConfiguration ctConfiguration,
-		CTDisplayRendererRegistry ctDisplayRendererRegistry,
-		CTEntryLocalService ctEntryLocalService,
-		CTSchemaVersionLocalService ctSchemaVersionLocalService,
-		GroupLocalService groupLocalService, Language language, Portal portal,
-		PublishScheduler publishScheduler, RenderRequest renderRequest,
-		RenderResponse renderResponse, UserLocalService userLocalService) {
+			long activeCTCollectionId,
+			BasePersistenceRegistry basePersistenceRegistry,
+			CTClosureFactory ctClosureFactory, CTCollection ctCollection,
+			CTConfiguration ctConfiguration,
+			CTDisplayRendererRegistry ctDisplayRendererRegistry,
+			CTEntryLocalService ctEntryLocalService,
+			CTSchemaVersionLocalService ctSchemaVersionLocalService,
+			GroupLocalService groupLocalService, Language language,
+			Portal portal, PublishScheduler publishScheduler,
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			UserLocalService userLocalService)
+		throws PortalException {
 
 		_activeCTCollectionId = activeCTCollectionId;
 		_basePersistenceRegistry = basePersistenceRegistry;

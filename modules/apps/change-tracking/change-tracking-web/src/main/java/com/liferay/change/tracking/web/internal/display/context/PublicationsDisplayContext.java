@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionService;
@@ -26,18 +27,30 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTC
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -52,6 +65,7 @@ import java.util.Objects;
 import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -93,6 +107,136 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 		}
 
 		_renderResponse = renderResponse;
+	}
+
+	public Map<String, Object> getCollaboratorsReactData(
+			CTCollection ctCollection, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		_addPublicationRole(
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+			PublicationRoleConstants.NAME_EDIT);
+		_addPublicationRole(
+			new String[] {
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
+			},
+			PublicationRoleConstants.NAME_PERMISSIONS);
+		_addPublicationRole(
+			new String[] {
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
+				CTActionKeys.PUBLISH
+			},
+			PublicationRoleConstants.NAME_PUBLISH);
+		_addPublicationRole(
+			new String[] {ActionKeys.VIEW}, PublicationRoleConstants.NAME_VIEW);
+
+		return HashMapBuilder.<String, Object>put(
+			"autocompleteUserURL",
+			() -> {
+				ResourceURL autocompleteUserURL =
+					_renderResponse.createResourceURL();
+
+				autocompleteUserURL.setResourceID(
+					"/change_tracking/autocomplete_user");
+
+				return autocompleteUserURL.toString();
+			}
+		).put(
+			"getCollaboratorsURL",
+			() -> {
+				ResourceURL getCollaboratorsURL =
+					_renderResponse.createResourceURL();
+
+				getCollaboratorsURL.setResourceID(
+					"/change_tracking/get_collaborators");
+
+				getCollaboratorsURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId()));
+
+				return getCollaboratorsURL.toString();
+			}
+		).put(
+			"inviteUsersURL",
+			() -> {
+				ResourceURL inviteUsersURL =
+					_renderResponse.createResourceURL();
+
+				inviteUsersURL.setResourceID("/change_tracking/invite_users");
+
+				inviteUsersURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId()));
+
+				return inviteUsersURL.toString();
+			}
+		).put(
+			"namespace", _renderResponse.getNamespace()
+		).put(
+			"roles",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"id", PublicationRoleConstants.ROLE_EDIT
+				).put(
+					"label",
+					_language.get(
+						_httpServletRequest,
+						PublicationRoleConstants.LABEL_EDIT)
+				),
+				JSONUtil.put(
+					"id", PublicationRoleConstants.ROLE_PERMISSIONS
+				).put(
+					"label",
+					_language.get(
+						_httpServletRequest,
+						PublicationRoleConstants.LABEL_PERMISSIONS)
+				),
+				JSONUtil.put(
+					"id", PublicationRoleConstants.ROLE_PUBLISH
+				).put(
+					"label",
+					_language.get(
+						_httpServletRequest,
+						PublicationRoleConstants.LABEL_PUBLISH)
+				),
+				JSONUtil.put(
+					"default", true
+				).put(
+					"id", PublicationRoleConstants.ROLE_VIEW
+				).put(
+					"label",
+					_language.get(
+						_httpServletRequest,
+						PublicationRoleConstants.LABEL_VIEW)
+				))
+		).put(
+			"sharingVerifyEmailAddressURL",
+			() -> {
+				ResourceURL sharingVerifyEmailAddressURL =
+					_renderResponse.createResourceURL();
+
+				sharingVerifyEmailAddressURL.setResourceID(
+					"/change_tracking/verify_email_address");
+
+				return sharingVerifyEmailAddressURL.toString();
+			}
+		).put(
+			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+		).put(
+			"updateRolesURL",
+			() -> {
+				ResourceURL updateRolesURL =
+					_renderResponse.createResourceURL();
+
+				updateRolesURL.setResourceID("/change_tracking/update_roles");
+
+				updateRolesURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId()));
+
+				return updateRolesURL.toString();
+			}
+		).build();
 	}
 
 	public long getCtCollectionId() {
@@ -253,6 +397,36 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	@Override
 	protected String getPortalPreferencesPrefix() {
 		return "ongoing";
+	}
+
+	private void _addPublicationRole(String[] actionIds, String name)
+		throws PortalException {
+
+		Role role = RoleLocalServiceUtil.fetchRole(
+			_themeDisplay.getCompanyId(), name);
+
+		if (role == null) {
+			try (SafeClosable safeClosable =
+					CTCollectionThreadLocal.setCTCollectionId(0)) {
+
+				role = RoleLocalServiceUtil.addRole(
+					_themeDisplay.getDefaultUserId(), null, 0, name,
+					HashMapBuilder.put(
+						LocaleUtil.getDefault(), name
+					).build(),
+					null, RoleConstants.TYPE_PUBLICATION, StringPool.BLANK,
+					ServiceContextFactory.getInstance(_httpServletRequest));
+
+				for (String actionId : actionIds) {
+					ResourcePermissionLocalServiceUtil.addResourcePermission(
+						_themeDisplay.getCompanyId(),
+						CTCollection.class.getName(),
+						ResourceConstants.SCOPE_GROUP_TEMPLATE,
+						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+						role.getRoleId(), actionId);
+				}
+			}
+		}
 	}
 
 	private JSONArray _getDropdownItemsJSONArray(

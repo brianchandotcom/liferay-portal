@@ -48,6 +48,15 @@ portletDisplay.setShowBackIcon(true);
 					</li>
 
 					<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, CTActionKeys.PUBLISH) %>">
+						<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, ActionKeys.PERMISSIONS) %>">
+							<li class="tbar-item">
+								<react:component
+									module="publications/js/ManageCollaborators"
+									props="<%= publicationsDisplayContext.getCollaboratorsReactData(ctCollection, permissionChecker) %>"
+								/>
+							</li>
+						</c:if>
+
 						<c:if test="<%= PropsValues.SCHEDULER_ENABLED %>">
 							<li class="tbar-item">
 								<liferay-portlet:renderURL var="scheduleURL">

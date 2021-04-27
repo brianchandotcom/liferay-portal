@@ -119,6 +119,11 @@
 	}
 }
 
+.publications-collaborators-circle {
+	border-color: #cdced9;
+	border-radius: 5000px;
+}
+
 .publications-discard-container {
 	padding-top: 48px;
 
@@ -149,6 +154,29 @@
 
 		.publications-radio-label {
 			font-weight: 600;
+		}
+	}
+}
+
+.publications-invite-users-modal {
+	.form-group:last-child {
+		margin-bottom: 0;
+	}
+
+	.modal-title .autofit-col {
+		padding: 2px;
+	}
+
+	.publications-invite-users-modal-body {
+		max-height: 70vh;
+	}
+
+	.table-responsive {
+		margin-bottom: 0;
+
+		.table-delete,
+		.table-list .table-delete td {
+			background-color: #feefef;
 		}
 	}
 }

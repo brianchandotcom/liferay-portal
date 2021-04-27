@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BORDER_BOTTOM_INPUT_FIELD</td>
+	<td>//div[contains(@class,'label')][normalize-space()='${key_borderBottom}']/following-sibling::div[1]//div[label[normalize-space(text())='${key_fieldLabel}']]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CITY</td>
 	<td>//div[label[contains(.,'City')]]//input[@type='text']</td>
 	<td></td>

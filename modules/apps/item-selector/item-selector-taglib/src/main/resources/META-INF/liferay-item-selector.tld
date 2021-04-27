@@ -119,6 +119,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The target URL for the method to edit the image via image editor.</description>
+			<name>editImageURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A message to be shown if there are no results.</description>
 			<name>emptyResultsMessage</name>
 			<required>false</required>

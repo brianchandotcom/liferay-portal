@@ -256,7 +256,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 				_layoutPageTemplatesImporter.importPageElement(
 					layout, layoutStructure, layoutStructure.getMainItemId(),
-					_read("test-content-page-definition.json"), 0);
+					_read("test-page-element.json"), 0);
 			}
 			finally {
 				PrincipalThreadLocal.setName(name);

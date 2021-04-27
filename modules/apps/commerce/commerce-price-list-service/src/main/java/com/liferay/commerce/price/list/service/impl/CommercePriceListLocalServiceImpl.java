@@ -448,6 +448,59 @@ public class CommercePriceListLocalServiceImpl
 		}
 	}
 
+	@Override
+	public CommercePriceList fetchByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			return null;
+		}
+
+		return commercePriceListPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
+	public CommercePriceList fetchCatalogBaseCommercePriceList(long groupId)
+		throws PortalException {
+
+		return commercePriceListPersistence.fetchByG_C_T(
+			groupId, true, CommercePriceListConstants.TYPE_PRICE_LIST);
+	}
+
+	@Override
+	public CommercePriceList fetchCatalogBaseCommercePriceListByType(
+			long groupId, String type)
+		throws PortalException {
+
+		return commercePriceListPersistence.fetchByG_C_T(groupId, true, type);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommercePriceList fetchCommerceCatalogBasePriceList(long groupId)
+		throws PortalException {
+
+		return commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
+			groupId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommercePriceList fetchCommerceCatalogBasePriceListByType(
+			long groupId, String type)
+		throws PortalException {
+
+		return commercePriceListLocalService.
+			fetchCatalogBaseCommercePriceListByType(groupId, type);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -516,59 +569,6 @@ public class CommercePriceListLocalServiceImpl
 		cleanPriceListCache(commercePriceList.getCompanyId());
 
 		return commercePriceList;
-	}
-
-	@Override
-	public CommercePriceList fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commercePriceListPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
-	}
-
-	@Override
-	public CommercePriceList fetchCatalogBaseCommercePriceList(long groupId)
-		throws PortalException {
-
-		return commercePriceListPersistence.fetchByG_C_T(
-			groupId, true, CommercePriceListConstants.TYPE_PRICE_LIST);
-	}
-
-	@Override
-	public CommercePriceList fetchCatalogBaseCommercePriceListByType(
-			long groupId, String type)
-		throws PortalException {
-
-		return commercePriceListPersistence.fetchByG_C_T(groupId, true, type);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CommercePriceList fetchCommerceCatalogBasePriceList(long groupId)
-		throws PortalException {
-
-		return commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
-			groupId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CommercePriceList fetchCommerceCatalogBasePriceListByType(
-			long groupId, String type)
-		throws PortalException {
-
-		return commercePriceListLocalService.
-			fetchCatalogBaseCommercePriceListByType(groupId, type);
 	}
 
 	@Override

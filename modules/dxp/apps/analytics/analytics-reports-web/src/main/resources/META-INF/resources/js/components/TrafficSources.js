@@ -31,11 +31,11 @@ const COLORS_MAP = {
 };
 
 const PIE_CHART_SIZES = {
-	height: 80,
-	innerRadius: 25,
+	height: 140,
+	innerRadius: 40,
+	outerRadius: 70,
 	paddingAngle: 1,
-	radius: 40,
-	width: 100,
+	width: 140,
 };
 
 /**
@@ -200,7 +200,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 					<EmptyPieChart
 						height={PIE_CHART_SIZES.height}
 						innerRadius={PIE_CHART_SIZES.innerRadius}
-						radius={PIE_CHART_SIZES.radius}
+						outerRadius={PIE_CHART_SIZES.outerRadius}
 						width={PIE_CHART_SIZES.width}
 					/>
 				)}
@@ -219,7 +219,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 								innerRadius={PIE_CHART_SIZES.innerRadius}
 								isAnimationActive={false}
 								nameKey="name"
-								outerRadius={PIE_CHART_SIZES.radius}
+								outerRadius={PIE_CHART_SIZES.outerRadius}
 								paddingAngle={PIE_CHART_SIZES.paddingAngle}
 							>
 								{trafficSources.map((entry, i) => {

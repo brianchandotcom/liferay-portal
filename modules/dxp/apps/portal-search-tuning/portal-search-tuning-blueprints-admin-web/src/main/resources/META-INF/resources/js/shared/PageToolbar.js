@@ -193,7 +193,10 @@ export default function PageToolbar({
 
 	return (
 		<div className="page-toolbar-root">
-			<ClayToolbar light>
+			<ClayToolbar
+				aria-label={Liferay.Language.get('page-toolbar')}
+				light
+			>
 				<ClayLayout.ContainerFluid>
 					<ClayToolbar.Nav>
 						<ClayToolbar.Item className="text-left" expand>
@@ -303,7 +306,10 @@ export default function PageToolbar({
 			</ClayToolbar>
 
 			{onChangeTab && (
-				<ClayNavigationBar triggerLabel={tabs[tab]}>
+				<ClayNavigationBar
+					aria-label={Liferay.Language.get('navigation')}
+					triggerLabel={tabs[tab]}
+				>
 					{Object.keys(tabs).map((tabKey) => (
 						<ClayNavigationBar.Item
 							active={tab === tabKey}

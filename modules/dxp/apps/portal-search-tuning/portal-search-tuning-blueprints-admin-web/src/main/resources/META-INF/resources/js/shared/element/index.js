@@ -171,6 +171,7 @@ function Element({
 				return (
 					<MultiSelectInput
 						disabled={disabled}
+						label={config.label}
 						name={inputName}
 						setFieldTouched={setFieldTouched}
 						setFieldValue={setFieldValue}
@@ -273,6 +274,11 @@ function Element({
 					</ClayList.ItemField>
 
 					<ClayToggle
+						aria-label={
+							elementTemplateJSON.enabled
+								? Liferay.Language.get('enabled')
+								: Liferay.Language.get('disabled')
+						}
 						onToggle={_handleToggle}
 						toggled={elementTemplateJSON.enabled}
 					/>

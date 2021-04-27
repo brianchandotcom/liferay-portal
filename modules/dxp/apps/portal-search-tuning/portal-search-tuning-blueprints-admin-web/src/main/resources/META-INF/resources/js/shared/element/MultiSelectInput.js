@@ -14,6 +14,7 @@ import React, {useState} from 'react';
 
 function MultiSelectInput({
 	disabled,
+	label,
 	name,
 	setFieldTouched,
 	setFieldValue,
@@ -23,6 +24,7 @@ function MultiSelectInput({
 
 	return (
 		<ClayMultiSelect
+			aria-label={label}
 			disabled={disabled}
 			inputValue={inputValue}
 			items={value}

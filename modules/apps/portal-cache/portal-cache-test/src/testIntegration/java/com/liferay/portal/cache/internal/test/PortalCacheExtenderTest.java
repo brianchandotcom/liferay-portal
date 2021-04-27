@@ -36,7 +36,6 @@ import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 
-import javax.management.InstanceNotFoundException;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
@@ -79,41 +78,6 @@ public class PortalCacheExtenderTest {
 		if (_bundle.getState() != Bundle.UNINSTALLED) {
 			_bundle.uninstall();
 		}
-	}
-
-	@Test
-	public void testAddAndRemoveConfig() throws Exception {
-		_assertCacheConfig(
-			PortalCacheManagerNames.MULTI_VM, 1001, _TEST_CACHE_MULTI, 51L);
-		_assertCacheConfig(
-			PortalCacheManagerNames.SINGLE_VM, 1001, _TEST_CACHE_SINGLE, 51L);
-
-		_bundle.stop();
-
-		_bundle.update(
-			_createBundle(_BUNDLE_SYMBOLIC_NAME, null, _singleVmXML));
-
-		_bundle.start();
-
-		Assert.assertNull(
-			_fetchMBeanObject(
-				PortalCacheManagerNames.MULTI_VM, _TEST_CACHE_MULTI));
-
-		_assertCacheConfig(
-			PortalCacheManagerNames.SINGLE_VM, 1001, _TEST_CACHE_SINGLE, 51L);
-
-		_bundle.stop();
-
-		_bundle.update(_createBundle(_BUNDLE_SYMBOLIC_NAME, _multiVmXML, null));
-
-		_bundle.start();
-
-		Assert.assertNull(
-			_fetchMBeanObject(
-				PortalCacheManagerNames.SINGLE_VM, _TEST_CACHE_SINGLE));
-
-		_assertCacheConfig(
-			PortalCacheManagerNames.MULTI_VM, 1001, _TEST_CACHE_MULTI, 51L);
 	}
 
 	@Test
@@ -204,26 +168,6 @@ public class PortalCacheExtenderTest {
 				unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
 				unsyncByteArrayOutputStream.size());
 		}
-	}
-
-	private Object _fetchMBeanObject(String cacheManagerName, String cacheName)
-		throws Exception {
-
-		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-
-		Object object = null;
-
-		try {
-			object = mBeanServer.getObjectInstance(
-				new ObjectName(
-					StringBundler.concat(
-						"net.sf.ehcache:type=CacheConfiguration,CacheManager=",
-						cacheManagerName, ",name=", cacheName)));
-		}
-		catch (InstanceNotFoundException instanceNotFoundException) {
-		}
-
-		return object;
 	}
 
 	private String _generateXMLContent(

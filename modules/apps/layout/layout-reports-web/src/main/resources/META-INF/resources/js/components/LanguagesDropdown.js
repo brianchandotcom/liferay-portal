@@ -32,6 +32,9 @@ export default function LanguagesDropdown({
 		<ClayDropDown
 			active={active}
 			hasLeftSymbols
+			menuElementAttrs={{
+				className: 'dropdown-menu__languages',
+			}}
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton

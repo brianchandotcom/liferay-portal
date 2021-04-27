@@ -1177,7 +1177,7 @@ definition {
 
 		Select(
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
-			value1 = "Specific Display Page Template");
+			value1 = "Specific");
 
 		Click.javaScriptClick(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
 

@@ -59,6 +59,26 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<entity cache-enabled="true" local-service="true" name="CacheFieldEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="cacheFieldEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+	</entity>
 	<entity cache-enabled="true" local-service="true" name="DataLimitEntry" remote-service="false">
 
 		<!-- PK fields -->

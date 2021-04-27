@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -60,8 +61,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -117,7 +120,8 @@ public class LayoutReportsDataMVCResourceCommand
 				_portal.getPathContext(resourceRequest) + "/assets/"
 			).put(
 				"canonicalURLs",
-				_getCanonicalURLsJSONArray(resourceRequest, layout)
+				_getCanonicalURLsJSONArray(
+					resourceRequest, resourceResponse, layout)
 			).put(
 				"configureGooglePageSpeedURL",
 				_getConfigureGooglePageSpeedURL(resourceRequest)
@@ -158,7 +162,8 @@ public class LayoutReportsDataMVCResourceCommand
 	}
 
 	private JSONArray _getCanonicalURLsJSONArray(
-		PortletRequest portletRequest, Layout layout) {
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		Layout layout) {
 
 		Locale defaultLocale = _getDefaultLocale(layout);
 
@@ -208,6 +213,10 @@ public class LayoutReportsDataMVCResourceCommand
 					}
 				).put(
 					"languageId", LocaleUtil.toW3cLanguageId(locale)
+				).put(
+					"layoutReportsIssuesURL",
+					_getResourceURL(
+						layout.getGroupId(), canonicalURL, portletResponse)
 				).put(
 					"title", _getTitle(portletRequest, layout, locale)
 				).build()
@@ -302,6 +311,21 @@ public class LayoutReportsDataMVCResourceCommand
 
 			return LocaleUtil.getSiteDefault();
 		}
+	}
+
+	private String _getResourceURL(
+		long groupId, String canonicalURL, PortletResponse portletResponse) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(portletResponse);
+
+		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
+
+		resourceURL.setParameter("groupId", String.valueOf(groupId));
+		resourceURL.setParameter("canonicalURL", canonicalURL);
+		resourceURL.setResourceID("/layout_reports/get_layout_reports_issues");
+
+		return resourceURL.toString();
 	}
 
 	private String _getTitle(

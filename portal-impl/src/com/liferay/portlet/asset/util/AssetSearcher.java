@@ -88,6 +88,13 @@ public class AssetSearcher extends BaseSearcher {
 	protected void addSearchAllCategories(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
+		addSearchAllCategories(Field.ASSET_CATEGORY_IDS, queryBooleanFilter);
+	}
+
+	protected void addSearchAllCategories(
+			String fieldName, BooleanFilter queryBooleanFilter)
+		throws Exception {
+
 		long[] allCategoryIds = _assetEntryQuery.getAllCategoryIds();
 
 		if (allCategoryIds.length == 0) {
@@ -98,7 +105,7 @@ public class AssetSearcher extends BaseSearcher {
 			PermissionThreadLocal.getPermissionChecker(), allCategoryIds);
 
 		if (allCategoryIds.length != filteredAllCategoryIds.length) {
-			addImpossibleTerm(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
+			addImpossibleTerm(queryBooleanFilter, fieldName);
 
 			return;
 		}
@@ -125,8 +132,7 @@ public class AssetSearcher extends BaseSearcher {
 				categoryIds.add(allCategoryId);
 			}
 
-			TermsFilter categoryIdTermsFilter = new TermsFilter(
-				Field.ASSET_CATEGORY_IDS);
+			TermsFilter categoryIdTermsFilter = new TermsFilter(fieldName);
 
 			categoryIdTermsFilter.addValues(
 				ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
@@ -196,6 +202,13 @@ public class AssetSearcher extends BaseSearcher {
 	protected void addSearchAnyCategories(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
+		addSearchAllCategories(Field.ASSET_CATEGORY_IDS, queryBooleanFilter);
+	}
+
+	protected void addSearchAnyCategories(
+			String fieldName, BooleanFilter queryBooleanFilter)
+		throws Exception {
+
 		long[] anyCategoryIds = _assetEntryQuery.getAnyCategoryIds();
 
 		if (anyCategoryIds.length == 0) {
@@ -206,13 +219,12 @@ public class AssetSearcher extends BaseSearcher {
 			PermissionThreadLocal.getPermissionChecker(), anyCategoryIds);
 
 		if (filteredAnyCategoryIds.length == 0) {
-			addImpossibleTerm(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
+			addImpossibleTerm(queryBooleanFilter, fieldName);
 
 			return;
 		}
 
-		TermsFilter categoryIdsTermsFilter = new TermsFilter(
-			Field.ASSET_CATEGORY_IDS);
+		TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
 
 		for (long anyCategoryId : filteredAnyCategoryIds) {
 			AssetCategory assetCategory =
@@ -287,10 +299,21 @@ public class AssetSearcher extends BaseSearcher {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		addSearchAllCategories(queryBooleanFilter);
-		addSearchAnyCategories(queryBooleanFilter);
-		addSearchNotAnyCategories(queryBooleanFilter);
-		addSearchNotAllCategories(queryBooleanFilter);
+		addSearchAllCategories(Field.ASSET_CATEGORY_IDS, queryBooleanFilter);
+		addSearchAnyCategories(Field.ASSET_CATEGORY_IDS, queryBooleanFilter);
+		addSearchNotAnyCategories(Field.ASSET_CATEGORY_IDS, queryBooleanFilter);
+		addSearchNotAllCategories(Field.ASSET_CATEGORY_IDS, queryBooleanFilter);
+
+		if (searchContext.isIncludeInternalAssetCategories()) {
+			addSearchAllCategories(
+				Field.ASSET_INTERNAL_CATEGORY_IDS, queryBooleanFilter);
+			addSearchAnyCategories(
+				Field.ASSET_INTERNAL_CATEGORY_IDS, queryBooleanFilter);
+			addSearchNotAnyCategories(
+				Field.ASSET_INTERNAL_CATEGORY_IDS, queryBooleanFilter);
+			addSearchNotAllCategories(
+				Field.ASSET_INTERNAL_CATEGORY_IDS, queryBooleanFilter);
+		}
 	}
 
 	@Override
@@ -344,6 +367,13 @@ public class AssetSearcher extends BaseSearcher {
 	protected void addSearchNotAllCategories(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
+		addSearchNotAllCategories(Field.ASSET_CATEGORY_IDS, queryBooleanFilter);
+	}
+
+	protected void addSearchNotAllCategories(
+			String fieldName, BooleanFilter queryBooleanFilter)
+		throws Exception {
+
 		long[] notAllCategoryIds = _assetEntryQuery.getNotAllCategoryIds();
 
 		if (notAllCategoryIds.length == 0) {
@@ -373,8 +403,7 @@ public class AssetSearcher extends BaseSearcher {
 				categoryIds.add(notAllCategoryId);
 			}
 
-			TermsFilter categoryIdTermsFilter = new TermsFilter(
-				Field.ASSET_CATEGORY_IDS);
+			TermsFilter categoryIdTermsFilter = new TermsFilter(fieldName);
 
 			categoryIdTermsFilter.addValues(
 				ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
@@ -444,14 +473,20 @@ public class AssetSearcher extends BaseSearcher {
 	protected void addSearchNotAnyCategories(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
+		addSearchNotAnyCategories(Field.ASSET_CATEGORY_IDS, queryBooleanFilter);
+	}
+
+	protected void addSearchNotAnyCategories(
+			String fieldName, BooleanFilter queryBooleanFilter)
+		throws Exception {
+
 		long[] notAnyCategoryIds = _assetEntryQuery.getNotAnyCategoryIds();
 
 		if (notAnyCategoryIds.length == 0) {
 			return;
 		}
 
-		TermsFilter categoryIdsTermsFilter = new TermsFilter(
-			Field.ASSET_CATEGORY_IDS);
+		TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
 
 		for (long notAnyCategoryId : notAnyCategoryIds) {
 			AssetCategory assetCategory =

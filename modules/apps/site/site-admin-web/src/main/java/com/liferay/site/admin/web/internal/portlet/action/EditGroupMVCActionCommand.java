@@ -173,11 +173,8 @@ public class EditGroupMVCActionCommand
 			_validateDefaultLocaleGroupName(nameMap, defaultLocale);
 		}
 
-		boolean redirect = false;
-
-		if (!Objects.equals(friendlyURL, liveGroup.getFriendlyURL())) {
-			redirect = true;
-		}
+		boolean redirect = !Objects.equals(
+			friendlyURL, liveGroup.getFriendlyURL());
 
 		liveGroup = _groupService.updateGroup(
 			liveGroupId, parentGroupId, nameMap, descriptionMap, type,

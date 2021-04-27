@@ -28,7 +28,6 @@ export default function nextPage({
 	viewMode,
 }) {
 	return (dispatch) => {
-
 		evaluate(null, {
 			activePage,
 			defaultLanguageId,

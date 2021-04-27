@@ -148,7 +148,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 				groupId: groupId ? groupId : themeDisplay.getScopeGroupId(),
 				nextPage: nextPage ? nextPage : null,
 				portletNamespace,
-				previousPage: previousPage ? previousPage : null
+				previousPage: previousPage ? previousPage : null,
 			}),
 			trigger: fieldName,
 		}),

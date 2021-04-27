@@ -236,7 +236,7 @@ public class DDMFormTemplateContextProcessor {
 	protected void process() {
 		_ddmFormLayout.setNextPage(_jsonObject.getInt("nextPage"));
 		_ddmFormLayout.setPreviousPage(_jsonObject.getInt("previousPage"));
-		
+
 		traversePages(_jsonObject.getJSONArray("pages"));
 	}
 
@@ -584,7 +584,7 @@ public class DDMFormTemplateContextProcessor {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
-			
+
 			ddmFormLayoutPage.setDescription(
 				getLocalizedValue(jsonObject.getString("description")));
 			ddmFormLayoutPage.setTitle(

@@ -21,6 +21,7 @@ import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.graphql.ObjectDefinitionGraphQL;
 import com.liferay.object.internal.application.list.ObjectDefinitionPanelApp;
 import com.liferay.object.internal.graphql.ObjectDefinitionGraphQLImpl;
+import com.liferay.object.internal.jaxrs.resource.ObjectEntryApplication;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.internal.portlet.ObjectDefinitionPortlet;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
@@ -50,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.Portlet;
+
+import javax.ws.rs.core.Application;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -211,7 +215,8 @@ public class ObjectDefinitionLocalServiceImpl
 						objectDefinition, _objectEntryLocalService),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"model.class.name", objectDefinition.getClassName()
-					).build())
+					).build()),
+				_registerObjectEntryApplication(objectDefinition)
 			});
 	}
 
@@ -267,6 +272,29 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		runSQL(sql);
+	}
+
+	private ServiceRegistration<Application> _registerObjectEntryApplication(
+		ObjectDefinition objectDefinition) {
+
+		String contextPath = TextFormatter.formatPlural(
+			StringUtil.toLowerCase(objectDefinition.getName()));
+
+		return _bundleContext.registerService(
+			Application.class,
+			new ObjectEntryApplication(
+				objectDefinition, _objectEntryLocalService,
+				_objectFieldLocalService),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"liferay.jackson", false
+			).put(
+				"osgi.jaxrs.application.base", "/" + contextPath
+			).put(
+				"osgi.jaxrs.extension.select",
+				"(osgi.jaxrs.name=Liferay.Vulcan)"
+			).put(
+				"osgi.jaxrs.name", objectDefinition.getName()
+			).build());
 	}
 
 	private void _validateName(long companyId, String name)

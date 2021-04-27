@@ -45,7 +45,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 					const input = document.createElement('input');
 
-					input.name = `${portletNamespace}rowIds`;
+					input.name = `${portletNamespace}rowIdsRole`;
 					input.value = selectedItems.map((item) => item.value);
 
 					form.appendChild(input);

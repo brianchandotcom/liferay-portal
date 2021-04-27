@@ -31,7 +31,7 @@ export default function EmptyLayoutReports() {
 				alt={Liferay.Language.get(
 					'default-page-audit-image-alt-description'
 				)}
-				className="c-mb-4 c-mt-5"
+				className="c-my-4"
 				src={defaultIllustration}
 				width="120px"
 			/>

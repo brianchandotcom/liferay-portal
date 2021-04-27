@@ -1625,7 +1625,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(
-			key_fieldsetName = "displayPageTemplate",
+			key_fieldsetName = "displayPage",
 			locator1 = "WC#PREVIEW_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");

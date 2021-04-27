@@ -105,7 +105,7 @@ public class MessageBoardMessageResourceImpl
 
 	@Override
 	public void deleteSiteMessageBoardMessageByExternalReferenceCode(
-			String externalReferenceCode, Long siteId)
+			Long siteId, String externalReferenceCode)
 		throws Exception {
 
 		MBMessage mbMessage =
@@ -207,7 +207,7 @@ public class MessageBoardMessageResourceImpl
 	@Override
 	public MessageBoardMessage
 			getSiteMessageBoardMessageByExternalReferenceCode(
-				String externalReferenceCode, Long siteId)
+				Long siteId, String externalReferenceCode)
 		throws Exception {
 
 		MBMessage mbMessage =
@@ -321,7 +321,7 @@ public class MessageBoardMessageResourceImpl
 	@Override
 	public MessageBoardMessage
 			putSiteMessageBoardMessageByExternalReferenceCode(
-				String externalReferenceCode, Long siteId,
+				Long siteId, String externalReferenceCode,
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 

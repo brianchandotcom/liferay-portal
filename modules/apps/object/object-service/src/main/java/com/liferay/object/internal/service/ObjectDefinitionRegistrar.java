@@ -61,13 +61,12 @@ public class ObjectDefinitionRegistrar {
 					_objectDefinitionLocalService::registerObjectDefinition),
 				null);
 
-			Thread objectDefinitionRegistrarThread = new Thread(
-				futureTask,
-				ObjectDefinitionRegistrar.class.getName() + "-Registrar");
+			Thread thread = new Thread(
+				futureTask, "Object Definition Registrar");
 
-			objectDefinitionRegistrarThread.setDaemon(true);
+			thread.setDaemon(true);
 
-			objectDefinitionRegistrarThread.start();
+			thread.start();
 
 			DependencyManagerSyncUtil.registerSyncFuture(futureTask);
 		}

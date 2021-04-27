@@ -487,8 +487,6 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		Pause(locator1 = "1000");
-
 		DataEngine.addRepeatableFieldsGroup(fieldsGroupLabel = "Fields Group 2");
 
 		WebContent.addWithStructureCP(
@@ -574,8 +572,6 @@ definition {
 		NavItem.gotoWebContent();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		Pause(locator1 = "1000");
 
 		DataEngine.addRepeatableFieldsGroup(fieldsGroupLabel = "Fields Group 1");
 

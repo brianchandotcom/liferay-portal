@@ -116,9 +116,12 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 				Serializable attributeValue = expandoBridge.getAttribute(
 					attributeName);
 
-				sb.append(
-					(attributeValue != null) ? CSVUtil.encode(attributeValue) :
-						"");
+				if (attributeValue != null) {
+					sb.append(CSVUtil.encode(attributeValue));
+				}
+				else {
+					sb.append(StringPool.BLANK);
+				}
 			}
 			else if (field.contains("Date")) {
 				Date date = (Date)BeanPropertiesUtil.getObject(user, field);

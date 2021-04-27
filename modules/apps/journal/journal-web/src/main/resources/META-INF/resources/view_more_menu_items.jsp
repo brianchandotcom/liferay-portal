@@ -96,24 +96,3 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-	var Util = Liferay.Util;
-
-	var addMenuItemFm = document.getElementById(
-		'<portlet:namespace />addMenuItemFm'
-	);
-
-	var delegate = delegateModule.default;
-
-	delegate(addMenuItemFm, 'click', '.selector-button', (event) => {
-		Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(journalViewMoreMenuItemsDisplayContext.getEventName()) %>',
-			{
-				ddmStructureKey: event.delegateTarget.getAttribute(
-					'data-ddmStructureKey'
-				),
-			}
-		);
-	});
-</aui:script>

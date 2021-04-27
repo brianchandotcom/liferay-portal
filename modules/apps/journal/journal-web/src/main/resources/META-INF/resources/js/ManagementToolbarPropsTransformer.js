@@ -125,12 +125,14 @@ export default function propsTransformer({
 		onShowMoreButtonClick() {
 			openSelectionModal({
 				onSelect: (selectedItem) => {
-					navigate(
-						addParams(
-							`${portletNamespace}ddmStructureKey=${selectedItem.ddmStructureKey}`,
-							addArticleURL
-						)
-					);
+					if (selectedItem) {
+						navigate(
+							addParams(
+								`${portletNamespace}ddmStructureKey=${selectedItem.ddmstructurekey}`,
+								addArticleURL
+							)
+						);
+					}
 				},
 				selectEventName: `${portletNamespace}selectAddMenuItem`,
 				title: Liferay.Language.get('more'),

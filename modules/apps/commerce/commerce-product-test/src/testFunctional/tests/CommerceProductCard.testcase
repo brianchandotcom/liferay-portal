@@ -92,18 +92,16 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-
 		Click(
 			key_productName = "U-Joint",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD");
 
 		for (var number : list "1,4,5,7,11") {
-                AssertElementPresent(
-                    key_productName = "U-Joint",
-                    key_optionValue = "${number}",
-                    locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+			AssertElementPresent(
+				key_optionValue = "${number}",
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
 		}
-		
 	}
 
 	@description = "COMMERCE-6162. As a buyer, I want to be able to select the quantity of a product by multiple value, if set"

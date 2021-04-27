@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.rest.builder</artifactId>
-	<version>1.0.172</version>
+	<version>1.0.173</version>
 	<goalPrefix>rest-builder</goalPrefix>
 	<mojos>
 		<mojo>

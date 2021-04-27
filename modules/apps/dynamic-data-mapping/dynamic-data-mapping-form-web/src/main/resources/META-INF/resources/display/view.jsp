@@ -359,7 +359,6 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 	<div class="icons-container lfr-meta-actions">
 		<div class="btn-group lfr-icon-actions">
 			<liferay-ui:icon
-				cssClass="btn btn-link"
 				icon="cog"
 				label="<%= true %>"
 				markupView="lexicon"

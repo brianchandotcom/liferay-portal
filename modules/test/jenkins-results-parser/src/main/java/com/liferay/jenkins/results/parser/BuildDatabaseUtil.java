@@ -207,6 +207,14 @@ public class BuildDatabaseUtil {
 
 		sb.append("/");
 		sb.append(build.getJobName());
+
+		if (build instanceof AxisBuild) {
+			AxisBuild axisBuild = (AxisBuild)build;
+
+			sb.append("/");
+			sb.append(axisBuild.getAxisNumber());
+		}
+
 		sb.append("/");
 		sb.append(build.getBuildNumber());
 

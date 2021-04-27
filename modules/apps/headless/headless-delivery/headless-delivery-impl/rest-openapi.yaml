@@ -10386,16 +10386,16 @@ paths:
             operationId: deleteSiteMessageBoardMessageByExternalReferenceCode
             parameters:
                 - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
                   name: siteId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             responses:
                 204:
                     content:
@@ -10411,16 +10411,16 @@ paths:
             operationId: getSiteMessageBoardMessageByExternalReferenceCode
             parameters:
                 - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
                   name: siteId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -10441,16 +10441,16 @@ paths:
             operationId: putSiteMessageBoardMessageByExternalReferenceCode
             parameters:
                 - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
                   name: siteId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

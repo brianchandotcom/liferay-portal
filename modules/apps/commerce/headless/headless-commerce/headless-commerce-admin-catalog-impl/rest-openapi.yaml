@@ -85,6 +85,10 @@ components:
                     description:
                         Base64 enoded file
                     type: string
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 displayDate:
                     example: 2017-07-21
                     format: date
@@ -100,7 +104,6 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
-                    readOnly: true
                     type: integer
                 neverExpire:
                     example: true
@@ -140,6 +143,10 @@ components:
                     description:
                         Base64 encoded file
                     type: string
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 displayDate:
                     example: 2017-07-21
                     format: date
@@ -191,6 +198,10 @@ components:
             type: object
         AttachmentUrl:
             properties:
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 displayDate:
                     example: 2017-07-21
                     format: date

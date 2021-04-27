@@ -52,7 +52,6 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		Keyword keyword1 = testGetKeywordsRankedPage_addKeyword(
 			randomKeyword());
-
 		Keyword keyword2 = testGetKeywordsRankedPage_addKeyword(
 			randomKeyword());
 
@@ -66,7 +65,6 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		assertValid(page);
 
 		keywordResource.deleteKeyword(keyword1.getId());
-
 		keywordResource.deleteKeyword(keyword2.getId());
 	}
 
@@ -74,10 +72,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	public void testGetKeywordsRankedPageWithPagination() throws Exception {
 		Keyword keyword1 = testGetKeywordsRankedPage_addKeyword(
 			randomKeyword());
-
 		Keyword keyword2 = testGetKeywordsRankedPage_addKeyword(
 			randomKeyword());
-
 		Keyword keyword3 = testGetKeywordsRankedPage_addKeyword(
 			randomKeyword());
 

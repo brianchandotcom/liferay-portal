@@ -1,9 +1,10 @@
-@import './miller_columns/DragPreview';
-@import './miller_columns/MillerColumns';
 @import 'atlas-variables';
 
+@import 'miller_columns/DragPreview';
+@import 'miller_columns/MillerColumns';
+
 .portlet-layouts-admin {
-	@import './FriendlyURLHistory';
+	@import 'FriendlyURLHistory';
 
 	.active > .card {
 		box-shadow: 0 0 0 2px $primary-l1;

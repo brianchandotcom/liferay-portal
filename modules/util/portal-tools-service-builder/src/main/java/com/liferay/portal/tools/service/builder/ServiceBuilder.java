@@ -3311,14 +3311,16 @@ public class ServiceBuilder {
 		if (entity.hasPersistence()) {
 			Map<String, Object> context = _getContext();
 
-			context.put("entity", entity);
-			context.put("persistence", Boolean.TRUE);
-			context.put("referenceEntities", _mergeReferenceEntities(entity));
-
 			JavaClass modelImplJavaClass = _getJavaClass(
 				StringBundler.concat(
 					_outputPath, "/model/impl/", entity.getName(),
 					"Impl.java"));
+
+			context.put("cacheFields", _getCacheFields(modelImplJavaClass));
+
+			context.put("entity", entity);
+			context.put("persistence", Boolean.TRUE);
+			context.put("referenceEntities", _mergeReferenceEntities(entity));
 
 			context = _putDeprecatedKeys(context, modelImplJavaClass);
 

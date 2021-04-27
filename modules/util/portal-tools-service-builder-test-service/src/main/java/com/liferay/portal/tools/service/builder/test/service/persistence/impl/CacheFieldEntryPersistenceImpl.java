@@ -608,11 +608,16 @@ public class CacheFieldEntryPersistenceImpl
 	@Override
 	public void cacheResult(List<CacheFieldEntry> cacheFieldEntries) {
 		for (CacheFieldEntry cacheFieldEntry : cacheFieldEntries) {
-			if (entityCache.getResult(
-					CacheFieldEntryImpl.class,
-					cacheFieldEntry.getPrimaryKey()) == null) {
+			CacheFieldEntry cachedCacheFieldEntry =
+				(CacheFieldEntry)entityCache.getResult(
+					CacheFieldEntryImpl.class, cacheFieldEntry.getPrimaryKey());
 
+			if (cachedCacheFieldEntry == null) {
 				cacheResult(cacheFieldEntry);
+			}
+			else {
+				cacheFieldEntry.setNickName(
+					cachedCacheFieldEntry.getNickName());
 			}
 		}
 	}

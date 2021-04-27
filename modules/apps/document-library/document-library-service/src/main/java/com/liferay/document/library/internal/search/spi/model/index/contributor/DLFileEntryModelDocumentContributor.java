@@ -164,7 +164,6 @@ public class DLFileEntryModelDocumentContributor
 				StringUtil.replace(
 					dlFileEntry.getMimeType(), CharPool.FORWARD_SLASH,
 					CharPool.UNDERLINE));
-			document.addKeyword("path", dlFileEntry.getTitle());
 			document.addKeyword("readCount", dlFileEntry.getReadCount());
 			document.addNumber("size", dlFileEntry.getSize());
 

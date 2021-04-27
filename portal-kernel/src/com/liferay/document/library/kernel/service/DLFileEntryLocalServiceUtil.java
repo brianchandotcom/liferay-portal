@@ -68,6 +68,24 @@ public class DLFileEntryLocalServiceUtil {
 			Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
 				ddmFormValuesMap,
 			java.io.File file, InputStream inputStream, long size,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFileEntry(
+			userId, groupId, repositoryId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, fileEntryTypeId, ddmFormValuesMap,
+			file, inputStream, size, expirationDate, reviewDate,
+			serviceContext);
+	}
+
+	public static DLFileEntry addFileEntry(
+			long userId, long groupId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, long fileEntryTypeId,
+			Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+				ddmFormValuesMap,
+			java.io.File file, InputStream inputStream, long size,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 

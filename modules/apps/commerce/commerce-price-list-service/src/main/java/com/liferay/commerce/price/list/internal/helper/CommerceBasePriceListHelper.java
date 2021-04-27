@@ -122,7 +122,7 @@ public class CommerceBasePriceListHelper {
 					commerceCatalog.getGroupId(), type);
 
 		if (catalogBaseCommercePriceList != null) {
-			_commercePriceListLocalService.deleteCommercePriceList(
+			_commercePriceListLocalService.forceDeleteCommercePriceList(
 				catalogBaseCommercePriceList);
 		}
 	}

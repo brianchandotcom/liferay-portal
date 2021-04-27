@@ -352,7 +352,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(20);
 
 		sb.append("<div class=\"");
 
@@ -388,6 +388,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		sb.append("aria-hidden=\"true\" class=\"loading-animation ");
 		sb.append("loading-animation-sm\"></span>");
 
+		jspWriter.write(sb.toString());
+
 		try {
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
@@ -407,9 +409,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			throw new IOException(exception);
 		}
 
-		sb.append("</div></div></div>");
-
-		jspWriter.write(sb.toString());
+		jspWriter.write("</div></div></div>");
 	}
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(

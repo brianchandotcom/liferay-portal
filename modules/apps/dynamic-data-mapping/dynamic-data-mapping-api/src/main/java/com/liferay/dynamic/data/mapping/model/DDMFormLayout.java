@@ -173,6 +173,22 @@ public class DDMFormLayout implements Serializable {
 	public void setPaginationMode(String paginationMode) {
 		_paginationMode = paginationMode;
 	}
+	
+	public void setPreviousPage(Integer previousPage) {
+		_previousPage = previousPage;
+	} 
+	
+	public void setNextPage(Integer nextPage) {
+		_nextPage = nextPage;
+	} 
+	
+	public Integer getNextPage() {
+		return _nextPage;
+	}
+	
+	public Integer getPreviousPage() {
+		return _previousPage;
+	}
 
 	private Set<Locale> _availableLocales = new LinkedHashSet<>();
 	private List<DDMFormField> _ddmFormFields = new ArrayList<>();
@@ -181,5 +197,7 @@ public class DDMFormLayout implements Serializable {
 	private Locale _defaultLocale;
 	private String _definitionSchemaVersion;
 	private String _paginationMode;
+	private Integer _previousPage; 
+	private Integer _nextPage; 
 
 }

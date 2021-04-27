@@ -382,11 +382,6 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
-	public void registerObjectDefinitions() {
-		_objectDefinitionLocalService.registerObjectDefinitions();
-	}
-
-	@Override
 	public void unregisterObjectDefinition(long objectDefinitionId) {
 		_objectDefinitionLocalService.unregisterObjectDefinition(
 			objectDefinitionId);

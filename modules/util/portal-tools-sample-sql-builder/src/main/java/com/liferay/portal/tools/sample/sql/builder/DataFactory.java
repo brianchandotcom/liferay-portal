@@ -4034,9 +4034,15 @@ public class DataFactory {
 	public GroupModel newGuestGroupModel() {
 		_guestGroupId = _counter.get();
 
+		String typeSettings = "";
+
+		if (!BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
+			typeSettings = "searchLayoutCreated=true";
+		}
+
 		return newGroupModel(
 			_guestGroupId, getClassNameId(Group.class), _guestGroupId,
-			GroupConstants.GUEST, true);
+			GroupConstants.GUEST, 0, true, typeSettings);
 	}
 
 	public UserModel newGuestUserModel() {
@@ -6187,12 +6193,20 @@ public class DataFactory {
 		long groupId, long classNameId, long classPK, String name,
 		boolean site) {
 
-		return newGroupModel(groupId, classNameId, classPK, name, 0, site);
+		return newGroupModel(groupId, classNameId, classPK, name, 0, site, "");
 	}
 
 	protected GroupModel newGroupModel(
 		long groupId, long classNameId, long classPK, String name, int type,
 		boolean site) {
+
+		return newGroupModel(
+			groupId, classNameId, classPK, name, type, site, "");
+	}
+
+	protected GroupModel newGroupModel(
+		long groupId, long classNameId, long classPK, String name, int type,
+		boolean site, String typeSettings) {
 
 		GroupModel groupModel = new GroupModelImpl();
 
@@ -6218,6 +6232,7 @@ public class DataFactory {
 		groupModel.setGroupKey(name);
 		groupModel.setName(name);
 		groupModel.setType(type);
+		groupModel.setTypeSettings(typeSettings);
 		groupModel.setManualMembership(true);
 		groupModel.setMembershipRestriction(
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);

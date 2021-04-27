@@ -10363,11 +10363,24 @@ public class DDMStructurePersistenceImpl
 				continue;
 			}
 
-			if (entityCache.getResult(
-					DDMStructureImpl.class, ddmStructure.getPrimaryKey()) ==
-						null) {
+			DDMStructure cachedDDMStructure =
+				(DDMStructure)entityCache.getResult(
+					DDMStructureImpl.class, ddmStructure.getPrimaryKey());
 
+			if (cachedDDMStructure == null) {
 				cacheResult(ddmStructure);
+			}
+			else {
+				DDMStructureModelImpl ddmStructureModelImpl =
+					(DDMStructureModelImpl)ddmStructure;
+				DDMStructureModelImpl cachedDDMStructureModelImpl =
+					(DDMStructureModelImpl)cachedDDMStructure;
+
+				ddmStructureModelImpl.setClassName(
+					cachedDDMStructureModelImpl.getClassName());
+
+				ddmStructureModelImpl.setDDMForm(
+					cachedDDMStructureModelImpl.getDDMForm());
 			}
 		}
 	}

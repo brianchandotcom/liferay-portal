@@ -12196,11 +12196,20 @@ public class DDMTemplatePersistenceImpl
 				continue;
 			}
 
-			if (entityCache.getResult(
-					DDMTemplateImpl.class, ddmTemplate.getPrimaryKey()) ==
-						null) {
+			DDMTemplate cachedDDMTemplate = (DDMTemplate)entityCache.getResult(
+				DDMTemplateImpl.class, ddmTemplate.getPrimaryKey());
 
+			if (cachedDDMTemplate == null) {
 				cacheResult(ddmTemplate);
+			}
+			else {
+				DDMTemplateModelImpl ddmTemplateModelImpl =
+					(DDMTemplateModelImpl)ddmTemplate;
+				DDMTemplateModelImpl cachedDDMTemplateModelImpl =
+					(DDMTemplateModelImpl)cachedDDMTemplate;
+
+				ddmTemplateModelImpl.setResourceClassName(
+					cachedDDMTemplateModelImpl.getResourceClassName());
 			}
 		}
 	}

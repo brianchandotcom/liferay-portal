@@ -616,8 +616,13 @@ public class CacheFieldEntryPersistenceImpl
 				cacheResult(cacheFieldEntry);
 			}
 			else {
-				cacheFieldEntry.setNickName(
-					cachedCacheFieldEntry.getNickName());
+				CacheFieldEntryModelImpl cacheFieldEntryModelImpl =
+					(CacheFieldEntryModelImpl)cacheFieldEntry;
+				CacheFieldEntryModelImpl cachedCacheFieldEntryModelImpl =
+					(CacheFieldEntryModelImpl)cachedCacheFieldEntry;
+
+				cacheFieldEntryModelImpl.setNickName(
+					cachedCacheFieldEntryModelImpl.getNickName());
 			}
 		}
 	}

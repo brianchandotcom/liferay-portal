@@ -2002,11 +2002,20 @@ public class ObjectEntryPersistenceImpl
 	@Override
 	public void cacheResult(List<ObjectEntry> objectEntries) {
 		for (ObjectEntry objectEntry : objectEntries) {
-			if (entityCache.getResult(
-					ObjectEntryImpl.class, objectEntry.getPrimaryKey()) ==
-						null) {
+			ObjectEntry cachedObjectEntry = (ObjectEntry)entityCache.getResult(
+				ObjectEntryImpl.class, objectEntry.getPrimaryKey());
 
+			if (cachedObjectEntry == null) {
 				cacheResult(objectEntry);
+			}
+			else {
+				ObjectEntryModelImpl objectEntryModelImpl =
+					(ObjectEntryModelImpl)objectEntry;
+				ObjectEntryModelImpl cachedObjectEntryModelImpl =
+					(ObjectEntryModelImpl)cachedObjectEntry;
+
+				objectEntryModelImpl.setValues(
+					cachedObjectEntryModelImpl.getValues());
 			}
 		}
 	}

@@ -2929,11 +2929,21 @@ public class DDMFormInstancePersistenceImpl
 				continue;
 			}
 
-			if (entityCache.getResult(
-					DDMFormInstanceImpl.class,
-					ddmFormInstance.getPrimaryKey()) == null) {
+			DDMFormInstance cachedDDMFormInstance =
+				(DDMFormInstance)entityCache.getResult(
+					DDMFormInstanceImpl.class, ddmFormInstance.getPrimaryKey());
 
+			if (cachedDDMFormInstance == null) {
 				cacheResult(ddmFormInstance);
+			}
+			else {
+				DDMFormInstanceModelImpl ddmFormInstanceModelImpl =
+					(DDMFormInstanceModelImpl)ddmFormInstance;
+				DDMFormInstanceModelImpl cachedDDMFormInstanceModelImpl =
+					(DDMFormInstanceModelImpl)cachedDDMFormInstance;
+
+				ddmFormInstanceModelImpl.setDDMFormValues(
+					cachedDDMFormInstanceModelImpl.getDDMFormValues());
 			}
 		}
 	}

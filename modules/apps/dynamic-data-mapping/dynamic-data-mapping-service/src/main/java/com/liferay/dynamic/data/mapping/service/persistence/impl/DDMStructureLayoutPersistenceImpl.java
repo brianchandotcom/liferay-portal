@@ -4378,11 +4378,22 @@ public class DDMStructureLayoutPersistenceImpl
 				continue;
 			}
 
-			if (entityCache.getResult(
+			DDMStructureLayout cachedDDMStructureLayout =
+				(DDMStructureLayout)entityCache.getResult(
 					DDMStructureLayoutImpl.class,
-					ddmStructureLayout.getPrimaryKey()) == null) {
+					ddmStructureLayout.getPrimaryKey());
 
+			if (cachedDDMStructureLayout == null) {
 				cacheResult(ddmStructureLayout);
+			}
+			else {
+				DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl =
+					(DDMStructureLayoutModelImpl)ddmStructureLayout;
+				DDMStructureLayoutModelImpl cachedDDMStructureLayoutModelImpl =
+					(DDMStructureLayoutModelImpl)cachedDDMStructureLayout;
+
+				ddmStructureLayoutModelImpl.setDDMFormLayout(
+					cachedDDMStructureLayoutModelImpl.getDDMFormLayout());
 			}
 		}
 	}

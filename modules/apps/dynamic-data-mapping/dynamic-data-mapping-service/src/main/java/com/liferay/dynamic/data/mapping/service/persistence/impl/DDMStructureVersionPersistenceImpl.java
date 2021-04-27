@@ -1499,11 +1499,23 @@ public class DDMStructureVersionPersistenceImpl
 				continue;
 			}
 
-			if (entityCache.getResult(
+			DDMStructureVersion cachedDDMStructureVersion =
+				(DDMStructureVersion)entityCache.getResult(
 					DDMStructureVersionImpl.class,
-					ddmStructureVersion.getPrimaryKey()) == null) {
+					ddmStructureVersion.getPrimaryKey());
 
+			if (cachedDDMStructureVersion == null) {
 				cacheResult(ddmStructureVersion);
+			}
+			else {
+				DDMStructureVersionModelImpl ddmStructureVersionModelImpl =
+					(DDMStructureVersionModelImpl)ddmStructureVersion;
+				DDMStructureVersionModelImpl
+					cachedDDMStructureVersionModelImpl =
+						(DDMStructureVersionModelImpl)cachedDDMStructureVersion;
+
+				ddmStructureVersionModelImpl.setDDMForm(
+					cachedDDMStructureVersionModelImpl.getDDMForm());
 			}
 		}
 	}

@@ -32676,11 +32676,21 @@ public class JournalArticlePersistenceImpl
 				continue;
 			}
 
-			if (entityCache.getResult(
-					JournalArticleImpl.class, journalArticle.getPrimaryKey()) ==
-						null) {
+			JournalArticle cachedJournalArticle =
+				(JournalArticle)entityCache.getResult(
+					JournalArticleImpl.class, journalArticle.getPrimaryKey());
 
+			if (cachedJournalArticle == null) {
 				cacheResult(journalArticle);
+			}
+			else {
+				JournalArticleModelImpl journalArticleModelImpl =
+					(JournalArticleModelImpl)journalArticle;
+				JournalArticleModelImpl cachedJournalArticleModelImpl =
+					(JournalArticleModelImpl)cachedJournalArticle;
+
+				journalArticleModelImpl.setDocument(
+					cachedJournalArticleModelImpl.getDocument());
 			}
 		}
 	}

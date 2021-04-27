@@ -1904,6 +1904,18 @@ definition {
 				}
 			}
 
+			if (isSet(height)) {
+				Type(
+					key_borderBottom = "Size",
+					key_fieldLabel = "Height",
+					locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
+					value1 = "${height}");
+
+				Click(
+					key_sidebarButton = "Selection",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+			}
+
 			if (isSet(marginBottom)) {
 				Select(
 					key_borderBottom = "Margin",
@@ -2822,6 +2834,13 @@ definition {
 				key_justifyContent = "${justifyContent}",
 				key_position = "${position}",
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_JUSTIFY_CONTENT");
+		}
+
+		if (isSet(height)) {
+			AssertElementPresent(
+				key_height = "${height}",
+				key_position = "${position}",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_HEIGHT");
 		}
 
 		if (isSet(marginBottom)) {

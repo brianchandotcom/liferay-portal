@@ -33,6 +33,12 @@ public class PostgreSQLJDBCUtil {
 	public static byte[] getLargeObject(ResultSet resultSet, String name)
 		throws SQLException {
 
+		long id = resultSet.getLong(name);
+
+		if (id == 0) {
+			return null;
+		}
+
 		Statement statement = resultSet.getStatement();
 
 		Connection connection = statement.getConnection();
@@ -48,8 +54,6 @@ public class PostgreSQLJDBCUtil {
 
 			LargeObjectManager largeObjectManager =
 				pgConnection.getLargeObjectAPI();
-
-			long id = resultSet.getLong(name);
 
 			LargeObject largeObject = largeObjectManager.open(
 				id, LargeObjectManager.READ);

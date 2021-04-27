@@ -148,6 +148,25 @@ definition {
 				value1 = "${resolutionValue}");
 		}
 
+		else if (isSet(selectRole)) {
+			Click(locator1 = "Button#SELECT");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Check(
+				key_tableEntry = "${selectRole}",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		else if (isSet(optionsValue)) {
+			Select(
+				key_criterion = "options",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${optionsValue}");
+		}
+
 		else {
 			Type(
 				locator1 = "Segmentation#PROPERTY_FIELD",

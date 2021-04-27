@@ -343,10 +343,6 @@ public class ObjectDefinitionLocalServiceUtil {
 		getService().registerObjectDefinition(objectDefinition);
 	}
 
-	public static void registerObjectDefinitions() {
-		getService().registerObjectDefinitions();
-	}
-
 	public static void unregisterObjectDefinition(long objectDefinitionId) {
 		getService().unregisterObjectDefinition(objectDefinitionId);
 	}

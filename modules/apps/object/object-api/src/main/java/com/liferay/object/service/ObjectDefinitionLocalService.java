@@ -296,8 +296,6 @@ public interface ObjectDefinitionLocalService
 	@Clusterable
 	public void registerObjectDefinition(ObjectDefinition objectDefinition);
 
-	public void registerObjectDefinitions();
-
 	@Clusterable
 	public void unregisterObjectDefinition(long objectDefinitionId);
 

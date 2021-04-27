@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 
+import {addMappingFields} from '../../../../../app/actions/index';
 import {useToControlsId} from '../../../../../app/components/CollectionItemContext';
 import {
 	useActivationOrigin,
@@ -32,6 +33,7 @@ import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../../../../app/selectors/selectSegmentsExperienceId';
+import CollectionService from '../../../../../app/services/CollectionService';
 import {useDispatch, useSelector} from '../../../../../app/store/index';
 import deleteItem from '../../../../../app/thunks/deleteItem';
 import moveItem from '../../../../../app/thunks/moveItem';
@@ -50,14 +52,75 @@ import {
 	useDragItem,
 	useDropTarget,
 } from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
+import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 
 const HOVER_EXPAND_DELAY = 1000;
+
+const loadCollectionFields = (
+	dispatch,
+	itemType,
+	itemSubtype,
+	mappingFieldsKey
+) => {
+	CollectionService.getCollectionMappingFields({
+		itemSubtype: itemSubtype || '',
+		itemType,
+		onNetworkStatus: () => {},
+	})
+		.then((response) => {
+			dispatch(
+				addMappingFields({
+					fields: response.mappingFields,
+					key: mappingFieldsKey,
+				})
+			);
+		})
+		.catch((error) => {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+		});
+};
 
 export default function StructureTreeNode({node}) {
 	const activationOrigin = useActivationOrigin();
 	const activeItemId = useActiveItemId();
+	const dispatch = useDispatch();
 	const hoveredItemId = useHoveredItemId();
 	const isSelected = node.id === fromControlsId(activeItemId);
+
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const layoutData = useSelector((state) => state.layoutData);
+	const masterLayoutData = useSelector(
+		(state) => state.masterLayout?.masterLayoutData
+	);
+	const mappingFields = useSelector((state) => state.mappingFields);
+
+	useEffect(() => {
+		if (node.type === LAYOUT_DATA_ITEM_TYPES.collection) {
+			const item =
+				layoutData.items[node.id] || masterLayoutData.items[node.id];
+
+			if (!item?.config?.collection) {
+				return;
+			}
+
+			const {classNameId, itemSubtype, itemType} = item.config.collection;
+
+			const key = getMappingFieldsKey(classNameId, itemSubtype);
+
+			if (!mappingFields[key]) {
+				loadCollectionFields(dispatch, itemType, itemSubtype, key);
+			}
+		}
+	}, [
+		layoutData,
+		masterLayoutData,
+		node,
+		dispatch,
+		mappingFields,
+		fragmentEntryLinks,
+	]);
 
 	return (
 		<MemoizedStructureTreeNodeContent

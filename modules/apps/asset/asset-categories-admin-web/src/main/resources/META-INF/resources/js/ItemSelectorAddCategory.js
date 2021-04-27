@@ -12,22 +12,23 @@
  * details.
  */
 
-import {delegate} from 'frontend-js-web';
+import {delegate, navigate} from 'frontend-js-web';
 
 const createButton = ({action, buttonClass, label, type = 'submit'}) => {
+	const wrapper = document.createElement('div');
+
+	wrapper.classList.add('btn-group-item');
+
 	const button = document.createElement('button');
 
-	button.classList.add(
-		'add-category-toolbar-button',
-		'btn',
-		'ml-3',
-		buttonClass
-	);
+	button.classList.add('add-category-toolbar-button', 'btn', buttonClass);
 	button.dataset.action = action;
 	button.textContent = label;
 	button.type = type;
 
-	return button;
+	wrapper.appendChild(button);
+
+	return wrapper;
 };
 
 export default function ({currentURL, namespace, redirect}) {
@@ -35,27 +36,35 @@ export default function ({currentURL, namespace, redirect}) {
 
 	formSheet.classList.add('border-0');
 
-	const parentDocument = Liferay.Util.getOpener().document;
+	const openerWindow = Liferay.Util.getOpener();
 
-	const modalTitle = parentDocument.querySelector('.modal-title');
+	const modalTitle = openerWindow.document.querySelector('.modal-title');
+
+	const initialModalTitle = modalTitle.textContent;
 
 	modalTitle.textContent = `${
 		modalTitle.textContent
 	} - ${Liferay.Language.get('add-new')}`;
 
-	const footer = parentDocument.querySelector(
-		'.modal-footer > .btn-toolbar-content'
+	const initialModalFooterButtons = openerWindow.document.querySelectorAll(
+		'.liferay-modal .modal-footer .btn-group-item'
+	);
+
+	initialModalFooterButtons.forEach((item) => {
+		item.classList.add('hide');
+	});
+
+	const footer = openerWindow.document.querySelector(
+		'.modal-footer .btn-group'
 	);
 
 	const addCategoryButtons = footer.querySelectorAll(
 		'.add-category-toolbar-button'
 	);
 
-	if (addCategoryButtons.length > 0) {
+	if (addCategoryButtons.length) {
 		addCategoryButtons.forEach((button) => {
-			button.classList.remove('hide');
-			button.style.display = 'block';
-			button.hidden = false;
+			button.parentElement.classList.remove('hide');
 		});
 	}
 	else {
@@ -90,14 +99,26 @@ export default function ({currentURL, namespace, redirect}) {
 		(event) => {
 			const delegateTarget = event.delegateTarget;
 
+			modalTitle.textContent = initialModalTitle;
+
+			initialModalFooterButtons.forEach((item) => {
+				item.classList.remove('hide');
+			});
+
+			const hideAddCategoryButtons = () => {
+				footer
+					.querySelectorAll('.add-category-toolbar-button')
+					.forEach((button) =>
+						button.parentElement.classList.add('hide')
+					);
+			};
+
 			const action = delegateTarget.dataset.action;
 
 			if (action === 'cancel') {
-				footer
-					.querySelectorAll('.add-category-toolbar-button')
-					.forEach((button) => button.classList.add('hide'));
+				hideAddCategoryButtons();
 
-				Liferay.Util.navigate(redirect);
+				navigate(redirect);
 			}
 			else if (action === 'saveAndAddNew') {
 				document.getElementById(
@@ -107,6 +128,8 @@ export default function ({currentURL, namespace, redirect}) {
 				submitForm(document.getElementById(`${namespace}fm`));
 			}
 			else if (action === 'save') {
+				hideAddCategoryButtons();
+
 				submitForm(document.getElementById(`${namespace}fm`));
 			}
 		}

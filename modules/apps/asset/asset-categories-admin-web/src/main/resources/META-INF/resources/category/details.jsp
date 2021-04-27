@@ -204,7 +204,7 @@ renderResponse.setTitle(title);
 						"redirect", redirect
 					).build()
 				%>'
-				module="js/DetailsItemSelector"
+				module="js/ItemSelectorAddCategory"
 				servletContext="<%= application %>"
 			/>
 		</c:otherwise>

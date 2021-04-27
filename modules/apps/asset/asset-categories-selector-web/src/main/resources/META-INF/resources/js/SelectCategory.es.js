@@ -17,8 +17,9 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {Treeview} from 'frontend-js-components-web';
+import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 
 function visit(nodes, callback) {
 	nodes.forEach((node) => {
@@ -62,44 +63,6 @@ function SelectCategory({
 
 	const selectedNodesRef = useRef(null);
 
-	const handleAddCategoryClick = useCallback(() => {
-		const dialog = Liferay.Util.getWindow(itemSelectorSaveEvent);
-		const footer = dialog.getToolbar('footer');
-
-		footer.get('boundingBox').one('#addButton').hide();
-
-		footer.get('boundingBox').one('#cancelButton').hide();
-
-		Liferay.Util.navigate(addCategoryURL);
-	}, [addCategoryURL, itemSelectorSaveEvent]);
-
-	useEffect(() => {
-		const dialog = Liferay.Util.getWindow(itemSelectorSaveEvent);
-		const footer = dialog.getToolbar('footer');
-
-		if (!dialog.get('initialTitle')) {
-			dialog.set(
-				'initialTitle',
-				dialog.headerNode.one('.modal-title').text()
-			);
-		}
-
-		footer.get('boundingBox').all('.add-category-toolbar-button').hide();
-
-		footer.get('boundingBox').one('#addButton').show();
-
-		footer.get('boundingBox').one('#cancelButton').show();
-
-		if (
-			dialog.get('initialTitle') !==
-			dialog.headerNode.one('.modal-title').text()
-		) {
-			dialog.headerNode
-				.one('.modal-title')
-				.text(dialog.get('initialTitle'));
-		}
-	}, [itemSelectorSaveEvent]);
-
 	const handleSelectionChange = (selectedNodes) => {
 		const data = {};
 
@@ -131,7 +94,9 @@ function SelectCategory({
 
 		selectedNodesRef.current = data;
 
-		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {data});
+		const openerWindow = Liferay.Util.getOpener();
+
+		openerWindow.Liferay.fire(itemSelectorSaveEvent, {data});
 	};
 
 	const initialSelectedNodeIds = useMemo(() => {
@@ -183,7 +148,9 @@ function SelectCategory({
 						<ClayButton
 							className="btn-monospaced ml-3 nav-btn nav-btn-monospaced"
 							displayType="primary"
-							onClick={handleAddCategoryClick}
+							onClick={() => {
+								navigate(addCategoryURL);
+							}}
 						>
 							<ClayIcon symbol="plus" />
 						</ClayButton>

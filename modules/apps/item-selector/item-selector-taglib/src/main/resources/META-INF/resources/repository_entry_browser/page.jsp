@@ -20,6 +20,7 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_repository_entry_browse_page") + StringPool.UNDERLINE;
 
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:displayStyle"));
+PortletURL editImageURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:editImageURL");
 String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:emptyResultsMessage"));
 ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:existingFileEntryReturnType");
 List<String> extensions = (List)request.getAttribute("liferay-item-selector:repository-entry-browser:extensions");
@@ -596,6 +597,10 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 <aui:script require='<%= npmResolvedPackageName + "/repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es as ItemSelectorRepositoryEntryBrowser" %>'>
 	var itemSelector = new ItemSelectorRepositoryEntryBrowser.default({
 		closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
+
+		<c:if test="<%= editImageURL != null %>">
+			editImageURL: '<%= editImageURL.toString() %>',
+		</c:if>
 
 		maxFileSize: '<%= maxFileSize %>',
 

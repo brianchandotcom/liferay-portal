@@ -387,7 +387,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 		sb.append(iconTag.doTagAsString(pageContext));
 
-		sb.append("</div></div></div><div class=\"p-3 sidebar-body\"><span ");
+		sb.append("</div></div></div><div class=\"sidebar-body\"><span ");
 		sb.append("aria-hidden=\"true\" class=\"loading-animation ");
 		sb.append("loading-animation-sm\"></span>");
 

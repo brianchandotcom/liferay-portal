@@ -53,7 +53,6 @@ public class LayoutTypeControllerTracker {
 			new HashMap<>();
 
 		for (String type : _serviceTrackerMap.keySet()) {
-
 			layoutTypeControllers.put(
 				type, _serviceTrackerMap.getService(type));
 		}
@@ -82,6 +81,8 @@ public class LayoutTypeControllerTracker {
 				LayoutTypeController.class, new LayoutTypeControllerImpl(type),
 				HashMapBuilder.<String, Object>put(
 					"layout.type", type
+				).put(
+					"service.ranking", Integer.MIN_VALUE
 				).build());
 		}
 

@@ -919,7 +919,7 @@ definition {
 				webContentContent = "Webcontent Content",
 				webContentTitle = "Webcontent Title");
 
-			Panel.expandPanel(panel = "Display Page Template");
+			Panel.expandPanel(panel = "Display Page");
 
 			Select(
 				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",

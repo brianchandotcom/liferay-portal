@@ -1173,7 +1173,7 @@ definition {
 	}
 
 	macro editDisplayPage {
-		Panel.expandPanel(panel = "Display Page Template");
+		Panel.expandPanel(panel = "Display Page");
 
 		Select(
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
@@ -1620,7 +1620,7 @@ definition {
 	}
 
 	macro previewDisplayPageTemplate {
-		Panel.expandPanel(panel = "Display Page Template");
+		Panel.expandPanel(panel = "Display Page");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -2337,7 +2337,7 @@ definition {
 	}
 
 	macro viewSelectedDisplayPageTemplateCP {
-		Panel.expandPanel(panel = "Display Page Template");
+		Panel.expandPanel(panel = "Display Page");
 
 		AssertSelectedLabel(
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",

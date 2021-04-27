@@ -69,8 +69,9 @@ const infoItem = {
 
 const emptyCollectionConfig = {
 	collection: {
-		itemSubtype: '',
-		itemType: '',
+		classNameId: 'collectionClassNameId',
+		itemSubtype: 'collectionItemSubtype',
+		itemType: 'collectionItemType',
 	},
 };
 
@@ -345,7 +346,15 @@ describe('MappingSelector', () => {
 		);
 
 		await act(async () => {
-			renderMappingSelector({});
+			renderMappingSelector({
+				mappingFields: {
+					'collectionClassNameId-collectionItemSubtype': [
+						{
+							fields: collectionFields,
+						},
+					],
+				},
+			});
 		});
 
 		expect(queryByText(document.body, 'source')).not.toBeInTheDocument();

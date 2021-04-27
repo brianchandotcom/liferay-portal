@@ -25,10 +25,12 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentBase64;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentUrl;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.AttachmentDTOConverter;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.AttachmentUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -38,8 +40,11 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.upload.UniqueFileNameProvider;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -350,15 +355,23 @@ public class AttachmentResourceImpl
 			CPDefinition cpDefinition, int type, Attachment attachment)
 		throws Exception {
 
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			cpDefinition.getGroupId());
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			_getExpandoBridgeAttributes(attachment);
+
+		if (expandoBridgeAttributes != null) {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 				cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 				_uniqueFileNameProvider, attachment,
 				_classNameLocalService.getClassNameId(
 					cpDefinition.getModelClassName()),
-				cpDefinition.getCPDefinitionId(), type,
-				_serviceContextHelper.getServiceContext(
-					cpDefinition.getGroupId()));
+				cpDefinition.getCPDefinitionId(), type, serviceContext);
 
 		return _toAttachment(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
@@ -369,15 +382,23 @@ public class AttachmentResourceImpl
 			AttachmentBase64 attachmentBase64)
 		throws Exception {
 
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			cpDefinition.getGroupId());
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			_getExpandoBridgeAttributes(attachmentBase64);
+
+		if (expandoBridgeAttributes != null) {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 				_cpAttachmentFileEntryService, _uniqueFileNameProvider,
 				attachmentBase64,
 				_classNameLocalService.getClassNameId(
 					cpDefinition.getModelClassName()),
-				cpDefinition.getCPDefinitionId(), type,
-				_serviceContextHelper.getServiceContext(
-					cpDefinition.getGroupId()));
+				cpDefinition.getCPDefinitionId(), type, serviceContext);
 
 		return _toAttachment(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
@@ -387,15 +408,23 @@ public class AttachmentResourceImpl
 			CPDefinition cpDefinition, int type, AttachmentUrl attachmentUrl)
 		throws Exception {
 
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			cpDefinition.getGroupId());
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			_getExpandoBridgeAttributes(attachmentUrl);
+
+		if (expandoBridgeAttributes != null) {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 				_cpAttachmentFileEntryService, _uniqueFileNameProvider,
 				attachmentUrl,
 				_classNameLocalService.getClassNameId(
 					cpDefinition.getModelClassName()),
-				cpDefinition.getCPDefinitionId(), type,
-				_serviceContextHelper.getServiceContext(
-					cpDefinition.getGroupId()));
+				cpDefinition.getCPDefinitionId(), type, serviceContext);
 
 		return _toAttachment(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
@@ -476,6 +505,33 @@ public class AttachmentResourceImpl
 
 		return Page.of(
 			_toAttachments(cpAttachmentFileEntries), pagination, totalItems);
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		Attachment attachment) {
+
+		return CustomFieldsUtil.toMap(
+			CPAttachmentFileEntry.class.getName(),
+			contextCompany.getCompanyId(), attachment.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		AttachmentBase64 attachmentBase64) {
+
+		return CustomFieldsUtil.toMap(
+			CPAttachmentFileEntry.class.getName(),
+			contextCompany.getCompanyId(), attachmentBase64.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		AttachmentUrl attachmentUrl) {
+
+		return CustomFieldsUtil.toMap(
+			CPAttachmentFileEntry.class.getName(),
+			contextCompany.getCompanyId(), attachmentUrl.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Attachment _toAttachment(Long cpAttachmentFileEntryId)

@@ -21,14 +21,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.store.test.util.BaseStoreTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Dictionary;
 
 import org.junit.AfterClass;
 import org.junit.Assume;
@@ -71,14 +69,17 @@ public class AzureStoreTest extends BaseStoreTestCase {
 				"AzureStoreConfiguration",
 			StringPool.QUESTION);
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("connectionString", "");
-		properties.put("containerName", "");
-		properties.put("encryptionScope", "");
-		properties.put("httpLoggingEnabled", "false");
-
-		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
+		ConfigurationTestUtil.saveConfiguration(
+			_configuration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"connectionString", ""
+			).put(
+				"containerName", ""
+			).put(
+				"encryptionScope", ""
+			).put(
+				"httpLoggingEnabled", "false"
+			).build());
 	}
 
 	@AfterClass

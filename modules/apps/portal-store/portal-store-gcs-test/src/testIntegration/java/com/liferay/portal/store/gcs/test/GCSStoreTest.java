@@ -28,8 +28,6 @@ import com.liferay.portal.store.test.util.BaseStoreTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Dictionary;
-
 import org.junit.AfterClass;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -69,21 +67,31 @@ public class GCSStoreTest extends BaseStoreTestCase {
 			"com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
 			StringPool.QUESTION);
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("aes256Key", "");
-		properties.put("bucketName", "test");
-		properties.put("initialRPCTimeout", "120000");
-		properties.put("initialRetryDelay", "400");
-		properties.put("maxRPCTimeout", "600000");
-		properties.put("maxRetryAttempts", "5");
-		properties.put("maxRetryDelay", "10000");
-		properties.put("retryDelayMultiplier", "1.5");
-		properties.put("retryJitter", "false");
-		properties.put("rpcTimeoutMultiplier", "1.0");
-		properties.put("serviceAccountKey", "");
-
-		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
+		ConfigurationTestUtil.saveConfiguration(
+			_configuration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"aes256Key", ""
+			).put(
+				"bucketName", "test"
+			).put(
+				"initialRPCTimeout", "120000"
+			).put(
+				"initialRetryDelay", "400"
+			).put(
+				"maxRPCTimeout", "600000"
+			).put(
+				"maxRetryAttempts", "5"
+			).put(
+				"maxRetryDelay", "10000"
+			).put(
+				"retryDelayMultiplier", "1.5"
+			).put(
+				"retryJitter", "false"
+			).put(
+				"rpcTimeoutMultiplier", "1.0"
+			).put(
+				"serviceAccountKey", ""
+			).build());
 	}
 
 	@AfterClass

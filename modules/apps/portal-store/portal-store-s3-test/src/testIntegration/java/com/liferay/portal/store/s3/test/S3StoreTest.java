@@ -21,14 +21,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.store.test.util.BaseStoreTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Dictionary;
 
 import org.junit.AfterClass;
 import org.junit.Assume;
@@ -70,18 +68,25 @@ public class S3StoreTest extends BaseStoreTestCase {
 			"com.liferay.portal.store.s3.configuration.S3StoreConfiguration",
 			StringPool.QUESTION);
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("accessKey", "");
-		properties.put("bucketName", "test");
-		properties.put("httpClientMaxConnections", "50");
-		properties.put("s3Region", "us-east-1");
-		properties.put("s3StorageClass", "STANDARD");
-		properties.put("secretKey", "");
-		properties.put("tempDirCleanUpExpunge", "7");
-		properties.put("tempDirCleanUpFrequency", "100");
-
-		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
+		ConfigurationTestUtil.saveConfiguration(
+			_configuration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"accessKey", ""
+			).put(
+				"bucketName", "test"
+			).put(
+				"httpClientMaxConnections", "50"
+			).put(
+				"s3Region", "us-east-1"
+			).put(
+				"s3StorageClass", "STANDARD"
+			).put(
+				"secretKey", ""
+			).put(
+				"tempDirCleanUpExpunge", "7"
+			).put(
+				"tempDirCleanUpFrequency", "100"
+			).build());
 	}
 
 	@AfterClass

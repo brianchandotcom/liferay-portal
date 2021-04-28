@@ -53,8 +53,8 @@ public class GetPageContentMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			ContentUtil.getPageContentsJSONArray(
-				themeDisplay.getPlid(),
-				_portal.getHttpServletRequest(resourceRequest)));
+				_portal.getHttpServletRequest(resourceRequest),
+				themeDisplay.getPlid()));
 	}
 
 	@Reference

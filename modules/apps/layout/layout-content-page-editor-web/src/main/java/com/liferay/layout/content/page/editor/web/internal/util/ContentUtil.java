@@ -113,12 +113,12 @@ public class ContentUtil {
 	}
 
 	public static JSONArray getPageContentsJSONArray(
-			long plid, HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, long plid)
 		throws PortalException {
 
 		return JSONUtil.concat(
 			_getLayoutClassedModelPageContentsJSONArray(
-				plid, httpServletRequest),
+				httpServletRequest, plid),
 			AssetListEntryUsagesUtil.getPageContentsJSONArray(
 				httpServletRequest, plid));
 	}
@@ -357,7 +357,7 @@ public class ContentUtil {
 	}
 
 	private static JSONArray _getLayoutClassedModelPageContentsJSONArray(
-			long plid, HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, long plid)
 		throws PortalException {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();

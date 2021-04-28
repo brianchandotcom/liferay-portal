@@ -53,7 +53,7 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	</div>
 </div>
 
-<div class="row">
+<div class="form-group row">
 	<div class="col-md-6">
 
 		<%
@@ -105,7 +105,11 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 <script>
 	function <portlet:namespace />hideUnselectedClickToChatProviderLearnMessages() {
-		var clickToChatProviderIdOptions = clickToChatChatProviderId.querySelectorAll(
+		var clickToChatChatProviderIdElement = document.getElementById(
+			'<portlet:namespace />clickToChatChatProviderId'
+		);
+
+		var clickToChatProviderIdOptions = clickToChatChatProviderIdElement.querySelectorAll(
 			'option'
 		);
 
@@ -118,19 +122,35 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	}
 
 	function <portlet:namespace />onChangeClickToChatEnabled() {
-		Liferay.Util.toggleDisabled(
-			clickToChatChatProviderAccountId,
-			!clickToChatEnabled.checked
+		var clickToChatEnabledElement = document.getElementById(
+			'<portlet:namespace />clickToChatEnabled'
+		);
+
+		var clickToChatChatProviderAccountIdElement = document.getElementById(
+			'<portlet:namespace />clickToChatChatProviderAccountId'
+		);
+
+		var clickToChatChatProviderIdElement = document.getElementById(
+			'<portlet:namespace />clickToChatChatProviderId'
+		);
+
+		var clickToChatGuestUsersAllowedElement = document.getElementById(
+			'<portlet:namespace />clickToChatGuestUsersAllowed'
 		);
 
 		Liferay.Util.toggleDisabled(
-			clickToChatChatProviderId,
-			!clickToChatEnabled.checked
+			clickToChatChatProviderAccountIdElement,
+			!clickToChatEnabledElement.checked
 		);
 
 		Liferay.Util.toggleDisabled(
-			clickToChatGuestUsersAllowed,
-			!clickToChatEnabled.checked
+			clickToChatChatProviderIdElement,
+			!clickToChatEnabledElement.checked
+		);
+
+		Liferay.Util.toggleDisabled(
+			clickToChatGuestUsersAllowedElement,
+			!clickToChatEnabledElement.checked
 		);
 	}
 
@@ -141,6 +161,33 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 			event.target.value,
 			true
 		);
+	}
+
+	function <portlet:namespace />toggleClickToChatProviderFields() {
+		var clickToChatEnabledElement = document.getElementById(
+			'<portlet:namespace />clickToChatEnabled'
+		);
+
+		var clickToChatChatProviderAccountIdElement = document.getElementById(
+			'<portlet:namespace />clickToChatChatProviderAccountId'
+		);
+
+		var clickToChatChatProviderIdElement = document.getElementById(
+			'<portlet:namespace />clickToChatChatProviderId'
+		);
+
+		var clickToChatGuestUsersAllowedElement = document.getElementById(
+			'<portlet:namespace />clickToChatGuestUsersAllowed'
+		);
+
+		if (<%= disabled %> || !clickToChatEnabledElement.checked) {
+			Liferay.Util.toggleDisabled(
+				clickToChatChatProviderAccountIdElement,
+				true
+			);
+			Liferay.Util.toggleDisabled(clickToChatChatProviderIdElement, true);
+			Liferay.Util.toggleDisabled(clickToChatGuestUsersAllowedElement, true);
+		}
 	}
 
 	function <portlet:namespace />setVisibleClickToChatProviderLearnMessage(
@@ -161,35 +208,10 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 		}
 	}
 
-	var clickToChatChatProviderAccountId = document.getElementById(
-		'<portlet:namespace />clickToChatChatProviderAccountId'
-	);
-
-	var clickToChatChatProviderId = document.getElementById(
-		'<portlet:namespace />clickToChatChatProviderId'
-	);
-
-	var clickToChatEnabled = document.getElementById(
-		'<portlet:namespace />clickToChatEnabled'
-	);
-
-	var clickToChatGuestUsersAllowed = document.getElementById(
-		'<portlet:namespace />clickToChatGuestUsersAllowed'
-	);
-
-	if (<%= disabled %> || !clickToChatEnabled.checked) {
-		Liferay.Util.toggleDisabled(clickToChatChatProviderAccountId, true);
-		Liferay.Util.toggleDisabled(clickToChatChatProviderId, true);
-		Liferay.Util.toggleDisabled(clickToChatGuestUsersAllowed, true);
-	}
+	<portlet:namespace />toggleClickToChatProviderFields();
 
 	<portlet:namespace />setVisibleClickToChatProviderLearnMessage(
 		'<%= clickToChatChatProviderId %>',
 		true
 	);
 </script>
-
-No var outside function
-Repeat is OK
-Call the var *Element
-Everything inside function

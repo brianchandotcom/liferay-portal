@@ -13,15 +13,10 @@ import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
 import className from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 export default function Hint({message, position = 'top', secondary, title}) {
-	const iconRef = useRef();
 	const [showPopover, setShowPopover] = useState(false);
-
-	const hintClasses = className('p-1', 'small', {
-		'text-secondary': secondary,
-	});
 
 	return (
 		<ClayPopover
@@ -31,10 +26,11 @@ export default function Hint({message, position = 'top', secondary, title}) {
 			show={showPopover}
 			trigger={
 				<span
-					className={hintClasses}
+					className={className('p-1 small', {
+						'text-secondary': secondary,
+					})}
 					onMouseEnter={() => setShowPopover(true)}
 					onMouseLeave={() => setShowPopover(false)}
-					ref={iconRef}
 				>
 					<ClayIcon small="true" symbol="question-circle" />
 				</span>

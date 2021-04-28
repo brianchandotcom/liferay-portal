@@ -62,11 +62,11 @@ public class AssetListEntryUsagesUtil {
 			HttpServletRequest httpServletRequest, long plid)
 		throws PortalException {
 
+		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
+
 		List<AssetListEntryUsage> assetListEntryUsages =
 			AssetListEntryUsageLocalServiceUtil.getAssetEntryListUsagesByPlid(
 				plid);
-
-		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		Set<String> uniqueAssetListEntryUsagesKeys = new HashSet<>();
 

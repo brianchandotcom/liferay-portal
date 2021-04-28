@@ -136,6 +136,11 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
+
+							<%
+							row.setCssClass("card-page-item card-page-item-directory entry " + row.getCssClass());
+							%>
+
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
 									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest) %>"

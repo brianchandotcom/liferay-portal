@@ -18,6 +18,11 @@
 		"react": "16.12.0",
 		"recharts": "1.8.5"
 	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.js"
+		]
+	},
 	"name": "layout-reports-web",
 	"private": true,
 	"scripts": {

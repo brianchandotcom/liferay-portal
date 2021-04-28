@@ -320,7 +320,7 @@ public class DLFileEntryServiceTest {
 			_group.getGroupId(), folderId, sourceFileName, null, fileEntryTitle,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, new ByteArrayInputStream(_CONTENT.getBytes()), 0,
+			null, new ByteArrayInputStream(_CONTENT.getBytes()), 0, null, null,
 			serviceContext);
 	}
 

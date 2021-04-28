@@ -639,7 +639,7 @@ public class AMImageEntryLocalServiceTest {
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT,
 			Collections.emptyMap(), null, new UnsyncByteArrayInputStream(bytes),
-			bytes.length, serviceContext);
+			bytes.length, null, null, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

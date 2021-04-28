@@ -116,7 +116,7 @@ public class LiferayLocalRepository
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
 			userId, getGroupId(), getRepositoryId(), toFolderId(folderId),
 			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, ddmFormValuesMap, file, null, size,
+			fileEntryTypeId, ddmFormValuesMap, file, null, size, null, null,
 			serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
@@ -139,8 +139,8 @@ public class LiferayLocalRepository
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
 			userId, getGroupId(), getRepositoryId(), toFolderId(folderId),
 			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, ddmFormValuesMap, null, inputStream, size,
-			serviceContext);
+			fileEntryTypeId, ddmFormValuesMap, null, inputStream, size, null,
+			null, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

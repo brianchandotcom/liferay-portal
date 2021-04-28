@@ -149,7 +149,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			mappingFieldsJSONObject.put(
 				key,
 				MappingContentUtil.getMappingFieldsJSONArray(
-					StringPool.BLANK,
 					String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
 					themeDisplay.getScopeGroupId(), infoItemServiceTracker,
 					layoutPageTemplateEntry.getClassName(),

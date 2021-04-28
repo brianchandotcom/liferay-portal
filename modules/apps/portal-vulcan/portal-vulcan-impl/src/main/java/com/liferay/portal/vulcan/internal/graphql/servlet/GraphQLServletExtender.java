@@ -30,6 +30,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
@@ -576,7 +577,24 @@ public class GraphQLServletExtender {
 		_graphQLObjectServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, GraphQLObjectDefinition.class,
-				"model.class.name");
+				"model.class.name",
+				new ServiceTrackerMapListener<String, GraphQLObjectDefinition, GraphQLObjectDefinition>() {
+					@Override
+					public void keyEmitted(
+						ServiceTrackerMap<String, GraphQLObjectDefinition> serviceTrackerMap,
+						String key, GraphQLObjectDefinition service,
+						GraphQLObjectDefinition content) {
+						_servlet = null;
+					}
+
+					@Override
+					public void keyRemoved(
+						ServiceTrackerMap<String, GraphQLObjectDefinition> serviceTrackerMap,
+						String key, GraphQLObjectDefinition service,
+						GraphQLObjectDefinition content) {
+						_servlet = null;
+					}
+				});
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 

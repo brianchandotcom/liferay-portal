@@ -2,6 +2,7 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="CamelCaseNameCheck" files="portal-tools-service-builder-test-service/src/main/java/com/liferay/portal/tools/service/builder/test/model/impl/CacheFieldEntryImpl\.java" />
 		<suppress checks="VariableNameCheck" files="portal-tools-bundle-support/src/main/java/com/liferay/portal/tools/bundle/support/maven/CreateTokenMojo\.java" />
 	</checkstyle>
 	<source-check>

@@ -19,20 +19,23 @@ import EmptyLayoutReports from '../../../src/main/resources/META-INF/resources/j
 
 import '@testing-library/jest-dom/extend-expect';
 
-const testProps = {
-	assetsPath: 'assetsPath',
-	configurePageSpeedURL: null,
-};
+import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 describe('EmptyLayoutReports', () => {
 	afterEach(cleanup);
 
 	it('renders empty view with information', () => {
 		const {getByText} = render(
-			<EmptyLayoutReports
-				assetsPath={testProps.assetsPath}
-				configurePageSpeedURL={testProps.configurePageSpeedURL}
-			/>
+			<StoreContextProvider
+				value={{
+					data: {
+						assetsPath: 'assetsPath',
+						configureGooglePageSpeedURL: null,
+					},
+				}}
+			>
+				<EmptyLayoutReports />
+			</StoreContextProvider>
 		);
 
 		expect(
@@ -49,10 +52,16 @@ describe('EmptyLayoutReports', () => {
 
 	it('renders empty view with information and button', () => {
 		const {getByText} = render(
-			<EmptyLayoutReports
-				assetsPath={testProps.assetsPath}
-				configureGooglePageSpeedURL="validURL"
-			/>
+			<StoreContextProvider
+				value={{
+					data: {
+						assetsPath: 'assetsPath',
+						configureGooglePageSpeedURL: 'validURL',
+					},
+				}}
+			>
+				<EmptyLayoutReports />
+			</StoreContextProvider>
 		);
 
 		expect(

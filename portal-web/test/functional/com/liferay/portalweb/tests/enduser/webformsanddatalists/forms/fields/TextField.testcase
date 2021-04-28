@@ -1,0 +1,233 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a Text Field can be Autocompleted from a Data Provider"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeAutocompletedUsingADataProvider {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131350 CanBeAutocompletedUsingADataProvider pending implementation
+
+	}
+
+	@description = "Verify that a Text Field can be Autocompleted from a list of options"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeAutocompletedUsingAList {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131349 CanBeAutocompletedUsingAList pending implementation
+	}
+
+	@description = "Verify that a Text Field can be created"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeCreated {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131330 CanBeCreated pending implementation
+	}
+
+	@description = "Verify that a Text Field can be deleted"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeDeleted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131332 CanBeDeleted pending implementation
+	}
+
+	@description = "Verify that a Text Field can be duplicated"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeDuplicated {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131333 CanBeDuplicated pending implementation
+	}
+
+	@description = "Verify that a Text Field can be edited"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131331 CanBeEdited pending implementation
+	}
+
+	@description = "Verify that a Form can be submitted with the Text Field"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeSubmitted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131340 CanBeSubmitted pending implementation
+	}
+
+	@description = "Verify that a regular expression can be used to validate a Text Field"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeValidatedUsingARegularExpression {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131343 CanBeValidatedUsingARegularExpression pending implementation
+	}
+
+	@description = "Verify that the "Contains" option can be used to validate a Text Field"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeValidatedUsingTheContainsOption {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131344 CanBeValidatedUsingTheContainsOption pending implementation
+	}
+
+	@description = "Verify that the "Does Not Contain" option can be used to validate a Text Field"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeValidatedUsingTheDoesNotContainOption {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131345 CanBeValidatedUsingTheDoesNotContainOption pending implementation
+	}
+
+	@description = "Verify that the "Does Not Match" option can be used to validate a Text Field"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeValidatedUsingTheDoesNotMatchOption {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131348 CanBeValidatedUsingTheDoesNotMatchOption pending implementation
+	}
+
+	@description = "Verify that the "Is Not Email" option can be used to validate a Text Field"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeValidatedUsingTheIsNotEmailOption {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131347 CanBeValidatedUsingTheIsNotEmailOption pending implementation
+	}
+
+	@description = "Verify that the "Is Not URL" option can be used to validate a Text Field"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeValidatedUsingTheIsNotURLOption {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131346 CanBeValidatedUsingTheIsNotURLOption pending implementation
+	}
+
+	@description = "Verify that changes to a Field can be canceled"
+	@ignore = "true"
+	@priority = "5"
+	test ChangesCanBeCanceled {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131335 ChangesCanBeCanceled pending implementation
+	}
+
+	@description = "Verify that a Help Text can be added to a Text Field"
+	@ignore = "true"
+	@priority = "5"
+	test HelpTextCanBeAdded {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131338 HelpTextCanBeAdded pending implementation
+	}
+
+	@description = "Verify that the Field Label can be edited"
+	@ignore = "true"
+	@priority = "5"
+	test LabelCanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131336 LabelCanBeEdited pending implementation
+	}
+
+	@description = "Veriy that the Field Label can be hidden"
+	@ignore = "true"
+	@priority = "5"
+	test LabelCanBeHidden {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131337 LabelCanBeHidden pending implementation
+	}
+
+	@description = "Verify that Placeholder Text can be set"
+	@ignore = "true"
+	@priority = "5"
+	test PlaceholderTextCanBeAdded {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131342 PlaceholderTextCanBeAdded pending implementation
+	}
+
+	@description = "Verify that a Predefined Value can be set"
+	@ignore = "true"
+	@priority = "5"
+	test PredefinedValueCanBeAdded {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131341 PredefinedValueCanBeAdded pending implementation
+	}
+
+	@description = "Verify that the Field Reference can be Edited"
+	@ignore = "true"
+	@priority = "5"
+	test ReferenceCanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131339 ReferenceCanBeEdited pending implementation
+	}
+
+	@description = "Verify that the Field Type can be changed"
+	@ignore = "true"
+	@priority = "5"
+	test TypeCanBeChanged {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131334 TypeCanBeChanged pending implementation
+	}
+
+	@description = "Verify that Validation options are reset after changing the Field Type from Text Field to Numeric Field and vice versa"
+	@ignore = "true"
+	@priority = "4"
+	test ValidationIsResetAfterChangingFieldType {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131352 ValidationIsResetAfterChangingFieldType pending implementation
+	}
+
+}

@@ -1,0 +1,224 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a Select From List Field can be created"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeCreated {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131357 CanBeCreated pending implementation
+
+	}
+
+	@description = "Verify that a Select From List Field can be deleted"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeDeleted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131359 CanBeDeleted pending implementation
+	}
+
+	@description = "Verify that a Select From List Field can be duplicated"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeDuplicated {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131361 CanBeDuplicated pending implementation
+	}
+
+	@description = "Verify that a Select From List Field can be edited"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131358 CanBeEdited pending implementation
+	}
+
+	@description = "Verify that a Select From List Field can be required"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeRequired {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131360 CanBeRequired pending implementation
+	}
+
+	@description = "Verify that a Select From List Field can be set to repeatable"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeSetAsRepeatable {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131362 CanBeSetAsRepeatable pending implementation
+	}
+
+	@description = "Verify that a Form can be submitted with the Select From List Field"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeSubmitted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131369 CanBeSubmitted pending implementation
+	}
+
+	@description = "Verify that a list can be created using Autofill"
+	@ignore = "true"
+	@priority = "5"
+	test CanCreateListUsingAutofill {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131376 CanCreateListUsingAutofill pending implementation
+	}
+
+	@description = "Verify that a list can be created using a DataProvider"
+	@ignore = "true"
+	@priority = "5"
+	test CanCreateListUsingDataProvider {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131377 CanCreateListUsingDataProvider pending implementation
+	}
+
+	@description = "Verify that changes to a Field can be canceled"
+	@ignore = "true"
+	@priority = "4"
+	test ChangesCanBeCanceled {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131364 ChangesCanBeCanceled pending implementation
+	}
+
+	@description = "Verify that the Field References for the options can be edited"
+	@ignore = "true"
+	@priority = "5"
+	test FieldReferenceOfOptionsCanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131375 FieldReferenceOfOptionsCanBeEdited pending implementation
+	}
+
+	@description = "Verify that a Help Text can be added"
+	@ignore = "true"
+	@priority = "5"
+	test HelpTextCanBeAdded {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131367 HelpTextCanBeAdded pending implementation
+	}
+
+	@description = "Verify that the Field Label can be edited"
+	@ignore = "true"
+	@priority = "5"
+	test LabelCanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131365 LabelCanBeEdited pending implementation
+	}
+
+	@description = "Veriy that the Field Label can be hidden"
+	@ignore = "true"
+	@priority = "5"
+	test LabelCanBeHidden {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131366 LabelCanBeHidden pending implementation
+	}
+
+	@description = "Verify that options can be added"
+	@ignore = "true"
+	@priority = "5"
+	test OptionsCanBeAdded {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131373 OptionsCanBeAdded pending implementation
+	}
+
+	@description = "Verify that options can be rearranged"
+	@ignore = "true"
+	@priority = "5"
+	test OptionsCanBeRearranged {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131374 OptionsCanBeRearranged pending implementation
+	}
+
+	@description = "Verify that options can be sorted alphabetically"
+	@ignore = "true"
+	@priority = "5"
+	test OptionsCanBeSortedAlphabetically {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131372 OptionsCanBeSortedAlphabetically pending implementation
+	}
+
+	@description = "Verify that an option can be selected as a Predefined Value"
+	@ignore = "true"
+	@priority = "5"
+	test PredefinedValueCanBeAdded {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131370 PredefinedValueCanBeAdded pending implementation
+	}
+
+	@description = "Verify that after deleting an option that had been selected as the Predefined Value, the Predefined Value is reset to "Choose Options""
+	@ignore = "true"
+	@priority = "5"
+	test PredefinedValueIsResetWhenSelectedOptionIsDeleted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131371 PredefinedValueIsResetWhenSelectedOptionIsDeleted pending implementation
+	}
+
+	@description = "Verify that the Field Reference can be Edited"
+	@ignore = "true"
+	@priority = "5"
+	test ReferenceCanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131368 ReferenceCanBeEdited pending implementation
+	}
+
+	@description = "Verify that the Field Type can be changed"
+	@ignore = "true"
+	@priority = "5"
+	test TypeCanBeChanged {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131363 TypeCanBeChanged pending implementation
+	}
+
+}

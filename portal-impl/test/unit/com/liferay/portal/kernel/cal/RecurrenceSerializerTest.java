@@ -14,10 +14,8 @@
 
 package com.liferay.portal.kernel.cal;
 
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.util.Calendar;
@@ -41,7 +39,6 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 
 	@Before
 	public void setUp() {
-		setUpCalendarFactoryUtil();
 		setUpFastDateFormatFactoryUtil();
 	}
 
@@ -237,12 +234,6 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 	protected Recurrence getRecurrence(Calendar calendar, int recurrenceType) {
 		return new Recurrence(
 			calendar, new Duration(1, 0, 0, 0), recurrenceType);
-	}
-
-	protected void setUpCalendarFactoryUtil() {
-		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
-
-		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());
 	}
 
 	protected void setUpFastDateFormatFactoryUtil() {

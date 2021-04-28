@@ -18,6 +18,7 @@ import com.liferay.change.tracking.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -41,8 +42,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -87,9 +92,24 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			_userGroupRoleLocalService.getUserGroupRolesByGroup(
 				ctCollection.getGroupId());
 
+		Set<Long> roleIds = new HashSet<>();
+		Set<Long> userIds = new HashSet<>();
+
 		for (UserGroupRole userGroupRole : userGroupRoles) {
-			User user = userGroupRole.getUser();
-			Role role = userGroupRole.getRole();
+			roleIds.add(userGroupRole.getRoleId());
+			userIds.add(userGroupRole.getUserId());
+		}
+
+		Map<Serializable, Role> roleMap =
+			_basePersistenceRegistry.fetchBaseModelMap(
+				_portal.getClassNameId(Role.class.getName()), roleIds);
+		Map<Serializable, User> userMap =
+			_basePersistenceRegistry.fetchBaseModelMap(
+				_portal.getClassNameId(User.class.getName()), userIds);
+
+		for (UserGroupRole userGroupRole : userGroupRoles) {
+			Role role = roleMap.get(userGroupRole.getRole());
+			User user = userMap.get(userGroupRole.getUserId());
 
 			JSONObject jsonObject = JSONUtil.put(
 				"emailAddress", user.getEmailAddress()
@@ -126,6 +146,9 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);
 	}
+
+	@Reference
+	private BasePersistenceRegistry _basePersistenceRegistry;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

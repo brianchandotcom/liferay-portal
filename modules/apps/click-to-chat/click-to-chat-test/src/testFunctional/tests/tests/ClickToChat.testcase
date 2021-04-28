@@ -24,6 +24,8 @@ definition {
 
 	@priority = "5"
 	test EnableAndDisableJivoChat {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -67,6 +69,8 @@ definition {
 
 	@priority = "5"
 	test EnableAndDisableLivePerson {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

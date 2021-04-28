@@ -22,6 +22,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.list.provider.InfoListProvider;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -114,6 +116,19 @@ public class AssetListEntryUsagesUtil {
 		}
 
 		return typeLabel + " - " + subtypeLabel;
+	}
+
+	private static AssetRendererFactory<?> _getAssetRendererFactory(
+		String className) {
+
+		// LPS-111037
+
+		if (Objects.equals(className, FileEntry.class.getName())) {
+			className = DLFileEntry.class.getName();
+		}
+
+		return AssetRendererFactoryRegistryUtil.
+			getAssetRendererFactoryByClassName(className);
 	}
 
 	private static LayoutStructure _getLayoutStructure(
@@ -201,9 +216,8 @@ public class AssetListEntryUsagesUtil {
 			return StringPool.BLANK;
 		}
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetListEntry.getAssetEntryType());
+		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
+			assetListEntry.getAssetEntryType());
 
 		if ((assetRendererFactory == null) ||
 			!assetRendererFactory.isSupportsClassTypes()) {

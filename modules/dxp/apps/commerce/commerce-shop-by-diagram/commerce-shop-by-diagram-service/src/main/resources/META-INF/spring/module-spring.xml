@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramEntryLocalServiceImpl" id="com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryLocalService" />
+	<bean class="com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramEntryServiceImpl" id="com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService" />
+	<bean class="com.liferay.commerce.shop.by.diagram.service.persistence.impl.CPDefinitionDiagramEntryPersistenceImpl" id="com.liferay.commerce.shop.by.diagram.service.persistence.CPDefinitionDiagramEntryPersistence" />
+	<bean class="com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramSettingsLocalServiceImpl" id="com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingsLocalService" />
+	<bean class="com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramSettingsServiceImpl" id="com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingsService" />
+	<bean class="com.liferay.commerce.shop.by.diagram.service.persistence.impl.CPDefinitionDiagramSettingsPersistenceImpl" id="com.liferay.commerce.shop.by.diagram.service.persistence.CPDefinitionDiagramSettingsPersistence" />
+</beans>

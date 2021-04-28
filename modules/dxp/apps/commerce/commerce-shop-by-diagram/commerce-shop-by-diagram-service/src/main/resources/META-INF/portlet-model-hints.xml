@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry">
+		<field name="CPDefinitionDiagramEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionDiagramSettingsId" type="long" />
+		<field name="CPInstanceUuid" type="String" />
+		<field name="CProductId" type="long" />
+		<field name="number" type="int" />
+		<field name="quantity" type="int" />
+		<field name="positionX" type="double" />
+		<field name="positionY" type="double" />
+		<field name="radius" type="double" />
+	</model>
+	<model name="com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSettings">
+		<field name="CPDefinitionDiagramSettingsId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="assetCategoryId" type="long" />
+		<field name="name" type="String" />
+	</model>
+</model-hints>

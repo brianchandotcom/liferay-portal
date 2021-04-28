@@ -10,7 +10,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render, wait, within} from '@testing-library/react';
+import {cleanup, fireEvent, render, wait, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -379,7 +379,7 @@ describe('Detail', () => {
 			const questionCircleIcon = within(bestKeywordLabel).getByRole(
 				'presentation'
 			);
-			userEvent.click(questionCircleIcon);
+			fireEvent.mouseEnter(questionCircleIcon);
 			expect(getByText('best-keyword-help')).toBeInTheDocument();
 		});
 

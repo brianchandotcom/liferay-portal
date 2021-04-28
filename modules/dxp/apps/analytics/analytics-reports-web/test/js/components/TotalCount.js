@@ -9,8 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render, wait} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {cleanup, fireEvent, render, wait} from '@testing-library/react';
 import React from 'react';
 
 import TotalCount from '../../../src/main/resources/META-INF/resources/js/components/TotalCount';
@@ -51,11 +50,13 @@ describe('TotalCount', () => {
 
 		const helpTextIcon = getByRole('presentation');
 
-		userEvent.click(helpTextIcon);
+		fireEvent.mouseEnter(helpTextIcon);
 
-		getByText(
-			'This number refers to the total number of views since the content was published.'
-		);
+		expect(
+			getByText(
+				'This number refers to the total number of views since the content was published.'
+			)
+		).toBeInTheDocument();
 
 		expect(mockDataProvider).toHaveBeenCalledTimes(1);
 	});

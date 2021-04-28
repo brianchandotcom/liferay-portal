@@ -14,12 +14,15 @@
 
 package com.liferay.headless.commerce.bom.internal.resource.v1_0;
 
-import com.liferay.commerce.bom.model.CommerceBOMDefinition;
-import com.liferay.commerce.bom.model.CommerceBOMFolder;
-import com.liferay.commerce.bom.search.CommerceBOMSearcher;
-import com.liferay.commerce.bom.service.CommerceBOMDefinitionService;
-import com.liferay.commerce.bom.service.CommerceBOMFolderService;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSettings;
+import com.liferay.commerce.shop.by.diagram.search.CPDefinitionDiagramSearcher;
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingsService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.headless.commerce.bom.dto.v1_0.Brand;
 import com.liferay.headless.commerce.bom.dto.v1_0.Folder;
@@ -30,7 +33,6 @@ import com.liferay.headless.commerce.bom.dto.v1_0.Spot;
 import com.liferay.headless.commerce.bom.internal.dto.v1_0.converter.BreadcrumbDTOConverter;
 import com.liferay.headless.commerce.bom.internal.dto.v1_0.converter.util.BreadcrumbDTOConverterUtil;
 import com.liferay.headless.commerce.bom.resource.v1_0.FolderResource;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,7 +46,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -68,10 +71,10 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 	@Override
 	public Folder getFolder(Long id) throws Exception {
-		CommerceBOMFolder commerceBOMFolder = null;
+		AssetCategory assetCategory = null;
 
 		if (id > 0) {
-			commerceBOMFolder = _commerceBOMFolderService.getCommerceBOMFolder(
+			assetCategory = _assetCategoryService.getCategory(
 				GetterUtil.getLong(id));
 		}
 
@@ -79,7 +82,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 		folder.setBreadcrumbs(
 			BreadcrumbDTOConverterUtil.getBreadcrumbs(
-				_breadcrumbDTOConverter, commerceBOMFolder,
+				_breadcrumbDTOConverter, assetCategory,
 				contextAcceptLanguage.getPreferredLocale()));
 
 		ItemData itemData = new ItemData();
@@ -110,11 +113,11 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 			HashMapBuilder.<String, Serializable>put(
 				Field.NAME, keywords
 			).put(
-				"commerceBOMFolderId", id
+				"categoryId", id
 			).put(
 				"params", params
 			).put(
-				"parentCommerceBOMFolderId", id
+				"parentCategoryId", id
 			).build());
 
 		searchContext.setCompanyId(companyId);
@@ -139,7 +142,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		try {
 			List<Item> itemList = new ArrayList<>();
 
-			Indexer<?> indexer = CommerceBOMSearcher.getInstance();
+			Indexer<?> indexer = CPDefinitionDiagramSearcher.getInstance();
 
 			Hits hits = indexer.search(
 				buildSearchContext(
@@ -151,17 +154,17 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 				long classPK = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
-				if (className.equals(CommerceBOMDefinition.class.getName())) {
+				if (className.equals(
+						CPDefinitionDiagramSettings.class.getName())) {
+
 					itemList.add(
 						_toItem(
-							_commerceBOMDefinitionService.
-								getCommerceBOMDefinition(classPK)));
+							_cpDefinitionDiagramSettingsService.
+								getCPDefinitionDiagramSettings(classPK)));
 				}
-				else if (className.equals(CommerceBOMFolder.class.getName())) {
+				else if (className.equals(AssetCategory.class.getName())) {
 					itemList.add(
-						_toItem(
-							_commerceBOMFolderService.getCommerceBOMFolder(
-								classPK)));
+						_toItem(_assetCategoryService.getCategory(classPK)));
 				}
 			}
 
@@ -174,56 +177,89 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		}
 	}
 
-	private Item _toItem(CommerceBOMDefinition commerceBOMDefinition)
-		throws PortalException {
+	private Item _toItem(AssetCategory assetCategory) throws PortalException {
+		String thumbnail = StringPool.BLANK;
 
-		CPAttachmentFileEntry cpAttachmentFileEntry =
-			commerceBOMDefinition.fetchCPAttachmentFileEntry();
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
+				_portal.getClassNameId(AssetCategory.class),
+				assetCategory.getCategoryId(),
+				CPAttachmentFileEntryConstants.TYPE_IMAGE,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+		if (!cpAttachmentFileEntries.isEmpty()) {
+			CPAttachmentFileEntry cpAttachmentFileEntry =
+				cpAttachmentFileEntries.get(0);
 
-		String thumbnailURL = DLUtil.getDownloadURL(
-			fileEntry, fileEntry.getFileVersion(), null, null);
+			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+			thumbnail = DLUtil.getDownloadURL(
+				fileEntry, fileEntry.getFileVersion(), null, null);
+		}
+
+		String thumbnailURL = thumbnail;
 
 		return new Item() {
 			{
-				id = commerceBOMDefinition.getCommerceBOMDefinitionId();
-				name = commerceBOMDefinition.getName();
-				slug = commerceBOMDefinition.getFriendlyUrl();
+				id = assetCategory.getCategoryId();
+				name = assetCategory.getName();
 				thumbnail = thumbnailURL;
-				type = Item.Type.create("area");
-				url = "/areas/" + id;
-			}
-		};
-	}
-
-	private Item _toItem(CommerceBOMFolder commerceBOMFolder) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("/image/organization_logo?img_id=");
-		sb.append(commerceBOMFolder.getLogoId());
-		sb.append("&t=");
-		sb.append(
-			WebServerServletTokenUtil.getToken(commerceBOMFolder.getLogoId()));
-
-		return new Item() {
-			{
-				id = commerceBOMFolder.getCommerceBOMFolderId();
-				name = commerceBOMFolder.getName();
-				thumbnail = sb.toString();
 				type = Item.Type.create("folder");
 				url = "/folders/" + id;
 			}
 		};
 	}
 
+	private Item _toItem(
+			CPDefinitionDiagramSettings cpDefinitionDiagramSettings)
+		throws PortalException {
+
+		String thumbnail = StringPool.BLANK;
+
+		CPDefinition cpDefinition =
+			cpDefinitionDiagramSettings.getCPDefinition();
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			cpDefinitionDiagramSettings.fetchCPAttachmentFileEntry();
+
+		if (cpAttachmentFileEntry != null) {
+			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+			thumbnail = DLUtil.getDownloadURL(
+				fileEntry, fileEntry.getFileVersion(), null, null);
+		}
+
+		String thumbnailURL = thumbnail;
+
+		return new Item() {
+			{
+				id =
+					cpDefinitionDiagramSettings.
+						getCPDefinitionDiagramSettingsId();
+				name = cpDefinitionDiagramSettings.getName();
+				slug = null;
+				thumbnail = thumbnailURL;
+				type = Item.Type.create("diagram");
+				url = "/products/" + cpDefinition.getCProductId() + "/diagram";
+			}
+		};
+	}
+
+	@Reference
+	private AssetCategoryService _assetCategoryService;
+
 	@Reference
 	private BreadcrumbDTOConverter _breadcrumbDTOConverter;
 
 	@Reference
-	private CommerceBOMDefinitionService _commerceBOMDefinitionService;
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 	@Reference
-	private CommerceBOMFolderService _commerceBOMFolderService;
+	private CPDefinitionDiagramSettingsService
+		_cpDefinitionDiagramSettingsService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -39,17 +39,17 @@ public class LegacyEditSiteSettingsConfigurationScreen
 
 	@Override
 	public String getCategoryKey() {
-		return "site-configuration";
+		return "other";
 	}
 
 	@Override
 	public String getKey() {
-		return "site-configuration-general";
+		return "site-configuration-other";
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "general");
+		return LanguageUtil.get(locale, "other");
 	}
 
 	@Override

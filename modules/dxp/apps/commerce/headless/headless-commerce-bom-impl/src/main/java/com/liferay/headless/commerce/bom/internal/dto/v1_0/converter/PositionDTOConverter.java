@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.bom.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.bom.model.CommerceBOMEntry;
-import com.liferay.commerce.bom.service.CommerceBOMEntryService;
+import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry;
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService;
 import com.liferay.headless.commerce.bom.dto.v1_0.Position;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -27,11 +27,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, property = "model.class.name=commerceBOMEntryPosition",
+	enabled = false,
+	property = "model.class.name=cpDefinitionDiagramEntryPosition",
 	service = {DTOConverter.class, PositionDTOConverter.class}
 )
 public class PositionDTOConverter
-	implements DTOConverter<CommerceBOMEntry, Position> {
+	implements DTOConverter<CPDefinitionDiagramEntry, Position> {
 
 	@Override
 	public String getContentType() {
@@ -42,19 +43,19 @@ public class PositionDTOConverter
 	public Position toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CommerceBOMEntry commerceBOMEntry =
-			_commerceBOMEntryService.getCommerceBOMEntry(
+		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
+			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntry(
 				(Long)dtoConverterContext.getId());
 
 		return new Position() {
 			{
-				x = commerceBOMEntry.getPositionX();
-				y = commerceBOMEntry.getPositionY();
+				x = cpDefinitionDiagramEntry.getPositionX();
+				y = cpDefinitionDiagramEntry.getPositionY();
 			}
 		};
 	}
 
 	@Reference
-	private CommerceBOMEntryService _commerceBOMEntryService;
+	private CPDefinitionDiagramEntryService _cpDefinitionDiagramEntryService;
 
 }

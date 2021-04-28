@@ -6,7 +6,7 @@ dependencies {
 	compileOnly group: "com.sun.xml.bind", name: "jaxb-osgi", version: "2.3.4"
 	compileOnly group: "javax.json", name: "javax.json-api", version: "1.0"
 	compileOnly group: "org.apache.aries.component-dsl", name: "org.apache.aries.component-dsl.component-dsl", version: "1.2.2"
-	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "2.0.0-20210223.055537-1"
+	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "2.0.0"
 	compileOnly group: "org.apache.commons", name: "commons-lang3", version: "3.9"
 	compileOnly group: "org.apache.cxf", name: "cxf-core", version: "3.4.2"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.4.2"

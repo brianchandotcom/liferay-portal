@@ -46,5 +46,5 @@ String summary = searchContainer.getSummary();
 
 JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 
-String rowIdProperty = (String)request.getAttribute("rowIdProperty");
+String rowIdProperty = (String)request.getAttribute("liferay-ui:search-container-row:rowIdProperty");
 %>

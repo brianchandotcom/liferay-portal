@@ -332,7 +332,8 @@ public class SearchContainerRowTag<R>
 						String.valueOf(rowIdObject));
 			}
 
-			request.setAttribute("rowIdProperty", rowId);
+			request.setAttribute(
+				"liferay-ui:search-container-row:rowIdProperty", rowId);
 		}
 
 		_resultRow = new com.liferay.taglib.search.ResultRow(

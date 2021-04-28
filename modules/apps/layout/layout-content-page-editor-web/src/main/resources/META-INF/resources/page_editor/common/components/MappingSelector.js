@@ -305,40 +305,41 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			!selectedItem.classNameId
 		) {
 			setItemFields(null);
+
+			return;
+		}
+
+		const infoItem =
+			mappedInfoItems.find(
+				({classNameId, classPK}) =>
+					selectedItem.classNameId === classNameId &&
+					selectedItem.classPK === classPK
+			) || selectedItem;
+
+		const key =
+			selectedSourceType === MAPPING_SOURCE_TYPES.content
+				? getMappingFieldsKey(
+						infoItem.classNameId,
+						infoItem.classTypeId
+				  )
+				: getMappingFieldsKey(
+						selectedMappingTypes.type.id,
+						selectedMappingTypes.subtype.id || 0
+				  );
+
+		const fields = mappingFields[key];
+
+		if (fields) {
+			setItemFields(filterFields(fields, fieldType));
 		}
 		else {
-			const infoItem =
-				mappedInfoItems.find(
-					({classNameId, classPK}) =>
-						selectedItem.classNameId === classNameId &&
-						selectedItem.classPK === classPK
-				) || selectedItem;
-
-			const key =
-				selectedSourceType === MAPPING_SOURCE_TYPES.content
-					? getMappingFieldsKey(
-							infoItem.classNameId,
-							infoItem.classTypeId
-					  )
-					: getMappingFieldsKey(
-							selectedMappingTypes.type.id,
-							selectedMappingTypes.subtype.id || 0
-					  );
-
-			const fields = mappingFields[key];
-
-			if (fields) {
-				setItemFields(filterFields(fields, fieldType));
-			}
-			else {
-				loadMappingFields({
-					dispatch,
-					item: selectedItem,
-					sourceType: selectedSourceType,
-				}).then((newFields) => {
-					dispatch(addMappingFields({fields: newFields, key}));
-				});
-			}
+			loadMappingFields({
+				dispatch,
+				item: selectedItem,
+				sourceType: selectedSourceType,
+			}).then((newFields) => {
+				dispatch(addMappingFields({fields: newFields, key}));
+			});
 		}
 	}, [
 		dispatch,

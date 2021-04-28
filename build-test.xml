@@ -4402,6 +4402,68 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-docker-browser">
+		<sequential>
+			<get-browser-property property.name="browser.docker.browser.options" />
+			<get-browser-property property.name="browser.docker.image" />
+			<get-browser-property property.name="browser.docker.run.options" />
+			<get-browser-property property.name="browser.host" />
+
+			<local name="browser.docker.network.run.option" />
+
+			<condition else="" property="browser.docker.network.run.option" value="--network=${env.DOCKER_NETWORK_NAME}">
+				<isset property="env.DOCKER_NETWORK_NAME" />
+			</condition>
+
+			<local name="docker.browser.start.script" />
+
+			<property name="docker.browser.start.script" value="docker_browser_start.sh" />
+
+			<echo file="${docker.browser.start.script}">
+				<![CDATA[
+					docker run \
+						--detach \
+						--hostname=${browser.host} \
+						--interactive \
+						--name=${browser.host} \
+						--tty \
+						\
+						${browser.docker.network.run.option} \
+						${browser.docker.run.options} \
+						\
+						${browser.docker.image} \
+						\
+						${browser.docker.browser.options}
+				]]>
+			</echo>
+
+			<chmod
+				perm="a+x"
+			>
+				<fileset
+					dir="."
+					includes="${docker.browser.start.script}"
+				/>
+			</chmod>
+
+			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
+				<arg value="${docker.browser.start.script}" />
+			</exec>
+
+			<exec executable="cmd.exe" os="${os.windows}">
+				<arg value="${docker.browser.start.script}" />
+			</exec>
+
+			<delete file="${docker.browser.start.script}" />
+
+			<echo>Waiting for ${browser.host}:4444 to load</echo>
+
+			<waitfor maxwait="300" maxwaitunit="second">
+				<socket port="4444" server="${browser.host}" />
+			</waitfor>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-docker-database">
 		<sequential>
 			<get-database-property property.name="database.host" />
@@ -4968,6 +5030,45 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</execute>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-docker-browser">
+		<sequential>
+			<get-browser-property property.name="browser.host" />
+
+			<local name="docker.stop.script" />
+
+			<property name="docker.stop.script" value="docker_stop.sh" />
+
+			<echo file="${docker.stop.script}">
+				<![CDATA[
+					docker kill ${browser.host}
+
+					docker rm -f ${browser.host}
+
+					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${browser.host} 2>/dev/null
+				]]>
+			</echo>
+
+			<chmod
+				perm="a+x"
+			>
+				<fileset
+					dir="."
+					includes="${docker.stop.script}"
+				/>
+			</chmod>
+
+			<exec executable="/bin/bash" failonerror="false" os="${os.apple},${os.unix}">
+				<arg value="${docker.stop.script}" />
+			</exec>
+
+			<exec executable="cmd.exe" failonerror="false" os="${os.windows}">
+				<arg value="${docker.stop.script}" />
+			</exec>
+
+			<delete file="${docker.stop.script}" />
 		</sequential>
 	</macrodef>
 

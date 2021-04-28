@@ -18,6 +18,7 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
+import com.liferay.object.initializer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.application.list.ObjectDefinitionPanelApp;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.internal.portlet.ObjectDefinitionPortlet;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +56,9 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marco Leo
@@ -170,38 +175,54 @@ public class ObjectDefinitionLocalServiceImpl
 	@Clusterable
 	@Override
 	public void registerObjectDefinition(ObjectDefinition objectDefinition) {
+		List<ServiceRegistration<?>> serviceRegistrationList =
+			new ArrayList<>();
+
+		for (ObjectDefinitionDeployer objectDefinitionDeployer :
+				_objectDefinitionDeployers) {
+
+			serviceRegistrationList.add(
+				objectDefinitionDeployer.deploy(objectDefinition));
+		}
+
+		serviceRegistrationList.add(
+			_bundleContext.registerService(
+				PanelApp.class, new ObjectDefinitionPanelApp(objectDefinition),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"panel.app.order:Integer", "300"
+				).put(
+					"panel.category.key", PanelCategoryKeys.CONTROL_PANEL_USERS
+				).build()));
+
+		serviceRegistrationList.add(
+			_bundleContext.registerService(
+				Portlet.class, new ObjectDefinitionPortlet(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.display-category", "category.hidden"
+				).put(
+					"javax.portlet.display-name", objectDefinition.getName()
+				).put(
+					"javax.portlet.name", objectDefinition.getPortletId()
+				).put(
+					"javax.portlet.init-param.view-template", "/view.jsp"
+				).build()));
+
+		serviceRegistrationList.add(
+			_bundleContext.registerService(
+				WorkflowHandler.class,
+				new ObjectEntryWorkflowHandler(
+					objectDefinition, _objectEntryLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"model.class.name", objectDefinition.getClassName()
+				).build()));
+
+		ServiceRegistration<?>[] serviceRegistrations =
+			new ServiceRegistration<?>[serviceRegistrationList.size()];
+
+		serviceRegistrationList.toArray(serviceRegistrations);
+
 		_serviceRegistrationsMap.put(
-			objectDefinition.getObjectDefinitionId(),
-			new ServiceRegistration<?>[] {
-				_bundleContext.registerService(
-					PanelApp.class,
-					new ObjectDefinitionPanelApp(objectDefinition),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"panel.app.order:Integer", "300"
-					).put(
-						"panel.category.key",
-						PanelCategoryKeys.CONTROL_PANEL_USERS
-					).build()),
-				_bundleContext.registerService(
-					Portlet.class, new ObjectDefinitionPortlet(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"com.liferay.portlet.display-category",
-						"category.hidden"
-					).put(
-						"javax.portlet.display-name", objectDefinition.getName()
-					).put(
-						"javax.portlet.name", objectDefinition.getPortletId()
-					).put(
-						"javax.portlet.init-param.view-template", "/view.jsp"
-					).build()),
-				_bundleContext.registerService(
-					WorkflowHandler.class,
-					new ObjectEntryWorkflowHandler(
-						objectDefinition, _objectEntryLocalService),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"model.class.name", objectDefinition.getClassName()
-					).build())
-			});
+			objectDefinition.getObjectDefinitionId(), serviceRegistrations);
 	}
 
 	@Clusterable
@@ -237,6 +258,23 @@ public class ObjectDefinitionLocalServiceImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setObjectDefinitionRegistrarContributor(
+		ObjectDefinitionDeployer objectDefinitionDeployer) {
+
+		_objectDefinitionDeployers.add(objectDefinitionDeployer);
+	}
+
+	protected void unsetObjectDefinitionRegistrarContributor(
+		ObjectDefinitionDeployer objectDefinitionDeployer) {
+
+		_objectDefinitionDeployers.remove(objectDefinitionDeployer);
 	}
 
 	private void _createTable(
@@ -294,6 +332,8 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinitionLocalServiceImpl.class);
 
 	private BundleContext _bundleContext;
+	private final List<ObjectDefinitionDeployer> _objectDefinitionDeployers =
+		new ArrayList<>();
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

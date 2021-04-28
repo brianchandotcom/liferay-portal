@@ -22,8 +22,8 @@ ViewElementsManagementToolbarDisplayContext viewElementsManagementToolbarDisplay
 ViewElementsDisplayContext viewElementsDisplayContext = (ViewElementsDisplayContext)request.getAttribute(BlueprintsAdminWebKeys.VIEW_ELEMENTS_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewElementsManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= viewElementsManagementToolbarDisplayContext %>"
 	searchContainerId="elementEntries"
 	supportsBulkActions="<%= true %>"
 />

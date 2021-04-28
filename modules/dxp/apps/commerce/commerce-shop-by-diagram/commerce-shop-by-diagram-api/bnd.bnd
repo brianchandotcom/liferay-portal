@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Commerce Shop By Diagram API
+Bundle-SymbolicName: com.liferay.commerce.shop.by.diagram.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.shop.by.diagram.exception,\
+	com.liferay.commerce.shop.by.diagram.model,\
+	com.liferay.commerce.shop.by.diagram.search,\
+	com.liferay.commerce.shop.by.diagram.service,\
+	com.liferay.commerce.shop.by.diagram.service.persistence
+Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

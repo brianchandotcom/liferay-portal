@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -150,6 +151,15 @@ public class SearcherImpl implements Searcher {
 		doSmartSearch(searchRequestImpl, searchResponseBuilder);
 
 		doFederatedSearches(searchRequestImpl, searchResponseBuilder);
+
+		SearchContext searchContext = searchRequestImpl.getSearchContext();
+
+		String exceptionMessage = (String)searchContext.getAttribute(
+			"search.exception.message");
+
+		if (Validator.isNotNull(exceptionMessage)) {
+			searchResponseBuilder.responseString(exceptionMessage);
+		}
 
 		return searchResponseBuilder.federatedSearchKey(
 			searchRequestImpl.getFederatedSearchKey()

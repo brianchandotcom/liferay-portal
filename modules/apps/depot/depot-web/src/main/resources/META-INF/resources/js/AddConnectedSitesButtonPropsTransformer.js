@@ -25,7 +25,6 @@ export default function propsTransformer({
 			const {currentURL, itemSelectorURL} = additionalProps;
 
 			openSelectionModal({
-				customSelectEvent: true,
 				id: `${portletNamespace}selectSite`,
 				onSelect: (event) => {
 					const toGroupIdInput = document.getElementById(

@@ -105,7 +105,7 @@ public class ConfigurationEnvBuilder {
 
 		String content = generateConfigOverrideContent(configurationFiles);
 
-		Path configPath = Paths.get("config-env.text");
+		Path configPath = Paths.get("config-env.txt");
 
 		Files.write(configPath, content.getBytes());
 	}

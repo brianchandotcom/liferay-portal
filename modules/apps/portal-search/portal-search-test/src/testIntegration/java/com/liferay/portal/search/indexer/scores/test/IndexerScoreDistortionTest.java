@@ -126,8 +126,8 @@ public class IndexerScoreDistortionTest {
 		addWikiPage(title);
 
 		Class<?>[] classes = new Class<?>[] {
-			BlogsEntry.class, DLFileEntry.class, JournalArticle.class,
-			MBMessage.class, WikiPage.class
+			BlogsEntry.class, WikiPage.class, MBMessage.class,
+			DLFileEntry.class, JournalArticle.class
 		};
 
 		SearchResponse searchResponse = searcher.search(
@@ -153,12 +153,12 @@ public class IndexerScoreDistortionTest {
 				// Order is important (scores higher to lower)
 
 				BlogsEntry.class, WikiPage.class, MBMessage.class,
-				JournalArticle.class, DLFileEntry.class)
+				DLFileEntry.class, JournalArticle.class)
 		).put(
-			Field.TITLE, "[collision, collision, , , collision]"
+			Field.TITLE, "[collision, collision, , collision, ]"
 		).put(
 			Field.TITLE + "_en_US",
-			"[collision, collision, collision, collision, ]"
+			"[collision, collision, collision, , collision]"
 		).put(
 			Field.TITLE + "_hu_HU", "[collision, collision, collision, , ]"
 		).put(

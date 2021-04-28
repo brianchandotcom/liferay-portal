@@ -724,7 +724,7 @@
 </tr>
 <tr>
 	<td>MANAGEMENT_BAR</td>
-	<td>//div[contains(@class,'management-bar')]</td>
+	<td>//div[contains(@class,'management-bar')]//ul[contains(@class,'end')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -351,10 +351,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentBySessionLastSignInDate Test");
 
-		Segmentation.changeCriterionInputDate(
-			day = "31",
-			month = "03",
-			year = "2021");
+		Segmentation.fillProperty(dateValue = "03/31/2021");
 
 		Button.clickSave();
 
@@ -378,10 +375,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentBySessionLocalDate Test");
 
-		Segmentation.changeCriterionInputDate(
-			day = "31",
-			month = "03",
-			year = "2021");
+		Segmentation.fillProperty(dateValue = "03/31/2021");
 
 		Button.clickSave();
 

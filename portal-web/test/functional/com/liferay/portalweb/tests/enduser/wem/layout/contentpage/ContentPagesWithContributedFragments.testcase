@@ -54,7 +54,7 @@ definition {
 			key_fragmentName = "Heading",
 			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
 			locator2 = "boxShadow",
-			value1 = "rgb(11, 95, 255) 0px 0px 0px 1px inset");
+			value1 = "rgb(11, 95, 255) 0px 0px 0px 2px inset");
 
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
@@ -74,7 +74,7 @@ definition {
 			key_fragmentName = "Heading",
 			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
 			locator2 = "boxShadow",
-			value1 = "rgb(128, 172, 255) 0px 0px 0px 1px inset");
+			value1 = "rgb(128, 172, 255) 0px 0px 0px 2px inset");
 	}
 
 	@description = "This is a use case for LPS-116989. Can resize the item configuration panel."

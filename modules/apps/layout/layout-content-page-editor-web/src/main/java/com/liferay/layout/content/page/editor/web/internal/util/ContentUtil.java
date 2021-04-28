@@ -116,87 +116,8 @@ public class ContentUtil {
 			long plid, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
-
-		long fragmentEntryLinkClassNameId = PortalUtil.getClassNameId(
-			FragmentEntryLink.class);
-		LayoutStructure layoutStructure = null;
-		Set<String> uniqueLayoutClassedModelUsageKeys = new HashSet<>();
-
-		List<LayoutClassedModelUsage> layoutClassedModelUsages =
-			LayoutClassedModelUsageLocalServiceUtil.
-				getLayoutClassedModelUsagesByPlid(plid);
-
-		for (LayoutClassedModelUsage layoutClassedModelUsage :
-				layoutClassedModelUsages) {
-
-			if (uniqueLayoutClassedModelUsageKeys.contains(
-					_generateUniqueLayoutClassedModelUsageKey(
-						layoutClassedModelUsage))) {
-
-				continue;
-			}
-
-			if (layoutClassedModelUsage.getContainerType() ==
-					fragmentEntryLinkClassNameId) {
-
-				FragmentEntryLink fragmentEntryLink =
-					FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-						GetterUtil.getLong(
-							layoutClassedModelUsage.getContainerKey()));
-
-				if (fragmentEntryLink == null) {
-					LayoutClassedModelUsageLocalServiceUtil.
-						deleteLayoutClassedModelUsage(layoutClassedModelUsage);
-
-					continue;
-				}
-
-				if (layoutStructure == null) {
-					layoutStructure = LayoutStructureUtil.getLayoutStructure(
-						fragmentEntryLink.getGroupId(),
-						fragmentEntryLink.getPlid(),
-						fragmentEntryLink.getSegmentsExperienceId());
-				}
-
-				LayoutStructureItem layoutStructureItem =
-					layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-						fragmentEntryLink.getFragmentEntryLinkId());
-
-				if (ListUtil.exists(
-						layoutStructure.getDeletedLayoutStructureItems(),
-						deletedLayoutStructureItem -> Objects.equals(
-							deletedLayoutStructureItem.getItemId(),
-							layoutStructureItem.getItemId()))) {
-
-					continue;
-				}
-			}
-
-			try {
-				mappedContentsJSONArray.put(
-					_getPageContentJSONObject(
-						layoutClassedModelUsage, httpServletRequest));
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"An error occurred while getting mapped content ",
-							"with class PK ",
-							layoutClassedModelUsage.getClassPK(),
-							" and class name ID ",
-							layoutClassedModelUsage.getClassNameId()),
-						exception);
-				}
-			}
-
-			uniqueLayoutClassedModelUsageKeys.add(
-				_generateUniqueLayoutClassedModelUsageKey(
-					layoutClassedModelUsage));
-		}
-
-		return mappedContentsJSONArray;
+		return _getLayoutClassedModelPageContentsJSONArray(
+			plid, httpServletRequest);
 	}
 
 	private static String _generateUniqueLayoutClassedModelUsageKey(
@@ -430,6 +351,93 @@ public class ContentUtil {
 		}
 
 		return assetRenderer.getIconCssClass();
+	}
+
+	private static JSONArray _getLayoutClassedModelPageContentsJSONArray(
+			long plid, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		long fragmentEntryLinkClassNameId = PortalUtil.getClassNameId(
+			FragmentEntryLink.class);
+		LayoutStructure layoutStructure = null;
+		Set<String> uniqueLayoutClassedModelUsageKeys = new HashSet<>();
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			LayoutClassedModelUsageLocalServiceUtil.
+				getLayoutClassedModelUsagesByPlid(plid);
+
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				layoutClassedModelUsages) {
+
+			if (uniqueLayoutClassedModelUsageKeys.contains(
+					_generateUniqueLayoutClassedModelUsageKey(
+						layoutClassedModelUsage))) {
+
+				continue;
+			}
+
+			if (layoutClassedModelUsage.getContainerType() ==
+					fragmentEntryLinkClassNameId) {
+
+				FragmentEntryLink fragmentEntryLink =
+					FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+						GetterUtil.getLong(
+							layoutClassedModelUsage.getContainerKey()));
+
+				if (fragmentEntryLink == null) {
+					LayoutClassedModelUsageLocalServiceUtil.
+						deleteLayoutClassedModelUsage(layoutClassedModelUsage);
+
+					continue;
+				}
+
+				if (layoutStructure == null) {
+					layoutStructure = LayoutStructureUtil.getLayoutStructure(
+						fragmentEntryLink.getGroupId(),
+						fragmentEntryLink.getPlid(),
+						fragmentEntryLink.getSegmentsExperienceId());
+				}
+
+				LayoutStructureItem layoutStructureItem =
+					layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+						fragmentEntryLink.getFragmentEntryLinkId());
+
+				if (ListUtil.exists(
+						layoutStructure.getDeletedLayoutStructureItems(),
+						deletedLayoutStructureItem -> Objects.equals(
+							deletedLayoutStructureItem.getItemId(),
+							layoutStructureItem.getItemId()))) {
+
+					continue;
+				}
+			}
+
+			try {
+				mappedContentsJSONArray.put(
+					_getPageContentJSONObject(
+						layoutClassedModelUsage, httpServletRequest));
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"An error occurred while getting mapped content ",
+							"with class PK ",
+							layoutClassedModelUsage.getClassPK(),
+							" and class name ID ",
+							layoutClassedModelUsage.getClassNameId()),
+						exception);
+				}
+			}
+
+			uniqueLayoutClassedModelUsageKeys.add(
+				_generateUniqueLayoutClassedModelUsageKey(
+					layoutClassedModelUsage));
+		}
+
+		return mappedContentsJSONArray;
 	}
 
 	private static LayoutDisplayPageObjectProvider<?>

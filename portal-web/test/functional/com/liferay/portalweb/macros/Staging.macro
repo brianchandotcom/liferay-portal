@@ -681,6 +681,14 @@ definition {
 			Click(locator1 = "Link#REFRESH_COUNTS");
 		}
 
+		if (isSet(checkContentNameList)) {
+			for (var contentName : list "${checkContentNameList}") {
+				Check(
+					key_contentName = "${contentName}",
+					locator1 = "Staging#STAGING_CONTENT_CHECKBOX");
+			}
+		}
+
 		if ("${remoteStaging}" == "true") {
 			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
 		}

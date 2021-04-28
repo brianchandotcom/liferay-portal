@@ -1961,7 +1961,7 @@ definition {
 		while ("${count}" != "${loginAttempts}") {
 			var count = ${count} + 1;
 
-			User._login(
+			User.firstLoginUI(
 				password = "${password}",
 				userEmailAddress = "${userEmailAddress}");
 

@@ -79,6 +79,10 @@ public class DLFileEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addFileEntry(long, long, long, long, String, String, String, String, String, long, Map, File, InputStream, long, Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	public static DLFileEntry addFileEntry(
 			long userId, long groupId, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,

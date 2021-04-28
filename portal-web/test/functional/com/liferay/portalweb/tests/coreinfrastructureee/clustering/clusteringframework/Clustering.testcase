@@ -287,6 +287,22 @@ definition {
 	}
 
 	@priority = "4"
+	test TCPControlChannelProperties {
+		property custom.properties = "cluster.link.channel.properties.control=tcp.xml${line.separator}cluster.link.autodetect.address=localhost";
+		property test.name.skip.portal.instance = "Clustering#TCPControlChannelProperties";
+
+		for (var serverPort : list "8080,9080") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Create a new JGroups channel",
+				nodePort = "${serverPort}");
+
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "properties: TCP",
+				nodePort = "${serverPort}");
+		}
+	}
+
+	@priority = "4"
 	test ValidateDocumentOnSeparateNodes {
 		property test.name.skip.portal.instance = "Clustering#ValidateDocumentOnSeparateNodes";
 

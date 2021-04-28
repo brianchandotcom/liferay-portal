@@ -58,7 +58,6 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String fieldType = ParamUtil.getString(resourceRequest, "fieldType");
 		String classTypeId = ParamUtil.getString(
 			resourceRequest, "classTypeId");
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
@@ -66,7 +65,7 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 		try {
 			JSONArray mappingFieldsJSONArray =
 				MappingContentUtil.getMappingFieldsJSONArray(
-					fieldType, classTypeId, themeDisplay.getScopeGroupId(),
+					classTypeId, themeDisplay.getScopeGroupId(),
 					_infoItemServiceTracker, _portal.getClassName(classNameId),
 					themeDisplay.getLocale());
 

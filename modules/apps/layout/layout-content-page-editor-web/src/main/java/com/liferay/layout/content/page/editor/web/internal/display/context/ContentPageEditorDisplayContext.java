@@ -1828,9 +1828,9 @@ public class ContentPageEditorDisplayContext {
 			}
 
 			JSONArray jsonArray = MappingContentUtil.getMappingFieldsJSONArray(
-				StringPool.BLANK, String.valueOf(classTypeId),
-				themeDisplay.getScopeGroupId(), infoItemServiceTracker,
-				PortalUtil.getClassName(classNameId), themeDisplay.getLocale());
+				String.valueOf(classTypeId), themeDisplay.getScopeGroupId(),
+				infoItemServiceTracker, PortalUtil.getClassName(classNameId),
+				themeDisplay.getLocale());
 
 			mappingFieldsJSONObject.put(uniqueMappingFieldKey, jsonArray);
 		}

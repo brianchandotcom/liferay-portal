@@ -29,7 +29,7 @@ export default function ({
 	);
 
 	useEffect(() => {
-		const sidenavInstance = Liferay.SideNavigation.initialize(
+		const sidenavInstance = Liferay.SideNavigation.instance(
 			layoutReportsPanelToggle
 		);
 

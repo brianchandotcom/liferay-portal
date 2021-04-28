@@ -191,6 +191,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			DBPartitionUtil.setDefaultCompanyId(company.getCompanyId());
 		}
 
+		boolean newDBPartitionAdded = DBPartitionUtil.addDBPartition(
+			company.getCompanyId());
+
 		company.setWebId(webId);
 		company.setMx(mx);
 		company.setSystem(system);
@@ -202,9 +205,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		// Virtual host
 
 		updateVirtualHostname(company.getCompanyId(), virtualHostname);
-
-		boolean newDBPartitionAdded = DBPartitionUtil.addDBPartition(
-			company.getCompanyId());
 
 		SafeClosable safeClosable = CompanyThreadLocal.setInitializingCompanyId(
 			company.getCompanyId());

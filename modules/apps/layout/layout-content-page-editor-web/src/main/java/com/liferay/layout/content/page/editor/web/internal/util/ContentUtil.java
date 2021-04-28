@@ -116,8 +116,11 @@ public class ContentUtil {
 			long plid, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return _getLayoutClassedModelPageContentsJSONArray(
-			plid, httpServletRequest);
+		return JSONUtil.concat(
+			_getLayoutClassedModelPageContentsJSONArray(
+				plid, httpServletRequest),
+			AssetListEntryUsagesUtil.getPageContentsJSONArray(
+				httpServletRequest, plid));
 	}
 
 	private static String _generateUniqueLayoutClassedModelUsageKey(

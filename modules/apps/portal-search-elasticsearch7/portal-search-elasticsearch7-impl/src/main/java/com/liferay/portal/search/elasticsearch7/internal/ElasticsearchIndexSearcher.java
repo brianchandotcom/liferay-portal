@@ -169,6 +169,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				}
 			}
 
+			searchContext.setAttribute(
+				"search.exception.message",
+				_getExceptionMessage(runtimeException));
+
 			return new HitsImpl();
 		}
 		finally {
@@ -516,6 +520,16 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchResponseBuilderFactory searchResponseBuilderFactory) {
 
 		_searchResponseBuilderFactory = searchResponseBuilderFactory;
+	}
+
+	private String _getExceptionMessage(RuntimeException runtimeException) {
+		String message = runtimeException.toString();
+
+		for (Throwable throwable : runtimeException.getSuppressed()) {
+			message = message.concat("\nSuppressed: " + throwable.getMessage());
+		}
+
+		return message;
 	}
 
 	private SearchRequestBuilder _getSearchRequestBuilder(

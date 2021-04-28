@@ -201,6 +201,10 @@ public class ElasticsearchSearchEngineAdapterImpl
 
 			runtimeException2.setStackTrace(runtimeException1.getStackTrace());
 
+			for (Throwable throwable : runtimeException1.getSuppressed()) {
+				runtimeException2.addSuppressed(throwable);
+			}
+
 			return runtimeException2;
 		}
 

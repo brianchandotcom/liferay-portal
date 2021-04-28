@@ -116,7 +116,10 @@ public class SearchInsightsPortlet extends MVCPortlet {
 				searchInsightsPortletPreferences.
 					getFederatedSearchKeyOptional());
 
-		if (isOmniadmin() && isRequestStringPresent(searchResponse)) {
+		if (isOmniadmin() &&
+			(isRequestStringPresent(searchResponse) ||
+			 isResponseStringPresent(searchResponse))) {
+
 			searchInsightsDisplayContext.setRequestString(
 				buildRequestString(searchResponse));
 
@@ -164,6 +167,13 @@ public class SearchInsightsPortlet extends MVCPortlet {
 			searchResponse.getRequestString());
 
 		return requestString.isPresent();
+	}
+
+	protected boolean isResponseStringPresent(SearchResponse searchResponse) {
+		Optional<String> responseString = SearchStringUtil.maybe(
+			searchResponse.getResponseString());
+
+		return responseString.isPresent();
 	}
 
 	@Reference

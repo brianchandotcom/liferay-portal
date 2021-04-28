@@ -122,6 +122,41 @@ public class ContentDashboardItemTypeItemSelectorViewTest {
 			results.toString(), initialCount + 1, results.size());
 	}
 
+	@Test
+	public void testGetSearchContainerWithPrefixes() throws Exception {
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			"content", "string", "text", true, "textarea",
+			new Locale[] {LocaleUtil.US}, LocaleUtil.US);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
+			LocaleUtil.US, ServiceContextTestUtil.getServiceContext());
+
+		SearchContainer<Object> searchContainer = _getSearchContainer("Tes");
+
+		List<Object> results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 1, results.size());
+
+		Assert.assertEquals(
+			ddmStructure.getName(LocaleUtil.US),
+			ReflectionTestUtil.invoke(
+				results.get(0), "getLabel", new Class<?>[] {Locale.class},
+				LocaleUtil.US));
+
+		searchContainer = _getSearchContainer("Struct");
+
+		results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 1, results.size());
+
+		Assert.assertEquals(
+			ddmStructure.getName(LocaleUtil.US),
+			ReflectionTestUtil.invoke(
+				results.get(0), "getLabel", new Class<?>[] {Locale.class},
+				LocaleUtil.US));
+	}
+
 	private SearchContainer<Object> _getSearchContainer(String keywords)
 		throws Exception {
 

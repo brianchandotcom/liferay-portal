@@ -660,7 +660,7 @@
 			},
 			"extension": {
 				"store": true,
-				"type": "keyword"
+				"type": "text"
 			},
 			"fileEntryTypeId": {
 				"store": true,

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="false" package-path="com.liferay.commerce.shop.by.diagram">
+	<author>Alessio Antonio Rendina</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CPDefinitionDiagramEntry" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionDiagramEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionDiagramSettingsId" type="long" />
+		<column name="CPInstanceUuid" type="String" />
+		<column name="CProductId" type="long" />
+		<column name="number" type="int" />
+		<column name="quantity" type="int" />
+		<column name="positionX" type="double" />
+		<column name="positionY" type="double" />
+		<column name="radius" type="double" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="number" />
+		</order>
+
+		<!-- Finders -->
+
+		<finder name="CPDefinitionDiagramSettingsId" return-type="Collection">
+			<finder-column name="CPDefinitionDiagramSettingsId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CPDefinitionDiagramSettings" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionDiagramSettingsId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="assetCategoryId" type="long" />
+		<column name="name" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finders -->
+
+		<finder name="CPDefinitionId" return-type="CPDefinitionDiagramSettings" unique="true">
+			<finder-column name="CPDefinitionId" />
+		</finder>
+		<finder name="AssetCategoryId" return-type="Collection">
+			<finder-column name="assetCategoryId" />
+		</finder>
+	</entity>
+</service-builder>

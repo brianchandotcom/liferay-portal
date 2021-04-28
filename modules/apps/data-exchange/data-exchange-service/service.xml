@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.data.exchange">
+	<author>Igor Beslic</author>
+	<namespace>dataexchange</namespace>
+	<entity local-service="true" name="DEExecution">
+
+		<!-- PK fields -->
+
+		<column name="deExecutionId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="dePlanId" type="long" />
+		<column convert-null="false" name="batchExternalReferenceCode" type="String" />
+		<column convert-null="false" name="dispatchExternalReferenceCode" type="String" />
+		<column name="size" type="integer" />
+		<column name="total" type="integer" />
+		<column convert-null="false" name="status" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="DEPlanId" return-type="Collection">
+			<finder-column name="dePlanId" />
+		</finder>
+		<finder name="DPI_BERC" return-type="DEMapping" unique="true">
+			<finder-column name="dePlanId" />
+			<finder-column name="batchExternalReferenceCode" />
+		</finder>
+		<finder name="DPI_DERC" return-type="DEMapping" unique="true">
+			<finder-column name="dePlanId" />
+			<finder-column name="dispatchExternalReferenceCode" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="DEMapping" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="deMappingId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="dePlanId" type="long" />
+		<column convert-null="false" name="externalName" type="String" />
+		<column convert-null="false" name="externalType" type="String" />
+		<column convert-null="false" name="internalName" type="String" />
+		<column convert-null="false" name="internalType" type="String" />
+		<column convert-null="false" name="transformationExpression" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="DEPlanId" return-type="Collection">
+			<finder-column name="dePlanId" />
+		</finder>
+		<finder name="DPI_EN_IN" return-type="DEMapping" unique="true">
+			<finder-column name="dePlanId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="DEPlan" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="dePlanId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="active" type="boolean" />
+		<column convert-null="false" name="externalContentType" type="String" />
+		<column convert-null="false" name="internalClassName" type="String" />
+		<column convert-null="false" name="name" type="String" />
+		<column convert-null="false" name="channel" type="String" />
+		<column name="export" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_U" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+		</finder>
+		<finder name="C_ECT" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="externalContentType" />
+		</finder>
+		<finder name="C_N" return-type="DEPlan" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="DEPolicy" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="dePolicyId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="dePlanId" type="long" />
+		<column convert-null="false" name="name" type="String" />
+		<column convert-null="false" name="value" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="DEPlanId" return-type="Collection">
+			<finder-column name="dePlanId" />
+		</finder>
+		<finder name="DPI_N" return-type="DEPolicy" unique="true">
+			<finder-column name="dePlanId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+</service-builder>

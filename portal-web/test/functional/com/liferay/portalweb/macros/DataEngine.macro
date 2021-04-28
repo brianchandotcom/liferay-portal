@@ -1264,6 +1264,12 @@ definition {
 		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
 	}
 
+	macro gotoEditFieldset{
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+
+		MenuItem.click(menuItem = "Edit");
+	}
+
 	macro gotoFieldsetItemEllipsis {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");
@@ -1405,6 +1411,17 @@ definition {
 			key_fieldFieldLabel = "Searchable",
 			key_optionValue = "${searchableType}",
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
+	}
+
+	macro viewFieldset {
+		AssertVisible(
+			key_fieldsetLabel = "${fieldsetName}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+		for (var fieldName : list "${fieldNameList}") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldName}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
 	}
 
 	macro viewFieldsetTranslation {

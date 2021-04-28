@@ -200,6 +200,14 @@ definition {
 		property portal.release = "false";
 		property testray.component.names = "Asset Publisher,Bookmarks";
 
+		task ("Change Asset Link Behavior to Show Full Content") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
+		}
+
 		task ("Add a bookmarks entry via Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -320,6 +328,10 @@ definition {
 		}
 
 		task ("Change the display template to Full Content") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
 			Portlet.gotoPortletOptions(
 				portletName = "Asset Publisher",
 				portletOption = "Configuration");
@@ -522,6 +534,10 @@ definition {
 		}
 
 		task ("View the order of web contents in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
 			var n = "1";
 
 			for (var title : list "WC Priority 3 Title,WC Priority 5 Title,WC Priority 1 Title") {

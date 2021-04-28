@@ -22,8 +22,8 @@ ViewReportedEntriesManagementToolbarDisplayContext viewReportedEntriesManagement
 ViewKeywordEntriesDisplayContext viewKeywordEntriesDisplayContext = (ViewKeywordEntriesDisplayContext)request.getAttribute(KeywordIndexWebKeys.VIEW_KEYWORD_ENTRIES_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewReportedEntriesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= viewReportedEntriesManagementToolbarDisplayContext %>"
 	searchContainerId="reportedEntries"
 	supportsBulkActions="<%= true %>"
 />

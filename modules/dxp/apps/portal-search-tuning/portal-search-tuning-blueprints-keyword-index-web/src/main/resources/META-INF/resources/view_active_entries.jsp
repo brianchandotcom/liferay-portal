@@ -22,8 +22,8 @@ ViewActiveEntriesManagementToolbarDisplayContext viewActiveEntriesManagementTool
 ViewKeywordEntriesDisplayContext viewKeywordEntriesDisplayContext = (ViewKeywordEntriesDisplayContext)request.getAttribute(KeywordIndexWebKeys.VIEW_KEYWORD_ENTRIES_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewActiveEntriesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= viewActiveEntriesManagementToolbarDisplayContext %>"
 	searchContainerId="activeEntries"
 	supportsBulkActions="<%= true %>"
 />

@@ -22,8 +22,8 @@ ViewBlacklistedEntriesManagementToolbarDisplayContext viewBlackListedEntriesMana
 ViewKeywordEntriesDisplayContext viewKeywordEntriesDisplayContext = (ViewKeywordEntriesDisplayContext)request.getAttribute(KeywordIndexWebKeys.VIEW_KEYWORD_ENTRIES_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewBlackListedEntriesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= viewBlackListedEntriesManagementToolbarDisplayContext %>"
 	searchContainerId="blackListedEntries"
 	supportsBulkActions="<%= true %>"
 />

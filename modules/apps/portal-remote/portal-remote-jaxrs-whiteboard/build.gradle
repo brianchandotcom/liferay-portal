@@ -1,16 +1,27 @@
 dependencies {
-	compileInclude group: "org.apache.cxf", name: "cxf-core", version: "3.2.14"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.2.14"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "3.2.14"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-databinding-jaxb", version: "3.2.14"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.2.14"
-	compileInclude group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.2.14"
 	compileInclude group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
 
+	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.2.3"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.sun.xml.bind", name: "jaxb-osgi", version: "2.3.3"
 	compileOnly group: "javax.json", name: "javax.json-api", version: "1.0"
-	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "1.0.9"
+	compileOnly group: "org.apache.aries.component-dsl", name: "org.apache.aries.component-dsl.component-dsl", version: "1.2.2"
+	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "2.0.0-20210223.055537-1"
+	compileOnly group: "org.apache.commons", name: "commons-lang3", version: "3.9"
+	compileOnly group: "org.apache.cxf", name: "cxf-core", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-databinding-jaxb", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-client", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-sse", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-tools-common", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.4.2"
 	compileOnly group: "org.apache.geronimo.specs", name: "geronimo-jaxrs_2.1_spec", version: "1.1"
+	compileOnly group: "org.apache.velocity", name: "velocity-engine-core", version: "2.2"
+	compileOnly group: "org.apache.ws.xmlschema", name: "xmlschema-core", version: "2.2.5"
+	compileOnly group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs", version: "1.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.util.function", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "org.osgi.util.promise", version: "1.1.0"
@@ -19,10 +30,16 @@ dependencies {
 deployDependencies {
 	from configurations.compileOnly
 
+	include "commons-*.jar"
+	include "cxf-*.jar"
 	include "geronimo-jaxrs_2.1_spec-*.jar"
-	include "javax.json-api*.jar"
+	include "javax.json-api-*.jar"
+	include "jaxb-osgi-*.jar"
+	include "org.apache.aries.component-dsl.*.jar"
 	include "org.apache.aries.jax.rs.whiteboard-*.jar"
 	include "org.osgi.service.jaxrs-*.jar"
+	include "velocity-*.jar"
+	include "xmlschema-core-*.jar"
 
 	rename(/geronimo-jaxrs_2\.1_spec-(.+)\.jar/, "geronimo-jaxrs_2.1_spec" + renameSuffix)
 }

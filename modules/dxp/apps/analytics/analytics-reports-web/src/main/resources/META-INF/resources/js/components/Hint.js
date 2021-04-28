@@ -10,13 +10,12 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayPopover from '@clayui/popover';
 import className from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
-import Popover from './Popover';
-
-export default function Hint({align, message, position, secondary, title}) {
+export default function Hint({message, position = 'top', secondary, title}) {
 	const iconRef = useRef();
 	const [showPopover, setShowPopover] = useState(false);
 
@@ -25,34 +24,30 @@ export default function Hint({align, message, position, secondary, title}) {
 	});
 
 	return (
-		<>
-			<span
-				className={hintClasses}
-				onMouseEnter={() => setShowPopover(true)}
-				onMouseLeave={() => setShowPopover(false)}
-				ref={iconRef}
-			>
-				<ClayIcon
-					small="true"
-					symbol="question-circle"
-				/>
-			</span>
-
-			{showPopover && (
-				<Popover
-					align={align}
-					anchor={iconRef.current}
-					header={title}
-					position={position}
+		<ClayPopover
+			alignPosition={position}
+			header={title}
+			onShowChange={setShowPopover}
+			show={showPopover}
+			trigger={
+				<span
+					className={hintClasses}
+					onMouseEnter={() => setShowPopover(true)}
+					onMouseLeave={() => setShowPopover(false)}
+					ref={iconRef}
 				>
-					{message}
-				</Popover>
-			)}
-		</>
+					<ClayIcon small="true" symbol="question-circle" />
+				</span>
+			}
+		>
+			{message}
+		</ClayPopover>
 	);
 }
 
 Hint.proptypes = {
 	message: PropTypes.string.isRequired,
+	position: PropTypes.string,
+	secondary: PropTypes.bool,
 	title: PropTypes.string.isRequired,
 };

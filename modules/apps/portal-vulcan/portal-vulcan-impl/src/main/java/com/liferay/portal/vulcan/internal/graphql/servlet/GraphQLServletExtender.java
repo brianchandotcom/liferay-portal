@@ -725,15 +725,21 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLArgument _addArgument(
-		GraphQLInputType graphQLInputType, String name) {
+		GraphQLInputType graphQLInputType, String name, Object defaultValue) {
 
 		GraphQLArgument.Builder argumentBuilder = GraphQLArgument.newArgument();
 
-		return argumentBuilder.name(
+		argumentBuilder.name(
 			name
 		).type(
 			graphQLInputType
-		).build();
+		);
+
+		if (defaultValue != null) {
+			argumentBuilder.defaultValue(defaultValue);
+		}
+
+		return argumentBuilder.build();
 	}
 
 	private void _addCreateEndpoint(
@@ -750,8 +756,9 @@ public class GraphQLServletExtender {
 		List<GraphQLArgument> arguments = new ArrayList<>();
 
 		arguments.add(
-			_addArgument(graphQLInputObjectType, objectDefinition.getName()));
-		arguments.add(_addArgument(Scalars.GraphQLLong, "siteId"));
+			_addArgument(
+				graphQLInputObjectType, objectDefinition.getName(), null));
+		arguments.add(_addArgument(Scalars.GraphQLLong, "siteId", null));
 
 		GraphQLFieldDefinition.Builder newFieldDefinitionBuilder =
 			GraphQLFieldDefinition.newFieldDefinition();
@@ -806,7 +813,7 @@ public class GraphQLServletExtender {
 
 		mutationBuilder.field(
 			newFieldDefinitionBuilder.argument(
-				_addArgument(Scalars.GraphQLLong, idName)
+				_addArgument(Scalars.GraphQLLong, idName, null)
 			).name(
 				name
 			).type(
@@ -836,33 +843,12 @@ public class GraphQLServletExtender {
 
 		arguments.add(
 			_addArgument(
-				GraphQLList.list(Scalars.GraphQLString), "aggregation"));
-		arguments.add(_addArgument(Scalars.GraphQLString, "filter"));
-
-		GraphQLArgument.Builder pageBuilder = new GraphQLArgument.Builder();
-
-		arguments.add(
-			pageBuilder.defaultValue(
-				1
-			).name(
-				"page"
-			).type(
-				Scalars.GraphQLInt
-			).build());
-
-		GraphQLArgument.Builder pageSizeBuilder = new GraphQLArgument.Builder();
-
-		arguments.add(
-			pageSizeBuilder.defaultValue(
-				20
-			).name(
-				"pageSize"
-			).type(
-				Scalars.GraphQLInt
-			).build());
-
-		arguments.add(_addArgument(Scalars.GraphQLString, "search"));
-		arguments.add(_addArgument(Scalars.GraphQLString, "sort"));
+				GraphQLList.list(Scalars.GraphQLString), "aggregation", null));
+		arguments.add(_addArgument(Scalars.GraphQLString, "filter", null));
+		arguments.add(_addArgument(Scalars.GraphQLInt, "page", 1));
+		arguments.add(_addArgument(Scalars.GraphQLInt, "pageSize", 20));
+		arguments.add(_addArgument(Scalars.GraphQLString, "search", null));
+		arguments.add(_addArgument(Scalars.GraphQLString, "sort", null));
 
 		GraphQLFieldDefinition.Builder newFieldDefinitionBuilder =
 			GraphQLFieldDefinition.newFieldDefinition();
@@ -879,25 +865,24 @@ public class GraphQLServletExtender {
 				pageType
 			));
 
+		Stream<com.liferay.object.model.ObjectField> fieldsStream =
+			objectFields.stream();
+
+		List<String> fieldNames = fieldsStream.map(
+			com.liferay.object.model.ObjectField::getName
+		).collect(
+			Collectors.toList()
+		);
+
+		fieldNames.add(idName);
+
+		EntityModel entityModel = _getEntityModel(
+			objectDefinition, objectFields);
+
 		schemaBuilder.codeRegistry(
 			codeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("query", name),
 				(DataFetcher<Object>)environment -> {
-					Stream<com.liferay.object.model.ObjectField> fieldsStream =
-						objectFields.stream();
-
-					List<String> fieldNames = fieldsStream.map(
-						com.liferay.object.model.ObjectField::getName
-					).collect(
-						Collectors.toList()
-					);
-
-					fieldNames.add(idName);
-
-					SortContextProvider sortContextProvider =
-						new SortContextProvider(
-							_language, _portal, _sortParserProvider);
-
 					GraphQLContext graphQLContext =
 						environment.getLocalContext();
 
@@ -907,37 +892,6 @@ public class GraphQLServletExtender {
 					AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
 						httpServletRequestOptional.orElse(null), _language,
 						_portal);
-
-					EntityModel entityModel = _getEntityModel(
-						objectDefinition, objectFields);
-
-					Sort[] sorts = sortContextProvider.createContext(
-						acceptLanguage, entityModel,
-						environment.getArgument("sort"));
-
-					AggregationContextProvider aggregationContextProvider =
-						new AggregationContextProvider(_language, _portal);
-
-					List<String> aggregations = environment.getArgument(
-						"aggregation");
-
-					if (aggregations == null) {
-						aggregations = new ArrayList<>();
-					}
-
-					Aggregation aggregation =
-						aggregationContextProvider.createContext(
-							acceptLanguage, aggregations.toArray(new String[0]),
-							entityModel);
-
-					FilterContextProvider filterContextProvider =
-						new FilterContextProvider(
-							_expressionConvert, _filterParserProvider,
-							_language, _portal);
-
-					Filter filter = filterContextProvider.createContext(
-						acceptLanguage, entityModel,
-						environment.getArgument("filter"));
 
 					Page<Document> page = SearchUtil.search(
 						new HashMap<>(),
@@ -953,19 +907,28 @@ public class GraphQLServletExtender {
 											getObjectDefinitionId())),
 								BooleanClauseOccur.MUST);
 						},
-						filter, ObjectEntry.class,
-						environment.getArgument("search"),
+						_getFilter(
+							acceptLanguage, entityModel,
+							environment.getArgument("filter")),
+						ObjectEntry.class, environment.getArgument("search"),
 						Pagination.of(
 							environment.getArgument("page"),
 							environment.getArgument("pageSize")),
 						queryConfig -> queryConfig.setSelectedFieldNames(
 							fieldNames.toArray(new String[0])),
 						searchContext -> {
-							searchContext.addVulcanAggregation(aggregation);
+							searchContext.addVulcanAggregation(
+								_getAggregation(
+									acceptLanguage,
+									environment.getArgument("aggregation"),
+									entityModel));
 							searchContext.setCompanyId(
 								CompanyThreadLocal.getCompanyId());
 						},
-						sorts, document -> document);
+						_getSorts(
+							acceptLanguage, entityModel,
+							environment.getArgument("sort")),
+						document -> document);
 
 					return HashMapBuilder.<String, Object>put(
 						"actions", page.getActions()
@@ -1000,7 +963,7 @@ public class GraphQLServletExtender {
 
 		queryBuilder.field(
 			newFieldDefinitionBuilder.argument(
-				_addArgument(Scalars.GraphQLLong, idName)
+				_addArgument(Scalars.GraphQLLong, idName, null)
 			).name(
 				name
 			).type(
@@ -1437,18 +1400,8 @@ public class GraphQLServletExtender {
 				BiFunction<Object, List<String>, Aggregation>
 					aggregationBiFunction = (resource, aggregations) -> {
 						try {
-							if (aggregations == null) {
-								return null;
-							}
-
-							AggregationContextProvider
-								aggregationContextProvider =
-									new AggregationContextProvider(
-										_language, _portal);
-
-							return aggregationContextProvider.createContext(
-								acceptLanguage,
-								aggregations.toArray(new String[0]),
+							return _getAggregation(
+								acceptLanguage, aggregations,
 								_getEntityModel(
 									resource,
 									httpServletRequest.getParameterMap()));
@@ -1466,12 +1419,7 @@ public class GraphQLServletExtender {
 				BiFunction<Object, String, Filter> filterBiFunction =
 					(resource, filterString) -> {
 						try {
-							FilterContextProvider filterContextProvider =
-								new FilterContextProvider(
-									_expressionConvert, _filterParserProvider,
-									_language, _portal);
-
-							return filterContextProvider.createContext(
+							return _getFilter(
 								acceptLanguage,
 								_getEntityModel(
 									resource,
@@ -1491,11 +1439,7 @@ public class GraphQLServletExtender {
 				BiFunction<Object, String, Sort[]> sortsBiFunction =
 					(resource, sortsString) -> {
 						try {
-							SortContextProvider sortContextProvider =
-								new SortContextProvider(
-									_language, _portal, _sortParserProvider);
-
-							return sortContextProvider.createContext(
+							return _getSorts(
 								acceptLanguage,
 								_getEntityModel(
 									resource,
@@ -1657,6 +1601,21 @@ public class GraphQLServletExtender {
 		}
 	}
 
+	private Aggregation _getAggregation(
+		AcceptLanguage acceptLanguage, List<String> aggregations,
+		EntityModel entityModel) {
+
+		if (aggregations == null) {
+			return null;
+		}
+
+		AggregationContextProvider aggregationContextProvider =
+			new AggregationContextProvider(_language, _portal);
+
+		return aggregationContextProvider.createContext(
+			acceptLanguage, aggregations.toArray(new String[0]), entityModel);
+	}
+
 	private String _getBasePath(
 		String contextPath, String requestURI, String requestURL,
 		String servletPath) {
@@ -1777,6 +1736,18 @@ public class GraphQLServletExtender {
 		return field;
 	}
 
+	private Filter _getFilter(
+			AcceptLanguage acceptLanguage, EntityModel entityModel,
+			String filterString)
+		throws Exception {
+
+		FilterContextProvider filterContextProvider = new FilterContextProvider(
+			_expressionConvert, _filterParserProvider, _language, _portal);
+
+		return filterContextProvider.createContext(
+			acceptLanguage, entityModel, filterString);
+	}
+
 	private Boolean _getGraphQLFieldValue(AnnotatedElement annotatedElement) {
 		GraphQLField graphQLField = annotatedElement.getAnnotation(
 			GraphQLField.class);
@@ -1883,6 +1854,17 @@ public class GraphQLServletExtender {
 		}
 
 		return null;
+	}
+
+	private Sort[] _getSorts(
+		AcceptLanguage acceptLanguage, EntityModel entityModel,
+		String sortsString) {
+
+		SortContextProvider sortContextProvider = new SortContextProvider(
+			_language, _portal, _sortParserProvider);
+
+		return sortContextProvider.createContext(
+			acceptLanguage, entityModel, sortsString);
 	}
 
 	private Field _getThisField(Class<?> clazz) {

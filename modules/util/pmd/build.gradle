@@ -8,4 +8,5 @@ dependencies {
 
 updateFileVersions {
 	match(/com\.liferay\.pmd=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+	match(/\t\t<dependency name="com.liferay.pmd" org="com.liferay" rev="(\d.+)" \/>/, "../../../tools/sdk/dependencies/com.liferay.pmd/ivy.xml")
 }

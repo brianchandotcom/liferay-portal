@@ -159,6 +159,12 @@ public class LiferayOAuthDataProvider
 		ServerAuthorizationCodeGrant serverAuthorizationCodeGrant =
 			super.createCodeGrant(authorizationCodeRegistration);
 
+		if (serverAuthorizationCodeGrant.getClientCodeChallengeMethod() ==
+				null) {
+
+			serverAuthorizationCodeGrant.setClientCodeChallengeMethod("S256");
+		}
+
 		serverAuthorizationCodeGrant.setExtraProperties(
 			authorizationCodeRegistration.getExtraProperties());
 		serverAuthorizationCodeGrant.setRequestedScopes(

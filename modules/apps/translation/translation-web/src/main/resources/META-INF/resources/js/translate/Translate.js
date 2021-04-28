@@ -24,6 +24,13 @@ import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
 import TranslateHeader from './components/TranslateHeader';
 import {FETCH_STATUS} from './constants';
 
+const normalizeFields = (fields) =>
+	fields.reduce((acc, field) => {
+		const [id, content] = Object.entries(field)[0];
+
+		return {...acc, [id]: content};
+	}, {});
+
 const ACTION_TYPES = {
 	UPDATE_FETCH_STATUS: 'UPDATE_FETCH_STATUS',
 	UPDATE_FIELD: 'UPDATE_FIELD',
@@ -148,11 +155,7 @@ const Translate = ({
 
 				if (isMounted()) {
 					dispatch({
-						payload: fields.reduce((acc, field) => {
-							const [id, content] = Object.entries(field)[0];
-
-							return {...acc, [id]: content};
-						}, {}),
+						payload: normalizeFields(fields),
 						type: ACTION_TYPES.UPDATE_FIELDS_BULK,
 					});
 
@@ -198,11 +201,7 @@ const Translate = ({
 
 			if (isMounted()) {
 				dispatch({
-					payload: fields.reduce((acc, field) => {
-						const [id, content] = Object.entries(field)[0];
-
-						return {...acc, [id]: content};
-					}, {}),
+					payload: normalizeFields(fields),
 					type: ACTION_TYPES.UPDATE_FIELD,
 				});
 			}

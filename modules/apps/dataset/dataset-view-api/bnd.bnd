@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Dataset View API
+Bundle-SymbolicName: com.liferay.dataset.view.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.dataset.view.exception,\
+	com.liferay.dataset.view.model,\
+	com.liferay.dataset.view.service,\
+	com.liferay.dataset.view.service.persistence

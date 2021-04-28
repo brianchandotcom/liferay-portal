@@ -49,10 +49,6 @@ public class JSONSerializerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
 		LocalizationUtil localizationUtil = new LocalizationUtil();
 
 		localizationUtil.setLocalization(new LocalizationImpl());

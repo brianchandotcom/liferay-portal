@@ -15,8 +15,6 @@
 package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.util;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -46,10 +44,6 @@ public class GCloudVisionUtilTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test

@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -69,8 +68,6 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		_numericDDMFormFieldTypeReportProcessor.
 			ddmFormInstanceRecordLocalService =
 				_ddmFormInstanceRecordLocalService;
-
-		_setUpJSONFactoryUtil();
 	}
 
 	@Test
@@ -429,12 +426,6 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		);
 
 		return ddmFormInstanceRecord;
-	}
-
-	private void _setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	private static final int _VALUES_MAX_LENGTH = 5;

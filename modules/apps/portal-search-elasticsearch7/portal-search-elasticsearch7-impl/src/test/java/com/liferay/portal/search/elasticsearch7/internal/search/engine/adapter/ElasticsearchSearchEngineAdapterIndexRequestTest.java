@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -106,8 +105,6 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		setUpJSONFactoryUtil();
-
 		_elasticsearchFixture = new ElasticsearchFixture();
 
 		_elasticsearchFixture.setUp();
@@ -605,12 +602,6 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 					createIndexRequestExecutor(elasticsearchClientResolver));
 			}
 		};
-	}
-
-	protected static void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	protected void assertAnalysisIndexResponseTokens(

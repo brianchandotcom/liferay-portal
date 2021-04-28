@@ -17,7 +17,6 @@ package com.liferay.wiki.editor.configuration.internal;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -67,10 +66,6 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 		MockitoAnnotations.initMocks(this);
 
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
 		LanguageUtil languageUtil = new LanguageUtil();
 

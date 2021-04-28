@@ -24,8 +24,6 @@ import com.liferay.analytics.reports.web.internal.model.ReferringURL;
 import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
 import com.liferay.analytics.reports.web.internal.model.SocialTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -34,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,13 +45,6 @@ public class TrafficChannelUtilTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
 
 	@Test
 	public void testToJSONObject() {

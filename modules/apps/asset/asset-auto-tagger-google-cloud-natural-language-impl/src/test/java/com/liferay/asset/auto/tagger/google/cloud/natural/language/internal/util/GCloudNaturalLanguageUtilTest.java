@@ -16,8 +16,6 @@ package com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.uti
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -50,10 +48,6 @@ public class GCloudNaturalLanguageUtilTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test

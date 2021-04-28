@@ -25,8 +25,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -66,7 +64,6 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest
 
 	@Before
 	public void setUp() {
-		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
 	}
 
@@ -552,12 +549,6 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest
 		);
 
 		return ddmForm;
-	}
-
-	private void _setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	private void _setUpLanguageUtil() {

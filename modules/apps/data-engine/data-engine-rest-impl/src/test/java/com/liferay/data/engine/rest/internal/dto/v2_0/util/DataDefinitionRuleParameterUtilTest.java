@@ -14,9 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.dto.v2_0.util;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -25,7 +23,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.HashMap;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,11 +42,6 @@ public class DataDefinitionRuleParameterUtilTest extends PowerMockito {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_setUpJSONFactoryUtil();
-	}
 
 	@Test
 	public void testToDataDefinitionRuleParameters() throws JSONException {
@@ -77,12 +69,6 @@ public class DataDefinitionRuleParameterUtilTest extends PowerMockito {
 			new HashMap<>());
 
 		Assert.assertEquals("{}", jsonObject.toString());
-	}
-
-	private void _setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 }

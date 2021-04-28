@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -40,10 +39,6 @@ public class ServiceContextTest {
 
 	@Test
 	public void testJSONSerialization() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAttribute("TestName", "TestValue");

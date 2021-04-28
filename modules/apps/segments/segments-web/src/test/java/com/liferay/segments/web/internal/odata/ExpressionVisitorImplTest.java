@@ -14,9 +14,7 @@
 
 package com.liferay.segments.web.internal.odata;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,7 +39,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,13 +52,6 @@ public class ExpressionVisitorImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
 
 	@Test
 	public void testVisitBinaryExpressionOperationWithAndOperation()

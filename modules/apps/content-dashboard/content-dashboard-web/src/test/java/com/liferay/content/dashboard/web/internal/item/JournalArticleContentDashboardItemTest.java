@@ -23,8 +23,6 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -66,10 +64,6 @@ public class JournalArticleContentDashboardItemTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
 		LanguageResources languageResources = new LanguageResources();
 
 		languageResources.setConfig(StringPool.BLANK);

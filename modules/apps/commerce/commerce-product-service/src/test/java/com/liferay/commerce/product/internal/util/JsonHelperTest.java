@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -46,10 +45,6 @@ public class JsonHelperTest {
 	public void setUp() {
 		ConfigurationFactoryUtil.setConfigurationFactory(
 			Mockito.mock(ConfigurationFactory.class, Mockito.RETURNS_MOCKS));
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test

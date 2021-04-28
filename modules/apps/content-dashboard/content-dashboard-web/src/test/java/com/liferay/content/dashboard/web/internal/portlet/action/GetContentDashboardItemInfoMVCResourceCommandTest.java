@@ -23,7 +23,6 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.type.WebImage;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -75,10 +74,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		BrowserSnifferUtil browserSnifferUtil = new BrowserSnifferUtil();
 
 		browserSnifferUtil.setBrowserSniffer(new BrowserSnifferImpl());
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
 		PortalUtil portalUtil = new PortalUtil();
 

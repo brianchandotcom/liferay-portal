@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
@@ -78,8 +76,6 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	@Before
 	public void setUp() {
-		setUpJSONFactoryUtil();
-
 		_searchEngineAdapter = createSearchEngineAdapter(
 			_elasticsearchConnectionFixture);
 
@@ -192,7 +188,7 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	protected JSONObject createJSONObject(String message) {
 		try {
-			return _jsonFactory.createJSONObject(message);
+			return JSONFactoryUtil.createJSONObject(message);
 		}
 		catch (JSONException jsonException) {
 			throw new RuntimeException(jsonException);
@@ -209,12 +205,6 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		assertHealthy(statsClusterResponse.getClusterHealthStatus());
 
 		assertOneIndex(statsClusterResponse.getStatsMessage());
-	}
-
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(_jsonFactory);
 	}
 
 	private void _createIndex() {
@@ -253,7 +243,6 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		_elasticsearchConnectionFixture;
 
 	private IndicesClient _indicesClient;
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

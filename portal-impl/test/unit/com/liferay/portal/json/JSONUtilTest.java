@@ -48,12 +48,6 @@ public class JSONUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		JSONInit.init();
-
-		JSONFactoryImpl jsonFactoryImpl = new JSONFactoryImpl();
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(jsonFactoryImpl);
 	}
 
 	@Test

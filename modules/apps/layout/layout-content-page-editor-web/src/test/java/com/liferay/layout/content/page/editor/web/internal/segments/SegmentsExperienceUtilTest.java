@@ -14,8 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.segments;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,10 +43,6 @@ public class SegmentsExperienceUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(new LanguageImpl());

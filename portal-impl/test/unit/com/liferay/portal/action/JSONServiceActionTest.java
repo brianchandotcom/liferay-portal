@@ -14,8 +14,6 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -26,7 +24,6 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -40,13 +37,6 @@ public class JSONServiceActionTest {
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
 
 	@Test
 	public void testGetArgumentValue() throws Exception {

@@ -20,8 +20,6 @@ import com.liferay.item.selector.web.internal.TestFileEntryItemSelectorReturnTyp
 import com.liferay.item.selector.web.internal.TestStringItemSelectorReturnType;
 import com.liferay.item.selector.web.internal.TestURLItemSelectorReturnType;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -57,10 +55,6 @@ public class ItemSelectorCriterionSerializerImplTest {
 			_testStringItemSelectorReturnType);
 		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testURLItemSelectorReturnType);
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test

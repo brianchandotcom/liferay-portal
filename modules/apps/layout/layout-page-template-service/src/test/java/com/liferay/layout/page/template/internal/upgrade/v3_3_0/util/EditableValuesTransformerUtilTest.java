@@ -17,8 +17,6 @@ package com.liferay.layout.page.template.internal.upgrade.v3_3_0.util;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -38,10 +36,6 @@ public class EditableValuesTransformerUtilTest {
 
 	@Before
 	public void setUp() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
 		_objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);

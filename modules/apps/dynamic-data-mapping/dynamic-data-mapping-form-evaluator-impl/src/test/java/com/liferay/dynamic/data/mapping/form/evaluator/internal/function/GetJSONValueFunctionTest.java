@@ -15,14 +15,11 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,11 +33,6 @@ public class GetJSONValueFunctionTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_setUpJSONFactoryUtil();
-	}
 
 	@Test
 	public void testApply() {
@@ -65,12 +57,6 @@ public class GetJSONValueFunctionTest {
 		JSONObject jsonObject = _getJSONValueFunction.apply(null);
 
 		Assert.assertEquals(0, jsonObject.length());
-	}
-
-	private void _setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	private final GetJSONValueFunction _getJSONValueFunction =

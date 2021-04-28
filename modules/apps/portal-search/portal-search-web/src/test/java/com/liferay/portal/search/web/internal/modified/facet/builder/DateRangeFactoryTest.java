@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.builder;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 
@@ -25,7 +23,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,13 +36,6 @@ public class DateRangeFactoryTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
 
 	@Test
 	public void testBoundedRange() {

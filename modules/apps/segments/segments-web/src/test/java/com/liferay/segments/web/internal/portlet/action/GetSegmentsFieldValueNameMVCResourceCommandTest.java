@@ -14,9 +14,6 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -52,11 +49,7 @@ public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws PortalException {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
+	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
 			_getSegmentsFieldValueNameMVCResourceCommand,
 			"_segmentsFieldCustomizerRegistry",

@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -63,8 +62,6 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			_ddmFormInstanceRecordLocalService;
 
 		_mockDDMFormInstanceRecord();
-
-		_setUpJSONFactoryUtil();
 	}
 
 	@Test
@@ -312,12 +309,6 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		).thenReturn(
 			ddmFormInstanceRecord
 		);
-	}
-
-	private void _setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	private static final long _FORM_INSTANCE_RECORD_ID = 0;

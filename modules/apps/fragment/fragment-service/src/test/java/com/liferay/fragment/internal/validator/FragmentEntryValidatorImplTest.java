@@ -15,8 +15,6 @@
 package com.liferay.fragment.internal.validator;
 
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -72,10 +70,6 @@ public class FragmentEntryValidatorImplTest {
 	@Before
 	public void setUp() {
 		_fragmentEntryValidatorImpl = new FragmentEntryValidatorImpl();
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test

@@ -18,6 +18,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
+import com.liferay.portal.kernel.util.CalendarFactory;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -83,6 +85,7 @@ public class InitializeKernelUtilTestRule
 			_setUpPropsUtil(_processProperties(portalProps.properties()));
 		}
 
+		_setUpCalendarFactoryUtil();
 		_setUpFileUtil();
 		_setUpHtmlUtil();
 		_setUpHttpUtil();
@@ -124,6 +127,24 @@ public class InitializeKernelUtilTestRule
 		}
 
 		return propertyMap;
+	}
+
+	private void _setUpCalendarFactoryUtil()
+		throws ReflectiveOperationException {
+
+		Thread thread = Thread.currentThread();
+
+		ClassLoader classLoader = thread.getContextClassLoader();
+
+		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
+
+		Class<?> clazz = classLoader.loadClass(
+			"com.liferay.portal.util.CalendarFactoryImpl");
+
+		Constructor<?> constructor = clazz.getDeclaredConstructor();
+
+		calendarFactoryUtil.setCalendarFactory(
+			(CalendarFactory)constructor.newInstance());
 	}
 
 	private void _setUpFileUtil() throws ClassNotFoundException {

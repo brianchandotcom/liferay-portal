@@ -40,7 +40,6 @@ export default function Hint({align, message, position, secondary, title}) {
 				ref={iconRef}
 			>
 				<ClayIcon
-					className="mr-1"
 					small="true"
 					symbol="question-circle"
 				/>

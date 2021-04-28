@@ -73,7 +73,7 @@ function TotalCount({
 					title={popoverHeader}
 				/>
 			</span>
-			<span className="font-weight-bold">{displayValue}</span>
+			<span className="font-weight-bold inline-item-after">{displayValue}</span>
 		</div>
 	);
 }

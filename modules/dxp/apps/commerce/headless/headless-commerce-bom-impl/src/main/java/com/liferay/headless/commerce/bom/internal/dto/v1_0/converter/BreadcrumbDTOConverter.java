@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.bom.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.bom.model.CommerceBOMFolder;
-import com.liferay.commerce.bom.service.CommerceBOMFolderService;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.headless.commerce.bom.dto.v1_0.Breadcrumb;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = {BreadcrumbDTOConverter.class, DTOConverter.class}
 )
 public class BreadcrumbDTOConverter
-	implements DTOConverter<CommerceBOMFolder, Breadcrumb> {
+	implements DTOConverter<AssetCategory, Breadcrumb> {
 
 	@Override
 	public String getContentType() {
@@ -42,19 +42,18 @@ public class BreadcrumbDTOConverter
 	public Breadcrumb toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CommerceBOMFolder commerceBOMFolder =
-			_commerceBOMFolderService.getCommerceBOMFolder(
-				(Long)dtoConverterContext.getId());
+		AssetCategory assetCategory = _assetCategoryService.getCategory(
+			(Long)dtoConverterContext.getId());
 
 		return new Breadcrumb() {
 			{
-				label = commerceBOMFolder.getName();
-				url = "/folders/" + commerceBOMFolder.getCommerceBOMFolderId();
+				label = assetCategory.getName();
+				url = "/folders/" + assetCategory.getCategoryId();
 			}
 		};
 	}
 
 	@Reference
-	private CommerceBOMFolderService _commerceBOMFolderService;
+	private AssetCategoryService _assetCategoryService;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.bom.internal.dto.v1_0.converter.util;
 
-import com.liferay.commerce.bom.model.CommerceBOMFolder;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.headless.commerce.bom.dto.v1_0.Breadcrumb;
 import com.liferay.headless.commerce.bom.internal.dto.v1_0.converter.BreadcrumbDTOConverter;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -33,7 +33,7 @@ public class BreadcrumbDTOConverterUtil {
 
 	public static Breadcrumb[] getBreadcrumbs(
 			BreadcrumbDTOConverter breadcrumbDTOConverter,
-			CommerceBOMFolder commerceBOMFolder, Locale locale)
+			AssetCategory assetCategory, Locale locale)
 		throws Exception {
 
 		List<Breadcrumb> breadcrumbs = new ArrayList<>();
@@ -46,20 +46,19 @@ public class BreadcrumbDTOConverterUtil {
 				}
 			});
 
-		if (commerceBOMFolder != null) {
-			List<CommerceBOMFolder> ancestorCommerceBOMFolders =
-				commerceBOMFolder.getAncestors();
+		if (assetCategory != null) {
+			List<AssetCategory> ancestorAssetCategories =
+				assetCategory.getAncestors();
 
-			Collections.reverse(ancestorCommerceBOMFolders);
+			Collections.reverse(ancestorAssetCategories);
 
-			for (CommerceBOMFolder ancestorCommerceBOMFolder :
-					ancestorCommerceBOMFolders) {
+			for (AssetCategory ancestorAssetCategory :
+					ancestorAssetCategories) {
 
 				breadcrumbs.add(
 					breadcrumbDTOConverter.toDTO(
 						new DefaultDTOConverterContext(
-							ancestorCommerceBOMFolder.getCommerceBOMFolderId(),
-							locale)));
+							ancestorAssetCategory.getCategoryId(), locale)));
 			}
 		}
 

@@ -72,3 +72,46 @@ export function getDurationValues(durationValue) {
 		seconds: fullDuration.seconds() || null,
 	};
 }
+
+export function remainingTimeFormat(
+	onTime,
+	remainingTime,
+	ignoreZeros = false
+) {
+	const remainingTimePositive = onTime ? remainingTime : remainingTime * -1;
+
+	const remainingTimeUTC = moment.utc(remainingTimePositive);
+
+	const days = remainingTimeUTC.format('D') - 1;
+
+	const hours = remainingTimeUTC.format('HH');
+
+	const minutes = remainingTimeUTC.format('mm');
+
+	let durationText = '';
+
+	if (ignoreZeros) {
+		if (Number(days) > 0) {
+			durationText += `${days}d `;
+		}
+
+		if (Number(hours) > 0) {
+			durationText += `${hours}h `;
+		}
+
+		if (Number(minutes) > 0) {
+			durationText += `${minutes}min`;
+		}
+
+		durationText = String(durationText).trimEnd();
+	}
+	else {
+		durationText = `${days}d ${hours}h ${minutes}min`;
+	}
+
+	const onTimeText = onTime
+		? Liferay.Language.get('left')
+		: Liferay.Language.get('overdue');
+
+	return [durationText, onTimeText];
+}

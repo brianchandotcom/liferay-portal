@@ -17,6 +17,7 @@ import React from 'react';
 
 import ContentView from '../../../../shared/components/content-view/ContentView.es';
 import RetryButton from '../../../../shared/components/list/RetryButton.es';
+import {remainingTimeFormat} from '../../../../shared/util/duration.es';
 import moment from '../../../../shared/util/moment.es';
 
 function Body({
@@ -213,20 +214,10 @@ function SLAResultItem({dateOverdue, name, onTime, remainingTime, status}) {
 				return `(${Liferay.Language.get('sla-paused')})`;
 			}
 			case 'Running': {
-				const remainingTimePositive = onTime
-					? remainingTime
-					: remainingTime * -1;
-
-				const remainingTimeUTC = moment.utc(remainingTimePositive);
-
-				const durationText =
-					remainingTimeUTC.format('D') -
-					1 +
-					remainingTimeUTC.format('[d] HH[h] mm[min]');
-
-				const onTimeText = onTime
-					? Liferay.Language.get('left')
-					: Liferay.Language.get('overdue');
+				const [durationText, onTimeText] = remainingTimeFormat(
+					onTime,
+					remainingTime
+				);
 
 				return `${moment
 					.utc(dateOverdue)

@@ -82,7 +82,7 @@ function EditBlueprintForm({
 		initialSelectedElements['query_configuration'].length
 	);
 
-	const validate = (values) => {
+	const _handleFormikValidate = (values) => {
 		const errors = {};
 
 		// Validate the elements added to the query builder
@@ -203,7 +203,7 @@ function EditBlueprintForm({
 		}
 	};
 
-	const _handleSubmit = (values) => {
+	const _handleFormikSubmit = (values) => {
 		const formData = new FormData(form.current);
 
 		try {
@@ -320,8 +320,8 @@ function EditBlueprintForm({
 				'\t'
 			),
 		},
-		onSubmit: _handleSubmit,
-		validate,
+		onSubmit: _handleFormikSubmit,
+		validate: _handleFormikValidate,
 	});
 
 	const _handleFetchPreviewSearch = (value, delta, page) => {

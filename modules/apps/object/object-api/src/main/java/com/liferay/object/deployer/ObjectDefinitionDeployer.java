@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.initializer;
+package com.liferay.object.deployer;
 
 import com.liferay.object.model.ObjectDefinition;
 

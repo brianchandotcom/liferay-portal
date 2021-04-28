@@ -12,19 +12,14 @@
  * details.
  */
 
-package com.liferay.object.initializer;
+package com.liferay.object.deployer;
 
-import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.kernel.model.LayoutTypeController;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Deactivate;
 
 import java.util.Dictionary;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Marco Leo

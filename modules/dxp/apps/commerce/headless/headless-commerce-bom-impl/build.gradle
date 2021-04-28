@@ -18,6 +18,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-	compileOnly project(":dxp:apps:commerce:commerce-bom-api")
+	compileOnly project(":dxp:apps:commerce:commerce-shop-by-diagram:commerce-shop-by-diagram-api")
 	compileOnly project(":dxp:apps:commerce:headless:headless-commerce-bom-api")
 }

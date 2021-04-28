@@ -126,9 +126,13 @@ definition {
 			fieldName = "siteSettingsStrategy",
 			selectOption = "Always Override");
 
-		Navigator.openURL();
+		AssertNotVisible(
+			key_fieldName = "chatProviderId",
+			locator1 = "FormFields#TEXT_FIELD");
 
-		AssertElementPresent(locator1 = "Providers#CHAT_PROVIDERS_HIDE");
+		AssertNotVisible(
+			key_fieldName = "chatProviderAccountId",
+			locator1 = "FormFields#TEXT_FIELD");
 	}
 
 }

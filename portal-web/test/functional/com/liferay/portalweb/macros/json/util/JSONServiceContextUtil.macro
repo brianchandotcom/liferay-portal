@@ -30,6 +30,17 @@ definition {
 		return "${JSON}";
 	}
 
+	macro _addAttributes {
+		Variables.assertDefined(parameterList = "${JSON},${attributes}");
+
+		var JSON = JSONUtil2._addJSONObject(
+			JSON = "${JSON}",
+			key = "attributes",
+			value = "${attributes}");
+
+		return "${JSON}";
+	}
+
 	macro _addGroupId {
 		Variables.assertDefined(parameterList = "${groupName},${JSON}");
 
@@ -123,6 +134,12 @@ definition {
 		if (isSet(addGuestPermissions)) {
 			var serviceContext = JSONServiceContextUtil._addGuestPermissions(
 				addGuestPermissions = "${addGuestPermissions}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(attributes)) {
+			var serviceContext = JSONServiceContextUtil._addAttributes(
+				attributes = "${attributes}",
 				JSON = "${serviceContext}");
 		}
 

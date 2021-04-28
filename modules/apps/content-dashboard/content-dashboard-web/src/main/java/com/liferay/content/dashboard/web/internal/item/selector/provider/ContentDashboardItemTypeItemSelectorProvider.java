@@ -20,7 +20,6 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeUtil;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemTypeChecker;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
@@ -28,18 +27,14 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -47,7 +42,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -93,7 +87,7 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 		return searchContainer;
 	}
 
-	private BooleanClause[] _getBooleanClauses(String keywords, Locale locale) {
+	private BooleanClause[] _getBooleanClauses() {
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
 		BooleanFilter booleanFilter = new BooleanFilter();
@@ -109,18 +103,6 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 		}
 
 		booleanFilter.add(classNameIdTermsFilter, BooleanClauseOccur.MUST);
-
-		if (Validator.isNotNull(keywords)) {
-			String sortableKeywords = StringUtil.replace(
-				StringUtil.toLowerCase(keywords), ' ', '*');
-
-			WildcardQuery wildcardQuery = new WildcardQueryImpl(
-				Field.getSortableFieldName(
-					"localized_name_".concat(LocaleUtil.toLanguageId(locale))),
-				StringPool.STAR + sortableKeywords + StringPool.STAR);
-
-			booleanQueryImpl.add(wildcardQuery, BooleanClauseOccur.MUST);
-		}
 
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
@@ -193,10 +175,12 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 				false
 			).withSearchContext(
 				searchContext -> {
-					searchContext.setBooleanClauses(
-						_getBooleanClauses(
-							_getKeywords(portletRequest),
-							_portal.getLocale(portletRequest)));
+					String keywords = _getKeywords(portletRequest);
+
+					searchContext.setAttribute(Field.DESCRIPTION, keywords);
+					searchContext.setAttribute(Field.NAME, keywords);
+
+					searchContext.setBooleanClauses(_getBooleanClauses());
 					searchContext.setCompanyId(
 						_portal.getCompanyId(portletRequest));
 					searchContext.setEnd(end);

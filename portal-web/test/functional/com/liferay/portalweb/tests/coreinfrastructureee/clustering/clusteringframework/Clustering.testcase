@@ -303,6 +303,22 @@ definition {
 	}
 
 	@priority = "4"
+	test UDPControlChannelProperties {
+		property custom.properties = "cluster.link.channel.properties.control=udp.xml${line.separator}cluster.link.channel.properties.transport.0=udp.xml";
+		property test.name.skip.portal.instance = "Clustering#UDPControlChannelProperties";
+
+		for (var serverPort : list "8080,9080") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Create a new JGroups channel",
+				nodePort = "${serverPort}");
+
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "properties: UDP",
+				nodePort = "${serverPort}");
+		}
+	}
+
+	@priority = "4"
 	test ValidateDocumentOnSeparateNodes {
 		property test.name.skip.portal.instance = "Clustering#ValidateDocumentOnSeparateNodes";
 

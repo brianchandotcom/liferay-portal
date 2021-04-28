@@ -61,8 +61,6 @@ public class DLFileEntryKeywordQueryContributor
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "ddmContent", false);
 		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "extension", false);
-		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "fileEntryTypeId", false);
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.CONTENT, false);
@@ -81,7 +79,8 @@ public class DLFileEntryKeywordQueryContributor
 						StringPool.QUOTE + exactMatch + StringPool.QUOTE, "");
 
 					fileNameBooleanQuery.add(
-						_getMatchQuery(exactMatch, MatchQuery.Type.PHRASE),
+						_getMatchQuery(
+							"fileName", exactMatch, MatchQuery.Type.PHRASE),
 						BooleanClauseOccur.MUST);
 
 					if (Validator.isNotNull(notExactKeyword)) {
@@ -96,11 +95,14 @@ public class DLFileEntryKeywordQueryContributor
 						BooleanClauseOccur.MUST);
 				}
 
-				MatchQuery matchPhraseQuery = _getMatchQuery(
-					keywords, MatchQuery.Type.PHRASE);
-
+				booleanQuery.add(
+					_getMatchQuery(
+						"extension", keywords, MatchQuery.Type.PHRASE_PREFIX),
+					BooleanClauseOccur.SHOULD);
 				fileNameBooleanQuery.add(
-					matchPhraseQuery, BooleanClauseOccur.SHOULD);
+					_getMatchQuery(
+						"fileName", keywords, MatchQuery.Type.PHRASE),
+					BooleanClauseOccur.SHOULD);
 
 				booleanQuery.add(
 					fileNameBooleanQuery, BooleanClauseOccur.SHOULD);
@@ -114,8 +116,10 @@ public class DLFileEntryKeywordQueryContributor
 	@Reference
 	protected QueryHelper queryHelper;
 
-	private MatchQuery _getMatchQuery(String keywords, MatchQuery.Type phrase) {
-		MatchQuery matchPhraseQuery = new MatchQuery("fileName", keywords);
+	private MatchQuery _getMatchQuery(
+		String field, String keywords, MatchQuery.Type phrase) {
+
+		MatchQuery matchPhraseQuery = new MatchQuery(field, keywords);
 
 		matchPhraseQuery.setType(phrase);
 
@@ -130,10 +134,9 @@ public class DLFileEntryKeywordQueryContributor
 		booleanQuery.add(
 			new MatchQuery("fileName", keyword), BooleanClauseOccur.SHOULD);
 
-		MatchQuery matchPhrasePrefixQuery = _getMatchQuery(
-			keyword, MatchQuery.Type.PHRASE_PREFIX);
-
-		booleanQuery.add(matchPhrasePrefixQuery, BooleanClauseOccur.SHOULD);
+		booleanQuery.add(
+			_getMatchQuery("fileName", keyword, MatchQuery.Type.PHRASE_PREFIX),
+			BooleanClauseOccur.SHOULD);
 
 		return booleanQuery;
 	}

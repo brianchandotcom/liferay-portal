@@ -49,7 +49,7 @@ public class DLTestUtil {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, new ByteArrayInputStream(bytes), bytes.length,
+			null, new ByteArrayInputStream(bytes), bytes.length, null, null,
 			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId()));
 	}
 

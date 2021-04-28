@@ -557,7 +557,8 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
 			dlFileEntry.getDescription(), null,
 			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,
-			dlFileEntry.getSize(), serviceContext);
+			dlFileEntry.getSize(), dlFileEntry.getExpirationDate(),
+			dlFileEntry.getReviewDate(), serviceContext);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 

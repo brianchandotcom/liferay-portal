@@ -134,11 +134,11 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Video");
+				fragmentName = "Video URL");
 		}
 
 		task ("Configure the video") {
-			PageEditor.gotoConfiguration(fragmentName = "Video");
+			PageEditor.gotoConfiguration(fragmentName = "Video URL");
 
 			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
 
@@ -158,7 +158,7 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.gotoConfiguration(fragmentName = "Video");
+			PageEditor.gotoConfiguration(fragmentName = "Video URL");
 
 			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
